@@ -1,0 +1,523 @@
+plugin.tx_browser_pi3 {
+
+  // Template for TypoScript array manuals
+  template = COA
+  template {
+    wrap = <dl>|</dl>
+    // Header
+    10 = COA
+    10 {
+      // Link I/IV: a
+      10 = TEXT
+      10 {
+        value = <a target="_blank" href="
+      }
+      // Link II/IV: url
+      11 = TEXT
+      11 {
+        typolink {
+          extTarget   = _blank
+          parameter   = http://typo3.org/extensions/repository/view/browser_tut_basics_en/current/
+          returnLast  = url
+        }
+      }
+      // Link III/IV
+      12 = TEXT
+      12 {
+        value = " title="typo3.org">
+      }
+      // Icon
+      20 = IMAGE
+      20 {
+        file = EXT:browser/pi3/icons/browser.gif
+        stdWrap {
+          noTrimWrap = || |
+        }
+      }
+      // Description
+      30 = TEXT
+      30 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_basics_en.title
+        }
+      }
+      // Link IV/IV
+      40 = TEXT
+      40 {
+        value = </a>
+      }
+      wrap = <dt>|</dt>
+    }
+    // Prompt
+    20 = TEXT
+    20 {
+      stdWrap {
+        data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_basics_en.description
+      }
+      wrap = <dd>|</dd>
+    }
+  }
+}
+
+plugin.tx_browser_pi3 {
+
+  manuals {
+    // Browser section - header
+    1110 = TEXT
+    1110 {
+      stdWrap {
+        data = LLL:EXT:browser/pi3/locallang.xml:browser.title
+      }
+      wrap = <h1>|</h1>
+    }
+    // Browser section - subheader
+    1111 = TEXT
+    1111 {
+      stdWrap {
+        data = LLL:EXT:browser/pi3/locallang.xml:browser.subtitle
+      }
+      wrap = <h2>|</h2>
+    }
+    // browser
+    1120 < plugin.tx_browser_pi3.template
+    1120 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser.description
+        }
+      }
+    }
+    // browser_tut_basics_en
+    1130 < plugin.tx_browser_pi3.template
+    1130 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_basics_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_basics_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_basics_en.description
+        }
+      }
+    }
+    // browser_tut_ajax_en
+    1131 < plugin.tx_browser_pi3.template
+    1131 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_ajax_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_ajax_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_ajax_en.description
+        }
+      }
+    }
+    // browser_tut_database_en
+    1140 < plugin.tx_browser_pi3.template
+    1140 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_database_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_database_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_database_en.description
+        }
+      }
+    }
+    // browser_tut_hooks_en
+    1145 < plugin.tx_browser_pi3.template
+    1145 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_hooks_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_hooks_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_hooks_en.description
+        }
+      }
+    }
+    // browser_tut_images_en
+    1150 < plugin.tx_browser_pi3.template
+    1150 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_images_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_images_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_images_en.description
+        }
+      }
+    }
+    // browser_tut_labeling_en
+    1160 < plugin.tx_browser_pi3.template
+    1160 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_labeling_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_labeling_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_labeling_en.description
+        }
+      }
+    }
+    // browser_tut_localization_en
+    1170 < plugin.tx_browser_pi3.template
+    1170 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_localization_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_localization_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_localization_en.description
+        }
+      }
+    }
+    // browser_tut_marker_en
+    1180 < plugin.tx_browser_pi3.template
+    1180 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_marker_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_marker_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_marker_en.description
+        }
+      }
+    }
+    // browser_tut_realurl_en
+    1190 < plugin.tx_browser_pi3.template
+    1190 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_realurl_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_realurl_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_realurl_en.description
+        }
+      }
+    }
+    // browser_tut_rss_en
+    1191 < plugin.tx_browser_pi3.template
+    1191 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_rss_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_rss_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_rss_en.description
+        }
+      }
+    }
+    // browser_tut_search_en
+    1200 < plugin.tx_browser_pi3.template
+    1200 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_search_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_search_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_search_en.description
+        }
+      }
+    }
+    // browser_tut_severalplugins_en
+    1210 < plugin.tx_browser_pi3.template
+    1210 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_severalplugins_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_severalplugins_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_severalplugins_en.description
+        }
+      }
+    }
+    // browser_tut_socialmedia_en
+    1220 < plugin.tx_browser_pi3.template
+    1220 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_socialmedia_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_socialmedia_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_socialmedia_en.description
+        }
+      }
+    }
+    // browser_tut_templating_en
+    1230 < plugin.tx_browser_pi3.template
+    1230 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_templating_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_templating_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_templating_en.description
+        }
+      }
+    }
+    // browser_tut_tt_news_en
+    1240 < plugin.tx_browser_pi3.template
+    1240 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_tt_news_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_tt_news_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_tt_news_en.description
+        }
+      }
+    }
+    // Websites - subheader
+    2000 = TEXT
+    2000 {
+      stdWrap {
+        data = LLL:EXT:browser/pi3/locallang.xml:websites.subtitle
+      }
+      wrap = <h2>|</h2>
+    }
+    // green_cars
+    2110 < plugin.tx_browser_pi3.template
+    2110 {
+      10 {
+        11 {
+          typolink {
+            parameter = http://grüne-autos.org
+          }
+        }
+        20 {
+          file = EXT:browser/pi3/icons/green_cars.gif
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:green_cars.green_cars.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:green_cars.green_cars.description
+        }
+      }
+    }
+    // job_market
+    2120 < plugin.tx_browser_pi3.template
+    2120 {
+      10 {
+        11 {
+          typolink {
+            parameter = http://typo3-job-market.de/
+          }
+        }
+        20 {
+          file = EXT:browser/pi3/icons/job_market.gif
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:job_market.job_market.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:job_market.job_market.description
+        }
+      }
+    }
+    // organiser
+    2130 < plugin.tx_browser_pi3.template
+    2130 {
+      10 {
+        11 {
+          typolink {
+            parameter = http://typo3-organiser.de/
+          }
+        }
+        20 {
+          file = EXT:browser/pi3/icons/organiser.gif
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:organiser.organiser.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:organiser.organiser.description
+        }
+      }
+    }
+    // quick_shop
+    2140 < plugin.tx_browser_pi3.template
+    2140 {
+      10 {
+        11 {
+          typolink {
+            parameter = http://typo3-quick-shop.de/
+          }
+        }
+        20 {
+          file = EXT:browser/pi3/icons/quick_shop.gif
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:quick_shop.quick_shop.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:quick_shop.quick_shop.description
+        }
+      }
+    }
+  }
+
+}

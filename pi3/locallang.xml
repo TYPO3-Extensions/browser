@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+  <meta type="array">
+    <type>module</type>
+    <description>Language labels for plugin &quot;tx_browser_pi1&quot;</description>
+  </meta>
+  <data type="array">
+    <languageKey index="default" type="array">
+      <label index="tt_content.list_type_pi3">Browser - Tutorials and Websites</label>
+      <label index="browser.title">Tutorials and Websites</label>
+      <label index="browser.subtitle">Browser Manuals and Tutorials</label>
+      <label index="browser.browser.title">TYPO3 Manual</label>
+      <label index="browser.browser.description">The Browser TYPO3 manual: installing, quickstart and TypoScript referenc tables.</label>
+      <label index="browser.browser_tut_ajax_en.title">Tutorial AJAX</label>
+      <label index="browser.browser_tut_ajax_en.description">Publish your data supported by AJAX.</label>
+      <label index="browser.browser_tut_basics_en.title">Tutorial Basics</label>
+      <label index="browser.browser_tut_basics_en.description">Step-by-step introduction for the basics.</label>
+      <label index="browser.browser_tut_database_en.title">Tutorial Database</label>
+      <label index="browser.browser_tut_database_en.description">Relation Building and special functions, provided by the Browser.</label>
+      <label index="browser.browser_tut_hooks_en.title">Tutorial Hooks</label>
+      <label index="browser.browser_tut_hooks_en.description">Use hooks for your data. Handle data of any extension in your extension.</label>
+      <label index="browser.browser_tut_images_en.title">Tutorial Images</label>
+      <label index="browser.browser_tut_images_en.description">Configuring images and galeries.</label>
+      <label index="browser.browser_tut_labeling_en.title">Tutorial Labeling</label>
+      <label index="browser.browser_tut_labeling_en.description">Labeling and field properties.</label>
+      <label index="browser.browser_tut_localization_en.title">Tutorial Localization</label>
+      <label index="browser.browser_tut_localization_en.description">Proper localization design for your database.</label>
+      <label index="browser.browser_tut_marker_en.title">Tutorial Marker</label>
+      <label index="browser.browser_tut_marker_en.description">Database marker, constant marker, browser system marker, piVars marker, TYPO3 GLOBALS Marker</label>
+      <label index="browser.browser_tut_rss_en.title">Tutorial RSS/XML</label>
+      <label index="browser.browser_tut_rss_en.description">Publish your data in RSS/XML format</label>
+      <label index="browser.browser_tut_realurl_en.title">Tutorial RealURL</label>
+      <label index="browser.browser_tut_realurl_en.description">Search Engine Optimisation</label>
+      <label index="browser.browser_tut_search_en.title">Tutorial Search</label>
+      <label index="browser.browser_tut_search_en.description">The browser search engine. Filter your lists.</label>
+      <label index="browser.browser_tut_severalplugins_en.title">Tutorial Several Plugins</label>
+      <label index="browser.browser_tut_severalplugins_en.description">Use the Browser plugin several times on the same page.</label>
+      <label index="browser.browser_tut_socialmedia_en.title">Tutorial Social Media</label>
+      <label index="browser.browser_tut_socialmedia_en.description">Use social bookmarks. Publish your data on facebook.com.</label>
+      <label index="browser.browser_tut_templating_en.title">Tutorial Templating</label>
+      <label index="browser.browser_tut_templating_en.description">Create your own template and your own view.</label>
+      <label index="browser.browser_tut_tt_news_en.title">Tutorial tt_news Sample</label>
+      <label index="browser.browser_tut_tt_news_en.description">Test the Browser out of the box with tt_news and than with your won data.</label>
+      <label index="websites.subtitle">Browser Demo Websites</label>
+      <label index="green_cars.green_cars.title"><![CDATA[grüne-autos.org (green cars)]]></label>
+      <label index="green_cars.green_cars.description">Database with the browser extension in three hours? The case story demonstrates it.</label>
+      <label index="job_market.job_market.title">Job Market</label>
+      <label index="job_market.job_market.description">The first TYPO3 job market without any PHP code.</label>
+      <label index="organiser.organiser.title">Organiser</label>
+      <label index="organiser.organiser.description">The 36 tonner out of the TYPO3 extensions: news, events, organisation, staff and calendar. All in one. Without any line PHP! The publishing is scheduled for February of 2011.</label>
+      <label index="quick_shop.quick_shop.title">Quick Shop</label>
+      <label index="quick_shop.quick_shop.description">Quick Shop - the fastest shop in the history of TYPO3. Install the shop with one mouse click!</label>
+    </languageKey>
+    <languageKey index="de" type="array">
+      <label index="tt_content.list_type_pi3">Browser - Tutorials und Websites</label>
+      <label index="browser.title">Tutorials und Websites</label>
+      <label index="browser.subtitle">Browser Handbücher und Tutorials</label>
+      <label index="browser.browser.title">TYPO3 Handbuch</label>
+      <label index="browser.browser.description">Das Browser-TYPO3-Handbuch: Installation, Schnellstart, TypoScript-Referenz-Tabellen</label>
+      <label index="browser.browser_tut_ajax_en.title">Tutorial AJAX</label>
+      <label index="browser.browser_tut_ajax_en.description"><![CDATA[Veröffentliche Deine Daten und benutze dabei AJAX!]]></label>
+      <label index="browser.browser_tut_basics_en.title">Tutorial Basics - Grundlagen</label>
+      <label index="browser.browser_tut_basics_en.description"><![CDATA[Einführung in die Grundlagen. Die wichtigste Unterlage nach dem Manual und vor jedem anderen Tutorial. U.a.: stdWrap, HTML-Templating, Optimierung für Suchmaschinen.]]></label>
+      <label index="browser.browser_tut_database_en.title">Tutorial Datenbank</label>
+      <label index="browser.browser_tut_database_en.description">Datenbank-Relationen und spezielle SQL-Funktionen für hierachische Ordnungen und Synonyme.</label>
+      <label index="browser.browser_tut_hooks_en.title">Tutorial Hooks</label>
+      <label index="browser.browser_tut_hooks_en.description"><![CDATA[Benutze Hooks f&uuml;r Deine Daten. Verarbeite die Daten von jeder Extension in Deiner Extension.]]></label>
+      <label index="browser.browser_tut_images_en.title">Tutorial Images - Bilder</label>
+      <label index="browser.browser_tut_images_en.description">Bilder konfigurieren und Bildergalerien benutzen.</label>
+      <label index="browser.browser_tut_labeling_en.title">Tutorial Labelling - Bezeichnungen</label>
+      <label index="browser.browser_tut_labeling_en.description"><![CDATA[Felder bezeichnen und Eigenschaften ändern.]]></label>
+      <label index="browser.browser_tut_localization_en.title">Tutorial Localisation - Sprachen</label>
+      <label index="browser.browser_tut_localization_en.description">Wie funktioniert Lokalisierung. Wie sollte eine Datenbank aufgebaut sein, damit diese für verschiedene Sprachen verwendbar ist?</label>
+      <label index="browser.browser_tut_marker_en.title">Tutorial Marker</label>
+      <label index="browser.browser_tut_marker_en.description">Datenbank Marker, Konstanten, Browser-System-Marker, Marker für Parameter der aktuellen URL und alle Werte aus dem TYPO3-GLOBALS-Array.</label>
+      <label index="browser.browser_tut_realurl_en.title">Tutorial RealURL</label>
+      <label index="browser.browser_tut_realurl_en.description">RealURL für die eigene Datenbank nutzen.</label>
+      <label index="browser.browser_tut_rss_en.title">Tutorial RSS/XML</label>
+      <label index="browser.browser_tut_rss_en.description"><![CDATA[Veröffentliche Deine Daten im RSS- und XML-Format!]]></label>
+      <label index="browser.browser_tut_search_en.title">Tutorial Search - Suche</label>
+      <label index="browser.browser_tut_search_en.description">Die Browser interne Suchmaschine konfigurieren und Datensätze filtern.</label>
+      <label index="browser.browser_tut_severalplugins_en.title">Tutorial Several Plugins</label>
+      <label index="browser.browser_tut_severalplugins_en.description">Verwende den Browser mehrmals auf einer Seite!</label>
+      <label index="browser.browser_tut_socialmedia_en.title">Tutorial Social Media</label>
+      <label index="browser.browser_tut_socialmedia_en.description"><![CDATA[Verwende Social-Bookmarks. Veröffentliche Deine Daten auf facebook.com.]]></label>
+      <label index="browser.browser_tut_templating_en.title">Tutorial Templating</label>
+      <label index="browser.browser_tut_templating_en.description">Gestalte Deine eigenen Templates und Views.</label>
+      <label index="browser.browser_tut_tt_news_en.title">Tutorial tt_news Sample</label>
+      <label index="browser.browser_tut_tt_news_en.description">Teste den Browser "out of the box" mit tt_news. Und danach mit Deinen eigenen Daten.</label>
+      <label index="websites.subtitle">Browser Demo-Websites</label>
+      <label index="green_cars.green_cars.title"><![CDATA[grüne-autos.org (green cars)]]></label>
+      <label index="green_cars.green_cars.description">Komplexe Datenbank mit dem Browser in drei Stunden? Die Fall-Studie für den Verkehrsclub Deutschland (VCD) zeigt wie es geht.</label>
+      <label index="job_market.job_market.title">Job Market</label>
+      <label index="job_market.job_market.description">Der erste TYPO3-Stellenmarkt ohne eine Zeile PHP.</label>
+      <label index="organiser.organiser.title">Organiser</label>
+      <label index="organiser.organiser.description"><![CDATA[Der 36-Tonner unter den TYPO3-Erweiterungen: Nachrichten, Veranstaltungen, Organisation, Personal und Kalender. Alles in einer Extension. Ohne eine Zeile PHP! Die Veröffentlichung ist für Februar 2011 vorgesehen.]]></label>
+      <label index="quick_shop.quick_shop.title">Quick Shop</label>
+      <label index="quick_shop.quick_shop.description">Quick Shop - der schnellste Shop in der Geschichte von TYPO3. Installiere den Shop mit einem Maus-Klick!</label>
+    </languageKey>
+  </data>
+</T3locallang>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+  <ROOT>
+    <TCEforms>
+      <sheetTitle>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript</sheetTitle>
+    </TCEforms>
+    <type>array</type>
+    <el>
+      <mode>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.mode</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.mode.0</numIndex>
+                <numIndex index="1">disabled</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.mode.1</numIndex>
+                <numIndex index="1">list_only</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.mode.2</numIndex>
+                <numIndex index="1">list_and_single</numIndex>
+              </numIndex>
+            </items>
+            <default>disabled</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </mode>
+      <ajaxTutorial>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.ajaxTutorial</label>
+          <displayCond>FIELD:mode:IN:list_only,list_and_single</displayCond>
+          <config>
+            <type>check</type>
+            <cols>1</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.ajaxTutorial.0</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+          </config>
+        </TCEforms>
+      </ajaxTutorial>
+      <ajaxChecklist>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.ajaxChecklist</label>
+          <displayCond>FIELD:mode:IN:list_only,list_and_single</displayCond>
+          <config>
+            <type>check</type>
+            <cols>1</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.ajaxChecklist.0</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+          </config>
+        </TCEforms>
+      </ajaxChecklist>
+      <list_transition>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.list_transition</label>
+          <displayCond>FIELD:mode:IN:list_only,list_and_single</displayCond>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.list_transition.0</numIndex>
+                <numIndex index="1">none</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.list_transition.1</numIndex>
+                <numIndex index="1">collapse</numIndex>
+              </numIndex>
+            </items>
+            <default>collapse</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </list_transition>
+      <single_transition>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.single_transition</label>
+          <displayCond>FIELD:mode:=:list_and_single</displayCond>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.single_transition.0</numIndex>
+                <numIndex index="1">none</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.single_transition.1</numIndex>
+                <numIndex index="1">collapse</numIndex>
+              </numIndex>
+            </items>
+            <default>collapse</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </single_transition>
+      <list_on_single>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.list_on_single</label>
+          <displayCond>FIELD:mode:=:list_and_single</displayCond>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.list_on_single.0</numIndex>
+                <numIndex index="1">listAndSingle</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.list_on_single.1</numIndex>
+                <numIndex index="1">listCollapsableAndSingle</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.list_on_single.2</numIndex>
+                <numIndex index="1">single</numIndex>
+              </numIndex>
+            </items>
+            <default>single</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </list_on_single>
+    </el>
+  </ROOT>
+</T3DataStructure>

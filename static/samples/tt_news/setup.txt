@@ -1,0 +1,169 @@
+plugin.tx_browser_pi1 {
+
+  template {
+    extensions {
+      tt_news {
+        sample {
+          // [String] Name of the template. It will displayed in the plugin/flexform
+          name      = tt_news: Sample
+          file      = EXT:browser/res/sample/tt_news/default.tmpl
+          // [csv] Comma seperated list with the number of the correspondening views
+          csvViews  = 1000
+        }
+        rss {
+          // [String] Name of the template. It will displayed in the plugin/flexform
+          name      = tt_news: RSS
+          file      = EXT:browser/res/sample/tt_news/rss.tmpl
+          // [csv] Comma seperated list with the number of the correspondening views
+          csvViews  = 1010
+        }
+      }
+    }
+  }
+
+  views {
+    list {
+      1000 {
+        // [String] Name of the view. It will displayed in the plugin/flexform
+        name    = tt_news: Sample
+        // [String] Alias for showUid. It is optional. If you don't need it, remove the whole line.
+        showUid = newsUid
+        // [String] Select clause (don't confuse it with the SQL select)
+        select (
+          tt_news.title,
+          tt_news_cat.title,
+          tt_news.image,
+          tt_news.imagealttext,
+          tt_news.imagetitletext,
+          tt_news.image,
+          tt_news.datetime,
+          tt_news.short
+        )
+        orderBy (
+          tt_news.datetime DESC
+        )
+      }
+      1010 {
+        // [String] Name of the view. It will displayed in the plugin/flexform
+        name    = tt_news: RSS
+        // [String] Alias for showUid. It is optional. If you don't need it, remove the whole line.
+        showUid = newsUid
+        // [String] Select clause (don't confuse it with the SQL select)
+        select (
+          tt_news.title,
+          tt_news.short,
+          tt_news.bodytext,
+          tt_news.uid
+        )
+        // [String] Order By clause (don't confuse it with the SQL Order By)
+        orderBy (
+          tt_news.datetime DESC
+        )
+        tt_news {
+          short = COA
+          short {
+            10 = TEXT
+            10 {
+              value = ###TT_NEWS.TEASER_SHORT###
+            }
+            20 = TEXT
+            20 {
+              if.isFalse  = ###TT_NEWS.SHORT###
+              value       = ###TT_NEWS.BODYTEXT###
+              crop        = 300 | ... | 1
+              stripHtml   = 1
+            }
+          }
+          title = COA
+          title {
+            10 = TEXT
+            10 {
+              value = ###TT_NEWS.TITLE###
+              crop  = 60 | ... | 1
+            }
+          }
+          uid = COA
+          uid {
+            10 = TEXT
+            10 {
+              value = {$plugin.tx_browser_pi1.extensions.tt_news.host}/
+            }
+            20 = TEXT
+            20 {
+              typolink {
+                parameter = {$plugin.tx_browser_pi1.extensions.tt_news.pages.single_view}
+                parameter {
+                  insertData = 1
+                }
+                //additionalParams  = &tx_browser_pi1[newsUid]=###TT_NEWS.UID###&###CHASH###
+                additionalParams  = &tx_ttnews[tt_news]=###TT_NEWS.UID###&###CHASH###
+                returnLast = url
+              }
+            }
+          }
+        }
+        marker < plugin.tx_browser_pi1.marker
+        marker {
+          my_http = TEXT
+          my_http {
+            value = http://
+          }
+          rss_title {
+            value   = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.default.title}
+            lang.de = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.de.title}
+          }
+          rss_url {
+            typolink {
+              parameter = {$plugin.tx_browser_pi1.extensions.tt_news.pages.rss_feed}
+            }
+          }
+          rss_description {
+            value   = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.default.description}
+            lang.de = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.de.description}
+          }
+          rss_image_title {
+            value   = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.default.description}
+            lang.de = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.de.description}
+          }
+          rss_image_url {
+            value = http://{$plugin.tx_browser_pi1.extensions.tt_news.host}{$plugin.tx_browser_pi1.extensions.tt_news.pathToIcon}
+          }
+          rss_image_link {
+            value = http://{$plugin.tx_browser_pi1.extensions.tt_news.host}/
+          }
+          rss_image_height {
+            value = http://{$plugin.tx_browser_pi1.extensions.tt_news.heightOfIcon}/
+          }
+          rss_image_width {
+            value = http://{$plugin.tx_browser_pi1.extensions.tt_news.widthOfIcon}/
+          }
+          rss_image_description {
+            value   = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.default.description}
+            lang.de = {$plugin.tx_browser_pi1.extensions.tt_news._LOCAL_LANG.de.description}
+          }
+        }
+      }
+    }
+    single {
+      1000 {
+        // [String] Select clause (don't confuse it with the SQL select)
+        select (
+          tt_news.title,
+          tt_news.short,
+          tt_news.datetime,
+          tt_news.bodytext,
+          tt_news.image,
+          tt_news.imagecaption,
+          tt_news.imagealttext,
+          tt_news.imagetitletext
+        )
+      }
+      1010 {
+        // [Mixed] Internal comment
+        comment = This view should not be used. select value is a dummy!
+        // [String] Select clause (don't confuse it with the SQL select)
+        select  = tt_news.title
+      }
+    }
+  }
+}

@@ -1,0 +1,1682 @@
+<?php
+/***************************************************************
+*  Copyright notice
+*
+*  (c) 2008 - 2010 Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  All rights reserved
+*
+*  This script is part of the TYPO3 project. The TYPO3 project is
+*  free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation; either version 2 of the License, or
+*  (at your option) any later version.
+*
+*  The GNU General Public License can be found at
+*  http://www.gnu.org/copyleft/gpl.html.
+*
+*  This script is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  This copyright notice MUST APPEAR in all copies of the script!
+***************************************************************/
+
+  /**
+* The class tx_browser_pi1_localization bundles methods for localization for the extension browser
+*
+* @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
+* @package    TYPO3
+* @subpackage    tx_browser
+*/
+
+  /**
+ * [CLASS/FUNCTION INDEX of SCRIPT]
+ *
+ *
+ *
+ *   61: class tx_browser_pi1_localization
+ *  111:     function __construct($parentObj)
+ *
+ *              SECTION: SQL query parts
+ *  165:     function localizationFields_select($table)
+ *  403:     function localizationFields_where($table)
+ *  506:     function localizationSingle_where($table)
+ *
+ *              SECTION: Configuring Localization
+ *  649:     function localizationConfig()
+ *
+ *              SECTION: Consolidation
+ *  729:     function consolidate_filter($rows)
+ *  901:     function consolidate_rows($rows, $table)
+ *
+ *              SECTION: Little Helpers
+ * 1537:     function init_typoscript()
+ * 1591:     function propper_locArray($arr_langFields, $table)
+ *
+ * TOTAL FUNCTIONS: 9
+ * (This index is automatically created/updated by the extension "extdeveval")
+ *
+ */
+class tx_browser_pi1_localization
+{
+
+
+  //////////////////////////////////////////////////////
+  //
+  // Variables set by the pObj (by class.tx_browser_pi1.php)
+
+  var $conf       = FALSE;
+  // [Array] The current TypoScript configuration array
+  var $mode       = FALSE;
+  // [Integer] The current mode (from modeselector)
+  var $view       = FALSE;
+  // [String] 'list' or 'single': The current view
+  var $conf_view  = FALSE;
+  // [Array] The TypoScript configuration array of the current view
+  var $conf_path  = FALSE;
+  // [String] TypoScript path to the current view. I.e. views.single.1
+  // Variables set by the pObj (by class.tx_browser_pi1.php)
+
+
+  //////////////////////////////////////////////////////
+  //
+  // Variables set by this class
+
+  var $int_localization_mode;
+  // [Integer] See defines in the contructor. Set by localizationConfig().
+  var $lang_id;
+  // [Integer] $GLOBALS['TSFE']->sys_language_content. Set by localizationConfig().
+  var $overlay_mode;
+  // [String] $GLOBALS['TSFE']->sys_language_contentOL. Set by localizationConfig().
+  var $conf_localization      = FALSE;
+  // [Array] The The current TypoScript configuration array local or global: advanced.localization
+  var $conf_localization_path = FALSE;
+  // [String] The The current TypoScript configuration path local or global: advanced.localization
+
+
+
+
+
+
+
+
+
+/**
+ * Constructor. The method initiate the parent object
+ *
+ * @param	object		The parent object
+ * @return	void
+ */
+  function __construct($parentObj)
+  {
+    $this->pObj = $parentObj;
+
+    define('PI1_ANY_LANGUAGE',                  0);
+    define('PI1_DEFAULT_LANGUAGE',              1);
+    define('PI1_DEFAULT_LANGUAGE_ONLY',         2);
+    define('PI1_SELECTED_OR_DEFAULT_LANGUAGE',  3);
+    define('PI1_SELECTED_LANGUAGE_ONLY',        4);
+    // See method localizationConfig()
+    // See class.tx_browser_pi1_views.php: Workaround filter and localisation - Bugfix #9024
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * SQL query parts
+  *
+  **********************************************/
+
+
+
+
+  /**
+ * Returns different SELECT statements with the localization or overlay fields from the current table.
+ * Localization field i.e.: tt_news.sys_language_content
+ * Overlay field i.e.:      tt_news_cat.title_lang_ol
+ * Result depends on localization mode and on the TCA.
+ * woAlias:     and SELECT statement with syntax table.field, table,field
+ * filter:      and SELECT statement with syntax table.field AS `table.field`, table,field  AS `table.field`
+ * wiAlias:     same as filter
+ * addedFields: array with added fields in the syntax table.field
+ *
+ * Example for woAlias: tx_bzdstaffdirectory_groups.sys_language_uid, tx_bzdstaffdirectory_groups.l18n_parent
+ *
+ * The mothod supports languageField and transOrigPointerField only.
+ *
+ * @param	string		$table: Name of the table in the TYPO3 database / in TCA
+ * @return	array		$arr_andSelect with elements woAlias, filter, wiAlias and addedFields
+ */
+  function localizationFields_select($table)
+  {
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Load the TCA, if we don't have an table.columns array
+
+    if (!is_array($GLOBALS['TCA'][$table]['columns']))
+    {
+      t3lib_div::loadTCA($table);
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] $GLOBALS[\'TCA\'][\''.$table.'\'] is loaded.', $this->pObj->extKey, 0);
+      }
+    }
+    // Load the TCA, if we don't have an table.columns array
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Do we need translated/localized records?
+
+    $bool_dontLocalize = FALSE;
+    if(!isset($this->int_localization_mode))
+    {
+      $this->int_localization_mode = $this->localizationConfig();
+    }
+    if($this->int_localization_mode == PI1_DEFAULT_LANGUAGE)
+    {
+      $bool_dontLocalize = TRUE;
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] Localization mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localize!', $this->pObj->extKey, 0);
+      }
+    }
+    if($this->int_localization_mode == PI1_DEFAULT_LANGUAGE_ONLY)
+    {
+      $bool_dontLocalize = TRUE;
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] Localization mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localize!', $this->pObj->extKey, 0);
+      }
+    }
+    // Do we need translated/localized records?
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Get the field names for sys_language_content and for l10n_parent
+
+    $arr_localize['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+    $arr_localize['pid_field']  = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+    // Get the field names for sys_language_content and for l10n_parent
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Do we have a localized table?
+
+    $bool_tableIsLocalized = FALSE;
+    if ($arr_localize['id_field'] && $arr_localize['pid_field'])
+    {
+      $bool_tableIsLocalized = TRUE;
+    }
+    if($bool_tableIsLocalized and $bool_dontLocalize)
+    {
+      $bool_tableIsLocalized = FALSE;
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] '.$table.' is localized. But we ignore it!', $this->pObj->extKey, 0);
+      }
+    }
+    if ($bool_tableIsLocalized)
+    {
+      $this->pObj->arr_realTables_localized[] = $table;
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] \''.$table.'\' is localized.', $this->pObj->extKey, 0);
+      }
+    }
+    if (!$bool_tableIsLocalized)
+    {
+      $this->pObj->arr_realTables_notLocalized[] = $table;
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] \''.$table.'\' isn\'t localized.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALIZATION] Localization isn\'t needed.', $this->pObj->extKey, 0);
+      }
+    }
+    // Do we have a localized table?
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Do we have translated fields in case of a not localized table?
+
+    if (!$bool_tableIsLocalized and !$bool_dontLocalize)
+    {
+      $bool_fieldIsLocalized = FALSE;
+      $conf_tca = $this->conf_localization['TCA.'];
+//var_dump('localization 229', $conf_tca, $table, $this->pObj->arr_realTables_arrFields[$table]);
+      // Loop through the array with all used tableFields
+      if(is_array($this->pObj->arr_realTables_arrFields[$table]))
+      {
+        foreach ($this->pObj->arr_realTables_arrFields[$table] as $str_field)
+        {
+          $str_field_lang_ol = $str_field.$conf_tca['field.']['appendix'];
+          // Has the table a field for tranlation (syntax i.e.: field_lang_ol)?
+          if (is_array($GLOBALS['TCA'][$table]['columns'][$str_field_lang_ol]))
+          {
+            if ($this->pObj->b_drs_locallang)
+            {
+              t3lib_div::devlog('[INFO/LOCALIZATION] \''.$table.'.'.$str_field.'\' is translated in '.$str_field_lang_ol.'.', $this->pObj->extKey, 0);
+            }
+            $arr_lang_ol[] = $table.'.'.$str_field_lang_ol;
+            $this->pObj->arr_realTables_arrFields[$table][]   = $str_field_lang_ol;
+            $this->pObj->arrConsolidate['addedTableFields'][] = $table.'.'.$str_field_lang_ol;
+            $arr_tables['woAlias'][]                          = $table.'.'.$str_field_lang_ol;
+            $arr_tables['filter'][]                           = $table.'.'.$str_field_lang_ol." AS `table.".$str_field_lang_ol."`";
+            $arr_tables['filter'][]                           = "'".intval($this->lang_id)."' AS `table.sys_language_content`, ".
+            $arr_tables['wiAlias'][]                          = $table.'.'.$str_field_lang_ol." AS `".$table.'.'.$str_field_lang_ol."`";
+            $bool_fieldIsLocalized = TRUE;
+          }
+          // Has the table a field for tranlation (syntax i.e.: field_lang_ol)?
+        }
+      }
+      // Loop through the array with all used tableFields
+
+      if (!$bool_fieldIsLocalized)
+      {
+        if ($this->pObj->b_drs_locallang)
+        {
+          t3lib_div::devlog('[INFO/LOCALIZATION] \''.$table.'\' hasn\'t any field with appendix '.$conf_tca['field.']['appendix'].'.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/LOCALIZATION] Overlay isn\'t needed.', $this->pObj->extKey, 0);
+        }
+        return FALSE;
+      }
+    }
+    // Do we have translated fields in case of a not localized table?
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Clean up the array
+
+    $arr_localize = $this->propper_locArray($arr_localize, $table);
+    // Clean up the array
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Building AND SELECT
+
+    $str_dummyFilter = "'".intval($this->lang_id)."' AS `table.sys_language_content`, ".
+      "'' AS `table.l10n_parent` ";
+    // The user can use more than one filter. If he uses more than one filter, it will be built a UNION SELECT
+    // query. So every SELECT statement should have the same amount of fields. We need the dummy filter,
+    // because it is possible that one filter is a field from a localized table and another filter isn't a
+    // field from a localized table.
+
+    $arr_andSelect['woAlias'] = FALSE;  // Default
+    // Without Alias. I.e.: tx_bzdstaffdirectory_groups.sys_language_uid, tx_bzdstaffdirectory_groups.l18n_parent
+//BUGFIX 091112
+//    $arr_andSelect['filter']  = $str_dummyFilter;
+    $arr_andSelect['filter']  = "'0' AS `table.title_lang_ol`, ".$str_dummyFilter;
+    // Filter. I.e.:        tx_bzdstaffdirectory_groups.sys_language_uid AS `table.sys_language_uid`, tx_bzdsta...
+    $arr_andSelect['wiAlias'] = FALSE;  // Default
+    // With Alias. I.e.:    tx_bzdstaffdirectory_groups.sys_language_uid AS `tx_bzdstaffdirectory_groups.sys_la...
+    $arr_andSelect['addedFields'] = FALSE;          // Default
+//    $arr_andSelect['addedFields'][] = 'table.l10n_parent';          // Default
+//    $arr_andSelect['addedFields'][] = 'table.sys_language_content'; // Default
+
+    // Case is PI1_DEFAULT_LANGUAGE
+    if ($this->int_localization_mode == PI1_DEFAULT_LANGUAGE)
+    {
+      // Nothing to do. Take the default values.
+    }
+    // Case is PI1_DEFAULT_LANGUAGE
+
+    // Case is PI1_SELECTED_OR_DEFAULT_LANGUAGE
+    if ($this->int_localization_mode == PI1_SELECTED_OR_DEFAULT_LANGUAGE)
+    {
+      if (is_array($arr_localize))
+      {
+        foreach ($arr_localize as $tableField)
+        {
+          list($table, $field) = explode('.', $tableField);
+          $arr_tables['woAlias'][] = $tableField;
+          $arr_tables['filter'][]  = $tableField." AS `table.".$field."`";
+          $arr_tables['wiAlias'][] = $tableField." AS `".$tableField."`";
+        }
+//BUGFIX 091112
+        $arr_tables['filter'][]  = "'0' AS `table.title_lang_ol`";
+      }
+    }
+    // Case is PI1_SELECTED_OR_DEFAULT_LANGUAGE
+
+    // Case is PI1_SELECTED_LANGUAGE_ONLY
+    if ($this->int_localization_mode == PI1_SELECTED_LANGUAGE_ONLY)
+    {
+      // Nothing to do. Take the default values.
+    }
+    // Case is PI1_SELECTED_LANGUAGE_ONLY
+
+    // Extend the SELECT query if we have fields for localization or overlay
+    if (is_array($arr_tables))
+    {
+      $arr_andSelect['woAlias']     = implode(', ', $arr_tables['woAlias']);
+      $arr_andSelect['filter']      = implode(', ', $arr_tables['filter']);
+      $arr_andSelect['wiAlias']     = implode(', ', $arr_tables['wiAlias']);
+      $arr_andSelect['addedFields'] = $arr_tables['woAlias'];
+      // These andWhere needs a consolidation
+    }
+    // Extend the SELECT query if we have fields for localization or overlay
+    // Building AND SELECT
+
+    return $arr_andSelect;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+ /**
+  * Returns an AND WHERE statement with the localization fields from the current table,
+  * Result depends on the localization mode and on TCA.
+  *
+  * The mothod supports languageField and transOrigPointerField only.
+  *
+  * @param	string		$table: Name of the table in the TYPO3 database / in TCA
+  * @return	string		$str_addSelect: An add select string
+  */
+  function localizationFields_where($table)
+  {
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Load the TCA, if we don't have an table.columns array
+
+    if (!is_array($GLOBALS['TCA'][$table]['columns']))
+    {
+      t3lib_div::loadTCA($table);
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] $GLOBALS[\'TCA\'][\''.$table.'\'] is loaded.', $this->pObj->extKey, 0);
+      }
+    }
+    // Load the TCA, if we don't have an table.columns array
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Get the field names for sys_language_content and for l10n_parent
+
+    $arr_localize['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+    $arr_localize['pid_field']  = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+    // Get the field names for sys_language_content and for l10n_parent
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Clean up the array
+
+    $arr_localize = $this->propper_locArray($arr_localize, $table);
+    // Clean up the array
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Get the localization configuration
+
+    $this->int_localization_mode = $this->localizationConfig();
+    // Get the localization configuration
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Return, if we don't have localization fields
+
+    if (!$arr_localize)
+    {
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] There isn\'t any localized field.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALIZATION] A localized AND WHERE isn\'t needed.', $this->pObj->extKey, 0);
+      }
+      return FALSE;
+    }
+    // Return, if we don't have localization fields
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Building AND WHERE
+
+    if ($this->int_localization_mode == PI1_DEFAULT_LANGUAGE)
+    {
+      $str_andWhere = $arr_localize['id_field']." <= 0 ";
+    }
+    if ($this->int_localization_mode == PI1_SELECTED_OR_DEFAULT_LANGUAGE)
+    {
+      $str_andWhere = "( ".$arr_localize['id_field']." <= 0 OR ".$arr_localize['id_field']." = ".intval($this->lang_id)." ) ";
+      // These andWhere needs a consolidation
+    }
+    if ($this->int_localization_mode == PI1_SELECTED_LANGUAGE_ONLY)
+    {
+      $str_andWhere = $arr_localize['id_field']." = ".intval($this->lang_id)." ";
+    }
+    // Building AND WHERE
+
+
+    return $str_andWhere;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /**
+  * Returns an AND WHERE statement either 'AND table.uid = showuid' or 'AND (table.uid = showuid OR table.l18n_parent = showuid)'
+  * Result depends on the localization mode and on TCA.
+  *
+  * @param	string		$table: Name of the table in the TYPO3 database / in TCA
+  * @return	string		$str_andWhere: An andWhere statement
+  */
+  function localizationSingle_where($table)
+  {
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Load the TCA, if we don't have an table.columns array
+
+    if (!is_array($GLOBALS['TCA'][$table]['columns']))
+    {
+      t3lib_div::loadTCA($table);
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] $GLOBALS[\'TCA\'][\''.$table.'\'] is loaded.', $this->pObj->extKey, 0);
+      }
+    }
+    // Load the TCA, if we don't have an table.columns array
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Get the field names for for l10n_parent
+
+    $arr_localize['pid_field']  = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+    // Get the field names for for l10n_parent
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Clean up the array
+
+    $arr_localize = $this->propper_locArray($arr_localize, $table);
+    // Clean up the array
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Get the localization configuration
+
+    if ($this->int_localization_mode === FALSE)
+    {
+      $this->int_localization_mode = $this->localizationConfig();
+    }
+    // Get the localization configuration
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Default AND WHERE uid ...
+
+    // Do we have a showUid not for the local table but for the foreign table? 3.3.3
+    if($this->pObj->arrLocalTable['showUid4TableField'])
+    {
+      $str_andWhere = ' AND '.$this->pObj->arrLocalTable['showUid4TableField'].' = '.$this->pObj->piVars['showUid'];
+    }
+    if(!$this->pObj->arrLocalTable['showUid4TableField'])
+    {
+      $str_andWhere = ' AND '.$this->pObj->arrLocalTable['uid'].' = '.$this->pObj->piVars['showUid'];
+    }
+    // Do we have a showUid not for the local table but for the foreign table? 3.3.3
+    // Default AND WHERE uid ...
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Return with default AND WHERE uid ..., if we don't have localization fields
+
+    if (!$arr_localize)
+    {
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] '.$table.' hasn\'t any localized field.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALIZATION] A localized AND WHERE isn\'t needed.', $this->pObj->extKey, 0);
+      }
+      return $str_andWhere;
+    }
+    // Return with default AND WHERE uid ..., if we don't have localization fields
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Building and Return AND WHERE
+
+    if ($this->int_localization_mode == PI1_DEFAULT_LANGUAGE)
+    {
+      // Nothing to do: Return with default AND WHERE uid ...
+    }
+    if ($this->int_localization_mode == PI1_SELECTED_OR_DEFAULT_LANGUAGE)
+    {
+      $str_andWhere =
+        ' AND '.
+        '( '.
+          $this->pObj->arrLocalTable['uid'].' = '.$this->pObj->piVars['showUid'].' '.
+          'OR '.
+          $arr_localize['pid_field'].' = '.$this->pObj->piVars['showUid'].' '.
+        ')';
+    }
+    if ($this->int_localization_mode == PI1_SELECTED_LANGUAGE_ONLY)
+    {
+      $str_andWhere =
+        ' AND '.
+        '( '.
+          $this->pObj->arrLocalTable['uid'].' = '.$this->pObj->piVars['showUid'].' '.
+          'OR '.
+          $arr_localize['pid_field'].' = '.$this->pObj->piVars['showUid'].' '.
+        ')';
+    }
+    // Building AND WHERE
+
+    return $str_andWhere;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * Configuring Localization
+  *
+  **********************************************/
+
+
+
+
+   /**
+ * Get the localization configuration out of TypoScript config. Set the class vars $lang_id and
+ * $overlay_mode. Returns one of the constants:
+ * PI1_ANY_LANGUAGE, PI1_DEFAULT_LANGUAGE_ONLY, PI1_DEFAULT_LANGUAGE, PI1_SELECTED_LANGUAGE_ONLY, PI1_SELECTED_OR_DEFAULT_LANGUAGE
+ *
+ * Constants were defined in the constructor.
+ *
+ * @return	integer		See description above
+ */
+  function localizationConfig()
+  {
+
+    $this->lang_id      = $GLOBALS['TSFE']->sys_language_content;
+    $this->overlay_mode = $GLOBALS['TSFE']->sys_language_contentOL;
+
+    if ($this->pObj->b_drs_locallang)
+    {
+      t3lib_div::devlog('[INFO/LOCALIZATION] config.sys_language_uid = '.$this->lang_id, $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/LOCALIZATION] config.sys_language_overlay = '.$this->overlay_mode, $this->pObj->extKey, 0);
+    }
+
+//    if ($this->lang_id == 0 && $this->overlay_mode === 0)
+//    {
+//      // Display records with sys_language_uid = 0 or -1
+//      return PI1_ANY_LANGUAGE;
+//    }
+//    if ($this->lang_id == 0 && $this->overlay_mode === 1)
+//    {
+//      // Display only records with sys_language_uid = 0
+//      return PI1_DEFAULT_LANGUAGE_ONLY;
+//    }
+    if ($this->lang_id == 0)
+    {
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] Mode is PI1_DEFAULT_LANGUAGE', $this->pObj->extKey, 0);
+      }
+      // Display only records with sys_language_uid = 0 or -1
+      return PI1_DEFAULT_LANGUAGE;
+    }
+    if ($this->lang_id > 0 && $this->overlay_mode === 'hideNonTranslated')
+    {
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] Mode is PI1_SELECTED_LANGUAGE_ONLY', $this->pObj->extKey, 0);
+      }
+      return PI1_SELECTED_LANGUAGE_ONLY;
+    }
+    if ($this->lang_id > 0)
+    {
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] Mode is PI1_SELECTED_OR_DEFAULT_LANGUAGE', $this->pObj->extKey, 0);
+      }
+      return PI1_SELECTED_OR_DEFAULT_LANGUAGE;
+    }
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * Consolidation
+  *
+  **********************************************/
+
+
+
+
+  /**
+ * Removes all default language records, which have a translation.
+ * Process SQL result rows in case of PI1_SELECTED_OR_DEFAULT_LANGUAGE only.
+ *
+ * @param	array		$rows: SQL result rows
+ * @return	array		$rows: Consolidated rows
+ */
+  function consolidate_filter($rows)
+  {
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Return, if we don't have an array or we have an empty array
+
+    if (!is_array($rows))
+    {
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[WARN/LOCALIZATION] Rows aren\'t an array. Is it ok?', $this->pObj->extKey, 2);
+        t3lib_div::devlog('[INFO/LOCALIZATION] Without rows we don\'t need any consolidation.', $this->pObj->extKey, 0);
+      }
+      return FALSE;
+    }
+    if (count($rows) < 1)
+    {
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[WARN/LOCALIZATION] Rows are #0. Is it ok?', $this->pObj->extKey, 2);
+        t3lib_div::devlog('[INFO/LOCALIZATION] Without rows we don\'t need any consolidation.', $this->pObj->extKey, 0);
+      }
+      return $rows;
+    }
+    // Return, if we don't have an array or we have an empty array
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Consolidation Steps
+    // 1. If language should not replaced RETURN
+    // 2. Fetch all language default records
+    // 3. Remove the default records from $rows, if they have a translation.
+    // 4. Language Overlay
+    // 5. Return $rows
+
+    // 1. If language should not replaced RETURN
+    $this->int_localization_mode = $this->localizationConfig();
+    if ($this->int_localization_mode != PI1_SELECTED_OR_DEFAULT_LANGUAGE)
+    {
+      return $rows;
+    }
+    // 1. If language should not replaced RETURN
+
+    // 2. Fetch all language default records
+    foreach ($rows as $row => $elements)
+    {
+      $tableField           = $elements['table.field'];
+      list($table, $field)  = explode('.', $tableField);
+      $langField            = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+      $int_sys_language     = $elements['table.'.$langField];
+      if ($int_sys_language <= 0)
+      {
+        $arr_default[$table][$elements['uid']] = $row;
+      }
+    }
+    // 2. Fetch all language default records
+
+    // 3. Remove the default records from $rows, if they have a translation.
+    foreach ($rows as $row => $elements)
+    {
+      $tableField           = $elements['table.field'];
+      list($table, $field)  = explode('.', $tableField);
+      $langPidField         = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+      $int_languagePid      = $elements['table.'.$langPidField];
+      if (in_array($int_languagePid, array_keys($arr_default[$table])))
+      {
+        $row_default = $arr_default[$table][$int_languagePid];
+        unset($rows[$row_default]);
+      }
+    }
+    // 3. Remove the default records from $rows, if they have a translation.
+
+
+    // 4. Language Overlay
+    // Do we have lang_ol fields?
+    $arr_lang_ol        = FALSE;
+    $conf_tca           = $this->conf_localization['TCA.'];
+    $str_field_lang_ol  = $str_field.$conf_tca['field.']['appendix'];
+    $str_devider        = $str_field.$conf_tca['value.']['devider'];
+    $bool_langPrefix    = $str_field.$conf_tca['value.']['langPrefix'];
+
+    reset($rows);
+    $firstKey = key($rows);
+    $int_count = 0;
+
+    // Check first row for lang_ol fields
+    foreach ($rows[$firstKey] as $tableField_ol => $value)
+    {
+      list($table, $field_ol) = explode('.', $tableField_ol);
+      $int_field_len  = strlen($field_ol) - strlen($str_field_lang_ol);
+      $field_appendix = substr($field_ol, $int_field_len);
+      $field          = substr($field_ol, 0, $int_field_len);
+      if ($field_appendix == $str_field_lang_ol)
+      {
+        $arr_lang_ol[$int_count]['default'] = $table.'.'.$field;
+        $arr_lang_ol[$int_count]['overlay'] = $tableField_ol;
+        $int_count ++;
+      }
+    }
+    // Check first row for lang_ol fields
+
+    // Process language overlay, if there are lang_ol fields
+    if (is_array($arr_lang_ol))
+    {
+      $lang_prefix = $GLOBALS['TSFE']->lang; // Value i.e.: de
+      // Loop through all SQL result rows
+      foreach ($rows as $row => $elements)
+      {
+        // Loop through all lang_ol fields
+        foreach ($arr_lang_ol as $key => $row_lang_ol)
+        {
+          $str_overlay = $elements[$row_lang_ol['overlay']]; // Get the value. I.e: en:Lead Story|fr:Accroche
+          // lang_ol has a value
+          if ($str_overlay != '')
+          {
+            $str_phrase_ol = FALSE;
+            $arr_overlay = explode($str_devider, trim($str_overlay));
+
+            // TypoScript configuration: lang_ol values have a lang prefix like de, en or fr
+            if ($bool_langPrefix)
+            {
+              // Loop through all lang_ol phrases and search for the phrase with a lang_prefix
+              foreach ($arr_overlay as $str_phrase)
+              {
+                if ($lang_prefix.':' == substr($str_phrase, 0, strlen($lang_prefix.':')))
+                {
+                  $str_phrase_ol = substr($str_phrase, strlen($lang_prefix.':'));
+                }
+              }
+              // Loop through all lang_ol phrases and search for the phrase with a lang_prefix
+            }
+            // TypoScript configuration: lang_ol values have a lang prefix like de, en or fr
+
+            // TypoScript configuration: lang_ol values haven't any lang prefix like de, en or fr
+            if (!$bool_langPrefix)
+            {
+              // Take the phrase out of the $arr_overlay with the key language-id minus one
+              $str_phrase_ol = $arr_overlay[$this->lang_id - 1];
+            }
+            // TypoScript configuration: lang_ol values haven't any lang prefix like de, en or fr
+
+            if ($str_phrase_ol)
+            {
+              $rows[$row]['value'] = $str_phrase_ol;
+            }
+          }
+          // lang_ol has a value
+        }
+        // Loop through all lang_ol fields
+      }
+      // Loop through all SQL result rows
+    }
+    // Process language overlay, if there are lang_ol fields
+    // 4. Language Overlay
+
+
+    // 5. Return $rows
+    return $rows;
+  }
+
+
+
+
+  /**
+ * Consolidate the SQL-Result: The non current language records will be deleted.
+ * Process SQL result rows in case of PI1_SELECTED_OR_DEFAULT_LANGUAGE only.
+ *
+ * @param	array		$rows: SQL result rows
+ * @param	string		$table: The current table name
+ * @return	array		$rows: Consolidated rows
+ */
+  function consolidate_rows($rows, $table)
+  {
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Return, if we don't have an array or we have an empty array
+
+    if (!is_array($rows))
+    {
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[WARN/LOCALIZATION] Rows aren\'t an array. Is it ok?', $this->pObj->extKey, 2);
+        t3lib_div::devlog('[INFO/LOCALIZATION] Without rows we don\'t need any consolidation.', $this->pObj->extKey, 0);
+      }
+      return FALSE;
+    }
+    if (count($rows) < 1)
+    {
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[WARN/LOCALIZATION] Rows are #0. Is it ok?', $this->pObj->extKey, 2);
+        t3lib_div::devlog('[INFO/LOCALIZATION] Without rows we don\'t need any consolidation.', $this->pObj->extKey, 0);
+      }
+      return $rows;
+    }
+    // Return, if we don't have an array or we have an empty array
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Consolidation Steps
+    // 1. If language should not replaced RETURN
+    // 2. Fetch all language default records
+    // 3. Process l10n_mode in case of exclude or mergeIfNotBlank
+    // 4. In case of a non localized table: Copy values from default to current language record
+    // 5. Remove the default records from $rows, if they have a translation.
+    // 6. Set the default language record uid
+    // 7. Language Overlay
+    // 8. Return $rows
+
+    // 1. If language should not replaced RETURN
+//var_dump($this->int_localization_mode);  //:todo:
+//    if ($this->int_localization_mode === FALSE)
+//    {
+      $this->int_localization_mode = $this->localizationConfig();
+      if ($this->int_localization_mode != PI1_SELECTED_OR_DEFAULT_LANGUAGE)
+      {
+        if ($this->pObj->b_drs_locallang)
+        {
+          t3lib_div::devlog('[INFO/LOCALIZATION] Records in default language should ignored in every case.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/LOCALIZATION] We don\'t need any consolidation.', $this->pObj->extKey, 0);
+        }
+        return $rows;
+      }
+//    }
+    // 1. If language should not replaced RETURN
+
+    // Just for development
+    if (FALSE)
+    {
+      $int_count    = 0;
+      $int_max_rows = 10;
+      $rows_prompt  = $rows;
+      foreach ($rows as $row => $elements)
+      {
+        if($int_count >= $int_max_rows)
+        {
+          unset($rows_prompt[$row]);
+        }
+        $int_count++;
+      }
+      var_dump($rows_prompt);
+    }
+    // Just for development
+
+    // 2. Fetch all language default records
+    $int_count = 0;
+//var_dump('localization 934', $rows);
+    foreach ($rows as $row => $elements)
+    {
+      $langPidField         = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
+      $int_languagePid      = $elements[$table.'.'.$langPidField];
+      $langField            = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+      $int_sys_language     = $elements[$table.'.'.$langField];
+      if ($int_sys_language <= 0)
+      {
+//        $arr_default[$table][$elements[$table.'.uid']][] = $row;
+        $arr_default[$table.'.uid'][$elements[$table.'.uid']]['keys_in_rows'][] = $row;
+      }
+      if ($int_sys_language > 0)
+      {
+        $arr_localize[$table.'.uid'][$elements[$table.'.uid']][$langPidField]     = $int_languagePid;
+        $arr_localize[$table.'.uid'][$elements[$table.'.uid']]['keys_in_rows'][]  = $row;
+      }
+      $int_count++;
+    }
+    // 2. Fetch all language default records
+
+
+    ////////////////////////////////////////////////////////////////////////
+    //
+    // DRS - Performance
+
+    if ($this->pObj->b_drs_perform) {
+      if($this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->getDifferenceToStarttime();
+      }
+      if(!$this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->mtime();
+      }
+      t3lib_div::devLog('[INFO/PERFORMANCE] All records in default language are fetched: '. ($endTime - $startTime).' ms', $this->pObj->extKey, 0);
+    }
+    // DRS - Performance
+
+
+    // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
+    $bool_l10n_mode = FALSE;
+    // Do we have localized records?
+    if(is_array($arr_localize))
+    {
+      $bool_l10n_mode = TRUE;
+    }
+
+    // We have localized records
+    if ($bool_l10n_mode)
+    {
+      reset($rows);
+//var_dump('localization 966', $rows);
+      $firstKey = key($rows);
+      $int_count = 0;
+      // Loop through the first row for getting the tableFields
+      foreach ($rows[$firstKey] as $tableField => $value)
+      {
+        $bool_count = FALSE;
+        list($tableL10n, $field) = explode('.', $tableField);
+        // Get exclude mode
+        if ($GLOBALS['TCA'][$tableL10n]['columns'][$field]['l10n_mode'] == 'exclude')
+        {
+          $arr_l10n_mode[$int_count][$tableField] = 'exclude';
+          $bool_count = TRUE;
+        }
+        // Get exclude mode
+        // Get mergeIfNotBlank mode
+        if ($GLOBALS['TCA'][$tableL10n]['columns'][$field]['l10n_mode'] == 'mergeIfNotBlank')
+        {
+          $arr_l10n_mode[$int_count][$tableField] = 'mergeIfNotBlank';
+          $bool_count = TRUE;
+        }
+        // Get mergeIfNotBlank mode
+        if ($bool_count)
+        {
+          $int_count++;
+        }
+      }
+      // Loop through the first row for getting the tableFields
+
+      // We have l10n_mode fields with the mode exclude or mergeIfNotBlank
+      if (is_array($arr_l10n_mode))
+      {
+        // Loop through the array with localization information
+//var_dump('localization 998', $arr_localize);
+        foreach ($arr_localize as $tableFieldLUid => $arr_uid)
+        {
+          list($tableLoc, $fieldLoc) = explode('.', $tableFieldLUid);                   // tx_wine_main.uid
+          $langPidField = $GLOBALS['TCA'][$tableLoc]['ctrl']['transOrigPointerField'];  // I.e: l18n_parent
+
+          // Loop through the records with localization information
+          foreach($arr_uid as $uid_localize => $rec_localize)
+          {
+//var_dump('localization 1008', $uid_localize, $rec_localize);
+            $uid_default        = $rec_localize[$langPidField];
+            $arr_keysInRowsLoc  = $rec_localize['keys_in_rows'];
+            $key_in_rowsDef     = $arr_default[$tableFieldLUid][$uid_default]['keys_in_rows'][0];
+
+            // Loop through all rows with localized records
+            foreach ($arr_keysInRowsLoc as $key_in_rowsLoc)
+            {
+              // Loop through the array with the l10n_mode fields
+              foreach ($arr_l10n_mode as $key => $arr_tableFieldMode)
+              {
+                $tableField     = key($arr_tableFieldMode);
+                $str_l10n_mode  = $arr_tableFieldMode[$tableField];
+//var_dump('localization 1021', $str_l10n_mode.': $rows['.$key_in_rowsLoc.']['.$tableField.'] = $rows['.$key_in_rowsDef.']['.$tableField.']', $rows[$key_in_rowsDef][$tableField]);
+                // Allocates to the field of the localized row the value from the field out of the default row
+                if ($str_l10n_mode == 'exclude')
+                {
+                  $rows[$key_in_rowsLoc][$tableField] = $rows[$key_in_rowsDef][$tableField];
+//                  if ($this->pObj->b_drs_locallang)
+//                  {
+//                    t3lib_div::devlog('[INFO/LOCALIZATION] Exclude', $this->pObj->extKey, 0);
+//                  }
+                }
+                // Allocates to the field of the localized row the value from the field out of the default row, if localized field is empty
+                if ($str_l10n_mode == 'mergeIfNotBlank')
+                {
+                  if ($rows[$key_in_rowsLoc][$tableField] == FALSE)
+                  {
+                    $rows[$key_in_rowsLoc][$tableField] = $rows[$key_in_rowsDef][$tableField];
+                  }
+                }
+              }
+              // Loop through the array with the l10n_mode fields
+            }
+            // Loop through all rows with localized records
+          }
+          // Loop through the records with localization information
+        }
+        // Loop through the array with localization information
+      }
+      // We have l10n_mode fields with the mode exclude or mergeIfNotBlank
+    }
+    // We have localized records
+    // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
+
+
+    ////////////////////////////////////////////////////////////////////////
+    //
+    // DRS - Performance
+
+    if ($this->pObj->b_drs_perform) {
+      if($this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->getDifferenceToStarttime();
+      }
+      if(!$this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->mtime();
+      }
+      t3lib_div::devLog('[INFO/PERFORMANCE] After l10n_mode: '. ($endTime - $startTime).' ms', $this->pObj->extKey, 0);
+    }
+    // DRS - Performance
+
+
+    // 4. In case of a non localized table: Copy values from default to current language record
+//var_dump('localization 1059', $this->pObj->arr_realTables_notLocalized);
+    if(is_array($this->pObj->arr_realTables_notLocalized))
+    {
+      $arr_lang_ol        = FALSE;
+      $conf_tca           = $this->conf_localization['TCA.'];
+      $str_field_lang_ol  = $str_field.$conf_tca['field.']['appendix'];
+
+      reset($rows);
+      $firstKey = key($rows);
+
+      // Check first row for lang_ol fields
+//var_dump('localization 1065', $rows[$firstKey]);
+      foreach ($rows[$firstKey] as $tableField_ol => $dummy)
+      {
+        list($table_ol, $field_ol) = explode('.', $tableField_ol);
+        if(in_array($table_ol, $this->pObj->arr_realTables_notLocalized))
+        {
+          $arr_lang_ol[] = $tableField_ol;
+        }
+//        $int_field_len  = strlen($field_ol) - strlen($str_field_lang_ol);
+//        $field_appendix = substr($field_ol, $int_field_len);
+//        $field          = substr($field_ol, 0, $int_field_len);
+//        if ($field_appendix == $str_field_lang_ol)
+//        {
+//          $arr_lang_ol[] = $table2.'.'.$field;
+//          $arr_lang_ol[] = $tableField_ol;
+//        }
+      }
+    }
+    // Check first row for lang_ol fields
+//var_dump('localization 1075', $arr_lang_ol);
+//string(17) "localization 1075"
+//array(1) {
+//  [0]=>
+//  string(34) "tx_wine_drinkability.title_lang_ol"
+//  }
+//}
+
+    // Get default lang overlay values
+    $arr_default_lang_ol  = FALSE;
+    $int_count            = 0;
+    if(is_array($arr_lang_ol))
+    {
+      $localTable       = $this->pObj->localTable;
+      $uid_localTable   = $localTable.'.uid';
+      $sys_language_uid = $GLOBALS['TCA'][$localTable]['ctrl']['languageField'];  // I.e. tx_wine_main.sys_language_uid
+
+      $arr_default_lang_ol = FALSE;
+      foreach($rows as $row => $elements)
+      {
+        // Default language record
+        if($elements[$localTable.'.'.$sys_language_uid] <= 0)
+        {
+          foreach($arr_lang_ol as $key => $field_lang_ol)
+          {
+            $arr_default_lang_ol[$elements[$uid_localTable]][$int_count]['field_lang_ol'] = $field_lang_ol;
+            $arr_default_lang_ol[$elements[$uid_localTable]][$int_count]['value']         = $elements[$field_lang_ol];
+            $int_count++;
+          }
+        }
+        // Default language record
+      }
+    }
+    // Get default lang overlay values
+
+//var_dump('localization 1108', $arr_default_lang_ol);
+//string(17) "localization 1108"
+//array(3) {
+//  [1]=>
+//  array(5) {
+//    [0]=>
+//    array(2) {
+//      ["field_lang_ol"]=>
+//      string(28) "tx_wine_region.title_lang_ol"
+//      ["value"]=>
+//      string(0) ""
+//    }
+//    [1]=>
+//    array(2) {
+//      ["field_lang_ol"]=>
+//      string(28) "tx_wine_winery.title_lang_ol"
+//      ["value"]=>
+//      string(0) ""
+//    }
+//    [2]=>
+//    array(2) {
+//      ["field_lang_ol"]=>
+//      string(27) "tx_wine_style.title_lang_ol"
+//      ["value"]=>
+//      string(32) "de:Rotwein (jung)|es:Tinto Joven"
+//    }
+//    [3]=>
+//    array(2) {
+//      ["field_lang_ol"]=>
+//      string(30) "tx_wine_varietal.title_lang_ol"
+//      ["value"]=>
+//      string(33) "de:Garnacha 100%|es:Garnacha 100%"
+//    }
+//    [4]=>
+//    array(2) {
+//      ["field_lang_ol"]=>
+//      string(34) "tx_wine_drinkability.title_lang_ol"
+//      ["value"]=>
+//      string(72) "de:Sofort und die nächsten 3-4 Jahre|es:Ahora y los próximos 3-4 años"
+//    }
+//  [7]=>
+//  ...
+//  [2]=>
+//  ...
+//}
+
+    // Set lang overlay values in current language record
+    if(is_array($arr_default_lang_ol))
+    {
+      $langPidField = $GLOBALS['TCA'][$localTable]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
+      $int_count    = 0;
+  //var_dump('localization 1135', $rows);
+      foreach($rows as $row => $elements)
+      {
+  //var_dump('localization 1137', $elements);
+        // Current language record
+        if($elements[$localTable.'.'.$sys_language_uid] > 0)
+        {
+          // Get parent language uid
+          $uid_l10n_parent = $elements[$localTable.'.'.$langPidField];
+  //var_dump('localization 1142', $arr_default_lang_ol[$uid_l10n_parent]);
+          foreach($arr_default_lang_ol[$uid_l10n_parent] as $key => $arr_field_value)
+          {
+            $field_lang_ol              = $arr_field_value['field_lang_ol'];
+            $value_lang_ol              = $arr_field_value['value'];
+            $rows[$row][$field_lang_ol] = $value_lang_ol;
+          }
+        }
+        // Current language record
+      }
+    }
+    // Set lang overlay values in current language record
+//var_dump('localization 1153', $rows);
+
+    unset($arr_default_lang_ol);
+    unset($arr_lang_ol);
+    // 4. In case of a non localized table: Copy values from default to current language record
+
+
+    ////////////////////////////////////////////////////////////////////////
+    //
+    // DRS - Performance
+
+    if ($this->pObj->b_drs_perform) {
+      if($this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->getDifferenceToStarttime();
+      }
+      if(!$this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->mtime();
+      }
+      t3lib_div::devLog('[INFO/PERFORMANCE] After non localized tables: '. ($endTime - $startTime).' ms', $this->pObj->extKey, 0);
+    }
+    // DRS - Performance
+
+
+    // 5. Remove the default records from $rows, if they have a translation.
+    if(is_array($arr_default))
+    {
+      $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
+      foreach ($rows as $row => $elements)
+      {
+        $int_languagePid = $elements[$table.'.'.$langPidField];
+        // If the record has an element with the key l18n_parent i.e.
+        if (in_array($int_languagePid, array_keys($arr_default[$table.'.uid'])))
+        {
+          // Delete in the array with the default language records the record with the uid which is the value out of the $langPidField
+          foreach($arr_default[$table.'.uid'][$int_languagePid]['keys_in_rows'] as $row_default)
+          {
+            //var_dump($table.'.uid: '.$int_languagePid.': '.$row_default);
+            unset($rows[$row_default]);
+          }
+          // Delete in the array with the default language records the record with the uid which is the value out of the $langPidField
+        }
+        // If the record has an element with the key l18n_parent i.e.
+      }
+    }
+    // 5. Remove the default records from $rows, if they have a translation.
+
+
+    ////////////////////////////////////////////////////////////////////////
+    //
+    // DRS - Performance
+
+    if ($this->pObj->b_drs_perform) {
+      if($this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->getDifferenceToStarttime();
+      }
+      if(!$this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->mtime();
+      }
+      t3lib_div::devLog('[INFO/PERFORMANCE] After removing waste records: '. ($endTime - $startTime).' ms', $this->pObj->extKey, 0);
+    }
+    // DRS - Performance
+
+
+    // 6. Set the default language record uid
+    // Should we set it?
+    $bool_defaultLanguageLink = $this->conf_localization['realURL.']['defaultLanguageLink'];
+    if ($bool_defaultLanguageLink)
+    {
+      if (is_array($arr_localize))
+      {
+        $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
+        foreach($arr_localize[$table.'.uid'] as $uid_localizeRecord => $row_localize)
+        {
+          foreach($row_localize['keys_in_rows'] as $key_in_rows)
+          {
+            //var_dump('$rows['.$key_in_rows.']['.$table.'.uid] = '.$row_localize[$langPidField]);
+            $rows[$key_in_rows][$table.'.uid'] = $row_localize[$langPidField];
+          }
+        }
+      }
+    }
+    // Should we set it?
+    // 6. Set the default language record uid
+
+    // 7. Language Overlay
+    // Do we have lang_ol fields?
+    $arr_lang_ol        = FALSE;
+    $conf_tca           = $this->conf_localization['TCA.'];
+    $str_field_lang_ol  = $str_field.$conf_tca['field.']['appendix'];
+    if ($this->pObj->b_drs_locallang)
+    {
+      t3lib_div::devlog('[INFO/LOCALIZATION] Fields with the appendix '.$str_field_lang_ol.' will be used for language overlaying.', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[HELP/LOCALIZATION] If you want to use another appendix please configure:<br />'.
+        $this->conf_localization_path.'.TCA.field.appendix.', $this->pObj->extKey, 1);
+    }
+    $str_devider        = $str_field.$conf_tca['value.']['devider'];
+    $bool_langPrefix    = $str_field.$conf_tca['value.']['langPrefix'];
+    if ($this->pObj->b_drs_locallang)
+    {
+      if ($bool_langPrefix)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] Overlay values need the language prefix. I.e. en, de, fr.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[HELP/LOCALIZATION] If you want to use overlay values without this prefixes please configure:<br />'.
+          $this->conf_localization_path.'.TCA.value.langPrefix.', $this->pObj->extKey, 1);
+      }
+      if (!$bool_langPrefix)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] Overlay values don\'t need any language prefix like en, de, fr.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[HELP/LOCALIZATION] If you want to use overlay values with this prefixes please configure:<br />'.
+          $this->conf_localization_path.'.TCA.value.langPrefix.', $this->pObj->extKey, 1);
+      }
+    }
+
+    reset($rows);
+    $firstKey = key($rows);
+    $int_count = 0;
+
+    // Check first row for lang_ol fields
+    foreach ($rows[$firstKey] as $tableField_ol => $value)
+    {
+      list($table, $field_ol) = explode('.', $tableField_ol);
+      $int_field_len  = strlen($field_ol) - strlen($str_field_lang_ol);
+      $field_appendix = substr($field_ol, $int_field_len);
+      $field          = substr($field_ol, 0, $int_field_len);
+      if ($field_appendix == $str_field_lang_ol)
+      {
+        $arr_lang_ol[$int_count]['default'] = $table.'.'.$field;
+        $arr_lang_ol[$int_count]['overlay'] = $tableField_ol;
+        $int_count ++;
+      }
+    }
+    // Check first row for lang_ol fields
+
+    // Process language overlay, if there are lang_ol fields
+    if (is_array($arr_lang_ol))
+    {
+      $lang_prefix = $GLOBALS['TSFE']->lang; // Value i.e.: de
+//var_dump('localization 1153', $lang_prefix);
+      // Loop through all SQL result rows
+      foreach ($rows as $row => $elements)
+      {
+//var_dump('localization 1157', $elements);
+        // Loop through all lang_ol fields
+        foreach ($arr_lang_ol as $key => $row_lang_ol)
+        {
+          $str_overlay = $elements[$row_lang_ol['overlay']]; // Get the value. I.e: en:Lead Story|fr:Accroche
+          // lang_ol has a value
+          if ($str_overlay != '')
+          {
+            $str_phrase_ol = FALSE;
+            $arr_overlay = explode($str_devider, trim($str_overlay));
+//var_dump('localization 1166', $arr_overlay);
+
+            // TypoScript configuration: lang_ol values have a lang prefix like de, en or fr
+            if ($bool_langPrefix)
+            {
+              // Loop through all lang_ol phrases and search for the phrase with a lang_prefix
+              foreach ($arr_overlay as $str_phrase)
+              {
+                if ($lang_prefix.':' == substr($str_phrase, 0, strlen($lang_prefix.':')))
+                {
+                  $str_phrase_ol = substr($str_phrase, strlen($lang_prefix.':'));
+                }
+              }
+              // Loop through all lang_ol phrases and search for the phrase with a lang_prefix
+            }
+            // TypoScript configuration: lang_ol values have a lang prefix like de, en or fr
+
+            // TypoScript configuration: lang_ol values haven't any lang prefix like de, en or fr
+            if (!$bool_langPrefix)
+            {
+              // Take the phrase out of the $arr_overlay with the key language-id minus one
+              $str_phrase_ol = $arr_overlay[$this->lang_id - 1];
+            }
+            // TypoScript configuration: lang_ol values haven't any lang prefix like de, en or fr
+
+            if ($str_phrase_ol)
+            {
+              $rows[$row][$row_lang_ol['default']] = $str_phrase_ol;
+            }
+          }
+          // lang_ol has a value
+        }
+        // Loop through all lang_ol fields
+      }
+      // Loop through all SQL result rows
+    }
+    // Process language overlay, if there are lang_ol fields
+    // 7. Language Overlay
+
+
+    ////////////////////////////////////////////////////////////////////////
+    //
+    // DRS - Performance
+
+    if ($this->pObj->b_drs_perform) {
+      if($this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->getDifferenceToStarttime();
+      }
+      if(!$this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->mtime();
+      }
+      t3lib_div::devLog('[INFO/PERFORMANCE] After language overlay: '. ($endTime - $startTime).' ms', $this->pObj->extKey, 0);
+    }
+    // DRS - Performance
+
+
+    // Just for development
+    if (FALSE)
+    {
+      $int_count    = 0;
+      $int_max_rows = 10;
+      $rows_prompt  = $rows;
+      foreach ($rows as $row => $elements)
+      {
+        if($int_count >= $int_max_rows)
+        {
+          unset($rows_prompt[$row]);
+        }
+        $int_count++;
+      }
+      var_dump($rows_prompt);
+    }
+    // Just for development
+
+    // 8. Return $rows
+    return $rows;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * Little Helpers
+  *
+  **********************************************/
+
+
+
+
+  /**
+ * Load the local or global TypoScript configuration array from advanced.localization
+ *
+ * @return	void
+ */
+  function init_typoscript()
+  {
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Load the local TypoScript configuration
+
+    $viewWiDot                    = $this->view.'.';
+    $this->conf_localization      = $this->conf['views.'][$viewWiDot][$this->mode.'.']['advanced.']['localization.'];
+    $this->conf_localization_path = 'views.'.$viewWiDot.$this->mode.'.advanced.localization';
+    // Load the local TypoScript configuration
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Load the global TypoScript configuration if there isn't any local configuration
+
+    if (is_array($this->conf_localization))
+    {
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] '.$this->conf_localization_path.' is configured.', $this->pObj->extKey, 0);
+      }
+    }
+    if (!is_array($this->conf_localization))
+    {
+      if ($this->pObj->b_drs_locallang)
+      {
+        t3lib_div::devlog('[INFO/LOCALIZATION] '.$this->conf_localization_path.' isn\'t configured. We take the global array.', $this->pObj->extKey, 0);
+      }
+      $this->conf_localization      = $this->conf['advanced.']['localization.'];
+      $this->conf_localization_path = 'advanced.localization';
+    }
+    // Load the global TypoScript configuration if there isn't any local configuration
+
+  }
+
+
+
+
+
+
+
+
+
+
+  /**
+ * Make the array propper for localization fields.
+ * Empty elements will removed. Field names become a table prefix.
+ *
+ * @param	array		$arr_langFields: Array with the field names of localization fields
+ * @param	string		$table: Name of the table in the TYPO3 database / in TCA
+ * @return	array		$arr_langFields: Cleaned up array
+ */
+  function propper_locArray($arr_langFields, $table)
+  {
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Return, if we don't have an array
+
+    if (!is_array($arr_langFields))
+    {
+      return FALSE;
+    }
+    // Return, if we don't have an array
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Remove empty elements
+
+    foreach($arr_langFields as $key => $field)
+    {
+      if(!$field)
+      {
+        unset($arr_langFields[$key]);
+      }
+    }
+    // Remove empty elements
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Return, if we don't have an array
+
+    if (!is_array($arr_langFields))
+    {
+      return FALSE;
+    }
+    // Return, if we don't have an array
+
+
+    ////////////////////////////////////////////////////////////////////////////////
+    //
+    // Add the table. We like the table.field syntax.
+
+    foreach($arr_langFields as $key => $field)
+    {
+      $arr_langFields[$key] = $table.'.'.$field;
+    }
+    // Add the table. We like the table.field syntax.
+
+    if(is_array($arr_langFields))
+    {
+      if(count($arr_langFields) == 0)
+      {
+        unset($arr_langFields);
+        $arr_langFields = FALSE;
+      }
+    }
+    return $arr_langFields;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_localization.php']) {
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_localization.php']);
+}
+
+?>

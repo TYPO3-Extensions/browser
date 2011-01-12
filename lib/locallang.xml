@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+  <meta type="array">
+    <type>module</type>
+    <description>Language labels for plugin &quot;tx_browser_pi1&quot;</description>
+  </meta>
+  <data type="array">
+    <languageKey index="default" type="array">
+      <label index="promptCheckUpdateHeader">Update wizard</label>
+      <label index="promptCheckUpdateBody"><![CDATA[
+        You don't need the update wizard
+        <ul>
+          <li>
+            if you are using the Browser the first time
+          </li>
+          <li>
+            if your last Browser version was > 3.4.2
+          </li>
+        </ul>
+        <br />
+        Maybe the Browser TypoScript configuration or the Browser plugin/flexform will be 
+        changed with this update.<br />
+        <br />
+        You can check with the update wizard, if your installation is affected.<br />
+        <br />
+        <ol>
+          <li>
+            Please enable the option <strong>Update Wizard Enabling [x]</strong>.
+          </li>
+          <li>
+            Please add your IP in the field <strong>Update Wizard Allowed IPs</strong>.
+          </li>
+          <li>
+            Please clear all TYPO3 caches.
+          </li>
+          <li>
+            Visit a page with a browser plugin/flexform in the TYPO3 frontend. You will receive a report.
+          </li>
+        </ol>
+      ]]></label>
+      <label index="promptCurrIPBody">Your current IP</label>
+    </languageKey>
+    <languageKey index="de" type="array">
+      <label index="promptCheckUpdateHeader">Update-Assistent</label>
+      <label index="promptCheckUpdateBody"><![CDATA[
+        Du brauchst keinen Update-Test durchzuf&uuml;hren,
+        <ul>
+          <li>
+            wenn Du den Browser zum ersten Mal installierst
+          </li>
+          <li>
+            wenn Deine letzte Browser-Version > 3.4.2 war
+          </li>
+        </ul>
+        <br />
+        Mit dem aktuellen Update des Browsers sind m&ouml;glicherweise TypoScript-Dateien 
+        und das Browser Plugin (Flexform) aktualisiert worden.<br />
+        <br />
+        Mit dem Update-Assistenten kannst Du &uuml;berpr&uuml;fen, ob Deine Installation betroffen ist.<br />
+        <br />
+        <ol>
+          <li>
+            Bitte aktiviere die Option <strong>Update Wizard Enabling [x]</strong>.
+          </li>
+          <li>
+            Bitte f&uuml;ge im Feld <strong>Update Wizard Allowed IPs</strong> Deine IP-Adresse hinzu.
+          </li>
+          <li>
+            Leere alle TYPO3 Caches.
+          </li>
+          <li>
+            Rufe im Frontend eine Seite mit einem Browser-Plugin auf. Du erh&auml;ltst dann einen Bericht.
+          </li>
+        </ol>
+      ]]></label>
+      <label index="promptCurrIPBody">Deine aktuelle IP-Adresse</label>
+    </languageKey>
+  </data>
+</T3locallang>

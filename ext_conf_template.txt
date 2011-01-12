@@ -1,0 +1,15 @@
+  # cat=basic/enable/10;        type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptCheckUpdate]; label=Update Wizard
+updateWizard=0
+
+  # cat=basic/enable/20;        type=boolean; label= Update Wizard Enabling
+updateWizardEnable = 0
+
+  # cat=basic/enable/30;        type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptCurrIP]; label=Your current IP
+currentIP = 0
+
+  # cat=basic/enable/31;        type=string; label= Update Wizard Allowed IPs: comma seperated list of IPs, which will shown the report.
+updateWizardAllowedIPs = 127.0.0.1, 127.0.0.2
+
+
+  # cat=basic/dev/930;       type=options[Don't log anything,---------------------------------------,Auto Discover development,Calendar,Filter and Category Menu,Hooks,Javascript,Labeling Support/Localization,PageBrowser and A-Z-Browser,Performance,Plugin,Realurl,Search,SEO (Search Engine Optimization),Social media,SQL development,Templating,Typoscript Template Container,Typoscript Update Checker,---------------------------------------,All]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
+drs_mode = Don't log anything

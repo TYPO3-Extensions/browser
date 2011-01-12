@@ -1,0 +1,15 @@
+plugin.tx_browser_pi1 {
+
+  // [STRING] Path to the HTML template file
+  template {
+    extensions {
+      browser {
+        calendar {
+          name = Browser: Calendar
+          file = EXT:browser/pi5/res/default.tmpl
+        }
+      }
+    }
+  }
+
+}

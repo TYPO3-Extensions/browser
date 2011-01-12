@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+  <meta>
+    <langDisable>1</langDisable>
+  </meta>
+  <sheets>
+    <sDEF>EXT:browser/pi5/flexform_sheet_sDEF.xml</sDEF>
+    <year>EXT:browser/pi5/flexform_sheet_year.xml</year>
+    <month>EXT:browser/pi5/flexform_sheet_month.xml</month>
+    <week>EXT:browser/pi5/flexform_sheet_week.xml</week>
+    <day>EXT:browser/pi5/flexform_sheet_day.xml</day>
+    <socialmedia>EXT:browser/pi1/flexform_sheet_socialmedia.xml</socialmedia>
+    <javascript>EXT:browser/pi1/flexform_sheet_javascript.xml</javascript>
+    <tca>EXT:browser/pi1/flexform_sheet_tca.xml</tca>
+  </sheets>
+</T3DataStructure>

@@ -1,0 +1,807 @@
+<?php
+/***************************************************************
+*  Copyright notice
+*
+*  (c) 2010 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  All rights reserved
+*
+*  This script is part of the TYPO3 project. The TYPO3 project is
+*  free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation; either version 2 of the License, or
+*  (at your option) any later version.
+*
+*  The GNU General Public License can be found at
+*  http://www.gnu.org/copyleft/gpl.html.
+*
+*  This script is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  This copyright notice MUST APPEAR in all copies of the script!
+***************************************************************/
+
+/**
+* The class tx_browser_pi1_multisort bundles methods for ordering rows.
+*
+* @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*
+* @since    3.4.4
+* @version  3.4.5
+*
+* @package    TYPO3
+* @subpackage    tx_browser
+*/
+
+/**
+ * [CLASS/FUNCTION INDEX of SCRIPT]
+ *
+ *
+ *
+ *   55: class tx_browser_pi1_multisort
+ *   71:     function __construct($parentObj)
+ *  101:     function multisort_rows()
+ *  329:     function multisort_mm_children()
+ *
+ *              SECTION: Helper
+ *  597:     function multisort_upto_6_level($arr_multisort)
+ *  690:     function multisort_rows_upto_6_level($arr_multisort, $rows)
+ *
+ * TOTAL FUNCTIONS: 5
+ * (This index is automatically created/updated by the extension "extdeveval")
+ *
+ */
+class tx_browser_pi1_multisort
+{
+
+
+
+
+
+
+
+
+    /**
+ * Constructor. The method initiate the parent object
+ *
+ * @param	object		The parent object
+ * @return	void
+ */
+  function __construct($parentObj)
+  {
+    $this->pObj = $parentObj;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+ * Order the rows depending on csvOrderBy and piVars[sort]
+ *
+ * @param	array		&$array: Reference to the array with the rows
+ * @return	void
+ * @version 3.4.5
+ */
+  function multisort_rows()
+  {
+    $conf = $this->pObj->conf;
+    $mode = $this->pObj->piVar_mode;
+    $view = $this->pObj->view;
+
+    $viewWiDot = $view.'.';
+
+    $conf_view    = $conf['views.'][$viewWiDot][$mode.'.'];
+    $b_synonym    = $conf_view['functions.']['synonym'];
+
+    $args                 = false;
+    $arr_usedTableFields  = array();  //:todo: Wird nicht gefuellt
+    $csvOrderBy           = $this->pObj->objSqlAut->orderBy();
+    $arrOrderByWiAscDesc  = $this->pObj->objZz->getCSVasArray($csvOrderBy);
+    $csvOrderByWoAscDesc  = $this->pObj->objSqlFun->get_orderBy_tableFields($csvOrderBy);
+    $arrOrderByWoAscDesc  = $this->pObj->objZz->getCSVasArray($csvOrderByWoAscDesc);
+    $rows                 = $this->pObj->rows;
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // RETURN if there isn't any row
+
+    if(!is_array($rows))
+    {
+      if ($this->pObj->b_drs_sql)
+      {
+        t3lib_div::devlog('[INFO/SQL] Abort multisort_rows(). There isn\'t any row.', $this->pObj->extKey, 0);
+      }
+      return;
+    }
+    // RETURN if there isn't any row
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // RETURN if there isn't any orderBy array
+
+    if(!is_array($arrOrderByWoAscDesc))
+    {
+      if ($this->pObj->b_drs_sql)
+      {
+        t3lib_div::devlog('[INFO/SQL] Abort multisort_rows(). There is no orderBy clause.', $this->pObj->extKey, 0);
+      }
+      return;
+    }
+    // RETURN if there isn't any orderBy array
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // RETURN if we have synonyms
+
+    if($b_synonym)
+    {
+      if ($this->pObj->b_drs_sql)
+      {
+        t3lib_div::devlog('[INFO/SQL] Abort multisort_rows(). No ORDER BY here - we have synonyms!', $this->pObj->extKey, 0);
+      }
+      return;
+    }
+    // RETURN if we have synonyms
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // Remove keys, which aren't existing
+
+    reset($rows);
+    $firstKey             = key($rows);
+    $arr_rmKeys           = array_diff($arrOrderByWoAscDesc, array_keys($rows[$firstKey]));
+    $arrOrderByWoAscDesc  = array_flip($arrOrderByWoAscDesc);
+    foreach($arr_rmKeys as $key)
+    {
+      unset($arrOrderByWoAscDesc[$key]);
+      if ($this->pObj->b_drs_error)
+      {
+        t3lib_div::devlog('[ERROR/SQL] \''.$key.'\' isn\'t any element in the current row!', $this->pObj->extKey, 3);
+        t3lib_div::devlog('[WARN/SQL] Maybe the order of the rows won\'t be proper.', $this->pObj->extKey, 2);
+        t3lib_div::devlog('[HELP/SQL] Please take care for a proper orderBy statement.', $this->pObj->extKey, 1);
+      }
+    }
+    $arrOrderByWoAscDesc = array_flip($arrOrderByWoAscDesc);
+    // Remove keys, which aren't existing
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // Building arguments for array_multisort - Part I
+
+    $int_count = 0;
+    foreach($arrOrderByWiAscDesc as $key => $strOrderByField)
+    {
+      if($int_count > 6)
+      {
+        if ($this->pObj->b_drs_warn)
+        {
+          t3lib_div::devlog('[WARN/SQL] The order clause has more than seven items!<br />'.
+            'value is: \''.$csvOrderBy.'\'.', $this->pObj->extKey, 2);
+          t3lib_div::devlog('[HELP/SQL] Please reduce the amount of items in the order clause.', $this->pObj->extKey, 1);
+        }
+        break; // dwildt, 100915
+      }
+      // dwildt, 100915
+      // Get SORT_DESC or SORT_ASC
+      list($tableField, $order) = explode(' ', $strOrderByField);
+
+      if(!in_array($tableField, $arr_usedTableFields))
+      {
+        $args[$int_count]['table.field']    = $tableField;
+        $args[$int_count]['int_orderFlag']  = $this->pObj->objSqlFun->get_descOrAsc($strOrderByField);
+
+        list($table, $field)  = explode('.', $tableField);
+
+        // dwildt, 100915
+        $arr_sortTypeAndCase = $this->pObj->objSqlFun->get_sortTypeAndCase($table, $field);
+        $args[$int_count]['int_typeFlag']   = $arr_sortTypeAndCase['int_typeFlag'];
+        $args[$int_count]['caseSensitive']  = $arr_sortTypeAndCase['bool_caseSensitive'];
+        // Get the typeFlag
+
+        $int_count++;
+      }
+    }
+    // Building arguments for array_multisort - Part I
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // Building arguments for array_multisort - Part II
+
+    $i_count_args     = 0;
+    $bool_drsWarnUtf8 = false; // 101009
+    foreach($args as $key => $arr_tableField_order)
+    {
+      $i_count_rows   = 0;
+      foreach ($rows as $row => $elements)
+      {
+        if(!$arr_tableField_order['caseSensitive'])
+        {
+          $str_value = strtolower($rows[$row][$arr_tableField_order['table.field']]);
+          if (!$bool_drsWarnUtf8 && $this->pObj->b_drs_warn)
+          {
+            t3lib_div::devlog('[WARN/UTF-8] multisort_rows() uses strtolower(). This is '.
+              'UTF-8 insecure and multibyte insecure!', $this->pObj->extKey, 2);
+            $bool_drsWarnUtf8 = true;
+          }
+        }
+        if($arr_tableField_order['caseSensitive'])
+        {
+          $str_value = $rows[$row][$arr_tableField_order['table.field']];
+        }
+        $arr_multisort[$i_count_args]['table.field'][$i_count_rows] = $str_value;
+        $i_count_rows++;
+      }
+      $arr_multisort[$i_count_args]['int_orderFlag'] = $arr_tableField_order['int_orderFlag'];
+      $arr_multisort[$i_count_args]['int_typeFlag']  = $arr_tableField_order['int_typeFlag'];
+      $i_count_args++;
+    }
+    // Building arguments for array_multisort - Part II
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // DRS - Development Reporting System
+
+    if ($this->pObj->b_drs_sql)
+    {
+      $arr_constant[1] = 'SORT_NUMERIC';
+      $arr_constant[2] = 'SORT_STRING';
+      $arr_constant[3] = 'SORT_DESC';
+      $arr_constant[4] = 'SORT_ASC';
+      $str_prompt = 'array_multisort(<br />';
+      foreach($args as $arr_items)
+      {
+        $str_prompt = $str_prompt.'&nbsp;&nbsp;\''.$arr_items['table.field'].'\', '.$arr_constant[$arr_items['int_orderFlag']].', '.
+                      $arr_constant[$arr_items['int_typeFlag']].', <br >';
+      }
+      $str_prompt = $str_prompt.');';
+      t3lib_div::devlog('[INFO/SQL] Rows are ordered by PHP:<br />'.
+        '<br />'.
+        $str_prompt.'<br />'.
+        '<br />'.
+        'Level: '.(count($arr_multisort) - 1),
+        $this->pObj->extKey, 0);
+    }
+
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // Write the result to the global rows array
+
+    // dwildt, 100915
+    $arr_return = $this->multisort_rows_upto_6_level($arr_multisort, $rows);
+    $rows       = $arr_return['rows'];
+
+    $this->pObj->rows = $rows;
+    // Write the result to the global rows array
+  }
+
+
+
+
+
+
+
+
+
+
+    /**
+ * multisort_mm_children(): Order children elements depending on csvOrderBy.
+ *                          Result is one row with ordered children elements.
+ *                          It will be handled the field sorting only to date.
+ *
+ * @return	void
+ * @internal  http://forge.typo3.org/issues/9727
+ * @since     3.4.3
+ * @version   3.4.3
+ */
+  function multisort_mm_children()
+  {
+    $csvOrderBy           = $this->pObj->objSqlAut->orderBy();
+    $arrOrderByWiAscDesc  = $this->pObj->objZz->getCSVasArray($csvOrderBy);
+    $rows                 = $this->pObj->rows;
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // RETURN rows contain more than one row
+
+    if(count($rows) > 1)
+    {
+      if ($this->pObj->b_drs_warn)
+      {
+        t3lib_div::devlog('[WARN/SQL] ABORTED multisort_mm_children() can handle one row only. '.
+          'But rows contain more than one row!', $this->pObj->extKey, 2);
+      }
+      return;
+    }
+    // RETURN rows contain more than one row
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // Get the first key of the row
+
+    reset($rows);
+    $row_firstKey = key($rows);
+    // Get the first key of the row
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // Get the children devider
+
+    $str_sqlDeviderDisplay  = $this->pObj->objTyposcript->str_sqlDeviderDisplay;
+    $str_sqlDeviderWorkflow = $this->pObj->objTyposcript->str_sqlDeviderWorkflow;
+    $str_devider            = $str_sqlDeviderDisplay.$str_sqlDeviderWorkflow;
+    // Get the children devider
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Get all mm relation tables and all foreign tables -  #9727
+
+    $arr_mm_tables = array();
+      // fsander, 101023    -- initialize $arr_foreign_tables
+    $arr_foreign_tables = array();
+      // fsander, 101023    -- check if we have an array first
+    if (is_array($this->pObj->objSqlAut->arr_relations_mm_simple['MM'])) {
+      if(is_array($this->pObj->objSqlAut->arr_relations_mm_simple['MM']))
+      {
+        foreach($this->pObj->objSqlAut->arr_relations_mm_simple['MM'] as $arr_relation_tables)
+        {
+          foreach($arr_relation_tables as $str_relation_table => $str_foreign_table)
+          {
+            $arr_mm_tables[$str_relation_table][]     = $str_foreign_table;
+            $arr_foreign_tables[$str_foreign_table][] = $str_relation_table;
+          }
+        }
+      }
+    }
+      // Get all mm relation tables and all foreign tables -  #9727
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // Get arrays for ordering with multisort
+
+    $i_counter          = 0;
+    $arr_check_elements = null;
+    foreach($arrOrderByWiAscDesc as $tableFieldOrder)
+    {
+      // Our multisort handles six array at maximum
+      if($i_counter > 6)
+      {
+        // DRS - Development Reporting System
+        if ($this->pObj->b_drs_warn)
+        {
+          t3lib_div::devlog('[WARN/SQL] The order clause has more than seven items!<br />'.
+            'value is: \''.$csvOrderBy.'\'.', $this->pObj->extKey, 2);
+          t3lib_div::devlog('[HELP/SQL] Please reduce the amount of items in the order clause.', $this->pObj->extKey, 1);
+        }
+        // DRS - Development Reporting System
+        break; // dwildt, 100915
+      }
+      // Our multisort handles six array at maximum
+
+      // Get table and field
+      list($table, $fieldOrder) = explode('.', $tableFieldOrder);
+      list($field, $order)      = explode(' ', $fieldOrder);
+      // Get table and field
+
+      // Set dest_table depending on mm table
+      $bool_children_table  = false;
+      $dest_table           = $table;
+      if(in_array($table, array_keys($arr_foreign_tables)))
+      {
+        $bool_children_table  = true;
+      }
+      if(in_array($table, array_keys($arr_mm_tables)))
+      {
+        $bool_children_table  = true;
+        $dest_table           = $arr_mm_tables[$table][0];
+      }
+      // Set dest_table depending on mm table
+
+      // Get sort type and case sensitive
+      $arr_sortTypeAndCase      = $this->pObj->objSqlFun->get_sortTypeAndCase($table, $field);
+      // Get sort type and case sensitive
+
+      // Get array order for children table
+      if($bool_children_table)
+      {
+        // Set table counter
+        if(empty($arr_order[$table]))
+        {
+          $i_counter_table = 0;
+        }
+        if(!empty($arr_order[$table]))
+        {
+          $i_counter_table = count($arr_order[$table]);
+        }
+        // Set table counter
+
+        // Get values
+        // 101012, dwildt
+        $arr_tmp = null;
+        if($str_devider)
+        {
+          $arr_tmp = explode($str_devider, $rows[$row_firstKey][$table.'.'.$field]);
+        }
+        #9872
+        if(!empty($arr_tmp))
+        {
+          $arr_order[$dest_table][$i_counter_table][$table.'.'.$field] = $arr_tmp;
+        }
+        // Get values
+
+        // Generate one multisort array
+        #9872
+        if(!empty($arr_order))
+        {
+          //var_dump('sqlFun 1160', $dest_table, $i_counter_table, $table.'.'.$field, $arr_order, count($arr_order[$dest_table][$i_counter_table][$table.'.'.$field]));
+          $arr_check_elements[$dest_table][$i_counter_table]         = count($arr_order[$dest_table][$i_counter_table][$table.'.'.$field]);
+          $arr_order[$dest_table][$i_counter_table]['int_orderFlag'] = $this->pObj->objSqlFun->get_descOrAsc($tableFieldOrder);
+          $arr_order[$dest_table][$i_counter_table]['int_typeFlag']  = $arr_sortTypeAndCase['int_typeFlag'];
+          // Generate one multisort array
+
+          // Workaround: Warn, because of case sensitive only
+          if ($this->pObj->b_drs_warn)
+          {
+            t3lib_div::devlog('[WARN/SQL] multisort_mm_children() sort case sensitive only!',
+              $this->pObj->extKey, 2);
+          }
+          // Workaround: Warn, because of case sensitive only
+
+          $i_counter++;
+        }
+      }
+      // Get array order for children table
+    }
+    // Get arrays for ordering with multisort
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // Warn, if multisort arrays have different numbers of elements
+
+    // 101012, dwildt
+    if(is_array($arr_check_elements))
+    {
+      foreach($arr_check_elements as $dest_table => $arr_curr_elements)
+      {
+        $i_first_elements = $arr_curr_elements[0];
+        foreach($arr_curr_elements as $i_curr_elements)
+        {
+          if($i_first_elements != $i_curr_elements)
+          {
+            if ($this->pObj->b_drs_error)
+            {
+              t3lib_div::devlog('[WARN/SQL] multisort_mm_children(): multisort arrays for table '.$table .' '.
+                'have different number of elements. Multisort won\'t work probably!',
+                $this->pObj->extKey, 2);
+              t3lib_div::devlog('[INFO/SQL] multisort_mm_children(): Maybe your MM table for '.$table .' '.
+                'cointains waste records. Please delete waste records from your MM table!',
+                $this->pObj->extKey, 0);
+            }
+          }
+        }
+      }
+    }
+    // Warn, if multisort arrays have different numbers of elements
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // Multisort
+
+    // 101012, dwildt
+    if(is_array($arr_order))
+    {
+      foreach($arr_order as $table => $arr_field_order)
+      {
+        $arr_field_order = $this->multisort_upto_6_level($arr_field_order);
+        foreach($arr_field_order as $key => $arr_multisort)
+        {
+          reset($arr_multisort);
+          $tableField = key($arr_multisort);
+          $rows[$row_firstKey][$tableField] = implode($str_devider, $arr_multisort[$tableField]);
+        }
+      }
+    }
+
+    $this->pObj->rows = $rows;
+    // Multisort
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * Helper
+    *
+    **********************************************/
+
+
+
+
+
+
+
+/**
+ * multisort_upto_6_level: multisort upto 6 arrays
+ *
+ * @param	array		$arr_multisort  : array with elements (arrays) for multisort
+ * @return	array		$arr_multisort  : ordered
+ * @since   3.4.3
+ * @version 3.4.3
+ */
+  function multisort_upto_6_level($arr_multisort)
+  {
+    /////////////////////////////////////////////////////////////////
+    //
+    // Process array_multisort
+
+    if((count($arr_multisort) -1 ) == 0)
+    {
+      array_multisort(
+        $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag']
+      );
+    }
+    if((count($arr_multisort) -1 ) == 1)
+    {
+      array_multisort(
+        $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag']
+      );
+    }
+    if((count($arr_multisort) -1 ) == 2)
+    {
+      array_multisort(
+        $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        $arr_multisort[2][key($arr_multisort[2])], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag']
+      );
+    }
+    if((count($arr_multisort) -1 ) == 3)
+    {
+      array_multisort(
+        $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        $arr_multisort[2][key($arr_multisort[2])], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        $arr_multisort[3][key($arr_multisort[3])], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag']
+      );
+    }
+    if((count($arr_multisort) -1 ) == 4)
+    {
+      array_multisort(
+        $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        $arr_multisort[2][key($arr_multisort[2])], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        $arr_multisort[3][key($arr_multisort[3])], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
+        $arr_multisort[4][key($arr_multisort[4])], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag']
+      );
+    }
+    if((count($arr_multisort) -1 ) == 5)
+    {
+      array_multisort(
+        $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        $arr_multisort[2][key($arr_multisort[2])], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        $arr_multisort[3][key($arr_multisort[3])], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
+        $arr_multisort[4][key($arr_multisort[4])], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag'],
+        $arr_multisort[5][key($arr_multisort[5])], $arr_multisort[5]['int_orderFlag'], $arr_multisort[5]['int_typeFlag']
+      );
+    }
+    if((count($arr_multisort) -1 ) > 5)
+    {
+      array_multisort(
+        $arr_multisort[0][key($arr_multisort[0])], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        $arr_multisort[1][key($arr_multisort[1])], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        $arr_multisort[2][key($arr_multisort[2])], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        $arr_multisort[3][key($arr_multisort[3])], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
+        $arr_multisort[4][key($arr_multisort[4])], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag'],
+        $arr_multisort[5][key($arr_multisort[5])], $arr_multisort[5]['int_orderFlag'], $arr_multisort[5]['int_typeFlag'],
+        $arr_multisort[6][key($arr_multisort[6])], $arr_multisort[6]['int_orderFlag'], $arr_multisort[6]['int_typeFlag']
+      );
+    }
+    // Process array_multisort
+
+    return $arr_multisort;
+  }
+
+
+
+
+
+
+
+
+/**
+ * multisort_rows_upto_6_level: multisort rows with upto 6 arrays
+ *
+ *
+ *                                  : [rows]          ordered
+ *
+ * @param	array		$arr_multisort  : array with elements (arrays) for multisort
+ * @param	array		$rows           : Result of a database query
+ * @return	array		$arr_return     : [arr_multisort] ordered
+ * @since   3.4.3
+ * @version 3.4.3
+ */
+  function multisort_rows_upto_6_level($arr_multisort, $rows)
+  {
+    /////////////////////////////////////////////////////////////////
+    //
+    // Process array_multisort
+
+    if((count($arr_multisort) -1 ) == 0)
+    {
+      array_multisort(
+        $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        $rows
+      );
+    }
+    if((count($arr_multisort) -1 ) == 1)
+    {
+      array_multisort(
+        $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        $rows
+      );
+    }
+    if((count($arr_multisort) -1 ) == 2)
+    {
+      array_multisort(
+        $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        $arr_multisort[2]['table.field'], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        $rows
+      );
+    }
+    if((count($arr_multisort) -1 ) == 3)
+    {
+      array_multisort(
+        $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        $arr_multisort[2]['table.field'], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        $arr_multisort[3]['table.field'], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
+        $rows
+      );
+    }
+    if((count($arr_multisort) -1 ) == 4)
+    {
+      array_multisort(
+        $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        $arr_multisort[2]['table.field'], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        $arr_multisort[3]['table.field'], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
+        $arr_multisort[4]['table.field'], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag'],
+        $rows
+      );
+    }
+    if((count($arr_multisort) -1 ) == 5)
+    {
+      array_multisort(
+        $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        $arr_multisort[2]['table.field'], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        $arr_multisort[3]['table.field'], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
+        $arr_multisort[4]['table.field'], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag'],
+        $arr_multisort[5]['table.field'], $arr_multisort[5]['int_orderFlag'], $arr_multisort[5]['int_typeFlag'],
+        $rows
+      );
+    }
+    if((count($arr_multisort) -1 ) > 5)
+    {
+      array_multisort(
+        $arr_multisort[0]['table.field'], $arr_multisort[0]['int_orderFlag'], $arr_multisort[0]['int_typeFlag'],
+        $arr_multisort[1]['table.field'], $arr_multisort[1]['int_orderFlag'], $arr_multisort[1]['int_typeFlag'],
+        $arr_multisort[2]['table.field'], $arr_multisort[2]['int_orderFlag'], $arr_multisort[2]['int_typeFlag'],
+        $arr_multisort[3]['table.field'], $arr_multisort[3]['int_orderFlag'], $arr_multisort[3]['int_typeFlag'],
+        $arr_multisort[4]['table.field'], $arr_multisort[4]['int_orderFlag'], $arr_multisort[4]['int_typeFlag'],
+        $arr_multisort[5]['table.field'], $arr_multisort[5]['int_orderFlag'], $arr_multisort[5]['int_typeFlag'],
+        $arr_multisort[6]['table.field'], $arr_multisort[6]['int_orderFlag'], $arr_multisort[6]['int_typeFlag'],
+        $rows
+      );
+    }
+    // Process array_multisort
+
+    $arr_return['arr_multisort']  = $arr_multisort;
+    $arr_return['rows']           = $rows;
+
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
+
+  if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_multisort.php']) {
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_multisort.php']);
+  }
+
+?>

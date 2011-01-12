@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+  <ROOT>
+    <TCEforms>
+      <sheetTitle>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_tca</sheetTitle>
+    </TCEforms>
+    <type>array</type>
+    <el>
+      <configuration>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_tca.configuration</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_tca.configuration.default</numIndex>
+                <numIndex index="1">default</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_tca.configuration.adjusted</numIndex>
+                <numIndex index="1">adjusted</numIndex>
+              </numIndex>
+            </items>
+            <default>default</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </configuration>
+      <title_csvFields>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_tca.title.csvFields</label>
+          <displayCond>FIELD:configuration:=:adjusted</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim</eval>
+            <default>title</default>
+          </config>
+        </TCEforms>
+      </title_csvFields>
+      <image_csvFields>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_tca.image.csvFields</label>
+          <displayCond>FIELD:configuration:=:adjusted</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim</eval>
+            <default>image, images</default>
+          </config>
+        </TCEforms>
+      </image_csvFields>
+      <imageCaption_csvFields>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_tca.imageCaption.csvFields</label>
+          <displayCond>FIELD:configuration:=:adjusted</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim</eval>
+            <default>caption, imagecaption</default>
+          </config>
+        </TCEforms>
+      </imageCaption_csvFields>
+      <imageAltText_csvFields>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_tca.imageAltText.csvFields</label>
+          <displayCond>FIELD:configuration:=:adjusted</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim</eval>
+            <default>imagealttext, imageseo</default>
+          </config>
+        </TCEforms>
+      </imageAltText_csvFields>
+      <imageTitleText_csvFields>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_tca.imageTitleText.csvFields</label>
+          <displayCond>FIELD:configuration:=:adjusted</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim</eval>
+            <default>imagetitletext, imageseo</default>
+          </config>
+        </TCEforms>
+      </imageTitleText_csvFields>
+      <document_csvFields>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_tca.document.csvFields</label>
+          <displayCond>FIELD:configuration:=:adjusted</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim</eval>
+            <default>document, documents, media</default>
+          </config>
+        </TCEforms>
+      </document_csvFields>
+      <timestamp_csvFields>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_tca.timestamp.csvFields</label>
+          <displayCond>FIELD:configuration:=:adjusted</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim</eval>
+            <default>datetime, starttime, endtime</default>
+          </config>
+        </TCEforms>
+      </timestamp_csvFields>
+    </el>
+  </ROOT>
+</T3DataStructure>

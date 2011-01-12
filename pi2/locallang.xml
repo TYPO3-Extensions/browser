@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+  <meta type="array">
+    <type>module</type>
+    <description>Language labels for plugin &quot;tx_browser_pi1&quot;</description>
+  </meta>
+  <data type="array">
+    <languageKey index="default" type="array">
+      <label index="back">Back to the list view</label>
+      <label index="header">Plugin- and TypoScript-Update-Assistent</label>
+      <label index="ok">Everything seems to be ok. There is no TypoScript code for updating.</label>
+      <label index="checker_word_hidden">hidden</label>
+      <label index="checker_word_page">page</label>
+      <label index="checker_phrase_morePluginsInThisInstall">There are more browser plugins in this TYPO3 installation. Please check them too!</label>
+      <label index="checker_phrase_warnLinkDomain">The links to the pages are proper only, if the page is available by the current host.</label>
+      <label index="ticket_phrase_dest">New Code</label>
+      <label index="ticket_phrase_expl">Example</label>
+      <label index="ticket_phrase_plugin">Browser Plugin: Maintain the New Code (technical values)</label>
+      <label index="ticket_phrase_plugin_new">This message will be displayed, if your are using the current Browser plugin. Please add a new Browser plugin to this page. Configure it. Delete the former Browser plugin.</label>
+      <label index="ticket_phrase_srce">Current Code</label>
+      <label index="ticket_phrase_status">Status</label>
+      <label index="ticket_phrase_ticket">Ticket</label>
+      <label index="ticket_phrase_todo">Todo</label>
+      <label index="ticket_phrase_why">Why?</label>
+      <label index="ticket_gloLoc_1">global</label>
+      <label index="ticket_gloLoc_2">local</label>
+      <label index="ticket_gloLoc_3">global and local</label>
+      <label index="ticket_status_1">OK</label>
+      <label index="ticket_status_2">Information</label>
+      <label index="ticket_status_3">Help</label>
+      <label index="ticket_status_4">Warning</label>
+      <label index="ticket_status_5">Error</label>
+      <label index="ticket_todo_1">There is nothing to do.</label>
+      <label index="ticket_todo_2">Please update your TypoScript code.</label>
+      <label index="ticket_todo_3">You have to update your TypoScript.</label>
+      <label index="ticket_todo_4">Please delete your TypoScript code.</label>
+      <label index="ticket_view_1">list view</label>
+      <label index="ticket_view_2">single view</label>
+      <label index="ticket_view_3">list view and single view</label>
+    </languageKey>
+    <languageKey index="de" type="array">
+      <label index="back">Zurueck zur Liste</label>
+      <label index="header">Plugin- und TypoScript-Update-Assistent</label>
+      <label index="ok">Der TypoScript-Code scheint in Ordnung zu sein. Es gibt nichts zu tun - ausser den TypoScript-Update-Assistenten abzuschalten.</label>
+      <label index="checker_word_hidden">versteckt</label>
+      <label index="checker_word_page">Seite</label>
+      <label index="checker_phrase_morePluginsInThisInstall"><![CDATA[In dieser TYPO3-Installation befinden sich weitere Browser Plugins. Bitte pr&uuml;fen Sie auch diese Plugins.]]></label>
+      <label index="checker_phrase_warnLinkDomain"><![CDATA[Die aufgef&uuml;hrten Links funktionieren nicht, wenn die jeweilige Seite nicht unter der aktuellen Domain erreichbar ist.]]></label>
+      <label index="ticket_phrase_dest">Neuer Code</label>
+      <label index="ticket_phrase_expl">Beispiel</label>
+      <label index="ticket_phrase_plugin">Browser Plugin: Neue Werte pflegen (technische Angaben)</label>
+      <label index="ticket_phrase_plugin_new"><![CDATA[Diese Meldung erscheint, solange Du das bisherige Browser Plugin verwendest! Füge eine neues Browser Plugin in die Seite ein. Konfiguriere das Plugin. Lösche das bisherige Browser Plugin.]]></label>
+      <label index="ticket_phrase_srce">Jetziger Code</label>
+      <label index="ticket_phrase_status">Status</label>
+      <label index="ticket_phrase_ticket">Ticket</label>
+      <label index="ticket_phrase_todo">Todo</label>
+      <label index="ticket_phrase_why">Warum?</label>
+      <label index="ticket_gloLoc_1">global</label>
+      <label index="ticket_gloLoc_2">local</label>
+      <label index="ticket_gloLoc_3">global and local</label>
+      <label index="ticket_status_1">OK</label>
+      <label index="ticket_status_2">Information</label>
+      <label index="ticket_status_3">Hilfe</label>
+      <label index="ticket_status_4">Warnung</label>
+      <label index="ticket_status_5">Fehler</label>
+      <label index="ticket_todo_1">Es gibt nichts zu tun.</label>
+      <label index="ticket_todo_2">Sie sollten Ihren TypoScript-Code aktualisieren.</label>
+      <label index="ticket_todo_3">Sie muessen Ihren TypoScript-Code aktualisieren.</label>
+      <label index="ticket_todo_4">Sie sollten Ihren TypoScript-Code entfernen.</label>
+      <label index="ticket_view_1">Listenansicht</label>
+      <label index="ticket_view_2">Detailansicht</label>
+      <label index="ticket_view_3">Listen- und Detailansicht</label>
+    </languageKey>
+  </data>
+</T3locallang>

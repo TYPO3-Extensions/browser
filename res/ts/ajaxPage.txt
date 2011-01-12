@@ -1,0 +1,17 @@
+  ////////////////////////////////////////////////////////////////////////////////////////////
+  //
+  // AJAX page object
+
+[globalString = GP:tx_browser_pi1|segment=single] || [globalString = GP:tx_browser_pi1|segment=list] || [globalString = GP:tx_browser_pi1|segment=searchform]
+  // Don't handle header of content element
+  lib.stdHeader >
+  // Don't wrap content element with a default div
+  tt_content.stdWrap >
+  // Don't prefix the content element with a comment
+  tt_content.list.20.stdWrap.prefixComment >  
+  // Remove the current page obeject
+  page >
+  // Create a page object for AJAX 
+  page < plugin.tx_browser_pi1.javascript.ajax.page
+[global]
+  // AJAX page object

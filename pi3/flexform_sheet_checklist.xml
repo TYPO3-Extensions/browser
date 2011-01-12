@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+  <ROOT>
+    <TCEforms>
+      <sheetTitle>LLL:EXT:browser/pi3/flexform_tca.php:sheet_checklist</sheetTitle>
+    </TCEforms>
+    <type>array</type>
+    <el>
+      <statictemplate>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi3/flexform_tca.php:sheet_checklist.statictemplate.label</label>
+          <config>
+            <type>check</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi3/flexform_tca.php:sheet_checklist.statictemplate.0</numIndex>
+              </numIndex>
+            </items>
+          </config>
+        </TCEforms>
+      </statictemplate>
+    </el>
+  </ROOT>
+</T3DataStructure>

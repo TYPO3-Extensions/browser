@@ -1,0 +1,26 @@
+plugin.tx_browser_pi1 {
+
+  # cat=Browser for tt_news//310;       type=string;  label=Host: Host of the RSS feed. No protocol, no slash! I.e: www.typo3-browser.de
+  extensions.tt_news.host = www.typo3-browser.de
+
+  # cat=Browser for tt_news//320;       type=int+;  label=News single view: Page uid of the single view with the news
+  extensions.tt_news.pages.single_view = 
+  # cat=Browser for tt_news//321;       type=int+;  label=RSS-Feed: Page uid of the RSS-Feed with the news
+  extensions.tt_news.pages.rss_feed = 
+
+  # cat=Browser for tt_news//330;       type=string;  label=Title: Title of the RSS-Feed in the default language (usually English)
+  extensions.tt_news._LOCAL_LANG.default.title = News
+  # cat=Browser for tt_news//331;       type=string;  label=Title (de): Title of the RSS-Feed (German)
+  extensions.tt_news._LOCAL_LANG.de.title = Nachrichten
+  # cat=Browser for tt_news//332;       type=string;  label=Description: Description of the RSS-Feed in the default language (usually English)
+  extensions.tt_news._LOCAL_LANG.default.description = Browser - the TYPO3-Frontend-Engine. Sample with tt_news. News.
+  # cat=Browser for tt_news//333;       type=string;  label=Description (de): Description of the RSS-Feed (German)
+  extensions.tt_news._LOCAL_LANG.de.description = Browser - die TYPO3-Frontend-Engine: Beispiel mit tt_news. Nachrichten
+
+  # cat=Browser for tt_news//340;       type=string;  label=Path to the RSS icon
+  extensions.tt_news.pathToIcon = /typo3conf/ext/browser/res/images/browser_rss-feed.gif
+  # cat=Browser for tt_news/Dims/341;       type=int+;  label=Height of RSS icon: in pixel 
+  extensions.tt_news.heightOfIcon = 210
+  # cat=Browser for tt_news/Dims/342;       type=int+;  label=Width of RSS icon: in pixel
+  extensions.tt_news.widthOfIcon = 210
+}
