@@ -1,6 +1,6 @@
 3.6.1
   11-02-03 
-  Revision 43033
+  Revision 43034
   Bugfixes
   - 11785: Hooks are moved on the top in pi1/class.tx_browser_pi1_template.php 
 
