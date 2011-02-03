@@ -1,11 +1,13 @@
 3.6.1
   11-02-03 
-  Revision 43025 
+  Revision 43033
   Bugfixes
   - 11785: Hooks are moved on the top in pi1/class.tx_browser_pi1_template.php 
 
   11-01-25
   New Features
+  - 12756: Images got full tt_content support
+  - 12707: Dynamic states/zones in the TCA backend
   - 12528: Don't remove empty marker in TypoScript by default
            TypoScript is effected: new property:
            - advanced.downgrade.3_6_0.marker.in_typoscript.remove_emptyMarker = 0
