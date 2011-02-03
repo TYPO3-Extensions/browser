@@ -280,6 +280,7 @@ class tx_browser_pi1_filter {
       return $arr_result;
     }
     $markerArray = $arr_result['data']['marker'];
+//var_dump('filter 283', $markerArray);
     unset ($arr_result);
       // Get the content for the filter marker
 
@@ -392,12 +393,14 @@ class tx_browser_pi1_filter {
     // LOOP get rows per table.field
     // Get rows
 
+
+
     /////////////////////////////////////////////////////////////////
     //
     // Wrap rows
 
-    $arr_input['data']['rows'] = $arr_rows;
-    $arr_input['data']['template'] = $template;
+    $arr_input['data']['rows']      = $arr_rows;
+    $arr_input['data']['template']  = $template;
     $arr_result = $this->wrapRows($arr_input);
     $marker = $arr_result['data']['marker'];
     if ($arr_result['error']['status']) {
@@ -1108,6 +1111,8 @@ class tx_browser_pi1_filter {
     // LOOP table.field
     // Convert the rows
 
+
+
     /////////////////////////////////////////////////////////////////
     //
     // Wrap table.fields
@@ -1393,13 +1398,9 @@ class tx_browser_pi1_filter {
 //if (!($pos === false)) var_dump('filter 1397', $arr_values);
 
     $int_count_displayItem = 0;
-    if (!is_array($arr_values)) 
-    {
-      $arr_values = array ();
-    }
 
       // Loop through the rows of the SQL result
-    foreach ($arr_values as $uid => $value) 
+    foreach ((array) $arr_values as $uid => $value) 
     {
         // #8337, 101012, dwildt
       if (!($maxItemsPerRow === false)) 

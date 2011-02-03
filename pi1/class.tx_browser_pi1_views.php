@@ -107,6 +107,19 @@ class tx_browser_pi1_views
     $conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
 
 
+
+      /////////////////////////////////////
+      //
+      // Overwrite global general_stdWrap
+
+      // #12471, 110123, dwildt
+    if (is_array($conf_view['general_stdWrap.'])) {
+      $this->pObj->conf['general_stdWrap.'] = $conf_view['general_stdWrap.'];
+    }
+      // Overwrite global general_stdWrap
+
+
+
     /////////////////////////////////////
     //
     // Get the local or global displayList
@@ -1107,6 +1120,19 @@ class tx_browser_pi1_views
       $mode = 1;
     }
     // Do we have an existing mode?
+
+
+
+      /////////////////////////////////////
+      //
+      // Overwrite global general_stdWrap
+
+      // #12471, 110123, dwildt
+    if (is_array($conf_view['general_stdWrap.'])) {
+      $this->pObj->conf['general_stdWrap.'] = $conf_view['general_stdWrap.'];
+    }
+      // Overwrite global general_stdWrap
+
 
 
     /////////////////////////////////////

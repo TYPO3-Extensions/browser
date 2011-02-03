@@ -532,19 +532,20 @@ class tx_browser_pi1_template
   function tmplListview($template, $rows)
   {
 
-    ////////////////////////////////////////////////////////
-    //
-    // Set the groupby mode and get a proper template
+      ////////////////////////////////////////////////////////
+      //
+      // Set the groupby mode and get a proper template
 
     $template = $this->groupBy_verify($template);
-    // Set the groupby mode and get a proper template
+      // Set the groupby mode and get a proper template
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Remove ###LIST_TITLE### in case of AJAX single view
 
-    // #9659, 101013, dwildt
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Remove ###LIST_TITLE### in case of AJAX single view
+
+      // #9659, 101013, dwildt
     if($this->pObj->segment['header'] == false)
     {
       if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_javascript)
@@ -557,27 +558,26 @@ class tx_browser_pi1_template
       $template = $this->pObj->cObj->substituteSubpart($template, '###LIST_TITLE###', null, true);
       //var_dump('templ 488', $template);
     }
-    // Remove my_title in case of AJAX
+      // Remove my_title in case of AJAX
 
 
 
-    ////////////////////////////////////////////////////////
-    //
-    // Replace mode and view in the whole template
+      ////////////////////////////////////////////////////////
+      //
+      // Replace mode and view in the whole template
 
     $template = str_replace('###MODE###', $this->pObj->piVar_mode, $template);
     $template = str_replace('###VIEW###', $this->pObj->view, $template);
-    // Replace mode an view in the whole template
+      // Replace mode an view in the whole template
 
 
 
-    ////////////////////////////////////////////////////////
-    //
-    // First time on the site?
+      ////////////////////////////////////////////////////////
+      //
+      // First time on the site?
 
     if($this->pObj->boolFirstVisit)
     {
-      //$bool_emptyList = $this->pObj->lDisplay['emptyListByStart'];
       $bool_emptyList = $this->pObj->objConfig->bool_emptyAtStart;
       if($bool_emptyList)
       {
@@ -613,12 +613,13 @@ class tx_browser_pi1_template
         }
       }
     }
-    // First time on the site?
+      // First time on the site?
 
 
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
+
+      ////////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
 
     if ($this->pObj->b_drs_perform) {
       if($this->pObj->bool_typo3_43)
@@ -631,12 +632,13 @@ class tx_browser_pi1_template
       }
       t3lib_div::devLog('[INFO/PERFORMANCE] After \'First time?\': '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
     }
-    // DRS - Performance
+        // DRS - Performance
 
 
-    /////////////////////////////////////
-    //
-    // RETURN: Without rows no listview table
+
+      /////////////////////////////////////
+      //
+      // RETURN: Without rows no listview table
 
     if (count($rows) == 0 || !is_array($rows))
     {
@@ -656,23 +658,24 @@ class tx_browser_pi1_template
       }
       $markerArray    = $this->pObj->objWrapper->constant_markers();
 
-      /////////////////////////////////////
-      //
-      // Workaround
+        /////////////////////////////////////
+        //
+        // Workaround
 
-      // In case of ###LISTHEADITEM### is part of ###SEARCHFORM###
+        // In case of ###LISTHEADITEM### is part of ###SEARCHFORM###
       $markerArray['###ITEM###']  = false;
-      // Workaround
+        // Workaround
 
       $template       = $this->pObj->cObj->substituteMarkerArray($template, $markerArray);
       return $template;
     }
-    // RETURN: Without rows no listview table
+      // RETURN: Without rows no listview table
 
 
-    //////////////////////////////////////////////////////////////////
-    //
-    // Get the local or the global displayList array
+
+      //////////////////////////////////////////////////////////////////
+      //
+      // Get the local or the global displayList array
 
     $lDisplayList = $this->conf_view['displayList.'];
     if (!is_array($lDisplayList))
@@ -680,368 +683,17 @@ class tx_browser_pi1_template
       $lDisplayList = $this->conf['displayList.'];
     }
     $this->lDisplayList = $lDisplayList;
-    // Get the local or the global displaySingle or displayList array
+      // Get the local or the global displaySingle or displayList array
 
 
-    //////////////////////////////////////////////////////////////////
-    //
-    // Init the global array $arrHandleAs
 
+      //////////////////////////////////////////////////////////////////
+      //
+      // Init the global array $arrHandleAs
+  
     $this->pObj->objTca->setArrHandleAs();
     $this->pObj->rows     = $rows;  //:todo: function parameter without rows
-    // Init the global array $arrHandleAs
-
-
-    //////////////////////////////////////////////////////////////////
-    //
-    // Keys for special handling
-
-    $handleAs       = $this->pObj->arrHandleAs;
-    $arrKeyAsDocument = $this->pObj->objZz->getCSVtablefieldsAsArray($handleAs['document']);
-    // Keys for special handling
-
-
-    //////////////////////////////////////////////////////////////////
-    //
-    // Is there a upload folder?
-
-    // Bugfix #9418
-    // $this->pObj->uploadFolder = $this->pObj->conf['views.'][$this->viewWiDot][$this->mode.'.']['upload'];
-    $this->pObj->uploadFolder = $this->pObj->conf['views.'][$this->view.'.'][$this->mode.'.']['upload'];
-    if (!$this->pObj->uploadFolder)
-    {
-      $this->pObj->uploadFolder = $this->pObj->conf['upload'];
-    }
-    // Is there a upload folder?
-
-
-    //////////////////////////////////////////////////////////////////
-    //
-    // HTML-Template with ###ITEM### ?
-
-    $tmpl_element = $this->pObj->cObj->getSubpart($template, '###LISTBODYITEM###');
-    $bool_table = true;
-    $pos = strpos($tmpl_element, '###ITEM###');
-    if ($pos === false)
-    {
-      $bool_table = false;
-    }
-    // HTML-Template with ###ITEM### ?
-
-
-    //////////////////////////////////////////////////////////////////
-    //
-    // With ###ITEM###
-
-    if($bool_table)
-    {
-      // DRS - Development Reporting System
-      if ($this->pObj->b_drs_templating)
-      {
-        t3lib_div::devlog('[INFO/TEMPLATING] HTML-Template subpart ###LISTBODYITEM### contains the marker ###ITEM###.<br />'.
-          'The Browser will replace the ###ITEM### with the SQL result in form of a table or list.', $this->pObj->extKey, 0);
-        t3lib_div::devLog('[HELP/TEMPLATING] Change it? Use your own marker like ####TABLE.FIELD### in the HTML template.', $this->pObj->extKey, 1);
-      }
-      // DRS - Development Reporting System
-
-
-      // Table header with titles in columns
-      $template = $this->tmplTableHead($template);
-      // Table header with titles in columns
-
-
-      // ###LISTBODY###: Table body with elements in columns
-      // Counter for classes (odd / even)
-      // Bug #8343
-      //$c                 = 0;
-      $c                 = 2;
-      // Current group name. Initial value is a timestamp, because the real groupname can be false or empty
-      $str_current_group = time();
-      // Array with the grouped records
-      $arr_htmlGroupby       = false;
-      // Counter for the groups. It is a need for the current group
-      $int_groupCounter  = -1;
-      // Rows of a group
-      $bodyRows          = '';
-      // Wrap for the groupname
-      if($this->pObj->str_wrap_grouptitle)
-      {
-        $arr_wrap_grouptitle = explode('|', $this->pObj->str_wrap_grouptitle);
-      }
-      if(!$this->pObj->str_wrap_grouptitle)
-      {
-        $arr_wrap_grouptitle = array(false, false);
-      }
-      // elements
-      foreach($rows as $elements)
-      {
-        // In case of the first group and a new group
-        $str_next_group = $this->groupBy_get_groupname($elements);
-        if($this->bool_groupby)
-        {
-          if($str_next_group != $str_current_group)
-          {
-            $str_current_group = $str_next_group;
-            $int_groupCounter++;
-            $arr_htmlGroupby[$int_groupCounter] = $this->pObj->cObj->getSubpart($template, '###GROUPBY###');
-            $arr_htmlGroupby[$int_groupCounter] = str_replace('###GROUPBY_GROUPNAME###',
-                                                    $arr_wrap_grouptitle[0].$str_current_group.$arr_wrap_grouptitle[1],
-                                                    $arr_htmlGroupby[$int_groupCounter]);
-            if($int_groupCounter > 0)
-            {
-              // Allocates the collected rows to the passed group
-              $arr_htmlGroupby[$int_groupCounter - 1] = $this->pObj->cObj->substituteSubpart(
-                                                          $arr_htmlGroupby[$int_groupCounter - 1],
-                                                          '###LISTBODY###', $bodyRows, true);
-              $bodyRows = '';
-            }
-          }
-        }
-        // In case of the first group and a new group
-
-        // ###LISTBODYITEM###: bodyRows
-        $htmlRows     = $this->tmplRows($elements, '###LISTBODYITEM###', $template);
-        $listBodyRow  = $this->pObj->cObj->getSubpart($template, '###LISTBODY###');
-        $listBodyRow  = $this->pObj->cObj->substituteSubpart($listBodyRow, '###LISTBODYITEM###', $htmlRows, true);
-
-        // Suggestion #8856,  dwildt, 100812
-        // Bugfix     #10762, dwildt, 101201
-        //$markerBodyRows['###CLASS###'] = ($c++%2 ? ' class="odd"' : '');
-        $str_class = null;
-        if($c - 2 == 0)
-        {
-          $str_class = 'first ';
-        }
-        if($c++%2)
-        {
-          $str_class = $str_class.'odd ';
-        }
-        $str_class = $str_class.'item-'.($c - 2).' ';
-        if(count($rows) == ($c - 2))
-        {
-          $str_class = $str_class.'last ';
-        }
-        $str_class = trim($str_class);
-        $markerBodyRows['###CLASS###'] = ' class="'.$str_class.'"';
-        // Suggestion #8856, dwildt, 100812
-
-        $listBodyRow  = $this->pObj->cObj->substituteMarkerArray($listBodyRow, $markerBodyRows);
-        $bodyRows    .= $listBodyRow;
-        // ###LISTBODYITEM###: bodyRows
-      }
-      // elements
-
-      if($this->bool_groupby)
-      {
-        // Allocates the collected rows to the current group
-        $arr_htmlGroupby[$int_groupCounter] = $this->pObj->cObj->substituteSubpart(
-                                                $arr_htmlGroupby[$int_groupCounter],
-                                                '###LISTBODY###', $bodyRows, true);
-        $str_htmlGroupby = implode("\n",$arr_htmlGroupby);
-        $template = $this->pObj->cObj->substituteSubpart($template, '###GROUPBY###', $str_htmlGroupby, true);
-      }
-      if(!$this->bool_groupby)
-      {
-        // #10762 ###CLASS### won't be replaced
-        // $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODYITEM###', $bodyRows, true);
-        $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODY###', $bodyRows, true);
-      }
-      // ###LISTBODY###: Table body with elements in columns
-    }
-    // With ###ITEM###
-
-
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After some initials: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-    // DRS - Performance
-
-
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // Without ###ITEM### but with table.field marker
-
-    if(!$bool_table)
-    {
-      // DRS - Development Reporting System
-      if ($this->pObj->b_drs_templating)
-      {
-        t3lib_div::devlog('[INFO/TEMPLATING] HTML-Template subpart ###LISTBODYITEM### doesn\'t contain the marker ###ITEM###.<br />'.
-          'The Browser will process all ###TABLE.FIELD### markers instead.', $this->pObj->extKey, 0);
-        t3lib_div::devLog('[HELP/TEMPLATING] Change it? Remove your markers ####TABLE.FIELD### and use ###ITEM### instead.', $this->pObj->extKey, 1);
-      }
-      // DRS - Development Reporting System
-
-      // Select box for ordering
-      $template = $this->tmplTableHead($template);
-      // Select box for ordering
-
-      // ###LISTBODY### Content
-      // Current group name. Initial value is a timestamp, because the real groupname can be false or empty
-      $str_current_group = time();
-      // Array with the grouped records
-      $arr_htmlGroupby   = false;
-      // Counter for the groups. It is a need for the current group
-      $int_groupCounter  = -1;
-      // Rows of a group
-      $tmpl_rows         = '';
-      // Wrap for the groupname
-      if($this->pObj->str_wrap_grouptitle)
-      {
-        $arr_wrap_grouptitle = explode('|', $this->pObj->str_wrap_grouptitle);
-      }
-      if(!$this->pObj->str_wrap_grouptitle)
-      {
-        $arr_wrap_grouptitle = array(false, false);
-      }
-
-      // Rows
-      foreach($rows as $row => $elements)
-      {
-        // In case of the first group and a new group
-        $str_next_group = $this->groupBy_get_groupname($elements);
-        if($this->bool_groupby)
-        {
-          // A new group is starting
-          if($str_next_group != $str_current_group)
-          {
-            $str_current_group = $str_next_group;
-            $int_groupCounter++;
-            $arr_htmlGroupby[$int_groupCounter] = $this->pObj->cObj->getSubpart($template, '###GROUPBY###');
-            $str_current_group_stdWrap          = $this->groupBy_stdWrap($elements);
-            $arr_htmlGroupby[$int_groupCounter] = str_replace('###GROUPBY_GROUPNAME###',
-                                                    $arr_wrap_grouptitle[0].$str_current_group_stdWrap.$arr_wrap_grouptitle[1],
-                                                    $arr_htmlGroupby[$int_groupCounter]);
-            if($int_groupCounter > 0)
-            {
-              // Allocates the collected rows to the passed group
-              $arr_htmlGroupby[$int_groupCounter - 1] = $this->pObj->cObj->substituteSubpart(
-                                                          $arr_htmlGroupby[$int_groupCounter - 1],
-                                                          '###LISTBODY###', $tmpl_rows, true);
-              $tmpl_rows = '';
-            }
-          }
-          // A new group is starting
-        }
-        // In case of the first group and a new group
-
-        $this->pObj->elements    = $elements;
-        $this->pObj->rows[$row]  = $rows[$row];
-        $tmpl_row                = $this->tmplRows($elements, '###LISTBODYITEM###', $template); //:todo: Performance
-
-        // Suggestion #8856,  dwildt, 100812
-        // Bugfix     #10762, dwildt, 101201
-        //$markerBodyRows['###CLASS###'] = ($c++%2 ? ' class="odd"' : '');
-        $str_class = null;
-        if($c - 2 == 0)
-        {
-          $str_class = 'first ';
-        }
-        if($c++%2)
-        {
-          $str_class = $str_class.'odd ';
-        }
-        $str_class = $str_class.'item-'.($c - 2).' ';
-        if(count($rows) == ($c - 2))
-        {
-          $str_class = $str_class.'last ';
-        }
-        $str_class = trim($str_class);
-        $markerArray['###CLASS###'] = ' class="'.$str_class.'"';
-        // Suggestion #8856, dwildt, 100812
-
-        // Bug #5922, 100210
-        if(!is_array($markerArray))
-        {
-          $tmpl_rows .= $tmpl_row;
-        }
-        if(is_array($markerArray))
-        {
-          $tmpl_row   = $this->pObj->cObj->substituteMarkerArray($tmpl_row, $markerArray);
-          $tmpl_rows .= $tmpl_row;
-        }
-//var_dump('template 880', $markerArray['###CLASS###'], $tmpl_row);
-      }
-      // Rows
-      unset($markerArray);
-      // Content
-
-      if($this->bool_groupby)
-      {
-        // Allocates the collected rows to the current group
-        $arr_htmlGroupby[$int_groupCounter] = $this->pObj->cObj->substituteSubpart(
-                                                $arr_htmlGroupby[$int_groupCounter],
-                                                '###LISTBODY###', $tmpl_rows, true);
-        $str_htmlGroupby = implode("\n",$arr_htmlGroupby);
-        $template = $this->pObj->cObj->substituteSubpart($template, '###GROUPBY###', $str_htmlGroupby, true);
-//var_dump('template 755', $arr_htmlGroupby[$int_groupCounter]);
-      }
-      if(!$this->bool_groupby)
-      {
-        $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODY###', $tmpl_rows, true);
-//var_dump('template 760 NO_GROUP');
-      }
-      $this->pObj->rows = $rows;
-      // ###LISTBODY### Content
-
-
-      ////////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-      if ($this->pObj->b_drs_perform) {
-        if($this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->getDifferenceToStarttime();
-        }
-        if(!$this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->mtime();
-        }
-        t3lib_div::devLog('[INFO/PERFORMANCE] After rows with individual design: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-      }
-      // DRS - Performance
-    }
-    // Without ###ITEM### but with table.field marker
-
-
-    /////////////////////////////////////
-    //
-    // Fill up the template with content
-
-    $markerArray['###MODE###']    = $this->mode;
-    $markerArray['###VIEW###']    = $this->pObj->view;
-    $markerArray['###SUMMARY###'] = $this->pObj->objWrapper->tableSummary('list');
-    $markerArray['###CAPTION###'] = $this->pObj->objWrapper->tableCaption('list');
-    $subpart        = $this->pObj->cObj->getSubpart($template, '###LISTVIEW###');
-    $listview       = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
-    $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $listview, true);
-    unset($markerArray);
-    $markerArray    = $this->pObj->objWrapper->constant_markers();
-    $template       = $this->pObj->cObj->substituteMarkerArray($template, $markerArray);
-    // Fill up the template with content
-
-
-    /////////////////////////////////////
-    //
-    // SEO: Search Engine Optimisation
-
-    reset($rows);
-    $firstKey = key($rows);
-    $this->pObj->objSeo->seo($rows[$firstKey]);
-    // SEO: Search Engine Optimisation
+      // Init the global array $arrHandleAs
 
 
 
@@ -1090,7 +742,374 @@ class tx_browser_pi1_template
     }
       // DRS - Development Reporting System
       // Any foreign extension is using this hook
+    $rows = $this->pObj->rows;
       // Hook for handle the consolidated rows
+
+
+
+      //////////////////////////////////////////////////////////////////
+      //
+      // Keys for special handling
+
+    $handleAs       = $this->pObj->arrHandleAs;
+    $arrKeyAsDocument = $this->pObj->objZz->getCSVtablefieldsAsArray($handleAs['document']);
+      // Keys for special handling
+
+
+
+      //////////////////////////////////////////////////////////////////
+      //
+      // Is there a upload folder?
+
+    // Bugfix #9418
+    // $this->pObj->uploadFolder = $this->pObj->conf['views.'][$this->viewWiDot][$this->mode.'.']['upload'];
+    $this->pObj->uploadFolder = $this->pObj->conf['views.'][$this->view.'.'][$this->mode.'.']['upload'];
+    if (!$this->pObj->uploadFolder)
+    {
+      $this->pObj->uploadFolder = $this->pObj->conf['upload'];
+    }
+      // Is there a upload folder?
+
+
+
+      //////////////////////////////////////////////////////////////////
+      //
+      // HTML-Template with ###ITEM### ?
+
+    $tmpl_element = $this->pObj->cObj->getSubpart($template, '###LISTBODYITEM###');
+    $bool_table = true;
+    $pos = strpos($tmpl_element, '###ITEM###');
+    if ($pos === false)
+    {
+      $bool_table = false;
+    }
+      // HTML-Template with ###ITEM### ?
+
+
+
+      //////////////////////////////////////////////////////////////////
+      //
+      // With ###ITEM###
+
+    if($bool_table)
+    {
+        // DRS - Development Reporting System
+      if ($this->pObj->b_drs_templating)
+      {
+        t3lib_div::devlog('[INFO/TEMPLATING] HTML-Template subpart ###LISTBODYITEM### contains the marker ###ITEM###.<br />'.
+          'The Browser will replace the ###ITEM### with the SQL result in form of a table or list.', $this->pObj->extKey, 0);
+        t3lib_div::devLog('[HELP/TEMPLATING] Change it? Use your own marker like ####TABLE.FIELD### in the HTML template.', $this->pObj->extKey, 1);
+      }
+        // DRS - Development Reporting System
+
+        // Table header with titles in columns
+      $template = $this->tmplTableHead($template);
+
+
+
+        // ###LISTBODY###: Table body with elements in columns
+        // Counter for classes (odd / even)
+        // Bug #8343
+        //$c                 = 0;
+      $c                 = 2;
+        // Current group name. Initial value is a timestamp, because the real groupname can be false or empty
+      $str_current_group = time();
+        // Array with the grouped records
+      $arr_htmlGroupby       = false;
+        // Counter for the groups. It is a need for the current group
+      $int_groupCounter  = -1;
+        // Rows of a group
+      $bodyRows          = '';
+        // Wrap for the groupname
+      if($this->pObj->str_wrap_grouptitle)
+      {
+        $arr_wrap_grouptitle = explode('|', $this->pObj->str_wrap_grouptitle);
+      }
+      if(!$this->pObj->str_wrap_grouptitle)
+      {
+        $arr_wrap_grouptitle = array(false, false);
+      }
+
+
+
+        // elements
+      foreach($rows as $elements)
+      {
+          // In case of the first group and a new group
+        $str_next_group = $this->groupBy_get_groupname($elements);
+        if($this->bool_groupby)
+        {
+          if($str_next_group != $str_current_group)
+          {
+            $str_current_group = $str_next_group;
+            $int_groupCounter++;
+            $arr_htmlGroupby[$int_groupCounter] = $this->pObj->cObj->getSubpart($template, '###GROUPBY###');
+            $arr_htmlGroupby[$int_groupCounter] = str_replace('###GROUPBY_GROUPNAME###',
+                                                    $arr_wrap_grouptitle[0].$str_current_group.$arr_wrap_grouptitle[1],
+                                                    $arr_htmlGroupby[$int_groupCounter]);
+            if($int_groupCounter > 0)
+            {
+                // Allocates the collected rows to the passed group
+              $arr_htmlGroupby[$int_groupCounter - 1] = $this->pObj->cObj->substituteSubpart(
+                                                          $arr_htmlGroupby[$int_groupCounter - 1],
+                                                          '###LISTBODY###', $bodyRows, true);
+              $bodyRows = '';
+            }
+          }
+        }
+          // In case of the first group and a new group
+
+          // ###LISTBODYITEM###: bodyRows
+        $htmlRows     = $this->tmplRows($elements, '###LISTBODYITEM###', $template);
+        $listBodyRow  = $this->pObj->cObj->getSubpart($template, '###LISTBODY###');
+        $listBodyRow  = $this->pObj->cObj->substituteSubpart($listBodyRow, '###LISTBODYITEM###', $htmlRows, true);
+
+          // Suggestion #8856,  dwildt, 100812
+          // Bugfix     #10762, dwildt, 101201
+          //$markerBodyRows['###CLASS###'] = ($c++%2 ? ' class="odd"' : '');
+        $str_class = null;
+        if($c - 2 == 0)
+        {
+          $str_class = 'first ';
+        }
+        if($c++%2)
+        {
+          $str_class = $str_class.'odd ';
+        }
+        $str_class = $str_class.'item-'.($c - 2).' ';
+        if(count($rows) == ($c - 2))
+        {
+          $str_class = $str_class.'last ';
+        }
+        $str_class = trim($str_class);
+        $markerBodyRows['###CLASS###'] = ' class="'.$str_class.'"';
+          // Suggestion #8856, dwildt, 100812
+
+        $listBodyRow  = $this->pObj->cObj->substituteMarkerArray($listBodyRow, $markerBodyRows);
+        $bodyRows    .= $listBodyRow;
+          // ###LISTBODYITEM###: bodyRows
+      }
+        // elements
+
+
+
+      if($this->bool_groupby)
+      {
+        // Allocates the collected rows to the current group
+        $arr_htmlGroupby[$int_groupCounter] = $this->pObj->cObj->substituteSubpart(
+                                                $arr_htmlGroupby[$int_groupCounter],
+                                                '###LISTBODY###', $bodyRows, true);
+        $str_htmlGroupby = implode("\n",$arr_htmlGroupby);
+        $template = $this->pObj->cObj->substituteSubpart($template, '###GROUPBY###', $str_htmlGroupby, true);
+      }
+      if(!$this->bool_groupby)
+      {
+        // #10762 ###CLASS### won't be replaced
+        // $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODYITEM###', $bodyRows, true);
+        $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODY###', $bodyRows, true);
+      }
+      // ###LISTBODY###: Table body with elements in columns
+    }
+      // With ###ITEM###
+
+
+
+      ////////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
+
+    if ($this->pObj->b_drs_perform) {
+      if($this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->getDifferenceToStarttime();
+      }
+      if(!$this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->mtime();
+      }
+      t3lib_div::devLog('[INFO/PERFORMANCE] After some initials: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+    }
+      // DRS - Performance
+
+
+
+      ////////////////////////////////////////////////////////////////////////
+      //
+      // Without ###ITEM### but with table.field marker
+  
+    if(!$bool_table)
+    {
+        // DRS - Development Reporting System
+      if ($this->pObj->b_drs_templating)
+      {
+        t3lib_div::devlog('[INFO/TEMPLATING] HTML-Template subpart ###LISTBODYITEM### doesn\'t contain the marker ###ITEM###.<br />'.
+          'The Browser will process all ###TABLE.FIELD### markers instead.', $this->pObj->extKey, 0);
+        t3lib_div::devLog('[HELP/TEMPLATING] Change it? Remove your markers ####TABLE.FIELD### and use ###ITEM### instead.', $this->pObj->extKey, 1);
+      }
+        // DRS - Development Reporting System
+
+        // Select box for ordering
+      $template = $this->tmplTableHead($template);
+
+        // ###LISTBODY### Content
+        // Current group name. Initial value is a timestamp, because the real groupname can be false or empty
+      $str_current_group = time();
+        // Array with the grouped records
+      $arr_htmlGroupby   = false;
+        // Counter for the groups. It is a need for the current group
+      $int_groupCounter  = -1;
+        // Rows of a group
+      $tmpl_rows         = '';
+        // Wrap for the groupname
+      if($this->pObj->str_wrap_grouptitle)
+      {
+        $arr_wrap_grouptitle = explode('|', $this->pObj->str_wrap_grouptitle);
+      }
+      if(!$this->pObj->str_wrap_grouptitle)
+      {
+        $arr_wrap_grouptitle = array(false, false);
+      }
+
+        // Rows
+      foreach($rows as $row => $elements)
+      {
+          // In case of the first group and a new group
+        $str_next_group = $this->groupBy_get_groupname($elements);
+        if($this->bool_groupby)
+        {
+            // A new group is starting
+          if($str_next_group != $str_current_group)
+          {
+            $str_current_group = $str_next_group;
+            $int_groupCounter++;
+            $arr_htmlGroupby[$int_groupCounter] = $this->pObj->cObj->getSubpart($template, '###GROUPBY###');
+            $str_current_group_stdWrap          = $this->groupBy_stdWrap($elements);
+            $arr_htmlGroupby[$int_groupCounter] = str_replace('###GROUPBY_GROUPNAME###',
+                                                    $arr_wrap_grouptitle[0].$str_current_group_stdWrap.$arr_wrap_grouptitle[1],
+                                                    $arr_htmlGroupby[$int_groupCounter]);
+            if($int_groupCounter > 0)
+            {
+                // Allocates the collected rows to the passed group
+              $arr_htmlGroupby[$int_groupCounter - 1] = $this->pObj->cObj->substituteSubpart(
+                                                          $arr_htmlGroupby[$int_groupCounter - 1],
+                                                          '###LISTBODY###', $tmpl_rows, true);
+              $tmpl_rows = '';
+            }
+          }
+            // A new group is starting
+        }
+          // In case of the first group and a new group
+
+        $this->pObj->elements    = $elements;
+        $this->pObj->rows[$row]  = $rows[$row];
+        $tmpl_row                = $this->tmplRows($elements, '###LISTBODYITEM###', $template); //:todo: Performance
+
+          // Suggestion #8856,  dwildt, 100812
+          // Bugfix     #10762, dwildt, 101201
+          //$markerBodyRows['###CLASS###'] = ($c++%2 ? ' class="odd"' : '');
+        $str_class = null;
+        if($c - 2 == 0)
+        {
+          $str_class = 'first ';
+        }
+        if($c++%2)
+        {
+          $str_class = $str_class.'odd ';
+        }
+        $str_class = $str_class.'item-'.($c - 2).' ';
+        if(count($rows) == ($c - 2))
+        {
+          $str_class = $str_class.'last ';
+        }
+        $str_class = trim($str_class);
+        $markerArray['###CLASS###'] = ' class="'.$str_class.'"';
+          // Suggestion #8856, dwildt, 100812
+
+          // Bug #5922, 100210
+        if(!is_array($markerArray))
+        {
+          $tmpl_rows .= $tmpl_row;
+        }
+        if(is_array($markerArray))
+        {
+          $tmpl_row   = $this->pObj->cObj->substituteMarkerArray($tmpl_row, $markerArray);
+          $tmpl_rows .= $tmpl_row;
+        }
+//var_dump('template 880', $markerArray['###CLASS###'], $tmpl_row);
+      }
+        // Rows
+      unset($markerArray);
+
+
+
+      if($this->bool_groupby)
+      {
+        // Allocates the collected rows to the current group
+        $arr_htmlGroupby[$int_groupCounter] = $this->pObj->cObj->substituteSubpart(
+                                                $arr_htmlGroupby[$int_groupCounter],
+                                                '###LISTBODY###', $tmpl_rows, true);
+        $str_htmlGroupby = implode("\n",$arr_htmlGroupby);
+        $template = $this->pObj->cObj->substituteSubpart($template, '###GROUPBY###', $str_htmlGroupby, true);
+//var_dump('template 755', $arr_htmlGroupby[$int_groupCounter]);
+      }
+      if(!$this->bool_groupby)
+      {
+        $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODY###', $tmpl_rows, true);
+//var_dump('template 760 NO_GROUP');
+      }
+      $this->pObj->rows = $rows;
+        // ###LISTBODY### Content
+
+
+
+        ////////////////////////////////////////////////////////////////////////
+        //
+        // DRS - Performance
+
+      if ($this->pObj->b_drs_perform) 
+      {
+        if($this->pObj->bool_typo3_43)
+        {
+          $endTime = $this->pObj->TT->getDifferenceToStarttime();
+        }
+        if(!$this->pObj->bool_typo3_43)
+        {
+          $endTime = $this->pObj->TT->mtime();
+        }
+        t3lib_div::devLog('[INFO/PERFORMANCE] After rows with individual design: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+      }
+        // DRS - Performance
+    }
+      // Without ###ITEM### but with table.field marker
+
+
+
+      /////////////////////////////////////
+      //
+      // Fill up the template with content
+  
+    $markerArray['###MODE###']    = $this->mode;
+    $markerArray['###VIEW###']    = $this->pObj->view;
+    $markerArray['###SUMMARY###'] = $this->pObj->objWrapper->tableSummary('list');
+    $markerArray['###CAPTION###'] = $this->pObj->objWrapper->tableCaption('list');
+    $subpart        = $this->pObj->cObj->getSubpart($template, '###LISTVIEW###');
+    $listview       = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
+    $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $listview, true);
+    unset($markerArray);
+    $markerArray    = $this->pObj->objWrapper->constant_markers();
+    $template       = $this->pObj->cObj->substituteMarkerArray($template, $markerArray);
+      // Fill up the template with content
+
+
+
+      /////////////////////////////////////
+      //
+      // SEO: Search Engine Optimisation
+  
+    reset($rows);
+    $firstKey = key($rows);
+    $this->pObj->objSeo->seo($rows[$firstKey]);
+    // SEO: Search Engine Optimisation
 
 
 
@@ -1139,7 +1158,14 @@ class tx_browser_pi1_template
     }
     $this->lDisplaySingle = $lDisplaySingle;
     // Get the local or the global displaySingle array
-
+// 110125, dwildt
+//if(t3lib_div::getIndpEnv('REMOTE_ADDR') =='84.184.207.88')
+//{
+//  if(isset($this->conf_view['tx_org_repertoire.']['image.']['layout.']['default.']['value']))
+//  {
+//    var_dump('template 1165', $this->conf_view['tx_org_repertoire.']['image.']['layout.']['default.']['value']);
+//  }
+//}
 
     ///////////////////////////////////////////////////////////
     //
@@ -2213,7 +2239,6 @@ class tx_browser_pi1_template
       // Get the global $arrHandleAs array
     $handleAs                   = $this->pObj->arrHandleAs;
       // [Boolean] Shouldn't empty values handled?
-//:TODO:
     $bool_dontHandleEmptyValues = $this->pObj->objConfig->bool_dontHandleEmptyValues;
     //var_dump('template 2218', $bool_dontHandleEmptyValues);
 
@@ -2279,7 +2304,14 @@ class tx_browser_pi1_template
       $lDisplayView = $this->conf[$lDisplayType];
     }
       // Get the local or the global displaySingle or displayList array
-
+// 110125, dwildt
+//if(t3lib_div::getIndpEnv('REMOTE_ADDR') =='84.184.207.88')
+//{
+//  if(isset($this->conf_view['tx_org_repertoire.']['image.']['layout.']['default.']['value']))
+//  {
+//    var_dump('template 2312', $this->conf_view['tx_org_repertoire.']['image.']['layout.']['default.']['value']);
+//  }
+//}
 
 
       //////////////////////////////////////////////////////////////////
@@ -2324,18 +2356,18 @@ class tx_browser_pi1_template
     $this->pObj->boolFirstElement = true;
 
     $i_count_element  = 0;
-    // Counts the elements of the row
+      // Counts the elements of the row
     $i_count_cell   = 0;
-    // Counts the printed cells like <td>
+      // Counts the printed cells like <td>
 
 
 
-    //////////////////////////////////////////////////////////////////
-    //
-    // Default Design
+      //////////////////////////////////////////////////////////////////
+      //
+      // Default Design
 
     $bool_design_default   = true;
-    // List view with default design
+      // List view with default design
     if($this->pObj->view == 'list')
     {
       $tmpl_element = $this->pObj->cObj->getSubpart($template, '###LISTBODYITEM###');
@@ -2343,27 +2375,27 @@ class tx_browser_pi1_template
       if ($pos === false)
       {
         $bool_design_default = false;
-        // DRS - Development Reporting System
+          // DRS - Development Reporting System
         if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
         {
           t3lib_div::devLog('[INFO/TEMPLATING] ###LISTBODYITEM### without ###ITEM###<br />
            The Browser process an individual design with TABLE.FIELD markers.', $this->pObj->extKey, 0);
         }
-        // DRS - Development Reporting System
+          // DRS - Development Reporting System
       }
       if (!($pos === false))
       {
-        // DRS - Development Reporting System
+          // DRS - Development Reporting System
         if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
         {
           t3lib_div::devLog('[INFO/TEMPLATING] ###LISTBODYITEM### contains ###ITEM###<br />
            The Browser process the default design with rows.', $this->pObj->extKey, 0);
         }
-        // DRS - Development Reporting System
+          // DRS - Development Reporting System
       }
     }
-    // List view with default design
-    // Singe view with default design
+      // List view with default design
+      // Single view with default design
     if($this->pObj->view == 'single')
     {
       $tmpl_element = $this->pObj->cObj->getSubpart($template, '###SINGLEBODYROW###');
@@ -2371,33 +2403,33 @@ class tx_browser_pi1_template
       if ($pos === false)
       {
         $bool_design_default = false;
-        // DRS - Development Reporting System
+          // DRS - Development Reporting System
         if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
         {
           t3lib_div::devLog('[INFO/TEMPLATING] ###SINGLEBODYROW### without ###VALUE###<br />
            The Browser process an individual design with TABLE.FIELD markers.', $this->pObj->extKey, 0);
         }
-        // DRS - Development Reporting System
+          // DRS - Development Reporting System
       }
       if (!($pos === false))
       {
-        // DRS - Development Reporting System
+          // DRS - Development Reporting System
         if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
         {
           t3lib_div::devLog('[INFO/TEMPLATING] ###SINGLEBODYROW### contains ###VALUE###<br />
            The Browser process the default design with rows.', $this->pObj->extKey, 0);
         }
-        // DRS - Development Reporting System
+          // DRS - Development Reporting System
       }
     }
-    // Single view with default design
-    // Default Design
+      // Single view with default design
+      // Default Design
 
 
 
-    //////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
+      //////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
 
     if ($this->pObj->boolFirstRow)
     {
@@ -2413,17 +2445,18 @@ class tx_browser_pi1_template
         t3lib_div::devLog('[INFO/PERFORMANCE] Before elements loop (first row): '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
       }
     }
-    // DRS - Performance
+      // DRS - Performance
 
 
 
-    //////////////////////////////////////////////////////////////////
-    //
-    // Loop through all elements
+      //////////////////////////////////////////////////////////////////
+      //
+      // Loop through all elements
 
     $c                    = 0;
     $htmlRow              = false;
     $bool_drs_handleCase  = false;
+    
     $markerArray          = $this->pObj->objWrapper->constant_markers();
     foreach($elements as $key => $value)
     {
@@ -2431,11 +2464,6 @@ class tx_browser_pi1_template
       $bool_dontColorSwords = false;
       list($table, $field)  = explode('.', $key);
 
-//:TODO: emptyValues
-//if($key == 'fe_users.www')
-//{
-//  var_dump('template 2435', $key, $value,$bool_dontHandleEmptyValues, $this->pObj->view);
-//}
         // Handle empty values?
       $bool_handleElement = true;
       if($bool_dontHandleEmptyValues)
@@ -2814,6 +2842,7 @@ class tx_browser_pi1_template
         //if(t3lib_div::_GP('dev')) var_dump('template 2206', $elements);
         // Bugfix, 3.3.7, 100617, dwildt
         $this->pObj->elements = $elements;
+
         $value = $this->pObj->objWrapper->wrapAndLinkValue($key, $value, $elements[$uidField]);
   
         // DRS - Performance
@@ -2853,7 +2882,6 @@ class tx_browser_pi1_template
             $bool_defaultTemplate = false;
             $markerArray['###SOCIALMEDIA_BOOKMARKS###'] = $this->pObj->objSocialmedia->get_htmlBookmarks($elements, $key, $bool_defaultTemplate);
             $htmlRow  = $this->pObj->cObj->substituteMarkerArray($htmlSubpart, $markerArray);
-            //var_dump('template 2264');
           }
           if($this->view == 'single' && $bool_design_default)
           {
@@ -2894,7 +2922,6 @@ class tx_browser_pi1_template
         // DRS - Performance
       }
         // LOOP: Handle element
-//:TODO:
 
       $i_count_element++;
     }

@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 - 2010 - Dirk Wildt http://wildt.at.die-netzmacher.de
+*  (c) 2008 - 2011 - Dirk Wildt http://wildt.at.die-netzmacher.de
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +29,7 @@
 * @package    TYPO3
 * @subpackage    tx_browser
 *
-* @version 3.6.0
+* @version 3.6.1
 */
 
   /**
@@ -109,7 +109,7 @@ class tx_browser_pi1_wrapper
  * constant_markers(): Generate the markerArray with self-defined markers out of the TypoScript. Return a markerArray, if there are values for replacement.
  *
  * @return	array		The markerArray. If there aren't any value, it returns FALSE.
- * @version 3.5.0
+ * @version 3.6.1
  */
   function constant_markers() {
 
@@ -121,9 +121,10 @@ class tx_browser_pi1_wrapper
     $conf_view = $conf['views.'][$viewWiDot][$mode.'.'];
 
 
-    //////////////////////////////////////////////////////////
-    //
-    // Get the TypoScript marker array. RETURN, if there isn't any array.
+
+      //////////////////////////////////////////////////////////
+      //
+      // Get the TypoScript marker array. RETURN, if there isn't any array.
 
     $conf_marker = $conf_view['marker.'];
     if (!is_array($conf_marker))
@@ -142,32 +143,107 @@ class tx_browser_pi1_wrapper
         return false;
       }
     }
-    // Get the TypoScript marker array
+      // Get the TypoScript marker array
 
-    //////////////////////////////////////////////////////////
-    //
-    // Replece database marker in case of a current row
+      //////////////////////////////////////////////////////////
+      //
+      // Replace database marker in case of a current row
 
-    if(isset($this->pObj->elements))
+    // #12472, 110124, dwildt
+//    if(isset($this->pObj->elements))
+//    {
+//      $conf_marker = $this->pObj->objMarker->substitute_marker_recurs($conf_marker, $this->pObj->elements);
+//    }
+      // Replace database marker in case of a current row
+
+      // One dimensional array of the tsConf markers
+    $conf_oneDim_marker = t3lib_BEfunc::implodeTSParams($conf_marker);
+      // Loop through all elements (real values)
+    foreach((array) $this->pObj->elements as $key_tableField => $value_tableField)
     {
-      $conf_marker = $this->pObj->objMarker->substitute_marker_recurs($conf_marker, $this->pObj->elements);
+        // Loop through one dimensional marker array
+      foreach((array) $conf_oneDim_marker as $key => $value)
+      {
+          // Replace constant marker with real value
+        $value = str_replace('###'.strtoupper($key_tableField).'###', $value_tableField, $value);
+          // cHash marker
+        $pos = strpos($value, '&###CHASH###');
+        if (!($pos === false)) {
+          $str_path   = str_replace('&###CHASH###', '', $value);
+          $arr_url    = parse_url($str_path);
+          $cHash_md5  = $this->pObj->objZz->get_cHash($arr_url['path']);
+          $value      = str_replace('&###CHASH###', '&cHash='.$cHash_md5, $value);
+        }
+          // cHash marker
+          // session marker
+//        if(in_array('session.', $key))
+//        {
+//            // 110124, dwildt, :TODO: session
+//          $elements = $this->session_marker($value_arr_curr, $elements);
+//        }
+          // session marker
+        $conf_oneDim_marker[$key] = $value;
+      }
+        // Loop through one dimensional marker array
     }
-    // Replece database marker in case of a current row
+      // Loop through all elements (real values)
+    unset($conf_marker);
+      // Rebild tsConf marker
+    $conf_marker = $this->pObj->objTyposcript->oneDim_to_tree($conf_oneDim_marker);
+      // #12472, 110124, dwildt
 
 
-    //////////////////////////////////////////////////////////
-    //
-    // Building the marker array for replacement
 
-    foreach($conf_marker as $key_marker => $arr_marker) {
-      $str_marker = substr($key_marker, 0, strlen($key_marker) -1);
-      // I.e. $key_marker is 'title.', but we like the marker name without any dot
-      $value          = $arr_marker['value'];
-      $hashKeyMarker  = '###'.strtoupper($str_marker).'###';
-      // The key name of the marker for the markerArray in the format ###MARKER###
-      $markerArray[$hashKeyMarker] = $this->general_stdWrap($value, $arr_marker);
+      //////////////////////////////////////////////////////////
+      //
+      // Building the marker array for replacement
+
+    foreach($conf_marker as $key_marker => $arr_marker) 
+    {
+      if(substr($key_marker, -1, 1) == '.')
+      {
+          // I.e. $key_marker is 'title.', but we like the marker name without any dot
+        $str_marker     = substr($key_marker, 0, strlen($key_marker) -1);
+          // #12472, 110123, dwildt
+        $tskey          = $conf_marker[$str_marker]; // TEXT or COA
+        $hashKeyMarker  = '###'.strtoupper($str_marker).'###';
+        switch($tskey)
+        {
+          case(null):
+          case('TEXT'):
+            //var_dump('TEXT: '.$conf_marker[$str_marker]);
+            $value          = $arr_marker['value'];
+              // The key name of the marker for the markerArray in the format ###MARKER###
+            $markerArray[$hashKeyMarker] = $this->general_stdWrap($value, $arr_marker);
+//if($str_marker == 'my_datesheet2')
+//{
+//  var_dump('wrapper 184 TEXT', $value, $arr_marker, $markerArray[$hashKeyMarker]);
+//}
+            break;
+          case('COA'):
+            $markerArray[$hashKeyMarker] = $this->general_stdWrap($this->pObj->local_cObj->COBJ_ARRAY($arr_marker, $ext=''), false);
+//if($str_marker == 'my_datesheet')
+//{
+//  var_dump('wrapper 188 COA', $arr_marker, $markerArray[$hashKeyMarker]);
+//}
+            break;
+          default:
+            var_dump('ERROR: '.$conf_marker[$str_marker]);
+            if ($this->pObj->b_drs_template)
+            {
+              t3lib_div::devlog('[ERROR/TEMPLATING] Type of marker \'' . $str_marker . '\' is ' .
+                $tskey . '. But markers could by TEXT or COA only!' .
+                $this->pObj->cObj->data['uid'], $this->pObj->extKey, 3);
+              t3lib_div::devlog('[WARN/TEMPLATING] Maybe you will get an unproper rendering result.' .
+                $this->pObj->cObj->data['uid'], $this->pObj->extKey, 2);
+              t3lib_div::devlog('[INFO/TEMPLATING] Please configure.' . $str_marker, 
+                $this->pObj->cObj->data['uid'], $this->pObj->extKey, 1);
+            }
+        }
+          // #12472, 110123, dwildt
+      }
     }
-    // Building the marker array for replacement
+      // Building the marker array for replacement
 
 
 
@@ -223,6 +299,14 @@ class tx_browser_pi1_wrapper
     $viewWiDot  = $view.'.';
     $conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
 
+//// 110125, dwildt
+//if(t3lib_div::getIndpEnv('REMOTE_ADDR') =='84.184.207.88')
+//{
+//  if(isset($conf_view['tx_org_repertoire.']['image.']['layout.']['default.']['value']))
+//  {
+//    var_dump('template 1165', $conf_view['tx_org_repertoire.']['image.']['layout.']['default.']['value']);
+//  }
+//}
 
 
     //////////////////////////////////////////////////////////////
@@ -455,14 +539,15 @@ class tx_browser_pi1_wrapper
 
     // COA default type
     // Is there a COA array in the TypoScript setup?
-    if(is_array($conf['views.'][$viewWiDot][$mode.'.'][$table.'.'][$field.'.'])) {
-      // Get the COA type, set it to 'TEXT', if there isn't a value
+    if(is_array($conf['views.'][$viewWiDot][$mode.'.'][$table.'.'][$field.'.'])) 
+    {
+        // Get the COA type, set it to 'TEXT', if there isn't a value
       $lCObjType = $conf['views.'][$viewWiDot][$mode.'.'][$table.'.'][$field];
       if (!$lCObjType)
       {
         $lCObjType = 'TEXT';
       }
-      // Get the COA array
+        // Get the COA array
       $lConfCObj['10.'] = $conf['views.'][$viewWiDot][$mode.'.'][$table.'.'][$field.'.'];
     }
     // Is there a COA array in the TypoScript setup?
@@ -487,6 +572,14 @@ class tx_browser_pi1_wrapper
     // Get the local or gloabl autoconfig array - #9879
 
 
+// 110125, dwildt
+//if(t3lib_div::getIndpEnv('REMOTE_ADDR') =='84.184.207.88')
+//{
+//  if(isset($lConfCObj['10.']['layout.']['default.']['value']))
+//  {
+//    var_dump('wrapper 579', $lConfCObj['10.']['layout.']['default.']['value']);
+//  }
+//}
     $lConfCObj['10']  = $lCObjType;
     $lConfCObj['10.']['value'] = $value;
     if ($lAutoconf['marker.']['typoScript.']['replacement'])
@@ -508,6 +601,14 @@ class tx_browser_pi1_wrapper
       //Replace all ###MARKER### in Typoscript with its values.
       //if(t3lib_div::_GP('dev')) var_dump('wrapper 485', $lConfCObj);
     }
+// 110125, dwildt
+//if(t3lib_div::getIndpEnv('REMOTE_ADDR') =='84.184.207.88')
+//{
+//  if(isset($lConfCObj['10.']['layout.']['default.']['value']))
+//  {
+//    var_dump('wrapper 608', $lConfCObj['10.']['layout.']['default.']['value']);
+//  }
+//}
     if (!$lAutoconf['marker.']['typoScript.']['replacement'])
     {
       if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)

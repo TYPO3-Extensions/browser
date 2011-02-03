@@ -27,9 +27,9 @@
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
-* @subpackage    tx_browser
-* @version 3.6.0
-* @since 3.6.0
+* @subpackage    browser
+* @version 3.6.1
+* @since 3.6.1
 */
 
 
@@ -118,13 +118,49 @@ class tx_browser_extmanager
 
     return $str_prompt;
   }
+
+
+
+
+
+
+
+
+
+  /**
+ * promptExternalLinks(): Displays the quick start message.
+ *
+ * @return  string    message wrapped in HTML
+ * @since 3.6.1
+ * @version 3.6.1
+ */
+  function promptExternalLinks()
+  {
+//.message-notice
+//.message-information
+//.message-ok
+//.message-warning
+//.message-error
+
+      $str_prompt = null;
+
+      $str_prompt = $str_prompt.'
+<div class="message-body">
+  ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptExternalLinksBody'). '
+</div>';
+
+    return $str_prompt;
+  }
+
+
+
+
+
+
+
+
+
 }
-
-
-
-
-
-
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/lib/class.tx_browser_extmanager.php'])

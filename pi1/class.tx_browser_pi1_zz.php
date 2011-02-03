@@ -108,24 +108,27 @@
   // Variables set by the pObj (by class.tx_browser_pi1.php)
 
 
-  //////////////////////////////////////////////////////
-  //
-  // Variables set by this class
-
+    //////////////////////////////////////////////////////
+    //
+    // Variables set by this class
+  
+    // [Array] The current TypoScript configuration array
   var $conf       = false;
-  // [Array] The current TypoScript configuration array
+    // [Array] Temporarily array for storing piVars
   var $tmp_piVars   = false;
-  // [Array] Temporarily array for storing piVars
+    // [Array] Array with all keys of the TYPO3 array $GLOBALS
   var $arr_t3global_keys = false;
-  // [Array] Array with all keys of the TYPO3 array $GLOBALS
 
-  #10116
-  var $bool_advanced_dontReplace = true;
-  // [Boolean] Don't replace $GLOBALS
-  var $int_advanced_recursionGard = 10000;
-  // [Integer] Maximum Number for recursive loops
-  var $arr_advanced_securitySword = null;
-  // [Array] Array with security configuration for the search word
+    #10116
+    // [Boolean] Don't replace $GLOBALS
+  var $bool_advanced_dontReplace    = true;
+    // [Integer] Maximum Number for recursive loops
+  var $int_advanced_recursionGard   = 10000;
+    // [Array] Array with security configuration for the search word
+  var $arr_advanced_securitySword   = null;
+    // #12528, dwildt, 110125
+    // [Boolean] Empty marker in TypoScript will be removed
+  var $bool_advanced_3_6_0_rmMarker = false;
 
 
 
@@ -170,6 +173,7 @@
  * Prepaire piVars. Allocates values to $this->piVars and $this->pi_isOnlyFields
  *
  * @return	void
+ * @version 3.6.1
  */
   function prepairePiVars()
   {
@@ -527,17 +531,21 @@
       #10116
       if(!empty($conf_view['advanced.']))
       {
-        $int_minLenSword = $conf_view['advanced.']['security.']['sword.']['minLenWord'];
-        $this->bool_advanced_dontReplace  = $conf_view['advanced.']['performance.']['GLOBALS.']['dont_replace'];
-        $this->int_advanced_recursionGard = (int) $conf_view['advanced.']['recursionGuard'];
-        $this->arr_advanced_securitySword = $conf_view['advanced.']['security.']['sword.'];
+        $int_minLenSword                    = $conf_view['advanced.']['security.']['sword.']['minLenWord'];
+        $this->bool_advanced_dontReplace    = $conf_view['advanced.']['performance.']['GLOBALS.']['dont_replace'];
+        $this->int_advanced_recursionGard   = (int) $conf_view['advanced.']['recursionGuard'];
+        $this->arr_advanced_securitySword   = $conf_view['advanced.']['security.']['sword.'];
+          // #12528, dwildt, 110125
+        $this->bool_advanced_3_6_0_rmMarker = $conf_view['advanced.']['downgrade.']['3_6_0.marker.']['in_typoscript.']['remove_emptyMarker'];
       }
       if(empty($conf_view['advanced.']))
       {
-        $int_minLenSword = $conf['advanced.']['security.']['sword.']['minLenWord'];
-        $this->bool_advanced_dontReplace  = $conf['advanced.']['performance.']['GLOBALS.']['dont_replace'];
-        $this->int_advanced_recursionGard = (int) $conf['advanced.']['recursionGuard'];
-        $this->arr_advanced_securitySword = $conf['advanced.']['security.']['sword.'];
+        $int_minLenSword                    = $conf['advanced.']['security.']['sword.']['minLenWord'];
+        $this->bool_advanced_dontReplace    = $conf['advanced.']['performance.']['GLOBALS.']['dont_replace'];
+        $this->int_advanced_recursionGard   = (int) $conf['advanced.']['recursionGuard'];
+        $this->arr_advanced_securitySword   = $conf['advanced.']['security.']['sword.'];
+          // #12528, dwildt, 110125
+        $this->bool_advanced_3_6_0_rmMarker = $conf['advanced.']['downgrade.']['3_6_0.marker.']['in_typoscript.']['remove_emptyMarker'];
       }
 
       if (strlen(trim($this->pObj->piVars['sword'])) < $int_minLenSword)
@@ -1752,6 +1760,8 @@
  * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
  * @param	array		$elements: The current row of the SQL result
  * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ * 
+ * @version 3.6.1
  */
   function substitute_marker_recurs($arr_multi_dimensional, $elements)
   {
@@ -1937,17 +1947,18 @@
               }
               // Marker has children values
 
-              // Marker hasn't any child value
+                // Marker hasn't any child value
               if(!in_array($key_marker, $arr_children_to_devide))
               {
                 $value_marker         = $this->color_swords($key_marker, $value_marker);
-                // 3.3.4
-                //$str_value_after_loop = str_replace($str_marker, $value_marker, $str_value_after_loop);
+                  // 3.3.4
+                  //$str_value_after_loop = str_replace($str_marker, $value_marker, $str_value_after_loop);
+
                 $str_value_after_loop = str_replace($str_marker, $value_marker, $str_tmp_value);
               }
-              // Marker hasn't any child value
+                // Marker hasn't any child value
             }
-            // Value has the current marker
+              // Value has the current marker
 
             // Set boolean for workflow
             if ($str_tmp_value != $str_value_after_loop)
@@ -2003,24 +2014,38 @@
           }
 
 
-          /////////////////////////////////////
-          //
-          // Delete the markers, which weren't replaced in the multi-dimensional array
-
-          $arr_value            = array($value_arr_curr);
-          $arr_markers_in_value = $this->pObj->objTTContainer->get_marker_keys_recursive($arr_value);
-          if (is_array($arr_markers_in_value))
+            /////////////////////////////////////
+            //
+            // Delete the markers, which weren't replaced in the multi-dimensional array
+  
+          if($bool_advanced_3_6_0_rmMarker)
           {
-            if (count($arr_markers_in_value) >= 1)
+            $arr_value            = array($value_arr_curr);
+            $arr_markers_in_value = $this->pObj->objTTContainer->get_marker_keys_recursive($arr_value);
+            if (is_array($arr_markers_in_value))
             {
-              // There is one non replaced marker at least
-              foreach ($arr_markers_in_value as $key_m_i_value => $value_m_i_value)
+              if (count($arr_markers_in_value) >= 1)
               {
-                $value_arr_curr = str_replace('###'.strtoupper($key_m_i_value).'###', '', $value_arr_curr);
+//  // :TODO: 110125, dwildt
+//  if(t3lib_div::getIndpEnv('REMOTE_ADDR') =='84.184.207.88')
+//  {
+//    var_dump('zz 2028', $value_arr_curr);
+//  }
+                // There is one non replaced marker at least
+                foreach ($arr_markers_in_value as $key_m_i_value => $value_m_i_value)
+                {
+                  $value_arr_curr = str_replace('###'.strtoupper($key_m_i_value).'###', '', $value_arr_curr);
+                }
+//  // :TODO: 110125, dwildt
+//  if(t3lib_div::getIndpEnv('REMOTE_ADDR') =='84.184.207.88')
+//  {
+//    var_dump('zz 2038', $value_arr_curr);
+//  }
               }
             }
+            
           }
-          // Delete the markers, which weren't replaced in the multi-dimensional array
+            // Delete the markers, which weren't replaced in the multi-dimensional array
         }
         $arr_multi_dimensional[$key_arr_curr] = $value_arr_curr;
       }

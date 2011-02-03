@@ -89,8 +89,8 @@
 /**
  * Constructor. The method initiate the parent object
  *
- * @param	object		The parent object
- * @return	void
+ * @param object    The parent object
+ * @return  void
  */
   function __construct($parentObj)
   {
@@ -117,8 +117,8 @@
     /**
  * Returns the value for a $GLOBALS marker
  *
- * @param	string		Marker: The TSFE marker like ###TSFE:fe_user|enablecolumns|deleted###
- * @return	string		The value from the TSFE array
+ * @param string    Marker: The TSFE marker like ###TSFE:fe_user|enablecolumns|deleted###
+ * @return  string    The value from the TSFE array
  */
   function get_t3globals_value($marker)
   {
@@ -192,8 +192,8 @@
  * Syntax for $GLOBALS markers is: ###$GLOBALS KEY:element_firstLevel|element_secondLevel|...###
  * I.e:                            ###TSFE:fe_user|enablecolumns|deleted###
  *
- * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
- * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
+ * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
  */
   function substitute_t3globals_recurs($arr_multi_dimensional)
   {
@@ -384,9 +384,9 @@
     /**
  * Returns the value for a $GLOBALS marker
  *
- * @param	string		$arr_tsConf: The current TypoScript configuration
- * @param	array		$elements: Array with the element session
- * @return	string		The value from the TSFE array
+ * @param string    $arr_tsConf: The current TypoScript configuration
+ * @param array   $elements: Array with the element session
+ * @return  string    The value from the TSFE array
  */
   function session_marker($arr_tsConf, $elements)
   {
@@ -471,35 +471,37 @@ if(t3lib_div::_GP('dev')) var_dump('zz 1048', $elements);
  * Replace all markers in a multi-dimensional array like an TypoScript array with the real values from the SQL result
  * The method extends the SQL result with all piVar values. ###CHASH### has a process.
  *
- * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
- * @param	array		$elements: The current row of the SQL result
- * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
+ * @param array   $elements: The current row of the SQL result
+ * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
  */
   function substitute_marker_recurs($arr_multi_dimensional, $elements)
   {
-    $conf = $this->pObj->conf;
+    $conf       = $this->pObj->conf;
     $conf_view  = $this->pObj->conf['views.'][$this->pObj->view.'.'][$this->pObj->piVar_mode.'.'];
 
-    /////////////////////////////////////
-    //
-    // Get arr_children_to_devide as array
+
+
+      /////////////////////////////////////
+      //
+      // Get arr_children_to_devide as array
 
     $arr_children_to_devide = $this->pObj->arr_children_to_devide;
     if(!is_array($arr_children_to_devide))
     {
       $arr_children_to_devide = array();
     }
-    // Get arr_children_to_devide as array
+      // Get arr_children_to_devide as array
 
 
 
-    /////////////////////////////////////
-    //
-    // Security: recursionGuard
+      /////////////////////////////////////
+      //
+      // Security: recursionGuard
 
     static $int_levelRecurs = 0;
-
-    #10116
+    
+      #10116
     $arr_conf_advanced = $conf['advanced.'];
     if(!empty($conf_view['advanced.']))
     {
@@ -525,13 +527,13 @@ if(t3lib_div::_GP('dev')) var_dump('zz 1048', $elements);
       echo $prompt;
       exit;
     }
-    // Security: recursionGuard
+      // Security: recursionGuard
 
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // Get the children devider configuration
+      //////////////////////////////////////////////////////////////
+      //
+      // Get the children devider configuration
 
     if($int_levelRecurs == 0)
     {
@@ -545,18 +547,18 @@ if(t3lib_div::_GP('dev')) var_dump('zz 1048', $elements);
         $this->pObj->objTyposcript->set_confSqlDevider();
       }
     }
-    // Get the children devider configuration
+      // Get the children devider configuration
 
 
 
-    /////////////////////////////////////
-    //
-    // Add to the $elements the piVars
+      /////////////////////////////////////
+      //
+      // Add to the $elements the piVars
 
     foreach ($this->pObj->piVars as $key_pivar => $value_pivar)
     {
-      // dwildt, 090620: If we have multiple selects, piVars can contain arrays
-      // This array should be array of uids. We don't need any process for uids here.
+        // dwildt, 090620: If we have multiple selects, piVars can contain arrays
+        // This array should be array of uids. We don't need any process for uids here.
       if (!is_array($value_pivar))
       {
         $elements[strtolower($key_pivar)] = $value_pivar;
@@ -571,122 +573,131 @@ if(t3lib_div::_GP('dev')) var_dump('zz 1048', $elements);
         }
       }
     }
-    // Add to the $elements the piVars
+      // Add to the $elements the piVars
 
 
 
-    /////////////////////////////////////
-    //
-    // Add to the $elements the singlePid
+      /////////////////////////////////////
+      //
+      // Add to the $elements the singlePid
 
     if (isset($this->pObj->singlePid))
     {
       $elements[strtolower('singlePid')] = $this->pObj->singlePid;
     }
-    // Add to the $elements the singlePid
+      // Add to the $elements the singlePid
 
 
 
-    /////////////////////////////////////
-    //
-    // Loop through the current level of the multi-dimensional array
+      /////////////////////////////////////
+      //
+      // Loop through the current level of the multi-dimensional array
 
     foreach($arr_multi_dimensional as $key_arr_curr => $value_arr_curr)
     {
-      // 100709, fsander
-      // if(is_array(array_keys($value_arr_curr)))
+        // 100709, fsander
+        // if(is_array(array_keys($value_arr_curr)))
       if(is_array($value_arr_curr) && is_array(array_keys($value_arr_curr)))
       {
         if(in_array('session.', array_keys($value_arr_curr)))
         {
           $elements = $this->session_marker($value_arr_curr, $elements);
-
         }
       }
 
       if (is_array($value_arr_curr))
       {
-        // Loop through the next level of the multi-dimensional array (recursive)
+          // Loop through the next level of the multi-dimensional array (recursive)
         $arr_multi_dimensional[$key_arr_curr] = $this->substitute_marker_recurs($value_arr_curr, $elements);
       }
 
 
-      /////////////////////////////////////
-      //
-      // Replace markers with the values
-
+        /////////////////////////////////////
+        //
+        // Replace markers with the values
+  
       if(!is_array($value_arr_curr))
       {
-        // Do we have markers?
+          // Do we have markers?
         $b_marker = true;
         $i_marker = substr_count($value_arr_curr, '###');  // I.e: 4
         if ($i_marker == 0)
         {
+            // There isn't any '###'
           $b_marker = false;
-          // There isn't any '###'
         }
-        // Do we have markers?
+          // Do we have markers?
 
         if ($b_marker)
         {
           $str_value_after_loop = $value_arr_curr;
           $b_marker_changed     = false;
 
-          // Loop: Replace all used markers, if they have a real value
+            // Loop: Replace all used markers, if they have a real value
+//:TODO: 110123
+//if($this->pObj->objTemplate->mode == 202)
+//{
+//  var_dump('marker 640', $elements);
+//}
           foreach($elements as $key_marker => $value_marker)
           {
             $bool_marker   = false;
             $str_tmp_value = $str_value_after_loop;
             $str_marker    = '###'.strtoupper($key_marker).'###';
 
-            // Value has the current marker
+              // Value has the current marker
             if (!(strpos($str_tmp_value, $str_marker) === false))
             {
-              // Marker has children values
+                // Marker has children values
               if(in_array($key_marker, $arr_children_to_devide))
               {
-                // Get the workflow devider for children values
+                  // Get the workflow devider for children values
                 $str_sqlDeviderDisplay  = $this->pObj->objTyposcript->str_sqlDeviderDisplay;
                 $str_sqlDeviderWorkflow = $this->pObj->objTyposcript->str_sqlDeviderWorkflow;
                 $str_devider            = $str_sqlDeviderDisplay.$str_sqlDeviderWorkflow;
-                // Get the workflow devider for children values
+                  // Get the workflow devider for children values
 
-                // Get children values
+                  // Get children values
                 $arr_valuesChildren   = explode($str_devider, $value_marker);
 
-                // Multiple the values and replace the marker for every child
-                // EXAMPLE for value
-                //   Before marker replacement: &tx_trevent_pi1[uid]=###FE_USERS.UID###&###CHASH###
-                //   After  marker replacement: &tx_trevent_pi1[uid]=158&###CHASH###, ;|;&tx_trevent_pi1[uid]=155&###CHASH###
+                  // Multiple the values and replace the marker for every child
+                  // EXAMPLE for value
+                  //   Before marker replacement: &tx_trevent_pi1[uid]=###FE_USERS.UID###&###CHASH###
+                  //   After  marker replacement: &tx_trevent_pi1[uid]=158&###CHASH###, ;|;&tx_trevent_pi1[uid]=155&###CHASH###
                 $arr_lConfCObj = array();
                 foreach($arr_valuesChildren as $keyChild => $valueChild)
                 {
                   $arr_value_after_loop[] = str_replace($str_marker, $valueChild, $str_tmp_value);
                 }
                 $str_value_after_loop = implode($str_devider, $arr_value_after_loop);
-                // Multiple the values and replace the marker for every child
+                  // Multiple the values and replace the marker for every child
               }
-              // Marker has children values
+                // Marker has children values
 
-              // Marker hasn't any child value
+                // Marker hasn't any child value
               if(!in_array($key_marker, $arr_children_to_devide))
               {
                 $value_marker         = $this->pObj->objZz->color_swords($key_marker, $value_marker);
-                // 3.3.4
-                //$str_value_after_loop = str_replace($str_marker, $value_marker, $str_value_after_loop);
+                  // 3.3.4
+                  //$str_value_after_loop = str_replace($str_marker, $value_marker, $str_value_after_loop);
                 $str_value_after_loop = str_replace($str_marker, $value_marker, $str_tmp_value);
+//:TODO: 110123
+//if($this->pObj->objTemplate->mode == 202 && $key_marker == 'tx_org_cal.datetime')
+//{
+//  var_dump('marker 682', $str_marker, $key_marker, $value_marker, $str_tmp_value);
+//}
               }
-              // Marker hasn't any child value
+                // Marker hasn't any child value
             }
-            // Value has the current marker
+              // Value has the current marker
 
-            // Set boolean for workflow
+              // Set boolean for workflow
             if ($str_tmp_value != $str_value_after_loop)
             {
-              //if(t3lib_div::_GP('dev')) var_dump('zz 1375', $key_marker, $str_tmp_value, $str_value_after_loop);
+                //if(t3lib_div::_GP('dev')) var_dump('zz 1375', $key_marker, $str_tmp_value, $str_value_after_loop);
               $bool_marker = true;
             }
-            // Set boolean for workflow
+              // Set boolean for workflow
 
             $str_elements1        = htmlspecialchars($value_marker);
             if (strlen($str_elements1) > $this->pObj->i_drs_max_sql_result_len)
@@ -708,9 +719,9 @@ if(t3lib_div::_GP('dev')) var_dump('zz 1048', $elements);
               }
             }
           }
-          // Loop: Replace all used markers, if they have a real value
+            // Loop: Replace all used markers, if they have a real value
 
-          // Do we have a cHash marker?
+            // Do we have a cHash marker?
           $pos = strpos($str_value_after_loop, '&###CHASH###');
           if (!($pos === false)) {
             $str_path             = str_replace('&###CHASH###', '', $str_value_after_loop);
@@ -718,11 +729,11 @@ if(t3lib_div::_GP('dev')) var_dump('zz 1048', $elements);
             $cHash_md5            = $this->pObj->objZz->get_cHash($arr_url['path']);
             $str_value_after_loop = str_replace('&###CHASH###', '&cHash='.$cHash_md5, $str_value_after_loop);
           }
-          // Do we have a cHash marker?
+            // Do we have a cHash marker?
 
           if ($str_value_after_loop != $value_arr_curr)
           {
-            // Value has changed
+              // Value has changed
             $b_marker_changed = true;
             $value_arr_curr = $str_value_after_loop;
           }
@@ -735,9 +746,10 @@ if(t3lib_div::_GP('dev')) var_dump('zz 1048', $elements);
           }
 
 
-          /////////////////////////////////////
-          //
-          // Delete the markers, which weren't replaced in the multi-dimensional array
+
+            /////////////////////////////////////
+            //
+            // Delete the markers, which weren't replaced in the multi-dimensional array
 
           $arr_value            = array($value_arr_curr);
           $arr_markers_in_value = $this->pObj->objTTContainer->get_marker_keys_recursive($arr_value);
@@ -745,21 +757,21 @@ if(t3lib_div::_GP('dev')) var_dump('zz 1048', $elements);
           {
             if (count($arr_markers_in_value) >= 1)
             {
-              // There is one non replaced marker at least
+                // There is one non replaced marker at least
               foreach ($arr_markers_in_value as $key_m_i_value => $value_m_i_value)
               {
                 $value_arr_curr = str_replace('###'.strtoupper($key_m_i_value).'###', '', $value_arr_curr);
               }
             }
           }
-          // Delete the markers, which weren't replaced in the multi-dimensional array
+            // Delete the markers, which weren't replaced in the multi-dimensional array
         }
         $arr_multi_dimensional[$key_arr_curr] = $value_arr_curr;
       }
-      // Replace markers with the values
+        // Replace markers with the values
 
     }
-    // Loop through the current level of the multi-dimensional array
+      // Loop through the current level of the multi-dimensional array
 
     return $arr_multi_dimensional;
   }
@@ -774,9 +786,9 @@ if(t3lib_div::_GP('dev')) var_dump('zz 1048', $elements);
  * Replace all markers in a multi-dimensional array like an TypoScript array with the real values from the SQL result
  * The method extends the SQL result with all piVar values
  *
- * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
- * @param	array		$elements: The current row of the SQL result
- * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
+ * @param array   $elements: The current row of the SQL result
+ * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
  */
   function extend_marker_wi_pivars($markerArray)
   {

@@ -1239,6 +1239,8 @@ plugin.tx_browser_pi1 {
   }
   
   marker {
+      // markers can use TEXT or COA
+    my_title = TEXT
     my_title {
       value = 
       lang {
@@ -1246,6 +1248,8 @@ plugin.tx_browser_pi1 {
       }
       wrap = <h1>|</h1>
     }
+      // markers can use TEXT or COA
+    my_url = TEXT
     my_url {
       typolink {
         parameter = {page:uid}
@@ -1255,21 +1259,29 @@ plugin.tx_browser_pi1 {
         returnLast = url
       }
     }
+      // markers can use TEXT or COA
+    my_reset = TEXT
     my_reset {
       value = Reset
       lang {
         de = Zur&uuml;cksetzen
       }
     }
+      // markers can use TEXT or COA
+    my_search = TEXT
     my_search {
       value = Search
       lang {
         de = Suchen
       }
     }
+      // markers can use TEXT or COA
+    my_search_legend = TEXT
     my_search_legend {
       data = LLL:EXT:browser/pi1/locallang.xml:label_search_legend
     }
+      // markers can use TEXT or COA
+    my_week = TEXT
     my_week {
       value = week
       lang {
@@ -1918,6 +1930,16 @@ plugin.tx_browser_pi1 {
               // [String, CSV] Comma seperated values for any TCA eval value, which should order by php SORT_NUMERIC
               csv_sortNumeric = date, datetime, double2, int, num, md5, time, timesec, year
             }
+          }
+        }
+      }
+    }
+    downgrade {
+      3_6_0 {
+        marker {
+          in_typoscript {
+              // [Boolean] 1: Behaviour like <= 3.6.0; 0: Behaviour from 3.6.1
+            remove_emptyMarker = 0
           }
         }
       }

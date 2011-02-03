@@ -1,6 +1,14 @@
 3.6.1
-  11-01-10
+  11-02-03
+  Bugfixes
+  - 11785: Hooks are moved on the top in pi1/class.tx_browser_pi1_template.php 
+
+  11-01-25
   New Features
+  - 12528: Don't remove empty marker in TypoScript by default
+           TypoScript is effected: new property:
+           - advanced.downgrade.3_6_0.marker.in_typoscript.remove_emptyMarker = 0
+  - 12472: Constant markers should be COA able
   - 12006: Simulate a single record with its uid in a list view plugin
   - 12005: Blank the manual sort field by TypoScript configuration
   - 11981: Name views in TypoScript
@@ -8,6 +16,7 @@
            Thanks to Paedagogische Hochschule Zentralschweiz, http://www.phz.ch/, who 
            has ordered this feature
   Bugfixes
+  - 12471: general_stdWrap isn't local
   - 11973: DRS reported autoconfig.consolidation.sql.rows.unique is FALSE && true at the same time.
            Thanks to Christian Weiske / netresearch.de for bug repoprt and code for fixing
   - 11886: Search does not work with multiple plugins on the same page

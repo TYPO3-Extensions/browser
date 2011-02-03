@@ -327,6 +327,11 @@ class tx_browser_pi1 extends tslib_pibase {
  */
   function main($content, $conf) 
   {
+// 110125, dwildt
+//if(t3lib_div::getIndpEnv('REMOTE_ADDR') =='84.184.207.88')
+//{
+//  var_dump('browser', $conf['views.']['single.']['302.']['tx_org_repertoire.']['image.']['layout.']['default.']['value']);
+//}
 
     $this->conf = $conf;
 
