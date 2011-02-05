@@ -58,7 +58,7 @@ class tx_browser_tca
 
   /**
  * static_country_zones():  Function to use in own TCA definitions
- *                          Adds additional select items
+ *                          Removes items, which aren't matched by the current country
  *
  *                      items           reference to the array of items (label,value,icon)
  *                      config          The config array for the field.
@@ -72,7 +72,13 @@ class tx_browser_tca
  */
   function static_country_zones($params)
   {
-      // If the user stores the country id in antother field than 'static_countries'
+
+// Next line hasn't any effect outside this method
+//      // Remove all static_country_zones
+//    unset($params['items']);
+//var_dump(__CLASS__ . ' : ' . __LINE__ , $params['items']);
+
+      // If the user stores the country id in another field than 'static_countries'
     $str_tcaFieldForStaticCountries = $params['config']['itemsProcFunc_conf']['countries_are_in'];
     if(empty($str_tcaFieldForStaticCountries))
     {
