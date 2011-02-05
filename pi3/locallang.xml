@@ -17,6 +17,8 @@
       <label index="browser.browser_tut_basics_en.description">Step-by-step introduction for the basics.</label>
       <label index="browser.browser_tut_database_en.title">Tutorial Database</label>
       <label index="browser.browser_tut_database_en.description">Relation Building and special functions, provided by the Browser.</label>
+      <label index="browser.browser_tut_dev_en.title">Tutorial Development</label>
+      <label index="browser.browser_tut_dev_en.description">Develop the Browser! Use the SVN repository on forge.typo3.org.</label>
       <label index="browser.browser_tut_hooks_en.title">Tutorial Hooks</label>
       <label index="browser.browser_tut_hooks_en.description">Use hooks for your data. Handle data of any extension in your extension.</label>
       <label index="browser.browser_tut_images_en.title">Tutorial Images</label>
@@ -39,6 +41,8 @@
       <label index="browser.browser_tut_socialmedia_en.description">Use social bookmarks. Publish your data on facebook.com.</label>
       <label index="browser.browser_tut_templating_en.title">Tutorial Templating</label>
       <label index="browser.browser_tut_templating_en.description">Create your own template and your own view.</label>
+      <label index="browser.browser_tut_tca_en.title">Tutorial TCA</label>
+      <label index="browser.browser_tut_tca_en.description">Configure the TCA Browser properties. Use ready methods for TCA backend form (itemsProcFunc)</label>
       <label index="browser.browser_tut_tt_news_en.title">Tutorial tt_news Sample</label>
       <label index="browser.browser_tut_tt_news_en.description">Test the Browser out of the box with tt_news and than with your won data.</label>
       <label index="websites.subtitle">Browser Demo Websites</label>
@@ -63,6 +67,8 @@
       <label index="browser.browser_tut_basics_en.description"><![CDATA[Einführung in die Grundlagen. Die wichtigste Unterlage nach dem Manual und vor jedem anderen Tutorial. U.a.: stdWrap, HTML-Templating, Optimierung für Suchmaschinen.]]></label>
       <label index="browser.browser_tut_database_en.title">Tutorial Datenbank</label>
       <label index="browser.browser_tut_database_en.description">Datenbank-Relationen und spezielle SQL-Funktionen für hierachische Ordnungen und Synonyme.</label>
+      <label index="browser.browser_tut_dev_en.title">Tutorial Development</label>
+      <label index="browser.browser_tut_dev_en.description">Helf mit, den Browser weiterzuentwickeln! Benutze das SVN Repository auf forge.typo3.org.</label>
       <label index="browser.browser_tut_hooks_en.title">Tutorial Hooks</label>
       <label index="browser.browser_tut_hooks_en.description"><![CDATA[Benutze Hooks f&uuml;r Deine Daten. Verarbeite die Daten von jeder Extension in Deiner Extension.]]></label>
       <label index="browser.browser_tut_images_en.title">Tutorial Images - Bilder</label>
@@ -85,6 +91,8 @@
       <label index="browser.browser_tut_socialmedia_en.description"><![CDATA[Verwende Social-Bookmarks. Veröffentliche Deine Daten auf facebook.com.]]></label>
       <label index="browser.browser_tut_templating_en.title">Tutorial Templating</label>
       <label index="browser.browser_tut_templating_en.description">Gestalte Deine eigenen Templates und Views.</label>
+      <label index="browser.browser_tut_tca_en.title">Tutorial TCA</label>
+      <label index="browser.browser_tut_tca_en.description">Konfiguriere die TCA-Browser-Eigenschaften. Nutze die fertigen Methoden für TCA-Backend-Formulare (itemsProcFunc)!</label>
       <label index="browser.browser_tut_tt_news_en.title">Tutorial tt_news Sample</label>
       <label index="browser.browser_tut_tt_news_en.description">Teste den Browser "out of the box" mit tt_news. Und danach mit Deinen eigenen Daten.</label>
       <label index="websites.subtitle">Browser Demo-Websites</label>
