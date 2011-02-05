@@ -2,7 +2,7 @@
  /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008 - 2010 Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2008 - 2011 Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +28,7 @@
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage    tx_browser
- * @version 3.6.0
+ * @version 3.6.2
  */
 
  /**
@@ -95,6 +95,8 @@ class tx_browser_pi1_views
  *
  * @param string    $template: Template
  * @return  void
+ * 
+ * @version 3.6.2
  */
   function listView($template) {
 
@@ -612,6 +614,56 @@ class tx_browser_pi1_views
     }
     // Consolidate rows
 //if(t3lib_div::_GP('dev')) var_dump('views 601', array_keys(current($rows)));
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Hook for handle the consolidated rows
+
+      // #12813, dwildt, 110205
+      // This hook is used by one foreign extension at least
+    if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_consolidated']))
+    {
+        // DRS - Development Reporting System
+      if ($this->pObj->b_drs_hooks)
+      {
+        $i_extensions = count($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_consolidated']);
+        $arr_ext      = array_values($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_consolidated']);
+        $csv_ext      = implode(',', $arr_ext);
+        if ($i_extensions == 1)
+        {
+          t3lib_div::devlog('[INFO/HOOK] The third party extension '.$csv_ext.' uses the HOOK rows_filter_consolidated.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/HOOK] In case of errors or strange behaviour please check this extension!', $this->pObj->extKey, 1);
+        }
+        if ($i_extensions > 1)
+        {
+          t3lib_div::devlog('[INFO/HOOK] The third party extensions '.$csv_ext.' use the HOOK rows_filter_consolidated.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/HOOK] In case of errors or strange behaviour please check this extenions!', $this->pObj->extKey, 1);
+        }
+      }
+        // DRS - Development Reporting System
+
+      $_params = array('pObj' => &$this);
+      foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_consolidated'] as $_funcRef)
+      {
+        t3lib_div::callUserFunction($_funcRef, $_params, $this);
+      }
+    }
+      // Any foreign extension is using this hook
+      // DRS - Development Reporting System
+    if ($this->pObj->b_drs_hooks)
+    {
+      if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_consolidated']))
+      {
+        t3lib_div::devlog('[INFO/HOOK] Any third party extension doesn\'t use the HOOK rows_filter_consolidated.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[HELP/HOOK] See Tutorial Hooks: http://typo3.org/extensions/repository/view/browser_tut_hooks_en/current/', $this->pObj->extKey, 1);
+      }
+    }
+      // DRS - Development Reporting System
+      // Any foreign extension is using this hook
+    $rows = $this->pObj->rows;
+      // Hook for handle the consolidated rows
 
 
 
