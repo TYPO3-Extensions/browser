@@ -1,3 +1,7 @@
+includeLibs {
+  tx_browser_typoscript = EXT:browser/lib/class.tx_browser_typoscript.php
+}
+
 plugin.tx_browser_pi1 {
 
   // [STRING] Path to the HTML template file

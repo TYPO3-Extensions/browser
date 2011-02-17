@@ -66,67 +66,26 @@ class tx_browser_typoscript extends tslib_pibase
 
 
   /**
- * static_country_zones():  Function to use in own TCA definitions
- *                          Adds additional select items
+ * numberFormat(): format numbers with thousands seperator and decimal point
  *
- * @param string    $content: The content of the PlugIn
- * @param array   $conf: The PlugIn Configuration
- * @return  string    The content that should be displayed on the website
- *
+ * @param   string    $content: current content of TypoScript workflow
+ * @param   array     $conf: current TypoScript configuration array
+ * @since 3.6.2
+ * @version 3.6.2
+ * @return  string    formatted number
  */
-  public function static_country_zones($content = '', $conf = array())
+  public function numberFormat($content = '', $conf = array()) 
   {
     global $TSFE;
-    $local_cObj = $TSFE->cObj; // cObject
+    $local_cObj = $TSFE->cObj;
 
-//var_dump(__FILE__ . ': ' . __LINE__ . " :\n\n" . $content, $conf);
-//die('test dwildt '. '###');
-       // TS configuration
-    $lConf    = $conf['userFunc.'];
-       // get the wrapped zones
-    $content  = $local_cObj->cObjGetSingle($lConf['zones'], $lConf['zones.']);
-    
-//    return 'test';
-    return $content;
+    if (!$content) 
+    {
+      $conf     = $conf['userFunc.'];
+      $content  = $local_cObj->cObjGetSingle($conf['number'], $conf['number.']);
+    }
 
-//      // If the user stores the country id in antother field than 'static_countries'
-//    $str_tcaFieldForStaticCountries = $params['config']['itemsProcFunc_conf']['countries_are_in'];
-//    if(empty($str_tcaFieldForStaticCountries))
-//    {
-//      $str_tcaFieldForStaticCountries = 'static_countries';
-//    }
-//
-//      // get the uid of the current country
-//    $uid_StaticCountries  = $params['row'][$str_tcaFieldForStaticCountries];
-//    
-//      // Build the SELECT statement    
-//    $select   = 'static_country_zones.uid as itemKey, static_country_zones.zn_name_local as itemValue';
-//    $from     = 'static_country_zones, static_countries';
-//    $where    = 'static_countries.cn_iso_nr  = static_country_zones.zn_country_iso_nr AND static_countries.uid = '.$uid_StaticCountries;
-//    $groupBy  = null;
-//    $orderBy  = 'zn_name_local';
-//    $limit    = null;
-//    
-//      // Exexcute the SELECT statemant
-//    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select, $from, $where, $groupBy, $orderBy, $limit);
-//
-//      // Allocate key and value to the params item array
-//    while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
-//    {
-//      //var_dump($row);
-//      $params['items'][] = array($row['itemValue'], $row['itemKey']);
-//    }
-//
-//      // Free the SQL result
-//    $GLOBALS['TYPO3_DB']->sql_free_result($res);
-//    
-//      // If there isn't any state/zone, deliver an empty value
-//    if(empty($params['items']))
-//    {
-//      $params['items'][] = array('', 0);
-//    }
-//
-//    return $params;
+    return number_format($content, $conf['decimal'], $conf['dec_point'], $conf['thousands_sep']);
   }
 
 
