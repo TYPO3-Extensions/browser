@@ -1,4 +1,9 @@
 3.6.2
+  DEVELOPER VERSION (Revision 44464)
+  11-01-03
+  Bugfixes
+  * 13008: Workflow devider will not be consolidated
+
   DEVELOPER VERSION (Revision 44462)
   11-01-03
   Consolidation
