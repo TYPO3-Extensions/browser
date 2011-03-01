@@ -311,7 +311,7 @@ class tx_browser_pi1_typoscript
     if (is_array($this->conf_view['filter.']))
     {
       $arr_prompt = array();
-      foreach($this->conf_view['filter.'] as $tableWiDot => $arrFields)
+      foreach((array) $this->conf_view['filter.'] as $tableWiDot => $arrFields)
       {
         // Get piVar name
         $tableField           = $tableWiDot.key($arrFields);
@@ -660,7 +660,7 @@ class tx_browser_pi1_typoscript
         // SELECT has aliases
         if (!(strpos($conf_sql['select'], " AS ") === false))
         {
-          foreach($arr_addToSelect as $tableField)
+          foreach((array) $arr_addToSelect as $tableField)
           {
             $conf_sql['select'] = $conf_sql['select'].', '.$tableField.' AS \''.$tableField.'\'';
           }
@@ -930,7 +930,7 @@ class tx_browser_pi1_typoscript
     $arrTmp[0]  = $arrCsv;
     $arrTmp     = $this->pObj->objSqlFun->replace_tablealias($arrTmp);
     $arrCsv     = $arrTmp[0];
-    foreach($arrCsv as $tableField) {
+    foreach((array) $arrCsv as $tableField) {
       list($table, $field) = explode('.', $tableField);
       $table = trim($table);
       $field = trim($field);

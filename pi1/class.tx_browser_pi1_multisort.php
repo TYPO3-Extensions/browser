@@ -175,7 +175,7 @@ class tx_browser_pi1_multisort
     $firstKey             = key($rows);
     $arr_rmKeys           = array_diff($arrOrderByWoAscDesc, array_keys($rows[$firstKey]));
     $arrOrderByWoAscDesc  = array_flip($arrOrderByWoAscDesc);
-    foreach($arr_rmKeys as $key)
+    foreach((array) $arr_rmKeys as $key)
     {
       unset($arrOrderByWoAscDesc[$key]);
       if ($this->pObj->b_drs_error)
@@ -195,7 +195,7 @@ class tx_browser_pi1_multisort
     // Building arguments for array_multisort - Part I
 
     $int_count = 0;
-    foreach($arrOrderByWiAscDesc as $key => $strOrderByField)
+    foreach((array) $arrOrderByWiAscDesc as $key => $strOrderByField)
     {
       if($int_count > 6)
       {
@@ -237,7 +237,7 @@ class tx_browser_pi1_multisort
 
     $i_count_args     = 0;
     $bool_drsWarnUtf8 = false; // 101009
-    foreach($args as $key => $arr_tableField_order)
+    foreach((array) $args as $key => $arr_tableField_order)
     {
       $i_count_rows   = 0;
       foreach ($rows as $row => $elements)
@@ -278,7 +278,7 @@ class tx_browser_pi1_multisort
       $arr_constant[3] = 'SORT_DESC';
       $arr_constant[4] = 'SORT_ASC';
       $str_prompt = 'array_multisort(<br />';
-      foreach($args as $arr_items)
+      foreach((array) $args as $arr_items)
       {
         $str_prompt = $str_prompt.'&nbsp;&nbsp;\''.$arr_items['table.field'].'\', '.$arr_constant[$arr_items['int_orderFlag']].', '.
                       $arr_constant[$arr_items['int_typeFlag']].', <br >';
@@ -383,9 +383,9 @@ class tx_browser_pi1_multisort
     if (is_array($this->pObj->objSqlAut->arr_relations_mm_simple['MM'])) {
       if(is_array($this->pObj->objSqlAut->arr_relations_mm_simple['MM']))
       {
-        foreach($this->pObj->objSqlAut->arr_relations_mm_simple['MM'] as $arr_relation_tables)
+        foreach((array) $this->pObj->objSqlAut->arr_relations_mm_simple['MM'] as $arr_relation_tables)
         {
-          foreach($arr_relation_tables as $str_relation_table => $str_foreign_table)
+          foreach((array) $arr_relation_tables as $str_relation_table => $str_foreign_table)
           {
             $arr_mm_tables[$str_relation_table][]     = $str_foreign_table;
             $arr_foreign_tables[$str_foreign_table][] = $str_relation_table;
@@ -403,7 +403,7 @@ class tx_browser_pi1_multisort
 
     $i_counter          = 0;
     $arr_check_elements = null;
-    foreach($arrOrderByWiAscDesc as $tableFieldOrder)
+    foreach((array) $arrOrderByWiAscDesc as $tableFieldOrder)
     {
       // Our multisort handles six array at maximum
       if($i_counter > 6)
@@ -505,10 +505,10 @@ class tx_browser_pi1_multisort
     // 101012, dwildt
     if(is_array($arr_check_elements))
     {
-      foreach($arr_check_elements as $dest_table => $arr_curr_elements)
+      foreach((array) $arr_check_elements as $dest_table => $arr_curr_elements)
       {
         $i_first_elements = $arr_curr_elements[0];
-        foreach($arr_curr_elements as $i_curr_elements)
+        foreach((array) $arr_curr_elements as $i_curr_elements)
         {
           if($i_first_elements != $i_curr_elements)
           {
@@ -536,10 +536,10 @@ class tx_browser_pi1_multisort
     // 101012, dwildt
     if(is_array($arr_order))
     {
-      foreach($arr_order as $table => $arr_field_order)
+      foreach((array) $arr_order as $table => $arr_field_order)
       {
         $arr_field_order = $this->multisort_upto_6_level($arr_field_order);
-        foreach($arr_field_order as $key => $arr_multisort)
+        foreach((array) $arr_field_order as $key => $arr_multisort)
         {
           reset($arr_multisort);
           $tableField = key($arr_multisort);

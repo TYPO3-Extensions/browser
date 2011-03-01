@@ -197,7 +197,7 @@ class tx_browser_pi1_seo
             $metaKeywd = $this->pObj->objWrapper->wrapTableFields($metaKeywd, $elements);
           }
           $arrKeywd = explode(',', $metaKeywd);
-          foreach($arrKeywd as $key => $value) {
+          foreach((array) $arrKeywd as $key => $value) {
             if (trim($value))
             {
               $cleanedArrKeywd[$key] = trim($value);

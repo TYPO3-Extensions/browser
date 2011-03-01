@@ -179,7 +179,7 @@ class tx_browser_pi1_consolidate
     }
       // Do we have a showUid not for the local table but for the foreign table? 3.3.3
 
-    foreach($rows as $elements)
+    foreach((array) $rows as $elements)
     {
       $arr_localTable_uid[] = $elements[$localTable.'.uid'];
     }
@@ -217,7 +217,7 @@ class tx_browser_pi1_consolidate
     reset($rows);
     $int_keyFirstRow = key($rows);
     $arr_tableFields = array_keys($rows[$int_keyFirstRow]);
-    foreach($arr_tableFields as $tableField)
+    foreach((array) $arr_tableFields as $tableField)
     {
       list($table, $field) = explode('.', $tableField);
       if($table != $localTable)
@@ -294,9 +294,9 @@ class tx_browser_pi1_consolidate
     $arr_mm_tables = array();
       // fsander, 101023    -- check if we have an array first
     if (is_array($this->pObj->objSqlAut->arr_relations_mm_simple['MM'])) {
-      foreach($this->pObj->objSqlAut->arr_relations_mm_simple['MM'] as $arr_relation_tables)
+      foreach((array) $this->pObj->objSqlAut->arr_relations_mm_simple['MM'] as $arr_relation_tables)
       {
-        foreach($arr_relation_tables as $str_relation_table => $str_foreign_table)
+        foreach((array) $arr_relation_tables as $str_relation_table => $str_foreign_table)
         {
           $arr_mm_tables[$str_relation_table][]     = $str_foreign_table;
           $arr_foreign_tables[$str_foreign_table][] = $str_relation_table;
@@ -313,11 +313,11 @@ class tx_browser_pi1_consolidate
 
     $arr_localTable_foreignTables = false;
     $str_localTableUid            = $localTable.'.uid';
-    foreach($arr_localTable_uid as $localUid)
+    foreach((array) $arr_localTable_uid as $localUid)
     {
-      foreach($arr_foreignTables as $foreignTable)
+      foreach((array) $arr_foreignTables as $foreignTable)
       {
-        foreach($rows as $row => $elements)
+        foreach((array) $rows as $row => $elements)
         {
           if ($elements[$str_localTableUid] == $localUid)
           {
@@ -346,7 +346,7 @@ class tx_browser_pi1_consolidate
               }
             }
             // 1st Loop
-            foreach($elements as $tableField => $element)
+            foreach((array) $elements as $tableField => $element)
             {
               list($table, $field) = explode('.', $tableField);
               if ($bool_newId)
@@ -1003,7 +1003,7 @@ class tx_browser_pi1_consolidate
     //
     // Store every field with a relation in the $arr_fields_wi_relation
 
-    foreach($this->arr_fields_current as $tableField)
+    foreach((array) $this->arr_fields_current as $tableField)
     {
       list($table, $field) = explode('.', $tableField);
 
@@ -1071,7 +1071,7 @@ class tx_browser_pi1_consolidate
     $viewWiDot = $view.'.';
     $conf_view = $conf['views.'][$viewWiDot][$mode.'.'];
 
-    foreach($arr_fields_wi_relation as $tableField => $arr_relation_info)
+    foreach((array) $arr_fields_wi_relation as $tableField => $arr_relation_info)
     {
       // Get TypoScript configuration of current table.field
       list($table, $field)  = explode('.', $tableField);
@@ -1125,7 +1125,7 @@ class tx_browser_pi1_consolidate
     $arr_tsConf_TEXT_path_wi_marker = null;
 
     // Loop: Each table.field with relation
-    foreach($arr_fields_wi_relation as $tableField => $arr_relation_info)
+    foreach((array) $arr_fields_wi_relation as $tableField => $arr_relation_info)
     {
       $bool_handle = true;
 
@@ -1166,7 +1166,7 @@ class tx_browser_pi1_consolidate
       if($bool_handle)
       {
         $arr_tsConf_value = null;
-        foreach($arr_result as $tsConfkey_path => $tsConf_value)
+        foreach((array) $arr_result as $tsConfkey_path => $tsConf_value)
         {
           $str_searchFor    = '/.value$/';
           preg_match($str_searchFor, $tsConfkey_path, $arr_result);
@@ -1186,7 +1186,7 @@ class tx_browser_pi1_consolidate
       // Get all tsConf TEXT arrays with values with markers for foreign tables
       if($bool_handle)
       {
-        foreach($arr_tsConf_value as $key_value => $value_value)
+        foreach((array) $arr_tsConf_value as $key_value => $value_value)
         {
           $key_TEXT = substr($key_value, 0, strlen($key_value) - strlen('.value'));
           if($arr_ts_one_dimension[$key_TEXT] == 'TEXT')
@@ -1270,7 +1270,7 @@ class tx_browser_pi1_consolidate
 
 
     // Loop: Each TEXT ts conf with marker for foreign tables
-    foreach($arr_tsConf_TEXT_path_wi_marker as $key_TEXT => $value_TEXT)
+    foreach((array) $arr_tsConf_TEXT_path_wi_marker as $key_TEXT => $value_TEXT)
     {
 
       $bool_handle = true;
@@ -1295,7 +1295,7 @@ class tx_browser_pi1_consolidate
         $arr_ts_manipulate = null;
         // Loop: Each ts element of the current view
         $bool_rm_text = false;
-        foreach($conf_oneDim_view as $key_oneDim => $value_oneDim)
+        foreach((array) $conf_oneDim_view as $key_oneDim => $value_oneDim)
         {
           // Array with all matched ts elements
           $pos = strpos($key_oneDim, $key_TEXT.'.');
@@ -1390,9 +1390,9 @@ class tx_browser_pi1_consolidate
       if($bool_handle)
       {
         $int_counter = 10;
-        foreach($rows_foreignTable as $row_foreignTable)
+        foreach((array) $rows_foreignTable as $row_foreignTable)
         {
-          foreach($row_foreignTable as $field_ft => $value_ft)
+          foreach((array) $row_foreignTable as $field_ft => $value_ft)
           {
             $arr_markers[$int_counter]['###'.strtoupper($foreign_table).'.'.strtoupper($field_ft).'###'] = $value_ft;
           }
@@ -1410,12 +1410,12 @@ class tx_browser_pi1_consolidate
         // COA array
         $arr_new_ts_code[$conf_view_path.$key_TEXT] = 'COA';
         // Loop: Each TEXT array
-        foreach($arr_markers as $int_element => $arr_marker)
+        foreach((array) $arr_markers as $int_element => $arr_marker)
         {
           // TEXT array
           $arr_new_ts_code[$conf_view_path.$key_TEXT.'.'.$int_element] = 'TEXT';
           // Loop: Each TEXT element
-          foreach($arr_ts_manipulate as $key_manipulate => $value_manipulate)
+          foreach((array) $arr_ts_manipulate as $key_manipulate => $value_manipulate)
           {
             $key_short = substr($key_manipulate, strlen($key_TEXT.'.'));
             $value_manipulate = $this->pObj->cObj->substituteMarkerArray($value_manipulate, $arr_marker);
@@ -1430,7 +1430,7 @@ class tx_browser_pi1_consolidate
             {
               $str_tsType = $conf_oneDim_view[$key_TEXT.'.browser.devider'];
               $arr_new_ts_code[$conf_view_path.$key_TEXT.'.'.($int_element + 1)] = $str_tsType;
-              foreach($conf_oneDim_view as $key_oneDim => $value_oneDim)
+              foreach((array) $conf_oneDim_view as $key_oneDim => $value_oneDim)
               {
                 // Array with all matched ts elements
                 $pos = strpos($key_oneDim, $key_TEXT.'.browser.devider.');
@@ -1452,7 +1452,7 @@ class tx_browser_pi1_consolidate
                 // 100921, dwildt, Bugfix in t3lib_BEfunc::implodeTSParams
                 // See http://bugs.typo3.org/view.php?id=15757 implodeTSParams(): numeric keys will be renumbered
                 $arr_tsConf = t3lib_BEfunc::implodeTSParams($arr_conf_advanced['sql.']['devider.']['childrenRecords.']);
-                foreach($arr_tsConf as $key_ts => $value_ts)
+                foreach((array) $arr_tsConf as $key_ts => $value_ts)
                 {
                   $arr_new_ts_code[$conf_view_path.$key_TEXT.'.'.($int_element + 1).'.'.$key_ts] = $value_ts;
                   // Array with all matched ts elements

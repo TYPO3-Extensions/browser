@@ -285,7 +285,7 @@ class tx_browser_pi1_socialmedia
     // Set the piVar for the record uid
 
     // Set additional Parameter and the cHash
-    foreach($this->pObj->piVars as $paramKey => $paramValue) {
+    foreach((array) $this->pObj->piVars as $paramKey => $paramValue) {
       $additionalParams .= '&'.$this->pObj->prefixId.'['.$paramKey.']='.$paramValue;
     }
     $cHash_calc = $this->pObj->objZz->get_cHash('&id='.$singlePid.$additionalParams);
@@ -510,7 +510,7 @@ class tx_browser_pi1_socialmedia
 
     // Loop through the bookmarks, which are selected in the flexform plugin
     $arr_item = false;
-    foreach($arr_currBookmarks as $str_currBookmark)
+    foreach((array) $arr_currBookmarks as $str_currBookmark)
     {
       // Bookmark isn't a proper TypoScript array
       if(!is_array($arr_tsBookmarks[$str_currBookmark.'.']) || count($arr_tsBookmarks[$str_currBookmark.'.']) < 1)

@@ -1929,7 +1929,7 @@ class tx_browser_pi1_filter {
     {
       $arr_removePiVars[] = 'plugin';
     }
-    foreach($arr_removePiVars as $str_removePiVars)
+    foreach((array) $arr_removePiVars as $str_removePiVars)
     {
       if(isset($this->pObj->piVars[$str_removePiVars]))
       {
@@ -1955,7 +1955,7 @@ class tx_browser_pi1_filter {
 
 
     $additionalParams = null;
-    foreach($this->pObj->piVars as $paramKey => $paramValue)
+    foreach((array) $this->pObj->piVars as $paramKey => $paramValue)
     {
       if(!empty($paramValue))
       {

@@ -202,7 +202,7 @@ class tx_browser_pi1_sql_auto
     $arr_mmSorting = false;
     if(is_array($this->pObj->arrConsolidate['select']['mmSortingTableFields']))
     {
-      foreach($this->pObj->arrConsolidate['select']['mmSortingTableFields'] as $tableField)
+      foreach((array) $this->pObj->arrConsolidate['select']['mmSortingTableFields'] as $tableField)
       {
         list($table, $field) = explode('.', $tableField);
         $arr_mmSorting[] = $tableField.' AS \''.$tableField.'\'';
@@ -226,7 +226,7 @@ class tx_browser_pi1_sql_auto
     $str_pid_list = str_replace(',', ', ', $str_pid_list);
     // For human readable
 
-    foreach($arr_return['data'] as $str_query_part => $str_statement)
+    foreach((array) $arr_return['data'] as $str_query_part => $str_statement)
     {
       $str_statement                        = str_replace('###PID_LIST###', $str_pid_list,                  $str_statement);
       $str_statement                        = str_replace('###UID###',      $this->pObj->piVars['showUid'], $str_statement);
@@ -359,7 +359,7 @@ class tx_browser_pi1_sql_auto
     $arr_addTableUids = false;
     if(is_array($this->pObj->arrConsolidate['addedTableFields']))
     {
-      foreach($this->pObj->arrConsolidate['addedTableFields'] as $tableField)
+      foreach((array) $this->pObj->arrConsolidate['addedTableFields'] as $tableField)
       {
         list($table, $field) = explode('.', $tableField);
         if ($field == 'uid')
@@ -1003,7 +1003,7 @@ class tx_browser_pi1_sql_auto
       // Convert Array
       // from: ["tt_news."]["tt_news_cat_mm"] = "tt_news_cat"
       // to:   ["tt_news"]["tt_news_cat_mm"] = "tt_news_cat"
-      foreach($tables as $localTable => $localFields)
+      foreach((array) $tables as $localTable => $localFields)
       {
         $str_dot = false;
         if(substr($localTable, -1) == '.')
@@ -1039,7 +1039,7 @@ class tx_browser_pi1_sql_auto
           }
         }
         // Load the TCA, if we don't have an table.columns array
-        foreach($foreignTables as $mmTable => $foreignTable)
+        foreach((array) $foreignTables as $mmTable => $foreignTable)
         {
           if (in_array($foreignTable, array_keys($this->pObj->arr_realTables_arrFields)))
           {
@@ -1163,9 +1163,9 @@ class tx_browser_pi1_sql_auto
       // Convert Array
       // from: ["tt_news"]["cruser_id"] = "be_users"
       // to:   ["tt_news.cruser_id"]    = "be_users"
-      foreach($tables as $keyTable => $arrFields)
+      foreach((array) $tables as $keyTable => $arrFields)
       {
-        foreach($arrFields as $keyField => $valueField)
+        foreach((array) $arrFields as $keyField => $valueField)
         {
           $str_dot = false;
           if(substr($keyTable, -1) != '.')
@@ -1177,7 +1177,7 @@ class tx_browser_pi1_sql_auto
         }
         unset($tables[$keyTable]);
       }
-      foreach($tables as $localTableField => $foreignTable)
+      foreach((array) $tables as $localTableField => $foreignTable)
       {
         list ($localTable, $localField)     = explode('.', $localTableField);
           // #11650, cweiske, 101223
@@ -1358,7 +1358,7 @@ class tx_browser_pi1_sql_auto
       // The user has to add a wildcard
       if($this->pObj->bool_searchWildcardsManual)
       {
-        foreach($arr_swords_and as $key => $value)
+        foreach((array) $arr_swords_and as $key => $value)
         {
           // First char of search word isn't a wildcard
           $int_firstChar = 0;
@@ -2122,7 +2122,7 @@ class tx_browser_pi1_sql_auto
         t3lib_div::devlog('[INFO/SQL] Nothing to do. There is no relation.', $this->pObj->extKey, 0);
       }
       $tables = $this->pObj->arr_realTables_arrFields;
-      foreach($tables as $tableKey => $tableValue)
+      foreach((array) $tables as $tableKey => $tableValue)
       {
         t3lib_div::loadTCA($tableKey);
         if ($this->pObj->b_drs_tca)
@@ -2221,7 +2221,7 @@ class tx_browser_pi1_sql_auto
 
     // get config.type (should be select and/or group)
     $arrTCAtypes = explode(',', $allowedTCAconfigTypesCSV);
-    foreach($arrTCAtypes as $key => $value)
+    foreach((array) $arrTCAtypes as $key => $value)
     {
       $arrTCAtypes[trim($key)] = trim($value);
     }
@@ -2234,7 +2234,7 @@ class tx_browser_pi1_sql_auto
     if ($dontUseFieldsCSV)
     {
       $arrNoColumns = explode(',', $dontUseFieldsCSV);
-      foreach($arrNoColumns as $key => $value)
+      foreach((array) $arrNoColumns as $key => $value)
       {
         list($table, $field) = explode('.', $value);
         $arrNoColumns[][trim($table)] = trim($field);
@@ -2258,7 +2258,7 @@ class tx_browser_pi1_sql_auto
     // Loop through the TCA of the foreign tables
 
     $tables = $this->pObj->arr_realTables_arrFields;
-    foreach($tables as $tableKey => $tableValue)
+    foreach((array) $tables as $tableKey => $tableValue)
     {
       t3lib_div::loadTCA($tableKey);
       if ($this->pObj->b_drs_tca)
@@ -2268,7 +2268,7 @@ class tx_browser_pi1_sql_auto
       $arrColumns = $GLOBALS['TCA'][$tableKey]['columns'];
       if (is_array($arrColumns))
       {
-        foreach($arrColumns as $columnsKey => $columnsValue)
+        foreach((array) $arrColumns as $columnsKey => $columnsValue)
         {
           $config = $columnsValue['config'];
 
@@ -2347,7 +2347,7 @@ class tx_browser_pi1_sql_auto
             if ($boolRelation && is_array($arrNoColumns))
             {
               // We should build a relation, but we have to check if it isn't one of the forbidden table.fields
-              foreach($arrNoColumns as $ncKey => $ncValue)
+              foreach((array) $arrNoColumns as $ncKey => $ncValue)
               {
                 // var_dump($tableKey, $ncValue[$tableKey], $columnsKey);
                 // -> "tx_civserv_service", "sv_organisation", "sv_similar_services"

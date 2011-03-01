@@ -1029,7 +1029,7 @@ class tx_browser_pi2_checker
 
     $str_list        = false;
     $bool_foreignPid = false;
-    foreach($rows as $row)
+    foreach((array) $rows as $row)
     {
       // Hidden value
       $str_hidden = false;

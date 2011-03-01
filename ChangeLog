@@ -1,152 +1,160 @@
 3.6.2
-  DEVELOPER VERSION (Revision 43794)
+  DEVELOPER VERSION (Revision 44455)
+  11-01-03
+  Bugfixes
+  * 13464: foreach( ... ) is moved to foreach((array) ... )
+  Consolidation
+  * 00000: substitute_marker_recurs() was double: in marker and in zz
+           substitute_marker_recurs() is removed in zz
+  
+  DEVELOPER VERSION (Revision 43907)
   11-02-17
   New Fetaures
-  - 13145: Number formats: userfunc
+  * 13145: Number formats: userfunc
   Improvement
-  - 00000: Integration of Tutorial Development in the tutorial list (pi3). Revision 43139
-  - 00000: Integration of Tutorial TCA in the tutorial list (pi3). Revision 43139
+  * 00000: Integration of Tutorial Development in the tutorial list (pi3). Revision 43139
+  * 00000: Integration of Tutorial TCA in the tutorial list (pi3). Revision 43139
 
 3.6.1
   11-02-03 
   Revision 43034
   Bugfixes
-  - 11785: Hooks are moved on the top in pi1/class.tx_browser_pi1_template.php 
+  * 11785: Hooks are moved on the top in pi1/class.tx_browser_pi1_template.php 
 
   11-01-25
   New Features
-  - 12756: Images got full tt_content support
-  - 12707: Dynamic states/zones in the TCA backend
-  - 12528: Don't remove empty marker in TypoScript by default
+  * 12756: Images got full tt_content support
+  * 12707: Dynamic states/zones in the TCA backend
+  * 12528: Don't remove empty marker in TypoScript by default
            TypoScript is effected: new property:
-           - advanced.downgrade.3_6_0.marker.in_typoscript.remove_emptyMarker = 0
-  - 12472: Constant markers should be COA able
-  - 12006: Simulate a single record with its uid in a list view plugin
-  - 12005: Blank the manual sort field by TypoScript configuration
-  - 11981: Name views in TypoScript
-  - 11603: Configuration to hide rows with empty values
+           * advanced.downgrade.3_6_0.marker.in_typoscript.remove_emptyMarker = 0
+  * 12472: Constant markers should be COA able
+  * 12006: Simulate a single record with its uid in a list view plugin
+  * 12005: Blank the manual sort field by TypoScript configuration
+  * 11981: Name views in TypoScript
+  * 11603: Configuration to hide rows with empty values
            Thanks to Paedagogische Hochschule Zentralschweiz, http://www.phz.ch/, who 
            has ordered this feature
   Bugfixes
-  - 12471: general_stdWrap isn't local
-  - 11973: DRS reported autoconfig.consolidation.sql.rows.unique is FALSE && true at the same time.
+  * 12471: general_stdWrap isn't local
+  * 11973: DRS reported autoconfig.consolidation.sql.rows.unique is FALSE && true at the same time.
            Thanks to Christian Weiske / netresearch.de for bug repoprt and code for fixing
-  - 11886: Search does not work with multiple plugins on the same page
+  * 11886: Search does not work with multiple plugins on the same page
            Thanks to Christian Weiske / netresearch.de for bug report and code for fixing
-  - 11870: orderBy ( SUBSTRING(field FROM 3)) does not work
+  * 11870: orderBy ( SUBSTRING(field FROM 3)) does not work
            Thanks to Christian Weiske / netresearch.de for bug report and code for fixing
-  - 11844: Filter: local table without value in select box
+  * 11844: Filter: local table without value in select box
   Tasks
-  - 11847: OrderBy box: proper selected
-  - 11846: Integrate hook tutorial
+  * 11847: OrderBy box: proper selected
+  * 11846: Integrate hook tutorial
   Development
-  - 11666: No public code repository. 
+  * 11666: No public code repository. 
            Thanks to Christian Weiske / netresearch.de for support
 
 3.6.0
   10-12-29
   New Features
-  - 11785: Hooks
-  - 11650: Simple relations: Configurable foreign table field. Thanks to cweiske
-  - 11580: Configurable: Should the search respect filters?
-  - 11523: Hide the update report for public
-  - 11402: Filter for areas
-  - 11401: Filter for local table
-  - 11211: Wrap for image and image caption with the image number
-  - 11204: If a record hasn't any image, a alternate image will be displayed by default
-  -  8807: Category Menu
+  * 11785: Hooks
+  * 11650: Simple relations: Configurable foreign table field. Thanks to cweiske
+  * 11580: Configurable: Should the search respect filters?
+  * 11523: Hide the update report for public
+  * 11402: Filter for areas
+  * 11401: Filter for local table
+  * 11211: Wrap for image and image caption with the image number
+  * 11204: If a record hasn't any image, a alternate image will be displayed by default
+  *  8807: Category Menu
   Task
-  - 10858: Conflict between page browser and views
+  * 10858: Conflict between page browser and views
   Bugfixes
-  - 11579: Unproper sword test fails in case of _GET
-  - 11430: bug in whereClause bugfix: " AND " gets unconditionally removed. Thanks to cweiske
-  - 11429: no enablecolumns (enablefields) leads to sql error. Thanks to cweiske
-  - 11418: Wrong error message: "You didn't have uploaded any template!" Thanks to cweiske
-  - 11407: Ordering filter items hasn't any effect
-  - 10762: ###CLASS### won't be replaced
-  - 00000: Only one filter was handled (Version 3.5.903)
+  * 11579: Unproper sword test fails in case of _GET
+  * 11430: bug in whereClause bugfix: " AND " gets unconditionally removed. Thanks to cweiske
+  * 11429: no enablecolumns (enablefields) leads to sql error. Thanks to cweiske
+  * 11418: Wrong error message: "You didn't have uploaded any template!" Thanks to cweiske
+  * 11407: Ordering filter items hasn't any effect
+  * 10762: ###CLASS### won't be replaced
+  * 00000: Only one filter was handled (Version 3.5.903)
   
 3.5.0
   10-10-31
   New Features
-  - 10221: RSS-Feed
-  -  9659: AJAX support, plugin tab [AJAX]
-    - default.tmpl, default_ul.tmpl, sample_ttnews.tmpl
-      - reset button got the class reset
-      - listarea is wrapped with <div class="listarea">...</div>
-  -  8335: Filter with multiple select
-  -  8337: Filter with checkbox and radio buttons
-  -  9408: Display the number of hits in the filter items
-  - 10171: Plugin tab [Search / Filter]
-  - 10172: Plugin tab [development]
+  * 10221: RSS-Feed
+  *  9659: AJAX support, plugin tab [AJAX]
+    * default.tmpl, default_ul.tmpl, sample_ttnews.tmpl
+      * reset button got the class reset
+      * listarea is wrapped with <div class="listarea">...</div>
+  *  8335: Filter with multiple select
+  *  8337: Filter with checkbox and radio buttons
+  *  9408: Display the number of hits in the filter items
+  * 10171: Plugin tab [Search / Filter]
+  * 10172: Plugin tab [development]
   Improvements
-  - 00000: Improved templating
-  - 00000: Manual completely revised
-  - 00000: New tutorials AJAX, RSS, tt_news_sample
-  - 00000: Some tutorials revised
+  * 00000: Improved templating
+  * 00000: Manual completely revised
+  * 00000: New tutorials AJAX, RSS, tt_news_sample
+  * 00000: Some tutorials revised
   Maintenance
-  - 00000: template ###TEMPLATE_SINGLE_IMGTXT### is removed
+  * 00000: template ###TEMPLATE_SINGLE_IMGTXT### is removed
   
 3.4.5
   10-10-07
   New Features
-  - 10116: Array Advanced is local too
-  - 10067: Wizard Icons
+  * 10116: Array Advanced is local too
+  * 10067: Wizard Icons
   Bugfixes
-  - 10111: Human readable format changes sql query
-  - 10054: A-Z-Browser: Default Tab doesn't get selected property
+  * 10111: Human readable format changes sql query
+  * 10054: A-Z-Browser: Default Tab doesn't get selected property
 
 3.4.4
   10-10-04
   New Features
-  - 9917: Selecting a random sample from a set of rows
+  * 9917: Selecting a random sample from a set of rows
            Browser Plugin no cache
-  - 9879: Enable local autoconfiguration array (for each plugin)
-  - 9838: Simplifying relation building. Enabling several relations to one foreign table.
+  * 9879: Enable local autoconfiguration array (for each plugin)
+  * 9838: Simplifying relation building. Enabling several relations to one foreign table.
   Bugfixes
-  - 9872: multisort_mm_children fails in case of one children
+  * 9872: multisort_mm_children fails in case of one children
   Maintenance
-  - 9860: Consolidation Code
+  * 9860: Consolidation Code
 
 3.4.3
   10-09-13
   New Features
-  - 9697: Relation building: Extend it for MM_opposite_field
-  - 9727: Order children records in a single view by mm sorting
+  * 9697: Relation building: Extend it for MM_opposite_field
+  * 9727: Order children records in a single view by mm sorting
   Improvements
-  - 0000: TCA default label detection is extended in TypoScript and Plugin
-  - imagecaption, imageseo, documents
+  * 0000: TCA default label detection is extended in TypoScript and Plugin
+  * imagecaption, imageseo, documents
   Bugfixes
-  - 9708: ereg_replace PHP 5.3 instead of preg_replace
-  - 9689: Plugin template isn't view secure
-  - 9596: Several Plugins +++ Social Bookmarks are missing
+  * 9708: ereg_replace PHP 5.3 instead of preg_replace
+  * 9689: Plugin template isn't view secure
+  * 9596: Several Plugins +++ Social Bookmarks are missing
   Tasks
-  - 9695: Plugin [Templating] field [data query]: Empty value is missing
+  * 9695: Plugin [Templating] field [data query]: Empty value is missing
   Credits
-  - 9708: to Thomas Rehhoff for preg_replace <> ereg_replace (PHP 5.3)
+  * 9708: to Thomas Rehhoff for preg_replace <> ereg_replace (PHP 5.3)
 
 3.4.2
   10-09-04
   New Features
-  - 9683: Selectable list views from TypoScript in the plugin
-  - 9599: Manual configuring of piVar showuid
-  - 9461: tt_news-sample-template available by the plugin
-  - 9458: Destination pid for search form
-  - Browser got a favicon.ico. See /res/favicon.ico
+  * 9683: Selectable list views from TypoScript in the plugin
+  * 9599: Manual configuring of piVar showuid
+  * 9461: tt_news-sample-template available by the plugin
+  * 9458: Destination pid for search form
+  * Browser got a favicon.ico. See /res/favicon.ico
   Suggestion
-  - 9495: pagebrowser pointer in new search
-  - 9419: Upload Folder with auto slash
-  - 8434: Group list of values in single view
+  * 9495: pagebrowser pointer in new search
+  * 9419: Upload Folder with auto slash
+  * 8434: Group list of values in single view
   Improvements
-  - xml-files got CDATA statements
-  - Plugin Manuals (pi3) contains links to the latest manuals and demo websites
+  * xml-files got CDATA statements
+  * Plugin Manuals (pi3) contains links to the latest manuals and demo websites
   Bugfixes
-  - 9418: Wrong path to the upoad folder
-  - 9024: Fix was lost from 3.4.1 dev to 3.4.1 publish
-  - 8589: Fix was lost from 3.4.1 dev to 3.4.1 publish
-  - 8856: Fix was lost from 3.4.1 dev to 3.4.1 publish
-  - 8368: Fix was lost from 3.4.1 dev to 3.4.1 publish
-  - 8333: Fix was lost from 3.4.1 dev to 3.4.1 publish
+  * 9418: Wrong path to the upoad folder
+  * 9024: Fix was lost from 3.4.1 dev to 3.4.1 publish
+  * 8589: Fix was lost from 3.4.1 dev to 3.4.1 publish
+  * 8856: Fix was lost from 3.4.1 dev to 3.4.1 publish
+  * 8368: Fix was lost from 3.4.1 dev to 3.4.1 publish
+  * 8333: Fix was lost from 3.4.1 dev to 3.4.1 publish
   Credits
     Thanks to Frank Sander for the code snippets:
     8333, 8434, 9495, 9495
@@ -154,417 +162,417 @@
 3.4.1
   10-08-18
   New Feature
-  - 9026: Editors are enabled to select layouts / TypoScript snippets by drop down menu
-  - 8856: First/Last/Odd/Even Classes for Items
+  * 9026: Editors are enabled to select layouts / TypoScript snippets by drop down menu
+  * 8856: First/Last/Odd/Even Classes for Items
   Bugfixes
-  - 9025: Records won't be consolidated proper
-  - 9024: Filter and localization: default language only
-  - 8589: Javascript error message if no single view is configured needs to be encoded
-  - 8523: Localized children records won't be grouped
-  - 8368: Filters in URL to singleview -> overwriting tablefields
-  - 8333: special chars in A-Z Browser's item Pivar and class
-  - 0000: array_keys(): The first argument should be an array in class.tx_browser_pi1_zz.php line 1548
+  * 9025: Records won't be consolidated proper
+  * 9024: Filter and localization: default language only
+  * 8589: Javascript error message if no single view is configured needs to be encoded
+  * 8523: Localized children records won't be grouped
+  * 8368: Filters in URL to singleview -> overwriting tablefields
+  * 8333: special chars in A-Z Browser's item Pivar and class
+  * 0000: array_keys(): The first argument should be an array in class.tx_browser_pi1_zz.php line 1548
 
 3.4.0
   10-07-01
   New Feature
-  - Social Media: Support for publishing social bookmarks and data with the facebook-API
+  * Social Media: Support for publishing social bookmarks and data with the facebook-API
   Bugfix
-  - 8553: Filter doesn't look for pid list
-  - 8343: first tablerow contains ###CLASS##
+  * 8553: Filter doesn't look for pid list
+  * 8343: first tablerow contains ###CLASS##
 
 3.3.7
   10-06-17
   New Features
-  - groupBy: Field got the stdWrap property
-  - Query parts got the stdWrap property
-  - Override options for select, from, where, andWhere, orderBy and groupBy
+  * groupBy: Field got the stdWrap property
+  * Query parts got the stdWrap property
+  * Override options for select, from, where, andWhere, orderBy and groupBy
 
 3.3.6
   10-06-09
   Bugfix
-  - wrapper.php: $this->pObj->arr_children_to_devide will handle as array only
-  - zz.php:      $this->pObj->arr_children_to_devide will handle as array only
+  * wrapper.php: $this->pObj->arr_children_to_devide will handle as array only
+  * zz.php:      $this->pObj->arr_children_to_devide will handle as array only
 
 3.3.5
   10-06-06
   Improvements
-  - Plugin: Tab [Advanced] moved to [Marker & RealUrl]
-    - The section RealUrl enables to configure, if parameters should used in links to a single view or not.
-  - Plugin: Tab [Listview] enables to configure, if swords should be colored in single views
-  - TypoScript code is shrinking 
+  * Plugin: Tab [Advanced] moved to [Marker & RealUrl]
+    * The section RealUrl enables to configure, if parameters should used in links to a single view or not.
+  * Plugin: Tab [Listview] enables to configure, if swords should be colored in single views
+  * TypoScript code is shrinking 
 
 3.3.4
   10-06-04
   New Feature
-  - Multiple Plugins: Each plugin is enabled to handle the piVars from any other plugin.
+  * Multiple Plugins: Each plugin is enabled to handle the piVars from any other plugin.
   Bugfix
-  - Multiple plugins displayed alls views in single mode
-  - Colored swords: Swords didn't get any color in a single view
+  * Multiple plugins displayed alls views in single mode
+  * Colored swords: Swords didn't get any color in a single view
 
 3.3.3
   10-06-01
   New Features
-  - Children got a TypoScript configuration child by child
-  - The new TypoScript property localTable.showUid4TableField enables a select query with the showuid for a foreign table
+  * Children got a TypoScript configuration child by child
+  * The new TypoScript property localTable.showUid4TableField enables a select query with the showuid for a foreign table
   Development
-  - TypoScript property is removed: advanced.development.version.3_1_0.orderByPHP
+  * TypoScript property is removed: advanced.development.version.3_1_0.orderByPHP
 
 3.3.2
   10-05-12
   Improvement
-  - 7730: Search with manual wildcards is enabled
+  * 7730: Search with manual wildcards is enabled
 
 3.3.1
   10-05-04
   Bugfix
-  - Invalid argument supplied for foreach() in class.tx_browser_pi1_sql_functions.php on line 2245
+  * Invalid argument supplied for foreach((array) ) in class.tx_browser_pi1_sql_functions.php on line 2245
 
 3.3.0
   10-05-01
   New Features
-  - Data can display by groups in list views
-  - Plugin got the registers [Templating] and [TCA]
+  * Data can display by groups in list views
+  * Plugin got the registers [Templating] and [TCA]
   Improvements
-  - Ordering by php: database fields will evaluated for an automatic setting of SORT_STRING and SORT_NUMERIC.
+  * Ordering by php: database fields will evaluated for an automatic setting of SORT_STRING and SORT_NUMERIC.
     The properties in the TCA will evaluated and the field types in the database will evaluated.
     Ordering by any sorting field is now possible.
-  - Tutorial for Configuríng TCA
-  - 7529, 7158: Items in select boxes of the filters became XHTML conform: htmlSpecialChars is true by default
-  - TypoScript property: advanced.sql.devider.childrenRecords
+  * Tutorial for Configuríng TCA
+  * 7529, 7158: Items in select boxes of the filters became XHTML conform: htmlSpecialChars is true by default
+  * TypoScript property: advanced.sql.devider.childrenRecords
     Devider between values of children records can be configured by TypoScript
   Bugfixes
-  - 7582: Conflict between default tab of a-z-browser and empty list by start is solved
-  - 7159: Filter: Select boxes got the same id
-  - 7264: Filter: SQL query had a wrong order of order and group
-  - 7526: Index browser: Tab [All] didn't keep piVars in mind
-  - 6782: timestamps weren't rendered as timestamps in some cases
+  * 7582: Conflict between default tab of a-z-browser and empty list by start is solved
+  * 7159: Filter: Select boxes got the same id
+  * 7264: Filter: SQL query had a wrong order of order and group
+  * 7526: Index browser: Tab [All] didn't keep piVars in mind
+  * 6782: timestamps weren't rendered as timestamps in some cases
 
 3.2.1
   10-02-20
   New Features
-  - Section Check List in the Manual
+  * Section Check List in the Manual
   Improvements
-  - Check List is enhanced in the plugin
+  * Check List is enhanced in the plugin
   Bugfix
-  - 6468, 6518: desc becomes DESC in fieldnames 
+  * 6468, 6518: desc becomes DESC in fieldnames 
 
 3.2.0
   10-02-17
   New Subversion
-  - New Features
-    - Plugin Browser-Tutorials
-    - Plugins got the tab Check-List
+  * New Features
+    * Plugin Browser-Tutorials
+    * Plugins got the tab Check-List
   Bugfix
-  - 6468: Conflict between asc or desc and similar field names
+  * 6468: Conflict between asc or desc and similar field names
 
 3.1.6
   10-02-09
   Bugfix
-  - 5273: The default A-Z-tab isn't displayed in URL now
+  * 5273: The default A-Z-tab isn't displayed in URL now
     See Reference: plugin.tx_browser_pi1.a-z_Browser.defaultTab.display_in_url
-  - 5945, 6363: CSS/A-Z-Browser: All tabs were last tabs
+  * 5945, 6363: CSS/A-Z-Browser: All tabs were last tabs
   Improvement
-  - Search is extended with operators "and" and "not".
-  - displayList.display.searchform.resultPhrase.searchFor.and moved to
+  * Search is extended with operators "and" and "not".
+  * displayList.display.searchform.resultPhrase.searchFor.and moved to
     displayList.display.searchform.and
-  - a-z_Browser.defaultTab.realURL moved to a-z_Browser.defaultTab.display_in_url
+  * a-z_Browser.defaultTab.realURL moved to a-z_Browser.defaultTab.display_in_url
 
 3.1.5
   10-01-21
   Bugfix
-  - 5922: PHP array error in context with missing filters
+  * 5922: PHP array error in context with missing filters
   Update Manual
-  - Illustrations and link to the Case Study "Grüne Autos"  
+  * Illustrations and link to the Case Study "Grüne Autos"  
   Improvement
-  - Marker ###minLenSword### moved to ###advanced.security.sword.minLenWord###
+  * Marker ###minLenSword### moved to ###advanced.security.sword.minLenWord###
 
 3.1.4
   09-12-18
   Improvement
-  - Plugin got the limit field
-  - Enabling the using of tables with translated fields in case of default language
-  - EmptyPageAtStart: PageBrowser won't be displayed
-  - ###SINGLEPID### is a system marker
-  - pageBrowser.results_at_a_time is replaced by the plugin
-  - Foreign tables can get their own pidList: See foreignTables.your_table.csvPidList
-  - Plugin value titleWrap got priority over TypoSCript value
-  - RealURL, search and filter are maintained
+  * Plugin got the limit field
+  * Enabling the using of tables with translated fields in case of default language
+  * EmptyPageAtStart: PageBrowser won't be displayed
+  * ###SINGLEPID### is a system marker
+  * pageBrowser.results_at_a_time is replaced by the plugin
+  * Foreign tables can get their own pidList: See foreignTables.your_table.csvPidList
+  * Plugin value titleWrap got priority over TypoSCript value
+  * RealURL, search and filter are maintained
   
 3.1.3
   09-12-03
   Update Tutorial
-  - Adding missing images, adding a new key image
+  * Adding missing images, adding a new key image
   
 3.1.2
   09-12-02
   New Features
-  - List views have access to every table.field marker. Individual layouts in list views are possible.
-  - Select box for ordering records
-  - TYPO3 $GLOBALS are accessible from TypoScript. Markers will replaced with their values
+  * List views have access to every table.field marker. Individual layouts in list views are possible.
+  * Select box for ordering records
+  * TYPO3 $GLOBALS are accessible from TypoScript. Markers will replaced with their values
   New Tutorial
-  - Browser Tutorial Marker en: Design your own layout.
+  * Browser Tutorial Marker en: Design your own layout.
   Improvement
-  - default.tmpl and default_ul.tmpl are extended with the subpart ###TEMPLATE_SELECTBOX###
-  - Search: resultphrase is extended with the minLen hint
+  * default.tmpl and default_ul.tmpl are extended with the subpart ###TEMPLATE_SELECTBOX###
+  * Search: resultphrase is extended with the minLen hint
   Bugfixing
-  - Some columns left empty in list views under certain conditions
+  * Some columns left empty in list views under certain conditions
 
 3.0.5
   09-10-28
   Improvement
-  - piVar azTab is removed, if there isn't used any a-z-browser
+  * piVar azTab is removed, if there isn't used any a-z-browser
   Bugfix
-  - Localization
-    - Orthography and syntax mistakes with exclude and mergeIfNotBlank
-    - Counting mismatch for plugins
-    - Replace bug in case of localization but non localized foreign tables 
+  * Localization
+    * Orthography and syntax mistakes with exclude and mergeIfNotBlank
+    * Counting mismatch for plugins
+    * Replace bug in case of localization but non localized foreign tables 
 
 3.0.4
   09-10-13
   Development
-  - Filters got the override property for select, from and groupBy
+  * Filters got the override property for select, from and groupBy
 
 3.0.3
   09-10-11
   Development
-  - mtime() is used upto TYPO3 4.2, getDifferenceToStarttime() is used from TYPO3 4.3
-  - Update PHP API data
+  * mtime() is used upto TYPO3 4.2, getDifferenceToStarttime() is used from TYPO3 4.3
+  * Update PHP API data
   Bugfix
-  - Adding $GLOBALS['TSFE']->includeTCA()
+  * Adding $GLOBALS['TSFE']->includeTCA()
 
 3.0.2
   09-10-09
   Maintenance
-  - Browser suggests to install the Tutorial Browser and Development Log.
+  * Browser suggests to install the Tutorial Browser and Development Log.
   
 3.0.1
   09-10-08
   Major Version Release
-  - New Features
-    - Multiple Plugins
-      - Browser Plugins are unlimited on every page
-    - Localization
-      - Browser can handle localized records
-    - Filter
-      - You can add selectboxes to the search field
-    - TypoSCript Update Assistent
-    - Self-defined Markers
-    - Sword has AND functionality by default
-    - Flexform
-      - You can configure some properties with the Browser plugin and without TypoScript 
-  - Maintenance
-    - Consolidation
-      - Browser will display only one record in the result list even if
+  * New Features
+    * Multiple Plugins
+      * Browser Plugins are unlimited on every page
+    * Localization
+      * Browser can handle localized records
+    * Filter
+      * You can add selectboxes to the search field
+    * TypoSCript Update Assistent
+    * Self-defined Markers
+    * Sword has AND functionality by default
+    * Flexform
+      * You can configure some properties with the Browser plugin and without TypoScript 
+  * Maintenance
+    * Consolidation
+      * Browser will display only one record in the result list even if
         there a more than one children record. Values of children records 
         will become a CSV list. 
-    - Single views display 1:n relations
-    - A-Z-Browser tabs got the stdWrap property
-  - Security
-    - Enhanced security handling of piVars
-    - If a record uid isn't propper, the page will be redirected form the single to the list view.
+    * Single views display 1:n relations
+    * A-Z-Browser tabs got the stdWrap property
+  * Security
+    * Enhanced security handling of piVars
+    * If a record uid isn't propper, the page will be redirected form the single to the list view.
 
 2.6.9
   09-10-04
   Development
-  - Results got the limit property
+  * Results got the limit property
   Maintenance
-  - Browser for Virtual Civil Services got an own extension key.
+  * Browser for Virtual Civil Services got an own extension key.
 
 2.6.8
   09-10-02
   Status
-  - Changed from alpha to beta
+  * Changed from alpha to beta
   Development
-  - Simple relations become proper
-  - Some Properties moved from TypoScript to the Plugin
+  * Simple relations become proper
+  * Some Properties moved from TypoScript to the Plugin
 
 2.6.6
   09-09-25
   Maintenance
-  - Browser for BZD Staff Directory got an own extension key 
+  * Browser for BZD Staff Directory got an own extension key 
 
 2.6.4
   09-09-07
   Maintenance
-  - Localization Development
+  * Localization Development
   TypoScript
-  - a-z_Browser.defaultTab: Type is changed from string to integer. Value is now the key of the default tab and not the name.
+  * a-z_Browser.defaultTab: Type is changed from string to integer. Value is now the key of the default tab and not the name.
 
 2.5.9
   09-08-26
   Maintenance
-  - devlog  
+  * devlog  
 
 2.5.5
   09-06-27
   Maintanance
-  - We removed the TypoScript porperty (array): views.[list || single].X.override.
+  * We removed the TypoScript porperty (array): views.[list || single].X.override.
     NOTICE: We added it and more in 3.3.7 again
-  - Clean up PHP code
+  * Clean up PHP code
 
 2.3.8
   09-06-17
   Maintenance
-  - Update the Manual
-  - Update tutorial files
+  * Update the Manual
+  * Update tutorial files
   
 2.3.7
   09-06-12
   Maintenance
-  - Simplification of real URL configuration
+  * Simplification of real URL configuration
   
 2.3.6
   09-06-11
   Bugfixing
-  - In case of simulateStaticDocuments there was a URL rewriting with a double host
+  * In case of simulateStaticDocuments there was a URL rewriting with a double host
   
 2.3.5
   09-06-01
   Maintenance
-  - Extending the A-Z-Browser with the defaultTabWrap property
-  - Extending SQL manual mode for single views
-  - Integration of the function hierarchically order
+  * Extending the A-Z-Browser with the defaultTabWrap property
+  * Extending SQL manual mode for single views
+  * Integration of the function hierarchically order
   Documentation
-  - Extending the manual with examples for
-    - the synonym function
-    - switching the HTML default template
+  * Extending the manual with examples for
+    * the synonym function
+    * switching the HTML default template
   Templates
-  - Extending the browser with a second template default_ul.tmpl. 
+  * Extending the browser with a second template default_ul.tmpl. 
     It wraps lists as unordered lists instead of tables.
   Bugfixing
-  - There wasn't any error message in case of a missing select property but an empty content
-  - ###UID### and ###PID_LIST### weren't replaced in andWhere clauses in SQL auto mode
+  * There wasn't any error message in case of a missing select property but an empty content
+  * ###UID### and ###PID_LIST### weren't replaced in andWhere clauses in SQL auto mode
 
 2.3.4
   09-05-28
   Maintenance
-  - Update the manual
+  * Update the manual
 
 2.3.3
   09-05-27
   Maintenance
-  - Simplifying the SQL query in case there is a configured search but there isn't any sword
+  * Simplifying the SQL query in case there is a configured search but there isn't any sword
   Bugfixing
-  - There was a bug in case of using relation.mm and LEFT JOIN and more than two related tables.
-  - There was a bug with handleAs['document']
+  * There was a bug in case of using relation.mm and LEFT JOIN and more than two related tables.
+  * There was a bug with handleAs['document']
 
 2.3.1
   09-05-06
   New Features
-  - Synonyms
-  - Hierarchical order
+  * Synonyms
+  * Hierarchical order
 
 2.2.1
   09-04-30
   New Features
-  - SQL query definition with JOINS manually
+  * SQL query definition with JOINS manually
 
 2.1.3
   09-04-20
-  - A-Z-Browser can process utf-8 database und multi-byte charset in PHP
+  * A-Z-Browser can process utf-8 database und multi-byte charset in PHP
 
 2.1.1
   09-04-03
   New Features
-  - TT_CONTAINER - Typoscript Template Container (TTC). Templating with Typoscript only.
-  - DRS - Development Reporting System
-  - The SEO meta tags title, keywords and description got the TypoScript stdWrap property.
+  * TT_CONTAINER - Typoscript Template Container (TTC). Templating with Typoscript only.
+  * DRS - Development Reporting System
+  * The SEO meta tags title, keywords and description got the TypoScript stdWrap property.
 
 2.0.1
   09-03-11
   Major Version Release
-    - New Features 
-      - SQL override 
-        - You can override the system generated SQL clauses
-          SELECT, FROM, WHERE and ORDER BY by TypoScript
-          Warning: Feature is removed with version 2.5.5
-      - Hooks 
-        - You can override any SQL query and result in third party extensions
-    - New Workflow
-      - SQL 
-        - Changing from FULL JOIN to LEFT JOIN. Please take a look
-          in the chapter update in the manual.  
-    - Maintainance
-      - HTML-Template: The A-Z-Browser got a <div>-Tag
+  * New Features 
+    * SQL override 
+      * You can override the system generated SQL clauses
+        SELECT, FROM, WHERE and ORDER BY by TypoScript
+        Warning: Feature is removed with version 2.5.5
+    * Hooks 
+      * You can override any SQL query and result in third party extensions
+  * New Workflow
+    * SQL 
+      * Changing from FULL JOIN to LEFT JOIN. Please take a look
+        in the chapter update in the manual.  
+  * Maintainance
+    * HTML-Template: The A-Z-Browser got a <div>-Tag
 
 1.1.3
   09-03-05
   Maintenance
-    - Code cleaning 
+  * Code cleaning 
 
 1.1.2
   09-02-25
   Bugfixing
-    - There was a mistake while counting cells.
-    - CSS classes weren't propper.
+  * There was a mistake while counting cells.
+  * CSS classes weren't propper.
 
 1.1.1
   09-02-23
   New Features
-    - A-Z-Browser. Configureable by typoscript
-      - Typoscript example in res/a-z_Browser.txt
-    - Default CSS stylesheet
+  * A-Z-Browser. Configureable by typoscript
+    * Typoscript example in res/a-z_Browser.txt
+  * Default CSS stylesheet
   Manual
-    - Updated
+  * Updated
   Maintenance
-    - Code cleaning 
+  * Code cleaning 
 
 1.0.3
   09-02-17
   Bugfix
-    - TCA internal_type: There was a bug in case of relation and a missing
-      internal_type field in the TCA
+  * TCA internal_type: There was a bug in case of relation and a missing
+    internal_type field in the TCA
 
 1.0.2
   08-12-15
   Improvement
-    - Error Messages
-    - TCA config.type group
+  * Error Messages
+  * TCA config.type group
 
 1.0.1
   08-11-18
   Major Version Release
-    - New Tools like SQL Autorelation Building and Field Autowrapping
-    - Renaming extkey from fe_db_browser to browser
+  * New Tools like SQL Autorelation Building and Field Autowrapping
+  * Renaming extkey from fe_db_browser to browser
 
 0.1.3 (fe_db_browser)
   08-11-18
   Bugfixing
-    - <a>-tag will be wrapped before stdWrap now
+  * <a>-tag will be wrapped before stdWrap now
 
 0.1.2 (fe_db_browser)
   08-11-10
   Bugfixing
-    - Failure in an MySQL-Statement
+  * Failure in an MySQL-Statement
 
 0.1.1 (fe_db_browser)
   08-11-09
   Development
-    - Adding the TS property andWhere
+  * Adding the TS property andWhere
   Maintenance
-    - Adding a method index in class.tx_fedbbrowser_pi1.php
+  * Adding a method index in class.tx_fedbbrowser_pi1.php
   Bugfixing
-    - The HTML tag <tbody> was lost.
+  * The HTML tag <tbody> was lost.
 
 0.1.0 - 0.0.7 (fe_db_browser)
   08-10-21
   Development
-    - SEO: Search Engine Optimisation
-    - realUrl: Optimizing
-    - Adding ext_php_api.dat
+  * SEO: Search Engine Optimisation
+  * realUrl: Optimizing
+  * Adding ext_php_api.dat
 
 0.0.7 (fe_db_browser)
   08-10-20
   Optimizing
-    - HTML classes
-    - HTML template
+  * HTML classes
+  * HTML template
   Sorry, the manual missed in 0.0.6
 
 0.0.6 - 0.0.5 (fe_db_browser)
   08-10-17
   Bugfixing
-    - Images were not rendered in list view if there wasn't a single view.
+  * Images were not rendered in list view if there wasn't a single view.
 
 0.0.4 (fe_db_browser)
   08-09-25

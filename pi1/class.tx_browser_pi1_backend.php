@@ -140,10 +140,10 @@ class tx_browser_pi1_backend
       if (is_array($arr_extensions) && count($arr_extensions))
       {
           // Loop through all extensions and templates
-        foreach($arr_extensions as $extensionWiDot => $arr_templates)
+        foreach((array) $arr_extensions as $extensionWiDot => $arr_templates)
         {
           $extension = substr($extensionWiDot, 0, strlen($extensionWiDot) - 1);
-          foreach($arr_templates as $arr_template)
+          foreach((array) $arr_templates as $arr_template)
           {
             if($arr_template['file'] == $str_pathToTmplFile)
             {
@@ -170,7 +170,7 @@ class tx_browser_pi1_backend
 
       // #11981, 110106, dwildt
       // Remove any value, keep arrays
-    foreach($arr_listviews as $key => $view)
+    foreach((array) $arr_listviews as $key => $view)
     {
       if(substr($key, -1, 1) != '.')
       {
@@ -182,7 +182,7 @@ class tx_browser_pi1_backend
       // Loop through all listviews
     if (is_array($arr_listviews) && count($arr_listviews))
     {
-      foreach($arr_listviews as $key_listview => $arr_listview)
+      foreach((array) $arr_listviews as $key_listview => $arr_listview)
       {
         $key_listview = strtolower(substr($key_listview, 0, -1));
         $bool_handleCurrList = true;
@@ -257,7 +257,7 @@ class tx_browser_pi1_backend
       // Loop: bookmarks
     if (is_array($arr_bookmarks) && count($arr_bookmarks))
     {
-      foreach($arr_bookmarks as $key_bookmark => $arr_bookmark)
+      foreach((array) $arr_bookmarks as $key_bookmark => $arr_bookmark)
       {
         $key_bookmark = strtolower(substr($key_bookmark, 0, -1));
         if($arr_bookmark['name'])
@@ -316,7 +316,7 @@ class tx_browser_pi1_backend
       // Loop through all dataQuerys
     if (is_array($arr_dataQuery) && count($arr_dataQuery))
     {
-      foreach($arr_dataQuery as $key_dataQuery => $arr_dataQuery)
+      foreach((array) $arr_dataQuery as $key_dataQuery => $arr_dataQuery)
       {
         // First item should be an empty value
         // #9695, 100912
@@ -388,10 +388,10 @@ class tx_browser_pi1_backend
     }
 
       // Loop through all extensions and templates
-    foreach($arr_extensions as $extensionWiDot => $arr_templates)
+    foreach((array) $arr_extensions as $extensionWiDot => $arr_templates)
     {
       $extension = substr($extensionWiDot, 0, strlen($extensionWiDot) - 1);
-      foreach($arr_templates as $arr_template)
+      foreach((array) $arr_templates as $arr_template)
       {
 //var_dump($extensionWiDot, $arr_template['name'], $arr_template['file']);
         $label = $arr_template['name'].' ('.$extension.')';

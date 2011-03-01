@@ -401,7 +401,7 @@ class tx_browser_pi1_navi
     $tsDisplayTitleTag = $this->conf['a-z_Browser.']['display.']['tabHrefTitle'];
 
 
-    foreach($lArrTabs as $key_tab => $arr_tab)
+    foreach((array) $lArrTabs as $key_tab => $arr_tab)
     {
       $str_label  = $lArrTabs[$key_tab]['label'];
       // #8333, fsander
@@ -1594,7 +1594,7 @@ class tx_browser_pi1_navi
     }
     if(is_array($this->conf['views.'][$this->view.'.']))
     {
-      foreach($this->conf['views.'][$this->view.'.'] as $keyView => $arrView)
+      foreach((array) $this->conf['views.'][$this->view.'.'] as $keyView => $arrView)
       {
         // We don't need the typoscript array dot
         $mode                       = substr($keyView, 0, strlen($keyView) - 1);

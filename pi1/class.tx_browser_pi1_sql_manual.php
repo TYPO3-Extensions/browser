@@ -246,7 +246,7 @@
       // Is there a andWhere statement from the filter class?
       if (is_array($this->pObj->arr_andWhereFilter))
       {
-        foreach($this->pObj->arr_andWhereFilter as $tableField => $str_andWhere)
+        foreach((array) $this->pObj->arr_andWhereFilter as $tableField => $str_andWhere)
         {
           $str_where .= $str_andWhere;
         }
@@ -293,7 +293,7 @@
       $str_joins_filter  = '';
       if (is_array($this->pObj->arr_andWhereFilter))
       {
-        foreach($this->pObj->arr_andWhereFilter as $tableField => $str_andWhere)
+        foreach((array) $this->pObj->arr_andWhereFilter as $tableField => $str_andWhere)
         {
           list($table, $field) = explode('.', $tableField);
           $arr_joins_filter = $conf_view['filter.'][$table.'.'][$field.'.']['joins.'];
@@ -441,7 +441,7 @@
       $str_pid_list = $this->pObj->pidList;
       $str_pid_list = str_replace(',', ', ', $str_pid_list);
       // For human readable
-      foreach($arr_return['data'] as $str_query_part => $str_statement)
+      foreach((array) $arr_return['data'] as $str_query_part => $str_statement)
       {
         $str_statement                        = str_replace('###PID_LIST###', $str_pid_list,                  $str_statement);
         $str_statement                        = str_replace('###UID###',      $this->pObj->piVars['showUid'], $str_statement);

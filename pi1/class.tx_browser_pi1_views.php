@@ -645,8 +645,9 @@ class tx_browser_pi1_views
         // DRS - Development Reporting System
 
       $_params = array('pObj' => &$this);
-      foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_consolidated'] as $_funcRef)
+      foreach((array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_consolidated'] as $_funcRef)
       {
+//:TODO:
         t3lib_div::callUserFunction($_funcRef, $_params, $this);
       }
     }
@@ -848,7 +849,7 @@ class tx_browser_pi1_views
         // DRS - Development Reporting System
 
       //:todo: Proper Hook
-//      foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['browser_list'] as $_classRef)
+//      foreach((array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['browser_list'] as $_classRef)
 //      {
 //        $_procObj   = &t3lib_div::getUserObj($_classRef);
 //        $this->pObj = $_procObj->browser_list($arr_data, $this);
@@ -889,7 +890,7 @@ class tx_browser_pi1_views
     }
     $arrLinkToSingleFields = explode(',', $csvLinkToSingle);
     $this->pObj->arrLinkToSingle = array();
-    foreach($arrLinkToSingleFields as $arrLinkToSingleField)
+    foreach((array) $arrLinkToSingleFields as $arrLinkToSingleField)
     {
       list($table, $field) = explode('.', trim($arrLinkToSingleField));
       $this->pObj->arrLinkToSingle[] = $table.'.'.$field;
@@ -1499,7 +1500,7 @@ class tx_browser_pi1_views
         }
       }
 // :todo: Proper Hook
-//      foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['browser_single'] as $_classRef)
+//      foreach((array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['browser_single'] as $_classRef)
 //      {
 //        $_procObj   = &t3lib_div::getUserObj($_classRef);
 //        $this       = $_procObj->browser_single($arr_data, $this);

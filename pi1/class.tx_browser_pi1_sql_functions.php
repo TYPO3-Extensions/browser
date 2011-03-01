@@ -990,7 +990,7 @@ class tx_browser_pi1_sql_functions
         return $arr_tablefields;
       }
 
-      foreach($arr_tablefields as $key => $value) {
+      foreach((array) $arr_tablefields as $key => $value) {
         //$value                 = $this->pObj->objZz->cleanCSV_from_lr_and_doubleSpace($value);
         if (is_array($conf_view['select.']['deal_as_table.']))
         {
@@ -1293,7 +1293,7 @@ class tx_browser_pi1_sql_functions
       {
         $boolMaskOdd = false;
       }
-      foreach($arr_andWhere_withMaskedStrings as $key => $value)
+      foreach((array) $arr_andWhere_withMaskedStrings as $key => $value)
       {
         switch($key%2)
         {
@@ -1342,7 +1342,7 @@ class tx_browser_pi1_sql_functions
       // array[4] = "fo.pid"
       // array[5] = "IN"
       // array[6] = "(###PID_LIST###)"
-      foreach($arr_andWhere_items as $arr_items => $item)
+      foreach((array) $arr_andWhere_items as $arr_items => $item)
       {
         // Do we have an item with one dot exactly?
         $arr_item_wi_dot = explode('.', $item);
@@ -1659,7 +1659,7 @@ class tx_browser_pi1_sql_functions
       // Is eval field SORT_NUMERIC?
       $csv_tcaEvalField = $GLOBALS['TCA'][$table]['columns'][$field]['config']['eval'];
       $arr_tcaEvalField = $this->pObj->objZz->getCSVasArray($csv_tcaEvalField);
-      foreach($arr_tcaEvalField as $str_eval)
+      foreach((array) $arr_tcaEvalField as $str_eval)
       {
         if(in_array($str_eval, $arr_evalFieldsSortnumeric))
         {
@@ -1914,7 +1914,7 @@ class tx_browser_pi1_sql_functions
       {
         $str_deleted_tablefield = $arr_tablefields[0];
         unset($arr_tablefields[0]);
-        foreach($arr_tablefields as $key => $value)
+        foreach((array) $arr_tablefields as $key => $value)
         {
           $arr_tablefields[$key] = trim($value);
         }
@@ -2121,7 +2121,7 @@ class tx_browser_pi1_sql_functions
       {
         $str_deleted_tablefield = $arr_tablefields[0];
         unset($arr_tablefields[0]);
-        foreach($arr_tablefields as $key => $value)
+        foreach((array) $arr_tablefields as $key => $value)
         {
           $arr_tablefields[$key] = trim($value);
         }
@@ -2259,7 +2259,7 @@ class tx_browser_pi1_sql_functions
 
     $lConfCObj['10']  = $str_tsValue;
     $lConfCObj['10.'] = $arr_tsArray;
-    $lConfCObj        = $this->pObj->objZz->substitute_marker_recurs($lConfCObj, $elements);
+    $lConfCObj        = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $elements);
     $lConfCObj        = $this->pObj->objZz->substitute_t3globals_recurs($lConfCObj);
     $str_tsValue      = $this->pObj->objWrapper->general_stdWrap($this->pObj->local_cObj->COBJ_ARRAY($lConfCObj, $ext=''), false);
 

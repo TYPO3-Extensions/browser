@@ -1068,7 +1068,7 @@ class tx_browser_pi1_localization
           $langPidField = $GLOBALS['TCA'][$tableLoc]['ctrl']['transOrigPointerField'];  // I.e: l18n_parent
 
           // Loop through the records with localization information
-          foreach($arr_uid as $uid_localize => $rec_localize)
+          foreach((array) $arr_uid as $uid_localize => $rec_localize)
           {
 //var_dump('localization 1008', $uid_localize, $rec_localize);
             $uid_default        = $rec_localize[$langPidField];
@@ -1183,12 +1183,12 @@ class tx_browser_pi1_localization
       $sys_language_uid = $GLOBALS['TCA'][$localTable]['ctrl']['languageField'];  // I.e. tx_wine_main.sys_language_uid
 
       $arr_default_lang_ol = FALSE;
-      foreach($rows as $row => $elements)
+      foreach((array) $rows as $row => $elements)
       {
         // Default language record
         if($elements[$localTable.'.'.$sys_language_uid] <= 0)
         {
-          foreach($arr_lang_ol as $key => $field_lang_ol)
+          foreach((array) $arr_lang_ol as $key => $field_lang_ol)
           {
             $arr_default_lang_ol[$elements[$uid_localTable]][$int_count]['field_lang_ol'] = $field_lang_ol;
             $arr_default_lang_ol[$elements[$uid_localTable]][$int_count]['value']         = $elements[$field_lang_ol];
@@ -1252,7 +1252,7 @@ class tx_browser_pi1_localization
       $langPidField = $GLOBALS['TCA'][$localTable]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
       $int_count    = 0;
   //var_dump('localization 1135', $rows);
-      foreach($rows as $row => $elements)
+      foreach((array) $rows as $row => $elements)
       {
   //var_dump('localization 1137', $elements);
         // Current language record
@@ -1261,7 +1261,7 @@ class tx_browser_pi1_localization
           // Get parent language uid
           $uid_l10n_parent = $elements[$localTable.'.'.$langPidField];
   //var_dump('localization 1142', $arr_default_lang_ol[$uid_l10n_parent]);
-          foreach($arr_default_lang_ol[$uid_l10n_parent] as $key => $arr_field_value)
+          foreach((array) $arr_default_lang_ol[$uid_l10n_parent] as $key => $arr_field_value)
           {
             $field_lang_ol              = $arr_field_value['field_lang_ol'];
             $value_lang_ol              = $arr_field_value['value'];
@@ -1308,7 +1308,7 @@ class tx_browser_pi1_localization
         if (in_array($int_languagePid, array_keys($arr_default[$table.'.uid'])))
         {
           // Delete in the array with the default language records the record with the uid which is the value out of the $langPidField
-          foreach($arr_default[$table.'.uid'][$int_languagePid]['keys_in_rows'] as $row_default)
+          foreach((array) $arr_default[$table.'.uid'][$int_languagePid]['keys_in_rows'] as $row_default)
           {
             //var_dump($table.'.uid: '.$int_languagePid.': '.$row_default);
             unset($rows[$row_default]);
@@ -1347,9 +1347,9 @@ class tx_browser_pi1_localization
       if (is_array($arr_localize))
       {
         $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
-        foreach($arr_localize[$table.'.uid'] as $uid_localizeRecord => $row_localize)
+        foreach((array) $arr_localize[$table.'.uid'] as $uid_localizeRecord => $row_localize)
         {
-          foreach($row_localize['keys_in_rows'] as $key_in_rows)
+          foreach((array) $row_localize['keys_in_rows'] as $key_in_rows)
           {
             //var_dump('$rows['.$key_in_rows.']['.$table.'.uid] = '.$row_localize[$langPidField]);
             $rows[$key_in_rows][$table.'.uid'] = $row_localize[$langPidField];
@@ -1606,7 +1606,7 @@ class tx_browser_pi1_localization
     //
     // Remove empty elements
 
-    foreach($arr_langFields as $key => $field)
+    foreach((array) $arr_langFields as $key => $field)
     {
       if(!$field)
       {
@@ -1631,7 +1631,7 @@ class tx_browser_pi1_localization
     //
     // Add the table. We like the table.field syntax.
 
-    foreach($arr_langFields as $key => $field)
+    foreach((array) $arr_langFields as $key => $field)
     {
       $arr_langFields[$key] = $table.'.'.$field;
     }

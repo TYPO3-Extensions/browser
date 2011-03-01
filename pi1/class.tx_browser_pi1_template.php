@@ -204,7 +204,7 @@ class tx_browser_pi1_template
     {
       $arr_removePiVars[] = 'plugin';
     }
-    foreach($arr_removePiVars as $str_removePiVars)
+    foreach((array) $arr_removePiVars as $str_removePiVars)
     {
       if(isset($this->pObj->piVars[$str_removePiVars]))
       {
@@ -248,9 +248,9 @@ class tx_browser_pi1_template
       if(is_array($conf_respect_filters['but.']))
       {
         $conf_filter = $conf_view['filter.'];
-        foreach($conf_respect_filters['but.'] as $tableWiDot => $arr_fields)
+        foreach((array) $conf_respect_filters['but.'] as $tableWiDot => $arr_fields)
         {
-          foreach($arr_fields as $field_key => $field_value)
+          foreach((array) $arr_fields as $field_key => $field_value)
           {
             if($field_value)
             {
@@ -400,7 +400,7 @@ class tx_browser_pi1_template
     // Char for Wildcard
     $chr_wildcard = $this->pObj->str_searchWildcardCharManual;
     $arr_colored  = array();
-    foreach($this->pObj->arr_resultphrase['arr_marker'] as $key => $value)
+    foreach((array) $this->pObj->arr_resultphrase['arr_marker'] as $key => $value)
     {
       $value = stripslashes($value);
       if ($bool_wrapSwords)
@@ -450,7 +450,7 @@ class tx_browser_pi1_template
       }
     }
     $str_swords = $this->pObj->arr_resultphrase['str_mask'];
-    foreach($arrWrappedSwords as $key => $value)
+    foreach((array) $arrWrappedSwords as $key => $value)
     {
       $str_swords = str_replace($key, $value, $str_swords);
     }
@@ -725,7 +725,7 @@ class tx_browser_pi1_template
         // DRS - Development Reporting System
 
       $_params = array('pObj' => &$this);
-      foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_list_consolidated'] as $_funcRef)
+      foreach((array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_list_consolidated'] as $_funcRef)
       {
         t3lib_div::callUserFunction($_funcRef, $_params, $this);
       }
@@ -833,7 +833,7 @@ class tx_browser_pi1_template
 
 
         // elements
-      foreach($rows as $elements)
+      foreach((array) $rows as $elements)
       {
           // In case of the first group and a new group
         $str_next_group = $this->groupBy_get_groupname($elements);
@@ -971,7 +971,7 @@ class tx_browser_pi1_template
       }
 
         // Rows
-      foreach($rows as $row => $elements)
+      foreach((array) $rows as $row => $elements)
       {
           // In case of the first group and a new group
         $str_next_group = $this->groupBy_get_groupname($elements);
@@ -1211,7 +1211,7 @@ class tx_browser_pi1_template
         // DRS - Development Reporting System
 
       $_params = array('pObj' => &$this);
-      foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['row_single_consolidated'] as $_funcRef)
+      foreach((array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['row_single_consolidated'] as $_funcRef)
       {
         t3lib_div::callUserFunction($_funcRef, $_params, $this);
       }
@@ -1716,7 +1716,7 @@ class tx_browser_pi1_template
       //
       // Delete columns, we don't want
 
-    foreach($arrColumns as $columnKey => $columnValue)
+    foreach((array) $arrColumns as $columnKey => $columnValue)
     {
         // We don't want the imageCaption
       if (trim($columnValue) == $handleAs['imageCaption'])
@@ -1814,7 +1814,7 @@ class tx_browser_pi1_template
     $bool_first     = true;
 
       // Loop: All columns / keys of first record
-    foreach($arrColumns as $columnValue)
+    foreach((array) $arrColumns as $columnValue)
     {
       list($table, $field) = explode('.', trim($columnValue));
       $field    = trim($columnValue);
@@ -1928,7 +1928,7 @@ class tx_browser_pi1_template
       $arrOrderByWoColumns = array_diff($arrOrderByFields, $arrColumns);
       if(is_array($arrOrderByWoColumns))
       {
-        foreach($arrOrderByWoColumns as $columnValue)
+        foreach((array) $arrOrderByWoColumns as $columnValue)
         {
           if ($this->pObj->internal['descFlag'])
           {
@@ -1995,7 +1995,7 @@ class tx_browser_pi1_template
         $arr_values = array();
       }
         // Loop through the rows of the SQL result
-      foreach($arr_values as $value => $label)
+      foreach((array) $arr_values as $value => $label)
       {
         $str_counter_element  = $int_counter_element.'.';
         $conf_item            = $arr_ts['wrap.']['item'];
@@ -2099,12 +2099,12 @@ class tx_browser_pi1_template
         // Form action (URL without any parameter)
       $str_hidden = null;
       $str_param  = null;
-      foreach($this->pObj->piVars as $key => $values)
+      foreach((array) $this->pObj->piVars as $key => $values)
       {
         $piVar_key = $this->pObj->prefixId.'['.$key.']';
         if(is_array($values))
         {
-          foreach($values as $value)
+          foreach((array) $values as $value)
           {
             if(!empty($value))
             {
@@ -2319,7 +2319,7 @@ class tx_browser_pi1_template
       // Prepair Documents
 
     $arrAsDocument = explode(',', $handleAs['document']);
-    foreach($arrAsDocument as $arrAsDocumentField)
+    foreach((array) $arrAsDocument as $arrAsDocumentField)
     {
       list($table, $field) = explode('.', trim($arrAsDocumentField));
       $arrKeyAsDocument[] = $table.'.'.$field;
@@ -2458,7 +2458,7 @@ class tx_browser_pi1_template
     $bool_drs_handleCase  = false;
     
     $markerArray          = $this->pObj->objWrapper->constant_markers();
-    foreach($elements as $key => $value)
+    foreach((array) $elements as $key => $value)
     {
       $boolSubstitute       = true;
       $bool_dontColorSwords = false;
@@ -3224,7 +3224,7 @@ class tx_browser_pi1_template
     //
     // Wrap all elements
 
-    foreach($elements as $tableField => $value)
+    foreach((array) $elements as $tableField => $value)
     {
 
       $b_is_rendered  = false;
@@ -3292,7 +3292,7 @@ class tx_browser_pi1_template
         $int_last_uid     = false;
 
         // Loop through all rows
-        foreach($rows as $lRow => $lElements)
+        foreach((array) $rows as $lRow => $lElements)
         {
           // Store the current id of the current element.
           $int_cur_uid = $lElements[$table.'.uid'];

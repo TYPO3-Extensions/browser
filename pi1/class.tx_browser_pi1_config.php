@@ -371,7 +371,7 @@ class tx_browser_pi1_config
     $arr_rm_langParents = false;
     if(count($rows) > 1)
     {
-      foreach($rows as $row => $elements)
+      foreach((array) $rows as $row => $elements)
       {
         // We have a localized record
         if($elements[$str_langPid] > 0)
@@ -383,7 +383,7 @@ class tx_browser_pi1_config
     }
     if(is_array($arr_rm_langParents))
     {
-      foreach($rows as $row => $elements)
+      foreach((array) $rows as $row => $elements)
       {
         // Rempve the default language record
         if(in_array($elements['uid'], $arr_rm_langParents))
@@ -698,7 +698,7 @@ class tx_browser_pi1_config
 //      $arr_viewsIds         =  $this->pObj->objZz->getCSVasArray($str_views_csv);
 //      $arr_viewsIds_proper  = false;
 //      // Remove every id, which isn't proper
-//      foreach($arr_viewsIds as $key => $value)
+//      foreach((array) $arr_viewsIds as $key => $value)
 //      {
 //        if (in_array($value.'.', array_keys($this->pObj->conf['views.']['list.'])))
 //        {
@@ -806,7 +806,7 @@ class tx_browser_pi1_config
       $arr_viewsList         =  $this->pObj->objZz->getCSVasArray($str_views_csv);
       $arr_viewsList_proper  = false;
       // Remove every id, which isn't proper
-      foreach($arr_viewsList as $key => $value)
+      foreach((array) $arr_viewsList as $key => $value)
       {
         if (in_array($value.'.', array_keys($this->pObj->conf['views.']['list.'])))
         {
@@ -1877,7 +1877,7 @@ class tx_browser_pi1_config
     {
       case('adjusted'):
         $arr_csvValue = array('title', 'image', 'imageCaption', 'imageAltText', 'imageTitleText', 'document', 'timestamp');
-        foreach($arr_csvValue as $str_csvValue)
+        foreach((array) $arr_csvValue as $str_csvValue)
         {
           $str_csvFields = $this->pObj->pi_getFFvalue($arr_piFlexform, $str_csvValue.'_csvFields', 'tca', 'lDEF', 'vDEF');
           // #9879

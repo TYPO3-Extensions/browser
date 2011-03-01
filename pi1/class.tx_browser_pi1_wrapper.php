@@ -198,7 +198,7 @@ class tx_browser_pi1_wrapper
       //
       // Building the marker array for replacement
 
-    foreach($conf_marker as $key_marker => $arr_marker) 
+    foreach((array) $conf_marker as $key_marker => $arr_marker) 
     {
       if(substr($key_marker, -1, 1) == '.')
       {
@@ -597,7 +597,7 @@ class tx_browser_pi1_wrapper
           t3lib_div::devLog('[WARN/TEMPLATING] $this->pObj->elements isn\'t set!', $this->pObj->extKey, 2);
         }
       }
-      $lConfCObj = $this->pObj->objZz->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
+      $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
       //Replace all ###MARKER### in Typoscript with its values.
       //if(t3lib_div::_GP('dev')) var_dump('wrapper 485', $lConfCObj);
     }
@@ -674,7 +674,7 @@ class tx_browser_pi1_wrapper
         }
         // Alias for showUid? #9599
 
-        foreach($this->pObj->piVars as $paramKey => $paramValue) {
+        foreach((array) $this->pObj->piVars as $paramKey => $paramValue) {
           $additionalParams .= '&'.$this->pObj->prefixId.'['.$paramKey.']='.$paramValue;
         }
         $cHash_calc = $this->pObj->objZz->get_cHash('&id='.$singlePid.$additionalParams);
@@ -698,7 +698,7 @@ class tx_browser_pi1_wrapper
             t3lib_div::devLog('[WARN/TEMPLATING] $this->pObj->elements isn\'t set!', $this->pObj->extKey, 2);
           }
         }
-        $lConfCObj = $this->pObj->objZz->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
+        $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
         // Replace all ###MARKER### in Typoscript with its values.
 
         // Recover piVars, if they weren't used in the realUrl path
@@ -907,7 +907,7 @@ class tx_browser_pi1_wrapper
 
     $arr_values   = explode($str_devider, $xsv_values);
     $arr_confCObj = array();
-    foreach($arr_values as $key => $value)
+    foreach((array) $arr_values as $key => $value)
     {
       // Get for every child the TS configuration
       $arr_confCObj[$key] = $this->pObj->objZz->children_tsconf_recurs($key, $lConfCObj, $str_devider);
@@ -928,7 +928,7 @@ class tx_browser_pi1_wrapper
     // general_stdWrap for each child
 
     $arr_values = array();
-    foreach($arr_confCObj as $lConfCObj)
+    foreach((array) $arr_confCObj as $lConfCObj)
     {
       $str_value    = $this->general_stdWrap($this->pObj->local_cObj->COBJ_ARRAY($lConfCObj, $ext), false);
       $arr_values[] = $str_value;
@@ -1360,7 +1360,7 @@ class tx_browser_pi1_wrapper
     }
     // Marker Array
     // Tecklenborg-Werft: ###TX_SHIPS_MAIN.G2_NAME### - Geschichte und Bilder
-    foreach($elements as $key => $value) {
+    foreach((array) $elements as $key => $value) {
       $markerArray['###'.strtoupper($key).'###'] = $value;
     }
     return $this->pObj->cObj->substituteMarkerArray($wrapThisString, $markerArray);

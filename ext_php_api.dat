@@ -1483,7 +1483,7 @@ fields_wi_relation():  Find every field with a relation to a foreign table.
     //
     // Store every field with a relation in the $arr_fields_wi_relation
 
-    foreach($this->arr_fields_current as $tableField)
+    foreach((array) $this->arr_fields_current as $tableField)
     {
       list($table, $field) = explode('.', $tableField);
 
@@ -1514,7 +1514,7 @@ fields_wi_marker(): Find marker with foreign tables in the TypoScript
     $viewWiDot = $view.'.';
     $conf_view = $conf['views.'][$viewWiDot][$mode.'.'];
 
-    foreach($arr_fields_wi_relation as $tableField => $arr_relation_info)
+    foreach((array) $arr_fields_wi_relation as $tableField => $arr_relation_info)
     {
       // Get TypoScript configuration of current table.field
       list($table, $field)  = explode('.', $tabl
@@ -4352,7 +4352,7 @@ Get the SQL part behind the AS. If this is an alias, replace the alias with the 
         return $arr_tablefields;
       }
 
-      foreach($arr_tablefields as $key => $value) {
+      foreach((array) $arr_tablefields as $key => $value) {
         //$value                 = $t
 [...]
     }
@@ -5700,7 +5700,7 @@ Get all used markes in the current level and all children levels of the TypoScri
 
 Extends $arr_markers with keys from TT_CONTAINER tableFieldUid.
 ";s:5:"param";a:1:{i:0;a:2:{i:0;s:5:"array";i:1;s:77:"$arr_markers: The marker array like: $arr_markers[tx_civserv_service.sv_name]";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:83:"The marker array extended with uidFields like: $arr_markers[tx_civserv_service.uid]";}}s:7:"content";a:2:{i:0;s:376:"
-    foreach($this->arr_ttc_values as $key => $arr_container_values)
+    foreach((array) $this->arr_ttc_values as $key => $arr_container_values)
     {
       if ($this->pObj->b_drs_ttc)
       {
@@ -6241,7 +6241,7 @@ Allocates the class array arr_table_wi_arrFields with realname tables and there 
     $arrTmp[0]  = $arrCsv;
     $arrTmp     = $this->pObj->objSqlFun->replace_tablealias($arrTmp);
     $arrCsv     = $arrTmp[0];
-    foreach($arrCsv as $tableField) {
+    foreach((array) $arrCsv as $tableField) {
       list($table, $field) = 
 [...]
 php']) {
@@ -6686,7 +6686,7 @@ Substitute marker ###TABLE.FIELD### with the value of table.field
     }
     // Marker Array
     // Tecklenborg-Werft: ###TX_SHIPS_MAIN.G2_NAME### - Geschichte und Bilder
-    foreach($elements as $key => $value) {
+    foreach((array) $elements as $key => $value) {
       $markerArray['###'.strtoupper($key).'###'] = $value;
     }
     return $this->pObj->cObj->substituteMarkerArray($wrapThisString, $markerArray);
@@ -6891,9 +6891,9 @@ Remove all filter entries off the PiVars array.
 ";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:28:"$inputPiVars: current piVars";}i:1;a:2:{i:0;s:5:"array";i:1;s:50:"$filterConf: TypoScript filter configuration array";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:47:"The modified piVars Array (without filters now)";}s:5:"other";a:3:{i:0;s:23:"@author    Frank Sander";i:1;s:16:"@version   3.4.2";i:2;s:27:"@internal  Suggestion #9495";}s:11:"other_index";a:3:{s:7:"@author";a:1:{i:0;s:12:"Frank Sander";}s:8:"@version";a:1:{i:0;s:6:"3.4.2 ";}s:9:"@internal";a:1:{i:0;s:16:"Suggestion #9495";}}}s:7:"content";a:2:{i:0;s:507:"    // Get the filter fields
     if(is_array($filterConf) && is_array($inputPiVars))
     {
-      foreach($filterConf as $tableWiDot => $arrFields)
+      foreach((array) $filterConf as $tableWiDot => $arrFields)
       {
-        foreach($arrFields as $fieldWiWoDot => $dummy)
+        foreach((array) $arrFields as $fieldWiWoDot => $dummy)
         {
          if(substr($fieldWiWoDot, -1) != '.')
          {
@@ -7078,7 +7078,7 @@ Returns the value for a $GLOBALS marker
 
 Returns a comma seperated list as an array of elements.
 ";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:30:"Comma seperated list of values";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:25:"The array with the values";}}s:7:"content";a:2:{i:0;s:180:"    $tmpArrCSV = explode(',', $csvValues);
-    foreach($tmpArrCSV as $valueCSV) {
+    foreach((array) $tmpArrCSV as $valueCSV) {
       $arrCSV[] = $this->cleanUp_lfCr_doubleSpace($valueCSV);
     }
     return $arrCSV;
@@ -7090,7 +7090,7 @@ Returns a comma seperated list as an array of elements.
 
 Returns a comma seperated list of table.field as an array of elements.
 ";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:58:"Comma seperated list of values in this format: table.field";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:37:"The array with the table.field values";}}s:7:"content";a:2:{i:0;s:292:"    $tmpArrCSV = explode(',', $csvTableFields);
-    foreach($tmpArrCSV as $valueCSV) {
+    foreach((array) $tmpArrCSV as $valueCSV) {
       list($table, $field) = explode('.', trim($csvTableFields));
       $tableField = $table.'.'.$field;
       $arrCSV[] = $this->cleanUp_lfCr_doubleSpace($tableField);

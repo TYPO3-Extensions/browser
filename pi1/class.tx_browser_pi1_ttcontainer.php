@@ -598,7 +598,7 @@ class tx_browser_pi1_ttcontainer
     //
     // Loop through the current level of the TypoScript
 
-    foreach($arr_ttc_values as $key_ttc_values => $value_ttc_values)
+    foreach((array) $arr_ttc_values as $key_ttc_values => $value_ttc_values)
     {
       if (is_array($value_ttc_values))
       {
@@ -701,7 +701,7 @@ class tx_browser_pi1_ttcontainer
   function get_marker_uids($arr_marker_keys)
   {
 
-    foreach($this->arr_ttc_values as $key => $arr_container_values)
+    foreach((array) $this->arr_ttc_values as $key => $arr_container_values)
     {
       if ($this->pObj->b_drs_ttc)
       {
@@ -747,11 +747,11 @@ class tx_browser_pi1_ttcontainer
     // Get for every marker the value
 
     // Loop through all markers
-    foreach($arr_marker_keys as $key_marker => $value_marker)
+    foreach((array) $arr_marker_keys as $key_marker => $value_marker)
     {
       $i_row  = 0;
       // Loop through all rows
-      foreach($rows as $key_row => $elements)
+      foreach((array) $rows as $key_row => $elements)
       {
         // Check in the first loop, if we have the searched key in the row
         if($b_first_run)
@@ -824,7 +824,7 @@ class tx_browser_pi1_ttcontainer
     if (is_array($arr_marker_values))
     {
       // Loop through all marker rows
-      foreach($arr_marker_values as $key1 => $elements1)
+      foreach((array) $arr_marker_values as $key1 => $elements1)
       {
         if(count($arr_marker_values) <= 1)
         {
@@ -838,7 +838,7 @@ class tx_browser_pi1_ttcontainer
         // Remove the first element of the array, because we want compare only further elements
 
         // Loop through all rows of the compare array
-        foreach($arr_marker_compare as $key2 => $elements2)
+        foreach((array) $arr_marker_compare as $key2 => $elements2)
         {
           $b_unset  = false;
           $arr_diff = array_diff_assoc($elements1, $elements2);
@@ -1000,11 +1000,11 @@ class tx_browser_pi1_ttcontainer
 
     $sql_row_keys = array_keys($this->rows[0]);
     //Loop through all marker rows
-    foreach($arr_marker_values as $key_marker => $elements_marker)
+    foreach((array) $arr_marker_values as $key_marker => $elements_marker)
     {
       $arr_marker_uidfields = array_keys($elements_marker);
       // Loop through all rows of the limit array
-      foreach($arr_limits as $key_limits => $row_limits)
+      foreach((array) $arr_limits as $key_limits => $row_limits)
       {
 
         $str_limit_uidfield  = $row_limits['uidField'];
@@ -1367,7 +1367,7 @@ class tx_browser_pi1_ttcontainer
 
     $arr_ttc_values_substituted = $arr_ttc_values;
     // Update all markers in the current TypoScript recursive
-    foreach($arr_marker_values as $key_key_marker => $arr_values)
+    foreach((array) $arr_marker_values as $key_key_marker => $arr_values)
     {
       $arr_ttc_values_substituted = $this->pObj->objMarker->substitute_marker_recurs($arr_ttc_values, $arr_values);
       // Get the current TypoScript array with substituted markers

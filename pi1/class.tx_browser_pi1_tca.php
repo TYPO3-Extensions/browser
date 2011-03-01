@@ -256,7 +256,7 @@ class tx_browser_pi1_tca
     // Get field names, which shouldn't wrapped by autodiscover
 
     $lArrDontDiscoverFields = explode(',', $this->pObj->confAutodiscover['dontDiscoverFields.']['csvValue']);
-    foreach($lArrDontDiscoverFields as $tmpKey => $tmpValue) {
+    foreach((array) $lArrDontDiscoverFields as $tmpKey => $tmpValue) {
       $this->pObj->arrDontDiscoverFields[$tmpKey] = trim($tmpValue);
     }
     if ($this->pObj->b_drs_discover) {
@@ -357,7 +357,7 @@ class tx_browser_pi1_tca
     //
     // Get the names of items of the TS autodiscover.items
 
-    foreach($TSconfAdItems as $itemKey => $itemArr) {
+    foreach((array) $TSconfAdItems as $itemKey => $itemArr) {
       if(!is_array($TSconfAdItems[$itemKey])) {
         // We have the item name not the array
         if($TSconfAdItems[$itemKey]) {
@@ -431,7 +431,7 @@ class tx_browser_pi1_tca
     // Check for each item the defined configuration vars:
     // TCAlabel, TCAconfig.type, TCAconfig.internal_type, TCAconfig.allowed
 
-    foreach($lArrTCAitems as $TCAitem) {
+    foreach((array) $lArrTCAitems as $TCAitem) {
 
       // TS views.list||single.x.handleAs has priority over TS autoconf.autoDiscover.items
       if($this->pObj->TShandleAs[$TCAitem] == $tableField) {
