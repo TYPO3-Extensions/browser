@@ -532,7 +532,7 @@ class tx_browser_pi1 extends tslib_pibase {
     //
     // Replace TSFE markers
 
-    $this->conf = $this->objMarker->substitute_t3globals_recurs($this->conf);
+    $this->conf = $this->objZz->substitute_t3globals_recurs($this->conf);
     // Replace TSFE markers
 
 

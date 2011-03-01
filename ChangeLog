@@ -1,4 +1,14 @@
 3.6.2
+  DEVELOPER VERSION (Revision 44462)
+  11-01-03
+  Consolidation
+  * 00000: substitute_t3globals_recurs() was double: in marker and in zz
+           substitute_t3globals_recurs() is removed in marker
+  * 00000: get_t3globals_value() was double: in marker and in zz
+           get_t3globals_value() is removed in marker
+  * 00000: session_marker() was double: in marker and in zz
+           session_marker() is removed in zz
+  
   DEVELOPER VERSION (Revision 44455)
   11-01-03
   Bugfixes

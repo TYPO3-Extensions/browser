@@ -1146,18 +1146,33 @@
  * Syntax for $GLOBALS markers is: ###$GLOBALS KEY:element_firstLevel|element_secondLevel|...###
  * I.e:                            ###TSFE:fe_user|enablecolumns|deleted###
  *
- * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
- * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
+ * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
  */
   function substitute_t3globals_recurs($arr_multi_dimensional)
   {
-    $conf = $this->pObj->conf;
+    $conf       = $this->pObj->conf;
+    $conf_view  = $this->pObj->conf['views.'][$this->pObj->view.'.'][$this->pObj->piVar_mode.'.'];
+
+//var_dump('zz 710', $GLOBALS['HTTP_ACCEPT_LANGUAGE']);
+// string(35) "de-de,de;q=0.8,en;q=0.5,en-us;q=0.3"
+//var_dump('zz 710', $GLOBALS['TSFE']);
+//exit;
+// string(35) "de-de,de;q=0.8,en;q=0.5,en-us;q=0.3"
 
     ////////////////////////////////////////////////
     //
     // RETURN, if marker with $Global keys should not replaced
 
-    if($this->bool_advanced_dontReplace)
+    #10116
+    $arr_conf_advanced = $conf['advanced.'];
+    if(!empty($conf_view['advanced.']))
+    {
+      $arr_conf_advanced = $conf_view['advanced.'];
+    }
+
+    $bool_dontReplace = $arr_conf_advanced['performance.']['GLOBALS.']['dont_replace'];
+    if($bool_dontReplace)
     {
       if ($this->pObj->b_drs_ttc || $this->pObj->b_drs_plugin)
       {
@@ -1175,7 +1190,7 @@
     // Security: recursionGuard
 
     static $int_levelRecurs = 0;
-    $int_levelRecursMax = $this->int_advanced_recursionGard;
+    $int_levelRecursMax         = (int) $arr_conf_advanced['recursionGuard'];
     $int_levelRecurs++;
     if ($int_levelRecurs > $int_levelRecursMax)
     {
@@ -1281,114 +1296,6 @@
     // Loop through the current level of the multi-dimensional array
     return $arr_multi_dimensional;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /***********************************************
-    *
-    * Session markers
-    *
-    **********************************************/
-
-    /**
- * Returns the value for a $GLOBALS marker
- *
- * @param	string		Marker: The TSFE marker like ###TSFE:fe_user|enablecolumns|deleted###
- * @param	array		$elements: Array with element sessions
- * @return	string		The value from the TSFE array
- */
-  function session_marker($arr_tsConf, $elements)
-  {
-
-    $str_sess_key  = $arr_tsConf['session.']['key'];  // i.e: ses
-    $str_sess_name = $arr_tsConf['session.']['name']; // i.e: wt_cart_cart
-    $arr_session   = $GLOBALS['TSFE']->fe_user->getKey($str_sess_key, $str_sess_name); // get already exting products from session
-
-    // RETURN default value, if we don't have any session
-    if(!is_array($arr_session) || count($arr_session) < 1)
-    {
-      $elements['session'] = $arr_tsConf['session.']['getDefault'];  // i.e: 1
-      return $elements;
-    }
-    // RETURN default value, if we don't have any session
-
-
-    $arr_tsConf = $this->pObj->objMarker->substitute_marker_recurs($arr_tsConf, $elements);
-
-    $str_keyElement   = $arr_tsConf['session.']['whereElement.']['key'];   // i.e: uid
-    $str_valueElement = $arr_tsConf['session.']['whereElement.']['value']; // i.e: ###SHOWUID###
-    // One loop for every item
-    foreach ($arr_session as $key => $value)
-    {
-      if ($arr_session[$key][$str_keyElement] == $str_valueElement)
-      {
-        $elements['session'] = $arr_session[$key][$arr_tsConf['session.']['getFrom']];
-        break;
-      }
-    }
-
-    if(!isset($elements['session']))
-    {
-      $elements['session'] = $arr_tsConf['session.']['getDefault'];
-    }
-
-
-//    $sesArray = $GLOBALS['TSFE']->fe_user->getKey('ses', 'wt_cart_cart'); // get already exting products from session
-//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if (!($pos === false))
-//    {
-//      var_dump('zz 1080', $sesArray);
-//      var_dump('zz 1005', $arr_tsConf);
-//      var_dump('zz 1082', $arr_tsConf['session.']);
-//      var_dump('zz 1048', $elements);
-//    }
-    return $elements;
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
