@@ -1387,7 +1387,9 @@ class tx_browser_pi1_navi
     //
     // Set maximum for the pointer
 
-    // #10858, dwildt, 101220
+      // 110302, dwildt: :todo: it seems, that $int_maxPointer isn't handled anywhere
+    $int_maxPointer = 9999;
+      // #10858, dwildt, 101220
     if(isset($this->pObj->piVars['pointer']))
     {
       if($this->pObj->piVars['pointer'] > 0)
@@ -1405,8 +1407,9 @@ class tx_browser_pi1_navi
           $this->pObj->piVars['pointer'] = $int_maxPointer;
         }
       }
+        // 13549, 110203, dwildt
+      $int_maxPointer = (count($rows) / $this->pObj->piVars['pointer']);
     }
-    $int_maxPointer = (count($rows) / $this->pObj->piVars['pointer']);
     // Set maximum for the pointer
 
 

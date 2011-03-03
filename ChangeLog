@@ -1,7 +1,9 @@
 3.6.2
-  DEVELOPER VERSION (Revision 44464)
-  11-01-03
+  DEVELOPER VERSION (Revision 44541)
+  11-01-04
   Bugfixes
+  * 13573: Localisation: proper handle of languageField and transOrigPointerField
+  * 13505: Empty AND in some localization context
   * 13008: Workflow devider will not be consolidated
 
   DEVELOPER VERSION (Revision 44462)

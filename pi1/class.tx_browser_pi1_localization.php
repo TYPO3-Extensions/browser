@@ -281,8 +281,9 @@ class tx_browser_pi1_localization
             $this->pObj->arrConsolidate['addedTableFields'][] = $table.'.'.$str_field_lang_ol;
             $arr_tables['woAlias'][]                          = $table.'.'.$str_field_lang_ol;
             $arr_tables['filter'][]                           = $table.'.'.$str_field_lang_ol." AS `table.".$str_field_lang_ol."`";
-            $arr_tables['filter'][]                           = "'".intval($this->lang_id)."' AS `table.sys_language_content`, ".
+            $arr_tables['filter'][]                           = "'".intval($this->lang_id)."' AS `table." . $arr_localize['id_field'] . "`, ".
             $arr_tables['wiAlias'][]                          = $table.'.'.$str_field_lang_ol." AS `".$table.'.'.$str_field_lang_ol."`";
+              // 13573, 110303, dwildt
             $bool_fieldIsLocalized = TRUE;
           }
           // Has the table a field for tranlation (syntax i.e.: field_lang_ol)?
@@ -314,8 +315,8 @@ class tx_browser_pi1_localization
     //
     // Building AND SELECT
 
-    $str_dummyFilter = "'".intval($this->lang_id)."' AS `table.sys_language_content`, ".
-      "'' AS `table.l10n_parent` ";
+    $str_dummyFilter = "'".intval($this->lang_id)."' AS `table." . $arr_localize['id_field'] . "`, ".
+      "'' AS `table." . $arr_localize['pid_field'] . "` ";  // 13573, 110303, dwildt
     // The user can use more than one filter. If he uses more than one filter, it will be built a UNION SELECT
     // query. So every SELECT statement should have the same amount of fields. We need the dummy filter,
     // because it is possible that one filter is a field from a localized table and another filter isn't a

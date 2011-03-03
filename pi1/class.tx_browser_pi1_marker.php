@@ -216,6 +216,7 @@
     $str_sqlDeviderDisplay  = $this->pObj->objTyposcript->str_sqlDeviderDisplay;
     $str_sqlDeviderWorkflow = $this->pObj->objTyposcript->str_sqlDeviderWorkflow;
     $str_devider            = $str_sqlDeviderDisplay.$str_sqlDeviderWorkflow;
+//var_dump(__METHOD__ . ': ' . __LINE__, $arr_children_to_devide, $str_devider);
       // Get the children devider configuration
 
 
@@ -258,52 +259,51 @@
       // One dimensional array of the tsConf markers
     $arr_one_dimensional = t3lib_BEfunc::implodeTSParams($arr_multi_dimensional);
 
-      // Loop through all elements (real values)
-    foreach((array) $elements as $key_tableField => $value_tableField)
+      // Loop through one dimensional tsConf array
+    foreach((array) $arr_one_dimensional as $key_tsConf => $value_tsConf)
     {
-        // Loop through one dimensional marker array
-      foreach((array) $arr_one_dimensional as $key_tsConf => $value_tsConf)
-      {
-        $value_tsConf_curr = $value_tsConf;
+      $value_tsConf_after_loop  = $value_tsConf;
 
-          // CONTINUE: there isn't any marker - go to the next tsConf element
-        $int_countMarker = substr_count($value_tsConf_curr, '###');  // I.e: 4
-        if ($int_countMarker == 0)
+        // CONTINUE: there isn't any marker - go to the next tsConf element
+      $int_countMarker = substr_count($value_tsConf, '###');  // I.e: 4
+      if ($int_countMarker == 0)
+      {
+        if ($this->pObj->b_drs_marker)
         {
-          if ($this->pObj->b_drs_marker)
+          $value_tsConf_html = htmlspecialchars($value_tsConf);
+          if (strlen($value_tsConf_html) > $this->pObj->i_drs_max_sql_result_len)
           {
-            $value_tsConf_html = htmlspecialchars($value_tsConf_curr);
-            if (strlen($value_tsConf_html) > $this->pObj->i_drs_max_sql_result_len)
-            {
-              $value_tsConf_html = substr($value_tsConf_html, 0, $this->pObj->i_drs_max_sql_result_len).' ...';
-            }
-            t3lib_div::devlog('[INFO/TEMPLATING] ... '.$value_tsConf.' hasn\'t any marker.', $this->pObj->extKey, 0);
+            $value_tsConf_html = substr($value_tsConf_html, 0, $this->pObj->i_drs_max_sql_result_len).' ...';
           }
-          continue;
+          t3lib_div::devlog('[INFO/TEMPLATING] ... '.$value_tsConf.' hasn\'t any marker.', $this->pObj->extKey, 0);
         }
-          // CONTINUE: there isn't any marker - go to the next tsConf element
-  
+        continue;
+      }
+        // CONTINUE: there isn't any marker - go to the next tsConf element
+
+        // Loop through all elements (real values)
+      foreach((array) $elements as $key_tableField => $value_tableField)
+      {
           // Replace constant marker with real value
         $key_marker         = '###'.strtoupper($key_tableField).'###';
-        $value_tsConf_curr  = str_replace($key_marker, $value_tableField, $value_tsConf_curr);
 
           // session marker
 //        if(in_array('session.', $key_tsConf))
 //        {
 //            // 110124, dwildt, :todo: session
-//          $elements = $this->session_marker($value_tsConf_curr, $elements);
+//          $elements = $this->session_marker($value_tsConf_after_loop, $elements);
 //        }
           // session marker
 
 
           // Value contains the current marker: handle children records
-        if (!(strpos($value_tsConf_curr, $key_marker) === false))
+        if (!(strpos($value_tsConf_after_loop, $key_marker) === false))
         {
             // Marker has children values
           if(in_array($key_tableField, (array) $arr_children_to_devide))
           {
               // Get children values
-            $arr_valuesChildren = explode($str_devider, $value_tsConf_curr);
+            $arr_valuesChildren = explode($str_devider, $value_tableField);
   
               // Multiple the values and replace the marker for every child
               // EXAMPLE for value
@@ -312,9 +312,11 @@
             $arr_value_after_loop = null;
             foreach((array) $arr_valuesChildren as $keyChild => $valueChild)
             {
-              $arr_value_after_loop[] = str_replace($key_marker, $valueChild, $value_tsConf_curr);
+              $arr_value_after_loop[] = str_replace($key_marker, $valueChild, $value_tsConf_after_loop);
             }
-            $value_tsConf_curr = implode($str_sqlDeviderDisplay, (array) $arr_value_after_loop);
+              // 13008, 110302, dwildt
+            $value_tsConf_after_loop = implode($str_sqlDeviderDisplay, (array) $arr_value_after_loop);
+//var_dump(__METHOD__ . ': ' . __LINE__, $value_tsConf_after_loop);
               // Multiple the values and replace the marker for every child
           }
             // Marker has children values
@@ -323,57 +325,57 @@
           if(!in_array($key_tsConf, (array) $arr_children_to_devide))
           {
               // Color swords
-            $value_tsConf_curr  = $this->color_swords($key_tsConf, $value_tsConf_curr);
-            $value_tsConf_curr  = str_replace($key_marker, $valueChild, $value_tsConf_curr);
+            $value_tableField        = $this->pObj->objZz->color_swords($key_tableField, $value_tableField);
+            $value_tsConf_after_loop = str_replace($key_marker, $value_tableField, $value_tsConf_after_loop);
           }
             // Marker hasn't any child value
         }
           // Value contains the current marker: handle children records
 
-          // Replace cHash marker
-        $pos = strpos($value_tsConf_curr, '&###CHASH###');
-        if (!($pos === false))
-        {
-          $str_path           = str_replace('&###CHASH###', '', $value_tsConf_curr);
-          $arr_url            = parse_url($str_path);
-          $cHash_md5          = $this->pObj->objZz->get_cHash($arr_url['path']);
-          $value_tsConf_curr  = str_replace('&###CHASH###', '&cHash='.$cHash_md5, $value_tsConf_curr);
-        }
-          // Replace cHash marker
+      }
+        // Loop through all elements (real values)
 
-          // Clear markers, which aren't replaced
-        if($this->pObj->objZz->bool_advanced_3_6_0_rmMarker)
-        {
-          $value_tsConf_curr = preg_replace('|###.*?###|i', '', $value_tsConf_curr);
-        }
+        // Replace cHash marker
+      $pos = strpos($value_tsConf_after_loop, '&###CHASH###');
+      if (!($pos === false)) {
+        $str_path                 = str_replace('&###CHASH###', '', $value_tsConf_after_loop);
+        $arr_url                  = parse_url($str_path);
+        $cHash_md5                = $this->pObj->objZz->get_cHash($arr_url['path']);
+        $value_tsConf_after_loop  = str_replace('&###CHASH###', '&cHash='.$cHash_md5, $value_tsConf_after_loop);
+      }
+        // Replace cHash marker
 
-          // DRS - Development Reporting System
-        if ($value_tsConf_curr != $value_tsConf)
+        // Clear markers, which aren't replaced
+      if($this->pObj->objZz->bool_advanced_3_6_0_rmMarker)
+      {
+        $value_tsConf_after_loop = preg_replace('|###.*?###|i', '', $value_tsConf_after_loop);
+      }
+
+        // DRS - Development Reporting System
+      if ($value_tsConf_after_loop != $value_tsConf)
+      {
+        if ($this->pObj->b_drs_marker)
         {
-          if ($this->pObj->b_drs_marker)
+          $value_tsConf_html = htmlspecialchars($value_tsConf_after_loop);
+          if (strlen($value_tsConf_html) > $this->pObj->i_drs_max_sql_result_len)
           {
-            $value_tsConf_html = htmlspecialchars($value_tsConf_curr);
-            if (strlen($value_tsConf_html) > $this->pObj->i_drs_max_sql_result_len)
-            {
-              $value_tsConf_html = substr($value_tsConf_html, 0, $this->pObj->i_drs_max_sql_result_len).' ...';
-            }
-            if(empty($value_tsConf_html))
-            {
-              t3lib_div::devlog('[INFO/TEMPLATING] ... ['.$key_marker.']: '.$value_tsConf.' is EMPTY.', $this->pObj->extKey, 0);
-            }
-            if(!empty($value_tsConf_html))
-            {
-              t3lib_div::devlog('[INFO/TEMPLATING] ... ['.$key_marker.']: '.$value_tsConf.' become:<br /><br />'.$value_tsConf_html, $this->pObj->extKey, 0);
-            }
+            $value_tsConf_html = substr($value_tsConf_html, 0, $this->pObj->i_drs_max_sql_result_len).' ...';
+          }
+          if(empty($value_tsConf_html))
+          {
+            t3lib_div::devlog('[INFO/TEMPLATING] ... ['.$key_marker.']: '.$value_tsConf.' is EMPTY.', $this->pObj->extKey, 0);
+          }
+          if(!empty($value_tsConf_html))
+          {
+            t3lib_div::devlog('[INFO/TEMPLATING] ... ['.$key_marker.']: '.$value_tsConf.' become:<br /><br />'.$value_tsConf_html, $this->pObj->extKey, 0);
           }
         }
-          // DRS - Development Reporting System
-
-        $arr_one_dimensional[$key_tsConf] = $value_tsConf_curr;
       }
-        // Loop through one dimensional marker array
+        // DRS - Development Reporting System
+
+      $arr_one_dimensional[$key_tsConf] = $value_tsConf_after_loop;
     }
-      // Loop through all elements (real values)
+      // Loop through one dimensional tsConf array
 
       // Rebuild $arr_multi_dimensional
     unset($arr_multi_dimensional);
@@ -523,22 +525,22 @@
       //
       // Loop through the current level of the multi-dimensional array
 
-    foreach((array) $arr_multi_dimensional as $key_arr_curr => $value_arr_curr)
+    foreach((array) $arr_multi_dimensional as $key_tsConf => $value_tsConf)
     {
         // 100709, fsander
-        // if(is_array(array_keys($value_arr_curr)))
-      if(is_array($value_arr_curr) && is_array(array_keys($value_arr_curr)))
+        // if(is_array(array_keys($value_tsConf)))
+      if(is_array($value_tsConf) && is_array(array_keys($value_tsConf)))
       {
-        if(in_array('session.', array_keys($value_arr_curr)))
+        if(in_array('session.', array_keys($value_tsConf)))
         {
-          $elements = $this->session_marker($value_arr_curr, $elements);
+          $elements = $this->session_marker($value_tsConf, $elements);
         }
       }
 
-      if (is_array($value_arr_curr))
+      if (is_array($value_tsConf))
       {
           // Loop through the next level of the multi-dimensional array (recursive)
-        $arr_multi_dimensional[$key_arr_curr] = $this->substitute_marker_recurs($value_arr_curr, $elements);
+        $arr_multi_dimensional[$key_tsConf] = $this->substitute_marker_recurs($value_tsConf, $elements);
       }
 
 
@@ -546,11 +548,11 @@
         //
         // Replace markers with the values
   
-      if(!is_array($value_arr_curr))
+      if(!is_array($value_tsConf))
       {
           // Do we have markers?
         $b_marker = true;
-        $i_marker = substr_count($value_arr_curr, '###');  // I.e: 4
+        $i_marker = substr_count($value_tsConf, '###');  // I.e: 4
         if ($i_marker == 0)
         {
             // There isn't any '###'
@@ -560,25 +562,25 @@
 
         if ($b_marker)
         {
-          $str_value_after_loop = $value_arr_curr;
-          $b_marker_changed     = false;
+          $value_tsConf_after_loop  = $value_tsConf;
+          $b_marker_changed         = false;
 
             // Loop: Replace all used markers, if they have a real value
-          foreach((array) $elements as $key_marker => $value_marker)
+          foreach((array) $elements as $key_tableField => $value_tableField)
           {
-            $bool_marker   = false;
-            $str_tmp_value = $str_value_after_loop;
-            $str_marker    = '###'.strtoupper($key_marker).'###';
+            $bool_marker        = false;
+            $value_tsConf_curr  = $value_tsConf_after_loop;
+            $key_marker         = '###'.strtoupper($key_tableField).'###';
 
               // Value has the current marker
-            if (!(strpos($str_tmp_value, $str_marker) === false))
+            if (!(strpos($value_tsConf_curr, $key_marker) === false))
             {
                 // Marker has children values
-              if(in_array($key_marker, $arr_children_to_devide))
+              if(in_array($key_tableField, $arr_children_to_devide))
               {
 //var_dump(__METHOD__ . ': ' . __LINE__);
                   // Get children values
-                $arr_valuesChildren   = explode($str_devider, $value_marker);
+                $arr_valuesChildren   = explode($str_devider, $value_tableField);
 
                   // Multiple the values and replace the marker for every child
                   // EXAMPLE for value
@@ -587,34 +589,35 @@
                 $arr_lConfCObj = array();
                 foreach((array) $arr_valuesChildren as $keyChild => $valueChild)
                 {
-                  $arr_value_after_loop[] = str_replace($str_marker, $valueChild, $str_tmp_value);
+                  $arr_value_after_loop[] = str_replace($key_marker, $valueChild, $value_tsConf_curr);
                 }
-                $str_value_after_loop = implode($str_sqlDeviderDisplay, $arr_value_after_loop);
+                  // 13008, 110302, dwildt
+                $value_tsConf_after_loop = implode($str_sqlDeviderDisplay, $arr_value_after_loop);
                   // Multiple the values and replace the marker for every child
               }
                 // Marker has children values
 
                 // Marker hasn't any child value
-              if(!in_array($key_marker, $arr_children_to_devide))
+              if(!in_array($key_tableField, $arr_children_to_devide))
               {
-                $value_marker         = $this->pObj->objZz->color_swords($key_marker, $value_marker);
+                $value_tableField        = $this->pObj->objZz->color_swords($key_tableField, $value_tableField);
                   // 3.3.4
-                  //$str_value_after_loop = str_replace($str_marker, $value_marker, $str_value_after_loop);
-                $str_value_after_loop = str_replace($str_marker, $value_marker, $str_tmp_value);
+                  //$value_tsConf_after_loop = str_replace($key_marker, $value_tableField, $value_tsConf_after_loop);
+                $value_tsConf_after_loop = str_replace($key_marker, $value_tableField, $value_tsConf_curr);
               }
                 // Marker hasn't any child value
             }
               // Value has the current marker
 
               // Set boolean for workflow
-            if ($str_tmp_value != $str_value_after_loop)
+            if ($value_tsConf_curr != $value_tsConf_after_loop)
             {
-                //if(t3lib_div::_GP('dev')) var_dump('zz 1375', $key_marker, $str_tmp_value, $str_value_after_loop);
+                //if(t3lib_div::_GP('dev')) var_dump('zz 1375', $key_tableField, $value_tsConf_curr, $value_tsConf_after_loop);
               $bool_marker = true;
             }
               // Set boolean for workflow
 
-            $str_elements1        = htmlspecialchars($value_marker);
+            $str_elements1        = htmlspecialchars($value_tableField);
             if (strlen($str_elements1) > $this->pObj->i_drs_max_sql_result_len)
             {
               $str_elements1 = substr($str_elements1, 0, $this->pObj->i_drs_max_sql_result_len).' ...';
@@ -625,11 +628,11 @@
               {
                 if(!$str_elements1)
                 {
-                  t3lib_div::devlog('[INFO/TEMPLATING] ... ['.$key_arr_curr.']: '.$str_marker.' is NULL.', $this->pObj->extKey, 0);
+                  t3lib_div::devlog('[INFO/TEMPLATING] ... ['.$key_tsConf.']: '.$key_marker.' is NULL.', $this->pObj->extKey, 0);
                 }
                 else
                 {
-                  t3lib_div::devlog('[INFO/TEMPLATING] ... ['.$key_arr_curr.']: '.$str_marker.' -> '.$str_elements1, $this->pObj->extKey, 0);
+                  t3lib_div::devlog('[INFO/TEMPLATING] ... ['.$key_tsConf.']: '.$key_marker.' -> '.$str_elements1, $this->pObj->extKey, 0);
                 }
               }
             }
@@ -637,26 +640,26 @@
             // Loop: Replace all used markers, if they have a real value
 
             // Do we have a cHash marker?
-          $pos = strpos($str_value_after_loop, '&###CHASH###');
+          $pos = strpos($value_tsConf_after_loop, '&###CHASH###');
           if (!($pos === false)) {
-            $str_path             = str_replace('&###CHASH###', '', $str_value_after_loop);
-            $arr_url              = parse_url($str_path);
-            $cHash_md5            = $this->pObj->objZz->get_cHash($arr_url['path']);
-            $str_value_after_loop = str_replace('&###CHASH###', '&cHash='.$cHash_md5, $str_value_after_loop);
+            $str_path                 = str_replace('&###CHASH###', '', $value_tsConf_after_loop);
+            $arr_url                  = parse_url($str_path);
+            $cHash_md5                = $this->pObj->objZz->get_cHash($arr_url['path']);
+            $value_tsConf_after_loop  = str_replace('&###CHASH###', '&cHash='.$cHash_md5, $value_tsConf_after_loop);
           }
             // Do we have a cHash marker?
 
-          if ($str_value_after_loop != $value_arr_curr)
+          if ($value_tsConf_after_loop != $value_tsConf)
           {
               // Value has changed
             $b_marker_changed = true;
-            $value_arr_curr = $str_value_after_loop;
+            $value_tsConf = $value_tsConf_after_loop;
           }
           else
           {
             if ($this->pObj->b_drs_ttc)
             {
-              t3lib_div::devlog('[INFO/TEMPLATING] ... ['.$key_arr_curr.']: hasn\'t any marker.', $this->pObj->extKey, 0);
+              t3lib_div::devlog('[INFO/TEMPLATING] ... ['.$key_tsConf.']: hasn\'t any marker.', $this->pObj->extKey, 0);
             }
           }
 
@@ -668,7 +671,7 @@
 
           if($this->pObj->objZz->bool_advanced_3_6_0_rmMarker)
           {
-            $arr_value            = array($value_arr_curr);
+            $arr_value            = array($value_tsConf);
             $arr_markers_in_value = $this->pObj->objTTContainer->get_marker_keys_recursive($arr_value);
             if (is_array($arr_markers_in_value))
             {
@@ -677,14 +680,14 @@
                   // There is one non replaced marker at least
                 foreach ($arr_markers_in_value as $key_m_i_value => $value_m_i_value)
                 {
-                  $value_arr_curr = str_replace('###'.strtoupper($key_m_i_value).'###', '', $value_arr_curr);
+                  $value_tsConf = str_replace('###'.strtoupper($key_m_i_value).'###', '', $value_tsConf);
                 }
               }
             }
           }
             // Delete the markers, which weren't replaced in the multi-dimensional array
         }
-        $arr_multi_dimensional[$key_arr_curr] = $value_arr_curr;
+        $arr_multi_dimensional[$key_tsConf] = $value_tsConf;
       }
         // Replace markers with the values
 

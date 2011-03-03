@@ -357,20 +357,20 @@ class tx_browser_pi1_views
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Workaround filter and localisation - Bugfix #9024
-
-    /*
-     * Description of the bug
-     *
-     * If we have a localized website
-     * and the user has selected a non default language
-     * and the user has selected a filter
-     * than the query above will select only default language records
-     */
-
-    // User selected a non default language
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Workaround filter and localisation - Bugfix #9024
+  
+      /*
+       * Description of the bug
+       *
+       * If we have a localized website
+       * and the user has selected a non default language
+       * and the user has selected a filter
+       * than the query below will select only default language records
+       */
+  
+      // User selected a non default language
     if($this->pObj->objLocalize->int_localization_mode >= 3)
     {
       // User selected a filter
@@ -380,29 +380,45 @@ class tx_browser_pi1_views
         {
           $arr_where = null;
           list($table, $field) = explode('.', $this->pObj->arrLocalTable['uid']);
-          while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
-          {
-            $uid          = $row[$table.'.'.$field];
-            $arr_where[]  = '('.$table.'.'.$field.' = '.$uid.
-                            ' OR '.$table.'.l10n_parent = '.$uid.')';
-          }
-          $where    = implode(' OR ', $arr_where);
-          $where    = '('.$where.')';
-          $andWhere = $this->pObj->objLocalize->localizationFields_where($table);
-          $where    = $where.' AND '.$andWhere;
+            // Get the field names for sys_language_content and for l10n_parent
+          $arr_localize['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+          $arr_localize['pid_field']  = $GLOBALS['TCA'][$table]['ctrl'][' '];
+            // Get the field names for sys_language_content and for l10n_parent
 
-          $query = $GLOBALS['TYPO3_DB']->SELECTquery($select, $from, $where, $groupBy="", $orderBy, $limit="", $uidIndexField="");
-          $res   = $GLOBALS['TYPO3_DB']->sql_query($query);
-          $error = $GLOBALS['TYPO3_DB']->sql_error();
-
-          // DRS - Development Reporting System
-          if ($this->pObj->b_drs_sql)
+            // 13505, 110302, dwildt
+          $where = null;
+          if ($arr_localize['id_field'] && $arr_localize['pid_field'])
           {
-            t3lib_div::devlog('[INFO/SQL] Bugfix #9024 - Next query for localisation consolidation',  $this->pObj->extKey, 0);
-            t3lib_div::devlog('[INFO/SQL] '.$query,  $this->pObj->extKey, 0);
-            t3lib_div::devlog('[HELP/SQL] Be aware of the multi-byte notation, if you want to use the query in your SQL shell or in phpMyAdmin.', $this->pObj->extKey, 1);
+            while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
+            {
+              $uid          = $row[$table.'.'.$field];
+              $arr_where[]  = '('.$table.'.'.$field.' = '.$uid.
+                              ' OR '.$table.'.' . $arr_localize['pid_field'] . ' = '.$uid.')';
+                                // 13573, 110303, dwildt
+            }
+            $where    = implode(' OR ', $arr_where);
+            $where    = '('.$where.')';
+            $andWhere = $this->pObj->objLocalize->localizationFields_where($table);
+              // 13505, 110302, dwildt
+            if(!$andWhere)
+            {
+              $andWhere = 1;
+            }
+            $where = $where.' AND '.$andWhere;
+            $query = $GLOBALS['TYPO3_DB']->SELECTquery($select, $from, $where, $groupBy="", $orderBy, $limit="", $uidIndexField="");
+            $res   = $GLOBALS['TYPO3_DB']->sql_query($query);
+            $error = $GLOBALS['TYPO3_DB']->sql_error();
+
+            // DRS - Development Reporting System
+            if ($this->pObj->b_drs_sql)
+            {
+              t3lib_div::devlog('[INFO/SQL] Bugfix #9024 - Next query for localisation consolidation',  $this->pObj->extKey, 0);
+              t3lib_div::devlog('[INFO/SQL] '.$query,  $this->pObj->extKey, 0);
+              t3lib_div::devlog('[HELP/SQL] Be aware of the multi-byte notation, if you want to use the query in your SQL shell or in phpMyAdmin.', $this->pObj->extKey, 1);
+            }
+            // DRS - Development Reporting System
           }
-          // DRS - Development Reporting System
+
         }
         if($b_union)
         {
@@ -427,7 +443,7 @@ class tx_browser_pi1_views
       }
       // User selected a filter
     }
-    // User selected a non default language
+      // User selected a non default language
 
     if ($error != '')
     {
