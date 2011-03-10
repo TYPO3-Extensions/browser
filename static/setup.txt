@@ -1,3 +1,4 @@
+<<<<<<< .mine
 includeLibs {
   tx_browser_typoscript = EXT:browser/lib/class.tx_browser_typoscript.php
 }
@@ -2072,4 +2073,2080 @@ plugin.tx_browser_pi1 {
     }
   }
 
+=======
+includeLibs {
+  tx_browser_typoscript = EXT:browser/lib/class.tx_browser_typoscript.php
+}
+
+plugin.tx_browser_pi1 {
+
+    // [STRING] Path to the HTML template file
+  template {
+      // default file
+    file = EXT:browser/res/default.tmpl
+    extensions {
+      browser {
+        table {
+          name = Browser: Table
+          file = EXT:browser/res/default.tmpl
+        }
+        list {
+          name = Browser: List
+          file = EXT:browser/res/default_ul.tmpl
+        }
+      }
+    }
+    add_parameter {
+      comment   = Array for adding parameter to navigation elements.
+      tutorial  = http://typo3.org/extensions/repository/view/browser_tut_navigation_en/current/
+        // Default parameter
+      browser = COA
+      browser {
+          // showUid
+        10 = TEXT
+        10 {
+          dataWrap        = &tx_browser_pi1[showUid]={GPvar:tx_browser_pi1|showUid}&###CHASH###
+          if.isTrue.data  = GPvar:tx_browser_pi1|showUid
+        }
+          // azTab
+        20 = TEXT
+        20  {
+          dataWrap        = &tx_browser_pi1[azTab]={GPvar:tx_browser_pi1|azTab}
+          if.isTrue.data  = GPvar:tx_browser_pi1|azTab
+        }
+          // mode
+        30 = TEXT
+        30  {
+          dataWrap        = &tx_browser_pi1[mode]={GPvar:tx_browser_pi1|mode}
+          if.isTrue.data  = GPvar:tx_browser_pi1|mode
+        }
+          // pointer
+        40 = TEXT
+        40  {
+          dataWrap        = &tx_browser_pi1[pointer]={GPvar:tx_browser_pi1|pointer}
+          if.isTrue.data  = GPvar:tx_browser_pi1|pointer
+        }
+          // sort
+        50 = TEXT
+        50  {
+          dataWrap        = &tx_browser_pi1[sort:tx_browser_pi1|sort}
+          if.isTrue.data  = GPvar:tx_browser_pi1|sort
+        }
+          // sword
+        60 = TEXT
+        60  {
+          dataWrap        = &tx_browser_pi1[sword]={GPvar:tx_browser_pi1|sword}
+          if.isTrue.data  = GPvar:tx_browser_pi1|sword
+        }
+      }
+      extensions {
+      }
+    }
+  }
+
+  localTable {
+    // [STRING] Uid field of the local table. This is the name of the uid field of the record for a link to a single view. It is "uid" usually   
+    uid = uid
+    // [STRING] Pid field of the local table.   
+    pid = pid
+  }
+
+  pageBrowser {
+    // [String] Name for the pagebrowser piVar 
+    pointer                = pointer
+    // [INTEGER] The maximum pages, which will displayed in the page browser
+    maxPages               = 10
+    // [BOOLEAN] Display the text line "Displaying results x to y out of z" 
+    showResultCount        =  1
+    // [BOOLEAN] Don't link the active page 
+    dontLinkActivePage     =  1
+    tableParams            = cellpadding="2" align="center"
+    showFirstLast          =  1
+    pagefloat              = center
+    // [BOOLEAN] Display the text line "<< First < Previous 1-20 21-40 41-60 Next > Last >>" 
+    showRange              =  1
+    wrap {
+      disabledLinkWrap       = <span class="SCell">|</span>
+      inactiveLinkWrap       = |
+      activeLinkWrap         = <span class="SCell">|</span>
+      showResultsWrap        = |<br />
+      showResultsNumbersWrap =
+      browseBoxWrap          =
+      browseLinksWrap        = |
+    }
+    
+  }
+  
+  a-z_Browser {
+    display { 
+      // [Boolean] Should tabs displayed, if they haven't any item?
+      tabWithoutItems = 1
+      // [Boolean] Should tabs use the title porperty of the HTML a tag?
+      tabHrefTitle    = 1
+    } 
+    // [INTEGER] The key/id of the default tab (see the 'x' in a-z_Browser.tabs.x). If the user didn't activate any tab, this is the current tab.
+    defaultTab = 0
+    defaultTab {
+      // [BOOLEAN] Display the name of the default tab in the URL path
+      display_in_url = 0
+    }
+    // [STRING] The default wrap for all tabs. If you need a wrap for only one tab, please use the wrap property of that tab.
+    defaultTabWrap = <span>|</span>
+    // [Boolean] Are initials of the tabs case sensitive?
+    caseSensitive = 0
+    // [STRING, syntax: table.field]: If you want to use another field than the first field of your SQL query.
+    field =
+    tabs { 
+      // Tab with the property special (all)
+      0 = All 
+      0 { 
+        // [STRING] (all || others): Display all items
+        special =  all
+        stdWrap {
+          data = LLL:EXT:browser/pi1/locallang.xml:label_azbrowser_all
+        }
+      } 
+      1 = 0-9
+      1 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  0,1,2,3,4,5,6,7,8,9
+        // Don't use the default value displayWithoutItems. Display this tab only, if it has items
+        displayWithoutItems = 0
+      } 
+      2 = A
+      2 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  A
+      } 
+      3 = B
+      3 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  B
+      } 
+      4 = C
+      4 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  C
+      } 
+      5 = D
+      5 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  D
+      } 
+      6 = E
+      6 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  E
+      } 
+      7 = F
+      7 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  F
+      } 
+      8 = G
+      8 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  G
+      } 
+      9 = H
+      9 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  H
+      } 
+      10 = I
+      10 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  I
+      } 
+      11 = J
+      11 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  J
+      } 
+      12 = K
+      12 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  K
+      } 
+      13 = L
+      13 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  L
+      } 
+      14 = M
+      14 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  M
+      } 
+      15 = N
+      15 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  N
+      } 
+      16 = O
+      16 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  O
+      } 
+      17 = PQ
+      17 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  P, Q
+      } 
+      18 = R
+      18 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  R
+      } 
+      19 = S
+      19 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  S
+      } 
+      20 = T
+      20 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  T
+      } 
+      21 = U
+      21 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  U
+      } 
+      22 = V
+      22 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  V
+      } 
+      23 = W
+      23 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  W
+      } 
+      24 = XYZ
+      24 { 
+        // [CSV-STRING] List of comma separated initials (an initial has one digit only)
+        valuesCSV =  X, Y, Z
+      } 
+      // Tab with the property special (others)
+      25 = Others 
+      25 { 
+        // [STRING] (all || others): Display all items which aren't matched by the other tabs
+        special = others
+        // Don't use the default value displayWithoutItems. Display this tab only, if it has items
+        displayWithoutItems = 0
+        stdWrap {
+          data = LLL:EXT:browser/pi1/locallang.xml:label_azbrowser_others
+        }
+      } 
+    } 
+    // [STRING] (auto || iso || utf): Manual configuring of using multibyte methods 
+    charset = auto
+  }  
+
+  modeSelector {
+    wrap =
+  }
+
+  # Rendering of news items. re-use the RTE parseFunc configuration for normal content
+  general_stdWrap {
+    parseFunc < lib.parseFunc_RTE
+    parseFunc {
+      nonTypoTagStdWrap {
+        encapsLines {
+          nonWrappedTag >
+        }
+      }
+    }
+  }
+
+  document_stdWrap {
+    icon = 1
+    stdWrap {
+      noTrimWrap = || |
+    }
+  }
+
+  displaySingle {
+
+    seo {
+      htmlHead {
+        // [Boolean] Search Engine Optimization for the meta tag title. Activate the register browser_htmlTitleTag. 
+        title = 0
+        meta {
+          // [Boolean] Search Engine Optimization for the meta tag description. Activate the register browser_description. 
+          description = 0
+          // [Boolean] Search Engine Optimization for the meta tag keywords. Activate the register browser_keywords. 
+          keywords    = 0
+        }
+      }
+    }
+
+    display {
+      title         = 1
+      table {
+        summary     = 1
+        caption     = 1
+      }
+      backbutton = 1
+      backbutton {
+        data = LLL:EXT:browser/pi1/locallang.xml:backbutton
+        wrap = <a href="javascript:history.back()">|</a> 
+      }
+      searchform {
+        // [Boolean] 1: Wrap the Swords in the result, 0: Don't wrap it
+        wrapSwordInResults = 1
+        wrapSwordInResults {
+          0 {
+            // #ffff7f: light yellow
+            wrap = <span style="background:#ffff7f">|</span>
+          }
+          1 {
+            // #b3ffb2: light green
+            wrap = <span style="background:#b3ffb2">|</span>
+          }
+          2 {
+            // #ffb2b2: light red
+            wrap = <span style="background:#ffb2b2">|</span>
+          }
+          3 {
+            // #b2b3ff: light blue
+            wrap = <span style="background:#b2b3ff">|</span>
+          }
+          4 {
+            // #ffffb3: light light yellow
+            wrap = <span style="background:#ffffb3">|</span>
+          }
+          5 {
+            // #e6ffb2 light light yellow green
+            wrap = <span style="background:#e6ffb2">|</span>
+          }
+          6 {
+            // #ffd380: light orange
+            wrap = <span style="background:#ffd380">|</span>
+          }
+          7 {
+            // #b3ffff: light turkise
+            wrap = <span style="background:#b3ffff">|</span>
+          }
+        }
+      }
+    }
+    
+    templateMarker = ###TEMPLATE_SINGLE###
+
+    content_stdWrap {
+      parseFunc < lib.parseFunc_RTE
+    }
+
+    caption_stdWrap {
+      wrap = <p class="single-image_caption"> | </p>
+      trim=1
+    }
+
+    imageCount      = {$plugin.tx_browser_pi1.singleImageCount}
+    imageWrapIfAny  = <div class="single-image single-image-###IMAGE_COUNT###"> | </div>
+    imageBoxWrap {
+      // [String] Wrap code for every image/imagecaption block #11211
+      wrap = <span class="single-imagebox single-imagebox-###IMAGE_COUNT###"> | </span>
+    }
+    image {
+      // [String] path and file name of the image, which should displayed, if a record hasn't any image #11204
+      file = EXT:browser/res/images/alternate_image_400x300.gif
+      file {
+        maxW = {$plugin.tx_browser_pi1.singleMaxW}
+        maxH = {$plugin.tx_browser_pi1.singleMaxH}
+      }
+      wrap =
+      imageLinkWrap = 1
+      imageLinkWrap {
+        enable = 1
+        bodyTag = <body bgColor="#ffffff">
+        wrap = <a href="javascript:close();"> | </a>
+        width = {$plugin.tx_browser_pi1.singlePopupMaxW}
+        height = {$plugin.tx_browser_pi1.singlePopupMaxH}
+        JSwindow = 1
+        JSwindow.newWindow = 1
+        JSwindow.expand = 17,20
+      }
+      noImage_stdWrap {
+      }
+    }
+
+    // [Boolean] If first image is for the preview, it wouldn't display in the single view
+    firstImageIsPreview       = 0
+    // [Boolean] If first image is for the preview, but there is no further image, preview image will displayed in the single view
+    forceFirstImageIsPreview  = 0
+    
+    // [Boolean, stdWrap] Display the no-item-message, if SQL query will return an empty result
+    noItemMessage = 1
+    noItemMessage {
+      data = LLL:EXT:browser/pi1/locallang.xml:phrase_norecord
+      wrap = <p style="padding:2em 0;">|</p>
+    }
+    
+  }
+
+  displayList {
+
+    singlePid =
+    seo {
+      htmlHead {
+        // [Boolean] Search Engine Optimization for the meta tag title. Activate the register browser_htmlTitleTag. 
+        title = 0
+        meta {
+          // [Boolean] Search Engine Optimization for the meta tag description. Activate the register browser_description. 
+          description = 0
+          // [Boolean] Search Engine Optimization for the meta tag keywords. Activate the register browser_keywords. 
+          keywords    = 0
+        }
+      }
+    }
+
+    display {
+      searchform {
+        and {
+          // [String] One word only
+          value = and
+          lang {
+            // [String] One word only
+            de = und
+          }
+        }
+        or {
+          // [String] One word only
+          value = or
+          lang {
+            // [String] One word only
+            de = oder
+          }
+        }
+        not {
+          // [String] One word only
+          value = not
+          lang {
+            // [String] One word only
+            de = nicht
+          }
+        }
+        resultPhrase {
+          searchFor {
+            value = Search for
+            lang {
+              de = Suche nach
+            }
+          }
+          hasResult {
+            value = has the result
+            lang {
+              de = hat folgendes Ergebnis
+            }
+          }
+          minLenPhrase = 1
+          // [Boolean] 1: display; 0: don't display
+          minLenPhrase {
+            value = (a single sword must content ###advanced.security.sword.minLenWord### at least).
+            lang {
+              de = (ein Suchbegriff muss mindestens ###advanced.security.sword.minLenWord### Zeichen lang sein).
+            }
+            wrap = <br />|
+          }
+          operatorPhrase = 1
+          // [Boolean] 1: display; 0: don't display
+          operatorPhrase {
+            value (
+<p>
+  You can fokus your search with "and", "not" and phrases. Examples:
+</p>
+<ul>
+  <li>
+    "green apples" and taste
+  </li>
+  <li>
+    apples and taste not "Golden Delicious"
+  </li>
+</ul>
+)
+            lang {
+              de (
+<p>
+  Sie k&ouml;nnen die Suche mit "und", "nicht" und Phrasen eingrenzen. Beispiele:
+</p>
+<ul>
+  <li>
+    "Gr&uuml;ne &Auml;pfel" und Geschmack
+  </li>
+  <li>
+    &Auml;pfel und Geschmack nicht "Golden Delicious"
+  </li>
+</ul>
+)
+            }
+            wrap = |
+          }
+          wildcardPhrase {
+            value (
+<ul>
+  <li>
+    apple%wildcard% will find apple and applepie
+  </li>
+</ul>
+)
+            lang {
+              de (
+<ul>
+  <li>
+    Apfel%wildcard% findet Apfel und Apfelmus
+  </li>
+</ul>
+)
+            }
+            wrap = |
+          }
+          wrap = <p>|</p>
+        }
+        wrapSwordInResults {
+          0 {
+            // #ffff7f: light yellow
+            wrap = <span style="background:#ffff7f;font-weight:bold;padding:0 .2em;">|</span>
+          }
+          1 {
+            // #b3ffb2: light green
+            wrap = <span style="background:#b3ffb2;font-weight:bold;padding:0 .2em;">|</span>
+          }
+          2 {
+            // #ffb2b2: light red
+            wrap = <span style="background:#ffb2b2;font-weight:bold;padding:0 .2em;">|</span>
+          }
+          3 {
+            // #b2b3ff: light blue
+            wrap = <span style="background:#b2b3ff;font-weight:bold;padding:0 .2em;">|</span>
+          }
+          4 {
+            // #ffffb3: light light yellow
+            wrap = <span style="background:#ffffb3;font-weight:bold;padding:0 .2em;">|</span>
+          }
+          5 {
+            // #e6ffb2 light light yellow green
+            wrap = <span style="background:#e6ffb2;font-weight:bold;padding:0 .2em;">|</span>
+          }
+          6 {
+            // #ffd380: light orange
+            wrap = <span style="background:#ffd380;font-weight:bold;padding:0 .2em;">|</span>
+          }
+          7 {
+            // #b3ffff: light turkise
+            wrap = <span style="background:#b3ffff;font-weight:bold;padding:0 .2em;">|</span>
+          }
+        }
+        noResult {
+          value = Sorry, there is no matched record!
+          lang {
+            de = Zu Ihrer Anfrage gibt es keine Treffer.
+          }
+        }
+        respect_filters = Comment: The search ignore any filter, if all is false (default)
+        respect_filters {
+          // [Boolean] 0: Don't respect any filter (default), 1: Respect every filter
+          all = 0
+          but = Comment: but is an array for exceptions
+          but {
+            // table.field [Boolean] This is an example. This has an effect only, if all is false
+            tx_mytable_pi1.datetime = 1
+          }
+        }
+      }
+      // [Boolean] 0: subpart CATEGORY_MENU will removed from the HTML template (default). 1: Don't remove it!
+      category_menu = 0
+      emptyListByStart {
+        stdWrap {
+          data = LLL:EXT:browser/pi1/locallang.xml:label_first_visit
+          wrap = <p style="padding:2em 0;">|</p>
+        }
+      }
+      table {
+        // [Boolean] Display the HTML table property summary (WAI guideline) 
+        summary     = 1
+        // [Boolean] Display the HTML table tag caption (WAI guideline) 
+        caption     = 1
+      }
+      // [Boolean] If it isn't possible to link to a single view, link to a single nevertheless and display a JSS alert on click  
+      jssAlert      = 1
+    }
+    
+
+    templateMarker = ###TEMPLATE_LIST###
+
+    selectBox_orderBy {
+      // [Boolean] 1: Display the select box for ordering (default), 0: don't display.
+      display = 1
+      // upto 3.4.5: templateMarker = ###TEMPLATE_SELECTBOX###
+      templateMarker = ###TEMPLATE_SELECTBOX_VALID###
+      selectbox = SELECTBOX
+      selectbox {
+        form {
+          // [String] HTML class of the form
+          class = selectboxorderby
+          legend_stdWrap {
+            value   = Sorting
+            lang.de = Sortieren
+          }
+          button_stdWrap {
+            value   = Send
+            lang.de = Absenden
+          }
+        }
+        // [Boolean] Should be added a default item?
+        first_item = 1
+        first_item {
+          stdWrap {
+            data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_firstitem_default
+          }
+          // [STRING, unique] Value attribute in the option tag (#11401)
+          option_value = 0
+        }
+        // [Integer] How many items should the select box display in the visible area?
+        size = 1
+        // [String] Wrap the object
+        // upto 3.4.5: wrap = <div class="selectbox">|</div>
+        wrap = |
+        wrap {
+          // [Integer] Space characters from left margin in the HTML code
+          nice_html_spaceLeft = 12
+          // [String] Wrap the items
+          // upto 3.4.5: object  = <select name="orderby" size="###SIZE###" onchange="javascript:Go(this)">|</select>
+          object = <select name="tx_browser_pi1[sort]" size="###SIZE###">|</select>
+          object {
+            // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 14
+          }
+          // [String] Wrap one item
+          // upto 3.4.5: item    = <option###CLASS######STYLE### value="###URL###"###ITEM_SELECTED###>|</option>
+          item = <option###CLASS######STYLE### value="###VALUE###"###ITEM_SELECTED###>|</option>
+          item {
+            // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 16
+            // [String] HTML code for a selected item
+            selected = selected="selected"
+            // [String] Default HTML class 
+            class {
+              asc   = asc
+              desc  = desc
+            }
+            // [String] Default HTML style
+            style = 
+            stdWrap {
+              htmlSpecialChars = 1
+              crop = 60 | ... | 1
+            }
+          }
+        }
+        order {
+          // [String] value || uid
+          field = value
+          // [String] ASC || DESC
+          orderFlag = ASC
+          html {
+            str_asc  = 
+            str_desc = 
+          }
+        }
+        sql {
+          // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
+          andWhere = 
+        }
+      }
+    }
+
+    master_templates {
+      // Master template for a category menu
+      category_menu = CATEGORY_MENU
+      category_menu {
+        // [String/optional] Name for the piVar. Name must be unique.
+        nice_piVar = 
+        // [Boolean] Should be added a default item?
+        first_item = 1
+        first_item {
+          // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+          display_without_any_hit = 1
+          // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+          display_hits = 0
+          display_hits {
+            // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item. 
+            behindItem = 1
+            stdWrap {
+              noTrimWrap = | (|)|
+            }
+          } 
+          stdWrap {
+            data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
+          }
+          // [STRING, unique] Value attribute in the option tag (#11401)
+          option_value = 0
+        }
+        // [Boolean]: 1: If value is changing, AJAX will reload the form. 0: No auto reload.
+        ajax_onchange = 1
+        // [String] Wrap the object
+        wrap = <div class="category_menu">###TITLE###|</div>
+        wrap {
+          // [Integer] Space characters from left margin in the HTML code
+          nice_html_spaceLeft = 12
+          title_stdWrap {
+            // [String] Title of the object. If it shouldn't display, please delete the title_stdWrap array
+            value = ###TABLE.FIELD###
+            wrap  = <div class="category_menu_title">|</div>
+          }
+          // [String] Wrap the items
+          object = <ul>|</ul>
+          object {
+            // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 14
+          }
+          // [String] Wrap one item
+          item    = <li><a href="###URL###" ###CLASS### ###STYLE### title="">|</a></li>
+          item {
+            // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+            display_without_any_hit = 0
+            // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+            display_hits = 1 
+            display_hits {
+              // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item. 
+              behindItem = 1
+              stdWrap {
+                noTrimWrap = | (|)|
+              }
+            } 
+            // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 16
+            // [String] Class for a selected item
+            selected = selected
+            // [String] Default HTML class 
+            class = ###ITEM_SELECTED######ONCHANGE###
+            // [String] Default HTML style
+            style =
+            stdWrap {
+              htmlSpecialChars = 1
+              crop             = 60 | ... | 1
+//              typolink {
+//                parameter = {page:uid}
+//                parameter {
+//                  insertData = 1
+//                }
+//              }
+            }
+          }
+        }
+        order {
+          // [String] value || uid
+          field = value
+          // [String] ASC || DESC
+          orderFlag = ASC
+        }
+        sql {
+          // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
+          andWhere = 
+        }
+        // [BOOLEAN] 1: Display an area filter, 0: Don't display an area (default)
+        area = 0
+      }
+      checkbox = CHECKBOX
+      checkbox {
+        // [String/optional] Name for the piVar. Name must be unique.
+        nice_piVar = 
+        // [Boolean] Is a selecting obligatory?
+        required = 0
+        // [String] Wrap the object
+        // [Boolean]: 1: If value is changing, AJAX will reload the form. 0: No auto reload.
+        ajax_onchange = 1
+        wrap (
+<fieldset class="checkbox ###ONCHANGE###">
+              <legend>###TITLE###</legend>
+                |
+            </fieldset>
+)
+        wrap {
+          // [Integer] Space characters from left margin in the HTML code
+          nice_html_spaceLeft = 12
+          title_stdWrap {
+            // [String] Title of the object. If it shouldn't display, please delete the title array
+            value = ###TABLE.FIELD###
+            wrap  = |
+          }
+          // [String] Wrap the items
+          object = |
+          // [String] Wrap one item
+          item    = <input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###> |
+          item {
+            // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+            display_without_any_hit = 0
+            // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+            display_hits = 1
+            display_hits {
+              // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item. 
+              behindItem = 1
+              stdWrap {
+                noTrimWrap = | (|)|
+              }
+            } 
+            // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 16
+            // [String] HTML code for a selected item
+            selected = checked="checked"
+            // [String] Default HTML class 
+            class = 
+            // [String] Default HTML style
+            style =
+            stdWrap {
+              crop = 60 | ... | 1
+            }
+          }
+          // [Integer] Maximum items per row. 0: unlimited
+          itemsPerRow = 3
+          itemsPerRow {
+            // [String] Wrap the row
+            wrap = <div class="row row-###EVEN_ODD###">|</div>
+            // [String] if there aren't enough items to fill up a row
+            noItemValue = &nbsp;
+          }
+        }
+        order {
+          // [String] value || uid
+          field = value
+          // [String] ASC || DESC
+          orderFlag = ASC
+        }
+        sql {
+          // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
+          andWhere = 
+        }
+        // [BOOLEAN] You have to allocate one of the areas of the mastertemplate
+        area = 0
+      }
+      // Master template for radio buttons
+      radiobuttons = RADIOBUTTONS
+      radiobuttons {
+        // [String/optional] Name for the piVar. Name must be unique.
+        nice_piVar = 
+        // [Boolean] Is a selecting obligatory?
+        required = 1
+        // [Boolean]: 1: If value is changing, AJAX will reload the form. 0: No auto reload.
+        ajax_onchange = 1
+        // [String] Wrap the object
+        wrap (
+<fieldset class="radiobuttons ###ONCHANGE###">
+              <legend>###TITLE###</legend>
+                |
+            </fieldset>
+)
+        wrap {
+          // [Integer] Space characters from left margin in the HTML code
+          nice_html_spaceLeft = 12
+          title_stdWrap {
+            // [String] Title of the object. If it shouldn't display, please delete the title array
+            value = ###TABLE.FIELD###
+            wrap  = |
+          }
+          // [String] Wrap the items
+          object = |
+          // [String] Wrap one item
+          item    = <input###CLASS######STYLE### type="radio" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###> |
+          item {
+            // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+            display_without_any_hit = 0
+            // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+            display_hits = 1
+            display_hits {
+              // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item. 
+              behindItem = 1
+              stdWrap {
+                noTrimWrap = | (|)|
+              }
+            } 
+            // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 16
+            // [String] HTML code for a selected item
+            selected = checked="checked"
+            // [String] Default HTML class 
+            class = 
+            // [String] Default HTML style
+            style =
+            stdWrap {
+              crop = 60 | ... | 1
+            }
+          }
+          // [Integer] Maximum items per row. 0: unlimited
+          itemsPerRow = 3
+          itemsPerRow {
+            // [String] Wrap the row
+            wrap = <div class="row row-###EVEN_ODD###">|</div>
+            // [String] if there aren't enough items to fill up a row
+            noItemValue = &nbsp;
+          }
+        }
+        order {
+          // [String] value || uid
+          field = value
+          // [String] ASC || DESC
+          orderFlag = ASC
+        }
+        sql {
+          // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
+          andWhere = 
+        }
+        // [BOOLEAN] You have to allocate one of the areas of the mastertemplate
+        area = 0
+      }
+      // Master template for a selectbox
+      selectbox = SELECTBOX
+      selectbox {
+        // [String/optional] Name for the piVar. Name must be unique.
+        nice_piVar = 
+        // [Boolean] Should be added a default item?
+        first_item = 1
+        first_item {
+          // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+          display_without_any_hit = 1
+          // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+          display_hits = 0
+          display_hits {
+            // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item. 
+            behindItem = 1
+            stdWrap {
+              noTrimWrap = | (|)|
+            }
+          } 
+          stdWrap {
+            data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
+          }
+          // [STRING, unique] Value attribute in the option tag (#11401)
+          option_value = 0
+        }
+        // [Boolean] Should it be possible to select more than one item?
+        multiple  = 1
+        multiple {
+          // [String] HTML code for multiple
+          selected = multiple="multiple"
+        }
+        // [Integer] How many items should the select box display in the visible area?
+        size = 1
+        // [Boolean]: 1: If value is changing, AJAX will reload the form. 0: No auto reload.
+        ajax_onchange = 1
+        // [String] Wrap the object
+        wrap = <div class="selectbox">###TITLE###|</div>
+        wrap {
+          // [Integer] Space characters from left margin in the HTML code
+          nice_html_spaceLeft = 12
+          title_stdWrap {
+            // [String] Title of the object. If it shouldn't display, please delete the title array
+            value = ###TABLE.FIELD###
+            wrap  = <div class="selectbox_title">|</div>
+          }
+          // [String] Wrap the items
+          object = <select class="###ONCHANGE###" name="###TABLE.FIELD###" id="###ID###" size="###SIZE###"###MULTIPLE###>|</select>
+          object {
+            // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 14
+          }
+          // [String] Wrap one item
+          item    = <option###CLASS######STYLE### value="###UID###"###ITEM_SELECTED###>|</option>
+          item {
+            // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+            display_without_any_hit = 0
+            // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+            display_hits = 1 
+            display_hits {
+              // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item. 
+              behindItem = 1
+              stdWrap {
+                noTrimWrap = | (|)|
+              }
+            } 
+            // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 16
+            // [String] HTML code for a selected item
+            selected = selected="selected"
+            // [String] Default HTML class 
+            class = 
+            // [String] Default HTML style
+            style =
+            stdWrap {
+              htmlSpecialChars = 1
+              crop             = 60 | ... | 1
+            }
+          }
+        }
+        order {
+          // [String] value || uid
+          field = value
+          // [String] ASC || DESC
+          orderFlag = ASC
+        }
+        sql {
+          // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
+          andWhere = 
+        }
+        // [BOOLEAN] You have to allocate one of the areas of the master template. Tutorial: http://typo3.org/extensions/repository/view/browser_tut_search_en/current/
+        area = 0
+      }
+      areas {
+        sample_currency = 1
+        sample_currency {
+          faq = Tutorial: http://typo3.org/extensions/repository/view/browser_tut_search_en/current/
+          // [BOOLEAN] 1: One field - with individual from-to-string, 0: Don't take it
+          strings = 1
+          strings {
+            faq = FAQ: How to configure first_item, hits and nice_piVar?
+            faq {
+              first_item    = Properties for the first_item will be taken from first_item above
+              display_hits  = Properties will be taken from wrap.item above
+              nice_piVar    = Property will be taken from nice_piVar above
+            }
+            label_stdWrap {
+              data = LLL:EXT:browser/pi1/locallang.xml:label_fromTo
+            }
+            options {
+              faq = FAQ: How do I configure a currency area?
+              faq {
+                area      = Define valueFrom and valueTo. If one is empty it is unlimited.
+                keys      = A key of an item should be an integer like: 10, 20, 30, 40, etc.
+                10_to_30  = Example for three items of a currency area
+              }
+              fields {
+                10 {
+                  comment = Upto 10.000 EUR
+                  valueFrom_stdWrap {
+                    value = 
+                  }
+                  valueTo_stdWrap {
+                    value = 10000
+                  }
+                  value_stdWrap {
+                    value = Upto 10.000 EUR
+                    lang {
+                      de = Bis 10.000 EUR
+                    }
+                  }
+                }
+                20 {
+                  comment = From 10.000 EUR to 20.000 EUR
+                  valueFrom_stdWrap {
+                    value = 10000
+                  }
+                  valueTo_stdWrap {
+                    value = 20000
+                  }
+                  value_stdWrap {
+                    value = 10.000 - 20.000 EUR
+                  }
+                }
+                30 {
+                  comment = From 20.000 EUR without any limit
+                  valueFrom_stdWrap {
+                    value = 20000
+                  }
+                  valueTo_stdWrap {
+                    value = 
+                  }
+                  value_stdWrap {
+                    value = From 20.000 EUR
+                    lang {
+                      de = Ab 20.000 EUR
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        sample_period = 1
+        sample_period {
+          faq = Tutorial: http://typo3.org/extensions/repository/view/browser_tut_search_en/current/
+          // [BOOLEAN] 1: One field - with individual from-to-string, 0: Don't take it
+          strings = 0
+          strings {
+            faq = FAQ: How to configure first_item, hits and nice_piVar?
+            faq {
+              first_item    = Properties for the first_item will be taken from first_item above
+              display_hits  = Properties will be taken from wrap.item above
+              nice_piVar    = Property will be taken from nice_piVar above
+            }
+            label_stdWrap {
+              data = LLL:EXT:browser/pi1/locallang.xml:label_fromTo
+            }
+            // [STRING: number || string] number: sql query with >= and <=, string: sql query with LIKE ???
+            sql = number
+            options {
+              faq = FAQ: How do I configure an area for a period?
+              faq {
+                area      = Define valueFrom and valueTo. If one is empty it is unlimited.
+                keys      = A key of an item should be an integer like: 10, 20, 30, 40, etc.
+              }
+              fields {
+                10 {
+                  comment = Before 2010
+                  valueFrom_stdWrap {
+                    value = 
+                  }
+                  valueTo_stdWrap {
+                    value = 1262300400
+                  }
+                  value_stdWrap {
+                    value = Before 2010
+                    lang {
+                      de = Vor 2010
+                    }
+                  }
+                }
+                20 {
+                  comment = From 2010 to 2011
+                  valueFrom_stdWrap {
+                    value = 1262300400
+                  }
+                  valueTo_stdWrap {
+                    value = 1293836400
+                  }
+                  value_stdWrap {
+                    value = 2010 - 2011
+                  }
+                }
+                30 {
+                  comment = After 2011
+                  valueFrom_stdWrap {
+                    value = 1293836400
+                  }
+                  valueTo_stdWrap {
+                    value = 
+                  }
+                  value_stdWrap {
+                    value = After 2011
+                    lang {
+                      de = Nach 2011
+                    }
+                  }
+                }
+              }
+            }
+          }
+          interval = 1
+          interval {
+            // [BOOLEAN]: 1: dates are converted to timestamp. 0: undefined
+            compare_wiTimeStamp = 1
+            // [STRING] 'day', 'week', 'month' or 'year'
+            case = year
+            day {
+              start_period {
+                // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                  // Examples with strtotime: last Monday, -1 day, now, next Monday
+                  value = last Monday
+                }
+              }
+              times_stdWrap {
+                // [INTEGER] Display the period n times
+                value = 7
+              }
+              value_stdWrap {
+                // [STRING] Leave it empty! It will be handled while runtime.
+                value = 
+                // [STRING] See php method strftime
+                strftime = %A
+              }
+            }
+            week {
+              start_period {
+                // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                  // Examples with strtotime: -3 weeks, now, next week
+                  value = last week
+                }
+              }
+              times_stdWrap {
+                // [INTEGER] Display the period n times
+                value = 6
+              }
+              firstday_stdWrap {
+                // [INTEGER] 1: Mon, 2: Thu, ... 7: Sun
+                value = 1
+              }
+              value_stdWrap {
+                // [STRING] Leave it empty! It will be handled while runtime.
+                value = 
+                // [STRING] See php method strftime
+                strftime = %U. ###MY_WEEK###
+              }
+            }
+            month {
+              start_period {
+                // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                  // Examples with strtotime: January, -1 month, now, next month
+                  value = now
+                }
+              }
+              times_stdWrap {
+                // [INTEGER] Display the period n times
+                value = 6
+              }
+              value_stdWrap {
+                // [STRING] Leave it empty! It will be handled while runtime.
+                value = 
+                // [STRING] See php method strftime
+                strftime = %b %y
+              }
+            }
+            year {
+              start_period {
+                // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                  // Examples with strtotime: -1 year, 2010, now, next year
+                  value = -1 year
+                }
+              }
+              times_stdWrap {
+                // [INTEGER] Display the period n times
+                value = 3
+              }
+              value_stdWrap {
+                // [STRING] Leave it empty! It will be handled while runtime.
+                value = 
+                // [STRING] See php method strftime
+                strftime = %Y
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    // [Boolean] Display caption in List view?
+    caption_stdWrap.if.directReturn = 0
+
+    // [Integer] Amount of images which should be displayed
+    imageCount     = {$plugin.tx_browser_pi1.listImageCount}
+    // [String] Wrap code for the whole image block (if there is any image)
+    imageWrapIfAny = 
+    imageBoxWrap {
+      // [String] Wrap code for every image/imagecaption block #11211
+      wrap = <span class="list-imagebox list-imagebox-###IMAGE_COUNT###"> | </span>
+    }
+    image {
+      // [String] path and file name of the image, which should displayed, if a record hasn't any image #11204
+      file = EXT:browser/res/images/alternate_image_400x300.gif
+      file {
+        maxW = {$plugin.tx_browser_pi1.listMaxW}
+        maxH = {$plugin.tx_browser_pi1.listMaxH}
+      }
+      wrap          = 
+      imageLinkWrap = 1
+      imageLinkWrap {
+        enable = 1
+        bodyTag = <body bgColor="#ffffff">
+        wrap = <a href="javascript:close();"> | </a>
+        width = {$plugin.tx_browser_pi1.listPopupMaxW}
+        height = {$plugin.tx_browser_pi1.listPopupMaxH}
+        JSwindow = 1
+        JSwindow.newWindow = 1
+        JSwindow.expand = 17,20
+      }
+      noImage_stdWrap {
+      }
+      firstImageIsPreview       >
+      forceFirstImageIsPreview  >
+    }
+    // [Boolean, stdWrap] Display the no-item-message, if SQL query will return an empty result
+    noItemMessage = 1
+    noItemMessage {
+      data = LLL:EXT:browser/pi1/locallang.xml:phrase_norecord
+      wrap = <p style="padding:2em 0;">|</p>
+    }
+  }
+  
+  marker {
+      // markers can use TEXT or COA
+    my_title = TEXT
+    my_title {
+      value = 
+      lang {
+        de = 
+      }
+      wrap = <h1>|</h1>
+    }
+      // markers can use TEXT or COA
+    my_url = TEXT
+    my_url {
+      typolink {
+        parameter = {page:uid}
+        parameter {
+          insertData = 1
+        }
+        returnLast = url
+      }
+    }
+      // markers can use TEXT or COA
+    my_reset = TEXT
+    my_reset {
+      value = Reset
+      lang {
+        de = Zur&uuml;cksetzen
+      }
+    }
+      // markers can use TEXT or COA
+    my_search = TEXT
+    my_search {
+      value = Search
+      lang {
+        de = Suchen
+      }
+    }
+      // markers can use TEXT or COA
+    my_search_legend = TEXT
+    my_search_legend {
+      data = LLL:EXT:browser/pi1/locallang.xml:label_search_legend
+    }
+      // markers can use TEXT or COA
+    my_week = TEXT
+    my_week {
+      value = week
+      lang {
+        de = Woche
+      }
+    }
+  }
+
+  plugin {
+    socialmedia {
+      socialbookmarks {
+          wraps {
+            stdWrap_items {
+              value = ###BOOKMARK_ITEMS###
+              wrap  = <span class="tx_browser_pi1.bookmark_items">|</span>
+            }
+            stdWrap_item {
+              value = <a href="###BOOKMARK_URL###" target="_blank" title="###BOOKMARK_NAME###"><img ###BOOKMARK_IMAGESIZE### src="###BOOKMARK_IMAGE###"></a>
+              wrap  = <span class="tx_browser_pi1.bookmark_item">|</span>
+            }
+          }
+        bookmarks {
+          items {
+            addthis {
+              name    = Add This
+              url     = http://www.addthis.com/bookmark.php?pub=geotek&amp;url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/addthis.png
+              stdWrap {
+                value = <a title="###BOOKMARK_NAME###" href="###BOOKMARK_URL###"><img ###BOOKMARK_IMAGESIZE### src="###BOOKMARK_IMAGE###"></a>
+                wrap  = <span class="tx_browser_pi1.bookmark_item tx_browser_pi1.bookmark_item_first">|</span>
+              }
+            }
+            ask {
+              name    = Ask.com
+              url     = http://myjeeves.ask.com/mysearch/BookmarkIt?v=1.2&amp;t=webpages&amp;url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/ask.png
+            }
+            backflip {
+              name    = Backflip
+              url     = http://www.backflip.com/add_page_pop.ihtml?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/backflip.png
+            }
+            blinkbits {
+              name    = BlinkBits
+              url     = http://www.blinkbits.com/bookmarklets/save.php?v=1&amp;source_url=###URL###&amp;title=###TITLE###&amp;body=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/blinkbits.png
+            }
+            blinklist {
+              name    = blinklist
+              url     = http://www.blinklist.com/index.php?Action=Blink/addblink.php&amp;Description=&amp;Url=###URL###&amp;Title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/blinklist.png
+            }
+            blogmarks {
+              name    = BlogMarks
+              url     = http://blogmarks.net/my/new.php?mini=1&amp;simple=1&amp;url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/blogmarks.png
+            }
+            bluedot {
+              name    = Bluedot
+              url     = http://bluedot.us/Authoring.aspx?u=###URL###&amp;t=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/bluedot.png
+            }
+            connotea {
+              name    = Connotea
+              url     = http://www.connotea.org/addpopup?continue=confirm&amp;uri=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/connotea.png
+            }
+            delicious {
+              name    = del.icio.us
+              url     = http://del.icio.us/post?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/delicious.png
+            }
+            delirious {
+              name    = de.lirio.us
+              url     = http://de.lirio.us/rubric/post?uri=###URL###;title=###TITLE###;when_done=go_back
+              image   = EXT:browser/res/images/socialmedia/bookmarks/delirious.png
+            }
+            digg {
+              name    = digg.com
+              url     = http://digg.com/submit?phase=2&amp;url=###URL###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/digg.png
+            }
+            facebook {
+              name    = Facebook
+              url     = http://www.facebook.com/share.php?u=###URL###&t=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/facebook.png
+            }
+            fark {
+              name    = Fark.com
+              url     = http://cgi.fark.com/cgi/fark/edit.pl?new_url=###URL###&amp;new_comment=###TITLE###&amp;linktype=Misc
+              image   = EXT:browser/res/images/socialmedia/bookmarks/fark.png
+            }
+            feedmelinks {
+              name    = Feed me links
+              url     = http://feedmelinks.com/categorize?from=toolbar&amp;op=submit&amp;url=###URL###name=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/feedmelinks.png
+            }
+            folkd {
+              name    = Folkd
+              url     = http://www.folkd.com/submit/###URL###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/folkd.png
+            }
+            furl {
+              name    = Furl
+              url     = http://www.furl.net/storeIt.jsp?u=###URL###&amp;t=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/furl.png
+            }
+            google {
+              name    = google.com
+              url     = http://www.google.com/bookmarks/mark?op=add&amp;bkmk=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/google.png
+            }
+            hype {
+              name    = hype it!
+              url     = http://hype.yeebase.com/submit/###URL###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/hype.png
+            }
+            linkagogo {
+              name    = LinkaGoGo
+              url     = http://www.linkagogo.com/go/AddNoPopup?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/linkagogo.png
+            }
+            linkarena {
+              name    = LinkaARENA
+              url     = http://linkarena.com/bookmarks/addlink/?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/linkarena.png
+            }
+            live {
+              name    = live.com
+              url     = https://favorites.live.com/quickadd.aspx?marklet=1&amp;mkt=en-us&amp;url=###URL###&amp;title=###TITLE###&amp;top=1
+              image   = EXT:browser/res/images/socialmedia/bookmarks/live.png
+            }
+            magnolia {
+              name    = Ma.gnolia
+              url     = http://ma.gnolia.com/beta/bookmarklet/add?url=###URL###&amp;title=###TITLE###&amp;description=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/magnolia.png
+            }
+            misterwong {
+              name    = Mister Wong
+              url     = http://www.mister-wong.de/index.php?action=addurl&amp;bm_url=###URL###&amp;bm_description=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/wong.png
+            }
+            mylinkde {
+              name    = MyLink.de
+              url     = http://www.mylink.de/qa.asp?link=###URL###&amp;bez=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/mylinkde.png
+            }
+            netscape {
+              name    = Netscape
+              url     = http://www.netscape.com/submit/?U=###URL###&amp;T=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/netscape.png
+            }
+            netvouz {
+              name    = netvouz
+              url     = http://www.netvouz.com/action/submitBookmark?url=###URL###&amp;title=###TITLE###&amp;description=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/netvouz.png
+            }
+            newsvine {
+              name    = newsvine.com
+              url     = http://www.newsvine.com/_tools/seed&amp;save?u=###URL###&amp;h=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/newsvine.png
+            }
+            oneview {
+              name    = oneview
+              url     = http://www.oneview.de/quickadd/neu/addBookmark.jsf?URL=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/oneview.png
+            }
+            rawsugar {
+              name    = RawSugar
+              url     = http://www.rawsugar.com/tagger/?turl=###URL###&amp;tttl=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/rawsugar.png
+            }
+            reddit {
+              name    = Reddit
+              url     = http://reddit.com/submit?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/reddit.png
+            }
+            scuttle {
+              name    = Scuttle
+              url     = http://www.scuttle.org/bookmarks.php/maxpower?action=add&amp;address=###URL###&amp;title=###TITLE###&amp;description=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/scuttle.png
+            }
+            simpy {
+              name    = Simpy
+              url     = http://www.simpy.com/simpy/LinkAdd.do?href=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/simpy.png
+            }
+            smarking {
+              name    = Smarking
+              url     = http://smarking.com/editbookmark/?url=###URL###&amp;description=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/smarking.png
+            }
+            spurl {
+              name    = Spurl
+              url     = http://www.spurl.net/spurl.php?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/spurl.png
+            }
+            stumbleupon {
+              name    = stumbleupon.com
+              url     = http://www.stumbleupon.com/submit?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/su.png
+            }
+            tagthat {
+              name    = TagThat
+              url     = http://www.tagthat.de/bookmarken.php?action=neu&amp;url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/tagthat.png
+            }
+            tailrank {socialmedia
+              name    = TailRank
+              url     = http://tailrank.com/share/?text=&amp;link_href=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/tailrank.png
+            }
+            technorati {
+              name    = Technorati
+              url     = http://technorati.com/faves/?add=###URL###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/technorati.png
+            }
+            twitter {
+              name    = Twitter
+              url     = http://twitter.com/home?status=###TITLE###+-+###URL###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/twitter.png
+            }
+            webnews {
+              name    = Webnews
+              url     = http://www.webnews.de/einstellen?url=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/webnews.png
+            }
+            wink {
+              name    = Wink
+              url     = http://www.wink.com/_/tag?url=###URL###&amp;doctitle=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/wink.png
+            }
+            wists {
+              name    = Wists
+              url     = http://wists.com/r.php?c=&amp;r=###URL###&amp;title=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/wists.png
+            }
+            yahoomyweb {
+              name    = YahooMyWeb
+              url     = http://myweb.yahoo.com/myresults/bookmarklet?t=###TITLE###&amp;u=###URL###&amp;ei=UTF-8
+              image   = EXT:browser/res/images/socialmedia/bookmarks/yahoomyweb.png
+            }
+            yiggde {
+              name    = YiggIt
+              url     = http://yigg.de/neu?exturl=###URL###&amp;exttitle=###TITLE###&amp;extdesc=###TITLE###
+              image   = EXT:browser/res/images/socialmedia/bookmarks/yiggit.png
+            }
+          }
+        }
+      }
+    }
+    templating {
+      arrDataQuery {
+        config {
+          ifNoItem {
+            value = No query vailable
+          }
+        }
+      }
+    }
+  }
+
+  javascript {
+    jquery {
+      // [STRING] Path to jQuery 
+      file = http://code.jquery.com/jquery-1.4.2.min.js
+    }
+    ajax {
+      // [STRING] Path to Javascript file with ajax methods
+      file    = EXT:browser/res/js/tx_browser_pi1_ajax.js
+      // [STRING] Path to Javascript file with ajax language values
+      fileLL  = EXT:browser/res/js/tx_browser_pi1_ajax_languages.js
+      html {
+        marker {
+          // [STRING / UPPERCASE] Name of the class in CHECKBOX, RADIOBUTTONS, SELECTBOX.
+          ajax_onchange = ONCHANGE
+        }
+      }
+      // [PAGE] page object
+      page = PAGE
+      page {
+        typeNum = 0
+        config {
+          disableAllHeaderCode  = 1
+          xhtml_cleaning        = 0
+          admPanel              = 0
+        }
+        10 = CONTENT
+        10 { 
+          table=tt_content 
+          select{ 
+            // only use current page 
+            pidInList = this
+            // only use current language
+            languageField=sys_language_uid 
+            andWhere.cObject = COA
+            andWhere.cObject {
+              // choose all Browser plugins...
+              10 = TEXT
+              10.value = list_type = 'browser_pi1'
+              // if an UID is provided in the querystring, choose only that plugin 
+              20 = TEXT
+              20.data = GPvar:tx_browser_pi1|plugin
+              20.if.isTrue.data = GPvar:tx_browser_pi1|plugin
+              20.outerWrap = AND uid = |
+            } 
+          }
+        }
+      } 
+    }
+    general {
+      // [STRING] Path to Javascript file general methods
+      file = EXT:browser/res/js/tx_browser_pi1.js
+    }
+  }
+
+  rss {
+    page = PAGE
+    page {
+      typeNum = 0
+      config {
+        disableAllHeaderCode  = 1
+        disablePrefixComment  = 1
+        xhtml_cleaning        = 0
+        admPanel              = 0
+        additionalHeaders     = Content-type:text/xml
+      }
+      10 = CONTENT
+      10 { 
+        table=tt_content 
+        select{ 
+          // use current language
+          languageField = sys_language_uid 
+          andWhere {
+            cObject = COA
+            cObject {
+              // choose all Browser plugins...
+              10 = TEXT
+              10 {
+                value = list_type = 'browser_pi1'
+              } 
+            } 
+          } 
+        }
+      }
+    } 
+  }
+
+  autoconfig {
+    // [BOOLEAN] Build relations automatically
+    relations = {$plugin.tx_browser_pi1.autoSQLrelConfig}
+    relations {
+      // [BOOLEAN] Don't use relations from foreign tables back to the local table
+      oneWayOnly                = {$plugin.tx_browser_pi1.autoSQLrelOnlyOneway}
+      //  [BOOLEAN] Use simple relations from a local table field to a foreign table. If the frontend plugin is configured, the plugin will overwrite this value!
+      simpleRelations           = 1
+      simpleRelations {
+        //  [BOOLEAN] Don't use relations from a table to itself
+        selfReference           = {$plugin.tx_browser_pi1.autoSQLrelSelfReference}
+      }
+      // [BOOLEAN] Use MM relations from the local table over an mm-table to a foreign table.  If the frontend plugin is configured, the plugin will overwrite this value!
+      mmRelations               = 1
+      TCAconfig {
+        // [BOOLEAN] Respect the TCA type for relation building
+        type = 1
+        // [CSV-STRING] Comma separated list of field types in the TCA, which are allowed for looking up relations.
+        type {
+          csvValue = select
+        }
+      }
+      // [CSV-STRING, syntax: table.field] Comma separated list of fields in the TCA, which will ignored for looking up relations.
+      #csvDontUseFields            = tt_news.l18n_parent, tt_news.l18n_diffsource, tt_news_cat.parent_category
+      csvDontUseFields          =
+      // [BOOLEAN] Use LEFT JOIN statements, if left_join is TRUE. 1 is recommended. 
+      left_join                 = 1
+    }
+    autoDiscover {
+      dontDiscoverFields {
+        // [CSV-STRING] Comma separated list of fields, which shouldn't checked in the TCA
+        csvValue = uid, pid
+      }
+      items {
+        // [BOOLEAN] Detect titles automatically
+        title = {$plugin.tx_browser_pi1.autoDiscoverTitle}
+        title {
+          localTableOnly  = 1
+          oneValueOnly    = 1
+          setUploadFolder = 0
+          // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+          dontColorSwords = 0
+          // [BOOLEAN] Respect TCA labels for the auto-detection
+          TCAlabel        = 1
+          TCAlabel {
+            // [CSV-STRING] Detect fields with this labels in the TCA for the title
+            csvValue = title
+          }
+        }
+        // [BOOLEAN] Detect iamges automatically
+        image = {$plugin.tx_browser_pi1.autoDiscoverImage}
+        image {
+          localTableOnly  = 0
+          oneValueOnly    = 1
+          setUploadFolder = 1
+          // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+          dontColorSwords = 1
+          // [BOOLEAN] Respect TCA labels for the auto-detection
+          TCAlabel        = 1
+          TCAlabel {
+            // [CSV-STRING] Detect fields with this labels in the TCA for the image
+            csvValue = image, images
+          }
+          TCAconfig {
+            // [BOOLEAN] Respect the TCA type for the auto-detection
+            type = 1
+            type {
+              // [CSV-STRING] Respect the TCA type values for the auto-detection
+              csvValue = group
+            }
+            // [BOOLEAN] Respect the TCA internal type for the auto-detection
+            internal_type = 1
+            internal_type {
+              csvValue = file
+            }
+            // [BOOLEAN] Respect the TCA allowed value for the auto-detection
+            allowed = 1
+            allowed {
+              // [STRING] Respect the TCA allowed value for the auto-detection
+              value = imagefile_ext
+            }
+          }
+        }
+        // [BOOLEAN] Detect the caption of an image automatically
+        imageCaption = {$plugin.tx_browser_pi1.autoDiscoverImage}
+        imageCaption {
+          localTableOnly  = 0
+          oneValueOnly    = 1
+          setUploadFolder = 0
+          // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+          dontColorSwords = 0
+          // [BOOLEAN] Respect TCA labels for the auto-detection
+          TCAlabel        = 1
+          TCAlabel {
+            // [CSV-STRING] Detect fields with this labels in the TCA for the image caption
+            csvValue = caption, imagecaption
+          }
+          TCAconfig {
+            // [BOOLEAN] Respect the TCA type for the auto-detection
+            type = 1
+            type {
+              // [CSV-STRING] Respect the TCA type values for the auto-detection
+              csvValue = text
+            }
+          }
+        }
+        // [BOOLEAN] Detect the HTML-a-tag property alt of an image automatically
+        imageAltText = {$plugin.tx_browser_pi1.autoDiscoverImage}
+        imageAltText {
+          localTableOnly  = 0
+          oneValueOnly    = 1
+          setUploadFolder = 0
+          // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+          dontColorSwords = 1
+          // [BOOLEAN] Respect TCA labels for the auto-detection
+          TCAlabel        = 1
+          TCAlabel {
+            // [CSV-STRING] Detect fields with this labels in the TCA for the HTML-a-tag property alt of the image
+            csvValue = imagealttext, imageseo
+          }
+          TCAconfig {
+            // [BOOLEAN] Respect the TCA type for the auto-detection
+            type = 1
+            type {
+              // [CSV-STRING] Respect the TCA type values for the auto-detection
+              csvValue = text
+            }
+          }
+        }
+        // [BOOLEAN] Detect the HTML-a-tag property title of an image automatically
+        imageTitleText = {$plugin.tx_browser_pi1.autoDiscoverImage}
+        imageTitleText {
+          localTableOnly  = 0
+          oneValueOnly    = 1
+          setUploadFolder = 0
+          // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+          dontColorSwords = 1
+          // [BOOLEAN] Respect TCA labels for the auto-detection
+          TCAlabel        = 1
+          TCAlabel {
+            // [CSV-STRING] Detect fields with this labels in the TCA for the HTML-a-tag property title of the image
+            csvValue = imagetitletext, imageseo
+          }
+          TCAconfig {
+            // [BOOLEAN] Respect the TCA type for the auto-detection
+            type = 1
+            type {
+              // [CSV-STRING] Respect the TCA type values for the auto-detection
+              csvValue = text
+            }
+          }
+        }
+        // [BOOLEAN] Detect documents automatically
+        document = {$plugin.tx_browser_pi1.autoDiscoverDocument}
+        document {
+          localTableOnly  = 0
+          oneValueOnly    = 0
+          // [BOOLEAN] Take the TCA path to the upload folder 
+          setUploadFolder = 1
+          // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+          dontColorSwords = 1
+          // [BOOLEAN] Respect TCA labels for the auto-detection
+          TCAlabel        = 1
+          TCAlabel {
+            // [CSV-STRING] Detect fields with this labels in the TCA for documents
+            csvValue = media, document, documents
+          }
+          TCAconfig {
+            // [BOOLEAN] Respect the TCA type for the auto-detection
+            type = 1
+            type {
+              // [CSV-STRING] Respect the TCA type values for the auto-detection
+              csvValue = group
+            }
+            internal_type = 1
+            internal_type {
+              // [CSV-STRING] Respect the TCA internal type values for the auto-detection
+              csvValue = file
+            }
+          }
+        }
+        // [BOOLEAN] Detect time stamps automatically
+        timestamp = {$plugin.tx_browser_pi1.autoDiscoverTimestamp}
+        timestamp {
+          oneValueOnly   = 0
+          // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
+          dontColorSwords = 0
+          // [BOOLEAN] Respect TCA labels for the auto-detection
+          TCAlabel       = 1
+          TCAlabel {
+            // [CSV-STRING] Detect fields with this labels in the TCA for time stamps
+            csvValue = datetime, starttime, endtime,
+          }
+          TCAconfig {
+            // [STRING] Respect the value of TCA eval for the auto-detection
+            eval = datetime
+          }
+        }
+      }
+    }
+    // Marker
+    marker {
+      typoScript {
+        // Replace a marker with its value. I. e. ###TT_NEWS.TITLE### becomes "Title of the news"
+        replacement = 1
+      }
+    }
+    consolidation {
+      sql {
+        rows {
+          // [BOOLEAN] Try to change non unique rows to unique rows
+          unique = 1
+          unique {
+            // [BOOLEAN] Remove foreignUid fields from the rows
+            rm_foreignUid_fields = 1
+            // [BOOLEAN] Remove values, if they don't have an unique uid, but they are the same
+            rm_nonUnique_values = 1
+          }
+        }
+      }
+    }
+  }
+
+  format {
+    // Default output format for timestamps
+    strftime    = {$plugin.tx_browser_pi1.strftime}
+    strftime {
+      // [BOOLEAN] Change the result of the php method strftime() to ISO, if the value is in UTF-8: 1 (TRUE), 0 (FALSE). 1 is recommended
+      utf8_encode = 1
+    }
+  }
+
+  advanced {
+    performance {
+      GLOBALS {
+      // [Boolean] Don't look for markers with keys of the TYPO3 array $GLOBALS like TSFE:fe_user|...
+        dont_replace = 1
+      }
+    }
+    // [INTEGER] Guard for recursive methods. Every loop will break after x times.  
+    recursionGuard = 10000
+    localization {
+      realURL {
+        // [BOOLEAN] Default 1 (it is compliant with realURL). 1: Record will get the link to the record in default language. I.e record title won't be translated in the realURL path. You can switch to the record in another language. 0: Record will get the link to the translated record. I.e record title will be translated in the realURL path. You can't switch to the record in another language. 
+        defaultLanguageLink = 1
+      }
+      TCA {
+        field {
+          // [string] Fields with this appendix will be used for translation. I.e. tt_news_cat.title_lang_ol
+          appendix = _lang_ol
+        }
+        value {
+          // [string] Devider for seperating language entries like de:Aufmacher|fr:Accroche or Aufmacher|Accroche
+          devider = |
+          // [Boolean] 1: lang_ol values have a lang_prefix like en:Lead Story|de:Aufmacher|fr:Accroche, 0: lang_ol values are without lang_prefix like Lead Story|Aufmacher|Accroche
+          langPrefix = 1
+        }
+      }
+    }
+    security {
+      sword {
+        // [Integer] The minimum length of a word in the sword. Example: "I am searching for" becomes "searching for"
+        minLenWord = 3
+        addSlashes {
+          // [String/CSV] Comma seperated list of chars, which will get a slash in every mysql query. You don't need \x00, \n, \r, \, ', " and \x1a, because it will be processed by mysql_real_escape_string().
+          csvChars = %
+        }
+      }
+    }
+    sql {
+      orderBy {
+        // [Boolean] FALSE: There is no different handling for capitals and lower-case letters
+        caseSensitive = 0
+      }
+      devider {
+        childrenRecords = TEXT
+        childrenRecords {
+          // [String] Values of children records will be devided by ... This value will be displayed, if there is no other TypoScript configured for the current element.
+          value      = ,
+          noTrimWrap = || |
+        }
+        workflow = TEXT
+        workflow {
+          // [String] Devider for internal workflow
+          value = ;|;
+        }
+      }
+    }
+    php {
+      multisort {
+        eval {
+          sort_numeric {
+            db {
+              // [String, CSV] Comma seperated values for any database field name, which should order by php SORT_NUMERIC
+              csv_sortNumeric = bigint, decimal, double, float, int, mediumint, smallint, timestamp, tinyint
+            }
+            tca {
+              // [String, CSV] Comma seperated values for any TCA eval value, which should order by php SORT_NUMERIC
+              csv_sortNumeric = date, datetime, double2, int, num, md5, time, timesec, year
+            }
+          }
+        }
+      }
+    }
+    downgrade {
+      3_6_0 {
+        marker {
+          in_typoscript {
+              // [Boolean] 1: Behaviour like <= 3.6.0; 0: Behaviour from 3.6.1
+            remove_emptyMarker = 0
+          }
+        }
+      }
+    }
+  }
+  
+  _CSS_DEFAULT_STYLE (
+    .tx-browser-pi1 div.azSelector,
+    .tx-browser-pi1 div.modeSelector {
+      padding:.4em 0;
+      height:1.4em;
+    }
+    .tx-browser-pi1 ul.azSelector,
+    .tx-browser-pi1 ul.modeSelector {
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+      font-size:1em;
+      height:1em;
+      background:#EEE;
+    }
+    * html .tx-browser-pi1 ul.azSelector,
+    * html .tx-browser-pi1 ul.modeSelector {
+      width: 100%;
+    }
+    .tx-browser-pi1 ul.azSelector li,
+    .tx-browser-pi1 ul.modeSelector li {
+      display: block;
+      margin: 0;
+      padding: 0;
+      float: left;
+      border-right:1px solid grey;
+    }
+    .tx-browser-pi1 ul.azSelector li.last,
+    .tx-browser-pi1 ul.modeSelector li.last {
+      border-right:0;
+    }
+    .tx-browser-pi1 ul.azSelector li.selected,
+    .tx-browser-pi1 ul.modeSelector li.selected {
+      background:yellow;
+    }
+    /* #9659 */
+    .txbrowserpi1loader {
+      background: #fff url(/typo3conf/ext/browser/res/images/browser_loader.gif) no-repeat  center ;
+      background-color: #fff;
+      opacity:.8;
+      position: relative;
+      top:10;
+      left:0;
+      width:100%;
+      height:30px;
+      margin:0 0 -42px 0;
+      z-index:2;
+    }
+     
+    .loading {  
+      opacity:.8;
+    }
+    .txbrowserpi1ajaxerror {
+      color: #d00;
+    }
+    /* #9659 */
+  )
+  
+  _LOCAL_LANG {
+    default {
+      pi_list_browseresults_prev      = &#171;
+      pi_list_browseresults_first     = &#171;&#171;
+      pi_list_browseresults_next      = &#187;
+      pi_list_browseresults_last      = &#187;&#187;
+      pi_list_browseresults_displays  = %s to %s out of %s records
+    }
+    de {
+      pi_list_browseresults_prev      = &#171;
+      pi_list_browseresults_first     = &#171;&#171;
+      pi_list_browseresults_next      = &#187;
+      pi_list_browseresults_last      = &#187;&#187;
+      pi_list_browseresults_displays  = %s bis %s von insgesamt %s Datens&auml;tzen
+    }
+  }
+
+>>>>>>> .r44897
 }
