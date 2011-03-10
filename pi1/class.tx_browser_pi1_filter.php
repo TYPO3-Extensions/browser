@@ -280,7 +280,8 @@ class tx_browser_pi1_filter {
       return $arr_result;
     }
     $markerArray = $arr_result['data']['marker'];
-//var_dump('filter 283', $markerArray);
+// dwildt, 110309: Werte sind aus db! Falsch!
+//var_dump(__METHOD__ . ': ' . __LINE__ , $markerArray);
     unset ($arr_result);
       // Get the content for the filter marker
 
@@ -392,6 +393,12 @@ class tx_browser_pi1_filter {
     }
     // LOOP get rows per table.field
     // Get rows
+// dwildt, 110309
+//var_dump(__METHOD__ . ': ' . __LINE__, $arr_rows['tx_org_workshop.rating']);
+//var_dump(__METHOD__ . ': ' . __LINE__, $arr_rows);
+//foreach ($this->rows_wo_limit as $rKey => $rVal) {
+//  var_dump($rVal['tx_org_workshop.uid'] . ': ' . $rVal['tx_org_workshop.rating']);
+//}
 
 
 
@@ -824,7 +831,8 @@ class tx_browser_pi1_filter {
  * @return  array   Data array with rows
  * @version 3.5.0
  */
-  function getRows($tableField) {
+  function getRows($tableField) 
+  {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
     $view = $this->pObj->view;
@@ -834,164 +842,190 @@ class tx_browser_pi1_filter {
 
     $arr_return['error']['status'] = false;
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Build the SQL query.
+      /////////////////////////////////////////////////////////////////
+      //
+      // Build the SQL query.
 
     list ($table, $field) = explode('.', $tableField);
 
-    // SELECT
+      // SELECT
     $str_select = $conf_view['filter.'][$table . '.'][$field . '.']['sql.']['select'];
-    if (!empty ($str_select)) {
+    if (!empty ($str_select)) 
+    {
       $str_select = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($str_select);
-      if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql) {
+      if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql) 
+      {
         t3lib_div :: devlog('[INFO/FILTER+SQL] Select Override is activated. ' . $str_select, $this->pObj->extKey, 0);
       }
     }
-    if (empty ($str_select)) {
+    if (empty ($str_select)) 
+    {
       $str_select = $table . ".uid AS 'uid',\n" .
       "         " . $table . "." . $field . " AS 'value',\n";
-      if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql) {
+      if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql) 
+      {
         t3lib_div :: devlog('[INFO/FILTER+SQL] There is no select override. ' . $str_select, $this->pObj->extKey, 0);
       }
     }
     $str_select = $str_select . "\n" .
     "         '" . $tableField . "' AS 'table.field'###LOCALIZATION_SELECT###";
-    // SELECT
+      // SELECT
 
-    // FROM
+      // FROM
     $str_from = $conf_view['filter.'][$table . '.'][$field . '.']['sql.']['from'];
-    if ($str_from) {
+    if ($str_from) 
+    {
       $str_from = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($str_from);
     }
-    if (!$str_from) {
+    if (!$str_from) 
+    {
       $str_from = $table;
     }
-    // FROM
+      // FROM
 
-    // ORDER BY
+      // ORDER BY
     $str_orderBy = $conf_view['filter.'][$table . '.'][$field . '.']['sql.']['orderBy'];
-    if ($str_orderBy) {
+    if ($str_orderBy) 
+    {
       $str_orderBy = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($str_orderBy);
       $str_orderBy = "  ORDER BY " . $str_orderBy . "\n";
     }
-    // ORDER BY
+      // ORDER BY
 
-    // GROUP BY
+      // GROUP BY
     $str_groupBy = $conf_view['filter.'][$table . '.'][$field . '.']['sql.']['groupBy'];
-    if ($str_groupBy) {
+    if ($str_groupBy)
+    {
       $str_groupBy = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($str_groupBy);
       $str_groupBy = "  GROUP BY " . $str_groupBy . "\n";
     }
-    // GROUP BY
+      // GROUP BY
 
-    // AND WHERE
+      // AND WHERE
     $str_andWhere = $conf_view['filter.'][$table . '.'][$field . '.']['sql.']['andWhere'];
     $str_andWhere = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($str_andWhere);
-    if ($str_andWhere) {
+    if ($str_andWhere) 
+    {
       $str_andWhere = "    AND " . $str_andWhere . "\n";
     }
-    // AND WHERE
+      // AND WHERE
 
-    // BUG #8533
-    // AND WHERE PID LIST
-    if ($this->pObj->pidList) {
+      // BUG #8533
+      // AND WHERE PID LIST
+    if ($this->pObj->pidList) 
+    {
       $str_andWhere = $str_andWhere . "    AND " . $table . ".pid IN (" . $this->pObj->pidList . ")\n";
     }
-    // AND WHERE PID LIST
+      // AND WHERE PID LIST
 
-    // QUERY
+      // QUERY
     $query = "  SELECT " . $str_select . "\n" .
     "  FROM " . $str_from . "\n" .
     "  WHERE 1 " . $this->pObj->cObj->enableFields($table) . "###LOCALIZATION_WHERE###\n" .
     $str_andWhere .
     $str_groupBy .
     $str_orderBy; // Bugfix #7264
-    // QUERY
+      // QUERY
 
-    // BUGFIX - part I: If table.field isn't in $this->pObj->arr_realTables_arrFields
-    //                  we will get trouble in $this->pObj->objLocalize->localizationFields_select()
+      // BUGFIX - part I: If table.field isn't in $this->pObj->arr_realTables_arrFields
+      //                  we will get trouble in $this->pObj->objLocalize->localizationFields_select()
     $bool_table_is_added = false;
     $bool_field_is_added = false;
-    if (!is_array($this->pObj->arr_realTables_arrFields[$table])) {
+    if (!is_array($this->pObj->arr_realTables_arrFields[$table]))
+    {
       $this->pObj->arr_realTables_arrFields[$table][] = $field;
       $bool_table_is_added = true;
       $bool_field_is_added = true;
-      if ($this->pObj->b_drs_filter) {
+      if ($this->pObj->b_drs_filter)
+      {
         t3lib_div :: devlog('[INFO/FILTER] Table ' . $table . '.' . $field . ' is added to arr_realTables_arrFields temporarily. It is removed.', $this->pObj->extKey, 0);
       }
     }
-    if (is_array($this->pObj->arr_realTables_arrFields[$table])) {
-      if (!in_array($field, $this->pObj->arr_realTables_arrFields[$table])) {
+    if (is_array($this->pObj->arr_realTables_arrFields[$table])) 
+    {
+      if (!in_array($field, $this->pObj->arr_realTables_arrFields[$table])) 
+      {
         $this->pObj->arr_realTables_arrFields[$table][] = $field;
         $bool_field_is_added = true;
-        if ($this->pObj->b_drs_filter) {
+        if ($this->pObj->b_drs_filter) 
+        {
           t3lib_div :: devlog('[INFO/FILTER] Field ' . $table . '.' . $field . ' is added to arr_realTables_arrFields temporarily. It is removed.', $this->pObj->extKey, 0);
         }
       }
     }
-    // BUGFIX - part I
+      // BUGFIX - part I
 
     $arr_local_select = $this->pObj->objLocalize->localizationFields_select($table);
-    // BUGFIX - part II: Remove added table.fields
-    if ($bool_table_is_added) {
+      // BUGFIX - part II: Remove added table.fields
+    if ($bool_table_is_added) 
+    {
       unset ($this->pObj->arr_realTables_arrFields[$table]);
-      if ($this->pObj->b_drs_filter) {
+      if ($this->pObj->b_drs_filter) 
+      {
         t3lib_div :: devlog('[INFO/FILTER] Table ' . $table . ' is removed from arr_realTables_arrFields temporarily. It is removed.', $this->pObj->extKey, 0);
       }
     }
-    if (!$bool_table_is_added && $bool_field_is_added) {
+    if (!$bool_table_is_added && $bool_field_is_added)
+    {
       $arr_flip = array_flip($this->pObj->arr_realTables_arrFields[$table]);
       $rm_key = $arr_flip[$field];
       unset ($this->pObj->arr_realTables_arrFields[$table][$rm_key]);
-      if ($this->pObj->b_drs_filter) {
+      if ($this->pObj->b_drs_filter) 
+      {
         t3lib_div :: devlog('[INFO/FILTER] Field ' . $table . '.' . $field . ' is removed from arr_realTables_arrFields temporarily. It is removed.', $this->pObj->extKey, 0);
       }
     }
-    // BUGFIX - part II: Remove added table.fields
+      // BUGFIX - part II: Remove added table.fields
 
     $str_local_select = $arr_local_select['filter'];
-    if ($str_local_select) {
+    if ($str_local_select) 
+    {
       $str_local_select = ",\n" .
       "         " . $str_local_select . "\n";
     }
     $query = str_replace('###LOCALIZATION_SELECT###', $str_local_select, $query);
     $str_local_where = $this->pObj->objLocalize->localizationFields_where($table);
-    if ($str_local_where) {
+    if ($str_local_where) 
+    {
       $str_local_where = " AND " . $str_local_where;
     }
     $query = str_replace('###LOCALIZATION_WHERE###', $str_local_where, $query);
-    // Build the SQL query.
+      // Build the SQL query.
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Replace PID_LIST
+      /////////////////////////////////////////////////////////////////
+      //
+      // Replace PID_LIST
 
     $str_pid_list = $this->pObj->pidList;
     $str_pid_list = str_replace(',', ', ', $str_pid_list);
-    // For human readable
+      // For human readable
     $query = str_replace('###PID_LIST###', $str_pid_list, $query);
-    // Replace PID_LIST
+      // Replace PID_LIST
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Execute the Query
+      /////////////////////////////////////////////////////////////////
+      //
+      // Execute the Query
 
     $res = $GLOBALS['TYPO3_DB']->sql_query($query);
     $error = $GLOBALS['TYPO3_DB']->sql_error();
 
-    if ($error != '') {
-      if ($this->pObj->b_drs_filter) {
+    if ($error != '') 
+    {
+      if ($this->pObj->b_drs_filter) 
+      {
         t3lib_div :: devlog('[ERROR/FILTER] ' . $query, $this->pObj->extKey, 3);
         t3lib_div :: devlog('[ERROR/FILTER] ' . $error, $this->pObj->extKey, 3);
         t3lib_div :: devlog('[ERROR/FILTER] ABORT.', $this->pObj->extKey, 3);
       }
       $str_header = '<h1 style="color:red">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
-      if ($this->pObj->b_drs_error) {
+      if ($this->pObj->b_drs_error) 
+      {
         $str_warn = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">' . $this->pObj->pi_getLL('drs_security') . '</p>';
         $str_prompt = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $error . '</p>';
         $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $query . '</p>';
-      } else {
+      }
+      else
+      {
         $str_prompt = '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">' . $this->pObj->pi_getLL('drs_sql_prompt') . '</p>';
       }
       $arr_return['error']['status'] = true;
@@ -999,36 +1033,115 @@ class tx_browser_pi1_filter {
       $arr_return['error']['prompt'] = $str_prompt;
       return $arr_return;
     }
-    if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql) {
-      // 100629, dwildt
-      // $query_br = str_replace("\n", '<br />', $query);
-      //t3lib_div::devlog('[INFO/FILTER+SQL] Query:<br /><br />'.$query_br, $this->pObj->extKey, 0);
+    if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql) 
+    {
+        // 100629, dwildt
+        // $query_br = str_replace("\n", '<br />', $query);
+        //t3lib_div::devlog('[INFO/FILTER+SQL] Query:<br /><br />'.$query_br, $this->pObj->extKey, 0);
       t3lib_div :: devlog('[INFO/FILTER+SQL] Query:<br /><br />' . $query, $this->pObj->extKey, 0);
     }
-    // Execute the Query
+// dwildt, 110309
+//var_dump(__METHOD__ . ': ' . __LINE__ , $query);
+      // Execute the Query
 
-    ////////////////////////////////////
-    //
-    // Building the rows
 
-    while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+
+
+      ////////////////////////////////////
+      //
+      // Building the rows
+
+    while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) 
+    {
       $rows[] = $row;
     }
-    if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql) {
+    if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql) 
+    {
       t3lib_div :: devlog('[INFO/FILTER+SQL] Result: #' . count($rows) . ' row(s).', $this->pObj->extKey, 0);
     }
-    // Building the rows
+      // Building the rows
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Consolidate Localization
+      /////////////////////////////////////////////////////////////////
+      //
+      // Consolidate Localization
 
     $rows = $this->pObj->objLocalize->consolidate_filter($rows);
-    // Consolidate Localization
+      // Consolidate Localization
 
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Hook for handle the consolidated rows
+
+      // #12813, dwildt, 110309
+      // This hook is used by one foreign extension at least
+    $this->rows = $rows;
+    if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_options']))
+    {
+        // DRS - Development Reporting System
+      if ($this->pObj->b_drs_hooks)
+      {
+        $i_extensions = count($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_options']);
+        $arr_ext      = array_values($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_options']);
+        $csv_ext      = implode(',', $arr_ext);
+        if ($i_extensions == 1)
+        {
+          t3lib_div::devlog('[INFO/HOOK] The third party extension '.$csv_ext.' uses the HOOK rows_filter_options.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/HOOK] In case of errors or strange behaviour please check this extension!', $this->pObj->extKey, 1);
+        }
+        if ($i_extensions > 1)
+        {
+          t3lib_div::devlog('[INFO/HOOK] The third party extensions '.$csv_ext.' use the HOOK rows_filter_options.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/HOOK] In case of errors or strange behaviour please check this extensions!', $this->pObj->extKey, 1);
+        }
+      }
+        // DRS - Development Reporting System
+
+      $_params = array('pObj' => &$this);
+      foreach((array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_options'] as $_funcRef)
+      {
+        t3lib_div::callUserFunction($_funcRef, $_params, $this);
+      }
+    }
+      // Any foreign extension is using this hook
+      // DRS - Development Reporting System
+    if ($this->pObj->b_drs_hooks)
+    {
+      if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_options']))
+      {
+        t3lib_div::devlog('[INFO/HOOK] Any third party extension doesn\'t use the HOOK rows_filter_options.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[HELP/HOOK] See Tutorial Hooks: http://typo3.org/extensions/repository/view/browser_tut_hooks_en/current/', $this->pObj->extKey, 1);
+      }
+    }
+      // DRS - Development Reporting System
+      // Any foreign extension is using this hook
+// dwildt, 110309
+//foreach ($this->pObj->rows as $rKey => $rVal) {
+//  var_dump($rVal['tx_org_workshop.uid'] . ': ' . $rVal['tx_org_workshop.rating']);
+//}
+    $rows = $this->rows;
+// dwildt, 110309
+//var_dump(__METHOD__ . ': ' . __LINE__ , $rows);
+//foreach ($rows as $rKey => $rVal) {
+//  var_dump($rVal['tx_org_workshop.uid'] . ': ' . $rVal['tx_org_workshop.rating']);
+//}
+      // Hook for handle the consolidated rows
+
+    
     $arr_return['data']['rows'] = $rows;
+// dwildt, 110309
+//var_dump(__METHOD__ . ': ' . __LINE__ , $arr_return['data']['rows']);
+
     return $arr_return;
   }
+
+
+
+
+
+
+
+
 
   /**
  * wrapRows(): Main function for filter processing. It returns the template with rendered filters.
