@@ -138,8 +138,8 @@
 /**
  * Constructor. The method initiate the parent object
  *
- * @param	object		The parent object
- * @return	void
+ * @param object    The parent object
+ * @return  void
  */
   function __construct($parentObj)
   {
@@ -172,7 +172,7 @@
   /**
  * Prepaire piVars. Allocates values to $this->piVars and $this->pi_isOnlyFields
  *
- * @return	void
+ * @return  void
  * @version 3.6.1
  */
   function prepairePiVars()
@@ -381,9 +381,17 @@
       // Set the global boolFirstVisit
 
     $this->pObj->boolFirstVisit = true;
-    $int_max_piVars             = 0;
+    $int_max_piVars = 0;
     if(is_array($this->pObj->piVars))
     {
+        // 13006, dwildt, 110310
+        // Don't take care about showUid, if it is empty
+      if(empty($this->pObj->piVars['showUid']))
+      {
+        $int_max_piVars++;
+      }
+        // Don't take care about showUid, if it is empty
+
         // piVars['plugin'] is a system piVar and it is independent of the visiting times
       if(isset($this->pObj->piVars['plugin']))
       {
@@ -777,9 +785,9 @@
 /**
  * Remove all filter entries off the PiVars array.
  *
- * @param	array		$inputPiVars: current piVars
- * @param	array		$filterConf: TypoScript filter configuration array
- * @return	array		The modified piVars Array (without filters now)
+ * @param array   $inputPiVars: current piVars
+ * @param array   $filterConf: TypoScript filter configuration array
+ * @return  array   The modified piVars Array (without filters now)
  * @author    Frank Sander
  * @version   3.4.2
  * @internal  Suggestion #9495
@@ -835,8 +843,8 @@
  * advanced_remove_piVars():  Method is controlled by TypoSCript advanced.realUrl.linkToSingle.dont_display_piVars
  *                            Original piVars will stored in the global $this->piVars
  *
- * @param	boolean		$keepFilters
- * @return	void
+ * @param boolean   $keepFilters
+ * @return  void
  * @version   3.4.2
  * @internal  Suggestion #9495 by Frank Sander
  */
@@ -944,7 +952,7 @@
  * advanced_remove_piVars_filter: Remove piVars, which are set by filter
  *                                Bugfix #8368
  *
- * @return	void
+ * @return  void
  */
     function advanced_remove_piVars_filter()
     {
@@ -1071,8 +1079,8 @@
     /**
  * Returns the value for a $GLOBALS marker
  *
- * @param	string		Marker: The TSFE marker like ###TSFE:fe_user|enablecolumns|deleted###
- * @return	string		The value from the TSFE array
+ * @param string    Marker: The TSFE marker like ###TSFE:fe_user|enablecolumns|deleted###
+ * @return  string    The value from the TSFE array
  */
   function get_t3globals_value($marker)
   {
@@ -1316,8 +1324,8 @@
     /**
  * Returns a comma seperated list as an array of elements.
  *
- * @param	string		Comma seperated list of values
- * @return	array		The array with the values
+ * @param string    Comma seperated list of values
+ * @return  array   The array with the values
  */
   function getCSVasArray($csvValues)
   {
@@ -1332,8 +1340,8 @@
     /**
  * Returns a comma seperated list of table.field as an array of elements.
  *
- * @param	string		Comma seperated list of values in this format: table.field
- * @return	array		The array with the table.field values
+ * @param string    Comma seperated list of values in this format: table.field
+ * @return  array   The array with the table.field values
  */
   function getCSVtablefieldsAsArray($csvTableFields)
   {
@@ -1351,8 +1359,8 @@
  * Removes linefeed, carriage returns and double spaces form a string.
  * We need it for TypoScript, if a user is using () instead of =
  *
- * @param	string		Comma seperated list of values
- * @return	array		Cleaned up comma seperated list of values
+ * @param string    Comma seperated list of values
+ * @return  array   Cleaned up comma seperated list of values
  */
   function cleanUp_lfCr_doubleSpace($csvValue)
   {
@@ -1377,7 +1385,7 @@
     /**
  * Sets the human readable format for timestamps in the global var $tsStrftime.
  *
- * @return	string		The format for a local date/time
+ * @return  string    The format for a local date/time
  */
   function setTsStrftime()
   {
@@ -1421,12 +1429,12 @@
  * Link string to the current page.
  * Returns the $str wrapped in <a>-tags with a link to the CURRENT page, but with $urlParameters set as extra parameters for the page.
  *
- * @param	string		The content string to wrap in <a> tags
- * @param	array		Typolink array
- * @param	array		Array with URL parameters as key/value pairs. They will be "imploded" and added to the list of parameters defined in the plugins TypoScript property "parent.addParams" plus $this->pi_moreParams.
- * @param	boolean		If $cache is set (0/1), the page is asked to be cached by a &cHash value (unless the current plugin using this class is a USER_INT). Otherwise the no_cache-parameter will be a part of the link.
- * @param	integer		Alternative page ID for the link. (By default this function links to the SAME page!)
- * @return	string		The input string wrapped in <a> tags
+ * @param string    The content string to wrap in <a> tags
+ * @param array   Typolink array
+ * @param array   Array with URL parameters as key/value pairs. They will be "imploded" and added to the list of parameters defined in the plugins TypoScript property "parent.addParams" plus $this->pi_moreParams.
+ * @param boolean   If $cache is set (0/1), the page is asked to be cached by a &cHash value (unless the current plugin using this class is a USER_INT). Otherwise the no_cache-parameter will be a part of the link.
+ * @param integer   Alternative page ID for the link. (By default this function links to the SAME page!)
+ * @return  string    The input string wrapped in <a> tags
  * @see pi_linkTP_keepPIvars(), tslib_cObj::typoLink()
  */
   function linkTP($str, $typolink=array(), $urlParameters=array(), $cache=0, $altPageId=0)
@@ -1455,13 +1463,13 @@
  * Like pi_linkTP, but $urlParameters is by default set to $this->piVars with $overrulePIvars overlaid.
  * This means any current entries from this->piVars are passed on (except the key "DATA" which will be unset before!) and entries in $overrulePIvars will OVERRULE the current in the link.
  *
- * @param	string		The content string to wrap in <a> tags
- * @param	array		Typolink array
- * @param	array		Array of values to override in the current piVars. Contrary to pi_linkTP the keys in this array must correspond to the real piVars array and therefore NOT be prefixed with the $this->pObj->prefixId string. Further, if a value is a blank string it means the piVar key will not be a part of the link (unset)
- * @param	boolean		If $cache is set, the page is asked to be cached by a &cHash value (unless the current plugin using this class is a USER_INT). Otherwise the no_cache-parameter will be a part of the link.
- * @param	boolean		If set, then the current values of piVars will NOT be preserved anyways... Practical if you want an easy way to set piVars without having to worry about the prefix, "tx_xxxxx[]"
- * @param	integer		Alternative page ID for the link. (By default this function links to the SAME page!)
- * @return	string		The input string wrapped in <a> tags
+ * @param string    The content string to wrap in <a> tags
+ * @param array   Typolink array
+ * @param array   Array of values to override in the current piVars. Contrary to pi_linkTP the keys in this array must correspond to the real piVars array and therefore NOT be prefixed with the $this->pObj->prefixId string. Further, if a value is a blank string it means the piVar key will not be a part of the link (unset)
+ * @param boolean   If $cache is set, the page is asked to be cached by a &cHash value (unless the current plugin using this class is a USER_INT). Otherwise the no_cache-parameter will be a part of the link.
+ * @param boolean   If set, then the current values of piVars will NOT be preserved anyways... Practical if you want an easy way to set piVars without having to worry about the prefix, "tx_xxxxx[]"
+ * @param integer   Alternative page ID for the link. (By default this function links to the SAME page!)
+ * @return  string    The input string wrapped in <a> tags
  * @see linkTP()
  */
   function linkTP_keepPIvars($str, $typolink=array(), $overrulePIvars=array(), $cache=0, $clearAnyway=0, $altPageId=0)
@@ -1495,8 +1503,8 @@
   /**
  * get_absUrl: Get the absolute URL path
  *
- * @param	string		$str_relUrl: relative URL path
- * @return	string		$str_absUrl: Absolute URL path
+ * @param string    $str_relUrl: relative URL path
+ * @return  string    $str_absUrl: Absolute URL path
  */
   function get_absUrl($str_relUrl)
   {
@@ -1531,7 +1539,7 @@
   /**
  * get_singlePid_for_listview: The singlePid for links in list views
  *
- * @return	integer		$singlePid: uid
+ * @return  integer   $singlePid: uid
  */
   function get_singlePid_for_listview()
   {
@@ -1590,8 +1598,8 @@
   /**
  * Calculate the cHash md5 value
  *
- * @param	string		$str_params: URL parameter string like &tx_browser_pi1[showUid]=12&&tx_browser_pi1[cat]=1
- * @return	string		$cHash_md5: md5 value like d218cfedf9
+ * @param string    $str_params: URL parameter string like &tx_browser_pi1[showUid]=12&&tx_browser_pi1[cat]=1
+ * @return  string    $cHash_md5: md5 value like d218cfedf9
  */
   function get_cHash($str_params)
   {
@@ -1613,8 +1621,8 @@
   /**
  * get_pathWoEXT: Delivers a proper relative path, if path has an EXT: prefix
  *
- * @param	string		$str_TYPO3_EXT_path: With or without EXT: prefix
- * @return	string		$str_TYPO3_EXT_path: Proper relative path
+ * @param string    $str_TYPO3_EXT_path: With or without EXT: prefix
+ * @return  string    $str_TYPO3_EXT_path: Proper relative path
  */
   function get_pathWoEXT($str_TYPO3_EXT_path)
   {
@@ -1665,9 +1673,9 @@
  * Replace all markers in a multi-dimensional array like an TypoScript array with the real values from the SQL result
  * The method extends the SQL result with all piVar values
  *
- * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
- * @param	array		$elements: The current row of the SQL result
- * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
+ * @param array   $elements: The current row of the SQL result
+ * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
  */
   function extend_marker_wi_pivars($markerArray)
   {
@@ -1709,10 +1717,10 @@
   /**
  * children_tsconf_recurs:
  *
- * @param	integer		$key: key of the current child in the string with childrens
- * @param	array		$arr_multi_dimensional: Multi-dimensional TypoScript array
- * @param	string		$str_devider: The devider of the childrens in the current string
- * @return	array		$arr_multi_dimensional: A proper TypoScript array for the current child
+ * @param integer   $key: key of the current child in the string with childrens
+ * @param array   $arr_multi_dimensional: Multi-dimensional TypoScript array
+ * @param string    $str_devider: The devider of the childrens in the current string
+ * @return  array   $arr_multi_dimensional: A proper TypoScript array for the current child
  */
   function children_tsconf_recurs($key, $arr_multi_dimensional, $str_devider)
   {
@@ -1803,8 +1811,8 @@
   /**
  * Returns the label for a fieldname from local language array. First it tries to get a llValue out of the _local_lang, if it failed, take a look in the TCA.
  *
- * @param	string		Fieldname in the _LOCAL_LANG array or the locallang.xml
- * @return	string		Return the translated label in case of success. Otherwise the given table.field
+ * @param string    Fieldname in the _LOCAL_LANG array or the locallang.xml
+ * @return  string    Return the translated label in case of success. Otherwise the given table.field
  */
   function getTableFieldLL($tableField) {
 
@@ -1895,8 +1903,8 @@
   /**
  * Inits the class 'language'
  *
- * @param	string		Fieldname in the _LOCAL_LANG array or the locallang.xml
- * @return	void
+ * @param string    Fieldname in the _LOCAL_LANG array or the locallang.xml
+ * @return  void
  */
   function initLang()
   {
@@ -1939,8 +1947,8 @@
  * Example for a phrase: "Dirk Wildt" Pressesprecher Berlin
  * This will return the elements: Dirk Wildt, Pressesprecher, Berlin
  *
- * @param	string		$str_search_phrase: piVar value
- * @return	array		search values
+ * @param string    $str_search_phrase: piVar value
+ * @return  array   search values
  */
   function search_values($str_sword_phrase)
   {
@@ -2382,9 +2390,9 @@
  * Example for a phrase: "Dirk Wildt" Pressesprecher Berlin
  * This will return the elements: Dirk Wildt, Pressesprecher, Berlin
  *
- * @param	string		$tableField: Syntax table.field
- * @param	string		$value: Content. Maybe with or maybe without a value like the sword.
- * @return	string		$value: Wrapped swords. Depending on TypoScript configuration.
+ * @param string    $tableField: Syntax table.field
+ * @param string    $value: Content. Maybe with or maybe without a value like the sword.
+ * @return  string    $value: Wrapped swords. Depending on TypoScript configuration.
  */
   function color_swords($tableField, $value)
   {
@@ -2475,9 +2483,9 @@
 /**
  * Checks the value of a piVar for security. Get magic quotes, stripslashes, mysql_real_escape_string
  *
- * @param	string		$str_value: piVar value
- * @param	string		$str_type: Type for evaluation like string, integer or boolean
- * @return	string		piVar value
+ * @param string    $str_value: piVar value
+ * @param string    $str_type: Type for evaluation like string, integer or boolean
+ * @return  string    piVar value
  */
   function secure_piVar($str_value, $str_type)
   {
@@ -2718,7 +2726,7 @@
  *                      $GLOBALS[TSFE]->metaCharset, $GLOBALS[TSFE]->renderCharset
  *                      Result can be overriden by $conf['a-z_Browser.']['charset']
  *
- * @return	boolean		TRUE, if one of the following variables has the value utf-8: $TYPO3_CONF_VARS[BE][forceCharset]
+ * @return  boolean   TRUE, if one of the following variables has the value utf-8: $TYPO3_CONF_VARS[BE][forceCharset]
  */
   function b_TYPO3_utf8()
   {
@@ -2795,8 +2803,8 @@
 /**
  * Translate a char to one-byte and multi-byte notation for both cases lower and upper.
  *
- * @param	string		The char, we want back in lower and upper case and with single byte and multi-byte notation
- * @return	array		Array with for for elements. false, if it $str_char isn't a multi-byte char.
+ * @param string    The char, we want back in lower and upper case and with single byte and multi-byte notation
+ * @return  array   Array with for for elements. false, if it $str_char isn't a multi-byte char.
  */
   function char_single_multi_byte($str_char)
   {

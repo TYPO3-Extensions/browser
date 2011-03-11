@@ -63,7 +63,7 @@
   * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
   * @package    TYPO3
   * @subpackage    tx_browser_pi1
-  * @version 3.6.1
+  * @version 3.6.2
   */
 class tx_browser_pi1_config
 {
@@ -146,8 +146,10 @@ class tx_browser_pi1_config
   //[socialmedia]
 
   //[templating]
-  var $int_templating_dataQuery  = false;
+  var $int_templating_dataQuery   = false;
   // [int] key of the dataQuery in the TypoScript, which should added in list views
+  var $bool_wrapInBaseClass       = true;
+  // [boolean] wrap the plugin in with pi_wrapInBaseClass
   //[templating]
 
   // Vars set by methods in the current class
@@ -1934,6 +1936,7 @@ class tx_browser_pi1_config
  * The method removes "unavailable" views from the TypoScript.
  *
  * @return  void
+ * @version 3.6.2
  */
   function sheet_templating()
   {
@@ -1942,30 +1945,29 @@ class tx_browser_pi1_config
     $str_lang       = $this->pObj->lang->lang;
     $modeWiDot      = (int) $this->mode.'.';
     $viewWiDot      = $this->pObj->view.'.';
-    // #9689
+      // #9689
     $str_path2emplate = false;
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field template
-
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field template
+  
     $str_template = $this->pObj->pi_getFFvalue($arr_piFlexform, 'template', 'templating', 'lDEF', 'vDEF');
     $bool_doNothing = false;
     switch($str_template)
     {
       case('typoscript'):
-        // Do nothing;
-        // #9689
+          // Do nothing;
+          // #9689
         $bool_doNothing = true;
         break;
       case('adjusted'):
         $str_path = $this->pObj->pi_getFFvalue($arr_piFlexform, 'path', 'templating', 'lDEF', 'vDEF');
-        // #9689
-        //$this->pObj->conf['template.']['file'] = 'uploads/tx_browser/'.$str_path;
+          // #9689
         if(empty($str_path))
         {
-          // #11418, cweiske, 101219
+            // #11418, cweiske, 101219
           echo  '<div style="background:red;color:white;font-weight:bold;padding:2em;text-align:center;">'.
                 '  ERROR with the template: You have not uploaded any template!<br />'.
                 '  <br />'.
@@ -1975,7 +1977,7 @@ class tx_browser_pi1_config
         $str_path2emplate = 'uploads/tx_browser/'.$str_path;
         break;
       default:
-        #10221: RSS-Feed
+          #10221: RSS-Feed
         $str_path2emplate = $str_template;
     }
     if (!$bool_doNothing)
@@ -1995,31 +1997,59 @@ class tx_browser_pi1_config
       if (empty($this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['template.']['file']))
       {
         $this->pObj->conf['template.']['file'] = $str_path2emplate;
-        // Global HTML Template
+          // Global HTML Template
       }
     }
-    // #9689
+      // #9689
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field dataQuery
-
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field dataQuery
+  
     $this->int_templating_dataQuery = $this->pObj->pi_getFFvalue($arr_piFlexform, 'dataQuery', 'templating', 'lDEF', 'vDEF');
-    // Field dataQuery
+      // Field dataQuery
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Development Reporting System
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field wrapBaseClass
 
+      // 12367, dwildt, 110310
+    $int_wrapInBaseClass = $this->pObj->pi_getFFvalue($arr_piFlexform, 'wrapBaseClass', 'templating', 'lDEF', 'vDEF');
+
+    switch ($int_wrapInBaseClass) 
+    {
+      case(null):
+        // do nothing;
+        break;
+      case(0):
+        $this->bool_wrapInBaseClass = false;
+        break;
+      case(1):
+      default:
+        $this->bool_wrapInBaseClass = true;
+    }
+    if ($this->pObj->b_drs_plugin)
+    {
+      t3lib_div::devlog('[INFO/PLUGIN] templating/wrapBaseClass: \'' . 
+        $this->bool_wrapInBaseClass . '\'', $this->pObj->extKey, 0);
+    }
+      // Field wrapBaseClass
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
+  
     if ($this->pObj->b_drs_plugin)
     {
       t3lib_div::devlog('[INFO/PLUGIN] templating: template.file is set to \''.$this->pObj->conf['template.']['file'].'\'.', $this->pObj->extKey, 0);
     }
-    // DRS - Development Reporting System
+      // DRS - Development Reporting System
 
 
     return;

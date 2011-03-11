@@ -60,7 +60,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * @package    TYPO3
  * @subpackage    tx_browser
  *
- * @version 3.6.1
+ * @version 3.6.2
  */
 
 /**
@@ -322,7 +322,7 @@ class tx_browser_pi1 extends tslib_pibase {
  * @param array   $conf: The PlugIn Configuration
  * @return  string    The content that should be displayed on the website
  * 
- * @version 3.6.1
+ * @version 3.6.2
  
  */
   function main($content, $conf) 
@@ -917,19 +917,27 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // XML/RSS: return the result (XML string) without wrapInBaseClass
-
+      //////////////////////////////////////////////////////////////////////
+      //
+      // XML/RSS: return the result (XML string) without wrapInBaseClass
+  
     if(substr($str_template_completed, 0, strlen('<?xml')) == '<?xml')
     {
       return trim($str_template_completed);
     }
-    // XML/RSS: return the result (XML string) without wrapInBaseClass
+      // XML/RSS: return the result (XML string) without wrapInBaseClass
 
 
-
-    return $html_updateCheck.$this->pi_wrapInBaseClass($str_template_completed);
+      // 12367, dwildt, 110310
+    switch($this->objConfig->bool_wrapInBaseClass)
+    {
+      case(false):
+        return $html_updateCheck.$str_template_completed;
+        break;
+      case(true):
+      default:
+        return $html_updateCheck.$this->pi_wrapInBaseClass($str_template_completed);
+    }
   }
 
 
@@ -1413,7 +1421,7 @@ class tx_browser_pi1 extends tslib_pibase {
     // class.tx_browser_pi1_template.php
 
     // [Array] The current TypoScript configuration array
-    $this->objTemplate->conf      = $this->conf;
+//    $this->objTemplate->conf      = $this->conf;
     // [Integer] The current mode (from modeselector)
     $this->objTemplate->mode      = $this->piVar_mode;
     // [String] 'list' or 'single': The current view

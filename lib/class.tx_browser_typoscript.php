@@ -76,6 +76,7 @@ class tx_browser_typoscript extends tslib_pibase
  */
   public function numberFormat($content = '', $conf = array()) 
   {
+      // 13145, dwildt, 110217
     global $TSFE;
     $local_cObj = $TSFE->cObj;
 

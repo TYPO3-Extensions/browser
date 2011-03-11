@@ -38,7 +38,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
       <label index="error_ttcv_prompt_array">There is a TypoScript Object TT_CONTAINER_VALUE, which isn't an array. See devlog for more information.</label>
       <label index="error_ttcv_prompt_object">The TT_CONTAINER object isn't defined.</label>
       <label index="error_ttcv_prompt_realurl_1">You used in your TypoScript a typolink with the property civserv.realurl. But the used value isn't defined in your realurl configuration file.</label>
-      <label index="error_ttcv_prompt_recursion">The limit of the recursionguard is overrun. If it isn't an error, please increase the recursionGuard.</label>
+      <label index="error_ttcv_prompt_recursion">The limit of the recursionguard is overrun. If it isn't an error, please increase the recursionGuard. Did you miss to include the browser template in the page template?</label>
       <label index="error_ttcv_prompt_value">A TypoScript Object TT_CONTAINER_VALUE hasn't any value in value. See devlog for more information.</label>
       <label index="error_typoscript_h1">Typoscript Error</label>
       <label index="error_typoscript_joins">If you define a SQL query manually, you have to define the TypoScript values select, from, andWhere and the array joins. There are further information in the DRS and the manual.</label>
@@ -91,7 +91,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="error_ttcv_prompt_array">Es gibt ein TypoScript Objekt TT_CONTAINER_VALUE, das kein Array ist! Weitere Hinweise siehe devlog.</label>
       <label index="error_ttcv_prompt_object">Das TT_CONTAINER Objekt ist nicht definiert.</label>
       <label index="error_ttcv_prompt_realurl_1">Sie verwenden im TypoScript ein typolink Array mit der Eigenschaft civserv.realurl. Der dort verwendete Wert ist nicht in der Realurl Konfigurationsdatei definiert.</label>
-      <label index="error_ttcv_prompt_recursion"><![CDATA[Die Begrenzung der Recursions-Kontrolle ist überschritten. Falls es sich dabei um keinen Fehler handeln sollte, erhöhen Sie bitte den Wert in recursionGuard.]]></label>
+      <label index="error_ttcv_prompt_recursion"><![CDATA[Die Begrenzung der Recursions-Kontrolle ist überschritten. Falls es sich dabei um keinen Fehler handeln sollte, erhöhe bitte den Wert in recursionGuard. Hast Du vergessen, dass static template einzubinden?]]></label>
       <label index="error_ttcv_prompt_value">Ein TypoScript Object TT_CONTAINER_VALUE hat keinen Wert in value. Weitere Hinweise siehe devlog.</label>
       <label index="error_typoscript_h1">Typoscript Fehler</label>
       <label index="error_typoscript_joins"><![CDATA[Wenn Sie eine SQL-Abfrage manuell definieren, müssen Sie die TypoScript-Werte für select, from und andWhere sowie für das Array joins angeben. Weitere Informationen finden Sie im DRS und in der Dokumentation.]]></label>

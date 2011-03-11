@@ -1190,23 +1190,47 @@ class tx_browser_pi1_sql_auto
         {
           $foreignTableField = $foreignTable.'.uid';
         }
+
+          // #11843, fconstien, 110310
+	$localTableFieldMaxItems = $GLOBALS['TCA'][$localTable]['columns'][$localField]['config']['maxitems'];
+	switch(true)
+	{
+	  case($localTableFieldMaxItems == 1):
+            $str_query_part = "   " . $localTableField . " = " . $foreignTableField .
+                              "   " . $str_enablefields_foreign .
+                              "   " . $str_pidStatement ;
+            break;
+	  case($localTableFieldMaxItems == 2):
+            $str_query_part = "   ( " .
+                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
+                              "     " . $localTableField . " LIKE CONCAT(" . $foreignTableField . ", ',%') OR " .
+                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField .
+                              "   )" .
+                              "   " . $str_enablefields_foreign .
+                              "   " . $str_pidStatement ;
+            break;
+          default:
+            $str_query_part = "   ( " .
+                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
+                              "     " . $localTableField . " LIKE CONCAT(" . $foreignTableField . ", ',%') OR " .
+                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField . ", ',%') OR " .
+                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField . ") " .
+                              "   )" .
+                              "   " . $str_enablefields_foreign .
+                              "   " . $str_pidStatement ;
+	}
+          // #11843, fconstien, 110310
+
           // #11650, cweiske, 101223
         if ($this->b_left_join)
         {
           $str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
           $str_pidStatement         = $this->str_andWherePid($foreignTable);
-          $str_pidStatement         = " AND ".$str_pidStatement." ";
-          $str_left_join_uidforeign = " LEFT JOIN ".$foreignTable.
-                                      " ON ( ".
-                                      "   ( ".
-                                      "     ".$localTableField." = ".$foreignTableField." OR ".
-                                      "     ".$localTableField." LIKE CONCAT(".$foreignTableField.", ',%') OR ".
-                                      "     ".$localTableField." LIKE CONCAT('%,', ".$foreignTableField.", ',%') OR ".
-                                      "     ".$localTableField." LIKE CONCAT('%,', ".$foreignTableField.") ".
-                                      "   )".
-                                      "   ".$str_enablefields_foreign.
-                                      "   ".$str_pidStatement.
-                                      " )";
+          $str_pidStatement         = " AND " . $str_pidStatement . " " ;
+          $str_left_join_uidforeign = " LEFT JOIN " . $foreignTable .
+                                      " ON ( " .
+                                      $str_query_part .
+                                      " )" ;
           // Use current LEFT JOIN once only
           if (strpos($str_left_join, $str_left_join_uidforeign) === false)
           {
@@ -1216,16 +1240,9 @@ class tx_browser_pi1_sql_auto
         if (!$this->b_left_join)
         {
           // The AND clause below makes only sense, if it is a 1:1-relation!
-          $str_full_join .=  " AND (".
-                                  "   ( ".
-                                  "     ".$localTableField." = ".$foreignTableField." OR ".
-                                  "     ".$localTableField." LIKE CONCAT(".$foreignTableField.", ',%') OR ".
-                                  "     ".$localTableField." LIKE CONCAT('%,', ".$foreignTableField.", ',%') OR ".
-                                  "     ".$localTableField." LIKE CONCAT('%,', ".$foreignTableField.") ".
-                                  "   )".
-                                  "   ".$str_enablefields_foreign.
-                                  "   ".$str_pidStatement.
-                                  " )";
+          $str_full_join .=  " AND (" .
+                             $str_query_part .
+                             " )" ;
         }
         // Add the foreign table to the fetched tables, if it is new
         if (!in_array($foreignTable, array_keys($this->pObj->arr_realTables_arrFields)))

@@ -29,7 +29,7 @@
  * @package    TYPO3
  * @subpackage    tx_browser
  *
- * @version 3.6.1
+ * @version 3.6.2
  */
 
   /**
@@ -582,15 +582,15 @@ class tx_browser_pi1_template
       if($bool_emptyList)
       {
         $conf_emptyList = $this->pObj->lDisplay['emptyListByStart.']['stdWrap.'];
-        if ($this->pObj->b_drs_templating)
+        if ($this->pObj->b_drs_templating || $this->b_drs_plugin)
         {
           $langKey = $GLOBALS['TSFE']->lang;
           if ($langKey == 'en')
           {
             $langKey = 'default';
           }
-          t3lib_div::devLog('[INFO/TEMPLATING] It is the first call for the plugin. The SQL result is replaced with a message.', $this->pObj->extKey, 0);
-          t3lib_div::devLog('[HELP/TEMPLATING] If you want a SQL result instead of the message, please configure:<br />
+          t3lib_div::devLog('[INFO/PLUGIN + TEMPLATING] It is the first call for the plugin. The SQL result is replaced with a message.', $this->pObj->extKey, 0);
+          t3lib_div::devLog('[HELP/PLUGIN + TEMPLATING] If you want a SQL result instead of the message, please configure:<br />
             displayList.display.emptyListByStart = 0<br />
             <br />
             If you want another label, please configure:<br />
@@ -2231,7 +2231,7 @@ class tx_browser_pi1_template
  * @param string    Template
  * @return  string    FALSE || HTML string
  * @since 1.x.x
- * @version 3.6.1
+ * @version 3.6.2
  */
   function tmplRows($elements, $subpart, $template)
   {
@@ -2458,6 +2458,16 @@ class tx_browser_pi1_template
     $bool_drs_handleCase  = false;
     
     $markerArray          = $this->pObj->objWrapper->constant_markers();
+
+      // #12723, mbless, 110310
+    $this->_elements                = $elements;
+    $this->hook_template_elements();
+    $elements                       = $this->_elements;
+    unset($this->_elements);
+    $this->_elementsTransformed     = array();
+    $this->_elementsBoolSubstitute  = array();
+      // #12723, mbless, 110310
+
     foreach((array) $elements as $key => $value)
     {
       $boolSubstitute       = true;
@@ -2860,72 +2870,89 @@ class tx_browser_pi1_template
             t3lib_div::devLog('[INFO/PERFORMANCE] After wrap and link value: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
           }
         }
-        // DRS - Performance
-  
-        // Substitute the template marker
-        if ($boolSubstitute)
-        {
-          $htmlSubpart = $this->pObj->cObj->getSubpart($template, $subpart);
-          if($this->view == 'list' && $bool_design_default)
-          {
-            $class = $i_count_cell < $maxColumns ? 'cell-'.$i_count_cell : 'cell-'.$i_count_cell.' last';
-            $markerArray['###CLASS###'] = ' class="'.$class.'"';
-            $markerArray['###ITEM###']  = $value;
-            $bool_defaultTemplate = true;
-            $markerArray['###SOCIALMEDIA_BOOKMARKS###'] = $this->pObj->objSocialmedia->get_htmlBookmarks($elements, $key, $bool_defaultTemplate);
-            $htmlRow  .= $this->pObj->cObj->substituteMarkerArray($htmlSubpart, $markerArray);
-            //var_dump('template 2256');
-          }
-          if($this->view == 'list' && !$bool_design_default)
-          {
-            $markerArray['###'.strtoupper($key).'###']  = $value;
-            $bool_defaultTemplate = false;
-            $markerArray['###SOCIALMEDIA_BOOKMARKS###'] = $this->pObj->objSocialmedia->get_htmlBookmarks($elements, $key, $bool_defaultTemplate);
-            $htmlRow  = $this->pObj->cObj->substituteMarkerArray($htmlSubpart, $markerArray);
-          }
-          if($this->view == 'single' && $bool_design_default)
-          {
-            $markerArray['###CLASS###'] = $c++%2 ? ' class="odd"' : '';
-            $markerArray['###FIELD###'] = $this->pObj->objZz->getTableFieldLL($key);
-            $markerArray['###VALUE###'] = $value;
-            $bool_defaultTemplate = true;
-            $markerArray['###SOCIALMEDIA_BOOKMARKS###'] = $this->pObj->objSocialmedia->get_htmlBookmarks($elements, $key, $bool_defaultTemplate);
-            $htmlRow  .= $this->pObj->cObj->substituteMarkerArray($htmlSubpart, $markerArray);
-          }
-          if($this->view == 'single' && !$bool_design_default)
-          {
-            $markerArray['###'.strtoupper($key).'###']  = $value;
-            $bool_defaultTemplate = false;
-            $markerArray['###SOCIALMEDIA_BOOKMARKS###'] = $this->pObj->objSocialmedia->get_htmlBookmarks($elements, $key, $bool_defaultTemplate);
-            $htmlRow  = $this->pObj->cObj->substituteMarkerArray($htmlSubpart, $markerArray);
-          }
-          $i_count_cell++;
-        }
-        // Substitute the template marker
-        //var_dump('template 2286', $markerArray['###SOCIALMEDIA_BOOKMARKS###']);
-  
-        // DRS - Performance
-        if ($this->pObj->boolFirstRow && $i_count_element == 0)
-        {
-          if ($this->pObj->b_drs_perform) {
-            if($this->pObj->bool_typo3_43)
-            {
-              $endTime = $this->pObj->TT->getDifferenceToStarttime();
-            }
-            if(!$this->pObj->bool_typo3_43)
-            {
-              $endTime = $this->pObj->TT->mtime();
-            }
-            t3lib_div::devLog('[INFO/PERFORMANCE] After substitute marker: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-          }
-        }
-        // DRS - Performance
+          // DRS - Performance
+
+          // #12723, mbless, 110310
+        $this->_elementsTransformed[$key] = $value;
+        $this->_elementsBoolSubstitute[$key] = $boolSubstitute;
       }
         // LOOP: Handle element
+    }
+      // foreach
+    $this->hook_template_elements_transformed();
+
+    foreach ($this->_elementsTransformed as $key => $value) 
+    {
+      $boolSubstitute = $this->_elementsBoolSubstitute[$key];
+        // #12723, mbless, 110310
+
+        // Substitute the template marker
+      if ($boolSubstitute)
+      {
+        $htmlSubpart = $this->pObj->cObj->getSubpart($template, $subpart);
+        if($this->view == 'list' && $bool_design_default)
+        {
+          $class = $i_count_cell < $maxColumns ? 'cell-'.$i_count_cell : 'cell-'.$i_count_cell.' last';
+          $markerArray['###CLASS###'] = ' class="'.$class.'"';
+          $markerArray['###ITEM###']  = $value;
+          $bool_defaultTemplate = true;
+          $markerArray['###SOCIALMEDIA_BOOKMARKS###'] = $this->pObj->objSocialmedia->get_htmlBookmarks($elements, $key, $bool_defaultTemplate);
+          $htmlRow  .= $this->pObj->cObj->substituteMarkerArray($htmlSubpart, $markerArray);
+          //var_dump('template 2256');
+        }
+        if($this->view == 'list' && !$bool_design_default)
+        {
+          $markerArray['###'.strtoupper($key).'###']  = $value;
+          $bool_defaultTemplate = false;
+          $markerArray['###SOCIALMEDIA_BOOKMARKS###'] = $this->pObj->objSocialmedia->get_htmlBookmarks($elements, $key, $bool_defaultTemplate);
+          $htmlRow  = $this->pObj->cObj->substituteMarkerArray($htmlSubpart, $markerArray);
+        }
+        if($this->view == 'single' && $bool_design_default)
+        {
+          $markerArray['###CLASS###'] = $c++%2 ? ' class="odd"' : '';
+          $markerArray['###FIELD###'] = $this->pObj->objZz->getTableFieldLL($key);
+          $markerArray['###VALUE###'] = $value;
+          $bool_defaultTemplate = true;
+          $markerArray['###SOCIALMEDIA_BOOKMARKS###'] = $this->pObj->objSocialmedia->get_htmlBookmarks($elements, $key, $bool_defaultTemplate);
+          $htmlRow  .= $this->pObj->cObj->substituteMarkerArray($htmlSubpart, $markerArray);
+        }
+        if($this->view == 'single' && !$bool_design_default)
+        {
+          $markerArray['###'.strtoupper($key).'###']  = $value;
+          $bool_defaultTemplate = false;
+          $markerArray['###SOCIALMEDIA_BOOKMARKS###'] = $this->pObj->objSocialmedia->get_htmlBookmarks($elements, $key, $bool_defaultTemplate);
+          $htmlRow  = $this->pObj->cObj->substituteMarkerArray($htmlSubpart, $markerArray);
+        }
+        $i_count_cell++;
+      }
+        // Substitute the template marker
+      //var_dump('template 2286', $markerArray['###SOCIALMEDIA_BOOKMARKS###']);
+  
+        // DRS - Performance
+      if ($this->pObj->boolFirstRow && $i_count_element == 0)
+      {
+        if ($this->pObj->b_drs_perform) {
+          if($this->pObj->bool_typo3_43)
+          {
+            $endTime = $this->pObj->TT->getDifferenceToStarttime();
+          }
+          if(!$this->pObj->bool_typo3_43)
+          {
+            $endTime = $this->pObj->TT->mtime();
+          }
+          t3lib_div::devLog('[INFO/PERFORMANCE] After substitute marker: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+        }
+      }
+        // DRS - Performance
 
       $i_count_element++;
     }
-    // Loop through all elements
+      // Loop through all elements
+
+      // #12723, mbless, 110310
+    unset ($this->_elementsTransformed);
+    unset ($this->_elementsBoolSubstitute);
+      // #12723, mbless, 110310
 
 
 
@@ -3345,6 +3372,34 @@ class tx_browser_pi1_template
 
 
 
+
+
+    // #12723, mbless, 110310
+    //  $this->hook_template_elements();
+    //  hook to manipulate the elements of a row BEFORE the elements are linked or transformed by typoscript
+  function hook_template_elements() {
+      // debug($this->_elements,'$this->_elements',__LINE__,__FILE__);
+    if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsHook'])) {
+      foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsHook'] as $_classRef) {
+        $_procObj = & t3lib_div :: getUserObj($_classRef);
+        $_procObj->BR_TemplateElementsHook($this);
+      }
+    }
+  }
+
+    //  $this->hook_template_elements_transformed();
+    //  hook to manipulate the elements of a row AFTER the elements are linked or transformed by typoscript
+  function hook_template_elements_transformed() {
+      // debug($this->_elementsTransformed,'$this->_elementsTransformed',__LINE__,__FILE__);
+      // debug($this->_elementsBoolSubstitute,'$this->_elementsBoolSubstitute',__LINE__,__FILE__);
+    if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsTransformedHook'])) {
+      foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsTransformedHook'] as $_classRef) {
+        $_procObj = & t3lib_div :: getUserObj($_classRef);
+        $_procObj->BR_TemplateElementsTransformedHook($this);
+      }
+    }
+  }
+    // #12723, mbless, 110310
 
 
 

@@ -1,18 +1,24 @@
 3.6.2
-  DEVELOPER VERSION (Revision 44541)
-  11-01-04
-  New Feature
-  * 13597: TypoScript snippet for adding parameters
+  New Features
+  * 13597: TypoScript snippet for additional parameters
+  * 13145: Number formats: userfunc
+  * 12813: Added hook rows_filter_options
+  * 12723: Added hooks BR_TemplateElementsHook and BR_TemplateElementsTransformedHook
+           Thanks to Martin Bless
+  * 12367: Disable wrapInPiBase by TypoScript
 
-  DEVELOPER VERSION (Revision 44541)
-  11-01-04
   Bugfixes
   * 13573: Localisation: proper handle of languageField and transOrigPointerField
   * 13505: Empty AND in some localization context
+  * 13464: foreach( ... ) is moved to foreach((array) ... )
   * 13008: Workflow devider will not be consolidated
 
-  DEVELOPER VERSION (Revision 44462)
-  11-01-03
+  Maintenance
+  * 12310: Better error message for "Recursion Guard: Recursion is bigger than 0"
+  * 12813: Hook rows_filter_consolidated is moved to rows_filter_values
+  * 00000: Integration of Tutorial Development in the tutorial list (pi3). Revision 43139
+  * 00000: Integration of Tutorial TCA in the tutorial list (pi3). Revision 43139
+
   Consolidation
   * 00000: substitute_t3globals_recurs() was double: in marker and in zz
            substitute_t3globals_recurs() is removed in marker
@@ -20,23 +26,9 @@
            get_t3globals_value() is removed in marker
   * 00000: session_marker() was double: in marker and in zz
            session_marker() is removed in zz
-  
-  DEVELOPER VERSION (Revision 44455)
-  11-01-03
-  Bugfixes
-  * 13464: foreach( ... ) is moved to foreach((array) ... )
-  Consolidation
   * 00000: substitute_marker_recurs() was double: in marker and in zz
            substitute_marker_recurs() is removed in zz
   
-  DEVELOPER VERSION (Revision 43907)
-  11-02-17
-  New Fetaures
-  * 13145: Number formats: userfunc
-  Improvement
-  * 00000: Integration of Tutorial Development in the tutorial list (pi3). Revision 43139
-  * 00000: Integration of Tutorial TCA in the tutorial list (pi3). Revision 43139
-
 3.6.1
   11-02-03 
   Revision 43034

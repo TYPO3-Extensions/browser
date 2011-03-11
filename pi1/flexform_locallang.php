@@ -163,6 +163,8 @@ $LOCAL_LANG = array(
     'sheet_templating.template.tutorial.0'      => 'Templating: http://typo3.org/extensions/repository/view/browser_tut_templating_en/current/',
     'sheet_templating.path'                     => 'Plugin: Own HTML file',
     'sheet_templating.dataQuery'                => 'Data: query',
+    'sheet_templating.wrapBaseClass'            => 'Templating: default <div> container for this plugin',
+    'sheet_templating.wrapBaseClass.0'          => 'Wrap in base class (recommended)',
 
     'sheet_viewList'                            => 'Lists',
     'sheet_viewList.title'                      => 'Title (substitutes ###MY_TITLE###)',
@@ -357,6 +359,8 @@ $LOCAL_LANG = array(
     'sheet_templating.template'                 => 'Plugin: HTML-Vorlage',
     'sheet_templating.path'                     => 'Plugin: Hochgeladene Datei',
     'sheet_templating.dataQuery'                => 'Daten: Abfrage',
+    'sheet_templating.wrapBaseClass'            => 'Templating: Standard <div>-Container fuer dieses Plugin',
+    'sheet_templating.wrapBaseClass.0'          => 'Mit Basis-Klasse umschliessen (empfohlen)',
 
     'sheet_viewList'                            => 'Listenansicht',
     'sheet_viewList.title'                      => 'Titel (ersetzt ###MY_TITLE###)',

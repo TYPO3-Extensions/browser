@@ -22,7 +22,7 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
   // Methods for backend workflows
   
   require_once(t3lib_extMgm::extPath($_EXTKEY).'pi1/class.tx_browser_pi1_backend.php');
-  require_once(t3lib_extMgm::extPath($_EXTKEY).'pi5/class.tx_browser_pi5_backend.php');
+  //require_once(t3lib_extMgm::extPath($_EXTKEY).'pi5/class.tx_browser_pi5_backend.php');
 
 
 
@@ -33,7 +33,7 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
   // Plugin 1
   t3lib_extMgm::addStaticFile($_EXTKEY,'static/', 'Browser');
   // Plugin 5
-  t3lib_extMgm::addStaticFile($_EXTKEY,'pi5/static/', '+Browser Calendar');
+  //t3lib_extMgm::addStaticFile($_EXTKEY,'pi5/static/', '+Browser Calendar');
   // Plugin 4
   t3lib_extMgm::addStaticFile($_EXTKEY,'pi4/static/', '+Browser (no cache)');
   // Plugin 1: sample tt_news

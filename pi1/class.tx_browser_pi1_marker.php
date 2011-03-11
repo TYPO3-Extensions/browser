@@ -399,6 +399,8 @@
  * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
  * @param array   $elements: The current row of the SQL result
  * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ * 
+ * @version 3.6.2
  */
   function substitute_marker_recurs($arr_multi_dimensional, $elements)
   {
@@ -444,10 +446,12 @@
         t3lib_div::devlog('[HELP] If it is ok, please increase advanced.recursionGuard.', $this->pObj->extKey, 1);
         t3lib_div::devlog('[ERROR] EXIT', $this->pObj->extKey, 3);
       }
+        // 12310, dwildt, 110310
       $prompt = '<h1>Recursion Guard</h1>
         <p>
           Recursion is bigger than '.$int_levelRecursMax.'<br />
           If it is ok, please increase advanced.recursionGuard.<br />
+          Did you miss to include the browser template in the page template?<br />
           Method: ' . __METHOD__ . '
         </p>';
       echo $prompt;
