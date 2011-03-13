@@ -38,21 +38,18 @@
  *
  *
  *
- *   59: class tx_browser_pi1_marker
- *   95:     function __construct($parentObj)
- *
- *              SECTION: $GLOBAL markers
- *  123:     function get_t3globals_value($marker)
- *  198:     function substitute_t3globals_recurs($arr_multi_dimensional)
+ *   56: class tx_browser_pi1_marker
+ *   87:     function __construct($parentObj)
  *
  *              SECTION: Session markers
- *  391:     function session_marker($arr_tsConf, $elements)
+ *  114:     function session_marker($arr_tsConf, $elements)
  *
  *              SECTION: Markers
- *  478:     function substitute_marker_recurs($arr_multi_dimensional, $elements)
- *  781:     function extend_marker_wi_pivars($markerArray)
+ *  178:     function substitute_marker($arr_multi_dimensional)
+ *  400:     function substitute_marker_recurs($arr_multi_dimensional, $elements)
+ *  715:     function extend_marker_wi_pivars($markerArray)
  *
- * TOTAL FUNCTIONS: 6
+ * TOTAL FUNCTIONS: 5
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -62,12 +59,12 @@
     //////////////////////////////////////////////////////
     //
     // Variables set by the pObj (by class.tx_browser_pi1.php)
-  
-  
+
+
     //////////////////////////////////////////////////////
     //
     // Variables set by this class
-  
+
     // [Array] The current TypoScript configuration array
   var $conf               = false;
     // [Array] Temporarily array for storing piVars
@@ -113,6 +110,7 @@
  * @param string    $arr_tsConf: The current TypoScript configuration
  * @param array   $elements: Array with the element session
  * @return  string    The value from the TSFE array
+ * 
  */
   function session_marker($arr_tsConf, $elements)
   {
@@ -172,11 +170,12 @@
   /**
  * substitute_marker(): Replace all markers in a multi-dimensional array like an TypoScript array with the real values from the SQL result
  * The method extends the SQL result with all piVar values. ###CHASH### has a process.
+ * 
+ * This method should supersede the deprecated method substitute_marker_recursive () 
  *
  * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
  * @param array   $elements: The current row of the SQL result
  * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
- * 
  * @version 3.6.2
  */
   function substitute_marker($arr_multi_dimensional)
@@ -304,7 +303,7 @@
           {
               // Get children values
             $arr_valuesChildren = explode($str_devider, $value_tableField);
-  
+
               // Multiple the values and replace the marker for every child
               // EXAMPLE for value
               //   Before marker replacement: &tx_trevent_pi1[uid]=###FE_USERS.UID###&###CHASH###
@@ -315,7 +314,7 @@
               $arr_value_after_loop[] = str_replace($key_marker, $valueChild, $value_tsConf_after_loop);
             }
               // 13008, 110302, dwildt
-            $value_tsConf_after_loop = implode($str_sqlDeviderDisplay, (array) $arr_value_after_loop);
+            $value_tsConf_after_loop = implode($str_devider, (array) $arr_value_after_loop);
 //var_dump(__METHOD__ . ': ' . __LINE__, $value_tsConf_after_loop);
               // Multiple the values and replace the marker for every child
           }
@@ -392,18 +391,21 @@
 
   /**
  * [DEPRECATED] Use substitute_marker()
- * 
+ *
  * substitute_marker_recurs(): Replace all markers in a multi-dimensional array like an TypoScript array with the real values from the SQL result
  * The method extends the SQL result with all piVar values. ###CHASH### has a process.
  *
  * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
  * @param array   $elements: The current row of the SQL result
  * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
- * 
  * @version 3.6.2
  */
   function substitute_marker_recurs($arr_multi_dimensional, $elements)
   {
+
+      // 110312, dwildt
+    //return $this->substitute_marker($arr_multi_dimensional);
+
     $conf       = $this->pObj->conf;
     $conf_view  = $this->pObj->conf['views.'][$this->pObj->view.'.'][$this->pObj->piVar_mode.'.'];
 
@@ -428,7 +430,7 @@
       // Security: recursionGuard
 
     static $int_levelRecurs = 0;
-    
+
       #10116
     $arr_conf_advanced = $conf['advanced.'];
     if(!empty($conf_view['advanced.']))
@@ -551,7 +553,7 @@
         /////////////////////////////////////
         //
         // Replace markers with the values
-  
+
       if(!is_array($value_tsConf))
       {
           // Do we have markers?
@@ -700,7 +702,6 @@
 
     return $arr_multi_dimensional;
   }
-
 
 
 

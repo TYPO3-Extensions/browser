@@ -260,6 +260,7 @@ class tx_browser_pi1_ttcontainer
  *
  * @param	array		Array with the currrent tt_container
  * @return	array		Array with the elements error and data. Data contains the Template.
+ * 
  */
   function loop_container_recurs($arr_container=array())
   {

@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2010-2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +28,7 @@
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *
 * @since    3.4.4
-* @version  3.4.5
+* @version  3.6.3
 *
 * @package    TYPO3
 * @subpackage    tx_browser
@@ -65,8 +65,8 @@ class tx_browser_pi1_multisort
     /**
  * Constructor. The method initiate the parent object
  *
- * @param	object		The parent object
- * @return	void
+ * @param object    The parent object
+ * @return  void
  */
   function __construct($parentObj)
   {
@@ -94,8 +94,8 @@ class tx_browser_pi1_multisort
     /**
  * Order the rows depending on csvOrderBy and piVars[sort]
  *
- * @param	array		&$array: Reference to the array with the rows
- * @return	void
+ * @param array   &$array: Reference to the array with the rows
+ * @return  void
  * @version 3.4.5
  */
   function multisort_rows()
@@ -116,6 +116,7 @@ class tx_browser_pi1_multisort
     $csvOrderByWoAscDesc  = $this->pObj->objSqlFun->get_orderBy_tableFields($csvOrderBy);
     $arrOrderByWoAscDesc  = $this->pObj->objZz->getCSVasArray($csvOrderByWoAscDesc);
     $rows                 = $this->pObj->rows;
+//var_dump(__METHOD__ . ': ' . __LINE__, $rows);
 
 
 
@@ -294,7 +295,6 @@ class tx_browser_pi1_multisort
 
 
 
-
     /////////////////////////////////////////////////////////////////
     //
     // Write the result to the global rows array
@@ -303,6 +303,7 @@ class tx_browser_pi1_multisort
     $arr_return = $this->multisort_rows_upto_6_level($arr_multisort, $rows);
     $rows       = $arr_return['rows'];
 
+//var_dump(__METHOD__ . ': ' . __LINE__, $rows);
     $this->pObj->rows = $rows;
     // Write the result to the global rows array
   }
@@ -315,29 +316,65 @@ class tx_browser_pi1_multisort
 
 
 
+    /**
+ * multisort_mm_children_list(): Order children elements depending on csvOrderBy.
+ *
+ * @return  void
+ * @internal  http://forge.typo3.org/issues/13803
+ * @since     3.6.3
+ * @version   3.6.3
+ */
+  function multisort_mm_children_list($rows)
+  {
+//      // 
+////var_dump(__METHOD__ . ': ' . __LINE__, $rows);
+//    foreach($rows as $key => $elements)
+//    {
+//      $rows_curr = array();
+//      $rows_curr[$key] = $elements;
+//var_dump(__METHOD__ . ': ' . __LINE__, $rows_curr);
+//      $rows_curr = $this->multisort_mm_children_single($rows_curr);
+//      $rows[$key] = $rows_curr[$key];
+//var_dump(__METHOD__ . ': ' . __LINE__, $rows_curr);
+//    }
+    return $rows;
+  }
+
+
+
+
+
+
+
 
     /**
- * multisort_mm_children(): Order children elements depending on csvOrderBy.
+ * multisort_mm_children_single(): Order children elements depending on csvOrderBy.
  *                          Result is one row with ordered children elements.
  *                          It will be handled the field sorting only to date.
  *
- * @return	void
+ * @return  void
  * @internal  http://forge.typo3.org/issues/9727
  * @since     3.4.3
- * @version   3.4.3
+ * @version   3.6.3
  */
-  function multisort_mm_children()
+      // 13803, dwildt, 110312
+  //function multisort_mm_children()
+  function multisort_mm_children_single($rows)
   {
     $csvOrderBy           = $this->pObj->objSqlAut->orderBy();
     $arrOrderByWiAscDesc  = $this->pObj->objZz->getCSVasArray($csvOrderBy);
     $rows                 = $this->pObj->rows;
+//if($this->pObj->cObj->data['uid'] == 23)
+//{
+//  var_dump(__METHOD__ . ': ' . __LINE__, $rows);
+//}
 
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // RETURN rows contain more than one row
-
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN rows contain more than one row
+  
     if(count($rows) > 1)
     {
       if ($this->pObj->b_drs_warn)
@@ -347,28 +384,28 @@ class tx_browser_pi1_multisort
       }
       return;
     }
-    // RETURN rows contain more than one row
+      // RETURN rows contain more than one row
 
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Get the first key of the row
+      /////////////////////////////////////////////////////////////////
+      //
+      // Get the first key of the row
 
     reset($rows);
     $row_firstKey = key($rows);
-    // Get the first key of the row
+      // Get the first key of the row
 
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Get the children devider
+      /////////////////////////////////////////////////////////////////
+      //
+      // Get the children devider
 
     $str_sqlDeviderDisplay  = $this->pObj->objTyposcript->str_sqlDeviderDisplay;
     $str_sqlDeviderWorkflow = $this->pObj->objTyposcript->str_sqlDeviderWorkflow;
     $str_devider            = $str_sqlDeviderDisplay.$str_sqlDeviderWorkflow;
-    // Get the children devider
+      // Get the children devider
 
 
 
@@ -389,43 +426,101 @@ class tx_browser_pi1_multisort
           {
             $arr_mm_tables[$str_relation_table][]     = $str_foreign_table;
             $arr_foreign_tables[$str_foreign_table][] = $str_relation_table;
+              // 13803, dwildt, 110313
+            $arrOrderByWiAscDesc[]                    = $str_relation_table . '.sorting';
+            if ($this->pObj->b_drs_sql)
+            {
+              t3lib_div::devlog('[INFO/SQL] ' . $str_relation_table . '.sorting' .
+                'is added to csvOrderBy temporarily.', $this->pObj->extKey, 0);
+            }
+              // 13803, dwildt, 110313
           }
         }
       }
     }
+        // 13803, dwildt, 110313
+        // Remove non unique values
+      $arrOrderByWiAscDesc = array_unique($arrOrderByWiAscDesc);
       // Get all mm relation tables and all foreign tables -  #9727
 
+// Wenn ...sorting existiert, und noch nicht Teil der SQL-Anweisung ist, dann anhängen
+//if($this->pObj->cObj->data['uid'] == 23)
+//{
+//  var_dump(__METHOD__ . ': ' . __LINE__, $arr_mm_tables, $arr_foreign_tables);
+//}
+//$arrOrderByWiAscDesc = array_unique($arrOrderByWiAscDesc);
+//$arrOrderByWiAscDesc[] = 1;
+//$arrOrderByWiAscDesc[] = 1;
+//$arrOrderByWiAscDesc[] = 1;
+//$arrOrderByWiAscDesc[] = 1;
+//$arrOrderByWiAscDesc[] = 1;
+//$arrOrderByWiAscDesc[] = 1;
+//$arrOrderByWiAscDesc[] = 1;
+//
+//if($this->pObj->cObj->data['uid'] == 23)
+//{
+//  var_dump(__METHOD__ . ': ' . __LINE__, $arrOrderByWiAscDesc);
+//}
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Get arrays for ordering with multisort
 
-    $i_counter          = 0;
+      /////////////////////////////////////////////////////////////////
+      //
+      // Cut $arrOrderByWiAscDesc after the sixth element
+
+      // Our multisort handles six array at maximum
+    $max_elements = 6;
+    if(count($arrOrderByWiAscDesc) > $max_elements)
+    {
+      $strOrderByWiAscDesc = implode(', ', $arrOrderByWiAscDesc);
+        // DRS - Development Reporting System
+      if ($this->pObj->b_drs_warn)
+      {
+        t3lib_div::devlog('[WARN/SQL] The order clause has more than six items!<br />'.
+          'value is: \''.$strOrderByWiAscDesc.'\'.', $this->pObj->extKey, 2);
+        t3lib_div::devlog('[INFO/SQL] Order clause will reduced to six items.', $this->pObj->extKey, 0);
+      }
+        // DRS - Development Reporting System
+      $count_elements = 0;
+      foreach($arrOrderByWiAscDesc as $key => $value)
+      {
+        if($count_elements >= $max_elements)
+        {
+          unset($arrOrderByWiAscDesc[$key]);
+        }
+        $count_elements++;
+      }
+        // DRS - Development Reporting System
+      if ($this->pObj->b_drs_warn)
+      {
+        $strOrderByWiAscDesc = implode(', ', $arrOrderByWiAscDesc);
+        t3lib_div::devlog('[INFO/SQL] Order clause after reducing: '.
+          '\''.$strOrderByWiAscDesc.'\'.', $this->pObj->extKey, 2);
+        t3lib_div::devlog('[HELP/SQL] Please reduce the amount of items in the order clause manually.', $this->pObj->extKey, 1);
+      }
+        // DRS - Development Reporting System
+    }
+      // Cut $arrOrderByWiAscDesc after the sixth element
+//if($this->pObj->cObj->data['uid'] == 23)
+//{
+//  var_dump(__METHOD__ . ': ' . __LINE__, $arrOrderByWiAscDesc);
+//}
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Get arrays for ordering with multisort
+
     $arr_check_elements = null;
     foreach((array) $arrOrderByWiAscDesc as $tableFieldOrder)
     {
-      // Our multisort handles six array at maximum
-      if($i_counter > 6)
-      {
-        // DRS - Development Reporting System
-        if ($this->pObj->b_drs_warn)
-        {
-          t3lib_div::devlog('[WARN/SQL] The order clause has more than seven items!<br />'.
-            'value is: \''.$csvOrderBy.'\'.', $this->pObj->extKey, 2);
-          t3lib_div::devlog('[HELP/SQL] Please reduce the amount of items in the order clause.', $this->pObj->extKey, 1);
-        }
-        // DRS - Development Reporting System
-        break; // dwildt, 100915
-      }
-      // Our multisort handles six array at maximum
-
-      // Get table and field
+        // Get table and field
       list($table, $fieldOrder) = explode('.', $tableFieldOrder);
       list($field, $order)      = explode(' ', $fieldOrder);
-      // Get table and field
+        // Get table and field
 
-      // Set dest_table depending on mm table
+        // Set dest_table depending on mm table
       $bool_children_table  = false;
       $dest_table           = $table;
       if(in_array($table, array_keys($arr_foreign_tables)))
@@ -437,16 +532,16 @@ class tx_browser_pi1_multisort
         $bool_children_table  = true;
         $dest_table           = $arr_mm_tables[$table][0];
       }
-      // Set dest_table depending on mm table
+        // Set dest_table depending on mm table
 
-      // Get sort type and case sensitive
-      $arr_sortTypeAndCase      = $this->pObj->objSqlFun->get_sortTypeAndCase($table, $field);
-      // Get sort type and case sensitive
+        // Get sort type and case sensitive
+      $arr_sortTypeAndCase    = $this->pObj->objSqlFun->get_sortTypeAndCase($table, $field);
+        // Get sort type and case sensitive
 
-      // Get array order for children table
+        // Get array order for children table
       if($bool_children_table)
       {
-        // Set table counter
+          // Set table counter
         if(empty($arr_order[$table]))
         {
           $i_counter_table = 0;
@@ -455,54 +550,72 @@ class tx_browser_pi1_multisort
         {
           $i_counter_table = count($arr_order[$table]);
         }
-        // Set table counter
+          // Set table counter
 
-        // Get values
-        // 101012, dwildt
+          // Get values
+          // 101012, dwildt
         $arr_tmp = null;
         if($str_devider)
         {
           $arr_tmp = explode($str_devider, $rows[$row_firstKey][$table.'.'.$field]);
         }
-        #9872
+          #9872
         if(!empty($arr_tmp))
         {
           $arr_order[$dest_table][$i_counter_table][$table.'.'.$field] = $arr_tmp;
         }
-        // Get values
+          // Get values
 
-        // Generate one multisort array
-        #9872
+          // Generate one multisort array
+          #9872
         if(!empty($arr_order))
         {
           //var_dump('sqlFun 1160', $dest_table, $i_counter_table, $table.'.'.$field, $arr_order, count($arr_order[$dest_table][$i_counter_table][$table.'.'.$field]));
           $arr_check_elements[$dest_table][$i_counter_table]         = count($arr_order[$dest_table][$i_counter_table][$table.'.'.$field]);
           $arr_order[$dest_table][$i_counter_table]['int_orderFlag'] = $this->pObj->objSqlFun->get_descOrAsc($tableFieldOrder);
           $arr_order[$dest_table][$i_counter_table]['int_typeFlag']  = $arr_sortTypeAndCase['int_typeFlag'];
-          // Generate one multisort array
+            // Generate one multisort array
 
-          // Workaround: Warn, because of case sensitive only
+            // Workaround: Warn, because of case sensitive only
           if ($this->pObj->b_drs_warn)
           {
             t3lib_div::devlog('[WARN/SQL] multisort_mm_children() sort case sensitive only!',
               $this->pObj->extKey, 2);
           }
-          // Workaround: Warn, because of case sensitive only
-
-          $i_counter++;
+            // Workaround: Warn, because of case sensitive only
         }
       }
-      // Get array order for children table
+        // Get array order for children table
     }
-    // Get arrays for ordering with multisort
+      // Get arrays for ordering with multisort
 
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Warn, if multisort arrays have different numbers of elements
+      // RETURN there isn't any children record for ordering
+    if(empty($arr_order))
+    {
+      if ($this->pObj->b_drs_sql)
+      {
+        t3lib_div::devlog('[INFO/SQL] There isn\'t any children record for ordering.', $this->pObj->extKey, 0);
+      }
+      return;
+    }
+      // RETURN there isn't any children record for ordering
 
-    // 101012, dwildt
+
+
+//if($this->pObj->cObj->data['uid'] == 23)
+//{
+//  var_dump(__METHOD__ . ': ' . __LINE__, $arr_check_elements, $arr_order);
+//}
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Warn, if multisort arrays have different numbers of elements
+
+      // 101012, dwildt
     if(is_array($arr_check_elements))
     {
       foreach((array) $arr_check_elements as $dest_table => $arr_curr_elements)
@@ -525,15 +638,15 @@ class tx_browser_pi1_multisort
         }
       }
     }
-    // Warn, if multisort arrays have different numbers of elements
+      // Warn, if multisort arrays have different numbers of elements
 
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Multisort
+      /////////////////////////////////////////////////////////////////
+      //
+      // Multisort
 
-    // 101012, dwildt
+      // 101012, dwildt
     if(is_array($arr_order))
     {
       foreach((array) $arr_order as $table => $arr_field_order)
@@ -549,9 +662,15 @@ class tx_browser_pi1_multisort
     }
 
     $this->pObj->rows = $rows;
-    // Multisort
-
+//if($this->pObj->cObj->data['uid'] == 23)
+//{
+//  var_dump(__METHOD__ . ': ' . __LINE__, $rows);
+//}
     return;
+      // Multisort
+//var_dump(__METHOD__ . ': ' . __LINE__, $rows);
+//
+//    return $rows;
   }
 
 
@@ -589,8 +708,8 @@ class tx_browser_pi1_multisort
 /**
  * multisort_upto_6_level: multisort upto 6 arrays
  *
- * @param	array		$arr_multisort  : array with elements (arrays) for multisort
- * @return	array		$arr_multisort  : ordered
+ * @param array   $arr_multisort  : array with elements (arrays) for multisort
+ * @return  array   $arr_multisort  : ordered
  * @since   3.4.3
  * @version 3.4.3
  */
@@ -681,9 +800,9 @@ class tx_browser_pi1_multisort
  *
  *                                  : [rows]          ordered
  *
- * @param	array		$arr_multisort  : array with elements (arrays) for multisort
- * @param	array		$rows           : Result of a database query
- * @return	array		$arr_return     : [arr_multisort] ordered
+ * @param array   $arr_multisort  : array with elements (arrays) for multisort
+ * @param array   $rows           : Result of a database query
+ * @return  array   $arr_return     : [arr_multisort] ordered
  * @since   3.4.3
  * @version 3.4.3
  */

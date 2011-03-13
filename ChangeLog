@@ -1,4 +1,10 @@
+3.6.3
+  11-03-13
+  Bugfix
+  * 13807: Single view: Childrens aren't devided proper
+
 3.6.2
+  11-03-11
   New Features
   * 13597: TypoScript snippet for additional parameters
   * 13145: Number formats: userfunc
