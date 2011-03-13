@@ -598,7 +598,7 @@
                   $arr_value_after_loop[] = str_replace($key_marker, $valueChild, $value_tsConf_curr);
                 }
                   // 13008, 110302, dwildt
-                $value_tsConf_after_loop = implode($str_sqlDeviderDisplay, $arr_value_after_loop);
+                $value_tsConf_after_loop = implode($str_devider, $arr_value_after_loop);
                   // Multiple the values and replace the marker for every child
               }
                 // Marker has children values
