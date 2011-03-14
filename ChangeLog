@@ -1,9 +1,11 @@
 3.6.3
   11-03-13
-  New Featur
-  * 13803: List view: ordering children record
+  New Feature
+  * 13803: Ordering children record
   Bugfix
   * 13807: Single view: Childrens aren't devided proper
+  Manual
+  * Updated
 
 3.6.2
   11-03-11
