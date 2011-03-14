@@ -709,7 +709,7 @@ class tx_browser_pi1_views
       // Ordering the children
   
       // 13803, dwildt, 110312
-    $rows = $this->pObj->objMultisort->multisort_mm_children_list($rows);
+    $rows = $this->pObj->objMultisort->multisort_mm_children($rows);
       // Ordering the children
 
 
@@ -1463,9 +1463,9 @@ class tx_browser_pi1_views
       // #9727: Ordering the children
 
       // 13803, dwildt, 110312
-    //$this->pObj->objMultisort->multisort_mm_children();
-    $rows = $this->pObj->objMultisort->multisort_mm_children_single($rows);
-    $rows = $this->pObj->rows;
+    $rows = $this->pObj->objMultisort->multisort_mm_children($rows);
+    //$rows = $this->pObj->objMultisort->multisort_mm_children_single($rows);
+    $this->pObj->rows = $rows;
       // #9727: Ordering the children
 
 

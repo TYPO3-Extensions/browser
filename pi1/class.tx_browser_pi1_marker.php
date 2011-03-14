@@ -314,6 +314,7 @@
               $arr_value_after_loop[] = str_replace($key_marker, $valueChild, $value_tsConf_after_loop);
             }
               // 13008, 110302, dwildt
+              // 13807, 110313, dwildt
             $value_tsConf_after_loop = implode($str_devider, (array) $arr_value_after_loop);
 //var_dump(__METHOD__ . ': ' . __LINE__, $value_tsConf_after_loop);
               // Multiple the values and replace the marker for every child
@@ -598,6 +599,7 @@
                   $arr_value_after_loop[] = str_replace($key_marker, $valueChild, $value_tsConf_curr);
                 }
                   // 13008, 110302, dwildt
+                  // 13807, 110313, dwildt
                 $value_tsConf_after_loop = implode($str_devider, $arr_value_after_loop);
                   // Multiple the values and replace the marker for every child
               }

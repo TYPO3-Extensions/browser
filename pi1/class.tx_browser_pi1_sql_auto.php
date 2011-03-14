@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008 - 2010 Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2008-2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,6 +29,8 @@
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage    tx_browser
+ * 
+ * @version 3.6.3
  */
 
 /**
@@ -78,6 +80,8 @@ class tx_browser_pi1_sql_auto
   // [Array] Array with some configuration from the TS for an automatic relation building
   var $arr_relations_mm_simple;
   // [Array] Array with the arrays MM and/or simple
+  var $arr_relations_opposite;
+  // [Array] Array with ...
   var $b_left_join = false;
   // [Boolean] TRUE if we should use LEFT JOIN. From TypoScript global or local autoconfig.relations.left_join
 
@@ -884,9 +888,9 @@ class tx_browser_pi1_sql_auto
     $arr_return['error']['status'] = false;
 
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Tables used?
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Tables used?
 
     if (count($this->pObj->arr_realTables_arrFields) < 1)
     {
@@ -905,9 +909,9 @@ class tx_browser_pi1_sql_auto
     }
 
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Do we have tables for a simple relation building?
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Do we have tables for a simple relation building?
 
     if (is_array($conf_view['relations.']['simple.']))
     {
@@ -921,12 +925,13 @@ class tx_browser_pi1_sql_auto
         t3lib_div::devlog('[INFO/SQL] relations.simple is configured.', $this->pObj->extKey, 0);
       }
     }
-    // Do we have tables for a simple relation building?
+      // Do we have tables for a simple relation building?
 
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Do we have tables for a MM relation building?
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Do we have tables for a MM relation building?
+
     if (is_array($conf_view['relations.']['mm.']))
     {
       if (!is_array($this->arr_relations_mm_simple))
@@ -939,26 +944,26 @@ class tx_browser_pi1_sql_auto
         t3lib_div::devlog('[INFO/SQL] relations.mm is configured.', $this->pObj->extKey, 0);
       }
     }
-    // Do we have tables for a MM relation building?
+      // Do we have tables for a MM relation building?
 
-    // RETURN there isn't any table
+      // RETURN there isn't any table
     if (empty($this->arr_relations_mm_simple))
     {
-      // We don't have any table. Return.
+        // We don't have any table. Return.
       if ($this->pObj->b_drs_sql)
       {
         t3lib_div::devlog('[INFO/SQL] Nothing to do. There is no relation.', $this->pObj->extKey, 0);
       }
       return $arr_return;
     }
-    // RETURN there isn't any table
-    // Do we have tables for relation building?
+      // RETURN there isn't any table
+      // Do we have tables for relation building?
 
 
 
-    //////////////////////////////////////////////////////////////////
-    //
-    // RETURN, if relation isn't MM or isn't simple
+      //////////////////////////////////////////////////////////////////
+      //
+      // RETURN, if relation isn't MM or isn't simple
 
     if(is_array($this->arr_relations_mm_simple))
     {
@@ -981,15 +986,15 @@ class tx_browser_pi1_sql_auto
         }
       }
     }
-    // RETURN, if relation isn't MM or simple
+      // RETURN, if relation isn't MM or simple
 
 
     $str_full_join = false;
 
 
-    //////////////////////////////////////////////////////////////////
-    //
-    // MM-relation-building
+      //////////////////////////////////////////////////////////////////
+      //
+      // MM-relation-building
 
     $tables = $this->arr_relations_mm_simple['MM'];
     if (is_array($tables))
@@ -1021,6 +1026,8 @@ class tx_browser_pi1_sql_auto
       //  array["tx_ships_main"]["tx_ships_main_g3_application_mm"] = "tx_ships_application"
       //  array["tx_ships_main"]["tx_ships_main_g3_rigortype_mm"]   = "tx_ships_rigortype"
       //  ...
+      
+        // Loop: tables
       foreach ($tables as $localTable => $foreignTables)
       {
         //var_dump($foreignTables);
@@ -1029,7 +1036,7 @@ class tx_browser_pi1_sql_auto
         //  array["tx_ships_main_g3_rigortype_mm"]    = "tx_ships_rigortype"
         //  array["tx_ships_main_g3_powersystem_mm"]  = ...
 
-        // Load the TCA, if we don't have an table.columns array
+          // Load the TCA, if we don't have an table.columns array
         if (!is_array($GLOBALS['TCA'][$localTable]['columns']))
         {
           t3lib_div::loadTCA($localTable);
@@ -1038,21 +1045,26 @@ class tx_browser_pi1_sql_auto
             t3lib_div::devlog('[INFO/SQL] $GLOBALS[\'TCA\'][\''.$localTable.'\'] is loaded.', $this->pObj->extKey, 0);
           }
         }
-        // Load the TCA, if we don't have an table.columns array
+          // Load the TCA, if we don't have an table.columns array
+        
+          // Loop: foreignTables
         foreach((array) $foreignTables as $mmTable => $foreignTable)
         {
+            // foreignTable is an element in the array of the real tables
           if (in_array($foreignTable, array_keys($this->pObj->arr_realTables_arrFields)))
           {
-            // #9697, 100912, dwildt
+              // #9697, 100912, dwildt
             $bool_opposite = false;
             if(!empty($this->arr_relations_opposite[$localTable][$mmTable]['MM_opposite_field']))
             {
               $bool_opposite = true;
             }
-            // #9697, 100912, dwildt
+              // #9697, 100912, dwildt
+
+              // left join: true
             if ($this->b_left_join)
             {
-              // #9697, 100912, dwildt
+                // #9697, 100912, dwildt
               if($bool_opposite)
               {
                 $str_left_join_uidlocal = ' LEFT JOIN '.$mmTable.
@@ -1063,8 +1075,8 @@ class tx_browser_pi1_sql_auto
                 $str_left_join_uidlocal = ' LEFT JOIN '.$mmTable.
                                           ' ON ( '.$localTable.'.uid = '.$mmTable.'.uid_local )';
               }
-              // #9697, 100912, dwildt
-              // Use current LEFT JOIN once only
+                // #9697, 100912, dwildt
+                // Use current LEFT JOIN once only
               if (strpos($str_left_join, $str_left_join_uidlocal) === false)
               {
                 if ($this->pObj->b_drs_sql)
@@ -1073,10 +1085,13 @@ class tx_browser_pi1_sql_auto
                 }
                 $str_left_join = $str_left_join.$str_left_join_uidlocal;
               }
+
               $str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
               $str_pidStatement         = $this->str_andWherePid($foreignTable);
               $str_pidStatement         = ' AND '.$str_pidStatement.' ';
-              // #9697, 100912, dwildt
+
+                // #9697, 100912, dwildt
+                // Opposite relation: true
               if($bool_opposite)
               {
                 $str_left_join_uidforeign = ' LEFT JOIN '.$foreignTable.
@@ -1086,6 +1101,8 @@ class tx_browser_pi1_sql_auto
                                                 $str_pidStatement.
                                               ' )';
               }
+                // Opposite relation: true
+                // Opposite relation: false
               if(!$bool_opposite)
               {
                 $str_left_join_uidforeign = ' LEFT JOIN '.$foreignTable.
@@ -1095,20 +1112,26 @@ class tx_browser_pi1_sql_auto
                                                 $str_pidStatement.
                                               ' )';
               }
-              // #9697, 100912, dwildt
-              // Use current LEFT JOIN once only
+                // Opposite relation: false
+                // #9697, 100912, dwildt
+
+                // Use current LEFT JOIN once only
               if (strpos($str_left_join, $str_left_join_uidforeign) === false)
               {
                 $str_left_join = $str_left_join.$str_left_join_uidforeign;
               }
+                // Use current LEFT JOIN once only
             }
+              // left join: true
+          
+              // left join: false
             if (!$this->b_left_join)
             {
               if ($this->pObj->b_drs_sql)
               {
                 t3lib_div::devlog('[INFO/SQL] '.$localTable.' get a FULL JOIN to '.$foreignTable.'.', $this->pObj->extKey, 0);
               }
-              // #9697, 100912, dwildt
+                // #9697, 100912, dwildt
               if($bool_opposite)
               {
                 $str_full_join .= ' AND '.$localTable.'.uid = '.$mmTable.'.uid_foreign'.
@@ -1119,36 +1142,54 @@ class tx_browser_pi1_sql_auto
                 $str_full_join .= ' AND '.$localTable.'.uid = '.$mmTable.'.uid_local'.
                                   ' AND '.$mmTable.'.uid_foreign = '.$foreignTable.'.uid';
               }
-              // #9697, 100912, dwildt
+                // #9697, 100912, dwildt
             }
-            // Add the mm table to the fetched tables, if it is new
+              // left join: false
+
+              // Add the mm table to the fetched tables, if it is new
             if (!in_array($mmTable, array_keys($this->pObj->arr_realTables_arrFields)))
             {
               // Add every new table.field to the global array arr_realTables_arrFields
               $this->pObj->arr_realTables_arrFields[$mmTable][] = 'uid_local';
               $this->pObj->arr_realTables_arrFields[$mmTable][] = 'uid_foreign';
 
-              // 091128: ADDED (in context with table_mm.sorting)
+                // 091128: ADDED (in context with table_mm.sorting)
               $keys_mmTable = array_keys(($GLOBALS['TYPO3_DB']->admin_get_fields($mmTable)));
               if(in_array('sorting', $keys_mmTable))
               {
                 $this->pObj->arr_realTables_arrFields[$mmTable][] = 'sorting';
-                // Add every new table.field to the global array consolidate
+                  // Add every new table.field to the global array consolidate
                 $this->pObj->arrConsolidate['addedTableFields'][] = $mmTable.'.sorting';
                 $this->pObj->arrConsolidate['select']['mmSortingTableFields'][]  = $mmTable.'.sorting';
               }
-              // 091128: ADDED (in context with table_mm.sorting)
+                // 091128: ADDED (in context with table_mm.sorting)
+                // 13803, 110313, dwildt
+              if(in_array('sorting_foreign', $keys_mmTable))
+              {
+                $this->pObj->arr_realTables_arrFields[$mmTable][] = 'sorting_foreign';
+                  // Add every new table.field to the global array consolidate
+                $this->pObj->arrConsolidate['addedTableFields'][] = $mmTable.'.sorting_foreign';
+                $this->pObj->arrConsolidate['select']['mmSortingTableFields'][]  = $mmTable.'.sorting_foreign';
+              }
+                // 13803, 110313, dwildt
             }
-            // Add the foreign table to the fetched tables, if it is new
+              // Add the mm table to the fetched tables, if it is new
+
+              // Add the foreign table to the fetched tables, if it is new
             if (!in_array($foreignTable, array_keys($this->pObj->arr_realTables_arrFields)))
             {
               $this->pObj->arr_realTables_arrFields[$foreignTable][] = 'uid';
             }
+              // Add the foreign table to the fetched tables, if it is new
           }
+            // foreignTable is an element in the array of the real tables
         }
+          // Loop: foreignTables
       }
+        // Loop: tables
     }
-    // MM-relation-building
+    
+      // MM-relation-building
 
 
     //////////////////////////////////////////////////////////////////
@@ -1192,15 +1233,15 @@ class tx_browser_pi1_sql_auto
         }
 
           // #11843, fconstien, 110310
-	$localTableFieldMaxItems = $GLOBALS['TCA'][$localTable]['columns'][$localField]['config']['maxitems'];
-	switch(true)
-	{
-	  case($localTableFieldMaxItems == 1):
+        $localTableFieldMaxItems = $GLOBALS['TCA'][$localTable]['columns'][$localField]['config']['maxitems'];
+        switch(true)
+        {
+          case($localTableFieldMaxItems == 1):
             $str_query_part = "   " . $localTableField . " = " . $foreignTableField .
                               "   " . $str_enablefields_foreign .
                               "   " . $str_pidStatement ;
             break;
-	  case($localTableFieldMaxItems == 2):
+          case($localTableFieldMaxItems == 2):
             $str_query_part = "   ( " .
                               "     " . $localTableField . " = " . $foreignTableField . " OR " .
                               "     " . $localTableField . " LIKE CONCAT(" . $foreignTableField . ", ',%') OR " .
@@ -1218,7 +1259,7 @@ class tx_browser_pi1_sql_auto
                               "   )" .
                               "   " . $str_enablefields_foreign .
                               "   " . $str_pidStatement ;
-	}
+        }
           // #11843, fconstien, 110310
 
           // #11650, cweiske, 101223

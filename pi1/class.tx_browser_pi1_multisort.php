@@ -347,6 +347,146 @@ class tx_browser_pi1_multisort
 
 
 
+
+
+
+
+
+
+
+
+
+    /**
+ * multisort_mm_children(): Order children elements
+ *                          Result is one row with ordered children elements.
+ *                          It will be handled the field sorting only to date.
+ *
+ * @param   array   $row  : Current row
+ * @return  array   $row  : Row with ordered childrens
+ * 
+ * @since     3.6.3
+ * @version   3.6.3
+ */
+      // 13803, dwildt, 110312
+  //function multisort_mm_children()
+  function multisort_mm_children($rows)
+  {
+    $conf = $this->pObj->conf;
+    $mode = $this->pObj->piVar_mode;
+    $view = $this->pObj->view;
+
+    $viewWiDot          = $view.'.';
+    $conf_view          = $conf['views.'][$viewWiDot][$mode.'.'];
+    $conf_path          = 'views.' . $viewWiDot . $mode. '.';
+    $conf_orderChildren = $conf_view['orderBy.'];
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN orderBy hasn't any elements
+  
+    if(empty($conf_orderChildren))
+    {
+      if ($this->pObj->b_drs_sql)
+      {
+        t3lib_div::devlog('[INFO/SQL] ' . $conf_path . 'orderBy hasn\'t any element.' .
+          'If you have children, they will be ordered randomly.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[HELP/SQL] See tutorial ... ', $this->pObj->extKey, 1);
+      }
+      return $rows;
+    }
+      // RETURN orderBy hasn't any elements
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Get the children devider
+
+    $str_sqlDeviderDisplay  = $this->pObj->objTyposcript->str_sqlDeviderDisplay;
+    $str_sqlDeviderWorkflow = $this->pObj->objTyposcript->str_sqlDeviderWorkflow;
+    $str_devider            = $str_sqlDeviderDisplay.$str_sqlDeviderWorkflow;
+      // Get the children devider
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Loop: rows
+
+    foreach($rows as $key_rows => $row)
+    {
+      $str_localTableUid = $rows[$key_rows][$this->pObj->arrLocalTable['uid']];
+        // Loop: tsConf queries
+      foreach($conf_orderChildren as $foreignTable => $foreignQuery)
+      {
+        $arr_queries[$foreignTable] = str_replace('###UID_LOCAL###', $str_localTableUid, $foreignQuery);
+      }
+        // Loop: tsConf queries
+
+        // Loop: queries
+      foreach($arr_queries as $foreignTable => $query)
+      {
+        $res    = $GLOBALS['TYPO3_DB']->sql_query($query);
+
+          // EXIT: error!
+        $error  = $GLOBALS['TYPO3_DB']->sql_error();
+        if (!empty($error)) 
+        {
+          if ($this->pObj->b_drs_error) 
+          {
+            $str_warn     = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">' . $this->pObj->pi_getLL('drs_security') . '</p>';
+            $str_prompt   = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $error . '</p>';
+            $str_prompt  .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $query . '</p>';
+            echo $str_warn . $str_prompt;
+          }
+          else
+          {
+            echo '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">' . $this->pObj->pi_getLL('drs_sql_prompt') . '</p>';
+          }
+          exit;
+        }
+          // EXIT: error!
+
+          // Loop: children
+        $arr_ordered = null;
+        while ($row_foreignTable = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) 
+        {
+          foreach($row_foreignTable as $key => $value)
+          {
+              // Get the ordered values as a string
+            $arr_ordered[$foreignTable . '.' . $key][] = $value;
+          }
+        }
+          // Loop: children
+
+          // Loop: ordered values
+        foreach((array) $arr_ordered as $foreign_tableField => $arr_values)
+        {
+          if(isset($rows[$key_rows][$foreign_tableField]))
+          {
+              // Set the ordered values
+            $rows[$key_rows][$foreign_tableField] = implode($str_devider, $arr_values);
+          }
+        }
+          // Loop: ordered values
+      }
+        // Loop: queries
+    }
+      // Loop: rows
+
+
+    
+    return $rows;
+  }
+
+
+
+
+
+
+
+
     /**
  * multisort_mm_children_single(): Order children elements depending on csvOrderBy.
  *                          Result is one row with ordered children elements.
@@ -412,12 +552,19 @@ class tx_browser_pi1_multisort
       /////////////////////////////////////////////////////////////////
       //
       // Get all mm relation tables and all foreign tables -  #9727
+//if($this->pObj->cObj->data['uid'] == 23)
+//{
+//  var_dump(__METHOD__ . ': ' . __LINE__, $this->pObj->objSqlAut->arr_relations_opposite);
+//  var_dump(__METHOD__ . ': ' . __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple['MM']);
+//}
 
     $arr_mm_tables = array();
       // fsander, 101023    -- initialize $arr_foreign_tables
     $arr_foreign_tables = array();
       // fsander, 101023    -- check if we have an array first
-    if (is_array($this->pObj->objSqlAut->arr_relations_mm_simple['MM'])) {
+      // There is an relations_mm_simple_array
+    if (is_array($this->pObj->objSqlAut->arr_relations_mm_simple['MM'])) 
+    {
       if(is_array($this->pObj->objSqlAut->arr_relations_mm_simple['MM']))
       {
         foreach((array) $this->pObj->objSqlAut->arr_relations_mm_simple['MM'] as $arr_relation_tables)
@@ -426,8 +573,10 @@ class tx_browser_pi1_multisort
           {
             $arr_mm_tables[$str_relation_table][]     = $str_foreign_table;
             $arr_foreign_tables[$str_foreign_table][] = $str_relation_table;
-              // 13803, dwildt, 110313
+              // 13803, dwildt, 110313: non opposite
             $arrOrderByWiAscDesc[]                    = $str_relation_table . '.sorting';
+//              // 13803, dwildt, 110313: opposite
+//            $arrOrderByWiAscDesc[]                    = $str_relation_table . '.sorting_foreign';
             if ($this->pObj->b_drs_sql)
             {
               t3lib_div::devlog('[INFO/SQL] ' . $str_relation_table . '.sorting' .
@@ -438,10 +587,13 @@ class tx_browser_pi1_multisort
         }
       }
     }
-        // 13803, dwildt, 110313
-        // Remove non unique values
-      $arrOrderByWiAscDesc = array_unique($arrOrderByWiAscDesc);
+      // There is an relations_mm_simple_array
       // Get all mm relation tables and all foreign tables -  #9727
+
+      // 13803, dwildt, 110313
+      // Remove non unique values
+    $arrOrderByWiAscDesc = array_unique($arrOrderByWiAscDesc);
+
 
 // Wenn ...sorting existiert, und noch nicht Teil der SQL-Anweisung ist, dann anhängen
 //if($this->pObj->cObj->data['uid'] == 23)
@@ -898,29 +1050,10 @@ class tx_browser_pi1_multisort
 
 
 
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  }
-
-  if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_multisort.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_multisort.php']);
-  }
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_multisort.php']) {
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_multisort.php']);
+}
 
 ?>
