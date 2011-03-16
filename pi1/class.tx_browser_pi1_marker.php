@@ -315,7 +315,7 @@
             }
               // 13008, 110302, dwildt
               // 13807, 110313, dwildt
-            $value_tsConf_after_loop = implode($str_devider, (array) $arr_value_after_loop);
+            $value_tsConf_after_loop = implode($str_sqlDeviderDisplay, (array) $arr_value_after_loop);
 //var_dump(__METHOD__ . ': ' . __LINE__, $value_tsConf_after_loop);
               // Multiple the values and replace the marker for every child
           }
