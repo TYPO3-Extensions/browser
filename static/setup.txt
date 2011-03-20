@@ -1176,6 +1176,11 @@ plugin.tx_browser_pi1 {
                 // [STRING] See php method strftime
                 strftime = %A
               }
+              url_stdWrap {
+                // PHP strftime: %Y%m%d example: 20101231
+                strftime      = %Y%m%d
+                rawUrlEncode  = 1
+              }
             }
             week {
               start_period {
@@ -1198,7 +1203,12 @@ plugin.tx_browser_pi1 {
                 // [STRING] Leave it empty! It will be handled while runtime.
                 value = 
                 // [STRING] See php method strftime
-                strftime = %U. ###MY_WEEK###
+                strftime = %V. ###MY_WEEK###
+              }
+              url_stdWrap {
+                // PHP strftime: %Y%V example: 201053
+                strftime      = %Y%V
+                rawUrlEncode  = 1
               }
             }
             month {
@@ -1220,6 +1230,11 @@ plugin.tx_browser_pi1 {
                 // [STRING] See php method strftime
                 strftime = %b %y
               }
+              url_stdWrap {
+                // PHP strftime: %B_%Y example: december_2010
+                strftime      = %B_%Y
+                rawUrlEncode  = 1
+              }
             }
             year {
               start_period {
@@ -1239,6 +1254,11 @@ plugin.tx_browser_pi1 {
                 value = 
                 // [STRING] See php method strftime
                 strftime = %Y
+              }
+              url_stdWrap {
+                // PHP strftime: %Y example: 2010
+                strftime      = %Y
+                rawUrlEncode  = 1
               }
             }
           }

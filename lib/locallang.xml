@@ -9,7 +9,7 @@
       <label index="promptCheckUpdateHeader">Update wizard</label>
       <label index="promptCheckUpdateBody"><![CDATA[
         You don't need the update wizard
-        <ul>
+        <ul style="list-style:outside;">
           <li>
             if you are using the Browser the first time
           </li>
@@ -23,7 +23,7 @@
         <br />
         You can check with the update wizard, if your installation is affected.<br />
         <br />
-        <ol>
+        <ol style="list-style:outside;">
           <li>
             Please enable the option <strong>Update Wizard Enabling [x]</strong>.
           </li>
@@ -50,7 +50,7 @@
               height="80" 
               alt="Die Netzmacher - Internet ist Handwerk" /></a>
         </div>
-        <ul>
+        <ul style="list-style:outside;">
           <li>
             TYPO3-Browser website<br />
             <a href="http://typo3-browser.de/" 
@@ -119,7 +119,7 @@
       <label index="promptCheckUpdateHeader">Update-Assistent</label>
       <label index="promptCheckUpdateBody"><![CDATA[
         Du brauchst keinen Update-Test durchzuf&uuml;hren,
-        <ul>
+        <ul style="list-style:outside;">
           <li>
             wenn Du den Browser zum ersten Mal installierst
           </li>
@@ -133,7 +133,7 @@
         <br />
         Mit dem Update-Assistenten kannst Du &uuml;berpr&uuml;fen, ob Deine Installation betroffen ist.<br />
         <br />
-        <ol>
+        <ol style="list-style:outside;">
           <li>
             Bitte aktiviere die Option <strong>Update Wizard Enabling [x]</strong>.
           </li>
@@ -160,7 +160,7 @@
               height="80" 
               alt="Die Netzmacher - Internet ist Handwerk" /></a>
         </div>
-        <ul>
+        <ul style="list-style:outside;">
           <li>
             TYPO3-Browser Homepage<br />
             <a href="http://typo3-browser.de/" 

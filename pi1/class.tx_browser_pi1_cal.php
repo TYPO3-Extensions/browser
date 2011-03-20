@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
- *  (c) 2010 Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2010-2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage    tx_browser
 *
-* @version 3.6.0
+* @version 3.6.4
 * @since 3.6.0
 */
 
@@ -65,6 +65,11 @@ class tx_browser_pi1_cal {
 
   var $arr_hits = null;
   // [array] Hits per tablefield (filter) and  item
+
+  var $arr_url_tsKey = null;
+  // [array] Array with area url and its real tsKey
+
+
 
   /**
  * Constructor. The method initiate the parent object
@@ -122,37 +127,6 @@ class tx_browser_pi1_cal {
       $arr_ts = $conf_view['filter.'][$table . '.'][$field . '.'];
       if ($arr_ts['area'])
       {
-
-          // Check proper configuration
-//        if ($arr_ts['area.']['strings'] == false && $arr_ts['area.']['from_to_fields'] == false)
-//        {
-//          $arr_ts['area.']['from_to_fields'] = true;
-//            // DRS - Development Reporting System
-//          if ($this->pObj->b_drs_warn)
-//          {
-//            t3lib_div :: devLog('[INFO/CAL] filter.' . $tableField . '.area is true.', $this->pObj->extKey, 0);
-//            t3lib_div :: devLog('[WARN/CAL] But strings and from_to_fields both are false.', $this->pObj->extKey, 2);
-//            t3lib_div :: devLog('[INFO/CAL] from_to_fields is set to true.', $this->pObj->extKey, 0);
-//            t3lib_div :: devLog('[HELP/CAL] Please configure strings and from_to_fields.', $this->pObj->extKey, 1);
-//          }
-//            // DRS - Development Reporting System
-//        }
-//        if ($arr_ts['area.']['strings'] == true && $arr_ts['area.']['from_to_fields'] == true)
-//        {
-//          $arr_ts['area.']['strings'] = false;
-//            // DRS - Development Reporting System
-//          if ($this->pObj->b_drs_warn)
-//          {
-//            t3lib_div :: devLog('[INFO/CAL] filter.' . $tableField . '.area is true.', $this->pObj->extKey, 0);
-//            t3lib_div :: devLog('[WARN/CAL] But strings and from_to_fields both are true.', $this->pObj->extKey, 2);
-//            t3lib_div :: devLog('[INFO/CAL] strings is set to false.', $this->pObj->extKey, 0);
-//            t3lib_div :: devLog('[HELP/CAL] Please configure strings and from_to_fields.', $this->pObj->extKey, 1);
-//          }
-//            // DRS - Development Reporting System
-//        }
-          // Check proper configuration
-
-//:TODO:
         switch (true)
         {
           case ($arr_ts['area.']['interval']):
@@ -167,6 +141,7 @@ class tx_browser_pi1_cal {
             }
             $this->arr_area[$tableField]['key'] = 'interval';
             $arr_ts = $this->area_set_tsPeriod($arr_ts, $tableField);
+            //var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_ts);
             break;
           case ($arr_ts['area.']['strings']):
             if(!is_array($arr_ts['area.']['strings.']))
@@ -215,8 +190,7 @@ class tx_browser_pi1_cal {
   {
     list ($table, $field) = explode('.', $tableField);
 
-
-
+      // Get an auto generated ts configuration array 
     $arr_ts = $this->area_set_tsPeriod($arr_ts, $tableField);
 
     $arr_return['data']['values'] = $this->area_set_hits($arr_ts, $arr_values, $tableField);
@@ -293,6 +267,136 @@ class tx_browser_pi1_cal {
   * Area Helper
   *
   **********************************************/
+
+
+
+
+
+
+
+
+
+  /**
+ * area_get_urlPeriod(): Get the get parameter from TypoScript
+ *                       From tsConf the array ['area.']['interval.' || 'string.']['options.']['fields.]
+ *                       Return wrapped value from 'url_stdWrap'
+ *                       #13920, 110319, dwildt
+ *
+ * @param array   $arr_ts: The TypoScript configuration of the current filter
+ * @param string    $tableField: The current table.field
+ * @param string    $tsKey: Current tsKey like 10, 20, 30, ...
+ * @return  array   $tsKey: I.e. 2011_Jan, 2011_Feb, 2011_Mar, ...
+ * @version 3.6.4
+ * @since 3.6.4
+ */
+  function area_get_urlPeriod($arr_ts, $tableField, $tsKey)
+  {
+      ///////////////////////////////////////////////////////////////
+      //
+      // RETURN there isn't any tsKey
+
+    if ($tsKey == null)
+    {
+      return $tsKey;
+    }
+      // RETURN there isn't any tsKey
+
+
+
+      ///////////////////////////////////////////////////////////////
+      //
+      // RETURN there isn't any area for $tableField
+
+    if (empty ($this->pObj->objCal->arr_area[$tableField]['key']))
+    {
+      return $tsKey;
+    }
+      // RETURN there isn't any area for $tableField
+
+
+
+      ///////////////////////////////////////////////////////////////
+      //
+      // Move key (10, 20, 30, ...) to url_stdWrap (i.e: 2011_Jan, 2011_Feb, 2011_Mar, ...)
+
+    $str_area_key = $this->pObj->objCal->arr_area[$tableField]['key'];
+    switch ($str_area_key)
+    {
+      //case ('from_to_fields') :
+      case ('strings') :
+      case ('interval') :
+        if(isset($arr_ts['area.'][$str_area_key . '.']['options.']['fields.'][$tsKey . '.']['url_stdWrap.']))
+        {
+          $url_conf = $arr_ts['area.'][$str_area_key . '.']['options.']['fields.'][$tsKey . '.']['url_stdWrap.'];
+          $tsKeyUrl = $this->pObj->local_cObj->stdWrap($url_conf['value'], $url_conf);
+        }
+        break;
+      default:
+        echo __METHOD__ . ' (' . __LINE__ . '): undefined value in switch '.$this->pObj->objCal->arr_area[$tableField]['key'];
+        exit;
+    }
+      // Move key (10, 20, 30, ...) to url_stdWrap (i.e: 2011_Jan, 2011_Feb, 2011_Mar, ...)
+
+    return $tsKeyUrl;
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * area_get_tsKey_from_urlPeriod(): Get the real tsKey from TypoScript url_stdWrap
+ *                                  I.e $str_urlPeriod: 2011M%C3%A4r, 2011Apr, 2011Mai, ...
+ *                                  Returns i.e: 10, 20, 30, ...
+ *                                  #13920, 110319, dwildt
+ *
+ * @param string    $tableField: The current table.field
+ * @return  string   $str_urlPeriod: I.e. 2011M%C3%A4r, 2011Apr, 2011Mai, ...
+ * @version 3.6.4
+ * @since 3.6.4
+ */
+  function area_get_tsKey_from_urlPeriod($tableField, $str_urlPeriod)
+  {
+    $tsKey = $str_urlPeriod;
+
+
+
+      ///////////////////////////////////////////////////////////////
+      //
+      // RETURN there isn't any area for $tableField
+
+    if (empty ($this->pObj->objCal->arr_area[$tableField]['key']))
+    {
+      return $tsKey;
+    }
+      // RETURN there isn't any area for $tableField
+
+
+
+      ///////////////////////////////////////////////////////////////
+      //
+      // RETURN real tsKey
+
+    if(isset($this->arr_url_tsKey[$tableField][$str_urlPeriod]))
+    {
+      return $this->arr_url_tsKey[$tableField][$str_urlPeriod];
+    }
+    
+      // Try to fetch the tsKey by a raw URL encoded value
+    $str_urlPeriod = rawurlencode($str_urlPeriod);
+    if(isset($this->arr_url_tsKey[$tableField][$str_urlPeriod]))
+    {
+      return $this->arr_url_tsKey[$tableField][$str_urlPeriod];
+    }
+      // RETURN real tsKey
+
+      // RETURN given tsKey
+    return $tsKey;
+  }
 
 
 
@@ -448,7 +552,7 @@ class tx_browser_pi1_cal {
  * @param array   $arr_ts: The TypoScript configuration of the current filter
  * @param string    $tableField: The current table.field
  * @return  array   Updated $arr_ts
- * @version 3.6.0
+ * @version 3.6.4
  * @since 3.6.0
  */
   function area_set_tsPeriod($arr_ts, $tableField)
@@ -628,6 +732,15 @@ class tx_browser_pi1_cal {
       $arr_fields[$int_element . '.']['valueTo_stdWrap' . '.']['value']   = $to;
       $arr_fields[$int_element . '.']['value_stdWrap' . '.']              = $arr_period_conf['value_stdWrap.'];
       $arr_fields[$int_element . '.']['value_stdWrap' . '.']['value']     = $from;
+
+        // 13920, 110318, dwildt
+      $arr_fields[$int_element . '.']['url_stdWrap' . '.']                = $arr_period_conf['url_stdWrap.'];
+      $arr_fields[$int_element . '.']['url_stdWrap' . '.']['value']       = $from;
+      $url_conf = $arr_fields[$int_element . '.']['url_stdWrap' . '.'];
+      $tsKeyUrl = $this->pObj->local_cObj->stdWrap($url_conf['value'], $url_conf);
+      $this->arr_url_tsKey[$tableField][$tsKeyUrl] = $int_element;
+        // 13920, 110318, dwildt
+
       $from = strtotime($offset, $from);
       $to   = strtotime($offset, $to);
     }
@@ -655,11 +768,7 @@ class tx_browser_pi1_cal {
 
     $this->pObj->conf['views.'][$viewWiDot][$mode . '.']['filter.'][$table . '.'][$field . '.']['area.']['interval.']['options.']['fields.'] = $arr_fields;
     $arr_ts = $this->pObj->conf['views.'][$viewWiDot][$mode . '.']['filter.'][$table . '.'][$field . '.'];
-//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if (!($pos === false)) var_dump('cal 634', $this->pObj->conf['views.'][$viewWiDot][$mode . '.']['filter.'][$table . '.'][$field . '.']['area.']['interval.']['options.']['fields.']);
       // Set TypoScript
-
-
 
     return $arr_ts;
   }

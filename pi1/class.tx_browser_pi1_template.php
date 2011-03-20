@@ -656,6 +656,7 @@ class tx_browser_pi1_template
       {
         $template = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', '', true);
       }
+//var_dump(__METHOD__ . ': ' . __LINE__);
       $markerArray    = $this->pObj->objWrapper->constant_markers();
 
         /////////////////////////////////////
@@ -860,6 +861,7 @@ class tx_browser_pi1_template
           // In case of the first group and a new group
 
           // ###LISTBODYITEM###: bodyRows
+        $this->pObj->elements = $elements;
         $htmlRows     = $this->tmplRows($elements, '###LISTBODYITEM###', $template);
         $listBodyRow  = $this->pObj->cObj->getSubpart($template, '###LISTBODY###');
         $listBodyRow  = $this->pObj->cObj->substituteSubpart($listBodyRow, '###LISTBODYITEM###', $htmlRows, true);
@@ -1035,7 +1037,6 @@ class tx_browser_pi1_template
           $tmpl_row   = $this->pObj->cObj->substituteMarkerArray($tmpl_row, $markerArray);
           $tmpl_rows .= $tmpl_row;
         }
-//var_dump('template 880', $markerArray['###CLASS###'], $tmpl_row);
       }
         // Rows
       unset($markerArray);
@@ -1050,12 +1051,10 @@ class tx_browser_pi1_template
                                                 '###LISTBODY###', $tmpl_rows, true);
         $str_htmlGroupby = implode("\n",$arr_htmlGroupby);
         $template = $this->pObj->cObj->substituteSubpart($template, '###GROUPBY###', $str_htmlGroupby, true);
-//var_dump('template 755', $arr_htmlGroupby[$int_groupCounter]);
       }
       if(!$this->bool_groupby)
       {
         $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODY###', $tmpl_rows, true);
-//var_dump('template 760 NO_GROUP');
       }
       $this->pObj->rows = $rows;
         // ###LISTBODY### Content
@@ -1096,6 +1095,7 @@ class tx_browser_pi1_template
     $listview       = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
     $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $listview, true);
     unset($markerArray);
+//var_dump(__METHOD__ . ': ' . __LINE__);
     $markerArray    = $this->pObj->objWrapper->constant_markers();
     $template       = $this->pObj->cObj->substituteMarkerArray($template, $markerArray);
       // Fill up the template with content
@@ -1158,14 +1158,8 @@ class tx_browser_pi1_template
     }
     $this->lDisplaySingle = $lDisplaySingle;
     // Get the local or the global displaySingle array
-// 110125, dwildt
-//if(t3lib_div::getIndpEnv('REMOTE_ADDR') =='84.184.207.88')
-//{
-//  if(isset($this->conf_view['tx_org_repertoire.']['image.']['layout.']['default.']['value']))
-//  {
-//    var_dump('template 1165', $this->conf_view['tx_org_repertoire.']['image.']['layout.']['default.']['value']);
-//  }
-//}
+
+
 
     ///////////////////////////////////////////////////////////
     //
@@ -2235,7 +2229,6 @@ class tx_browser_pi1_template
  */
   function tmplRows($elements, $subpart, $template)
   {
-
       // Get the global $arrHandleAs array
     $handleAs                   = $this->pObj->arrHandleAs;
       // [Boolean] Shouldn't empty values handled?
@@ -2304,14 +2297,7 @@ class tx_browser_pi1_template
       $lDisplayView = $this->conf[$lDisplayType];
     }
       // Get the local or the global displaySingle or displayList array
-// 110125, dwildt
-//if(t3lib_div::getIndpEnv('REMOTE_ADDR') =='84.184.207.88')
-//{
-//  if(isset($this->conf_view['tx_org_repertoire.']['image.']['layout.']['default.']['value']))
-//  {
-//    var_dump('template 2312', $this->conf_view['tx_org_repertoire.']['image.']['layout.']['default.']['value']);
-//  }
-//}
+
 
 
       //////////////////////////////////////////////////////////////////

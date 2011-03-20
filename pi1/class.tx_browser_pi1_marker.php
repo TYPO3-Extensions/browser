@@ -1,58 +1,58 @@
 <?php
 /***************************************************************
- *  Copyright notice
- *
- *  (c) 2010 - 2011: Dirk Wildt <http://wildt.at.die-netzmacher.de>
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+*  Copyright notice
+*
+*  (c) 2010 - 2011: Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  All rights reserved
+*
+*  This script is part of the TYPO3 project. The TYPO3 project is
+*  free software; you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation; either version 2 of the License, or
+*  (at your option) any later version.
+*
+*  The GNU General Public License can be found at
+*  http://www.gnu.org/copyleft/gpl.html.
+*
+*  This script is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  This copyright notice MUST APPEAR in all copies of the script!
+***************************************************************/
 
  /**
- * The class tx_browser_pi1_marker bundles marker methods for the extension browser
- *
- * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
- *
- * @since     3.4.4
- * @version   3.6.2
- * @package    TYPO3
- * @subpackage    tx_browser
- */
+* The class tx_browser_pi1_marker bundles marker methods for the extension browser
+*
+* @author    Dirk Wildt http://wildt.at.die-netzmacher.de
+*
+* @since     3.4.4
+* @version   3.6.2
+* @package    TYPO3
+* @subpackage    tx_browser
+*/
 
  /**
- * [CLASS/FUNCTION INDEX of SCRIPT]
- *
- *
- *
- *   56: class tx_browser_pi1_marker
- *   87:     function __construct($parentObj)
- *
- *              SECTION: Session markers
- *  114:     function session_marker($arr_tsConf, $elements)
- *
- *              SECTION: Markers
- *  178:     function substitute_marker($arr_multi_dimensional)
- *  400:     function substitute_marker_recurs($arr_multi_dimensional, $elements)
- *  715:     function extend_marker_wi_pivars($markerArray)
- *
- * TOTAL FUNCTIONS: 5
- * (This index is automatically created/updated by the extension "extdeveval")
- *
- */
+* [CLASS/FUNCTION INDEX of SCRIPT]
+*
+*
+*
+*   56: class tx_browser_pi1_marker
+*   87:     function __construct($parentObj)
+*
+*              SECTION: Session markers
+*  114:     function session_marker($arr_tsConf, $elements)
+*
+*              SECTION: Markers
+*  178:     function substitute_marker($arr_multi_dimensional)
+*  400:     function substitute_marker_recurs($arr_multi_dimensional, $elements)
+*  715:     function extend_marker_wi_pivars($markerArray)
+*
+* TOTAL FUNCTIONS: 5
+* (This index is automatically created/updated by the extension "extdeveval")
+*
+*/
   class tx_browser_pi1_marker
   {
 
@@ -189,7 +189,7 @@
       //
       // RETURN there isn't any element
 
-    if(!is_array($elements))
+    if(empty($elements))
     {
       return $arr_multi_dimensional;
     }
@@ -215,7 +215,6 @@
     $str_sqlDeviderDisplay  = $this->pObj->objTyposcript->str_sqlDeviderDisplay;
     $str_sqlDeviderWorkflow = $this->pObj->objTyposcript->str_sqlDeviderWorkflow;
     $str_devider            = $str_sqlDeviderDisplay.$str_sqlDeviderWorkflow;
-//var_dump(__METHOD__ . ': ' . __LINE__, $arr_children_to_devide, $str_devider);
       // Get the children devider configuration
 
 
@@ -231,7 +230,11 @@
       // This array should be array of uids. We don't need any process for uids here.
       if (!is_array($value_pivar))
       {
-        $elements[strtolower($key_pivar)] = $value_pivar;
+          // dwildt, 110320: Prevent to override database values in $elements by piVars 
+        if(!isset($elements[strtolower($key_pivar)]))
+        {
+          $elements[strtolower($key_pivar)] = $value_pivar;
+        }
       }
       if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
       {
@@ -316,7 +319,6 @@
               // 13008, 110302, dwildt
               // 13807, 110313, dwildt
             $value_tsConf_after_loop = implode($str_sqlDeviderDisplay, (array) $arr_value_after_loop);
-//var_dump(__METHOD__ . ': ' . __LINE__, $value_tsConf_after_loop);
               // Multiple the values and replace the marker for every child
           }
             // Marker has children values
@@ -381,7 +383,6 @@
     unset($arr_multi_dimensional);
     $arr_multi_dimensional = $this->pObj->objTyposcript->oneDim_to_tree($arr_one_dimensional);
       // #12472, 110124, dwildt
-
     return $arr_multi_dimensional;
   }
 

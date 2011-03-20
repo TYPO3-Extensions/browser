@@ -72,8 +72,8 @@ class tx_browser_pi1_wrapper
    /**
  * Constructor. The method initiate the parent object
  *
- * @param	object		The parent object
- * @return	void
+ * @param object    The parent object
+ * @return  void
  */
   function __construct($parentObj)
   {
@@ -108,10 +108,11 @@ class tx_browser_pi1_wrapper
   /**
  * constant_markers(): Generate the markerArray with self-defined markers out of the TypoScript. Return a markerArray, if there are values for replacement.
  *
- * @return	array		The markerArray. If there aren't any value, it returns FALSE.
+ * @return  array   The markerArray. If there aren't any value, it returns FALSE.
  * @version 3.6.1
  */
-  function constant_markers() {
+  function constant_markers() 
+  {
 
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -215,21 +216,12 @@ class tx_browser_pi1_wrapper
         {
           case(null):
           case('TEXT'):
-            //var_dump('TEXT: '.$conf_marker[$str_marker]);
             $value          = $arr_marker['value'];
               // The key name of the marker for the markerArray in the format ###MARKER###
             $markerArray[$hashKeyMarker] = $this->general_stdWrap($value, $arr_marker);
-//if($str_marker == 'my_datesheet2')
-//{
-//  var_dump('wrapper 184 TEXT', $value, $arr_marker, $markerArray[$hashKeyMarker]);
-//}
             break;
           case('COA'):
             $markerArray[$hashKeyMarker] = $this->general_stdWrap($this->pObj->local_cObj->COBJ_ARRAY($arr_marker, $ext=''), false);
-//if($str_marker == 'my_datesheet')
-//{
-//  var_dump('wrapper 188 COA', $arr_marker, $markerArray[$hashKeyMarker]);
-//}
             break;
           default:
             var_dump('ERROR: '.$conf_marker[$str_marker]);
@@ -286,10 +278,10 @@ class tx_browser_pi1_wrapper
   /**
  * wrapAndLinkValue(): Wraps a value and links it. Method uses the COA property and API function
  *
- * @param	string		$tableField: the field name in the format table.field
- * @param	string		$value: The value, which should be wrapped
- * @param	integer		$recordId: Id of the record, which should be displayed in a single view
- * @return	string		The wrapped and linked value
+ * @param string    $tableField: the field name in the format table.field
+ * @param string    $value: The value, which should be wrapped
+ * @param integer   $recordId: Id of the record, which should be displayed in a single view
+ * @return  string    The wrapped and linked value
  * @version 3.5.0
  */
   function wrapAndLinkValue($tableField, $value, $recordId=0)
@@ -402,102 +394,103 @@ class tx_browser_pi1_wrapper
 
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // Prepaire the link process management
+      //////////////////////////////////////////////////////////////
+      //
+      // Prepaire booleans for the link process management
 
+    $arr_prompt_drs = null;
     switch(true)
     {
-      case(!$value || $value == ''):
-        // There is no value, don't set a link. This has priority over all below.
+      case(empty($value)) :
+          // There isn't any value, don't set a link. This has priority over all below.
+        $arr_prompt_drs[]   = '!$value || $value == \'\'';
         $boolDoNotLink      = false;
         $boolDoJssAlert     = false;
         $boolDoLinkToSingle = false;
         $boolDoTsTypolink   = false;
         break;
-      case($boolDoTsTypolink && 1==0):
-        // We have a TS typolink array. This has priority over all below.
-        $boolDoNotLink      = false;
-        $boolDoJssAlert     = false;
-        $boolDoLinkToSingle = false;
-        $boolDoTsTypolink   = true;
-        break;
-      case($view == 'list'):
+          // There isn't any value, don't set a link. This has priority over all below.
+      case($view == 'list') :
+          // Current view is a list view
+        $arr_prompt_drs[]   = '$view == \'list\'';
         switch(true)
         {
-          // Is the field an element in the array linkToSingle?
+            // Is the field an element in the array linkToSingle?
           case(!in_array($tableField, $this->pObj->arrLinkToSingle)):
-            // The value shouldn't get any link to a single view
-            // There isn't any link to set
+              // The value shouldn't get any link to a single view
+              // There isn't any link to set
+            $arr_prompt_drs[]   = '!in_array($tableField, $this->pObj->arrLinkToSingle)';
             $boolDoNotLink      = true;
             $boolDoJssAlert     = false;
             $boolDoLinkToSingle = false;
             $boolDoTsTypolink   = false;
             break;
-            // End of case: field isn't in array linkToSingle
           default:
-            // The value should get a link to a single view
-            // Is there a single view)
+            $arr_prompt_drs[]   = 'default';
+              // Link to a single view
             switch(true)
             {
               case($boolSingleViewExist):
-                // There is a single view
-                // Link to a single view
+                  // There is a single view, link to it!
+                $arr_prompt_drs[]   = '$boolSingleViewExist';
                 $boolDoNotLink      = false;
                 $boolDoJssAlert     = false;
                 $boolDoLinkToSingle = true;
                 $boolDoTsTypolink   = false;
                 break;
-                // End of case: Link to a single view
               default:
-                // There isn't any single view
-                // Should we set a javascript alert?
+                  // There isn't any single view, link to a javascript alert?
+                $arr_prompt_drs[]   = 'default';
                 switch(true)
                 {
                   case($boolDoJssAlert):
-                    // We should set a link to javascript alert
+                      // Link to a javascript alert
+                    $arr_prompt_drs[]   = '$boolDoJssAlert';
                     $boolDoNotLink      = false;
                     $boolDoJssAlert     = true;
                     $boolDoLinkToSingle = false;
                     $boolDoTsTypolink   = false;
                     break;
-                    // End of case: Set a javascript alert
                   default:
-                    // There isn't any link to set
+                      // Don't link to a javascript alert
+                    $arr_prompt_drs[]   = 'default';
                     $boolDoNotLink      = true;
                     $boolDoJssAlert     = false;
                     $boolDoLinkToSingle = false;
                     $boolDoTsTypolink   = false;
                     break;
-                    // End of case: Don't set any link
                 }
                 break;
-                // End of case: There is no single view
+                  // There isn't any single view, link to a javascript alert?
             }
             break;
-            // End of case: field is not in array linkToSingle
+              // Link to a single view
         }
         break;
-        // End of case: view == list
+          // Current view is a list view
       case($view == 'single'):
-        // Do nothing
+          // Current view is a single view
         $boolDoNotLink      = true;
         $boolDoJssAlert     = false;
         $boolDoLinkToSingle = false;
         $boolDoTsTypolink   = false;
+        $arr_prompt_drs[]   = '$view == \'single\'';
         break;
-        // End of case: view == single
+          // Current view is a single view
       default:
-        // This case isn't defined
+          // ERROR: undefined case!
         if($this->pObj->b_drs_error) {
           t3lib_div::devLog('[ERROR/DRS] Method wrapAndLinkValue() has an undefined case in \'Prepaire process management\'.', $this->pObj->extKey, 3);
           t3lib_div::devlog('[HELP/DRS] Please contact the developer:<br />'.$this->pObj->developer_contact, $this->pObj->extKey, 1);
           t3lib_div::devLog('[WARN/DRS] '.$tableField.' will be wrapped not proper probably.', $this->pObj->extKey, 2);
         }
+        $arr_prompt_drs[]   = 'default';
         break;
-        // End of case: undefined
+          // ERROR: undefined case!
     }
-    // Prepaire the link process management
+    $str_prompt_drs = implode(' -> ', $arr_prompt_drs);
+    //var_dump(__METHOD__ . ': ' . __LINE__, $str_prompt_drs, '$boolDoLinkToSingle: ' . $boolDoLinkToSingle);
+      // Prepaire booleans for the link process management
 
 
 
@@ -527,7 +520,8 @@ class tx_browser_pi1_wrapper
     //
     // If we need it, set the singlePid
 
-    if($boolDoLinkToSingle) {
+    if($boolDoLinkToSingle) 
+    {
       $singlePid             = $this->pObj->objZz->get_singlePid_for_listview();
       $this->pObj->singlePid = $singlePid;
     }
@@ -857,11 +851,11 @@ class tx_browser_pi1_wrapper
  *                            workflow of the browser. Children records became a string. This method enables, to
  *                            wrap each child in the string seperately.
  *
- * @param	string		$tableField: the field name in the format table.field
- * @param	string		$xsv_value: Variable seperated values, which should be wrapped
- * @param	array		$lConfCObj: TypoScript configuration array
- * @param	string		$ext: If "INT" then the cObject is a "COBJ_ARRAY_INT" (non-cached), otherwise just "COBJ_ARRAY" (cached)
- * @return	string		The wrapped and linked children values
+ * @param string    $tableField: the field name in the format table.field
+ * @param string    $xsv_value: Variable seperated values, which should be wrapped
+ * @param array   $lConfCObj: TypoScript configuration array
+ * @param string    $ext: If "INT" then the cObject is a "COBJ_ARRAY_INT" (non-cached), otherwise just "COBJ_ARRAY" (cached)
+ * @return  string    The wrapped and linked children values
  */
   function wrapAndLinkValue_Children($tableField, $xsv_values, $lConfCObj, $ext)
   {
@@ -972,8 +966,8 @@ class tx_browser_pi1_wrapper
   /**
  * Wrap images with the TYPO3 stdWrap method
  *
- * @param	array		$tsImage : the typoscript array of an image
- * @return	string		The wrapped image(s)
+ * @param array   $tsImage : the typoscript array of an image
+ * @return  string    The wrapped image(s)
  * @version 3.6.0
  * @since 1.0
  */
@@ -1154,8 +1148,8 @@ class tx_browser_pi1_wrapper
   /**
  * Wrap documents with the TYPO3 filelink method
  *
- * @param	string		$documents : the list of documents
- * @return	string		The wrapped document(s)
+ * @param string    $documents : the list of documents
+ * @return  string    The wrapped document(s)
  */
   function wrapDocument($documents) {
 
@@ -1207,9 +1201,9 @@ class tx_browser_pi1_wrapper
   /**
  * Wrap string in the format YYYY-MM-DD. It is a special method for the extension ships.
  *
- * @param	string		$string : the string in the format YYYY-MM-DD
- * @param	string		$view : list or single
- * @return	string		The wrapped document(s)
+ * @param string    $string : the string in the format YYYY-MM-DD
+ * @param string    $view : list or single
+ * @return  string    The wrapped document(s)
  */
   function wrapYYYYMMDD($specialDate) {
 
@@ -1240,9 +1234,9 @@ class tx_browser_pi1_wrapper
  * Wraps the given string with general_stdWrap from configuration. If $arr_tsConf is an array, $arr_tsConf will be
  * processed instead of general_stdWrap.
  *
- * @param	string		$string to wrap
- * @param	array		$arr_tsConf: Array with a TS configuration
- * @return	string		Wrapped string
+ * @param string    $string to wrap
+ * @param array   $arr_tsConf: Array with a TS configuration
+ * @return  string    Wrapped string
  */
   function general_stdWrap($str, $arr_tsConf)
   {
@@ -1270,8 +1264,8 @@ class tx_browser_pi1_wrapper
   /**
  * Return the table summary out of the locallang_db.xml
  *
- * @param	string		view: list or single
- * @return	string		summary
+ * @param string    view: list or single
+ * @return  string    summary
  */
   function tableSummary($view)
   {
@@ -1314,8 +1308,8 @@ class tx_browser_pi1_wrapper
   /**
  * Return the table caption out of the locallang_db.xml
  *
- * @param	string		view: list or single
- * @return	string		summary
+ * @param string    view: list or single
+ * @return  string    summary
  */
   function tableCaption($view) {
 
@@ -1353,9 +1347,9 @@ class tx_browser_pi1_wrapper
   /**
  * Substitute marker ###TABLE.FIELD### with the value of table.field
  *
- * @param	string		String with one or more table field markers
- * @param	array		The single record
- * @return	string		String with one ore more table field values
+ * @param string    String with one or more table field markers
+ * @param array   The single record
+ * @return  string    String with one ore more table field values
  */
   function wrapTableFields($wrapThisString, $elements) {
 

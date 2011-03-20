@@ -556,7 +556,7 @@ class tx_browser_pi1_filter {
 
     foreach ($this->arr_conf_tableFields as $tableField)
     {
-      // Process nice_piVar
+        // Process nice_piVar
       list ($table, $field) = explode('.', $tableField);
       // #8337, 101011, dwildt
       $obj_ts         = $conf_view['filter.'][$table . '.'][$field];
@@ -566,19 +566,17 @@ class tx_browser_pi1_filter {
       $arr_piVar      = $arr_result['data']['arr_piVar'];
       $str_nice_piVar = $arr_result['data']['nice_piVar'];
       unset ($arr_result);
-      // Process nice_piVar
+        // Process nice_piVar
 
-      // Current piVar isn't set
+        // Current piVar isn't set
       $bool_handleCurrPiVar = true;
       if (count($arr_piVar) < 1)
       {
         $bool_handleCurrPiVar = false;
       }
-      // Current piVar isn't set
+        // Current piVar isn't set
 
         // Build the andWhere statement
-//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false)) var_dump('filter 571', $tableField, $arr_piVar, $bool_handleCurrPiVar);
       if ($bool_handleCurrPiVar)
       {
           // SQL automatic mode
@@ -676,10 +674,21 @@ class tx_browser_pi1_filter {
   function andWhere_localTable($obj_ts, $arr_ts, $arr_piVar, $tableField)
   {
     $str_andWhere = null;
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Handle area filter
+
     if(is_array($this->pObj->objCal->arr_area[$tableField]))
     {
       foreach ($arr_piVar as $str_piVar)
       {
+          // 13920, 110319, dwildt
+          // Move url value to tsKey
+        $str_piVar      = $this->pObj->objCal->area_get_tsKey_from_urlPeriod($tableField, $str_piVar);
+
         $arr_item       = null;
         $str_key        = $this->pObj->objCal->arr_area[$tableField]['key']; // I.e strings
         $arr_currField  = $arr_ts['area.'][$str_key . '.']['options.']['fields.'][$str_piVar . '.'];
@@ -713,6 +722,13 @@ class tx_browser_pi1_filter {
         $str_andWhere = ' (' . $str_andWhere . ')';
       }
     }
+      // Handle area filter
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Handle without area filter
 
     if(!is_array($this->pObj->objCal->arr_area[$tableField]))
     {
@@ -726,6 +742,7 @@ class tx_browser_pi1_filter {
         $str_andWhere = ' (' . $str_andWhere . ')';
       }
     }
+      // Handle without area filter
 
     return $str_andWhere;
   }
@@ -764,17 +781,23 @@ class tx_browser_pi1_filter {
     list ($table, $field) = explode('.', $tableField);
     $str_andWhere = null;
 
-//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if (!($pos === false)) var_dump('filter 702', $arr_piVar, $arr_ts['area.'][$this->pObj->objCal->arr_area[$tableField] . '.']['options.']['fields.']);
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Handle area filter
+
     if(is_array($this->pObj->objCal->arr_area[$tableField]))
     {
       foreach ($arr_piVar as $str_piVar)
       {
+          // 13920, 110319, dwildt
+          // Move url value to tsKey
+        $str_piVar      = $this->pObj->objCal->area_get_tsKey_from_urlPeriod($tableField, $str_piVar);
+
         $arr_item       = null;
         $str_key        = $this->pObj->objCal->arr_area[$tableField]['key']; // I.e strings
         $arr_currField  = $arr_ts['area.'][$str_key . '.']['options.']['fields.'][$str_piVar . '.'];
-//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false)) var_dump('filter 712', $str_key, $arr_currField);
 
         $from       = $arr_currField['valueFrom_stdWrap.']['value'];
         $from_conf  = $arr_currField['valueFrom_stdWrap.'];
@@ -804,15 +827,21 @@ class tx_browser_pi1_filter {
       {
         $str_andWhere = ' (' . $str_andWhere . ')';
       }
-//      $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//      if (!($pos === false)) var_dump('filter 738', $str_andWhere);
     }
+      // Handle area filter
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Handle without area filter
 
     if(!is_array($this->pObj->objCal->arr_area[$tableField]))
     {
       $str_uidList = implode(', ', $arr_piVar);
       $str_andWhere = $table . ".uid IN (" . $str_uidList . ")\n";
     }
+      // Handle without area filter
 
     return $str_andWhere;
   }
@@ -1494,21 +1523,35 @@ class tx_browser_pi1_filter {
           echo 'tx_browser_pi1_filter::rednerHtmlFilter: undefined value in switch '.$this->pObj->objCal->arr_area[$tableField]['key'];
           exit;
       }
+        // DRS - Development Reporting System
+      if ($this->pObj->b_drs_cal || $this->pObj->b_drs_filter)
+      {
+        $arr_prompt = null;
+        foreach((array) $arr_values as $key => $value)
+        {
+          $arr_prompt[] = '[' . $key . '] = ' . $value;
+        }
+        $str_prompt = implode(', ', (array) $arr_prompt);
+        t3lib_div :: devLog('[INFO/FILTER+CAL] values are: ' . $str_prompt, $this->pObj->extKey, 0);
+      }
+        // DRS - Development Reporting System
     }
       // Area
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Wrap the items
 
-    // Order the items, add a first item, process stdWrap
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Wrap the items
+  
+      // Order the items, add a first item, process stdWrap
     $arr_result = $this->items_order_and_addFirst($arr_ts, $arr_values, $tableField);
     $arr_values = $arr_result['data']['values'];
     unset ($arr_result);
     $conf_selected = ' ' . $arr_ts['wrap.']['item.']['selected'];
 
-//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false)) var_dump('filter 1397', $arr_values);
+//var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_values);
+
 
     $int_count_displayItem = 0;
 
@@ -1575,12 +1618,10 @@ class tx_browser_pi1_filter {
           // Wrap the item style
         $conf_item = $this->get_wrappedItemStyle($arr_ts, $conf_item, false);
           // Wrap the item uid
-//:TODO:
         $conf_item = $this->get_wrappedItemKey($arr_ts, $uid, $conf_item);
           // Wrap the item URL
-        $conf_item = $this->get_wrappedItemURL($tableField, $uid, $conf_item);
-//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false)) var_dump('filter 1472', $tableField, $uid, $conf_item);
+        $conf_item = $this->get_wrappedItemURL($arr_ts, $tableField, $uid, $conf_item);
+
           // Get the item selected (or not selected)
         $conf_item = $this->get_wrappedItemSelected($uid, $value, $arr_piVar, $conf_selected, $conf_item);
           // Remove empty class
@@ -1697,7 +1738,8 @@ class tx_browser_pi1_filter {
       //
       // Handle the first_item
 
-    if ($arr_ts['first_item']) {
+    if ($arr_ts['first_item']) 
+    {
       $bool_handle = true;
 
       // :todo: 101019, dwildt: Next section seems to have an unproper effect
@@ -1714,20 +1756,24 @@ class tx_browser_pi1_filter {
 
         // Wrap the first item and prepaire it for adding
       //if($bool_handle || $bool_display_without_any_hit)
-      if ($bool_handle) {
+      if ($bool_handle) 
+      {
           // Wrap the item
         $value = $this->pObj->local_cObj->stdWrap($arr_ts['first_item.']['stdWrap.']['value'], $arr_ts['first_item.']['stdWrap.']);
 
           // Wrap the hits and add it to the item
         $bool_display_hits = $arr_ts['first_item.']['display_hits'];
-        if ($bool_display_hits) {
+        if ($bool_display_hits) 
+        {
           $conf_hits = $arr_ts['first_item.']['display_hits.']['stdWrap.'];
           $str_hits = $this->pObj->objWrapper->general_stdWrap($int_hits, $conf_hits);
           $bool_behindItem = $arr_ts['first_item.']['display_hits.']['behindItem'];
-          if ($bool_behindItem) {
+          if ($bool_behindItem) 
+          {
             $value = $value . $str_hits;
           }
-          if (!$bool_behindItem) {
+          if (!$bool_behindItem) 
+          {
             $value = $str_hits . $value;
           }
         }
@@ -1737,7 +1783,8 @@ class tx_browser_pi1_filter {
           // dwildt, 101211, #11401
         //$arr_new_values[0] = $value;
         $arr_new_values[$arr_ts['first_item.']['option_value']] = $value;
-        if ($this->pObj->b_drs_filter) {
+        if ($this->pObj->b_drs_filter) 
+        {
           t3lib_div :: devLog('[INFO/FILTER] \'' . $value . '\' is added as the first item.', $this->pObj->extKey, 0);
           t3lib_div :: devLog('[HELP/FILTER] If you don\'t want a default item, please configure ' . $conf_view_path . $tableField . '.first_item.', $this->pObj->extKey, 1);
         }
@@ -1796,7 +1843,6 @@ class tx_browser_pi1_filter {
       // #11407: Ordering filter items hasn't any effect
 
 
-
       /////////////////////////////////////////////////////////////////
       //
       // stdWrap all items but the first item
@@ -1815,6 +1861,7 @@ class tx_browser_pi1_filter {
           {
             $tsConf = $arr_ts['wrap.']['item.']['stdWrap.'];
             $value  = $this->pObj->local_cObj->stdWrap($value, $tsConf);
+//var_dump(__METHOD__ . ' (' . __LINE__ . ')', $value);
           }
         }
         $arr_values[$key] = $value;
@@ -1984,15 +2031,11 @@ class tx_browser_pi1_filter {
     
 
     // #11844, dwildt, 110102
-//    if ($uid != 0) 
     if ($uid != $arr_ts['first_item.']['option_value']) 
     {
-//      $str_uid = $uid;
       $str_uid = htmlspecialchars($uid, ENT_QUOTES);
     }
     $conf_item = str_replace('###UID###', $str_uid, $conf_item);
-//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false)) var_dump('filter 1878', $uid, $conf_item);
 
     return $conf_item;
   }
@@ -2017,12 +2060,16 @@ class tx_browser_pi1_filter {
   /**
  * get_wrappedItemURL(): Get the URL for the item
  *
+ * @param array   $arr_ts: The TypoScript configuration of the object
  * @param string    $tableField: table.field of the current filter
  * @param string    $value: value of the current filter
  * @param string    $conf_item: The current item wrap
  * @return  string    Returns the wrapped item
+ * 
+ * @version 3.6.4
+ * @since 3.6.1
  */
-  function get_wrappedItemURL($tableField, $value, $conf_item)
+  function get_wrappedItemURL($arr_ts, $tableField, $value, $conf_item)
   {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -2033,9 +2080,20 @@ class tx_browser_pi1_filter {
 
     $arr_currPiVars  = $this->pObj->piVars;
 
+      // 13920, 110319, dwildt
+      // Set value of the first item to null: it won't become an additional parameter below
+    if ($value == $arr_ts['first_item.']['option_value']) 
+    {
+      $value = null;
+    }
+
+      // 13920, 110319, dwildt
+      // Move value (10, 20, 30, ...) to url_stdWrap (i.e: 2011_Jan, 2011_Feb, 2011_Mar, ...)
+    $value = $this->pObj->objCal->area_get_urlPeriod($arr_ts, $tableField, $value);
+
       // Remove piVars temporarily
-//    $arr_removePiVars = array('sword', 'sort', 'pointer');
     $arr_removePiVars = array('sort', 'pointer');
+
       // Remove piVars['plugin'], if current plugin is trhe default plugin
       // #11576, dwildt, 101219
     if(!$this->pObj->objConfig->bool_linkToSingle_wi_piVar_plugin)
@@ -2066,7 +2124,6 @@ class tx_browser_pi1_filter {
     $this->pObj->piVars = $this->pObj->objZz->removeFiltersFromPiVars($this->pObj->piVars, $conf_view['filter.']);
       // Remove the filter fields temporarily
 
-
     $additionalParams = null;
     foreach((array) $this->pObj->piVars as $paramKey => $paramValue)
     {
@@ -2076,22 +2133,18 @@ class tx_browser_pi1_filter {
       }
     }
     $additionalParams = $additionalParams . '&' . $this->pObj->prefixId . '[' . $tableField . ']=' . $value;
-    $cHash_calc       = $this->pObj->objZz->get_cHash('&id='.$GLOBALS['TSFE']->id.$additionalParams);
-//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false)) var_dump('filter 1850', '&id='.$GLOBALS['TSFE']->id.$additionalParams, $cHash_calc);
+    $cHash_calc       = $this->pObj->objZz->get_cHash('&id=' . $GLOBALS['TSFE']->id . $additionalParams);
 
     $arr_typolink['parameter']        = $GLOBALS['TSFE']->id;
     $arr_typolink['additionalParams'] = $additionalParams.'&cHash='.$cHash_calc;
     $arr_typolink['returnLast']       = 'URL';
 
-    $str_url = $this->pObj->local_cObj->typoLink_URL($arr_typolink);
+    $str_url    = $this->pObj->local_cObj->typoLink_URL($arr_typolink);
+    $conf_item  = str_replace('###URL###', $str_url, $conf_item);
 
-    $conf_item = str_replace('###URL###', $str_url, $conf_item);
-//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false)) var_dump('filter 1859', $tableField, $arr_typolink, $str_url, $conf_item);
-
-
+      // Reset $this->pObj->piVars
     $this->pObj->piVars   = $arr_currPiVars;
+      // Reset $GLOBALS['TSFE']->id
     $GLOBALS['TSFE']->id  = $int_tsfeId;
 
     return $conf_item;
