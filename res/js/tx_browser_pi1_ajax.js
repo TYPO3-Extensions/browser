@@ -8,7 +8,7 @@
  *
  * for more info visit http://typo3-browser-forum.de/
  * 
- * status: 19 Dec 2010  
+ * status: 20 Mar 2011  
  *
  */
  
@@ -249,12 +249,14 @@ function ajaxifyDynamicFilters(pObj) {
         data: dataString,        
         timeout: ajaxTimeout,
         success: function(d, s) {
-          var pObj = $(this);
-          $(this).find('.searchbox').add('.listarea', pObj).add('.listarea', pObj).wrapAll('<div class="browser_ajax_temp" />');
+          var pObj = $(this);          
+		  $(this).find('.searchbox').add('.listarea', pObj).add('.listarea', pObj).wrapAll('<div class="browser_ajax_temp" />');
           pObj.find('.searchbox').removeClass('loading');    
           $(this).find('.txbrowserpi1loader').fadeOut(500, function() {
             $(this).remove();
           });
+          // Removing of disabled attribute needed due to a bug in Firefox 3.6: 
+          pObj.find('.searchbox form').find(':input').add(':checkbox').add(':radio').add('button').removeAttr("disabled");
           if (pObj.hasClass('ajaxltcollapse')) {
             var listarea = pObj.find('.listarea');
             listarea.slideUp(300, function() {
