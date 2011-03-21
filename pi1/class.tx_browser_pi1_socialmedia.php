@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2010-2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,6 +28,8 @@
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
 * @subpackage    tx_browser
+* 
+* @version 3.6.4
 */
 
   /**
@@ -152,6 +154,8 @@ class tx_browser_pi1_socialmedia
  * @param	string		$key: The name current table.field
  * @param	boolean		$bool_defaultTemplate: TRUE if we have a default HTML template (with ###ITEM### marker)
  * @return	string		$str_items or FALSE. $str_items are the rendered bookmarks
+ * 
+ * @version 3.6.4
  */
   function get_htmlBookmarks($elements, $key, $bool_defaultTemplate)
   {
@@ -259,8 +263,8 @@ class tx_browser_pi1_socialmedia
 
 
 
-    // Set the link to the single view
-    // Get the uid of the page with the single view
+      // Set the link to the single view
+      // Get the uid of the page with the single view
     if($this->view == 'list')
     {
       $str_tableFieldTitle = $this->pObj->objConfig->str_socialmedia_bookmarks_tableFieldTitle_list;
@@ -271,47 +275,95 @@ class tx_browser_pi1_socialmedia
       $str_tableFieldTitle = $this->pObj->objConfig->str_socialmedia_bookmarks_tableFieldTitle_single;
       $singlePid = $GLOBALS['TSFE']->id;
     }
-    // Get the uid of the page with the single view
+      // Get the uid of the page with the single view
 
-    // Set the piVar for the record uid
-    $bool_rmShowuid = false;
-    if(!isset($this->pObj->piVars['showUid']))
+      // Alias for showUid?
+      // 13930, 110320, dwildt
+    $bool_rmShowUid   = false;
+    $bool_setShowUid  = false;
+    $bool_rmAliasUid  = false;
+
+      // No alias for showUid
+    if(empty($this->pObj->piVar_alias_showUid))
     {
-      $uidField   = $this->pObj->arrLocalTable['uid'];
-      $int_recUid = $elements[$uidField];
-      $this->pObj->piVars['showUid'] = $int_recUid;
-      $bool_rmShowuid = true;
+        // SET piVar showUid
+      if(!isset($this->pObj->piVars['showUid']))
+      {
+        $bool_rmShowUid = true;
+        $uidField       = $this->pObj->arrLocalTable['uid'];
+        $int_recUid     = $elements[$uidField];
+        $this->pObj->piVars['showUid'] = $int_recUid;
+      }
+        // SET piVar showUid
     }
-    // Set the piVar for the record uid
+      // No alias for showUid
+      // Alias for showUid
+      // 13930, 110320, dwildt
+    if(!empty($this->pObj->piVar_alias_showUid))
+    {
+      if(isset($this->pObj->piVars['showUid']))
+      {
+        $bool_setShowUid  = true;
+        $int_showUid      = $this->pObj->piVars['showUid'];
+        unset($this->pObj->piVars['showUid']);
+      }
+        // SET piVar alias (for showUid)
+      if(!isset($this->pObj->piVars[$this->pObj->piVar_alias_showUid]))
+      {
+        $bool_rmAliasUid  = true;
+        $uidField         = $this->pObj->arrLocalTable['uid'];
+        $int_recUid       = $elements[$uidField];
+        $this->pObj->piVars[$this->pObj->piVar_alias_showUid] = $int_recUid;
+      }
+        // SET piVar alias (for showUid)
+    }
+      // Alias for showUid
 
-    // Set additional Parameter and the cHash
-    foreach((array) $this->pObj->piVars as $paramKey => $paramValue) {
-      $additionalParams .= '&'.$this->pObj->prefixId.'['.$paramKey.']='.$paramValue;
+      // Set additional Parameter and the cHash
+    $additionalParams = null;
+    foreach((array) $this->pObj->piVars as $paramKey => $paramValue)
+    {
+      if(!empty($paramValue))
+      {
+        $additionalParams .= '&'.$this->pObj->prefixId.'['.$paramKey.']='.$paramValue;
+      }
     }
     $cHash_calc = $this->pObj->objZz->get_cHash('&id='.$singlePid.$additionalParams);
-    // Set additional Parameter and the cHash
+      // Set additional Parameter and the cHash
 
-    // Remove the piVar for the record uid
-    if($bool_rmShowuid)
+      // Remove the piVar for the record uid
+    if($bool_rmShowUid)
     {
       unset($this->pObj->piVars['showUid']);
     }
-    // Remove the piVar for the record uid
+    if($bool_rmAliasUid)
+    {
+      unset($this->pObj->piVars[$this->pObj->piVar_alias_showUid]);
+    }
+      // Remove the piVar for the record uid
+      // Reset showUid
+      // 13930, 110320, dwildt
+    if($bool_setShowUid)
+    {
+      $this->pObj->piVars['showUid'] = $int_showUid;
+    }
+      // Reset showUid
 
-    // Set the TypoScript configuration array
+      // Set the TypoScript configuration array
+    $lConfCObj = null;
     $lConfCObj['typolink.']['parameter']         = $singlePid;
     $lConfCObj['typolink.']['additionalParams']  = $additionalParams.'&cHash='.$cHash_calc;
     $lConfCObj['typolink.']['returnLast']        = 'url';
-    // Set the TypoScript configuration array
+      // Set the TypoScript configuration array
 
-    // Set the URL (wrap the Link)
+      // Set the URL (wrap the Link)
     $str_relUrl               = $this->pObj->local_cObj->stdWrap('#', $lConfCObj);
     $str_absUrl               = $this->pObj->objZz->get_absUrl($str_relUrl);
     $markerArray              = false;
     $markerArray['###URL###'] = $str_absUrl;
-    // Set the URL (wrap the Link)
+      // Set the URL (wrap the Link)
 
-    // Set the title property
+      // Set the title property
     if(isset($elements[$str_tableFieldTitle]))
     {
       $str_title = $elements[$str_tableFieldTitle];
@@ -320,21 +372,19 @@ class tx_browser_pi1_socialmedia
     {
       $str_title = $this->pObj->objTemplate->arr_curr_value[$str_tableFieldTitle];
     }
-    $str_title = str_replace('"', "'", $str_title);
+    $str_title                  = rawurlencode($str_title);
     $markerArray['###TITLE###'] = $str_title;
-    // Set the title property
+      // Set the title property
 
-    // Replace ###URL### and ###TITLE###
+      // Replace ###URL### and ###TITLE###
     $str_items = $this->pObj->cObj->substituteMarkerArray($str_items, $markerArray);
-    // Replace ###URL### and ###TITLE###
-    // Set the link to the single view
+      // Replace ###URL### and ###TITLE###
+      // Set the link to the single view
 
 
 
-    // Return the result
-// 100912
+      // Return the result
     $int_countThisMethod = $int_countThisMethod + 1;
-//var_dump('socialmedia 327', $str_items);
     return $str_items;
   }
 

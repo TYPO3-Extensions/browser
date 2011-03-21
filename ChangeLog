@@ -3,6 +3,7 @@
   New Feature
   * 13920: Should have Area and interval: get parameters with date
   Bugfixing
+  * 13930: Socialmedia: Alias for showuid isn't handled
   * 00000: Calender: first row got wrong values while filtering
 
 3.6.3
