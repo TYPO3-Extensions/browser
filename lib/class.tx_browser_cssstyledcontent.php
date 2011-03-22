@@ -84,15 +84,15 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     // You have to extend your TypoScript tt_content.uploads.20:
     //
     //    fields {
-    //      layout      (stdWrap) ->  0: link only, 1: with application icon, 2: with based icon
-    //                                i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSLAYOUT###
-    //      files       (stdWrap) ->  name of the files
-    //                                i.e: ###TX_ORG_REPERTOIRE.DOCUMENTS###
-    //      description (stdWrap) ->  description of the files, devided by LF
-    //                                i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSCAPTION###
+    //      layout  (stdWrap) ->  0: link only, 1: with application icon, 2: with based icon
+    //                            i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSLAYOUT###
+    //      files   (stdWrap) ->  name of the files
+    //                            i.e: ###TX_ORG_REPERTOIRE.DOCUMENTS###
+    //      caption (stdWrap) ->  caption of the files, devided by LF
+    //                            i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSCAPTION###
     //    }
-    //    tableField    (stdWrap) ->  current table.field. 
-    //                                i.e. tx_org_repertoire.documents
+    //    tableField  (stdWrap) ->  current table.field. 
+    //                              i.e. tx_org_repertoire.documents
 
 
 
@@ -140,9 +140,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // there are files to list ...
     if (count($fileArray))
     {
-        // the descriptions for the files
-      $descriptions = $this->cObj->stdWrap($conf['fields.']['description'], $conf['fields.']['description.']);
-      $descriptions = t3lib_div::trimExplode(LF, $descriptions);
+        // the captions of the files
+      $captions = $this->cObj->stdWrap($conf['fields.']['caption'], $conf['fields.']['caption.']);
+      $captions = t3lib_div::trimExplode(LF, $captions);
 
         // Adding hardcoded TS to linkProc configuration
       $conf['linkProc.']['path.']['current']    = 1;
@@ -180,7 +180,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           $filesData[$key]['path']          = $path;
           $filesData[$key]['filesize']      = filesize($absPath);
           $filesData[$key]['fileextension'] = strtolower($path_info['extension']);
-          $filesData[$key]['description']   = trim($descriptions[$key]);
+          $filesData[$key]['description']   = trim($captions[$key]);
 
           $this->cObj->setCurrentVal($path);
           $GLOBALS['TSFE']->register['ICON_REL_PATH'] = $path.$fileName;
