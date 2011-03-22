@@ -85,11 +85,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     //
     //    fields {
     //      layout      (stdWrap) ->  0: link only, 1: with application icon, 2: with based icon
-    //                                i.e: ###TX_ORG_REPERTOIRE.DOCUMENTS_LAYOUT###
+    //                                i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSLAYOUT###
     //      files       (stdWrap) ->  name of the files
     //                                i.e: ###TX_ORG_REPERTOIRE.DOCUMENTS###
     //      description (stdWrap) ->  description of the files, devided by LF
-    //                                i.e: ###TX_ORG_REPERTOIRE.DOCUMENTS_CAPTION###
+    //                                i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSCAPTION###
     //    }
     //    tableField    (stdWrap) ->  current table.field. 
     //                                i.e. tx_org_repertoire.documents
