@@ -27,9 +27,9 @@
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
-* @subpackage    org
-* @version 0.3.1
-* @since 0.3.1
+* @subpackage    browser
+* @version 3.6.4
+* @since 3.6.1
 */
 
 
@@ -99,9 +99,9 @@ class tx_browser_typoscript extends tslib_pibase
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/org_workshops/lib/class.tx_browser_typoscript.php'])
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/lib/class.tx_browser_typoscript.php'])
 {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/org_workshops/lib/class.tx_browser_typoscript.php']);
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/lib/class.tx_browser_typoscript.php']);
 }
 
 ?>

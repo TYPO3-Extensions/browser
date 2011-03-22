@@ -1,5 +1,6 @@
 includeLibs {
   tx_browser_typoscript = EXT:browser/lib/class.tx_browser_typoscript.php
+  tx_browser_cssstyledcontent = EXT:browser/lib/class.tx_browser_cssstyledcontent.php
 }
 
 plugin.tx_browser_pi1 {
