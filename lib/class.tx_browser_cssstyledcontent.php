@@ -111,7 +111,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     list($table, $field) = explode('.', $tableField);
   
       // file path variable is set, this takes precedence
-    $filePathConf = $this->cObj->stdWrap($conf['filePath'], $conf['filePath.']);
+    $filePathConf = $this->cObj->stdWrap($conf['fields.']['from_path'], $conf['fields.']['from_path.']);
     if (!empty($filePathConf))
     {
       $fileList   = $this->cObj->filelist($filePathConf);
