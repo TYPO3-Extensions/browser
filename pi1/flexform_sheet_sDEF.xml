@@ -83,8 +83,8 @@
             <size>5</size>
             <maxitems>99</maxitems>
             <allowNonIdValues>1</allowNonIdValues>
-            <selectedListStyle>width:200px</selectedListStyle>
-            <itemListStyle>width:200px</itemListStyle>
+            <selectedListStyle>width:360px</selectedListStyle>
+            <itemListStyle>width:360px</itemListStyle>
             <items type="array"></items>
             <itemsProcFunc>tx_browser_pi1_backend->sDef_getArrViewsList</itemsProcFunc>
           </config>
