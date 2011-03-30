@@ -2413,8 +2413,19 @@ class tx_browser_pi1_config
       // Field navigation
 
     $int_navigation  = $this->pObj->pi_getFFvalue($arr_piFlexform, 'navigation', 'viewList', 'lDEF', 'vDEF');
+    if ($this->pObj->b_drs_plugin)
+    {
+      t3lib_div::devlog('[INFO/PLUGIN] viewList/navigation<br />
+        navigation: \'' . $int_navigation . '\'', $this->pObj->extKey, 0);
+    }
 
-    switch ($int_navigation) {
+    if(empty($int_navigation))
+    {
+        // default case
+      $int_navigation = 3;
+    }
+    switch ($int_navigation) 
+    {
       case(0):
         $this->bool_azBrowser   = 0;
         $this->bool_pageBrowser = 0;
