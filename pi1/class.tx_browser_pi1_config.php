@@ -1501,7 +1501,7 @@ class tx_browser_pi1_config
     // Field relations_select
 
     $str_relations = $this->pObj->pi_getFFvalue($arr_piFlexform, 'relations_select', 'sDEF', 'lDEF', 'vDEF');
-    if ($str_relations == 'default')
+    if ($str_relations == 'default' OR empty($str_relations))
     {
       if ($this->pObj->b_drs_plugin)
       {
