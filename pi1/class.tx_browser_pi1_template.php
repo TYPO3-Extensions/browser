@@ -1241,7 +1241,7 @@ class tx_browser_pi1_template
       $this->pObj->rows     = $rows;
     }
     // Set the globals elements and rows
-echo chr(10) . chr(10) . __LINE__ . ' ' . chr(10) . __FILE__ . ' $this->pObj->rows:' . chr(10) . print_r($this->pObj->rows, 1) . chr(10) . chr(10);
+//echo chr(10) . chr(10) . __LINE__ . ' ' . chr(10) . __FILE__ . ' $this->pObj->rows:' . chr(10) . print_r($this->pObj->rows, 1) . chr(10) . chr(10);
 
 
 
