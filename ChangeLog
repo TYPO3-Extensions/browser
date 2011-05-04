@@ -1,3 +1,9 @@
+3.6.5
+  11-05-04
+  Bugfixing
+  * 00000: Hook row_single_consolidated didn't update the result proper
+    effected file: class.tx_browser_pi1_template.php
+
 3.6.4
   11-03-20
   New Feature

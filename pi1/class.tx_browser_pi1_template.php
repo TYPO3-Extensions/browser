@@ -29,7 +29,7 @@
  * @package    TYPO3
  * @subpackage    tx_browser
  *
- * @version 3.6.2
+ * @version 3.6.5
  */
 
   /**
@@ -526,7 +526,7 @@ class tx_browser_pi1_template
  * @param string    A HTML template with the TYPO3 subparts and markers
  * @param array   Array with the records of the SQL result
  * @return  void
- * 
+ *
  * @version 3.6.0
  */
   function tmplListview($template, $rows)
@@ -691,7 +691,7 @@ class tx_browser_pi1_template
       //////////////////////////////////////////////////////////////////
       //
       // Init the global array $arrHandleAs
-  
+
     $this->pObj->objTca->setArrHandleAs();
     $this->pObj->rows     = $rows;  //:todo: function parameter without rows
       // Init the global array $arrHandleAs
@@ -938,7 +938,7 @@ class tx_browser_pi1_template
       ////////////////////////////////////////////////////////////////////////
       //
       // Without ###ITEM### but with table.field marker
-  
+
     if(!$bool_table)
     {
         // DRS - Development Reporting System
@@ -1065,7 +1065,7 @@ class tx_browser_pi1_template
         //
         // DRS - Performance
 
-      if ($this->pObj->b_drs_perform) 
+      if ($this->pObj->b_drs_perform)
       {
         if($this->pObj->bool_typo3_43)
         {
@@ -1086,7 +1086,7 @@ class tx_browser_pi1_template
       /////////////////////////////////////
       //
       // Fill up the template with content
-  
+
     $markerArray['###MODE###']    = $this->mode;
     $markerArray['###VIEW###']    = $this->pObj->view;
     $markerArray['###SUMMARY###'] = $this->pObj->objWrapper->tableSummary('list');
@@ -1105,7 +1105,7 @@ class tx_browser_pi1_template
       /////////////////////////////////////
       //
       // SEO: Search Engine Optimisation
-  
+
     reset($rows);
     $firstKey = key($rows);
     $this->pObj->objSeo->seo($rows[$firstKey]);
@@ -1142,7 +1142,7 @@ class tx_browser_pi1_template
  * @param array   The SQL result as rows array
  * @return  void
  * @since 1.x.x
- * @version 3.6.0
+ * @version 3.6.5
  */
   function tmplSingleview($template, $rows)
   {
@@ -1209,6 +1209,7 @@ class tx_browser_pi1_template
       {
         t3lib_div::callUserFunction($_funcRef, $_params, $this);
       }
+//echo chr(10) . '<!--' . chr(10) . __LINE__ . ' ' . chr(10) . __FILE__ . ' $this->pObj->rows:' . chr(10) . print_r($this->pObj->rows, 1) . chr(10) . '-->' . chr(10);
     }
       // Any foreign extension is using this hook
       // DRS - Development Reporting System
@@ -1223,6 +1224,24 @@ class tx_browser_pi1_template
       // DRS - Development Reporting System
       // Any foreign extension is using this hook
       // Hook for handle the consolidated row
+
+
+
+    ///////////////////////////////////////////////////////////
+    //
+    // Set the globals elements and rows
+
+    $rows = $this->pObj->rows;
+    if (is_array($rows))
+    {
+      reset($rows);
+      $firstKey             = key($rows);
+      $elements             = $rows[$firstKey];
+      $this->pObj->elements = $elements;
+      $this->pObj->rows     = $rows;
+    }
+    // Set the globals elements and rows
+echo chr(10) . chr(10) . __LINE__ . ' ' . chr(10) . __FILE__ . ' $this->pObj->rows:' . chr(10) . print_r($this->pObj->rows, 1) . chr(10) . chr(10);
 
 
 
@@ -2265,7 +2284,7 @@ class tx_browser_pi1_template
       //////////////////////////////////////////////////////////////////
       //
       // Should swords get an HTML wrap in results?
-  
+
       // Get the local or gloabl autoconfig array - #9879
     $lAutoconf = $this->conf_view['autoconfig.'];
     if (!is_array($lAutoconf))
@@ -2442,7 +2461,7 @@ class tx_browser_pi1_template
     $c                    = 0;
     $htmlRow              = false;
     $bool_drs_handleCase  = false;
-    
+
     $markerArray          = $this->pObj->objWrapper->constant_markers();
 
       // #12723, mbless, 110310
@@ -2514,7 +2533,7 @@ class tx_browser_pi1_template
           }
         }
         // Handle as text
-  
+
         // DRS - Performance
         if ($this->pObj->boolFirstRow && $i_count_element == 0)
         {
@@ -2531,7 +2550,7 @@ class tx_browser_pi1_template
           }
         }
         // DRS - Performance
-  
+
         // Handle as image
         if ($key == $handleAs['image']) {
           if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
@@ -2555,7 +2574,7 @@ class tx_browser_pi1_template
   //        }
         }
         // Handle as image
-  
+
         // Handle as imageCaption
         if ($key == $handleAs['imageCaption'])
         {
@@ -2569,7 +2588,7 @@ class tx_browser_pi1_template
           $boolSubstitute = false;
         }
         // Handle as imageCaption
-  
+
         // Handle as imageAltText
         if ($key == $handleAs['imageAltText'])
         {
@@ -2583,7 +2602,7 @@ class tx_browser_pi1_template
           $boolSubstitute = false;
         }
         // Handle as imageAltText
-  
+
         // Handle as imageTitleText
         if ($key == $handleAs['imageTitleText'])
         {
@@ -2597,7 +2616,7 @@ class tx_browser_pi1_template
           $boolSubstitute = false;
         }
         // Handle as imageTitleText
-  
+
         // DRS - Performance
         if ($this->pObj->boolFirstRow && $i_count_element == 0)
         {
@@ -2614,7 +2633,7 @@ class tx_browser_pi1_template
           }
         }
         // DRS - Performance
-  
+
         // Handle as document
         if (in_array($key, $arrKeyAsDocument))
         {
@@ -2627,7 +2646,7 @@ class tx_browser_pi1_template
           $value = $this->pObj->objWrapper->wrapDocument($value);
         }
         // Handle as document
-  
+
         // DRS - Performance
         if ($this->pObj->boolFirstRow && $i_count_element == 0)
         {
@@ -2644,7 +2663,7 @@ class tx_browser_pi1_template
           }
         }
         // DRS - Performance
-  
+
         // Handle as timestamp
         if ($key == $handleAs['timestamp'])
         {
@@ -2654,7 +2673,7 @@ class tx_browser_pi1_template
             t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' is handle as a timestamp.', $this->pObj->extKey, 0);
           }
           $bool_dontColorSwords = $arr_TCAitems['timestamp.']['dontColorSwords'];
-  
+
           // Bugfix #6782, dwildt, 100310
           // If there isn't a tca configuration, take the default strftime configuration
           list($table, $field) = explode('.', $key);
@@ -2700,7 +2719,7 @@ class tx_browser_pi1_template
           // If there isn't a tca configuration, take the default strftime configuration
         }
         // Handle as timestamp
-  
+
         // DRS - Performance
         if ($this->pObj->boolFirstRow && $i_count_element == 0)
         {
@@ -2717,7 +2736,7 @@ class tx_browser_pi1_template
           }
         }
         // DRS - Performance
-  
+
         // Handle as YYYY-MM-DD
         if ($key == $handleAs['YYYY-MM-DD'])
         {
@@ -2730,7 +2749,7 @@ class tx_browser_pi1_template
           $value = $this->pObj->objWrapper->wrapYYYYMMDD($value);
         }
         // Handle as YYYY-MM-DD
-  
+
         // First field is UID and we have a list view
         if ($extraUidField && $i_count_element == 0 && $this->view == 'list')
         {
@@ -2744,7 +2763,7 @@ class tx_browser_pi1_template
           $boolSubstitute = false;
         }
         // First field is UID and we have a list view
-  
+
         // Remove fields, which shouldn't displayed
         if (!is_array($this->arr_rmFields))
         {
@@ -2761,7 +2780,7 @@ class tx_browser_pi1_template
           $boolSubstitute = false;
         }
         // Remove fields, which shouldn't displayed
-  
+
         // DRS - Performance
         if ($this->pObj->boolFirstRow && $i_count_element == 0)
         {
@@ -2778,7 +2797,7 @@ class tx_browser_pi1_template
           }
         }
         // DRS - Performance
-  
+
         // Remove fields, which where added because of missing uid and pid
         $addedTableFields = $this->pObj->arrConsolidate['addedTableFields'];
         if (!is_array($addedTableFields))
@@ -2796,7 +2815,7 @@ class tx_browser_pi1_template
           $boolSubstitute = false;
         }
         // Remove fields, which where added because of missing uid and pid
-  
+
         // DRS - Performance
         if ($this->pObj->boolFirstRow && $i_count_element == 0)
         {
@@ -2813,7 +2832,7 @@ class tx_browser_pi1_template
           }
         }
         // DRS - Performance
-  
+
         // DRS- Developement Reporting System: Any Case didn't matched above
         if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
         {
@@ -2824,7 +2843,7 @@ class tx_browser_pi1_template
           }
         }
         // DRS- Developement Reporting System: Any Case didn't matched above
-  
+
         // Colors the sword words and phrases
         // 3.3.4
         //if(t3lib_div::_GP('dev')) var_dump('template 2196', $key, $bool_dontColorSwords);
@@ -2833,14 +2852,14 @@ class tx_browser_pi1_template
           $value = $this->pObj->objZz->color_swords($key, $value);
         }
         // Colors the sword words and phrases
-  
+
         $this->pObj->boolFirstElement = false;
         //if(t3lib_div::_GP('dev')) var_dump('template 2206', $elements);
         // Bugfix, 3.3.7, 100617, dwildt
         $this->pObj->elements = $elements;
 
         $value = $this->pObj->objWrapper->wrapAndLinkValue($key, $value, $elements[$uidField]);
-  
+
         // DRS - Performance
         if ($this->pObj->boolFirstRow && $i_count_element == 0)
         {
@@ -2867,7 +2886,7 @@ class tx_browser_pi1_template
       // foreach
     $this->hook_template_elements_transformed();
 
-    foreach ($this->_elementsTransformed as $key => $value) 
+    foreach ($this->_elementsTransformed as $key => $value)
     {
       $boolSubstitute = $this->_elementsBoolSubstitute[$key];
         // #12723, mbless, 110310
@@ -2913,7 +2932,7 @@ class tx_browser_pi1_template
       }
         // Substitute the template marker
       //var_dump('template 2286', $markerArray['###SOCIALMEDIA_BOOKMARKS###']);
-  
+
         // DRS - Performance
       if ($this->pObj->boolFirstRow && $i_count_element == 0)
       {
