@@ -559,6 +559,24 @@ class tx_browser_pi1_javascript
     $name         = 'jQuery';
     $path_tsConf  = 'javascript.jquery.file';
     $bool_success = $this->addJssFile($path, $name, $path_tsConf);
+    if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
+    {
+      if($bool_success)
+      {
+        t3lib_div::devlog('[INFO/FLEXFORM+JSS] ' . $path . ' is embedded.', $this->pObj->extKey, 0);
+      }
+      if(!$bool_success)
+      {
+        t3lib_div::devlog('[INFO/FLEXFORM+JSS] ' . $path . ' is embedded.', $this->pObj->extKey, 0);
+      }
+    }
+    if(!$bool_success)
+    {
+      if ($this->pObj->b_drs_error)
+      {
+        t3lib_div::devlog('[ERROR/FLEXFORM+JSS] ' . $path . ' couldn\'t embedded.', $this->pObj->extKey, 3);
+      }
+    }
 
     return $bool_success;
   }
