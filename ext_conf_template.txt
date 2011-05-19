@@ -1,4 +1,4 @@
-  # cat=basic/enable/10;             type=options[English,German]; label= Localise special backend labels: Language for special backend labels like TypoScript static templates and the link handler.
+  # cat=basic/enable/10;             type=options[English,German]; label= Localise special backend labels: Language for special backend labels like TypoScript static templates and flexforms.
 LLstatic = English
 
   # cat=basic/enable/100;              type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptCheckUpdate]; label=Update Wizard
