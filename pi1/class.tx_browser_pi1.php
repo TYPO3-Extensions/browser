@@ -858,12 +858,12 @@ class tx_browser_pi1 extends tslib_pibase {
       {
           // name has to correspondend with similar code in tx_browser_pi1_template.php
         $name               = 'ajaxLL';
-        $path               = $conf['javascript.']['ajax.']['fileLL'];
+        $path               = $this->conf['javascript.']['ajax.']['fileLL'];
         $path_tsConf        = 'javascript.ajax.fileLL';
         $bool_success_ajax  = $this->objJss->addJssFile($path, $name, $path_tsConf);
           // name has to correspondend with similar code in tx_browser_pi1_template.php
         $name               = 'ajax';
-        $path               = $conf['javascript.']['ajax.']['file'];
+        $path               = $this->conf['javascript.']['ajax.']['file'];
         $path_tsConf        = 'javascript.ajax.file';
         $bool_success_ajax  = $this->objJss->addJssFile($path, $name, $path_tsConf);
 

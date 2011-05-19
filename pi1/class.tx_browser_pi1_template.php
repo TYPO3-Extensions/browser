@@ -642,9 +642,9 @@ class tx_browser_pi1_template
 
     if (count($rows) == 0 || !is_array($rows))
     {
-      if ($this->conf['displayList.']['noItemMessage'])
+      if ($this->pObj->conf['displayList.']['noItemMessage'])
       {
-        $noItemMessage = $this->pObj->objWrapper->general_stdWrap('X', $this->conf['displayList.']['noItemMessage.']);
+        $noItemMessage = $this->pObj->objWrapper->general_stdWrap('X', $this->pObj->conf['displayList.']['noItemMessage.']);
         $template = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $noItemMessage, true);
         if ($this->pObj->b_drs_templating)
         {
@@ -652,7 +652,7 @@ class tx_browser_pi1_template
           t3lib_div::devLog('[HELP/TEMPLATING] Change it? Configure '.$this->conf_path.'.displayList.noItemMessage.', $this->pObj->extKey, 1);
         }
       }
-      if (!$this->conf['displayList.']['noItemMessage'])
+      if (!$this->pObj->conf['displayList.']['noItemMessage'])
       {
         $template = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', '', true);
       }
@@ -681,7 +681,7 @@ class tx_browser_pi1_template
     $lDisplayList = $this->conf_view['displayList.'];
     if (!is_array($lDisplayList))
     {
-      $lDisplayList = $this->conf['displayList.'];
+      $lDisplayList = $this->pObj->conf['displayList.'];
     }
     $this->lDisplayList = $lDisplayList;
       // Get the local or the global displaySingle or displayList array
@@ -1154,7 +1154,7 @@ class tx_browser_pi1_template
     $lDisplaySingle = $this->conf_view['displaySingle.'];
     if (!is_array($lDisplaySingle))
     {
-      $lDisplaySingle = $this->conf['displaySingle.'];
+      $lDisplaySingle = $this->pObj->conf['displaySingle.'];
     }
     $this->lDisplaySingle = $lDisplaySingle;
     // Get the local or the global displaySingle array
@@ -1388,7 +1388,7 @@ class tx_browser_pi1_template
         t3lib_div::devlog('[INFO/SQL] views.single.X. hasn\'t any autoconf array.<br />
           We take the global one.', $this->pObj->extKey, 0);
       }
-      $lAutoconf = $this->conf['autoconfig.'];
+      $lAutoconf = $this->pObj->conf['autoconfig.'];
     }
     // Get the local or gloabl autoconfig array- #9879
     $arr_TCAitems = $lAutoconf['autoDiscover.']['items.'];
@@ -2167,19 +2167,19 @@ class tx_browser_pi1_template
       {
           // name has to correspondend with similar code in tx_browser_pi1.php
         $name         = 'ajaxLL';
-        $path         = $this->conf['javascript.']['ajax.']['fileLL'];
+        $path         = $this->pObj->conf['javascript.']['ajax.']['fileLL'];
         $path_tsConf  = 'javascript.ajax.fileLL';
         $bool_success = $this->pObj->objJss->addJssFile($path, $name, $path_tsConf);
           // name has to correspondend with similar code in tx_browser_pi1.php
         $name         = 'ajax';
-        $path         = $this->conf['javascript.']['ajax.']['file'];
+        $path         = $this->pObj->conf['javascript.']['ajax.']['file'];
         $path_tsConf  = 'javascript.ajax.file';
         $bool_success = $this->pObj->objJss->addJssFile($path, $name, $path_tsConf);
       }
 
         // Adding Browser General JSS file
       $name         = 'general';
-      $path         = $this->conf['javascript.']['general.']['file'];
+      $path         = $this->pObj->conf['javascript.']['general.']['file'];
       $path_tsConf  = 'javascript.general.file';
       $bool_success = $this->pObj->objJss->addJssFile($path, $name, $path_tsConf);
         // Adding Browser General JSS file
@@ -2294,7 +2294,7 @@ class tx_browser_pi1_template
         t3lib_div::devlog('[INFO/SQL] views.single|list.X. hasn\'t any autoconf array.<br />
           We take the global one.', $this->pObj->extKey, 0);
       }
-      $lAutoconf = $this->conf['autoconfig.'];
+      $lAutoconf = $this->pObj->conf['autoconfig.'];
     }
       // Get the local or gloabl autoconfig array- #9879
 
@@ -2313,7 +2313,7 @@ class tx_browser_pi1_template
     $lDisplayView = $this->conf_view[$lDisplayType];
     if (!is_array($lDisplayView))
     {
-      $lDisplayView = $this->conf[$lDisplayType];
+      $lDisplayView = $this->pObj->conf[$lDisplayType];
     }
       // Get the local or the global displaySingle or displayList array
 
@@ -2683,7 +2683,7 @@ class tx_browser_pi1_template
             // strftime isn't UTF-8 secure
             if (mb_detect_encoding($value) == 'UTF-8')
             {
-              if ($this->conf['format.']['strftime.']['utf8_encode'])
+              if ($this->pObj->conf['format.']['strftime.']['utf8_encode'])
               {
                 $value_iso = utf8_encode($value);
                 if ($this->pObj->b_drs_templating)

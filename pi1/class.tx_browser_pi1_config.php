@@ -1372,6 +1372,7 @@ class tx_browser_pi1_config
               tx_browser_pi1_config::sheet_javascript()
             </p>
           </div>';
+        echo $prompt;
         exit;
     }
     if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
@@ -1422,6 +1423,7 @@ class tx_browser_pi1_config
               tx_browser_pi1_config::sheet_javascript()
             </p>
           </div>';
+        echo $prompt;
         exit;
     }
     if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
@@ -1475,6 +1477,7 @@ class tx_browser_pi1_config
               tx_browser_pi1_config::sheet_javascript()
             </p>
           </div>';
+        echo $prompt;
         exit;
     }
     if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
@@ -2561,6 +2564,7 @@ class tx_browser_pi1_config
               tx_browser_pi1_config::sheet_viewList()
             </p>
           </div>';
+        echo $prompt;
         exit;
     }
     if ($this->pObj->b_drs_flexform)
@@ -2598,6 +2602,7 @@ class tx_browser_pi1_config
               tx_browser_pi1_config::sheet_viewList()
             </p>
           </div>';
+        echo $prompt;
         exit;
     }
     if ($this->pObj->b_drs_flexform)
@@ -2640,6 +2645,7 @@ class tx_browser_pi1_config
               tx_browser_pi1_config::sheet_viewList()
             </p>
           </div>';
+        echo $prompt;
         exit;
     }
     if ($this->pObj->b_drs_flexform)
