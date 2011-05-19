@@ -1429,15 +1429,18 @@ class tx_browser_pi1_config
       t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
         'browser_libraries: \'' . $this->str_browser_libraries . '\'',
         $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
-        'browser_libraries_general: \'' . $str_browser_libraries_general . '\'',
-        $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
-        'browser_libraries_ajax: \'' . $str_browser_libraries_ajax . '\'',
-        $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
-        'browser_libraries_ajax_ll: \'' . $str_browser_libraries_ajaxLL . '\'',
-        $this->pObj->extKey, 0);
+      if ($this->str_browser_libraries == 'configured')
+      {
+        t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
+          'browser_libraries_general: \'' . $str_browser_libraries_general . '\'',
+          $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
+          'browser_libraries_ajax: \'' . $str_browser_libraries_ajax . '\'',
+          $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
+          'browser_libraries_ajax_ll: \'' . $str_browser_libraries_ajaxLL . '\'',
+          $this->pObj->extKey, 0);
+      }
     }
       // #13429, dwildt, 110519
       // Field browser_libraries
