@@ -1619,7 +1619,7 @@ plugin.tx_browser_pi1 {
   javascript {
     jquery {
       // [STRING] Path to jQuery 
-      file = http://code.jquery.com/jquery-1.4.2.min.js
+      file = EXT:browser/res/js/jquery-1.6.min.js
     }
     ajax {
       // [STRING] Path to Javascript file with ajax methods

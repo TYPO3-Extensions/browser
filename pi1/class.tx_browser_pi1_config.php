@@ -114,19 +114,21 @@ class tx_browser_pi1_config
   var $bool_linkToSingle_wi_piVar_sort    = false;
   // [boolean] Should the URL to a single view contain the parameter sort?
 
-  // #9659, 101013 fsander
-  //[javascript]
+    //[javascript]
+    // #9659, 101013 fsander
   var $bool_ajax_enabled                  = false;
-  // [boolean] AJAX enabled?
+    // [boolean] AJAX enabled?
   var $bool_ajax_single                   = false;
-  // [boolean] AJAX also used for single view?
+    // [boolean] AJAX also used for single view?
   var $str_ajax_list_transition           = false;
-  // [string] AJAX transition for list view
+    // [string] AJAX transition for list view
   var $str_ajax_single_transition         = false;
-  // [string] AJAX transition for single view
+    // [string] AJAX transition for single view
   var $str_ajax_list_on_single            = false;
-  // [string] AJAX mode for list in single view
-  // #9659, 101013 fsander
+    // [string] AJAX mode for list in single view
+    // #9659, 101013 fsander
+  var $str_browser_libraries              = 'default';
+  var $str_jquery_library                 = 'EXT:browser/res/js/jquery-1.6.min.js';
 
   //[socialmedia]
   var $str_socialmedia_bookmarks_enabled                = false;

@@ -15,7 +15,7 @@
             <items type="array">
               <numIndex index="0" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_library.0</numIndex>
-                <numIndex index="1">EXT:browser/res/js/jquery-1.6.min.js</numIndex>
+                <numIndex index="1">typoscript</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_library.1</numIndex>
@@ -30,7 +30,7 @@
                 <numIndex index="1">none</numIndex>
               </numIndex>
             </items>
-            <default>EXT:browser/res/js/jquery-1.6.min.js</default>
+            <default>typoscript</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>
@@ -58,7 +58,7 @@
             <items type="array">
               <numIndex index="0" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries.0</numIndex>
-                <numIndex index="1">default</numIndex>
+                <numIndex index="1">typoscript</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries.1</numIndex>
@@ -69,7 +69,7 @@
                 <numIndex index="1">none</numIndex>
               </numIndex>
             </items>
-            <default>default</default>
+            <default>typoscript</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>
