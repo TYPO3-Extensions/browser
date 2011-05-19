@@ -60,7 +60,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * @package    TYPO3
  * @subpackage    tx_browser
  *
- * @version 3.6.2
+ * @version 3.6.5
  */
 
 /**
@@ -234,10 +234,10 @@ class tx_browser_pi1 extends tslib_pibase {
   var $b_drs_browser      = false;
   var $b_drs_discover     = false;
   var $b_drs_filter       = false;
+  var $b_drs_flexform     = false;
   var $b_drs_javascript   = false;
   var $b_drs_locallang    = false;
   var $b_drs_perform      = false;
-  var $b_drs_plugin       = false;
   var $b_drs_realurl      = false;
   var $b_drs_seo          = false;
   var $b_drs_socialmedia  = false;
@@ -1014,12 +1014,12 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->b_drs_cal          = false;
     $this->b_drs_discover     = false;
     $this->b_drs_filter       = false;
+    $this->b_drs_flexform     = false;
     $this->b_drs_hooks        = false;
     $this->b_drs_javascript   = false;
     $this->b_drs_locallang    = false;
     $this->b_drs_marker       = false;
     $this->b_drs_perform      = false;
-    $this->b_drs_plugin       = false;
     $this->b_drs_realurl      = false;
     $this->b_drs_search       = false;
     $this->b_drs_seo          = false;
@@ -1047,12 +1047,12 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_cal          = true;
       $this->b_drs_discover     = true;
       $this->b_drs_filter       = true;
+      $this->b_drs_flexform     = true;
       $this->b_drs_hooks        = true;
       $this->b_drs_javascript   = true;
       $this->b_drs_locallang    = true;
       $this->b_drs_marker       = true;
       $this->b_drs_perform      = true;
-      $this->b_drs_plugin       = true;
       $this->b_drs_realurl      = true;
       $this->b_drs_search       = true;
       $this->b_drs_seo          = true;
@@ -1090,13 +1090,12 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_filter     = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
-    if ($this->arr_extConf['drs_mode'] == 'Javascript')
+    if ($this->arr_extConf['drs_mode'] == 'Flexform')
     {
       $this->b_drs_error      = true;
       $this->b_drs_warn       = true;
       $this->b_drs_info       = true;
-      $this->b_drs_javascript = true;
-      $this->b_drs_perform    = true;
+      $this->b_drs_flexform   = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
     if ($this->arr_extConf['drs_mode'] == 'Hooks')
@@ -1105,6 +1104,15 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_warn       = true;
       $this->b_drs_info       = true;
       $this->b_drs_hooks      = true;
+      $this->b_drs_perform    = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Javascript')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_javascript = true;
       $this->b_drs_perform    = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
@@ -1123,14 +1131,6 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_warn       = true;
       $this->b_drs_info       = true;
       $this->b_drs_browser    = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Plugin')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_plugin     = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
     if ($this->arr_extConf['drs_mode'] == 'Performance')
@@ -1264,7 +1264,7 @@ class tx_browser_pi1 extends tslib_pibase {
     // Require and init helper classes
 
     require_once('class.tx_browser_pi1_cal.php');
-    // Class with methods for get flexform values
+    // Class with methods for get calendar values
     $this->objCal = new tx_browser_pi1_cal($this);
 
     require_once('class.tx_browser_pi1_config.php');
