@@ -238,12 +238,12 @@ class tx_browser_pi1_config
     //
     // DRS - Development Reporting System
 
-    if ($this->pObj->b_drs_plugin)
+    if ($this->pObj->b_drs_flexform)
     {
       $str_header     = $this->pObj->cObj->data['header'];
       $int_uid        = $this->pObj->cObj->data['uid'];
       $int_pid        = $this->pObj->cObj->data['pid'];
-      t3lib_div::devlog('[INFO/PLUGIN] \''.$str_header.'\' (pid: '.$int_pid.', uid: '.$int_uid.')', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/FLEXFORM] \''.$str_header.'\' (pid: '.$int_pid.', uid: '.$int_uid.')', $this->pObj->extKey, 0);
     }
     // DRS - Development Reporting System
 
@@ -407,9 +407,9 @@ class tx_browser_pi1_config
 
     if(count($rows) <= 1)
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] There is only one plugin on the page. There isn\'t any effect for any piVar.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] There is only one plugin on the page. There isn\'t any effect for any piVar.', $this->pObj->extKey, 0);
       }
       return;
     }
@@ -426,23 +426,23 @@ class tx_browser_pi1_config
     switch($str_piVars)
     {
       case('all'):
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] Current plugin wants to handle all piVars.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] Current plugin wants to handle all piVars.', $this->pObj->extKey, 0);
         }
         return;
         break;
       case('default'):
       case(false):
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] Current plugin wants to handle only own piVars.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] Current plugin wants to handle only own piVars.', $this->pObj->extKey, 0);
         }
         break;
       default:
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[WARN/PLUGIN] Current plugin has an undefined value in piVars. '.
+          t3lib_div::devlog('[WARN/FLEXFORM] Current plugin has an undefined value in piVars. '.
             'Definded is: default, all. Current value is: '.$str_piVars, $this->pObj->extKey, 2);
         }
     }
@@ -455,9 +455,9 @@ class tx_browser_pi1_config
     // We have more than one plugin on the page
 
     // DRS - Development Reporting System
-    if ($this->pObj->b_drs_plugin)
+    if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div::devlog('[INFO/PLUGIN] There is more than one plugin on the page.', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/FLEXFORM] There is more than one plugin on the page.', $this->pObj->extKey, 0);
     }
     // DRS - Development Reporting System
 
@@ -479,9 +479,9 @@ class tx_browser_pi1_config
       if($uid_plugin_selected != $uid_plugin_current)
       {
         $bool_unset_piVars = true;
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] The visitor hasn\'t selected the current plugin.<br />
+          t3lib_div::devlog('[INFO/FLEXFORM] The visitor hasn\'t selected the current plugin.<br />
             Id of the current plugin: '.$uid_plugin_current.'<br />
             Id of the selected plugin: '.$uid_plugin_selected.'<br />
             All piVars for the current plugin are removed!', $this->pObj->extKey, 0);
@@ -489,9 +489,9 @@ class tx_browser_pi1_config
       }
       if($uid_plugin_selected == $uid_plugin_current)
       {
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] The visitor has selected the current plugin.<br />
+          t3lib_div::devlog('[INFO/FLEXFORM] The visitor has selected the current plugin.<br />
             Id of the current plugin: '.$uid_plugin_current.'<br />
             Id of the selected plugin: '.$uid_plugin_selected.'<br />
             No piVar for the current plugin is removed!', $this->pObj->extKey, 0);
@@ -501,15 +501,15 @@ class tx_browser_pi1_config
     if(!$uid_plugin_current)
     {
       $bool_unset_piVars = true;
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
         $csv_piVars_keys = implode(', ', array_keys($this->pObj->piVars));
-        t3lib_div::devlog('[INFO/PLUGIN] The visitor hasn\'t selected any plugin.<br />
+        t3lib_div::devlog('[INFO/FLEXFORM] The visitor hasn\'t selected any plugin.<br />
           Id of the current plugin: NULL<br />
           Id of the selected plugin: '.$uid_plugin_selected.'<br />
           Keys of the piVars: '.$csv_piVars_keys.'<br />
           All piVars for the current plugin are removed!', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[HELP/PLUGIN] If the plugin should handle the piVars,
+        t3lib_div::devlog('[HELP/FLEXFORM] If the plugin should handle the piVars,
           please configure in the plugin [General]: handle piVars from foreign plugins!',
           $this->pObj->extKey, 1);
       }
@@ -530,9 +530,9 @@ class tx_browser_pi1_config
     // in the template marker array
     
     $this->pObj->piVars['plugin'] = $uid_plugin_selected;
-    if ($this->pObj->b_drs_plugin)
+    if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div::devlog('[INFO/PLUGIN] piVars[plugin] = '.$uid_plugin_selected.' is added to the array piVars.', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/FLEXFORM] piVars[plugin] = '.$uid_plugin_selected.' is added to the array piVars.', $this->pObj->extKey, 0);
     }
     // Add piVar[plugin]
 
@@ -601,9 +601,9 @@ class tx_browser_pi1_config
     //
     // DRS - Development Reporting System
 
-    if ($this->pObj->b_drs_plugin)
+    if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div::devlog('[INFO/PLUGIN] list id (mode): \''.$this->mode.'\'.', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/FLEXFORM] list id (mode): \''.$this->mode.'\'.', $this->pObj->extKey, 0);
     }
     // DRS - Development Reporting System
 
@@ -653,9 +653,9 @@ class tx_browser_pi1_config
     // Return, if views have the default status
     if($str_views_status == 'all')
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] sDEF/views: \'all\'. Nothing to do.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] sDEF/views: \'all\'. Nothing to do.', $this->pObj->extKey, 0);
       }
       $this->prepare_mode();
       // Prepare Mode
@@ -669,9 +669,9 @@ class tx_browser_pi1_config
     //
     // DRS - Development Reporting System
 
-    if ($this->pObj->b_drs_plugin)
+    if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div::devlog('[INFO/PLUGIN] sDEF/views: \''.$str_views_status.'\'.', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/FLEXFORM] sDEF/views: \''.$str_views_status.'\'.', $this->pObj->extKey, 0);
     }
     // DRS - Development Reporting System
 
@@ -689,9 +689,9 @@ class tx_browser_pi1_config
 //    if ($str_views_csv == '')
 //    {
 //      $bool_viewsIds = false;
-//      if ($this->pObj->b_drs_plugin)
+//      if ($this->pObj->b_drs_flexform)
 //      {
-//        t3lib_div::devlog('[INFO/PLUGIN] sDEF/viewsIds is empty. Nothing to do.', $this->pObj->extKey, 0);
+//        t3lib_div::devlog('[INFO/FLEXFORM] sDEF/viewsIds is empty. Nothing to do.', $this->pObj->extKey, 0);
 //      }
 //    }
 //    // If viewsIds is empty, do nothing
@@ -717,14 +717,14 @@ class tx_browser_pi1_config
 //      if (!is_array($arr_viewsIds_proper))
 //      {
 //        $bool_viewsIds = false;
-//        if ($this->pObj->b_drs_plugin)
+//        if ($this->pObj->b_drs_flexform)
 //        {
 //          $str_prompt = implode(', ', $arr_viewsIds);
-//          t3lib_div::devlog('[WARN/PLUGIN] sDEF/viewsIds hasn\'t any proper views.list id: \''.$str_prompt.'\'', $this->pObj->extKey, 2);
+//          t3lib_div::devlog('[WARN/FLEXFORM] sDEF/viewsIds hasn\'t any proper views.list id: \''.$str_prompt.'\'', $this->pObj->extKey, 2);
 //          $str_prompt = implode('.', array_keys($this->pObj->conf['views.']['list.']));
 //          $str_prompt = str_replace('..', ', ', $str_prompt);
 //          $str_prompt = str_replace('.', '', $str_prompt);
-//          t3lib_div::devlog('[HELP/PLUGIN] Proper values would be: \''.$str_prompt.'\'', $this->pObj->extKey, 1);
+//          t3lib_div::devlog('[HELP/FLEXFORM] Proper values would be: \''.$str_prompt.'\'', $this->pObj->extKey, 1);
 //        }
 //      }
 //    }
@@ -744,9 +744,9 @@ class tx_browser_pi1_config
 //          // Remove string
 //          $valueWoDot = substr($value, 0, strlen($value) - 1);
 //          unset($this->pObj->conf['views.']['list.'][$value]);
-//          if ($this->pObj->b_drs_plugin)
+//          if ($this->pObj->b_drs_flexform)
 //          {
-//            t3lib_div::devlog('[INFO/PLUGIN] views.list.'.$valueWoDot.' is removed from TypoScript.', $this->pObj->extKey, 0);
+//            t3lib_div::devlog('[INFO/FLEXFORM] views.list.'.$valueWoDot.' is removed from TypoScript.', $this->pObj->extKey, 0);
 //          }
 //          // Remove list view
 //
@@ -756,21 +756,21 @@ class tx_browser_pi1_config
 //          // Remove string
 //          $valueWoDot = substr($value, 0, strlen($value) - 1);
 //          unset($this->pObj->conf['views.']['single.'][$value]);
-//          if ($this->pObj->b_drs_plugin)
+//          if ($this->pObj->b_drs_flexform)
 //          {
-//            t3lib_div::devlog('[INFO/PLUGIN] views.list.'.$valueWoDot.' is removed from TypoScript.', $this->pObj->extKey, 0);
+//            t3lib_div::devlog('[INFO/FLEXFORM] views.list.'.$valueWoDot.' is removed from TypoScript.', $this->pObj->extKey, 0);
 //          }
 //          // Remove single view
 //        }
 //      }
 //      //var_dump($arr_viewsIds_proper);
 //    }
-//    if ($this->pObj->b_drs_plugin)
+//    if ($this->pObj->b_drs_flexform)
 //    {
 //      $str_prompt = implode('.', array_keys($this->pObj->conf['views.']['list.']));
 //      $str_prompt = str_replace('..', ', ', $str_prompt);
 //      $str_prompt = str_replace('.', '', $str_prompt);
-//      t3lib_div::devlog('[INFO/PLUGIN] This views will displayed: \''.$str_prompt.'\'', $this->pObj->extKey, 0);
+//      t3lib_div::devlog('[INFO/FLEXFORM] This views will displayed: \''.$str_prompt.'\'', $this->pObj->extKey, 0);
 //    }
 //    // Remove every view, which isn't element of the id list
 //    // Field viewsIds
@@ -796,9 +796,9 @@ class tx_browser_pi1_config
     if ($str_views_csv == '')
     {
       $bool_viewsIds = false;
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] sDEF/viewsIds is empty. Nothing to do.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] sDEF/viewsIds is empty. Nothing to do.', $this->pObj->extKey, 0);
       }
     }
     // If viewsIds is empty, do nothing
@@ -825,14 +825,14 @@ class tx_browser_pi1_config
       if (!is_array($arr_viewsList_proper))
       {
         $bool_viewsList = false;
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
           $str_prompt = implode(', ', $arr_viewsList);
-          t3lib_div::devlog('[WARN/PLUGIN] sDEF/viewsList hasn\'t any proper views.list id: \''.$str_prompt.'\'', $this->pObj->extKey, 2);
+          t3lib_div::devlog('[WARN/FLEXFORM] sDEF/viewsList hasn\'t any proper views.list id: \''.$str_prompt.'\'', $this->pObj->extKey, 2);
           $str_prompt = implode('.', array_keys($this->pObj->conf['views.']['list.']));
           $str_prompt = str_replace('..', ', ', $str_prompt);
           $str_prompt = str_replace('.', '', $str_prompt);
-          t3lib_div::devlog('[HELP/PLUGIN] Proper values would be: \''.$str_prompt.'\'', $this->pObj->extKey, 1);
+          t3lib_div::devlog('[HELP/FLEXFORM] Proper values would be: \''.$str_prompt.'\'', $this->pObj->extKey, 1);
         }
       }
       // Remove every id, which isn't proper
@@ -849,9 +849,9 @@ class tx_browser_pi1_config
           // Remove string
           $valueWoDot = substr($value, 0, strlen($value) - 1);
           unset($this->pObj->conf['views.']['list.'][$value]);
-          if ($this->pObj->b_drs_plugin)
+          if ($this->pObj->b_drs_flexform)
           {
-            t3lib_div::devlog('[INFO/PLUGIN] views.list.'.$valueWoDot.' is removed from TypoScript.', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/FLEXFORM] views.list.'.$valueWoDot.' is removed from TypoScript.', $this->pObj->extKey, 0);
           }
           // Remove list view
 
@@ -861,20 +861,20 @@ class tx_browser_pi1_config
           // Remove string
           $valueWoDot = substr($value, 0, strlen($value) - 1);
           unset($this->pObj->conf['views.']['single.'][$value]);
-          if ($this->pObj->b_drs_plugin)
+          if ($this->pObj->b_drs_flexform)
           {
-            t3lib_div::devlog('[INFO/PLUGIN] views.list.'.$valueWoDot.' is removed from TypoScript.', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/FLEXFORM] views.list.'.$valueWoDot.' is removed from TypoScript.', $this->pObj->extKey, 0);
           }
           // Remove single view
         }
       }
       //var_dump($arr_viewsList_proper);
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
         $str_prompt = implode('.', array_keys($this->pObj->conf['views.']['list.']));
         $str_prompt = str_replace('..', ', ', $str_prompt);
         $str_prompt = str_replace('.', '', $str_prompt);
-        t3lib_div::devlog('[INFO/PLUGIN] This views will displayed: \''.$str_prompt.'\'', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] This views will displayed: \''.$str_prompt.'\'', $this->pObj->extKey, 0);
       }
       // Remove every view, which isn't element of the id list
     }
@@ -899,16 +899,16 @@ class tx_browser_pi1_config
     $plugin_singlePid = $this->pObj->pi_getFFvalue($arr_piFlexform, 'viewsSinglePid', 'sDEF', 'lDEF', 'vDEF');
     if(!$plugin_singlePid)
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewsSinglePid isn\'t set.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewsSinglePid isn\'t set.', $this->pObj->extKey, 0);
       }
     }
     if($plugin_singlePid)
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewsSinglePid: \''.$plugin_singlePid.'\'!', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewsSinglePid: \''.$plugin_singlePid.'\'!', $this->pObj->extKey, 0);
       }
     }
     // Get the single pid from the plugin
@@ -919,26 +919,26 @@ class tx_browser_pi1_config
       // Get value from TypoScript
       $conf_singlePid = $this->pObj->conf['views.']['list.'][$this->mode.'.']['displayList.']['singlePid'];
       $str_path       = 'views.list.'.$this->mode.'.displayList.singlePid';
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] '.$str_path.': \''.$conf_singlePid.'\'', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] '.$str_path.': \''.$conf_singlePid.'\'', $this->pObj->extKey, 0);
       }
       // Get value from TypoScript
       // Set the plugin single pid to the current pageId, if it is empty
       if(!$plugin_singlePid)
       {
         $plugin_singlePid = $GLOBALS['TSFE']->id;
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] Plugin SinglePid was empty. It is overriden with the current page id: \''.$plugin_singlePid.'\'!', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] Plugin SinglePid was empty. It is overriden with the current page id: \''.$plugin_singlePid.'\'!', $this->pObj->extKey, 0);
         }
       }
       // Set the plugin single pid to the current pageId, if it is empty
       // Set value in TypoScript
       $this->pObj->conf['views.']['list.'][$this->mode.'.']['displayList.']['singlePid'] = $plugin_singlePid;
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] TypoScript value \''.$conf_singlePid.'\' is overriden with \''.$plugin_singlePid.'\'!', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] TypoScript value \''.$conf_singlePid.'\' is overriden with \''.$plugin_singlePid.'\'!', $this->pObj->extKey, 0);
       }
       // Set value in TypoScript
     }
@@ -950,26 +950,26 @@ class tx_browser_pi1_config
       // Get value from TypoScript
       $conf_singlePid = $this->pObj->conf['displayList.']['singlePid'];
       $str_path       = 'displayList.singlePid';
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] '.$str_path.': \''.$conf_singlePid.'\'', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] '.$str_path.': \''.$conf_singlePid.'\'', $this->pObj->extKey, 0);
       }
       // Get value from TypoScript
       // Set the plugin single pid to the current pageId, if it is empty
       if(!$plugin_singlePid)
       {
         $plugin_singlePid = $GLOBALS['TSFE']->id;
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] Plugin SinglePid was empty. It is overriden with the current page id: \''.$plugin_singlePid.'\'!', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] Plugin SinglePid was empty. It is overriden with the current page id: \''.$plugin_singlePid.'\'!', $this->pObj->extKey, 0);
         }
       }
       // Set the plugin single pid to the current pageId, if it is empty
       // Set value in TypoScript
       $this->pObj->conf['displayList.']['singlePid'] = $plugin_singlePid;
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] TypoScript value \''.$conf_singlePid.'\' is overriden with \''.$plugin_singlePid.'\'!', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] TypoScript value \''.$conf_singlePid.'\' is overriden with \''.$plugin_singlePid.'\'!', $this->pObj->extKey, 0);
       }
       // Set value in TypoScript
     }
@@ -988,17 +988,17 @@ class tx_browser_pi1_config
     if(empty($int_viewsListPid))
     {
       $this->int_viewsListPid = false;
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewsListPid isn\'t set.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewsListPid isn\'t set.', $this->pObj->extKey, 0);
       }
     }
     if(!empty($int_viewsListPid))
     {
       $this->int_viewsListPid = $int_viewsListPid;
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewsListPid: \''.$int_viewsListPid.'\'!', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewsListPid: \''.$int_viewsListPid.'\'!', $this->pObj->extKey, 0);
       }
     }
     // Get the pid for the result page from the plugin
@@ -1068,9 +1068,9 @@ class tx_browser_pi1_config
     $str_performance_select = $this->pObj->pi_getFFvalue($arr_piFlexform, 'performance_select', 'advanced', 'lDEF', 'vDEF');
 
     // DRS - Development Reporting System
-    if ($this->pObj->b_drs_plugin)
+    if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div::devlog('[INFO/PLUGIN] advanced/performance_select: \''.$str_performance_select.'\'.', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/FLEXFORM] advanced/performance_select: \''.$str_performance_select.'\'.', $this->pObj->extKey, 0);
     }
     // DRS - Development Reporting System
 
@@ -1153,9 +1153,9 @@ class tx_browser_pi1_config
           echo $prompt;
           exit;
       }
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] advanced/performance_costs<br />
+        t3lib_div::devlog('[INFO/FLEXFORM] advanced/performance_costs<br />
           look_for_globals: \''.$this->pObj->conf['advanced.']['performance.']['GLOBALS.']['dont_replace'].'\'', $this->pObj->extKey, 0);
       }
     }
@@ -1172,9 +1172,9 @@ class tx_browser_pi1_config
     $str_realUrl_select = $this->pObj->pi_getFFvalue($arr_piFlexform, 'realUrl_select', 'advanced', 'lDEF', 'vDEF');
 
     // DRS - Development Reporting System
-    if ($this->pObj->b_drs_plugin)
+    if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div::devlog('[INFO/PLUGIN] advanced/realUrl_select: \''.$str_realUrl_select.'\'.', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/FLEXFORM] advanced/realUrl_select: \''.$str_realUrl_select.'\'.', $this->pObj->extKey, 0);
     }
     // DRS - Development Reporting System
 
@@ -1204,9 +1204,9 @@ class tx_browser_pi1_config
       $this->bool_linkToSingle_wi_piVar_plugin  = (($int_realUrl &  8)  ==  8);
       $this->bool_linkToSingle_wi_piVar_sort    = (($int_realUrl & 16)  == 16);
 
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] advanced/realUrl<br />
+        t3lib_div::devlog('[INFO/FLEXFORM] advanced/realUrl<br />
           int_realUrl: \''.$int_realUrl.'\'<br />
           linkToSingle_wi_piVar_azTab: \''.$this->bool_linkToSingle_wi_piVar_azTab.'\'<br />
           linkToSingle_wi_piVar_mode: \''.$this->bool_linkToSingle_wi_piVar_mode.'\'<br />
@@ -1374,9 +1374,9 @@ class tx_browser_pi1_config
           </div>';
         exit;
     }
-    if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_javascript)
+    if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
     {
-      t3lib_div::devlog('[INFO/PLUGIN+JSS] '.
+      t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
         'jquery_library: \'' . $this->str_jquery_library . '\'',
         $this->pObj->extKey, 0);
     }
@@ -1424,18 +1424,18 @@ class tx_browser_pi1_config
           </div>';
         exit;
     }
-    if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_javascript)
+    if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
     {
-      t3lib_div::devlog('[INFO/PLUGIN+JSS] '.
+      t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
         'browser_libraries: \'' . $this->str_browser_libraries . '\'',
         $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/PLUGIN+JSS] '.
+      t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
         'browser_libraries_general: \'' . $str_browser_libraries_general . '\'',
         $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/PLUGIN+JSS] '.
+      t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
         'browser_libraries_ajax: \'' . $str_browser_libraries_ajax . '\'',
         $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/PLUGIN+JSS] '.
+      t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
         'browser_libraries_ajax_ll: \'' . $str_browser_libraries_ajaxLL . '\'',
         $this->pObj->extKey, 0);
     }
@@ -1474,12 +1474,12 @@ class tx_browser_pi1_config
           </div>';
         exit;
     }
-    if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_javascript)
+    if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
     {
-      t3lib_div::devlog('[INFO/PLUGIN+JSS] '.
+      t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
         'AJAX enabled: \''.(int) $this->bool_ajax_enabled.'\'',
         $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/PLUGIN+JSS] '.
+      t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
         'AJAX with list and single view: \''.(int) $this->bool_ajax_single.'\'<br />',
         $this->pObj->extKey, 0);
     }
@@ -1503,9 +1503,9 @@ class tx_browser_pi1_config
       {
         $this->str_ajax_list_transition = 'collapse';
       }
-      if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_javascript)
+      if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
       {
-        t3lib_div::devlog('[INFO/PLUGIN+JSS] '.
+        t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
           'Transition for list view: \''.$this->str_ajax_list_transition.'\'',
           $this->pObj->extKey, 0);
       }
@@ -1521,9 +1521,9 @@ class tx_browser_pi1_config
         {
           $this->str_ajax_single_transition = 'collapse';
         }
-        if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_javascript)
+        if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
         {
-          t3lib_div::devlog('[INFO/PLUGIN+JSS] '.
+          t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
             'Transition for single view: \''.$this->str_ajax_single_transition.'\'',
             $this->pObj->extKey, 0);
         }
@@ -1551,9 +1551,9 @@ class tx_browser_pi1_config
         {
           $this->str_ajax_list_on_single = 'single';
         }
-        if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_javascript)
+        if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
         {
-          t3lib_div::devlog('[INFO/PLUGIN+JSS] '.
+          t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
             'Single view: \''.$this->str_ajax_list_on_single.'\'',
             $this->pObj->extKey, 0);
         }
@@ -1611,9 +1611,9 @@ class tx_browser_pi1_config
     $str_relations = $this->pObj->pi_getFFvalue($arr_piFlexform, 'relations_select', 'sDEF', 'lDEF', 'vDEF');
     if ($str_relations == 'default' OR empty($str_relations))
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] relations_select is default.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] relations_select is default.', $this->pObj->extKey, 0);
       }
       return;
     }
@@ -1625,9 +1625,9 @@ class tx_browser_pi1_config
     // Field relations
 
     $str_relations = $this->pObj->pi_getFFvalue($arr_piFlexform, 'relations', 'sDEF', 'lDEF', 'vDEF');
-    if ($this->pObj->b_drs_plugin)
+    if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div::devlog('[INFO/PLUGIN] relations: \''.$str_relations.'\'!', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/FLEXFORM] relations: \''.$str_relations.'\'!', $this->pObj->extKey, 0);
     }
     $bool_typoscript = false;
     $bool_error      = false;
@@ -1682,9 +1682,9 @@ class tx_browser_pi1_config
             '.$str_reload.'
           </p>
           </div>';
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[ERROR/PLUGIN] '.$str_prompt.'!', $this->pObj->extKey, 3);
+        t3lib_div::devlog('[ERROR/FLEXFORM] '.$str_prompt.'!', $this->pObj->extKey, 3);
       }
     }
     if (!$bool_error)
@@ -1703,7 +1703,7 @@ class tx_browser_pi1_config
         $this->pObj->conf['autoconfig.']['relations.']['mmRelations']     = $bool_mmRealations;
       }
     }
-    if ($this->pObj->b_drs_plugin)
+    if ($this->pObj->b_drs_flexform)
     {
       if(!$bool_error)
       {
@@ -1715,13 +1715,13 @@ class tx_browser_pi1_config
             $path_view = 'views.'.$viewWiDot.$modeWiDot;
           }
           $str_simple = $path_view.'autoconfig.relations.simpleRelations';
-          t3lib_div::devlog('[INFO/PLUGIN] TypoScript '.$str_simple.' is set to: '.$bool_simpleRealations.'.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] TypoScript '.$str_simple.' is set to: '.$bool_simpleRealations.'.', $this->pObj->extKey, 0);
           $str_mm = $path_view.'autoconfig.relations.mmRelations';
-          t3lib_div::devlog('[INFO/PLUGIN] TypoScript '.$str_mm.' is set to: '.$bool_mmRealations.'.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] TypoScript '.$str_mm.' is set to: '.$bool_mmRealations.'.', $this->pObj->extKey, 0);
         }
         if(!$bool_typoscript)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] TypoScript isn\'t changed.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] TypoScript isn\'t changed.', $this->pObj->extKey, 0);
         }
       }
     }
@@ -1742,7 +1742,7 @@ class tx_browser_pi1_config
     {
       $this->pObj->conf['autoconfig.']['relations.']['left_join'] = $int_joins;
     }
-    if ($this->pObj->b_drs_plugin)
+    if ($this->pObj->b_drs_flexform)
     {
       $path_view = null;
       if (!empty($this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.']))
@@ -1750,7 +1750,7 @@ class tx_browser_pi1_config
         $path_view = 'views.'.$viewWiDot.$modeWiDot;
       }
       $str_path = $path_view.'autoconfig.relations.left_join';
-      t3lib_div::devlog('[INFO/PLUGIN] TypoScript '.$str_path.' is set to: '.$int_joins.'.', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/FLEXFORM] TypoScript '.$str_path.' is set to: '.$int_joins.'.', $this->pObj->extKey, 0);
     }
     // Field joins
 
@@ -1762,15 +1762,15 @@ class tx_browser_pi1_config
     $int_root = $this->pObj->pi_getFFvalue($arr_piFlexform, 'root', 'sDEF', 'lDEF', 'vDEF');
     if ($int_root == 1)
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] Root is set.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] Root is set.', $this->pObj->extKey, 0);
       }
       if (strstr($this->pObj->cObj->currentRecord, 'tt_content'))
       {
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] pidList before changing: '.$this->pObj->pidList, $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] pidList before changing: '.$this->pObj->pidList, $this->pObj->extKey, 0);
         }
 //        $this->pObj->conf['pidList'] = $this->pObj->cObj->data['pages'];
 //        if ($this->pObj->conf['pidList'])
@@ -1792,17 +1792,17 @@ class tx_browser_pi1_config
         {
           $this->pObj->pidList = '0';
         }
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] pidList after changing: '.$this->pObj->pidList, $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] pidList after changing: '.$this->pObj->pidList, $this->pObj->extKey, 0);
         }
       }
     }
     if ($int_root != 1)
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] Root isn\'t set.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] Root isn\'t set.', $this->pObj->extKey, 0);
       }
     }
     // Field root
@@ -1860,9 +1860,9 @@ class tx_browser_pi1_config
       case(false):
       case('disabled'):
         // RETURN if bookmarks are disabled
-        if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_socialmedia)
+        if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_socialmedia)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] socialmedia/bookmarks are disabled.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] socialmedia/bookmarks are disabled.', $this->pObj->extKey, 0);
         }
         return;
         // RETURN if bookmarks are disabled
@@ -1905,23 +1905,23 @@ class tx_browser_pi1_config
 
 
     // DRS - Development Reporting System
-    if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_socialmedia)
+    if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_socialmedia)
     {
       $str_bookmarks_list   = str_replace(',', ', ', $this->strCsv_socialmedia_bookmarks_list);
       $str_bookmarks_single = str_replace(',', ', ', $this->strCsv_socialmedia_bookmarks_single);
-      t3lib_div::devlog('[INFO/PLUGIN] socialmedia/bookmarks are enabled: '.
+      t3lib_div::devlog('[INFO/FLEXFORM] socialmedia/bookmarks are enabled: '.
         $this->str_socialmedia_bookmarks_enabled, $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/PLUGIN] socialmedia/bookmarks in list views - table.field for site: '.
+      t3lib_div::devlog('[INFO/FLEXFORM] socialmedia/bookmarks in list views - table.field for site: '.
         $this->str_socialmedia_bookmarks_tableFieldSite_list, $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/PLUGIN] socialmedia/bookmarks in list views - table.field for title: '.
+      t3lib_div::devlog('[INFO/FLEXFORM] socialmedia/bookmarks in list views - table.field for title: '.
         $this->str_socialmedia_bookmarks_tableFieldTitle_list, $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/PLUGIN] socialmedia/bookmarks in list views: '.
+      t3lib_div::devlog('[INFO/FLEXFORM] socialmedia/bookmarks in list views: '.
         $str_bookmarks_list, $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/PLUGIN] socialmedia/bookmarks in list views - table.field for site: '.
+      t3lib_div::devlog('[INFO/FLEXFORM] socialmedia/bookmarks in list views - table.field for site: '.
         $this->str_socialmedia_bookmarks_tableFieldSite_list, $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/PLUGIN] socialmedia/bookmarks in list views - table.field for title: '.
+      t3lib_div::devlog('[INFO/FLEXFORM] socialmedia/bookmarks in list views - table.field for title: '.
         $this->str_socialmedia_bookmarks_tableFieldTitle_list, $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/PLUGIN] socialmedia/bookmarks in single views: '.
+      t3lib_div::devlog('[INFO/FLEXFORM] socialmedia/bookmarks in single views: '.
         $str_bookmarks_single, $this->pObj->extKey, 0);
     }
     // DRS - Development Reporting System
@@ -1999,23 +1999,23 @@ class tx_browser_pi1_config
           {
             $this->pObj->conf['autoconfig.']['autoDiscover.']['items.'][$str_csvValue.'.']['TCAlabel.']['csvValue'] = $str_csvFields;
           }
-          if ($this->pObj->b_drs_plugin)
+          if ($this->pObj->b_drs_flexform)
           {
             $path_view = null;
             if (!empty($this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.']))
             {
               $path_view = 'views.'.$viewWiDot.$modeWiDot;
             }
-            t3lib_div::devlog('[INFO/PLUGIN] tca: '.$path_view.'autoconfig.autoDiscover.items.'.$str_csvValue.'.TCAlabel.csvValue is set to \''.$str_csvFields.'\'', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/FLEXFORM] tca: '.$path_view.'autoconfig.autoDiscover.items.'.$str_csvValue.'.TCAlabel.csvValue is set to \''.$str_csvFields.'\'', $this->pObj->extKey, 0);
           }
         }
         break;
       default:
         // Do nothing
         // DRS - Development Reporting System
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] tca: configuration is default. Nothing to do.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] tca: configuration is default. Nothing to do.', $this->pObj->extKey, 0);
         }
         break;
     }
@@ -2140,9 +2140,9 @@ class tx_browser_pi1_config
       default:
         $this->bool_wrapInBaseClass = true;
     }
-    if ($this->pObj->b_drs_plugin)
+    if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div::devlog('[INFO/PLUGIN] templating/wrapBaseClass: \'' . 
+      t3lib_div::devlog('[INFO/FLEXFORM] templating/wrapBaseClass: \'' . 
         $this->bool_wrapInBaseClass . '\'', $this->pObj->extKey, 0);
     }
       // Field wrapBaseClass
@@ -2153,9 +2153,9 @@ class tx_browser_pi1_config
       //
       // DRS - Development Reporting System
   
-    if ($this->pObj->b_drs_plugin)
+    if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div::devlog('[INFO/PLUGIN] templating: template.file is set to \''.$this->pObj->conf['template.']['file'].'\'.', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/FLEXFORM] templating: template.file is set to \''.$this->pObj->conf['template.']['file'].'\'.', $this->pObj->extKey, 0);
     }
       // DRS - Development Reporting System
 
@@ -2200,16 +2200,16 @@ class tx_browser_pi1_config
     $str_title = $this->pObj->pi_getFFvalue($arr_piFlexform, 'title', 'viewList', 'lDEF', 'vDEF');
     if($str_title)
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewList/title: \''.$str_title.'\'!', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewList/title: \''.$str_title.'\'!', $this->pObj->extKey, 0);
       }
     }
     if(!$str_title)
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewList/title is empty.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewList/title is empty.', $this->pObj->extKey, 0);
       }
     }
       // Get the title for the list view
@@ -2235,26 +2235,26 @@ class tx_browser_pi1_config
     }
     if ($str_path)
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] '.$str_path.': \''.$conf_title.'\'', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] '.$str_path.': \''.$conf_title.'\'', $this->pObj->extKey, 0);
       }
       if ($conf_title)
       {
         if ($str_title)
         {
           $conf_title = $str_title;
-          if ($this->pObj->b_drs_plugin)
+          if ($this->pObj->b_drs_flexform)
           {
-            t3lib_div::devlog('[INFO/PLUGIN] The plugin value has priority for TypoScript value: \''.$conf_title.'\'!', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/FLEXFORM] The plugin value has priority for TypoScript value: \''.$conf_title.'\'!', $this->pObj->extKey, 0);
           }
         }
         if (!$str_title)
         {
           $str_title = $conf_title;
-          if ($this->pObj->b_drs_plugin)
+          if ($this->pObj->b_drs_flexform)
           {
-            t3lib_div::devlog('[INFO/PLUGIN] TypoScript value: \''.$conf_title.'\'!', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/FLEXFORM] TypoScript value: \''.$conf_title.'\'!', $this->pObj->extKey, 0);
           }
         }
       }
@@ -2269,9 +2269,9 @@ class tx_browser_pi1_config
         {
           $this->pObj->conf['views.']['list.'][$this->mode.'.']['marker.']['my_title.']['lang.'][$str_lang] = $conf_title;
         }
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] The TypoScript value was 0 or empty.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] The TypoScript value was 0 or empty.', $this->pObj->extKey, 0);
         }
       }
     }
@@ -2290,15 +2290,15 @@ class tx_browser_pi1_config
         $conf_title = $this->pObj->conf['marker.']['my_title.']['lang.'][$str_lang];
         $str_path   = 'marker.my_title.lang.'.$str_lang;
       }
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] '.$str_path.': \''.$conf_title.'\'', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] '.$str_path.': \''.$conf_title.'\'', $this->pObj->extKey, 0);
       }
       if ($conf_title)
       {
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] The TypoScript value has priority: \''.$conf_title.'\'!', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] The TypoScript value has priority: \''.$conf_title.'\'!', $this->pObj->extKey, 0);
         }
       }
       if (!$conf_title)
@@ -2312,9 +2312,9 @@ class tx_browser_pi1_config
         {
           $this->pObj->conf['marker.']['my_title.']['lang.'][$str_lang] = $conf_title;
         }
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] The TypoScript value is overriden with: \''.$conf_title.'\'!', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] The TypoScript value is overriden with: \''.$conf_title.'\'!', $this->pObj->extKey, 0);
         }
       }
     }
@@ -2330,17 +2330,17 @@ class tx_browser_pi1_config
     $str_titleWrap = $this->pObj->pi_getFFvalue($arr_piFlexform, 'titleWrap', 'viewList', 'lDEF', 'vDEF');
     if($str_titleWrap)
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewList/titleWrap: \''.htmlspecialchars($str_titleWrap).'\'!', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewList/titleWrap: \''.htmlspecialchars($str_titleWrap).'\'!', $this->pObj->extKey, 0);
       }
     }
     if(!$str_titleWrap)
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewList/titleWrap is empty.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[INFO/PLUGIN] We try to get a title wrap from TypoScript.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewList/titleWrap is empty.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] We try to get a title wrap from TypoScript.', $this->pObj->extKey, 0);
       }
     }
       // Get the titleWrap for the list view
@@ -2355,26 +2355,26 @@ class tx_browser_pi1_config
     }
     if ($str_path)
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] '.$str_path.': \''.htmlspecialchars($conf_titleWrap).'\'', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] '.$str_path.': \''.htmlspecialchars($conf_titleWrap).'\'', $this->pObj->extKey, 0);
       }
       if ($conf_titleWrap)
       {
         if(!$str_titleWrap)
         {
-          if ($this->pObj->b_drs_plugin)
+          if ($this->pObj->b_drs_flexform)
           {
-            t3lib_div::devlog('[INFO/PLUGIN] We take the local value.', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/FLEXFORM] We take the local value.', $this->pObj->extKey, 0);
           }
         }
         if($str_titleWrap)
         {
           $conf_titleWrap = $str_titleWrap;
           $this->pObj->conf['views.']['list.'][$this->mode.'.']['marker.']['my_title.']['wrap'] = $conf_titleWrap;
-          if ($this->pObj->b_drs_plugin)
+          if ($this->pObj->b_drs_flexform)
           {
-            t3lib_div::devlog('[INFO/PLUGIN] Local value will be overriden by the plugin value.', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/FLEXFORM] Local value will be overriden by the plugin value.', $this->pObj->extKey, 0);
           }
         }
       }
@@ -2382,9 +2382,9 @@ class tx_browser_pi1_config
       {
         $conf_titleWrap = $str_titleWrap;
         $this->pObj->conf['views.']['list.'][$this->mode.'.']['marker.']['my_title.']['wrap'] = $conf_titleWrap;
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] The TypoScript value was 0 or empty. It is overriden with: \''.htmlspecialchars($conf_titleWrap).'\'!', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] The TypoScript value was 0 or empty. It is overriden with: \''.htmlspecialchars($conf_titleWrap).'\'!', $this->pObj->extKey, 0);
         }
       }
     }
@@ -2395,26 +2395,26 @@ class tx_browser_pi1_config
     {
       $conf_titleWrap = $this->pObj->conf['marker.']['my_title.']['wrap'];
       $str_path   = 'marker.my_titleWrap.value';
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] '.$str_path.': \''.htmlspecialchars($conf_titleWrap).'\'', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] '.$str_path.': \''.htmlspecialchars($conf_titleWrap).'\'', $this->pObj->extKey, 0);
       }
       if ($conf_titleWrap)
       {
         if(!$str_titleWrap)
         {
-          if ($this->pObj->b_drs_plugin)
+          if ($this->pObj->b_drs_flexform)
           {
-            t3lib_div::devlog('[INFO/PLUGIN] We take the local value.', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/FLEXFORM] We take the local value.', $this->pObj->extKey, 0);
           }
         }
         if($str_titleWrap)
         {
           $conf_titleWrap = $str_titleWrap;
           $this->pObj->conf['marker.']['my_title.']['wrap'] = $conf_titleWrap;
-          if ($this->pObj->b_drs_plugin)
+          if ($this->pObj->b_drs_flexform)
           {
-            t3lib_div::devlog('[INFO/PLUGIN] Global value will be overriden by the plugin value.', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/FLEXFORM] Global value will be overriden by the plugin value.', $this->pObj->extKey, 0);
           }
         }
       }
@@ -2422,9 +2422,9 @@ class tx_browser_pi1_config
       {
         $conf_titleWrap = $str_titleWrap;
         $this->pObj->conf['marker.']['my_title.']['wrap'] = $conf_titleWrap;
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] The TypoScript value is overriden with: \''.htmlspecialchars($conf_titleWrap).'\'!', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] The TypoScript value is overriden with: \''.htmlspecialchars($conf_titleWrap).'\'!', $this->pObj->extKey, 0);
         }
       }
     }
@@ -2441,18 +2441,18 @@ class tx_browser_pi1_config
     $str_grouptitleWrap = $this->pObj->pi_getFFvalue($arr_piFlexform, 'grouptitleWrap', 'viewList', 'lDEF', 'vDEF');
     if($str_grouptitleWrap)
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewList/grouptitleWrap: \''.htmlspecialchars($str_grouptitleWrap).'\'!', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewList/grouptitleWrap: \''.htmlspecialchars($str_grouptitleWrap).'\'!', $this->pObj->extKey, 0);
       }
       $this->pObj->str_wrap_grouptitle = $str_grouptitleWrap;
     }
     if(!$str_grouptitleWrap)
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewList/grouptitleWrap is empty.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[INFO/PLUGIN] We try to get a title wrap from TypoScript.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewList/grouptitleWrap is empty.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] We try to get a title wrap from TypoScript.', $this->pObj->extKey, 0);
       }
       $this->pObj->str_wrap_grouptitle = false;
     }
@@ -2469,18 +2469,18 @@ class tx_browser_pi1_config
     $str_limit = $this->pObj->pi_getFFvalue($arr_piFlexform, 'limit', 'viewList', 'lDEF', 'vDEF');
     if($str_limit)
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewList/limit: \''.htmlspecialchars($str_limit).'\'!', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewList/limit: \''.htmlspecialchars($str_limit).'\'!', $this->pObj->extKey, 0);
       }
     }
     if(!$str_limit)
     {
       $str_limit = 20;
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewList/limit is empty.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[INFO/PLUGIN] viewList/limit: We allocates it with 20.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewList/limit is empty.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewList/limit: We allocates it with 20.', $this->pObj->extKey, 0);
       }
     }
     $str_limit = '0,'.$str_limit;
@@ -2496,16 +2496,16 @@ class tx_browser_pi1_config
     }
     if ($str_path)
     {
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] '.$str_path.': \''.htmlspecialchars($conf_limit).'\'', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] '.$str_path.': \''.htmlspecialchars($conf_limit).'\'', $this->pObj->extKey, 0);
       }
       if ($conf_limit)
       {
-        if ($this->pObj->b_drs_plugin)
+        if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/PLUGIN] The TypoScript value hasn\'t any effect: \''.htmlspecialchars($conf_limit).'\'!', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[HELP/PLUGIN] Please remove \''.$str_path.'\'!', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] The TypoScript value hasn\'t any effect: \''.htmlspecialchars($conf_limit).'\'!', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/FLEXFORM] Please remove \''.$str_path.'\'!', $this->pObj->extKey, 0);
         }
       }
     }
@@ -2560,9 +2560,9 @@ class tx_browser_pi1_config
           </div>';
         exit;
     }
-    if ($this->pObj->b_drs_plugin)
+    if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div::devlog('[INFO/PLUGIN] viewList/navigation<br />
+      t3lib_div::devlog('[INFO/FLEXFORM] viewList/navigation<br />
         azBrowser: \''.$this->bool_azBrowser.'\'<br />
         pageBrowser: \''.$this->bool_pageBrowser.'\'', $this->pObj->extKey, 0);
     }
@@ -2597,9 +2597,9 @@ class tx_browser_pi1_config
           </div>';
         exit;
     }
-    if ($this->pObj->b_drs_plugin)
+    if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div::devlog('[INFO/PLUGIN] viewList/records<br />
+      t3lib_div::devlog('[INFO/FLEXFORM] viewList/records<br />
         emptyAtStart: \''.$this->bool_emptyAtStart.'\'', $this->pObj->extKey, 0);
     }
       // Field records
@@ -2639,9 +2639,9 @@ class tx_browser_pi1_config
           </div>';
         exit;
     }
-    if ($this->pObj->b_drs_plugin)
+    if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div::devlog('[INFO/PLUGIN] viewList/emptyValues<br />
+      t3lib_div::devlog('[INFO/FLEXFORM] viewList/emptyValues<br />
         dontHandle: \''.$this->bool_dontHandleEmptyValues.'\'', $this->pObj->extKey, 0);
     }
 //var_dump('config 2500', $this->bool_dontHandleEmptyValues);
@@ -2665,9 +2665,9 @@ class tx_browser_pi1_config
       $this->bool_searchForm_wiColoredSwordsSingle = false;
       $this->pObj->bool_searchWildcardsManual      = false;
       $this->pObj->str_searchWildcardCharManual    = '*';
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewList/search: \'default\'. Nothing to do.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewList/search: \'default\'. Nothing to do.', $this->pObj->extKey, 0);
       }
       $bool_handleSearch = false;
     }
@@ -2677,9 +2677,9 @@ class tx_browser_pi1_config
     if($bool_handleSearch)
     {
         // DRS - Development Reporting System
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewList/search: \''.$str_search.'\'.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewList/search: \''.$str_search.'\'.', $this->pObj->extKey, 0);
       }
         // DRS - Development Reporting System
         // Field search
@@ -2697,9 +2697,9 @@ class tx_browser_pi1_config
       $this->bool_searchForm_wiColoredSwords       = (($int_searchForm & 4) == 4);
       $this->bool_searchForm_wiColoredSwordsSingle = (($int_searchForm & 8) == 8);
   
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewList/searchForm<br />
+        t3lib_div::devlog('[INFO/FLEXFORM] viewList/searchForm<br />
           int_searchForm: \''.$int_searchForm.'\'<br />
           searchForm: \''.$this->bool_searchForm.'\'<br />
           searchForm_wiPhrase: \''.$this->bool_searchForm_wiPhrase.'\'<br />
@@ -2724,9 +2724,9 @@ class tx_browser_pi1_config
       {
         $this->pObj->bool_searchWildcardsManual = 1;
       }
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewList/searchWildcards: '.
+        t3lib_div::devlog('[INFO/FLEXFORM] viewList/searchWildcards: '.
           $this->pObj->bool_searchWildcardsManual.'\'', $this->pObj->extKey, 0);
       }
         // Field searchWildcards
@@ -2740,9 +2740,9 @@ class tx_browser_pi1_config
       $str_searchWildcardChar  = $this->pObj->pi_getFFvalue($arr_piFlexform, 'searchWildcardChar', 'viewList', 'lDEF', 'vDEF');
   
       $this->pObj->str_searchWildcardCharManual = $str_searchWildcardChar;
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewList/searchWildcardChar: '.
+        t3lib_div::devlog('[INFO/FLEXFORM] viewList/searchWildcardChar: '.
           $this->pObj->bool_searchWildcardCharManual.'\'', $this->pObj->extKey, 0);
       }
         // Field searchWildcardChar
@@ -2761,10 +2761,10 @@ class tx_browser_pi1_config
     if(!empty($int_simulateSingleUid))
     {
       $this->int_singlePid = (int) $int_simulateSingleUid;
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] viewList/simulateSingleUid: \''.$int_simulateSingleUid.'\'', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[HELP/PLUGIN] This plugin will act like a plugin which is called with a single uid!', $this->pObj->extKey, 1);
+        t3lib_div::devlog('[INFO/FLEXFORM] viewList/simulateSingleUid: \''.$int_simulateSingleUid.'\'', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[HELP/FLEXFORM] This plugin will act like a plugin which is called with a single uid!', $this->pObj->extKey, 1);
       }
     }
       // Get the simulateSingleUid for the list view

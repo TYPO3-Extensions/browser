@@ -539,13 +539,13 @@ class tx_browser_pi1_javascript
     if(empty($path))
     {
         // Do nothing
-      if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_javascript)
+      if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
       {
         if(empty($this->pObj->objConfig->str_jquery_library))
         {
-          t3lib_div::devlog('[INFO/PLUGIN+JSS] Flexform Javascript|jquery_library is empty.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM+JSS] Flexform Javascript|jquery_library is empty.', $this->pObj->extKey, 0);
         }
-        t3lib_div::devlog('[INFO/PLUGIN+JSS] jQuery path is empty: jQuery isn\'t embedded.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM+JSS] jQuery path is empty: jQuery isn\'t embedded.', $this->pObj->extKey, 0);
       }
       return true;
     }
@@ -620,10 +620,10 @@ class tx_browser_pi1_javascript
       // RETURN, there isn't any file for embedding
     if(empty($this->pObj->objConfig->str_browser_libraries))
     {
-      if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_javascript)
+      if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
       {
-        t3lib_div::devlog('[INFO/PLUGIN+JSS] Flexform Javascript|browser_libraries is empty.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[INFO/PLUGIN+JSS] Script isn\'t included. ', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM+JSS] Flexform Javascript|browser_libraries is empty.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM+JSS] Script isn\'t included. ', $this->pObj->extKey, 0);
       }
       return true;
     }

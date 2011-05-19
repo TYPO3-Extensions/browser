@@ -262,7 +262,7 @@
         {
           if(empty($this->pObj->piVars['showUid']))
           {
-            t3lib_div::devlog('[WARN/PLUGIN] showUid is empty. If you have expect a value for the current plugin,
+            t3lib_div::devlog('[WARN/FLEXFORM] showUid is empty. If you have expect a value for the current plugin,
               please configure in the current plugin: [General] handle piVars from foreign plugins!',
               $this->pObj->extKey, 2);
           }
@@ -282,11 +282,11 @@
     if($this->pObj->objConfig->int_singlePid)
     {
       $this->pObj->piVars['showUid'] = $this->pObj->objConfig->int_singlePid;
-      if ($this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_flexform)
       {
-        t3lib_div::devlog('[INFO/PLUGIN] Plugin has a simulated single uid: '.
+        t3lib_div::devlog('[INFO/FLEXFORM] Plugin has a simulated single uid: '.
           $this->pObj->piVars['showUid'], $this->pObj->extKey, 0);
-        t3lib_div::devlog('[INFO/PLUGIN] This UID has precedence!', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] This UID has precedence!', $this->pObj->extKey, 0);
       }
     }
       // Simulate showUid from current plugin
@@ -1182,7 +1182,7 @@
     $bool_dontReplace = $arr_conf_advanced['performance.']['GLOBALS.']['dont_replace'];
     if($bool_dontReplace)
     {
-      if ($this->pObj->b_drs_ttc || $this->pObj->b_drs_plugin)
+      if ($this->pObj->b_drs_ttc || $this->pObj->b_drs_flexform)
       {
         t3lib_div::devlog('[INFO/TYPOSCRIPT] [advanced.][performance.][GLOBALS.][dont_replace] is TRUE.', $this->pObj->extKey, 0);
         t3lib_div::devlog('[HELP/TTC] If you are using markers like ###TSFE:fe_user|...### you should set it to false.<br />'.

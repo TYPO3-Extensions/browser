@@ -301,7 +301,7 @@ class tx_browser_pi1_template
     $markerArray['###BUTTON###']        = $this->pObj->pi_getLL('pi_list_searchBox_search', 'Search', true);
     $markerArray['###POINTER###']       = $this->pObj->prefixId.'[pointer]';
       // 110110, cweiske, #11886
-    $markerArray['###PLUGIN###']        = $this->pObj->piVars['plugin'];
+    $markerArray['###FLEXFORM###']        = $this->pObj->piVars['plugin'];
     $markerArray['###MODE###']          = $this->pObj->piVar_mode;
     $markerArray['###VIEW###']          = $this->pObj->view;
     $markerArray['###RESULTPHRASE###']  = $this->resultphrase();
@@ -548,11 +548,11 @@ class tx_browser_pi1_template
       // #9659, 101013, dwildt
     if($this->pObj->segment['header'] == false)
     {
-      if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_javascript)
+      if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
       {
-        t3lib_div::devlog('[INFO/PLUGIN+JSS] tx_browser_pi1[segment] has a value. AJAX call single view with list view.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[INFO/PLUGIN+JSS] AJAX: Do not handle the list title!', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[INFO/PLUGIN+JSS] AJAX: Subpart ###LIST_TITLE### is removed.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM+JSS] tx_browser_pi1[segment] has a value. AJAX call single view with list view.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM+JSS] AJAX: Do not handle the list title!', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM+JSS] AJAX: Subpart ###LIST_TITLE### is removed.', $this->pObj->extKey, 0);
       }
       //var_dump('templ 486', $this->pObj->segment, $template);
       $template = $this->pObj->cObj->substituteSubpart($template, '###LIST_TITLE###', null, true);
@@ -582,15 +582,15 @@ class tx_browser_pi1_template
       if($bool_emptyList)
       {
         $conf_emptyList = $this->pObj->lDisplay['emptyListByStart.']['stdWrap.'];
-        if ($this->pObj->b_drs_templating || $this->b_drs_plugin)
+        if ($this->pObj->b_drs_templating || $this->b_drs_flexform)
         {
           $langKey = $GLOBALS['TSFE']->lang;
           if ($langKey == 'en')
           {
             $langKey = 'default';
           }
-          t3lib_div::devLog('[INFO/PLUGIN + TEMPLATING] It is the first call for the plugin. The SQL result is replaced with a message.', $this->pObj->extKey, 0);
-          t3lib_div::devLog('[HELP/PLUGIN + TEMPLATING] If you want a SQL result instead of the message, please configure:<br />
+          t3lib_div::devLog('[INFO/FLEXFORM + TEMPLATING] It is the first call for the plugin. The SQL result is replaced with a message.', $this->pObj->extKey, 0);
+          t3lib_div::devLog('[HELP/FLEXFORM + TEMPLATING] If you want a SQL result instead of the message, please configure:<br />
             displayList.display.emptyListByStart = 0<br />
             <br />
             If you want another label, please configure:<br />
