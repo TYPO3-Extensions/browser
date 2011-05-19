@@ -6,6 +6,114 @@
     </TCEforms>
     <type>array</type>
     <el>
+      <jquery_library>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_library</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_library.0</numIndex>
+                <numIndex index="1">EXT:browser/res/js/jquery-1.6.min.js</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_library.1</numIndex>
+                <numIndex index="1">http://code.jquery.com/jquery-1.6.min.js</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_library.2</numIndex>
+                <numIndex index="1">configured</numIndex>
+              </numIndex>
+              <numIndex index="3" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_library.3</numIndex>
+                <numIndex index="1">none</numIndex>
+              </numIndex>
+            </items>
+            <default>EXT:browser/res/js/jquery-1.6.min.js</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </jquery_library>
+      <jquery_library_own>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_library_own</label>
+          <displayCond>FIELD:jquery_library:IN:configured</displayCond>
+          <config>
+            <type>input</type>
+            <size>255</size>
+            <eval>trim,required,nospace</eval>
+            <default>EXT:browser/res/js/jquery-1.6.min.js</default>
+          </config>
+        </TCEforms>
+      </jquery_library_own>
+      <browser_libraries>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries.0</numIndex>
+                <numIndex index="1">default</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries.1</numIndex>
+                <numIndex index="1">configured</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries.2</numIndex>
+                <numIndex index="1">none</numIndex>
+              </numIndex>
+            </items>
+            <default>default</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </browser_libraries>
+      <browser_libraries_general>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries_general</label>
+          <displayCond>FIELD:browser_libraries:IN:configured</displayCond>
+          <config>
+            <type>input</type>
+            <size>255</size>
+            <eval>trim,required,nospace</eval>
+            <default>EXT:browser/res/js/tx_browser_pi1.js</default>
+          </config>
+        </TCEforms>
+      </browser_libraries_general>
+      <browser_libraries_ajax>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries_ajax</label>
+          <displayCond>FIELD:browser_libraries:IN:configured</displayCond>
+          <config>
+            <type>input</type>
+            <size>255</size>
+            <eval>trim,required,nospace</eval>
+            <default>EXT:browser/res/js/tx_browser_pi1_ajax.js</default>
+          </config>
+        </TCEforms>
+      </browser_libraries_ajax>
+      <browser_libraries_ajax_ll>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries_ajax_ll</label>
+          <displayCond>FIELD:browser_libraries:IN:configured</displayCond>
+          <config>
+            <type>input</type>
+            <size>255</size>
+            <eval>trim,required,nospace</eval>
+            <default>EXT:browser/res/js/tx_browser_pi1_ajax_languages.js</default>
+          </config>
+        </TCEforms>
+      </browser_libraries_ajax_ll>
       <mode>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.mode</label>

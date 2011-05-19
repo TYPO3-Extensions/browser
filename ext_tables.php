@@ -61,8 +61,8 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
   {
     $TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_browser_pi1_backend_wizicon'] = 
       t3lib_extMgm::extPath($_EXTKEY).'pi1/class.tx_browser_pi1_backend_wizicon.php'; 
-    $TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_browser_pi5_backend_wizicon'] = 
-      t3lib_extMgm::extPath($_EXTKEY).'pi5/class.tx_browser_pi5_backend_wizicon.php'; 
+//    $TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_browser_pi5_backend_wizicon'] = 
+//      t3lib_extMgm::extPath($_EXTKEY).'pi5/class.tx_browser_pi5_backend_wizicon.php'; 
     $TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_browser_pi4_backend_wizicon'] = 
       t3lib_extMgm::extPath($_EXTKEY).'pi4/class.tx_browser_pi4_backend_wizicon.php'; 
     $TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_browser_pi3_backend_wizicon'] = 
@@ -88,19 +88,19 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
 
 
 
-  ///////////////////////////////////////////////////////////
-  //
-  // Plugin 5 configuration
-  
-  $TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi5']='layout,select_key';
-  // Remove the default tt_content fields layout, select_key, pages and recursive.
-  $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi5']='pi_flexform';
-  // Display the field pi_flexform
-  t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_pi5', 'FILE:EXT:'.$_EXTKEY.'/pi5/flexform.xml');
-  // Register our file with the flexform structure
-  t3lib_extMgm::addPlugin(array('LLL:EXT:browser/locallang_db.xml:tt_content.list_type_pi5', $_EXTKEY.'_pi5', 'EXT:browser/ext_icon.gif'),'list_type');
-  // Add the Flexform to the Plugin List
-  // Plugin 1 configuration
+//  ///////////////////////////////////////////////////////////
+//  //
+//  // Plugin 5 configuration
+//  
+//  $TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi5']='layout,select_key';
+//  // Remove the default tt_content fields layout, select_key, pages and recursive.
+//  $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi5']='pi_flexform';
+//  // Display the field pi_flexform
+//  t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_pi5', 'FILE:EXT:'.$_EXTKEY.'/pi5/flexform.xml');
+//  // Register our file with the flexform structure
+//  t3lib_extMgm::addPlugin(array('LLL:EXT:browser/locallang_db.xml:tt_content.list_type_pi5', $_EXTKEY.'_pi5', 'EXT:browser/ext_icon.gif'),'list_type');
+//  // Add the Flexform to the Plugin List
+//  // Plugin 1 configuration
 
 
 

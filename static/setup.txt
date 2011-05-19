@@ -1365,16 +1365,16 @@ plugin.tx_browser_pi1 {
   plugin {
     socialmedia {
       socialbookmarks {
-          wraps {
-            stdWrap_items {
-              value = ###BOOKMARK_ITEMS###
-              wrap  = <span class="tx_browser_pi1.bookmark_items">|</span>
-            }
-            stdWrap_item {
-              value = <a href="###BOOKMARK_URL###" target="_blank" title="###BOOKMARK_NAME###"><img ###BOOKMARK_IMAGESIZE### src="###BOOKMARK_IMAGE###"></a>
-              wrap  = <span class="tx_browser_pi1.bookmark_item">|</span>
-            }
+        wraps {
+          stdWrap_items {
+            value = ###BOOKMARK_ITEMS###
+            wrap  = <span class="tx_browser_pi1.bookmark_items">|</span>
           }
+          stdWrap_item {
+            value = <a href="###BOOKMARK_URL###" target="_blank" title="###BOOKMARK_NAME###"><img ###BOOKMARK_IMAGESIZE### src="###BOOKMARK_IMAGE###"></a>
+            wrap  = <span class="tx_browser_pi1.bookmark_item">|</span>
+          }
+        }
         bookmarks {
           items {
             addthis {
@@ -1609,7 +1609,7 @@ plugin.tx_browser_pi1 {
       arrDataQuery {
         config {
           ifNoItem {
-            value = No query vailable
+            value = No query available
           }
         }
       }
