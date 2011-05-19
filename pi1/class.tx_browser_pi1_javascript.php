@@ -626,10 +626,10 @@ class tx_browser_pi1_javascript
       }
       $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
         '  <script src="'.$path.'" type="text/javascript"></script>';
-      if ($this->pObj->b_drs_javascript)
+      if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
       {
-        t3lib_div::devlog('[INFO/JSS] file is included: '.$path, $this->pObj->extKey, 0);
-        t3lib_div::devlog('[HELP/JSS] Change it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
+        t3lib_div::devlog('[INFO/FLEXFORM+JSS] file is included: '.$path, $this->pObj->extKey, 0);
+        t3lib_div::devlog('[HELP/FLEXFORM+JSS] Change it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
       }
       return true;
     }
@@ -650,7 +650,7 @@ class tx_browser_pi1_javascript
 
     if ($this->pObj->b_drs_error)
     {
-      t3lib_div::devlog('[ERROR/JSS] script can not be included: '.$path, $this->pObj->extKey, 0);
+      t3lib_div::devlog('[ERROR/JSS] script can not be included: '.$path, $this->pObj->extKey, 3);
       t3lib_div::devlog('[HELP/JSS] Solve it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
     }
     return false;
