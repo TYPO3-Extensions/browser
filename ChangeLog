@@ -1,6 +1,7 @@
 3.6.5
   11-05-19
   New Feature
+  * 14038: Hide the search button by AJAX
   * 13429: Embedding jquery and other javascript code is controlled by the flexform
   
   11-05-04

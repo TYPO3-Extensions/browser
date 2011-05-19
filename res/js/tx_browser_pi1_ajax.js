@@ -8,7 +8,7 @@
  *
  * for more info visit http://typo3-browser-forum.de/
  * 
- * status: 20 Mar 2011  
+ * status: 25 Mar 2011  
  *
  */
  
@@ -175,6 +175,9 @@ function ajaxifySearchFormSubmit(pObj) {
   var searchform = pObj.find('.searchbox form');
   if (pObj.hasClass('debugjss')) {
     searchform.find(':submit').css('border', '2px solid ' + debugColor);
+  }
+  if (pObj.hasClass('hidesubmit')) {
+    searchform.find(':submit').hide();
   }
   searchform.submit( function () { 
     var listarea = pObj.find('.listarea');
