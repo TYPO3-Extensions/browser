@@ -2160,18 +2160,18 @@ class tx_browser_pi1_template
 
         // We need jQuery. Load
         // name has to correspondend with similar code in tx_browser_pi1.php
-      $name = 'jQuery';
-      $bool_success_jQuery = $this->pObj->objJss->load_jQuery();
+      $name                 = 'jQuery';
+      $bool_success_jQuery  = $this->pObj->objJss->load_jQuery();
 
       if ($this->pObj->objConfig->bool_ajax_enabled)
       {
           // name has to correspondend with similar code in tx_browser_pi1.php
-        $name = 'ajaxLL';
+        $name         = 'ajaxLL';
         $path         = $this->conf['javascript.']['ajax.']['fileLL'];
         $path_tsConf  = 'javascript.ajax.fileLL';
         $bool_success = $this->pObj->objJss->addJssFile($path, $name, $path_tsConf);
           // name has to correspondend with similar code in tx_browser_pi1.php
-        $name = 'ajax';
+        $name         = 'ajax';
         $path         = $this->conf['javascript.']['ajax.']['file'];
         $path_tsConf  = 'javascript.ajax.file';
         $bool_success = $this->pObj->objJss->addJssFile($path, $name, $path_tsConf);

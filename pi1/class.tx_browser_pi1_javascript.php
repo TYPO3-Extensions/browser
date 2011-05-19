@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2010-2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +28,7 @@
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *
 * @since    3.5.0
-* @version  3.5.0
+* @version  3.6.5
 *
 * @package    TYPO3
 * @subpackage    tx_browser
@@ -494,7 +494,7 @@ class tx_browser_pi1_javascript
  *
  * @return	boolean		True: success. False: error.
  * @since 3.5.0
- * @version 3.5.0
+ * @version 3.6.5
  */
   function load_jQuery()
   {
@@ -530,10 +530,33 @@ class tx_browser_pi1_javascript
       return true;
     }
 
+
+
+    $path         = $this->pObj->conf['javascript.']['jquery.']['file'];
+
+      // #13429, dwildt, 110519
+      // RETURN, there isn't any jQuery for embedding
+    if(empty($path))
+    {
+        // Do nothing
+      if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_javascript)
+      {
+        if(empty($this->pObj->objConfig->str_jquery_library))
+        {
+          t3lib_div::devlog('[INFO/PLUGIN+JSS] Flexform Javascript|jquery_library is empty.', $this->pObj->extKey, 0);
+        }
+        t3lib_div::devlog('[INFO/PLUGIN+JSS] jQuery path is empty: jQuery isn\'t embedded.', $this->pObj->extKey, 0);
+      }
+      return true;
+    }
+      // RETURN, there isn't any jQuery for embedding
+      // #13429, dwildt, 110519
+
+
+
       // if none of the previous is true, we need to include jQuery from external source
       // name has to correspondend with similar code in tx_browser_pi1_template.php
     $name         = 'jQuery';
-    $path         = $this->pObj->conf['javascript.']['jquery.']['file'];
     $path_tsConf  = 'javascript.jquery.file';
     $bool_success = $this->addJssFile($path, $name, $path_tsConf);
 
@@ -563,7 +586,7 @@ class tx_browser_pi1_javascript
  * @param	string		$keyPathTs: The TypoScript element path to $path for the DRS
  * @return	boolean		True: success. False: error.
  * @since 3.5.0
- * @version 3.5.0
+ * @version 3.6.5
  */
   function addJssFile($path, $name, $keyPathTs)
   {
@@ -592,6 +615,20 @@ class tx_browser_pi1_javascript
       }
       return true;
     }
+
+      // #13429, dwildt, 110519
+      // RETURN, there isn't any file for embedding
+    if(empty($this->pObj->objConfig->str_browser_libraries))
+    {
+      if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_javascript)
+      {
+        t3lib_div::devlog('[INFO/PLUGIN+JSS] Flexform Javascript|browser_libraries is empty.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/PLUGIN+JSS] Script isn\'t included. ', $this->pObj->extKey, 0);
+      }
+      return true;
+    }
+      // RETURN, there isn't any file for embedding
+      // #13429, dwildt, 110519
 
     if ($this->pObj->b_drs_error)
     {

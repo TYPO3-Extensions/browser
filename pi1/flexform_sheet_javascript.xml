@@ -101,10 +101,10 @@
           </config>
         </TCEforms>
       </browser_libraries_ajax>
-      <browser_libraries_ajax_ll>
+      <browser_libraries_ajaxLL>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries_ajax_ll</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries_ajaxLL</label>
           <displayCond>FIELD:browser_libraries:IN:configured</displayCond>
           <config>
             <type>input</type>
@@ -113,7 +113,7 @@
             <default>EXT:browser/res/js/tx_browser_pi1_ajax_languages.js</default>
           </config>
         </TCEforms>
-      </browser_libraries_ajax_ll>
+      </browser_libraries_ajaxLL>
       <mode>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.mode</label>

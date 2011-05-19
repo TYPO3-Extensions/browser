@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 - 2011 - Dirk Wildt http://wildt.at.die-netzmacher.de
+*  (c) 2009-2011 - Dirk Wildt http://wildt.at.die-netzmacher.de
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -63,7 +63,7 @@
   * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
   * @package    TYPO3
   * @subpackage    tx_browser_pi1
-  * @version 3.6.2
+  * @version 3.6.5
   */
 class tx_browser_pi1_config
 {
@@ -127,8 +127,8 @@ class tx_browser_pi1_config
   var $str_ajax_list_on_single            = false;
     // [string] AJAX mode for list in single view
     // #9659, 101013 fsander
-  var $str_browser_libraries              = 'default';
-  var $str_jquery_library                 = 'EXT:browser/res/js/jquery-1.6.min.js';
+  var $str_browser_libraries              = 'typoscript';
+  var $str_jquery_library                 = 'typoscript';
 
   //[socialmedia]
   var $str_socialmedia_bookmarks_enabled                = false;
@@ -1146,7 +1146,7 @@ class tx_browser_pi1_config
                 ERROR
               </h1>
               <p>
-                Plugin Field Searchbox has a value bigger than 7. The value isn\'t defined.<br />
+                Flexform field Searchbox has a value bigger than 7. The value isn\'t defined.<br />
                 tx_browser_pi1_config::sheet_advanced()
               </p>
             </div>';
@@ -1328,13 +1328,119 @@ class tx_browser_pi1_config
  *
  * @return  void
  * @version 3.5.0
- * @since 3.5.0
+ * @since 3.6.5
  */
   function sheet_javascript()
   {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
     $str_lang       = $this->pObj->lang->lang;
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field jquery_library
+      // #13429, dwildt, 110519
+
+    $this->str_jquery_library = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_library', 'javascript', 'lDEF', 'vDEF');
+
+    switch ($this->str_jquery_library)
+    {
+      case(false):
+      case('typoscript'):
+        $this->str_jquery_library = 'typoscript';
+        break;
+      case('http://code.jquery.com/jquery-1.6.min.js'):
+        $this->pObj->conf['javascript.']['jquery.']['file'] = $this->str_jquery_library;
+        break;
+      case('configured'):
+        $str_jquery_library_own = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_library_own', 'javascript', 'lDEF', 'vDEF');
+        $this->pObj->conf['javascript.']['jquery.']['file'] = $str_jquery_library_own;
+        break;
+      case('none'):
+        $this->pObj->conf['javascript.']['jquery.']['file'] = null;
+        break;
+      default:
+        $prompt = '
+          <div style="background:white; color:red; font-weight:bold;border:.4em solid red;">
+            <h1>
+              ERROR</h1>
+            <p>
+              Flexform field jquery_library has an invalid value. The value isn\'t defined.<br />
+              value: ' . $this->str_jquery_library . '<br />
+              tx_browser_pi1_config::sheet_javascript()
+            </p>
+          </div>';
+        exit;
+    }
+    if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_javascript)
+    {
+      t3lib_div::devlog('[INFO/PLUGIN+JSS] '.
+        'jquery_library: \'' . $this->str_jquery_library . '\'',
+        $this->pObj->extKey, 0);
+    }
+      // #13429, dwildt, 110519
+      // Field jquery_library
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field browser_libraries
+      // #13429, dwildt, 110519
+
+    $this->str_browser_libraries = $this->pObj->pi_getFFvalue($arr_piFlexform, 'browser_libraries', 'javascript', 'lDEF', 'vDEF');
+
+    switch ($this->str_browser_libraries)
+    {
+      case(false):
+      case('typoscript'):
+        $this->str_browser_libraries = 'typoscript';
+        break;
+      case('configured'):
+        $str_browser_libraries_general  = $this->pObj->pi_getFFvalue($arr_piFlexform, 'browser_libraries_general',  'javascript', 'lDEF', 'vDEF');
+        $str_browser_libraries_ajax     = $this->pObj->pi_getFFvalue($arr_piFlexform, 'browser_libraries_ajax',     'javascript', 'lDEF', 'vDEF');
+        $str_browser_libraries_ajaxLL   = $this->pObj->pi_getFFvalue($arr_piFlexform, 'browser_libraries_ajaxLL',   'javascript', 'lDEF', 'vDEF');
+        $this->pObj->conf['javascript.']['ajax.']['file']     = $str_browser_libraries_general;
+        $this->pObj->conf['javascript.']['ajax.']['fileLL']   = $str_browser_libraries_ajax;
+        $this->pObj->conf['javascript.']['general.']['file']  = $str_browser_libraries_ajaxLL;
+        break;
+      case('none'):
+        $this->pObj->conf['javascript.']['ajax.']['file']     = null;
+        $this->pObj->conf['javascript.']['ajax.']['fileLL']   = null;
+        $this->pObj->conf['javascript.']['general.']['file']  = null;
+        break;
+      default:
+        $prompt = '
+          <div style="background:white; color:red; font-weight:bold;border:.4em solid red;">
+            <h1>
+              ERROR</h1>
+            <p>
+              Flexform field browser_libraries has an invalid value. The value isn\'t defined.<br />
+              value: ' . $this->str_browser_libraries . '<br />
+              tx_browser_pi1_config::sheet_javascript()
+            </p>
+          </div>';
+        exit;
+    }
+    if ($this->pObj->b_drs_plugin || $this->pObj->b_drs_javascript)
+    {
+      t3lib_div::devlog('[INFO/PLUGIN+JSS] '.
+        'browser_libraries: \'' . $this->str_browser_libraries . '\'',
+        $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/PLUGIN+JSS] '.
+        'browser_libraries_general: \'' . $str_browser_libraries_general . '\'',
+        $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/PLUGIN+JSS] '.
+        'browser_libraries_ajax: \'' . $str_browser_libraries_ajax . '\'',
+        $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/PLUGIN+JSS] '.
+        'browser_libraries_ajax_ll: \'' . $str_browser_libraries_ajaxLL . '\'',
+        $this->pObj->extKey, 0);
+    }
+      // #13429, dwildt, 110519
+      // Field browser_libraries
 
 
 
@@ -1362,7 +1468,7 @@ class tx_browser_pi1_config
             <h1>
               ERROR</h1>
             <p>
-              Plugin Field ajax::mode has an invalid value. The value isn\'t defined.<br />
+              Flexform field ajax::mode has an invalid value. The value isn\'t defined.<br />
               tx_browser_pi1_config::sheet_javascript()
             </p>
           </div>';
@@ -2448,7 +2554,7 @@ class tx_browser_pi1_config
             <h1>
               ERROR</h1>
             <p>
-              Plugin Field navigation has a value bigger than 3. The value isn\'t defined.<br />
+              Flexform field navigation has a value bigger than 3. The value isn\'t defined.<br />
               tx_browser_pi1_config::sheet_viewList()
             </p>
           </div>';
@@ -2485,7 +2591,7 @@ class tx_browser_pi1_config
               ERROR
             </h1>
             <p>
-              Plugin Field records has a value bigger than 1. The value isn\'t defined.<br />
+              Flexform field records has a value bigger than 1. The value isn\'t defined.<br />
               tx_browser_pi1_config::sheet_viewList()
             </p>
           </div>';
@@ -2527,7 +2633,7 @@ class tx_browser_pi1_config
               ERROR
             </h1>
             <p>
-              Plugin Field emptyValues has a value bigger than 1. The value isn\'t defined.<br />
+              Flexform field emptyValues has a value bigger than 1. The value isn\'t defined.<br />
               tx_browser_pi1_config::sheet_viewList()
             </p>
           </div>';
