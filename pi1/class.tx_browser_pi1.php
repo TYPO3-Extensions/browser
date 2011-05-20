@@ -406,18 +406,9 @@ class tx_browser_pi1 extends tslib_pibase {
 
     //////////////////////////////////////////////////////////////////////
     //
-    // Init array from localconf.php
-
-    $arrConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]);
-    // Init array from localconf.php
-
-
-
-    //////////////////////////////////////////////////////////////////////
-    //
     // Init current IP
 
-    $this->str_developer_csvIp = $arrConf['updateWizardAllowedIPs'];
+    $this->str_developer_csvIp = $this->arr_extConf['updateWizardAllowedIPs'];
     // Init current IP
 
 
@@ -428,7 +419,7 @@ class tx_browser_pi1 extends tslib_pibase {
 
 //    if ($arrConf['CheckUpdate_262'])
     // dwildt, 101216, #11523
-    if($arrConf['updateWizardEnable'])
+    if($this->arr_extConf['updateWizardEnable'])
     {
       $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
       if (!($pos === false))
