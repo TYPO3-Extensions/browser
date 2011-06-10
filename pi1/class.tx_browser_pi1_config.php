@@ -2529,7 +2529,10 @@ class tx_browser_pi1_config
     $int_navigation  = $this->pObj->pi_getFFvalue($arr_piFlexform, 'navigation', 'viewList', 'lDEF', 'vDEF');
 
       // Set default value
-    if(empty($int_navigation))
+        // #27352, uherrmann, 110610
+  ##if(empty($int_navigation))
+    if(!isset($int_navigation))
+        // #27352, uherrmann, 110610
     {
         // default case
       $int_navigation = 3;
