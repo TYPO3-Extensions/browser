@@ -1,9 +1,16 @@
 3.6.5
+  11-06-11
+  Bugfixing
+  * 27358: White space clips csvViews <uherrmann>
+  * 27352: Unchecking A-Z Browser as well as Page browser shows both <uherrmann>
+  New Feature
+  * 27354: Enable offset declaration for limit <uherrmann>
+
   11-05-19
   New Feature
   * 14038: Hide the search button by AJAX
   * 13429: Embedding jquery and other javascript code is controlled by the flexform
-  
+
   11-05-04
   Bugfixing
   * 00000: Hook row_single_consolidated didn't update the result proper

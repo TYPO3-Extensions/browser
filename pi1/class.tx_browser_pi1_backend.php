@@ -151,7 +151,7 @@ class tx_browser_pi1_backend
               $csvViews     = $arr_template['csvViews'];
                 // #27358, uherrmann, 110610
             ##$arr_csvViews = explode(',', $csvViews);
-              $arr_csvViews = t3lib_div:trimExplode(',', $csvViews);
+              $arr_csvViews = t3lib_div::trimExplode(',', $csvViews);
                 // #27358, uherrmann, 110610
               $arr_views    = array_merge($arr_views, $arr_csvViews);
             }

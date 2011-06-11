@@ -2472,6 +2472,14 @@ class tx_browser_pi1_config
       // Field limit
 
       // Get the limit for the list view
+          // #27354, uherrmann, 110611
+        // Get the limit (offset) for the list view
+    $str_limit_offset = $this->pObj->pi_getFFvalue($arr_piFlexform, 'limitOffset', 'viewList', 'lDEF', 'vDEF');
+      // downwards compatibility < 3.6.5:
+      // offset is NULL if flexform was never saved with this field:
+      $str_limit_offset = (int)$str_limit_offset;
+          // #27354, uherrmann, 110611
+
     $str_limit = $this->pObj->pi_getFFvalue($arr_piFlexform, 'limit', 'viewList', 'lDEF', 'vDEF');
     if($str_limit)
     {
@@ -2489,7 +2497,10 @@ class tx_browser_pi1_config
         t3lib_div::devlog('[INFO/FLEXFORM] viewList/limit: We allocates it with 20.', $this->pObj->extKey, 0);
       }
     }
-    $str_limit = '0,'.$str_limit;
+        // #27354, uherrmann, 110611
+  ##$str_limit = '0,'.$str_limit;
+    $str_limit = $str_limit_offset.','.$str_limit;
+        // #27354, uherrmann, 110611
       // Get the limit for the list view
 
       // View has a local limit
@@ -2511,7 +2522,10 @@ class tx_browser_pi1_config
         if ($this->pObj->b_drs_flexform)
         {
           t3lib_div::devlog('[INFO/FLEXFORM] The TypoScript value hasn\'t any effect: \''.htmlspecialchars($conf_limit).'\'!', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[HELP/FLEXFORM] Please remove \''.$str_path.'\'!', $this->pObj->extKey, 0);
+        ##t3lib_div::devlog('[HELP/FLEXFORM] Please remove \''.$str_path.'\'! ', $this->pObj->extKey, 0);
+            // #27354, uherrmann, 110611
+          t3lib_div::devlog('[HELP/FLEXFORM] Please remove \''.$str_path.'\'! Use fields \'Limit: start/offset\' and \'Limit: records per page\' (Backend/ Browser plugin) instead of!', $this->pObj->extKey, 0);
+            // #27354, uherrmann, 110611
         }
       }
     }
