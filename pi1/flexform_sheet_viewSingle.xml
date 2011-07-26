@@ -16,11 +16,11 @@
             <items type="array">
               <numIndex index="0" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.0</numIndex>
-                <numIndex index="1">default</numIndex>
+                <numIndex index="1">0</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.1</numIndex>
-                <numIndex index="1">adjusted</numIndex>
+                <numIndex index="1">1</numIndex>
               </numIndex>
             </items>
             <default>0</default>
@@ -40,7 +40,7 @@
             <items type="array">
               <numIndex index="0" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.tutorial.0</numIndex>
-                <numIndex index="1"></numIndex>
+                <numIndex index="1">0</numIndex>
               </numIndex>
             </items>
           </config>
@@ -56,11 +56,11 @@
             <items type="array">
               <numIndex index="0" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.displayFirstLast.0</numIndex>
-                <numIndex index="1">default</numIndex>
+                <numIndex index="1">0</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.displayFirstLast.1</numIndex>
-                <numIndex index="1">adjusted</numIndex>
+                <numIndex index="1">1</numIndex>
               </numIndex>
             </items>
             <default>0</default>
@@ -79,11 +79,11 @@
             <items type="array">
               <numIndex index="0" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.missingRecords.0</numIndex>
-                <numIndex index="1">default</numIndex>
+                <numIndex index="1">0</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.missingRecords.1</numIndex>
-                <numIndex index="1">adjusted</numIndex>
+                <numIndex index="1">1</numIndex>
               </numIndex>
             </items>
             <default>0</default>
