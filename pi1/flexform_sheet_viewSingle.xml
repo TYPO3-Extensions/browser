@@ -29,7 +29,7 @@
           </config>
         </TCEforms>
       </recordbrowser>
-      <recordbrowser.tutorial>
+      <recordbrowserTutorial>
         <TCEforms>
           <exclude>1</exclude>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.tutorial</label>
@@ -45,7 +45,7 @@
             </items>
           </config>
         </TCEforms>
-      </recordbrowser.tutorial>
+      </recordbrowserTutorial>
       <recordbrowser.displayFirstLast>
         <TCEforms>
           <exclude>1</exclude>
