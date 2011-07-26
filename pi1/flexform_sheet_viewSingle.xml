@@ -2,14 +2,14 @@
 <T3DataStructure>
   <ROOT>
     <TCEforms>
-      <sheetTitle>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList</sheetTitle>
+      <sheetTitle>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle</sheetTitle>
     </TCEforms>
     <type>array</type>
     <el>
       <title>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.title</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.title</label>
           <config>
             <type>input</type>
             <size>40</size>
@@ -20,7 +20,7 @@
       <titleWrap>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.titleWrap</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.titleWrap</label>
           <config>
             <type>input</type>
             <size>40</size>
@@ -31,7 +31,7 @@
       <grouptitleWrap>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.grouptitleWrap</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.grouptitleWrap</label>
           <config>
             <type>input</type>
             <size>40</size>
@@ -42,7 +42,7 @@
       <limitOffset>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.limitOffset</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.limitOffset</label>
           <config>
             <type>input</type>
             <size>4</size>
@@ -59,7 +59,7 @@
       <limit>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.limit</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.limit</label>
           <config>
             <type>input</type>
             <size>4</size>
@@ -76,17 +76,17 @@
       <navigation>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.navigation</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.navigation</label>
           <config>
             <type>check</type>
             <cols>3</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.navigation.azBrowser</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.navigation.azBrowser</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.navigation.pageBrowser</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.navigation.pageBrowser</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
@@ -97,13 +97,13 @@
       <records>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.records</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.records</label>
           <config>
             <type>check</type>
             <cols>3</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.records.emptyAtStart</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.records.emptyAtStart</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
@@ -114,13 +114,13 @@
       <emptyValues>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.emptyValues</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.emptyValues</label>
           <config>
             <type>check</type>
             <cols>2</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.emptyValues.dontHandle</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.emptyValues.dontHandle</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
@@ -130,17 +130,17 @@
       </emptyValues>
       <search>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.search</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.search.default</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.default</numIndex>
                 <numIndex index="1">default</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.search.adjusted</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.adjusted</numIndex>
                 <numIndex index="1">adjusted</numIndex>
               </numIndex>
             </items>
@@ -153,14 +153,14 @@
       <searchTutorial>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.searchTutorial</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.searchTutorial</label>
           <displayCond>FIELD:search:=:adjusted</displayCond>
           <config>
             <type>check</type>
             <cols>1</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.searchTutorial.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.searchTutorial.0</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
@@ -170,26 +170,26 @@
       <searchForm>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.search.form</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.form</label>
           <displayCond>FIELD:search:=:adjusted</displayCond>
           <config>
             <type>check</type>
             <cols>2</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.search.form.display</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.form.display</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.search.form.wiPhrase</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.form.wiPhrase</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.search.form.wiColoredSwords</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.form.wiColoredSwords</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
               <numIndex index="3" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.search.form.wiColoredSwordsSingle</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.form.wiColoredSwordsSingle</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
@@ -201,12 +201,12 @@
         <TCEforms>
           <exclude>1</exclude>                        
           <displayCond>FIELD:search:=:adjusted</displayCond>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.search.form.check_wiColoredSwordsSingle.label</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.form.check_wiColoredSwordsSingle.label</label>
           <config>
             <type>check</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.search.form.check_wiColoredSwordsSingle.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.form.check_wiColoredSwordsSingle.0</numIndex>
               </numIndex>
             </items>
           </config>
@@ -214,17 +214,17 @@
       </check_wiColoredSwordsSingle_330>
       <searchWildcards>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.search.wildcards</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.wildcards</label>
           <displayCond>FIELD:search:=:adjusted</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.search.wildcards.default</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.wildcards.default</numIndex>
                 <numIndex index="1">default</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.search.wildcards.manual</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.wildcards.manual</numIndex>
                 <numIndex index="1">manual</numIndex>
               </numIndex>
             </items>
@@ -238,7 +238,7 @@
         <TCEforms>
           <exclude>1</exclude>
           <displayCond>FIELD:search:=:adjusted</displayCond>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.search.wildcards.char</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.wildcards.char</label>
           <config>
             <type>input</type>
             <size>1</size>
@@ -251,7 +251,7 @@
       <simulateSingleUid>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewList.simulateSingleUid</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.simulateSingleUid</label>
           <config>
             <type>input</type>
             <size>5</size>
