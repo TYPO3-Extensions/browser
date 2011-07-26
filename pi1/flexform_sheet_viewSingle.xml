@@ -6,259 +6,92 @@
     </TCEforms>
     <type>array</type>
     <el>
-      <title>
+      <recordbrowser>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.title</label>
-          <config>
-            <type>input</type>
-            <size>40</size>
-            <eval>trim</eval>
-          </config>
-        </TCEforms>
-      </title>
-      <titleWrap>
-        <TCEforms>
-          <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.titleWrap</label>
-          <config>
-            <type>input</type>
-            <size>40</size>
-            <eval>trim</eval>
-          </config>
-        </TCEforms>
-      </titleWrap>
-      <grouptitleWrap>
-        <TCEforms>
-          <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.grouptitleWrap</label>
-          <config>
-            <type>input</type>
-            <size>40</size>
-            <eval>trim</eval>
-          </config>
-        </TCEforms>
-      </grouptitleWrap>
-      <limitOffset>
-        <TCEforms>
-          <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.limitOffset</label>
-          <config>
-            <type>input</type>
-            <size>4</size>
-            <max>4</max>
-            <eval>int</eval>
-            <range>
-              <lower>0</lower>
-              <upper>1000</upper>
-            </range>
-            <default>0</default>
-          </config>
-        </TCEforms>
-      </limitOffset>
-      <limit>
-        <TCEforms>
-          <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.limit</label>
-          <config>
-            <type>input</type>
-            <size>4</size>
-            <max>4</max>
-            <eval>int</eval>
-            <range>
-              <lower>1</lower>
-              <upper>1000</upper>
-            </range>
-            <default>20</default>
-          </config>
-        </TCEforms>
-      </limit>
-      <navigation>
-        <TCEforms>
-          <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.navigation</label>
-          <config>
-            <type>check</type>
-            <cols>3</cols>
-            <items type="array">
-              <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.navigation.azBrowser</numIndex>
-                <numIndex index="1"></numIndex>
-              </numIndex>
-              <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.navigation.pageBrowser</numIndex>
-                <numIndex index="1"></numIndex>
-              </numIndex>
-            </items>
-            <default>3</default>
-          </config>
-        </TCEforms>
-      </navigation>
-      <records>
-        <TCEforms>
-          <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.records</label>
-          <config>
-            <type>check</type>
-            <cols>3</cols>
-            <items type="array">
-              <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.records.emptyAtStart</numIndex>
-                <numIndex index="1"></numIndex>
-              </numIndex>
-            </items>
-            <default>0</default>
-          </config>
-        </TCEforms>
-      </records>
-      <emptyValues>
-        <TCEforms>
-          <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.emptyValues</label>
-          <config>
-            <type>check</type>
-            <cols>2</cols>
-            <items type="array">
-              <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.emptyValues.dontHandle</numIndex>
-                <numIndex index="1"></numIndex>
-              </numIndex>
-            </items>
-            <default>1</default>
-          </config>
-        </TCEforms>
-      </emptyValues>
-      <search>
-        <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.default</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.0</numIndex>
                 <numIndex index="1">default</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.adjusted</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.1</numIndex>
                 <numIndex index="1">adjusted</numIndex>
               </numIndex>
             </items>
-            <default>default</default>
+            <default>0</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>
         </TCEforms>
-      </search>
-      <searchTutorial>
+      </recordbrowser>
+      <recordbrowser.tutorial>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.searchTutorial</label>
-          <displayCond>FIELD:search:=:adjusted</displayCond>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.tutorial</label>
+          <displayCond>FIELD:recordbrowser:=:1</displayCond>
           <config>
             <type>check</type>
             <cols>1</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.searchTutorial.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.tutorial.0</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
           </config>
         </TCEforms>
-      </searchTutorial>
-      <searchForm>
+      </recordbrowser.tutorial>
+      <recordbrowser.displayFirstLast>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.form</label>
-          <displayCond>FIELD:search:=:adjusted</displayCond>
-          <config>
-            <type>check</type>
-            <cols>2</cols>
-            <items type="array">
-              <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.form.display</numIndex>
-                <numIndex index="1"></numIndex>
-              </numIndex>
-              <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.form.wiPhrase</numIndex>
-                <numIndex index="1"></numIndex>
-              </numIndex>
-              <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.form.wiColoredSwords</numIndex>
-                <numIndex index="1"></numIndex>
-              </numIndex>
-              <numIndex index="3" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.form.wiColoredSwordsSingle</numIndex>
-                <numIndex index="1"></numIndex>
-              </numIndex>
-            </items>
-            <default>7</default>
-          </config>
-        </TCEforms>
-      </searchForm>
-      <check_wiColoredSwordsSingle_330>
-        <TCEforms>
-          <exclude>1</exclude>                        
-          <displayCond>FIELD:search:=:adjusted</displayCond>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.form.check_wiColoredSwordsSingle.label</label>
-          <config>
-            <type>check</type>
-            <items type="array">
-              <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.form.check_wiColoredSwordsSingle.0</numIndex>
-              </numIndex>
-            </items>
-          </config>
-        </TCEforms>
-      </check_wiColoredSwordsSingle_330>
-      <searchWildcards>
-        <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.wildcards</label>
-          <displayCond>FIELD:search:=:adjusted</displayCond>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.displayFirstLast</label>
+          <displayCond>FIELD:recordbrowser:=:1</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.wildcards.default</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.displayFirstLast.0</numIndex>
                 <numIndex index="1">default</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.wildcards.manual</numIndex>
-                <numIndex index="1">manual</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.displayFirstLast.1</numIndex>
+                <numIndex index="1">adjusted</numIndex>
               </numIndex>
             </items>
-            <default>default</default>
+            <default>0</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>
         </TCEforms>
-      </searchWildcards>
-      <searchWildcardChar>
+      </recordbrowser.displayFirstLast>
+      <recordbrowser.missingRecords>
         <TCEforms>
           <exclude>1</exclude>
-          <displayCond>FIELD:search:=:adjusted</displayCond>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.search.wildcards.char</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.missingRecords</label>
+          <displayCond>FIELD:recordbrowser:=:1</displayCond>
           <config>
-            <type>input</type>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.missingRecords.0</numIndex>
+                <numIndex index="1">default</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.missingRecords.1</numIndex>
+                <numIndex index="1">adjusted</numIndex>
+              </numIndex>
+            </items>
+            <default>0</default>
+            <maxitems>1</maxitems>
             <size>1</size>
-            <max>1</max>
-            <eval>trim,required,nospace</eval>
-            <default>*</default>
           </config>
         </TCEforms>
-      </searchWildcardChar>
-      <simulateSingleUid>
-        <TCEforms>
-          <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.simulateSingleUid</label>
-          <config>
-            <type>input</type>
-            <size>5</size>
-            <eval>trim,nospace</eval>
-          </config>
-        </TCEforms>
-      </simulateSingleUid>
+      </recordbrowser.missingRecords>
     </el>
   </ROOT>
 </T3DataStructure>
