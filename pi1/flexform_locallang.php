@@ -228,7 +228,7 @@ $LOCAL_LANG = array(
     'sheet_viewSingle.recordbrowser.labels.1'           => 'first previous ... next last',
     'sheet_viewSingle.recordbrowser.labels.2'           => 'icons',
     'sheet_viewSingle.recordbrowser.labels.3'           => 'content from particular record',
-    'sheet_viewSingle.recordbrowser.labels.altTitle'    => 'table.field',
+    'sheet_viewSingle.recordbrowser.labels.altTitle'    => 'Record browser: alt/title for every item [table.field syntax like: tt_news.title]',
     'sheet_viewSingle.recordbrowser.tutorial'           => 'Record browser: Tutorial',
     'sheet_viewSingle.recordbrowser.tutorial.0'         => 'http://typo3.org/extensions/repository/view/browser_tut_navigation_en/current/',
   ),
