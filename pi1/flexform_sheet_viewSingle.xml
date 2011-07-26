@@ -84,6 +84,7 @@
               <numIndex index="1" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.missingRecords.1</numIndex>
                 <numIndex index="1">1</numIndex>
+              </numIndex>
               <numIndex index="2" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.recordbrowser.missingRecords.2</numIndex>
                 <numIndex index="1">2</numIndex>
