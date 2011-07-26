@@ -6,6 +6,7 @@
   <sheets>
     <sDEF>EXT:browser/pi1/flexform_sheet_sDEF.xml</sDEF>
     <viewList>EXT:browser/pi1/flexform_sheet_viewList.xml</viewList>
+    <viewSingle>EXT:browser/pi1/flexform_sheet_viewSingle.xml</viewSingle>
     <templating>EXT:browser/pi1/flexform_sheet_templating.xml</templating>
     <javascript>EXT:browser/pi1/flexform_sheet_javascript.xml</javascript>
     <advanced>EXT:browser/pi1/flexform_sheet_advanced.xml</advanced>

@@ -1,3 +1,8 @@
+3.6.6
+  110726
+  Improvement
+  * #27041: Record browser for the single view / Prev-next Switcher in the single view
+  
 3.6.5
   11-06-11
   Bugfixing
