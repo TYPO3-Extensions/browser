@@ -212,7 +212,7 @@ $LOCAL_LANG = array(
     'sheet_viewList.search.wildcards.char'      => 'Search: char for a wildcard (i.e "*")',
     'sheet_viewList.simulateSingleUid'          => 'Display record with UID (single view)',
 
-    'sheet_viewSingle'                            => 'Single		',
+    'sheet_viewSingle'                            => 'Single',
     'sheet_viewSingle.title'                      => 'Title (substitutes ###MY_TITLE###)',
     'sheet_viewSingle.titleWrap'                  => 'Title Wrap (i.e. <h1>|</h1>)',
     'sheet_viewSingle.grouptitleWrap'             => 'Group Title Wrap (i.e. <h2>|</h2>)',
