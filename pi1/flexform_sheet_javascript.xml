@@ -49,6 +49,68 @@
           </config>
         </TCEforms>
       </jquery_library_own>
+      <jquery_ui>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.0</numIndex>
+                <numIndex index="1">typoscript</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.1</numIndex>
+                <numIndex index="1">blitzer</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.2</numIndex>
+                <numIndex index="1">smoothness</numIndex>
+              </numIndex>
+              <numIndex index="3" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.3</numIndex>
+                <numIndex index="1">start</numIndex>
+              </numIndex>
+              <numIndex index="4" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.4</numIndex>
+                <numIndex index="1">configured</numIndex>
+              </numIndex>
+              <numIndex index="5" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.5</numIndex>
+                <numIndex index="1">none</numIndex>
+              </numIndex>
+            </items>
+            <default>typoscript</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </jquery_ui>
+      <jquery_ui_library>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui_library</label>
+          <displayCond>FIELD:jquery_ui:IN:configured</displayCond>
+          <config>
+            <type>input</type>
+            <size>255</size>
+            <eval>trim,required,nospace</eval>
+            <default>EXT:browser/res/js/jquery/jquery-ui-1.8.14.custom.min.js</default>
+          </config>
+        </TCEforms>
+      </jquery_ui_library>
+      <jquery_ui_css>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui_css</label>
+          <displayCond>FIELD:jquery_ui:IN:configured</displayCond>
+          <config>
+            <type>input</type>
+            <size>255</size>
+            <eval>trim,required,nospace</eval>
+            <default>EXT:browser/res/js/jquery/smoothness/jquery-ui-1.8.14.custom.css</default>
+          </config>
+        </TCEforms>
+      </jquery_ui_css>
       <browser_libraries>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries</label>
