@@ -1623,22 +1623,22 @@ plugin.tx_browser_pi1 {
       ui {
         default {
             // [STRING] Path to the library of the user interface (ui). By default: all features!
-          library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
+          library = EXT:browser/res/js/jquery/jquery-ui-1.8.14.custom.min.js
             // [STRING] Path to the CSS of the user interface (ui)
-          css     = EXT:browser/res/js/jquery/ui/css/smoothness/jquery-ui-1.8.14.custom.css
+          css     = EXT:browser/res/js/jquery/smoothness/jquery-ui-1.8.14.custom.css
         }
         blitzer {
             // [STRING] Path to the library of the user interface (ui). By default: all features!
-          library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
+          library = EXT:browser/res/js/jquery/jquery-ui-1.8.14.custom.min.js
             // [STRING] Path to the CSS of the user interface (ui)
-          css     = EXT:browser/res/js/jquery/ui/css/blitzer/jquery-ui-1.8.14.custom.css
+          css     = EXT:browser/res/js/jquery/blitzer/jquery-ui-1.8.14.custom.css
         }
         smoothness < .default
         start {
             // [STRING] Path to the library of the user interface (ui). By default: all features!
-          library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
+          library = EXT:browser/res/js/jquery/jquery-ui-1.8.14.custom.min.js
             // [STRING] Path to the CSS of the user interface (ui)
-          css     = EXT:browser/res/js/jquery/ui/css/start/jquery-ui-1.8.14.custom.css
+          css     = EXT:browser/res/js/jquery/start/jquery-ui-1.8.14.custom.css
         }
       }
     }

@@ -57,6 +57,7 @@ $LOCAL_LANG = array(
     'sheet_javascript.jquery_library.2'         => 'Own file or URL',
     'sheet_javascript.jquery_library.3'         => 'Don\'t embed it!',
     'sheet_javascript.jquery_library_own'       => 'jQuery own library from fileadmin/..., http://..., EXT:...',
+    'sheet_javascript.jquery_ui'                => 'jQuery UI (User Interface) von',
     'sheet_javascript.jquery_ui.0'              => 'TypoScript (empfohlen)',
     'sheet_javascript.jquery_ui.1'              => 'UI blitzer (red)',
     'sheet_javascript.jquery_ui.2'              => 'UI smoothness (grey)',
