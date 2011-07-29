@@ -363,6 +363,20 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['version']                         = '3.4.2';
     $arr_release[$int_v][$int_t]['srce']                            = 'sDEF.viewsIds';
     $arr_release[$int_v][$int_t]['dest']                            = 'sDEF.viewslist';
+
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'jQuery library: path has changed';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'This porperty is moved in TypoScript since version %version%.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'jQuery Bibliothek: Pfad hat sich ge&auml;ndert';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft ist seit Version %version% im TypoScript an anderer Stelle.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'moved_value';
+    $arr_release[$int_v][$int_t]['version']                         = '3.7.0';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'javascript.jquery.file';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'javascript.jquery.library';
+
+
 //:TODO:
     // Set the Ticket array
 

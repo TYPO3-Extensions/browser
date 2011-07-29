@@ -1,3 +1,11 @@
+3.7.0
+  110729
+  Update
+  * #28562: jQuery library 1.6 -> 1.6.2
+  Improvement
+  * #27041: Record browser for the single view / Prev-next Switcher in the single view
+  * #28562: browser got the jQuery UI blitzer, smoothness and start
+  
 3.6.6
   110726
   Improvement

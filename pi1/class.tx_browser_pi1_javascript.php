@@ -532,7 +532,7 @@ class tx_browser_pi1_javascript
 
 
 
-    $path         = $this->pObj->conf['javascript.']['jquery.']['file'];
+    $path         = $this->pObj->conf['javascript.']['jquery.']['library'];
 
       // #13429, dwildt, 110519
       // RETURN, there isn't any jQuery for embedding
