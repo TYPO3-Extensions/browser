@@ -56,10 +56,6 @@
           <config>
             <type>select</type>
             <items type="array">
-              <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.0</numIndex>
-                <numIndex index="1">typoscript</numIndex>
-              </numIndex>
               <numIndex index="1" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.1</numIndex>
                 <numIndex index="1">blitzer</numIndex>
@@ -81,7 +77,7 @@
                 <numIndex index="1">none</numIndex>
               </numIndex>
             </items>
-            <default>typoscript</default>
+            <default>smoothness</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>
