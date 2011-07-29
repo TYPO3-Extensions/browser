@@ -50,7 +50,7 @@ $LOCAL_LANG = array(
     'sheet_development.debugJSS.label'          => 'Frontend-Debugger for Javascript / AJAX',
     'sheet_development.debugJSS.0'              => 'Debug it!',
 
-    'sheet_javascript'                          => 'Javascript/AJAX',
+    'sheet_javascript'                          => 'jQuery & AJAX',
     'sheet_javascript.jquery_library'           => 'jQuery library from',
     'sheet_javascript.jquery_library.0'         => 'TypoScript (recommended)',
     'sheet_javascript.jquery_library.1'         => 'jquery.com (data privacy risk)',
@@ -291,7 +291,7 @@ $LOCAL_LANG = array(
     'sheet_development.debugJSS.label'          => 'Frontend-Debugger fuer Javascript und AJAX',
     'sheet_development.debugJSS.0'              => 'Debuggen!',
 
-    'sheet_javascript'                          => 'Javascript/AJAX',
+    'sheet_javascript'                          => 'jQuery & AJAX',
     'sheet_javascript.jquery_library'           => 'jQuery Bibliothek von',
     'sheet_javascript.jquery_library.0'         => 'TypoScript (empfohlen)',
     'sheet_javascript.jquery_library.1'         => 'jquery.com (Risiko: Datenschutz)',
