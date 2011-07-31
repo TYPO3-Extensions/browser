@@ -255,7 +255,7 @@
       </root>
       <session>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.session</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
