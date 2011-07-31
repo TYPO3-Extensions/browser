@@ -59,22 +59,27 @@
               <numIndex index="1" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.1</numIndex>
                 <numIndex index="1">blitzer</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_blitzer.png</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.2</numIndex>
                 <numIndex index="1">smoothness</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_overcast.png</numIndex>
               </numIndex>
               <numIndex index="3" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.3</numIndex>
                 <numIndex index="1">start</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_start_menu.png</numIndex>
               </numIndex>
               <numIndex index="4" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.4</numIndex>
                 <numIndex index="1">configured</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/my_ui.gif</numIndex>
               </numIndex>
               <numIndex index="5" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.5</numIndex>
                 <numIndex index="1">none</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/dont_embedd_it.gif</numIndex>
               </numIndex>
             </items>
             <default>smoothness</default>
