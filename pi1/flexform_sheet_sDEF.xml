@@ -262,11 +262,11 @@
             <items type="array">
               <numIndex index="0" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.session.0</numIndex>
-                <numIndex index="1">default</numIndex>
+                <numIndex index="1">0</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.session.1</numIndex>
-                <numIndex index="1">configured</numIndex>
+                <numIndex index="1">1</numIndex>
               </numIndex>
             </items>
             <default>0</default>
