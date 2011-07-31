@@ -253,6 +253,51 @@
           </config>
         </TCEforms>
       </root>
+      <session>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.session.0</numIndex>
+                <numIndex index="1">default</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.session.1</numIndex>
+                <numIndex index="1">configured</numIndex>
+              </numIndex>
+            </items>
+            <default>0</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </session>
+      <session.type>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.session.type</label>
+          <displayCond>FIELD:session:=:1</displayCond>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.session.type.0</numIndex>
+                <numIndex index="1">0</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.session.type.1</numIndex>
+                <numIndex index="1">1</numIndex>
+              </numIndex>
+            </items>
+            <default>0</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </session.type>
     </el>
   </ROOT>
 </T3DataStructure>

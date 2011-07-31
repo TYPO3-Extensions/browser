@@ -123,6 +123,12 @@ $LOCAL_LANG = array(
     'sheet_sDEF.relations.joins.full'           => 'Full (displays only records with a child)',
     'sheet_sDEF.relations.root'                 => 'Relations: Records without Pid',
     'sheet_sDEF.relations.root.display'         => 'Display records of the root level too',
+    'sheet_sDEF.session'                        => 'Session',
+    'sheet_sDEF.session.0'                      => 'Default',
+    'sheet_sDEF.session.1'                      => 'Configured',
+    'sheet_sDEF.session.type'                   => 'Session: type',
+    'sheet_sDEF.session.type.0'                 => 'Enable session (default)',
+    'sheet_sDEF.session.type.1'                 => 'Disable session (less performance)',
 
     'sheet_search'                              => 'Search / Filter',
     'sheet_search.search'                       => 'Search',

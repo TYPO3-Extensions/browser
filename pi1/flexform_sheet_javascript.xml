@@ -79,7 +79,7 @@
               <numIndex index="5" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.5</numIndex>
                 <numIndex index="1">none</numIndex>
-                <numIndex index="2">EXT:browser/res/images/jQuery/dont_embedd_it.gif</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/dont_embed_it.gif</numIndex>
               </numIndex>
             </items>
             <default>smoothness</default>
