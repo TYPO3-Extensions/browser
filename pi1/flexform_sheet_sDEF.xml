@@ -223,12 +223,12 @@
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations.joins.left</numIndex>
-                <numIndex index="1">1</numIndex>
-              </numIndex>
-              <numIndex index="1" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations.joins.full</numIndex>
                 <numIndex index="1">0</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations.joins.left</numIndex>
+                <numIndex index="1">1</numIndex>
               </numIndex>
             </items>
             <default>1</default>

@@ -1604,14 +1604,22 @@ class tx_browser_pi1_flexform
       //
       // Field relations_select
 
-    $str_relations = $this->pObj->pi_getFFvalue($arr_piFlexform, 'relations_select', 'sDEF', 'lDEF', 'vDEF');
-    if ($str_relations == 'default' OR empty($str_relations))
+    $relations  = false;
+    $joins      = -1;
+    $root       = -1;
+    $relations_select = $this->pObj->pi_getFFvalue($arr_piFlexform, 'relations_select', 'sDEF', 'lDEF', 'vDEF');
+    if ($relations_select == 'default' OR empty($relations_select))
     {
+      $relations  = 'all';
+      $joins      = 1;
+      $root       = 0;
       if ($this->pObj->b_drs_flexform)
       {
         t3lib_div::devlog('[INFO/FLEXFORM] relations_select is default.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] relations is set to all.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] joins is set to 1.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] root is set to 0.', $this->pObj->extKey, 0);
       }
-      return;
     }
       // Field relations_select
 
@@ -1621,15 +1629,18 @@ class tx_browser_pi1_flexform
       //
       // Field relations
 
-    $str_relations = $this->pObj->pi_getFFvalue($arr_piFlexform, 'relations', 'sDEF', 'lDEF', 'vDEF');
+    if(!$relations)
+    {
+      $relations = $this->pObj->pi_getFFvalue($arr_piFlexform, 'relations', 'sDEF', 'lDEF', 'vDEF');
+    }
     if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div::devlog('[INFO/FLEXFORM] relations: \''.$str_relations.'\'!', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/FLEXFORM] relations: \''.$relations.'\'!', $this->pObj->extKey, 0);
     }
     $bool_typoscript = false;
     $bool_error      = false;
     #9879
-    switch($str_relations)
+    switch($relations)
     {
       case('all'):
         $bool_typoscript        = true;
@@ -1663,7 +1674,7 @@ class tx_browser_pi1_flexform
       $str_prompt = str_replace('%class%', __METHOD__ . ' (' . __LINE__ . ')', $str_prompt);
       $str_prompt = str_replace('%sheet%', 'sheet_sDEF()', $str_prompt);
       $str_prompt = str_replace('%field%', 'relations', $str_prompt);
-      $str_prompt = str_replace('%value%', $str_relations, $str_prompt);
+      $str_prompt = str_replace('%value%', $relations, $str_prompt);
       $str_reload = $this->pObj->pi_getLL('config_reload');
       $str_reload = str_replace('%pid%', $this->pObj->cObj->data['pid'], $str_reload);
       $str_reload = str_replace('%uid%', $this->pObj->cObj->data['uid'], $str_reload);
@@ -1731,14 +1742,17 @@ class tx_browser_pi1_flexform
       // Field joins
 
       #9879
-    $int_joins = $this->pObj->pi_getFFvalue($arr_piFlexform, 'joins', 'sDEF', 'lDEF', 'vDEF');
+    if($joins < 0)
+    {
+      $joins = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'joins', 'sDEF', 'lDEF', 'vDEF');
+    }
     if (!empty($this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.']))
     {
-      $this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.']['relations.']['left_join'] = $int_joins;
+      $this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.']['relations.']['left_join'] = $joins;
     }
     if (empty($this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.']))
     {
-      $this->pObj->conf['autoconfig.']['relations.']['left_join'] = $int_joins;
+      $this->pObj->conf['autoconfig.']['relations.']['left_join'] = $joins;
     }
     if ($this->pObj->b_drs_flexform)
     {
@@ -1748,7 +1762,7 @@ class tx_browser_pi1_flexform
         $path_view = 'views.'.$viewWiDot.$modeWiDot;
       }
       $str_path = $path_view.'autoconfig.relations.left_join';
-      t3lib_div::devlog('[INFO/FLEXFORM] TypoScript '.$str_path.' is set to: '.$int_joins.'.', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/FLEXFORM] TypoScript '.$str_path.' is set to: '.$joins.'.', $this->pObj->extKey, 0);
     }
       // Field joins
 
@@ -1758,8 +1772,11 @@ class tx_browser_pi1_flexform
       //
       // Field root
 
-    $int_root = $this->pObj->pi_getFFvalue($arr_piFlexform, 'root', 'sDEF', 'lDEF', 'vDEF');
-    if ($int_root == 1)
+    if($root < 0)
+    {
+      $root = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'root', 'sDEF', 'lDEF', 'vDEF');
+    }
+    if ($root == 1)
     {
       if ($this->pObj->b_drs_flexform)
       {
@@ -1785,7 +1802,7 @@ class tx_browser_pi1_flexform
         }
       }
     }
-    if ($int_root != 1)
+    if ($root != 1)
     {
       if ($this->pObj->b_drs_flexform)
       {
