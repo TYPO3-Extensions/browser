@@ -1819,7 +1819,7 @@ class tx_browser_pi1_navi
       $dummy            = $this->pObj->objViews->listView($this->pObj->str_template_raw);
       $this->pObj->rows = $curr_rows;
       $this->pObj->view = $curr_view;
-      $uids_all_rows    = $this->uids_all_rows;
+      $uids_all_rows    = $this->pObj->uids_all_rows;
     }
       // No session: call the list view again
 
