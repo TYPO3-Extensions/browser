@@ -327,25 +327,16 @@ class tx_browser_pi1 extends tslib_pibase {
  */
   function main($content, $conf) 
   {
-// 110125, dwildt
-//if(t3lib_div::getIndpEnv('REMOTE_ADDR') =='84.184.207.88')
-//{
-//  var_dump('browser', $conf['views.']['single.']['302.']['tx_org_repertoire.']['image.']['layout.']['default.']['value']);
-//}
-
     $this->conf = $conf;
 
     $this->pi_setPiVarDefaults();
     $this->pi_loadLL();
 
-//if(t3lib_div::_GP('dev')) var_dump('browser 312', $GLOBALS['TSFE']->fe_user);
-//$sesArray = $GLOBALS['TSFE']->fe_user->getKey('ses', 'wt_cart_cart'); // get already exting products from session
-//if(t3lib_div::_GP('dev')) var_dump('browser 312', $sesArray);
 
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // TYPO3 Version
+      ////////////////////////////////////////////////////////////////////
+      //
+      // TYPO3 Version
 
     $str_version = TYPO3_version;
     if(!$str_version)
@@ -361,12 +352,13 @@ class tx_browser_pi1 extends tslib_pibase {
     {
       $this->bool_typo3_43 = false;
     }
-    // TYPO3 Version
+      // TYPO3 Version
 
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Timetracking
+
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Timetracking
 
     require_once(PATH_t3lib.'class.t3lib_timetrack.php');
     $this->TT = new t3lib_timeTrack;
@@ -379,46 +371,46 @@ class tx_browser_pi1 extends tslib_pibase {
     {
       $this->startTime = $this->TT->mtime();
     }
-    // Timetracking
+      // Timetracking
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Get the values from the localconf.php file
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Get the values from the localconf.php file
 
     $this->arr_extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]);
-    // Get the values from the localconf.php file
+      // Get the values from the localconf.php file
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Init DRS - Development Reporting System
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Init DRS - Development Reporting System
 
     $this->init_drs();
     if ($this->b_drs_perform)
     {
       t3lib_div::devlog('[INFO/PERFORMANCE] START', $this->extKey, 0);
     }
-    // Init DRS - Development Reporting System
+      // Init DRS - Development Reporting System
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Init current IP
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Init current IP
 
     $this->str_developer_csvIp = $this->arr_extConf['updateWizardAllowedIPs'];
-    // Init current IP
+      // Init current IP
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Init Update Check
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Init Update Check
 
-//    if ($arrConf['CheckUpdate_262'])
-    // dwildt, 101216, #11523
+      // dwildt, 101216, #11523
     if($this->arr_extConf['updateWizardEnable'])
     {
       $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
@@ -430,31 +422,34 @@ class tx_browser_pi1 extends tslib_pibase {
         $html_updateCheck = $this->objPi2->main($content, $conf, $this);
       }
     }
-    // Init Update Check
+      // Init Update Check
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Get the global TCA
 
-    /* BACKGROUND : t3lib_div::loadTCA($table) loads for the frontend
-     * only 'ctrl' and 'feInterface' parts.
-     */
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Get the global TCA
+
+      /* BACKGROUND : t3lib_div::loadTCA($table) loads for the frontend
+       * only 'ctrl' and 'feInterface' parts.
+       */
     $GLOBALS['TSFE']->includeTCA();
-    // Get the global TCA
-//var_dump($GLOBALS['TSFE']->fe_user);
+      // Get the global TCA
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Require and init helper classes
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Require and init helper classes
 
     $this->require_classes();
-    // Require and init helper classes
+      // Require and init helper classes
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Get pid list
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Get pid list
 
     if (strstr($this->cObj->currentRecord, 'tt_content'))
     {
@@ -462,35 +457,35 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->conf['recursive']  = $this->cObj->data['recursive'];
       $this->pidList = $this->pi_getPidList($this->conf['pidList'], $this->conf['recursive']);
     }
-    // Get pid list
+      // Get pid list
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Make cObj instance
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Make cObj instance
 
     $this->local_cObj = t3lib_div::makeInstance('tslib_cObj');
-    // Make cObj instance
+      // Make cObj instance
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Clean up views
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Clean up views (multiple plugins)
 
       // #11981, 110106, dwildt
     $conf       = $this->objZz->cleanup_views($conf);
     $this->conf = $conf;
-    // Clean up views
+      // Clean up views (multiple plugins)
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Get Configuration out of the Plugin (Flexform) but [Templating]
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Get Configuration out of the Plugin (Flexform) but [Templating]
 
     $this->objConfig->main();
-    // Get Configuration out of the Plugin (Flexform) but [Templating]
+      // Get Configuration out of the Plugin (Flexform) but [Templating]
 
 
 
@@ -503,33 +498,37 @@ class tx_browser_pi1 extends tslib_pibase {
       // Prepaire piVars
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Get Configuration out of the Plugin (Flexform) devider [Templating]
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Get Configuration out of the Plugin (Flexform) devider [Templating]
 
     $this->objConfig->sheet_templating();
-    // Get Configuration out of the Plugin (Flexform) devider [Templating]
+      // Get Configuration out of the Plugin (Flexform) devider [Templating]
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Set the class variables
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Set the class variables
 
     $this->init_classVars();
-    // Set the class variables
+      // Set the class variables
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Replace TSFE markers
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Replace TSFE markers
 
     $this->conf = $this->objZz->substitute_t3globals_recurs($this->conf);
-    // Replace TSFE markers
+      // Replace TSFE markers
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
 
     if ($this->b_drs_perform)
     {
@@ -543,12 +542,13 @@ class tx_browser_pi1 extends tslib_pibase {
       }
       t3lib_div::devLog('[INFO/PERFORMANCE] substitute_t3globals_recurs: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
     }
-    // DRS - Performance
+      // DRS - Performance
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Get the HTML template
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Get the HTML template
 
     $arr_data['view'] = $this->view;
     $arr_data['mode'] = $this->piVar_mode;
@@ -576,12 +576,13 @@ class tx_browser_pi1 extends tslib_pibase {
     }
     $this->str_template_raw = $arr_result['data']['template'];
     unset($arr_result);
-    // Get the HTML template
+      // Get the HTML template
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Prepaire modeSelector
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Prepaire modeSelector
 
     $arr_result = $this->objNavi->prepaireModeSelector();
     if ($arr_result['error']['status']) {
@@ -591,28 +592,31 @@ class tx_browser_pi1 extends tslib_pibase {
     }
     $this->arrModeItems = $arr_result['data'];
     unset($arr_result);
-    // Prepaire modeSelector
+      // Prepaire modeSelector
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Prepaire format for time values
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Prepaire format for time values
 
     $this->tsStrftime = $this->objZz->setTsStrftime();
-    // Prepaire format for time values
+      // Prepaire format for time values
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Get used tables from the SQL query parts out of the Typoscript
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Get used tables from the SQL query parts out of the Typoscript
 
     $this->arr_realTables_arrFields = $this->objTyposcript->fetch_realTables_arrFields();
-    // Get used tables from the SQL query parts out of the Typoscript
+      // Get used tables from the SQL query parts out of the Typoscript
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Get the local table uid field name and pid field name
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Get the local table uid field name and pid field name
 
     $this->arrLocalTable = $this->objTyposcript->fetch_localTable();
     if (!is_array($this->arrLocalTable))
@@ -632,49 +636,52 @@ class tx_browser_pi1 extends tslib_pibase {
       }
       $prompt = '<h1 style="color:red;">'.$this->pi_getLL('error_readlog_h1').'</h1>
            <p style="color:red;font-weight:bold;">'.$this->pi_getLL('error_table_no').'</p>';
-      //return $this->pi_wrapInBaseClass($prompt);
       return $html_updateCheck.$this->pi_wrapInBaseClass($prompt);
     }
-    // Get the local table uid field name and pid name
+      // Get the local table uid field name and pid name
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Get the local table
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Get the local table
 
     list($this->localTable, $field) = explode('.', $this->arrLocalTable['uid']);
-    // Get the local table
+      // Get the local table
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Add missing uids and pids
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Add missing uids and pids
 
     $arr_result = $this->objConsolidate->addUidAndPid();
     $this->arrConsolidate['addedTableFields'] = $arr_result['data']['consolidate']['addedTableFields'];
     $this->arr_realTables_arrFields           = $arr_result['data']['arrFetchedTables'];
     unset($arr_result);
-    // Add missing uids
+      // Add missing uids
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Set the manual SQL mode or the auto SQL mode
 
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Set the manual SQL mode or the auto SQL mode
+
+      // Process the query building in case of a manual configuration with SELECT, FROM and WHERE and maybe JOINS
     $arr_result = $this->objSqlMan->check_typoscript_query_parts();
-    // Process the query building in case of a manual configuration with SELECT, FROM and WHERE and maybe JOINS
+      // RETURN error
     if ($arr_result['error']['status'])
     {
       $template = $arr_result['error']['header'].$arr_result['error']['prompt'];
-      //return $template;
       return $html_updateCheck.$this->pi_wrapInBaseClass($template);
     }
+      // RETURN error
 
     // ##############################################################################################################################
     //unset($arr_result); // :todo:
     // ##############################################################################################################################
 
-    // Auto SQL mode: The user configured only a select statement
+      // Auto SQL mode: The user configured only a select statement
     if(!$arr_result)
     {
       $this->b_sql_manual = false;
@@ -684,12 +691,12 @@ class tx_browser_pi1 extends tslib_pibase {
           SQL auto mode.', $this->extKey, 0);
       }
     }
-    // Auto SQL mode: The user configured only a select statement
+      // Auto SQL mode: The user configured only a select statement
 
-    // Manual SQL mode: The user configured more than a select statement
+      // Manual SQL mode: The user configured more than a select statement
     if($arr_result)
     {
-      // The user configured a whole SQL query
+        // The user configured a whole SQL query
       $this->b_sql_manual = true;
       if ($this->b_drs_sql)
       {
@@ -697,13 +704,14 @@ class tx_browser_pi1 extends tslib_pibase {
           SQL manual mode.', $this->extKey, 0);
       }
     }
-    // Manual SQL mode: The user configured more than a select statement
-    // Set the manual SQL mode or the auto SQL mode
+      // Manual SQL mode: The user configured more than a select statement
+      // Set the manual SQL mode or the auto SQL mode
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
 
     if ($this->b_drs_perform) {
       if($this->bool_typo3_43)
@@ -716,12 +724,13 @@ class tx_browser_pi1 extends tslib_pibase {
       }
       t3lib_div::devLog('[INFO/PERFORMANCE] Before view processing: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
     }
-    // DRS - Performance
+      // DRS - Performance
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Process the views
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Process the views
 
     switch($this->view) {
       case('list'):
@@ -731,12 +740,13 @@ class tx_browser_pi1 extends tslib_pibase {
         $str_template_completed = $this->objViews->singleView($this->str_template_raw);
         break;
     }
-    // Process the views
+      // Process the views
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
 
     if ($this->b_drs_perform) {
       if($this->bool_typo3_43)
@@ -749,12 +759,13 @@ class tx_browser_pi1 extends tslib_pibase {
       }
       t3lib_div::devLog('[INFO/PERFORMANCE] After view processing: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
     }
-    // DRS - Performance
+      // DRS - Performance
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Error, if the completed template is an array and has the element error.status
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Error, if the completed template is an array and has the element error.status
 
     if(is_array($str_template_completed))
     {
@@ -772,12 +783,13 @@ class tx_browser_pi1 extends tslib_pibase {
         return $html_updateCheck.$this->pi_wrapInBaseClass($prompt);
       }
     }
-    // Error, if the completed template is an array and has the element error.status
+      // Error, if the completed template is an array and has the element error.status
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Error, if the completed template is the raw template
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Error, if the completed template is the raw template
 
     if($this->str_template_raw == $str_template_completed) {
       if ($this->b_drs_error)
@@ -798,7 +810,8 @@ class tx_browser_pi1 extends tslib_pibase {
       // return $this->pi_wrapInBaseClass($prompt);
       return $html_updateCheck.$this->pi_wrapInBaseClass($prompt);
     }
-    // Error, if the completed template is the raw template
+      // Error, if the completed template is the raw template
+
 
 
       //////////////////////////////////////////////////////////////////////
@@ -896,15 +909,15 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // AJAX: return the result (HTML string) without wrapInBaseClass
+      //////////////////////////////////////////////////////////////////////
+      //
+      // AJAX: return the result (HTML string) without wrapInBaseClass
 
     if($this->segment['wrap_piBase'] == false)
     {
       return trim($str_template_completed);
     }
-    // AJAX: return the result (HTML string) without wrapInBaseClass
+      // AJAX: return the result (HTML string) without wrapInBaseClass
 
 
 
@@ -945,27 +958,11 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /***********************************************
    *
    * DRS - Development Reporting System
    *
    **********************************************/
-
 
 
 
@@ -977,9 +974,9 @@ class tx_browser_pi1 extends tslib_pibase {
   function init_drs()
   {
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Prepaire the developer contact prompt
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Prepaire the developer contact prompt
 
     $this->developer_contact =
         'company: '.  $this->str_developer_company.'<br />'.
@@ -995,13 +992,13 @@ class tx_browser_pi1 extends tslib_pibase {
     {
       $this->i_drs_max_sql_result_len = $i_len;
     }
-    // Prepaire the developer contact prompt
+      // Prepaire the developer contact prompt
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Initiate the DRS mode
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Initiate the DRS mode
 
     $this->b_drs_all          = false;
     $this->b_drs_error        = false;
@@ -1026,13 +1023,13 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->b_drs_templating   = false;
     $this->b_drs_tsUpdate     = false;
     $this->b_drs_ttc          = false;
-    // Initiate the DRS mode
+      // Initiate the DRS mode
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Set the DRS mode
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Set the DRS mode
 
     if ($this->arr_extConf['drs_mode'] == 'All')
     {
@@ -1207,31 +1204,9 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_tsUpdate   = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
-
-    // Set the DRS mode
+      // Set the DRS mode
 
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1256,96 +1231,98 @@ class tx_browser_pi1 extends tslib_pibase {
  */
   function require_classes()
   {
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Require and init helper classes
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Require and init helper classes
 
+      // Class with methods for get calendar values
     require_once('class.tx_browser_pi1_cal.php');
-    // Class with methods for get calendar values
     $this->objCal = new tx_browser_pi1_cal($this);
 
+      // Class with methods for get flexform values
     require_once('class.tx_browser_pi1_config.php');
-    // Class with methods for get flexform values
     $this->objConfig = new tx_browser_pi1_config($this);
 
+      // Class with methods for consolidating rows
     require_once('class.tx_browser_pi1_consolidate.php');
-    // Class with methods for consolidating rows
     $this->objConsolidate = new tx_browser_pi1_consolidate($this);
 
+      // Class with realurl methods
     require_once('class.tx_browser_pi1_filter.php');
-    // Class with realurl methods
     $this->objFilter = new tx_browser_pi1_filter($this);
 
-    // #9659, 101016, dwildt
+      // #9659, 101016, dwildt
+      // Class with methods for ordering rows
     require_once('class.tx_browser_pi1_javascript.php');
-    // Class with methods for ordering rows
     $this->objJss = new tx_browser_pi1_javascript($this);
 
+      // Class with methods for the markers
     require_once('class.tx_browser_pi1_marker.php');
-    // Class with methods for the markers
     $this->objMarker = new tx_browser_pi1_marker($this);
 
+      // Class with methods for ordering rows
     require_once('class.tx_browser_pi1_multisort.php');
-    // Class with methods for ordering rows
     $this->objMultisort = new tx_browser_pi1_multisort($this);
 
+      // Class with methods for the modeSelector, the pageBrowser and the a-z-browser
     require_once('class.tx_browser_pi1_navi.php');
-    // Class with methods for the modeSelector, the pageBrowser and the a-z-browser
     $this->objNavi = new tx_browser_pi1_navi($this);
 
+      // Class with localization methods
     require_once('class.tx_browser_pi1_localization.php');
-    // Class with localization methods
     $this->objLocalize = new tx_browser_pi1_localization($this);
 
+      // Class with seo methods for Search Engine Optimization
     require_once('class.tx_browser_pi1_seo.php');
-    // Class with seo methods for Search Engine Optimization
     $this->objSeo = new tx_browser_pi1_seo($this);
 
+      // Class with methods for social media
     require_once('class.tx_browser_pi1_socialmedia.php');
-    // Class with methods for social media
     $this->objSocialmedia = new tx_browser_pi1_socialmedia($this);
 
+      // Class with sql methods, if user defined only a SELECT
     require_once('class.tx_browser_pi1_sql_auto.php');
-    // Class with sql methods, if user defined only a SELECT
     $this->objSqlAut = new tx_browser_pi1_sql_auto($this);
 
+      // Class with sql methods for manual mode and auto mode
     require_once('class.tx_browser_pi1_sql_functions.php');
-    // Class with sql methods for manual mode and auto mode
     $this->objSqlFun = new tx_browser_pi1_sql_functions($this);
 
+      // Class with sql methods, if user defined a SELECT, FROM, WHERE and an array JOINS
     require_once('class.tx_browser_pi1_sql_manual.php');
-    // Class with sql methods, if user defined a SELECT, FROM, WHERE and an array JOINS
     $this->objSqlMan = new tx_browser_pi1_sql_manual($this);
 
+      // Class with TCA methods, which evaluate the TYPO3 TCA array
     require_once('class.tx_browser_pi1_tca.php');
-    // Class with TCA methods, which evaluate the TYPO3 TCA array
     $this->objTca = new tx_browser_pi1_tca($this);
 
+      // Class with template methods, which return HTML
     require_once('class.tx_browser_pi1_template.php');
-    // Class with template methods, which return HTML
     $this->objTemplate = new tx_browser_pi1_template($this);
 
+      // Class with ttcontainer methods, which return HTML
     require_once('class.tx_browser_pi1_ttcontainer.php');
-    // Class with ttcontainer methods, which return HTML
     $this->objTTContainer = new tx_browser_pi1_ttcontainer($this);
 
+      // Class with typoscript methods, which process typoscript
     require_once('class.tx_browser_pi1_typoscript.php');
-    // Class with typoscript methods, which process typoscript
     $this->objTyposcript = new tx_browser_pi1_typoscript($this);
 
+      // Class with views methods, which process the list view and the single view
     require_once('class.tx_browser_pi1_views.php');
-    // Class with views methods, which process the list view and the single view
     $this->objViews = new tx_browser_pi1_views($this);
 
+      // Class with wrapper methods for wrapping fields and link values
     require_once('class.tx_browser_pi1_wrapper.php');
-    // Class with wrapper methods for wrapping fields and link values
     $this->objWrapper = new tx_browser_pi1_wrapper($this);
 
+      // Class with zz methods
     require_once('class.tx_browser_pi1_zz.php');
-    // Class with zz methods
     $this->objZz = new tx_browser_pi1_zz($this);
 
   }
+
+
 
 
 
@@ -1361,115 +1338,94 @@ class tx_browser_pi1 extends tslib_pibase {
   function init_classVars()
   {
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // class.tx_browser_pi1_localization.php
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_localization.php
 
-    // [Array] The current Typoscript configuration array
+      // [Array] The current Typoscript configuration array
     $this->objLocalize->conf      = $this->conf;
-    // [Integer] The current mode (from modeselector)
+      // [Integer] The current mode (from modeselector)
     $this->objLocalize->mode      = $this->piVar_mode;
-    // [String] 'list' or 'single': The current view
+      // [String] 'list' or 'single': The current view
     $this->objLocalize->view      = $this->view;
-    // [Array] The TypoScript configuration array of the current view
+      // [Array] The TypoScript configuration array of the current view
     $this->objLocalize->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
-    // [String] TypoScript path to the current view. I.e. views.single.1
+      // [String] TypoScript path to the current view. I.e. views.single.1
     $this->objLocalize->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
     $this->objLocalize->init_typoscript();
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // class.tx_browser_pi1_navi.php
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_navi.php
 
-    // [Array] The current TypoScript configuration array
+      // [Array] The current TypoScript configuration array
     $this->objNavi->conf      = $this->conf;
-    // [Integer] The current mode (from modeselector)
+      // [Integer] The current mode (from modeselector)
     $this->objNavi->mode      = $this->piVar_mode;
-    // [String] 'list' or 'single': The current view
+      // [String] 'list' or 'single': The current view
     $this->objNavi->view      = $this->view;
-    // [Array] The TypoScript configuration array of the current view
+      // [Array] The TypoScript configuration array of the current view
     $this->objNavi->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
-    // [String] TypoScript path to the current view. I.e. views.single.1
+      // [String] TypoScript path to the current view. I.e. views.single.1
     $this->objNavi->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // class.tx_browser_pi1_socialmedia.php
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_socialmedia.php
 
-    // [Array] The current TypoScript configuration array
+      // [Array] The current TypoScript configuration array
     $this->objSocialmedia->conf      = $this->conf;
-    // [Integer] The current mode (from modeselector)
+      // [Integer] The current mode (from modeselector)
     $this->objSocialmedia->mode      = $this->piVar_mode;
-    // [String] 'list' or 'single': The current view
+      // [String] 'list' or 'single': The current view
     $this->objSocialmedia->view      = $this->view;
-    // [Array] The TypoScript configuration array of the current view
+      // [Array] The TypoScript configuration array of the current view
     $this->objSocialmedia->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
-    // [String] TypoScript path to the current view. I.e. views.single.1
+      // [String] TypoScript path to the current view. I.e. views.single.1
     $this->objSocialmedia->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // class.tx_browser_pi1_template.php
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_template.php
 
-    // [Array] The current TypoScript configuration array
+      // [Array] The current TypoScript configuration array
 //    $this->objTemplate->conf      = $this->conf;
-    // [Integer] The current mode (from modeselector)
+      // [Integer] The current mode (from modeselector)
     $this->objTemplate->mode      = $this->piVar_mode;
-    // [String] 'list' or 'single': The current view
+      // [String] 'list' or 'single': The current view
     $this->objTemplate->view      = $this->view;
-    // [Array] The TypoScript configuration array of the current view
+      // [Array] The TypoScript configuration array of the current view
     $this->objTemplate->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
-    // [String] TypoScript path to the current view. I.e. views.single.1
+      // [String] TypoScript path to the current view. I.e. views.single.1
     $this->objTemplate->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // class.tx_browser_pi1_typoscript.php
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_typoscript.php
 
-    // [Array] The current TypoScript configuration array
+      // [Array] The current TypoScript configuration array
     $this->objTyposcript->conf      = $this->conf;
-    // [Integer] The current mode (from modeselector)
+      // [Integer] The current mode (from modeselector)
     $this->objTyposcript->mode      = $this->piVar_mode;
-    // [String] 'list' or 'single': The current view
+      // [String] 'list' or 'single': The current view
     $this->objTyposcript->view      = $this->view;
-    // [Array] The TypoScript configuration array of the current view
+      // [Array] The TypoScript configuration array of the current view
     $this->objTyposcript->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
-    // [String] TypoScript path to the current view. I.e. views.single.1
+      // [String] TypoScript path to the current view. I.e. views.single.1
     $this->objTyposcript->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
 
 
 
     return false;
-
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1510,27 +1466,28 @@ class tx_browser_pi1 extends tslib_pibase {
     $arr_return['data']['template'] = false;
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Catch the template
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Catch the template
 
     if (!empty($conf['views.'][$viewWiDot][$mode.'.']['template.']['file']))
     {
+        // Local HTML Template
       $template_path = $conf['views.'][$viewWiDot][$mode.'.']['template.']['file'];
-      // Local HTML Template
     }
     if (empty($conf['views.'][$viewWiDot][$mode.'.']['template.']['file']))
     {
+        // Global HTML Template
       $template_path = $conf['template.']['file'];
-      // Global HTML Template
     }
     $template = $cObj->fileResource($template_path);
-    // Catch the template
+      // Catch the template
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Development Reporting System
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
 
     if (!$template)
     {
@@ -1546,7 +1503,8 @@ class tx_browser_pi1 extends tslib_pibase {
       $arr_return['error']['prompt'] = $str_prompt;
       return $arr_return;
     }
-    // DRS - Development Reporting System
+      // DRS - Development Reporting System
+
 
 
     $arr_return['data']['template'] = $template;
@@ -1566,14 +1524,8 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
-
-
-
-
-
-
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1.php']) {
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1.php']) 
+{
   include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1.php']);
 }
 

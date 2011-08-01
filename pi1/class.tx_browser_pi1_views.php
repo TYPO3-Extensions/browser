@@ -98,7 +98,8 @@ class tx_browser_pi1_views
  * 
  * @version 3.6.2
  */
-  function listView($template) {
+  function listView($template)
+  {
 
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -115,7 +116,8 @@ class tx_browser_pi1_views
       // Overwrite global general_stdWrap
 
       // #12471, 110123, dwildt
-    if (is_array($conf_view['general_stdWrap.'])) {
+    if (is_array($conf_view['general_stdWrap.']))
+    {
       $this->pObj->conf['general_stdWrap.'] = $conf_view['general_stdWrap.'];
     }
       // Overwrite global general_stdWrap
@@ -126,9 +128,12 @@ class tx_browser_pi1_views
       //
       // Get the local or global displayList
 
-    if (is_array($conf_view['displayList.'])) {
+    if (is_array($conf_view['displayList.']))
+    {
       $this->pObj->lDisplayList = $conf_view['displayList.'];
-    } else {
+    }
+    else
+    {
       $this->pObj->lDisplayList = $conf['displayList.'];
     }
       // Get the local or global displayList
@@ -139,9 +144,12 @@ class tx_browser_pi1_views
       //
       // Get the local or global displayList.display
 
-    if (is_array($conf_view['displayList.']['display.'])) {
+    if (is_array($conf_view['displayList.']['display.']))
+    {
       $this->pObj->lDisplay = $conf_view['displayList.']['display.'];
-    } else {
+    }
+    else
+    {
       $this->pObj->lDisplay = $conf['displayList.']['display.'];
     }
       // Get the local or global displayList.display
@@ -152,7 +160,8 @@ class tx_browser_pi1_views
       //
       // RETURN, there isn't any list
 
-    if (!is_array($conf['views.'][$viewWiDot])) {
+    if (!is_array($conf['views.'][$viewWiDot]))
+    {
       if ($this->pObj->b_drs_error)
       {
         t3lib_div::devlog('[ERROR/DRS] views.'.$view.' hasn\'t any item.', $this->pObj->extKey, 3);
@@ -171,7 +180,10 @@ class tx_browser_pi1_views
       // Do we have an existing mode?
 
     $maxModes = count($conf['views.'][$viewWiDot]);
-    if ($mode > $maxModes) $mode = 1;
+    if ($mode > $maxModes)
+    {
+      $mode = 1;
+    }
       // Do we have an existing mode?
 
 
@@ -193,7 +205,8 @@ class tx_browser_pi1_views
       //
       // DRS - Performance
 
-    if ($this->pObj->b_drs_perform) {
+    if ($this->pObj->b_drs_perform) 
+    {
       if($this->pObj->bool_typo3_43)
       {
         $endTime = $this->pObj->TT->getDifferenceToStarttime();
@@ -332,6 +345,7 @@ class tx_browser_pi1_views
       // Execute the SQL query
 
 
+
       //////////////////////////////////////////////////////////////////////
       //
       // DRS - Development Reporting System
@@ -360,7 +374,7 @@ class tx_browser_pi1_views
       //////////////////////////////////////////////////////////////////////
       //
       // Workaround filter and localisation - Bugfix #9024
-  
+
       /*
        * Description of the bug
        *
@@ -677,15 +691,8 @@ class tx_browser_pi1_views
     }
       // DRS - Development Reporting System
       // Any foreign extension is using this hook
-// dwildt, 110309
-//foreach ($this->pObj->rows as $rKey => $rVal) {
-//  var_dump($rVal['tx_org_workshop.uid'] . ': ' . $rVal['tx_org_workshop.rating']);
-//}
+
     $rows = $this->pObj->rows;
-// dwildt, 110309
-//foreach ($rows as $rKey => $rVal) {
-//  var_dump($rVal['tx_org_workshop.uid'] . ': ' . $rVal['tx_org_workshop.rating']);
-//}
       // Hook for handle the consolidated rows
 
 
@@ -694,7 +701,7 @@ class tx_browser_pi1_views
       //
       // Ordering the rows
 
-    #9917: Selecting a random sample from a set of rows
+    // #9917: Selecting a random sample from a set of rows
     if(!($conf_view['random'] == 1))
     {
       $this->pObj->objMultisort->multisort_rows();
@@ -809,12 +816,7 @@ class tx_browser_pi1_views
       // Filter - part II/II - HTML code / template
 
     $this->pObj->objFilter->rows_wo_limit = $rows;
-// dwildt, 110309
-//foreach ($rows as $rKey => $rVal) {
-//  var_dump($rVal['tx_org_workshop.uid'] . ': ' . $rVal['tx_org_workshop.rating']);
-//}
     $arr_result = $this->pObj->objFilter->filter($template);
-//var_dump($arr_result);
     if ($arr_result['error']['status'])
     {
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
@@ -833,6 +835,8 @@ class tx_browser_pi1_views
     $arr_result = $this->pObj->objSqlFun->rows_with_cleaned_up_fields($rows);
     $rows       = $arr_result['data']['rows'];
     unset($arr_result);
+      // 110801, dwildt
+    $this->pObj->rows = $rows;
       // Clean up: Delete rows, we don't want to display
 
 
@@ -894,6 +898,7 @@ class tx_browser_pi1_views
       // Hook for override the SQL result for for the list view
 
 
+
       ////////////////////////////////////////////////////////////////////////
       //
       // Prepaire array with links to single view
@@ -941,7 +946,7 @@ class tx_browser_pi1_views
       }
       $this->pObj->arrLinkToSingle = $this->pObj->objSqlFun->replace_tablealias($this->pObj->arrLinkToSingle);
     }
-    // Replace aliases in case of aliases
+      // Replace aliases in case of aliases
 
     $str_csvList = implode(', ', $this->pObj->arrLinkToSingle);
     if ($this->pObj->b_drs_sql)
@@ -950,6 +955,7 @@ class tx_browser_pi1_views
       t3lib_div::devLog('[HELP/DRS] If you want to configure the field list, please use views.'.$viewWiDot.$mode.'.csvLinkToSingleView.', $this->pObj->extKey, 1);
     }
       // Prepaire array with links to single view
+
 
 
       ////////////////////////////////////////////////////////////////////////
@@ -987,9 +993,14 @@ class tx_browser_pi1_views
     $template     = $this->pObj->objTemplate->tmplSearchBox($template, $bool_display);
       // HTML search form
 
+      /////////////////////////////////////
+      //
       // HTML a-z-browser
+
     $arr_data['template']       = $template;
-    $arr_data['rows']           = $rows;
+      // 110801, dwildt
+    //$arr_data['rows']           = $rows;
+    $arr_data['rows']           = $this->pObj->rows;
     $arr_result = $this->pObj->objNavi->azBrowser($arr_data);
     if ($arr_result['error']['status'])
     {
@@ -997,17 +1008,18 @@ class tx_browser_pi1_views
       return $this->pObj->pi_wrapInBaseClass($prompt);
     }
 
-    $lArrTabs = $arr_result['data']['azTabArray'];
-    $arr_tsId = $arr_result['data']['tabIds'];
-    $template = $arr_result['data']['template'];
-    $rows     = $arr_result['data']['rows'];
+    $lArrTabs         = $arr_result['data']['azTabArray'];
+    $arr_tsId         = $arr_result['data']['tabIds'];
+    $template         = $arr_result['data']['template'];
+    $rows             = $arr_result['data']['rows'];
+      // 110801, dwildt +
+    $this->pObj->rows = $rows;
     unset($arr_result);
       // HTML a-z-browser
 
-
-
       // DRS - Performance
-    if ($this->pObj->b_drs_perform) {
+    if ($this->pObj->b_drs_perform)
+    {
       if($this->pObj->bool_typo3_43)
       {
         $endTime = $this->pObj->TT->getDifferenceToStarttime();
@@ -1020,7 +1032,10 @@ class tx_browser_pi1_views
     }
       // DRS - Performance
 
+      /////////////////////////////////////
+      //
       // HTML page browser
+
     $arr_data['azTabArray'] = $lArrTabs;
     $arr_data['tabIds']     = $arr_tsId;
     $arr_data['template']   = $template;
@@ -1028,8 +1043,10 @@ class tx_browser_pi1_views
 
     $arr_result = $this->pObj->objNavi->tmplPageBrowser($arr_data);
     unset($arr_data);
-    $template             = $arr_result['data']['template'];
-    $rows                 = $arr_result['data']['rows'];
+    $template         = $arr_result['data']['template'];
+    $rows             = $arr_result['data']['rows'];
+      // 110801, dwildt +
+    $this->pObj->rows = $rows;
     unset($arr_result);
       // HTML page browser
 
@@ -1040,6 +1057,7 @@ class tx_browser_pi1_views
     unset($arr_data);
       // HTML mode selector
       // Building the template
+
 
 
       ////////////////////////////////////////////////////////////////////////
@@ -1067,10 +1085,10 @@ class tx_browser_pi1_views
 
     if(isset($conf_view['limit']))
     {
-      $arr_limit  = explode(',', $conf_view['limit']);
-      $int_start  = (int) trim($arr_limit[0]);
-      $int_amount = (int) trim($arr_limit[1]);
-      $int_counter = 0;
+      $arr_limit        = explode(',', $conf_view['limit']);
+      $int_start        = (int) trim($arr_limit[0]);
+      $int_amount       = (int) trim($arr_limit[1]);
+      $int_counter      = 0;
       $int_remove_start = $int_start;
       $int_remove_end   = $int_start + $int_amount;
       $drs_rows_before  = count($rows);
@@ -1169,7 +1187,8 @@ class tx_browser_pi1_views
  * 
  * @version 3.6.3
  */
-  function singleView($template) {
+  function singleView($template)
+  {
 
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;

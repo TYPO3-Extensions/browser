@@ -94,8 +94,8 @@ class tx_browser_pi1_navi
  /**
   * Constructor. The method initiate the parent object
   *
-  * @param	object		The parent object
-  * @return	void
+  * @param  object    The parent object
+  * @return void
   */
   function __construct($parentObj)
   {
@@ -125,8 +125,8 @@ class tx_browser_pi1_navi
  * Returns an array with used tables and fields out of the TypoScript SQL query parts.
  * The tables will have real names
  *
- * @param	array		Array with elements rows and template
- * @return	array		Array with the syntax array[table][] = field
+ * @param array   Array with elements rows and template
+ * @return  array   Array with the syntax array[table][] = field
  */
   function azBrowser($arr_data)
   {
@@ -333,8 +333,8 @@ class tx_browser_pi1_navi
  /**
   * Building the HTML template with the A-Z-Browser
   *
-  * @param	array		Array with elements azTabArray, tabIds, template
-  * @return	array		Array data with the element template
+  * @param  array   Array with elements azTabArray, tabIds, template
+  * @return array   Array data with the element template
   */
   function azTemplate($arr_data)
   {
@@ -609,8 +609,8 @@ class tx_browser_pi1_navi
  /**
   * Generates an array with informations for every tab
   *
-  * @param	array		Array with elements azRows and rows
-  * @return	array		Array data with elements azTabArray, tabIds and rows
+  * @param  array   Array with elements azRows and rows
+  * @return array   Array data with elements azTabArray, tabIds and rows
   * @version        3.4.3
   */
   function azTabArray($arr_data)
@@ -1050,8 +1050,8 @@ class tx_browser_pi1_navi
  /**
   * Building the SQL query for the A-Z-Browser. Exxecute the query. Return the rows.
   *
-  * @param	array		Array with the current rows
-  * @return	array		Array data with the element azRows
+  * @param  array   Array with the current rows
+  * @return array   Array data with the element azRows
   */
   function azRowsInitial($arr_data)
   {
@@ -1315,10 +1315,11 @@ class tx_browser_pi1_navi
  /**
   * Building the page browser. Returns the HTML template
   *
-  * @param	array		Array with elements template and display
-  * @return	string		template
+  * @param  array   Array with elements template and display
+  * @return string    template
   */
-  function tmplPageBrowser($arr_data) {
+  function tmplPageBrowser($arr_data)
+  {
 
     $int_currTab    = $arr_data['tabIds']['active'];
     $arr_currRowIds = $arr_data['azTabArray'][$int_currTab]['keyRow'];
@@ -1330,9 +1331,10 @@ class tx_browser_pi1_navi
     $arr_return['data']['rows']     = $rows;
 
 
-    ///////////////////////////////////////////////
-    //
-    // RETURN if pagebrowser shouldn't displayed
+
+      ///////////////////////////////////////////////
+      //
+      // RETURN if pagebrowser shouldn't displayed
 
     if (!$this->pObj->objConfig->bool_pageBrowser)
     {
@@ -1340,12 +1342,13 @@ class tx_browser_pi1_navi
       $arr_return['data']['template'] = $template;
       return $arr_return;
     }
-    // RETURN if pagebrowser shouldn't displayed
+      // RETURN if pagebrowser shouldn't displayed
 
 
-    ///////////////////////////////////////////////
-    //
-    // RETURN if we have any row
+
+      ///////////////////////////////////////////////
+      //
+      // RETURN if we have any row
 
     if (!is_array($rows) || (is_array($rows) && count($rows) < 1))
     {
@@ -1353,12 +1356,13 @@ class tx_browser_pi1_navi
       $arr_return['data']['template'] = $template;
       return $arr_return;
     }
-    // RETURN if we have any row
+      // RETURN if we have any row
 
 
-    ///////////////////////////////////////////////
-    //
-    // RETURN if firstVisit and emptyListByStart
+
+      ///////////////////////////////////////////////
+      //
+      // RETURN if firstVisit and emptyListByStart
 
     if($this->pObj->boolFirstVisit and $this->pObj->objConfig->bool_emptyAtStart)
     {
@@ -1366,57 +1370,60 @@ class tx_browser_pi1_navi
       $arr_return['data']['template'] = $template;
       return $arr_return;
     }
-    // RETURN if firstVisit and emptyListByStart
+      // RETURN if firstVisit and emptyListByStart
 
 
 
-    ///////////////////////////////////////////////////
-    //
-    // Move $GLOBALS['TSFE']->id temporarily
-    // #9458
+      ///////////////////////////////////////////////////
+      //
+      // Move $GLOBALS['TSFE']->id temporarily
+      // #9458
+
     $int_tsfeId = $GLOBALS['TSFE']->id;
     if (!empty($this->pObj->objConfig->int_viewsListPid))
     {
       $GLOBALS['TSFE']->id = $this->pObj->objConfig->int_viewsListPid;
     }
-    // Move $GLOBALS['TSFE']->id temporarily
+      // Move $GLOBALS['TSFE']->id temporarily
 
 
 
-    ///////////////////////////////////////////////
-    //
-    // Set maximum for the pointer
+// 110801, dwildt -
+//      ///////////////////////////////////////////////
+//      //
+//      // Set maximum for the pointer
+//
+//      // 110302, dwildt: :todo: it seems, that $int_maxPointer isn't handled anywhere
+//    $int_maxPointer = 9999;
+//      // #10858, dwildt, 101220
+//    if(isset($this->pObj->piVars['pointer']))
+//    {
+//      if($this->pObj->piVars['pointer'] > 0)
+//      {
+//        if($this->conf_view['limit'])
+//        {
+//          list($start, $limit) = explode(',', $this->conf_view['limit']);
+//          if($limit < 1) $limit = 20;
+//        }
+//        $int_maxPointer = (count($rows) / $limit);
+//          // Returns the next lowest integer
+//        $int_maxPointer = floor($int_maxPointer);
+//        if($this->pObj->piVars['pointer'] > $int_maxPointer)
+//        {
+//          $this->pObj->piVars['pointer'] = $int_maxPointer;
+//        }
+//      }
+//        // 13549, 110203, dwildt
+//      $int_maxPointer = (count($rows) / $this->pObj->piVars['pointer']);
+//    }
+//      // Set maximum for the pointer
+// 110801, dwildt -
 
-      // 110302, dwildt: :todo: it seems, that $int_maxPointer isn't handled anywhere
-    $int_maxPointer = 9999;
-      // #10858, dwildt, 101220
-    if(isset($this->pObj->piVars['pointer']))
-    {
-      if($this->pObj->piVars['pointer'] > 0)
-      {
-        if($this->conf_view['limit'])
-        {
-          list($start, $limit) = explode(',', $this->conf_view['limit']);
-          if($limit < 1) $limit = 20;
-        }
-        $int_maxPointer = (count($rows) / $limit);
-          // Returns the next lowest integer
-        $int_maxPointer = floor($int_maxPointer);
-        if($this->pObj->piVars['pointer'] > $int_maxPointer)
-        {
-          $this->pObj->piVars['pointer'] = $int_maxPointer;
-        }
-      }
-        // 13549, 110203, dwildt
-      $int_maxPointer = (count($rows) / $this->pObj->piVars['pointer']);
-    }
-    // Set maximum for the pointer
 
 
-
-    ///////////////////////////////////////////////
-    //
-    // Change pagebrowser in case of limit
+      ///////////////////////////////////////////////
+      //
+      // Change pagebrowser in case of limit
 
     if($this->conf_view['limit'])
     {
@@ -1424,20 +1431,20 @@ class tx_browser_pi1_navi
       if($limit < 1) $limit = 20;
       $this->conf['pageBrowser.']['results_at_a_time'] = trim($limit);
 
-      // DRS - Development Reporting System
+        // DRS - Development Reporting System
       if ($this->pObj->b_drs_templating)
       {
         t3lib_div::devlog('[INFO/TEMPLATING] pageBrowser.result_at_a_time is overriden by limit: '.$limit.'.',  $this->pObj->extKey, 0);
       }
-      // DRS - Development Reporting System
+        // DRS - Development Reporting System
     }
-    // Change pagebrowser in case of limit
+      // Change pagebrowser in case of limit
 
 
 
-    ///////////////////////////////////////////////
-    //
-    // Init piBase for pagebrowser
+      ///////////////////////////////////////////////
+      //
+      // Init piBase for pagebrowser
 
     $this->pObj->internal['res_count']          = count($rows);
     $this->pObj->internal['maxPages']           = $this->conf['pageBrowser.']['maxPages'];
@@ -1446,24 +1453,26 @@ class tx_browser_pi1_navi
     $this->pObj->internal['dontLinkActivePage'] = $this->conf['pageBrowser.']['dontLinkActivePage'];
     $this->pObj->internal['showFirstLast']      = $this->conf['pageBrowser.']['showFirstLast'];
     $this->pObj->internal['pagefloat']          = $this->conf['pageBrowser.']['pagefloat'];
-    // Init piBase for pagebrowser
+      // Init piBase for pagebrowser
 
 
-    ///////////////////////////////////////////////
-    //
-    // Get the wrapped pagebrowser
+
+      ///////////////////////////////////////////////
+      //
+      // Get the wrapped pagebrowser
 
     $pb = $this->conf['pageBrowser.'];
     $res_items  = $this->pObj->pi_list_browseresults
                   (
                     $pb['showResultCount'], $pb['tableParams'], $pb['wrap.'],$pb['pointer'],$pb['hscText']
                   );
-    // Get the wrapped pagebrowser
+      // Get the wrapped pagebrowser
 
 
-    ///////////////////////////////////////////////
-    //
-    // Build the template
+
+      ///////////////////////////////////////////////
+      //
+      // Build the template
 
     $markerArray                            = $this->pObj->objWrapper->constant_markers();
     $markerArray['###RESULT_AND_ITEMS###']  = $res_items;
@@ -1472,12 +1481,13 @@ class tx_browser_pi1_navi
     $subpart      = $this->pObj->cObj->getSubpart($template, '###PAGEBROWSER###');
     $pageBrowser  = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
     $template     = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSER###', $pageBrowser, true);
-    // Build the template
+      // Build the template
 
 
-    ///////////////////////////////////////////////
-    //
-    // Process the rows
+
+      ///////////////////////////////////////////////
+      //
+      // Process the rows
 
     $int_start  = $this->pObj->piVars[$pb['pointer']] * $pb['results_at_a_time'];
     $int_amount = $pb['results_at_a_time'];
@@ -1495,12 +1505,13 @@ class tx_browser_pi1_navi
       $int_counter++;
     }
     $drs_rows_after = count($rows);
-    // Process the rows
+      // Process the rows
 
 
-    ///////////////////////////////////////////////
-    //
-    // DRS - Development Reporting System
+
+      ///////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
 
     if ($drs_rows_after != $drs_rows_before)
     {
@@ -1510,18 +1521,19 @@ class tx_browser_pi1_navi
         t3lib_div::devlog('[INFO/TEMPLATING] The pagebrowser has #'.$removed_rows.' rows removed.',  $this->pObj->extKey, 0);
       }
     }
-    // DRS - Development Reporting System
+      // DRS - Development Reporting System
 
 
-    ///////////////////////////////////////////////
-    //
-    // RETURN the result
+
+      ///////////////////////////////////////////////
+      //
+      // RETURN the result
 
     $arr_return['data']['template'] = $template;
     $arr_return['data']['rows']     = $rows;
     $GLOBALS['TSFE']->id            = $int_tsfeId; // #9458
     return $arr_return;
-    // RETURN the result
+      // RETURN the result
   }
 
 
@@ -1562,7 +1574,7 @@ class tx_browser_pi1_navi
     /**
  * Prepaire an array for the mode selector. Allocate a value to $this->piVar_mode.
  *
- * @return	array		Array with the modeSelector names
+ * @return  array   Array with the modeSelector names
  */
   function prepaireModeSelector() {
 
@@ -1629,8 +1641,8 @@ class tx_browser_pi1_navi
  /**
   * Building the mode selector HTML code.
   *
-  * @param	array		Array with the template and the mode selector tabs
-  * @return	string		template
+  * @param  array   Array with the template and the mode selector tabs
+  * @return string    template
   */
   function tmplModeSelector($arr_data)
   {
