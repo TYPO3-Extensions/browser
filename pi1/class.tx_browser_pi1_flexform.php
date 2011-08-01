@@ -2910,6 +2910,48 @@ class tx_browser_pi1_flexform
 
       //////////////////////////////////////////////////////////////////////
       //
+      // Field record_browser.display.firstAndLastItem
+
+    $firstAndLastItem = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.firstAndLastItem', 'viewSingle', 'lDEF', 'vDEF');
+    if ($this->pObj->b_drs_flexform)
+    {
+      t3lib_div::devlog('[INFO/FLEXFORM] viewSingle.record_browser.display.firstAndLastItem: \'' . $firstAndLastItem . '\'.', $this->pObj->extKey, 0);
+    }
+
+    switch($firstAndLastItem)
+    {
+      case(0):
+          // disabled
+        $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'] = 0;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is set to false.', $this->pObj->extKey, 0);
+        }
+        break;
+      case(1):
+          // enabled
+        $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'] = 1;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is set to true.', $this->pObj->extKey, 0);
+        }
+        break;
+      case(2):
+          // typoscript
+        // Do nothing
+        $value = $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'];
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
+        }
+        break;
+    }
+      // Field record_browser.display.firstAndLastItem
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Field record_browser.display.itemsWithoutLink
 
     $itemsWithoutLink = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.itemsWithoutLink', 'viewSingle', 'lDEF', 'vDEF');
@@ -2952,85 +2994,43 @@ class tx_browser_pi1_flexform
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Field record_browser.display.firstAndLastItem
+      // Field record_browser.display.withoutResult
 
-    $firstAndLastItem = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.firstAndLastItem', 'viewSingle', 'lDEF', 'vDEF');
+    $withoutResult = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.withoutResult', 'viewSingle', 'lDEF', 'vDEF');
     if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div::devlog('[INFO/FLEXFORM] viewSingle.record_browser.display.firstAndLastItem: \'' . $firstAndLastItem . '\'.', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/FLEXFORM] viewSingle.record_browser.display.withoutResult: \'' . $withoutResult . '\'.', $this->pObj->extKey, 0);
     }
 
-    switch($firstAndLastItem)
+    switch($withoutResult)
     {
       case(0):
           // disabled
-        $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'] = 0;
+        $this->pObj->conf['navigation.']['record_browser.']['display.']['withoutResult'] = 0;
         if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is set to false.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.withoutResult is set to false.', $this->pObj->extKey, 0);
         }
         break;
       case(1):
           // enabled
-        $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'] = 1;
+        $this->pObj->conf['navigation.']['record_browser.']['display.']['withoutResult'] = 1;
         if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is set to true.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.withoutResult is set to true.', $this->pObj->extKey, 0);
         }
         break;
       case(2):
           // typoscript
         // Do nothing
-        $value = $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'];
+        $value = $this->pObj->conf['navigation.']['record_browser.']['display.']['withoutResult'];
         if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.withoutResult is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
         }
         break;
     }
-      // Field record_browser.display.firstAndLastItem
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // Field record_browser.display.firstAndLastItem
-
-    $firstAndLastItem = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.firstAndLastItem', 'viewSingle', 'lDEF', 'vDEF');
-    if ($this->pObj->b_drs_flexform)
-    {
-      t3lib_div::devlog('[INFO/FLEXFORM] viewSingle.record_browser.display.firstAndLastItem: \'' . $firstAndLastItem . '\'.', $this->pObj->extKey, 0);
-    }
-
-    switch($firstAndLastItem)
-    {
-      case(0):
-          // disabled
-        $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'] = 0;
-        if ($this->pObj->b_drs_flexform)
-        {
-          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is set to false.', $this->pObj->extKey, 0);
-        }
-        break;
-      case(1):
-          // enabled
-        $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'] = 1;
-        if ($this->pObj->b_drs_flexform)
-        {
-          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is set to true.', $this->pObj->extKey, 0);
-        }
-        break;
-      case(2):
-          // typoscript
-        // Do nothing
-        $value = $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'];
-        if ($this->pObj->b_drs_flexform)
-        {
-          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
-        }
-        break;
-    }
-      // Field record_browser.display.firstAndLastItem
+      // Field record_browser.display.withoutResult
 
 
 
