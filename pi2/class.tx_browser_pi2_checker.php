@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2010 - Dirk Wildt <wildt.at.die-netzmacher.de>
+ *  (c) 2009-2011 - Dirk Wildt <wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,7 +27,8 @@
  *
  * @author    Dirk Wildt <wildt.at.die-netzmacher.de>
  * @package    TYPO3
- * @subpackage    tx_browser
+ * @subpackage    browser
+ * @version 3.7.0
  */
 
 /**
@@ -527,6 +528,135 @@ class tx_browser_pi2_checker
 
 
 
+    /**
+ * Check if the current TypoScript array isn't moved to the destination array. Returns an HTML report.
+ *
+ * @param integer   $int_release: The number of the release like 0, 1, 2, 3, ...
+ * @param integer   $int_ticketNo: The number of the ticket like 0, 123, 4567
+ * @param array   $arr_ticket: The array with the tiket properties
+ * @param array   $arr_conf_oneDimension: The current TypoScript configuration
+ * @return  string    $str_html_return: HTML report
+ * @version 3.7.0
+ */
+  function moved_array($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
+  {
+    $str_srce_path = $arr_ticket['srce']['typoscript']['path'];
+    $str_dest_path = $arr_ticket['dest']['typoscript']['path'];
+
+      // If we have the destination code RETURN
+    foreach((array) $arr_conf_oneDimension as $key => $value)
+    {
+      $pos = strpos($key, $str_dest_path);
+      if (!($pos === false)) 
+      {
+        if ($this->pObj->pObj->b_drs_tsUpdate)
+        {
+          t3lib_div::devlog('[INFO/UPDATE] ' . $str_dest_path . ' is a part of the TypoSript.', $this->pObj->extKey, 0);
+        }
+          // Is there the source code?
+        foreach((array) $arr_conf_oneDimension as $key2 => $value2)
+        {
+          $pos = strpos($key2, $str_srce_path);
+          if (!($pos === false)) 
+          {
+            if ($this->pObj->pObj->b_drs_tsUpdate)
+            {
+              t3lib_div::devlog('[WARN/UPDATE] Please delete depricated TypoScript:<br />' . $str_srce_path . ' >', $this->pObj->extKey, 2);
+            }
+            return false;
+          }
+        }
+          // Is there the source code?
+        return false;
+      }
+    }
+      // If we have the destination code RETURN
+
+      // Get the source value
+    $bool_srce = false;
+    foreach((array) $arr_conf_oneDimension as $key2 => $value2)
+    {
+      $pos = strpos($key2, $str_srce_path);
+      if (!($pos === false)) 
+      {
+        $bool_srce = true;
+        break;
+      }
+    }
+
+      // RETURN there isn't any source code
+    if(!$bool_srce)
+    {
+      return;
+    }
+
+      // DRS - Development Reporting system
+    if ($this->pObj->pObj->b_drs_tsUpdate)
+    {
+      t3lib_div::devlog('[WARN/UPDATE] ' . $str_srce_path . ' is depricated. Update it to ' . $str_dest_path . '!', $this->pObj->extKey, 2);
+    }
+      // DRS - Development Reporting system
+
+      // Get the localized header
+    if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['header']))
+    {
+      $str_h1 = $arr_ticket['header'][$GLOBALS['TSFE']->lang];
+    }
+    if (!array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['header']))
+    {
+      $str_h1 = $arr_ticket['header']['default'];
+    }
+      // Get the localized header
+
+      // Get the localized prompt
+    if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['prompt']))
+    {
+      $str_prompt = $arr_ticket['prompt'][$GLOBALS['TSFE']->lang];
+    }
+    if (!array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['prompt']))
+    {
+      $str_prompt = $arr_ticket['prompt']['default'];
+    }
+      // Get the localized prompt
+
+      // Get the formated ticket number
+    $str_ticketNo       = sprintf("%04d", $int_ticketNo);
+    $str_status         = $this->pObj->pi_getLL('ticket_status_' . $arr_ticket['status']);
+    $str_todo           = $this->pObj->pi_getLL('ticket_todo_' . $arr_ticket['todo']);
+    $str_img_status     = '<img align="top" '.
+                          'alt="' . $str_status . '" title="' . $str_status . '" '.
+                          'src="' . $this->get_image_path($arr_ticket['status']) . '"/>';
+    $str_img_info       = '<img align="top" '.
+                          'alt="' . $this->pObj->pi_getLL('ticket_phrase_todo') . '" '.
+                          'title="' . $this->pObj->pi_getLL('ticket_phrase_todo') . '" '.
+                          'src="' . $this->get_image_path(PI2_STATUS_HELP) . '"/>';
+
+    $str_html_return = '
+      <h2>'.$str_img_status.' '.$str_h1.'</h2>
+      <p>
+        '.$str_prompt.'<br />
+        <strong>' . $this->pObj->pi_getLL('ticket_phrase_ticket') . ': </strong>' . $str_ticketNo . '
+      </p>
+      <p>
+          ' . $str_img_info . ' ' . $str_todo . '
+      </p>
+      <h3>' . $this->pObj->pi_getLL('ticket_phrase_srce') . '</h3>
+      <p' . $this->str_style_ts.'>'.$str_srce_path . ' { ... </p>
+      <h3>' . $this->pObj->pi_getLL('ticket_phrase_dest') . '</h3>
+      <p' . $this->str_style_ts . '>' . $str_dest_path . ' { ... </p>
+      '."\n";
+
+    $str_srce_value   = $arr_conf_oneDimension[$arr_ticket['srce']['typoscript']['code']];
+    $str_html_return  = str_replace('%value%', ' { ... ', $str_html_return);
+    $str_html_return  = str_replace('%version%', $arr_ticket['version'], $str_html_return);
+
+    return $str_html_return;
+
+  }
+
+
+
+
 
 
 
@@ -535,11 +665,11 @@ class tx_browser_pi2_checker
     /**
  * Check if the current TypoScript array isn't moved to the destination array. Returns an HTML report.
  *
- * @param	integer		$int_release: The number of the release like 0, 1, 2, 3, ...
- * @param	integer		$int_ticketNo: The number of the ticket like 0, 123, 4567
- * @param	array		$arr_ticket: The array with the tiket properties
- * @param	array		$arr_conf_oneDimension: The current TypoScript configuration
- * @return	string		$str_html_return: HTML report
+ * @param integer   $int_release: The number of the release like 0, 1, 2, 3, ...
+ * @param integer   $int_ticketNo: The number of the ticket like 0, 123, 4567
+ * @param array   $arr_ticket: The array with the tiket properties
+ * @param array   $arr_conf_oneDimension: The current TypoScript configuration
+ * @return  string    $str_html_return: HTML report
  */
   function moved_value($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
   {
