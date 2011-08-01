@@ -385,8 +385,20 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
     $arr_release[$int_v][$int_t]['function']                        = 'moved_value';
     $arr_release[$int_v][$int_t]['version']                         = '3.7.0';
-    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'plugin';
-    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'flexform';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'plugin.socialmedia';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'flexform.socialmedia';
+
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript property plugin';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'This porperty is moved in TypoScript since version %version%.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Eigenschaft plugin';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft ist seit Version %version% im TypoScript an anderer Stelle.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'moved_value';
+    $arr_release[$int_v][$int_t]['version']                         = '3.7.0';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'plugin.templating';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'flexform.templating';
 
 //:TODO:
     // Set the Ticket array
