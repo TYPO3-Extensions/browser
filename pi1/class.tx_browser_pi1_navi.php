@@ -1851,7 +1851,12 @@ class tx_browser_pi1_navi
       $uids_of_all_rows        = $arr_browser_session['uids_of_all_rows'];
     }
       // Session: get the tx_browser_pi1 session array 
-echo '<pre>' . var_export($uids_of_all_rows, true) . '</pre>';
+
+
+
+//:TODO: If no array -> call list view first time
+//echo '<pre>' . var_export($uids_of_all_rows, true) . '</pre>';
+echo '<pre>' . $this->pObj->singlePid . '</pre>';
     $pos_of_all_rows = array_flip($uids_of_all_rows);
     
     $pos_of_first_row = 0;
