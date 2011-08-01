@@ -1034,6 +1034,17 @@ class tx_browser_pi1_views
 
       /////////////////////////////////////
       //
+      // record browser
+
+    $arr_result         = $this->pObj->objNavi->recordbrowser_set_session_data($rows);
+//    $template         = $arr_result['data']['template'];
+//    $rows             = $arr_result['data']['rows'];
+//    $this->pObj->rows = $rows;
+//    unset($arr_result);
+      // record browser
+
+      /////////////////////////////////////
+      //
       // HTML page browser
 
     $arr_data['azTabArray'] = $lArrTabs;
@@ -1049,17 +1060,6 @@ class tx_browser_pi1_views
     $this->pObj->rows = $rows;
     unset($arr_result);
       // HTML page browser
-
-      /////////////////////////////////////
-      //
-      // record browser
-
-    $arr_result         = $this->pObj->objNavi->recordbrowser_set_session_data($rows);
-//    $template         = $arr_result['data']['template'];
-//    $rows             = $arr_result['data']['rows'];
-//    $this->pObj->rows = $rows;
-//    unset($arr_result);
-      // record browser
 
       // HTML mode selector
     $arr_data['template']     = $template;
