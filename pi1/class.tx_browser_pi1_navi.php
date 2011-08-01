@@ -1852,6 +1852,64 @@ class tx_browser_pi1_navi
     }
       // Session: get the tx_browser_pi1 session array 
 echo '<pre>' . var_export($uids_of_all_rows, true) . '</pre>';
+    $pos_of_all_rows = array_flip($uids_of_all_rows);
+    
+    $pos_of_first_row = 0;
+    $pos_of_curr_row  = $pos_of_all_rows[$this->pObj->singlePid];
+    $pos_of_last_row  = $pos_of_all_rows[count($pos_of_all_rows) -1];
+    
+    if($pos_of_curr_row >= ($pos_of_first_row + 2))
+    {
+      $uid['first']['uid']  = $uids_of_all_rows[0];
+      $uid['first']['pos']  = $pos_of_all_rows[0];
+    }
+    if($pos_of_curr_row < ($pos_of_first_row + 2))
+    {
+      $uid['first']['uid']  = 0;
+      $uid['first']['pos']  = 0;
+    }
+
+    if($pos_of_curr_row >= ($pos_of_first_row + 1))
+    {
+      $uid['prev']['uid']  = $uids_of_all_rows[$pos_of_curr_row - 1];
+      $uid['prev']['pos']  = $pos_of_all_rows[$pos_of_curr_row - 1];
+    }
+    if($pos_of_curr_row < ($pos_of_first_row + 1))
+    {
+      $uid['prev']['uid']  = 0;
+      $uid['prev']['pos']  = 0;
+    }
+
+    $uid['curr']['uid']   = $this->pObj->singlePid;
+    $uid['curr']['pos']   = $pos_of_all_rows[$this->pObj->singlePid];
+
+    if($pos_of_curr_row <= ($pos_of_last_row - 1))
+    {
+      $uid['next']['uid']  = $uids_of_all_rows[$pos_of_curr_row - 1];
+      $uid['next']['pos']  = $pos_of_all_rows[$pos_of_curr_row - 1];
+    }
+    if($pos_of_curr_row > ($pos_of_last_row - 1))
+    {
+      $uid['next']['uid']  = 0;
+      $uid['next']['pos']  = 0;
+    }
+
+    if($pos_of_curr_row <= ($pos_of_last_row - 2))
+    {
+      $uid['last']['uid']  = $uids_of_all_rows[count($uids_of_all_rows) -1];;
+      $uid['last']['pos']  = $pos_of_all_rows[count($pos_of_all_rows) -1];
+    }
+    if($pos_of_curr_row > ($pos_of_last_row - 2))
+    {
+      $uid['last']['uid']  = 0;
+      $uid['last']['pos']  = 0;
+    }
+
+    
+    $record_browser = implode('|', $uid);
+    $markerArray['###RECORD_BROWSER###'] = var_export($uid, true);
+    $str_content = $this->pObj->cObj->substituteMarkerArray($str_content, $markerArray);
+
 
 
       //////////////////////////////////////////////////////////////////////
@@ -1874,6 +1932,7 @@ echo '<pre>' . var_export($uids_of_all_rows, true) . '</pre>';
 
 
 
+      return $str_content;
   }
 
 
