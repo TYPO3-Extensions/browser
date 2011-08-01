@@ -485,6 +485,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // Get Configuration out of the Plugin (Flexform) but [Templating]
 
     $this->objFlexform->main();
+    $conf = $this->conf;
       // Get Configuration out of the Plugin (Flexform) but [Templating]
 
 

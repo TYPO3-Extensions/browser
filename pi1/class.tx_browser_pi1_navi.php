@@ -1747,7 +1747,7 @@ class tx_browser_pi1_navi
       //
       // RETURN record browser isn't enabled
 
-    if(!$this->pObj->conf['navigation.']['record_browser'])
+    if(!($this->pObj->conf['navigation.']['record_browser'] == 1))
     {
       if ($this->pObj->b_drs_templating)
       {
