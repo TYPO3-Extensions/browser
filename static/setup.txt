@@ -272,6 +272,26 @@ plugin.tx_browser_pi1 {
         browseLinksWrap        = |
       }
     }
+
+      // [BOOLEAN] 1 (default): Display the record browser. 0: Don't display it.
+    record_browser = 1
+    record_browser {
+      display {
+          // [BOOLEAN] 0 (default): Don't display the record browser, if there isn't any result/record. 1 (default): Display it ever.
+        withoutResult     = 1
+          // [BOOLEAN] 1 (default): Display link to first and last record. 0: Don't display it.
+        firstAndLastItem  = 1
+          // [BOOLEAN] 0: Display items with a link only. 1 (default): Display items ever.
+        itemsWithoutLink  = 1
+      }
+      wrap {
+        disabledLinkWrap       = <span class="SCell">|</span>
+        inactiveLinkWrap       = |
+        activeLinkWrap         = <span class="SCell">|</span>
+        browseBoxWrap          =
+        browseLinksWrap        = |
+      }
+    }
   }
 
 
