@@ -1797,7 +1797,6 @@ class tx_browser_pi1_navi
         t3lib_div::devlog('[INFO/TEMPLATING] advanced.session_manager.session.enabled is \'' . $value . '\' '.
           'Record browser won\'t get its data from session (less performance).', $this->pObj->extKey, 0);
       }
-      return false;
     }
       // Session isn't enabled
 
