@@ -29,7 +29,7 @@
  *
  *
  *
- *   68: class tx_browser_pi1_config
+ *   68: class tx_browser_pi1_flexform
  *  165:     function __construct($parentObj)
  *  199:     function main()
  *
@@ -57,15 +57,15 @@
 
 
  /**
-  * The class tx_browser_pi1_config bundles all methods for the flexform but any wizard.
+  * The class tx_browser_pi1_flexform bundles all methods for the flexform but any wizard.
   * See Wizards in the wizard class.
   *
   * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
   * @package    TYPO3
-  * @subpackage    tx_browser_pi1
-  * @version 3.6.5
+  * @subpackage    browser
+  * @version 3.7.0
   */
-class tx_browser_pi1_config
+class tx_browser_pi1_flexform
 {
   /////////////////////////////////////////////////
   //
@@ -1147,7 +1147,7 @@ class tx_browser_pi1_config
               </h1>
               <p>
                 Flexform field Searchbox has a value bigger than 7. The value isn\'t defined.<br />
-                tx_browser_pi1_config::sheet_advanced()
+                ' . __METHOD__ . ' (' . __LINE__ . ')
               </p>
             </div>';
           echo $prompt;
@@ -1352,14 +1352,14 @@ class tx_browser_pi1_config
         $this->str_jquery_library = 'typoscript';
         break;
       case('http://code.jquery.com/jquery-1.6.min.js'):
-        $this->pObj->conf['javascript.']['jquery.']['file'] = $this->str_jquery_library;
+        $this->pObj->conf['javascript.']['jquery.']['library'] = $this->str_jquery_library;
         break;
       case('configured'):
         $str_jquery_library_own = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_library_own', 'javascript', 'lDEF', 'vDEF');
-        $this->pObj->conf['javascript.']['jquery.']['file'] = $str_jquery_library_own;
+        $this->pObj->conf['javascript.']['jquery.']['library'] = $str_jquery_library_own;
         break;
       case('none'):
-        $this->pObj->conf['javascript.']['jquery.']['file'] = null;
+        $this->pObj->conf['javascript.']['jquery.']['library'] = null;
         break;
       default:
         $prompt = '
@@ -1369,7 +1369,7 @@ class tx_browser_pi1_config
             <p>
               Flexform field jquery_library has an invalid value. The value isn\'t defined.<br />
               value: ' . $this->str_jquery_library . '<br />
-              tx_browser_pi1_config::sheet_javascript()
+              ' . __METHOD__ . ' (' . __LINE__ . ')
             </p>
           </div>';
         echo $prompt;
@@ -1420,7 +1420,7 @@ class tx_browser_pi1_config
             <p>
               Flexform field browser_libraries has an invalid value. The value isn\'t defined.<br />
               value: ' . $this->str_browser_libraries . '<br />
-              tx_browser_pi1_config::sheet_javascript()
+              ' . __METHOD__ . ' (' . __LINE__ . ')
             </p>
           </div>';
         echo $prompt;
@@ -1474,7 +1474,7 @@ class tx_browser_pi1_config
               ERROR</h1>
             <p>
               Flexform field ajax::mode has an invalid value. The value isn\'t defined.<br />
-              tx_browser_pi1_config::sheet_javascript()
+              ' . __METHOD__ . ' (' . __LINE__ . ')
             </p>
           </div>';
         echo $prompt;
@@ -1669,7 +1669,7 @@ class tx_browser_pi1_config
     if($bool_error)
     {
       $str_prompt = $this->pObj->pi_getLL('config_error_prompt');
-      $str_prompt = str_replace('%class%', 'class.tx_browser_pi1_config.php', $str_prompt);
+      $str_prompt = str_replace('%class%', __METHOD__ . ' (' . __LINE__ . ')', $str_prompt);
       $str_prompt = str_replace('%sheet%', 'sheet_sDEF()', $str_prompt);
       $str_prompt = str_replace('%field%', 'relations', $str_prompt);
       $str_prompt = str_replace('%value%', $str_relations, $str_prompt);
@@ -1903,7 +1903,7 @@ class tx_browser_pi1_config
                                                                     'socialmedia', 'lDEF', 'vDEF');
         break;
       default:
-        echo 'ERROR in class:tx_browser_pi1_config::sheet_socialmedia on line 1637';
+        echo 'ERROR: ' . __METHOD__ . ' (' . __LINE__ . ')';
         exit;
     }
 
@@ -2578,7 +2578,7 @@ class tx_browser_pi1_config
               ERROR</h1>
             <p>
               Flexform field navigation has a value bigger than 3. The value isn\'t defined.<br />
-              tx_browser_pi1_config::sheet_viewList()
+              ' . __METHOD__ . ' (' . __LINE__ . ')
             </p>
           </div>';
         echo $prompt;
@@ -2616,7 +2616,7 @@ class tx_browser_pi1_config
             </h1>
             <p>
               Flexform field records has a value bigger than 1. The value isn\'t defined.<br />
-              tx_browser_pi1_config::sheet_viewList()
+              ' . __METHOD__ . ' (' . __LINE__ . ')
             </p>
           </div>';
         echo $prompt;
@@ -2659,7 +2659,7 @@ class tx_browser_pi1_config
             </h1>
             <p>
               Flexform field emptyValues has a value bigger than 1. The value isn\'t defined.<br />
-              tx_browser_pi1_config::sheet_viewList()
+              ' . __METHOD__ . ' (' . __LINE__ . ')
             </p>
           </div>';
         echo $prompt;
@@ -2819,8 +2819,8 @@ class tx_browser_pi1_config
 }
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_config.php'])  {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_config.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_flexform.php'])  {
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_flexform.php']);
 }
 
 ?>

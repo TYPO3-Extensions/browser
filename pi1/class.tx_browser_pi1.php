@@ -484,7 +484,7 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // Get Configuration out of the Plugin (Flexform) but [Templating]
 
-    $this->objConfig->main();
+    $this->objFlexform->main();
       // Get Configuration out of the Plugin (Flexform) but [Templating]
 
 
@@ -503,7 +503,7 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // Get Configuration out of the Plugin (Flexform) devider [Templating]
 
-    $this->objConfig->sheet_templating();
+    $this->objFlexform->sheet_templating();
       // Get Configuration out of the Plugin (Flexform) devider [Templating]
 
 
@@ -838,7 +838,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // AJAX
 
       // #9659, 101010 fsander
-    if (!$this->objConfig->bool_ajax_enabled)
+    if (!$this->objFlexform->bool_ajax_enabled)
     {
       if ($this->b_drs_javascript)
       {
@@ -847,7 +847,7 @@ class tx_browser_pi1 extends tslib_pibase {
       }
     }
 
-    if ($this->objConfig->bool_ajax_enabled)
+    if ($this->objFlexform->bool_ajax_enabled)
     {
       if ($this->b_drs_javascript)
       {
@@ -932,7 +932,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // XML/RSS: return the result (XML string) without wrapInBaseClass
 
       // 12367, dwildt, 110310
-    switch($this->objConfig->bool_wrapInBaseClass)
+    switch($this->objFlexform->bool_wrapInBaseClass)
     {
       case(false):
         return $html_updateCheck.$str_template_completed;
@@ -1233,8 +1233,8 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objCal = new tx_browser_pi1_cal($this);
 
       // Class with methods for get flexform values
-    require_once('class.tx_browser_pi1_config.php');
-    $this->objConfig = new tx_browser_pi1_config($this);
+    require_once('class.tx_browser_pi1_flexform.php');
+    $this->objFlexform = new tx_browser_pi1_flexform($this);
 
       // Class with methods for consolidating rows
     require_once('class.tx_browser_pi1_consolidate.php');

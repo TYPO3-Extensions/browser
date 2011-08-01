@@ -200,7 +200,7 @@ class tx_browser_pi1_template
       // Remove pointer temporarily
     $arr_removePiVars = array('sword', 'sort', 'pointer');
         // #11576, dwildt, 101219
-    if(!$this->pObj->objConfig->bool_linkToSingle_wi_piVar_plugin)
+    if(!$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin)
     {
       $arr_removePiVars[] = 'plugin';
     }
@@ -216,9 +216,9 @@ class tx_browser_pi1_template
       // Move $GLOBALS['TSFE']->id temporarily
       // #9458
     $int_tsfeId = $GLOBALS['TSFE']->id;
-    if (!empty($this->pObj->objConfig->int_viewsListPid))
+    if (!empty($this->pObj->objFlexform->int_viewsListPid))
     {
-      $GLOBALS['TSFE']->id = $this->pObj->objConfig->int_viewsListPid;
+      $GLOBALS['TSFE']->id = $this->pObj->objFlexform->int_viewsListPid;
     }
       // Move $GLOBALS['TSFE']->id temporarily
 
@@ -375,7 +375,7 @@ class tx_browser_pi1_template
     $str_and         = $this->pObj->objWrapper->general_stdWrap($conf_and['value'], $conf_and);
 
     $conf_minLen     = $lSearchform['resultPhrase.'];
-    $bool_wrapSwords = $this->pObj->objConfig->bool_searchForm_wiColoredSwords;
+    $bool_wrapSwords = $this->pObj->objFlexform->bool_searchForm_wiColoredSwords;
     $key_according   = 0;
     $arr_confWrap    = $lSearchform['wrapSwordInResults.'];
     $max_key         = count($arr_confWrap) - 1;
@@ -501,7 +501,7 @@ class tx_browser_pi1_template
     //
     // RETURN false, in case of TypoScript: Don't display resultphrase'
 
-    if (!$this->pObj->objConfig->bool_searchForm_wiPhrase)
+    if (!$this->pObj->objFlexform->bool_searchForm_wiPhrase)
     {
       return false;
     }
@@ -578,7 +578,7 @@ class tx_browser_pi1_template
 
     if($this->pObj->boolFirstVisit)
     {
-      $bool_emptyList = $this->pObj->objConfig->bool_emptyAtStart;
+      $bool_emptyList = $this->pObj->objFlexform->bool_emptyAtStart;
       if($bool_emptyList)
       {
         $conf_emptyList = $this->pObj->lDisplay['emptyListByStart.']['stdWrap.'];
@@ -1297,7 +1297,7 @@ class tx_browser_pi1_template
     // Building the back button
 
 //    // #9659, 101010 fsander
-//    if ($this->pObj->objConfig->bool_ajax_enabled)
+//    if ($this->pObj->objFlexform->bool_ajax_enabled)
 //    {
 //      if ($this->pObj->b_drs_templating || $this->pObj->b_drs_javascript)
 //      {
@@ -1308,7 +1308,7 @@ class tx_browser_pi1_template
 //      $backbutton = $this->pObj->cObj->substituteMarkerArray($subpart, array('###BUTTON###' => $str_backbutton));
 //      $template   = $this->pObj->cObj->substituteSubpart($template, '###BACKBUTTON###', $backbutton, true);
 //    }
-//    if (!$this->pObj->objConfig->bool_ajax_enabled)
+//    if (!$this->pObj->objFlexform->bool_ajax_enabled)
 //    {
       $bool_backbutton  = $this->pObj->lDisplay['backbutton'];
       $conf_backbutton  = $this->pObj->lDisplay['backbutton.'];
@@ -2163,7 +2163,7 @@ class tx_browser_pi1_template
       $name                 = 'jQuery';
       $bool_success_jQuery  = $this->pObj->objJss->load_jQuery();
 
-      if ($this->pObj->objConfig->bool_ajax_enabled)
+      if ($this->pObj->objFlexform->bool_ajax_enabled)
       {
           // name has to correspondend with similar code in tx_browser_pi1.php
         $name         = 'ajaxLL';
@@ -2251,7 +2251,7 @@ class tx_browser_pi1_template
       // Get the global $arrHandleAs array
     $handleAs                   = $this->pObj->arrHandleAs;
       // [Boolean] Shouldn't empty values handled?
-    $bool_dontHandleEmptyValues = $this->pObj->objConfig->bool_dontHandleEmptyValues;
+    $bool_dontHandleEmptyValues = $this->pObj->objFlexform->bool_dontHandleEmptyValues;
     //var_dump('template 2218', $bool_dontHandleEmptyValues);
 
 

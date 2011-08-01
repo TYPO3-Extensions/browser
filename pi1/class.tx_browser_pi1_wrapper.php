@@ -248,7 +248,7 @@ class tx_browser_pi1_wrapper
       // AJAX
 
       // #9659, 101010 fsander
-    if ($this->pObj->objConfig->bool_ajax_enabled)
+    if ($this->pObj->objFlexform->bool_ajax_enabled)
     {
       $markerArray['###BROWSER_ID###'] = $this->pObj->cObj->data['uid'];
       if ($this->pObj->b_drs_template || $this->pObj->b_drs_javascript)

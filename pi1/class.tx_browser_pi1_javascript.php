@@ -186,7 +186,7 @@ class tx_browser_pi1_javascript
       // RETURN null, in case of disabled AJAX
 
     $bool_return = false;
-    if (!$this->pObj->objConfig->bool_ajax_enabled)
+    if (!$this->pObj->objFlexform->bool_ajax_enabled)
     {
       $bool_return = true;
     }
@@ -395,22 +395,22 @@ class tx_browser_pi1_javascript
       // Generate the AJAX class
 
     $str_ajax_class = 'ajax';
-    if ($this->pObj->objConfig->bool_ajax_single)
+    if ($this->pObj->objFlexform->bool_ajax_single)
     {
        $str_ajax_class .= ' ajax_single';
     }
-    if ($this->pObj->objConfig->str_ajax_list_transition != 'none')
+    if ($this->pObj->objFlexform->str_ajax_list_transition != 'none')
     {
-       $str_ajax_class .= ' ajaxlt'.$this->pObj->objConfig->str_ajax_list_transition;
+       $str_ajax_class .= ' ajaxlt'.$this->pObj->objFlexform->str_ajax_list_transition;
     }
-    if ($this->pObj->objConfig->str_ajax_single_transition != 'none')
+    if ($this->pObj->objFlexform->str_ajax_single_transition != 'none')
     {
-       $str_ajax_class .= ' ajaxst'.$this->pObj->objConfig->str_ajax_single_transition;
+       $str_ajax_class .= ' ajaxst'.$this->pObj->objFlexform->str_ajax_single_transition;
     }
     // #9659, 101013 fsander
-    if ($this->pObj->objConfig->str_ajax_list_on_single != 'listAndSingle')
+    if ($this->pObj->objFlexform->str_ajax_list_on_single != 'listAndSingle')
     {
-       $str_ajax_class .= ' ajaxlos'.$this->pObj->objConfig->str_ajax_list_on_single;
+       $str_ajax_class .= ' ajaxlos'.$this->pObj->objFlexform->str_ajax_list_on_single;
     }
     // #9659, 101016, dwildt
     // #9659, 101017 fsander
@@ -541,7 +541,7 @@ class tx_browser_pi1_javascript
         // Do nothing
       if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
       {
-        if(empty($this->pObj->objConfig->str_jquery_library))
+        if(empty($this->pObj->objFlexform->str_jquery_library))
         {
           t3lib_div::devlog('[INFO/FLEXFORM+JSS] Flexform Javascript|jquery_library is empty.', $this->pObj->extKey, 0);
         }
@@ -636,7 +636,7 @@ class tx_browser_pi1_javascript
 
       // #13429, dwildt, 110519
       // RETURN, there isn't any file for embedding
-    if(empty($this->pObj->objConfig->str_browser_libraries))
+    if(empty($this->pObj->objFlexform->str_browser_libraries))
     {
       if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
       {

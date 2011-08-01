@@ -149,7 +149,7 @@ class tx_browser_pi1_filter {
       //
       // RETURN filters shouldn't processed
 
-    $bool_display = $this->pObj->objConfig->bool_searchForm;
+    $bool_display = $this->pObj->objFlexform->bool_searchForm;
     if ($bool_display == 0)
     {
         // DRS - Development Reporting System
@@ -2096,7 +2096,7 @@ class tx_browser_pi1_filter {
 
       // Remove piVars['plugin'], if current plugin is trhe default plugin
       // #11576, dwildt, 101219
-    if(!$this->pObj->objConfig->bool_linkToSingle_wi_piVar_plugin)
+    if(!$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin)
     {
       $arr_removePiVars[] = 'plugin';
     }
@@ -2113,9 +2113,9 @@ class tx_browser_pi1_filter {
       // Move $GLOBALS['TSFE']->id temporarily
       // #9458
     $int_tsfeId = $GLOBALS['TSFE']->id;
-    if (!empty($this->pObj->objConfig->int_viewsListPid))
+    if (!empty($this->pObj->objFlexform->int_viewsListPid))
     {
-      $GLOBALS['TSFE']->id = $this->pObj->objConfig->int_viewsListPid;
+      $GLOBALS['TSFE']->id = $this->pObj->objFlexform->int_viewsListPid;
     }
       // Move $GLOBALS['TSFE']->id temporarily
 

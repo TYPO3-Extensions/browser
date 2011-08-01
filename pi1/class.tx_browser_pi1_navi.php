@@ -145,30 +145,30 @@ class tx_browser_pi1_navi
     $lDisplay = $this->pObj->lDisplayList['display.'];
 
 
-    /////////////////////////////////////
-    //
-    // Bool Synonyms
+
+      /////////////////////////////////////
+      //
+      // Bool Synonyms
 
     $this->bool_synonyms = $this->conf_view['functions.']['synonym'];
-    // Bool Synonyms
+      // Bool Synonyms
 
 
-    ///////////////////////////////////////////////////
-    //
-    // RETURN, if the A-Z-Browser isn't activated
 
-    //if ($lDisplay['a-z_Browser'])
-    if ($this->pObj->objConfig->bool_azBrowser)
+      ///////////////////////////////////////////////////
+      //
+      // RETURN, if the A-Z-Browser isn't activated
+
+    if ($this->pObj->objFlexform->bool_azBrowser)
     {
-      // The A-Z-Browser should be displayed
+        // The A-Z-Browser should be displayed
       if ($this->pObj->b_drs_browser) {
         t3lib_div::devlog('[INFO/BROWSER] display.a-z_Browser is true.', $this->pObj->extKey, 0);
       }
     }
-    //if (!$lDisplay['a-z_Browser'])
-    if (!$this->pObj->objConfig->bool_azBrowser)
+    if (!$this->pObj->objFlexform->bool_azBrowser)
     {
-      // The A-Z-Browser isn't activated, we don't need any process, return
+        // The A-Z-Browser isn't activated, we don't need any process, return
       if ($this->pObj->b_drs_browser) {
         t3lib_div::devlog('[INFO/BROWSER] display.a-z_Browser is false.', $this->pObj->extKey, 0);
       }
@@ -176,12 +176,13 @@ class tx_browser_pi1_navi
       $arr_return['data']['template'] = $template;
       return $arr_return;
     }
-    // RETURN, if the A-Z-Browser isn't activated
+      // RETURN, if the A-Z-Browser isn't activated
 
 
-    ///////////////////////////////////////////////////
-    //
-    // RETURN, if we don't have configured tabs
+
+      ///////////////////////////////////////////////////
+      //
+      // RETURN, if we don't have configured tabs
 
     $arr_conf_tabs = $this->conf['a-z_Browser.']['tabs.'];
     if (!is_array($arr_conf_tabs))
@@ -195,26 +196,27 @@ class tx_browser_pi1_navi
       $arr_return['data']['template'] = $template;
       return $arr_return;
     }
-    // RETURN, if we don't have configured tabs
+      // RETURN, if we don't have configured tabs
 
 
 
-    ///////////////////////////////////////////////////
-    //
-    // Move $GLOBALS['TSFE']->id temporarily
-    // #9458
+      ///////////////////////////////////////////////////
+      //
+      // Move $GLOBALS['TSFE']->id temporarily
+      // #9458
+
     $int_tsfeId = $GLOBALS['TSFE']->id;
-    if (!empty($this->pObj->objConfig->int_viewsListPid))
+    if (!empty($this->pObj->objFlexform->int_viewsListPid))
     {
-      $GLOBALS['TSFE']->id = $this->pObj->objConfig->int_viewsListPid;
+      $GLOBALS['TSFE']->id = $this->pObj->objFlexform->int_viewsListPid;
     }
-    // Move $GLOBALS['TSFE']->id temporarily
+      // Move $GLOBALS['TSFE']->id temporarily
 
 
 
-    ///////////////////////////////////////////////////
-    //
-    // Get the A-Z-Browser rows (uid, initialField)
+      ///////////////////////////////////////////////////
+      //
+      // Get the A-Z-Browser rows (uid, initialField)
 
     $arr_result = $this->azRowsInitial($arr_data);
     if ($arr_result['error']['status'])
@@ -224,14 +226,16 @@ class tx_browser_pi1_navi
     }
     $azRows = $arr_result['data']['azRows'];
     unset($arr_result);
-    // Get the A-Z-Browser rows (uid, initialField)
+      // Get the A-Z-Browser rows (uid, initialField)
 
 
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
 
-    if ($this->pObj->b_drs_perform) {
+      ////////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
+
+    if ($this->pObj->b_drs_perform)
+    {
       if($this->pObj->bool_typo3_43)
       {
         $endTime = $this->pObj->TT->getDifferenceToStarttime();
@@ -242,12 +246,13 @@ class tx_browser_pi1_navi
       }
       t3lib_div::devLog('[INFO/PERFORMANCE] After rows initial: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
     }
-    // DRS - Performance
+      // DRS - Performance
 
 
-    ///////////////////////////////////////////////////
-    //
-    // Count the hits per tab, prepaire the tabArray
+
+      ///////////////////////////////////////////////////
+      //
+      // Count the hits per tab, prepaire the tabArray
 
     $arr_data['azRows']         = $azRows;
     $arr_data['rows']           = $rows;
@@ -257,14 +262,16 @@ class tx_browser_pi1_navi
     $arr_tsId = $arr_result['data']['tabIds'];
     $rows     = $arr_result['data']['rows'];
     unset($arr_result);
-    // Count the hits per tab, prepaire the tabArray
+      // Count the hits per tab, prepaire the tabArray
 
 
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
 
-    if ($this->pObj->b_drs_perform) {
+      ////////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
+
+    if ($this->pObj->b_drs_perform)
+    {
       if($this->pObj->bool_typo3_43)
       {
         $endTime = $this->pObj->TT->getDifferenceToStarttime();
@@ -275,12 +282,13 @@ class tx_browser_pi1_navi
       }
       t3lib_div::devLog('[INFO/PERFORMANCE] After prepairing tab array: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
     }
-    // DRS - Performance
+      // DRS - Performance
 
 
-    ///////////////////////////////////////////////////
-    //
-    // Build the A-Z-Browser template
+
+      ///////////////////////////////////////////////////
+      //
+      // Build the A-Z-Browser template
 
     $arr_data['azTabArray'] = $lArrTabs;
     $arr_data['tabIds']     = $arr_tsId;
@@ -289,11 +297,13 @@ class tx_browser_pi1_navi
     unset($arr_data);
     $template = $arr_result['data']['template'];
     unset($arr_result);
+      // Build the A-Z-Browser template
 
 
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
+
+      ////////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
 
     if ($this->pObj->b_drs_perform) {
       if($this->pObj->bool_typo3_43)
@@ -306,7 +316,7 @@ class tx_browser_pi1_navi
       }
       t3lib_div::devLog('[INFO/PERFORMANCE] After building the template: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
     }
-    // DRS - Performance
+      // DRS - Performance
 
 
     $arr_return['data']['azTabArray'] = $lArrTabs;
@@ -361,7 +371,7 @@ class tx_browser_pi1_navi
     {
       $bool_dontLinkDefaultTab = true;
       // #7582, Bugfix, 100501
-      if($this->pObj->objConfig->bool_emptyAtStart)
+      if($this->pObj->objFlexform->bool_emptyAtStart)
       {
         $bool_dontLinkDefaultTab = false;
         // DRS - Development Reporting System
@@ -376,18 +386,18 @@ class tx_browser_pi1_navi
     }
 
 
-    //////////////////////////////////////////////////////
-    //
-    // DRS - Development Reporting System
+      //////////////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
 
     $boolPrompt_1 = false;
     $boolPrompt_2 = false;
-    // DRS - Development Reporting System
+      // DRS - Development Reporting System
 
 
-    //////////////////////////////////////////////////////
-    //
-    // Get the key of last displayed tab
+      //////////////////////////////////////////////////////
+      //
+      // Get the key of last displayed tab
 
     end($lArrTabs);
     do
@@ -396,12 +406,12 @@ class tx_browser_pi1_navi
       prev($lArrTabs);
     }
     while ($lArrTabs[$i_curr_key]['displayWithoutItems'] + $lArrTabs[$i_curr_key]['amount'] < 1);
-    // The tab with the current key won't be displayed,
-    // if $lArrTabs[$i_curr_key]['displayWithoutItems'] == 0 and $lArrTabs[$i_curr_key]['amount'] == 0
-    // Take so long the previous tab as it will be dislayed in this case.
+      // The tab with the current key won't be displayed,
+      // if $lArrTabs[$i_curr_key]['displayWithoutItems'] == 0 and $lArrTabs[$i_curr_key]['amount'] == 0
+      // Take so long the previous tab as it will be dislayed in this case.
 
     $lastTabId = $i_curr_key;
-    // Get the key of last displayed tab
+      // Get the key of last displayed tab
 
 
     $tsDisplayTitleTag = $this->conf['a-z_Browser.']['display.']['tabHrefTitle'];
@@ -410,8 +420,8 @@ class tx_browser_pi1_navi
     foreach((array) $lArrTabs as $key_tab => $arr_tab)
     {
       $str_label  = $lArrTabs[$key_tab]['label'];
-      // #8333, fsander
-      // #9912, dwildt
+        // #8333, fsander
+        // #9912, dwildt
 //:TODO:
 //  /**
 //   * Converts special chars (like ���, umlauts etc) to ascii equivalents (usually double-bytes, like �=> ae etc.)
@@ -1143,7 +1153,7 @@ class tx_browser_pi1_navi
 
       $arr_return['error']['status'] = true;
       $arr_return['error']['header'] = '<h1 style="color:red">Error A-Z-Browser</h1>';
-      $arr_return['error']['prompt'] = '<p1 style="color:red">'.$str_prompt.'</p>';
+      $arr_return['error']['prompt'] = '<p style="color:red">'.$str_prompt.'</p>';
       return $arr_return;
     }
 
@@ -1345,7 +1355,7 @@ class tx_browser_pi1_navi
       //
       // RETURN if pagebrowser shouldn't displayed
 
-    if (!$this->pObj->objConfig->bool_pageBrowser)
+    if (!$this->pObj->objFlexform->bool_pageBrowser)
     {
       $template = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSER###', '', true);
       $arr_return['data']['template'] = $template;
@@ -1373,7 +1383,7 @@ class tx_browser_pi1_navi
       //
       // RETURN if firstVisit and emptyListByStart
 
-    if($this->pObj->boolFirstVisit and $this->pObj->objConfig->bool_emptyAtStart)
+    if($this->pObj->boolFirstVisit and $this->pObj->objFlexform->bool_emptyAtStart)
     {
       $template = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSER###', '', true);
       $arr_return['data']['template'] = $template;
@@ -1389,9 +1399,9 @@ class tx_browser_pi1_navi
       // #9458
 
     $int_tsfeId = $GLOBALS['TSFE']->id;
-    if (!empty($this->pObj->objConfig->int_viewsListPid))
+    if (!empty($this->pObj->objFlexform->int_viewsListPid))
     {
-      $GLOBALS['TSFE']->id = $this->pObj->objConfig->int_viewsListPid;
+      $GLOBALS['TSFE']->id = $this->pObj->objFlexform->int_viewsListPid;
     }
       // Move $GLOBALS['TSFE']->id temporarily
 
@@ -1720,53 +1730,101 @@ class tx_browser_pi1_navi
 
 
  /**
-  * recordbrowser_set_session_data: Set session data for the record browser
-  *                                 We need the record browser in the sngle view
-  *                                 Feature #27041
+  * recordbrowser_set_session_data: Set session data for the record browser.
+  *                                 * We need the record browser in the sngle view.
+  *                                 * This method must be called, before the page browser 
+  *                                   changes the rows array (before limiting).
+  *                                 * Feature: #27041
   *
   * @param  array   $rows: Array with all available rows of the list view in order of the list view
-  * @return void
+ * @return  array   $arr_return: false in case of success, otherwise array with an error message
   * 
   * @version 3.7.0
   */
   function recordbrowser_set_session_data($rows)
   {
+    
+      /////////////////////////////////////
+      //
       // RETURN session isn't enabled
-      // ...
-      
+
+      // RETURN session isn't enabled
+
+
+
+      /////////////////////////////////////
+      //
       // RETURN rows are empty
+
     if(empty($rows))
     {
-      die('ERROR rows are empty');
+        // Get the tx_browser_pi1 session array 
+      $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey('ses', $this->pObj->prefixId);
+        // Empty the array with the uids of all rows 
+      $arr_browser_session['uids_all_rows'] = array();
+        // Set the tx_browser_pi1 session array
+      $GLOBALS['TSFE']->fe_user->setKey('ses', $this->pObj->prefixId, $arr_browser_session);
+      if ($this->pObj->b_drs_templating)
+      {
+        t3lib_div::devlog('[INFO/TEMPLATING] Rows are empty. Session array [' . $this->pObj->prefixId . '][uids_all_rows] will be empty.',  $this->pObj->extKey, 0);
+      }
+      return false;
     }
+      // RETURN rows are empty
 
+
+
+      /////////////////////////////////////
+      //
       // Get table.field for uid of the local table
+
     $key_for_uid = $this->pObj->arrLocalTable['uid'];
     
       // RETURN uid table.field isn't any key
     $key = key($rows);
     if(!isset($rows[$key][$key_for_uid]))
     {
-      die('ERROR ' . $key_for_uid);
+      $arr_return['error']['status'] = true;
+      $arr_return['error']['header'] = '<h1 style="color:red">Error Record Browser</h1>';
+      $arr_return['error']['prompt'] = '<p style="color:red">Key is missing in $rows. Key is ' . $key_for_uid . '</p>';
+      $arr_return['error']['prompt'] = $arr_return['error']['prompt'] . '<p>' . __METHOD__ . ' (' . __LINE__ . ')</p>';
+      return $arr_return;
     }
       // RETURN uid table.field isn't any key
-    
-      // LOOP rows
+      // Get table.field for uid of the local table
+
+
+
+      /////////////////////////////////////
+      //
+      // LOOP rows: set the array with uids
+
     $arr_uid = array();
     foreach((array) $rows as $row => $elements)
     {
       $arr_uid[] = $elements[$key_for_uid];
     }
-    echo '<pre>' . var_export($arr_uid, true) . '</pre>';
-      // LOOP rows
-      
-      // Set ...
-//$myData = $GLOBALS['TSFE']->fe_user->getKey('ses', 'myData');
-//$str_myData = implode(', ', $myData);
-//$str_template_completed = 'Hallo ' . $str_myData . ' ' . $str_template_completed;
-//$myConfig['name'] = 'dirk';    
-//$myConfig['street'] = 'Born';
-//$GLOBALS['TSFE']->fe_user->setKey('ses', 'myData', $myConfig);
+    //echo '<pre>' . var_export($arr_uid, true) . '</pre>';
+      // LOOP rows: set the array with uids
+
+
+
+      /////////////////////////////////////
+      //
+      // Set the session array
+
+      // Get the tx_browser_pi1 session array 
+    $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey('ses', $this->pObj->prefixId);
+      // Overwrite the array with the uids of all rows 
+    $arr_browser_session['uids_all_rows'] = $arr_uid;
+      // Set the tx_browser_pi1 session array
+    $GLOBALS['TSFE']->fe_user->setKey('ses', $this->pObj->prefixId, $arr_browser_session);
+    if ($this->pObj->b_drs_templating)
+    {
+      t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $this->pObj->prefixId . '][uids_all_rows] is set with ' .
+        '#' . count($arr_uid) . ' uids.',  $this->pObj->extKey, 0);
+    }
+      // Set the session array
 
   }
 

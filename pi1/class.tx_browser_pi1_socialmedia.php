@@ -173,7 +173,7 @@ class tx_browser_pi1_socialmedia
 
 
     // RETURN if social bookmarks are disabled
-    $str_bookmarks_enabled = $this->pObj->objConfig->str_socialmedia_bookmarks_enabled;
+    $str_bookmarks_enabled = $this->pObj->objFlexform->str_socialmedia_bookmarks_enabled;
     if($str_bookmarks_enabled == 'disabled' || !$str_bookmarks_enabled)
     {
       // DRS - Development Reporting System
@@ -198,11 +198,11 @@ class tx_browser_pi1_socialmedia
       // RETURN false if current key is the table.field for site
       if($this->view == 'list')
       {
-        $str_currKey_forSite = $this->pObj->objConfig->str_socialmedia_bookmarks_tableFieldSite_list;
+        $str_currKey_forSite = $this->pObj->objFlexform->str_socialmedia_bookmarks_tableFieldSite_list;
       }
       if($this->view == 'single')
       {
-        $str_currKey_forSite = $this->pObj->objConfig->str_socialmedia_bookmarks_tableFieldSite_single;
+        $str_currKey_forSite = $this->pObj->objFlexform->str_socialmedia_bookmarks_tableFieldSite_single;
       }
       if($str_currKey_forSite != $key)
       {
@@ -267,12 +267,12 @@ class tx_browser_pi1_socialmedia
       // Get the uid of the page with the single view
     if($this->view == 'list')
     {
-      $str_tableFieldTitle = $this->pObj->objConfig->str_socialmedia_bookmarks_tableFieldTitle_list;
+      $str_tableFieldTitle = $this->pObj->objFlexform->str_socialmedia_bookmarks_tableFieldTitle_list;
       $singlePid           = $this->pObj->objZz->get_singlePid_for_listview();
     }
     if($this->view == 'single')
     {
-      $str_tableFieldTitle = $this->pObj->objConfig->str_socialmedia_bookmarks_tableFieldTitle_single;
+      $str_tableFieldTitle = $this->pObj->objFlexform->str_socialmedia_bookmarks_tableFieldTitle_single;
       $singlePid = $GLOBALS['TSFE']->id;
     }
       // Get the uid of the page with the single view
@@ -474,14 +474,14 @@ class tx_browser_pi1_socialmedia
     // Get current bookmars for the list view
     if($this->view == 'list')
     {
-      $csv_bookmarks = $this->pObj->objConfig->strCsv_socialmedia_bookmarks_list;
+      $csv_bookmarks = $this->pObj->objFlexform->strCsv_socialmedia_bookmarks_list;
     }
     // Get current bookmars for the list view
 
     // Get current bookmars for the single view
     if($this->view == 'single')
     {
-      $csv_bookmarks = $this->pObj->objConfig->strCsv_socialmedia_bookmarks_single;
+      $csv_bookmarks = $this->pObj->objFlexform->strCsv_socialmedia_bookmarks_single;
     }
     // Get current bookmars for the single view
 

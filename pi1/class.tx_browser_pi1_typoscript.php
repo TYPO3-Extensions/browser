@@ -576,11 +576,11 @@ class tx_browser_pi1_typoscript
 
     // 3.4.1
     // plugin [template] int_templating_dataQuery has a value
-//var_dump('typoscript 487', $this->pObj->objConfig->int_templating_dataQuery);
-    if($this->pObj->objConfig->int_templating_dataQuery)
+//var_dump('typoscript 487', $this->pObj->objFlexform->int_templating_dataQuery);
+    if($this->pObj->objFlexform->int_templating_dataQuery)
     {
       // Get andWhere from TypoScript
-      $str_key   = $this->pObj->objConfig->int_templating_dataQuery.'.';
+      $str_key   = $this->pObj->objFlexform->int_templating_dataQuery.'.';
 //var_dump('typoscript 494', $str_key);
       $arr_items = $this->conf['plugin.']['templating.']['arrDataQuery.']['items.'];
 //var_dump('typoscript 495', $arr_items);

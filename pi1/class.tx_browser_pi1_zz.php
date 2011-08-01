@@ -230,8 +230,8 @@
       // #9599
     if(empty($this->pObj->piVars['mode']))
     {
-      $this->pObj->objConfig->prepare_mode();
-      $mode = $this->pObj->objConfig->mode;
+      $this->pObj->objFlexform->prepare_mode();
+      $mode = $this->pObj->objFlexform->mode;
     }
     if(!empty($this->pObj->piVars['mode']))
     {
@@ -278,10 +278,10 @@
       // Simulate showUid from current plugin
 
 //$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false)) var_dump('zz 277', $this->pObj->objConfig->int_singlePid);
-    if($this->pObj->objConfig->int_singlePid)
+//if (!($pos === false)) var_dump('zz 277', $this->pObj->objFlexform->int_singlePid);
+    if($this->pObj->objFlexform->int_singlePid)
     {
-      $this->pObj->piVars['showUid'] = $this->pObj->objConfig->int_singlePid;
+      $this->pObj->piVars['showUid'] = $this->pObj->objFlexform->int_singlePid;
       if ($this->pObj->b_drs_flexform)
       {
         t3lib_div::devlog('[INFO/FLEXFORM] Plugin has a simulated single uid: '.
@@ -610,7 +610,7 @@
 //      // Do we have a sword in the URL?
 //      // Is there a difference to the current sword?
 //      // #9659, 101010 dwildt, AJAX
-//    if (!$this->pObj->objConfig->bool_ajax_enabled)
+//    if (!$this->pObj->objFlexform->bool_ajax_enabled)
 //    {
 //      if($str_swordInUrl && ($str_swordInUrl != $this->pObj->piVars['sword']))
 //      {
@@ -704,7 +704,7 @@
     // Set piVars[azTab] to default value, if it is empty and a-z_Browser.defaultTab.realURL is true
 
     // Delete piVar[azTab], if we don't have any a-z-browser.
-    if($this->pObj->objConfig->bool_azBrowser == 0)
+    if($this->pObj->objFlexform->bool_azBrowser == 0)
     {
       unset($this->pObj->piVars['azTab']);
     }
@@ -869,12 +869,12 @@
     // Should we process dont_display_piVars?
 
     $arr_rmPiVars = false;
-    $arr_noPiVars['azTab']   = !$this->pObj->objConfig->bool_linkToSingle_wi_piVar_azTab;
-    $arr_noPiVars['mode']    = !$this->pObj->objConfig->bool_linkToSingle_wi_piVar_mode;
-    $arr_noPiVars['pointer'] = !$this->pObj->objConfig->bool_linkToSingle_wi_piVar_pointer;
-    $arr_noPiVars['plugin']  = !$this->pObj->objConfig->bool_linkToSingle_wi_piVar_plugin;
-    $arr_noPiVars['sort']    = !$this->pObj->objConfig->bool_linkToSingle_wi_piVar_sort;
-    $arr_noPiVars['sword']   = !$this->pObj->objConfig->bool_searchForm_wiColoredSwordsSingle;
+    $arr_noPiVars['azTab']   = !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_azTab;
+    $arr_noPiVars['mode']    = !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_mode;
+    $arr_noPiVars['pointer'] = !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_pointer;
+    $arr_noPiVars['plugin']  = !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin;
+    $arr_noPiVars['sort']    = !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_sort;
+    $arr_noPiVars['sword']   = !$this->pObj->objFlexform->bool_searchForm_wiColoredSwordsSingle;
 
     // Do we have an array with piVar keys?
     if (is_array($arr_noPiVars))
@@ -2424,7 +2424,7 @@
 
       // Don't display any wrapped swords. RETURN.
       //if (!$lSearchform['wrapSwordInResults'])
-    if(!$this->pObj->objConfig->bool_searchForm_wiColoredSwords)
+    if(!$this->pObj->objFlexform->bool_searchForm_wiColoredSwords)
     {
 // 3.3.4
 //if(t3lib_div::_GP('dev')) var_dump('zz 2225: RETURN bool_searchForm_wiColoredSwords');

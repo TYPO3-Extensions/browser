@@ -988,8 +988,8 @@ class tx_browser_pi1_views
 
       // HTML search form
       // #9659, 101011, fsander
-    //$bool_display = $this->pObj->objConfig->bool_searchForm;
-    $bool_display = $this->pObj->objConfig->bool_searchForm && $this->pObj->segment['searchform'];
+    //$bool_display = $this->pObj->objFlexform->bool_searchForm;
+    $bool_display = $this->pObj->objFlexform->bool_searchForm && $this->pObj->segment['searchform'];
     $template     = $this->pObj->objTemplate->tmplSearchBox($template, $bool_display);
       // HTML search form
 
@@ -1036,12 +1036,28 @@ class tx_browser_pi1_views
       //
       // record browser
 
-    $arr_result         = $this->pObj->objNavi->recordbrowser_set_session_data($rows);
-//    $template         = $arr_result['data']['template'];
-//    $rows             = $arr_result['data']['rows'];
-//    $this->pObj->rows = $rows;
-//    unset($arr_result);
+    $arr_result = $this->pObj->objNavi->recordbrowser_set_session_data($rows);
+    if ($arr_result['error']['status'])
+    {
+      $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
+      return $this->pObj->pi_wrapInBaseClass($prompt);
+    }
       // record browser
+
+      // DRS - Performance
+    if ($this->pObj->b_drs_perform)
+    {
+      if($this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->getDifferenceToStarttime();
+      }
+      if(!$this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->mtime();
+      }
+      t3lib_div::devLog('[INFO/PERFORMANCE] After record browser: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+    }
+      // DRS - Performance
 
       /////////////////////////////////////
       //
