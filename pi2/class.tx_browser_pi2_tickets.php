@@ -262,8 +262,8 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
     $arr_release[$int_v][$int_t]['function']                        = 'moved_value';
     $arr_release[$int_v][$int_t]['version']                         = '3.1.6';
-    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'a-z_Browser.defaultTab.realURL';
-    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'a-z_Browser.defaultTab.display_in_url';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'navigation.a-z_Browser.defaultTab.realURL';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'navigation.a-z_Browser.defaultTab.display_in_url';
 
     $int_t++;
     $arr_release[$int_v][$int_t]['header']['default']               = 'piVars: don\'t display piVars in links to single view';
