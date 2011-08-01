@@ -482,6 +482,7 @@ $LOCAL_LANG = array(
     'sheet_viewSingle.record_browser'                             => 'Datensatz-Browser',
     'sheet_viewSingle.record_browser.0'                           => 'deaktiviert (Standard)',
     'sheet_viewSingle.record_browser.1'                           => 'aktiviert',
+    'sheet_viewSingle.record_browser.2'                           => 'beachte TypoScript',
     'sheet_viewSingle.record_browser.display.firstAndLastItem'    => 'Datensatz-Browser: Zeige Link zum ersten und letzten Datensatz der Serie an',
     'sheet_viewSingle.record_browser.display.firstAndLastItem.0'  => 'ja (empfohlen)',
     'sheet_viewSingle.record_browser.display.firstAndLastItem.1'  => 'nein',
