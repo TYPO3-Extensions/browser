@@ -141,7 +141,7 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['header']['default']               = 'A-Z-Browser Default Tab';
     $arr_release[$int_v][$int_t]['prompt']['default']               = 'The A-Z-Browser Default Tab couldn\'t translate to another language until %version%. We changed the type from string to integer. The value has to be an id of a tab instead of the name. Edit your code like in the example below.';
     $arr_release[$int_v][$int_t]['header']['de']                    = 'A-Z-Browser Standard-Tab';
-    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Der A-Z-Browser Standard-Tab konnte bis zur Version %version% nicht &uuml;bersetzt werden. Wir haben den Typ von String auf Integer umgestellt. Der Wert ist jetzt die ID eines Tabs statt wie bisher eines Namens. &Auml;ndern Sie den Code wie im Beispiel unten erl&auml;utert.';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Der A-Z-Browser Standard-Tab konnte bis zur Version %version% nicht &uuml;bersetzt werden. Wir haben den Typ von String auf Integer umgestellt. Der Wert ist jetzt die ID eines Tabs statt wie bisher eines Namens. &Auml;ndere den Code wie im Beispiel unten erl&auml;utert.';
     $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
     $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
     $arr_release[$int_v][$int_t]['function']                        = 'str_to_int';
@@ -280,7 +280,7 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['header']['default']               = 'Sword: don\'t display sword in links to single view';
     $arr_release[$int_v][$int_t]['prompt']['default']               = 'This porperty is configured by the Plugin since version %version%. Please remove the TypoScript code. Please configure the plugin: Listview > Search: configured > colored swords (single view)';
     $arr_release[$int_v][$int_t]['header']['de']                    = 'Suchbegriff: in Links zur Detailansicht nicht anzeigen';
-    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft wird ab Version %version% im Plugin gepflegt. Entfernen Sie bitte den TypoScript-Code. Und pflegen Sie das Plugin: Listenansicht > Suche: konfiguriert > farbige Treffer (Detailansicht).';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft wird ab Version %version% im Plugin gepflegt. Entferne bitte den TypoScript-Code. Und pflege das Plugin: Listenansicht > Suche: konfiguriert > farbige Treffer (Detailansicht).';
     $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_WARN;
     $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_REMOVE_PLEASE;
     $arr_release[$int_v][$int_t]['function']                        = 'moved_from_ts_to_plugin';
@@ -291,7 +291,7 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['header']['default']               = 'A-Z-Index: don\'t display value in links to single view';
     $arr_release[$int_v][$int_t]['prompt']['default']               = 'This porperty is configured by the Plugin since version %version%. Please remove the TypoScript code. Please configure the plugin: Marker & RealUrl > RealUrl: configured > A-Z-index';
     $arr_release[$int_v][$int_t]['header']['de']                    = 'A-Z-Index: in Links zur Detailansicht nicht anzeigen';
-    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft wird ab Version %version% im Plugin gepflegt. Entfernen Sie bitte den TypoScript-Code. Und pflegen Sie das Plugin: Marker & RealUrl > RealUrl: konfiguriert > A-Z-Index.';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft wird ab Version %version% im Plugin gepflegt. Entferne bitte den TypoScript-Code. Und pflege das Plugin: Marker & RealUrl > RealUrl: konfiguriert > A-Z-Index.';
     $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_WARN;
     $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_REMOVE_PLEASE;
     $arr_release[$int_v][$int_t]['function']                        = 'moved_from_ts_to_plugin';
@@ -302,7 +302,7 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['header']['default']               = 'Mode: don\'t display mode in links to single view';
     $arr_release[$int_v][$int_t]['prompt']['default']               = 'This porperty is configured by the Plugin since version %version%. Please remove the TypoScript code. Please configure the plugin: Marker & RealUrl > RealUrl: configured > Current view';
     $arr_release[$int_v][$int_t]['header']['de']                    = 'Aktuelle Ansicht: in Links zur Detailansicht nicht anzeigen';
-    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft wird ab Version %version% im Plugin gepflegt. Entfernen Sie bitte den TypoScript-Code. Und pflegen Sie das Plugin: Marker & RealUrl > RealUrl: konfiguriert > Aktuelle Ansicht.';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft wird ab Version %version% im Plugin gepflegt. Entferne bitte den TypoScript-Code. Und pflege das Plugin: Marker & RealUrl > RealUrl: konfiguriert > Aktuelle Ansicht.';
     $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_WARN;
     $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_REMOVE_PLEASE;
     $arr_release[$int_v][$int_t]['function']                        = 'moved_from_ts_to_plugin';
@@ -313,7 +313,7 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['header']['default']               = 'Pointer: don\'t display value in links to single view';
     $arr_release[$int_v][$int_t]['prompt']['default']               = 'This porperty is configured by the Plugin since version %version%. Please remove the TypoScript code. Please configure the plugin: Marker & RealUrl > RealUrl: configured > Current page of page-browser';
     $arr_release[$int_v][$int_t]['header']['de']                    = 'Seite des Page-Browsers: in Links zur Detailansicht nicht anzeigen';
-    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft wird ab Version %version% im Plugin gepflegt. Entfernen Sie bitte den TypoScript-Code. Und pflegen Sie das Plugin: Marker & RealUrl > RealUrl: konfiguriert > Aktuelle Seite des Datensatz- bzw. Page-Brwosers.';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft wird ab Version %version% im Plugin gepflegt. Entferne bitte den TypoScript-Code. Und pflege das Plugin: Marker & RealUrl > RealUrl: konfiguriert > Aktuelle Seite des Datensatz- bzw. Page-Brwosers.';
     $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_WARN;
     $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_REMOVE_PLEASE;
     $arr_release[$int_v][$int_t]['function']                        = 'moved_from_ts_to_plugin';
@@ -324,7 +324,7 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['header']['default']               = 'Plugin: don\'t display uid in links to single view';
     $arr_release[$int_v][$int_t]['prompt']['default']               = 'This porperty is configured by the Plugin since version %version%. Please remove the TypoScript code. Please configure the plugin: Marker & RealUrl > RealUrl: configured > Current plugin';
     $arr_release[$int_v][$int_t]['header']['de']                    = 'Plugin: Uid in Links zur Detailansicht nicht anzeigen';
-    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft wird ab Version %version% im Plugin gepflegt. Entfernen Sie bitte den TypoScript-Code. Und pflegen Sie das Plugin: Marker & RealUrl > RealUrl: konfiguriert > Das aktuelle Plugin.';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft wird ab Version %version% im Plugin gepflegt. Entferne bitte den TypoScript-Code. Und pflege das Plugin: Marker & RealUrl > RealUrl: konfiguriert > Das aktuelle Plugin.';
     $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_WARN;
     $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_REMOVE_PLEASE;
     $arr_release[$int_v][$int_t]['function']                        = 'moved_from_ts_to_plugin';
@@ -335,7 +335,7 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['header']['default']               = 'Sort: don\'t display sorting clause in links to single view';
     $arr_release[$int_v][$int_t]['prompt']['default']               = 'This porperty is configured by the Plugin since version %version%. Please remove the TypoScript code. Please configure the plugin: Marker & RealUrl > RealUrl: configured > Sort clause';
     $arr_release[$int_v][$int_t]['header']['de']                    = 'Sortierung: in Links zur Detailansicht nicht anzeigen';
-    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft wird ab Version %version% im Plugin gepflegt. Entfernen Sie bitte den TypoScript-Code. Und pflegen Sie das Plugin: Marker & RealUrl > RealUrl: konfiguriert > Aktuelle Sortierung.';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft wird ab Version %version% im Plugin gepflegt. Entferne bitte den TypoScript-Code. Und pflege das Plugin: Marker & RealUrl > RealUrl: konfiguriert > Aktuelle Sortierung.';
     $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_WARN;
     $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_REMOVE_PLEASE;
     $arr_release[$int_v][$int_t]['function']                        = 'moved_from_ts_to_plugin';
@@ -377,22 +377,10 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'javascript.jquery.library';
 
     $int_t++;
-    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript property plugin';
-    $arr_release[$int_v][$int_t]['prompt']['default']               = 'This porperty is moved in TypoScript since version %version%.';
-    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Eigenschaft plugin';
-    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft ist seit Version %version% im TypoScript an anderer Stelle.';
-    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
-    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
-    $arr_release[$int_v][$int_t]['function']                        = 'moved_value';
-    $arr_release[$int_v][$int_t]['version']                         = '3.7.0';
-    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'plugin.socialmedia';
-    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'flexform.socialmedia';
-
-    $int_t++;
-    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript property plugin';
-    $arr_release[$int_v][$int_t]['prompt']['default']               = 'This porperty is moved in TypoScript since version %version%.';
-    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Eigenschaft plugin';
-    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft ist seit Version %version% im TypoScript an anderer Stelle.';
+    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array plugin is renamed';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'The TypoScript array has since version %version% another label. You have to rename it.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Array plugin ist umbenannt';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Das TypoScript Array hat seit Version %version% eine andere Bezeichnung. Du musst es umbenennen.';
     $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
     $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
     $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
