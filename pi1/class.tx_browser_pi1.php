@@ -918,6 +918,12 @@ class tx_browser_pi1 extends tslib_pibase {
     }
       // XML/RSS: return the result (XML string) without wrapInBaseClass
 
+//$myData = $GLOBALS['TSFE']->fe_user->getKey('ses', 'myData');
+//$str_myData = implode(', ', $myData);
+//$str_template_completed = 'Hallo ' . $str_myData . ' ' . $str_template_completed;
+//$myConfig['name'] = 'dirk';    
+//$myConfig['street'] = 'Born';
+//$GLOBALS['TSFE']->fe_user->setKey('ses', 'myData', $myConfig);
 
       // 12367, dwildt, 110310
     switch($this->objConfig->bool_wrapInBaseClass)
