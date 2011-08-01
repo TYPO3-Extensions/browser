@@ -37,16 +37,16 @@
       <handle_marker>
         <TCEforms>
           <exclude>select</exclude>
-          <label>LLL:EXT:calcgrantsth/pi1/flexform_locallang.xml:sheet_development.handle_marker</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_development.handle_marker</label>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:calcgrantsth/pi1/flexform_locallang.xml:sheet_development.handle_marker.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_development.handle_marker.0</numIndex>
                 <numIndex index="1">remove_empty_markers</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:calcgrantsth/pi1/flexform_locallang.xml:sheet_development.handle_marker.1</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_development.handle_marker.1</numIndex>
                 <numIndex index="1">none</numIndex>
               </numIndex>
             </items>
