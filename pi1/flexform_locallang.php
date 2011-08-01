@@ -127,8 +127,9 @@ $LOCAL_LANG = array(
     'sheet_sDEF.session.0'                      => 'Default',
     'sheet_sDEF.session.1'                      => 'Configured',
     'sheet_sDEF.session.type'                   => 'Session: type',
-    'sheet_sDEF.session.type.0'                 => 'Enable session (recommended)',
-    'sheet_sDEF.session.type.1'                 => 'Disable session (less performance)',
+    'sheet_sDEF.session.type.0'                 => 'TypoScript',
+    'sheet_sDEF.session.type.1'                 => 'Enable session (recommended)',
+    'sheet_sDEF.session.type.2'                 => 'Disable session (less performance)',
 
     'sheet_search'                              => 'Search / Filter',
     'sheet_search.search'                       => 'Search',
@@ -374,8 +375,9 @@ $LOCAL_LANG = array(
     'sheet_sDEF.session.0'                      => 'Standard',
     'sheet_sDEF.session.1'                      => 'Konfiguriert',
     'sheet_sDEF.session.type'                   => 'Session: Typ',
-    'sheet_sDEF.session.type.0'                 => 'Aktiviere Session (empfohlen)',
-    'sheet_sDEF.session.type.1'                 => 'Deaktiviere Session (geringere Performance)',
+    'sheet_sDEF.session.type.0'                 => 'TypoScript',
+    'sheet_sDEF.session.type.1'                 => 'Aktiviere Session (empfohlen)',
+    'sheet_sDEF.session.type.2'                 => 'Deaktiviere Session (geringere Performance)',
 
     'sheet_search'                              => 'Suche / Filter',
     'sheet_search.search'                       => 'Suche',

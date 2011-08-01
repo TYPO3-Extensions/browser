@@ -543,41 +543,43 @@ class tx_browser_pi2_checker
     $str_srce_path = $arr_ticket['srce']['typoscript']['path'];
     $str_dest_path = $arr_ticket['dest']['typoscript']['path'];
 
-      // If we have the destination code RETURN
-    foreach((array) $arr_conf_oneDimension as $key => $value)
-    {
-      $pos = strpos($key, $str_dest_path);
-      if (!($pos === false)) 
-      {
-        if ($this->pObj->pObj->b_drs_tsUpdate)
-        {
-          t3lib_div::devlog('[INFO/UPDATE] ' . $str_dest_path . ' is a part of the TypoSript.', $this->pObj->extKey, 0);
-        }
-          // Is there the source code?
-        foreach((array) $arr_conf_oneDimension as $key2 => $value2)
-        {
-          $pos = strpos($key2, $str_srce_path);
-          if (!($pos === false)) 
-          {
-            if ($this->pObj->pObj->b_drs_tsUpdate)
-            {
-              t3lib_div::devlog('[WARN/UPDATE] Please delete depricated TypoScript:<br />' . $str_srce_path . ' >', $this->pObj->extKey, 2);
-            }
-            return false;
-          }
-        }
-          // Is there the source code?
-        return false;
-      }
-    }
-      // If we have the destination code RETURN
+//      // If we have the destination code RETURN
+//    foreach((array) $arr_conf_oneDimension as $key => $value)
+//    {
+//      $pos = strpos($key, $str_dest_path);
+////      if (!($pos === false)) 
+//      if ($pos === 0) 
+//      {
+//        if ($this->pObj->pObj->b_drs_tsUpdate)
+//        {
+//          t3lib_div::devlog('[INFO/UPDATE] ' . $str_dest_path . ' is a part of the TypoSript.', $this->pObj->extKey, 0);
+//        }
+//          // Is there the source code?
+//        foreach((array) $arr_conf_oneDimension as $key2 => $value2)
+//        {
+//          $pos = strpos($key2, $str_srce_path);
+//          if (!($pos === false)) 
+//          {
+//            if ($this->pObj->pObj->b_drs_tsUpdate)
+//            {
+//              t3lib_div::devlog('[WARN/UPDATE] Please delete depricated TypoScript:<br />' . $str_srce_path . ' >', $this->pObj->extKey, 2);
+//            }
+//            return false;
+//          }
+//        }
+//          // Is there the source code?
+//        return false;
+//      }
+//    }
+//      // If we have the destination code RETURN
 
       // Get the source value
     $bool_srce = false;
     foreach((array) $arr_conf_oneDimension as $key2 => $value2)
     {
       $pos = strpos($key2, $str_srce_path);
-      if (!($pos === false)) 
+//      if (!($pos === false)) 
+      if ($pos === 0)
       {
         $bool_srce = true;
         break;

@@ -388,6 +388,42 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'plugin';
     $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'flexform';
 
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array a-z_Browser is moved';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'The TypoScript array has since version %version% another position. Please move it to the new position.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Array a-z_Browser ist verschoben';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Das TypoScript Array hat seit Version %version% einen anderen Platz. Bitte verschiebe das Array an die neue Position.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
+    $arr_release[$int_v][$int_t]['version']                         = '3.7.0';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'a-z_Browser';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'naivigation.a-z_Browser';
+
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array modeSelector is moved';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'The TypoScript array has since version %version% another position. Please move it to the new position.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Array modeSelector ist verschoben';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Das TypoScript Array hat seit Version %version% einen anderen Platz. Bitte verschiebe das Array an die neue Position.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
+    $arr_release[$int_v][$int_t]['version']                         = '3.7.0';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'modeSelector';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'naivigation.modeSelector';
+
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array pageBrowser is moved';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'The TypoScript array has since version %version% another position. Please move it to the new position.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Array pageBrowser ist verschoben';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Das TypoScript Array hat seit Version %version% einen anderen Platz. Bitte verschiebe das Array an die neue Position.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
+    $arr_release[$int_v][$int_t]['version']                         = '3.7.0';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'pageBrowser';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'naivigation.pageBrowser';
+
 //:TODO:
     // Set the Ticket array
 

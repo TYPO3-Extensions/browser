@@ -5,8 +5,11 @@
 <pre>
 <em>
 
+VERSION 3.7.0
+  - #27041: Single view got the record browser. See marker ###RECORD_BROWSER### below.
+
 VERSION 3.6.1
-  - 11886: List view search form got the new hidden field: tx_browser_pi1[plugin]
+  - #11886: List view search form got the new hidden field: tx_browser_pi1[plugin]
 
 
 
@@ -39,12 +42,12 @@ This template is the default template for all list views.
   - MY_TITLE
   - MY_URL
   - MY_RESET
-  
+
   You find the configuration in
   - plugin.tx_browser_pi1.markers
   - plugin.tx_browser_pi1.views.list.XX.markers
   - plugin.tx_browser_pi1.views.single.XX.markers
-  
+
   If a view hasn't any marker array, the browser takes the global marker array.
 
 </em>
@@ -63,7 +66,7 @@ This template is the default template for all list views.
               <input class="sword" type="text" name="tx_browser_pi1[sword]" onfocus="if(this.value =='###SWORD_DEFAULT###') this.value=''" value="###SWORD###" />
               <input class="button hidesubmit" type="submit" value="###MY_SEARCH###" />
               <input class="button" type="button" onclick="location='###MY_URL###'" class="reset" value="###MY_RESET###" />
-              <!-- Add filters with the ###TABLE.FIELD### syntax and configure your filters with TypoScript --> 
+              <!-- Add filters with the ###TABLE.FIELD### syntax and configure your filters with TypoScript -->
             </fieldset>
           </form>
           ###RESULTPHRASE###
@@ -165,6 +168,7 @@ plugin.tx_browser_pi1.views.single.XX.template.default = 1
           </ul>
         </div><!-- ###MODESELECTOR### end --><!-- ###SINGLEVIEW### begin -->
         <div class="###VIEW###view ###VIEW###view-###MODE###">
+          ###RECORD_BROWSER###
           <h1>
             ###TITLE###
           </h1>

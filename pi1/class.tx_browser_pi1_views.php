@@ -1206,6 +1206,11 @@ class tx_browser_pi1_views
 
 
 
+
+
+
+
+
   /**
  * Display a single item from the database
  *
@@ -1226,9 +1231,9 @@ class tx_browser_pi1_views
     $conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
 
 
-    /////////////////////////////////////
-    //
-    // Do we have configured views?
+      /////////////////////////////////////
+      //
+      // Do we have configured views?
 
     $maxModes = count($conf['views.'][$viewWiDot]);
     if (!$maxModes || $maxModes == 0)
@@ -1242,12 +1247,13 @@ class tx_browser_pi1_views
       }
       return false;
     }
-    // Do we have configured views?
+      // Do we have configured views?
 
 
-    /////////////////////////////////////
-    //
-    // Do we have an existing mode?
+
+      /////////////////////////////////////
+      //
+      // Do we have an existing mode?
 
     if (!$maxModes || $maxModes == 0)
     {
@@ -1257,7 +1263,7 @@ class tx_browser_pi1_views
     {
       $mode = 1;
     }
-    // Do we have an existing mode?
+      // Do we have an existing mode?
 
 
 
@@ -1273,9 +1279,9 @@ class tx_browser_pi1_views
 
 
 
-    /////////////////////////////////////
-    //
-    // Get the local or global displaySingle
+      /////////////////////////////////////
+      //
+      // Get the local or global displaySingle
 
     if (is_array($conf_view['displaySingle.']))
     {
@@ -1285,12 +1291,13 @@ class tx_browser_pi1_views
     {
       $this->pObj->lDisplaySingle = $this->pObj->conf['displaySingle.'];
     }
-    // Get the local or global displaySingle
+      // Get the local or global displaySingle
 
 
-    /////////////////////////////////////
-    //
-    // Get the local or global displaySingle.display
+
+      /////////////////////////////////////
+      //
+      // Get the local or global displaySingle.display
 
     if (is_array($conf_view['displaySingle.']['display.']))
     {
@@ -1300,12 +1307,13 @@ class tx_browser_pi1_views
     {
       $this->pObj->lDisplay = $conf['displaySingle.']['display.'];
     }
-    // Get the local or global displaySingle.display
+      // Get the local or global displaySingle.display
 
 
-    /////////////////////////////////////
-    //
-    // Set global SQL values
+
+      /////////////////////////////////////
+      //
+      // Set global SQL values
 
     $arr_result = $this->pObj->objSqlFun->global_all();
     if ($arr_result['error']['status'])
@@ -1313,31 +1321,34 @@ class tx_browser_pi1_views
       $template = $arr_result['error']['header'].$arr_result['error']['prompt'];
       return $template;
     }
-    // Set global SQL values
+      // Set global SQL values
 
 
-    /////////////////////////////////////
-    //
-    // SQL with manual configuration or autmatically configuration
+
+      /////////////////////////////////////
+      //
+      // SQL with manual configuration or autmatically configuration
 
     if ($this->pObj->b_sql_manual)
     {
+        // Process the query building in case of a manual configuration with SELECT, FROM and WHERE and maybe JOINS
       $arr_result = $this->pObj->objSqlMan->get_query_array($this);
-      // Process the query building in case of a manual configuration with SELECT, FROM and WHERE and maybe JOINS
     }
 
+      // We don't have a manual configuration
     if (!$this->pObj->b_sql_manual)
     {
-      // We don't have a manual configuration
+        // Process the query building automatically
       $arr_result = $this->pObj->objSqlAut->get_query_array();
-      // Process the query building automatically
     }
+
     if ($arr_result['error']['status'])
     {
       $template = $arr_result['error']['header'].$arr_result['error']['prompt'];
       return $template;
     }
-    // SQL with manual configuration or autmatically configuration
+      // SQL with manual configuration or autmatically configuration
+
 
 
     $select   = $arr_result['data']['select'];
@@ -1347,9 +1358,10 @@ class tx_browser_pi1_views
     unset($arr_result);
 
 
-    /////////////////////////////////////
-    //
-    // Process SQL query: Get the record(s)
+
+      /////////////////////////////////////
+      //
+      // Process SQL query: Get the record(s)
 
     $groupBy  = '';
     $orderBy  = '';
@@ -1389,19 +1401,20 @@ class tx_browser_pi1_views
       t3lib_div::devlog('[INFO/SQL] '.$query,  $this->pObj->extKey, 0);
       t3lib_div::devlog('[HELP/SQL] Be aware of the multi-byte notation, if you want to use the query in your SQL shell or in phpMyAdmin.', $this->pObj->extKey, 1);
     }
-    // Process SQL query: Get the record(s)
+      // Process SQL query: Get the record(s)
 
 
-    ////////////////////////////////////
-    //
-    // Building $rows
+
+      ////////////////////////////////////
+      //
+      // Building $rows
 
     $arr_table_realnames = $conf_view['aliases.']['tables.'];
 
-    // Do we have aliases?
+      // Do we have aliases?
     if (is_array($arr_table_realnames))
     {
-      // Yes, we have aliases.
+        // Yes, we have aliases.
       $i_row = 0;
       while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
       {
@@ -1420,11 +1433,11 @@ class tx_browser_pi1_views
         }
         $i_row++;
       }
-      // Yes, we have aliases.
+        // Yes, we have aliases.
     }
     else
     {
-      // No, we don't have any alias.
+        // No, we don't have any alias.
       while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
       {
         $rows[] = $row;
@@ -1433,38 +1446,42 @@ class tx_browser_pi1_views
     // Do we have aliases?
 
 
-    ////////////////////////////////////
-    //
-    // SQL Free Result
+
+      ////////////////////////////////////
+      //
+      // SQL Free Result
 
     $GLOBALS['TYPO3_DB']->sql_free_result($res);
-    // SQL Free Result
+      // SQL Free Result
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Process synonyms if rows have synonyms
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Process synonyms if rows have synonyms
 
     $arr_result = $this->pObj->objSqlFun->rows_with_synonyms($rows);
     $rows       = $arr_result['data']['rows'];
     unset($arr_result);
-    // Process synonyms if rows have synonyms
+      // Process synonyms if rows have synonyms
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Consolidate Localization
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Consolidate Localization
 
     $rows = $this->pObj->objLocalize->consolidate_rows($rows, $this->pObj->localTable);
     $this->pObj->rows = $rows;
-    // Consolidate Localization
+      // Consolidate Localization
 
 
-    ///////////////////////////////////////////////////////////////
-    //
-    // Consolidate rows
 
-    // 100429, dwildt - Bugfixing: Consolidate rows was missing upto 3.2.2
+      ///////////////////////////////////////////////////////////////
+      //
+      // Consolidate rows
+
+      // 100429, dwildt - Bugfixing: Consolidate rows was missing upto 3.2.2
     if (!$this->pObj->b_sql_manual)
     {
       $arr_result       = $this->pObj->objConsolidate->consolidate($rows);
@@ -1481,15 +1498,16 @@ class tx_browser_pi1_views
         t3lib_div::devlog('[INFO/SQL] Manual SQL mode: Rows didn\'t get any general consolidation.',  $this->pObj->extKey, 0);
       }
     }
-    // Consolidate rows
+      // Consolidate rows
 
 
 
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
+      ////////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
 
-    if ($this->pObj->b_drs_perform) {
+    if ($this->pObj->b_drs_perform)
+    {
       if($this->pObj->bool_typo3_43)
       {
         $endTime = $this->pObj->TT->getDifferenceToStarttime();
@@ -1500,7 +1518,7 @@ class tx_browser_pi1_views
       }
       t3lib_div::devLog('[INFO/PERFORMANCE] After consolidate rows: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
     }
-    // DRS - Performance
+      // DRS - Performance
 
 
 
@@ -1516,11 +1534,12 @@ class tx_browser_pi1_views
 
 
 
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
+      ////////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
 
-    if ($this->pObj->b_drs_perform) {
+    if ($this->pObj->b_drs_perform)
+    {
       if($this->pObj->bool_typo3_43)
       {
         $endTime = $this->pObj->TT->getDifferenceToStarttime();
@@ -1531,25 +1550,26 @@ class tx_browser_pi1_views
       }
       t3lib_div::devLog('[INFO/PERFORMANCE] After multisort_mm_children(): '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
     }
-    // DRS - Performance
+      // DRS - Performance
 
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // #9838: Simplified relation building
-
+      /////////////////////////////////////////////////////////////////
+      //
+      // #9838: Simplified relation building
+  
     $this->pObj->objConsolidate->children_relation();
     $rows = $this->pObj->rows;
-    // #9838: Simplified relation building
+      // #9838: Simplified relation building
 
 
 
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
+      ////////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
 
-    if ($this->pObj->b_drs_perform) {
+    if ($this->pObj->b_drs_perform)
+    {
       if($this->pObj->bool_typo3_43)
       {
         $endTime = $this->pObj->TT->getDifferenceToStarttime();
@@ -1560,12 +1580,13 @@ class tx_browser_pi1_views
       }
       t3lib_div::devLog('[INFO/PERFORMANCE] After children_relation(): '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
     }
-    // DRS - Performance
+      // DRS - Performance
 
 
-    /////////////////////////////////////
-    //
-    // Hook for override the SQL result for for the single view
+
+      /////////////////////////////////////
+      //
+      // Hook for override the SQL result for for the single view
 
     if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['browser_single']))
     {
@@ -1593,13 +1614,14 @@ class tx_browser_pi1_views
 //        $this       = $_procObj->browser_single($arr_data, $this);
 //      }
     }
-    // End of Hook
+      // Hook for override the SQL result for for the single view
 
 
-    /////////////////////////////////////
-    //
-    // DRS - Development Reporting System
 
+      /////////////////////////////////////
+      //
+      // DRS - Development Reporting System
+  
     $bool_displayFirstRow = false;
     if (count($rows) == 0)
     {
@@ -1650,16 +1672,17 @@ class tx_browser_pi1_views
         t3lib_div::devlog('[INFO/SQL] ['.$key.']: '.$value, $this->pObj->extKey, 0);
       }
     }
-    // DRS - Development Reporting System
+      // DRS - Development Reporting System
 
 
-    /////////////////////////////////////
-    //
-    // Building the template
 
-    // It is possible to process one subpart only!
-    // If you want to process more than one subpart, the included subparts and markes have to be unique
-    // in the template file - in the HTML file. And the code in this class has to be modified.
+      /////////////////////////////////////
+      //
+      // Building the template
+
+      // It is possible to process one subpart only!
+      // If you want to process more than one subpart, the included subparts and markes have to be unique
+      // in the template file - in the HTML file. And the code in this class has to be modified.
     $str_marker = $this->pObj->lDisplaySingle['templateMarker'];
     $template   = $this->pObj->cObj->getSubpart($template, $str_marker);
 
@@ -1675,13 +1698,14 @@ class tx_browser_pi1_views
     $arr_data['arrModeItems'] = $this->pObj->arrModeItems;
     $template = $this->pObj->objNavi->tmplModeSelector($arr_data);
     unset($arr_data);
-    // Building the template
+      // Building the template
 
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Do we have a HTML template with markers or a Typoscript Template Container (TTC)?
 
+      ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      //
+      // Do we have a HTML template with markers or a Typoscript Template Container (TTC)?
+  
     $b_ttc = false;
     // dwildt, 101012
     if(is_array($conf['views.'][$viewWiDot][$mode.'.']))
@@ -1696,7 +1720,7 @@ class tx_browser_pi1_views
       }
     }
 
-    // Typoscript Template Container (TTC)
+      // Typoscript Template Container (TTC)
     if ($b_ttc)
     {
       if ($this->pObj->b_drs_ttc)
@@ -1713,9 +1737,9 @@ class tx_browser_pi1_views
       $template = $arr_result['data']['template'];
       unset($arr_result);
     }
-    // Typoscript Template Container (TTC)
+      // Typoscript Template Container (TTC)
 
-    // HTML Template with markers
+      // HTML Template with markers
     if (!$b_ttc)
     {
       // We have an old style template with HTML and markers
@@ -1727,8 +1751,8 @@ class tx_browser_pi1_views
       }
       $template = $this->pObj->objTemplate->tmplSingleview($template, $rows);
     }
-    // HTML Template with markers
-    // Do we have a HTML template with markers or a Typoscript Template Container (TTC)?
+      // HTML Template with markers
+      // Do we have a HTML template with markers or a Typoscript Template Container (TTC)?
 
 
     return $template;

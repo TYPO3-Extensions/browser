@@ -1791,6 +1791,73 @@ class tx_browser_pi1_flexform
       // Field root
 
 
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field session
+//:TODO:
+    $int_sessionType  = -1;
+    $int_session      = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'session', 'sDEF', 'lDEF', 'vDEF');
+    if ($int_session == 0 OR empty($int_session))
+    {
+      $int_sessionType = 1; // Session is enabled
+      if ($this->pObj->b_drs_flexform)
+      {
+        t3lib_div::devlog('[INFO/FLEXFORM] session is 0.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/FLEXFORM] session.type is set to 1.', $this->pObj->extKey, 0);
+      }
+    }
+      // Field session
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field session.type
+
+      // session.type isn't set above 
+    if($int_sessionType < 0)
+    {
+      $int_sessionType = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'session.type', 'sDEF', 'lDEF', 'vDEF');
+    }
+      // session.type isn't set above 
+
+    if ($this->pObj->b_drs_flexform)
+    {
+      t3lib_div::devlog('[INFO/FLEXFORM] session.type: \''.$int_sessionType.'\'!', $this->pObj->extKey, 0);
+    }
+
+    switch($int_sessionType)
+    {
+      case(0):
+          // typoscript
+        // Do nothing
+        $value = $this->pObj->conf['session_manager.']['session.']['enabled'];
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] session_manager.session.enabled is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
+        }
+        break;
+      case(1):
+          // enabled
+        $this->pObj->conf['session_manager.']['session.']['enabled'] = true;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] session_manager.session.enabled is set to true.', $this->pObj->extKey, 0);
+        }
+        break;
+      case(2):
+          // disabled
+        $this->pObj->conf['session_manager.']['session.']['enabled'] = false;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] session_manager.session.enabled is set to false.', $this->pObj->extKey, 0);
+        }
+        break;
+    }
+      // Field session.type
+
+
     return;
   }
 
