@@ -205,39 +205,39 @@ class tx_browser_pi1_flexform
  * Process the values from the pi_flexform field. Process each sheet. Allocates values to TypoScript.
  *
  * @return  void
- * @version 3.6.1
+ * @version 3.7.0
  */
   function main()
   {
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Init methods for pi_flexform
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Init methods for pi_flexform
 
     $this->pObj->pi_initPIflexForm();
-    // Init methods for pi_flexform
+      // Init methods for pi_flexform
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Development
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Development
 
-    // Display values from pi_flexform as an tree
+      // Display values from pi_flexform as an tree
     if (1 == 0)
     {
       $treeDat = $this->pObj->cObj->data['pi_flexform'];
       $treeDat = t3lib_div::resolveAllSheetsInDS($treeDat);
       var_dump(t3lib_div::view_array($treeDat));
     }
-    // Display values from pi_flexform as an tree
-    // Development
+      // Display values from pi_flexform as an tree
+      // Development
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Development Reporting System
-
+      //////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
+  
     if ($this->pObj->b_drs_flexform)
     {
       $str_header     = $this->pObj->cObj->data['header'];
@@ -245,59 +245,63 @@ class tx_browser_pi1_flexform
       $int_pid        = $this->pObj->cObj->data['pid'];
       t3lib_div::devlog('[INFO/FLEXFORM] \''.$str_header.'\' (pid: '.$int_pid.', uid: '.$int_uid.')', $this->pObj->extKey, 0);
     }
-    // DRS - Development Reporting System
+      // DRS - Development Reporting System
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Sheet development controlls the DRS
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Sheet development controlls the DRS
 
     $this->sheet_development();
-    // Sheet development controlls the DRS
+      // Sheet development controlls the DRS
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Init Language
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Init Language
 
     if(!$this->pObj->lang)
     {
       $this->pObj->objZz->initLang();
     }
-    // Init Language
+      // Init Language
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Prepare piVars
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Prepare piVars
 
     $this->prepare_piVars();
+      // Prepare piVars
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Process Fields with Priority
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Process Fields with Priority
 
     $this->sheet_sDEF_views();
-    // Process Fields with Priority
+      // Process Fields with Priority
 
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Process the Sheets
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Process the Sheets
 
     $this->sheet_javascript();
     $this->sheet_sDEF();
     $this->sheet_viewList();
+    $this->sheet_viewSingle();
     $this->sheet_socialmedia();
-    // #9689
+      // #9689
     //$this->sheet_templating();
     $this->sheet_tca();
     $this->sheet_advanced();
-    // Process the Sheets
+      // Process the Sheets
 
   }
 
@@ -1795,7 +1799,7 @@ class tx_browser_pi1_flexform
       //////////////////////////////////////////////////////////////////////
       //
       // Field session
-//:TODO:
+
     $int_sessionType  = -1;
     $int_session      = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'session', 'sDEF', 'lDEF', 'vDEF');
     if ($int_session == 0 OR empty($int_session))
@@ -2828,6 +2832,210 @@ class tx_browser_pi1_flexform
 
 
 
+
+
+  /**
+ * If the current plugin has views selected, only the selected views are available for the plugin.
+ * The method removes "unavailable" views from the TypoScript.
+ *
+ * @return  void
+ * @since 3.7.0
+ * @version 3.7.0
+ */
+  function sheet_viewSingle()
+  {
+    $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
+    $modeWiDot      = (int) $this->mode.'.';
+    $viewWiDot      = $this->pObj->view.'.';
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field record_browser
+
+    $record_browser = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser', 'viewSingle', 'lDEF', 'vDEF');
+    if ($this->pObj->b_drs_flexform)
+    {
+      t3lib_div::devlog('[INFO/FLEXFORM] viewSingle.record_browser: \'' . $record_browser . '\'.', $this->pObj->extKey, 0);
+    }
+
+    switch($record_browser)
+    {
+      case(0):
+          // disabled
+        $this->pObj->conf['navigation.']['record_browser'] = 0;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser is set to false.', $this->pObj->extKey, 0);
+        }
+        break;
+      case(1):
+          // enabled
+        $this->pObj->conf['navigation.']['record_browser'] = 1;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser is set to true.', $this->pObj->extKey, 0);
+        }
+        break;
+      case(2):
+          // typoscript
+        // Do nothing
+        $value = $this->pObj->conf['navigation.']['record_browser'];
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
+        }
+        break;
+    }
+      // Field record_browser
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // RETURN record_browser == false
+
+    if(!$this->pObj->conf['navigation.']['record_browser'])
+    {
+      if ($this->pObj->b_drs_flexform)
+      {
+        t3lib_div::devlog('[INFO/FLEXFORM] viewSingle RETURN', $this->pObj->extKey, 0);
+      }
+      return;
+    }
+      // RETURN record_browser == false
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field record_browser.display.itemsWithoutLink
+
+    $itemsWithoutLink = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.itemsWithoutLink', 'viewSingle', 'lDEF', 'vDEF');
+    if ($this->pObj->b_drs_flexform)
+    {
+      t3lib_div::devlog('[INFO/FLEXFORM] viewSingle.record_browser.display.itemsWithoutLink: \'' . $itemsWithoutLink . '\'.', $this->pObj->extKey, 0);
+    }
+
+    switch($itemsWithoutLink)
+    {
+      case(0):
+          // disabled
+        $this->pObj->conf['navigation.']['record_browser.']['display.']['itemsWithoutLink'] = 0;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.itemsWithoutLink is set to false.', $this->pObj->extKey, 0);
+        }
+        break;
+      case(1):
+          // enabled
+        $this->pObj->conf['navigation.']['record_browser.']['display.']['itemsWithoutLink'] = 1;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.itemsWithoutLink is set to true.', $this->pObj->extKey, 0);
+        }
+        break;
+      case(2):
+          // typoscript
+        // Do nothing
+        $value = $this->pObj->conf['navigation.']['record_browser.']['display.']['itemsWithoutLink'];
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.itemsWithoutLink is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
+        }
+        break;
+    }
+      // Field record_browser.display.itemsWithoutLink
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field record_browser.display.firstAndLastItem
+
+    $firstAndLastItem = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.firstAndLastItem', 'viewSingle', 'lDEF', 'vDEF');
+    if ($this->pObj->b_drs_flexform)
+    {
+      t3lib_div::devlog('[INFO/FLEXFORM] viewSingle.record_browser.display.firstAndLastItem: \'' . $firstAndLastItem . '\'.', $this->pObj->extKey, 0);
+    }
+
+    switch($firstAndLastItem)
+    {
+      case(0):
+          // disabled
+        $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'] = 0;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is set to false.', $this->pObj->extKey, 0);
+        }
+        break;
+      case(1):
+          // enabled
+        $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'] = 1;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is set to true.', $this->pObj->extKey, 0);
+        }
+        break;
+      case(2):
+          // typoscript
+        // Do nothing
+        $value = $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'];
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
+        }
+        break;
+    }
+      // Field record_browser.display.firstAndLastItem
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field record_browser.display.firstAndLastItem
+
+    $firstAndLastItem = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.firstAndLastItem', 'viewSingle', 'lDEF', 'vDEF');
+    if ($this->pObj->b_drs_flexform)
+    {
+      t3lib_div::devlog('[INFO/FLEXFORM] viewSingle.record_browser.display.firstAndLastItem: \'' . $firstAndLastItem . '\'.', $this->pObj->extKey, 0);
+    }
+
+    switch($firstAndLastItem)
+    {
+      case(0):
+          // disabled
+        $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'] = 0;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is set to false.', $this->pObj->extKey, 0);
+        }
+        break;
+      case(1):
+          // enabled
+        $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'] = 1;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is set to true.', $this->pObj->extKey, 0);
+        }
+        break;
+      case(2):
+          // typoscript
+        // Do nothing
+        $value = $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'];
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
+        }
+        break;
+    }
+      // Field record_browser.display.firstAndLastItem
+
+
+
+    return;
+  }
 
 
 

@@ -1746,8 +1746,17 @@ class tx_browser_pi1_navi
       /////////////////////////////////////
       //
       // RETURN record browser isn't enabled
-//:TODO:
-      // ...
+
+    if(!$this->pObj->conf['navigation.']['record_browser'])
+    {
+      if ($this->pObj->b_drs_templating)
+      {
+        $value = $this->pObj->conf['navigation.']['record_browser'];
+        t3lib_div::devlog('[INFO/TEMPLATING] navigation.record_browser is \'' . $value . '\' '.
+          'Record browser won\'t be handled (best performance).', $this->pObj->extKey, 0);
+      }
+      return false;
+    }
       // RETURN record browser isn't enabled
 
 
