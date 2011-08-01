@@ -2003,7 +2003,7 @@ echo '<pre>' . var_export($uids_all_rows, true) . '</pre>';
 
     if(!$bool_session)
     {
-      $this->pObj->uids_of_all_rows = $arr_uid[];
+      $this->pObj->uids_of_all_rows = $arr_uid;
       if ($this->pObj->b_drs_templating)
       {
         t3lib_div::devlog('[INFO/TEMPLATING] No session (less performance): global array uids_of_all_rows is set with ' .
