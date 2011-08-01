@@ -184,7 +184,7 @@ class tx_browser_pi1_navi
       //
       // RETURN, if we don't have configured tabs
 
-    $arr_conf_tabs = $this->conf['a-z_Browser.']['tabs.'];
+    $arr_conf_tabs = $this->conf['navigation.']['a-z_Browser.']['tabs.'];
     if (!is_array($arr_conf_tabs))
     {
       // The A-Z-Browser isn't configured
@@ -362,12 +362,12 @@ class tx_browser_pi1_navi
 
     $langKey  = $GLOBALS['TSFE']->lang;
 
-    $int_key_defaultTab   = $this->pObj->conf['a-z_Browser.']['defaultTab'];
-    $arr_defaultTab       = $this->pObj->conf['a-z_Browser.']['tabs.'][$int_key_defaultTab.'.']['stdWrap.'];
-    $str_defaultTabLabel  = $this->pObj->conf['a-z_Browser.']['tabs.'][$int_key_defaultTab];
+    $int_key_defaultTab   = $this->pObj->conf['navigation.']['a-z_Browser.']['defaultTab'];
+    $arr_defaultTab       = $this->pObj->conf['navigation.']['a-z_Browser.']['tabs.'][$int_key_defaultTab.'.']['stdWrap.'];
+    $str_defaultTabLabel  = $this->pObj->conf['navigation.']['a-z_Browser.']['tabs.'][$int_key_defaultTab];
     $defaultAzTab         = $this->pObj->objWrapper->general_stdWrap($str_defaultTabLabel, $arr_defaultTab);
     $bool_dontLinkDefaultTab = false;
-    if ($this->pObj->conf['a-z_Browser.']['defaultTab.']['display_in_url'] == 0)
+    if ($this->pObj->conf['navigation.']['a-z_Browser.']['defaultTab.']['display_in_url'] == 0)
     {
       $bool_dontLinkDefaultTab = true;
       // #7582, Bugfix, 100501
@@ -414,7 +414,7 @@ class tx_browser_pi1_navi
       // Get the key of last displayed tab
 
 
-    $tsDisplayTitleTag = $this->conf['a-z_Browser.']['display.']['tabHrefTitle'];
+    $tsDisplayTitleTag = $this->conf['navigation.']['a-z_Browser.']['display.']['tabHrefTitle'];
 
 
     foreach((array) $lArrTabs as $key_tab => $arr_tab)
@@ -674,7 +674,7 @@ class tx_browser_pi1_navi
     //
     // Build the $lArrTabs - Step 1 (special, label)
 
-    $conf_tabs = $this->conf['a-z_Browser.']['tabs.'];
+    $conf_tabs = $this->conf['navigation.']['a-z_Browser.']['tabs.'];
     foreach ($conf_tabs as $key_confTab => $str_confTab)
     {
       if (substr($key_confTab, -1) != '.')
@@ -735,7 +735,7 @@ class tx_browser_pi1_navi
     // Build the $lArrTabs - Step 2 (stdWrap, active, displayWoItems)
 
     // Get the key of the default tab
-    $int_key_defaultTab   = $this->conf['a-z_Browser.']['defaultTab'];
+    $int_key_defaultTab   = $this->conf['navigation.']['a-z_Browser.']['defaultTab'];
     $arr_tsId['default']  = $int_key_defaultTab;
     // Get the key of the default tab
 
@@ -761,7 +761,7 @@ class tx_browser_pi1_navi
       $str_wrap = $conf_tabs[$key_lArrTab.'.']['wrap'];
       if ($str_wrap == '')
       {
-        $str_wrap = $this->conf['a-z_Browser.']['defaultTabWrap'];
+        $str_wrap = $this->conf['navigation.']['a-z_Browser.']['defaultTabWrap'];
       }
       $lArrTabs[$key_lArrTab]['wrap'] = $str_wrap;
       // wrap
@@ -797,7 +797,7 @@ class tx_browser_pi1_navi
       $str_displayWithoutItems = $conf_tab['displayWithoutItems'];
       if ($str_displayWithoutItems == '')
       {
-        $lArrTabs[$key_lArrTab]['displayWithoutItems'] = $this->conf['a-z_Browser.']['display.']['tabWithoutItems'];
+        $lArrTabs[$key_lArrTab]['displayWithoutItems'] = $this->conf['navigation.']['a-z_Browser.']['display.']['tabWithoutItems'];
       }
       if ($str_displayWithoutItems != '')
       {
@@ -843,7 +843,7 @@ class tx_browser_pi1_navi
 
     $rows_others        = $azRows;
     $int_initialsUser   = 0;
-    $bool_caseSensitive = $this->conf['a-z_Browser.']['caseSensitive'];
+    $bool_caseSensitive = $this->conf['navigation.']['a-z_Browser.']['caseSensitive'];
 
     foreach ($lArrTabs as $key_lArrTab => $arr_lArrTab)
     {
@@ -1092,16 +1092,16 @@ class tx_browser_pi1_navi
     //
     // Get the table.field for the a-z_Browser initials
 
-    if (isset($this->conf_view['a-z_Browser.']['field']))
+    if (isset($this->conf_view['navigation.']['a-z_Browser.']['field']))
     {
-      $str_initialField = $this->conf_view['a-z_Browser.']['field'];
+      $str_initialField = $this->conf_view['navigation.']['a-z_Browser.']['field'];
       if ($this->pObj->b_drs_browser) {
         t3lib_div::devlog('[INFO/BROWSER] '.$this->conf_path.'a-z_Browser.field is '.$str_initialField, $this->pObj->extKey, 0);
       }
     }
     if (!$str_initialField)
     {
-      $str_initialField = $this->conf['a-z_Browser.']['field'];
+      $str_initialField = $this->conf['navigation.']['a-z_Browser.']['field'];
       if ($str_initialField)
       {
         // The user has defined a table.field element
@@ -1448,7 +1448,7 @@ class tx_browser_pi1_navi
     {
       list($start, $limit) = explode(',', $this->conf_view['limit']);
       if($limit < 1) $limit = 20;
-      $this->conf['pageBrowser.']['results_at_a_time'] = trim($limit);
+      $this->conf['navigation.']['pageBrowser.']['results_at_a_time'] = trim($limit);
 
         // DRS - Development Reporting System
       if ($this->pObj->b_drs_templating)
@@ -1466,12 +1466,12 @@ class tx_browser_pi1_navi
       // Init piBase for pagebrowser
 
     $this->pObj->internal['res_count']          = count($rows);
-    $this->pObj->internal['maxPages']           = $this->conf['pageBrowser.']['maxPages'];
-    $this->pObj->internal['results_at_a_time']  = $this->conf['pageBrowser.']['results_at_a_time'];
-    $this->pObj->internal['showRange']          = $this->conf['pageBrowser.']['showRange'];
-    $this->pObj->internal['dontLinkActivePage'] = $this->conf['pageBrowser.']['dontLinkActivePage'];
-    $this->pObj->internal['showFirstLast']      = $this->conf['pageBrowser.']['showFirstLast'];
-    $this->pObj->internal['pagefloat']          = $this->conf['pageBrowser.']['pagefloat'];
+    $this->pObj->internal['maxPages']           = $this->conf['navigation.']['pageBrowser.']['maxPages'];
+    $this->pObj->internal['results_at_a_time']  = $this->conf['navigation.']['pageBrowser.']['results_at_a_time'];
+    $this->pObj->internal['showRange']          = $this->conf['navigation.']['pageBrowser.']['showRange'];
+    $this->pObj->internal['dontLinkActivePage'] = $this->conf['navigation.']['pageBrowser.']['dontLinkActivePage'];
+    $this->pObj->internal['showFirstLast']      = $this->conf['navigation.']['pageBrowser.']['showFirstLast'];
+    $this->pObj->internal['pagefloat']          = $this->conf['navigation.']['pageBrowser.']['pagefloat'];
       // Init piBase for pagebrowser
 
 
@@ -1480,7 +1480,7 @@ class tx_browser_pi1_navi
       //
       // Get the wrapped pagebrowser
 
-    $pb = $this->conf['pageBrowser.'];
+    $pb = $this->conf['navigation.']['pageBrowser.'];
     $res_items  = $this->pObj->pi_list_browseresults
                   (
                     $pb['showResultCount'], $pb['tableParams'], $pb['wrap.'],$pb['pointer'],$pb['hscText']
@@ -1676,8 +1676,8 @@ class tx_browser_pi1_navi
       $tabClass         = ($i_counter < ($i_max_counter - 1)) ? 'tab-'.$i_counter : 'tab-'.$i_counter.' last';
       $class            = $this->mode == $str_item_key ? ' class="'.$tabClass.' selected"' : ' class="'.$tabClass.'"';
       $str_item_value   = htmlspecialchars($str_item_value);
-      if ($this->conf['modeSelector.']['wrap'] != '') {
-        $str_item_value = str_replace('|', $str_item_value, $this->conf['modeSelector.']['wrap']);
+      if ($this->conf['navigation.']['modeSelector.']['wrap'] != '') {
+        $str_item_value = str_replace('|', $str_item_value, $this->conf['navigation.']['modeSelector.']['wrap']);
       }
       $item             = $this->pObj->pi_linkTP_keepPIvars($str_item_value, array('mode' => $str_item_key), $this->pObj->boolCache);
       $markerArray['###CLASS###'] = $class;

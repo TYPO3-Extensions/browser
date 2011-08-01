@@ -673,14 +673,14 @@
     // Delete piVar[azTab], if it is empty.
 
     // Set the default tab, if there isn't any current tab
-    $int_key_defaultTab   = $this->pObj->conf['a-z_Browser.']['defaultTab'];
-    $arr_defaultTab       = $this->pObj->conf['a-z_Browser.']['tabs.'][$int_key_defaultTab.'.']['stdWrap.'];
-    $str_defaultTabLabel  = $this->pObj->conf['a-z_Browser.']['tabs.'][$int_key_defaultTab];
+    $int_key_defaultTab   = $this->pObj->conf['navigation.']['a-z_Browser.']['defaultTab'];
+    $arr_defaultTab       = $this->pObj->conf['navigation.']['a-z_Browser.']['tabs.'][$int_key_defaultTab.'.']['stdWrap.'];
+    $str_defaultTabLabel  = $this->pObj->conf['navigation.']['a-z_Browser.']['tabs.'][$int_key_defaultTab];
     $defaultAzTab         = $this->pObj->objWrapper->general_stdWrap($str_defaultTabLabel, $arr_defaultTab);
     if ($this->pObj->piVars['azTab'] == $defaultAzTab)
     {
       // Current tab is the default tab
-      if ($this->pObj->conf['a-z_Browser.']['defaultTab.']['display_in_url'] == 0)
+      if ($this->pObj->conf['navigation.']['a-z_Browser.']['defaultTab.']['display_in_url'] == 0)
       {
         // It shouldn't be displayed in the real URL path. Delete piVars[azTab]
         unset($this->pObj->piVars['azTab']);
@@ -696,7 +696,7 @@
     // Set piVars[azTab] to default value, if it is empty and a-z_Browser.defaultTab.realURL is true
     if (!isset($this->pObj->piVars['azTab']))
     {
-      if ($this->pObj->conf['a-z_Browser.']['defaultTab.']['display_in_url'] == 1)
+      if ($this->pObj->conf['navigation.']['a-z_Browser.']['defaultTab.']['display_in_url'] == 1)
       {
         $this->pObj->piVars['azTab'] = $defaultAzTab;
       }
@@ -2724,7 +2724,7 @@
  * Checks the TYPO3 utf-8 configuration.
  *
  *                      $GLOBALS[TSFE]->metaCharset, $GLOBALS[TSFE]->renderCharset
- *                      Result can be overriden by $conf['a-z_Browser.']['charset']
+ *                      Result can be overriden by $conf['navigation.']['a-z_Browser.']['charset']
  *
  * @return  boolean   TRUE, if one of the following variables has the value utf-8: $TYPO3_CONF_VARS[BE][forceCharset]
  */
@@ -2733,7 +2733,7 @@
     global $TYPO3_CONF_VARS;
 
     $conf = $this->pObj->conf;
-    $str_charset = $conf['a-z_Browser.']['charset'];
+    $str_charset = $conf['navigation.']['a-z_Browser.']['charset'];
 
     if ($this->pObj->b_drs_browser || $this->pObj->b_drs_sql)
     {

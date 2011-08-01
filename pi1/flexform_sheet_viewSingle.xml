@@ -46,6 +46,52 @@
           </config>
         </TCEforms>
       </record_browser.tutorial>
+      <record_browser.display.withoutResult>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.withoutResult</label>
+          <displayCond>FIELD:record_browser:=:1</displayCond>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.withoutResult.0</numIndex>
+                <numIndex index="1">0</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.withoutResult.1</numIndex>
+                <numIndex index="1">1</numIndex>
+              </numIndex>
+            </items>
+            <default>1</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </record_browser.display.withoutResult>
+      <record_browser.display.itemsWithoutLink>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.itemsWithoutLink</label>
+          <displayCond>FIELD:record_browser:=:1</displayCond>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.itemsWithoutLink.0</numIndex>
+                <numIndex index="1">0</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.itemsWithoutLink.1</numIndex>
+                <numIndex index="1">1</numIndex>
+              </numIndex>
+            </items>
+            <default>1</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </record_browser.display.itemsWithoutLink>
       <record_browser.display.firstAndLastItem>
         <TCEforms>
           <exclude>1</exclude>
@@ -100,52 +146,6 @@
           </config>
         </TCEforms>
       </record_browser.labels>
-      <record_browser.display.withoutResult>
-        <TCEforms>
-          <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.withoutResult</label>
-          <displayCond>FIELD:record_browser:=:1</displayCond>
-          <config>
-            <type>select</type>
-            <items type="array">
-              <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.withoutResult.0</numIndex>
-                <numIndex index="1">0</numIndex>
-              </numIndex>
-              <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.withoutResult.1</numIndex>
-                <numIndex index="1">1</numIndex>
-              </numIndex>
-            </items>
-            <default>1</default>
-            <maxitems>1</maxitems>
-            <size>1</size>
-          </config>
-        </TCEforms>
-      </record_browser.display.withoutResult>
-      <record_browser.display.itemsWithoutLink>
-        <TCEforms>
-          <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.itemsWithoutLink</label>
-          <displayCond>FIELD:record_browser:=:1</displayCond>
-          <config>
-            <type>select</type>
-            <items type="array">
-              <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.itemsWithoutLink.0</numIndex>
-                <numIndex index="1">0</numIndex>
-              </numIndex>
-              <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.itemsWithoutLink.1</numIndex>
-                <numIndex index="1">1</numIndex>
-              </numIndex>
-            </items>
-            <default>1</default>
-            <maxitems>1</maxitems>
-            <size>1</size>
-          </config>
-        </TCEforms>
-      </record_browser.display.itemsWithoutLink>
     </el>
   </ROOT>
 </T3DataStructure>
