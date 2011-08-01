@@ -1765,12 +1765,12 @@ class tx_browser_pi1_navi
       //
       // RETURN session isn't enabled
 
-    if(!$this->pObj->conf['session_manager.']['session.']['enabled'])
+    if(!$this->pObj->conf['advanced.']['session_manager.']['session.']['enabled'])
     {
       if ($this->pObj->b_drs_templating)
       {
-        $value = $this->pObj->conf['session_manager.']['session.']['enabled'];
-        t3lib_div::devlog('[INFO/TEMPLATING] session_manager.session.enabled is \'' . $value . '\' '.
+        $value = $this->pObj->conf['advanced.']['session_manager.']['session.']['enabled'];
+        t3lib_div::devlog('[INFO/TEMPLATING] advanced.session_manager.session.enabled is \'' . $value . '\' '.
           'Record browser won\'t get its data from session (less performance).', $this->pObj->extKey, 0);
       }
       return false;

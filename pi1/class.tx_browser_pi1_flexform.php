@@ -1836,26 +1836,26 @@ class tx_browser_pi1_flexform
       case(0):
           // typoscript
         // Do nothing
-        $value = $this->pObj->conf['session_manager.']['session.']['enabled'];
+        $value = $this->pObj->conf['advanced.']['session_manager.']['session.']['enabled'];
         if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/FLEXFORM] session_manager.session.enabled is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] advanced.session_manager.session.enabled is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
         }
         break;
       case(1):
           // enabled
-        $this->pObj->conf['session_manager.']['session.']['enabled'] = true;
+        $this->pObj->conf['advanced.']['session_manager.']['session.']['enabled'] = true;
         if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/FLEXFORM] session_manager.session.enabled is set to true.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] advanced.session_manager.session.enabled is set to true.', $this->pObj->extKey, 0);
         }
         break;
       case(2):
           // disabled
-        $this->pObj->conf['session_manager.']['session.']['enabled'] = false;
+        $this->pObj->conf['advanced.']['session_manager.']['session.']['enabled'] = false;
         if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div::devlog('[INFO/FLEXFORM] session_manager.session.enabled is set to false.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] advanced.session_manager.session.enabled is set to false.', $this->pObj->extKey, 0);
         }
         break;
     }
