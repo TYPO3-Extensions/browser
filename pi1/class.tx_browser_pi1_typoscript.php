@@ -582,7 +582,7 @@ class tx_browser_pi1_typoscript
       // Get andWhere from TypoScript
       $str_key   = $this->pObj->objFlexform->int_templating_dataQuery.'.';
 //var_dump('typoscript 494', $str_key);
-      $arr_items = $this->conf['plugin.']['templating.']['arrDataQuery.']['items.'];
+      $arr_items = $this->conf['flexform.']['templating.']['arrDataQuery.']['items.'];
 //var_dump('typoscript 495', $arr_items);
       $arr_item  = $arr_items[$str_key]['arrQuery.']['andWhere'];
       $conf_sql['andWhere'] = $conf_sql['andWhere'].$arr_item;

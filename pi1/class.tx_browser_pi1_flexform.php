@@ -1580,21 +1580,6 @@ class tx_browser_pi1_flexform
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /**
  * If the current plugin has views selected, only the selected views are available for the plugin.
  * The method removes "unavailable" views from the TypoScript.
@@ -1610,9 +1595,10 @@ class tx_browser_pi1_flexform
     $viewWiDot  = $this->pObj->view.'.';
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field relations_select
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field relations_select
 
     $str_relations = $this->pObj->pi_getFFvalue($arr_piFlexform, 'relations_select', 'sDEF', 'lDEF', 'vDEF');
     if ($str_relations == 'default' OR empty($str_relations))
@@ -1623,12 +1609,13 @@ class tx_browser_pi1_flexform
       }
       return;
     }
-    // Field relations_select
+      // Field relations_select
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field relations
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field relations
 
     $str_relations = $this->pObj->pi_getFFvalue($arr_piFlexform, 'relations', 'sDEF', 'lDEF', 'vDEF');
     if ($this->pObj->b_drs_flexform)
@@ -1731,14 +1718,15 @@ class tx_browser_pi1_flexform
         }
       }
     }
-    // Field relations
+      // Field relations
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field joins
 
-    #9879
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field joins
+
+      #9879
     $int_joins = $this->pObj->pi_getFFvalue($arr_piFlexform, 'joins', 'sDEF', 'lDEF', 'vDEF');
     if (!empty($this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.']))
     {
@@ -1758,12 +1746,13 @@ class tx_browser_pi1_flexform
       $str_path = $path_view.'autoconfig.relations.left_join';
       t3lib_div::devlog('[INFO/FLEXFORM] TypoScript '.$str_path.' is set to: '.$int_joins.'.', $this->pObj->extKey, 0);
     }
-    // Field joins
+      // Field joins
 
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field root
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field root
 
     $int_root = $this->pObj->pi_getFFvalue($arr_piFlexform, 'root', 'sDEF', 'lDEF', 'vDEF');
     if ($int_root == 1)
@@ -1778,18 +1767,6 @@ class tx_browser_pi1_flexform
         {
           t3lib_div::devlog('[INFO/FLEXFORM] pidList before changing: '.$this->pObj->pidList, $this->pObj->extKey, 0);
         }
-//        $this->pObj->conf['pidList'] = $this->pObj->cObj->data['pages'];
-//        if ($this->pObj->conf['pidList'])
-//        {
-//          $this->pObj->conf['pidList'] = '0,'.$this->pObj->conf['pidList'];
-//        }
-//        if (!$this->pObj->conf['pidList'])
-//        {
-//          $this->pObj->conf['pidList'] = '0';
-//        }
-//        $this->pObj->conf['recursive']  = $this->pObj->cObj->data['recursive'];
-//var_dump($this->pObj->cObj->data['pages'], $this->pObj->conf['pidList'], $this->pObj->conf['recursive']);
-//        $this->pObj->pidList            = $this->pObj->pi_getPidList($this->pObj->conf['pidList'], $this->pObj->conf['recursive']);
         if ($this->pObj->pidList)
         {
           $this->pObj->pidList = '0,'.$this->pObj->pidList;
@@ -1811,34 +1788,11 @@ class tx_browser_pi1_flexform
         t3lib_div::devlog('[INFO/FLEXFORM] Root isn\'t set.', $this->pObj->extKey, 0);
       }
     }
-    // Field root
+      // Field root
 
 
     return;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

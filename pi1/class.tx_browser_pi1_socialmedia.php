@@ -504,7 +504,7 @@ class tx_browser_pi1_socialmedia
 
 
     // Get the TypoScript local bookmark array
-    $arr_tsBookmarks = $this->conf_view['plugin.']['socialmedia.']['socialbookmarks.']['bookmarks.']['items.'];
+    $arr_tsBookmarks = $this->conf_view['flexform.']['socialmedia.']['socialbookmarks.']['bookmarks.']['items.'];
     if(!is_array($arr_tsBookmarks) || count($arr_tsBookmarks) < 1)
     {
       // DRS - Development Reporting System
@@ -520,7 +520,7 @@ class tx_browser_pi1_socialmedia
     // Get the TypoScript global bookmark array
     if(!is_array($arr_tsBookmarks) || count($arr_tsBookmarks) < 1)
     {
-      $arr_tsBookmarks = $this->conf['plugin.']['socialmedia.']['socialbookmarks.']['bookmarks.']['items.'];
+      $arr_tsBookmarks = $this->conf['flexform.']['socialmedia.']['socialbookmarks.']['bookmarks.']['items.'];
       // RETURN false if there isn't any global bookmark array in TypoScript
       if(!is_array($arr_tsBookmarks) || count($arr_tsBookmarks) < 1)
       {
@@ -740,7 +740,7 @@ class tx_browser_pi1_socialmedia
 
 
     // Get the local stdWrap for an item
-    $arr_default_stdWrapItem = $this->conf_view['plugin.']['socialmedia.']['socialbookmarks.']['wraps.']['stdWrap_item.'];
+    $arr_default_stdWrapItem = $this->conf_view['flexform.']['socialmedia.']['socialbookmarks.']['wraps.']['stdWrap_item.'];
     if(!is_array($arr_default_stdWrapItem) || count($arr_default_stdWrapItem) < 1)
     {
       // DRS - Development Reporting System
@@ -756,7 +756,7 @@ class tx_browser_pi1_socialmedia
     // Get the global stdWrap for an item
     if(!is_array($arr_default_stdWrapItem) || count($arr_default_stdWrapItem) < 1)
     {
-      $arr_default_stdWrapItem = $this->conf['plugin.']['socialmedia.']['socialbookmarks.']['wraps.']['stdWrap_item.'];
+      $arr_default_stdWrapItem = $this->conf['flexform.']['socialmedia.']['socialbookmarks.']['wraps.']['stdWrap_item.'];
       // WARN if there is no global array for a stdWrap
       if(!is_array($arr_default_stdWrapItem) || count($arr_default_stdWrapItem) < 1)
       {
@@ -801,7 +801,7 @@ class tx_browser_pi1_socialmedia
 
 
     // Get the local array for the stdWrap for items (bookmark list)
-    $arr_default_stdWrapItems = $this->conf_view['plugin.']['socialmedia.']['socialbookmarks.']['wraps.']['stdWrap_items.'];
+    $arr_default_stdWrapItems = $this->conf_view['flexform.']['socialmedia.']['socialbookmarks.']['wraps.']['stdWrap_items.'];
     if(!is_array($arr_default_stdWrapItems) || count($arr_default_stdWrapItems) < 1)
     {
       // DRS - Development Reporting System
@@ -819,7 +819,7 @@ class tx_browser_pi1_socialmedia
     // Get the global array for the stdWrap for items (bookmark list)
     if(!is_array($arr_default_stdWrapItems) || count($arr_default_stdWrapItems) < 1)
     {
-      $arr_default_stdWrapItems = $this->conf['plugin.']['socialmedia.']['socialbookmarks.']['wraps.']['stdWrap_items.'];
+      $arr_default_stdWrapItems = $this->conf['flexform.']['socialmedia.']['socialbookmarks.']['wraps.']['stdWrap_items.'];
       if(!is_array($arr_default_stdWrapItems) || count($arr_default_stdWrapItems) < 1)
       {
         $this->str_default_htmlItems = false;
