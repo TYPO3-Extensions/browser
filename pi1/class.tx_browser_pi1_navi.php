@@ -1819,7 +1819,7 @@ class tx_browser_pi1_navi
       $dummy            = $this->pObj->objViews->listView($this->pObj->str_template_raw);
       $this->pObj->rows = $curr_rows;
       $this->pObj->view = $curr_view;
-      $uids_all_rows    = $this->pObj->uids_all_rows;
+      $uids_of_all_rows = $this->pObj->uids_of_all_rows;
     }
       // No session: call the list view again
 
@@ -1848,10 +1848,10 @@ class tx_browser_pi1_navi
         // Get the data space
 
       $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
-      $uids_all_rows        = $arr_browser_session['uids_all_rows'];
+      $uids_of_all_rows        = $arr_browser_session['uids_of_all_rows'];
     }
       // Session: get the tx_browser_pi1 session array 
-echo '<pre>' . var_export($uids_all_rows, true) . '</pre>';
+echo '<pre>' . var_export($uids_of_all_rows, true) . '</pre>';
 
 
       //////////////////////////////////////////////////////////////////////
@@ -1948,12 +1948,12 @@ echo '<pre>' . var_export($uids_all_rows, true) . '</pre>';
         // Get the tx_browser_pi1 session array 
       $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey('ses', $this->pObj->prefixId);
         // Empty the array with the uids of all rows 
-      $arr_browser_session['uids_all_rows'] = array();
+      $arr_browser_session['uids_of_all_rows'] = array();
         // Set the tx_browser_pi1 session array
       $GLOBALS['TSFE']->fe_user->setKey('ses', $this->pObj->prefixId, $arr_browser_session);
       if ($this->pObj->b_drs_templating)
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] Rows are empty. Session array [' . $this->pObj->prefixId . '][uids_all_rows] will be empty.',  $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/TEMPLATING] Rows are empty. Session array [' . $this->pObj->prefixId . '][uids_of_all_rows] will be empty.',  $this->pObj->extKey, 0);
       }
       return false;
     }
@@ -2032,12 +2032,12 @@ echo '<pre>' . var_export($uids_all_rows, true) . '</pre>';
       // Get the tx_browser_pi1 session array 
     $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
       // Overwrite the array with the uids of all rows 
-    $arr_browser_session['uids_all_rows'] = $arr_uid;
+    $arr_browser_session['uids_of_all_rows'] = $arr_uid;
       // Set the tx_browser_pi1 session array
     $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_browser_session);
     if ($this->pObj->b_drs_templating)
     {
-      t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . '][' . $this->pObj->prefixId . '][uids_all_rows] is set with ' .
+      t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . '][' . $this->pObj->prefixId . '][uids_of_all_rows] is set with ' .
         '#' . count($arr_uid) . ' uids.',  $this->pObj->extKey, 0);
     }
       // Set the session array
