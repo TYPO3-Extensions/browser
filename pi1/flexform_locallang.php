@@ -49,6 +49,9 @@ $LOCAL_LANG = array(
     'sheet_development.dontUseDRS.0'            => 'I\'m not interested in DRS logs of this plugin.',
     'sheet_development.debugJSS.label'          => 'Frontend-Debugger for Javascript / AJAX',
     'sheet_development.debugJSS.0'              => 'Debug it!',
+    'sheet_development.handle_marker'           => 'Marker',
+    'sheet_development.handle_marker.0'         => 'Remove marker, which weren\'t replaced',
+    'sheet_development.handle_marker.1'         => 'Don\'t remove any marker (Debugging)',
 
     'sheet_javascript'                          => 'jQuery & AJAX',
     'sheet_javascript.jquery_library'           => 'jQuery library',
@@ -301,6 +304,9 @@ $LOCAL_LANG = array(
     'sheet_development.dontUseDRS.0'            => 'Dieses Plugin soll keinen Bericht in das DRS schreiben.',
     'sheet_development.debugJSS.label'          => 'Frontend-Debugger fuer Javascript und AJAX',
     'sheet_development.debugJSS.0'              => 'Debuggen!',
+    'sheet_development.handle_marker'           => 'Marker',
+    'sheet_development.handle_marker.0'         => 'Nicht ersetzte Marker entfernen',
+    'sheet_development.handle_marker.1'         => 'Nicht ersetzte Marker anzeigen (Debugging)',
 
     'sheet_javascript'                          => 'jQuery & AJAX',
     'sheet_javascript.jquery_library'           => 'jQuery Bibliothek',

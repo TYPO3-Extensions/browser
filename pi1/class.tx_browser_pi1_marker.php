@@ -27,10 +27,10 @@
 *
 * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
 *
-* @since     3.4.4
-* @version   3.6.2
 * @package    TYPO3
-* @subpackage    tx_browser
+* @subpackage    browser
+* @version   3.7.0
+* @since     3.4.4
 */
 
  /**
@@ -718,7 +718,6 @@
  * The method extends the SQL result with all piVar values
  *
  * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
- * @param array   $elements: The current row of the SQL result
  * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
  */
   function extend_marker_wi_pivars($markerArray)
@@ -739,6 +738,71 @@
     }
 
     return $markerArray;
+  }
+
+
+
+
+
+
+
+
+  /**
+ * replace_left_over(): Replace all markers, which are left over
+ *
+ * @param array   $str_content: current content
+ * @return  string  $str_content: rendered content
+ * @version 3.7.0
+ * @since 3.7.0
+ */
+  function replace_left_over($str_content)
+  {
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Replace the left over markers
+
+    $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
+    $handle_marker  = $this->pObj->pi_getFFvalue($arr_piFlexform, 'handle_marker', 'development', 'lDEF', 'vDEF');
+
+    switch($handle_marker)
+    {
+      case('remove_empty_markers'):
+        if ($this->pObj->b_drs_templating)
+        {
+          preg_match_all
+          (
+            '|###.*?###|i',
+            $str_content,
+            $arr_markers,
+            PREG_PATTERN_ORDER
+          );
+          $str_markers = implode(', ', $arr_markers[0]);
+          t3lib_div::devLog('[INFO/TEMPLATE] Markers will be removed: ' . $str_markers, $this->pObj->extKey, 0);
+        }
+        $str_content = preg_replace('|###.*?###|i', '', $str_content);
+        break;
+      case('none'):
+          // Do nothing;
+        break;
+      default:
+        $prompt = '
+          <div style="background:white; color:red; font-weight:bold;border:.4em solid red;">
+            <h1>
+              ERROR
+            </h1>
+            <p>
+              Undefined value: ' . $handle_marker . '. Allowed are remove_empty_markers and none.
+            </p>
+            <p>
+              ' . $this->pObj->extKey . ': '. __METHOD__ . ' (line ' . __LINE__ . ')
+            </p>
+          </div>';
+        echo $prompt;
+        exit;
+    }
+      // Replace the left over markers
+
+    return $str_content;
   }
 
 

@@ -912,6 +912,15 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
+      // Replace left over markers
+
+    $str_template_completed = $this->objMarker->replace_left_over($str_template_completed);
+      // Replace left over markers
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // AJAX: return the result (HTML string) without wrapInBaseClass
 
     if($this->segment['wrap_piBase'] == false)

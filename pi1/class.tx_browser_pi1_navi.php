@@ -1845,10 +1845,18 @@ class tx_browser_pi1_navi
       // Overwrite the array with the uids of all rows 
     $arr_browser_session['uids_all_rows'] = $arr_uid;
       // Set the tx_browser_pi1 session array
-    $GLOBALS['TSFE']->fe_user->setKey('ses', $this->pObj->prefixId, $arr_browser_session);
+    if($GLOBALS['TSFE']->loginUser)
+    {
+      $str_data_space = 'user';
+    }
+    if(!$GLOBALS['TSFE']->loginUser)
+    {
+      $str_data_space = 'ses';
+    }
+    $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_browser_session);
     if ($this->pObj->b_drs_templating)
     {
-      t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $this->pObj->prefixId . '][uids_all_rows] is set with ' .
+      t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . '][' . $this->pObj->prefixId . '][uids_all_rows] is set with ' .
         '#' . count($arr_uid) . ' uids.',  $this->pObj->extKey, 0);
     }
       // Set the session array
