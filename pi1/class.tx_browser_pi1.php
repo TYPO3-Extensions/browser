@@ -180,6 +180,8 @@ class tx_browser_pi1 extends tslib_pibase {
   // [Array] The elements of the current SQL row
   var $rows;
   // [Array] The rows of the SQL result
+  var $uids_of_all_rows;
+  // [Array] Uids of all rows (after consolidation but before limitation)
 
   var $arr_swordPhrases;
   // [Array] Array with sword phrases. Example: My Word "My Phrase" will be [0] My, [1] Word, [2] My Phrase
@@ -733,7 +735,8 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // Process the views
 
-    switch($this->view) {
+    switch($this->view)
+    {
       case('list'):
         $str_template_completed = $this->objViews->listView($this->str_template_raw);
         break;
@@ -749,7 +752,8 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // DRS - Performance
 
-    if ($this->b_drs_perform) {
+    if ($this->b_drs_perform)
+    {
       if($this->bool_typo3_43)
       {
         $endTime = $this->TT->getDifferenceToStarttime();
