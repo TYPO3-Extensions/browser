@@ -297,7 +297,7 @@ class tx_browser_pi5_backend
     }
 
       // TypoScript configuration for bookmarks
-    $arr_bookmarks = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['plugin.']['socialmedia.']['socialbookmarks.']['bookmarks.']['items.'];
+    $arr_bookmarks = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['socialmedia.']['socialbookmarks.']['bookmarks.']['items.'];
 
       // Loop: bookmarks
     if (is_array($arr_bookmarks) && count($arr_bookmarks))
@@ -356,7 +356,7 @@ class tx_browser_pi5_backend
     }
 
       // TypoScript configuration for dataQueries
-    $arr_dataQuery = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['plugin.']['templating.']['arrDataQuery.']['items.'];
+    $arr_dataQuery = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['templating.']['arrDataQuery.']['items.'];
 
       // Loop through all dataQuerys
     if (is_array($arr_dataQuery) && count($arr_dataQuery))
@@ -384,7 +384,7 @@ class tx_browser_pi5_backend
       // We don't have any item
     if(empty($arr_pluginConf['items']))
     {
-      $str_defaultItem           = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['plugin.']['templating.']['arrDataQuery.']['config.']['ifNoItem.']['value'];
+      $str_defaultItem           = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['templating.']['arrDataQuery.']['config.']['ifNoItem.']['value'];
       $arr_pluginConf['items'][] = array($str_defaultItem, '1');
     }
       // We don't have any item

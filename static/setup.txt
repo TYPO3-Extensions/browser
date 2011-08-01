@@ -70,25 +70,25 @@ plugin.tx_browser_pi1 {
   }
 
   localTable {
-    // [STRING] Uid field of the local table. This is the name of the uid field of the record for a link to a single view. It is "uid" usually   
+    // [STRING] Uid field of the local table. This is the name of the uid field of the record for a link to a single view. It is "uid" usually
     uid = uid
-    // [STRING] Pid field of the local table.   
+    // [STRING] Pid field of the local table.
     pid = pid
   }
 
   pageBrowser {
-    // [String] Name for the pagebrowser piVar 
+    // [String] Name for the pagebrowser piVar
     pointer                = pointer
     // [INTEGER] The maximum pages, which will displayed in the page browser
     maxPages               = 10
-    // [BOOLEAN] Display the text line "Displaying results x to y out of z" 
+    // [BOOLEAN] Display the text line "Displaying results x to y out of z"
     showResultCount        =  1
-    // [BOOLEAN] Don't link the active page 
+    // [BOOLEAN] Don't link the active page
     dontLinkActivePage     =  1
     tableParams            = cellpadding="2" align="center"
     showFirstLast          =  1
     pagefloat              = center
-    // [BOOLEAN] Display the text line "<< First < Previous 1-20 21-40 41-60 Next > Last >>" 
+    // [BOOLEAN] Display the text line "<< First < Previous 1-20 21-40 41-60 Next > Last >>"
     showRange              =  1
     wrap {
       disabledLinkWrap       = <span class="SCell">|</span>
@@ -99,16 +99,16 @@ plugin.tx_browser_pi1 {
       browseBoxWrap          =
       browseLinksWrap        = |
     }
-    
+
   }
-  
+
   a-z_Browser {
-    display { 
+    display {
       // [Boolean] Should tabs displayed, if they haven't any item?
       tabWithoutItems = 1
       // [Boolean] Should tabs use the title porperty of the HTML a tag?
       tabHrefTitle    = 1
-    } 
+    }
     // [INTEGER] The key/id of the default tab (see the 'x' in a-z_Browser.tabs.x). If the user didn't activate any tab, this is the current tab.
     defaultTab = 0
     defaultTab {
@@ -121,141 +121,141 @@ plugin.tx_browser_pi1 {
     caseSensitive = 0
     // [STRING, syntax: table.field]: If you want to use another field than the first field of your SQL query.
     field =
-    tabs { 
+    tabs {
       // Tab with the property special (all)
-      0 = All 
-      0 { 
+      0 = All
+      0 {
         // [STRING] (all || others): Display all items
         special =  all
         stdWrap {
           data = LLL:EXT:browser/pi1/locallang.xml:label_azbrowser_all
         }
-      } 
+      }
       1 = 0-9
-      1 { 
+      1 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  0,1,2,3,4,5,6,7,8,9
         // Don't use the default value displayWithoutItems. Display this tab only, if it has items
         displayWithoutItems = 0
-      } 
+      }
       2 = A
-      2 { 
+      2 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  A
-      } 
+      }
       3 = B
-      3 { 
+      3 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  B
-      } 
+      }
       4 = C
-      4 { 
+      4 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  C
-      } 
+      }
       5 = D
-      5 { 
+      5 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  D
-      } 
+      }
       6 = E
-      6 { 
+      6 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  E
-      } 
+      }
       7 = F
-      7 { 
+      7 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  F
-      } 
+      }
       8 = G
-      8 { 
+      8 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  G
-      } 
+      }
       9 = H
-      9 { 
+      9 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  H
-      } 
+      }
       10 = I
-      10 { 
+      10 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  I
-      } 
+      }
       11 = J
-      11 { 
+      11 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  J
-      } 
+      }
       12 = K
-      12 { 
+      12 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  K
-      } 
+      }
       13 = L
-      13 { 
+      13 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  L
-      } 
+      }
       14 = M
-      14 { 
+      14 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  M
-      } 
+      }
       15 = N
-      15 { 
+      15 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  N
-      } 
+      }
       16 = O
-      16 { 
+      16 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  O
-      } 
+      }
       17 = PQ
-      17 { 
+      17 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  P, Q
-      } 
+      }
       18 = R
-      18 { 
+      18 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  R
-      } 
+      }
       19 = S
-      19 { 
+      19 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  S
-      } 
+      }
       20 = T
-      20 { 
+      20 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  T
-      } 
+      }
       21 = U
-      21 { 
+      21 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  U
-      } 
+      }
       22 = V
-      22 { 
+      22 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  V
-      } 
+      }
       23 = W
-      23 { 
+      23 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  W
-      } 
+      }
       24 = XYZ
-      24 { 
+      24 {
         // [CSV-STRING] List of comma separated initials (an initial has one digit only)
         valuesCSV =  X, Y, Z
-      } 
+      }
       // Tab with the property special (others)
-      25 = Others 
-      25 { 
+      25 = Others
+      25 {
         // [STRING] (all || others): Display all items which aren't matched by the other tabs
         special = others
         // Don't use the default value displayWithoutItems. Display this tab only, if it has items
@@ -263,11 +263,11 @@ plugin.tx_browser_pi1 {
         stdWrap {
           data = LLL:EXT:browser/pi1/locallang.xml:label_azbrowser_others
         }
-      } 
-    } 
-    // [STRING] (auto || iso || utf): Manual configuring of using multibyte methods 
+      }
+    }
+    // [STRING] (auto || iso || utf): Manual configuring of using multibyte methods
     charset = auto
-  }  
+  }
 
   modeSelector {
     wrap =
@@ -296,12 +296,12 @@ plugin.tx_browser_pi1 {
 
     seo {
       htmlHead {
-        // [Boolean] Search Engine Optimization for the meta tag title. Activate the register browser_htmlTitleTag. 
+        // [Boolean] Search Engine Optimization for the meta tag title. Activate the register browser_htmlTitleTag.
         title = 0
         meta {
-          // [Boolean] Search Engine Optimization for the meta tag description. Activate the register browser_description. 
+          // [Boolean] Search Engine Optimization for the meta tag description. Activate the register browser_description.
           description = 0
-          // [Boolean] Search Engine Optimization for the meta tag keywords. Activate the register browser_keywords. 
+          // [Boolean] Search Engine Optimization for the meta tag keywords. Activate the register browser_keywords.
           keywords    = 0
         }
       }
@@ -316,7 +316,7 @@ plugin.tx_browser_pi1 {
       backbutton = 1
       backbutton {
         data = LLL:EXT:browser/pi1/locallang.xml:backbutton
-        wrap = <a href="javascript:history.back()">|</a> 
+        wrap = <a href="javascript:history.back()">|</a>
       }
       searchform {
         // [Boolean] 1: Wrap the Swords in the result, 0: Don't wrap it
@@ -357,7 +357,7 @@ plugin.tx_browser_pi1 {
         }
       }
     }
-    
+
     templateMarker = ###TEMPLATE_SINGLE###
 
     content_stdWrap {
@@ -402,14 +402,14 @@ plugin.tx_browser_pi1 {
     firstImageIsPreview       = 0
     // [Boolean] If first image is for the preview, but there is no further image, preview image will displayed in the single view
     forceFirstImageIsPreview  = 0
-    
+
     // [Boolean, stdWrap] Display the no-item-message, if SQL query will return an empty result
     noItemMessage = 1
     noItemMessage {
       data = LLL:EXT:browser/pi1/locallang.xml:phrase_norecord
       wrap = <p style="padding:2em 0;">|</p>
     }
-    
+
   }
 
   displayList {
@@ -417,12 +417,12 @@ plugin.tx_browser_pi1 {
     singlePid =
     seo {
       htmlHead {
-        // [Boolean] Search Engine Optimization for the meta tag title. Activate the register browser_htmlTitleTag. 
+        // [Boolean] Search Engine Optimization for the meta tag title. Activate the register browser_htmlTitleTag.
         title = 0
         meta {
-          // [Boolean] Search Engine Optimization for the meta tag description. Activate the register browser_description. 
+          // [Boolean] Search Engine Optimization for the meta tag description. Activate the register browser_description.
           description = 0
-          // [Boolean] Search Engine Optimization for the meta tag keywords. Activate the register browser_keywords. 
+          // [Boolean] Search Engine Optimization for the meta tag keywords. Activate the register browser_keywords.
           keywords    = 0
         }
       }
@@ -590,15 +590,15 @@ plugin.tx_browser_pi1 {
         }
       }
       table {
-        // [Boolean] Display the HTML table property summary (WAI guideline) 
+        // [Boolean] Display the HTML table property summary (WAI guideline)
         summary     = 1
-        // [Boolean] Display the HTML table tag caption (WAI guideline) 
+        // [Boolean] Display the HTML table tag caption (WAI guideline)
         caption     = 1
       }
-      // [Boolean] If it isn't possible to link to a single view, link to a single nevertheless and display a JSS alert on click  
+      // [Boolean] If it isn't possible to link to a single view, link to a single nevertheless and display a JSS alert on click
       jssAlert      = 1
     }
-    
+
 
     templateMarker = ###TEMPLATE_LIST###
 
@@ -653,13 +653,13 @@ plugin.tx_browser_pi1 {
             nice_html_spaceLeft = 16
             // [String] HTML code for a selected item
             selected = selected="selected"
-            // [String] Default HTML class 
+            // [String] Default HTML class
             class {
               asc   = asc
               desc  = desc
             }
             // [String] Default HTML style
-            style = 
+            style =
             stdWrap {
               htmlSpecialChars = 1
               crop = 60 | ... | 1
@@ -672,13 +672,13 @@ plugin.tx_browser_pi1 {
           // [String] ASC || DESC
           orderFlag = ASC
           html {
-            str_asc  = 
-            str_desc = 
+            str_asc  =
+            str_desc =
           }
         }
         sql {
           // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
-          andWhere = 
+          andWhere =
         }
       }
     }
@@ -688,7 +688,7 @@ plugin.tx_browser_pi1 {
       category_menu = CATEGORY_MENU
       category_menu {
         // [String/optional] Name for the piVar. Name must be unique.
-        nice_piVar = 
+        nice_piVar =
         // [Boolean] Should be added a default item?
         first_item = 1
         first_item {
@@ -697,12 +697,12 @@ plugin.tx_browser_pi1 {
           // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
           display_hits = 0
           display_hits {
-            // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item. 
+            // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
             behindItem = 1
             stdWrap {
               noTrimWrap = | (|)|
             }
-          } 
+          }
           stdWrap {
             data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
           }
@@ -733,19 +733,19 @@ plugin.tx_browser_pi1 {
             // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
             display_without_any_hit = 0
             // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
-            display_hits = 1 
+            display_hits = 1
             display_hits {
-              // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item. 
+              // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
               behindItem = 1
               stdWrap {
                 noTrimWrap = | (|)|
               }
-            } 
+            }
             // [Integer] Space characters from left margin in the HTML code
             nice_html_spaceLeft = 16
             // [String] Class for a selected item
             selected = selected
-            // [String] Default HTML class 
+            // [String] Default HTML class
             class = ###ITEM_SELECTED######ONCHANGE###
             // [String] Default HTML style
             style =
@@ -769,7 +769,7 @@ plugin.tx_browser_pi1 {
         }
         sql {
           // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
-          andWhere = 
+          andWhere =
         }
         // [BOOLEAN] 1: Display an area filter, 0: Don't display an area (default)
         area = 0
@@ -777,7 +777,7 @@ plugin.tx_browser_pi1 {
       checkbox = CHECKBOX
       checkbox {
         // [String/optional] Name for the piVar. Name must be unique.
-        nice_piVar = 
+        nice_piVar =
         // [Boolean] Is a selecting obligatory?
         required = 0
         // [String] Wrap the object
@@ -807,18 +807,18 @@ plugin.tx_browser_pi1 {
             // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
             display_hits = 1
             display_hits {
-              // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item. 
+              // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
               behindItem = 1
               stdWrap {
                 noTrimWrap = | (|)|
               }
-            } 
+            }
             // [Integer] Space characters from left margin in the HTML code
             nice_html_spaceLeft = 16
             // [String] HTML code for a selected item
             selected = checked="checked"
-            // [String] Default HTML class 
-            class = 
+            // [String] Default HTML class
+            class =
             // [String] Default HTML style
             style =
             stdWrap {
@@ -842,7 +842,7 @@ plugin.tx_browser_pi1 {
         }
         sql {
           // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
-          andWhere = 
+          andWhere =
         }
         // [BOOLEAN] You have to allocate one of the areas of the mastertemplate
         area = 0
@@ -851,7 +851,7 @@ plugin.tx_browser_pi1 {
       radiobuttons = RADIOBUTTONS
       radiobuttons {
         // [String/optional] Name for the piVar. Name must be unique.
-        nice_piVar = 
+        nice_piVar =
         // [Boolean] Is a selecting obligatory?
         required = 1
         // [Boolean]: 1: If value is changing, AJAX will reload the form. 0: No auto reload.
@@ -881,18 +881,18 @@ plugin.tx_browser_pi1 {
             // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
             display_hits = 1
             display_hits {
-              // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item. 
+              // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
               behindItem = 1
               stdWrap {
                 noTrimWrap = | (|)|
               }
-            } 
+            }
             // [Integer] Space characters from left margin in the HTML code
             nice_html_spaceLeft = 16
             // [String] HTML code for a selected item
             selected = checked="checked"
-            // [String] Default HTML class 
-            class = 
+            // [String] Default HTML class
+            class =
             // [String] Default HTML style
             style =
             stdWrap {
@@ -916,7 +916,7 @@ plugin.tx_browser_pi1 {
         }
         sql {
           // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
-          andWhere = 
+          andWhere =
         }
         // [BOOLEAN] You have to allocate one of the areas of the mastertemplate
         area = 0
@@ -925,7 +925,7 @@ plugin.tx_browser_pi1 {
       selectbox = SELECTBOX
       selectbox {
         // [String/optional] Name for the piVar. Name must be unique.
-        nice_piVar = 
+        nice_piVar =
         // [Boolean] Should be added a default item?
         first_item = 1
         first_item {
@@ -934,12 +934,12 @@ plugin.tx_browser_pi1 {
           // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
           display_hits = 0
           display_hits {
-            // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item. 
+            // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
             behindItem = 1
             stdWrap {
               noTrimWrap = | (|)|
             }
-          } 
+          }
           stdWrap {
             data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
           }
@@ -978,20 +978,20 @@ plugin.tx_browser_pi1 {
             // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
             display_without_any_hit = 0
             // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
-            display_hits = 1 
+            display_hits = 1
             display_hits {
-              // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item. 
+              // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
               behindItem = 1
               stdWrap {
                 noTrimWrap = | (|)|
               }
-            } 
+            }
             // [Integer] Space characters from left margin in the HTML code
             nice_html_spaceLeft = 16
             // [String] HTML code for a selected item
             selected = selected="selected"
-            // [String] Default HTML class 
-            class = 
+            // [String] Default HTML class
+            class =
             // [String] Default HTML style
             style =
             stdWrap {
@@ -1008,7 +1008,7 @@ plugin.tx_browser_pi1 {
         }
         sql {
           // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
-          andWhere = 
+          andWhere =
         }
         // [BOOLEAN] You have to allocate one of the areas of the master template. Tutorial: http://typo3.org/extensions/repository/view/browser_tut_search_en/current/
         area = 0
@@ -1040,7 +1040,7 @@ plugin.tx_browser_pi1 {
                 10 {
                   comment = Upto 10.000 EUR
                   valueFrom_stdWrap {
-                    value = 
+                    value =
                   }
                   valueTo_stdWrap {
                     value = 10000
@@ -1070,7 +1070,7 @@ plugin.tx_browser_pi1 {
                     value = 20000
                   }
                   valueTo_stdWrap {
-                    value = 
+                    value =
                   }
                   value_stdWrap {
                     value = From 20.000 EUR
@@ -1110,7 +1110,7 @@ plugin.tx_browser_pi1 {
                 10 {
                   comment = Before 2010
                   valueFrom_stdWrap {
-                    value = 
+                    value =
                   }
                   valueTo_stdWrap {
                     value = 1262300400
@@ -1140,7 +1140,7 @@ plugin.tx_browser_pi1 {
                     value = 1293836400
                   }
                   valueTo_stdWrap {
-                    value = 
+                    value =
                   }
                   value_stdWrap {
                     value = After 2011
@@ -1173,7 +1173,7 @@ plugin.tx_browser_pi1 {
               }
               value_stdWrap {
                 // [STRING] Leave it empty! It will be handled while runtime.
-                value = 
+                value =
                 // [STRING] See php method strftime
                 strftime = %A
               }
@@ -1202,7 +1202,7 @@ plugin.tx_browser_pi1 {
               }
               value_stdWrap {
                 // [STRING] Leave it empty! It will be handled while runtime.
-                value = 
+                value =
                 // [STRING] See php method strftime
                 strftime = %V. ###MY_WEEK###
               }
@@ -1227,7 +1227,7 @@ plugin.tx_browser_pi1 {
               }
               value_stdWrap {
                 // [STRING] Leave it empty! It will be handled while runtime.
-                value = 
+                value =
                 // [STRING] See php method strftime
                 strftime = %b %y
               }
@@ -1252,7 +1252,7 @@ plugin.tx_browser_pi1 {
               }
               value_stdWrap {
                 // [STRING] Leave it empty! It will be handled while runtime.
-                value = 
+                value =
                 // [STRING] See php method strftime
                 strftime = %Y
               }
@@ -1266,14 +1266,14 @@ plugin.tx_browser_pi1 {
         }
       }
     }
-    
+
     // [Boolean] Display caption in List view?
     caption_stdWrap.if.directReturn = 0
 
     // [Integer] Amount of images which should be displayed
     imageCount     = {$plugin.tx_browser_pi1.listImageCount}
     // [String] Wrap code for the whole image block (if there is any image)
-    imageWrapIfAny = 
+    imageWrapIfAny =
     imageBoxWrap {
       // [String] Wrap code for every image/imagecaption block #11211
       wrap = <span class="list-imagebox list-imagebox-###IMAGE_COUNT###"> | </span>
@@ -1285,7 +1285,7 @@ plugin.tx_browser_pi1 {
         maxW = {$plugin.tx_browser_pi1.listMaxW}
         maxH = {$plugin.tx_browser_pi1.listMaxH}
       }
-      wrap          = 
+      wrap          =
       imageLinkWrap = 1
       imageLinkWrap {
         enable = 1
@@ -1309,14 +1309,14 @@ plugin.tx_browser_pi1 {
       wrap = <p style="padding:2em 0;">|</p>
     }
   }
-  
+
   marker {
       // markers can use TEXT or COA
     my_title = TEXT
     my_title {
-      value = 
+      value =
       lang {
-        de = 
+        de =
       }
       wrap = <h1>|</h1>
     }
@@ -1362,7 +1362,7 @@ plugin.tx_browser_pi1 {
     }
   }
 
-  plugin {
+  flexform {
     socialmedia {
       socialbookmarks {
         wraps {
@@ -1662,27 +1662,27 @@ plugin.tx_browser_pi1 {
           admPanel              = 0
         }
         10 = CONTENT
-        10 { 
-          table=tt_content 
-          select{ 
-            // only use current page 
+        10 {
+          table=tt_content
+          select{
+            // only use current page
             pidInList = this
             // only use current language
-            languageField=sys_language_uid 
+            languageField=sys_language_uid
             andWhere.cObject = COA
             andWhere.cObject {
               // choose all Browser plugins...
               10 = TEXT
               10.value = list_type = 'browser_pi1'
-              // if an UID is provided in the querystring, choose only that plugin 
+              // if an UID is provided in the querystring, choose only that plugin
               20 = TEXT
               20.data = GPvar:tx_browser_pi1|plugin
               20.if.isTrue.data = GPvar:tx_browser_pi1|plugin
               20.outerWrap = AND uid = |
-            } 
+            }
           }
         }
-      } 
+      }
     }
     general {
       // [STRING] Path to Javascript file general methods
@@ -1702,11 +1702,11 @@ plugin.tx_browser_pi1 {
         additionalHeaders     = Content-type:text/xml
       }
       10 = CONTENT
-      10 { 
-        table=tt_content 
-        select{ 
+      10 {
+        table=tt_content
+        select{
           // use current language
-          languageField = sys_language_uid 
+          languageField = sys_language_uid
           andWhere {
             cObject = COA
             cObject {
@@ -1714,12 +1714,12 @@ plugin.tx_browser_pi1 {
               10 = TEXT
               10 {
                 value = list_type = 'browser_pi1'
-              } 
-            } 
-          } 
+              }
+            }
+          }
         }
       }
-    } 
+    }
   }
 
   autoconfig {
@@ -1747,7 +1747,7 @@ plugin.tx_browser_pi1 {
       // [CSV-STRING, syntax: table.field] Comma separated list of fields in the TCA, which will ignored for looking up relations.
       #csvDontUseFields            = tt_news.l18n_parent, tt_news.l18n_diffsource, tt_news_cat.parent_category
       csvDontUseFields          =
-      // [BOOLEAN] Use LEFT JOIN statements, if left_join is TRUE. 1 is recommended. 
+      // [BOOLEAN] Use LEFT JOIN statements, if left_join is TRUE. 1 is recommended.
       left_join                 = 1
     }
     autoDiscover {
@@ -1879,7 +1879,7 @@ plugin.tx_browser_pi1 {
         document {
           localTableOnly  = 0
           oneValueOnly    = 0
-          // [BOOLEAN] Take the TCA path to the upload folder 
+          // [BOOLEAN] Take the TCA path to the upload folder
           setUploadFolder = 1
           // [BOOLEAN] 1: Swords will not be wrapped with HTML tags in serach results, 0: Swords will be wrapped
           dontColorSwords = 1
@@ -1961,11 +1961,11 @@ plugin.tx_browser_pi1 {
         dont_replace = 1
       }
     }
-    // [INTEGER] Guard for recursive methods. Every loop will break after x times.  
+    // [INTEGER] Guard for recursive methods. Every loop will break after x times.
     recursionGuard = 10000
     localization {
       realURL {
-        // [BOOLEAN] Default 1 (it is compliant with realURL). 1: Record will get the link to the record in default language. I.e record title won't be translated in the realURL path. You can switch to the record in another language. 0: Record will get the link to the translated record. I.e record title will be translated in the realURL path. You can't switch to the record in another language. 
+        // [BOOLEAN] Default 1 (it is compliant with realURL). 1: Record will get the link to the record in default language. I.e record title won't be translated in the realURL path. You can switch to the record in another language. 0: Record will get the link to the translated record. I.e record title will be translated in the realURL path. You can't switch to the record in another language.
         defaultLanguageLink = 1
       }
       TCA {
@@ -2037,7 +2037,7 @@ plugin.tx_browser_pi1 {
       }
     }
   }
-  
+
   _CSS_DEFAULT_STYLE (
     .tx-browser-pi1 div.azSelector,
     .tx-browser-pi1 div.modeSelector {
@@ -2086,8 +2086,8 @@ plugin.tx_browser_pi1 {
       margin:0 0 -42px 0;
       z-index:2;
     }
-     
-    .loading {  
+
+    .loading {
       opacity:.8;
     }
     .txbrowserpi1ajaxerror {
@@ -2095,7 +2095,7 @@ plugin.tx_browser_pi1 {
     }
     /* #9659 */
   )
-  
+
   _LOCAL_LANG {
     default {
       pi_list_browseresults_prev      = &#171;
