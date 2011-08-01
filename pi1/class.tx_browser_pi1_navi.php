@@ -1741,7 +1741,7 @@ class tx_browser_pi1_navi
     }
 
       // Get table.field for uid of the local table
-    $key_for_uid = $this->pObj->arrLocalTable();
+    $key_for_uid = $this->pObj->arrLocalTable['uid'];
     
       // RETURN uid table.field isn't any key
     $key = key($rows);
