@@ -1740,7 +1740,7 @@ class tx_browser_pi1_navi
   */
   function recordbrowser_get($str_content)
   {
-    $markerArray['###TAB###'] = 'Record Browser';
+    $markerArray['###RECORD_BROWSER###'] = 'Record Browser';
     $str_content              = $this->pObj->cObj->substituteMarkerArray($str_content, $markerArray);
     return $str_content;
     
