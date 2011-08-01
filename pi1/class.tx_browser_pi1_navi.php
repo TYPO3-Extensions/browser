@@ -2,7 +2,7 @@
  /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008 - 2010 Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2008 - 2011 Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +28,8 @@
  *
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
- * @subpackage    tx_browser
+ * @subpackage    browser
+ * @version       3.7.0
  */
 
   /**
@@ -112,6 +113,11 @@ class tx_browser_pi1_navi
 
 
 
+    /***********************************************
+    *
+    * A-Z browser
+    *
+    **********************************************/
 
 
 
@@ -1301,8 +1307,11 @@ class tx_browser_pi1_navi
 
 
 
-
-
+    /***********************************************
+    *
+    * pagebrowser
+    *
+    **********************************************/
 
 
 
@@ -1544,28 +1553,9 @@ class tx_browser_pi1_navi
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /***********************************************
     *
-    * ModeSelector
+    * mode selector
     *
     **********************************************/
 
@@ -1576,15 +1566,17 @@ class tx_browser_pi1_navi
  *
  * @return  array   Array with the modeSelector names
  */
-  function prepaireModeSelector() {
+  function prepaireModeSelector()
+  {
 
     $arr_return = array();
     $arr_return['error']['status'] = false;
 
 
-    ///////////////////////////////////////////////
-    //
-    // RETURN with an error, if there are no views
+
+      ///////////////////////////////////////////////
+      //
+      // RETURN with an error, if there are no views
 
     if(!is_array($this->conf['views.']))
     {
@@ -1595,12 +1587,13 @@ class tx_browser_pi1_navi
       $arr_return['error']['prompt'] = $str_prompt;
       return $arr_return;
     }
-    // RETURN with an error, if there are no views
+      // RETURN with an error, if there are no views
 
 
-    ///////////////////////////////////////////////
-    //
-    // DRS - Development Reporting System
+
+      ///////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
 
     $langKey = $GLOBALS['TSFE']->lang;
     if($langKey == 'en')
@@ -1623,12 +1616,9 @@ class tx_browser_pi1_navi
         }
       }
     }
-    // DRS - Development Reporting System
+      // DRS - Development Reporting System
     return $arr_return;
   }
-
-
-
 
 
 
@@ -1651,20 +1641,21 @@ class tx_browser_pi1_navi
     $arr_items  = $arr_data['arrModeItems'];
 
 
-    /////////////////////////////////////
-    //
-    // Without items don't display any tabs
+      /////////////////////////////////////
+      //
+      // Without items don't display any tabs
 
     if (count($arr_items) <= 1) {
-      // We don't have a mode selector
+        // We don't have a mode selector
       $template = $this->pObj->cObj->substituteSubpart($template, '###MODESELECTOR###', '', true);
       return $template;
     }
 
 
-    /////////////////////////////////////
-    //
-    // Building the tabs
+
+      /////////////////////////////////////
+      //
+      // Building the tabs
 
     reset($arr_items);
     $i_max_counter  = count($arr_items);
@@ -1686,12 +1677,13 @@ class tx_browser_pi1_navi
       $i_counter++;
     }
     unset($markerArray);
-    // Building the tabs
+      // Building the tabs
 
 
-    /////////////////////////////////////
-    //
-    // Building and Return the template
+
+      /////////////////////////////////////
+      //
+      // Building and Return the template
 
     $markerArray               = $this->pObj->objWrapper->constant_markers();
     $markerArray['###MODE###'] = $this->mode;
@@ -1701,7 +1693,7 @@ class tx_browser_pi1_navi
     $modeSelector = $this->pObj->cObj->substituteSubpart($modeSelector, '###MODESELECTORTABS###', $tabs,          true);
     $template     = $this->pObj->cObj->substituteSubpart($template,     '###MODESELECTOR###',     $modeSelector,  true);
     return $template;
-    // Building and Return the template
+      // Building and Return the template
 
   }
 
@@ -1713,6 +1705,74 @@ class tx_browser_pi1_navi
 
 
 
+    /***********************************************
+    *
+    * record browser
+    *
+    **********************************************/
+
+
+
+
+
+
+
+
+
+ /**
+  * recordbrowser_set_session_data: Set session data for the record browser
+  *                                 We need the record browser in the sngle view
+  *                                 Feature #27041
+  *
+  * @param  array   $rows: Array with all available rows of the list view in order of the list view
+  * @return void
+  * 
+  * @version 3.7.0
+  */
+  function recordbrowser_set_session_data($rows)
+  {
+      // RETURN session isn't enabled
+      // ...
+      
+      // RETURN rows are empty
+    if(empty($rows))
+    {
+      die('ERROR rows are empty');
+    }
+
+      // Get table.field for uid of the local table
+    $key_for_uid = $this->pObj->arrLocalTable();
+    
+      // RETURN uid table.field isn't any key
+    $key = key($rows);
+    if(!isset($rows[$key][$key_for_uid]))
+    {
+      die('ERROR ' . $key_for_uid);
+    }
+      // RETURN uid table.field isn't any key
+    
+      // LOOP rows
+    $arr_uid = array();
+    foreach((array) $rows as $row => $elements)
+    {
+      $arr_uid[] = $elements[$key_for_uid];
+    }
+    echo '<pre>' . var_export($arr_uid, true) . '</pre>';
+      // LOOP rows
+      
+      // Set ...
+//$myData = $GLOBALS['TSFE']->fe_user->getKey('ses', 'myData');
+//$str_myData = implode(', ', $myData);
+//$str_template_completed = 'Hallo ' . $str_myData . ' ' . $str_template_completed;
+//$myConfig['name'] = 'dirk';    
+//$myConfig['street'] = 'Born';
+//$GLOBALS['TSFE']->fe_user->setKey('ses', 'myData', $myConfig);
+
+  }
+
+
+
+
 
 
 
@@ -1720,7 +1780,8 @@ class tx_browser_pi1_navi
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi.php']) {
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi.php']) 
+{
   include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi.php']);
 }
 

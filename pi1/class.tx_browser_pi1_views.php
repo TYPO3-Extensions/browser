@@ -1050,6 +1050,17 @@ class tx_browser_pi1_views
     unset($arr_result);
       // HTML page browser
 
+      /////////////////////////////////////
+      //
+      // record browser
+
+    $arr_result         = $this->pObj->objNavi->recordbrowser_set_session_data($rows);
+//    $template         = $arr_result['data']['template'];
+//    $rows             = $arr_result['data']['rows'];
+//    $this->pObj->rows = $rows;
+//    unset($arr_result);
+      // record browser
+
       // HTML mode selector
     $arr_data['template']     = $template;
     $arr_data['arrModeItems'] = $this->pObj->arrModeItems;
