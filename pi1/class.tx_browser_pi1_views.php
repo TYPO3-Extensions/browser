@@ -1755,8 +1755,17 @@ class tx_browser_pi1_views
       // Do we have a HTML template with markers or a Typoscript Template Container (TTC)?
 
 
-    return $template;
 
+      /////////////////////////////////////
+      //
+      // Record Browser
+
+    $template = $this->pObj->objNavi->recordbrowser_get($template);
+      // Record Browser
+
+
+
+    return $template;
   }
 
 

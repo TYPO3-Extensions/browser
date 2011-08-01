@@ -1730,6 +1730,149 @@ class tx_browser_pi1_navi
 
 
  /**
+  * recordbrowser_get:  Rplace the marker ###RECORD_BROWSER### with the rendered record browser
+  *                     * Feature: #27041
+  *
+  * @param  string   $str_content: current content
+  * @return  string   $str_content: rendered content
+  * 
+  * @version 3.7.0
+  */
+  function recordbrowser_get($str_content)
+  {
+    $markerArray['###TAB###'] = 'Record Browser';
+    $str_content              = $this->pObj->cObj->substituteMarkerArray($str_content, $markerArray);
+    return $str_content;
+    
+      /////////////////////////////////////
+      //
+      // RETURN record browser isn't enabled
+
+    if(!($this->pObj->conf['navigation.']['record_browser'] == 1))
+    {
+      if ($this->pObj->b_drs_templating)
+      {
+        $value = $this->pObj->conf['navigation.']['record_browser'];
+        t3lib_div::devlog('[INFO/TEMPLATING] navigation.record_browser is \'' . $value . '\' '.
+          'Record browser won\'t be handled (best performance).', $this->pObj->extKey, 0);
+      }
+      return false;
+    }
+      // RETURN record browser isn't enabled
+
+
+
+      /////////////////////////////////////
+      //
+      // RETURN session isn't enabled
+
+    if(!$this->pObj->conf['advanced.']['session_manager.']['session.']['enabled'])
+    {
+      if ($this->pObj->b_drs_templating)
+      {
+        $value = $this->pObj->conf['advanced.']['session_manager.']['session.']['enabled'];
+        t3lib_div::devlog('[INFO/TEMPLATING] advanced.session_manager.session.enabled is \'' . $value . '\' '.
+          'Record browser won\'t get its data from session (less performance).', $this->pObj->extKey, 0);
+      }
+      return false;
+    }
+      // RETURN session isn't enabled
+
+
+
+      /////////////////////////////////////
+      //
+      // RETURN rows are empty
+
+    if(empty($rows))
+    {
+        // Get the tx_browser_pi1 session array 
+      $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey('ses', $this->pObj->prefixId);
+        // Empty the array with the uids of all rows 
+      $arr_browser_session['uids_all_rows'] = array();
+        // Set the tx_browser_pi1 session array
+      $GLOBALS['TSFE']->fe_user->setKey('ses', $this->pObj->prefixId, $arr_browser_session);
+      if ($this->pObj->b_drs_templating)
+      {
+        t3lib_div::devlog('[INFO/TEMPLATING] Rows are empty. Session array [' . $this->pObj->prefixId . '][uids_all_rows] will be empty.',  $this->pObj->extKey, 0);
+      }
+      return false;
+    }
+      // RETURN rows are empty
+
+
+
+      /////////////////////////////////////
+      //
+      // Get table.field for uid of the local table
+
+    $key_for_uid = $this->pObj->arrLocalTable['uid'];
+    
+      // RETURN uid table.field isn't any key
+    $key = key($rows);
+    if(!isset($rows[$key][$key_for_uid]))
+    {
+      $arr_return['error']['status'] = true;
+      $arr_return['error']['header'] = '<h1 style="color:red">Error Record Browser</h1>';
+      $arr_return['error']['prompt'] = '<p style="color:red">Key is missing in $rows. Key is ' . $key_for_uid . '</p>';
+      $arr_return['error']['prompt'] = $arr_return['error']['prompt'] . '<p>' . __METHOD__ . ' (' . __LINE__ . ')</p>';
+      return $arr_return;
+    }
+      // RETURN uid table.field isn't any key
+      // Get table.field for uid of the local table
+
+
+
+      /////////////////////////////////////
+      //
+      // LOOP rows: set the array with uids
+
+    $arr_uid = array();
+    foreach((array) $rows as $row => $elements)
+    {
+      $arr_uid[] = $elements[$key_for_uid];
+    }
+    //echo '<pre>' . var_export($arr_uid, true) . '</pre>';
+      // LOOP rows: set the array with uids
+
+
+
+      /////////////////////////////////////
+      //
+      // Set the session array
+
+      // Get the tx_browser_pi1 session array 
+    $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey('ses', $this->pObj->prefixId);
+      // Overwrite the array with the uids of all rows 
+    $arr_browser_session['uids_all_rows'] = $arr_uid;
+      // Set the tx_browser_pi1 session array
+    if($GLOBALS['TSFE']->loginUser)
+    {
+      $str_data_space = 'user';
+    }
+    if(!$GLOBALS['TSFE']->loginUser)
+    {
+      $str_data_space = 'ses';
+    }
+    $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_browser_session);
+    if ($this->pObj->b_drs_templating)
+    {
+      t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . '][' . $this->pObj->prefixId . '][uids_all_rows] is set with ' .
+        '#' . count($arr_uid) . ' uids.',  $this->pObj->extKey, 0);
+    }
+      // Set the session array
+
+  }
+
+
+
+
+
+
+
+
+
+ /**
   * recordbrowser_set_session_data: Set session data for the record browser.
   *                                 * We need the record browser in the sngle view.
   *                                 * This method must be called, before the page browser 
@@ -1737,7 +1880,7 @@ class tx_browser_pi1_navi
   *                                 * Feature: #27041
   *
   * @param  array   $rows: Array with all available rows of the list view in order of the list view
- * @return  array   $arr_return: false in case of success, otherwise array with an error message
+  * @return  array   $arr_return: false in case of success, otherwise array with an error message
   * 
   * @version 3.7.0
   */
