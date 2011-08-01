@@ -914,6 +914,7 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // Replace left over markers
 
+      // 110801, dwildt, #28657
     $str_template_completed = $this->objMarker->replace_left_over($str_template_completed);
       // Replace left over markers
 

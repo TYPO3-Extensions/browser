@@ -749,6 +749,7 @@
 
   /**
  * replace_left_over(): Replace all markers, which are left over
+ *                      Feature: #28657
  *
  * @param array   $str_content: current content
  * @return  string  $str_content: rendered content
@@ -757,16 +758,16 @@
  */
   function replace_left_over($str_content)
   {
-      //////////////////////////////////////////////////////////////////////
-      //
-      // Replace the left over markers
 
+      // Get configuration from the flexform
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
     $handle_marker  = $this->pObj->pi_getFFvalue($arr_piFlexform, 'handle_marker', 'development', 'lDEF', 'vDEF');
 
+      // Switch configuration
     switch($handle_marker)
     {
       case('remove_empty_markers'):
+          // DRS - Development Reporting System
         if ($this->pObj->b_drs_templating)
         {
           preg_match_all
@@ -779,6 +780,8 @@
           $str_markers = implode(', ', $arr_markers[0]);
           t3lib_div::devLog('[INFO/TEMPLATE] Markers will be removed: ' . $str_markers, $this->pObj->extKey, 0);
         }
+          // DRS - Development Reporting System
+          // Replace the left over markers
         $str_content = preg_replace('|###.*?###|i', '', $str_content);
         break;
       case('none'):
@@ -800,10 +803,16 @@
         echo $prompt;
         exit;
     }
-      // Replace the left over markers
+      // Switch configuration
 
     return $str_content;
   }
+
+
+
+
+
+
 
 
 

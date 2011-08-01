@@ -1,10 +1,20 @@
 3.7.0
-  110729
+  110801, 110729
   Update
   * #28562: jQuery library 1.6 -> 1.6.2
-  Improvement
+            Integration of UI (User Interface) 1.8.14
+            * blitzer
+            * smoothness
+            * start
+  Improvements
   * #27041: Record browser for the single view / Prev-next Switcher in the single view
-  * #28562: browser got the jQuery UI blitzer, smoothness and start
+  * #28657: Development feature: Make empty markers replaceable
+  * #00000: Changes in TypoScript
+            * a-z_Browser   moved to navigation.a-z_Browser
+            * modeSelector  moved to navigation.modeSelector
+            * pageBrowser   moved to navigation.pageBrowser
+            * plugin        moved to flexform
+  
   
 3.6.6
   110726
