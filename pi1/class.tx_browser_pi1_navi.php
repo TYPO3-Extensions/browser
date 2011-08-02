@@ -2006,59 +2006,63 @@ class tx_browser_pi1_navi
     
     if($pos_of_curr_row >= ($pos_of_first_row + 2))
     {
-      $uid['first']['uid']  = $this->pObj->uids_of_all_rows[0];
-      $uid['first']['pos']  = $pos_of_all_rows[$uid['first']['uid']];
+      $uid['first']['uid'] = $this->pObj->uids_of_all_rows[0];
+      $uid['first']['pos'] = $pos_of_all_rows[$uid['first']['uid']];
+      $uid['href'][]       = '<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['first']['uid'] . '">first</a>';
     }
     if($pos_of_curr_row < ($pos_of_first_row + 2))
     {
-      $uid['first']['uid']  = 0;
-      $uid['first']['pos']  = 0;
+      $uid['first']['uid'] = 0;
+      $uid['first']['pos'] = 0;
+      $uid['href'][]       = 'first';
     }
 
     if($pos_of_curr_row >= ($pos_of_first_row + 1))
     {
-      $uid['prev']['uid']  = $this->pObj->uids_of_all_rows[$pos_of_curr_row - 1];
-      $uid['prev']['pos']  = $pos_of_all_rows[$uid['prev']['uid']];
+      $uid['prev']['uid'] = $this->pObj->uids_of_all_rows[$pos_of_curr_row - 1];
+      $uid['prev']['pos'] = $pos_of_all_rows[$uid['prev']['uid']];
+      $uid['href'][]      = '<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['prev']['uid'] . '">first</a>';
     }
     if($pos_of_curr_row < ($pos_of_first_row + 1))
     {
-      $uid['prev']['uid']  = 0;
-      $uid['prev']['pos']  = 0;
+      $uid['prev']['uid'] = 0;
+      $uid['prev']['pos'] = 0;
+      $uid['href'][]      = 'prev';
     }
 
     $uid['curr']['uid']   = $singlePid;
     $uid['curr']['pos']   = $pos_of_all_rows[$singlePid];
+    $uid['href'][]        = 'current (#' . $singlePid . ')';
 
     if($pos_of_curr_row <= ($pos_of_last_row - 1))
     {
-      $uid['next']['uid']  = $this->pObj->uids_of_all_rows[$pos_of_curr_row + 1];
-      $uid['next']['pos']  = $pos_of_all_rows[$uid['next']['uid']];
+      $uid['next']['uid'] = $this->pObj->uids_of_all_rows[$pos_of_curr_row + 1];
+      $uid['next']['pos'] = $pos_of_all_rows[$uid['next']['uid']];
+      $uid['href'][]      = '<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['next']['uid'] . '">first</a>';
     }
     if($pos_of_curr_row > ($pos_of_last_row - 1))
     {
-      $uid['next']['uid']  = 0;
-      $uid['next']['pos']  = 0;
+      $uid['next']['uid'] = 0;
+      $uid['next']['pos'] = 0;
+      $uid['href'][]      = 'next';
     }
 
     if($pos_of_curr_row <= ($pos_of_last_row - 2))
     {
-      $uid['last']['uid']  = $this->pObj->uids_of_all_rows[count($this->pObj->uids_of_all_rows) - 1];
-      $uid['last']['pos']  = $pos_of_all_rows[$uid['last']['uid']];
+      $uid['last']['uid'] = $this->pObj->uids_of_all_rows[count($this->pObj->uids_of_all_rows) - 1];
+      $uid['last']['pos'] = $pos_of_all_rows[$uid['last']['uid']];
+      $uid['href'][]      = '<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['last']['uid'] . '">first</a>';
     }
     if($pos_of_curr_row > ($pos_of_last_row - 2))
     {
-      $uid['last']['uid']  = 0;
-      $uid['last']['pos']  = 0;
+      $uid['last']['uid'] = 0;
+      $uid['last']['pos'] = 0;
+      $uid['href'][]      = 'last';
     }
     
     $record_browser = '<pre>' . var_export($uid, true) . '</pre>';
 
-    $record_browser = '
-<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['first']['uid'] . '">first</a>
-<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['prev']['uid'] . '">prev</a>
-<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['next']['uid'] . '">next</a>
-<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['last']['uid'] . '">last</a>
-';
+    $record_browser = implode(' | ', $uid['href']);
 
 
     return $record_browser;
