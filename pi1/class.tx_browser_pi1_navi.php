@@ -2053,6 +2053,12 @@ class tx_browser_pi1_navi
     
     $record_browser = '<pre>' . var_export($uid, true) . '</pre>';
 
+    $record_browser = '
+<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['first']['uid'] . '">first</a>
+<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['prev']['uid'] . '">prev</a>
+<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['next']['uid'] . '">next</a>
+<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['last']['uid'] . '">last</a>
+';
 
 
     return $record_browser;
