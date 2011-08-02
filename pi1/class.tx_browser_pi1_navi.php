@@ -1856,7 +1856,7 @@ class tx_browser_pi1_navi
 
 //echo '<pre>' . var_export($uids_of_all_rows, true) . '</pre>';
     $singlePid    = (int) $this->pObj->piVars['showUid'];
-echo '<pre>' . $singlePid . '</pre>';
+//echo '<pre>' . $singlePid . '</pre>';
     $pos_of_all_rows = array_flip($uids_of_all_rows);
     
     $pos_of_first_row = 0;
@@ -1899,6 +1899,7 @@ echo '<pre>' . $singlePid . '</pre>';
       $uid['next']['pos']  = 0;
     }
 
+echo '<pre>$pos_of_last_row ' . $pos_of_last_row . '</pre>';
     if($pos_of_curr_row <= ($pos_of_last_row - 2))
     {
       $uid['last']['uid']  = $uids_of_all_rows[count($uids_of_all_rows) - 1];
@@ -1912,7 +1913,7 @@ echo '<pre>' . $singlePid . '</pre>';
 
     
     $record_browser = implode('|', $uid);
-    $markerArray['###RECORD_BROWSER###'] = var_export($uid, true);
+    $markerArray['###RECORD_BROWSER###'] = '<pre>' . var_export($uid, true) . '</pre>';
     $str_content = $this->pObj->cObj->substituteMarkerArray($str_content, $markerArray);
 
 
