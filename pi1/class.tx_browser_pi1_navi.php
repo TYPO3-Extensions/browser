@@ -1861,7 +1861,7 @@ class tx_browser_pi1_navi
     
     $pos_of_first_row = 0;
     $pos_of_curr_row  = $pos_of_all_rows[$singlePid];
-    $pos_of_last_row  = $pos_of_all_rows[count($pos_of_all_rows) -1];
+    $pos_of_last_row  = key($uids_of_all_rows[count($uids_of_all_rows) -1]);
     
     if($pos_of_curr_row >= ($pos_of_first_row + 2))
     {
