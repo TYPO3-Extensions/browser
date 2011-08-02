@@ -1856,11 +1856,14 @@ class tx_browser_pi1_navi
 
 //:TODO: If no array -> call list view first time
 //echo '<pre>' . var_export($uids_of_all_rows, true) . '</pre>';
-echo '<pre>' . $this->pObj->singlePid . '</pre>';
+    $key          = key($curr_rows);
+    $key_for_uid  = $this->pObj->arrLocalTable['uid'];
+    $singlePid    = $curr_rows[$key][$key_for_uid];
+echo '<pre>' . $singlePid . '</pre>';
     $pos_of_all_rows = array_flip($uids_of_all_rows);
     
     $pos_of_first_row = 0;
-    $pos_of_curr_row  = $pos_of_all_rows[$this->pObj->singlePid];
+    $pos_of_curr_row  = $pos_of_all_rows[$singlePid];
     $pos_of_last_row  = $pos_of_all_rows[count($pos_of_all_rows) -1];
     
     if($pos_of_curr_row >= ($pos_of_first_row + 2))
@@ -1885,8 +1888,8 @@ echo '<pre>' . $this->pObj->singlePid . '</pre>';
       $uid['prev']['pos']  = 0;
     }
 
-    $uid['curr']['uid']   = $this->pObj->singlePid;
-    $uid['curr']['pos']   = $pos_of_all_rows[$this->pObj->singlePid];
+    $uid['curr']['uid']   = $singlePid;
+    $uid['curr']['pos']   = $pos_of_all_rows[$singlePid];
 
     if($pos_of_curr_row <= ($pos_of_last_row - 1))
     {

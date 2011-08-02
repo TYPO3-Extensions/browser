@@ -132,7 +132,7 @@ class tx_browser_pi1 extends tslib_pibase {
   var $pidList;
   // [String/CSV] List with pids of the records of the local table
   var $singlePid;
-  // [Integer] Uid of the current singlePid
+  // [Integer] Uid of the current singlePid. Is set in list view only.
   var $csvSelect;
   // [String/CSV] List of fields for the SQL select query
   var $csvSelectWoFunc;
