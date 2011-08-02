@@ -98,7 +98,7 @@ class tx_browser_pi1_navi
   * @param  object    The parent object
   * @return void
   */
-  function __construct($parentObj)
+  public function __construct($parentObj)
   {
     // Set the Parent Object
     $this->pObj = $parentObj;
@@ -134,7 +134,7 @@ class tx_browser_pi1_navi
  * @param array   Array with elements rows and template
  * @return  array   Array with the syntax array[table][] = field
  */
-  function azBrowser($arr_data)
+  public function azBrowser($arr_data)
   {
     $template       = $arr_data['template'];
     $rows           = $arr_data['rows'];
@@ -352,7 +352,7 @@ class tx_browser_pi1_navi
   * @param  array   Array with elements azTabArray, tabIds, template
   * @return array   Array data with the element template
   */
-  function azTemplate($arr_data)
+  public function azTemplate($arr_data)
   {
     $lArrTabs = $arr_data['azTabArray'];
     $arr_tsId = $arr_data['tabIds'];
@@ -628,7 +628,7 @@ class tx_browser_pi1_navi
   * @return array   Array data with elements azTabArray, tabIds and rows
   * @version        3.4.3
   */
-  function azTabArray($arr_data)
+  public function azTabArray($arr_data)
   {
     $azRows                           = $arr_data['azRows'];
     $rows                             = $arr_data['rows'];
@@ -1068,7 +1068,7 @@ class tx_browser_pi1_navi
   * @param  array   Array with the current rows
   * @return array   Array data with the element azRows
   */
-  function azRowsInitial($arr_data)
+  public function azRowsInitial($arr_data)
   {
     $arr_return['error']['status']  = false;
     $arr_return['data']['azRows']   = false;
@@ -1336,7 +1336,7 @@ class tx_browser_pi1_navi
   * @param  array   Array with elements template and display
   * @return string    template
   */
-  function tmplPageBrowser($arr_data)
+  public function tmplPageBrowser($arr_data)
   {
 
     $int_currTab    = $arr_data['tabIds']['active'];
@@ -1575,7 +1575,7 @@ class tx_browser_pi1_navi
  *
  * @return  array   Array with the modeSelector names
  */
-  function prepaireModeSelector()
+  public function prepaireModeSelector()
   {
 
     $arr_return = array();
@@ -1643,7 +1643,7 @@ class tx_browser_pi1_navi
   * @param  array   Array with the template and the mode selector tabs
   * @return string    template
   */
-  function tmplModeSelector($arr_data)
+  public function tmplModeSelector($arr_data)
   {
 
     $template   = $arr_data['template'];
@@ -1733,33 +1733,14 @@ class tx_browser_pi1_navi
   *                     * Feature: #27041
   *
   * @param  string   $str_content: current content
-  * @return  string   $str_content: rendered content
+  * @return  string   $str_content: content with rendered marker ###RECORD_BROWSER###
   * 
   * @version 3.7.0
+  * @since 3.7.0
   */
-  function recordbrowser_get($str_content)
+  public function recordbrowser_get($str_content)
   {
     $markerArray['###RECORD_BROWSER###'] = null;
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform)
-    {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] Before ' . __METHOD__ . ': '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
 
 
 
@@ -1803,24 +1784,20 @@ class tx_browser_pi1_navi
 
       //////////////////////////////////////////////////////////////////////////
       //
-      // No session: call the list view again
+      // No session: get data from the list view. Call it!
 
     if(!$bool_session)
     {
-      if ($this->pObj->b_drs_templating)
+      if ($this->pObj->b_drs_perform)
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] No session: list view is called again, because we need the uid of all rows. '.
-          '(less performance).', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[WARN/PERFORMANCE] list view is called. Uids of all rows are needed. '.
+          'Be aware of less performance!', $this->pObj->extKey, 2);
+        t3lib_div::devlog('[HELP/PERFORMANCE] Enable session for better performance!', $this->pObj->extKey, 1);
       }
-      $curr_rows        = $this->pObj->rows;
-      $curr_view        = $this->pObj->view;
-      $this->pObj->view = 'list';
-      $dummy            = $this->pObj->objViews->listView($this->pObj->str_template_raw);
-      $this->pObj->rows = $curr_rows;
-      $this->pObj->view = $curr_view;
-      $uids_of_all_rows = $this->pObj->uids_of_all_rows;
+        // listView will set $this->pObj->uids_of_all_rows
+      $this->recordbrowser_callListView();
     }
-      // No session: call the list view again
+      // No session: get data from the list view. Call it!
 
 
 
@@ -1830,12 +1807,15 @@ class tx_browser_pi1_navi
 
     if($bool_session)
     {
+        // DRS - Development Reporting System
       if ($this->pObj->b_drs_templating)
       {
         t3lib_div::devlog('[INFO/TEMPLATING] Session: uid of all rows are delivered by the session data '.
           '(best performance).', $this->pObj->extKey, 0);
       }
-        // Get the data space
+        // DRS - Development Reporting System
+
+        // Set the data space
       if($GLOBALS['TSFE']->loginUser)
       {
         $str_data_space = 'user';
@@ -1844,77 +1824,59 @@ class tx_browser_pi1_navi
       {
         $str_data_space = 'ses';
       }
-        // Get the data space
+        // Set the data space
 
-      $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
-//:TODO: If no array -> call list view first time
-      $uids_of_all_rows     = $arr_browser_session['uids_of_all_rows'];
+      $arr_browser_session = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
     }
       // Session: get the tx_browser_pi1 session array 
 
 
 
-//echo '<pre>' . var_export($uids_of_all_rows, true) . '</pre>';
-    $singlePid    = (int) $this->pObj->piVars['showUid'];
-//echo '<pre>' . $singlePid . '</pre>';
-    $pos_of_all_rows = array_flip($uids_of_all_rows);
-    
-    $pos_of_first_row = 0;
-    $pos_of_curr_row  = $pos_of_all_rows[$singlePid];
-    $pos_of_last_row  = $pos_of_all_rows[end($uids_of_all_rows)];
-    
-    if($pos_of_curr_row >= ($pos_of_first_row + 2))
-    {
-      $uid['first']['uid']  = $uids_of_all_rows[0];
-      $uid['first']['pos']  = $pos_of_all_rows[$uid['first']['uid']];
-    }
-    if($pos_of_curr_row < ($pos_of_first_row + 2))
-    {
-      $uid['first']['uid']  = 0;
-      $uid['first']['pos']  = 0;
-    }
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Session: tx_browser_pi1['uids_of_all_rows'] isn't set
 
-    if($pos_of_curr_row >= ($pos_of_first_row + 1))
+    if($bool_session && !isset($arr_browser_session['uids_of_all_rows']))
     {
-      $uid['prev']['uid']  = $uids_of_all_rows[$pos_of_curr_row - 1];
-      $uid['prev']['pos']  = $pos_of_all_rows[$uid['prev']['uid']];
+        // listView will set $this->pObj->uids_of_all_rows
+      $this->recordbrowser_callListView();
+        // Set the session array uids_of_all_rows
+      $arr_browser_session['uids_of_all_rows'] = $this->pObj->uids_of_all_rows;
+        // Write session data tx_browser_pi1
+      $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_browser_session);
+        // DRS - Development Reporting System
+      if ($this->pObj->b_drs_templating)
+      {
+        t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . '][' . $this->pObj->prefixId . '][uids_of_all_rows] is set with ' .
+          '#' . count($this->pObj->uids_of_all_rows) . ' uids.',  $this->pObj->extKey, 0);
+      }
+        // Get uids of all records
+      $this->pObj->uids_of_all_rows = $arr_browser_session['uids_of_all_rows'];
     }
-    if($pos_of_curr_row < ($pos_of_first_row + 1))
-    {
-      $uid['prev']['uid']  = 0;
-      $uid['prev']['pos']  = 0;
-    }
+      // Session: tx_browser_pi1['uids_of_all_rows'] isn't set
 
-    $uid['curr']['uid']   = $singlePid;
-    $uid['curr']['pos']   = $pos_of_all_rows[$singlePid];
 
-    if($pos_of_curr_row <= ($pos_of_last_row - 1))
-    {
-      $uid['next']['uid']  = $uids_of_all_rows[$pos_of_curr_row + 1];
-      $uid['next']['pos']  = $pos_of_all_rows[$uid['next']['uid']];
-    }
-    if($pos_of_curr_row > ($pos_of_last_row - 1))
-    {
-      $uid['next']['uid']  = 0;
-      $uid['next']['pos']  = 0;
-    }
 
-echo '<pre>$pos_of_last_row ' . $pos_of_last_row . '</pre>';
-    if($pos_of_curr_row <= ($pos_of_last_row - 2))
-    {
-      $uid['last']['uid']  = $uids_of_all_rows[count($uids_of_all_rows) - 1];
-      $uid['last']['pos']  = $pos_of_all_rows[$uid['last']['uid']];
-    }
-    if($pos_of_curr_row > ($pos_of_last_row - 2))
-    {
-      $uid['last']['uid']  = 0;
-      $uid['last']['pos']  = 0;
-    }
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Session: set $this->pObj->uids_of_all_rows
 
-    
-    $record_browser = implode('|', $uid);
-    $markerArray['###RECORD_BROWSER###'] = '<pre>' . var_export($uid, true) . '</pre>';
-    $str_content = $this->pObj->cObj->substituteMarkerArray($str_content, $markerArray);
+    if($bool_session)
+    {
+        // Get uids of all records
+      $this->pObj->uids_of_all_rows = $arr_browser_session['uids_of_all_rows'];
+    }
+      // Session: set $this->pObj->uids_of_all_rows
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Render the record browser
+
+    $markerArray['###RECORD_BROWSER###']  = $this->recordbrowser_rendering();
+    $str_content                          = $this->pObj->cObj->substituteMarkerArray($str_content, $markerArray);
+      // Render the record browser
 
 
 
@@ -1938,7 +1900,162 @@ echo '<pre>$pos_of_last_row ' . $pos_of_last_row . '</pre>';
 
 
 
-      return $str_content;
+    return $str_content;
+  }
+
+
+
+
+
+
+
+
+
+ /**
+  * recordbrowser_callListView: Call the listView. It is needed for the record browser in the single view,
+  *                             if there isn't any information about all available records.
+  *                             The method allocates the global array $this->pObj->uids_of_all_rows and
+  *                             returns it.
+  *                             The method will be called in two cases:
+  *                             * Session management is disabled
+  *                             * Single view is called without calling the list view before
+  *
+  * @return  void
+  * 
+  * @version  3.7.0
+  * @since    3.7.0
+  */
+  private function recordbrowser_callListView()
+  {
+      //////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
+
+    if ($this->pObj->b_drs_perform)
+    {
+      if($this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->getDifferenceToStarttime();
+      }
+      if(!$this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->mtime();
+      }
+      t3lib_div::devLog('[INFO/PERFORMANCE] Before ' . __METHOD__ . ': '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+    }
+      // DRS - Performance
+
+
+
+      // Store current values
+    $curr_rows        = $this->pObj->rows;
+    $curr_view        = $this->pObj->view;
+      // Set view to list
+    $this->pObj->view = 'list';
+      // listView will set $this->pObj->uids_of_all_rows
+    $dummy            = $this->pObj->objViews->listView($this->pObj->str_template_raw);
+      // Restore current values
+    $this->pObj->rows = $curr_rows;
+    $this->pObj->view = $curr_view;
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
+
+    if ($this->pObj->b_drs_perform)
+    {
+      if($this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->getDifferenceToStarttime();
+      }
+      if(!$this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->mtime();
+      }
+      t3lib_div::devLog('[INFO/PERFORMANCE] After ' . __METHOD__ . ': '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+    }
+    // DRS - Performance
+  }
+
+
+
+
+
+
+
+
+
+ /**
+  * recordbrowser_rendering: Render the record browser (HTML code)
+  *
+  * @return  string   $record_browser: HTML code
+  * 
+  * @version  3.7.0
+  * @since    3.7.0
+  */
+  private function recordbrowser_rendering()
+  {
+    $singlePid    = (int) $this->pObj->piVars['showUid'];
+    $pos_of_all_rows = array_flip($this->pObj->uids_of_all_rows);
+    
+    $pos_of_first_row = 0;
+    $pos_of_curr_row  = $pos_of_all_rows[$singlePid];
+    $pos_of_last_row  = $pos_of_all_rows[end($this->pObj->uids_of_all_rows)];
+    
+    if($pos_of_curr_row >= ($pos_of_first_row + 2))
+    {
+      $uid['first']['uid']  = $this->pObj->uids_of_all_rows[0];
+      $uid['first']['pos']  = $pos_of_all_rows[$uid['first']['uid']];
+    }
+    if($pos_of_curr_row < ($pos_of_first_row + 2))
+    {
+      $uid['first']['uid']  = 0;
+      $uid['first']['pos']  = 0;
+    }
+
+    if($pos_of_curr_row >= ($pos_of_first_row + 1))
+    {
+      $uid['prev']['uid']  = $this->pObj->uids_of_all_rows[$pos_of_curr_row - 1];
+      $uid['prev']['pos']  = $pos_of_all_rows[$uid['prev']['uid']];
+    }
+    if($pos_of_curr_row < ($pos_of_first_row + 1))
+    {
+      $uid['prev']['uid']  = 0;
+      $uid['prev']['pos']  = 0;
+    }
+
+    $uid['curr']['uid']   = $singlePid;
+    $uid['curr']['pos']   = $pos_of_all_rows[$singlePid];
+
+    if($pos_of_curr_row <= ($pos_of_last_row - 1))
+    {
+      $uid['next']['uid']  = $this->pObj->uids_of_all_rows[$pos_of_curr_row + 1];
+      $uid['next']['pos']  = $pos_of_all_rows[$uid['next']['uid']];
+    }
+    if($pos_of_curr_row > ($pos_of_last_row - 1))
+    {
+      $uid['next']['uid']  = 0;
+      $uid['next']['pos']  = 0;
+    }
+
+    if($pos_of_curr_row <= ($pos_of_last_row - 2))
+    {
+      $uid['last']['uid']  = $this->pObj->uids_of_all_rows[count($this->pObj->uids_of_all_rows) - 1];
+      $uid['last']['pos']  = $pos_of_all_rows[$uid['last']['uid']];
+    }
+    if($pos_of_curr_row > ($pos_of_last_row - 2))
+    {
+      $uid['last']['uid']  = 0;
+      $uid['last']['pos']  = 0;
+    }
+    
+    $record_browser = '<pre>' . var_export($uid, true) . '</pre>';
+
+
+
+    return $record_browser;
   }
 
 
@@ -1960,8 +2077,9 @@ echo '<pre>$pos_of_last_row ' . $pos_of_last_row . '</pre>';
   * @return  array   $arr_return: false in case of success, otherwise array with an error message
   * 
   * @version 3.7.0
+  * @since 3.7.0
   */
-  function recordbrowser_set_session_data($rows)
+  public function recordbrowser_set_session_data($rows)
   {
     $this->pObj->uids_of_all_rows = array();
 
