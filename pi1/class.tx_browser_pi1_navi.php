@@ -1856,9 +1856,7 @@ class tx_browser_pi1_navi
 
 //:TODO: If no array -> call list view first time
 //echo '<pre>' . var_export($uids_of_all_rows, true) . '</pre>';
-    $key          = key($curr_rows);
-    $key_for_uid  = $this->pObj->arrLocalTable['uid'];
-    $singlePid    = $curr_rows[$key][$key_for_uid];
+    $singlePid    = (int) $this->pObj->piVars['showUid'];
 echo '<pre>' . $singlePid . '</pre>';
     $pos_of_all_rows = array_flip($uids_of_all_rows);
     
