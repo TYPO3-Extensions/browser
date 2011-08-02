@@ -460,7 +460,6 @@ class tx_browser_pi1_navi
       {
         $liClass = ' class="'.$tabClass.' selected"';
       }
-//:TODO: 101004
       if (!$lArrTabs[$key_tab]['active'])
       {
         $liClass = ' class="'.$tabClass.'"';
@@ -1848,13 +1847,13 @@ class tx_browser_pi1_navi
         // Get the data space
 
       $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
-      $uids_of_all_rows        = $arr_browser_session['uids_of_all_rows'];
+//:TODO: If no array -> call list view first time
+      $uids_of_all_rows     = $arr_browser_session['uids_of_all_rows'];
     }
       // Session: get the tx_browser_pi1 session array 
 
 
 
-//:TODO: If no array -> call list view first time
 //echo '<pre>' . var_export($uids_of_all_rows, true) . '</pre>';
     $singlePid    = (int) $this->pObj->piVars['showUid'];
 echo '<pre>' . $singlePid . '</pre>';
@@ -1867,7 +1866,7 @@ echo '<pre>' . $singlePid . '</pre>';
     if($pos_of_curr_row >= ($pos_of_first_row + 2))
     {
       $uid['first']['uid']  = $uids_of_all_rows[0];
-      $uid['first']['pos']  = $pos_of_all_rows[0];
+      $uid['first']['pos']  = $pos_of_all_rows[$uid['first']['uid']];
     }
     if($pos_of_curr_row < ($pos_of_first_row + 2))
     {
@@ -1878,7 +1877,7 @@ echo '<pre>' . $singlePid . '</pre>';
     if($pos_of_curr_row >= ($pos_of_first_row + 1))
     {
       $uid['prev']['uid']  = $uids_of_all_rows[$pos_of_curr_row - 1];
-      $uid['prev']['pos']  = $pos_of_all_rows[$pos_of_curr_row - 1];
+      $uid['prev']['pos']  = $pos_of_all_rows[$uid['prev']['uid']];
     }
     if($pos_of_curr_row < ($pos_of_first_row + 1))
     {
@@ -1891,8 +1890,8 @@ echo '<pre>' . $singlePid . '</pre>';
 
     if($pos_of_curr_row <= ($pos_of_last_row - 1))
     {
-      $uid['next']['uid']  = $uids_of_all_rows[$pos_of_curr_row - 1];
-      $uid['next']['pos']  = $pos_of_all_rows[$pos_of_curr_row - 1];
+      $uid['next']['uid']  = $uids_of_all_rows[$pos_of_curr_row + 1];
+      $uid['next']['pos']  = $pos_of_all_rows[$uid['next']['uid']];
     }
     if($pos_of_curr_row > ($pos_of_last_row - 1))
     {
@@ -1902,8 +1901,8 @@ echo '<pre>' . $singlePid . '</pre>';
 
     if($pos_of_curr_row <= ($pos_of_last_row - 2))
     {
-      $uid['last']['uid']  = $uids_of_all_rows[count($uids_of_all_rows) -1];;
-      $uid['last']['pos']  = $pos_of_all_rows[count($pos_of_all_rows) -1];
+      $uid['last']['uid']  = $uids_of_all_rows[count($uids_of_all_rows) - 1];
+      $uid['last']['pos']  = $pos_of_all_rows[$uid['last']['uid']];
     }
     if($pos_of_curr_row > ($pos_of_last_row - 2))
     {
