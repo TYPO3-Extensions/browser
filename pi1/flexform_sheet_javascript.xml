@@ -83,8 +83,8 @@
                 <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_ui_dark.png</numIndex>
               </numIndex>
               <numIndex index="5" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.dot_luve</numIndex>
-                <numIndex index="1">dot_luve</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.dot_luv</numIndex>
+                <numIndex index="1">dot_luv</numIndex>
                 <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_dot_luv.png</numIndex>
               </numIndex>
               <numIndex index="6" type="array">

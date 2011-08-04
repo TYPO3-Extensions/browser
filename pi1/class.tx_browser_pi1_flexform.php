@@ -1415,7 +1415,7 @@ class tx_browser_pi1_flexform
       case('cupertino'): 
       case('dark_hive'): 
       case('darkness'): 
-      case('dot_luve'): 
+      case('dot_luv'): 
       case('eggplant'): 
       case('excite_bike'): 
       case('flick'): 
