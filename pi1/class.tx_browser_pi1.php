@@ -838,6 +838,11 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
+      // 110804, dwildt
+    $this->objJss->addCssFiles();
+
+
+
       //////////////////////////////////////////////////////////////////////
       //
       // AJAX
@@ -852,35 +857,35 @@ class tx_browser_pi1 extends tslib_pibase {
       }
     }
 
+    $bool_load_jQuery = false;
     if ($this->objFlexform->bool_ajax_enabled)
     {
       if ($this->b_drs_javascript)
       {
         t3lib_div::devlog('[INFO/JSS] AJAX is enabled.', $this->extKey, 0);
+        t3lib_div::devlog('[INFO/JSS] jQuery will be loaded.', $this->extKey, 0);
       }
+      $bool_load_jQuery = true;
+    }  
+    if ($this->objFlexform->bool_jquery_ui)
+    {
+      if ($this->b_drs_javascript)
+      {
+        t3lib_div::devlog('[INFO/JSS] jQuery UI should included.', $this->extKey, 0);
+        t3lib_div::devlog('[INFO/JSS] jQuery will be loaded.', $this->extKey, 0);
+      }
+      $bool_load_jQuery = true;
+    }  
 
+    if($bool_load_jQuery)
+    {
         // Adding jQuery
       $bool_success_jQuery = $this->objJss->load_jQuery();
-
-        // Adding Browser AJAX files and AJAX div
       if($bool_success_jQuery)
       {
-          // name has to correspondend with similar code in tx_browser_pi1_template.php
-        $name               = 'ajaxLL';
-        $path               = $this->conf['javascript.']['ajax.']['fileLL'];
-        $path_tsConf        = 'javascript.ajax.fileLL';
-        $bool_success_ajax  = $this->objJss->addJssFile($path, $name, $path_tsConf);
-          // name has to correspondend with similar code in tx_browser_pi1_template.php
-        $name               = 'ajax';
-        $path               = $this->conf['javascript.']['ajax.']['file'];
-        $path_tsConf        = 'javascript.ajax.file';
-        $bool_success_ajax  = $this->objJss->addJssFile($path, $name, $path_tsConf);
-
         // Wrap the template with a div with AJAX identifiers
         $str_template_completed = $this->objJss->wrap_ajax_div($str_template_completed);
       }
-        // Adding Browser AJAX files and AJAX div
-
       if(!$bool_success_jQuery)
       {
         if ($this->b_drs_warn)
@@ -891,6 +896,11 @@ class tx_browser_pi1 extends tslib_pibase {
     }
       // #9659, 101010 fsander
       // AJAX
+
+
+
+      // 110804, dwildt
+    $this->objJss->addJssFiles();
 
 
 

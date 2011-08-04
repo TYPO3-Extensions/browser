@@ -1802,32 +1802,69 @@ plugin.tx_browser_pi1 {
     jquery {
         // [STRING] Path to jQuery library
       library = EXT:browser/res/js/jquery/jquery-1.6.2.min.js
+      library {
+          // [Boolean] 0 (default): link to the script file, 1: include the script inline
+        inline = 0
+      }
       ui {
         blitzer {
             // [STRING] Path to the library of the user interface (ui). By default: all features!
           library = EXT:browser/res/js/jquery/jquery-ui-1.8.14.custom.min.js
+          library {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
             // [STRING] Path to the CSS of the user interface (ui)
           css     = EXT:browser/res/js/jquery/blitzer/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
         }
         smoothness {
             // [STRING] Path to the library of the user interface (ui). By default: all features!
           library = EXT:browser/res/js/jquery/jquery-ui-1.8.14.custom.min.js
+          library {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
             // [STRING] Path to the CSS of the user interface (ui)
           css     = EXT:browser/res/js/jquery/smoothness/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
         }
         start {
             // [STRING] Path to the library of the user interface (ui). By default: all features!
           library = EXT:browser/res/js/jquery/jquery-ui-1.8.14.custom.min.js
+          library {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
             // [STRING] Path to the CSS of the user interface (ui)
           css     = EXT:browser/res/js/jquery/start/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
         }
+        typoscript < .smoothness
       }
     }
     ajax {
         // [STRING] Path to Javascript file with ajax methods
       file    = EXT:browser/res/js/tx_browser_pi1_ajax.js
+      file {
+          // [Boolean] 0 (default): link to the script file, 1: include the script inline
+        inline = 0
+      }
         // [STRING] Path to Javascript file with ajax language values
       fileLL  = EXT:browser/res/js/tx_browser_pi1_ajax_languages.js
+      fileLL {
+          // [Boolean] 0 (default): link to the script file, 1: include the script inline
+        inline = 0
+      }
       html {
         marker {
             // [STRING / UPPERCASE] Name of the class in CHECKBOX, RADIOBUTTONS, SELECTBOX.

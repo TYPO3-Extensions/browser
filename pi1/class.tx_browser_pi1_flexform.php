@@ -64,6 +64,7 @@
   * @package    TYPO3
   * @subpackage    browser
   * @version 3.7.0
+  * @since  2.0.0
   */
 class tx_browser_pi1_flexform
 {
@@ -129,6 +130,9 @@ class tx_browser_pi1_flexform
     // #9659, 101013 fsander
   var $str_browser_libraries              = 'typoscript';
   var $str_jquery_library                 = 'typoscript';
+    // #28562, 110804, dwildt
+  var $bool_jquery_ui                     = false;
+    // [boolean] jQuery UI enabled
 
   //[socialmedia]
   var $str_socialmedia_bookmarks_enabled                = false;
@@ -1331,8 +1335,8 @@ class tx_browser_pi1_flexform
  * The method removes "unavailable" views from the TypoScript.
  *
  * @return  void
- * @version 3.5.0
- * @since 3.6.5
+ * @version 3.7.0
+ * @since 3.5.0
  */
   function sheet_javascript()
   {
@@ -1387,6 +1391,82 @@ class tx_browser_pi1_flexform
     }
       // #13429, dwildt, 110519
       // Field jquery_library
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field jquery_ui
+      // #28562, dwildt, 110804
+
+    $jquery_ui = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_ui', 'javascript', 'lDEF', 'vDEF');
+
+    if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
+    {
+      t3lib_div::devlog('[INFO/FLEXFORM+JSS] '.
+        'jquery_ui: \'' . $jquery_ui . '\'',
+        $this->pObj->extKey, 0);
+    }
+
+    switch ($jquery_ui)
+    {
+      case('blitzer'):
+      case('smoothness'):
+      case('start'):
+        $ui = $this->pObj->conf['javascript.']['jquery.']['ui.']['start.'];
+        $this->pObj->conf['javascript.']['jquery.']['ui.']['typoscript.'] = $ui;
+        $this->bool_jquery_ui = true;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] javascript.jquery.ui.typoscript < .' . $jquery_ui, $this->pObj->extKey, 0);
+        }
+        break;
+      case('z_configured'):
+        $library  = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_ui.z_configured.library', 'javascript', 'lDEF', 'vDEF');
+        $css      = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_ui.z_configured.css',     'javascript', 'lDEF', 'vDEF');
+        $this->pObj->conf['javascript.']['jquery.']['ui.']['typoscript.']['library']  = $library;
+        $this->pObj->conf['javascript.']['jquery.']['ui.']['typoscript.']['css']      = $css;
+        $this->bool_jquery_ui = true;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] javascript.jquery.ui.typoscript.library is set to '  . $library, $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] javascript.jquery.ui.typoscript.css is set to '      . $css,     $this->pObj->extKey, 0);
+        }
+        break;
+      case('z_none'):
+        $this->pObj->conf['javascript.']['jquery.']['ui.']['typoscript.']['library']  = null;
+        $this->pObj->conf['javascript.']['jquery.']['ui.']['typoscript.']['css']      = null;
+        $this->bool_jquery_ui = false;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] javascript.jquery.ui.typoscript.library is set to null.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM] javascript.jquery.ui.typoscript.css is set to null.',     $this->pObj->extKey, 0);
+        }
+        break;
+      case('z_typoscript'):
+        // Do nothing;
+        $this->bool_jquery_ui = true;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] javascript.jquery.ui.typoscript isn\'t changed by the flexform.', $this->pObj->extKey, 0);
+        }
+        break;
+      default:
+        $prompt = '
+          <div style="background:white; color:red; font-weight:bold;border:.4em solid red;">
+            <h1>
+              ERROR</h1>
+            <p>
+              Flexform field jquery_ui has an invalid value. The value isn\'t defined.<br />
+              value: ' . $jquery_ui . '<br />
+              ' . __METHOD__ . ' (' . __LINE__ . ')
+            </p>
+          </div>';
+        echo $prompt;
+        exit;
+    }
+      // #28562, dwildt, 110804
+      // Field jquery_ui
 
 
 

@@ -603,8 +603,9 @@ class tx_browser_pi1_javascript
  * @param	string		$name: For the key of additionalHeaderData
  * @param	string		$keyPathTs: The TypoScript element path to $path for the DRS
  * @return	boolean		True: success. False: error.
- * @since 3.5.0
+ *
  * @version 3.6.5
+ * @since 3.5.0
  */
   function addJssFile($path, $name, $keyPathTs)
   {
@@ -753,6 +754,84 @@ class tx_browser_pi1_javascript
 
 
 
+/**
+ * addCssFiles(): Add all needed CSS files to the HTML head
+ *
+ * @return  void
+ * @version 3.7.0
+ * @since 3.7.0
+ */
+  public function addCssFiles()
+  {
+      //////////////////////////////////////////////////////////////////////
+      //
+      // jquery_ui_css
+
+    if ($this->pObj->objFlexform->bool_jquery_ui)
+    {
+      $name         = 'jquery_ui_library_css';
+      $path         = $this->pObj->conf['javascript.']['jquery.']['ui.']['typoscript.']['css'];
+      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['ui.']['typoscript.']['css.']['inline'];
+      $path_tsConf  = 'javascript.jquery.ui.typoscript.css';
+  
+      $this->addFile($path, false, $name, $path_tsConf, 'css', $bool_inline);
+    }
+      // jquery_ui_css
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * addJssFiles(): Add all needed JavaScript files to the HTML head
+ *
+ * @return  void
+ * @version 3.7.0
+ * @since 3.7.0
+ */
+  public function addJssFiles()
+  {
+      //////////////////////////////////////////////////////////////////////
+      //
+      // jquery_ui_library
+
+    if ($this->pObj->objFlexform->bool_jquery_ui)
+    {
+      $name         = 'jquery_ui_library';
+      $path         = $this->pObj->conf['javascript.']['jquery.']['ui.']['typoscript.']['library'];
+      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['ui.']['typoscript.']['library.']['inline'];
+      $path_tsConf  = 'javascript.jquery.ui.typoscript.library';
+      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+    }
+      // jquery_ui_library
+
+
+
+    if ($this->objFlexform->bool_ajax_enabled)
+    {
+        // name has to correspondend with similar code in tx_browser_pi1_template.php
+      $name         = 'ajaxLL';
+      $path         = $this->conf['javascript.']['ajax.']['fileLL'];
+      $bool_inline  = $this->pObj->conf['javascript.']['ajax.']['fileLL']['inline'];
+      $path_tsConf  = 'javascript.ajax.fileLL';
+      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+
+        // name has to correspondend with similar code in tx_browser_pi1_template.php
+      $name         = 'ajax';
+      $path         = $this->conf['javascript.']['ajax.']['file'];
+      $bool_inline  = $this->pObj->conf['javascript.']['ajax.']['file.']['inline'];
+      $path_tsConf  = 'javascript.ajax.file';
+      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+    }
+  }
 
 
 
@@ -763,6 +842,170 @@ class tx_browser_pi1_javascript
 
 
 
+/**
+ * addJssFile(): Add a JavaScript file the the HTML head
+ *
+ * @param string    $path:          Path to the Javascript or CSS
+ * @param string    $ie_condition:  Optional condition for Internet Explorer
+ * @param string    $name:          For the key of additionalHeaderData
+ * @param string    $keyPathTs:     The TypoScript element path to $path for the DRS
+ * @param string    $str_type:      css or jss
+ * @param boolean   $bool_inline:   true: include css/jss inline. false: include it as a file
+ * @return  boolean   True: success. False: error.
+ * @since 3.7.0
+ * @version 3.7.0
+ */
+  private function addFile($path, $ie_condition=null, $name, $keyPathTs, $str_type, $bool_inline = false)
+  {
+      // RETURN file is loaded
+    if(isset ($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]))
+    {
+      if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
+      {
+        t3lib_div::devlog('[INFO/FLEXFORM+JSS] file isn\'t added again: '.$path, $this->pObj->extKey, 0);
+      }
+      return true;
+    }
+      // RETURN file is loaded
+
+
+
+      // RETURN path is empty
+    if(empty($path))
+    {
+      if ($this->pObj->b_drs_warn)
+      {
+        t3lib_div::devlog('[WARN/JSS] file can not be included. Path is empty. Maybe it is ok.', $this->pObj->extKey, 2);
+        t3lib_div::devlog('[HELP/JSS] Change it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
+      }
+      return false;
+    }
+      // RETURN path is empty
+
+
+
+    $arr_parsed_url = parse_url($path);
+
+      // URL or EXT:...
+    if(isset($arr_parsed_url['scheme']))
+    {
+      if($arr_parsed_url['scheme'] == 'EXT')
+      {
+        unset($arr_parsed_url['scheme']);
+      }
+    }
+      // URL or EXT:...
+
+      // link to a file
+    $bool_file_exists = true;
+    if(!isset($arr_parsed_url['scheme']))
+    {
+        // absolute path
+      $absPath  = t3lib_div::getFileAbsFileName($path,$onlyRelative=1,$relToTYPO3_mainDir=0);
+      if (!file_exists($absPath))
+      {
+        $bool_file_exists = false;
+      }
+        // absolute path ./. root path
+      $rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT');
+        // relative path
+      $path     = substr($absPath, strlen($rootPath.'/'));
+    }
+      // link to a file
+
+
+
+    if(!$bool_file_exists)
+    {
+      if ($this->pObj->b_drs_error)
+      {
+        t3lib_div::devlog('[ERROR/JSS] script can not be included. File doesn\'t exist: '.$path, $this->pObj->extKey, 3);
+        t3lib_div::devlog('[HELP/JSS] Solve it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
+      }
+      return false;
+    }
+
+
+
+      // switch: css || jss
+    switch($str_type)
+    {
+      case('css'):
+        if($bool_inline)
+        {
+          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
+'  <style type="text/css">
+' . implode ('', file($absPath)) . '
+  </style>';
+          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
+            $this->pObj->objMarkers->main($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]);
+        }
+        if(!$bool_inline)
+        {
+          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
+            '  <link rel="stylesheet" type="text/css" href="' . $path . '" media="all" />';
+        }
+        break;
+      case('jss'):
+        if($bool_inline)
+        {
+          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
+'  <script type="text/javascript">
+  <!--
+' . implode ('', file($absPath)) . '
+  //-->
+  </script>';
+          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
+            $this->pObj->objMarkers->main($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]);
+//var_dump(__METHOD__ . ' (line ' . __LINE__ .')', $absPath, $rootPath, $path, parse_url($path));
+
+        }
+        if(!$bool_inline)
+        {
+          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
+            '  <script src="'.$path.'" type="text/javascript"></script>';
+        }
+        break;
+      default:
+        $prompt = '
+          <div style="background:white; color:red; font-weight:bold;border:.4em solid red;">
+            <h1>
+              ERROR
+            </h1>
+            <p>
+              Undefined value: ' . $str_type . '. Allowed are css and jss.
+            </p>
+            <p>
+              ' . $this->pObj->extKey . ': '. __METHOD__ . ' (line ' . __LINE__ . ')
+            </p>
+          </div>';
+        echo $prompt;
+        exit;
+        break;
+    }
+      // switch: css || jss
+
+      // IE condition
+    if($ie_condition)
+    {
+      $str_addHeaderData = $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name];
+      $str_addHeaderData = '  <![' . $ie_condition . ']>' . trim($str_addHeaderData) . '<![endif]>';
+      $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $str_addHeaderData;
+    }
+      // IE condition
+
+      // DRS
+    if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
+    {
+      t3lib_div::devlog('[INFO/FLEXFORM+JSS] file is included: '.$path, $this->pObj->extKey, 0);
+      t3lib_div::devlog('[HELP/FLEXFORM+JSS] Change it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
+    }
+      // DRS
+
+    return true;
+      // path isn't empty
+
+  }
 
 
 
