@@ -386,33 +386,28 @@ plugin.tx_browser_pi1 {
             // First item of the record browser
           item_first = TEXT
           item_first {
-              // [STRING] empty (default): empty value will allocated while runtime.
-            value = 
+            value = ###RECORD_POSITION###
           }
             // Previous item of the record browser
           item_prev = TEXT
           item_prev {
-              // [STRING] empty (default): empty value will allocated while runtime.
-            value = 
+            value = ###RECORD_POSITION###
           }
             // Current item of the record browser
           item_curr = TEXT
           item_curr {
-              // [STRING] empty (default): empty value will allocated while runtime.
-            value = 
+            value = ###RECORD_POSITION###
             wrap  = <span class="link-curr-record">|</span>
           }
             // Next item of the record browser
           item_next = TEXT
           item_next {
-              // [STRING] empty (default): empty value will allocated while runtime.
-            value = 
+            value = ###RECORD_POSITION###
           }
             // Last item of the record browser
           item_last = TEXT
           item_last {
-              // [STRING] empty (default): empty value will allocated while runtime.
-            value = 
+            value = ###RECORD_POSITION###
           }
         }
         text {

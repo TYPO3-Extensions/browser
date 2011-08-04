@@ -2086,9 +2086,9 @@ class tx_browser_pi1_navi
       if($pos_of_curr_row >= ($pos_of_first_row + 2))
       {
           // Get uid of the record
-        $row_uid = $this->pObj->uids_of_all_rows[0];
+        $marker['###RECORD_UID###']       = $this->pObj->uids_of_all_rows[0];
           // Get position of the record
-        $row_pos = $pos_of_all_rows[$row_uid];
+        $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']];
 
           // Get item configuration
         $item_name = $conf_record_browser['wrapper.']['items.']['first'];
@@ -2106,9 +2106,7 @@ class tx_browser_pi1_navi
           // Set item label: If value is empty, take it from labeling.
 
           // Set and replace markers
-        $marker['###RECORD_UID###'] = $row_uid;
-        $item_conf                  = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
-          // Set and replace markers
+        $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
 
           // Set item
         $arr_items[] = 
@@ -2137,9 +2135,9 @@ class tx_browser_pi1_navi
     if($pos_of_curr_row >= ($pos_of_first_row + 1))
     {
         // Get uid of the record
-      $row_uid = $this->pObj->uids_of_all_rows[$pos_of_curr_row - 1];
+      $marker['###RECORD_UID###']       = $this->pObj->uids_of_all_rows[$pos_of_curr_row - 1];
         // Get position of the record
-      $row_pos = $pos_of_all_rows[$row_uid];
+      $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']];
 
         // Get item configuration
       $item_name = $conf_record_browser['wrapper.']['items.']['prev'];
@@ -2157,9 +2155,7 @@ class tx_browser_pi1_navi
         // Set item label: If value is empty, take it from labeling.
 
         // Set and replace markers
-      $marker['###RECORD_UID###'] = $row_uid;
-      $item_conf                  = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
-        // Set and replace markers
+      $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
 
         // Set item
       $arr_items[] = 
@@ -2185,9 +2181,9 @@ class tx_browser_pi1_navi
 
       // Set the item curr
       // Get uid of the record
-    $row_uid = $singlePid;
+    $marker['###RECORD_UID###']       = $singlePid;
       // Get position of the record
-    $row_pos = $pos_of_all_rows[$row_uid];
+    $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']];
 
       // Get item configuration
     $item_name = $conf_record_browser['wrapper.']['items.']['curr'];
@@ -2205,9 +2201,7 @@ class tx_browser_pi1_navi
       // Set item label: If value is empty, take it from labeling.
 
       // Set and replace markers
-    $marker['###RECORD_UID###'] = $row_uid;
-    $item_conf                  = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
-      // Set and replace markers
+    $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
 
       // Set item
     $arr_items[] = $this->pObj->cObj->cObjGetSingle
@@ -2222,9 +2216,9 @@ class tx_browser_pi1_navi
     if($pos_of_curr_row <= ($pos_of_last_row - 1))
     {
         // Get uid of the record
-      $row_uid = $this->pObj->uids_of_all_rows[$pos_of_curr_row + 1];
+      $marker['###RECORD_UID###']       = $this->pObj->uids_of_all_rows[$pos_of_curr_row + 1];
         // Get position of the record
-      $row_pos = $pos_of_all_rows[$row_uid];
+      $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']];
 
         // Get item configuration
       $item_name = $conf_record_browser['wrapper.']['items.']['next'];
@@ -2242,9 +2236,7 @@ class tx_browser_pi1_navi
         // Set item label: If value is empty, take it from labeling.
 
         // Set and replace markers
-      $marker['###RECORD_UID###'] = $row_uid;
-      $item_conf                  = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
-        // Set and replace markers
+      $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
 
         // Set item
       $arr_items[] = 
@@ -2274,9 +2266,9 @@ class tx_browser_pi1_navi
       if($pos_of_curr_row <= ($pos_of_last_row - 2))
       {
           // Get uid of the record
-        $row_uid = $this->pObj->uids_of_all_rows[count($this->pObj->uids_of_all_rows) - 1];
+        $marker['###RECORD_UID###']       = $this->pObj->uids_of_all_rows[count($this->pObj->uids_of_all_rows) - 1];
           // Get position of the record
-        $row_pos = $pos_of_all_rows[$row_uid];
+        $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']];
 
           // Get item configuration
         $item_name = $conf_record_browser['wrapper.']['items.']['last'];
@@ -2294,9 +2286,7 @@ class tx_browser_pi1_navi
           // Set item label: If value is empty, take it from labeling.
 
           // Set and replace markers
-        $marker['###RECORD_UID###'] = $row_uid;
-        $item_conf                  = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
-          // Set and replace markers
+        $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
 
           // Set item
         $arr_items[] = 
