@@ -289,7 +289,7 @@ plugin.tx_browser_pi1 {
         box {
             // [STRING] empty (default): empty value will allocated while runtime.
           value =
-          wrap  = <div class="tx-browser-pi1-recordbrowser">|<div style="clear:both;">&nbsp;</div></div>
+          wrap  = <ul id="icons" class="ui-widget ui-helper-clearfix" style="cursor: pointer;list-style: none outside none;">|</ul>
         }
         items {
             // First item of the record browser
@@ -297,6 +297,7 @@ plugin.tx_browser_pi1 {
           first {
               // [STRING] empty (default): empty value will allocated while runtime. See labeling below.
             value =
+            wrap  = <li class="ui-state-default ui-corner-all" style="cursor: pointer;float: left;list-style: none outside none;margin: 2px;padding: 4px 0;position: relative;">|</li>
             typolink {
               parameter = {page:uid} - - ###RECORD_POSITION###/###RECORD_SUM###
               parameter {
@@ -312,6 +313,7 @@ plugin.tx_browser_pi1 {
           curr {
               // [STRING] empty (default): empty value will allocated while runtime. See labeling below.
             value =
+            wrap  = <li class="ui-state-default ui-corner-all" style="cursor: pointer;float: left;list-style: none outside none;margin: 2px;padding: 4px 0;position: relative;">|</li>
           }
             // Next item of the record browser
           next < .first
@@ -357,32 +359,27 @@ plugin.tx_browser_pi1 {
             // First item of the record browser
           item_first = TEXT
           item_first {
-            value   = &nbsp;
-            wrap    = <div class="ui-icon ui-icon-seek-start" style="float:left;">|</div>
+            value = <span class="ui-icon ui-icon-seek-first" style="float: left;margin: 0 4px;"></span>
           }
             // Previous item of the record browser
           item_prev = TEXT
           item_prev {
-            value   = &nbsp;
-            wrap    = <div class="ui-icon ui-icon-seek-prev" style="float:left;">|</div>
+            value = <span class="ui-icon ui-icon-seek-prev" style="float: left;margin: 0 4px;"></span>
           }
             // Current item of the record browser
           item_curr = TEXT
           item_curr {
-            value   = &nbsp;
-            wrap    = <div class="ui-icon ui-icon-seek-stop" style="float:left;">|</div>
+            value = <span class="ui-icon ui-icon-seek-home" style="float: left;margin: 0 4px;"></span>
           }
             // Next item of the record browser
           item_next = TEXT
           item_next {
-            value   = &nbsp;
-            wrap    = <div class="ui-icon ui-icon-seek-next" style="float:left;">|</div>
+            value = <span class="ui-icon ui-icon-seek-next" style="float: left;margin: 0 4px;"></span>
           }
             // Last item of the record browser
           item_last = TEXT
           item_last {
-            value   = &nbsp;
-            wrap    = <div class="ui-icon ui-icon-seek-end" style="float:left;">|</div>
+            value = <span class="ui-icon ui-icon-seek-end" style="float: left;margin: 0 4px;"></span>
           }
           item_devider = TEXT
           item_devider {
@@ -1820,13 +1817,13 @@ plugin.tx_browser_pi1 {
       ui {
         blitzer {
             // [STRING] Path to the library of the user interface (ui). By default: all features!
-          library = EXT:browser/res/js/jquery/jquery-ui-1.8.14.custom.min.js
+          library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
           }
             // [STRING] Path to the CSS of the user interface (ui)
-          css     = EXT:browser/res/js/jquery/blitzer/jquery-ui-1.8.14.custom.css
+          css     = EXT:browser/res/js/jquery/ui/blitzer/jquery-ui-1.8.14.custom.css
           css {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
@@ -1834,13 +1831,13 @@ plugin.tx_browser_pi1 {
         }
         smoothness {
             // [STRING] Path to the library of the user interface (ui). By default: all features!
-          library = EXT:browser/res/js/jquery/jquery-ui-1.8.14.custom.min.js
+          library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
           }
             // [STRING] Path to the CSS of the user interface (ui)
-          css     = EXT:browser/res/js/jquery/smoothness/jquery-ui-1.8.14.custom.css
+          css     = EXT:browser/res/js/jquery/ui/smoothness/jquery-ui-1.8.14.custom.css
           css {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
@@ -1848,13 +1845,13 @@ plugin.tx_browser_pi1 {
         }
         start {
             // [STRING] Path to the library of the user interface (ui). By default: all features!
-          library = EXT:browser/res/js/jquery/jquery-ui-1.8.14.custom.min.js
+          library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
           }
             // [STRING] Path to the CSS of the user interface (ui)
-          css     = EXT:browser/res/js/jquery/start/jquery-ui-1.8.14.custom.css
+          css     = EXT:browser/res/js/jquery/ui/start/jquery-ui-1.8.14.custom.css
           css {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
