@@ -1413,7 +1413,7 @@ class tx_browser_pi1_flexform
       case('blitzer'):
       case('smoothness'):
       case('start'):
-        $ui = $this->pObj->conf['javascript.']['jquery.']['ui.']['start.'];
+        $ui = $this->pObj->conf['javascript.']['jquery.']['ui.'][$jquery_ui . '.'];
         $this->pObj->conf['javascript.']['jquery.']['ui.']['typoscript.'] = $ui;
         $this->bool_jquery_ui = true;
         if ($this->pObj->b_drs_flexform)

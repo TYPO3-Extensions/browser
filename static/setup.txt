@@ -289,7 +289,7 @@ plugin.tx_browser_pi1 {
         box {
             // [STRING] empty (default): empty value will allocated while runtime.
           value =
-          wrap  = <div id="tx-browser-pi1-recordbrowser">|</div>
+          wrap  = <div class="tx-browser-pi1-recordbrowser">|<div style="clear:both;">&nbsp;</div></div>
         }
         items {
             // First item of the record browser
