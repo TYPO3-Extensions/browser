@@ -2129,7 +2129,7 @@ class tx_browser_pi1_navi
         }
       }
     }
-    if(!empty($item))
+    if(!empty(trim($item)))
     {
       $arr_items[] = $item;
     }
@@ -2181,7 +2181,7 @@ class tx_browser_pi1_navi
                 );
       }
     }
-    if(!empty($item))
+    if(!empty(trim($item)))
     {
       $arr_items[] = $item;
     }
@@ -2220,7 +2220,7 @@ class tx_browser_pi1_navi
             );
       // Set item
 
-    if(!empty($item))
+    if(!empty(trim($item)))
     {
       $arr_items[] = $item;
     }
@@ -2272,7 +2272,7 @@ class tx_browser_pi1_navi
                 );
       }
     }
-    if(!empty($item))
+    if(!empty(trim($item)))
     {
       $arr_items[] = $item;
     }
@@ -2327,7 +2327,7 @@ class tx_browser_pi1_navi
         }
       }
     }
-    if(!empty($item))
+    if(!empty(trim($item)))
     {
       $arr_items[] = $item;
     }
