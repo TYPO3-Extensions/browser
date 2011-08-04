@@ -197,7 +197,7 @@
       <jquery_ui.z_configured.library>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.z_configured.library</label>
-          <displayCond>FIELD:jquery_ui:IN:configured</displayCond>
+          <displayCond>FIELD:jquery_ui:IN:z_configured</displayCond>
           <config>
             <type>input</type>
             <size>255</size>
@@ -209,7 +209,7 @@
       <jquery_ui.z_configured.css>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.z_configured.css</label>
-          <displayCond>FIELD:jquery_ui:IN:configured</displayCond>
+          <displayCond>FIELD:jquery_ui:IN:z_configured</displayCond>
           <config>
             <type>input</type>
             <size>255</size>
