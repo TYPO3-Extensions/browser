@@ -308,7 +308,11 @@ plugin.tx_browser_pi1 {
             // Previous item of the record browser
           prev < .first
             // Current item of the record browser
-          curr < .first
+          curr = TEXT
+          curr {
+              // [STRING] empty (default): empty value will allocated while runtime. See labeling below.
+            value =
+          }
             // Next item of the record browser
           next < .first
             // Last item of the record browser

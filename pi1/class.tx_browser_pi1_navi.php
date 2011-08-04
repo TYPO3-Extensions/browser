@@ -2109,25 +2109,28 @@ class tx_browser_pi1_navi
         $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
 
           // Set item
-        $arr_items[] = 
-                          $this->pObj->cObj->cObjGetSingle
-                          (
-                            $item_name,
-                            $item_conf
-                          );
+        $item = $this->pObj->cObj->cObjGetSingle
+                (
+                  $item_name,
+                  $item_conf
+                );
           // Set item
       }
       if($pos_of_curr_row < ($pos_of_first_row + 2))
       {
         if($conf_record_browser['display.']['itemsWithoutLink'])
         {
-          $arr_items[] =  $this->pObj->cObj->cObjGetSingle
-                          (
-                            $conf_labeling['item_first'],
-                            $conf_labeling['item_first.']
-                          );
+          $item = $this->pObj->cObj->cObjGetSingle
+                  (
+                    $conf_labeling['item_first'],
+                    $conf_labeling['item_first.']
+                  );
         }
       }
+    }
+    if(!empty($item))
+    {
+      $arr_items[] = $item;
     }
       // Set the item first
 
@@ -2158,24 +2161,27 @@ class tx_browser_pi1_navi
       $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
 
         // Set item
-      $arr_items[] = 
-                        $this->pObj->cObj->cObjGetSingle
-                        (
-                          $item_name,
-                          $item_conf
-                        );
+      $item = $this->pObj->cObj->cObjGetSingle
+              (
+                $item_name,
+                $item_conf
+              );
         // Set item
     }
     if($pos_of_curr_row < ($pos_of_first_row + 1))
     {
       if($conf_record_browser['display.']['itemsWithoutLink'])
       {
-        $arr_items[] =  $this->pObj->cObj->cObjGetSingle
-                        (
-                          $conf_labeling['item_prev'],
-                          $conf_labeling['item_prev.']
-                        );
+        $item = $this->pObj->cObj->cObjGetSingle
+                (
+                  $conf_labeling['item_prev'],
+                  $conf_labeling['item_prev.']
+                );
       }
+    }
+    if(!empty($item))
+    {
+      $arr_items[] = $item;
     }
       // Set the item prev
 
@@ -2204,12 +2210,17 @@ class tx_browser_pi1_navi
     $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
 
       // Set item
-    $arr_items[] = $this->pObj->cObj->cObjGetSingle
-                    (
-                      $item_name,
-                      $item_conf
-                    );
+    $item = $this->pObj->cObj->cObjGetSingle
+            (
+              $item_name,
+              $item_conf
+            );
       // Set item
+
+    if(!empty($item))
+    {
+      $arr_items[] = $item;
+    }
       // Set the item curr
 
       // Set the item next
@@ -2239,24 +2250,27 @@ class tx_browser_pi1_navi
       $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
 
         // Set item
-      $arr_items[] = 
-                        $this->pObj->cObj->cObjGetSingle
-                        (
-                          $item_name,
-                          $item_conf
-                        );
+      $item = $this->pObj->cObj->cObjGetSingle
+              (
+                $item_name,
+                $item_conf
+              );
         // Set item
     }
     if($pos_of_curr_row > ($pos_of_last_row - 1))
     {
       if($conf_record_browser['display.']['itemsWithoutLink'])
       {
-        $arr_items[] =  $this->pObj->cObj->cObjGetSingle
-                        (
-                          $conf_labeling['item_next'],
-                          $conf_labeling['item_next.']
-                        );
+        $item = $this->pObj->cObj->cObjGetSingle
+                (
+                  $conf_labeling['item_next'],
+                  $conf_labeling['item_next.']
+                );
       }
+    }
+    if(!empty($item))
+    {
+      $arr_items[] = $item;
     }
       // Set the item next
 
@@ -2289,25 +2303,28 @@ class tx_browser_pi1_navi
         $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
 
           // Set item
-        $arr_items[] = 
-                          $this->pObj->cObj->cObjGetSingle
-                          (
-                            $item_name,
-                            $item_conf
-                          );
+        $item = $this->pObj->cObj->cObjGetSingle
+                (
+                  $item_name,
+                  $item_conf
+                );
           // Set item
       }
       if($pos_of_curr_row > ($pos_of_last_row - 2))
       {
         if($conf_record_browser['display.']['itemsWithoutLink'])
         {
-          $arr_items[] =  $this->pObj->cObj->cObjGetSingle
-                          (
-                            $conf_labeling['item_last'],
-                            $conf_labeling['item_last.']
-                          );
+          $item = $this->pObj->cObj->cObjGetSingle
+                  (
+                    $conf_labeling['item_last'],
+                    $conf_labeling['item_last.']
+                  );
         }
       }
+    }
+    if(!empty($item))
+    {
+      $arr_items[] = $item;
     }
       // Set the item last
       // Set the items: first, prev, current, next and last
