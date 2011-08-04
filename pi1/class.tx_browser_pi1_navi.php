@@ -2088,7 +2088,7 @@ class tx_browser_pi1_navi
           // Get uid of the record
         $marker['###RECORD_UID###']       = $this->pObj->uids_of_all_rows[0];
           // Get position of the record
-        $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']];
+        $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
           // Get item configuration
         $item_name = $conf_record_browser['wrapper.']['items.']['first'];
@@ -2137,7 +2137,7 @@ class tx_browser_pi1_navi
         // Get uid of the record
       $marker['###RECORD_UID###']       = $this->pObj->uids_of_all_rows[$pos_of_curr_row - 1];
         // Get position of the record
-      $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']];
+      $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
         // Get item configuration
       $item_name = $conf_record_browser['wrapper.']['items.']['prev'];
@@ -2183,7 +2183,7 @@ class tx_browser_pi1_navi
       // Get uid of the record
     $marker['###RECORD_UID###']       = $singlePid;
       // Get position of the record
-    $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']];
+    $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
       // Get item configuration
     $item_name = $conf_record_browser['wrapper.']['items.']['curr'];
@@ -2218,7 +2218,7 @@ class tx_browser_pi1_navi
         // Get uid of the record
       $marker['###RECORD_UID###']       = $this->pObj->uids_of_all_rows[$pos_of_curr_row + 1];
         // Get position of the record
-      $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']];
+      $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
         // Get item configuration
       $item_name = $conf_record_browser['wrapper.']['items.']['next'];
@@ -2268,7 +2268,7 @@ class tx_browser_pi1_navi
           // Get uid of the record
         $marker['###RECORD_UID###']       = $this->pObj->uids_of_all_rows[count($this->pObj->uids_of_all_rows) - 1];
           // Get position of the record
-        $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']];
+        $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
           // Get item configuration
         $item_name = $conf_record_browser['wrapper.']['items.']['last'];
