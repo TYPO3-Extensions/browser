@@ -202,7 +202,7 @@
             <type>input</type>
             <size>255</size>
             <eval>trim,required,nospace</eval>
-            <default>EXT:browser/res/js/jquery/jquery-ui-1.8.14.custom.min.js</default>
+            <default>EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js</default>
           </config>
         </TCEforms>
       </jquery_ui.z_configured.library>
@@ -214,7 +214,7 @@
             <type>input</type>
             <size>255</size>
             <eval>trim,required,nospace</eval>
-            <default>EXT:browser/res/js/jquery/smoothness/jquery-ui-1.8.14.custom.css</default>
+            <default>EXT:browser/res/js/jquery/ui/smoothness/jquery-ui-1.8.14.custom.css</default>
           </config>
         </TCEforms>
       </jquery_ui.z_configured.css>
