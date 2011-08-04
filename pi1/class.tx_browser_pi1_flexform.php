@@ -1410,9 +1410,31 @@ class tx_browser_pi1_flexform
 
     switch ($jquery_ui)
     {
-      case('blitzer'):
-      case('smoothness'):
-      case('start'):
+      case('black_tie'): 
+      case('blitzer'): 
+      case('cupertino'): 
+      case('dark_hive'): 
+      case('darkness'): 
+      case('dot_luve'): 
+      case('eggplant'): 
+      case('excite_bike'): 
+      case('flick'): 
+      case('hot_sneaks'): 
+      case('humanity'): 
+      case('le_frog'): 
+      case('lightness'): 
+      case('mint_choc'): 
+      case('netzmacher'): 
+      case('overcast'): 
+      case('pepper_grinder'): 
+      case('redmond'): 
+      case('smoothness'): 
+      case('south_street'): 
+      case('start'): 
+      case('sunny'): 
+      case('swanky_purse'): 
+      case('trontastic'): 
+      case('vader'): 
         $ui = $this->pObj->conf['javascript.']['jquery.']['ui.'][$jquery_ui . '.'];
         $this->pObj->conf['javascript.']['jquery.']['ui.']['typoscript.'] = $ui;
         $this->bool_jquery_ui = true;
