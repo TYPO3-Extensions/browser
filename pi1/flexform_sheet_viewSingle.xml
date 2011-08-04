@@ -98,7 +98,7 @@
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
-            <default>yes</default>
+            <default>no</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>
