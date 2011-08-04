@@ -167,20 +167,27 @@
 
 
 
+
+
+
+
+
+
   /**
- * substitute_tablefield_marker(): Replace all markers in a multi-dimensional array like an TypoScript array with the real 
- *                      values from the SQL result
- *                      * The method extends the SQL result with all piVar values. ###CHASH### has a process.
- *                      * This method should supersede the deprecated method substitute_marker_recursive () 
+ * substitute_tablefield_marker():  Replace database markers:
+ *                                  Replace all markers in the given multidimensional array like the TypoScript
+ *                                  configuration with the real values from the SQL result (with table.field values)
+ *                                  * The method extends the SQL result with all piVar values. ###CHASH### has a process.
+ *                                  * This method should supersede the deprecated method substitute_marker_recursive () 
  *
  * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
  * @param array   $elements: The current row of the SQL result
  * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
- * @version 3.6.2
+ * @version 3.7.0
+ * @since   3.6.0
  */
   function substitute_tablefield_marker($arr_multi_dimensional)
   {
-    $conf     = $this->pObj->conf;
     $elements = $this->pObj->elements;
 
 
@@ -277,7 +284,7 @@
           {
             $value_tsConf_html = substr($value_tsConf_html, 0, $this->pObj->i_drs_max_sql_result_len).' ...';
           }
-          t3lib_div::devlog('[INFO/TEMPLATING] ... '.$value_tsConf.' hasn\'t any marker.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/MARKER] ... '.$value_tsConf.' hasn\'t any marker.', $this->pObj->extKey, 0);
         }
         continue;
       }
@@ -365,11 +372,11 @@
           }
           if(empty($value_tsConf_html))
           {
-            t3lib_div::devlog('[INFO/TEMPLATING] ... ['.$key_marker.']: '.$value_tsConf.' is EMPTY.', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/MARKER] ... ['.$key_marker.']: '.$value_tsConf.' is EMPTY.', $this->pObj->extKey, 0);
           }
           if(!empty($value_tsConf_html))
           {
-            t3lib_div::devlog('[INFO/TEMPLATING] ... ['.$key_marker.']: '.$value_tsConf.' become:<br /><br />'.$value_tsConf_html, $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/MARKER] ... ['.$key_marker.']: '.$value_tsConf.' become:<br /><br />'.$value_tsConf_html, $this->pObj->extKey, 0);
           }
         }
       }
@@ -385,6 +392,167 @@
       // #12472, 110124, dwildt
     return $arr_multi_dimensional;
   }
+
+
+
+
+
+
+
+
+
+  /**
+ * substitute_marker():  Replace markers:
+ *                       Replace all markers in the given multidimensional array like the TypoScript configuration
+ *                       with the values from the given marker array
+ *                                  * The method extends the SQL result with all piVar values. ###CHASH### has a process.
+ *                                  * This method should supersede the deprecated method substitute_marker_recursive () 
+ *
+ * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
+ * @param array   $elements: The current row of the SQL result
+ * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ * @version 3.7.0
+ * @since   3.6.0
+ */
+  function substitute_marker($arr_multi_dimensional, $marker)
+  {
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN there isn't any element
+
+    if(empty($marker))
+    {
+      return $arr_multi_dimensional;
+    }
+      // RETURN there isn't any element
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Add to the $marker piVars and singlePid
+
+      // Add to the $marker piVars
+    foreach ($this->pObj->piVars as $key_pivar => $value_pivar)
+    {
+      // dwildt, 090620: If we have multiple selects, piVars can contain arrays
+      // This array should be array of uids. We don't need any process for uids here.
+      if (!is_array($value_pivar))
+      {
+          // dwildt, 110320: Prevent to override database values in $marker by piVars 
+        if(!isset($marker['###' . strtoupper($key_pivar) . '###']))
+        {
+          $marker['###' . strtoupper($key_pivar) . '###'] = $value_pivar;
+        }
+      }
+      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+      {
+        t3lib_div::devlog('[INFO/TEMPLATING] The piVar ['.$key_pivar.'] is available.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[HELP/TEMPLATING] If you use the marker ###'.strtoupper($key_pivar).'###, it will become '.$value_pivar, $this->pObj->extKey, 1);
+      }
+    }
+      // Add to the $marker piVars
+
+      // Add to the $marker the singlePid
+    if (isset($this->pObj->singlePid))
+    {
+      $marker['###' . strtoupper('singlePid') . '###'] = $this->pObj->singlePid;
+    }
+      // Add to the $marker the singlePid
+      // Add to the $marker piVars and singlePid
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Loop through one dimensional array
+
+    $arr_one_dimensional = t3lib_BEfunc::implodeTSParams($arr_multi_dimensional);
+    foreach((array) $arr_one_dimensional as $key_tsConf => $value_tsConf)
+    {
+      $value_tsConf_after_loop  = $value_tsConf;
+
+        // CONTINUE: array element dosn't contain any marker
+      $int_countMarker = substr_count($value_tsConf, '###');  // I.e: 4
+      if ($int_countMarker == 0)
+      {
+        if ($this->pObj->b_drs_marker)
+        {
+          $value_tsConf_html = htmlspecialchars($value_tsConf);
+          if (strlen($value_tsConf_html) > $this->pObj->i_drs_max_sql_result_len)
+          {
+            $value_tsConf_html = substr($value_tsConf_html, 0, $this->pObj->i_drs_max_sql_result_len).' ...';
+          }
+          t3lib_div::devlog('[INFO/MARKER] ... '.$value_tsConf.' hasn\'t any marker.', $this->pObj->extKey, 0);
+        }
+        continue;
+      }
+        // CONTINUE: array element dosn't contain any marker
+
+        // Replace markers
+      foreach((array) $marker as $key_marker => $value_marker)
+      {
+        $value_tsConf_after_loop = str_replace($key_marker, $value_marker, $value_tsConf_after_loop);
+      }
+        // Replace markers
+
+        // Replace cHash marker
+      $pos = strpos($value_tsConf_after_loop, '&###CHASH###');
+      if (!($pos === false)) {
+        $str_path                 = str_replace('&###CHASH###', '', $value_tsConf_after_loop);
+        $arr_url                  = parse_url($str_path);
+        $cHash_md5                = $this->pObj->objZz->get_cHash($arr_url['path']);
+        $value_tsConf_after_loop  = str_replace('&###CHASH###', '&cHash='.$cHash_md5, $value_tsConf_after_loop);
+      }
+        // Replace cHash marker
+
+        // Clear markers, which aren't replaced
+      $value_tsConf_after_loop = preg_replace('|###.*?###|i', '', $value_tsConf_after_loop);
+
+        // DRS - Development Reporting System
+      if ($value_tsConf_after_loop != $value_tsConf)
+      {
+        if ($this->pObj->b_drs_marker)
+        {
+          $value_tsConf_html = htmlspecialchars($value_tsConf_after_loop);
+          if (strlen($value_tsConf_html) > $this->pObj->i_drs_max_sql_result_len)
+          {
+            $value_tsConf_html = substr($value_tsConf_html, 0, $this->pObj->i_drs_max_sql_result_len).' ...';
+          }
+          if(empty($value_tsConf_html))
+          {
+            t3lib_div::devlog('[INFO/MARKER] ... ['.$key_marker.']: '.$value_tsConf.' is EMPTY.', $this->pObj->extKey, 0);
+          }
+          if(!empty($value_tsConf_html))
+          {
+            t3lib_div::devlog('[INFO/MARKER] ... ['.$key_marker.']: '.$value_tsConf.' become:<br /><br />'.$value_tsConf_html, $this->pObj->extKey, 0);
+          }
+        }
+      }
+        // DRS - Development Reporting System
+
+      $arr_one_dimensional[$key_tsConf] = $value_tsConf_after_loop;
+    }
+      // Loop through one dimensional array
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Rebuild multidimensional array
+
+    unset($arr_multi_dimensional);
+    $arr_multi_dimensional = $this->pObj->objTyposcript->oneDim_to_tree($arr_one_dimensional);
+      // Rebuild multidimensional array
+
+
+
+      // RETURN multidimensional array
+    return $arr_multi_dimensional;
+  }
+
+
+
 
 
 
@@ -637,11 +805,11 @@
               {
                 if(!$str_elements1)
                 {
-                  t3lib_div::devlog('[INFO/TEMPLATING] ... ['.$key_tsConf.']: '.$key_marker.' is NULL.', $this->pObj->extKey, 0);
+                  t3lib_div::devlog('[INFO/TT_CONTAINER] ... ['.$key_tsConf.']: '.$key_marker.' is NULL.', $this->pObj->extKey, 0);
                 }
                 else
                 {
-                  t3lib_div::devlog('[INFO/TEMPLATING] ... ['.$key_tsConf.']: '.$key_marker.' -> '.$str_elements1, $this->pObj->extKey, 0);
+                  t3lib_div::devlog('[INFO/TT_CONTAINER] ... ['.$key_tsConf.']: '.$key_marker.' -> '.$str_elements1, $this->pObj->extKey, 0);
                 }
               }
             }
@@ -668,7 +836,7 @@
           {
             if ($this->pObj->b_drs_ttc)
             {
-              t3lib_div::devlog('[INFO/TEMPLATING] ... ['.$key_tsConf.']: hasn\'t any marker.', $this->pObj->extKey, 0);
+              t3lib_div::devlog('[INFO/TT_CONTAINER] ... ['.$key_tsConf.']: hasn\'t any marker.', $this->pObj->extKey, 0);
             }
           }
 
