@@ -14,6 +14,8 @@
             * modeSelector  moved to navigation.modeSelector
             * pageBrowser   moved to navigation.pageBrowser
             * plugin        moved to flexform
+  Development
+  * #00000: substitute_marker() is moved to substitute_tablefield_marker()
   
   
 3.6.6

@@ -2090,6 +2090,12 @@ class tx_browser_pi1_navi
                                 $conf_labelling['item_first.']
                               );
       }
+        // Set item label: If value is empty, take it from labelling.
+
+        // Set and replace markers
+      $marker['###RECORD_UID###'] = $row_uid;
+      $item_conf                  = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
+        // Set and replace markers
 
         // Set item
       $item = $this->pObj->cObj->cObjGetSingle
@@ -2097,11 +2103,8 @@ class tx_browser_pi1_navi
                 $item_name,
                 $item_conf
               );
+        // Set item
 
-        // Replace markers
-      $item = str_replace('###RECORD_UID###', $row_uid, $item);
-      $item = str_replace('###CHASH###',      1,        $item);
-      
       $uid['a_tag'][] = $item;
     }
     if($pos_of_curr_row < ($pos_of_first_row + 2))
