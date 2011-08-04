@@ -2121,7 +2121,7 @@ class tx_browser_pi1_navi
         if($conf_record_browser['display.']['itemsWithoutLink'])
         {
             // Set uid of the record to null
-          $marker['###RECORD_UID###'] = null;
+          $marker['###RECORD_POSITION###'] = null;
             // Set and replace markers
           $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['item_first.'], $marker);
           $item = $this->pObj->cObj->cObjGetSingle
@@ -2183,7 +2183,7 @@ class tx_browser_pi1_navi
       if($conf_record_browser['display.']['itemsWithoutLink'])
       {
           // Set uid of the record to null
-        $marker['###RECORD_UID###'] = null;
+        $marker['###RECORD_POSITION###'] = null;
           // Set and replace markers
         $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['item_prev.'], $marker);
         $item = $this->pObj->cObj->cObjGetSingle
@@ -2288,7 +2288,7 @@ class tx_browser_pi1_navi
       if($conf_record_browser['display.']['itemsWithoutLink'])
       {
           // Set uid of the record to null
-        $marker['###RECORD_UID###'] = null;
+        $marker['###RECORD_POSITION###'] = null;
           // Set and replace markers
         $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['item_next.'], $marker);
         $item = $this->pObj->cObj->cObjGetSingle
@@ -2351,7 +2351,7 @@ class tx_browser_pi1_navi
         if($conf_record_browser['display.']['itemsWithoutLink'])
         {
             // Set uid of the record to null
-          $marker['###RECORD_UID###'] = null;
+          $marker['###RECORD_POSITION###'] = null;
             // Set and replace markers
           $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['item_last.'], $marker);
           $item = $this->pObj->cObj->cObjGetSingle
