@@ -318,11 +318,6 @@ plugin.tx_browser_pi1 {
             // Last item of the record browser
           last < .first
         }
-        item_devider = TEXT
-        item_devider {
-          value = |
-          noTrimWrap = | | |
-        }
       }
       labeling {
         chars {
@@ -352,39 +347,46 @@ plugin.tx_browser_pi1 {
           item_last {
             value = &gt;&gt;
           }
+          item_devider = TEXT
+          item_devider {
+            value = |
+            noTrimWrap = | | |
+          }
         }
         icons {
             // First item of the record browser
           item_first = TEXT
           item_first {
-            value   = first
-            lang.de = Erster
-            wrap    = <span class="ui-icon-seek-start">|</span>
+            value   = &nbsp;
+            wrap    = <div class="ui-icon ui-icon-seek-start" style="float:left;">|</div>
           }
             // Previous item of the record browser
           item_prev = TEXT
           item_prev {
-            value   = previous
-            lang.de = Vorheriger
+            value   = &nbsp;
+            wrap    = <div class="ui-icon ui-icon-seek-prev" style="float:left;">|</div>
           }
             // Current item of the record browser
           item_curr = TEXT
           item_curr {
-            value   = current
-            lang.de = Aktuell
-            wrap    = <span class="link-curr-record">|</span>
+            value   = &nbsp;
+            wrap    = <div class="ui-icon ui-icon-seek-stop" style="float:left;">|</div>
           }
             // Next item of the record browser
           item_next = TEXT
           item_next {
-            value   = next
-            lang.de = N&auml;chster
+            value   = &nbsp;
+            wrap    = <div class="ui-icon ui-icon-seek-next" style="float:left;">|</div>
           }
             // Last item of the record browser
           item_last = TEXT
           item_last {
-            value   = last
-            lang.de = Letzter
+            value   = &nbsp;
+            wrap    = <div class="ui-icon ui-icon-seek-end" style="float:left;">|</div>
+          }
+          item_devider = TEXT
+          item_devider {
+            value = 
           }
         }
         position {
@@ -413,6 +415,11 @@ plugin.tx_browser_pi1 {
           item_last = TEXT
           item_last {
             value = ###RECORD_POSITION###
+          }
+          item_devider = TEXT
+          item_devider {
+            value = |
+            noTrimWrap = | | |
           }
         }
         text {
@@ -447,9 +454,13 @@ plugin.tx_browser_pi1 {
             value   = last
             lang.de = Letzter
           }
+          item_devider = TEXT
+          item_devider {
+            value = |
+            noTrimWrap = | | |
+          }
         }
-        typoscript < .text
-        typoscript < .chars
+        typoscript < .icons
       }
     }
   }

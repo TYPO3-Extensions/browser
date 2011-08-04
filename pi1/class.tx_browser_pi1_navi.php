@@ -2378,8 +2378,8 @@ class tx_browser_pi1_navi
       // Devide $arr_items
     $devider        = $this->pObj->cObj->cObjGetSingle
                       (
-                        $conf_record_browser['wrapper.']['item_devider'],
-                        $conf_record_browser['wrapper.']['item_devider.']
+                        $conf_labeling['item_devider'],
+                        $conf_labeling['item_devider.']
                       );
     $record_browser = implode($devider, $arr_items);
       // Devide $arr_items
