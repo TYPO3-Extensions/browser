@@ -56,30 +56,35 @@
           <config>
             <type>select</type>
             <items type="array">
-              <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.1</numIndex>
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.blitzer</numIndex>
                 <numIndex index="1">blitzer</numIndex>
                 <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_blitzer.png</numIndex>
               </numIndex>
-              <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.2</numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.smoothness</numIndex>
                 <numIndex index="1">smoothness</numIndex>
                 <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_overcast.png</numIndex>
               </numIndex>
-              <numIndex index="3" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.3</numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.start</numIndex>
                 <numIndex index="1">start</numIndex>
                 <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_start_menu.png</numIndex>
               </numIndex>
-              <numIndex index="4" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.4</numIndex>
-                <numIndex index="1">configured</numIndex>
+              <numIndex index="100" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.z_configured</numIndex>
+                <numIndex index="1">z_configured</numIndex>
                 <numIndex index="2">EXT:browser/res/images/jQuery/my_ui.gif</numIndex>
               </numIndex>
-              <numIndex index="5" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.5</numIndex>
-                <numIndex index="1">none</numIndex>
+              <numIndex index="101" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.z_none</numIndex>
+                <numIndex index="1">z_none</numIndex>
                 <numIndex index="2">EXT:browser/res/images/jQuery/dont_embed_it.gif</numIndex>
+              </numIndex>
+              <numIndex index="102" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.z_ts</numIndex>
+                <numIndex index="1">z_ts</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/typo3.gif</numIndex>
               </numIndex>
             </items>
             <default>smoothness</default>
@@ -88,9 +93,9 @@
           </config>
         </TCEforms>
       </jquery_ui>
-      <jquery_ui_library>
+      <jquery_ui.z_configured.library>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui_library</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.z_configured.library</label>
           <displayCond>FIELD:jquery_ui:IN:configured</displayCond>
           <config>
             <type>input</type>
@@ -99,10 +104,10 @@
             <default>EXT:browser/res/js/jquery/jquery-ui-1.8.14.custom.min.js</default>
           </config>
         </TCEforms>
-      </jquery_ui_library>
-      <jquery_ui_css>
+      </jquery_ui.z_configured.library>
+      <jquery_ui.z_configured.css>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui_css</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.z_configured.css</label>
           <displayCond>FIELD:jquery_ui:IN:configured</displayCond>
           <config>
             <type>input</type>
@@ -111,7 +116,7 @@
             <default>EXT:browser/res/js/jquery/smoothness/jquery-ui-1.8.14.custom.css</default>
           </config>
         </TCEforms>
-      </jquery_ui_css>
+      </jquery_ui.z_configured.css>
       <browser_libraries>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries</label>

@@ -359,6 +359,7 @@ plugin.tx_browser_pi1 {
           item_first {
             value   = first
             lang.de = Erster
+            wrap    = <span class="ui-icon-seek-start">|</span>
           }
             // Previous item of the record browser
           item_prev = TEXT
