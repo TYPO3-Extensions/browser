@@ -295,7 +295,7 @@ plugin.tx_browser_pi1 {
             // First item of the record browser
           first = TEXT
           first {
-              // [STRING] empty (default): empty value will allocated while runtime. See labelling below.
+              // [STRING] empty (default): empty value will allocated while runtime. See labeling below.
             value =
             typolink {
               parameter = {page:uid}
@@ -320,7 +320,7 @@ plugin.tx_browser_pi1 {
           noTrimWrap = | | |
         }
       }
-      labelling {
+      labeling {
         chars {
             // First item of the record browser
           item_first = TEXT

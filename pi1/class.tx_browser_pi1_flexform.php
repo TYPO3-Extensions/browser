@@ -2871,7 +2871,7 @@ class tx_browser_pi1_flexform
       //
       // Field record_browser
 
-    $record_browser = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser', 'viewSingle', 'lDEF', 'vDEF');
+    $record_browser = $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser', 'viewSingle', 'lDEF', 'vDEF');
     if ($this->pObj->b_drs_flexform)
     {
       t3lib_div::devlog('[INFO/FLEXFORM] viewSingle.record_browser: \'' . $record_browser . '\'.', $this->pObj->extKey, 0);
@@ -2879,24 +2879,13 @@ class tx_browser_pi1_flexform
 
     switch($record_browser)
     {
-      case(0):
-          // disabled
+      case('disabled'):
         $this->pObj->conf['navigation.']['record_browser'] = 0;
-        if ($this->pObj->b_drs_flexform)
-        {
-          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser is set to false.', $this->pObj->extKey, 0);
-        }
         break;
-      case(1):
-          // enabled
+      case('by_flexform'):
         $this->pObj->conf['navigation.']['record_browser'] = 1;
-        if ($this->pObj->b_drs_flexform)
-        {
-          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser is set to true.', $this->pObj->extKey, 0);
-        }
         break;
-      case(2):
-          // typoscript
+      case('ts'):
         // Do nothing
         $value = $this->pObj->conf['navigation.']['record_browser'];
         if ($this->pObj->b_drs_flexform)
@@ -2904,6 +2893,10 @@ class tx_browser_pi1_flexform
           t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
         }
         break;
+    }
+    if ($this->pObj->b_drs_flexform)
+    {
+      t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser is set to ' . $record_browser . '.', $this->pObj->extKey, 0);
     }
       // Field record_browser
 
@@ -2927,9 +2920,25 @@ class tx_browser_pi1_flexform
 
       //////////////////////////////////////////////////////////////////////
       //
+      // RETURN record_browser == ts
+
+    if($record_browser == 'ts')
+    {
+      if ($this->pObj->b_drs_flexform)
+      {
+        t3lib_div::devlog('[INFO/FLEXFORM] viewSingle.record_browser is set to ts. RETURN', $this->pObj->extKey, 0);
+      }
+      return;
+    }
+      // RETURN record_browser == false
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Field record_browser.display.firstAndLastItem
 
-    $firstAndLastItem = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.firstAndLastItem', 'viewSingle', 'lDEF', 'vDEF');
+    $firstAndLastItem = $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.firstAndLastItem', 'viewSingle', 'lDEF', 'vDEF');
     if ($this->pObj->b_drs_flexform)
     {
       t3lib_div::devlog('[INFO/FLEXFORM] viewSingle.record_browser.display.firstAndLastItem: \'' . $firstAndLastItem . '\'.', $this->pObj->extKey, 0);
@@ -2937,15 +2946,14 @@ class tx_browser_pi1_flexform
 
     switch($firstAndLastItem)
     {
-      case(0):
-          // disabled
+      case('no'):
         $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'] = 0;
         if ($this->pObj->b_drs_flexform)
         {
           t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is set to false.', $this->pObj->extKey, 0);
         }
         break;
-      case(1):
+      case('yes'):
           // enabled
         $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'] = 1;
         if ($this->pObj->b_drs_flexform)
@@ -2953,8 +2961,7 @@ class tx_browser_pi1_flexform
           t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is set to true.', $this->pObj->extKey, 0);
         }
         break;
-      case(2):
-          // typoscript
+      case('ts'):
         // Do nothing
         $value = $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'];
         if ($this->pObj->b_drs_flexform)
@@ -2971,7 +2978,7 @@ class tx_browser_pi1_flexform
       //
       // Field record_browser.display.itemsWithoutLink
 
-    $itemsWithoutLink = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.itemsWithoutLink', 'viewSingle', 'lDEF', 'vDEF');
+    $itemsWithoutLink = $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.itemsWithoutLink', 'viewSingle', 'lDEF', 'vDEF');
     if ($this->pObj->b_drs_flexform)
     {
       t3lib_div::devlog('[INFO/FLEXFORM] viewSingle.record_browser.display.itemsWithoutLink: \'' . $itemsWithoutLink . '\'.', $this->pObj->extKey, 0);
@@ -2979,24 +2986,21 @@ class tx_browser_pi1_flexform
 
     switch($itemsWithoutLink)
     {
-      case(0):
-          // disabled
+      case(('no')):
         $this->pObj->conf['navigation.']['record_browser.']['display.']['itemsWithoutLink'] = 0;
         if ($this->pObj->b_drs_flexform)
         {
           t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.itemsWithoutLink is set to false.', $this->pObj->extKey, 0);
         }
         break;
-      case(1):
-          // enabled
+      case('yes'):
         $this->pObj->conf['navigation.']['record_browser.']['display.']['itemsWithoutLink'] = 1;
         if ($this->pObj->b_drs_flexform)
         {
           t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.itemsWithoutLink is set to true.', $this->pObj->extKey, 0);
         }
         break;
-      case(2):
-          // typoscript
+      case('ts'):
         // Do nothing
         $value = $this->pObj->conf['navigation.']['record_browser.']['display.']['itemsWithoutLink'];
         if ($this->pObj->b_drs_flexform)
@@ -3013,7 +3017,7 @@ class tx_browser_pi1_flexform
       //
       // Field record_browser.display.withoutResult
 
-    $withoutResult = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.withoutResult', 'viewSingle', 'lDEF', 'vDEF');
+    $withoutResult = $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.withoutResult', 'viewSingle', 'lDEF', 'vDEF');
     if ($this->pObj->b_drs_flexform)
     {
       t3lib_div::devlog('[INFO/FLEXFORM] viewSingle.record_browser.display.withoutResult: \'' . $withoutResult . '\'.', $this->pObj->extKey, 0);
@@ -3021,24 +3025,21 @@ class tx_browser_pi1_flexform
 
     switch($withoutResult)
     {
-      case(0):
-          // disabled
+      case('no'):
         $this->pObj->conf['navigation.']['record_browser.']['display.']['withoutResult'] = 0;
         if ($this->pObj->b_drs_flexform)
         {
           t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.withoutResult is set to false.', $this->pObj->extKey, 0);
         }
         break;
-      case(1):
-          // enabled
+      case('yes'):
         $this->pObj->conf['navigation.']['record_browser.']['display.']['withoutResult'] = 1;
         if ($this->pObj->b_drs_flexform)
         {
           t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.display.withoutResult is set to true.', $this->pObj->extKey, 0);
         }
         break;
-      case(2):
-          // typoscript
+      case('ts'):
         // Do nothing
         $value = $this->pObj->conf['navigation.']['record_browser.']['display.']['withoutResult'];
         if ($this->pObj->b_drs_flexform)
@@ -3048,6 +3049,43 @@ class tx_browser_pi1_flexform
         break;
     }
       // Field record_browser.display.withoutResult
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field record_browser.labels
+
+    $labeling = $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.labeling', 'viewSingle', 'lDEF', 'vDEF');
+    if ($this->pObj->b_drs_flexform)
+    {
+      t3lib_div::devlog('[INFO/FLEXFORM] viewSingle.record_browser.labeling: \'' . $withoutResult . '\'.', $this->pObj->extKey, 0);
+    }
+
+    switch($labeling)
+    {
+      case('chars'):
+      case('icons'):
+      case('position'):
+      case('text'):
+          // Get configuration of the selected label
+        $conf_labelling = $this->pObj->conf['navigation.']['record_browser.']['labeling.'][$labeling . '.'];
+          // Set configuration of the selected label
+        $this->pObj->conf['navigation.']['record_browser.']['labeling.']['typoscript.'] = $conf_labelling;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.labelling.typoscript < .' . $labeling, $this->pObj->extKey, 0);
+        }
+        break;
+      case('ts'):
+        // Do nothing
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM] navigation.record_browser.labeling.typoscript will not changed by the flexform.', $this->pObj->extKey, 0);
+        }
+        break;
+    }
+      // Field record_browser.labeling
 
 
 
