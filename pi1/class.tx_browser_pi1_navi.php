@@ -2078,9 +2078,8 @@ class tx_browser_pi1_navi
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Set the items: first, prev, current, next and last
-
       // Set the item first
+
     $item = null;
     if($conf_record_browser['display.']['firstAndLastItem'])
     {
@@ -2121,21 +2120,30 @@ class tx_browser_pi1_navi
       {
         if($conf_record_browser['display.']['itemsWithoutLink'])
         {
+            // Set uid of the record to null
+          $marker['###RECORD_UID###'] = null;
+            // Set and replace markers
+          $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['item_first.'], $marker);
           $item = $this->pObj->cObj->cObjGetSingle
                   (
                     $conf_labeling['item_first'],
-                    $conf_labeling['item_first.']
+                    $item_conf
                   );
         }
       }
     }
-    if(trim($item) != '')
+    if(!empty($item))
     {
       $arr_items[] = $item;
     }
       // Set the item first
 
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Set the item prev
+
     $item = null;
     if($pos_of_curr_row >= ($pos_of_first_row + 1))
     {
@@ -2174,20 +2182,29 @@ class tx_browser_pi1_navi
     {
       if($conf_record_browser['display.']['itemsWithoutLink'])
       {
+          // Set uid of the record to null
+        $marker['###RECORD_UID###'] = null;
+          // Set and replace markers
+        $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['item_prev.'], $marker);
         $item = $this->pObj->cObj->cObjGetSingle
                 (
                   $conf_labeling['item_prev'],
-                  $conf_labeling['item_prev.']
+                  $item_conf
                 );
       }
     }
-    if(trim($item) != '')
+    if(!empty($item))
     {
       $arr_items[] = $item;
     }
       // Set the item prev
 
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Set the item curr
+
     $item = null;
       // Get uid of the record
     $marker['###RECORD_UID###']       = $singlePid;
@@ -2220,13 +2237,18 @@ class tx_browser_pi1_navi
             );
       // Set item
 
-    if(trim($item) != '')
+    if(!empty($item))
     {
       $arr_items[] = $item;
     }
       // Set the item curr
 
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Set the item next
+
     $item = null;
     if($pos_of_curr_row <= ($pos_of_last_row - 1))
     {
@@ -2265,20 +2287,29 @@ class tx_browser_pi1_navi
     {
       if($conf_record_browser['display.']['itemsWithoutLink'])
       {
+          // Set uid of the record to null
+        $marker['###RECORD_UID###'] = null;
+          // Set and replace markers
+        $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['item_next.'], $marker);
         $item = $this->pObj->cObj->cObjGetSingle
                 (
                   $conf_labeling['item_next'],
-                  $conf_labeling['item_next.']
+                  $item_conf
                 );
       }
     }
-    if(trim($item) != '')
+    if(!empty($item))
     {
       $arr_items[] = $item;
     }
       // Set the item next
 
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Set the item last
+
     $item = null;
     if($conf_record_browser['display.']['firstAndLastItem'])
     {
@@ -2319,20 +2350,23 @@ class tx_browser_pi1_navi
       {
         if($conf_record_browser['display.']['itemsWithoutLink'])
         {
+            // Set uid of the record to null
+          $marker['###RECORD_UID###'] = null;
+            // Set and replace markers
+          $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['item_last.'], $marker);
           $item = $this->pObj->cObj->cObjGetSingle
                   (
                     $conf_labeling['item_last'],
-                    $conf_labeling['item_last.']
+                    $item_conf
                   );
         }
       }
     }
-    if(trim($item) != '')
+    if(!empty($item))
     {
       $arr_items[] = $item;
     }
       // Set the item last
-      // Set the items: first, prev, current, next and last
 
 
 
