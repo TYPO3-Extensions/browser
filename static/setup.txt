@@ -298,7 +298,7 @@ plugin.tx_browser_pi1 {
               // [STRING] empty (default): empty value will allocated while runtime. See labeling below.
             value =
             typolink {
-              parameter = {page:uid}
+              parameter = {page:uid} - - ###RECORD_POSITION###/###RECORD_SUM###
               parameter {
                 insertData = 1
               }
