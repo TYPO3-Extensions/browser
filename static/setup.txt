@@ -314,13 +314,6 @@ plugin.tx_browser_pi1 {
             // Last item of the record browser
           last < .first
         }
-          // The whole HTML a-tag
-        item_a-tag = TEXT
-        item_a-tag {
-            // [STRING] empty (default): empty value will allocated while runtime. See items above.
-          value = 
-          wrap  = <a href="###RECORD_URL###">|</a>
-        }
         item_devider = TEXT
         item_devider {
           value = |

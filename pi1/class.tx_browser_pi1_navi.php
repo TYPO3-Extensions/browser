@@ -1998,8 +1998,11 @@ class tx_browser_pi1_navi
   */
   private function recordbrowser_rendering()
   {
+    $record_browser = null;
+    $arr_items      = array();
+
       // Uid of the current record
-    $singlePid        = (int) $this->pObj->piVars['showUid'];
+    $singlePid = (int) $this->pObj->piVars['showUid'];
 
 
 
@@ -2014,7 +2017,7 @@ class tx_browser_pi1_navi
       {
         t3lib_div::devlog('[INFO/TEMPLATING] record browser should not displayed: RETURN',  $this->pObj->extKey, 0);
       }
-      return null;
+      return $record_browser;
     }
       // RETURN record_browser should not be displayed
 
@@ -2043,7 +2046,7 @@ class tx_browser_pi1_navi
           t3lib_div::devlog('[INFO/TEMPLATING] uids_of_all_rows is empty. ' . 
             'record browser should not displayed in case of an empty result: RETURN',  $this->pObj->extKey, 0);
         }
-        return null;
+        return $record_browser;
       }
     }
       // RETURN record_browser should not be displayed in case of no result
@@ -2064,30 +2067,91 @@ class tx_browser_pi1_navi
 
 
 
-    $conf_labelling   = $conf_record_browser['labelling.']['typoscript.'];
-    $name_item_a_tag  = $conf_record_browser['wrapper.']['item_a-tag'];
-    $conf_item_a_tag  = $conf_record_browser['wrapper.']['item_a-tag.'];
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Get labelling configuration array
+
+    $conf_labelling = $conf_record_browser['labelling.']['typoscript.'];
+      // Get labelling configuration array
 
 
 
-    if($pos_of_curr_row >= ($pos_of_first_row + 2))
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Set the items: first, prev, current, next and last
+
+      // Set the item first
+    if($conf_record_browser['display.']['firstAndLastItem'])
+    {
+      if($pos_of_curr_row >= ($pos_of_first_row + 2))
+      {
+          // Get uid of the record
+        $row_uid = $this->pObj->uids_of_all_rows[0];
+          // Get position of the record
+        $row_pos = $pos_of_all_rows[$row_uid];
+
+          // Get item configuration
+        $item_name = $conf_record_browser['wrapper.']['items.']['first'];
+        $item_conf = $conf_record_browser['wrapper.']['items.']['first.'];
+
+          // Set item label: If value is empty, take it from labelling.
+        if(empty($item_conf['value']))
+        {
+          $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
+                                (
+                                  $conf_labelling['item_first'],
+                                  $conf_labelling['item_first.']
+                                );
+        }
+          // Set item label: If value is empty, take it from labelling.
+
+          // Set and replace markers
+        $marker['###RECORD_UID###'] = $row_uid;
+        $item_conf                  = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
+          // Set and replace markers
+
+          // Set item
+        $arr_items[] = 
+                          $this->pObj->cObj->cObjGetSingle
+                          (
+                            $item_name,
+                            $item_conf
+                          );
+          // Set item
+      }
+      if($pos_of_curr_row < ($pos_of_first_row + 2))
+      {
+        if($conf_record_browser['display.']['itemsWithoutLink'])
+        {
+          $arr_items[] =  $this->pObj->cObj->cObjGetSingle
+                          (
+                            $conf_labelling['item_first'],
+                            $conf_labelling['item_first.']
+                          );
+        }
+      }
+    }
+      // Set the item first
+
+      // Set the item prev
+    if($pos_of_curr_row >= ($pos_of_first_row + 1))
     {
         // Get uid of the record
-      $row_uid = $this->pObj->uids_of_all_rows[0];
+      $row_uid = $this->pObj->uids_of_all_rows[$pos_of_curr_row - 1];
         // Get position of the record
       $row_pos = $pos_of_all_rows[$row_uid];
 
         // Get item configuration
-      $item_name = $conf_record_browser['wrapper.']['items.']['first'];
-      $item_conf = $conf_record_browser['wrapper.']['items.']['first.'];
+      $item_name = $conf_record_browser['wrapper.']['items.']['prev'];
+      $item_conf = $conf_record_browser['wrapper.']['items.']['prev.'];
 
         // Set item label: If value is empty, take it from labelling.
       if(empty($item_conf['value']))
       {
         $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
                               (
-                                $conf_labelling['item_first'],
-                                $conf_labelling['item_first.']
+                                $conf_labelling['item_prev'],
+                                $conf_labelling['item_prev.']
                               );
       }
         // Set item label: If value is empty, take it from labelling.
@@ -2098,144 +2162,197 @@ class tx_browser_pi1_navi
         // Set and replace markers
 
         // Set item
-      $item = $this->pObj->cObj->cObjGetSingle
-              (
-                $item_name,
-                $item_conf
-              );
+      $arr_items[] = 
+                        $this->pObj->cObj->cObjGetSingle
+                        (
+                          $item_name,
+                          $item_conf
+                        );
         // Set item
-
-      $uid['a_tag'][] = $item;
-    }
-    if($pos_of_curr_row < ($pos_of_first_row + 2))
-    {
-      $uid['first']['label']  = $this->pObj->cObj->cObjGetSingle
-                                (
-                                  $conf_labelling['item_first'],
-                                  $conf_labelling['item_first.']
-                                );
-      $uid['a_tag'][]          = $uid['first']['label'];
-    }
-
-    if($pos_of_curr_row >= ($pos_of_first_row + 1))
-    {
-      $uid['prev']['uid']    = $this->pObj->uids_of_all_rows[$pos_of_curr_row - 1];
-      $uid['prev']['pos']    = $pos_of_all_rows[$uid['prev']['uid']];
-      $uid['prev']['label']  = $this->pObj->cObj->cObjGetSingle
-                                (
-                                  $conf_labelling['item_prev'],
-                                  $conf_labelling['item_prev.']
-                                );
-      $curr_item_a_tag        = $conf_item_a_tag;
-      if(empty($curr_item_a_tag['value']))
-      {
-        $curr_item_a_tag['value'] = $uid['prev']['label'];
-      }
-      $a_tag  = $this->pObj->cObj->cObjGetSingle
-                (
-                  $name_item_a_tag,
-                  $curr_item_a_tag
-                );
-      $href   = 'http://die-netzmacher.de/rechnungen/b_title/' . $uid['prev']['uid'];
-      $a_tag  = str_replace('###RECORD_URL###', $href, $a_tag);
-      $uid['a_tag'][] = $a_tag;
     }
     if($pos_of_curr_row < ($pos_of_first_row + 1))
     {
-      $uid['prev']['uid']    = 0;
-      $uid['prev']['pos']    = 0;
-      $uid['prev']['label']  = $this->pObj->cObj->cObjGetSingle
-                                (
-                                  $conf_labelling['item_prev'],
-                                  $conf_labelling['item_prev.']
-                                );
-      $uid['a_tag'][]          = $uid['prev']['label'];
+      if($conf_record_browser['display.']['itemsWithoutLink'])
+      {
+        $arr_items[] =  $this->pObj->cObj->cObjGetSingle
+                        (
+                          $conf_labelling['item_prev'],
+                          $conf_labelling['item_prev.']
+                        );
+      }
     }
+      // Set the item prev
 
-    $uid['curr']['uid']    = $singlePid;
-    $uid['curr']['pos']    = $pos_of_all_rows[$singlePid];
-    $uid['curr']['label']  = $this->pObj->cObj->cObjGetSingle
-                              (
-                                $conf_labelling['item_curr'],
-                                $conf_labelling['item_curr.']
-                              );
-    $uid['a_tag'][]          = $uid['curr']['label'];
+      // Set the item curr
+      // Get uid of the record
+    $row_uid = $singlePid;
+      // Get position of the record
+    $row_pos = $pos_of_all_rows[$row_uid];
 
+      // Get item configuration
+    $item_name = $conf_record_browser['wrapper.']['items.']['curr'];
+    $item_conf = $conf_record_browser['wrapper.']['items.']['curr.'];
+
+      // Set item label: If value is empty, take it from labelling.
+    if(empty($item_conf['value']))
+    {
+      $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
+                            (
+                              $conf_labelling['item_curr'],
+                              $conf_labelling['item_curr.']
+                            );
+    }
+      // Set item label: If value is empty, take it from labelling.
+
+      // Set and replace markers
+    $marker['###RECORD_UID###'] = $row_uid;
+    $item_conf                  = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
+      // Set and replace markers
+
+      // Set item
+    $arr_items[] = $this->pObj->cObj->cObjGetSingle
+                    (
+                      $item_name,
+                      $item_conf
+                    );
+      // Set item
+      // Set the item curr
+
+      // Set the item next
     if($pos_of_curr_row <= ($pos_of_last_row - 1))
     {
-      $uid['next']['uid']    = $this->pObj->uids_of_all_rows[$pos_of_curr_row + 1];
-      $uid['next']['pos']    = $pos_of_all_rows[$uid['next']['uid']];
-      $uid['next']['label']  = $this->pObj->cObj->cObjGetSingle
-                                (
-                                  $conf_labelling['item_next'],
-                                  $conf_labelling['item_next.']
-                                );
-      $curr_item_a_tag        = $conf_item_a_tag;
-      if(empty($curr_item_a_tag['value']))
+        // Get uid of the record
+      $row_uid = $this->pObj->uids_of_all_rows[$pos_of_curr_row + 1];
+        // Get position of the record
+      $row_pos = $pos_of_all_rows[$row_uid];
+
+        // Get item configuration
+      $item_name = $conf_record_browser['wrapper.']['items.']['next'];
+      $item_conf = $conf_record_browser['wrapper.']['items.']['next.'];
+
+        // Set item label: If value is empty, take it from labelling.
+      if(empty($item_conf['value']))
       {
-        $curr_item_a_tag['value'] = $uid['next']['label'];
+        $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
+                              (
+                                $conf_labelling['item_next'],
+                                $conf_labelling['item_next.']
+                              );
       }
-      $a_tag  = $this->pObj->cObj->cObjGetSingle
-                (
-                  $name_item_a_tag,
-                  $curr_item_a_tag
-                );
-      $href   = 'http://die-netzmacher.de/rechnungen/b_title/' . $uid['next']['uid'];
-      $a_tag  = str_replace('###RECORD_URL###', $href, $a_tag);
-      $uid['a_tag'][] = $a_tag;
+        // Set item label: If value is empty, take it from labelling.
+
+        // Set and replace markers
+      $marker['###RECORD_UID###'] = $row_uid;
+      $item_conf                  = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
+        // Set and replace markers
+
+        // Set item
+      $arr_items[] = 
+                        $this->pObj->cObj->cObjGetSingle
+                        (
+                          $item_name,
+                          $item_conf
+                        );
+        // Set item
     }
     if($pos_of_curr_row > ($pos_of_last_row - 1))
     {
-      $uid['next']['uid']    = 0;
-      $uid['next']['pos']    = 0;
-      $uid['next']['label']  = $this->pObj->cObj->cObjGetSingle
-                                (
-                                  $conf_labelling['item_next'],
-                                  $conf_labelling['item_next.']
-                                );
-      $uid['a_tag'][]          = $uid['next']['label'];
-    }
-
-    if($pos_of_curr_row <= ($pos_of_last_row - 2))
-    {
-      $uid['last']['uid']    = $this->pObj->uids_of_all_rows[count($this->pObj->uids_of_all_rows) - 1];
-      $uid['last']['pos']    = $pos_of_all_rows[$uid['last']['uid']];
-      $uid['last']['label']  = $this->pObj->cObj->cObjGetSingle
-                                (
-                                  $conf_labelling['item_last'],
-                                  $conf_labelling['item_last.']
-                                );
-      $curr_item_a_tag        = $conf_item_a_tag;
-      if(empty($curr_item_a_tag['value']))
+      if($conf_record_browser['display.']['itemsWithoutLink'])
       {
-        $curr_item_a_tag['value'] = $uid['last']['label'];
+        $arr_items[] =  $this->pObj->cObj->cObjGetSingle
+                        (
+                          $conf_labelling['item_next'],
+                          $conf_labelling['item_next.']
+                        );
       }
-      $a_tag  = $this->pObj->cObj->cObjGetSingle
-                (
-                  $name_item_a_tag,
-                  $curr_item_a_tag
-                );
-      $href   = 'http://die-netzmacher.de/rechnungen/b_title/' . $uid['last']['uid'];
-      $a_tag  = str_replace('###RECORD_URL###', $href, $a_tag);
-      $uid['a_tag'][] = $a_tag;
     }
-    if($pos_of_curr_row > ($pos_of_last_row - 2))
+      // Set the item next
+
+      // Set the item last
+    if($conf_record_browser['display.']['firstAndLastItem'])
     {
-      $uid['last']['uid']    = 0;
-      $uid['last']['pos']    = 0;
-      $uid['last']['label']  = $this->pObj->cObj->cObjGetSingle
+      if($pos_of_curr_row <= ($pos_of_last_row - 2))
+      {
+          // Get uid of the record
+        $row_uid = $this->pObj->uids_of_all_rows[count($this->pObj->uids_of_all_rows) - 1];
+          // Get position of the record
+        $row_pos = $pos_of_all_rows[$row_uid];
+
+          // Get item configuration
+        $item_name = $conf_record_browser['wrapper.']['items.']['last'];
+        $item_conf = $conf_record_browser['wrapper.']['items.']['last.'];
+
+          // Set item label: If value is empty, take it from labelling.
+        if(empty($item_conf['value']))
+        {
+          $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
                                 (
                                   $conf_labelling['item_last'],
                                   $conf_labelling['item_last.']
                                 );
-      $uid['a_tag'][]        = $uid['last']['label'];
+        }
+          // Set item label: If value is empty, take it from labelling.
+
+          // Set and replace markers
+        $marker['###RECORD_UID###'] = $row_uid;
+        $item_conf                  = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
+          // Set and replace markers
+
+          // Set item
+        $arr_items[] = 
+                          $this->pObj->cObj->cObjGetSingle
+                          (
+                            $item_name,
+                            $item_conf
+                          );
+          // Set item
+      }
+      if($pos_of_curr_row > ($pos_of_last_row - 2))
+      {
+        if($conf_record_browser['display.']['itemsWithoutLink'])
+        {
+          $arr_items[] =  $this->pObj->cObj->cObjGetSingle
+                          (
+                            $conf_labelling['item_last'],
+                            $conf_labelling['item_last.']
+                          );
+        }
+      }
     }
-    
-    $record_browser = '<pre>' . var_export($uid, true) . '</pre>';
-
-    $record_browser = implode(' | ', $uid['a_tag']);
+      // Set the item last
+      // Set the items: first, prev, current, next and last
 
 
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Set the record browser
+
+      // Devide $arr_items
+    $devider        = $this->pObj->cObj->cObjGetSingle
+                      (
+                        $conf_record_browser['wrapper.']['item_devider'],
+                        $conf_record_browser['wrapper.']['item_devider.']
+                      );
+    $record_browser = implode($devider, $arr_items);
+      // Devide $arr_items
+
+      // Wrap the box
+    if(empty($conf_record_browser['wrapper.']['box.']['value']))
+    {
+      $conf_record_browser['wrapper.']['box.']['value'] = $record_browser;
+    }
+    $record_browser = $this->pObj->cObj->cObjGetSingle
+                      (
+                        $conf_record_browser['wrapper.']['box'],
+                        $conf_record_browser['wrapper.']['box.']
+                      );
+      // Wrap the box
+      // Set the record browser
+
+
+
+      // RETURN the record browser
     return $record_browser;
   }
 
