@@ -1465,7 +1465,7 @@ class tx_browser_pi1_flexform
           t3lib_div::devlog('[INFO/FLEXFORM] javascript.jquery.ui.typoscript.css is set to null.',     $this->pObj->extKey, 0);
         }
         break;
-      case('z_typoscript'):
+      case('z_ts'):
         // Do nothing;
         $this->bool_jquery_ui = true;
         if ($this->pObj->b_drs_flexform)
