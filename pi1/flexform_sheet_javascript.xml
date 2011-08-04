@@ -55,22 +55,122 @@
           <onChange>reload</onChange>
           <config>
             <type>select</type>
-            <selicon_cols>3</selicon_cols>
+            <selicon_cols>8</selicon_cols>
             <items type="array">
               <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.black_tie</numIndex>
+                <numIndex index="1">black_tie</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_black_tie.png</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.blitzer</numIndex>
                 <numIndex index="1">blitzer</numIndex>
                 <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_blitzer.png</numIndex>
               </numIndex>
-              <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.smoothness</numIndex>
-                <numIndex index="1">smoothness</numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.cupertino</numIndex>
+                <numIndex index="1">cupertino</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_cupertino.png</numIndex>
+              </numIndex>
+              <numIndex index="3" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.dark_hive</numIndex>
+                <numIndex index="1">dark_hive</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_dark_hive.png</numIndex>
+              </numIndex>
+              <numIndex index="4" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.darkness</numIndex>
+                <numIndex index="1">darkness</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_ui_dark.png</numIndex>
+              </numIndex>
+              <numIndex index="5" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.dot_luve</numIndex>
+                <numIndex index="1">dot_luve</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_dot_luv.png</numIndex>
+              </numIndex>
+              <numIndex index="6" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.eggplant</numIndex>
+                <numIndex index="1">eggplant</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_eggplant.png</numIndex>
+              </numIndex>
+              <numIndex index="7" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.excite_bike</numIndex>
+                <numIndex index="1">excite_bike</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_excite_bike.png</numIndex>
+              </numIndex>
+              <numIndex index="8" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.flick</numIndex>
+                <numIndex index="1">flick</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_flick.png</numIndex>
+              </numIndex>
+              <numIndex index="9" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.hot_sneaks</numIndex>
+                <numIndex index="1">hot_sneaks</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_hot_sneaks.png</numIndex>
+              </numIndex>
+              <numIndex index="10" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.humanity</numIndex>
+                <numIndex index="1">humanity</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_humanity.png</numIndex>
+              </numIndex>
+              <numIndex index="11" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.le_frog</numIndex>
+                <numIndex index="1">le_frog</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_le_frog.png</numIndex>
+              </numIndex>
+              <numIndex index="12" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.lightness</numIndex>
+                <numIndex index="1">lightness</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_ui_light.png</numIndex>
+              </numIndex>
+              <numIndex index="13" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.mint_choco</numIndex>
+                <numIndex index="1">mint_choco</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_mint_choco.png</numIndex>
+              </numIndex>
+              <numIndex index="14" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.overcast</numIndex>
+                <numIndex index="1">overcats</numIndex>
                 <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_overcast.png</numIndex>
               </numIndex>
-              <numIndex index="2" type="array">
+              <numIndex index="15" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.pepper_grinder</numIndex>
+                <numIndex index="1">pepper_grinder</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_pepper_grinder.png</numIndex>
+              </numIndex>
+              <numIndex index="16" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.redmond</numIndex>
+                <numIndex index="1">redmond</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_windoze.png</numIndex>
+              </numIndex>
+              <numIndex index="17" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.smoothness</numIndex>
+                <numIndex index="1">smoothness</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_smoothness.png</numIndex>
+              </numIndex>
+              <numIndex index="18" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.south_street</numIndex>
+                <numIndex index="1">south_street</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_south_street.png</numIndex>
+              </numIndex>
+              <numIndex index="19" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.start</numIndex>
                 <numIndex index="1">start</numIndex>
                 <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_start_menu.png</numIndex>
+              </numIndex>
+              <numIndex index="20" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.sunny</numIndex>
+                <numIndex index="1">sunny</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_sunny.png</numIndex>
+              </numIndex>
+              <numIndex index="21" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.swanky_purse</numIndex>
+                <numIndex index="1">swanky_purse</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_swanky_purse.png</numIndex>
+              </numIndex>
+              <numIndex index="22" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.trontastic</numIndex>
+                <numIndex index="1">trontastic</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_trontastic.png</numIndex>
               </numIndex>
               <numIndex index="100" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.z_configured</numIndex>
