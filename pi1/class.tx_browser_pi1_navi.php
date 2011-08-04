@@ -2081,6 +2081,7 @@ class tx_browser_pi1_navi
       // Set the items: first, prev, current, next and last
 
       // Set the item first
+    $item = null;
     if($conf_record_browser['display.']['firstAndLastItem'])
     {
       if($pos_of_curr_row >= ($pos_of_first_row + 2))
@@ -2135,6 +2136,7 @@ class tx_browser_pi1_navi
       // Set the item first
 
       // Set the item prev
+    $item = null;
     if($pos_of_curr_row >= ($pos_of_first_row + 1))
     {
         // Get uid of the record
@@ -2186,6 +2188,7 @@ class tx_browser_pi1_navi
       // Set the item prev
 
       // Set the item curr
+    $item = null;
       // Get uid of the record
     $marker['###RECORD_UID###']       = $singlePid;
       // Get position of the record
@@ -2224,6 +2227,7 @@ class tx_browser_pi1_navi
       // Set the item curr
 
       // Set the item next
+    $item = null;
     if($pos_of_curr_row <= ($pos_of_last_row - 1))
     {
         // Get uid of the record
@@ -2275,6 +2279,7 @@ class tx_browser_pi1_navi
       // Set the item next
 
       // Set the item last
+    $item = null;
     if($conf_record_browser['display.']['firstAndLastItem'])
     {
       if($pos_of_curr_row <= ($pos_of_last_row - 2))
