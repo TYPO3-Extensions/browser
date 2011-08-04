@@ -277,19 +277,186 @@ plugin.tx_browser_pi1 {
     record_browser = 1
     record_browser {
       display {
-          // [BOOLEAN] 0 (default): Don't display the record browser, if there isn't any result/record. 1 (default): Display it ever.
+          // [BOOLEAN] 0: Don't display the record browser, if there isn't any result/record. 1 (default): Display it ever.
         withoutResult     = 1
-          // [BOOLEAN] 1 (default): Display link to first and last record. 0: Don't display it.
+          // [BOOLEAN] 0: Don't display link to first and last record. 1 (default): Display it.
         firstAndLastItem  = 1
           // [BOOLEAN] 0: Display items with a link only. 1 (default): Display items ever.
         itemsWithoutLink  = 1
       }
-      wrap {
-        disabledLinkWrap       = <span class="SCell">|</span>
-        inactiveLinkWrap       = |
-        activeLinkWrap         = <span class="SCell">|</span>
-        browseBoxWrap          =
-        browseLinksWrap        = |
+      wrapper {
+        box = TEXT
+        box {
+            // [STRING] empty (default): empty value will allocated while runtime.
+          value =
+          wrap  = <div id="tx-browser-pi1-recordbrowser">|</div>
+        }
+        items {
+            // First item of the record browser
+          first = TEXT
+          first {
+              // [STRING] empty (default): empty value will allocated while runtime. See labelling below.
+            value =
+            typolink {
+              parameter = {page:uid}
+              parameter {
+                insertData = 1
+              }
+              additionalParams = &tx_browser_pi1[showUid]=###RECORD_UID###&###CHASH###
+            }
+          }
+            // Previous item of the record browser
+          prev < .first
+            // Current item of the record browser
+          curr < .first
+            // Next item of the record browser
+          next < .first
+            // Last item of the record browser
+          last < .first
+        }
+          // The whole HTML a-tag
+        item_a-tag = TEXT
+        item_a-tag {
+            // [STRING] empty (default): empty value will allocated while runtime. See items above.
+          value = 
+          wrap  = <a href="###RECORD_URL###">|</a>
+        }
+        item_devider = TEXT
+        item_devider {
+          value = |
+          noTrimWrap = | | |
+        }
+      }
+      labelling {
+        chars {
+            // First item of the record browser
+          item_first = TEXT
+          item_first {
+            value = &lt;&lt;
+          }
+            // Previous item of the record browser
+          item_prev = TEXT
+          item_prev {
+            value = &lt;
+          }
+            // Current item of the record browser
+          item_curr = TEXT
+          item_curr {
+            value = &Oslash;
+            wrap  = <span class="link-curr-record">|</span>
+          }
+            // Next item of the record browser
+          item_next = TEXT
+          item_next {
+            value = &gt;
+          }
+            // Last item of the record browser
+          item_last = TEXT
+          item_last {
+            value = &gt;&gt;
+          }
+        }
+        icons {
+            // First item of the record browser
+          item_first = TEXT
+          item_first {
+            value   = first
+            lang.de = Erster
+          }
+            // Previous item of the record browser
+          item_prev = TEXT
+          item_prev {
+            value   = previous
+            lang.de = Vorheriger
+          }
+            // Current item of the record browser
+          item_curr = TEXT
+          item_curr {
+            value   = current
+            lang.de = Aktuell
+            wrap    = <span class="link-curr-record">|</span>
+          }
+            // Next item of the record browser
+          item_next = TEXT
+          item_next {
+            value   = next
+            lang.de = N&auml;chster
+          }
+            // Last item of the record browser
+          item_last = TEXT
+          item_last {
+            value   = last
+            lang.de = Letzter
+          }
+        }
+        position {
+            // First item of the record browser
+          item_first = TEXT
+          item_first {
+              // [STRING] empty (default): empty value will allocated while runtime.
+            value = 
+          }
+            // Previous item of the record browser
+          item_prev = TEXT
+          item_prev {
+              // [STRING] empty (default): empty value will allocated while runtime.
+            value = 
+          }
+            // Current item of the record browser
+          item_curr = TEXT
+          item_curr {
+              // [STRING] empty (default): empty value will allocated while runtime.
+            value = 
+            wrap  = <span class="link-curr-record">|</span>
+          }
+            // Next item of the record browser
+          item_next = TEXT
+          item_next {
+              // [STRING] empty (default): empty value will allocated while runtime.
+            value = 
+          }
+            // Last item of the record browser
+          item_last = TEXT
+          item_last {
+              // [STRING] empty (default): empty value will allocated while runtime.
+            value = 
+          }
+        }
+        text {
+            // First item of the record browser
+          item_first = TEXT
+          item_first {
+            value   = first
+            lang.de = Erster
+          }
+            // Previous item of the record browser
+          item_prev = TEXT
+          item_prev {
+            value   = previous
+            lang.de = Vorheriger
+          }
+            // Current item of the record browser
+          item_curr = TEXT
+          item_curr {
+            value   = current
+            lang.de = Aktuell
+            wrap    = <span class="link-curr-record">|</span>
+          }
+            // Next item of the record browser
+          item_next = TEXT
+          item_next {
+            value   = next
+            lang.de = N&auml;chster
+          }
+            // Last item of the record browser
+          item_last = TEXT
+          item_last {
+            value   = last
+            lang.de = Letzter
+          }
+        }
+        typoscript < .text
+        typoscript < .chars
       }
     }
   }

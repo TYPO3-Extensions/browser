@@ -30,6 +30,7 @@
  * @package    TYPO3
  * @subpackage    browser
  * @version       3.7.0
+ * @since 2.0.0
  */
 
   /**
@@ -1997,72 +1998,239 @@ class tx_browser_pi1_navi
   */
   private function recordbrowser_rendering()
   {
-    $singlePid    = (int) $this->pObj->piVars['showUid'];
-    $pos_of_all_rows = array_flip($this->pObj->uids_of_all_rows);
+      // Uid of the current record
+    $singlePid        = (int) $this->pObj->piVars['showUid'];
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // RETURN record_browser should not be displayed
+
+    $bool_record_browser = $this->conf['navigation.']['record_browser'];
+    if(!$bool_record_browser)
+    {
+      if ($this->pObj->b_drs_templating)
+      {
+        t3lib_div::devlog('[INFO/TEMPLATING] record browser should not displayed: RETURN',  $this->pObj->extKey, 0);
+      }
+      return null;
+    }
+      // RETURN record_browser should not be displayed
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Get record_browser configuration
+
+    $conf_record_browser = $this->conf['navigation.']['record_browser.'];
+      // Get record_browser configuration
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // RETURN record_browser should not be displayed in case of no result
+
+    $bool_display_without_result = $conf_record_browser['withoutResult'];
+    if(!$bool_display_without_result)
+    {
+      if(empty($this->pObj->uids_of_all_rows))
+      {
+        if ($this->pObj->b_drs_templating)
+        {
+          t3lib_div::devlog('[INFO/TEMPLATING] uids_of_all_rows is empty. ' . 
+            'record browser should not displayed in case of an empty result: RETURN',  $this->pObj->extKey, 0);
+        }
+        return null;
+      }
+    }
+      // RETURN record_browser should not be displayed in case of no result
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Get first, current and last positions and the position array
+
+      // Position array: the position (0, 1, ... , n) will be the value, the uid of the record will be the key 
+    $pos_of_all_rows  = array_flip($this->pObj->uids_of_all_rows);
     
     $pos_of_first_row = 0;
     $pos_of_curr_row  = $pos_of_all_rows[$singlePid];
     $pos_of_last_row  = $pos_of_all_rows[end($this->pObj->uids_of_all_rows)];
-    
+      // Get first, current and last positions and the position array
+
+
+
+    $conf_labelling   = $conf_record_browser['labelling.']['typoscript.'];
+    $name_item_a_tag  = $conf_record_browser['wrapper.']['item_a-tag'];
+    $conf_item_a_tag  = $conf_record_browser['wrapper.']['item_a-tag.'];
+
+
+
     if($pos_of_curr_row >= ($pos_of_first_row + 2))
     {
-      $uid['first']['uid'] = $this->pObj->uids_of_all_rows[0];
-      $uid['first']['pos'] = $pos_of_all_rows[$uid['first']['uid']];
-      $uid['href'][]       = '<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['first']['uid'] . '">first</a>';
+        // Get uid of the record
+      $row_uid = $this->pObj->uids_of_all_rows[0];
+        // Get position of the record
+      $row_pos = $pos_of_all_rows[$row_uid];
+
+        // Get item configuration
+      $item_name = $conf_record_browser['wrapper.']['items.']['first'];
+      $item_conf = $conf_record_browser['wrapper.']['items.']['first.'];
+
+        // Set item label: If value is empty, take it from labelling.
+      if(empty($item_conf['value']))
+      {
+        $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
+                              (
+                                $conf_labelling['item_first'],
+                                $conf_labelling['item_first.']
+                              );
+      }
+
+        // Set item
+      $item = $this->pObj->cObj->cObjGetSingle
+              (
+                $item_name,
+                $item_conf
+              );
+
+        // Replace markers
+      $item = str_replace('###RECORD_UID###', $row_uid, $item);
+      $item = str_replace('###CHASH###',      1,        $item);
+      
+      $uid['a_tag'][] = $item;
     }
     if($pos_of_curr_row < ($pos_of_first_row + 2))
     {
-      $uid['first']['uid'] = 0;
-      $uid['first']['pos'] = 0;
-      $uid['href'][]       = 'first';
+      $uid['first']['label']  = $this->pObj->cObj->cObjGetSingle
+                                (
+                                  $conf_labelling['item_first'],
+                                  $conf_labelling['item_first.']
+                                );
+      $uid['a_tag'][]          = $uid['first']['label'];
     }
 
     if($pos_of_curr_row >= ($pos_of_first_row + 1))
     {
-      $uid['prev']['uid'] = $this->pObj->uids_of_all_rows[$pos_of_curr_row - 1];
-      $uid['prev']['pos'] = $pos_of_all_rows[$uid['prev']['uid']];
-      $uid['href'][]      = '<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['prev']['uid'] . '">prev</a>';
+      $uid['prev']['uid']    = $this->pObj->uids_of_all_rows[$pos_of_curr_row - 1];
+      $uid['prev']['pos']    = $pos_of_all_rows[$uid['prev']['uid']];
+      $uid['prev']['label']  = $this->pObj->cObj->cObjGetSingle
+                                (
+                                  $conf_labelling['item_prev'],
+                                  $conf_labelling['item_prev.']
+                                );
+      $curr_item_a_tag        = $conf_item_a_tag;
+      if(empty($curr_item_a_tag['value']))
+      {
+        $curr_item_a_tag['value'] = $uid['prev']['label'];
+      }
+      $a_tag  = $this->pObj->cObj->cObjGetSingle
+                (
+                  $name_item_a_tag,
+                  $curr_item_a_tag
+                );
+      $href   = 'http://die-netzmacher.de/rechnungen/b_title/' . $uid['prev']['uid'];
+      $a_tag  = str_replace('###RECORD_URL###', $href, $a_tag);
+      $uid['a_tag'][] = $a_tag;
     }
     if($pos_of_curr_row < ($pos_of_first_row + 1))
     {
-      $uid['prev']['uid'] = 0;
-      $uid['prev']['pos'] = 0;
-      $uid['href'][]      = 'prev';
+      $uid['prev']['uid']    = 0;
+      $uid['prev']['pos']    = 0;
+      $uid['prev']['label']  = $this->pObj->cObj->cObjGetSingle
+                                (
+                                  $conf_labelling['item_prev'],
+                                  $conf_labelling['item_prev.']
+                                );
+      $uid['a_tag'][]          = $uid['prev']['label'];
     }
 
-    $uid['curr']['uid']   = $singlePid;
-    $uid['curr']['pos']   = $pos_of_all_rows[$singlePid];
-    $uid['href'][]        = 'current (#' . $singlePid . ')';
+    $uid['curr']['uid']    = $singlePid;
+    $uid['curr']['pos']    = $pos_of_all_rows[$singlePid];
+    $uid['curr']['label']  = $this->pObj->cObj->cObjGetSingle
+                              (
+                                $conf_labelling['item_curr'],
+                                $conf_labelling['item_curr.']
+                              );
+    $uid['a_tag'][]          = $uid['curr']['label'];
 
     if($pos_of_curr_row <= ($pos_of_last_row - 1))
     {
-      $uid['next']['uid'] = $this->pObj->uids_of_all_rows[$pos_of_curr_row + 1];
-      $uid['next']['pos'] = $pos_of_all_rows[$uid['next']['uid']];
-      $uid['href'][]      = '<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['next']['uid'] . '">next</a>';
+      $uid['next']['uid']    = $this->pObj->uids_of_all_rows[$pos_of_curr_row + 1];
+      $uid['next']['pos']    = $pos_of_all_rows[$uid['next']['uid']];
+      $uid['next']['label']  = $this->pObj->cObj->cObjGetSingle
+                                (
+                                  $conf_labelling['item_next'],
+                                  $conf_labelling['item_next.']
+                                );
+      $curr_item_a_tag        = $conf_item_a_tag;
+      if(empty($curr_item_a_tag['value']))
+      {
+        $curr_item_a_tag['value'] = $uid['next']['label'];
+      }
+      $a_tag  = $this->pObj->cObj->cObjGetSingle
+                (
+                  $name_item_a_tag,
+                  $curr_item_a_tag
+                );
+      $href   = 'http://die-netzmacher.de/rechnungen/b_title/' . $uid['next']['uid'];
+      $a_tag  = str_replace('###RECORD_URL###', $href, $a_tag);
+      $uid['a_tag'][] = $a_tag;
     }
     if($pos_of_curr_row > ($pos_of_last_row - 1))
     {
-      $uid['next']['uid'] = 0;
-      $uid['next']['pos'] = 0;
-      $uid['href'][]      = 'next';
+      $uid['next']['uid']    = 0;
+      $uid['next']['pos']    = 0;
+      $uid['next']['label']  = $this->pObj->cObj->cObjGetSingle
+                                (
+                                  $conf_labelling['item_next'],
+                                  $conf_labelling['item_next.']
+                                );
+      $uid['a_tag'][]          = $uid['next']['label'];
     }
 
     if($pos_of_curr_row <= ($pos_of_last_row - 2))
     {
-      $uid['last']['uid'] = $this->pObj->uids_of_all_rows[count($this->pObj->uids_of_all_rows) - 1];
-      $uid['last']['pos'] = $pos_of_all_rows[$uid['last']['uid']];
-      $uid['href'][]      = '<a href="http://die-netzmacher.de/rechnungen/b_title/' . $uid['last']['uid'] . '">last</a>';
+      $uid['last']['uid']    = $this->pObj->uids_of_all_rows[count($this->pObj->uids_of_all_rows) - 1];
+      $uid['last']['pos']    = $pos_of_all_rows[$uid['last']['uid']];
+      $uid['last']['label']  = $this->pObj->cObj->cObjGetSingle
+                                (
+                                  $conf_labelling['item_last'],
+                                  $conf_labelling['item_last.']
+                                );
+      $curr_item_a_tag        = $conf_item_a_tag;
+      if(empty($curr_item_a_tag['value']))
+      {
+        $curr_item_a_tag['value'] = $uid['last']['label'];
+      }
+      $a_tag  = $this->pObj->cObj->cObjGetSingle
+                (
+                  $name_item_a_tag,
+                  $curr_item_a_tag
+                );
+      $href   = 'http://die-netzmacher.de/rechnungen/b_title/' . $uid['last']['uid'];
+      $a_tag  = str_replace('###RECORD_URL###', $href, $a_tag);
+      $uid['a_tag'][] = $a_tag;
     }
     if($pos_of_curr_row > ($pos_of_last_row - 2))
     {
-      $uid['last']['uid'] = 0;
-      $uid['last']['pos'] = 0;
-      $uid['href'][]      = 'last';
+      $uid['last']['uid']    = 0;
+      $uid['last']['pos']    = 0;
+      $uid['last']['label']  = $this->pObj->cObj->cObjGetSingle
+                                (
+                                  $conf_labelling['item_last'],
+                                  $conf_labelling['item_last.']
+                                );
+      $uid['a_tag'][]        = $uid['last']['label'];
     }
     
     $record_browser = '<pre>' . var_export($uid, true) . '</pre>';
 
-    $record_browser = implode(' | ', $uid['href']);
+    $record_browser = implode(' | ', $uid['a_tag']);
 
 
     return $record_browser;

@@ -45,7 +45,7 @@
 *  114:     function session_marker($arr_tsConf, $elements)
 *
 *              SECTION: Markers
-*  178:     function substitute_marker($arr_multi_dimensional)
+*  178:     function substitute_tablefield_marker($arr_multi_dimensional)
 *  400:     function substitute_marker_recurs($arr_multi_dimensional, $elements)
 *  715:     function extend_marker_wi_pivars($markerArray)
 *
@@ -168,17 +168,17 @@
 
 
   /**
- * substitute_marker(): Replace all markers in a multi-dimensional array like an TypoScript array with the real values from the SQL result
- * The method extends the SQL result with all piVar values. ###CHASH### has a process.
- * 
- * This method should supersede the deprecated method substitute_marker_recursive () 
+ * substitute_tablefield_marker(): Replace all markers in a multi-dimensional array like an TypoScript array with the real 
+ *                      values from the SQL result
+ *                      * The method extends the SQL result with all piVar values. ###CHASH### has a process.
+ *                      * This method should supersede the deprecated method substitute_marker_recursive () 
  *
  * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
  * @param array   $elements: The current row of the SQL result
  * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
  * @version 3.6.2
  */
-  function substitute_marker($arr_multi_dimensional)
+  function substitute_tablefield_marker($arr_multi_dimensional)
   {
     $conf     = $this->pObj->conf;
     $elements = $this->pObj->elements;
@@ -392,7 +392,7 @@
 
 
   /**
- * [DEPRECATED] Use substitute_marker()
+ * [DEPRECATED] Use substitute_tablefield_marker()
  *
  * substitute_marker_recurs(): Replace all markers in a multi-dimensional array like an TypoScript array with the real values from the SQL result
  * The method extends the SQL result with all piVar values. ###CHASH### has a process.
@@ -406,7 +406,7 @@
   {
 
       // 110312, dwildt
-    //return $this->substitute_marker($arr_multi_dimensional);
+    //return $this->substitute_tablefield_marker($arr_multi_dimensional);
 
     $conf       = $this->pObj->conf;
     $conf_view  = $this->pObj->conf['views.'][$this->pObj->view.'.'][$this->pObj->piVar_mode.'.'];
