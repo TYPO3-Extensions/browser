@@ -369,7 +369,7 @@ plugin.tx_browser_pi1 {
             // Current item of the record browser
           item_curr = TEXT
           item_curr {
-            value = <span class="ui-icon ui-icon-seek-home" style="float: left;margin: 0 4px;"></span>
+            value = <span class="ui-icon ui-icon-home" style="float: left;margin: 0 4px;"></span>
           }
             // Next item of the record browser
           item_next = TEXT
