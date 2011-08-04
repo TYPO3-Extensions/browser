@@ -55,6 +55,7 @@
           <onChange>reload</onChange>
           <config>
             <type>select</type>
+            <selicon_cols>3<selicon_cols>
             <items type="array">
               <numIndex index="0" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.blitzer</numIndex>
