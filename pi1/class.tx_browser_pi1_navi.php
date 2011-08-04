@@ -2069,10 +2069,10 @@ class tx_browser_pi1_navi
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Get labelling configuration array
+      // Get labeling configuration array
 
-    $conf_labelling = $conf_record_browser['labelling.']['typoscript.'];
-      // Get labelling configuration array
+    $conf_labeling = $conf_record_browser['labeling.']['typoscript.'];
+      // Get labeling configuration array
 
 
 
@@ -2094,16 +2094,16 @@ class tx_browser_pi1_navi
         $item_name = $conf_record_browser['wrapper.']['items.']['first'];
         $item_conf = $conf_record_browser['wrapper.']['items.']['first.'];
 
-          // Set item label: If value is empty, take it from labelling.
+          // Set item label: If value is empty, take it from labeling.
         if(empty($item_conf['value']))
         {
           $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
                                 (
-                                  $conf_labelling['item_first'],
-                                  $conf_labelling['item_first.']
+                                  $conf_labeling['item_first'],
+                                  $conf_labeling['item_first.']
                                 );
         }
-          // Set item label: If value is empty, take it from labelling.
+          // Set item label: If value is empty, take it from labeling.
 
           // Set and replace markers
         $marker['###RECORD_UID###'] = $row_uid;
@@ -2125,8 +2125,8 @@ class tx_browser_pi1_navi
         {
           $arr_items[] =  $this->pObj->cObj->cObjGetSingle
                           (
-                            $conf_labelling['item_first'],
-                            $conf_labelling['item_first.']
+                            $conf_labeling['item_first'],
+                            $conf_labeling['item_first.']
                           );
         }
       }
@@ -2145,16 +2145,16 @@ class tx_browser_pi1_navi
       $item_name = $conf_record_browser['wrapper.']['items.']['prev'];
       $item_conf = $conf_record_browser['wrapper.']['items.']['prev.'];
 
-        // Set item label: If value is empty, take it from labelling.
+        // Set item label: If value is empty, take it from labeling.
       if(empty($item_conf['value']))
       {
         $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
                               (
-                                $conf_labelling['item_prev'],
-                                $conf_labelling['item_prev.']
+                                $conf_labeling['item_prev'],
+                                $conf_labeling['item_prev.']
                               );
       }
-        // Set item label: If value is empty, take it from labelling.
+        // Set item label: If value is empty, take it from labeling.
 
         // Set and replace markers
       $marker['###RECORD_UID###'] = $row_uid;
@@ -2176,8 +2176,8 @@ class tx_browser_pi1_navi
       {
         $arr_items[] =  $this->pObj->cObj->cObjGetSingle
                         (
-                          $conf_labelling['item_prev'],
-                          $conf_labelling['item_prev.']
+                          $conf_labeling['item_prev'],
+                          $conf_labeling['item_prev.']
                         );
       }
     }
@@ -2193,16 +2193,16 @@ class tx_browser_pi1_navi
     $item_name = $conf_record_browser['wrapper.']['items.']['curr'];
     $item_conf = $conf_record_browser['wrapper.']['items.']['curr.'];
 
-      // Set item label: If value is empty, take it from labelling.
+      // Set item label: If value is empty, take it from labeling.
     if(empty($item_conf['value']))
     {
       $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
                             (
-                              $conf_labelling['item_curr'],
-                              $conf_labelling['item_curr.']
+                              $conf_labeling['item_curr'],
+                              $conf_labeling['item_curr.']
                             );
     }
-      // Set item label: If value is empty, take it from labelling.
+      // Set item label: If value is empty, take it from labeling.
 
       // Set and replace markers
     $marker['###RECORD_UID###'] = $row_uid;
@@ -2230,16 +2230,16 @@ class tx_browser_pi1_navi
       $item_name = $conf_record_browser['wrapper.']['items.']['next'];
       $item_conf = $conf_record_browser['wrapper.']['items.']['next.'];
 
-        // Set item label: If value is empty, take it from labelling.
+        // Set item label: If value is empty, take it from labeling.
       if(empty($item_conf['value']))
       {
         $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
                               (
-                                $conf_labelling['item_next'],
-                                $conf_labelling['item_next.']
+                                $conf_labeling['item_next'],
+                                $conf_labeling['item_next.']
                               );
       }
-        // Set item label: If value is empty, take it from labelling.
+        // Set item label: If value is empty, take it from labeling.
 
         // Set and replace markers
       $marker['###RECORD_UID###'] = $row_uid;
@@ -2261,8 +2261,8 @@ class tx_browser_pi1_navi
       {
         $arr_items[] =  $this->pObj->cObj->cObjGetSingle
                         (
-                          $conf_labelling['item_next'],
-                          $conf_labelling['item_next.']
+                          $conf_labeling['item_next'],
+                          $conf_labeling['item_next.']
                         );
       }
     }
@@ -2282,16 +2282,16 @@ class tx_browser_pi1_navi
         $item_name = $conf_record_browser['wrapper.']['items.']['last'];
         $item_conf = $conf_record_browser['wrapper.']['items.']['last.'];
 
-          // Set item label: If value is empty, take it from labelling.
+          // Set item label: If value is empty, take it from labeling.
         if(empty($item_conf['value']))
         {
           $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
                                 (
-                                  $conf_labelling['item_last'],
-                                  $conf_labelling['item_last.']
+                                  $conf_labeling['item_last'],
+                                  $conf_labeling['item_last.']
                                 );
         }
-          // Set item label: If value is empty, take it from labelling.
+          // Set item label: If value is empty, take it from labeling.
 
           // Set and replace markers
         $marker['###RECORD_UID###'] = $row_uid;
@@ -2313,8 +2313,8 @@ class tx_browser_pi1_navi
         {
           $arr_items[] =  $this->pObj->cObj->cObjGetSingle
                           (
-                            $conf_labelling['item_last'],
-                            $conf_labelling['item_last.']
+                            $conf_labeling['item_last'],
+                            $conf_labeling['item_last.']
                           );
         }
       }
