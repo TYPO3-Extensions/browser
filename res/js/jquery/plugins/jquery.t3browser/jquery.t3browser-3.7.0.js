@@ -40,3 +40,15 @@ $('div').tooltip({  // calls the init method
 });
 $('div').tooltip('hide'); // calls the hide method
 $('div').tooltip('update', 'This is the new tooltip content!'); // calls the update method
+
+$(document).ready(function() {
+
+  $("#form_tabs-0-reset").click( function(e)
+    {
+      $("#error_container:visible ol li").slideUp("fast");
+      $("#error_container:visible").slideUp("fast");
+      $("#prompt_container:visible p label").slideUp("fast");
+      $("#prompt_container:visible").slideUp("fast");
+    }
+  );
+});
