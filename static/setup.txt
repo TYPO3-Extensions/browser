@@ -297,7 +297,7 @@ plugin.tx_browser_pi1 {
           first {
               // [STRING] empty (default): empty value will allocated while runtime. See labeling below.
             value =
-            wrap  = <li id="c###TT_CONTENT.UID###-record-browser-first" class="ui-state-default ui-corner-all" style="cursor: pointer;float: left;list-style: none outside none;margin: 2px;padding: 4px 0;position: relative;">|</li>
+            wrap  = <li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-record-browser" style="cursor: pointer;float: left;list-style: none outside none;margin: 2px;padding: 4px 0;position: relative;">|</li>
             typolink {
               parameter = {page:uid} - - ###RECORD_POSITION###/###RECORD_SUM###
               parameter {
@@ -308,26 +308,17 @@ plugin.tx_browser_pi1 {
           }
             // Previous item of the record browser
           prev < .first
-	  prev {
-            wrap  = <li id="c###TT_CONTENT.UID###-record-browser-prev" class="ui-state-default ui-corner-all" style="cursor: pointer;float: left;list-style: none outside none;margin: 2px;padding: 4px 0;position: relative;">|</li>
-	  }
             // Current item of the record browser
           curr = TEXT
           curr {
               // [STRING] empty (default): empty value will allocated while runtime. See labeling below.
             value =
-            wrap  = <li id="c###TT_CONTENT.UID###-record-browser-curr" class="ui-state-default ui-corner-all" style="cursor: pointer;float: left;list-style: none outside none;margin: 2px;padding: 4px 0;position: relative;">|</li>
+            wrap  = <li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-record-browser" style="cursor: pointer;float: left;list-style: none outside none;margin: 2px;padding: 4px 0;position: relative;">|</li>
           }
             // Next item of the record browser
           next < .first
-	  next {
-            wrap  = <li id="c###TT_CONTENT.UID###-record-browser-next" class="ui-state-default ui-corner-all" style="cursor: pointer;float: left;list-style: none outside none;margin: 2px;padding: 4px 0;position: relative;">|</li>
-	  }
             // Last item of the record browser
           last < .first
-	  last {
-            wrap  = <li id="c###TT_CONTENT.UID###-record-browser-last" class="ui-state-default ui-corner-all" style="cursor: pointer;float: left;list-style: none outside none;margin: 2px;padding: 4px 0;position: relative;">|</li>
-	  }
         }
       }
       labeling {
