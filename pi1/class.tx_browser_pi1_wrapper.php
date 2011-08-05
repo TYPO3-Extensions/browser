@@ -27,9 +27,10 @@
 *
 * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
 * @package    TYPO3
-* @subpackage    tx_browser
+* @subpackage    browser
 *
-* @version 3.6.1
+* @version 3.7.0
+* @since 3.0.0
 */
 
   /**
@@ -1137,6 +1138,34 @@ class tx_browser_pi1_wrapper
 
 
 
+
+
+
+
+
+  /**
+ * wrapInBaseIdClass: Wrap the given content with a div-tag and the properties id and class.
+ *                    id i.e    : id="c2794-tx-browser-pi1"
+ *                    class i.e : class="c2794-tx-browser-pi1"
+ *                    Method is added with #28562
+ *
+ * @param string    $content: the content which will be wrapped
+ * @return  string    the wrapped content
+ * 
+ * @version 3.7.0
+ * @since 3.7.0
+ */
+  function wrapInBaseIdClass($content)
+  {
+    $local_prefixId = str_replace('_', '-', $this->pObj->prefixId);
+    $id             = 'id="c' . $this->pObj->cObj->data['uid'] . '-' . $local_prefixId . '"';
+    $class          = 'class="' . $local_prefixId . '"';
+    
+    $wrap['start']  = '<div ' . $id . ' ' . $class . '">';
+    $wrap['end']    = '</div>';
+    
+    return $wrap['start'] . $content . $wrap['end'];
+  }
 
 
 
