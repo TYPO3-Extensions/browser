@@ -1158,10 +1158,10 @@ class tx_browser_pi1_wrapper
   function wrapInBaseIdClass($content)
   {
     $local_prefixId = str_replace('_', '-', $this->pObj->prefixId);
-    $id             = 'id="c' . $this->pObj->cObj->data['uid'] . '-' . $local_prefixId . '"';
-    $class          = 'class="' . $local_prefixId . '"';
+    $id             = ' id="c' . $this->pObj->cObj->data['uid'] . '-' . $local_prefixId . '"';
+    $class          = ' class="' . $local_prefixId . '"';
     
-    $wrap['start']  = '<div ' . $id . ' ' . $class . '">';
+    $wrap['start']  = '<div' . $id . $class . '>';
     $wrap['end']    = '</div>';
     
     return $wrap['start'] . $content . $wrap['end'];
