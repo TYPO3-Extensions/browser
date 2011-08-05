@@ -297,9 +297,9 @@ plugin.tx_browser_pi1 {
           first {
               // [STRING] empty (default): empty value will allocated while runtime. See labeling below.
             value =
-            wrap  = <li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-record-browser" style="cursor: pointer;float: left;list-style: none outside none;margin: 2px;padding: 4px 0;position: relative;">|</li>
+            wrap  = <li class="ui-state-default ui-corner-all" style="cursor: pointer;float: left;list-style: none outside none;margin: 2px;padding: 4px 0;position: relative;">|</li>
             typolink {
-              parameter = {page:uid} - - ###RECORD_POSITION###/###RECORD_SUM###
+              parameter = {page:uid} - c###TT_CONTENT.UID###-record-browser ###RECORD_POSITION###/###RECORD_SUM###
               parameter {
                 insertData = 1
               }

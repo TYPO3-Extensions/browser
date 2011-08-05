@@ -59,9 +59,12 @@ $(document).ready(function() {
 
   $(".c2479-record-browser").click(
     function(e) {
-      e.preventDefault(); 
+      e.preventDefault();
 //      $(".c2479-record-browser").t3browser('update', "#c2479-singleview-1");
-      $(this).t3browser('update', "#c2479-singleview-1");
+      $(this).t3browser('update', "#c2479-singleview-1", "test");
+      alert($(this).attr("class"));
+      alert($(this).attr("href"));
+      alert($(this).parent().attr("class"));
     }
   );
 });
