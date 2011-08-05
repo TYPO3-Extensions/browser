@@ -2218,6 +2218,17 @@ plugin.tx_browser_pi1 {
           }
         }
       }
+        // [PAGE] page object
+      jQuery = PAGE
+      jQuery {
+        typeNum = 28562
+        config {
+          disableAllHeaderCode  = 1
+          xhtml_cleaning        = 0
+          admPanel              = 0
+        }
+        10 < styles.content.get
+      }
     }
     general {
         // [STRING] Path to Javascript file general methods

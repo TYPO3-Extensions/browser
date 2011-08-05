@@ -1617,8 +1617,10 @@ class tx_browser_pi1_template
     //
     // Replace VIEW and MODE
 
-    $markerArray['###MODE###']  = $this->mode;
-    $markerArray['###VIEW###']  = $this->pObj->view;
+    $markerArray['###MODE###']            = $this->mode;
+    $markerArray['###VIEW###']            = $this->pObj->view;
+      // #28562, DWILDT, 110805 +
+    $markerArray['###TT_CONTENT.UID###']  = $this->pObj->cObj->data['uid'];
     // Replace VIEW and MODE
 
 
