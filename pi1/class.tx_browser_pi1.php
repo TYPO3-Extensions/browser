@@ -575,7 +575,7 @@ class tx_browser_pi1 extends tslib_pibase {
       }
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
       // return $this->pi_wrapInBaseClass($prompt);
-      return $html_updateCheck.$this->objMarker->wrapInBaseIdClass($prompt);
+      return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($prompt);
     }
     $this->str_template_raw = $arr_result['data']['template'];
     unset($arr_result);
@@ -590,8 +590,8 @@ class tx_browser_pi1 extends tslib_pibase {
     $arr_result = $this->objNavi->prepaireModeSelector();
     if ($arr_result['error']['status']) {
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
-      return $this->objMarker->wrapInBaseIdClass($prompt);
-      //return $html_updateCheck.$this->objMarker->wrapInBaseIdClass($prompt);
+      return $this->objWrapper->wrapInBaseIdClass($prompt);
+      //return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($prompt);
     }
     $this->arrModeItems = $arr_result['data'];
     unset($arr_result);
@@ -639,7 +639,7 @@ class tx_browser_pi1 extends tslib_pibase {
       }
       $prompt = '<h1 style="color:red;">'.$this->pi_getLL('error_readlog_h1').'</h1>
            <p style="color:red;font-weight:bold;">'.$this->pi_getLL('error_table_no').'</p>';
-      return $html_updateCheck.$this->objMarker->wrapInBaseIdClass($prompt);
+      return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($prompt);
     }
       // Get the local table uid field name and pid name
 
@@ -676,7 +676,7 @@ class tx_browser_pi1 extends tslib_pibase {
     if ($arr_result['error']['status'])
     {
       $template = $arr_result['error']['header'].$arr_result['error']['prompt'];
-      return $html_updateCheck.$this->objMarker->wrapInBaseIdClass($template);
+      return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($template);
     }
       // RETURN error
 
@@ -777,15 +777,15 @@ class tx_browser_pi1 extends tslib_pibase {
       if($str_template_completed['error']['status'] == true)
       {
         $prompt = $str_template_completed['error']['header'].$str_template_completed['error']['prompt'];
-        // return $this->objMarker->wrapInBaseIdClass($prompt);
-        return $html_updateCheck.$this->objMarker->wrapInBaseIdClass($prompt);
+        // return $this->objWrapper->wrapInBaseIdClass($prompt);
+        return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($prompt);
       }
       else
       {
         $prompt = '<h1 style="color:red;">'.$this->pi_getLL('error_h1').'</h1>
             <p style="color:red;font-weight:bold;">'.$this->pi_getLL('error_template_array').'</p>';
-        // return $this->objMarker->wrapInBaseIdClass($prompt);
-        return $html_updateCheck.$this->objMarker->wrapInBaseIdClass($prompt);
+        // return $this->objWrapper->wrapInBaseIdClass($prompt);
+        return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($prompt);
       }
     }
       // Error, if the completed template is an array and has the element error.status
@@ -812,8 +812,8 @@ class tx_browser_pi1 extends tslib_pibase {
       }
       $prompt = '<h1 style="color:red;">'.$this->pi_getLL('error_h1').'</h1>
           <p style="color:red;font-weight:bold;">'.$this->pi_getLL('error_template_render').'</p>';
-      // return $this->objMarker->wrapInBaseIdClass($prompt);
-      return $html_updateCheck.$this->objMarker->wrapInBaseIdClass($prompt);
+      // return $this->objWrapper->wrapInBaseIdClass($prompt);
+      return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($prompt);
     }
       // Error, if the completed template is the raw template
 
@@ -964,7 +964,7 @@ class tx_browser_pi1 extends tslib_pibase {
         break;
       case(true):
       default:
-        return $html_updateCheck.$this->objMarker->wrapInBaseIdClass($str_template_completed);
+        return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($str_template_completed);
     }
   }
 
