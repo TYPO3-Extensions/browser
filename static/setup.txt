@@ -1817,13 +1817,13 @@ plugin.tx_browser_pi1 {
       plugins {
 	t3browser {
             // [STRING] Path to the library of the t3browser plugin
-          library = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-3.7.0.js
+          library = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.1.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
           }
             // [STRING] Path to the CSS of the t3browser plugin
-          css     = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-3.7.0.css
+          css     = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.1.css
           css {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0

@@ -1,5 +1,5 @@
 /**
- * jQuery t3_browser Plugin 3.7.0
+ * jQuery t3_browser Plugin 0.0.1
  *
  * http://docs.jquery.com/Plugins/t3browser
  *
@@ -14,29 +14,29 @@
 ;(function( $ ){
   
   var methods = {
-    init : 	function( options ) 
-		{
-		  // THIS
-		},
-    show : 	function( )
-		{
-		    // IS
-		},
-    hide : 	function( )
-		{
-		   // GOOD
-		},
-    update : 	function( id )
-		{
-		  //e.preventDefault();
-		  $(id).slideUp("slow");
-		  $(id).slideDown("slow");
-		}
+    init :    function( options ) 
+              {
+              },
+    show :    function( )
+              {
+              },
+    hide :    function( )
+              {
+              },
+    update :  function( id, url )
+              {
+                //$(id).slideUp("slow");
+                // alert(href);
+                //location.href = url;
+                $.get(url, function(data){
+                  alert("Data Loaded: " + data);
+                });
+              }
   };
   
   $.fn.t3browser = function( method ) {
     
-    // Method calling logic
+      // Method calling logic
     if ( methods[method] ) {
       return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
     } else if ( typeof method === 'object' || ! method ) {
@@ -48,23 +48,16 @@
   };
 })( jQuery );
 
-//$('div').tooltip(); // calls the init method
-//$('div').tooltip({  // calls the init method
-//  foo : 'bar'
-//});
-//$('div').tooltip('hide'); // calls the hide method
-//$('div').tooltip('update', 'This is the new tooltip content!'); // calls the update method
 
 $(document).ready(function() {
 
+    // User has clicked on an item of the record browser inside of the content element with the uid 2479
   $(".c2479-record-browser").click(
     function(e) {
+        // Don't execute the click
       e.preventDefault();
-//      $(".c2479-record-browser").t3browser('update', "#c2479-singleview-1");
-      $(this).t3browser('update', "#c2479-singleview-1", "test");
-      alert($(this).attr("class"));
-      alert($(this).attr("href"));
-      alert($(this).parent().attr("class"));
+        // Update the content with the id #c2479-singleview-1
+      $(this).t3browser('update', "#c2479-singleview-1", $(this).attr("href") + "?type=28562");
     }
   );
 });
