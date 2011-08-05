@@ -14,13 +14,27 @@
 ;(function( $ ){
   
   var methods = {
-    init : function( options ) { // THIS },
-    show : function( ) { // IS   },
-    hide : function( ) { // GOOD },
-    update : function( content ) { // !!! }
+    init : 	function( options ) 
+		{
+		  // THIS
+		},
+    show : 	function( )
+		{
+		    // IS
+		},
+    hide : 	function( )
+		{
+		   // GOOD
+		},
+    update : 	function( id )
+		{
+		  //e.preventDefault();
+		  $(id).slideUp("slow");
+		  $(id).slideUp("slow");
+		}
   };
   
-  $.fn.tooltip = function( method ) {
+  $.fn.t3browser = function( method ) {
     
     // Method calling logic
     if ( methods[method] ) {
@@ -34,21 +48,15 @@
   };
 })( jQuery );
 
-$('div').tooltip(); // calls the init method
-$('div').tooltip({  // calls the init method
-  foo : 'bar'
-});
-$('div').tooltip('hide'); // calls the hide method
-$('div').tooltip('update', 'This is the new tooltip content!'); // calls the update method
+//$('div').tooltip(); // calls the init method
+//$('div').tooltip({  // calls the init method
+//  foo : 'bar'
+//});
+//$('div').tooltip('hide'); // calls the hide method
+//$('div').tooltip('update', 'This is the new tooltip content!'); // calls the update method
 
 $(document).ready(function() {
 
-  $("#form_tabs-0-reset").click( function(e)
-    {
-      $("#error_container:visible ol li").slideUp("fast");
-      $("#error_container:visible").slideUp("fast");
-      $("#prompt_container:visible p label").slideUp("fast");
-      $("#prompt_container:visible").slideUp("fast");
-    }
-  );
+  $(".c2479-record-browser").click( function(e) { e.preventDefault(); }).t3browser('update', "#c2479-singleview-1");
+  //$(".c2479-record-browser").t3browser('update', "#c2479-singleview-1");
 });

@@ -1814,9 +1814,25 @@ plugin.tx_browser_pi1 {
           // [Boolean] 0 (default): link to the script file, 1: include the script inline
         inline = 0
       }
+      plugins {
+	t3browser {
+            // [STRING] Path to the library of the t3browser plugin
+          library = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-3.7.0.js
+          library {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+            // [STRING] Path to the CSS of the t3browser plugin
+          css     = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-3.7.0.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+	}
+      }
       ui {
         black_tie {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -1830,7 +1846,7 @@ plugin.tx_browser_pi1 {
           }
         }
         blitzer {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -1844,7 +1860,7 @@ plugin.tx_browser_pi1 {
           }
         }
         cupertino {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -1858,7 +1874,7 @@ plugin.tx_browser_pi1 {
           }
         }
         dark_hive {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -1872,7 +1888,7 @@ plugin.tx_browser_pi1 {
           }
         }
         darkness {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -1886,7 +1902,7 @@ plugin.tx_browser_pi1 {
           }
         }
         dot_luv {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -1900,7 +1916,7 @@ plugin.tx_browser_pi1 {
           }
         }
         eggplant {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -1914,7 +1930,7 @@ plugin.tx_browser_pi1 {
           }
         }
         excite_bike {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -1928,7 +1944,7 @@ plugin.tx_browser_pi1 {
           }
         }
         flick {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -1942,7 +1958,7 @@ plugin.tx_browser_pi1 {
           }
         }
         hot_sneaks {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -1956,7 +1972,7 @@ plugin.tx_browser_pi1 {
           }
         }
         humanity {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -1970,7 +1986,7 @@ plugin.tx_browser_pi1 {
           }
         }
         le_frog {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -1984,7 +2000,7 @@ plugin.tx_browser_pi1 {
           }
         }
         lightness {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -1998,7 +2014,7 @@ plugin.tx_browser_pi1 {
           }
         }
         mint_choc {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -2012,7 +2028,7 @@ plugin.tx_browser_pi1 {
           }
         }
         netzmacher {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -2026,7 +2042,7 @@ plugin.tx_browser_pi1 {
           }
         }
         overcast {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -2040,7 +2056,7 @@ plugin.tx_browser_pi1 {
           }
         }
         pepper_grinder {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -2054,7 +2070,7 @@ plugin.tx_browser_pi1 {
           }
         }
         redmond {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -2068,7 +2084,7 @@ plugin.tx_browser_pi1 {
           }
         }
         smoothness {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -2082,7 +2098,7 @@ plugin.tx_browser_pi1 {
           }
         }
         south_street {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -2096,7 +2112,7 @@ plugin.tx_browser_pi1 {
           }
         }
         start {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -2110,7 +2126,7 @@ plugin.tx_browser_pi1 {
           }
         }
         sunny {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -2124,7 +2140,7 @@ plugin.tx_browser_pi1 {
           }
         }
         swanky_purse {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -2138,7 +2154,7 @@ plugin.tx_browser_pi1 {
           }
         }
         trontastic {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
@@ -2152,7 +2168,7 @@ plugin.tx_browser_pi1 {
           }
         }
         vader {
-            // [STRING] Path to the library of the user interface (ui). By default: all features!
+            // [STRING] Path to the library of the user interface (ui). All features are enabled in this script file!
           library = EXT:browser/res/js/jquery/ui/jquery-ui-1.8.14.custom.min.js
           library {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
