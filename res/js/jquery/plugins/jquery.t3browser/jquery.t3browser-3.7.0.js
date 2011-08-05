@@ -30,7 +30,7 @@
 		{
 		  //e.preventDefault();
 		  $(id).slideUp("slow");
-		  $(id).slideUp("slow");
+		  $(id).slideDown("slow");
 		}
   };
   
@@ -57,6 +57,11 @@
 
 $(document).ready(function() {
 
-  $(".c2479-record-browser").click( function(e) { e.preventDefault(); }).t3browser('update', "#c2479-singleview-1");
-  //$(".c2479-record-browser").t3browser('update', "#c2479-singleview-1");
+  $(".c2479-record-browser").click(
+    function(e) {
+      e.preventDefault(); 
+//      $(".c2479-record-browser").t3browser('update', "#c2479-singleview-1");
+      $(this).t3browser('update', "#c2479-singleview-1");
+    }
+  );
 });
