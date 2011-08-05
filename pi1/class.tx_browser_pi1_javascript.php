@@ -817,7 +817,7 @@ class tx_browser_pi1_javascript
 
       $name         = 'jquery_plugins_t3browser_library';
       $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library'];
-      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library']['inline'];
+      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library.']['inline'];
       $path_tsConf  = 'javascript.jquery.plugins.t3browser.library';
       $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
 
