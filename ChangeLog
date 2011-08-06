@@ -2,19 +2,18 @@
   110801, 110729
   New Feature
   * #28562: Integration of the completely UI (User Interface) 1.8.14 from http://jqueryui.com/themeroller/
-            * single views got the marker ###RECORD_BROWSER### in the HTML templates
   * #27041: Record browser for the single view / Prev-next Switcher in the single view
+            * single views got the marker ###RECORD_BROWSER### in the HTML templates
+            * Changes in TypoScript
+                      * a-z_Browser   moved to navigation.a-z_Browser
+                      * modeSelector  moved to navigation.modeSelector
+                      * pageBrowser   moved to navigation.pageBrowser
+                      * plugin        moved to flexform
   * #28657: Development feature: Make empty markers replaceable
-  Improvements
-  * #00000: Changes in TypoScript
-            * a-z_Browser   moved to navigation.a-z_Browser
-            * modeSelector  moved to navigation.modeSelector
-            * pageBrowser   moved to navigation.pageBrowser
-            * plugin        moved to flexform
   Update
   * #00000  jQuery library 1.6 -> 1.6.2
-  Development
-  * #00000: substitute_marker() is moved to substitute_tablefield_marker()
+  Miscellaneous
+  * #00000: PHP: substitute_marker() is moved to substitute_tablefield_marker()
   
 3.6.6
   110726
