@@ -1991,6 +1991,10 @@ plugin.tx_browser_pi1 {
                   returnLast = url
                 }
               }
+              typenum = TEXT
+              typenum {
+                value = {$plugin.tx_browser_pi1.typeNum.ajaxPageObj}
+              }
             }
           }
         }
