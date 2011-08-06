@@ -118,10 +118,10 @@
           </config>
         </TCEforms>
       </jquery_plugins.t3browser>
-      <jquery_plugins.t3browser.own.path>
+      <jquery_plugins.t3browser.own.plugin>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.own.path</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.own.plugin</label>
           <displayCond>FIELD:jquery_plugins.t3browser:IN:own</displayCond>
           <config>
             <type>group</type>
@@ -134,7 +134,24 @@
             <uploadfolder>uploads/tx_browser/</uploadfolder>
           </config>
         </TCEforms>
-      </jquery_plugins.t3browser.own.path>
+      </jquery_plugins.t3browser.own.plugin>
+      <jquery_plugins.t3browser.own.library>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.own.library</label>
+          <displayCond>FIELD:jquery_plugins.t3browser:IN:own</displayCond>
+          <config>
+            <type>group</type>
+            <internal_type>file</internal_type>
+            <allowed>js,jss</allowed>
+            <max_items>1</max_items>
+            <max_size>100</max_size>
+            <size>1</size>
+            <selectedListStyle>width:400px;</selectedListStyle>
+            <uploadfolder>uploads/tx_browser/</uploadfolder>
+          </config>
+        </TCEforms>
+      </jquery_plugins.t3browser.own.library>
       <browser_libraries>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries</label>

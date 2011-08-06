@@ -765,21 +765,35 @@ class tx_browser_pi1_javascript
   {
       //////////////////////////////////////////////////////////////////////
       //
-      // jquery_ui_css
+      // css_browser
 
-    if ($this->pObj->objFlexform->bool_jquery_ui)
+    if ($this->pObj->objFlexform->bool_css_browser)
     {
-      $name         = 'jquery_ui_library_css';
-      $path         = $this->pObj->conf['javascript.']['jquery.']['ui.']['typoscript.']['css'];
-      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['ui.']['typoscript.']['css.']['inline'];
-      $path_tsConf  = 'javascript.jquery.ui.typoscript.css';
+      $name         = 'css_browser';
+      $path         = $this->pObj->conf['template.']['css.']['browser'];
+      $bool_inline  = $this->pObj->conf['template.']['css.']['browser.']['inline'];
+      $path_tsConf  = 'template.css.browser';
   
       $this->addFile($path, false, $name, $path_tsConf, 'css', $bool_inline);
     }
-      // jquery_ui_css
+      // css_browser
 
 
 
+      //////////////////////////////////////////////////////////////////////
+      //
+      // css_jquery_ui
+
+    if ($this->pObj->objFlexform->bool_css_jqui)
+    {
+      $name         = 'css_jquery_ui';
+      $path         = $this->pObj->conf['template.']['css.']['jquery_ui'];
+      $bool_inline  = $this->pObj->conf['template.']['css.']['jquery_ui.']['inline'];
+      $path_tsConf  = 'template.css.jquery_ui';
+  
+      $this->addFile($path, false, $name, $path_tsConf, 'css', $bool_inline);
+    }
+      // css_jquery_ui
   }
 
 
@@ -801,25 +815,39 @@ class tx_browser_pi1_javascript
   {
       //////////////////////////////////////////////////////////////////////
       //
-      // jquery_ui_library
+      // jquery_ui
 
     if ($this->pObj->objFlexform->bool_jquery_ui)
     {
       $name         = 'jquery_ui_library';
-      $path         = $this->pObj->conf['javascript.']['jquery.']['ui.']['typoscript.']['library'];
-      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['ui.']['typoscript.']['library.']['inline'];
+      $path         = $this->pObj->conf['javascript.']['jquery.']['ui'];
+      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['ui.']['inline'];
       $path_tsConf  = 'javascript.jquery.ui.typoscript.library';
       $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
     }
-      // jquery_ui_library
+      // jquery_ui
 
 
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // jquery_plugins_t3browser
+
+    if ($this->pObj->objFlexform->bool_jquery_plugins_t3browser)
+    {
+      $name         = 'jquery_plugins_t3browser_plugin';
+      $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin'];
+      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin.']['inline'];
+      $path_tsConf  = 'javascript.jquery.plugins.t3browser.plugin';
+      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
 
       $name         = 'jquery_plugins_t3browser_library';
       $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library'];
       $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library.']['inline'];
       $path_tsConf  = 'javascript.jquery.plugins.t3browser.library';
       $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+    }
+      // jquery_plugins_t3browser
 
 
 
