@@ -855,6 +855,7 @@ class tx_browser_pi1_javascript
         {
             // I.e. $key_conf_marker is 'title.', but we like the marker name without any dot
           $str_marker             = substr($key_conf_marker, 0, strlen($key_conf_marker) -1);
+          $conf_marker[$str_marker . '.'] = $this->pObj->objMarker->substitute_marker($conf_marker[$str_marker . '.'], (array) $marker);
           $hashKeyMarker          = '###'.strtoupper($str_marker).'###';
           $marker[$hashKeyMarker] = $this->pObj->cObj->cObjGetSingle
                                     (
