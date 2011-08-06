@@ -501,6 +501,7 @@ class tx_browser_pi1_backend
         $lang = 'default';
     }
     require_once('flexform_locallang.php');
+var_dump($LOCAL_LANG);
     $arr_lang = $LOCAL_LANG[$lang];
     $this->ll_oneDimension = t3lib_BEfunc::implodeTSParams($arr_lang);
     
