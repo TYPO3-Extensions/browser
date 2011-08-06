@@ -861,10 +861,10 @@ class tx_browser_pi1_javascript
                                       $conf_marker[$str_marker],
                                       $conf_marker[$str_marker . '.']
                                     );
+          $inline_jss = str_replace($hashKeyMarker, $marker[$hashKeyMarker], $inline_jss);
         }
       }
-echo '<pre>' . var_export($marker, true) . '</pre>';
-      $inline_jss = $this->pObj->objMarker->substitute_marker($inline_jss, $marker);
+//echo '<pre>' . var_export($marker, true) . '</pre>';
       $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
     }
       // jquery_plugins_t3browser
