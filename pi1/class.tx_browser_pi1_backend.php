@@ -439,6 +439,8 @@ class tx_browser_pi1_backend
       return $arr_pluginConf;
     }
     
+      // Init the one dimensional language array
+    $this->getLL();
     var_dump($this->ll_oneDimension);
 
       // TypoScript configuration for jquery_ui
