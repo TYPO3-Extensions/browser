@@ -57,6 +57,21 @@
             <type>select</type>
             <selicon_cols>7</selicon_cols>
             <items type="array">
+              <numIndex index="100" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.z_configured</numIndex>
+                <numIndex index="1">z_configured</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/my_ui.gif</numIndex>
+              </numIndex>
+              <numIndex index="101" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.z_none</numIndex>
+                <numIndex index="1">z_none</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/dont_embed_it.gif</numIndex>
+              </numIndex>
+              <numIndex index="102" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.z_ts</numIndex>
+                <numIndex index="1">z_ts</numIndex>
+                <numIndex index="2">EXT:browser/res/images/jQuery/typoscript.gif</numIndex>
+              </numIndex>
               <numIndex index="0" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.black_tie</numIndex>
                 <numIndex index="1">black_tie</numIndex>
@@ -172,21 +187,6 @@
                 <numIndex index="1">trontastic</numIndex>
                 <numIndex index="2">EXT:browser/res/images/jQuery/theme_90_trontastic.png</numIndex>
               </numIndex>
-              <numIndex index="100" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.z_configured</numIndex>
-                <numIndex index="1">z_configured</numIndex>
-                <numIndex index="2">EXT:browser/res/images/jQuery/my_ui.gif</numIndex>
-              </numIndex>
-              <numIndex index="101" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.z_none</numIndex>
-                <numIndex index="1">z_none</numIndex>
-                <numIndex index="2">EXT:browser/res/images/jQuery/dont_embed_it.gif</numIndex>
-              </numIndex>
-              <numIndex index="102" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.z_ts</numIndex>
-                <numIndex index="1">z_ts</numIndex>
-                <numIndex index="2">EXT:browser/res/images/jQuery/typoscript.gif</numIndex>
-              </numIndex>
             </items>
             <default>smoothness</default>
             <maxitems>1</maxitems>
@@ -218,6 +218,71 @@
           </config>
         </TCEforms>
       </jquery_ui.z_configured.css>
+      <jquery_plugins.t3browser>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.own</numIndex>
+                <numIndex index="1">own</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.no</numIndex>
+                <numIndex index="1">no</numIndex>
+              </numIndex>
+            </items>
+            <default>ts</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </jquery_plugins.t3browser>
+      <jquery_plugins.t3browser.own.css>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.own.css</label>
+          <displayCond>FIELD:jquery_plugins.t3browser:IN:own</displayCond>
+          <config>
+            <type>input</type>
+            <size>255</size>
+            <eval>trim,required,nospace</eval>
+            <default>EXT:browser/res/js/tx_browser_pi1.js</default>
+          </config>
+        </TCEforms>
+      </jquery_plugins.t3browser.own.css>
+      <jquery_plugins.t3browser.own.plugin>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.own.plugin</label>
+          <displayCond>FIELD:jquery_plugins.t3browser:IN:own</displayCond>
+          <config>
+            <type>input</type>
+            <size>255</size>
+            <eval>trim,required,nospace</eval>
+            <default>EXT:browser/res/js/tx_browser_pi1.js</default>
+          </config>
+        </TCEforms>
+      </jquery_plugins.t3browser.own.plugin>
+      <jquery_plugins.t3browser.own.library>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.own.library</label>
+          <displayCond>FIELD:jquery_plugins.t3browser:IN:own</displayCond>
+          <config>
+            <type>input</type>
+            <size>255</size>
+            <eval>trim,required,nospace</eval>
+            <default>EXT:browser/res/js/tx_browser_pi1.js</default>
+          </config>
+        </TCEforms>
+      </jquery_plugins.t3browser.own.library>
       <browser_libraries>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries</label>

@@ -1,5 +1,5 @@
 /**
- * jQuery t3_browser Plugin 0.0.1
+ * jQuery t3browser Plugin 0.0.1
  *
  * http://docs.jquery.com/Plugins/t3browser
  *
@@ -83,22 +83,3 @@
       // Method calling logic
 
 })( jQuery );
-
-
-$( document ).ready( function( )
-{
-    // User has clicked the record browser
-    // live: Attach a handler to the event for all elements which match the current selector, now and in the future.
-    //       see: http://api.jquery.com/live/
-  $( ".c2479-record-browser" ).live(    
-    'click',
-    function( e ) {
-        // Don't execute the click
-      e.preventDefault( );
-        // Update the content with the id #c2479-singleview-1
-      $( this ).t3browser( 'update', "#c2479-singleview-1", $( this ).attr( "href" ) + "?type=28562 #c2479-singleview-1 > *" );
-    }
-  );
-    // User has clicked the record browser
-
-});

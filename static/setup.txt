@@ -1815,20 +1815,26 @@ plugin.tx_browser_pi1 {
         inline = 0
       }
       plugins {
-	t3browser {
-            // [STRING] Path to the library of the t3browser plugin
-          library = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.1.js
-          library {
-              // [Boolean] 0 (default): link to the script file, 1: include the script inline
-            inline = 0
-          }
+        t3browser {
             // [STRING] Path to the CSS of the t3browser plugin
-          css     = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.1.css
+          css     = EXT:browser/res/tx_browser_pi1.css
           css {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
           }
-	}
+            // [STRING] Path to the library of the t3browser plugin
+          library = EXT:browser/res/js/jquery/tx_browser_pi1.js
+          library {
+              // [Boolean] 0: link to the script file, 1 (default): include the script inline
+            inline = 1
+          }
+            // [STRING] Path to the plugin of the t3browser plugin
+          plugin = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.1.js
+          plugin {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
       }
       ui {
         black_tie {
