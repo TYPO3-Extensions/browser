@@ -60,12 +60,15 @@ class tx_browser_pi1_backend
 
 
 
+    // [Integer] Pid of the current page
   var $pid  = null;
-  // [Integer] Pid of the current page
+    // [Object] Current t3-page object
   var $obj_page = null;
-  // [Object] Current t3-page object
+    // [Object] TypoScript object of current page
   var $obj_TypoScript = null;
-  // [Object] TypoScript object of current page
+    // [Array] one dimensional array with language strings
+  var $ll_oneDimension = null;
+  
 
 
 
@@ -436,7 +439,7 @@ class tx_browser_pi1_backend
       return $arr_pluginConf;
     }
     
-    $this->getLL();
+    var_dump($this->ll_oneDimension);
 
       // TypoScript configuration for jquery_ui
     $arr_jquery_uis = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['templating.']['jquery_ui.'];
@@ -486,7 +489,7 @@ class tx_browser_pi1_backend
  *
  * @return  array   Array of the locallang data
  */
-  function getLL()
+  private function getLL()
   {
     $arr_extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['browser']);
     switch($arr_extConf['LLstatic'])
@@ -498,7 +501,8 @@ class tx_browser_pi1_backend
         $lang = 'default';
     }
     require_once('flexform_locallang.php');
-    var_dump($LOCAL_LANG[$lang]);
+    $arr_lang = $LOCAL_LANG[$lang];
+    $this->ll_oneDimension = t3lib_BEfunc::implodeTSParams($arr_lang);
     
 //    $path2llXml = t3lib_extMgm::extPath('browser').'pi1/locallang.xml';
 //    $llXml      = implode('', file($path2llXml));
@@ -527,7 +531,7 @@ class tx_browser_pi1_backend
  * @since 3.4.5
  * @version 3.4.5
  */
-  function init($arr_pluginConf)
+  private function init($arr_pluginConf)
   {
       // Require classes
     require_once(PATH_t3lib.'class.t3lib_page.php');
@@ -545,6 +549,9 @@ class tx_browser_pi1_backend
       return false;
     }
     $this->init_tsObj($arr_rows_of_all_pages_inRootLine);
+    
+      // Init the one dimensional language array
+    $this->getLL();
 
     return true;
   }
@@ -568,7 +575,7 @@ class tx_browser_pi1_backend
  * @since 3.4.5
  * @version 3.4.5
  */
-  function init_pageObj($arr_pluginConf)
+  private function init_pageObj($arr_pluginConf)
   {
     if(!empty($this->obj_page))
     {
@@ -600,7 +607,7 @@ class tx_browser_pi1_backend
  * @since 3.4.5
  * @version 3.4.5
  */
-  function init_pageUid($arr_pluginConf)
+  private function init_pageUid($arr_pluginConf)
   {
     if(!empty($this->pid))
     {
@@ -650,7 +657,7 @@ class tx_browser_pi1_backend
  * @since 3.4.5
  * @version 3.4.5
  */
-  function init_tsObj($arr_rows_of_all_pages_inRootLine)
+  private function init_tsObj($arr_rows_of_all_pages_inRootLine)
   {
     if(!empty($this->obj_TypoScript))
     {
