@@ -973,8 +973,8 @@ class tx_browser_pi1_javascript
 '  <style type="text/css">
 ' . implode ('', file($absPath)) . '
   </style>';
-          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
-            $this->pObj->objMarker->main($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]);
+//          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
+//            $this->pObj->objMarker->main($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]);
         }
         if(!$bool_inline)
         {
@@ -991,8 +991,8 @@ class tx_browser_pi1_javascript
 ' . implode ('', file($absPath)) . '
   //-->
   </script>';
-          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
-            $this->pObj->objMarker->main($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]);
+//          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
+//            $this->pObj->objMarker->main($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]);
 //var_dump(__METHOD__ . ' (line ' . __LINE__ .')', $absPath, $rootPath, $path, parse_url($path));
 
         }
