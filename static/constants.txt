@@ -37,6 +37,8 @@ plugin.tx_browser_pi1 {
   # cat=Browser - the TYPO3-Frontend-Engine/dims/161;   type=int+;    label= List image pop-up max height: Max height for an image displayed in an extra pop-up window
   listPopupMaxH = 500
 
+  # cat=Browser - the TYPO3-Frontend-Engine//310;       type=int+;    label= AJAX page object: Type number (typenum) of the AJAX page object
+  typeNum.ajaxPageObj = 28562
   # cat=Browser - the TYPO3-Frontend-Engine//320;       type=string;  label= Format for strftime
   strftime = %a, %d.%b.%y
 

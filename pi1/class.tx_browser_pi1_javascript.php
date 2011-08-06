@@ -846,6 +846,26 @@ class tx_browser_pi1_javascript
       $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library.']['inline'];
       $path_tsConf  = 'javascript.jquery.plugins.t3browser.library';
       $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+      
+      $inline_jss   = $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name];
+      $conf_marker  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library.']['marker.'];
+      foreach((array) $conf_marker as $key_conf_marker => $arr_conf_marker)
+      {
+        if(substr($key_conf_marker, -1, 1) == '.')
+        {
+            // I.e. $key_conf_marker is 'title.', but we like the marker name without any dot
+          $str_marker             = substr($key_conf_marker, 0, strlen($key_conf_marker) -1);
+          $hashKeyMarker          = '###'.strtoupper($str_marker).'###';
+          $marker[$hashKeyMarker] = $this->pObj->cObj->cObjGetSingle
+                                    (
+                                      $conf_marker[$str_marker],
+                                      $conf_marker[$str_marker . '.']
+                                    );
+        }
+      }
+echo '<pre>' . var_export($marker, true) . '</pre>';
+      $inline_jss = $this->pObj->objMarker->substitute_marker($inline_jss, $marker);
+      $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
     }
       // jquery_plugins_t3browser
 
