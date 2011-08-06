@@ -44,17 +44,3 @@
   };
 
 })( jQuery );
-
-
-$( document ).ready( function( )
-{
-    // User has clicked on an item of the record browser
-  $(".c2479-record-browser").click(
-    function(e) {
-        // Don't execute the click
-      e.preventDefault();
-        // Update the content with the id #c2479-singleview-1
-      $(this).t3browser('update', "#c2479-singleview-1", $(this).attr("href") + "?type=28562 #c2479-singleview-1 > *");
-    }
-  );
-});
