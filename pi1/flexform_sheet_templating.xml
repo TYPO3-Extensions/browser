@@ -88,7 +88,7 @@
       <css.browser.own.path>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.browser.own.path</label>
-          <displayCond>FIELD:css.browser:IN:z_configured</displayCond>
+          <displayCond>FIELD:css.browser:IN:own</displayCond>
           <config>
             <type>group</type>
             <internal_type>file</internal_type>
@@ -98,7 +98,6 @@
             <size>1</size>
             <selectedListStyle>width:400px;</selectedListStyle>
             <uploadfolder>uploads/tx_browser/</uploadfolder>
-            <default>EXT:browser/res/js/jquery/ui/smoothness/jquery-ui-1.8.14.custom.css</default>
           </config>
         </TCEforms>
       </css.browser.own.path>
@@ -260,7 +259,6 @@
             <size>1</size>
             <selectedListStyle>width:400px;</selectedListStyle>
             <uploadfolder>uploads/tx_browser/</uploadfolder>
-            <default>EXT:browser/res/js/jquery/ui/smoothness/jquery-ui-1.8.14.custom.css</default>
           </config>
         </TCEforms>
       </css.jqui.z_own.path>
