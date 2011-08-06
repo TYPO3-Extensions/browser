@@ -28,11 +28,19 @@
               {
                 //$(id).slideUp("slow");
                 $("#loading").show();
+                $(id).addClass("loading");
+                $(id).prepend("\t<div id='txbrowserpi1loader'></div>\n");
+                $("#txbrowserpi1loader").fadeOut(0).fadeIn(150);
                 $(id).load(
                   url,
-                  complete(responseText, textStatus, XMLHttpRequest)
+                  function(responseText, textStatus, XMLHttpRequest)
                   {
                     $("#loading").hide();
+                    $(id).removeClass("loading");
+                    $("#txbrowserpi1loader").fadeOut(500, function()
+                    {
+                      $(this).remove();
+                    });
                   }
                 );
               }

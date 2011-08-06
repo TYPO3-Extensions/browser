@@ -2642,7 +2642,7 @@ plugin.tx_browser_pi1 {
       background:yellow;
     }
     /* #9659 */
-    .txbrowserpi1loader {
+    #txbrowserpi1loader {
       background: #fff url(/typo3conf/ext/browser/res/images/browser_loader.gif) no-repeat  center ;
       background-color: #fff;
       opacity:.8;
