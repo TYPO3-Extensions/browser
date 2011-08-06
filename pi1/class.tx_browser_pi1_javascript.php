@@ -855,14 +855,14 @@ class tx_browser_pi1_javascript
     {
         // name has to correspondend with similar code in tx_browser_pi1_template.php
       $name         = 'ajaxLL';
-      $path         = $this->conf['javascript.']['ajax.']['fileLL'];
-      $bool_inline  = $this->pObj->conf['javascript.']['ajax.']['fileLL']['inline'];
+      $path         = $this->pObj->conf['javascript.']['ajax.']['fileLL'];
+      $bool_inline  = $this->pObj->conf['javascript.']['ajax.']['fileLL.']['inline'];
       $path_tsConf  = 'javascript.ajax.fileLL';
       $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
 
         // name has to correspondend with similar code in tx_browser_pi1_template.php
       $name         = 'ajax';
-      $path         = $this->conf['javascript.']['ajax.']['file'];
+      $path         = $this->pObj->conf['javascript.']['ajax.']['file'];
       $bool_inline  = $this->pObj->conf['javascript.']['ajax.']['file.']['inline'];
       $path_tsConf  = 'javascript.ajax.file';
       $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
