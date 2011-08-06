@@ -68,6 +68,8 @@ class tx_browser_pi1_backend
   var $obj_TypoScript = null;
     // [Array] one dimensional array with language strings
   var $ll_oneDimension = null;
+    // [Boolean] true, if init is called successfully
+  var $bool_init = false;
   
 
 
@@ -535,6 +537,10 @@ class tx_browser_pi1_backend
  */
   private function init($arr_pluginConf)
   {
+    if($this->init)
+    {
+      return true;
+    }
       // Require classes
     require_once(PATH_t3lib.'class.t3lib_page.php');
     require_once(PATH_t3lib.'class.t3lib_tstemplate.php');
@@ -556,6 +562,7 @@ class tx_browser_pi1_backend
     }
     $this->init_tsObj($arr_rows_of_all_pages_inRootLine);
 
+    $this->init = true;
     return true;
   }
 
