@@ -1984,7 +1984,10 @@ plugin.tx_browser_pi1 {
                     insertData = 1
                   }
                   //additionalParams = &tx_browser_pi1[showUid]=###SHOWUID###&###CHASH###
-                  additionalParams = &tx_browser_pi1[showUid]=###SHOWUID###
+                  additionalParams = &tx_browser_pi1[showUid]={GP:tx_browser_pi1|showUid}
+                  additionalParams {
+                    insertData = 1
+                  }
                   returnLast = url
                 }
               }
