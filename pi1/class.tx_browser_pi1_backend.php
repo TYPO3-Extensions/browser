@@ -486,11 +486,23 @@ class tx_browser_pi1_backend
  */
   function getLL()
   {
-    $path2llXml = t3lib_extMgm::extPath('browser').'pi1/locallang.xml';
-    $llXml      = implode('', file($path2llXml));
-    $arr_ll     = t3lib_div::xml2array($llXml, $NSprefix='', $reportDocTag=false);
-    $LOCAL_LANG = $arr_ll['data'];
-    return $LOCAL_LANG;
+    $arr_extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['browser']);
+    switch($arr_extConf['LLstatic'])
+    {
+      case('German'):
+        $lang = 'de';
+        break;
+      default:
+        $lang = 'default';
+    }
+    require_once('flexform_locallang.php');
+    var_dump($LOCAL_LANG[$lang]);
+    
+//    $path2llXml = t3lib_extMgm::extPath('browser').'pi1/locallang.xml';
+//    $llXml      = implode('', file($path2llXml));
+//    $arr_ll     = t3lib_div::xml2array($llXml, $NSprefix='', $reportDocTag=false);
+//    $LOCAL_LANG = $arr_ll['data'];
+//    return $LOCAL_LANG;
   }
 
 
