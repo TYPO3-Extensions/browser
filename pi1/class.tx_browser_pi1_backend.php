@@ -68,9 +68,7 @@ class tx_browser_pi1_backend
   var $obj_TypoScript = null;
     // [Array] one dimensional array with language strings
   var $ll_oneDimension = null;
-    // [Boolean] true, if init is called successfully
-  var $bool_init = false;
-  
+
 
 
 
@@ -442,8 +440,9 @@ class tx_browser_pi1_backend
     }
     
       // Init the one dimensional language array
-//    $this->getLL();
+    $this->getLL();
     var_dump(__METHOD__, $this->ll_oneDimension);
+
 
       // TypoScript configuration for jquery_ui
     $arr_jquery_uis = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['templating.']['jquery_ui.'];
@@ -537,10 +536,6 @@ class tx_browser_pi1_backend
  */
   private function init($arr_pluginConf)
   {
-    if($this->init)
-    {
-      return true;
-    }
       // Require classes
     require_once(PATH_t3lib.'class.t3lib_page.php');
     require_once(PATH_t3lib.'class.t3lib_tstemplate.php');
@@ -549,10 +544,6 @@ class tx_browser_pi1_backend
       // Init page id and the page object
     $this->init_pageUid($arr_pluginConf);
     $this->init_pageObj($arr_pluginConf);
-
-      // Init the one dimensional language array
-    $this->getLL();
-    var_dump(__METHOD__, $this->ll_oneDimension);
 
       // Init agregrated TypoScript
     $arr_rows_of_all_pages_inRootLine = $this->obj_page->getRootLine($this->pid);
