@@ -963,18 +963,23 @@ class tx_browser_pi1_javascript
 
 
 
+      // marker array
+    $markerArray = array();
+    $markerArray = $this->pObj->objMarker->extend_marker_wi_cObjData($markerArray);
+    $markerArray = $this->pObj->objMarker->extend_marker_wi_pivars($markerArray);
+
       // switch: css || jss
     switch($str_type)
     {
       case('css'):
         if($bool_inline)
         {
-          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
+          $inline_css =
 '  <style type="text/css">
 ' . implode ('', file($absPath)) . '
   </style>';
-//          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
-//            $this->pObj->objMarker->main($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]);
+          $inline_css = $this->pObj->cObj->substituteMarkerArray($inline_css, $markerArray);
+          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_css;
         }
         if(!$bool_inline)
         {
@@ -985,16 +990,14 @@ class tx_browser_pi1_javascript
       case('jss'):
         if($bool_inline)
         {
-          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
+          $inline_jss =
 '  <script type="text/javascript">
   <!--
 ' . implode ('', file($absPath)) . '
   //-->
   </script>';
-//          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
-//            $this->pObj->objMarker->main($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]);
-//var_dump(__METHOD__ . ' (line ' . __LINE__ .')', $absPath, $rootPath, $path, parse_url($path));
-
+          $inline_jss = $this->pObj->cObj->substituteMarkerArray($inline_jss, $markerArray);
+          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
         }
         if(!$bool_inline)
         {

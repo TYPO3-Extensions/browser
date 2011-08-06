@@ -882,11 +882,50 @@
 
 
   /**
- * Replace all markers in a multi-dimensional array like an TypoScript array with the real values from the SQL result
- * The method extends the SQL result with all piVar values
+ * extend_marker_wi_cObjData: Extend the given marker array with key/values from cObj->data,
+ *                            the data of the tt_content record of the browser plugin
  *
- * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
- * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ * @param array   $markerArray: Array with markers
+ * @return  array   $markerArray: Array with markers extended
+ * 
+ * @version 3.7.0
+ * @since 3.7.0
+ */
+  function extend_marker_wi_cObjData($markerArray)
+  {
+
+    /////////////////////////////////////
+    //
+    // Add to the marker array the piVars
+
+    foreach ($this->pObj->cObj->data as $key_cObjData => $value_cObjData)
+    {
+      $markerArray['###TT_CONTENT.'.strtoupper($key_cObjData).'###'] = $value_cObjData;
+      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+      {
+        t3lib_div::devlog('[INFO/TEMPLATING] The cObjData ['.$key_cObjData.'] is available.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[HELP/TEMPLATING] If you use the marker ###TT_CONTENT.'.strtoupper($key_cObjData).'###, it will become '.$value_cObjData, $this->pObj->extKey, 1);
+      }
+    }
+
+    return $markerArray;
+  }
+
+
+
+
+
+
+
+
+  /**
+ * extend_marker_wi_pivars: Extend the given marker array with key/values from the piVars
+ *
+ * @param array   $markerArray: Array with markers
+ * @return  array   $markerArray: Array with markers extended
+ * 
+ * @version 2.0.0
+ * @since 2.0.0
  */
   function extend_marker_wi_pivars($markerArray)
   {
