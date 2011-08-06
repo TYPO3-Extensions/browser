@@ -501,9 +501,7 @@ class tx_browser_pi1_backend
         $lang = 'default';
     }
     require_once('flexform_locallang.php');
-var_dump($LOCAL_LANG);
-    $arr_lang = $LOCAL_LANG[$lang];
-    $this->ll_oneDimension = t3lib_BEfunc::implodeTSParams($arr_lang);
+    $this->ll_oneDimension = $LOCAL_LANG[$lang];
     
 //    $path2llXml = t3lib_extMgm::extPath('browser').'pi1/locallang.xml';
 //    $llXml      = implode('', file($path2llXml));
@@ -543,6 +541,9 @@ var_dump($LOCAL_LANG);
     $this->init_pageUid($arr_pluginConf);
     $this->init_pageObj($arr_pluginConf);
 
+      // Init the one dimensional language array
+    $this->getLL();
+
       // Init agregrated TypoScript
     $arr_rows_of_all_pages_inRootLine = $this->obj_page->getRootLine($this->pid);
     if (empty($arr_rows_of_all_pages_inRootLine))
@@ -550,9 +551,6 @@ var_dump($LOCAL_LANG);
       return false;
     }
     $this->init_tsObj($arr_rows_of_all_pages_inRootLine);
-    
-      // Init the one dimensional language array
-    $this->getLL();
 
     return true;
   }
