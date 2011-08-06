@@ -9,6 +9,228 @@ plugin.tx_browser_pi1 {
   template {
       // default file
     file = EXT:browser/res/default.tmpl
+    css {
+      browser {
+      }
+      jquery_ui {
+      plugins {
+        t3browser {
+            // [STRING] Path to the CSS of the t3browser plugin
+          css     = EXT:browser/res/tx_browser_pi1.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+            // [STRING] Path to the library of the t3browser plugin
+          library = EXT:browser/res/js/jquery/tx_browser_pi1.js
+          library {
+              // [Boolean] 0: link to the script file, 1 (default): include the script inline
+            inline = 1
+          }
+            // [STRING] Path to the plugin of the t3browser plugin
+          plugin = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.1.js
+          plugin {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+      }
+      ui {
+        black_tie {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/black_tie/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        blitzer {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/blitzer/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        cupertino {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/cupertino/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        dark_hive {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/dark_hive/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        darkness {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/darkness/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        dot_luv {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/dot_luv/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        eggplant {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/eggplant/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        excite_bike {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/excite_bike/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        flick {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/flick/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        hot_sneaks {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/hot_sneaks/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        humanity {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/humanity/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        le_frog {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/le_frog/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        lightness {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/lightness/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        mint_choc {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/mint_choc/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        overcast {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/overcast/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        pepper_grinder {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/pepper_grinder/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        redmond {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/redmond/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        smoothness {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/smoothness/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        south_street {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/south_street/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        start {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/start/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        sunny {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/sunny/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        swanky_purse {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/swanky_purse/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        trontastic {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/trontastic/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        vader {
+            // [STRING] Path to the CSS of the user interface (ui)
+          css     = EXT:browser/res/js/jquery/ui/vader/jquery-ui-1.8.14.custom.css
+          css {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+        typoscript < .smoothness
+      }
+    }
     extensions {
       browser {
         table {
@@ -1801,6 +2023,137 @@ plugin.tx_browser_pi1 {
           ifNoItem {
             value = No query available
           }
+        }
+      }
+      jquery_ui {
+        z_own {
+          icon    = EXT:browser/res/images/jQuery/my_ui.gif
+        }
+        z_none {
+          icon    = EXT:browser/res/images/jQuery/dont_embed_it.gif
+        }
+        z_ts {
+          icon    = EXT:browser/res/images/jQuery/typoscript.gif
+        }
+        black_tie {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.black_tie
+          css     = EXT:browser/res/js/jquery/ui/black_tie/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_black_tie.png
+        }
+        blitzer {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.blitzer
+          css     = EXT:browser/res/js/jquery/ui/blitzer/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_blitzer.png
+        }
+        cupertino {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.cupertino
+          css     = EXT:browser/res/js/jquery/ui/cupertino/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_cupertino.png
+        }
+        dark_hive {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.dark_hive
+          css     = EXT:browser/res/js/jquery/ui/dark_hive/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_dark_hive.png
+        }
+        darkness {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.darkness
+          css     = EXT:browser/res/js/jquery/ui/darkness/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_ui_dark.png
+        }
+        dot_luv {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.dot_luv
+          css     = EXT:browser/res/js/jquery/ui/dot_luv/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_dot_luv.png
+        }
+        eggplant {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.eggplant
+          css     = EXT:browser/res/js/jquery/ui/eggplant/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_eggplant.png
+        }
+        excite_bike {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.excite_bike
+          css     = EXT:browser/res/js/jquery/ui/excite_bike/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_excite_bike.png
+        }
+        flick {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.flick
+          css     = EXT:browser/res/js/jquery/ui/flick/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_flick.png
+        }
+        hot_sneaks {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.hot_sneaks
+          css     = EXT:browser/res/js/jquery/ui/hot_sneaks/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_hot_sneaks.png
+        }
+        humanity {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.humanity
+          css     = EXT:browser/res/js/jquery/ui/humanity/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_humanity.png
+        }
+        le_frog {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.le_frog
+          css     = EXT:browser/res/js/jquery/ui/le_frog/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_le_frog.png
+        }
+        lightness {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.lightness
+          css     = EXT:browser/res/js/jquery/ui/lightness/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_ui_light.png
+        }
+        mint_choc {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.mint_choc
+          css     = EXT:browser/res/js/jquery/ui/mint_choc/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_mint_choc.png
+        }
+        overcast {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.overcast
+          css     = EXT:browser/res/js/jquery/ui/overcast/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_overcast.png
+        }
+        pepper_grinder {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.pepper_grinder
+          css     = EXT:browser/res/js/jquery/ui/pepper_grinder/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_pepper_grinder.png
+        }
+        redmond {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.redmond
+          css     = EXT:browser/res/js/jquery/ui/redmond/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_windoze.png
+        }
+        smoothness {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.smoothness
+          css     = EXT:browser/res/js/jquery/ui/smoothness/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_smoothness.png
+        }
+        south_street {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.south_street
+          css     = EXT:browser/res/js/jquery/ui/south_street/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_south_street.png
+        }
+        start {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.start
+          css     = EXT:browser/res/js/jquery/ui/start/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_start_menu.png
+        }
+        sunny {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.sunny
+          css     = EXT:browser/res/js/jquery/ui/sunny/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_sunny.png
+        }
+        swanky_purse {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.swanky_purse
+          css     = EXT:browser/res/js/jquery/ui/swanky_purse/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_swanky_purse.png
+        }
+        trontastic {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.trontastic
+          css     = EXT:browser/res/js/jquery/ui/trontastic/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_trontastic.png
+        }
+        vader {
+          label   = LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.vader
+          css     = EXT:browser/res/js/jquery/ui/vader/jquery-ui-1.8.14.custom.css
+          icon    = EXT:browser/res/images/jQuery/theme_90_black_matte.png
         }
       }
     }

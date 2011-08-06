@@ -27,8 +27,9 @@
  *
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
- * @subpackage    tx_browser
- * @version 3.6.1
+ * @subpackage    browser
+ * @version 3.7.0
+ * @since 3.0.0
  */
 
  /**
@@ -74,14 +75,12 @@ class tx_browser_pi1_backend
 
 
 
-
-
   /**
  * sDef_getArrViewsList: Get data query (and andWhere) for all list views of the current plugin.
  * Tab [General/sDEF]
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	array		with the names of the views list
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  array   with the names of the views list
  * @version 3.6.1
  */
   public function sDef_getArrViewsList($arr_pluginConf)
@@ -239,11 +238,12 @@ class tx_browser_pi1_backend
 
 
 
+
   /**
  * socialmedia_getArrBookmarks: Get bookmarks for flexform. Tab [Socialmedia]
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	array		with the bookmarks
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  array   with the bookmarks
  */
   public function socialmedia_getArrBookmarks($arr_pluginConf)
   {
@@ -301,8 +301,8 @@ class tx_browser_pi1_backend
  * templating_getArrDataQuery: Get data query (and andWhere) for all list views of the current plugin.
  * Tab [Templating]
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	array		with the bookmarks
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  array   with the bookmarks
  */
   public function templating_getArrDataQuery($arr_pluginConf)
   {
@@ -364,8 +364,8 @@ class tx_browser_pi1_backend
  * templating_getExtensionTemplates: Get templates from the browser and third party extensions
  * Tab [Templating]
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	array		$arr_pluginConf: Extended with the templates
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  array   $arr_pluginConf: Extended with the templates
  */
   public function templating_getExtensionTemplates($arr_pluginConf)
   {
@@ -416,6 +416,51 @@ class tx_browser_pi1_backend
 
 
 
+  /**
+ * temeplating_get_jquery_ui: Get the list of jquery uis for the flexform. Tab [Templating]
+ *                            * Feature #28562
+ *
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  array   with the uis
+ * 
+ * @version 3.7.0
+ * @since 3.7.0
+
+ */
+  public function temeplating_get_jquery_ui($arr_pluginConf)
+  {
+      // Require classes, init page id, page object and TypoScript object
+    $bool_success = $this->init($arr_pluginConf);
+    if(!$bool_success)
+    {
+      return $arr_pluginConf;
+    }
+
+      // TypoScript configuration for jquery_ui
+    $arr_jquery_uis = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['templating.']['jquery_ui.'];
+
+      // Loop: jquery_ui
+    foreach((array) $arr_jquery_uis as $key_jquery_ui => $arr_jquery_ui)
+    {
+      $jquery_ui_key    = strtolower(substr($key_jquery_ui, 0, -1));
+      $jquery_ui_label  = $arr_jquery_ui['label'];
+      $jquery_ui_icon   = $arr_jquery_ui['icon'];
+
+      $arr_pluginConf['items'][] = array($jquery_ui_label, $jquery_ui_key, $jquery_ui_icon);
+    }
+      // Loop: jquery_ui
+
+    return $arr_pluginConf;
+  }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -437,7 +482,7 @@ class tx_browser_pi1_backend
   /**
  * getLL(): Get the locallang for class use out of an XML file
  *
- * @return	array		Array of the locallang data
+ * @return  array   Array of the locallang data
  */
   function getLL()
   {
@@ -463,8 +508,8 @@ class tx_browser_pi1_backend
   /**
  * init(): Initiate this class.
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	boolean		TRUE: success. FALSE: error.
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  boolean   TRUE: success. FALSE: error.
  * @since 3.4.5
  * @version 3.4.5
  */
@@ -504,8 +549,8 @@ class tx_browser_pi1_backend
   /**
  * init_pageObj(): Initiate an page object.
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	boolean		FALSE
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  boolean   FALSE
  * @since 3.4.5
  * @version 3.4.5
  */
@@ -536,8 +581,8 @@ class tx_browser_pi1_backend
   /**
  * init_pageUid(): Initiate the page uid.
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	boolean		FALSE
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  boolean   FALSE
  * @since 3.4.5
  * @version 3.4.5
  */
@@ -586,8 +631,8 @@ class tx_browser_pi1_backend
   /**
  * init_tsObj(): Initiate the TypoScript of the current page.
  *
- * @param	array		$arr_rows_of_all_pages_inRootLine: Agregate the TypoScript of all pages in the rootline
- * @return	boolean		FALSE
+ * @param array   $arr_rows_of_all_pages_inRootLine: Agregate the TypoScript of all pages in the rootline
+ * @return  boolean   FALSE
  * @since 3.4.5
  * @version 3.4.5
  */
