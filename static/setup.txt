@@ -13,6 +13,7 @@ plugin.tx_browser_pi1 {
       browser {
       }
       jquery_ui {
+      }
       plugins {
         t3browser {
             // [STRING] Path to the CSS of the t3browser plugin
