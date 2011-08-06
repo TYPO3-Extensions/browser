@@ -449,7 +449,7 @@ class tx_browser_pi1_backend
     foreach((array) $arr_jquery_uis as $key_jquery_ui => $arr_jquery_ui)
     {
       $jquery_ui_key    = strtolower(substr($key_jquery_ui, 0, -1));
-      $jquery_ui_label  = $this->locallang($arr_jquery_ui['label']);
+      $jquery_ui_label  = $this->locallang[$arr_jquery_ui['label']];
       $jquery_ui_icon   = $arr_jquery_ui['icon'];
 
       $arr_pluginConf['items'][] = array($jquery_ui_label, $jquery_ui_key, $jquery_ui_icon);
