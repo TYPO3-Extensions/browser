@@ -417,7 +417,7 @@ class tx_browser_pi1_backend
 
 
   /**
- * temeplating_get_jquery_ui: Get the list of jquery uis for the flexform. Tab [Templating]
+ * templating_get_jquery_ui: Get the list of jquery uis for the flexform. Tab [Templating]
  *                            * Feature #28562
  *
  * @param array   $arr_pluginConf: Current plugin/flexform configuration
@@ -427,7 +427,7 @@ class tx_browser_pi1_backend
  * @since 3.7.0
 
  */
-  public function temeplating_get_jquery_ui($arr_pluginConf)
+  public function templating_get_jquery_ui($arr_pluginConf)
   {
       // Require classes, init page id, page object and TypoScript object
     $bool_success = $this->init($arr_pluginConf);

@@ -125,7 +125,7 @@
                 <numIndex index="2">EXT:browser/res/images/jQuery/typoscript.gif</numIndex>
               </numIndex>
             </items>
-            <itemsProcFunc>tx_browser_pi1_backend->temeplating_get_jquery_ui</itemsProcFunc>
+            <itemsProcFunc>tx_browser_pi1_backend->templating_get_jquery_ui</itemsProcFunc>
             <default>smoothness</default>
             <maxitems>1</maxitems>
             <size>1</size>
