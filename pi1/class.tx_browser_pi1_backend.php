@@ -435,6 +435,8 @@ class tx_browser_pi1_backend
     {
       return $arr_pluginConf;
     }
+    
+    $this->getLL();
 
       // TypoScript configuration for jquery_ui
     $arr_jquery_uis = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['templating.']['jquery_ui.'];
