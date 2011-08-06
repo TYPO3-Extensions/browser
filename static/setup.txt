@@ -2028,12 +2028,16 @@ plugin.tx_browser_pi1 {
       }
       jquery_ui {
         z_own {
+          label   = sheet_templating.css.jqui.z_own
           icon    = EXT:browser/res/images/jQuery/my_ui.gif
         }
         z_none {
+          label   = sheet_templating.css.jqui.z_none
           icon    = EXT:browser/res/images/jQuery/dont_embed_it.gif
         }
         z_ts {
+          label   = sheet_templating.css.jqui.z_ts
+          css     = 
           icon    = EXT:browser/res/images/jQuery/typoscript.gif
         }
         black_tie {

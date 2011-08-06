@@ -108,23 +108,6 @@
           <config>
             <type>select</type>
             <selicon_cols>7</selicon_cols>
-            <items type="array">
-              <numIndex index="100" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.z_own</numIndex>
-                <numIndex index="1">z_own</numIndex>
-                <numIndex index="2">EXT:browser/res/images/jQuery/my_ui.gif</numIndex>
-              </numIndex>
-              <numIndex index="101" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.z_none</numIndex>
-                <numIndex index="1">z_none</numIndex>
-                <numIndex index="2">EXT:browser/res/images/jQuery/dont_embed_it.gif</numIndex>
-              </numIndex>
-              <numIndex index="102" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.z_ts</numIndex>
-                <numIndex index="1">z_ts</numIndex>
-                <numIndex index="2">EXT:browser/res/images/jQuery/typoscript.gif</numIndex>
-              </numIndex>
-            </items>
             <itemsProcFunc>tx_browser_pi1_backend->templating_get_jquery_ui</itemsProcFunc>
             <default>smoothness</default>
             <maxitems>1</maxitems>
