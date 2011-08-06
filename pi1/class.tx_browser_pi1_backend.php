@@ -67,7 +67,7 @@ class tx_browser_pi1_backend
     // [Object] TypoScript object of current page
   var $obj_TypoScript = null;
     // [Array] one dimensional array with language strings
-  var $ll_oneDimension = null;
+  var $locallang = null;
 
 
 
@@ -441,8 +441,6 @@ class tx_browser_pi1_backend
     
       // Init the one dimensional language array
     $this->getLL();
-    var_dump(__METHOD__, $this->ll_oneDimension);
-
 
       // TypoScript configuration for jquery_ui
     $arr_jquery_uis = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['templating.']['jquery_ui.'];
@@ -451,7 +449,7 @@ class tx_browser_pi1_backend
     foreach((array) $arr_jquery_uis as $key_jquery_ui => $arr_jquery_ui)
     {
       $jquery_ui_key    = strtolower(substr($key_jquery_ui, 0, -1));
-      $jquery_ui_label  = $arr_jquery_ui['label'];
+      $jquery_ui_label  = $this->locallang($arr_jquery_ui['label']);
       $jquery_ui_icon   = $arr_jquery_ui['icon'];
 
       $arr_pluginConf['items'][] = array($jquery_ui_label, $jquery_ui_key, $jquery_ui_icon);
@@ -504,8 +502,7 @@ class tx_browser_pi1_backend
         $lang = 'default';
     }
     require_once('flexform_locallang.php');
-    $this->ll_oneDimension = $LOCAL_LANG[$lang];
-    var_dump(__METHOD__, $this->ll_oneDimension);
+    $this->locallang = $LOCAL_LANG[$lang];
     
 //    $path2llXml = t3lib_extMgm::extPath('browser').'pi1/locallang.xml';
 //    $llXml      = implode('', file($path2llXml));
