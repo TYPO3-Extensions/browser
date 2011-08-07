@@ -967,8 +967,10 @@
   {
 
       // Get configuration from the flexform
+    $sheet = 'development';
+    $field = 'handle_marker';
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
-    $handle_marker  = $this->pObj->pi_getFFvalue($arr_piFlexform, 'handle_marker', 'development', 'lDEF', 'vDEF');
+    $handle_marker  = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
 
       // Switch configuration
     switch($handle_marker)
@@ -996,19 +998,22 @@
         break;
       default:
         $prompt = '
-          <div style="background:white; color:red; font-weight:bold;border:.4em solid red;">
-            <h1>
-              ERROR
-            </h1>
-            <p>
-              Undefined value: ' . $handle_marker . '. Allowed are remove_empty_markers and none.
-            </p>
-            <p>
-              ' . $this->pObj->extKey . ': '. __METHOD__ . ' (line ' . __LINE__ . ')
-            </p>
-          </div>';
+                  <div style="background:white; font-weight:bold;border:.4em solid orange;">
+                    <h1>
+                      WARNING
+                    </h1>
+                    <p>
+                      Flexform field has an invalid value. The value isn\'t defined.<br />
+                      sheet: ' . $sheet . '<br />
+                      field: ' . $field . '<br />
+                      value: ' . $handle_marker . '<br />
+                      ' . __METHOD__ . ' (' . __LINE__ . ')
+                    </p>
+                    <p>
+                      Please save the plugin/flexform of the browser. The bug will be fixed probably.
+                    </p>
+                  </div>';
         echo $prompt;
-        exit;
     }
       // Switch configuration
 

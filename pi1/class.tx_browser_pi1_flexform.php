@@ -1837,7 +1837,8 @@ class tx_browser_pi1_flexform {
         $field . ': \'' . $css_jqui . '\'', $this->pObj->extKey, 0);
     }
 
-    switch ($css_jqui) {
+    switch ($css_jqui)
+    {
       case ('black_tie') :
       case ('blitzer') :
       case ('cupertino') :
@@ -1902,7 +1903,7 @@ class tx_browser_pi1_flexform {
                       Flexform field has an invalid value. The value isn\'t defined.<br />
                       sheet: ' . $sheet . '<br />
                       field: ' . $field . '<br />
-                      value: ' . $css_browser . '<br />
+                      value: ' . $css_jqui . '<br />
                       ' . __METHOD__ . ' (' . __LINE__ . ')
                     </p>
                     <p>
