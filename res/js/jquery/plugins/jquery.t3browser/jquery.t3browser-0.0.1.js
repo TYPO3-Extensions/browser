@@ -58,6 +58,10 @@
                     });
                       // Remove the opacity of the html element
                     $( html_element ).removeClass( "opacity08" );
+  $(function()
+  {
+    $( "input:submit, input:button, a.backbutton", ".tx-browser-pi1" ).button( );
+  });
                   }
                 );
                   // Send the AJAX request
