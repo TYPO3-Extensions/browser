@@ -1,4 +1,3 @@
-#content-default ul#record-browser,
 #record-browser {
   padding-left: 0;
 }
@@ -24,4 +23,7 @@
   height:300px;           /* Overriden while runtime */
   margin-bottom:-300px;   /* Overriden while runtime */
   z-index:2;
+}
+.tx-browser-pi1 p.backbutton {
+  text-align:right;
 }
