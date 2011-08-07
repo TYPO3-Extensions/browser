@@ -1804,9 +1804,10 @@ class tx_browser_pi1_flexform {
         break;
       default :
         $prompt = '
-                  <div style="background:white; color:red; font-weight:bold;border:.4em solid red;">
+                  <div style="background:white; font-weight:bold;border:.4em solid orange;">
                     <h1>
-                      ERROR</h1>
+                      WARNING
+                    </h1>
                     <p>
                       Flexform field has an invalid value. The value isn\'t defined.<br />
                       sheet: ' . $sheet . '<br />
@@ -1814,9 +1815,11 @@ class tx_browser_pi1_flexform {
                       value: ' . $css_browser . '<br />
                       ' . __METHOD__ . ' (' . __LINE__ . ')
                     </p>
+                    <p>
+                      Please save the plugin/flexform of the browser. The bug will be fixed probably.
+                    </p>
                   </div>';
         echo $prompt;
-        exit;
     }
     // #28562, dwildt, 110806
     // Field css.browser
@@ -1891,19 +1894,22 @@ class tx_browser_pi1_flexform {
         break;
       default :
         $prompt = '
-                  <div style="background:white; color:red; font-weight:bold;border:.4em solid red;">
+                  <div style="background:white; font-weight:bold;border:.4em solid orange;">
                     <h1>
-                      ERROR</h1>
+                      WARNING
+                    </h1>
                     <p>
                       Flexform field has an invalid value. The value isn\'t defined.<br />
                       sheet: ' . $sheet . '<br />
                       field: ' . $field . '<br />
-                      value: ' . $css_jqui . '<br />
+                      value: ' . $css_browser . '<br />
                       ' . __METHOD__ . ' (' . __LINE__ . ')
+                    </p>
+                    <p>
+                      Please save the plugin/flexform of the browser. The bug will be fixed probably.
                     </p>
                   </div>';
         echo $prompt;
-        exit;
     }
     // #28562, dwildt, 110806
     // Field css.jqui
