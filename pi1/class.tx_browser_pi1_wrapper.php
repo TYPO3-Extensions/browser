@@ -673,8 +673,16 @@ class tx_browser_pi1_wrapper
         }
         // Alias for showUid? #9599
 
-        foreach((array) $this->pObj->piVars as $paramKey => $paramValue) {
-          $additionalParams .= '&'.$this->pObj->prefixId.'['.$paramKey.']='.$paramValue;
+        foreach((array) $this->pObj->piVars as $paramKey => $paramValue)
+        {
+            // 110807, dwildt +
+          if(!empty($paramValue))
+          {
+            $additionalParams .= '&'.$this->pObj->prefixId.'['.$paramKey.']='.$paramValue;
+          }
+            // 110807, dwildt +
+            // 110807, dwildt -
+          //$additionalParams .= '&'.$this->pObj->prefixId.'['.$paramKey.']='.$paramValue;
         }
         $cHash_calc = $this->pObj->objZz->get_cHash('&id='.$singlePid.$additionalParams);
         // Building the typolink array
