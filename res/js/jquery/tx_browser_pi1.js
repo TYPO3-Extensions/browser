@@ -17,6 +17,13 @@
 
 $( document ).ready( function( )
 {
+    // UI for buttons in the searchbox form
+  $(function()
+  {
+    $( "input:submit, input:button", ".searchbox" ).button();
+  });
+
+
     // User has clicked the record browser
     // live: Attach a handler to the event for all elements which match the current selector, now and in the future.
     //       see: http://api.jquery.com/live/

@@ -54,6 +54,7 @@ This template is the default template for all list views.
 
 <!-- ###TEMPLATE_LIST### begin -->
 <!-- ###LIST_TITLE### begin -->
+        <div class="ui-widget ui-corner-all">
         ###MY_TITLE###
 <!-- ###LIST_TITLE### end -->
 <!-- ###SEARCHFORM### begin -->
@@ -65,7 +66,7 @@ This template is the default template for all list views.
               <input type="hidden" name="tx_browser_pi1[plugin]" value="###PLUGIN###" />
               <input class="sword" type="text" name="tx_browser_pi1[sword]" onfocus="if(this.value =='###SWORD_DEFAULT###') this.value=''" value="###SWORD###" />
               <input class="button hidesubmit" type="submit" value="###MY_SEARCH###" />
-              <input class="button" type="button" onclick="location='###MY_URL###'" class="reset" value="###MY_RESET###" />
+              <input class="button reset" type="button" onclick="location='###MY_URL###'" value="###MY_RESET###" />
               <!-- Add filters with the ###TABLE.FIELD### syntax and configure your filters with TypoScript -->
             </fieldset>
           </form>
@@ -116,6 +117,7 @@ This template is the default template for all list views.
 <!-- ###GROUPBYBODY### end -->
 <!-- ###GROUPBY### end -->
           </div><!-- ###LISTVIEW### end -->
+        </div>
         </div> <!-- /listarea -->
 <!-- ###TEMPLATE_LIST### end -->
 
