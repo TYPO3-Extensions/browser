@@ -234,8 +234,6 @@ class tx_browser_pi1_template
     {
       $conf_respect_filters = $conf['displayList.']['display.']['searchform.']['respect_filters.'];
     }
-//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false)) var_dump('template 238', $conf_respect_filters);
     if($conf_respect_filters['all'])
     {
       // Don't remove any filter ...
@@ -243,8 +241,6 @@ class tx_browser_pi1_template
     if(!$conf_respect_filters['all'])
     {
       // Remove all but ...
-//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false)) var_dump('template 247', $conf_respect_filters['but.']);
       if(is_array($conf_respect_filters['but.']))
       {
         $conf_filter = $conf_view['filter.'];
@@ -255,15 +251,12 @@ class tx_browser_pi1_template
             if($field_value)
             {
               unset($conf_filter[$tableWiDot][$field_key]);
-//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false)) var_dump('template 259', 'unset ' . $tableWiDot . $field_key);
             }
           }
         }
       }
       $this->pObj->piVars = $this->pObj->objZz->removeFiltersFromPiVars($this->pObj->piVars, $conf_filter);
     }
-//    $this->pObj->piVars = $this->pObj->objZz->removeFiltersFromPiVars($this->pObj->piVars, $conf_view['filter.']);
       // #11580, dwildt, 101219
       // Remove the filter fields temporarily
 

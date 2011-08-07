@@ -20,7 +20,7 @@ $( document ).ready( function( )
     // UI for buttons in the searchbox form
   $(function()
   {
-    $( "input:submit, input:button, a.backbutton", ".tx-browser-pi1" ).button();
+    $( "input:submit, input:button, a.backbutton", ".tx-browser-pi1" ).live( 'button' );
   });
 
 
@@ -32,7 +32,7 @@ $( document ).ready( function( )
     function( e ) {
         // Don't execute the click
       e.preventDefault( );
-        // Update the content with the id #c2479-singleview-1 for example
+        // Update the content with the id #c###TT_CONTENT.UID###-singleview-1
       url = $( this ).t3browser( 'url_autoQm', $( this ).attr( "href" ), "type=###TYPENUM###" );
       $( this ).t3browser( 'update', "#c###TT_CONTENT.UID###-singleview-1", url + " #c###TT_CONTENT.UID###-singleview-1 > *" );
     }
