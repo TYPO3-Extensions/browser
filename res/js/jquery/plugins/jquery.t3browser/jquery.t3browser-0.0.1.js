@@ -61,7 +61,7 @@
                   }
                 );
                   // Send the AJAX request
-              }
+              },
                 // update( )
     url_autoQm: function( url, param )
               {
@@ -78,7 +78,7 @@
                   url = url + "?" + param;
                 }
                 return url;
-              }
+              },
                 // url_autoQm
   };
   
