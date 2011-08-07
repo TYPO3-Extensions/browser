@@ -900,11 +900,14 @@
 
     foreach ($this->pObj->cObj->data as $key_cObjData => $value_cObjData)
     {
-      $markerArray['###TT_CONTENT.'.strtoupper($key_cObjData).'###'] = $value_cObjData;
-      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+      if(!empty($value_cObjData))
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] The cObjData ['.$key_cObjData.'] is available.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[HELP/TEMPLATING] If you use the marker ###TT_CONTENT.'.strtoupper($key_cObjData).'###, it will become '.$value_cObjData, $this->pObj->extKey, 1);
+        $markerArray['###TT_CONTENT.'.strtoupper($key_cObjData).'###'] = $value_cObjData;
+        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+        {
+          t3lib_div::devlog('[INFO/TEMPLATING] The cObjData ['.$key_cObjData.'] is available.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/TEMPLATING] If you use the marker ###TT_CONTENT.'.strtoupper($key_cObjData).'###, it will become '.$value_cObjData, $this->pObj->extKey, 1);
+        }
       }
     }
 
@@ -936,11 +939,14 @@
 
     foreach ($this->pObj->piVars as $key_pivar => $value_pivar)
     {
-      $markerArray['###'.strtoupper($key_pivar).'###'] = $value_pivar;
-      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+      if(!empty($value_pivar))
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] The piVar ['.$key_pivar.'] is available.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[HELP/TEMPLATING] If you use the marker ###'.strtoupper($key_pivar).'###, it will become '.$value_pivar, $this->pObj->extKey, 1);
+        $markerArray['###'.strtoupper($key_pivar).'###'] = $value_pivar;
+        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+        {
+          t3lib_div::devlog('[INFO/TEMPLATING] The piVar ['.$key_pivar.'] is available.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/TEMPLATING] If you use the marker ###'.strtoupper($key_pivar).'###, it will become '.$value_pivar, $this->pObj->extKey, 1);
+        }
       }
     }
 
