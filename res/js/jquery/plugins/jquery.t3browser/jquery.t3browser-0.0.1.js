@@ -26,6 +26,9 @@
               },
     update :  function( html_element, url )
               {
+                  // update():  replace the content of the given html element with the content 
+                  //            of the requested url. The url may have an jQuery filter.
+                  
                   // Add an opacity to the html element
                 $( html_element ).addClass( "opacity08" );
 
@@ -59,7 +62,24 @@
                 );
                   // Send the AJAX request
               }
-                // update( ) 
+                // update( )
+    url_autoQm: function( url, param )
+              {
+                  // Concatenate the url and the param in dependence of a question mark.
+                  // If url contains a question mark, param will added with ?param
+                  // otrherwise with &param
+
+                if(url.indexOf("?") >= 0)
+                {
+                  url = url + "&" + param;
+                }
+                if(!(url.indexOf("?") >= 0))
+                {
+                  url = url + "?" + param;
+                }
+                return url;
+              }
+                // url_autoQm
   };
   
   $.fn.t3browser = function( method )
