@@ -18,10 +18,7 @@
 $( document ).ready( function( )
 {
     // UI for buttons in the searchbox form
-  $(function()
-  {
-    $( "input:submit, input:button, a.backbutton", ".tx-browser-pi1" ).live( 'button' );
-  });
+  $( "input:submit, input:button, a.backbutton", ".tx-browser-pi1" ).button( );
 
 
     // User has clicked the record browser
