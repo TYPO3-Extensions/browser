@@ -25,12 +25,9 @@ $( document ).ready( function( )
     function( e ) {
         // Don't execute the click
       e.preventDefault( );
-        // Update the content with the id #c2479-singleview-1
-      //$( this ).t3browser( 'update', "#c###TT_CONTENT.UID###-singleview-1", $( this ).attr( "href" ) + "?type=28562" + " #c###TT_CONTENT.UID###-singleview-1 > *" );
-      //$( this ).t3browser( 'update', "#c###TT_CONTENT.UID###-singleview-1", $( this ).attr( "href" ) + "?type=###TYPENUM###" + " #c###TT_CONTENT.UID###-singleview-1 > *" );
+        // Update the content with the id #c2479-singleview-1 for example
       url = $( this ).t3browser( 'url_autoQm', $( this ).attr( "href" ), "type=###TYPENUM###" );
       $( this ).t3browser( 'update', "#c###TT_CONTENT.UID###-singleview-1", url + " #c###TT_CONTENT.UID###-singleview-1 > *" );
-      //$( this ).t3browser( 'update', "#c###TT_CONTENT.UID###-singleview-1", "###AJAX_URL_SINGLE### #c###TT_CONTENT.UID###-singleview-1 > *" );
     }
   );
     // User has clicked the record browser

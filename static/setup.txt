@@ -10,10 +10,10 @@ plugin.tx_browser_pi1 {
       // default file
     file = EXT:browser/res/default.tmpl
     css {
-      browser = EXT:browser/res/tx_browser_pi1.css
+      browser = EXT:browser/res/default.css
       browser {
-          // [Boolean] 0: CSS as external file, 1 (default): CSS inline
-        inline = 1
+          // [Boolean] 0 (default): CSS as external file, 1: CSS inline
+        inline = 0
       }
       jquery_ui = EXT:browser/res/js/jquery/ui/smoothness/jquery-ui-1.8.14.custom.css
       jquery_ui {
@@ -301,7 +301,7 @@ plugin.tx_browser_pi1 {
         box {
             // [STRING] empty (default): empty value will allocated while runtime.
           value =
-          wrap  = <ul id="icons" class="ui-widget ui-helper-clearfix" style="cursor: pointer;list-style: none outside none;">|</ul>
+          wrap  = <ul id="record-browser" class="ui-widget ui-helper-clearfix">|</ul>
         }
         items {
             // First item of the record browser
@@ -309,7 +309,7 @@ plugin.tx_browser_pi1 {
           first {
               // [STRING] empty (default): empty value will allocated while runtime. See labeling below.
             value =
-            wrap  = <li class="ui-state-default ui-corner-all" style="cursor: pointer;float: left;list-style: none outside none;margin: 2px;padding: 4px 0;position: relative;">|</li>
+            wrap  = <li class="ui-state-default ui-corner-all">|</li>
             typolink {
               parameter = {page:uid} - c###TT_CONTENT.UID###-record-browser ###RECORD_POSITION###/###RECORD_SUM###
               parameter {
@@ -325,7 +325,7 @@ plugin.tx_browser_pi1 {
           curr {
               // [STRING] empty (default): empty value will allocated while runtime. See labeling below.
             value =
-            wrap  = <li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-record-browser" style="cursor: pointer;float: left;list-style: none outside none;margin: 2px;padding: 4px 0;position: relative;">|</li>
+            wrap  = <li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-record-browser">|</li>
           }
             // Next item of the record browser
           next < .first
@@ -2483,21 +2483,7 @@ plugin.tx_browser_pi1 {
       color: #d00;
     }
     /* #9659 */
-    .opacity08 {
-      opacity:.8;
-    }
-    #tx-browser-pi1-loader {
-      background: #fff url(/typo3conf/ext/browser/res/images/browser_loader.gif) no-repeat  center ;
-      background-color: #fff;
-      opacity:.8;
-      position: relative;
-      top:0;
-      left:0;
-      width:100%;
-      height:300px;
-      margin-bottom:-300px;
-      z-index:2;
-    }
+
   )
 
   _LOCAL_LANG {

@@ -1,4 +1,26 @@
-#content-default .ui-widget p {
-  margin-top: 1em;
-  font-size:.95em;
+#record-browser {
+  padding-left: 0;
+}
+#record-browser li {
+  cursor: pointer;
+  float: left;
+  list-style: none;
+  margin: 2px;
+  padding: 4px 0;
+  position: relative;
+}
+.opacity08 {
+  opacity:.8;
+}
+#tx-browser-pi1-loader {
+  background: #fff url(/typo3conf/ext/browser/res/images/browser_loader.gif) no-repeat  center ;
+  background-color: #fff;
+  opacity:.8;
+  position: relative;
+  top:0;
+  left:0;
+  width:100%;             /* Overriden while runtime */
+  height:300px;           /* Overriden while runtime */
+  margin-bottom:-300px;   /* Overriden while runtime */
+  z-index:2;
 }
