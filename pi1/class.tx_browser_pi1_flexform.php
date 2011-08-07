@@ -1776,7 +1776,7 @@ class tx_browser_pi1_flexform {
 
     if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript) {
       t3lib_div :: devlog('[INFO/FLEXFORM+JSS] ' .
-      'css.jqui: \'' . $css_browser . '\'', $this->pObj->extKey, 0);
+      $field . ': \'' . $css_browser . '\'', $this->pObj->extKey, 0);
     }
 
     switch ($css_browser) {
@@ -1831,7 +1831,7 @@ class tx_browser_pi1_flexform {
 
     if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript) {
       t3lib_div :: devlog('[INFO/FLEXFORM+JSS] ' .
-      'css.jqui: \'' . $css_jqui . '\'', $this->pObj->extKey, 0);
+        $field . ': \'' . $css_jqui . '\'', $this->pObj->extKey, 0);
     }
 
     switch ($css_jqui) {
@@ -1860,7 +1860,7 @@ class tx_browser_pi1_flexform {
       case ('swanky_purse') :
       case ('trontastic') :
       case ('vader') :
-        $css = $this->pObj->conf['flexform.']['templating']['jquery_ui.'][$css_jqui . '.']['css'];
+        $css = $this->pObj->conf['flexform.']['templating.']['jquery_ui.'][$css_jqui . '.']['css'];
         $this->pObj->conf['template.']['css.']['jquery_ui'] = $css;
         $this->bool_css_jqui = true;
         if ($this->pObj->b_drs_flexform) {
