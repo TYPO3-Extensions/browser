@@ -25,5 +25,6 @@
   z-index:2;
 }
 .tx-browser-pi1 p.backbutton {
+  padding-top:1em;
   text-align:right;
 }
