@@ -169,25 +169,29 @@ plugin.tx_browser_pi1.views.single.XX.template.default = 1
         </div><!-- ###MODESELECTOR### end --><!-- ###SINGLEVIEW### begin -->
         <div id="c###TT_CONTENT.UID###-###VIEW###view-###MODE###" class="###VIEW###view ###VIEW###view-###MODE###">
           ###RECORD_BROWSER###
-          <h1>
-            ###TITLE###
-          </h1>
-          <table###SUMMARY###>
-            ###CAPTION###<!-- ###SINGLEBODY### begin -->
-            <tbody><!-- ###SINGLEBODYROW### begin -->
-              <tr###CLASS###>
-                <th>###FIELD###</th>
-                <td>###VALUE### ###SOCIALMEDIA_BOOKMARKS###</td>
-              </tr><!-- ###SINGLEBODYROW### end -->
-            </tbody><!-- ###SINGLEBODY### end -->
-          </table>
+          <div class="ui-widget">
+            <h1 class="ui-widget-header">
+              ###TITLE###
+            </h1>
+            <div class="ui-widget-content">
+              <table###SUMMARY###>
+                ###CAPTION###<!-- ###SINGLEBODY### begin -->
+                <tbody><!-- ###SINGLEBODYROW### begin -->
+                  <tr###CLASS###>
+                    <th>###FIELD###</th>
+                    <td>###VALUE### ###SOCIALMEDIA_BOOKMARKS###</td>
+                  </tr><!-- ###SINGLEBODYROW### end -->
+                </tbody><!-- ###SINGLEBODY### end -->
+              </table>
+            </div>
 <!-- ###AREA_FOR_AJAX_LIST_01### end -->
-          <!-- ###BACKBUTTON### begin -->
-          <p class="backbutton tx-browser-pi1-no-ajax-content">
-            ###BUTTON###
-          </p>
+            <!-- ###BACKBUTTON### begin -->
+            <p class="backbutton ui-helper-hidden">
+              ###BUTTON###
+            </p>
           <!-- ###BACKBUTTON### end -->
 <!-- ###AREA_FOR_AJAX_LIST_02### begin -->
+          </div>
         </div>
 <!-- ###AREA_FOR_AJAX_LIST_02### end -->
         <!-- ###SINGLEVIEW### end -->
