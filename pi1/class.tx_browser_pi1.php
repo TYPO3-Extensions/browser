@@ -842,6 +842,7 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // XML/RSS: return the result (XML string) without wrapInBaseClass
   
+      // #28855, 110809, dwildt
     if(substr($str_template_completed, 0, strlen('<?xml')) == '<?xml')
     {
       return trim($str_template_completed);

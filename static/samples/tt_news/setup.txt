@@ -64,7 +64,8 @@ plugin.tx_browser_pi1 {
           short {
             10 = TEXT
             10 {
-              value = ###TT_NEWS.TEASER_SHORT###
+                // #28856, 110809, dwildt
+              value = ###TT_NEWS.SHORT###
             }
             20 = TEXT
             20 {

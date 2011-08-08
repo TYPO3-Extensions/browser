@@ -14,6 +14,9 @@
   * #00000  jQuery library 1.6 -> 1.6.2
   Miscellaneous
   * #00000: PHP: substitute_marker() is moved to substitute_tablefield_marker()
+  Bugfixes
+  * #28855: Broken RSS-Feed
+  * #28856: RSS template had a wrong marker (tt_news sample)
   
 3.6.6
   110726
