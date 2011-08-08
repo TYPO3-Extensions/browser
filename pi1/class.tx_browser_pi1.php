@@ -838,6 +838,18 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
+      //////////////////////////////////////////////////////////////////////
+      //
+      // XML/RSS: return the result (XML string) without wrapInBaseClass
+  
+    if(substr($str_template_completed, 0, strlen('<?xml')) == '<?xml')
+    {
+      return trim($str_template_completed);
+    }
+      // XML/RSS: return the result (XML string) without wrapInBaseClass
+
+
+
       // 110804, dwildt
     $this->objJss->addCssFiles();
 
@@ -945,16 +957,6 @@ class tx_browser_pi1 extends tslib_pibase {
       // AJAX: return the result (HTML string) without wrapInBaseClass
 
 
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // XML/RSS: return the result (XML string) without wrapInBaseClass
-  
-    if(substr($str_template_completed, 0, strlen('<?xml')) == '<?xml')
-    {
-      return trim($str_template_completed);
-    }
-      // XML/RSS: return the result (XML string) without wrapInBaseClass
 
       // 12367, dwildt, 110310
     switch($this->objFlexform->bool_wrapInBaseClass)
