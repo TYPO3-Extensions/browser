@@ -1,15 +1,25 @@
 3.7.0
   110801, 110729
   New Feature
-  * #28562: Integration of the completely UI (User Interface) 1.8.14 from http://jqueryui.com/themeroller/
   * #27041: Record browser for the single view / Prev-next Switcher in the single view
             * single views got the marker ###RECORD_BROWSER### in the HTML templates
+              * Affected files:
+                * res/default.tmpl
+                * res/default_ul.tmpl
+                * res/sample/tt_news/default.tmpl
             * Changes in TypoScript
                       * a-z_Browser   moved to navigation.a-z_Browser
                       * modeSelector  moved to navigation.modeSelector
                       * pageBrowser   moved to navigation.pageBrowser
                       * plugin        moved to flexform
   * #28657: Development feature: Make empty markers replaceable
+  Development
+  * #28562: Integration of the completely UI (User Interface) 1.8.14 from http://jqueryui.com/themeroller/
+            This feature will be integrated completely and documented in 4.0.0!
+            * Affected files:
+              * res/default.tmpl
+              * res/default_ul.tmpl
+              * res/sample/tt_news/default.tmpl
   Update
   * #00000  jQuery library 1.6 -> 1.6.2
   Miscellaneous

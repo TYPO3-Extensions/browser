@@ -5,6 +5,11 @@
 <pre>
 <em>
 
+VERSION 3.7.0
+  - #27041: Single view got the record browser. See marker ###RECORD_BROWSER### below.
+            Single view got an id.
+    #28562: Single view got some classes with jQuery ui. See ui-widget among others.
+
 VERSION 3.6.1
   - 11886: List view search form got the new hidden field: tx_browser_pi1[plugin]
 
@@ -108,34 +113,39 @@ plugin.tx_browser_pi1.views.single.XX.template.default = 1
 
 <!-- ###TEMPLATE_SINGLE### begin -->
 <!-- ###MODESELECTOR### begin -->
-        <ul class="modeSelector modeSelector-###VIEW###-###MODE###"><!-- ###MODESELECTORTABS### begin -->
+        <ul id="c###TT_CONTENT.UID###-modeSelector-###VIEW###-###MODE###" class="modeSelector modeSelector-###VIEW###-###MODE###"><!-- ###MODESELECTORTABS### begin -->
           <li###CLASS###>###TABS###</li><!-- ###MODESELECTORTABS### end -->
         </ul><!-- ###MODESELECTOR### end -->
         <!-- ###SINGLEVIEW### begin -->
 <!-- ###AREA_FOR_AJAX_LIST_01### begin -->
-        <div class="###VIEW###view ###VIEW###view-###MODE###">
-          <!-- ###SINGLEBODY### begin -->
-          <h1>
-            ###TITLE###
-          </h1>
-          <dl style="font-size:.85em;">
-            <!-- ###SINGLEBODYROW### begin -->
-            <dt###CLASS###>
-              ###FIELD###
-            </dt>
-            <dd###CLASS###>
-              ###VALUE### ###SOCIALMEDIA_BOOKMARKS###
-            </dd>
-            <!-- ###SINGLEBODYROW### end -->
-          </dl>
-<!-- ###AREA_FOR_AJAX_LIST_01### end -->
-          <!-- ###BACKBUTTON### begin -->
-          <p class="backbutton">
-            ###BUTTON###
-          </p>
-          <!-- ###BACKBUTTON### end -->
-<!-- ###AREA_FOR_AJAX_LIST_02### begin -->
-          <!-- ###SINGLEBODY### end -->
+        <div id="c###TT_CONTENT.UID###-###VIEW###view-###MODE###" class="###VIEW###view ###VIEW###view-###MODE###">
+          ###RECORD_BROWSER###
+          <div class="ui-widget ui-corner-all">
+            <!-- ###SINGLEBODY### begin -->
+            <h1 class="ui-widget-header ui-corner-top">
+              ###TITLE###
+            </h1>
+            <div class="ui-widget-content ui-corner-bottom">
+              <dl style="font-size:.85em;">
+                <!-- ###SINGLEBODYROW### begin -->
+                <dt###CLASS###>
+                  ###FIELD###
+                </dt>
+                <dd###CLASS###>
+                  ###VALUE### ###SOCIALMEDIA_BOOKMARKS###
+                </dd>
+                <!-- ###SINGLEBODYROW### end -->
+              </dl>
+            </div>
+  <!-- ###AREA_FOR_AJAX_LIST_01### end -->
+            <!-- ###BACKBUTTON### begin -->
+            <p class="backbutton">
+              ###BUTTON###
+            </p>
+            <!-- ###BACKBUTTON### end -->
+  <!-- ###AREA_FOR_AJAX_LIST_02### begin -->
+            <!-- ###SINGLEBODY### end -->
+          </div>
         </div>
 <!-- ###AREA_FOR_AJAX_LIST_02### end -->
         <!-- ###SINGLEVIEW### end -->
