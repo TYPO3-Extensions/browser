@@ -301,7 +301,7 @@ plugin.tx_browser_pi1 {
         box {
             // [STRING] empty (default): empty value will allocated while runtime.
           value =
-          wrap  = <ul id="record-browser" class="ui-widget ui-helper-clearfix">|</ul><div id="error" class="ui-state-error ui-corner-all"></div>
+          wrap  = <ul id="record-browser" class="ui-widget ui-helper-clearfix">|</ul><div id="error"></div>
         }
         items {
             // First item of the record browser
