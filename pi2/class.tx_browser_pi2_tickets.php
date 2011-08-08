@@ -398,7 +398,7 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
     $arr_release[$int_v][$int_t]['version']                         = '3.7.0';
     $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'a-z_Browser';
-    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'naivigation.a-z_Browser';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'navigation.a-z_Browser';
 
     $int_t++;
     $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array modeSelector is moved';
@@ -410,7 +410,7 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
     $arr_release[$int_v][$int_t]['version']                         = '3.7.0';
     $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'modeSelector';
-    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'naivigation.modeSelector';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'navigation.modeSelector';
 
     $int_t++;
     $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array pageBrowser is moved';
@@ -422,7 +422,7 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
     $arr_release[$int_v][$int_t]['version']                         = '3.7.0';
     $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'pageBrowser';
-    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'naivigation.pageBrowser';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'navigation.pageBrowser';
 
 //:TODO:
     // Set the Ticket array
