@@ -47,7 +47,7 @@
 
                   // Send the AJAX request
                   // Replace the content of the html element with the delivered data
-alert('1');
+//alert('1');
 $("#error").slideUp( 'fast' );
 // Testen ob html_element existiert, sonst Fehlermeldung
                 $( html_element ).load(
@@ -66,7 +66,7 @@ $("#error").slideUp( 'fast' );
 $("#error").slideDown( 'fast' );
     alert(msg + " | " + xhr.status + " | " + xhr.statusText);
   }
-alert('2');
+//alert('2');
                       // Fade out the loader
                     $( "#tx-browser-pi1-loader" ).fadeOut( 500, function( )
                     {
@@ -75,7 +75,7 @@ alert('2');
                       // Remove the opacity of the html element
                     $( html_element ).removeClass( "opacity08" );
                     $( "input:submit, input:button, a.backbutton", ".tx-browser-pi1" ).button( );
-alert('3');
+//alert('3');
                   }
                 );
                   // Send the AJAX request
