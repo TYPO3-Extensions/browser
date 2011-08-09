@@ -54,15 +54,7 @@
                                 '</p>' +
                               '</div>' +
                             '</div>',
-                    uiInf:  '<div class="ui-widget">' + 
-                              '<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">'+ 
-                                '<p>' + 
-                                  '<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' +
-                                  '<strong>{0}</strong>' +
-                                  '{1}' +
-                                '</p>' +
-                              '</div>' +
-                            '</div>',
+                    uiInf:  '<div class="ui-widget">' + '<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">' + '<p>' + '<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' + '<strong>{0}</strong>' + '{1}' + '</p>' + '</div>' + '</div>',
                   }
                 };
 
