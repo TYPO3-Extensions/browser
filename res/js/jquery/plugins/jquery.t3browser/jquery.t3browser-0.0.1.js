@@ -18,8 +18,8 @@
     messages: {
       errMissingTagPropertyLabel: "Tag is missing:",
       errMissingTagPropertyPrmpt: "A HTML tag with an attribute {0} is missing. AJAX can't work!",
-      infMissingTagPropertyLabel: "Be aware of a proper HTMLtemplate:",
-      infMissingTagPropertyPrmpt: "Please add something like <div id=\"{0}\" to your template.",
+      hlpMissingTagPropertyLabel: "Be aware of a proper HTML template:",
+      hlpMissingTagPropertyPrmpt: "Please add something like <div id=\"{0}\">...</div> to your template.",
       hlpPageObjectLabel:   "Be aware of a proper TYPO3 page object:",
       hlpPageObjectPrmpt:   "Check the page object and the current typeNum.",
       hlpUrlLabel:          "Be aware of a proper URL:",
@@ -75,22 +75,18 @@
 
                 return this.each( function ( )
                 {
-                  if( !$( html_element ).length ) {
+                  if( !$( html_element + "Qsgah" ).length ) {
 //                    err_prompt( "#update-prompt", settings.messages.errMissingTagPropertyLabel, settings.messages.errMissingTagPropertyPrmpt );
 //                    inf_prompt( "#update-prompt", settings.messages.hlpMissingTagPropertyLabel, settings.messages.hlpMissingTagPropertyPrmpt );
-                    alert( settings.messages.errMissingTagPropertyLabel + " " + settings.messages.errMissingTagPropertyPrmpt );
-                    alert( settings.messages.hlpMissingTagPropertyLabel + " " + settings.messages.hlpMissingTagPropertyPrmpt );
+                    prompt = format( settings.messages.errMissingTagPropertyPrmpt, html_element);
+                    alert( settings.messages.errMissingTagPropertyLabel + " " + prompt );
+                    prompt = format( settings.messages.hlpMissingTagPropertyPrmpt, html_element);
+                    alert( settings.messages.hlpMissingTagPropertyLabel + " " + prompt );
                     fq_url = window.location.protocol + "//" + window.location.host + "/" + url;
-                    alert(fq_url);
-                    //window.location.href = fq_url;
+                    window.location.href = fq_url;
                     return;
                   }
-                  alert( "length " + $( html_element ).length );
-                  alert( "selector " + $( html_element ).selector );
-                  alert( "context " + $( html_element ).context.nodeName );
-                  alert( "length " + $( "#update-prompt" ).length );
-                  alert( "selector " + $( "#update-prompt" ).selector );
-                  alert( "context " + $( "#update-prompt" ).context.nodeName );
+
                   cover_wi_loader( html_element );
                 
                     // Fade out the error element
