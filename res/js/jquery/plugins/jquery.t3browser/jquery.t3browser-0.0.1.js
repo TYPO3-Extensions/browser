@@ -87,13 +87,13 @@ alert(1);
 //                      err_prompt( "#error", xhr.status,                             xhr.statusText                        );
 //                        element = format22( templates.uiErr, xhr.status,                             xhr.statusText);
                         element = format22( "test {0}", "1");
+alert(templates.uiErr);
 alert(element);
                   $( "#error" ).append( element );
 alert(2);
                       inf_prompt( "#error", settings.messages.hlpPageObjectLabel,   settings.messages.hlpPageObjectPrmpt  );
                       inf_prompt( "#error", settings.messages.hlpUrlLabel,          settings.messages.hlpUrlPrmpt         );
                       inf_prompt( "#error", settings.messages.hlpUrlSelectorLabel,  settings.messages.hlpUrlSelectorPrmpt );
-alert(3);
                         // Fade in the error element
                       $("#error:hidden").slideDown( 'fast' );
 //      var msg = "Sorry but there was an error: ";
@@ -162,7 +162,6 @@ alert(element);
                 }; 
 
                 function format22( source, params ) {
-alert(2);
                   if ( arguments.length == 1 )
                   {
                     return function() {
