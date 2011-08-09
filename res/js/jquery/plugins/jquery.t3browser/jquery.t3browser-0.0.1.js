@@ -22,6 +22,8 @@
       hlpUrlPrmpt:          "Check the requested URL manually: {0}",
       hlpUrlSelectorLabel:  "Be aware of the jQuery selector:",
       hlpUrlSelectorPrmpt:  "The request takes content into account only if this selector gets a result: {0}",
+      hlpGetRidOfLabel:     "Get rid of this messages?",
+      hlpGetRidOfPrmpt:     "Deactivate the jQuery plugin t3browser. But you won't have any AJAX support.",
     },
     templates: {
       uiErr:  '<div class="ui-widget">' + 
@@ -69,12 +71,14 @@
 
                 return this.each( function ( )
                 {
-                    // Cover the current html element with the loader *.gif
+                  alert( "length " + $( html_element ).length );
+                  alert( "selector " + $( html_element ).selector );
+                  alert( "context " + $( html_element ).context.nodeName );
                   cover_wi_loader( html_element );
                 
                     // Fade out the error element
-                  $("#error:visible").slideUp( 'fast' );
-                  $("#error div").remove( );
+                  $("#update-prompt:visible").slideUp( 'fast' );
+                  $("#update-prompt div").remove( );
 
                     // Send the AJAX request
                     // Replace the content of the html element with the delivered data
@@ -84,14 +88,15 @@
                   {
                     if (status == "error")
                     {
-                      err_prompt( "#error", xhr.status,                             xhr.statusText                        );
-                      inf_prompt( "#error", settings.messages.hlpPageObjectLabel,   settings.messages.hlpPageObjectPrmpt  );
-                      prompt = format( settings.messages.hlpUrlPrmpt,         url);
-                      inf_prompt( "#error", settings.messages.hlpUrlLabel,          prompt                                );
+                      err_prompt( "#update-prompt", xhr.status, xhr.statusText );
+                      inf_prompt( "#update-prompt", settings.messages.hlpPageObjectLabel, settings.messages.hlpPageObjectPrmpt );
+                      prompt = format( settings.messages.hlpUrlPrmpt, url);
+                      inf_prompt( "#update-prompt", settings.messages.hlpUrlLabel, prompt );
                       prompt = format( settings.messages.hlpUrlSelectorPrmpt, html_element_wi_selector);
-                      inf_prompt( "#error", settings.messages.hlpUrlSelectorLabel,  prompt );
+                      inf_prompt( "#update-prompt", settings.messages.hlpUrlSelectorLabel, prompt );
+                      inf_prompt( "#update-prompt", settings.messages.hlpGetRidOfLabel, settings.messages.hlpGetRidOfPrompt );
                         // Fade in the error element
-                      $("#error:hidden").slideDown( 'fast' );
+                      $("#update-prompt:hidden").slideDown( 'fast' );
 //      var msg = "Sorry but there was an error: ";
 //      var msg1 = '<div class="ui-widget"><div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><strong>';
 //      var msg2 = '</strong>';
@@ -99,10 +104,10 @@
 //      var prompt = "Did you configured a proper page object?\n Please check this URL: \n" + url;
       //var infPrompt = jQuery.t3browser.format( this.templates['uiInfo'], this.messages['hlpPageObjectLabel'], this.messages['hlpPageObjectPrompt']);
         //alert("'" + str + "'");
-//      $("#error").html(msg1 + xhr.statusText + ' (' + xhr.status + '): ' + msg2 + prompt + msg3);
-      //$("#error").html(infPrompt);
-  // Testen ob #error existiert, sonst alert oder add
-//  $("#error").slideDown( 'fast' );
+//      $("#update-prompt").html(msg1 + xhr.statusText + ' (' + xhr.status + '): ' + msg2 + prompt + msg3);
+      //$("#update-prompt").html(infPrompt);
+  // Testen ob #update-prompt existiert, sonst alert oder add
+//  $("#update-prompt").slideDown( 'fast' );
 //alert(settings.messages.hlpPageObjectLabel);
   //alert(msg + " | " + xhr.status + " | " + xhr.statusText);
     }
