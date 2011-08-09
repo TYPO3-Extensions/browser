@@ -16,6 +16,10 @@
   
   var settings = {
     messages: {
+      errMissingTagPropertyLabel: "Tag is missing:",
+      errMissingTagPropertyPrmpt: "A HTML tag with an attribute {0} is missing. AJAX can't work!",
+      infMissingTagPropertyLabel: "Be aware of a proper HTMLtemplate:",
+      infMissingTagPropertyPrmpt: "Please add something like <div id=" + '"' + {0} + '"' + "to your template.",
       hlpPageObjectLabel:   "Be aware of a proper TYPO3 page object:",
       hlpPageObjectPrmpt:   "Check the page object and the current typeNum.",
       hlpUrlLabel:          "Be aware of a proper URL:",
@@ -71,6 +75,13 @@
 
                 return this.each( function ( )
                 {
+                  if( !$( "#update-prompt" ).length ) {
+                    $( "body" ).prepend( '<div id="#update-prompt"></div>' );
+                  }
+                  if( !$( html_element ).length ) {
+                    err_prompt( "#update-prompt", settings.messages.errMissingTagPropertyLabel, settings.messages.errMissingTagPropertyPrmpt );
+                    inf_prompt( "#update-prompt", settings.messages.hlpMissingTagPropertyLabel, settings.messages.hlpMissingTagPropertyPrmpt );
+                  }
                   alert( "length " + $( html_element ).length );
                   alert( "selector " + $( html_element ).selector );
                   alert( "context " + $( html_element ).context.nodeName );
