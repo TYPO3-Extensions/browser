@@ -41,7 +41,7 @@
                     hlpPageObjectPrmpt:   "Check the page object and the current typeNum.",
                     hlpUrlLabel:          "Be aware of a proper URL:",
                     hlpUrlPrmpt:          "Check the requested URL manually: {0}",
-                    hlpUrlSelectorLabel:  "Be aware of the jQuery selector",
+                    hlpUrlSelectorLabel:  "Be aware of the jQuery selector:",
                     hlpUrlSelectorPrmpt:  "The request takes content into account only if it is wrapped by {0}",
                   },
                   templates: {
@@ -49,7 +49,7 @@
                               '<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">' + 
                                 '<p>' + 
                                   '<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>' +
-                                  '<strong>{0}</strong>' +
+                                  '<strong>{0}</strong> ' +
                                   '{1}' +
                                 '</p>' +
                               '</div>' +
@@ -58,7 +58,7 @@
                               '<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">' + 
                                 '<p>' + 
                                   '<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' +
-                                  '<strong>{0}</strong>' +
+                                  '<strong>{0}</strong> ' +
                                   '{1}' +
                                 '</p>' +
                               '</div>' +
@@ -73,7 +73,7 @@
                 
                     // Fade out the error element
                   $("#error:visible").slideUp( 'fast' );
-                  $("#error").remove( "div" );
+                  $("#error div");
 
                     // Send the AJAX request
                     // Replace the content of the html element with the delivered data
@@ -83,7 +83,6 @@
                   {
                     if (status == "error")
                     {
-alert(1);
                       err_prompt( "#error", xhr.status,                             xhr.statusText                        );
                       inf_prompt( "#error", settings.messages.hlpPageObjectLabel,   settings.messages.hlpPageObjectPrmpt  );
                       inf_prompt( "#error", settings.messages.hlpUrlLabel,          settings.messages.hlpUrlPrmpt         );
