@@ -61,13 +61,15 @@ $("#error").slideUp( 'fast' );
     var msg2 = '</strong>';
     var msg3 = '</p></div></div>';
     var prompt = "Did you configured a proper page object?\n Please check this URL: \n" + url;
-    var infPrompt = jQuery.t3browser.format( this.templates['uiInfo'], this.messages['hlpPageObjectLabel'], this.messages['hlpPageObjectPrompt']);
+//    var infPrompt = jQuery.t3browser.format( this.templates['uiInfo'], this.messages['hlpPageObjectLabel'], this.messages['hlpPageObjectPrompt']);
+    //var infPrompt = this.format( this.templates['uiInfo'], this.messages['hlpPageObjectLabel'], this.messages['hlpPageObjectPrompt']);
+//    var infPrompt = jQuery.t3browser.format( 'test {0}', '1');
       //alert("'" + str + "'");
-    //$("#error").html(msg1 + xhr.statusText + ' (' + xhr.status + '): ' + msg2 + prompt + msg3);
-    $("#error").html(infPrompt);
+    $("#error").html(msg1 + xhr.statusText + ' (' + xhr.status + '): ' + msg2 + prompt + msg3);
+    //$("#error").html(infPrompt);
 // Testen ob #error existiert, sonst alert oder add
 $("#error").slideDown( 'fast' );
-    alert(msg + " | " + xhr.status + " | " + xhr.statusText);
+    //alert(msg + " | " + xhr.status + " | " + xhr.statusText);
   }
 //alert('2');
                       // Fade out the loader
@@ -174,15 +176,7 @@ $.extend( $.fn.t3browser,
                 '</p>' +
               '</div>' +
             '</div>',
-    uiInf:  '<div class="ui-widget">' + 
-              '<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">'+ 
-                '<p>' + 
-                  '<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' +
-                  '<strong>{0}</strong>' +
-                  '{1}' +
-                '</p>' +
-              '</div>' +
-            '</div>',
+    uiInf:  '<div class="ui-widget">' +  '<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">'+ '<p>' +  '<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' + '<strong>{0}</strong>' + '{1}' + '</p>' + '</div>' + '</div>',
   }
 });    
 
