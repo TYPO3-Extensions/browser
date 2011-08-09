@@ -384,8 +384,9 @@
     $int_max_piVars = 0;
     if(is_array($this->pObj->piVars))
     {
-        // 13006, dwildt, 110310
+        // #13006, dwildt, 110310
         // Don't take care about showUid, if it is empty
+        // #28878, 110810, dwildt
       if(isset($this->pObj->piVars['showUid']) && empty($this->pObj->piVars['showUid']))
       //if(empty($this->pObj->piVars['showUid']))
       {
@@ -406,8 +407,6 @@
       }
         // If there are mor than max_piVars, it isn't the first visit
     }
-echo "<pre>" . var_export($this->pObj->boolFirstVisit, true) . "</pre>";
-echo "<pre>" . var_export($this->pObj->piVars, true) . "</pre>";
       // Set the global boolFirstVisit
 
 

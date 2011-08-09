@@ -25,6 +25,7 @@
   Miscellaneous
   * #00000: PHP: substitute_marker() is moved to substitute_tablefield_marker()
   Bugfixes
+  * #28878: Empty list at start: Form is empty for ever
   * #28855: Broken RSS-Feed
   * #28856: RSS template had a wrong marker (tt_news sample)
   
