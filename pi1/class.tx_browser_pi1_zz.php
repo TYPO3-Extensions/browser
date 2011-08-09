@@ -406,6 +406,7 @@
         // If there are mor than max_piVars, it isn't the first visit
     }
 echo "<pre>" . var_export($this->pObj->boolFirstVisit, true) . "</pre>";
+echo "<pre>" . var_export($this->pObj->piVars, true) . "</pre>";
       // Set the global boolFirstVisit
 
 
