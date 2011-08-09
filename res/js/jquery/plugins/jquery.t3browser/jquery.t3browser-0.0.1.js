@@ -127,7 +127,7 @@ $("#error").slideDown( 'fast' );
 
 
 
-$.t3browser.format = function(source, params) 
+$.fn.t3browser.format = function(source, params) 
 {
   if ( arguments.length == 1 )
   {
@@ -154,7 +154,7 @@ $.t3browser.format = function(source, params)
 
 
 
-$.extend( $.validator, 
+$.extend( $.fn.t3browser, 
 {
   messages: {
     errError:           "Sorry but there was an error: ",
