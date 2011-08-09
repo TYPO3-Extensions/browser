@@ -113,23 +113,17 @@
                       inf_prompt( "#update-prompt", settings.messages.hlpGetRidOfLabel, settings.messages.hlpGetRidOfPrmpt );
                         // Add error messages and helpful informations to the update prompt
 
+                        // Fade out the loading *.gif, initiate buttons again
+                      clean_up( html_element );
                         // Fade in the update prompt
-                      $("#update-prompt:hidden").slideDown( 'fast' );
+                      $( "#update-prompt:hidden" ).slideDown( 'fast' );
+                      $( "#update-prompt:hidden" ).append( response );
+                      return;
                     }
                       // ERROR server has an error and has send a message
 
                       // Fade out the loading *.gif, initiate buttons again
                     clean_up( html_element );
-                      // Fade out the loading *.gif
-                    $( "#tx-browser-pi1-loader" ).fadeOut( 500, function( )
-                    {
-                      $( this ).remove( );
-                    });
-                      // Remove the opacity of the html element
-                    $( html_element ).removeClass( "opacity08" );
-                      // Initiate the ui button layout again
-                    $( "input:submit, input:button, a.backbutton", ".tx-browser-pi1" ).button( );
-//alert('3');
                   });
                     // Send the AJAX request
                 });
