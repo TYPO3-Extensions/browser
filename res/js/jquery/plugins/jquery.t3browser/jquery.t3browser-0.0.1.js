@@ -26,7 +26,9 @@
               },
     update :  function( html_element, url )
               {
-                  // update():  replace the content of the given html element with the content 
+                return this.each( function ( )
+                {
+                // update():  replace the content of the given html element with the content 
                   //            of the requested url. The url may have an jQuery filter.
                   
                   // Add an opacity to the html element
@@ -81,6 +83,7 @@ $("#error").slideDown( 'fast' );
 //alert('3');
                   }
                 );
+                });
                   // Send the AJAX request
               },
                 // update( )
@@ -131,19 +134,19 @@ $("#error").slideDown( 'fast' );
   {
       // See http://docs.jquery.com/Plugins/Authoring#Plugin_Methods
 
-        // Method calling logic
-      if ( methods[method] ) 
-      {
-        return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-      }
-      else if ( typeof method === "object" || ! method )
-      {
-        return methods.init.apply( this, arguments );
-      }
-      else
-      {
-        $.error( "Method " +  method + " does not exist on jQuery.tooltip" );
-      }    
+      // Method calling logic
+    if ( methods[method] ) 
+    {
+      return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+    }
+    else if ( typeof method === "object" || ! method )
+    {
+      return methods.init.apply( this, arguments );
+    }
+    else
+    {
+      $.error( "Method " +  method + " does not exist on jQuery.tooltip" );
+    }    
   };
       // Method calling logic
 
