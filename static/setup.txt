@@ -1897,7 +1897,7 @@ plugin.tx_browser_pi1 {
         mint_choc {
           label   = sheet_templating.css.jqui.mint_choc
           css     = EXT:browser/res/js/jquery/ui/mint_choc/jquery-ui-1.8.14.custom.css
-          icon    = EXT:browser/res/images/jQuery/theme_90_mint_choc.png
+          icon    = EXT:browser/res/images/jQuery/theme_90_mint_choco.png
         }
         overcast {
           label   = sheet_templating.css.jqui.overcast

@@ -117,7 +117,7 @@
                       clean_up( html_element );
                         // Fade in the update prompt
                       $( "#update-prompt:hidden" ).slideDown( 'fast' );
-                      $( "#update-prompt:hidden" ).append( response );
+                      $( "#update-prompt" ).append( response );
                       return;
                     }
                       // ERROR server has an error and has send a message
