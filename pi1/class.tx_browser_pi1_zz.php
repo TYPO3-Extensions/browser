@@ -398,13 +398,14 @@
         $int_max_piVars++;
       }
         // piVars['plugin'] is a system piVar and it is independent of the visiting times
-        // If there are mor than max_piVars, it isn't the first visit
+        // If there are more than max_piVars, it isn't the first visit
       if(count($this->pObj->piVars) > $int_max_piVars)
       {
         $this->pObj->boolFirstVisit = false;
       }
         // If there are mor than max_piVars, it isn't the first visit
     }
+echo "<pre>" . var_export($this->pObj->boolFirstVisit, true) . "</pre>";
       // Set the global boolFirstVisit
 
 

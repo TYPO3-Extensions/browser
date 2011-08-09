@@ -84,7 +84,7 @@ class tx_browser_pi1_flexform {
   // [boolean] Display the A-Z-Browser
   var $bool_pageBrowser = true;
   // [boolean] Display the PageBrowser
-  var $bool_emptyAtStartbool_emptyAtStart = false;
+  var $bool_emptyAtStart = false;
   // [boolean] Display an empty list at start
   var $bool_dontHandleEmptyValues = true;
   // [boolean] Don't handle empty records in list views and don't handle empty fields in single views
