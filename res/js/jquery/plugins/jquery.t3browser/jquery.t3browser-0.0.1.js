@@ -54,7 +54,15 @@
                                 '</p>' +
                               '</div>' +
                             '</div>',
-                    uiInf:  '<div class="ui-widget">' + '<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">' + '<p>' + '<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' + '<strong>{0}</strong>' + '{1}' + '</p>' + '</div>' + '</div>',
+                    uiInf:  '<div class="ui-widget">' + 
+                              '<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">' + 
+                                '<p>' + 
+                                  '<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' +
+                                  '<strong>{0}</strong>' +
+                                  '{1}' +
+                                '</p>' +
+                              '</div>' +
+                            '</div>',
                   }
                 };
 
@@ -76,14 +84,7 @@
                     if (status == "error")
                     {
 alert(1);
-//                      err_prompt( "#error", xhr.status,                             xhr.statusText                        );
-//                        element = format22( templates.uiErr, xhr.status,                             xhr.statusText);
-                        element = format22( "test {0}", "1");
-alert(settings.templates.uiErr);
-alert(settings.templates.uiInf);
-alert(element);
-                  $( "#error" ).append( element );
-alert(2);
+                      err_prompt( "#error", xhr.status,                             xhr.statusText                        );
                       inf_prompt( "#error", settings.messages.hlpPageObjectLabel,   settings.messages.hlpPageObjectPrmpt  );
                       inf_prompt( "#error", settings.messages.hlpUrlLabel,          settings.messages.hlpUrlPrmpt         );
                       inf_prompt( "#error", settings.messages.hlpUrlSelectorLabel,  settings.messages.hlpUrlSelectorPrmpt );
@@ -140,17 +141,12 @@ alert(2);
                   // Cover the current html element with the loader *.gif
                   
                 function err_prompt( selector, label, prompt ) {
-                  element = function ( ) {
-			return format22( templates.uiErr, label, prompt); 
-			};
-alert(element);
+                  element = format22( settings.templates.uiErr, label, prompt); 
                   $( selector ).append( element );
                 }; 
 
                 function inf_prompt( selector, label, prompt ) {
-                  element = function () {
-			return format22( templates.uiInf, label, prompt); 
-			};
+                  element = format22( settings.templates.uiInf, label, prompt); 
                   $( selector ).append( element );
                 }; 
 
