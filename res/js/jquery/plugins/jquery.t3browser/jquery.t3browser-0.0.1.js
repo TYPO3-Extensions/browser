@@ -76,8 +76,14 @@
                 return this.each( function ( )
                 {
                   if( !$( html_element ).length ) {
-                    err_prompt( "#update-prompt", settings.messages.errMissingTagPropertyLabel, settings.messages.errMissingTagPropertyPrmpt );
-                    inf_prompt( "#update-prompt", settings.messages.hlpMissingTagPropertyLabel, settings.messages.hlpMissingTagPropertyPrmpt );
+//                    err_prompt( "#update-prompt", settings.messages.errMissingTagPropertyLabel, settings.messages.errMissingTagPropertyPrmpt );
+//                    inf_prompt( "#update-prompt", settings.messages.hlpMissingTagPropertyLabel, settings.messages.hlpMissingTagPropertyPrmpt );
+                    alert( settings.messages.errMissingTagPropertyLabel + " " + settings.messages.errMissingTagPropertyPrmpt );
+                    alert( settings.messages.hlpMissingTagPropertyLabel + " " + settings.messages.hlpMissingTagPropertyPrmpt );
+                    fq_url = window.location.protocol + "//" + window.location.host + "/" + url;
+                    alert(fq_url);
+                    //window.location.href = fq_url;
+                    return;
                   }
                   alert( "length " + $( html_element ).length );
                   alert( "selector " + $( html_element ).selector );
@@ -105,7 +111,7 @@
                       inf_prompt( "#update-prompt", settings.messages.hlpUrlLabel, prompt );
                       prompt = format( settings.messages.hlpUrlSelectorPrmpt, html_element_wi_selector);
                       inf_prompt( "#update-prompt", settings.messages.hlpUrlSelectorLabel, prompt );
-                      inf_prompt( "#update-prompt", settings.messages.hlpGetRidOfLabel, settings.messages.hlpGetRidOfPrompt );
+                      inf_prompt( "#update-prompt", settings.messages.hlpGetRidOfLabel, settings.messages.hlpGetRidOfPrmpt );
                         // Fade in the error element
                       $("#update-prompt:hidden").slideDown( 'fast' );
 //      var msg = "Sorry but there was an error: ";
@@ -160,7 +166,7 @@
                   
                 function err_prompt( selector, label, prompt ) {
                   if( !$( "#update-prompt" ).length ) {
-                    alert( label + ": " + prompt);
+                    alert( label + " " + prompt);
                     return;
                   }
                   element = format( settings.templates.uiErr, label, prompt); 
@@ -169,7 +175,7 @@
 
                 function inf_prompt( selector, label, prompt ) {
                   if( !$( "#update-prompt" ).length ) {
-                    alert( label + ": " + prompt);
+                    alert( label + " " + prompt);
                     return;
                   }
                   element = format( settings.templates.uiInf, label, prompt); 
