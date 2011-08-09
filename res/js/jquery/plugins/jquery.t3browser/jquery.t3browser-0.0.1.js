@@ -35,10 +35,37 @@
               {
                   // update():  replace the content of the given html element with the content 
                   //            of the requested url. The url may have an jQuery filter.
-    var settings = {
-      'location'         : 'top',
-      'background-color' : 'blue'
-    };
+                var settings = {
+                  messages: {
+                    errError:           "Sorry but there was an error: ",
+                    hlpPageObjectLabel: "Do you have a proper page object?",
+                    hlpPageObjectPrmpt: "Please check the TYPO3 page object and the current typeNum.",
+                    hlpUrlLabel:        "Please check this URL manually",
+                    hlpUrlPrmpt:        "",
+                  },
+                          
+                  templates: {
+                    uiErr:  '<div class="ui-widget">' + 
+                              '<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">' + 
+                                '<p>' + 
+                                  '<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>' +
+                                  '<strong>{0}</strong>' +
+                                  '{1}' +
+                                '</p>' +
+                              '</div>' +
+                            '</div>',
+                    uiInf:  '<div class="ui-widget">' + 
+                              '<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">'+ 
+                                '<p>' + 
+                                  '<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' +
+                                  '<strong>{0}</strong>' +
+                                  '{1}' +
+                                '</p>' +
+                              '</div>' +
+                            '</div>',
+                  }
+                };
+
                 return this.each(
                   function ( )
                   {
@@ -61,7 +88,7 @@
 
                       // Send the AJAX request
                       // Replace the content of the html element with the delivered data
-    alert(settings.location);
+    //alert('1');
     $("#error").slideUp( 'fast' );
     // Testen ob html_element existiert, sonst Fehlermeldung
                     $( html_element ).load(
@@ -81,7 +108,8 @@
         //$("#error").html(infPrompt);
     // Testen ob #error existiert, sonst alert oder add
     $("#error").slideDown( 'fast' );
-        alert(msg + " | " + xhr.status + " | " + xhr.statusText);
+alert(settings.messages.hlpPageObjectLabel);
+    //alert(msg + " | " + xhr.status + " | " + xhr.statusText);
       }
     //alert('2');
                           // Fade out the loader
@@ -145,56 +173,24 @@
   
   $.fn.t3browser = function( method )
   {
+      // Method calling logic
       // See http://docs.jquery.com/Plugins/Authoring#Plugin_Methods
-
-    // Method calling logic
+    
+      // Return executed method
     if ( methods[method] ) 
     {
       return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
     }
-    else if ( typeof method === "object" || ! method )
+    
+      // Set default values
+    if ( typeof method === "object" || ! method )
     {
       return methods.init.apply( this, arguments );
     }
-    else
-    {
-      $.error( "Method " +  method + " does not exist on jQuery.tooltip" );
-    }    
-  };
+    
+      // Error: No proper method, no arguments 
+    $.error( "Method " +  method + " does not exist on jQuery.t3browser" );
       // Method calling logic
+  };
 
 })( jQuery );
-
-
-
-$.extend( $.fn.t3browser, 
-{
-  messages: {
-    errError:           "Sorry but there was an error: ",
-    hlpPageObjectLabel: "Do you have a proper page object?",
-    hlpPageObjectPrmpt: "Please check the TYPO3 page object and the current typeNum.",
-    hlpUrlLabel:        "Please check this URL manually",
-    hlpUrlPrmpt:        "",
-  },
-          
-  templates: {
-    uiErr:  '<div class="ui-widget">' + 
-              '<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">' + 
-                '<p>' + 
-                  '<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>' +
-                  '<strong>{0}</strong>' +
-                  '{1}' +
-                '</p>' +
-              '</div>' +
-            '</div>',
-    uiInf:  '<div class="ui-widget">' + 
-              '<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">'+ 
-                '<p>' + 
-                  '<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' +
-                  '<strong>{0}</strong>' +
-                  '{1}' +
-                '</p>' +
-              '</div>' +
-            '</div>',
-  }
-});
