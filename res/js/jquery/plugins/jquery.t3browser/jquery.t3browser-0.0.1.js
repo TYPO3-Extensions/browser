@@ -99,14 +99,15 @@
                   var url_wi_selector = url + " " + html_element_wi_selector;
                   $( html_element ).load(url_wi_selector, function( response, status, xhr )
                   {
-                    alert( response );
                       // ERROR server has an error and has send a message
                     if (status == "error")
                     {
                         // Add error messages and helpful informations to the update prompt
-                      err_prompt( "#update-prompt", xhr.status, xhr.statusText );
+                      err_prompt( "#update-prompt", xhr.status + ":", xhr.statusText );
                       inf_prompt( "#update-prompt", settings.messages.hlpPageObjectLabel, settings.messages.hlpPageObjectPrmpt );
-                      prompt = format( settings.messages.hlpUrlPrmpt, url);
+                      fq_url = window.location.protocol + "//" + window.location.host + "/" + url;
+                      a_fq_url = '<a href="' + fq_url + '">' + fq_url + '</a>';
+                      prompt = format( settings.messages.hlpUrlPrmpt, a_fq_url);
                       inf_prompt( "#update-prompt", settings.messages.hlpUrlLabel, prompt );
                       prompt = format( settings.messages.hlpUrlSelectorPrmpt, html_element_wi_selector);
                       inf_prompt( "#update-prompt", settings.messages.hlpUrlSelectorLabel, prompt );
