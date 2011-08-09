@@ -74,6 +74,9 @@
                   alert( "length " + $( html_element ).length );
                   alert( "selector " + $( html_element ).selector );
                   alert( "context " + $( html_element ).context.nodeName );
+                  alert( "length " + $( "#update-prompt" ).length );
+                  alert( "selector " + $( "#update-prompt" ).selector );
+                  alert( "context " + $( "#update-prompt" ).context.nodeName );
                   cover_wi_loader( html_element );
                 
                     // Fade out the error element
