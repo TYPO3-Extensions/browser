@@ -61,7 +61,10 @@ $("#error").slideUp( 'fast' );
     var msg2 = '</strong>';
     var msg3 = '</p></div></div>';
     var prompt = "Did you configured a proper page object?\n Please check this URL: \n" + url;
-    $("#error").html(msg1 + xhr.statusText + ' (' + xhr.status + '): ' + msg2 + prompt + msg3);
+    var infPrompt = jQuery.t3browser.format( this.templates['uiInfo'], this.messages['hlpPageObjectLabel'], this.messages['hlpPageObjectPrompt']);
+      //alert("'" + str + "'");
+    //$("#error").html(msg1 + xhr.statusText + ' (' + xhr.status + '): ' + msg2 + prompt + msg3);
+    $("#error").html(infPrompt);
 // Testen ob #error existiert, sonst alert oder add
 $("#error").slideDown( 'fast' );
     alert(msg + " | " + xhr.status + " | " + xhr.statusText);
@@ -121,3 +124,65 @@ $("#error").slideDown( 'fast' );
       // Method calling logic
 
 })( jQuery );
+
+
+
+$.t3browser.format = function(source, params) 
+{
+  if ( arguments.length == 1 )
+  {
+    return function() {
+      var args = $.makeArray(arguments);
+      args.unshift(source);
+      return $.t3browser.format.apply( this, args );
+    };
+  }
+  if ( arguments.length > 2 && params.constructor != Array  )
+  {
+    params = $.makeArray(arguments).slice(1);
+  }
+  if ( params.constructor != Array )
+  {
+    params = [ params ];
+  }
+  $.each(params, function(i, n)
+  {
+    source = source.replace(new RegExp("\\{" + i + "\\}", "g"), n);
+  });
+  return source;
+};
+
+
+
+$.extend( $.validator, 
+{
+  messages: {
+    errError:           "Sorry but there was an error: ",
+    hlpPageObjectLabel: "Do you have a proper page object?",
+    hlpPageObjectPrmpt: "Please check the TYPO3 page object and the current typeNum.",
+    hlpUrlLabel:        "Please check this URL manually",
+    hlpUrlPrmpt:        "",
+  },
+          
+  templates: {
+    uiErr:  '<div class="ui-widget">' + 
+              '<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">'+ 
+                '<p>' + 
+                  '<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>' +
+                  '<strong>{0}</strong>' +
+                  '{1}' +
+                '</p>' +
+              '</div>' +
+            '</div>',
+    uiInf:  '<div class="ui-widget">' + 
+              '<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">'+ 
+                '<p>' + 
+                  '<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' +
+                  '<strong>{0}</strong>' +
+                  '{1}' +
+                '</p>' +
+              '</div>' +
+            '</div>',
+  }
+});    
+

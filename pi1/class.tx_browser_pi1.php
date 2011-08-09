@@ -179,7 +179,7 @@ class tx_browser_pi1 extends tslib_pibase {
   var $elements;
   // [Array] The elements of the current SQL row
   var $rows;
-  // [Array] The rows of the SQL result
+  // [Array] The rows of the SQL result: $uids_of_all_rows[uid_of_the_plugin][rows]
   var $uids_of_all_rows;
   // [Array] Uids of all rows (after consolidation but before limitation)
 
