@@ -75,9 +75,6 @@
 
                 return this.each( function ( )
                 {
-                  if( !$( "#update-prompt" ).length ) {
-                    $( "body" ).prepend( '<div id="#update-prompt"></div>' );
-                  }
                   if( !$( html_element ).length ) {
                     err_prompt( "#update-prompt", settings.messages.errMissingTagPropertyLabel, settings.messages.errMissingTagPropertyPrmpt );
                     inf_prompt( "#update-prompt", settings.messages.hlpMissingTagPropertyLabel, settings.messages.hlpMissingTagPropertyPrmpt );
@@ -162,11 +159,19 @@
                   // Cover the current html element with the loader *.gif
                   
                 function err_prompt( selector, label, prompt ) {
+                  if( !$( "#update-prompt" ).length ) {
+                    alert( label + ": " + prompt);
+                    return;
+                  }
                   element = format( settings.templates.uiErr, label, prompt); 
                   $( selector ).append( element );
                 }; 
 
                 function inf_prompt( selector, label, prompt ) {
+                  if( !$( "#update-prompt" ).length ) {
+                    alert( label + ": " + prompt);
+                    return;
+                  }
                   element = format( settings.templates.uiInf, label, prompt); 
                   $( selector ).append( element );
                 }; 
