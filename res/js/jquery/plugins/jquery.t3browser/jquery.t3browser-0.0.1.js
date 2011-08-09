@@ -87,8 +87,8 @@
                       inf_prompt( "#error", settings.messages.hlpPageObjectLabel,   settings.messages.hlpPageObjectPrmpt  );
                       prompt = format( settings.messages.hlpUrlPrmpt,         url);
                       inf_prompt( "#error", settings.messages.hlpUrlLabel,          prompt                                );
-                      prompt = format( settings.messages.hlpUrlSelectorPrmpt, selector);
-                      inf_prompt( "#error", settings.messages.hlpUrlSelectorLabel,  settings.messages.hlpUrlSelectorPrmpt );
+                      prompt = format( settings.messages.hlpUrlSelectorPrmpt, html_element_wi_selector);
+                      inf_prompt( "#error", settings.messages.hlpUrlSelectorLabel,  prompt );
                         // Fade in the error element
                       $("#error:hidden").slideDown( 'fast' );
 //      var msg = "Sorry but there was an error: ";
