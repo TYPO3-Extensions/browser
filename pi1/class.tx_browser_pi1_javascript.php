@@ -864,8 +864,8 @@ class tx_browser_pi1_javascript
           $inline_jss = str_replace($hashKeyMarker, $marker[$hashKeyMarker], $inline_jss);
         }
       }
-      $inline_jss = str_replace('###MODE###', $this->pObj->mode, $inline_jss);
-      $inline_jss = str_replace('###VIEW###', $this->pObj->piVar_mode, $inline_jss);
+      $inline_jss = str_replace('###MODE###', $this->pObj->piVar_mode,  $inline_jss);
+      $inline_jss = str_replace('###VIEW###', $this->pObj->view,        $inline_jss);
 //echo '<pre>' . var_export($marker, true) . '</pre>';
       $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
     }
