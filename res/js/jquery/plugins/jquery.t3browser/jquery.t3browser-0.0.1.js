@@ -14,36 +14,36 @@
 ;(function( $ )
 {
   
-                var settings = {
-                  messages: {
-                    hlpPageObjectLabel:   "Be aware of a proper TYPO3 page object:",
-                    hlpPageObjectPrmpt:   "Check the page object and the current typeNum.",
-                    hlpUrlLabel:          "Be aware of a proper URL:",
-                    hlpUrlPrmpt:          "Check the requested URL manually: {0}",
-                    hlpUrlSelectorLabel:  "Be aware of the jQuery selector:",
-                    hlpUrlSelectorPrmpt:  "The request takes content into account only if this selector gets a result: {0}",
-                  },
-                  templates: {
-                    uiErr:  '<div class="ui-widget">' + 
-                              '<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">' + 
-                                '<p>' + 
-                                  '<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>' +
-                                  '<strong>{0}</strong> ' +
-                                  '{1}' +
-                                '</p>' +
-                              '</div>' +
-                            '</div>',
-                    uiInf:  '<div class="ui-widget">' + 
-                              '<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">' + 
-                                '<p>' + 
-                                  '<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' +
-                                  '<strong>{0}</strong> ' +
-                                  '{1}' +
-                                '</p>' +
-                              '</div>' +
-                            '</div>',
-                  }
-                };
+  var settings = {
+    messages: {
+      hlpPageObjectLabel:   "Be aware of a proper TYPO3 page object:",
+      hlpPageObjectPrmpt:   "Check the page object and the current typeNum.",
+      hlpUrlLabel:          "Be aware of a proper URL:",
+      hlpUrlPrmpt:          "Check the requested URL manually: {0}",
+      hlpUrlSelectorLabel:  "Be aware of the jQuery selector:",
+      hlpUrlSelectorPrmpt:  "The request takes content into account only if this selector gets a result: {0}",
+    },
+    templates: {
+      uiErr:  '<div class="ui-widget">' + 
+                '<div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">' + 
+                  '<p>' + 
+                    '<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>' +
+                    '<strong>{0}</strong> ' +
+                    '{1}' +
+                  '</p>' +
+                '</div>' +
+              '</div>',
+      uiInf:  '<div class="ui-widget">' + 
+                '<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;">' + 
+                  '<p>' + 
+                    '<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>' +
+                    '<strong>{0}</strong> ' +
+                    '{1}' +
+                  '</p>' +
+                '</div>' +
+              '</div>',
+    }
+  };
 
   var methods = {
     init :    function( settings_ ) 
@@ -74,7 +74,7 @@
                 
                     // Fade out the error element
                   $("#error:visible").slideUp( 'fast' );
-                  $("#error div");
+                  $("#error div").remove( );
 
                     // Send the AJAX request
                     // Replace the content of the html element with the delivered data
