@@ -30,8 +30,10 @@ $( document ).ready( function( )
         // Don't execute the click
       e.preventDefault( );
         // Update the content with the id #c###TT_CONTENT.UID###-###VIEW###view-###MODE###
-      url = $( this ).t3browser( 'url_autoQm', $( this ).attr( "href" ), "type=###TYPENUM###" );
-      $( this ).t3browser( 'update', "#c###TT_CONTENT.UID###-###VIEW###view-###MODE###", url + " #c###TT_CONTENT.UID###-###VIEW###view-###MODE### > *" );
+      var url                       = $( this ).t3browser( 'url_autoQm', $( this ).attr( "href" ), "type=###TYPENUM###" );
+      var html_element              = "#c###TT_CONTENT.UID###-###VIEW###view-###MODE###";
+      var html_element_wi_selector  = html_element + " > *";
+      $( this ).t3browser( 'update', html_element, url, html_element_wi_selector );
     }
   );
     // User has clicked the record browser
