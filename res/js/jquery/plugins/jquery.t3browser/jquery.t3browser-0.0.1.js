@@ -219,20 +219,3 @@
   };
 
 })( jQuery );
-
-
-$( document ).ready( function( )
-{
-$('div').t3browser({
-                settings : {
-                  messages: {
-                    hlpPageObjectLabel:   "Beachte bitte das TYPO3 Page Objekt:",
-                    hlpPageObjectPrmpt:   "Prüfe das Page Objekt und den korrekten Wert von typeNum.",
-                    hlpUrlLabel:          "Be aware of a proper URL:",
-                    hlpUrlPrmpt:          "Check the requested URL manually: {0}",
-                    hlpUrlSelectorLabel:  "Be aware of the jQuery selector:",
-                    hlpUrlSelectorPrmpt:  "The request takes content into account only if this selector gets a result: {0}",
-                  },
-                },
-});
-});
