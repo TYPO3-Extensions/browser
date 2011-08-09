@@ -47,10 +47,26 @@
 
                   // Send the AJAX request
                   // Replace the content of the html element with the delivered data
+alert('1');
+$("#error").slideUp( 'fast' );
+// Testen ob html_element existiert, sonst Fehlermeldung
                 $( html_element ).load(
                   url,
-                  function( )
+                  function( response, status, xhr )
                   {
+//alert(status);
+  if (status == "error") {
+    var msg = "Sorry but there was an error: ";
+    var msg1 = '<div class="ui-widget"><div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><strong>';
+    var msg2 = '</strong>';
+    var msg3 = '</p></div></div>';
+    var prompt = "Did you configured a proper page object?\n Please check this URL: \n" + url;
+    $("#error").html(msg1 + xhr.statusText + ' (' + xhr.status + '): ' + msg2 + prompt + msg3);
+// Testen ob #error existiert, sonst alert oder add
+$("#error").slideDown( 'fast' );
+    alert(msg + " | " + xhr.status + " | " + xhr.statusText);
+  }
+alert('2');
                       // Fade out the loader
                     $( "#tx-browser-pi1-loader" ).fadeOut( 500, function( )
                     {
@@ -59,6 +75,7 @@
                       // Remove the opacity of the html element
                     $( html_element ).removeClass( "opacity08" );
                     $( "input:submit, input:button, a.backbutton", ".tx-browser-pi1" ).button( );
+alert('3');
                   }
                 );
                   // Send the AJAX request

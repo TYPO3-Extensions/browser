@@ -29,9 +29,10 @@ $( document ).ready( function( )
     function( e ) {
         // Don't execute the click
       e.preventDefault( );
-        // Update the content with the id #c###TT_CONTENT.UID###-singleview-1
+        // Update the content with the id #c###TT_CONTENT.UID###-singleview-###VIEW###
       url = $( this ).t3browser( 'url_autoQm', $( this ).attr( "href" ), "type=###TYPENUM###" );
-      $( this ).t3browser( 'update', "#c###TT_CONTENT.UID###-singleview-1", url + " #c###TT_CONTENT.UID###-singleview-1 > *" );
+      $( this ).t3browser( 'update', "#c###TT_CONTENT.UID###-singleview-###VIEW###", url + " #c###TT_CONTENT.UID###-singleview-###VIEW### > 
+*" );
     }
   );
     // User has clicked the record browser
