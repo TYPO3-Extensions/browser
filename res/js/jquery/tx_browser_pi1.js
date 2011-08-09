@@ -31,8 +31,7 @@ $( document ).ready( function( )
       e.preventDefault( );
         // Update the content with the id #c###TT_CONTENT.UID###-###VIEW###view-###MODE###
       url = $( this ).t3browser( 'url_autoQm', $( this ).attr( "href" ), "type=###TYPENUM###" );
-      $( this ).t3browser( 'update', "#c###TT_CONTENT.UID###-###VIEW###view-###MODE###", url + " #c###TT_CONTENT.UID###-###VIEW###view-###MODE### > 
-*" );
+      $( this ).t3browser( 'update', "#c###TT_CONTENT.UID###-###VIEW###view-###MODE###", url + " #c###TT_CONTENT.UID###-###VIEW###view-###MODE### > *" );
     }
   );
     // User has clicked the record browser
