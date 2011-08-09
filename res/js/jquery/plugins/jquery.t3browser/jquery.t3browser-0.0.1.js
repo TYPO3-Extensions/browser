@@ -83,10 +83,17 @@
                   {
                     if (status == "error")
                     {
-                      err_prompt( "#error", xhr.status,                             xhr.statusText                        );
+alert(1);
+//                      err_prompt( "#error", xhr.status,                             xhr.statusText                        );
+//                        element = format22( templates.uiErr, xhr.status,                             xhr.statusText);
+                        element = format22( "test {0}", "1");
+alert(element);
+                  $( "#error" ).append( element );
+alert(2);
                       inf_prompt( "#error", settings.messages.hlpPageObjectLabel,   settings.messages.hlpPageObjectPrmpt  );
                       inf_prompt( "#error", settings.messages.hlpUrlLabel,          settings.messages.hlpUrlPrmpt         );
                       inf_prompt( "#error", settings.messages.hlpUrlSelectorLabel,  settings.messages.hlpUrlSelectorPrmpt );
+alert(3);
                         // Fade in the error element
                       $("#error:hidden").slideDown( 'fast' );
 //      var msg = "Sorry but there was an error: ";
@@ -140,16 +147,22 @@
                   // Cover the current html element with the loader *.gif
                   
                 function err_prompt( selector, label, prompt ) {
-                  element = format( templates.uiErr, label, prompt); 
+                  element = function ( ) {
+			return format22( templates.uiErr, label, prompt); 
+			};
+alert(element);
                   $( selector ).append( element );
                 }; 
 
                 function inf_prompt( selector, label, prompt ) {
-                  element = format( templates.uiInf, label, prompt); 
+                  element = function () {
+			return format22( templates.uiInf, label, prompt); 
+			};
                   $( selector ).append( element );
                 }; 
 
-                function format( source, params ) {
+                function format22( source, params ) {
+alert(2);
                   if ( arguments.length == 1 )
                   {
                     return function() {
