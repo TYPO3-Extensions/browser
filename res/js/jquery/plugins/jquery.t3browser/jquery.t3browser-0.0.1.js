@@ -14,27 +14,6 @@
 ;(function( $ )
 {
   
-  var methods = {
-    init :    function( settings_ ) 
-              {
-                return this.each(function() {        
-                  // If settings_ exist, lets merge them
-                  // with our default settings
-                  if ( settings_ ) { 
-                    $.extend( settings, settings_ );
-                  }
-                });
-              },
-    show :    function( )
-              {
-              },
-    hide :    function( )
-              {
-              },
-    update :  function( html_element, url, html_element_wi_selector )
-              {
-                  // update():  replace the content of the given html element with the content 
-                  //            of the requested url. The content is the content of the html element with selector.
                 var settings = {
                   messages: {
                     hlpPageObjectLabel:   "Be aware of a proper TYPO3 page object:",
@@ -65,6 +44,28 @@
                             '</div>',
                   }
                 };
+
+  var methods = {
+    init :    function( settings_ ) 
+              {
+                return this.each(function() {        
+                  // If settings_ exist, lets merge them
+                  // with our default settings
+                  if ( settings_ ) { 
+                    $.extend( settings, settings_ );
+                  }
+                });
+              },
+    show :    function( )
+              {
+              },
+    hide :    function( )
+              {
+              },
+    update :  function( html_element, url, html_element_wi_selector )
+              {
+                  // update():  replace the content of the given html element with the content 
+                  //            of the requested url. The content is the content of the html element with selector.
 
                 return this.each( function ( )
                 {
@@ -220,11 +221,18 @@
 })( jQuery );
 
 
-$.extend($.t3browser.settings.messages, {
-                  hlpPageObjectLabel:   "Beachte bitte das TYPO3 Page Objekt:",
+$( document ).ready( function( )
+{
+$('div').t3browser({
+                settings : {
+                  messages: {
+                    hlpPageObjectLabel:   "Beachte bitte das TYPO3 Page Objekt:",
                     hlpPageObjectPrmpt:   "Prüfe das Page Objekt und den korrekten Wert von typeNum.",
                     hlpUrlLabel:          "Be aware of a proper URL:",
                     hlpUrlPrmpt:          "Check the requested URL manually: {0}",
                     hlpUrlSelectorLabel:  "Be aware of the jQuery selector:",
                     hlpUrlSelectorPrmpt:  "The request takes content into account only if this selector gets a result: {0}",
-}
+                  },
+                },
+});
+});
