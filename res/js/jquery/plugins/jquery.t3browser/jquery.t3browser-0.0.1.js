@@ -35,6 +35,10 @@
               {
                   // update():  replace the content of the given html element with the content 
                   //            of the requested url. The url may have an jQuery filter.
+    var settings = {
+      'location'         : 'top',
+      'background-color' : 'blue'
+    };
                 return this.each(
                   function ( )
                   {
@@ -57,7 +61,7 @@
 
                       // Send the AJAX request
                       // Replace the content of the html element with the delivered data
-    //alert('1');
+    alert(settings.location);
     $("#error").slideUp( 'fast' );
     // Testen ob html_element existiert, sonst Fehlermeldung
                     $( html_element ).load(
@@ -142,11 +146,6 @@
   $.fn.t3browser = function( method )
   {
       // See http://docs.jquery.com/Plugins/Authoring#Plugin_Methods
-
-    var settings = {
-      'location'         : 'top',
-      'background-color' : 'blue'
-    };
 
     // Method calling logic
     if ( methods[method] ) 
