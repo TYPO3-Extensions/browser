@@ -85,7 +85,9 @@
                     {
                       err_prompt( "#error", xhr.status,                             xhr.statusText                        );
                       inf_prompt( "#error", settings.messages.hlpPageObjectLabel,   settings.messages.hlpPageObjectPrmpt  );
-                      inf_prompt( "#error", settings.messages.hlpUrlLabel,          settings.messages.hlpUrlPrmpt         );
+                      prompt = format( settings.messages.hlpUrlPrmpt,         url);
+                      inf_prompt( "#error", settings.messages.hlpUrlLabel,          prompt                                );
+                      prompt = format( settings.messages.hlpUrlSelectorPrmpt, selector);
                       inf_prompt( "#error", settings.messages.hlpUrlSelectorLabel,  settings.messages.hlpUrlSelectorPrmpt );
                         // Fade in the error element
                       $("#error:hidden").slideDown( 'fast' );
@@ -140,16 +142,16 @@
                   // Cover the current html element with the loader *.gif
                   
                 function err_prompt( selector, label, prompt ) {
-                  element = format22( settings.templates.uiErr, label, prompt); 
+                  element = format( settings.templates.uiErr, label, prompt); 
                   $( selector ).append( element );
                 }; 
 
                 function inf_prompt( selector, label, prompt ) {
-                  element = format22( settings.templates.uiInf, label, prompt); 
+                  element = format( settings.templates.uiInf, label, prompt); 
                   $( selector ).append( element );
                 }; 
 
-                function format22( source, params ) {
+                function format( source, params ) {
                   if ( arguments.length == 1 )
                   {
                     return function() {
