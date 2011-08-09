@@ -62,14 +62,12 @@ $("#error").slideUp( 'fast' );
     var msg3 = '</p></div></div>';
     var prompt = "Did you configured a proper page object?\n Please check this URL: \n" + url;
     //var infPrompt = jQuery.t3browser.format( this.templates['uiInfo'], this.messages['hlpPageObjectLabel'], this.messages['hlpPageObjectPrompt']);
-    var infPrompt = $( this ).t3browser( 'format', 'test', 1);
-    alert($( this ).t3browser( 'format', 'test {0}', 1));
       //alert("'" + str + "'");
     $("#error").html(msg1 + xhr.statusText + ' (' + xhr.status + '): ' + msg2 + prompt + msg3);
     //$("#error").html(infPrompt);
 // Testen ob #error existiert, sonst alert oder add
 $("#error").slideDown( 'fast' );
-    //alert(msg + " | " + xhr.status + " | " + xhr.statusText);
+    alert(msg + " | " + xhr.status + " | " + xhr.statusText);
   }
 //alert('2');
                       // Fade out the loader
@@ -133,19 +131,22 @@ $("#error").slideDown( 'fast' );
   {
       // See http://docs.jquery.com/Plugins/Authoring#Plugin_Methods
 
-      // Method calling logic
-    if ( methods[method] ) 
+    return this.each( function( )
     {
-      return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-    }
-    else if ( typeof method === "object" || ! method )
-    {
-      return methods.init.apply( this, arguments );
-    }
-    else
-    {
-      $.error( "Method " +  method + " does not exist on jQuery.tooltip" );
-    }    
+        // Method calling logic
+      if ( methods[method] ) 
+      {
+        return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+      }
+      else if ( typeof method === "object" || ! method )
+      {
+        return methods.init.apply( this, arguments );
+      }
+      else
+      {
+        $.error( "Method " +  method + " does not exist on jQuery.tooltip" );
+      }    
+    });
   };
       // Method calling logic
 
