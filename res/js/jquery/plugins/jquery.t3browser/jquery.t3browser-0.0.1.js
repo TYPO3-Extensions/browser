@@ -75,9 +75,8 @@
 
                 return this.each( function ( )
                 {
-                  if( !$( html_element + "Qsgah" ).length ) {
-//                    err_prompt( "#update-prompt", settings.messages.errMissingTagPropertyLabel, settings.messages.errMissingTagPropertyPrmpt );
-//                    inf_prompt( "#update-prompt", settings.messages.hlpMissingTagPropertyLabel, settings.messages.hlpMissingTagPropertyPrmpt );
+                    // ERROR html_element is missing. Don't use AJAX but forward 
+                  if( !$( html_element ).length ) {
                     prompt = format( settings.messages.errMissingTagPropertyPrmpt, html_element);
                     alert( settings.messages.errMissingTagPropertyLabel + " " + prompt );
                     prompt = format( settings.messages.hlpMissingTagPropertyPrmpt, html_element);
@@ -86,21 +85,25 @@
                     window.location.href = fq_url;
                     return;
                   }
+                    // ERROR html_elementis missing. Don't use AJAX but forward 
 
-                  cover_wi_loader( html_element );
-                
-                    // Fade out the error element
+                    // Fade out the update prompt
                   $("#update-prompt:visible").slideUp( 'fast' );
                   $("#update-prompt div").remove( );
 
+                    // Cover the html_element with the loading *.gif
+                  cover_wi_loader( html_element );
+                
                     // Send the AJAX request
                     // Replace the content of the html element with the delivered data
-// :TODO: Testen ob html_element existiert, sonst Fehlermeldung
                   var url_wi_selector = url + " " + html_element_wi_selector;
                   $( html_element ).load(url_wi_selector, function( response, status, xhr )
                   {
+                    alert( response );
+                      // ERROR server has an error and has send a message
                     if (status == "error")
                     {
+                        // Add error messages and helpful informations to the update prompt
                       err_prompt( "#update-prompt", xhr.status, xhr.statusText );
                       inf_prompt( "#update-prompt", settings.messages.hlpPageObjectLabel, settings.messages.hlpPageObjectPrmpt );
                       prompt = format( settings.messages.hlpUrlPrmpt, url);
@@ -108,24 +111,16 @@
                       prompt = format( settings.messages.hlpUrlSelectorPrmpt, html_element_wi_selector);
                       inf_prompt( "#update-prompt", settings.messages.hlpUrlSelectorLabel, prompt );
                       inf_prompt( "#update-prompt", settings.messages.hlpGetRidOfLabel, settings.messages.hlpGetRidOfPrmpt );
-                        // Fade in the error element
+                        // Add error messages and helpful informations to the update prompt
+
+                        // Fade in the update prompt
                       $("#update-prompt:hidden").slideDown( 'fast' );
-//      var msg = "Sorry but there was an error: ";
-//      var msg1 = '<div class="ui-widget"><div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><strong>';
-//      var msg2 = '</strong>';
-//      var msg3 = '</p></div></div>';
-//      var prompt = "Did you configured a proper page object?\n Please check this URL: \n" + url;
-      //var infPrompt = jQuery.t3browser.format( this.templates['uiInfo'], this.messages['hlpPageObjectLabel'], this.messages['hlpPageObjectPrompt']);
-        //alert("'" + str + "'");
-//      $("#update-prompt").html(msg1 + xhr.statusText + ' (' + xhr.status + '): ' + msg2 + prompt + msg3);
-      //$("#update-prompt").html(infPrompt);
-  // Testen ob #update-prompt existiert, sonst alert oder add
-//  $("#update-prompt").slideDown( 'fast' );
-//alert(settings.messages.hlpPageObjectLabel);
-  //alert(msg + " | " + xhr.status + " | " + xhr.statusText);
-    }
-  //alert('2');
-                      // Fade out the loader
+                    }
+                      // ERROR server has an error and has send a message
+
+                      // Fade out the loading *.gif, initiate buttons again
+                    clean_up( html_element );
+                      // Fade out the loading *.gif
                     $( "#tx-browser-pi1-loader" ).fadeOut( 500, function( )
                     {
                       $( this ).remove( );
@@ -160,6 +155,21 @@
                 };
                   // Cover the current html element with the loader *.gif
                   
+                  // Fade out the loading *.gif, initiate buttons again
+                function clean_up( html_element ) {
+                    // Fade out the loading *.gif
+                  $( "#tx-browser-pi1-loader" ).fadeOut( 500, function( )
+                  {
+                    $( this ).remove( );
+                  });
+                    // Remove the opacity of the html element
+                  $( html_element ).removeClass( "opacity08" );
+                    // Initiate the ui button layout again
+                  $( "input:submit, input:button, a.backbutton", ".tx-browser-pi1" ).button( );
+                };
+                  // Fade out the loading *.gif, initiate buttons again
+
+                  // Prompt errors
                 function err_prompt( selector, label, prompt ) {
                   if( !$( "#update-prompt" ).length ) {
                     alert( label + " " + prompt);
@@ -168,7 +178,9 @@
                   element = format( settings.templates.uiErr, label, prompt); 
                   $( selector ).append( element );
                 }; 
+                  // Prompt errors
 
+                  // Prompt informations
                 function inf_prompt( selector, label, prompt ) {
                   if( !$( "#update-prompt" ).length ) {
                     alert( label + " " + prompt);
@@ -177,7 +189,9 @@
                   element = format( settings.templates.uiInf, label, prompt); 
                   $( selector ).append( element );
                 }; 
+                  // Prompt informations
 
+                  // Replace vars in the source with the given params
                 function format( source, params ) {
                   if ( arguments.length == 1 )
                   {
@@ -201,6 +215,7 @@
                   });
                   return source;
                 };              
+                  // Replace vars in the source with the given params
               },
                 // update( )
     url_autoQm: function( url, param )
