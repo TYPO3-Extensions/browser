@@ -17,6 +17,13 @@
   var methods = {
     init :    function( options ) 
               {
+                return this.each(function() {        
+                  // If options exist, lets merge them
+                  // with our default settings
+                  if ( options ) { 
+                    $.extend( settings, options );
+                  }
+                });
               },
     show :    function( )
               {
@@ -26,65 +33,67 @@
               },
     update :  function( html_element, url )
               {
-                return this.each( function ( )
-                {
-                // update():  replace the content of the given html element with the content 
+                  // update():  replace the content of the given html element with the content 
                   //            of the requested url. The url may have an jQuery filter.
-                  
-                  // Add an opacity to the html element
-                $( html_element ).addClass( "opacity08" );
-
-                  // Cover the html element with a loading gif
-                $( html_element ).prepend( "\t<div id='tx-browser-pi1-loader'></div>\n" );   
-                  // Get the size of the html element
-                var heightWiPx  = $( html_element ).css( "height" );
-                var widthWiPx   = $( html_element ).css( "width" );
-                  // Set the loader to the size of the html element
-                $( "#tx-browser-pi1-loader" ).css( "height",        heightWiPx        );
-                $( "#tx-browser-pi1-loader" ).css( "width",         widthWiPx         );
-                $( "#tx-browser-pi1-loader" ).css( "margin-bottom", "-" + heightWiPx  );
-                  // Fade in the loader
-                $( "#tx-browser-pi1-loader" ).fadeIn( 150 );
-                  // Cover the html element with a loading gif
-
-                  // Send the AJAX request
-                  // Replace the content of the html element with the delivered data
-//alert('1');
-$("#error").slideUp( 'fast' );
-// Testen ob html_element existiert, sonst Fehlermeldung
-                $( html_element ).load(
-                  url,
-                  function( response, status, xhr )
+                return this.each(
+                  function ( )
                   {
-//alert(status);
-  if (status == "error") {
-    var msg = "Sorry but there was an error: ";
-    var msg1 = '<div class="ui-widget"><div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><strong>';
-    var msg2 = '</strong>';
-    var msg3 = '</p></div></div>';
-    var prompt = "Did you configured a proper page object?\n Please check this URL: \n" + url;
-    //var infPrompt = jQuery.t3browser.format( this.templates['uiInfo'], this.messages['hlpPageObjectLabel'], this.messages['hlpPageObjectPrompt']);
-      //alert("'" + str + "'");
-    $("#error").html(msg1 + xhr.statusText + ' (' + xhr.status + '): ' + msg2 + prompt + msg3);
-    //$("#error").html(infPrompt);
-// Testen ob #error existiert, sonst alert oder add
-$("#error").slideDown( 'fast' );
-    alert(msg + " | " + xhr.status + " | " + xhr.statusText);
-  }
-//alert('2');
-                      // Fade out the loader
-                    $( "#tx-browser-pi1-loader" ).fadeOut( 500, function( )
-                    {
-                      $( this ).remove( );
-                    });
-                      // Remove the opacity of the html element
-                    $( html_element ).removeClass( "opacity08" );
-                    $( "input:submit, input:button, a.backbutton", ".tx-browser-pi1" ).button( );
-//alert('3');
+                  
+                      // Add an opacity to the html element
+                    $( html_element ).addClass( "opacity08" );
+
+                      // Cover the html element with a loading gif
+                    $( html_element ).prepend( "\t<div id='tx-browser-pi1-loader'></div>\n" );   
+                      // Get the size of the html element
+                    var heightWiPx  = $( html_element ).css( "height" );
+                    var widthWiPx   = $( html_element ).css( "width" );
+                      // Set the loader to the size of the html element
+                    $( "#tx-browser-pi1-loader" ).css( "height",        heightWiPx        );
+                    $( "#tx-browser-pi1-loader" ).css( "width",         widthWiPx         );
+                    $( "#tx-browser-pi1-loader" ).css( "margin-bottom", "-" + heightWiPx  );
+                      // Fade in the loader
+                    $( "#tx-browser-pi1-loader" ).fadeIn( 150 );
+                      // Cover the html element with a loading gif
+
+                      // Send the AJAX request
+                      // Replace the content of the html element with the delivered data
+    //alert('1');
+    $("#error").slideUp( 'fast' );
+    // Testen ob html_element existiert, sonst Fehlermeldung
+                    $( html_element ).load(
+                      url,
+                      function( response, status, xhr )
+                      {
+    //alert(status);
+      if (status == "error") {
+        var msg = "Sorry but there was an error: ";
+        var msg1 = '<div class="ui-widget"><div class="ui-state-error ui-corner-all" style="padding: 0 .7em;"><p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span><strong>';
+        var msg2 = '</strong>';
+        var msg3 = '</p></div></div>';
+        var prompt = "Did you configured a proper page object?\n Please check this URL: \n" + url;
+        //var infPrompt = jQuery.t3browser.format( this.templates['uiInfo'], this.messages['hlpPageObjectLabel'], this.messages['hlpPageObjectPrompt']);
+          //alert("'" + str + "'");
+        $("#error").html(msg1 + xhr.statusText + ' (' + xhr.status + '): ' + msg2 + prompt + msg3);
+        //$("#error").html(infPrompt);
+    // Testen ob #error existiert, sonst alert oder add
+    $("#error").slideDown( 'fast' );
+        alert(msg + " | " + xhr.status + " | " + xhr.statusText);
+      }
+    //alert('2');
+                          // Fade out the loader
+                        $( "#tx-browser-pi1-loader" ).fadeOut( 500, function( )
+                        {
+                          $( this ).remove( );
+                        });
+                          // Remove the opacity of the html element
+                        $( html_element ).removeClass( "opacity08" );
+                        $( "input:submit, input:button, a.backbutton", ".tx-browser-pi1" ).button( );
+    //alert('3');
+                      }
+                    );
+                      // Send the AJAX request
                   }
                 );
-                });
-                  // Send the AJAX request
               },
                 // update( )
     url_autoQm: function( url, param )
@@ -134,7 +143,12 @@ $("#error").slideDown( 'fast' );
   {
       // See http://docs.jquery.com/Plugins/Authoring#Plugin_Methods
 
-      // Method calling logic
+    var settings = {
+      'location'         : 'top',
+      'background-color' : 'blue'
+    };
+
+    // Method calling logic
     if ( methods[method] ) 
     {
       return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
