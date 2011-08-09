@@ -386,7 +386,8 @@
     {
         // 13006, dwildt, 110310
         // Don't take care about showUid, if it is empty
-      if(empty($this->pObj->piVars['showUid']))
+      if(isset($this->pObj->piVars['showUid']) && empty($this->pObj->piVars['showUid']))
+      //if(empty($this->pObj->piVars['showUid']))
       {
         $int_max_piVars++;
       }
