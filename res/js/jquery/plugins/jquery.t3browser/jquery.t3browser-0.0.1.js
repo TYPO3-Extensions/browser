@@ -131,8 +131,6 @@ $("#error").slideDown( 'fast' );
   {
       // See http://docs.jquery.com/Plugins/Authoring#Plugin_Methods
 
-    return this.each( function( )
-    {
         // Method calling logic
       if ( methods[method] ) 
       {
@@ -146,7 +144,6 @@ $("#error").slideDown( 'fast' );
       {
         $.error( "Method " +  method + " does not exist on jQuery.tooltip" );
       }    
-    });
   };
       // Method calling logic
 
