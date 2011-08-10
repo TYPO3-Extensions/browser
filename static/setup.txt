@@ -412,7 +412,7 @@ plugin.tx_browser_pi1 {
         typoscript < .icons
       }
       items_wo_link < .items
-      items {
+      items_wo_link {
         chars {
           first {
             typolink >
