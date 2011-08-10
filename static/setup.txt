@@ -336,135 +336,136 @@ plugin.tx_browser_pi1 {
       labeling {
         chars {
             // First item of the record browser
-          item_first = TEXT
-          item_first {
+          first = TEXT
+          first {
             value = &lt;&lt;
           }
             // Previous item of the record browser
-          item_prev = TEXT
-          item_prev {
+          prev = TEXT
+          prev {
             value = &lt;
           }
             // Current item of the record browser
-          item_curr = TEXT
-          item_curr {
+          curr = TEXT
+          curr {
             value = &Oslash;
             wrap  = <span class="link-curr-record">|</span>
           }
             // Next item of the record browser
-          item_next = TEXT
-          item_next {
+          next = TEXT
+          next {
             value = &gt;
           }
             // Last item of the record browser
-          item_last = TEXT
-          item_last {
+          last = TEXT
+          last {
             value = &gt;&gt;
           }
-          item_devider = TEXT
-          item_devider {
+          devider = TEXT
+          devider {
             value = |
             noTrimWrap = | | |
           }
         }
         icons {
             // First item of the record browser
-          item_first = TEXT
-          item_first {
+          first = TEXT
+          first {
             value = <span class="ui-icon ui-icon-seek-first" style="float: left;margin: 0 4px;"></span>
           }
             // Previous item of the record browser
-          item_prev = TEXT
-          item_prev {
+          prev = TEXT
+          prev {
             value = <span class="ui-icon ui-icon-seek-prev" style="float: left;margin: 0 4px;"></span>
           }
             // Current item of the record browser
-          item_curr = TEXT
-          item_curr {
+          curr = TEXT
+          curr {
             value = <span class="ui-icon ui-icon-home" style="float: left;margin: 0 4px;"></span>
           }
             // Next item of the record browser
-          item_next = TEXT
-          item_next {
+          next = TEXT
+          next {
             value = <span class="ui-icon ui-icon-seek-next" style="float: left;margin: 0 4px;"></span>
           }
             // Last item of the record browser
-          item_last = TEXT
-          item_last {
+          last = TEXT
+          last {
             value = <span class="ui-icon ui-icon-seek-end" style="float: left;margin: 0 4px;"></span>
           }
-          item_devider = TEXT
-          item_devider {
+          devider = TEXT
+          devider {
             value = 
+            noTrimWrap = | | |
           }
         }
         position {
             // First item of the record browser
-          item_first = TEXT
-          item_first {
+          first = TEXT
+          first {
             value = ###RECORD_POSITION###
           }
             // Previous item of the record browser
-          item_prev = TEXT
-          item_prev {
+          prev = TEXT
+          prev {
             value = ###RECORD_POSITION###
           }
             // Current item of the record browser
-          item_curr = TEXT
-          item_curr {
+          curr = TEXT
+          curr {
             value = ###RECORD_POSITION###
             wrap  = <span class="link-curr-record">|</span>
           }
             // Next item of the record browser
-          item_next = TEXT
-          item_next {
+          next = TEXT
+          next {
             value = ###RECORD_POSITION###
           }
             // Last item of the record browser
-          item_last = TEXT
-          item_last {
+          last = TEXT
+          last {
             value = ###RECORD_POSITION###
           }
-          item_devider = TEXT
-          item_devider {
+          devider = TEXT
+          devider {
             value = |
             noTrimWrap = | | |
           }
         }
         text {
             // First item of the record browser
-          item_first = TEXT
-          item_first {
+          first = TEXT
+          first {
             value   = first
             lang.de = Erster
           }
             // Previous item of the record browser
-          item_prev = TEXT
-          item_prev {
+          prev = TEXT
+          prev {
             value   = previous
             lang.de = Vorheriger
           }
             // Current item of the record browser
-          item_curr = TEXT
-          item_curr {
+          curr = TEXT
+          curr {
             value   = current
             lang.de = Aktuell
             wrap    = <span class="link-curr-record">|</span>
           }
             // Next item of the record browser
-          item_next = TEXT
-          item_next {
+          next = TEXT
+          next {
             value   = next
             lang.de = N&auml;chster
           }
             // Last item of the record browser
-          item_last = TEXT
-          item_last {
+          last = TEXT
+          last {
             value   = last
             lang.de = Letzter
           }
-          item_devider = TEXT
-          item_devider {
+          devider = TEXT
+          devider {
             value = |
             noTrimWrap = | | |
           }

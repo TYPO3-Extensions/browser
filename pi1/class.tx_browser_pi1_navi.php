@@ -2106,8 +2106,8 @@ class tx_browser_pi1_navi
         {
           $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
                                 (
-                                  $conf_labeling['item_first'],
-                                  $conf_labeling['item_first.']
+                                  $conf_labeling['first'],
+                                  $conf_labeling['first.']
                                 );
         }
           // Set item label: If value is empty, take it from labeling.
@@ -2130,10 +2130,10 @@ class tx_browser_pi1_navi
             // Set uid of the record to null
           $marker['###RECORD_POSITION###'] = null;
             // Set and replace markers
-          $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['item_first.'], $marker);
+          $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['first.'], $marker);
           $item = $this->pObj->cObj->cObjGetSingle
                   (
-                    $conf_labeling['item_first'],
+                    $conf_labeling['first'],
                     $item_conf
                   );
         }
@@ -2168,8 +2168,8 @@ class tx_browser_pi1_navi
       {
         $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
                               (
-                                $conf_labeling['item_prev'],
-                                $conf_labeling['item_prev.']
+                                $conf_labeling['prev'],
+                                $conf_labeling['prev.']
                               );
       }
         // Set item label: If value is empty, take it from labeling.
@@ -2192,10 +2192,10 @@ class tx_browser_pi1_navi
           // Set uid of the record to null
         $marker['###RECORD_POSITION###'] = null;
           // Set and replace markers
-        $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['item_prev.'], $marker);
+        $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['prev.'], $marker);
         $item = $this->pObj->cObj->cObjGetSingle
                 (
-                  $conf_labeling['item_prev'],
+                  $conf_labeling['prev'],
                   $item_conf
                 );
       }
@@ -2227,8 +2227,8 @@ class tx_browser_pi1_navi
     {
       $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
                             (
-                              $conf_labeling['item_curr'],
-                              $conf_labeling['item_curr.']
+                              $conf_labeling['curr'],
+                              $conf_labeling['curr.']
                             );
     }
       // Set item label: If value is empty, take it from labeling.
@@ -2273,8 +2273,8 @@ class tx_browser_pi1_navi
       {
         $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
                               (
-                                $conf_labeling['item_next'],
-                                $conf_labeling['item_next.']
+                                $conf_labeling['next'],
+                                $conf_labeling['next.']
                               );
       }
         // Set item label: If value is empty, take it from labeling.
@@ -2297,10 +2297,10 @@ class tx_browser_pi1_navi
           // Set uid of the record to null
         $marker['###RECORD_POSITION###'] = null;
           // Set and replace markers
-        $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['item_next.'], $marker);
+        $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['next.'], $marker);
         $item = $this->pObj->cObj->cObjGetSingle
                 (
-                  $conf_labeling['item_next'],
+                  $conf_labeling['next'],
                   $item_conf
                 );
       }
@@ -2336,8 +2336,8 @@ class tx_browser_pi1_navi
         {
           $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
                                 (
-                                  $conf_labeling['item_last'],
-                                  $conf_labeling['item_last.']
+                                  $conf_labeling['last'],
+                                  $conf_labeling['last.']
                                 );
         }
           // Set item label: If value is empty, take it from labeling.
@@ -2360,10 +2360,10 @@ class tx_browser_pi1_navi
             // Set uid of the record to null
           $marker['###RECORD_POSITION###'] = null;
             // Set and replace markers
-          $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['item_last.'], $marker);
+          $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['last.'], $marker);
           $item = $this->pObj->cObj->cObjGetSingle
                   (
-                    $conf_labeling['item_last'],
+                    $conf_labeling['last'],
                     $item_conf
                   );
         }
@@ -2384,8 +2384,8 @@ class tx_browser_pi1_navi
       // Devide $arr_items
     $devider        = $this->pObj->cObj->cObjGetSingle
                       (
-                        $conf_labeling['item_devider'],
-                        $conf_labeling['item_devider.']
+                        $conf_labeling['devider'],
+                        $conf_labeling['devider.']
                       );
     $record_browser = implode($devider, $arr_items);
       // Devide $arr_items

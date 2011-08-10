@@ -160,7 +160,7 @@
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
-            <default>chars</default>
+            <default>icons</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>
