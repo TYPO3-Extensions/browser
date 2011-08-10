@@ -2098,19 +2098,8 @@ class tx_browser_pi1_navi
         $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
           // Get item configuration
-        $item_name = $conf_record_browser['wrapper.']['items.']['first'];
-        $item_conf = $conf_record_browser['wrapper.']['items.']['first.'];
-
-          // Set item label: If value is empty, take it from labeling.
-        if(empty($item_conf['value']))
-        {
-          $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
-                                (
-                                  $conf_labeling['first'],
-                                  $conf_labeling['first.']
-                                );
-        }
-          // Set item label: If value is empty, take it from labeling.
+        $item_name = $conf_record_browser['items.']['typoscript.']['first'];
+        $item_conf = $conf_record_browser['items.']['typoscript.']['first.'];
 
           // Set and replace markers
         $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
@@ -2160,8 +2149,8 @@ class tx_browser_pi1_navi
       $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
         // Get item configuration
-      $item_name = $conf_record_browser['wrapper.']['items.']['prev'];
-      $item_conf = $conf_record_browser['wrapper.']['items.']['prev.'];
+      $item_name = $conf_record_browser['items.']['typoscript.']['prev'];
+      $item_conf = $conf_record_browser['items.']['typoscript.']['prev.'];
 
         // Set item label: If value is empty, take it from labeling.
       if(empty($item_conf['value']))
@@ -2219,8 +2208,8 @@ class tx_browser_pi1_navi
     $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
       // Get item configuration
-    $item_name = $conf_record_browser['wrapper.']['items.']['curr'];
-    $item_conf = $conf_record_browser['wrapper.']['items.']['curr.'];
+    $item_name = $conf_record_browser['items.']['typoscript.']['curr'];
+    $item_conf = $conf_record_browser['items.']['typoscript.']['curr.'];
 
       // Set item label: If value is empty, take it from labeling.
     if(empty($item_conf['value']))
@@ -2265,8 +2254,8 @@ class tx_browser_pi1_navi
       $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
         // Get item configuration
-      $item_name = $conf_record_browser['wrapper.']['items.']['next'];
-      $item_conf = $conf_record_browser['wrapper.']['items.']['next.'];
+      $item_name = $conf_record_browser['items.']['typoscript.']['next'];
+      $item_conf = $conf_record_browser['items.']['typoscript.']['next.'];
 
         // Set item label: If value is empty, take it from labeling.
       if(empty($item_conf['value']))
@@ -2328,8 +2317,8 @@ class tx_browser_pi1_navi
         $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
           // Get item configuration
-        $item_name = $conf_record_browser['wrapper.']['items.']['last'];
-        $item_conf = $conf_record_browser['wrapper.']['items.']['last.'];
+        $item_name = $conf_record_browser['items.']['typoscript.']['last'];
+        $item_conf = $conf_record_browser['items.']['typoscript.']['last.'];
 
           // Set item label: If value is empty, take it from labeling.
         if(empty($item_conf['value']))

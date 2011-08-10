@@ -411,6 +411,78 @@ plugin.tx_browser_pi1 {
         }
         typoscript < .icons
       }
+      items_wo_link < .items
+      items {
+        chars {
+          first {
+            typolink >
+          }
+          prev {
+            typolink >
+          }
+          curr {
+            typolink >
+          }
+          next {
+            typolink >
+          }
+          last {
+            typolink >
+          }
+        }
+        icons {
+          first {
+            typolink >
+          }
+          prev {
+            typolink >
+          }
+          curr {
+            typolink >
+          }
+          next {
+            typolink >
+          }
+          last {
+            typolink >
+          }
+        }
+        position {
+          first {
+            typolink >
+          }
+          prev {
+            typolink >
+          }
+          curr {
+            typolink >
+          }
+          next {
+            typolink >
+          }
+          last {
+            typolink >
+          }
+        }
+        text {
+          first {
+            typolink >
+          }
+          prev {
+            typolink >
+          }
+          curr {
+            typolink >
+          }
+          next {
+            typolink >
+          }
+          last {
+            typolink >
+          }
+        }
+        typoscript < .icons
+      }
     }
   }
 
