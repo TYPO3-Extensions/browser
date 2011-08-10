@@ -56,13 +56,12 @@
   var methods = {
     init :    function( settings_ ) 
               {
-alert( 'init' );
                 return this.each(function() {        
                   // If settings_ exist, lets merge them
                   // with our default settings
                   if ( settings_ ) { 
                     $.extend( settings, settings_ );
-alert( settings.messages.hlpUrlLabel );
+//alert( settings.messages.hlpUrlLabel );
 
                   }
                 });
@@ -110,7 +109,11 @@ alert( settings.messages.hlpUrlLabel );
                     {
                         // Add error messages and helpful informations to the update prompt
                       err_prompt( "#update-prompt", xhr.status + ":", xhr.statusText );
+//alert( settings.messages.hlpPageObjectLabel );
+//alert( typeof settings.messages.hlpPageObjectLabel );
+  
                       inf_prompt( "#update-prompt", settings.messages.hlpPageObjectLabel, settings.messages.hlpPageObjectPrmpt );
+alert( 2 );
                       fq_url = window.location.protocol + "//" + window.location.host + "/" + url;
                       a_fq_url = '<a href="' + fq_url + '">' + fq_url + '</a>';
                       prompt = format( settings.messages.hlpUrlPrmpt, a_fq_url);
@@ -118,6 +121,7 @@ alert( settings.messages.hlpUrlLabel );
                       prompt = format( settings.messages.hlpUrlSelectorPrmpt, html_element_wi_selector);
                       inf_prompt( "#update-prompt", settings.messages.hlpUrlSelectorLabel, prompt );
                       inf_prompt( "#update-prompt", settings.messages.hlpGetRidOfLabel, settings.messages.hlpGetRidOfPrmpt );
+alert( 99 );
                         // Add error messages and helpful informations to the update prompt
 
                         // Fade out the loading *.gif, initiate buttons again
@@ -194,6 +198,16 @@ alert( settings.messages.hlpUrlLabel );
 
                   // Replace vars in the source with the given params
                 function format( source, params ) {
+if( typeof source == "undefined" )
+{
+  source = '{0} {1}';
+}
+if( typeof params == "undefined" )
+{
+  params = new Array();
+  params[0] = 'SYSTEM ERROR:';
+  params[1] = 'params are undefined. It seems that there is a problem with a not defined variable. Function format( source, params).';
+}
                   if ( arguments.length == 1 )
                   {
                     return function() {
@@ -244,7 +258,7 @@ alert( settings.messages.hlpUrlLabel );
       // See http://docs.jquery.com/Plugins/Authoring#Plugin_Methods
     
       // Return executed method
-alert ( typeof method );
+//alert ( typeof method );
     if ( methods[method] ) 
     {
       return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));

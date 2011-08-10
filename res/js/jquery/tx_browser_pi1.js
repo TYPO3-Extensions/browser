@@ -17,13 +17,14 @@
 
 $( document ).ready( function( )
 {
+
     // UI for buttons in the searchbox form
   $( "input:submit, input:button, a.backbutton", ".tx-browser-pi1" ).button( );
 
-$('div').t3browser({
+$( ".c###TT_CONTENT.UID###-record-browser" ).t3browser({
     messages: {
-      hlpUrlLabel: "TEST TSET TETS:",
-    },
+      'hlpUrlLabel' : "TEST TSET TETS:"
+    }
 });
 
     // User has clicked the record browser
@@ -34,6 +35,7 @@ $('div').t3browser({
     function( e ) {
         // Don't execute the click
       e.preventDefault( );
+
         // Update the content with the id #c###TT_CONTENT.UID###-###VIEW###view-###MODE###
       var url                       = $( this ).t3browser( 'url_autoQm', $( this ).attr( "href" ), "type=###TYPENUM###" );
       var html_element              = "#c###TT_CONTENT.UID###-singleview-###MODE###";
