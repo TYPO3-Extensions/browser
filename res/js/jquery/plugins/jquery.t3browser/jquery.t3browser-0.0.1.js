@@ -56,11 +56,14 @@
   var methods = {
     init :    function( settings_ ) 
               {
+alert( 'init' );
                 return this.each(function() {        
                   // If settings_ exist, lets merge them
                   // with our default settings
                   if ( settings_ ) { 
                     $.extend( settings, settings_ );
+alert( settings.messages.hlpUrlLabel );
+
                   }
                 });
               },
@@ -241,6 +244,7 @@
       // See http://docs.jquery.com/Plugins/Authoring#Plugin_Methods
     
       // Return executed method
+alert ( typeof method );
     if ( methods[method] ) 
     {
       return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));

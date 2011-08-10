@@ -20,6 +20,11 @@ $( document ).ready( function( )
     // UI for buttons in the searchbox form
   $( "input:submit, input:button, a.backbutton", ".tx-browser-pi1" ).button( );
 
+$('div').t3browser({
+    messages: {
+      hlpUrlLabel: "TEST TSET TETS:",
+    },
+});
 
     // User has clicked the record browser
     // live: Attach a handler to the event for all elements which match the current selector, now and in the future.
