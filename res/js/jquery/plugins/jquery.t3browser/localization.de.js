@@ -23,22 +23,22 @@ $( document ).ready( function( )
     // WARNING: The messages array must be exactly the same like in jquery.t3browser-x.x.x.js
     //          If a property is missing, it will be removed in jquery.t3browser-x.x.x.js!
     
-  $( body ).t3browser({
+  $( 'body' ).t3browser({
     messages: {
       errMissingTagPropertyLabel: "HTML-Tag fehlt:",
       errMissingTagPropertyPrmpt: "Ein HTML Tag mit dem Attribute {0} fehlt. AJAX wird nicht korrekt funktionieren!",
       hlpMissingTagPropertyLabel: "Prüfe das HTML-Template:",
       hlpMissingTagPropertyPrmpt: "Bitte ergänze das Template mit etwas wie <div id=\"{0}\">...</div>",
-      hlpPageObjectLabel:         "Prüfe TYPO3:",
-      hlpPageObjectPrmpt:         "Prüfe bitte, ob das Page Objekt vorhanden ist. Prüfe typeNum.",
+      hlpPageObjectLabel:         "Du kannst TYPO3 prüfen:",
+      hlpPageObjectPrmpt:         "Ist das Page Objekt vorhanden? Ist typeNum richtig konfiguriert?",
       //hlpAjaxConflictLabel: "Maybe there is a conflict:",
       //hlpAjaxConflictPrmpt: "Don't use AJAX in the single view. See flexform/plugin sheet [jQuery] field [AJAX].",
-      hlpUrlLabel:                "Prüfe die URL:",
-      hlpUrlPrmpt:                "Prüfe die URL manuel: {0}",
-      hlpUrlSelectorLabel:        "Prüfe den jQuery Selector:",
+      hlpUrlLabel:                "Du kannst die URL prüfen:",
+      hlpUrlPrmpt:                "Klicke auf {0}",
+      hlpUrlSelectorLabel:        "Du kannst den jQuery Selector prüfen:",
       hlpUrlSelectorPrmpt:        "Die Anfrage an den Server ist leer, wenn der Selector kein Ergebnis produziert: {0}",
       hlpGetRidOfLabel:           "Nerven diese Meldungen?",
-      hlpGetRidOfPrmpt:           "Schalte das jQuery Plugin t3browser in der Flexform des TYPÜO3-Browsers ab. Du hast dann aber keine AJAX-Funktionalitäten.",
+      hlpGetRidOfPrmpt:           "Schalte das jQuery Plugin t3browser in der Flexform des TYPO3-Browsers ab. AJAX-Funktionalitäten sind dann aber abgeschaltet.",
     },
   });
 
