@@ -316,7 +316,7 @@ plugin.tx_browser_pi1 {
           first {
               // [STRING] empty (default): empty value will allocated while runtime. See labeling below.
             value = &lt;&lt;
-            wrap  = <li class="ui-state-default ui-corner-all">|</li>
+            noTrimWrap  = |<li class="ui-state-default ui-corner-all"> | </li>|
             typolink {
               parameter = {page:uid} - c###TT_CONTENT.UID###-record-browser ###RECORD_POSITION###/###RECORD_SUM###
               parameter {
@@ -334,7 +334,7 @@ plugin.tx_browser_pi1 {
           curr = TEXT
           curr {
             value = &Oslash;
-            wrap  = <li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-record-browser">|</li>
+            noTrimWrap  = |<li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-record-browser"> | </li>|
           }
             // Next item of the record browser
           next < .first
