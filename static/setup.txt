@@ -296,19 +296,26 @@ plugin.tx_browser_pi1 {
           // [BOOLEAN] 0 (default): Display items with a link only.
         itemsWithoutLink  = 0
       }
-      wrapper {
-        box = TEXT
-        box {
-            // [STRING] empty (default): empty value will allocated while runtime.
-          value =
-          wrap  = <ul id="record-browser" class="ui-widget ui-helper-clearfix">|</ul><div id="update-prompt"></div>
-        }
-        items {
+      items {
+        chars {
+            // Box: wrap for all items
+          wrap_all = TEXT
+          wrap_all {
+              // [STRING] empty (default): empty value will allocated while runtime with the rendered items.
+            value =
+            wrap  = <ul id="record-browser" class="ui-widget ui-helper-clearfix">|</ul><div id="update-prompt"></div>
+          }
+            // The devider between of two items
+          devider = TEXT
+          devider {
+            value = 
+            noTrimWrap = | | |
+          }
             // First item of the record browser
           first = TEXT
           first {
               // [STRING] empty (default): empty value will allocated while runtime. See labeling below.
-            value =
+            value = &lt;&lt;
             wrap  = <li class="ui-state-default ui-corner-all">|</li>
             typolink {
               parameter = {page:uid} - c###TT_CONTENT.UID###-record-browser ###RECORD_POSITION###/###RECORD_SUM###
@@ -320,6 +327,9 @@ plugin.tx_browser_pi1 {
           }
             // Previous item of the record browser
           prev < .first
+          prev {
+            value = &lt;
+          }
             // Current item of the record browser
           curr = TEXT
           curr {
@@ -329,42 +339,13 @@ plugin.tx_browser_pi1 {
           }
             // Next item of the record browser
           next < .first
-            // Last item of the record browser
-          last < .first
-        }
-      }
-      labeling {
-        chars {
-            // First item of the record browser
-          first = TEXT
-          first {
-            value = &lt;&lt;
-          }
-            // Previous item of the record browser
-          prev = TEXT
-          prev {
-            value = &lt;
-          }
-            // Current item of the record browser
-          curr = TEXT
-          curr {
-            value = &Oslash;
-            wrap  = <span class="link-curr-record">|</span>
-          }
-            // Next item of the record browser
-          next = TEXT
           next {
             value = &gt;
           }
             // Last item of the record browser
-          last = TEXT
+          last < .first
           last {
             value = &gt;&gt;
-          }
-          devider = TEXT
-          devider {
-            value = 
-            noTrimWrap = | | |
           }
         }
         icons {
@@ -393,11 +374,6 @@ plugin.tx_browser_pi1 {
           last {
             value = <span class="ui-icon ui-icon-seek-end" style="float: left;margin: 0 4px;"></span>
           }
-          devider = TEXT
-          devider {
-            value = 
-            noTrimWrap = | | |
-          }
         }
         position {
             // First item of the record browser
@@ -425,11 +401,6 @@ plugin.tx_browser_pi1 {
           last = TEXT
           last {
             value = ###RECORD_POSITION###
-          }
-          devider = TEXT
-          devider {
-            value = 
-            noTrimWrap = | | |
           }
         }
         text {
@@ -463,11 +434,6 @@ plugin.tx_browser_pi1 {
           last {
             value   = last
             lang.de = Letzter
-          }
-          devider = TEXT
-          devider {
-            value = 
-            noTrimWrap = | | |
           }
         }
         typoscript < .icons
