@@ -333,8 +333,7 @@ plugin.tx_browser_pi1 {
             // Current item of the record browser
           curr = TEXT
           curr {
-              // [STRING] empty (default): empty value will allocated while runtime. See labeling below.
-            value =
+            value = &Oslash;
             wrap  = <li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-record-browser">|</li>
           }
             // Next item of the record browser
@@ -376,7 +375,6 @@ plugin.tx_browser_pi1 {
           }
           curr {
             value = ###RECORD_POSITION###
-            wrap  = <span class="link-curr-record">|</span>
           }
           next {
             value = ###RECORD_POSITION###
@@ -398,7 +396,6 @@ plugin.tx_browser_pi1 {
           curr {
             value   = current
             lang.de = Aktuell
-            wrap    = <span class="link-curr-record">|</span>
           }
           next {
             value   = next
