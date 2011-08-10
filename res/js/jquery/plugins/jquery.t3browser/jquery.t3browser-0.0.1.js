@@ -18,18 +18,19 @@
     messages: {
       errMissingTagPropertyLabel: "Tag is missing:",
       errMissingTagPropertyPrmpt: "A HTML tag with an attribute {0} is missing. AJAX can't work proper!",
+      errServerErrorPrmpt:        "This is a message from the server. Maybe the server has some problems in general. If the server delivers content, you will see the content below this prompts.",
       hlpMissingTagPropertyLabel: "Be aware of a proper HTML template:",
       hlpMissingTagPropertyPrmpt: "Please add something like <div id=\"{0}\">...</div> to your template.",
-      hlpPageObjectLabel:   "Be aware of a proper TYPO3 page object:",
-      hlpPageObjectPrmpt:   "Check the page object and the current typeNum.",
+      hlpPageObjectLabel:         "You can check TYPO3:",
+      hlpPageObjectPrmpt:         "Is there a proper page object? Is there a proper typeNum?",
       //hlpAjaxConflictLabel: "Maybe there is a conflict:",
       //hlpAjaxConflictPrmpt: "Don't use AJAX in the single view. See flexform/plugin sheet [jQuery] field [AJAX].",
-      hlpUrlLabel:          "Be aware of a proper URL:",
-      hlpUrlPrmpt:          "Check the requested URL manually: {0}",
-      hlpUrlSelectorLabel:  "Be aware of the jQuery selector:",
-      hlpUrlSelectorPrmpt:  "The request takes content into account only if this selector gets a result: {0}",
-      hlpGetRidOfLabel:     "Get rid of this messages?",
-      hlpGetRidOfPrmpt:     "Deactivate the jQuery plugin t3browser. But you won't have any AJAX support.",
+      hlpUrlLabel:                "You can check the URL manually:",
+      hlpUrlPrmpt:                "Click on {0}",
+      hlpUrlSelectorLabel:        "Be aware of the jQuery selector:",
+      hlpUrlSelectorPrmpt:        "The request takes content into account only if this selector gets a result: {0}",
+      hlpGetRidOfLabel:           "Get rid of this messages?",
+      hlpGetRidOfPrmpt:           "Deactivate the jQuery plugin t3browser. But you won't have any AJAX support.",
     },
     templates: {
       uiErr:  '<div class="ui-widget">' + 
@@ -106,14 +107,14 @@
                     if (status == "error")
                     {
                         // Add error messages and helpful informations to the update prompt
-                      err_prompt( "#update-prompt", xhr.status + ":", xhr.statusText );
+                      err_prompt( "#update-prompt", xhr.statusText + " (" + xhr.status + "):", settings.messages.errServerErrorPrmpt);
                       inf_prompt( "#update-prompt", settings.messages.hlpPageObjectLabel, settings.messages.hlpPageObjectPrmpt );
                       fq_url = window.location.protocol + "//" + window.location.host + "/" + url;
                       a_fq_url = '<a href="' + fq_url + '">' + fq_url + '</a>';
                       prompt = format( settings.messages.hlpUrlPrmpt, a_fq_url);
                       inf_prompt( "#update-prompt", settings.messages.hlpUrlLabel, prompt );
                       prompt = format( settings.messages.hlpUrlSelectorPrmpt, html_element_wi_selector);
-                      inf_prompt( "#update-prompt", settings.messages.hlpUrlSelectorLabel, prompt );
+                      //inf_prompt( "#update-prompt", settings.messages.hlpUrlSelectorLabel, prompt );
                       inf_prompt( "#update-prompt", settings.messages.hlpGetRidOfLabel, settings.messages.hlpGetRidOfPrmpt );
                         // Add error messages and helpful informations to the update prompt
 

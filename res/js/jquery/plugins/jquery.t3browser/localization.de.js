@@ -27,6 +27,7 @@ $( document ).ready( function( )
     messages: {
       errMissingTagPropertyLabel: "HTML-Tag fehlt:",
       errMissingTagPropertyPrmpt: "Ein HTML Tag mit dem Attribute {0} fehlt. AJAX wird nicht korrekt funktionieren!",
+      errServerErrorPrmpt:        "Das ist eine Nachricht vom Server. Vielleicht hat der Server ein grundsätzliches Problem. Falls er mehr als die Fehlermeldung sendet, siehst Du die Server-Antwort unter diesen Meldungen.",
       hlpMissingTagPropertyLabel: "Prüfe das HTML-Template:",
       hlpMissingTagPropertyPrmpt: "Bitte ergänze das Template mit etwas wie <div id=\"{0}\">...</div>",
       hlpPageObjectLabel:         "Du kannst TYPO3 prüfen:",
