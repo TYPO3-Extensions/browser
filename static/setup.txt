@@ -348,89 +348,62 @@ plugin.tx_browser_pi1 {
             value = &gt;&gt;
           }
         }
+        icons < .chars
         icons {
-            // First item of the record browser
-          first = TEXT
           first {
             value = <span class="ui-icon ui-icon-seek-first" style="float: left;margin: 0 4px;"></span>
           }
-            // Previous item of the record browser
-          prev = TEXT
           prev {
             value = <span class="ui-icon ui-icon-seek-prev" style="float: left;margin: 0 4px;"></span>
           }
-            // Current item of the record browser
-          curr = TEXT
           curr {
             value = <span class="ui-icon ui-icon-home" style="float: left;margin: 0 4px;"></span>
           }
-            // Next item of the record browser
-          next = TEXT
           next {
             value = <span class="ui-icon ui-icon-seek-next" style="float: left;margin: 0 4px;"></span>
           }
-            // Last item of the record browser
-          last = TEXT
           last {
             value = <span class="ui-icon ui-icon-seek-end" style="float: left;margin: 0 4px;"></span>
           }
         }
+        position < .chars
         position {
-            // First item of the record browser
-          first = TEXT
           first {
             value = ###RECORD_POSITION###
           }
-            // Previous item of the record browser
-          prev = TEXT
           prev {
             value = ###RECORD_POSITION###
           }
-            // Current item of the record browser
-          curr = TEXT
           curr {
             value = ###RECORD_POSITION###
             wrap  = <span class="link-curr-record">|</span>
           }
-            // Next item of the record browser
-          next = TEXT
           next {
             value = ###RECORD_POSITION###
           }
-            // Last item of the record browser
-          last = TEXT
           last {
             value = ###RECORD_POSITION###
           }
         }
+        text < .chars
         text {
-            // First item of the record browser
-          first = TEXT
           first {
             value   = first
             lang.de = Erster
           }
-            // Previous item of the record browser
-          prev = TEXT
           prev {
             value   = previous
             lang.de = Vorheriger
           }
-            // Current item of the record browser
-          curr = TEXT
           curr {
             value   = current
             lang.de = Aktuell
             wrap    = <span class="link-curr-record">|</span>
           }
-            // Next item of the record browser
-          next = TEXT
           next {
             value   = next
             lang.de = N&auml;chster
           }
-            // Last item of the record browser
-          last = TEXT
           last {
             value   = last
             lang.de = Letzter
