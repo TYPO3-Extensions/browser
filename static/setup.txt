@@ -294,7 +294,7 @@ plugin.tx_browser_pi1 {
           // [BOOLEAN] 0: Don't display link to first and last record. 1 (default): Display it.
         firstAndLastItem  = 1
           // [BOOLEAN] 0 (default): Display items with a link only.
-        itemsWithoutLink  = 0
+        itemsWithoutLink  = 1
       }
       items {
         chars {
