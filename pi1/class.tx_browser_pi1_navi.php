@@ -2295,6 +2295,8 @@ var_dump($devider);
     $wrap_all_name = $conf_record_browser['items.']['typoscript.']['wrap_all'];
     $wrap_all_conf = $conf_record_browser['items.']['typoscript.']['wrap_all.'];
 
+var_dump($wrap_all_conf);
+
       // Set wrapper
     $wrap_all_conf = $this->pObj->cObj->cObjGetSingle($wrap_all_name, $wrap_all_conf);
     if(empty($wrap_all_conf['value']))

@@ -415,59 +415,119 @@ plugin.tx_browser_pi1 {
       items_wo_link {
         chars {
           first {
-            typolink >
+            wrap_all  >
+            devider   >
+            typolink  >
           }
           prev {
-            typolink >
-          }
-          curr >
-        }
-        icons {
-          first {
-            typolink >
-          }
-          prev {
-            typolink >
+            wrap_all  >
+            devider   >
+            typolink  >
           }
           curr >
           next {
-            typolink >
+            wrap_all  >
+            devider   >
+            typolink  >
           }
           last {
-            typolink >
+            wrap_all  >
+            devider   >
+            typolink  >
+          }
+        }
+        icons {
+          first {
+            wrap_all  >
+            devider   >
+            typolink  >
+          }
+          prev {
+            wrap_all  >
+            devider   >
+            typolink  >
+          }
+          curr >
+          next {
+            wrap_all  >
+            devider   >
+            typolink  >
+          }
+          last {
+            wrap_all  >
+            devider   >
+            typolink  >
           }
         }
         position {
           first {
-            typolink >
+            wrap_all  >
+            devider   >
+            typolink  >
           }
           prev {
-            typolink >
+            wrap_all  >
+            devider   >
+            typolink  >
           }
           curr >
           next {
-            typolink >
+            wrap_all  >
+            devider   >
+            typolink  >
           }
           last {
-            typolink >
+            wrap_all  >
+            devider   >
+            typolink  >
           }
         }
         text {
           first {
-            typolink >
+            wrap_all  >
+            devider   >
+            typolink  >
           }
           prev {
-            typolink >
+            wrap_all  >
+            devider   >
+            typolink  >
           }
           curr >
           next {
-            typolink >
+            wrap_all  >
+            devider   >
+            typolink  >
           }
           last {
-            typolink >
+            wrap_all  >
+            devider   >
+            typolink  >
           }
         }
-        typoscript < .icons
+        typoscript {
+          first {
+            wrap_all  >
+            devider   >
+            typolink  >
+          }
+          prev {
+            wrap_all  >
+            devider   >
+            typolink  >
+          }
+          curr >
+          next {
+            wrap_all  >
+            devider   >
+            typolink  >
+          }
+          last {
+            wrap_all  >
+            devider   >
+            typolink  >
+          }
+        }
       }
     }
   }
