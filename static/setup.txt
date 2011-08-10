@@ -420,15 +420,7 @@ plugin.tx_browser_pi1 {
           prev {
             typolink >
           }
-          curr {
-            typolink >
-          }
-          next {
-            typolink >
-          }
-          last {
-            typolink >
-          }
+          curr >
         }
         icons {
           first {
@@ -437,9 +429,7 @@ plugin.tx_browser_pi1 {
           prev {
             typolink >
           }
-          curr {
-            typolink >
-          }
+          curr >
           next {
             typolink >
           }
@@ -454,9 +444,7 @@ plugin.tx_browser_pi1 {
           prev {
             typolink >
           }
-          curr {
-            typolink >
-          }
+          curr >
           next {
             typolink >
           }
@@ -471,9 +459,7 @@ plugin.tx_browser_pi1 {
           prev {
             typolink >
           }
-          curr {
-            typolink >
-          }
+          curr >
           next {
             typolink >
           }

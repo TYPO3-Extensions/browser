@@ -2105,26 +2105,18 @@ class tx_browser_pi1_navi
         $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
 
           // Set item
-        $item = $this->pObj->cObj->cObjGetSingle
-                (
-                  $item_name,
-                  $item_conf
-                );
-          // Set item
+        $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
       }
       if($pos_of_curr_row < ($pos_of_first_row + 2))
       {
         if($conf_record_browser['display.']['itemsWithoutLink'])
         {
-            // Set uid of the record to null
-          $marker['###RECORD_POSITION###'] = null;
-            // Set and replace markers
-          $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['first.'], $marker);
-          $item = $this->pObj->cObj->cObjGetSingle
-                  (
-                    $conf_labeling['first'],
-                    $item_conf
-                  );
+            // Get item configuration
+          $item_name = $conf_record_browser['items_wo_link.']['typoscript.']['first'];
+          $item_conf = $conf_record_browser['items_wo_link.']['typoscript.']['first.'];
+
+            // Set item
+          $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
         }
       }
     }
@@ -2152,41 +2144,22 @@ class tx_browser_pi1_navi
       $item_name = $conf_record_browser['items.']['typoscript.']['prev'];
       $item_conf = $conf_record_browser['items.']['typoscript.']['prev.'];
 
-        // Set item label: If value is empty, take it from labeling.
-      if(empty($item_conf['value']))
-      {
-        $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
-                              (
-                                $conf_labeling['prev'],
-                                $conf_labeling['prev.']
-                              );
-      }
-        // Set item label: If value is empty, take it from labeling.
-
         // Set and replace markers
       $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
 
         // Set item
-      $item = $this->pObj->cObj->cObjGetSingle
-              (
-                $item_name,
-                $item_conf
-              );
-        // Set item
+      $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
     }
     if($pos_of_curr_row < ($pos_of_first_row + 1))
     {
       if($conf_record_browser['display.']['itemsWithoutLink'])
       {
-          // Set uid of the record to null
-        $marker['###RECORD_POSITION###'] = null;
-          // Set and replace markers
-        $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['prev.'], $marker);
-        $item = $this->pObj->cObj->cObjGetSingle
-                (
-                  $conf_labeling['prev'],
-                  $item_conf
-                );
+          // Get item configuration
+        $item_name = $conf_record_browser['items_wo_link.']['typoscript.']['prev'];
+        $item_conf = $conf_record_browser['items_wo_link.']['typoscript.']['prev.'];
+
+          // Set item
+        $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
       }
     }
     if(!empty($item))
@@ -2211,27 +2184,11 @@ class tx_browser_pi1_navi
     $item_name = $conf_record_browser['items.']['typoscript.']['curr'];
     $item_conf = $conf_record_browser['items.']['typoscript.']['curr.'];
 
-      // Set item label: If value is empty, take it from labeling.
-    if(empty($item_conf['value']))
-    {
-      $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
-                            (
-                              $conf_labeling['curr'],
-                              $conf_labeling['curr.']
-                            );
-    }
-      // Set item label: If value is empty, take it from labeling.
-
       // Set and replace markers
     $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
 
       // Set item
-    $item = $this->pObj->cObj->cObjGetSingle
-            (
-              $item_name,
-              $item_conf
-            );
-      // Set item
+    $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
 
     if(!empty($item))
     {
@@ -2257,41 +2214,22 @@ class tx_browser_pi1_navi
       $item_name = $conf_record_browser['items.']['typoscript.']['next'];
       $item_conf = $conf_record_browser['items.']['typoscript.']['next.'];
 
-        // Set item label: If value is empty, take it from labeling.
-      if(empty($item_conf['value']))
-      {
-        $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
-                              (
-                                $conf_labeling['next'],
-                                $conf_labeling['next.']
-                              );
-      }
-        // Set item label: If value is empty, take it from labeling.
-
         // Set and replace markers
       $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
 
         // Set item
-      $item = $this->pObj->cObj->cObjGetSingle
-              (
-                $item_name,
-                $item_conf
-              );
-        // Set item
+      $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
     }
     if($pos_of_curr_row > ($pos_of_last_row - 1))
     {
       if($conf_record_browser['display.']['itemsWithoutLink'])
       {
-          // Set uid of the record to null
-        $marker['###RECORD_POSITION###'] = null;
-          // Set and replace markers
-        $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['next.'], $marker);
-        $item = $this->pObj->cObj->cObjGetSingle
-                (
-                  $conf_labeling['next'],
-                  $item_conf
-                );
+          // Get item configuration
+        $item_name = $conf_record_browser['items_wo_link.']['typoscript.']['next'];
+        $item_conf = $conf_record_browser['items_wo_link.']['typoscript.']['next.'];
+
+          // Set item
+        $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
       }
     }
     if(!empty($item))
@@ -2307,7 +2245,7 @@ class tx_browser_pi1_navi
       // Set the item last
 
     $item = null;
-    if($conf_record_browser['display.']['firstAndLastItem'])
+    if($conf_record_browser['display.']['lastAndLastItem'])
     {
       if($pos_of_curr_row <= ($pos_of_last_row - 2))
       {
@@ -2320,41 +2258,22 @@ class tx_browser_pi1_navi
         $item_name = $conf_record_browser['items.']['typoscript.']['last'];
         $item_conf = $conf_record_browser['items.']['typoscript.']['last.'];
 
-          // Set item label: If value is empty, take it from labeling.
-        if(empty($item_conf['value']))
-        {
-          $item_conf['value'] = $this->pObj->cObj->cObjGetSingle
-                                (
-                                  $conf_labeling['last'],
-                                  $conf_labeling['last.']
-                                );
-        }
-          // Set item label: If value is empty, take it from labeling.
-
           // Set and replace markers
         $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
 
           // Set item
-        $item = $this->pObj->cObj->cObjGetSingle
-                (
-                  $item_name,
-                  $item_conf
-                );
-          // Set item
+        $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
       }
       if($pos_of_curr_row > ($pos_of_last_row - 2))
       {
         if($conf_record_browser['display.']['itemsWithoutLink'])
         {
-            // Set uid of the record to null
-          $marker['###RECORD_POSITION###'] = null;
-            // Set and replace markers
-          $item_conf = $this->pObj->objMarker->substitute_marker($conf_labeling['last.'], $marker);
-          $item = $this->pObj->cObj->cObjGetSingle
-                  (
-                    $conf_labeling['last'],
-                    $item_conf
-                  );
+            // Get item configuration
+          $item_name = $conf_record_browser['items_wo_link.']['typoscript.']['last'];
+          $item_conf = $conf_record_browser['items_wo_link.']['typoscript.']['last.'];
+
+            // Set item
+          $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
         }
       }
     }
