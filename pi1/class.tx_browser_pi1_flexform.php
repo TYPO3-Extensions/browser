@@ -2687,15 +2687,15 @@ class tx_browser_pi1_flexform {
         // Get configuration of the selected label
         $conf_labelling = $this->pObj->conf['navigation.']['record_browser.']['items.'][$labeling . '.'];
         // Set configuration of the selected label
-        $this->pObj->conf['navigation.']['record_browser.']['items.']['typoscript.'] = $conf_labelling;
+        $this->pObj->conf['navigation.']['record_browser.']['items.']['current.'] = $conf_labelling;
         if ($this->pObj->b_drs_flexform) {
-          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.items.typoscript < .' . $labeling, $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.items.current < .' . $labeling, $this->pObj->extKey, 0);
         }
         break;
       case ('ts') :
         // Do nothing
         if ($this->pObj->b_drs_flexform) {
-          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.labeling.typoscript will not changed by the flexform.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.labeling.current will not changed by the flexform.', $this->pObj->extKey, 0);
         }
         break;
     }

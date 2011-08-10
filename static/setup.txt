@@ -406,7 +406,7 @@ plugin.tx_browser_pi1 {
             lang.de = Letzter
           }
         }
-        typoscript < .icons
+        current < .icons
       }
       items_wo_link < .items
       items_wo_link {
@@ -431,16 +431,20 @@ plugin.tx_browser_pi1 {
           wrap_all  >
           devider   >
           first {
+            value = <span style="float: left;margin:8px 12px;"></span>
             typolink  >
           }
           prev {
+            value = <span style="float: left;margin:8px 12px;"></span>
             typolink  >
           }
           curr >
           next {
+            value = <span style="float: left;margin:8px 12px;"></span>
             typolink  >
           }
           last {
+            value = <span style="float: left;margin:8px 12px;"></span>
             typolink  >
           }
         }
@@ -478,7 +482,7 @@ plugin.tx_browser_pi1 {
             typolink  >
           }
         }
-        typoscript {
+        current {
           wrap_all  >
           devider   >
           first {

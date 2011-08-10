@@ -2089,8 +2089,8 @@ class tx_browser_pi1_navi
         $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
           // Get item configuration
-        $item_name = $conf_record_browser['items.']['typoscript.']['first'];
-        $item_conf = $conf_record_browser['items.']['typoscript.']['first.'];
+        $item_name = $conf_record_browser['items.']['current.']['first'];
+        $item_conf = $conf_record_browser['items.']['current.']['first.'];
 
           // Set and replace markers
         $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
@@ -2103,8 +2103,8 @@ class tx_browser_pi1_navi
         if($conf_record_browser['display.']['itemsWithoutLink'])
         {
             // Get item configuration
-          $item_name = $conf_record_browser['items_wo_link.']['typoscript.']['first'];
-          $item_conf = $conf_record_browser['items_wo_link.']['typoscript.']['first.'];
+          $item_name = $conf_record_browser['items_wo_link.']['current.']['first'];
+          $item_conf = $conf_record_browser['items_wo_link.']['current.']['first.'];
 
             // Set item
           $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
@@ -2132,8 +2132,8 @@ class tx_browser_pi1_navi
       $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
         // Get item configuration
-      $item_name = $conf_record_browser['items.']['typoscript.']['prev'];
-      $item_conf = $conf_record_browser['items.']['typoscript.']['prev.'];
+      $item_name = $conf_record_browser['items.']['current.']['prev'];
+      $item_conf = $conf_record_browser['items.']['current.']['prev.'];
 
         // Set and replace markers
       $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
@@ -2146,8 +2146,8 @@ class tx_browser_pi1_navi
       if($conf_record_browser['display.']['itemsWithoutLink'])
       {
           // Get item configuration
-        $item_name = $conf_record_browser['items_wo_link.']['typoscript.']['prev'];
-        $item_conf = $conf_record_browser['items_wo_link.']['typoscript.']['prev.'];
+        $item_name = $conf_record_browser['items_wo_link.']['current.']['prev'];
+        $item_conf = $conf_record_browser['items_wo_link.']['current.']['prev.'];
 
           // Set item
         $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
@@ -2172,8 +2172,8 @@ class tx_browser_pi1_navi
     $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
       // Get item configuration
-    $item_name = $conf_record_browser['items.']['typoscript.']['curr'];
-    $item_conf = $conf_record_browser['items.']['typoscript.']['curr.'];
+    $item_name = $conf_record_browser['items.']['current.']['curr'];
+    $item_conf = $conf_record_browser['items.']['current.']['curr.'];
 
       // Set and replace markers
     $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
@@ -2202,8 +2202,8 @@ class tx_browser_pi1_navi
       $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
         // Get item configuration
-      $item_name = $conf_record_browser['items.']['typoscript.']['next'];
-      $item_conf = $conf_record_browser['items.']['typoscript.']['next.'];
+      $item_name = $conf_record_browser['items.']['current.']['next'];
+      $item_conf = $conf_record_browser['items.']['current.']['next.'];
 
         // Set and replace markers
       $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
@@ -2216,8 +2216,8 @@ class tx_browser_pi1_navi
       if($conf_record_browser['display.']['itemsWithoutLink'])
       {
           // Get item configuration
-        $item_name = $conf_record_browser['items_wo_link.']['typoscript.']['next'];
-        $item_conf = $conf_record_browser['items_wo_link.']['typoscript.']['next.'];
+        $item_name = $conf_record_browser['items_wo_link.']['current.']['next'];
+        $item_conf = $conf_record_browser['items_wo_link.']['current.']['next.'];
 
           // Set item
         $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
@@ -2246,8 +2246,8 @@ class tx_browser_pi1_navi
         $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
           // Get item configuration
-        $item_name = $conf_record_browser['items.']['typoscript.']['last'];
-        $item_conf = $conf_record_browser['items.']['typoscript.']['last.'];
+        $item_name = $conf_record_browser['items.']['current.']['last'];
+        $item_conf = $conf_record_browser['items.']['current.']['last.'];
 
           // Set and replace markers
         $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
@@ -2260,8 +2260,8 @@ class tx_browser_pi1_navi
         if($conf_record_browser['display.']['itemsWithoutLink'])
         {
             // Get item configuration
-          $item_name = $conf_record_browser['items_wo_link.']['typoscript.']['last'];
-          $item_conf = $conf_record_browser['items_wo_link.']['typoscript.']['last.'];
+          $item_name = $conf_record_browser['items_wo_link.']['current.']['last'];
+          $item_conf = $conf_record_browser['items_wo_link.']['current.']['last.'];
 
             // Set item
           $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
@@ -2281,8 +2281,8 @@ class tx_browser_pi1_navi
       // Set the record browser
 
       // Devide configuration
-    $devider_name = $conf_record_browser['items.']['typoscript.']['devider'];
-    $devider_conf = $conf_record_browser['items.']['typoscript.']['devider.'];
+    $devider_name = $conf_record_browser['items.']['current.']['devider'];
+    $devider_conf = $conf_record_browser['items.']['current.']['devider.'];
 
       // Set devider
     $devider = $this->pObj->cObj->cObjGetSingle($devider_name, $devider_conf);
@@ -2291,8 +2291,8 @@ class tx_browser_pi1_navi
     $record_browser = implode($devider, $arr_items);
 
       // Wrapper configuration
-    $wrap_all_name = $conf_record_browser['items.']['typoscript.']['wrap_all'];
-    $wrap_all_conf = $conf_record_browser['items.']['typoscript.']['wrap_all.'];
+    $wrap_all_name = $conf_record_browser['items.']['current.']['wrap_all'];
+    $wrap_all_conf = $conf_record_browser['items.']['current.']['wrap_all.'];
     if(empty($wrap_all_conf['value']))
     {
       $wrap_all_conf['value'] = $record_browser;
