@@ -160,7 +160,7 @@
             <type>input</type>
             <size>255</size>
             <eval>trim,required,nospace</eval>
-            <default>EXT:res/js/jquery/plugins/jquery.t3browser/localization.###LANG###.js</default>
+            <default>EXT:browser/res/js/jquery/plugins/jquery.t3browser/localization.###LANG###.js</default>
           </config>
         </TCEforms>
       </jquery_plugins.t3browser.own.localization>
