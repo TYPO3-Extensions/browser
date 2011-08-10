@@ -2236,7 +2236,7 @@ class tx_browser_pi1_navi
       // Set the item last
 
     $item = null;
-    if($conf_record_browser['display.']['lastAndLastItem'])
+    if($conf_record_browser['display.']['firstAndLastItem'])
     {
       if($pos_of_curr_row <= ($pos_of_last_row - 2))
       {
