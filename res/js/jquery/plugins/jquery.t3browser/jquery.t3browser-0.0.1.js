@@ -83,7 +83,7 @@
                     alert( settings.messages.errMissingTagPropertyLabel + " " + prompt );
                     prompt = format( settings.messages.hlpMissingTagPropertyPrmpt, html_element);
                     alert( settings.messages.hlpMissingTagPropertyLabel + " " + prompt );
-                    alert(settings.messages.hlpAjaxConflictLabel + ": " + settings.messages.hlpAjaxConflictPrmpt );
+                    alert(settings.messages.hlpAjaxConflictLabel + " " + settings.messages.hlpAjaxConflictPrmpt );
                     fq_url = window.location.protocol + "//" + window.location.host + "/" + url;
                     window.location.href = fq_url;
                     return;
