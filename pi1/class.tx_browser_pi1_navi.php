@@ -1796,7 +1796,7 @@ class tx_browser_pi1_navi
           'Be aware of less performance!', $this->pObj->extKey, 2);
         t3lib_div::devlog('[HELP/PERFORMANCE] Enable session for better performance!', $this->pObj->extKey, 1);
       }
-        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid][$this-view][$this->mode]
+        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid][$this->view][$this->mode]
       $this->recordbrowser_callListView();
     }
       // No session: get data from the list view. Call it!
@@ -1838,23 +1838,23 @@ class tx_browser_pi1_navi
       //
       // Session: tx_browser_pi1['uids_of_all_rows'] isn't set
 
-    if($bool_session && !isset($arr_browser_session[$tt_content_uid][$this-view][$this->mode]['uids_of_all_rows']))
+    if($bool_session && !isset($arr_browser_session[$tt_content_uid][$this->view][$this->mode]['uids_of_all_rows']))
     {
-        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid][$this-view][$this->mode]
+        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid][$this->view][$this->mode]
       $this->recordbrowser_callListView();
         // Set the session array uids_of_all_rows
-      $arr_browser_session[$tt_content_uid][$this-view][$this->mode]['uids_of_all_rows'] = $this->pObj->uids_of_all_rows[$tt_content_uid][$this-view][$this->mode];
+      $arr_browser_session[$tt_content_uid][$this->view][$this->mode]['uids_of_all_rows'] = $this->pObj->uids_of_all_rows[$tt_content_uid][$this->view][$this->mode];
         // Write session data tx_browser_pi1
       $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_browser_session);
         // DRS - Development Reporting System
       if ($this->pObj->b_drs_templating)
       {
         t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . ']' .
-          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][uids_of_all_rows][' . $this-view . '][' . $this->mode . '] is set with ' .
-          '#' . count($this->pObj->uids_of_all_rows[$tt_content_uid][$this-view][$this->mode]) . ' uids.',  $this->pObj->extKey, 0);
+          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][uids_of_all_rows][' . $this->view . '][' . $this->mode . '] is set with ' .
+          '#' . count($this->pObj->uids_of_all_rows[$tt_content_uid][$this->view][$this->mode]) . ' uids.',  $this->pObj->extKey, 0);
       }
         // Get uids of all records
-      $this->pObj->uids_of_all_rows[$tt_content_uid][$this-view][$this->mode] = $arr_browser_session[$tt_content_uid][$this-view][$this->mode]['uids_of_all_rows'];
+      $this->pObj->uids_of_all_rows[$tt_content_uid][$this->view][$this->mode] = $arr_browser_session[$tt_content_uid][$this->view][$this->mode]['uids_of_all_rows'];
     }
       // Session: tx_browser_pi1['uids_of_all_rows'] isn't set
 
@@ -1867,9 +1867,9 @@ class tx_browser_pi1_navi
     if($bool_session)
     {
         // Get uids of all records
-      $this->pObj->uids_of_all_rows[$tt_content_uid][$this-view][$this->mode] = $arr_browser_session[$tt_content_uid][$this-view][$this->mode]['uids_of_all_rows'];
+      $this->pObj->uids_of_all_rows[$tt_content_uid][$this->view][$this->mode] = $arr_browser_session[$tt_content_uid][$this->view][$this->mode]['uids_of_all_rows'];
     }
-      // Session: set $this->pObj->uids_of_all_rows[$tt_content_uid][$this-view][$this->mode]
+      // Session: set $this->pObj->uids_of_all_rows[$tt_content_uid][$this->view][$this->mode]
 
 
 
@@ -1917,7 +1917,7 @@ class tx_browser_pi1_navi
  /**
   * recordbrowser_callListView: Call the listView. It is needed for the record browser in the single view,
   *                             if there isn't any information about all available records.
-  *                             The method allocates the global array $this->pObj->uids_of_all_rows[$tt_content_uid][$this-view][$this->mode] and
+  *                             The method allocates the global array $this->pObj->uids_of_all_rows[$tt_content_uid][$this->view][$this->mode] and
   *                             returns it.
   *                             The method will be called in two cases:
   *                             * Session management is disabled
@@ -1955,7 +1955,7 @@ class tx_browser_pi1_navi
     $curr_view        = $this->pObj->view;
       // Set view to list
     $this->pObj->view = 'list';
-      // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid][$this-view][$this->mode]
+      // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid][$this->view][$this->mode]
     $dummy            = $this->pObj->objViews->listView($this->pObj->str_template_raw);
       // Restore current values
     $this->pObj->rows = $curr_rows;
@@ -2043,7 +2043,7 @@ class tx_browser_pi1_navi
     $bool_display_without_result = $conf_record_browser['withoutResult'];
     if(!$bool_display_without_result)
     {
-      if(empty($this->pObj->uids_of_all_rows[$tt_content_uid][$this-view][$this->mode]))
+      if(empty($this->pObj->uids_of_all_rows[$tt_content_uid][$this->view][$this->mode]))
       {
         if ($this->pObj->b_drs_templating)
         {
@@ -2061,7 +2061,7 @@ class tx_browser_pi1_navi
       //
       // Get first, current and last positions and the position array
 
-    $uids_of_all_rows = $this->pObj->uids_of_all_rows[$tt_content_uid][$this-view][$this->mode];
+    $uids_of_all_rows = $this->pObj->uids_of_all_rows[$tt_content_uid][$this->view][$this->mode];
       // Position array: the position (0, 1, ... , n) will be the value, the uid of the record will be the key 
     $pos_of_all_rows  = array_flip($uids_of_all_rows);
     
@@ -2483,12 +2483,12 @@ class tx_browser_pi1_navi
         // Get the tx_browser_pi1 session array 
       $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey('ses', $this->pObj->prefixId);
         // Empty the array with the uids of all rows 
-      $arr_browser_session[$tt_content_uid][$this-view][$this->mode]['uids_of_all_rows'] = array();
+      $arr_browser_session[$tt_content_uid][$this->view][$this->mode]['uids_of_all_rows'] = array();
         // Set the tx_browser_pi1 session array
       $GLOBALS['TSFE']->fe_user->setKey('ses', $this->pObj->prefixId, $arr_browser_session);
       if ($this->pObj->b_drs_templating)
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] Rows are empty. Session array [' . $this->pObj->prefixId . '][uids_of_all_rows][' . $this-view . '][' . $this->mode . '] will be empty.',  $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/TEMPLATING] Rows are empty. Session array [' . $this->pObj->prefixId . '][uids_of_all_rows][' . $this->view . '][' . $this->mode . '] will be empty.',  $this->pObj->extKey, 0);
       }
       return false;
     }
@@ -2535,10 +2535,10 @@ class tx_browser_pi1_navi
       //
       // No session: set global array
 
-    $this->pObj->uids_of_all_rows[$tt_content_uid][$this-view][$this->mode] = array();
+    $this->pObj->uids_of_all_rows[$tt_content_uid][$this->view][$this->mode] = array();
     if(!$bool_session)
     {
-      $this->pObj->uids_of_all_rows[$tt_content_uid][$this-view][$this->mode] = $arr_uid;
+      $this->pObj->uids_of_all_rows[$tt_content_uid][$this->view][$this->mode] = $arr_uid;
       if ($this->pObj->b_drs_templating)
       {
         t3lib_div::devlog('[INFO/TEMPLATING] No session (less performance): global array uids_of_all_rows is set with ' .
@@ -2568,12 +2568,12 @@ class tx_browser_pi1_navi
       // Get the tx_browser_pi1 session array 
     $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
       // Overwrite the array with the uids of all rows 
-    $arr_browser_session[$tt_content_uid][$this-view][$this->mode]['uids_of_all_rows'] = $arr_uid;
+    $arr_browser_session[$tt_content_uid][$this->view][$this->mode]['uids_of_all_rows'] = $arr_uid;
       // Set the tx_browser_pi1 session array
     $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_browser_session);
     if ($this->pObj->b_drs_templating)
     {
-      t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . '][' . $this->pObj->prefixId . '][uids_of_all_rows][' . $this-view . '][' . $this->mode . '] is set with ' .
+      t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . '][' . $this->pObj->prefixId . '][uids_of_all_rows][' . $this->view . '][' . $this->mode . '] is set with ' .
         '#' . count($arr_uid) . ' uids.',  $this->pObj->extKey, 0);
     }
       // Set the session array
