@@ -482,23 +482,7 @@ plugin.tx_browser_pi1 {
             typolink  >
           }
         }
-        current {
-          wrap_all  >
-          devider   >
-          first {
-            typolink  >
-          }
-          prev {
-            typolink  >
-          }
-          curr >
-          next {
-            typolink  >
-          }
-          last {
-            typolink  >
-          }
-        }
+        current < .icons
       }
     }
   }
