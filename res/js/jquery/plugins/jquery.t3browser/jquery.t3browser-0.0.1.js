@@ -109,11 +109,7 @@
                     {
                         // Add error messages and helpful informations to the update prompt
                       err_prompt( "#update-prompt", xhr.status + ":", xhr.statusText );
-//alert( settings.messages.hlpPageObjectLabel );
-//alert( typeof settings.messages.hlpPageObjectLabel );
-  
                       inf_prompt( "#update-prompt", settings.messages.hlpPageObjectLabel, settings.messages.hlpPageObjectPrmpt );
-alert( 2 );
                       fq_url = window.location.protocol + "//" + window.location.host + "/" + url;
                       a_fq_url = '<a href="' + fq_url + '">' + fq_url + '</a>';
                       prompt = format( settings.messages.hlpUrlPrmpt, a_fq_url);
@@ -121,7 +117,6 @@ alert( 2 );
                       prompt = format( settings.messages.hlpUrlSelectorPrmpt, html_element_wi_selector);
                       inf_prompt( "#update-prompt", settings.messages.hlpUrlSelectorLabel, prompt );
                       inf_prompt( "#update-prompt", settings.messages.hlpGetRidOfLabel, settings.messages.hlpGetRidOfPrmpt );
-alert( 99 );
                         // Add error messages and helpful informations to the update prompt
 
                         // Fade out the loading *.gif, initiate buttons again
@@ -198,16 +193,18 @@ alert( 99 );
 
                   // Replace vars in the source with the given params
                 function format( source, params ) {
-if( typeof source == "undefined" )
-{
-  source = '{0} {1}';
-}
-if( typeof params == "undefined" )
-{
-  params = new Array();
-  params[0] = 'SYSTEM ERROR:';
-  params[1] = 'params are undefined. It seems that there is a problem with a not defined variable. Function format( source, params).';
-}
+                    // ERROR with source
+                  if( typeof source == "undefined" )
+                  {
+                    source = 'ERROR in jquery.t3browser-0.0.1.js: source is undefined. It seems that there is a problem with a not defined variable. Function format( source, params ).';
+                  }
+                    // ERROR with params
+                  if( typeof params == "undefined" )
+                  {
+                    params = new Array();
+                    params[0] = 'ERROR in jquery.t3browser-0.0.1.js:';
+                    params[1] = 'params are undefined. It seems that there is a problem with a not defined variable. Function format( source, params ). Please check settings { ... }.';
+                  }
                   if ( arguments.length == 1 )
                   {
                     return function() {
