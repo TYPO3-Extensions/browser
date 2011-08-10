@@ -64,23 +64,23 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
       <label index="backbutton"><![CDATA[Zurück]]></label>
       <label index="config_error_h1">Fehler im Browser-Plugin</label>
       <label index="config_error_prompt">Fehler in %class%::%sheet%: Der Wert des Felds '%field%' ist undefiniert: '%value%'.</label>
-      <label index="config_reload">Bitte speichern Sie das Plugin 'Browser' erneut ab! ID der Seite: %pid%, ID des Content-Elements: %uid%</label>
-      <label index="drs_security">SICHERHEITS-HINWEIS: Bitte deaktivieren Sie das DRS - Development Reporting System - auf jedem operativem System. Die Fehlermeldung unten ist ein Sicherheitsrisiko!</label>
+      <label index="config_reload">Bitte speichere das Plugin 'Browser' erneut ab! ID der Seite: %pid%, ID des Content-Elements: %uid%</label>
+      <label index="drs_security">SICHERHEITS-HINWEIS: Bitte deaktiviere das DRS - Development Reporting System - auf jedem operativem System. Die Fehlermeldung unten ist ein Sicherheitsrisiko!</label>
       <label index="drs_sql_prompt"><![CDATA[Browser - die TYPO3-Frontend-Engine<br />
-Die SQL-Abfrage enthält einen Fehler. Bitte benutzen Sie das DRS - das Development Reporting System. DRS zeigt die SQL-Abfrage und den Fehler.
+Die SQL-Abfrage enthält einen Fehler. Bitte benutze das DRS - das Development Reporting System. DRS zeigt die SQL-Abfrage und den Fehler.
 
 DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DRS aktivieren.]]></label>
       <label index="error_h1">Fehler</label>
       <label index="error_filter_h1">Fehler mit der Filter-Konfiguration</label>
-      <label index="error_filter_prompt"><![CDATA[Die Filter sind falsch konfiguriert. Benutzen Sie das DRS - Development Reporting System. Das DRS beschreibt den Fehler und wird versuchen eine Lösung anzubieten.]]></label>
+      <label index="error_filter_prompt"><![CDATA[Die Filter sind falsch konfiguriert. Benutze das DRS - Development Reporting System. Das DRS beschreibt den Fehler und wird versuchen eine Lösung anzubieten.]]></label>
       <label index="error_readlog_h1">Fehler</label>
-      <label index="error_readlog_prompt">Es ist ein Fehler aufgetreten. Bitte aktivieren Sie die Logging-Funktion dieser Extension (Browser) und werfen Sie einen Blick in das Log von cc_devLog!</label>
+      <label index="error_readlog_prompt">Es ist ein Fehler aufgetreten. Bitte aktiviere die Logging-Funktion dieser Extension (Browser) und wirf einen Blick in das Log von cc_devLog!</label>
       <label index="error_sql_h1">SQL Fehler</label>
-      <label index="error_sql_localtable"><![CDATA[Die globale Variable arrLocalTable hat einen Fehler. Weitere Hinweise erhalten Sie in den Log-Einträgen von devlog.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
-      <label index="error_sql_orderby"><![CDATA[Die ORDER BY-Anweisung hat einen Fehler. Weitere Hinweise erhalten Sie in den Log-Einträgen von devlog.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
-      <label index="error_sql_prompt"><![CDATA[Die SQL-Abfrage enthält einen Fehler. Bitte benutzen Sie das DRS - das Development Reporting System. DRS zeigt die SQL-Abfrage und den Fehler.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
-      <label index="error_sql_select"><![CDATA[Die SELECT-Anweisung hat einen Fehler. Weitere Hinweise erhalten Sie in den Log-Einträgen von devlog.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
-      <label index="error_sql_search"><![CDATA[Die im TypoScript angegenen Suchfelder haben einen Fehler. Weitere Hinweise erhalten Sie in den Log-Einträgen von devlog.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
+      <label index="error_sql_localtable"><![CDATA[Die globale Variable arrLocalTable hat einen Fehler. Weitere Hinweise erh&auml;ltst Du in den Log-Einträgen von devlog.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
+      <label index="error_sql_orderby"><![CDATA[Die ORDER BY-Anweisung hat einen Fehler. Weitere Hinweise erh&auml;ltst Du in den Log-Einträgen von devlog.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
+      <label index="error_sql_prompt"><![CDATA[Die SQL-Abfrage enthält einen Fehler. Bitte benutze das DRS - das Development Reporting System. DRS zeigt die SQL-Abfrage und den Fehler.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
+      <label index="error_sql_select"><![CDATA[Die SELECT-Anweisung hat einen Fehler. Weitere Hinweise erh&auml;ltst Du in den Log-Einträgen von devlog.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
+      <label index="error_sql_search"><![CDATA[Die im TypoScript angegenen Suchfelder haben einen Fehler. Weitere Hinweise erh&auml;ltst Du in den Log-Einträgen von devlog.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
       <label index="error_table_no"><![CDATA[Es konnten keine Tabellen für die Verarbeitung gefunden werden.]]></label>
       <label index="error_template_array"><![CDATA[Das Template ist ein Array. Das ist ein Fehler.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
       <label index="error_template_no"><![CDATA[Es gibt kein HTML-Template.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
@@ -90,11 +90,11 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="error_ttc_prompt_tablefielduid">Ein TypoScript Object TT_CONTAINER hat keinen Wert in tableFieldUid. Weitere Hinweise siehe devlog.</label>
       <label index="error_ttcv_prompt_array">Es gibt ein TypoScript Objekt TT_CONTAINER_VALUE, das kein Array ist! Weitere Hinweise siehe devlog.</label>
       <label index="error_ttcv_prompt_object">Das TT_CONTAINER Objekt ist nicht definiert.</label>
-      <label index="error_ttcv_prompt_realurl_1">Sie verwenden im TypoScript ein typolink Array mit der Eigenschaft civserv.realurl. Der dort verwendete Wert ist nicht in der Realurl Konfigurationsdatei definiert.</label>
+      <label index="error_ttcv_prompt_realurl_1">Du verwendest im TypoScript ein typolink Array mit der Eigenschaft civserv.realurl. Der dort verwendete Wert ist nicht in der Realurl Konfigurationsdatei definiert.</label>
       <label index="error_ttcv_prompt_recursion"><![CDATA[Die Begrenzung der Recursions-Kontrolle ist überschritten. Falls es sich dabei um keinen Fehler handeln sollte, erhöhe bitte den Wert in recursionGuard. Hast Du vergessen, dass static template einzubinden?]]></label>
       <label index="error_ttcv_prompt_value">Ein TypoScript Object TT_CONTAINER_VALUE hat keinen Wert in value. Weitere Hinweise siehe devlog.</label>
       <label index="error_typoscript_h1">Typoscript Fehler</label>
-      <label index="error_typoscript_joins"><![CDATA[Wenn Sie eine SQL-Abfrage manuell definieren, müssen Sie die TypoScript-Werte für select, from und andWhere sowie für das Array joins angeben. Weitere Informationen finden Sie im DRS und in der Dokumentation.]]></label>
+      <label index="error_typoscript_joins"><![CDATA[Wenn Du eine SQL-Abfrage manuell definierst, musst Du die TypoScript-Werte für select, from und andWhere sowie für das Array joins angeben. Weitere Informationen findest Du im DRS und in der Dokumentation.]]></label>
       <label index="error_views_noview"><![CDATA[Pardon, es ist keine Ansicht (view) konfiguriert.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
       <label index="error_views_single_noview">Pardon, es ist keine Detailansicht konfiguriert.</label>
       <label index="pi_list_searchBox_search">Suche</label>
@@ -103,7 +103,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="label_azbrowser_all">Alle</label>
       <label index="label_azbrowser_others">Andere</label>
       <label index="label_filter_firstitem_default"><![CDATA[Alle Einträge]]></label>
-      <label index="label_first_visit">Klicken Sie auf einen Buchstaben oder senden Sie eine Suchabfrage.</label>
+      <label index="label_first_visit">Klicke n Sie auf einen Buchstaben oder senden Sie eine Suchabfrage.</label>
       <label index="label_from">Von</label>
       <label index="label_fromTo">Von bis</label>
       <label index="label_noImageFile"><![CDATA[Es ist kein Bild verfügbar.]]></label>
