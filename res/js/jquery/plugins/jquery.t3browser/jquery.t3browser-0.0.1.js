@@ -22,8 +22,8 @@
       hlpMissingTagPropertyPrmpt: "Please add something like <div id=\"{0}\">...</div> to your template.",
       hlpPageObjectLabel:   "Be aware of a proper TYPO3 page object:",
       hlpPageObjectPrmpt:   "Check the page object and the current typeNum.",
-      hlpAjaxConflictLabel: "Maybe there is a conflict:",
-      hlpAjaxConflictPrmpt: "Don't use AJAX in the single view. See flexform/plugin sheet [jQuery] field [AJAX].",
+      //hlpAjaxConflictLabel: "Maybe there is a conflict:",
+      //hlpAjaxConflictPrmpt: "Don't use AJAX in the single view. See flexform/plugin sheet [jQuery] field [AJAX].",
       hlpUrlLabel:          "Be aware of a proper URL:",
       hlpUrlPrmpt:          "Check the requested URL manually: {0}",
       hlpUrlSelectorLabel:  "Be aware of the jQuery selector:",
@@ -83,7 +83,7 @@
                     alert( settings.messages.errMissingTagPropertyLabel + " " + prompt );
                     prompt = format( settings.messages.hlpMissingTagPropertyPrmpt, html_element);
                     alert( settings.messages.hlpMissingTagPropertyLabel + " " + prompt );
-                    alert(settings.messages.hlpAjaxConflictLabel + " " + settings.messages.hlpAjaxConflictPrmpt );
+                    //alert(settings.messages.hlpAjaxConflictLabel + " " + settings.messages.hlpAjaxConflictPrmpt );
                     fq_url = window.location.protocol + "//" + window.location.host + "/" + url;
                     window.location.href = fq_url;
                     return;
