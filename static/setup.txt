@@ -363,7 +363,7 @@ plugin.tx_browser_pi1 {
           }
           devider = TEXT
           devider {
-            value = |
+            value = 
             noTrimWrap = | | |
           }
         }
@@ -428,7 +428,7 @@ plugin.tx_browser_pi1 {
           }
           devider = TEXT
           devider {
-            value = |
+            value = 
             noTrimWrap = | | |
           }
         }
@@ -466,7 +466,7 @@ plugin.tx_browser_pi1 {
           }
           devider = TEXT
           devider {
-            value = |
+            value = 
             noTrimWrap = | | |
           }
         }
