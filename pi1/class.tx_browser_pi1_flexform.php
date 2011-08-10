@@ -1162,23 +1162,28 @@ class tx_browser_pi1_flexform {
       case ('own') :
         $plugin   = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_plugins.t3browser.own.plugin', $sheet, 'lDEF', 'vDEF');
         $library  = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_plugins.t3browser.own.library', $sheet, 'lDEF', 'vDEF');
-        $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin']   = $plugin;
-        $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library']  = $library;
+        $library  = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_plugins.t3browser.own.localization', $sheet, 'lDEF', 'vDEF');
+        $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin']       = $plugin;
+        $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library']      = $library;
+        $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localization'] = $localization;
         $this->bool_jquery_plugins_t3browser = true;
         if ($this->pObj->b_drs_flexform)
         {
-          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.plugin is set to ' . $plugin, $this->pObj->extKey, 0);
-          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.library is set to ' . $library, $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.plugin is set to '       . $plugin, $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.library is set to '      . $library, $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.localization is set to ' . $localization, $this->pObj->extKey, 0);
         }
         break;
       case ('no') :
-        $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin']   = null;
-        $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library']  = null;
+        $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin']       = null;
+        $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library']      = null;
+        $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localization'] = null;
         $this->bool_jquery_plugins_t3browser = false;
         if ($this->pObj->b_drs_flexform) 
         {
-          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.plugin is set to null.', $this->pObj->extKey, 0);
-          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.library is set to null.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.plugin is set to null.',       $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.library is set to null.',      $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.localization is set to null.', $this->pObj->extKey, 0);
         }
         break;
       case ('ts') :
@@ -1188,6 +1193,7 @@ class tx_browser_pi1_flexform {
         {
           t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.plugin isn\'t changed by the flexform.', $this->pObj->extKey, 0);
           t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.library isn\'t changed by the flexform.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.localization isn\'t changed by the flexform.', $this->pObj->extKey, 0);
         }
         break;
     }

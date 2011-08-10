@@ -17,7 +17,7 @@
   var settings = {
     messages: {
       errMissingTagPropertyLabel: "Tag is missing:",
-      errMissingTagPropertyPrmpt: "A HTML tag with an attribute {0} is missing. AJAX can't work!",
+      errMissingTagPropertyPrmpt: "A HTML tag with an attribute {0} is missing. AJAX can't work proper!",
       hlpMissingTagPropertyLabel: "Be aware of a proper HTML template:",
       hlpMissingTagPropertyPrmpt: "Please add something like <div id=\"{0}\">...</div> to your template.",
       hlpPageObjectLabel:   "Be aware of a proper TYPO3 page object:",
@@ -61,8 +61,6 @@
                   // with our default settings
                   if ( settings_ ) { 
                     $.extend( settings, settings_ );
-//alert( settings.messages.hlpUrlLabel );
-
                   }
                 });
               },
@@ -255,7 +253,6 @@
       // See http://docs.jquery.com/Plugins/Authoring#Plugin_Methods
     
       // Return executed method
-//alert ( typeof method );
     if ( methods[method] ) 
     {
       return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));

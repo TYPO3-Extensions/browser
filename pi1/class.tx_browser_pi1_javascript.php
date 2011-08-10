@@ -866,8 +866,15 @@ class tx_browser_pi1_javascript
       }
       $inline_jss = str_replace('###MODE###', $this->pObj->piVar_mode,  $inline_jss);
       $inline_jss = str_replace('###VIEW###', $this->pObj->view,        $inline_jss);
-//echo '<pre>' . var_export($marker, true) . '</pre>';
       $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
+
+      $name         = 'jquery_plugins_t3browser_localization';
+      $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localization'];
+      $path         = str_replace('###LANG###', $GLOBALS['TSFE']->lang, $path);
+      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localization.']['inline'];
+      $path_tsConf  = 'javascript.jquery.plugins.t3browser.localization';
+      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+
     }
       // jquery_plugins_t3browser
 

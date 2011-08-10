@@ -2022,6 +2022,12 @@ plugin.tx_browser_pi1 {
               }
             }
           }
+            // [STRING] Path to the jss file of the t3browser localization. ###LANG### will be replacedwhile runtime
+          localization = EXT:res/js/jquery/plugins/jquery.t3browser/localization.###LANG###.js
+          localization {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
         }
       }
         // [STRING] Path to the jss file of the user interface (ui). All features are enabled in the default script file!
