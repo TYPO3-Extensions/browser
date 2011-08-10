@@ -2274,7 +2274,7 @@ class tx_browser_pi1_navi
     }
       // Set the item last
 
-var_dump($arr_items);
+
 
       //////////////////////////////////////////////////////////////////////
       //
@@ -2287,23 +2287,17 @@ var_dump($arr_items);
       // Set devider
     $devider = $this->pObj->cObj->cObjGetSingle($devider_name, $devider_conf);
 
-var_dump($devider);
       // Devide items
     $record_browser = implode($devider, $arr_items);
 
       // Wrapper configuration
     $wrap_all_name = $conf_record_browser['items.']['typoscript.']['wrap_all'];
     $wrap_all_conf = $conf_record_browser['items.']['typoscript.']['wrap_all.'];
-
     if(empty($wrap_all_conf['value']))
     {
       $wrap_all_conf['value'] = $record_browser;
     }
-var_dump($wrap_all_conf);
 
-      // Set wrapper
-    $wrap_all_conf = $this->pObj->cObj->cObjGetSingle($wrap_all_name, $wrap_all_conf);
-var_dump($wrap_all_conf);
       // Wrap record browser
     $record_browser = $this->pObj->cObj->cObjGetSingle($wrap_all_name, $wrap_all_conf);
       // Set the record browser
