@@ -2076,15 +2076,6 @@ class tx_browser_pi1_navi
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Get labeling configuration array
-
-    $conf_labeling = $conf_record_browser['labeling.']['typoscript.'];
-      // Get labeling configuration array
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
       // Set the item first
 
     $item = null;
@@ -2289,26 +2280,28 @@ class tx_browser_pi1_navi
       //
       // Set the record browser
 
-      // Devide $arr_items
-    $devider        = $this->pObj->cObj->cObjGetSingle
-                      (
-                        $conf_labeling['devider'],
-                        $conf_labeling['devider.']
-                      );
-    $record_browser = implode($devider, $arr_items);
-      // Devide $arr_items
+      // Devide configuration
+    $devider_name = $conf_record_browser['items.']['typoscript.']['devider'];
+    $devider_conf = $conf_record_browser['items.']['typoscript.']['devider.'];
 
-      // Wrap the box
-    if(empty($conf_record_browser['wrapper.']['box.']['value']))
+      // Set devider
+    $devider = $this->pObj->cObj->cObjGetSingle($devider_name, $devider_conf);
+
+      // Devide items
+    $record_browser = implode($devider, $arr_items);
+
+      // Wrapper configuration
+    $wrap_all_name = $conf_record_browser['items.']['typoscript.']['wrap_all'];
+    $wrap_all_conf = $conf_record_browser['items.']['typoscript.']['wrap_all.'];
+
+      // Set wrapper
+    $wrap_all_conf = $this->pObj->cObj->cObjGetSingle($wrap_all_name, $wrap_all_conf);
+    if(empty($wrap_all_conf['value']))
     {
-      $conf_record_browser['wrapper.']['box.']['value'] = $record_browser;
+      $wrap_all_conf['value'] = $record_browser;
     }
-    $record_browser = $this->pObj->cObj->cObjGetSingle
-                      (
-                        $conf_record_browser['wrapper.']['box'],
-                        $conf_record_browser['wrapper.']['box.']
-                      );
-      // Wrap the box
+      // Wrap record browser
+    $record_browser = $this->pObj->cObj->cObjGetSingle($wrap_all_name, $wrap_all_conf);
       // Set the record browser
 
 
