@@ -19,6 +19,8 @@
       errMissingTagPropertyLabel: "Tag is missing:",
       errMissingTagPropertyPrmpt: "A HTML tag with an attribute {0} is missing. AJAX can't work proper!",
       errServerErrorPrmpt:        "This is a message from the server. Maybe the server has some problems in general. If the server delivers content, you will see the content below this prompts.",
+      hlpForumLabel:              "Interactive support:",
+      hlpForumPrmpt:              "If you need interactive help, please visit the <a href=\"http://typo3-browser.forum.de/\">TYPO3 Browser forum at typo3-browser.forum.de</a>. Posts arewelcome in English and German.';
       hlpMissingTagPropertyLabel: "Be aware of a proper HTML template:",
       hlpMissingTagPropertyPrmpt: "Please add something like <div id=\"{0}\">...</div> to your template.",
       hlpPageObjectLabel:         "You can check TYPO3:",
@@ -115,6 +117,7 @@
                       inf_prompt( "#update-prompt", settings.messages.hlpUrlLabel, prompt );
                       prompt = format( settings.messages.hlpUrlSelectorPrmpt, html_element_wi_selector);
                       //inf_prompt( "#update-prompt", settings.messages.hlpUrlSelectorLabel, prompt );
+                      inf_prompt( "#update-prompt", settings.messages.hlpForumLabel, settings.messages.hlpForumPrmpt );
                       inf_prompt( "#update-prompt", settings.messages.hlpGetRidOfLabel, settings.messages.hlpGetRidOfPrmpt );
                         // Add error messages and helpful informations to the update prompt
 
