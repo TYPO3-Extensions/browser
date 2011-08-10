@@ -2274,7 +2274,7 @@ class tx_browser_pi1_navi
     }
       // Set the item last
 
-
+var_dump($arr_items);
 
       //////////////////////////////////////////////////////////////////////
       //
@@ -2287,6 +2287,7 @@ class tx_browser_pi1_navi
       // Set devider
     $devider = $this->pObj->cObj->cObjGetSingle($devider_name, $devider_conf);
 
+var_dump($devider);
       // Devide items
     $record_browser = implode($devider, $arr_items);
 
@@ -2300,6 +2301,7 @@ class tx_browser_pi1_navi
     {
       $wrap_all_conf['value'] = $record_browser;
     }
+var_dump($wrap_all_conf);
       // Wrap record browser
     $record_browser = $this->pObj->cObj->cObjGetSingle($wrap_all_name, $wrap_all_conf);
       // Set the record browser
