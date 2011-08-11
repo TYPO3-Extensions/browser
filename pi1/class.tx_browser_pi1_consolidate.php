@@ -839,15 +839,30 @@ class tx_browser_pi1_consolidate
 
 
 
-    ///////////////////////////////////////////////////////////////
-    //
-    // Set global arr_row_current and arr_fields_current
+      ///////////////////////////////////////////////////////////////
+      //
+      // Set global arr_row_current and arr_fields_current
 
-    reset($rows);
-    $firstKey   = key($rows);
-    $this->arr_row_current    = $rows[$firstKey];
-    $this->arr_fields_current = array_keys($rows[$firstKey]);
-    // Set global arr_row_current and arr_fields_current
+      // 110811, pochart: Core: Error handler (FE): PHP Warning: key() [<a href='function.key'>function.key</a>]: Passed variable is not an array or object in typo3conf/ext/browser/pi1/class.tx_browser_pi1_consolidate.php line 847 
+    if(is_array($rows))
+    {
+      reset($rows);
+      $firstKey   = key($rows);
+      $this->arr_row_current    = $rows[$firstKey];
+      $this->arr_fields_current = array_keys($rows[$firstKey]);
+    }
+      // 110811, dwildt + 
+    if(!is_array($rows))
+    {
+      if ($this->pObj->b_drs_warn)
+      {
+        t3lib_div::devlog('[INFO/WARN] $rows is empty. Does it have any logic? The developer is asking. This is a :TODO: ', $this->pObj->extKey, 2);
+      }
+      $this->arr_row_current    = null;
+      $this->arr_fields_current = null;
+    }
+      // 110811, dwildt + 
+      // Set global arr_row_current and arr_fields_current
 
 
 
