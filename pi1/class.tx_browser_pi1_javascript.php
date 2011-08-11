@@ -514,7 +514,7 @@ class tx_browser_pi1_javascript
     {
       if ($this->pObj->b_drs_warn)
       {
-        t3lib_div::devlog('[WARN/JSS] Extension t3jquery isn\'t loaded.', $this->pObj->extKey, 2);
+        t3lib_div::devlog('[INFO/JSS] Extension t3jquery isn\'t loaded.', $this->pObj->extKey, 0);
         t3lib_div::devlog('[INFO/JSS] We try to get another jQuery source.', $this->pObj->extKey, 0);
         t3lib_div::devlog('[HELP/JSS] Change it? Load \'t3jquery\'', $this->pObj->extKey, 1);
       }
