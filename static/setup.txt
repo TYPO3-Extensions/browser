@@ -291,27 +291,27 @@ plugin.tx_browser_pi1 {
       display {
           // [BOOLEAN] 0: Don't display the record browser, if there isn't any result/record. 1 (default): Display it ever.
         withoutResult     = 1
-          // [BOOLEAN] 0: Don't display link to first and last record. 1 (default): Display it.
-        firstAndLastItem  = 1
-          // [BOOLEAN] 0 (default): Display items with a link only.
-        itemsWithoutLink  = 1
+          // [BOOLEAN] 0: Don't display the first and the last button. 1 (default): Display it.
+        firstAndLastButton  = 1
+          // [BOOLEAN] 0 (default): Display buttons with a link only.
+        itemsWithoutButton  = 1
       }
-      items {
+      buttons {
         chars {
-            // Box: wrap for all items
+            // Box: wrap for all buttons
           wrap_all = TEXT
           wrap_all {
-              // [STRING] empty (default): empty value will allocated while runtime with the rendered items.
+              // [STRING] empty (default): empty value will allocated while runtime with the rendered buttons.
             value =
             wrap  = <ul id="record-browser" class="ui-widget ui-helper-clearfix">|</ul><div id="update-prompt"></div>
           }
-            // The devider between of two items
+            // The devider between of two buttons
           devider = TEXT
           devider {
             value = 
             noTrimWrap = | | |
           }
-            // First item of the record browser
+            // First button of the record browser
           first = TEXT
           first {
               // [STRING] empty (default): empty value will allocated while runtime. See labeling below.
@@ -325,23 +325,23 @@ plugin.tx_browser_pi1 {
               additionalParams = &tx_browser_pi1[showUid]=###RECORD_UID###&###CHASH###
             }
           }
-            // Previous item of the record browser
+            // Previous button of the record browser
           prev < .first
           prev {
             value = &lt;
           }
-            // Current item of the record browser
+            // Current button of the record browser
           curr = TEXT
           curr {
             value = &Oslash;
             noTrimWrap  = |<li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-record-browser"> | </li>|
           }
-            // Next item of the record browser
+            // Next button of the record browser
           next < .first
           next {
             value = &gt;
           }
-            // Last item of the record browser
+            // Last button of the record browser
           last < .first
           last {
             value = &gt;&gt;
@@ -408,8 +408,8 @@ plugin.tx_browser_pi1 {
         }
         current < .icons
       }
-      items_wo_link < .items
-      items_wo_link {
+      buttons_wo_link < .buttons
+      buttons_wo_link {
         chars {
           wrap_all  >
           devider   >

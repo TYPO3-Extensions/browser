@@ -1773,10 +1773,10 @@ class tx_browser_pi1_navi
     if(!$this->pObj->conf['advanced.']['session_manager.']['session.']['enabled'])
     {
       $bool_session = false;
-      if ($this->pObj->b_drs_templating)
+      if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
       {
         $value = $this->pObj->conf['advanced.']['session_manager.']['session.']['enabled'];
-        t3lib_div::devlog('[INFO/TEMPLATING] advanced.session_manager.session.enabled is \'' . $value . '\' '.
+        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] advanced.session_manager.session.enabled is \'' . $value . '\' '.
           'Record browser won\'t get its data from session (less performance).', $this->pObj->extKey, 0);
       }
     }
@@ -1796,7 +1796,7 @@ class tx_browser_pi1_navi
           'Be aware of less performance!', $this->pObj->extKey, 2);
         t3lib_div::devlog('[HELP/PERFORMANCE] Enable session for better performance!', $this->pObj->extKey, 1);
       }
-        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows']
+        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']
       $this->recordbrowser_callListView();
     }
       // No session: get data from the list view. Call it!
@@ -1810,9 +1810,9 @@ class tx_browser_pi1_navi
     if($bool_session)
     {
         // DRS - Development Reporting System
-      if ($this->pObj->b_drs_templating)
+      if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] Session: uid of all rows should delivered by the session data '.
+        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session: uid of all rows should delivered by the session data '.
           '(best performance).', $this->pObj->extKey, 0);
       }
         // DRS - Development Reporting System
@@ -1828,7 +1828,7 @@ class tx_browser_pi1_navi
       }
         // Set the data space
       $arr_browser_session = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
-      if(empty($arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows']))
+      if(empty($arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']))
       {
         if ($this->pObj->b_drs_warn)
         {
@@ -1837,13 +1837,13 @@ class tx_browser_pi1_navi
             $this->pObj->extKey, 2);
         }
       }
-      if(!empty($arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows']))
+      if(!empty($arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']))
       {
-        if ($this->pObj->b_drs_templating)
+        if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
         {
-          t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . ']' .
+          t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session array [' . $str_data_space . ']' .
             '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
-            '#' . count($arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
+            '#' . count($arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
         }
       }
     }
@@ -1855,23 +1855,23 @@ class tx_browser_pi1_navi
       //
       // Session: tx_browser_pi1['uids_of_all_rows'] isn't set
 
-    if($bool_session && !isset($arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows']))
+    if($bool_session && !isset($arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']))
     {
-        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows']
+        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']
       $this->recordbrowser_callListView();
         // Set the session array uids_of_all_rows
-      $arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows'] = $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows'];
+      $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'];
         // Write session data tx_browser_pi1
       $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_browser_session);
         // DRS - Development Reporting System
-      if ($this->pObj->b_drs_templating)
+      if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . ']' .
+        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session array [' . $str_data_space . ']' .
           '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
-          '#' . count($this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
+          '#' . count($this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
       }
         // Get uids of all records
-      $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows'] = $arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows'];
+      $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'];
     }
       // Session: tx_browser_pi1['uids_of_all_rows'] isn't set
 
@@ -1884,9 +1884,9 @@ class tx_browser_pi1_navi
     if($bool_session)
     {
         // Get uids of all records
-      $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows'] = $arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows'];
+      $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'];
     }
-      // Session: set $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows']
+      // Session: set $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']
 
 
 
@@ -1934,7 +1934,7 @@ class tx_browser_pi1_navi
  /**
   * recordbrowser_callListView: Call the listView. It is needed for the record browser in the single view,
   *                             if there isn't any information about all available records.
-  *                             The method allocates the global array $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows'] and
+  *                             The method allocates the global array $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] and
   *                             returns it.
   *                             The method will be called in two cases:
   *                             * Session management is disabled
@@ -1972,7 +1972,7 @@ class tx_browser_pi1_navi
     $curr_view        = $this->pObj->view;
       // Set view to list
     $this->pObj->view = 'list';
-      // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows']
+      // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']
     $dummy            = $this->pObj->objViews->listView($this->pObj->str_template_raw);
       // Restore current values
     $this->pObj->rows = $curr_rows;
@@ -2018,7 +2018,7 @@ class tx_browser_pi1_navi
   private function recordbrowser_rendering()
   {
     $record_browser = null;
-    $arr_items      = array();
+    $arr_buttons      = array();
 
       // Uid of the current record
     $singlePid      = (int) $this->pObj->piVars['showUid'];
@@ -2060,7 +2060,7 @@ class tx_browser_pi1_navi
     $bool_display_without_result = $conf_record_browser['display.']['withoutResult'];
     if(!$bool_display_without_result)
     {
-      if(empty($this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows']))
+      if(empty($this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']))
       {
         if ($this->pObj->b_drs_templating)
         {
@@ -2078,7 +2078,7 @@ class tx_browser_pi1_navi
       //
       // Get first, current and last positions and the position array
 
-    $uids_of_all_rows = $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows'];
+    $uids_of_all_rows = $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'];
       // Position array: the position (0, 1, ... , n) will be the value, the uid of the record will be the key 
     $pos_of_all_rows  = array_flip($uids_of_all_rows);
     
@@ -2093,10 +2093,10 @@ class tx_browser_pi1_navi
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Set the item first
+      // Set the button first
 
-    $item = null;
-    if($conf_record_browser['display.']['firstAndLastItem'])
+    $button = null;
+    if($conf_record_browser['display.']['firstAndLastButton'])
     {
       if($pos_of_curr_row >= ($pos_of_first_row + 2))
       {
@@ -2105,42 +2105,42 @@ class tx_browser_pi1_navi
           // Get position of the record
         $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
-          // Get item configuration
-        $item_name = $conf_record_browser['items.']['current.']['first'];
-        $item_conf = $conf_record_browser['items.']['current.']['first.'];
+          // Get button configuration
+        $button_name = $conf_record_browser['buttons.']['current.']['first'];
+        $button_conf = $conf_record_browser['buttons.']['current.']['first.'];
 
           // Set and replace markers
-        $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
+        $button_conf = $this->pObj->objMarker->substitute_marker($button_conf, $marker);
 
-          // Set item
-        $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
+          // Set button
+        $button = $this->pObj->cObj->cObjGetSingle($button_name, $button_conf);
       }
       if($pos_of_curr_row < ($pos_of_first_row + 2))
       {
-        if($conf_record_browser['display.']['itemsWithoutLink'])
+        if($conf_record_browser['display.']['buttonsWithoutLink'])
         {
-            // Get item configuration
-          $item_name = $conf_record_browser['items_wo_link.']['current.']['first'];
-          $item_conf = $conf_record_browser['items_wo_link.']['current.']['first.'];
+            // Get button configuration
+          $button_name = $conf_record_browser['buttons_wo_link.']['current.']['first'];
+          $button_conf = $conf_record_browser['buttons_wo_link.']['current.']['first.'];
 
-            // Set item
-          $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
+            // Set button
+          $button = $this->pObj->cObj->cObjGetSingle($button_name, $button_conf);
         }
       }
     }
-    if(!empty($item))
+    if(!empty($button))
     {
-      $arr_items[] = $item;
+      $arr_buttons[] = $button;
     }
-      // Set the item first
+      // Set the button first
 
 
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Set the item prev
+      // Set the button prev
 
-    $item = null;
+    $button = null;
     if($pos_of_curr_row >= ($pos_of_first_row + 1))
     {
         // Get uid of the record
@@ -2148,69 +2148,69 @@ class tx_browser_pi1_navi
         // Get position of the record
       $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
-        // Get item configuration
-      $item_name = $conf_record_browser['items.']['current.']['prev'];
-      $item_conf = $conf_record_browser['items.']['current.']['prev.'];
+        // Get button configuration
+      $button_name = $conf_record_browser['buttons.']['current.']['prev'];
+      $button_conf = $conf_record_browser['buttons.']['current.']['prev.'];
 
         // Set and replace markers
-      $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
+      $button_conf = $this->pObj->objMarker->substitute_marker($button_conf, $marker);
 
-        // Set item
-      $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
+        // Set button
+      $button = $this->pObj->cObj->cObjGetSingle($button_name, $button_conf);
     }
     if($pos_of_curr_row < ($pos_of_first_row + 1))
     {
-      if($conf_record_browser['display.']['itemsWithoutLink'])
+      if($conf_record_browser['display.']['buttonsWithoutLink'])
       {
-          // Get item configuration
-        $item_name = $conf_record_browser['items_wo_link.']['current.']['prev'];
-        $item_conf = $conf_record_browser['items_wo_link.']['current.']['prev.'];
+          // Get button configuration
+        $button_name = $conf_record_browser['buttons_wo_link.']['current.']['prev'];
+        $button_conf = $conf_record_browser['buttons_wo_link.']['current.']['prev.'];
 
-          // Set item
-        $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
+          // Set button
+        $button = $this->pObj->cObj->cObjGetSingle($button_name, $button_conf);
       }
     }
-    if(!empty($item))
+    if(!empty($button))
     {
-      $arr_items[] = $item;
+      $arr_buttons[] = $button;
     }
-      // Set the item prev
+      // Set the button prev
 
 
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Set the item curr
+      // Set the button curr
 
-    $item = null;
+    $button = null;
       // Get uid of the record
     $marker['###RECORD_UID###']       = $singlePid;
       // Get position of the record
     $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
-      // Get item configuration
-    $item_name = $conf_record_browser['items.']['current.']['curr'];
-    $item_conf = $conf_record_browser['items.']['current.']['curr.'];
+      // Get button configuration
+    $button_name = $conf_record_browser['buttons.']['current.']['curr'];
+    $button_conf = $conf_record_browser['buttons.']['current.']['curr.'];
 
       // Set and replace markers
-    $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
+    $button_conf = $this->pObj->objMarker->substitute_marker($button_conf, $marker);
 
-      // Set item
-    $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
+      // Set button
+    $button = $this->pObj->cObj->cObjGetSingle($button_name, $button_conf);
 
-    if(!empty($item))
+    if(!empty($button))
     {
-      $arr_items[] = $item;
+      $arr_buttons[] = $button;
     }
-      // Set the item curr
+      // Set the button curr
 
 
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Set the item next
+      // Set the button next
 
-    $item = null;
+    $button = null;
     if($pos_of_curr_row <= ($pos_of_last_row - 1))
     {
         // Get uid of the record
@@ -2218,42 +2218,42 @@ class tx_browser_pi1_navi
         // Get position of the record
       $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
-        // Get item configuration
-      $item_name = $conf_record_browser['items.']['current.']['next'];
-      $item_conf = $conf_record_browser['items.']['current.']['next.'];
+        // Get button configuration
+      $button_name = $conf_record_browser['buttons.']['current.']['next'];
+      $button_conf = $conf_record_browser['buttons.']['current.']['next.'];
 
         // Set and replace markers
-      $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
+      $button_conf = $this->pObj->objMarker->substitute_marker($button_conf, $marker);
 
-        // Set item
-      $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
+        // Set button
+      $button = $this->pObj->cObj->cObjGetSingle($button_name, $button_conf);
     }
     if($pos_of_curr_row > ($pos_of_last_row - 1))
     {
-      if($conf_record_browser['display.']['itemsWithoutLink'])
+      if($conf_record_browser['display.']['buttonsWithoutLink'])
       {
-          // Get item configuration
-        $item_name = $conf_record_browser['items_wo_link.']['current.']['next'];
-        $item_conf = $conf_record_browser['items_wo_link.']['current.']['next.'];
+          // Get button configuration
+        $button_name = $conf_record_browser['buttons_wo_link.']['current.']['next'];
+        $button_conf = $conf_record_browser['buttons_wo_link.']['current.']['next.'];
 
-          // Set item
-        $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
+          // Set button
+        $button = $this->pObj->cObj->cObjGetSingle($button_name, $button_conf);
       }
     }
-    if(!empty($item))
+    if(!empty($button))
     {
-      $arr_items[] = $item;
+      $arr_buttons[] = $button;
     }
-      // Set the item next
+      // Set the button next
 
 
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Set the item last
+      // Set the button last
 
-    $item = null;
-    if($conf_record_browser['display.']['firstAndLastItem'])
+    $button = null;
+    if($conf_record_browser['display.']['firstAndLastButton'])
     {
       if($pos_of_curr_row <= ($pos_of_last_row - 2))
       {
@@ -2262,34 +2262,34 @@ class tx_browser_pi1_navi
           // Get position of the record
         $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
 
-          // Get item configuration
-        $item_name = $conf_record_browser['items.']['current.']['last'];
-        $item_conf = $conf_record_browser['items.']['current.']['last.'];
+          // Get button configuration
+        $button_name = $conf_record_browser['buttons.']['current.']['last'];
+        $button_conf = $conf_record_browser['buttons.']['current.']['last.'];
 
           // Set and replace markers
-        $item_conf = $this->pObj->objMarker->substitute_marker($item_conf, $marker);
+        $button_conf = $this->pObj->objMarker->substitute_marker($button_conf, $marker);
 
-          // Set item
-        $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
+          // Set button
+        $button = $this->pObj->cObj->cObjGetSingle($button_name, $button_conf);
       }
       if($pos_of_curr_row > ($pos_of_last_row - 2))
       {
-        if($conf_record_browser['display.']['itemsWithoutLink'])
+        if($conf_record_browser['display.']['buttonsWithoutLink'])
         {
-            // Get item configuration
-          $item_name = $conf_record_browser['items_wo_link.']['current.']['last'];
-          $item_conf = $conf_record_browser['items_wo_link.']['current.']['last.'];
+            // Get button configuration
+          $button_name = $conf_record_browser['buttons_wo_link.']['current.']['last'];
+          $button_conf = $conf_record_browser['buttons_wo_link.']['current.']['last.'];
 
-            // Set item
-          $item = $this->pObj->cObj->cObjGetSingle($item_name, $item_conf);
+            // Set button
+          $button = $this->pObj->cObj->cObjGetSingle($button_name, $button_conf);
         }
       }
     }
-    if(!empty($item))
+    if(!empty($button))
     {
-      $arr_items[] = $item;
+      $arr_buttons[] = $button;
     }
-      // Set the item last
+      // Set the button last
 
 
 
@@ -2298,18 +2298,18 @@ class tx_browser_pi1_navi
       // Set the record browser
 
       // Devide configuration
-    $devider_name = $conf_record_browser['items.']['current.']['devider'];
-    $devider_conf = $conf_record_browser['items.']['current.']['devider.'];
+    $devider_name = $conf_record_browser['buttons.']['current.']['devider'];
+    $devider_conf = $conf_record_browser['buttons.']['current.']['devider.'];
 
       // Set devider
     $devider = $this->pObj->cObj->cObjGetSingle($devider_name, $devider_conf);
 
-      // Devide items
-    $record_browser = implode($devider, $arr_items);
+      // Devide buttons
+    $record_browser = implode($devider, $arr_buttons);
 
       // Wrapper configuration
-    $wrap_all_name = $conf_record_browser['items.']['current.']['wrap_all'];
-    $wrap_all_conf = $conf_record_browser['items.']['current.']['wrap_all.'];
+    $wrap_all_name = $conf_record_browser['buttons.']['current.']['wrap_all'];
+    $wrap_all_conf = $conf_record_browser['buttons.']['current.']['wrap_all.'];
     if(empty($wrap_all_conf['value']))
     {
       $wrap_all_conf['value'] = $record_browser;
@@ -2359,10 +2359,10 @@ class tx_browser_pi1_navi
 
     if(!($this->pObj->conf['navigation.']['record_browser'] == 1))
     {
-      if ($this->pObj->b_drs_templating)
+      if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
       {
         $value = $this->pObj->conf['navigation.']['record_browser'];
-        t3lib_div::devlog('[INFO/TEMPLATING] navigation.record_browser is \'' . $value . '\' '.
+        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] navigation.record_browser is \'' . $value . '\' '.
           'Record browser won\'t be handled (best performance).', $this->pObj->extKey, 0);
       }
       return false;
@@ -2379,10 +2379,10 @@ class tx_browser_pi1_navi
     if(!$this->pObj->conf['advanced.']['session_manager.']['session.']['enabled'])
     {
       $bool_session = false;
-      if ($this->pObj->b_drs_templating)
+      if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
       {
         $value = $this->pObj->conf['advanced.']['session_manager.']['session.']['enabled'];
-        t3lib_div::devlog('[INFO/TEMPLATING] advanced.session_manager.session.enabled is \'' . $value . '\' '.
+        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] advanced.session_manager.session.enabled is \'' . $value . '\' '.
           'Record browser won\'t get its data from session (less performance).', $this->pObj->extKey, 0);
       }
     }
@@ -2399,12 +2399,12 @@ class tx_browser_pi1_navi
         // Get the tx_browser_pi1 session array 
       $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey('ses', $this->pObj->prefixId);
         // Empty the array with the uids of all rows 
-      $arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows'] = array();
+      $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = array();
         // Set the tx_browser_pi1 session array
       $GLOBALS['TSFE']->fe_user->setKey('ses', $this->pObj->prefixId, $arr_browser_session);
-      if ($this->pObj->b_drs_templating)
+      if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] Rows are empty. Session array [' . $this->pObj->prefixId . '][mode-' . $this->mode . '][uids_of_all_rows] will be empty.',  $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Rows are empty. Session array [' . $this->pObj->prefixId . '][mode-' . $this->mode . '][uids_of_all_rows] will be empty.',  $this->pObj->extKey, 0);
       }
       return false;
     }
@@ -2426,6 +2426,10 @@ class tx_browser_pi1_navi
       $arr_return['error']['header'] = '<h1 style="color:red">Error Record Browser</h1>';
       $arr_return['error']['prompt'] = '<p style="color:red">Key is missing in $rows. Key is ' . $key_for_uid . '</p>';
       $arr_return['error']['prompt'] = $arr_return['error']['prompt'] . '<p>' . __METHOD__ . ' (' . __LINE__ . ')</p>';
+      if ($this->pObj->b_drs_error)
+      {
+        t3lib_div::devlog('[INFO/ERROR] table.field for uid of the local table is not a key.' . $this->mode . '][uids_of_all_rows] will be empty.',  $this->pObj->extKey, 0);
+      }
       return $arr_return;
     }
       // RETURN uid table.field isn't any key
@@ -2451,13 +2455,13 @@ class tx_browser_pi1_navi
       //
       // No session: set global array
 
-    $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows'] = array();
+    $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = array();
     if(!$bool_session)
     {
-      $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows'] = $arr_uid;
-      if ($this->pObj->b_drs_templating)
+      $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = $arr_uid;
+      if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] No session (less performance): global array uids_of_all_rows is set with ' .
+        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] No session (less performance): global array uids_of_all_rows is set with ' .
           '#' . count($arr_uid) . ' uids.',  $this->pObj->extKey, 0);
       }
       return false;
@@ -2484,10 +2488,10 @@ class tx_browser_pi1_navi
       // Get the tx_browser_pi1 session array 
     $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
       // Overwrite the array with the uids of all rows 
-    $arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows'] = $arr_uid;
+    $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = $arr_uid;
       // Set the tx_browser_pi1 session array
     $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_browser_session);
-    if ($this->pObj->b_drs_templating)
+    if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
     {
       t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . '][' . $this->pObj->prefixId . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
         '#' . count($arr_uid) . ' uids.',  $this->pObj->extKey, 0);

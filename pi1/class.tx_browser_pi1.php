@@ -242,6 +242,7 @@ class tx_browser_pi1 extends tslib_pibase {
   var $b_drs_perform      = false;
   var $b_drs_realurl      = false;
   var $b_drs_seo          = false;
+  var $b_drs_session      = false;
   var $b_drs_socialmedia  = false;
   var $b_drs_sql          = false;
   var $b_drs_templating   = false;
@@ -1038,6 +1039,7 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->b_drs_realurl      = false;
     $this->b_drs_search       = false;
     $this->b_drs_seo          = false;
+    $this->b_drs_session      = false;
     $this->b_drs_socialmedia  = false;
     $this->b_drs_sql          = false;
     $this->b_drs_tca          = false;
@@ -1071,6 +1073,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_realurl      = true;
       $this->b_drs_search       = true;
       $this->b_drs_seo          = true;
+      $this->b_drs_session      = true;
       $this->b_drs_socialmedia  = true;
       $this->b_drs_sql          = true;
       $this->b_drs_tca          = true;
@@ -1175,6 +1178,14 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_warn       = true;
       $this->b_drs_info       = true;
       $this->b_drs_seo        = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Session Management')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_session      = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
     if ($this->arr_extConf['drs_mode'] == 'Social media')

@@ -77,24 +77,24 @@
           </config>
         </TCEforms>
       </record_browser.display.withoutResult>
-      <record_browser.display.itemsWithoutLink>
+      <record_browser.display.buttonsWithoutLink>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.itemsWithoutLink</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.buttonsWithoutLink</label>
           <displayCond>FIELD:record_browser:=:by_flexform</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.itemsWithoutLink.no</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.buttonsWithoutLink.no</numIndex>
                 <numIndex index="1">no</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.itemsWithoutLink.yes</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.buttonsWithoutLink.yes</numIndex>
                 <numIndex index="1">yes</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.itemsWithoutLink.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.buttonsWithoutLink.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
@@ -103,25 +103,25 @@
             <size>1</size>
           </config>
         </TCEforms>
-      </record_browser.display.itemsWithoutLink>
-      <record_browser.display.firstAndLastItem>
+      </record_browser.display.buttonsWithoutLink>
+      <record_browser.display.firstAndLastButton>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.firstAndLastItem</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.firstAndLastButton</label>
           <displayCond>FIELD:record_browser:=:by_flexform</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.firstAndLastItem.no</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.firstAndLastButton.no</numIndex>
                 <numIndex index="1">no</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.firstAndLastItem.yes</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.firstAndLastButton.yes</numIndex>
                 <numIndex index="1">yes</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.firstAndLastItem.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.firstAndLastButton.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
@@ -130,7 +130,7 @@
             <size>1</size>
           </config>
         </TCEforms>
-      </record_browser.display.firstAndLastItem>
+      </record_browser.display.firstAndLastButton>
       <record_browser.labeling>
         <TCEforms>
           <exclude>1</exclude>

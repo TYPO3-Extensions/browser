@@ -2561,74 +2561,74 @@ class tx_browser_pi1_flexform {
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Field record_browser.display.firstAndLastItem
+      // Field record_browser.display.firstAndLastButton
 
-    $firstAndLastItem = $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.firstAndLastItem', 'viewSingle', 'lDEF', 'vDEF');
+    $firstAndLastButton = $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.firstAndLastButton', 'viewSingle', 'lDEF', 'vDEF');
     if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div :: devlog('[INFO/FLEXFORM] viewSingle.record_browser.display.firstAndLastItem: \'' . $firstAndLastItem . '\'.', $this->pObj->extKey, 0);
+      t3lib_div :: devlog('[INFO/FLEXFORM] viewSingle.record_browser.display.firstAndLastButton: \'' . $firstAndLastButton . '\'.', $this->pObj->extKey, 0);
     }
 
-    switch ($firstAndLastItem)
+    switch ($firstAndLastButton)
     {
       case ('no') :
-        $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'] = 0;
+        $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastButton'] = 0;
         if ($this->pObj->b_drs_flexform) {
-          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is set to false.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastButton is set to false.', $this->pObj->extKey, 0);
         }
         break;
       case ('yes') :
         // enabled
-        $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'] = 1;
+        $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastButton'] = 1;
         if ($this->pObj->b_drs_flexform) {
-          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is set to true.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastButton is set to true.', $this->pObj->extKey, 0);
         }
         break;
       case ('ts') :
         // Do nothing
-        $value = $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastItem'];
+        $value = $this->pObj->conf['navigation.']['record_browser.']['display.']['firstAndLastButton'];
         if ($this->pObj->b_drs_flexform) {
-          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastItem is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.display.firstAndLastButton is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
         }
         break;
     }
-      // Field record_browser.display.firstAndLastItem
+      // Field record_browser.display.firstAndLastButton
 
 
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Field record_browser.display.itemsWithoutLink
+      // Field record_browser.display.buttonsWithoutLink
 
-    $itemsWithoutLink = $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.itemsWithoutLink', 'viewSingle', 'lDEF', 'vDEF');
+    $buttonsWithoutLink = $this->pObj->pi_getFFvalue($arr_piFlexform, 'record_browser.display.buttonsWithoutLink', 'viewSingle', 'lDEF', 'vDEF');
     if ($this->pObj->b_drs_flexform)
     {
-      t3lib_div :: devlog('[INFO/FLEXFORM] viewSingle.record_browser.display.itemsWithoutLink: \'' . $itemsWithoutLink . '\'.', $this->pObj->extKey, 0);
+      t3lib_div :: devlog('[INFO/FLEXFORM] viewSingle.record_browser.display.buttonsWithoutLink: \'' . $buttonsWithoutLink . '\'.', $this->pObj->extKey, 0);
     }
 
-    switch ($itemsWithoutLink)
+    switch ($buttonsWithoutLink)
     {
       case (('no')) :
-        $this->pObj->conf['navigation.']['record_browser.']['display.']['itemsWithoutLink'] = 0;
+        $this->pObj->conf['navigation.']['record_browser.']['display.']['buttonsWithoutLink'] = 0;
         if ($this->pObj->b_drs_flexform) {
-          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.display.itemsWithoutLink is set to false.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.display.buttonsWithoutLink is set to false.', $this->pObj->extKey, 0);
         }
         break;
       case ('yes') :
-        $this->pObj->conf['navigation.']['record_browser.']['display.']['itemsWithoutLink'] = 1;
+        $this->pObj->conf['navigation.']['record_browser.']['display.']['buttonsWithoutLink'] = 1;
         if ($this->pObj->b_drs_flexform) {
-          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.display.itemsWithoutLink is set to true.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.display.buttonsWithoutLink is set to true.', $this->pObj->extKey, 0);
         }
         break;
       case ('ts') :
         // Do nothing
-        $value = $this->pObj->conf['navigation.']['record_browser.']['display.']['itemsWithoutLink'];
+        $value = $this->pObj->conf['navigation.']['record_browser.']['display.']['buttonsWithoutLink'];
         if ($this->pObj->b_drs_flexform) {
-          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.display.itemsWithoutLink is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.display.buttonsWithoutLink is \'' . $value . '\' and will not changed by the flexform.', $this->pObj->extKey, 0);
         }
         break;
     }
-      // Field record_browser.display.itemsWithoutLink
+      // Field record_browser.display.buttonsWithoutLink
 
 
 
@@ -2685,23 +2685,23 @@ class tx_browser_pi1_flexform {
       case ('position') :
       case ('text') :
           // Get configuration of the selected label
-        $conf_labelling = $this->pObj->conf['navigation.']['record_browser.']['items.'][$labeling . '.'];
+        $conf_labelling = $this->pObj->conf['navigation.']['record_browser.']['buttons.'][$labeling . '.'];
           // Set configuration of the selected label
-        $this->pObj->conf['navigation.']['record_browser.']['items.']['current.'] = $conf_labelling;
+        $this->pObj->conf['navigation.']['record_browser.']['buttons.']['current.'] = $conf_labelling;
           // Get configuration of the selected label
-        $conf_labelling = $this->pObj->conf['navigation.']['record_browser.']['items_wo_link.'][$labeling . '.'];
+        $conf_labelling = $this->pObj->conf['navigation.']['record_browser.']['buttons_wo_link.'][$labeling . '.'];
           // Set configuration of the selected label
-        $this->pObj->conf['navigation.']['record_browser.']['items_wo_link.']['current.'] = $conf_labelling;
+        $this->pObj->conf['navigation.']['record_browser.']['buttons_wo_link.']['current.'] = $conf_labelling;
         if ($this->pObj->b_drs_flexform) {
-          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.items.current < .' . $labeling, $this->pObj->extKey, 0);
-          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.items_wo_link.current < .' . $labeling, $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.buttons.current < .' . $labeling, $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.buttons_wo_link.current < .' . $labeling, $this->pObj->extKey, 0);
         }
         break;
       case ('ts') :
         // Do nothing
         if ($this->pObj->b_drs_flexform) {
-          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.items.current will not changed by the flexform.', $this->pObj->extKey, 0);
-          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.items_wo_link.current will not changed by the flexform.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.buttons.current will not changed by the flexform.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser.buttons_wo_link.current will not changed by the flexform.', $this->pObj->extKey, 0);
         }
         break;
     }
