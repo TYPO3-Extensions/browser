@@ -1828,7 +1828,7 @@ class tx_browser_pi1_navi
       }
         // Set the data space
       $arr_browser_session = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
-      if(empty($arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]))
+      if(empty($arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows']))
       {
         if ($this->pObj->b_drs_warn)
         {
@@ -1837,7 +1837,7 @@ class tx_browser_pi1_navi
             $this->pObj->extKey, 2);
         }
       }
-      if(!empty($arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]))
+      if(!empty($arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows']))
       {
         if ($this->pObj->b_drs_templating)
         {
