@@ -1812,7 +1812,7 @@ class tx_browser_pi1_navi
         // DRS - Development Reporting System
       if ($this->pObj->b_drs_templating)
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] Session: uid of all rows are delivered by the session data '.
+        t3lib_div::devlog('[INFO/TEMPLATING] Session: uid of all rows should delivered by the session data '.
           '(best performance).', $this->pObj->extKey, 0);
       }
         // DRS - Development Reporting System
@@ -1827,8 +1827,16 @@ class tx_browser_pi1_navi
         $str_data_space = 'ses';
       }
         // Set the data space
-
       $arr_browser_session = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
+      if(empty($arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]))
+      {
+        if ($this->pObj->b_drs_warn)
+        {
+          t3lib_div::devlog('[INFO/WARN] Session array [' . $str_data_space . ']' .
+            '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][mode-' . $this->mode . '][uids_of_all_rows] is empty!',
+            $this->pObj->extKey, 2);
+        }
+      }
     }
       // Session: get the tx_browser_pi1 session array 
 
@@ -1850,7 +1858,7 @@ class tx_browser_pi1_navi
       if ($this->pObj->b_drs_templating)
       {
         t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . ']' .
-          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][uids_of_all_rows][mode-' . $this->mode . '] is set with ' .
+          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
           '#' . count($this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]) . ' uids.',  $this->pObj->extKey, 0);
       }
         // Get uids of all records
@@ -2387,7 +2395,7 @@ class tx_browser_pi1_navi
       $GLOBALS['TSFE']->fe_user->setKey('ses', $this->pObj->prefixId, $arr_browser_session);
       if ($this->pObj->b_drs_templating)
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] Rows are empty. Session array [' . $this->pObj->prefixId . '][uids_of_all_rows][mode-' . $this->mode . '] will be empty.',  $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/TEMPLATING] Rows are empty. Session array [' . $this->pObj->prefixId . '][mode-' . $this->mode . '][uids_of_all_rows] will be empty.',  $this->pObj->extKey, 0);
       }
       return false;
     }
@@ -2472,7 +2480,7 @@ class tx_browser_pi1_navi
     $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_browser_session);
     if ($this->pObj->b_drs_templating)
     {
-      t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . '][' . $this->pObj->prefixId . '][uids_of_all_rows][mode-' . $this->mode . '] is set with ' .
+      t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . '][' . $this->pObj->prefixId . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
         '#' . count($arr_uid) . ' uids.',  $this->pObj->extKey, 0);
     }
       // Set the session array
