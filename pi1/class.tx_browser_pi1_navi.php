@@ -1843,7 +1843,7 @@ class tx_browser_pi1_navi
         {
           t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . ']' .
             '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
-            '#' . count($this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
+            '#' . count($arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
         }
       }
     }
