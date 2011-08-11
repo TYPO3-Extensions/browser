@@ -2040,7 +2040,7 @@ class tx_browser_pi1_navi
       //
       // RETURN record_browser should not be displayed in case of no result
 
-    $bool_display_without_result = $conf_record_browser['withoutResult'];
+    $bool_display_without_result = $conf_record_browser['display.']['withoutResult'];
     if(!$bool_display_without_result)
     {
       if(empty($this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]))
