@@ -294,7 +294,7 @@ plugin.tx_browser_pi1 {
           // [BOOLEAN] 0: Don't display the first and the last button. 1 (default): Display it.
         firstAndLastButton  = 1
           // [BOOLEAN] 0 (default): Display buttons with a link only.
-        itemsWithoutButton  = 1
+        buttonsWithoutLink  = 1
       }
       buttons {
         chars {
