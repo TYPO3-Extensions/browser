@@ -1837,6 +1837,15 @@ class tx_browser_pi1_navi
             $this->pObj->extKey, 2);
         }
       }
+      if(!empty($arr_browser_session[$tt_content_uid]['mode-' .  $this->mode]))
+      {
+        if ($this->pObj->b_drs_templating)
+        {
+          t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . ']' .
+            '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
+            '#' . count($this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' .  $this->mode]) . ' uids.',  $this->pObj->extKey, 0);
+        }
+      }
     }
       // Session: get the tx_browser_pi1 session array 
 
