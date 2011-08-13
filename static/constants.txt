@@ -2,13 +2,13 @@ plugin.tx_browser_pi1 {
 
   # cat=Browser - the TYPO3-Frontend-Engine//110;       type=int+;    label= EN:Id of the sys_language record for the English language.
   typeNum.sys_language_en = 0
-  # cat=Browser - the TYPO3-Frontend-Engine//110;       type=int+;    label= DE:Id of the sys_language record for the German language.
+  # cat=Browser - the TYPO3-Frontend-Engine//111;       type=int+;    label= DE:Id of the sys_language record for the German language.
   typeNum.sys_language_de = 0
-  # cat=Browser - the TYPO3-Frontend-Engine//110;       type=int+;    label= FR:Id of the sys_language record for the French language.
+  # cat=Browser - the TYPO3-Frontend-Engine//112;       type=int+;    label= FR:Id of the sys_language record for the French language.
   typeNum.sys_language_fr = 0
-  # cat=Browser - the TYPO3-Frontend-Engine//110;       type=int+;    label= IT:Id of the sys_language record for the Italien language.
+  # cat=Browser - the TYPO3-Frontend-Engine//113;       type=int+;    label= IT:Id of the sys_language record for the Italien language.
   typeNum.sys_language_it = 0
-  # cat=Browser - the TYPO3-Frontend-Engine//110;       type=int+;    label= ES:Id of the sys_language record for the Spanish language.
+  # cat=Browser - the TYPO3-Frontend-Engine//114;       type=int+;    label= ES:Id of the sys_language record for the Spanish language.
   typeNum.sys_language_es = 0
 
   # cat=Browser - the TYPO3-Frontend-Engine/enable/330; type=boolean; label= SQL Relation Building Automatically: Try to build relations automatically? TRUE is recommended.
@@ -48,7 +48,7 @@ plugin.tx_browser_pi1 {
   # cat=Browser - the TYPO3-Frontend-Engine/dims/261;   type=int+;    label= List image pop-up max height: Max height for an image displayed in an extra pop-up window
   listPopupMaxH = 500
 
-  # cat=Browser - the TYPO3-Frontend-Engine//410;       type=int+;    label= AJAX page object: Type number (typenum) of the AJAX page object
+  # cat=Browser - the TYPO3-Frontend-Engine//410;       type=int+;    label= AJAX page object: Type number (typenum) of the AJAX page object. Default: 28562
   typeNum.ajaxPageObj = 28562
   # cat=Browser - the TYPO3-Frontend-Engine//420;       type=string;  label= Format for strftime
   strftime = %a, %d.%b.%y
