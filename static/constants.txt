@@ -1,45 +1,56 @@
 plugin.tx_browser_pi1 {
 
-  # cat=Browser - the TYPO3-Frontend-Engine/enable/230; type=boolean; label= SQL Relation Building Automatically: Try to build relations automatically? TRUE is recommended.
+  # cat=Browser - the TYPO3-Frontend-Engine//110;       type=int+;    label= EN:Id of the sys_language record for the English language.
+  typeNum.sys_language_en = 0
+  # cat=Browser - the TYPO3-Frontend-Engine//110;       type=int+;    label= DE:Id of the sys_language record for the German language.
+  typeNum.sys_language_de = 1
+  # cat=Browser - the TYPO3-Frontend-Engine//110;       type=int+;    label= FR:Id of the sys_language record for the French language.
+  typeNum.sys_language_fr = 2
+  # cat=Browser - the TYPO3-Frontend-Engine//110;       type=int+;    label= IT:Id of the sys_language record for the Italien language.
+  typeNum.sys_language_it = 3
+  # cat=Browser - the TYPO3-Frontend-Engine//110;       type=int+;    label= ES:Id of the sys_language record for the Spanish language.
+  typeNum.sys_language_es = 4
+
+  # cat=Browser - the TYPO3-Frontend-Engine/enable/330; type=boolean; label= SQL Relation Building Automatically: Try to build relations automatically? TRUE is recommended.
   autoSQLrelConfig = 1
-  # cat=Browser - the TYPO3-Frontend-Engine/enable/240; type=boolean; label= SQL Relation Building Oneway Only: Use only relations from the local table to the foreign table? TRUE is recommended.
+  # cat=Browser - the TYPO3-Frontend-Engine/enable/340; type=boolean; label= SQL Relation Building Oneway Only: Use only relations from the local table to the foreign table? TRUE is recommended.
   autoSQLrelOnlyOneway = 1
-  # cat=Browser - the TYPO3-Frontend-Engine/enable/260; type=boolean; label= SQL Simple Relation with Self References: Use self references in simple relations? FALSE is recommended.
+  # cat=Browser - the TYPO3-Frontend-Engine/enable/360; type=boolean; label= SQL Simple Relation with Self References: Use self references in simple relations? FALSE is recommended.
   autoSQLrelSelfReference = 0
-  # cat=Browser - the TYPO3-Frontend-Engine/enable/280; type=boolean; label= Discover Title: Try to discover fields with titles and wrap them as the header? Only for single views. TRUE is recommended.
+  # cat=Browser - the TYPO3-Frontend-Engine/enable/380; type=boolean; label= Discover Title: Try to discover fields with titles and wrap them as the header? Only for single views. TRUE is recommended.
   autoDiscoverTitle = 1
-  # cat=Browser - the TYPO3-Frontend-Engine/enable/281; type=boolean; label= Discover Timestamps: Try to discover fields with timestamps and wrap them in a human readable format (See format in the section 'Others' below) ? TRUE is recommended.
+  # cat=Browser - the TYPO3-Frontend-Engine/enable/381; type=boolean; label= Discover Timestamps: Try to discover fields with timestamps and wrap them in a human readable format (See format in the section 'Others' below) ? TRUE is recommended.
   autoDiscoverTimestamp = 1
-  # cat=Browser - the TYPO3-Frontend-Engine/enable/282; type=boolean; label= Discover Images: Try to discover fields with image file names, image capture, image alttext and image titletext. Wrap it as an image object? TRUE is recommended.
+  # cat=Browser - the TYPO3-Frontend-Engine/enable/382; type=boolean; label= Discover Images: Try to discover fields with image file names, image capture, image alttext and image titletext. Wrap it as an image object? TRUE is recommended.
   autoDiscoverImage = 1
-  # cat=Browser - the TYPO3-Frontend-Engine/enable/283; type=boolean; label= Discover Documents: Try to discover fields with document file names and wrap values as documents? TRUE is recommended.
+  # cat=Browser - the TYPO3-Frontend-Engine/enable/383; type=boolean; label= Discover Documents: Try to discover fields with document file names and wrap values as documents? TRUE is recommended.
   autoDiscoverDocument = 1
 
 
-  # cat=Browser - the TYPO3-Frontend-Engine/dims/110;   type=int+;    label= Single image max width: Max width for an image displayed in a single view
+  # cat=Browser - the TYPO3-Frontend-Engine/dims/210;   type=int+;    label= Single image max width: Max width for an image displayed in a single view
   singleMaxW = 240
-  # cat=Browser - the TYPO3-Frontend-Engine/dims/111;   type=int+;    label= Single image max height: Max height for an image displayed in a single view
+  # cat=Browser - the TYPO3-Frontend-Engine/dims/211;   type=int+;    label= Single image max height: Max height for an image displayed in a single view
   singleMaxH = 180
-  # cat=Browser - the TYPO3-Frontend-Engine/dims/112;   type=int+;    label= Single image maximum amount: Amount of maximum images per one record in a single view
+  # cat=Browser - the TYPO3-Frontend-Engine/dims/212;   type=int+;    label= Single image maximum amount: Amount of maximum images per one record in a single view
   singleImageCount = 10
-  # cat=Browser - the TYPO3-Frontend-Engine/dims/120;   type=int+;    label= List image pop-up max width: Max width for an image displayed in an extra pop-up window
+  # cat=Browser - the TYPO3-Frontend-Engine/dims/220;   type=int+;    label= List image pop-up max width: Max width for an image displayed in an extra pop-up window
   singlePopupMaxW = 1000m
-  # cat=Browser - the TYPO3-Frontend-Engine/dims/121;   type=int+;    label= List image pop-up max height: Max height for an image displayed in an extra pop-up window
+  # cat=Browser - the TYPO3-Frontend-Engine/dims/221;   type=int+;    label= List image pop-up max height: Max height for an image displayed in an extra pop-up window
   singlePopupMaxH = 800
-  # cat=Browser - the TYPO3-Frontend-Engine/dims/150;   type=int+;    label= List image max width: Max width for an image displayed in a list view
+  # cat=Browser - the TYPO3-Frontend-Engine/dims/250;   type=int+;    label= List image max width: Max width for an image displayed in a list view
   listMaxW = 80
-  # cat=Browser - the TYPO3-Frontend-Engine/dims/151;   type=int+;    label= List image max height: Max height for an image displayed in a list view
+  # cat=Browser - the TYPO3-Frontend-Engine/dims/251;   type=int+;    label= List image max height: Max height for an image displayed in a list view
   listMaxH = 60
-  # cat=Browser - the TYPO3-Frontend-Engine/dims/152;   type=int+;    label= List image maximum amount: Amount of maximum images per one record in a list view
+  # cat=Browser - the TYPO3-Frontend-Engine/dims/252;   type=int+;    label= List image maximum amount: Amount of maximum images per one record in a list view
   listImageCount = 1
-  # cat=Browser - the TYPO3-Frontend-Engine/dims/160;   type=int+;    label= List image pop-up max width: Max width for an image displayed in an extra pop-up window
+  # cat=Browser - the TYPO3-Frontend-Engine/dims/260;   type=int+;    label= List image pop-up max width: Max width for an image displayed in an extra pop-up window
   listPopupMaxW = 500m
-  # cat=Browser - the TYPO3-Frontend-Engine/dims/161;   type=int+;    label= List image pop-up max height: Max height for an image displayed in an extra pop-up window
+  # cat=Browser - the TYPO3-Frontend-Engine/dims/261;   type=int+;    label= List image pop-up max height: Max height for an image displayed in an extra pop-up window
   listPopupMaxH = 500
 
-  # cat=Browser - the TYPO3-Frontend-Engine//310;       type=int+;    label= AJAX page object: Type number (typenum) of the AJAX page object
+  # cat=Browser - the TYPO3-Frontend-Engine//410;       type=int+;    label= AJAX page object: Type number (typenum) of the AJAX page object
   typeNum.ajaxPageObj = 28562
-  # cat=Browser - the TYPO3-Frontend-Engine//320;       type=string;  label= Format for strftime
+  # cat=Browser - the TYPO3-Frontend-Engine//420;       type=string;  label= Format for strftime
   strftime = %a, %d.%b.%y
 
 }
