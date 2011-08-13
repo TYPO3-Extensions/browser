@@ -4,12 +4,12 @@ plugin.tx_browser_pi1 {
   typeNum.sys_language_en = 0
   # cat=Browser - the TYPO3-Frontend-Engine//111;       type=int+;    label= DE:Id of the sys_language record for the German language.
   typeNum.sys_language_de = 0
-  # cat=Browser - the TYPO3-Frontend-Engine//112;       type=int+;    label= FR:Id of the sys_language record for the French language.
-  typeNum.sys_language_fr = 0
-  # cat=Browser - the TYPO3-Frontend-Engine//113;       type=int+;    label= IT:Id of the sys_language record for the Italien language.
-  typeNum.sys_language_it = 0
-  # cat=Browser - the TYPO3-Frontend-Engine//114;       type=int+;    label= ES:Id of the sys_language record for the Spanish language.
+  # cat=Browser - the TYPO3-Frontend-Engine//112;       type=int+;    label= ES:Id of the sys_language record for the Spanish language.
   typeNum.sys_language_es = 0
+  # cat=Browser - the TYPO3-Frontend-Engine//113;       type=int+;    label= FR:Id of the sys_language record for the French language.
+  typeNum.sys_language_fr = 0
+  # cat=Browser - the TYPO3-Frontend-Engine//114;       type=int+;    label= IT:Id of the sys_language record for the Italien language.
+  typeNum.sys_language_it = 0
 
   # cat=Browser - the TYPO3-Frontend-Engine/enable/330; type=boolean; label= SQL Relation Building Automatically: Try to build relations automatically? TRUE is recommended.
   autoSQLrelConfig = 1
