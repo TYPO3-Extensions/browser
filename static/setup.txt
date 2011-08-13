@@ -2085,7 +2085,7 @@ plugin.tx_browser_pi1 {
             disableAllHeaderCode  = 1
             xhtml_cleaning        = 0
               // [Integer] Uid of the language. See record in sys_language
-            sys_language_uid      = 0
+            sys_language_uid      = {$plugin.tx_browser_pi1.typeNum.sys_language_en}
               // [Keyword] page: content_fallback, strict, ignore
             sys_language_mode     = content_fallback
               // [Boolean / Keyword] records: 0, 1, hideNonTranslated 
@@ -2101,7 +2101,7 @@ plugin.tx_browser_pi1 {
         de {
           config {
               // [Integer] Uid of the language. It has to corresponded with the id of the record in sys_language
-            sys_language_uid      = 1
+            sys_language_uid      = {$plugin.tx_browser_pi1.typeNum.sys_language_de}
             language              = de
             locale_all            = de_DE
             htmlTag_langKey       = de
@@ -2111,7 +2111,7 @@ plugin.tx_browser_pi1 {
         fr {
           config {
               // [Integer] Uid of the language. It has to corresponded with the id of the record in sys_language
-            sys_language_uid      = 2
+            sys_language_uid      = {$plugin.tx_browser_pi1.typeNum.sys_language_fr}
             language              = fr
             locale_all            = fr_FR
             htmlTag_langKey       = fr
@@ -2121,7 +2121,7 @@ plugin.tx_browser_pi1 {
         it {
           config {
               // [Integer] Uid of the language. It has to corresponded with the id of the record in sys_language
-            sys_language_uid      = 3
+            sys_language_uid      = {$plugin.tx_browser_pi1.typeNum.sys_language_it}
             language              = it
             locale_all            = it_IT
             htmlTag_langKey       = it
@@ -2131,7 +2131,7 @@ plugin.tx_browser_pi1 {
         es {
           config {
               // [Integer] Uid of the language. It has to corresponded with the id of the record in sys_language
-            sys_language_uid      = 4
+            sys_language_uid      = {$plugin.tx_browser_pi1.typeNum.sys_language_es}
             language              = es
             locale_all            = es_ES
             htmlTag_langKey       = es
