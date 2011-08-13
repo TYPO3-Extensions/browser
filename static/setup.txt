@@ -2075,15 +2075,22 @@ plugin.tx_browser_pi1 {
           }
         }
       }
-        // [PAGE] page object
-      jQuery = PAGE
       jQuery {
-        en = PAGE
-        en {
+          // [PAGE] page object
+        default = PAGE
+        default {
           typeNum = 28562
           config {
             disableAllHeaderCode  = 1
             xhtml_cleaning        = 0
+            admPanel              = 0
+          }
+          10 < styles.content.get
+        }
+        en < .default
+        en {
+          typeNum = 28562
+          config {
               // [Integer] Uid of the language. See record in sys_language
             sys_language_uid      = {$plugin.tx_browser_pi1.typeNum.sys_language_en}
               // [Keyword] page: content_fallback, strict, ignore
@@ -2093,7 +2100,6 @@ plugin.tx_browser_pi1 {
             language              = en
             locale_all            = en_GB
             htmlTag_langKey       = en
-            admPanel              = 0
           }
           10 < styles.content.get
         }
