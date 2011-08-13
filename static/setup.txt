@@ -2078,13 +2078,65 @@ plugin.tx_browser_pi1 {
         // [PAGE] page object
       jQuery = PAGE
       jQuery {
-        typeNum = 28562
-        config {
-          disableAllHeaderCode  = 1
-          xhtml_cleaning        = 0
-          admPanel              = 0
+        en = PAGE
+        en {
+          typeNum = 28562
+          config {
+            disableAllHeaderCode  = 1
+            xhtml_cleaning        = 0
+              // [Integer] Uid of the language. See record in sys_language
+            sys_language_uid      = 0
+              // [Keyword] page: content_fallback, strict, ignore
+            sys_language_mode     = content_fallback
+              // [Boolean / Keyword] records: 0, 1, hideNonTranslated 
+            sys_language_overlay  = 1
+            language              = en
+            locale_all            = en_GB
+            htmlTag_langKey       = en
+            admPanel              = 0
+          }
+          10 < styles.content.get
         }
-        10 < styles.content.get
+        de < .en
+        de {
+          config {
+              // [Integer] Uid of the language. It has to corresponded with the id of the record in sys_language
+            sys_language_uid      = 1
+            language              = de
+            locale_all            = de_DE
+            htmlTag_langKey       = de
+          }
+        }
+        fr < .en
+        fr {
+          config {
+              // [Integer] Uid of the language. It has to corresponded with the id of the record in sys_language
+            sys_language_uid      = 2
+            language              = fr
+            locale_all            = fr_FR
+            htmlTag_langKey       = fr
+          }
+        }
+        it < .en
+        it {
+          config {
+              // [Integer] Uid of the language. It has to corresponded with the id of the record in sys_language
+            sys_language_uid      = 3
+            language              = it
+            locale_all            = it_IT
+            htmlTag_langKey       = it
+          }
+        }
+        es < .en
+        es {
+          config {
+              // [Integer] Uid of the language. It has to corresponded with the id of the record in sys_language
+            sys_language_uid      = 4
+            language              = es
+            locale_all            = es_ES
+            htmlTag_langKey       = es
+          }
+        }
       }
     }
     general {
