@@ -12,4 +12,76 @@ plugin.tx_browser_pi1 {
     }
   }
 
+  flexform {
+    pi5 {
+      calendar {
+          // [String] year, month (default), week, day
+        initialView = month
+      }
+      yaer {
+        schedule {
+            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
+          display = 1
+            // [String] relative (default), absolute, ts. Can be overriden by the flexform while runtime!
+          configuration = relative
+            // [String] +999 to -999 and currentYear (default). Can be overriden by the flexform while runtime!
+          relative = currentYear
+            // [Integer/Year] Any year. I.e: 1963. Can be overriden by the flexform while runtime!
+          absolute =
+        }
+        navigator {
+            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
+          display = 1
+        }
+      }
+      month {
+        schedule {
+            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
+          display = 1
+            // [String] relative (default), absolute, ts. Can be overriden by the flexform while runtime!
+          configuration = relative
+            // [String] +999 to -999 and currentYear (default). Can be overriden by the flexform while runtime!
+          relative = currentYear
+            // [Integer/Year] Any year. I.e: 1963. Can be overriden by the flexform while runtime!
+          absolute =
+        }
+        navigator {
+            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
+          display = 1
+        }
+      }
+      week {
+        schedule {
+            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
+          display = 1
+            // [String] relative (default), absolute, ts. Can be overriden by the flexform while runtime!
+          configuration = relative
+            // [String] +999 to -999 and currentYear (default). Can be overriden by the flexform while runtime!
+          relative = currentYear
+            // [Integer/Year] Any year. I.e: 1963. Can be overriden by the flexform while runtime!
+          absolute =
+        }
+        navigator {
+            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
+          display = 1
+        }
+      }
+      day {
+        schedule {
+            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
+          display = 1
+            // [String] relative (default), absolute, ts. Can be overriden by the flexform while runtime!
+          configuration = relative
+            // [String] +999 to -999 and currentYear (default). Can be overriden by the flexform while runtime!
+          relative = currentYear
+            // [Integer/Year] Any year. I.e: 1963. Can be overriden by the flexform while runtime!
+          absolute =
+        }
+        navigator {
+            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
+          display = 1
+        }
+      }
+    }
+  }
 }

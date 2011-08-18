@@ -28,7 +28,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    browser
- * @version 3.7.0
+ * @version 4.0.0
  * @since 3.0.0
  */
 
@@ -37,20 +37,26 @@
  *
  *
  *
- *   55: class tx_browser_pi1_backend
- *   85:     public function sDef_getArrViewsList($arr_pluginConf)
- *  232:     public function socialmedia_getArrBookmarks($arr_pluginConf)
- *  291:     public function templating_getArrDataQuery($arr_pluginConf)
- *  354:     public function templating_getExtensionTemplates($arr_pluginConf)
+ *   63: class tx_browser_pi1_backend
+ *
+ *              SECTION: Sheets
+ *  115:     public function evaluate_externalLinks($arr_pluginConf, $obj_TCEform)
+ *  155:     public function evaluate_plugin($arr_pluginConf, $obj_TCEform)
+ *  404:     public function extend_calendar($arr_pluginConf, $obj_TCEform)
+ *  575:     public function sDef_getArrViewsList($arr_pluginConf)
+ *  739:     public function socialmedia_getArrBookmarks($arr_pluginConf)
+ *  800:     public function templating_getArrDataQuery($arr_pluginConf)
+ *  865:     public function templating_getExtensionTemplates($arr_pluginConf)
+ *  923:     public function templating_get_jquery_ui($arr_pluginConf)
  *
  *              SECTION: Helper Methods
- *  426:     function getLL()
- *  455:     function init($arr_pluginConf)
- *  496:     function init_pageObj($arr_pluginConf)
- *  528:     function init_pageUid($arr_pluginConf)
- *  578:     function init_tsObj($arr_rows_of_all_pages_inRootLine)
+ *  983:     private function getLL()
+ * 1018:     private function init($arr_pluginConf)
+ * 1060:     private function init_pageObj($arr_pluginConf)
+ * 1092:     private function init_pageUid($arr_pluginConf)
+ * 1142:     private function init_tsObj($arr_rows_of_all_pages_inRootLine)
  *
- * TOTAL FUNCTIONS: 9
+ * TOTAL FUNCTIONS: 13
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -69,6 +75,729 @@ class tx_browser_pi1_backend
     // [Array] one dimensional array with language strings
   var $locallang = null;
 
+  var $maxWidth = '600px';
+
+
+
+
+
+
+
+
+
+  /***********************************************
+   *
+   * Sheets
+   *
+   **********************************************/
+
+
+
+
+
+
+
+
+
+
+
+  /**
+ * evaluate_externalLinks: HTML content with external links
+ *
+ * Tab [evaluate]
+ *
+ * @param array   $arr_pluginConf:  Current plugin/flexform configuration
+ * @param array   $obj_TCEform:     Current TCE form object
+ * @return  string    $str_prompt: HTML prompt
+ * @version 4.0.0
+ * @since 4.0.0
+ */
+  public function evaluate_externalLinks($arr_pluginConf, $obj_TCEform)
+  {
+      //.message-notice
+      //.message-information
+      //.message-ok
+      //.message-warning
+      //.message-error
+    $str_prompt = null;
+
+    $str_prompt = $str_prompt.'
+      <div class="message-body" style="max-width:600px;">
+        ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptExternalLinksBody'). '
+      </div>
+      ';
+
+    return $str_prompt;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /**
+ * evaluate_plugin: Evaluates the plugin, flexform, TypoScript
+ *                  Returns a HTML report
+ *
+ * Tab [evaluate]
+ *
+ * @param array   $arr_pluginConf:  Current plugin/flexform configuration
+ * @param array   $obj_TCEform:     Current TCE form object
+ * @return  string    $str_prompt: HTML prompt
+ * @version 4.0.0
+ * @since 4.0.0
+ */
+  public function evaluate_plugin($arr_pluginConf, $obj_TCEform)
+  {
+      // Require classes, init page id, page object and TypoScript object
+    $bool_success = $this->init($arr_pluginConf);
+
+      // RETURN error with init()
+    if(!$bool_success)
+    {
+      return $arr_pluginConf;
+    }
+
+      //.message-notice
+      //.message-information
+      //.message-ok
+      //.message-warning
+      //.message-error
+    $str_prompt = null;
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // General information
+
+      // INFO: Link to the tutorial and to the browser forum
+    $str_prompt_info_tutorialAndForum = '
+      <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
+        <div class="message-body">
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.drs') . '
+        </div>
+      </div>
+      <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
+        <div class="message-body">
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.updateAssistent') . '
+        </div>
+      </div>
+      <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
+        <div class="message-body">
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.tutorialAndForum') . '
+        </div>
+      </div>
+      ';
+      // General information
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Check the plugin
+
+    $str_prompt_evaluationResult = null;
+
+      // TypoScript static template isn't included
+    if(empty($str_prompt_evaluationResult))
+    {
+      if( !is_array ( $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.'] ) )
+      {
+        $str_prompt_evaluationResult  = '
+          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.error.no_ts_template') . '
+            </div>
+          </div>
+          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_ts_template') . '
+            </div>
+          </div>
+          ';
+      }
+    }
+      // TypoScript static template isn't included
+
+      // There isn't any view configured
+    if(empty($str_prompt_evaluationResult))
+    {
+      if( !is_array ( $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['views.'] ) )
+      {
+        $str_prompt_evaluationResult  = '
+          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.error.no_view') . '
+            </div>
+          </div>
+          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_view') . '
+            </div>
+          </div>
+          ';
+      }
+    }
+      // There isn't any view configured
+
+      // There isn't any record storage page
+    if(empty($str_prompt_evaluationResult))
+    {
+      if( empty ( $arr_pluginConf['row']['pages'] ) )
+      {
+        $str_prompt_evaluationResult  = '
+          <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.warn.no_record_storage_pid') . '
+            </div>
+          </div>
+          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_record_storage_pid') . '
+            </div>
+          </div>
+          ';
+      }
+    }
+      // There isn't any record storage page
+
+      // There isn't any AJAX page object
+    if(empty($str_prompt_evaluationResult))
+    {
+        // Is AJAX enabled? AJAX page object II
+      $bool_AJAXenabled = false;
+      //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
+      $arr_xml = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
+      //var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
+      $record_browser = $arr_xml['data']['viewSingle']['lDEF']['record_browser']['vDEF'];
+
+      //var_dump(__METHOD__, __LINE__, '$record_browser', $record_browser);
+      switch ($record_browser)
+      {
+        case ('disabled') :
+          $bool_AJAXenabled = false;
+          break;
+        case ('by_flexform') :
+          $bool_AJAXenabled = true;
+          break;
+        case ('ts') :
+        default :
+          $bool_AJAXenabled = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
+          break;
+      }
+        // Is AJAX enabled? AJAX page object II
+
+        // AJAX is enabled. AJAX page object II
+      //var_dump(__METHOD__, __LINE__, '$bool_AJAXenabled', $bool_AJAXenabled);
+      if( $bool_AJAXenabled )
+      {
+          // Get default typeNum of AJAX page object
+        //var_dump(__METHOD__, __LINE__, $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum']);
+        if( !isset ($this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum']))
+        {
+          $str_prompt_evaluationResult  = '
+            <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+              <div class="message-body">
+                ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum') . '
+              </div>
+            </div>
+            <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+              <div class="message-body">
+                ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum') . '
+              </div>
+            </div>
+            ';
+        }
+          // Get default typeNum of AJAX page object
+          // Get name of AJAX page object
+        if( isset ($this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum']))
+        {
+          $AJAX_defaultTypeNum    = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum'];
+          $AJAX_nameOfPageObject  = $this->obj_TypoScript->setup['types.'][$AJAX_defaultTypeNum];
+            // There is no AJAX page object
+          //var_dump(__METHOD__, __LINE__, '$AJAX_nameOfPageObject', $AJAX_nameOfPageObject);
+          if( empty($AJAX_nameOfPageObject))
+          {
+          $str_prompt_evaluationResult  = '
+            <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+              <div class="message-body">
+                ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.error.no_AJAXpageObject') . '
+              </div>
+            </div>
+            <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+              <div class="message-body">
+                ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_AJAXpageObject') . '
+              </div>
+            </div>
+            ';
+            $str_prompt_evaluationResult = str_replace( '%typeNum%', $AJAX_defaultTypeNum, $str_prompt_evaluationResult);
+          }
+            // There is no AJAX page object
+        }
+          // Get name of AJAX page object
+      }
+        // AJAX is enabled. AJAX page object II
+    }
+      // There isn't any AJAX page object
+
+      // Evaluation result: default message in case of success
+    if(empty($str_prompt_evaluationResult))
+    {
+      $str_prompt_evaluationResult  = '
+        <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.ok') . '
+          </div>
+        </div>
+        ';
+    }
+      // Check the plugin
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN the prompt
+
+    $str_prompt = $str_prompt . $str_prompt_evaluationResult . $str_prompt_info_tutorialAndForum;
+      // RETURN the prompt
+
+
+
+    return $str_prompt;
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * extend_calendar: Renders a TCE form select box with calendar plugins.
+ *                  Three cases will be handled:
+ *                  1. There isn't any calendar plugin available:
+ *                     * returns a prompt only
+ *                  2. Thera are calendar plugins available, but anyone isn't selected:
+ *                     * returns a prompt with a select box
+ *                  3. Thera are calendar plugins available and one is selected:
+ *                     * returns a select box with a prompt
+ *
+ * Tab [extend]
+ *
+ * @param array   $arr_pluginConf:  Current plugin/flexform configuration
+ * @param array   $obj_TCEform:     Current TCE form object
+ * @return  string    $str_prompt: HTML prompt or HTML prompt and TCE select form with calendar plugins
+ * @version 4.0.0
+ * @since 4.0.0
+ */
+  public function extend_calendar($arr_pluginConf, $obj_TCEform)
+  {
+      //.message-notice
+      //.message-information
+      //.message-ok
+      //.message-warning
+      //.message-error
+
+    $arr_items  = null;
+    $str_prompt = null;
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // SQL query: Get all browser_pi5 plugins of the current page.
+
+    $pid            = (int) $arr_pluginConf['row']['pid'];
+    $select_fields  = 'uid, header';
+    $from_table     = 'tt_content';
+    $where_clause   = "pid = " . $pid . " AND CType = 'list' AND list_type = 'browser_pi5' AND hidden = 0 AND deleted = 0";
+    //echo $GLOBALS['TYPO3_DB']->SELECTquery($select_fields,$from_table,$where_clause,$groupBy='',$orderBy='',$limit='');
+      // SQL query: Get all browser_pi5 plugins of the current page.
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // SQL query: Execute it. Allocate items with values from the SQL result
+
+    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select_fields,$from_table,$where_clause,$groupBy='',$orderBy='',$limit='');
+
+      // The default first item
+    $value          = 0;
+    $label          = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.select.firstItem');
+    $arr_items[]    = '<option value="' . $value . '%selected%">' . $label . '</option>';
+      // The default first item
+
+      // LOOP rows of the SQL result
+    $bool_selected  = false;
+    while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
+    {
+      $selected = null;
+        // Current row is selected
+      if($row['uid'] == htmlspecialchars($arr_pluginConf['itemFormElValue']))
+      {
+        $bool_selected  = true;
+        $selected       = ' selected="selected"';
+      }
+        // Current row is selected
+
+        // Render the item
+      $value        = $row['uid'];
+      $label        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.select.prependItem') . ': ' . htmlspecialchars($row['header']) . ' (' . $row['uid'] . ')';
+      $arr_items[]  = '<option value="' . $value . '"'. $selected . '>' . $label . '</option>';
+        // Render the item
+    }
+      // LOOP rows of the SQL result
+
+      // Set default firstItem selected or not
+    if($bool_selected) {
+      $arr_items[0] = str_replace('%selected%', null, $arr_items[0]);
+    }
+    if(!$bool_selected) {
+      $arr_items[0] = str_replace('%selected%', ' selected="selected"', $arr_items[0]);
+    }
+    $items = implode("\n" . '          ', (array) $arr_items);
+      // Set default firstItem selected or not
+
+      // Free the SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result($res);
+      // SQL query: Execute it. Allocate items with values from the SQL result
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN there isn't any plugin Browser Calendar on this page
+
+    if( count($arr_items) < 2)
+    {
+      $str_prompt = $str_prompt.'
+        <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body" style="max-width:600px;">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.info.info') . '
+          </div>
+        </div>
+        ';
+      return $str_prompt;
+    }
+      // RETURN there isn't any plugin Browser Calendar on this page
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Render the select box (TCE form)
+
+    $formField = '
+      <div class="t3-form-field t3-form-field-flex">
+        <input type="hidden" name="' . $arr_pluginConf['itemFormElName'] . '_selIconVal" value="1" />
+        <select
+          id        = "tceforms-select-tx-browser-pi1-extend-calendar-calendar"
+          name      = "' . $arr_pluginConf['itemFormElName'] . '"
+          class     = "select"
+          size      = "1"
+          onchange  = "if (this.options[this.selectedIndex].value==\'--div--\') {this.selectedIndex=1;} ' . htmlspecialchars(implode('', $arr_pluginConf['fieldChangeFunc'])) . 'if (confirm(TBE_EDITOR.labels.onChangeAlert) &amp;&amp; TBE_EDITOR.checkSubmit(-1)){ TBE_EDITOR.submitForm() };">
+          ' . $items . '
+        </select>
+      </div>
+      ';
+      // Render the select box (TCE form)
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN no plugin is selected
+
+    if(!$bool_selected)
+    {
+      $str_prompt = $str_prompt.'
+        <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body" style="max-width:600px;">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.select.info') . '
+          </div>
+        </div>
+        ';
+      $str_prompt = $str_prompt . $formField;
+      return $str_prompt;
+    }
+      // RETURN no plugin is selected
+
+
+
+//      ///////////////////////////////////////////////////////////////////////////////
+//      //
+//      // A calendar plugin is selected
+//
+//    $str_prompt = $str_prompt.'
+//      <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
+//        <div class="message-body" style="max-width:600px;">
+//          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.select.ok') . '
+//        </div>
+//      </div>
+//      ';
+//    $str_prompt = $formField . $str_prompt;
+//      // A calendar plugin is selected
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////
+        //
+        // RETURN the select box (TCE form)
+
+      $str_prompt = $formField;
+      return $str_prompt;
+        // RETURN the select box (TCE form)
+  }
+
+
+
+
+
+
+
+
+  /**
+ * extend_calendar_view: Renders a TCE form select box with calendar plugins.
+ *                  Three cases will be handled:
+ *                  1. There isn't any calendar plugin available:
+ *                     * returns a prompt only
+ *                  2. Thera are calendar plugins available, but anyone isn't selected:
+ *                     * returns a prompt with a select box
+ *                  3. Thera are calendar plugins available and one is selected:
+ *                     * returns a select box with a prompt
+ *
+ * Tab [extend]
+ *
+ * @param array   $arr_pluginConf:  Current plugin/flexform configuration
+ * @param array   $obj_TCEform:     Current TCE form object
+ * @return  string    $str_prompt: HTML prompt or HTML prompt and TCE select form with calendar plugins
+ * @version 4.0.0
+ * @since 4.0.0
+ */
+  public function extend_calendar_view($arr_pluginConf, $obj_TCEform)
+  {
+      //.message-notice
+      //.message-information
+      //.message-ok
+      //.message-warning
+      //.message-error
+
+
+
+      // Require classes, init page id, page object and TypoScript object
+    $bool_success = $this->init($arr_pluginConf);
+    if(!$bool_success)
+    {
+      return $arr_pluginConf;
+    }
+
+
+
+    $arr_items  = null;
+    $str_prompt = null;
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN there isn't any plugin Browser Calendar selected
+
+      // Get current browser calendar plugin
+    $arr_xml    = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
+    $int_plugin = $arr_xml['data']['extend']['lDEF']['calendar']['vDEF'];
+      // Get current browser calendar plugin
+
+    if( empty( $int_plugin ) )
+    {
+      return null;
+    }
+      // RETURN there isn't any plugin Browser Calendar selected
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // A plugin Browser Calendar is selected
+
+      // Get current listviews
+    $arr_xml        = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
+    $str_views_csv  = $arr_xml['data']['sDEF']['lDEF']['viewsList']['vDEF'];
+    $arr_views_csv  = explode(',', $str_views_csv);
+      // Get current listviews
+
+      // The default first item
+    $arr_items    = null;
+    $value        = 0;
+    $label        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.select.firstItem');
+    $arr_items[]  = '<option value="' . $value . '%selected%">' . $label . '</option>';
+      // The default first item
+
+      // LOOP views
+    $bool_selected  = false;
+    foreach( $arr_views_csv as $key => $arr_view)
+    {
+      list( $value ) = explode('|', $arr_view);
+      
+      if( empty( $value ) )
+      {
+        continue;
+      }
+
+      $selected = null;
+        // Current view is selected
+      if($value == $arr_pluginConf['itemFormElValue'])
+      {
+        $bool_selected  = true;
+        $selected       = ' selected="selected"';
+      }
+        // Current view is selected
+
+        // Render the item
+      $label = $arr_extensions = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['views.']['list.'][$value . '.']['name'];
+      if( empty ( $label ) )
+      {
+        $label = $arr_extensions = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['views.']['list.'][$value];
+      }
+      if( empty ( $label ) )
+      {
+        $label = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.select.no_name');
+      }
+      $label        = $value . ' (' . $label . ')';
+      $label        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.select.prependItem') . ': ' . $label;
+      $arr_items[]  = '<option value="' . $value . '"'. $selected . '>' . $label . '</option>';
+        // Render the item
+    }
+      // LOOP views
+
+      // Set default firstItem selected or not
+    if($bool_selected) {
+      $arr_items[0] = str_replace('%selected%', null, $arr_items[0]);
+    }
+    if(!$bool_selected) {
+      $arr_items[0] = str_replace('%selected%', ' selected="selected"', $arr_items[0]);
+    }
+    $items = implode("\n" . '          ', (array) $arr_items);
+      // Set default firstItem selected or not
+      // LOOP views
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN there isn't any view available
+
+    if( count($arr_items) < 2)
+    {
+      $str_prompt = $str_prompt.'
+        <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body" style="max-width:600px;">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.error') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body" style="max-width:600px;">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.info') . '
+          </div>
+        </div>
+        ';
+      return $str_prompt;
+    }
+      // RETURN there isn't any view available
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Render the select box (TCE form)
+
+    $formField = '
+      <div class="t3-form-field t3-form-field-flex">
+        <input type="hidden" name="' . $arr_pluginConf['itemFormElName'] . '_selIconVal" value="1" />
+        <select
+          id        = "tceforms-select-tx-browser-pi1-extend-calendar-calendar"
+          name      = "' . $arr_pluginConf['itemFormElName'] . '"
+          class     = "select"
+          size      = "1"
+          onchange  = "if (this.options[this.selectedIndex].value==\'--div--\') {this.selectedIndex=1;} ' . htmlspecialchars(implode('', $arr_pluginConf['fieldChangeFunc'])) . 'if (confirm(TBE_EDITOR.labels.onChangeAlert) &amp;&amp; TBE_EDITOR.checkSubmit(-1)){ TBE_EDITOR.submitForm() };">
+          ' . $items . '
+        </select>
+      </div>
+      ';
+      // Render the select box (TCE form)
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN no view is selected
+
+    if(!$bool_selected)
+    {
+      $str_prompt = $str_prompt.'
+        <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body" style="max-width:600px;">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.select.info') . '
+          </div>
+        </div>
+        ';
+      $str_prompt = $str_prompt . $formField;
+      return $str_prompt;
+    }
+      // RETURN no plugin is selected
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN an object CALENDAR is missing in the view
+
+      $str_prompt = $str_prompt.'
+        <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body" style="max-width:600px;">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.select.no_calObj.error') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body" style="max-width:600px;">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.select.no_calObj.info') . '
+          </div>
+        </div>
+        ';
+      $str_prompt = $str_prompt . $formField;
+      return $str_prompt;
+      // RETURN an object CALENDAR is missing in the view
+
+
+    $str_prompt = $str_prompt.'
+      <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
+        <div class="message-body" style="max-width:600px;">
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.select.ok') . '
+        </div>
+      </div>
+      ';
+    $str_prompt = $formField . $str_prompt;
+      // A calendar plugin is selected
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN the select box (TCE form)
+
+      return $str_prompt;
+      // RETURN the select box (TCE form)
+  }
+
 
 
 
@@ -85,6 +814,7 @@ class tx_browser_pi1_backend
  * @param array   $arr_pluginConf: Current plugin/flexform configuration
  * @return  array   with the names of the views list
  * @version 3.6.1
+ * @since 3.6.1
  */
   public function sDef_getArrViewsList($arr_pluginConf)
   {
@@ -247,6 +977,8 @@ class tx_browser_pi1_backend
  *
  * @param array   $arr_pluginConf: Current plugin/flexform configuration
  * @return  array   with the bookmarks
+ * @version 3.6.1
+ * @since 3.6.1
  */
   public function socialmedia_getArrBookmarks($arr_pluginConf)
   {
@@ -306,6 +1038,8 @@ class tx_browser_pi1_backend
  *
  * @param array   $arr_pluginConf: Current plugin/flexform configuration
  * @return  array   with the bookmarks
+ * @version 3.6.1
+ * @since 3.6.1
  */
   public function templating_getArrDataQuery($arr_pluginConf)
   {
@@ -369,6 +1103,8 @@ class tx_browser_pi1_backend
  *
  * @param array   $arr_pluginConf: Current plugin/flexform configuration
  * @return  array   $arr_pluginConf: Extended with the templates
+ * @version 3.6.1
+ * @since 3.6.1
  */
   public function templating_getExtensionTemplates($arr_pluginConf)
   {
@@ -425,10 +1161,8 @@ class tx_browser_pi1_backend
  *
  * @param array   $arr_pluginConf: Current plugin/flexform configuration
  * @return  array   with the uis
- * 
  * @version 3.7.0
  * @since 3.7.0
-
  */
   public function templating_get_jquery_ui($arr_pluginConf)
   {
@@ -438,7 +1172,7 @@ class tx_browser_pi1_backend
     {
       return $arr_pluginConf;
     }
-    
+
       // Init the one dimensional language array
     $this->getLL();
 
@@ -503,12 +1237,6 @@ class tx_browser_pi1_backend
     }
     require_once('flexform_locallang.php');
     $this->locallang = $LOCAL_LANG[$lang];
-    
-//    $path2llXml = t3lib_extMgm::extPath('browser').'pi1/locallang.xml';
-//    $llXml      = implode('', file($path2llXml));
-//    $arr_ll     = t3lib_div::xml2array($llXml, $NSprefix='', $reportDocTag=false);
-//    $LOCAL_LANG = $arr_ll['data'];
-//    return $LOCAL_LANG;
   }
 
 

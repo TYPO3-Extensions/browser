@@ -2,64 +2,36 @@
 <T3DataStructure>
   <ROOT>
     <TCEforms>
-      <sheetTitle>LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF</sheetTitle>
+      <sheetTitle>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF</sheetTitle>
     </TCEforms>
     <type>array</type>
     <el>
-      <tutorial>
-        <TCEforms>
-          <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF.tutorial</label>
-          <config>
-            <type>check</type>
-            <cols>1</cols>
-            <items type="array">
-              <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF.tutorial.0</numIndex>
-                <numIndex index="1"></numIndex>
-              </numIndex>
-            </items>
-          </config>
-        </TCEforms>
-      </tutorial>
-      <checklist>
-        <TCEforms>
-          <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF.checklist</label>
-          <config>
-            <type>check</type>
-            <cols>1</cols>
-            <items type="array">
-              <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF.checklist.0</numIndex>
-                <numIndex index="1"></numIndex>
-              </numIndex>
-            </items>
-          </config>
-        </TCEforms>
-      </checklist>
       <initialView>
         <TCEforms>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF.initialView</label>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF.initialView</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF.initialView.year</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF.initialView.year</numIndex>
                 <numIndex index="1">year</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF.initialView.month</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF.initialView.month</numIndex>
                 <numIndex index="1">month</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF.initialView.week</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF.initialView.week</numIndex>
                 <numIndex index="1">week</numIndex>
               </numIndex>
               <numIndex index="3" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF.initialView.day</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF.initialView.day</numIndex>
                 <numIndex index="1">day</numIndex>
+              </numIndex>
+              <numIndex index="4" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF.initialView.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
             <default>month</default>
@@ -70,7 +42,7 @@
       </initialView>
       <template>
         <TCEforms>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF.template</label>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF.template</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
@@ -90,7 +62,7 @@
       <templatePath>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF.templatePath</label>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF.templatePath</label>
           <displayCond>FIELD:template:=:adjusted</displayCond>
           <config>
             <type>group</type>
@@ -104,44 +76,6 @@
           </config>
         </TCEforms>
       </templatePath>
-      <configured>
-        <TCEforms>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF.configured</label>
-          <onChange>reload</onChange>
-          <config>
-            <type>select</type>
-            <items type="array">
-              <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF.configured.default</numIndex>
-                <numIndex index="1">default</numIndex>
-              </numIndex>
-              <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF.configured.adapted</numIndex>
-                <numIndex index="1">adapted</numIndex>
-              </numIndex>
-            </items>
-            <default>default</default>
-            <maxitems>1</maxitems>
-            <size>1</size>
-          </config>
-        </TCEforms>
-      </configured>
-      <singlePid>
-        <TCEforms>
-          <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.php:sheet_sDEF.singlePid</label>
-          <displayCond>FIELD:configured:=:adapted</displayCond>
-          <config>
-            <type>group</type>
-            <internal_type>db</internal_type>
-            <allowed>pages</allowed>
-            <size>1</size>
-            <maxitems>1</maxitems>
-            <minitems>0</minitems>
-            <show_thumbs>1</show_thumbs>
-          </config>
-        </TCEforms>
-      </singlePid>
     </el>
   </ROOT>
 </T3DataStructure>

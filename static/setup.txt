@@ -308,7 +308,7 @@ plugin.tx_browser_pi1 {
             // The devider between of two buttons
           devider = TEXT
           devider {
-            value = 
+            value =
             noTrimWrap = | | |
           }
             // First button of the record browser
@@ -1839,7 +1839,7 @@ plugin.tx_browser_pi1 {
         }
         z_ts {
           label   = sheet_templating.css.jqui.z_ts
-          css     = 
+          css     =
           icon    = EXT:browser/res/images/jQuery/typoscript.gif
         }
         black_tie {
@@ -2079,7 +2079,7 @@ plugin.tx_browser_pi1 {
           // [PAGE] page object
         default = PAGE
         default {
-          typeNum = 28562
+          typeNum = {$plugin.tx_browser_pi1.typeNum.ajaxPageObj}
           config {
             disableAllHeaderCode  = 1
             xhtml_cleaning        = 0
@@ -2089,13 +2089,12 @@ plugin.tx_browser_pi1 {
         }
         en < .default
         en {
-          typeNum = 28562
           config {
               // [Integer] Uid of the language. See record in sys_language
             sys_language_uid      = {$plugin.tx_browser_pi1.typeNum.sys_language_en}
               // [Keyword] page: content_fallback, strict, ignore
             sys_language_mode     = content_fallback
-              // [Boolean / Keyword] records: 0, 1, hideNonTranslated 
+              // [Boolean / Keyword] records: 0, 1, hideNonTranslated
             sys_language_overlay  = 1
             language              = en
             locale_all            = en_GB

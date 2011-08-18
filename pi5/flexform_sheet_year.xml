@@ -2,37 +2,65 @@
 <T3DataStructure>
   <ROOT>
     <TCEforms>
-      <sheetTitle>LLL:EXT:browser/pi5/flexform_locallang.php:sheet_year</sheetTitle>
+      <sheetTitle>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year</sheetTitle>
     </TCEforms>
     <type>array</type>
     <el>
-      <configuration>
+      <schedule.display>
         <TCEforms>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.php:sheet_year.configuration</label>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.display</label>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.display.yes</numIndex>
+                <numIndex index="1">yes</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.display.no</numIndex>
+                <numIndex index="1">no</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.display.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+            </items>
+            <default>ts</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </schedule.display>
+      <schedule.configuration>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.configuration</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.php:sheet_year.configuration.relative</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.configuration.item.relative</numIndex>
                 <numIndex index="1">relative</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.php:sheet_year.configuration.absolute</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.configuration.item.absolute</numIndex>
                 <numIndex index="1">absolute</numIndex>
               </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.configuration.item.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
             </items>
-            <default>relative</default>
+            <default>ts</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>
         </TCEforms>
-      </configuration>
-      <relativeFrom>
+      </schedule.configuration>
+      <schedule.configuration.relative>
         <TCEforms>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.php:sheet_year.relativeFrom</label>
-          <onChange>reload</onChange>
-          <displayCond>FIELD:configuration:!=:absolute</displayCond>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.configuration.relative</label>
+          <displayCond>FIELD:schedule.configuration:=:relative</displayCond>
           <config>
             <type>select</type>
             <multiple>0</multiple>
@@ -44,70 +72,46 @@
             <itemListStyle>width:200px</itemListStyle>
             <items type="array"></items>
             <itemsProcFunc>tx_browser_pi5_backend->year_selectRelative</itemsProcFunc>
-            <default>current</default>
+            <default>currentYear</default>
           </config>
         </TCEforms>
-      </relativeFrom>
-      <relativeTo>
+      </schedule.configuration.relative>
+      <schedule.configuration.absolute>
         <TCEforms>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.php:sheet_year.relativeTo</label>
-          <onChange>reload</onChange>
-          <displayCond>FIELD:configuration:!=:absolute</displayCond>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.configuration.absolute</label>
+          <displayCond>FIELD:schedule.configuration:=:absolute</displayCond>
+          <config>
+            <type>input</type>
+            <size>4</size>
+            <eval>year</eval>
+          </config>
+        </TCEforms>
+      </schedule.configuration.absolute>
+      <navigator.display>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.navigator.display</label>
           <config>
             <type>select</type>
-            <multiple>0</multiple>
-            <size>1</size>
-            <minitems>0</minitems>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.navigator.display.yes</numIndex>
+                <numIndex index="1">yes</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.navigator.display.no</numIndex>
+                <numIndex index="1">no</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.navigator.display.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+            </items>
+            <default>ts</default>
             <maxitems>1</maxitems>
-            <allowNonIdValues>1</allowNonIdValues>
-            <selectedListStyle>width:200px</selectedListStyle>
-            <itemListStyle>width:200px</itemListStyle>
-            <items type="array"></items>
-            <itemsProcFunc>tx_browser_pi5_backend->year_selectRelative</itemsProcFunc>
-            <default>current</default>
+            <size>1</size>
           </config>
         </TCEforms>
-      </relativeTo>
-      <absoluteFrom>
-        <TCEforms>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.php:sheet_year.absoluteFrom</label>
-          <onChange>reload</onChange>
-          <displayCond>FIELD:configuration:=:absolute</displayCond>
-          <config>
-            <type>select</type>
-            <multiple>0</multiple>
-            <size>1</size>
-            <minitems>0</minitems>
-            <maxitems>1</maxitems>
-            <allowNonIdValues>1</allowNonIdValues>
-            <selectedListStyle>width:200px</selectedListStyle>
-            <itemListStyle>width:200px</itemListStyle>
-            <items type="array"></items>
-            <itemsProcFunc>tx_browser_pi5_backend->year_selectabsolute</itemsProcFunc>
-            <default>current</default>
-          </config>
-        </TCEforms>
-      </absoluteFrom>
-      <absoluteTo>
-        <TCEforms>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.php:sheet_year.absoluteTo</label>
-          <onChange>reload</onChange>
-          <displayCond>FIELD:configuration:=:absolute</displayCond>
-          <config>
-            <type>select</type>
-            <multiple>0</multiple>
-            <size>1</size>
-            <minitems>0</minitems>
-            <maxitems>1</maxitems>
-            <allowNonIdValues>1</allowNonIdValues>
-            <selectedListStyle>width:200px</selectedListStyle>
-            <itemListStyle>width:200px</itemListStyle>
-            <items type="array"></items>
-            <itemsProcFunc>tx_browser_pi5_backend->year_selectabsolute</itemsProcFunc>
-            <default>current</default>
-          </config>
-        </TCEforms>
-      </absoluteTo>
+      </navigator.display>
     </el>
   </ROOT>
 </T3DataStructure>

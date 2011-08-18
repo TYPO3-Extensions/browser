@@ -9,8 +9,6 @@
     <month>EXT:browser/pi5/flexform_sheet_month.xml</month>
     <week>EXT:browser/pi5/flexform_sheet_week.xml</week>
     <day>EXT:browser/pi5/flexform_sheet_day.xml</day>
-    <socialmedia>EXT:browser/pi1/flexform_sheet_socialmedia.xml</socialmedia>
-    <javascript>EXT:browser/pi1/flexform_sheet_javascript.xml</javascript>
-    <tca>EXT:browser/pi1/flexform_sheet_tca.xml</tca>
+    <evaluate>EXT:browser/pi5/flexform_sheet_evaluate.xml</evaluate>
   </sheets>
 </T3DataStructure>

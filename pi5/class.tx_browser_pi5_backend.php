@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2010-2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +28,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    tx_browser
- * @since 3.7.0
+ * @since 4.0.0
  */
 
  /**
@@ -281,6 +281,631 @@ class tx_browser_pi5_backend
 
 
 
+
+
+
+  /**
+ * evaluate_externalLinks: HTML content with external links
+ * 
+ * Tab [evaluate]
+ *
+ * @param array   $arr_pluginConf:  Current plugin/flexform configuration
+ * @param array   $obj_TCEform:     Current TCE form object
+ * @return  string   $str_prompt: HTML prompt
+ */
+  public function evaluate_externalLinks($arr_pluginConf, $obj_TCEform)
+  {
+      //.message-notice
+      //.message-information
+      //.message-ok
+      //.message-warning
+      //.message-error
+    $str_prompt = null;
+
+    $str_prompt = $str_prompt.'
+      <div class="message-body">
+        ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/lib/locallang.xml:promptExternalLinksBody'). '
+      </div>
+      ';
+
+    return $str_prompt;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /**
+ * evaluate_plugin: Evaluates the plugin, flexform, TypoScript
+ *                  Returns a HTML report
+ * 
+ * Tab [evaluate]
+ *
+ * @param array   $arr_pluginConf:  Current plugin/flexform configuration
+ * @param array   $obj_TCEform:     Current TCE form object
+ * @return  string   $str_prompt: HTML prompt
+ */
+  public function evaluate_plugin($arr_pluginConf, $obj_TCEform)
+  {
+      // Require classes, init page id, page object and TypoScript object
+    $bool_success = $this->init($arr_pluginConf);
+
+      // RETURN error with init()
+    if(!$bool_success)
+    {
+      return $arr_pluginConf;
+    }
+
+      //.message-notice
+      //.message-information
+      //.message-ok
+      //.message-warning
+      //.message-error
+    $str_prompt = null;
+
+      // WARNING: Completly support initial in 4.2
+    $str_prompt_warning_version_420 = '
+      <div class="typo3-message message-warning">
+        <div class="message-body">
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.warn.version.420') . '
+        </div>
+      </div>
+      ';
+
+      // INFO: Link to the tutorial and to the browser forum
+    $str_prompt_info_tutorialAndForum = '
+      <div class="typo3-message message-information">
+        <div class="message-body">
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.info.tutorialAndForum') . '
+        </div>
+      </div>
+      ';
+
+      // Evaluation result: default message in case of success
+    $str_prompt_evaluationResult  = '
+      <div class="typo3-message message-ok">
+        <div class="message-body">
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.ok') . '
+        </div>
+      </div>
+      ';
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Check the plugin
+
+    if( !is_array ( $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['pi5.'] ) )
+    {
+      $str_prompt_evaluationResult  = '
+        <div class="typo3-message message-error">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.error.no_ts_template') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.info.no_ts_template') . '
+          </div>
+        </div>
+        ';
+    }
+      // Check the plugin
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN the prompt
+
+    $str_prompt = $str_prompt . $str_prompt_warning_version_420 . $str_prompt_evaluationResult . $str_prompt_info_tutorialAndForum;
+      // RETURN the prompt
+
+
+
+    return $str_prompt;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /**
+ * day_selectAbsolute:  Get items for a select box.
+ *                      Returns a list with items like this:
+ *                      1, ... , 31
+ * Tab [day]
+ *
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  array   $arr_pluginConf: Extended with the items
+ */
+  public function day_selectAbsolute($arr_pluginConf)
+  {
+      // Localize lables
+    $ll_dayNom       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.nom');
+
+      // Start and end position
+    $int_firstDayOfAMonth =  1;
+    $int_lastDayOfAMonth  = 31;
+
+      // LOOP from first day to last day of a month
+    for($int_day = $int_firstDayOfAMonth; $int_day <= $int_lastDayOfAMonth; $int_day++)
+    {
+      $str_day  = $int_day . '. ' . $ll_dayNom;
+      $label    = $str_day;
+      $value    = $int_day;
+      $arr_pluginConf['items'][] = array($label, $value);
+    }
+      // LOOP from first day to last day of a month
+
+    return $arr_pluginConf;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /**
+ * day_selectRelative:  Get items for a select box.
+ *                      Returns a list with items like this:
+ *                      10, ... , -1, current week, +1, ..., +10
+ * Tab [day]
+ *
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  array   $arr_pluginConf: Extended with the items
+ */
+  public function day_selectRelative($arr_pluginConf)
+  {
+      // Localize lables
+    $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.default');
+    $ll_dayNom        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.nom');
+    $ll_currDayDat    = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.current.dat');
+    $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.takeItFromTs');
+    $ll_wouldBe       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBe');
+    $ll_wouldBeToday  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBeTodayDay');
+
+      // Configure current day
+    $int_currDay    = (int) date ( 'j' );                 // Integer value of current day.
+    $str_currMonth  = date ( 'M' );                       // Month represented by three characters
+    $str_currDay    = $ll_wouldBeToday . ' ' . $int_currDay . '. ' . $str_currMonth;   // Something like 22. day
+    
+
+      // Start and end position
+    $int_startDay  = $int_currDay - 10;
+    $int_endDay    = $int_currDay + 10;
+
+      // Default items for select box
+    $arr_pluginConf['items'][] = array($ll_currDayDat . ' ('. $str_currDay . ') - ' . $ll_default,  'currentDay'  );
+    $arr_pluginConf['items'][] = array($ll_takeItFromTs,                           'ts'          );
+    $arr_pluginConf['items'][] = array('-------------------------------------------',       null          );
+
+      // Last days
+    $ll_last        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.last');
+    $lastDay        = 'last Monday';
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.monday');
+    $label_lastDay  = $ll_last . ' ' . $ll_day;
+    $label          = $label_lastDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($lastDay)) . ')';
+    $value          = $lastDay;
+    $arr_pluginConf['items'][] = array($label, $value);
+    $lastDay        = 'last Tuesday';
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.tuesday');
+    $label_lastDay  = $ll_last . ' ' . $ll_day;
+    $label          = $label_lastDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($lastDay)) . ')';
+    $value          = $lastDay;
+    $arr_pluginConf['items'][] = array($label, $value);
+    $lastDay        = 'last Wednesday';
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.wednesday');
+    $label_lastDay  = $ll_last . ' ' . $ll_day;
+    $label          = $label_lastDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($lastDay)) . ')';
+    $value          = $lastDay;
+    $arr_pluginConf['items'][] = array($label, $value);
+    $lastDay        = 'last Thursday';
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.thursday');
+    $label_lastDay  = $ll_last . ' ' . $ll_day;
+    $label          = $label_lastDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($lastDay)) . ')';
+    $value          = $lastDay;
+    $arr_pluginConf['items'][] = array($label, $value);
+    $lastDay        = 'last Friday';
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.friday');
+    $label_lastDay  = $ll_last . ' ' . $ll_day;
+    $label          = $label_lastDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($lastDay)) . ')';
+    $value          = $lastDay;
+    $arr_pluginConf['items'][] = array($label, $value);
+    $lastDay        = 'last Saturday';
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.saturday');
+    $label_lastDay  = $ll_last . ' ' . $ll_day;
+    $label          = $label_lastDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($lastDay)) . ')';
+    $value          = $lastDay;
+    $arr_pluginConf['items'][] = array($label, $value);
+    $lastDay        = 'last Sunday';
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.sunday');
+    $label_lastDay  = $ll_last . ' ' . $ll_day;
+    $label          = $label_lastDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($lastDay)) . ')';
+    $arr_pluginConf['items'][] = array($label, $value);
+    $arr_pluginConf['items'][] = array('-------------------------------------------',       null          );
+      // Last days
+
+
+      // Next days
+    $ll_next        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.next');
+    $nextDay        = 'next Monday';
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.monday');
+    $label_nextDay  = $ll_next . ' ' . $ll_day;
+    $label          = $label_nextDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($nextDay)) . ')';
+    $value          = $nextDay;
+    $arr_pluginConf['items'][] = array($label, $value);
+    $nextDay        = 'next Tuesday';
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.tuesday');
+    $label_nextDay  = $ll_next . ' ' . $ll_day;
+    $label          = $label_nextDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($nextDay)) . ')';
+    $value          = $nextDay;
+    $arr_pluginConf['items'][] = array($label, $value);
+    $nextDay        = 'next Wednesday';
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.wednesday');
+    $label_nextDay  = $ll_next . ' ' . $ll_day;
+    $label          = $label_nextDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($nextDay)) . ')';
+    $value          = $nextDay;
+    $arr_pluginConf['items'][] = array($label, $value);
+    $nextDay        = 'next Thursday';
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.thursday');
+    $label_nextDay  = $ll_next . ' ' . $ll_day;
+    $label          = $label_nextDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($nextDay)) . ')';
+    $value          = $nextDay;
+    $arr_pluginConf['items'][] = array($label, $value);
+    $nextDay        = 'next Friday';
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.friday');
+    $label_nextDay  = $ll_next . ' ' . $ll_day;
+    $label          = $label_nextDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($nextDay)) . ')';
+    $value          = $nextDay;
+    $arr_pluginConf['items'][] = array($label, $value);
+    $nextDay        = 'next Saturday';
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.saturday');
+    $label_nextDay  = $ll_next . ' ' . $ll_day;
+    $label          = $label_nextDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($nextDay)) . ')';
+    $value          = $nextDay;
+    $arr_pluginConf['items'][] = array($label, $value);
+    $nextDay        = 'next Sunday';
+    $ll_day         = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.sunday');
+    $label_nextDay  = $ll_next . ' ' . $ll_day;
+    $label          = $label_nextDay . ' (' . $ll_wouldBe . ' ' . date ( 'D. d. M', strtotime($nextDay)) . ')';
+    $arr_pluginConf['items'][] = array($label, $value);
+    $arr_pluginConf['items'][] = array('-------------------------------------------',       null          );
+      // Next days
+
+      // LOOP items from ( current day ./. 10 ) to (current day + 10)
+    $strPlus = null;
+    for($int_day = $int_startDay; $int_day <= $int_endDay; $int_day++)
+    {
+      $strPosition = $strPlus . ( $int_day - $int_currDay ); // i.e.: -7 or +5
+      $str_day     = $ll_wouldBe . ' ' . $int_day . '. ' . $str_currMonth;
+
+      if($int_day == $int_currDay)
+      {
+        $label = '-------------------------------------------';
+        $value = null;
+        $arr_pluginConf['items'][] = array($label, $value);
+        $strPlus = '+ ';
+        continue;
+      }
+
+      $label = $strPosition . ' ('. $str_day . ')';
+      $value = $strPosition;
+      $arr_pluginConf['items'][] = array($label, $value);
+    }
+      // LOOP items from ( current day ./. 10 ) to (current day + 10)
+
+    return $arr_pluginConf;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /**
+ * month_selectAbsolute:  Get items for a select box.
+ *                        Returns a list with items like this:
+ *                      - 10, ... , -1, current month, +1, ..., +10
+ * Tab [year]
+ *
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  array   $arr_pluginConf: Extended with the items
+ */
+  public function month_selectAbsolute($arr_pluginConf)
+  {
+
+      // Start and end position
+    $int_firstMonthOfYear =  1;
+    $int_lastMonthOfYear  = 12;
+
+      // LOOP items from first to last month of a year
+    for($int_month = $int_firstMonthOfYear; $int_month <= $int_lastMonthOfYear; $int_month++)
+    {
+      $year   = date('Y');
+      $month  = $int_month;
+      $day    = 1;
+        // Month represented by three characters. Non localized (there is bug with set_locale and german Umlaute).
+      $str_month = date ( 'M', mktime(0, 0, 0, $month, $day, $year));
+      $label = $str_month;
+      $value = $int_month;
+      $arr_pluginConf['items'][] = array($label, $value);
+    }
+      // LOOP items from first to last month of a year
+
+    return $arr_pluginConf;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /**
+ * month_selectRelative:  Get items for a select box.
+ *                        Returns a list with items like this:
+ *                      - 10, ... , -1, current month, +1, ..., +10
+ * Tab [year]
+ *
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  array   $arr_pluginConf: Extended with the items
+ */
+  public function month_selectRelative($arr_pluginConf)
+  {
+      // Localize lables
+    $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.default');
+    $ll_currMonthDat  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.month.current.dat');
+    $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.takeItFromTs');
+    $ll_wouldBe       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBe');
+    $ll_wouldBeToday  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBeTodayMonth');
+
+      // Configure current month
+    $str_currMonth   = $ll_wouldBeToday . ' ' . date ( 'M' );        // Month represented by three characters
+    $int_currMonth   = (int) date ( 'n' );  // Integer value of current month 
+
+      // Start and end position
+    $int_startMonth  = $int_currMonth - 11;
+    $int_endMonth    = $int_currMonth + 11;
+
+      // Default items for select box
+    $arr_pluginConf['items'][] = array($ll_currMonthDat . ' ('. $str_currMonth . ') - ' . $ll_default,  'currentMonth'  );
+    $arr_pluginConf['items'][] = array($ll_takeItFromTs,                               'ts'            );
+    $arr_pluginConf['items'][] = array('-------------------------------------------',           null            );
+
+      // LOOP items from ( current month ./. 11 ) to (current month + 11)
+    $strPlus = null;
+    for($int_month = $int_startMonth; $int_month <= $int_endMonth; $int_month++)
+    {
+      $strPosition  = $strPlus . ( $int_month - $int_currMonth ); // i.e.: -7 or +5
+      $str_month    = $ll_wouldBe . ' ' . date ( 'M', strtotime($strPosition . ' month'));
+
+      if($int_month == $int_currMonth)
+      {
+        $label = '-------------------------------------------';
+        $value = null;
+        $arr_pluginConf['items'][] = array($label, $value);
+        $strPlus = '+ ';
+        continue;
+      }
+
+      $label = $strPosition . ' ('. $str_month . ')';
+      $value = $strPosition;
+      $arr_pluginConf['items'][] = array($label, $value);
+    }
+      // LOOP items from ( current month ./. 11 ) to (current month + 11)
+
+    return $arr_pluginConf;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /**
+ * week_selectAbsolute: Get items for a select box.
+ *                      Returns a list with items like this:
+ *                      1, ... , 53
+ * Tab [week]
+ *
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  array   $arr_pluginConf: Extended with the items
+ */
+  public function week_selectAbsolute($arr_pluginConf)
+  {
+      // Localize lables
+    $ll_weekNom       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.week.nom');
+
+      // Start and end position
+    $int_firstWeekOfAYear =  1;
+    $int_lastWeekOfAYear  = 53;
+
+      // LOOP from first week to last week of a year
+    for($int_week = $int_firstWeekOfAYear; $int_week <= $int_lastWeekOfAYear; $int_week++)
+    {
+      $str_week = $int_week . '. ' . $ll_weekNom;
+      $label    = $str_week;
+      $value    = $int_week;
+      $arr_pluginConf['items'][] = array($label, $value);
+    }
+      // LOOP from first week to last week of a year
+
+    return $arr_pluginConf;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /**
+ * week_selectRelative:  Get items for a select box.
+ *                        Returns a list with items like this:
+ *                      - 10, ... , -1, current week, +1, ..., +10
+ * Tab [year]
+ *
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  array   $arr_pluginConf: Extended with the items
+ */
+  public function week_selectRelative($arr_pluginConf)
+  {
+      // Localize lables
+    $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.default');
+    $ll_weekNom       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.week.nom');
+    $ll_currWeekDat   = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.week.current.dat');
+    $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.takeItFromTs');
+    $ll_wouldBe       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBe');
+    $ll_wouldBeToday  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBeTodayWeek');
+
+      // Configure current week
+    $int_currWeek   = (int) date ( 'W' );                 // Integer value of current week. The week is beginning on monday.
+    $str_currWeek   = $ll_wouldBeToday . ' ' . $int_currWeek . '. ' . $ll_weekNom;   // Something like 22. week
+
+      // Start and end position
+    $int_startWeek  = $int_currWeek - 10;
+    $int_endWeek    = $int_currWeek + 10;
+
+      // Default items for select box
+    $arr_pluginConf['items'][] = array($ll_currWeekDat . ' ('. $str_currWeek . ') - ' . $ll_default,  'currentWeek' );
+    $arr_pluginConf['items'][] = array($ll_takeItFromTs,                             'ts'          );
+    $arr_pluginConf['items'][] = array('-------------------------------------------',         null          );
+
+      // LOOP items from ( current week ./. 10 ) to (current week + 10)
+    $strPlus = null;
+    for($int_week = $int_startWeek; $int_week <= $int_endWeek; $int_week++)
+    {
+      $strPosition  = $strPlus . ( $int_week - $int_currWeek ); // i.e.: -7 or +5
+      $str_week     = $ll_wouldBe . ' ' . $int_week . '. ' . $ll_weekNom;
+
+      if($int_week == $int_currWeek)
+      {
+        $label = '-------------------------------------------';
+        $value = null;
+        $arr_pluginConf['items'][] = array($label, $value);
+        $strPlus = '+ ';
+        continue;
+      }
+
+      $label = $strPosition . ' ('. $str_week . ')';
+      $value = $strPosition;
+      $arr_pluginConf['items'][] = array($label, $value);
+    }
+      // LOOP items from ( current week ./. 10 ) to (current week + 10)
+
+    return $arr_pluginConf;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /**
+ * year_selectRelative: Get items for a select box.
+ *                      Returns a list with items like this:
+ *                      -10, ... , -1, current year, +1, ..., +10
+ * Tab [year]
+ *
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  array   $arr_pluginConf: Extended with the items
+ */
+  public function year_selectRelative($arr_pluginConf)
+  {
+      // Localize lables
+    $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.default');
+    $ll_currYearDat   = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.year.current.dat');
+    $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.takeItFromTs');
+    $ll_wouldBe       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBe');
+    $ll_wouldBeToday  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.wouldBeTodayYear');
+
+      // Configure current year
+    $int_currYear = (int) date ( 'Y' );
+    $str_currYear = $ll_wouldBeToday . ' ' . $int_currYear;
+
+      // Start and end position
+    $int_startYear  = $int_currYear - 10;
+    $int_endYear    = $int_currYear + 10;
+
+      // Default items for select box
+    $arr_pluginConf['items'][] = array($ll_currYearDat . ' ('. $str_currYear . ') - ' . $ll_default, 'currentYear' );
+    $arr_pluginConf['items'][] = array($ll_takeItFromTs,                    'ts' );
+    $arr_pluginConf['items'][] = array('-------------------------------------------', null );
+
+      // LOOP items from ( current year ./. 10 ) to (current year + 10)
+    $strPlus = null;
+    for($int_year = $int_startYear; $int_year <= $int_endYear; $int_year++)
+    {
+      $strPosition  = $strPlus . ( $int_year - $int_currYear ); // i.e.: -7 or +5
+
+      if($int_year == $int_currYear)
+      {
+        $label = '-------------------------------------------';
+        $value = null;
+        $arr_pluginConf['items'][] = array($label, $value);
+        $strPlus = '+ ';
+        continue;
+      }
+
+      $label = $strPosition . ' ('. $ll_wouldBe . ' ' . $int_year . ')';
+      $value = $strPosition;
+      $arr_pluginConf['items'][] = array($label, $value);
+    }
+      // LOOP items from ( current year ./. 10 ) to (current year + 10)
+
+    return $arr_pluginConf;
+
+  }
+
+
+
+
+
+
+
+
   /**
  * socialmedia_getArrBookmarks: Get bookmarks for flexform. Tab [Socialmedia]
  *
@@ -409,28 +1034,6 @@ class tx_browser_pi5_backend
    * Helper Methods
    *
    **********************************************/
-
-
-
-
-
-
-
-
-
-  /**
- * getLL(): Get the locallang for class use out of an XML file
- *
- * @return	array		Array of the locallang data
- */
-  function getLL()
-  {
-    $path2llXml = t3lib_extMgm::extPath('browser').'pi1/locallang.xml';
-    $llXml      = implode('', file($path2llXml));
-    $arr_ll     = t3lib_div::xml2array($llXml, $NSprefix='', $reportDocTag=false);
-    $LOCAL_LANG = $arr_ll['data'];
-    return $LOCAL_LANG;
-  }
 
 
 
@@ -589,6 +1192,63 @@ class tx_browser_pi5_backend
     $this->obj_TypoScript->generateConfig();
 
     return false;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /**
+ * zz: Get templates from the browser and third party extensions
+ * Tab [sDEF]
+ *
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  array   $arr_pluginConf: Extended with the items
+ */
+  public function zz($arr_pluginConf)
+  {
+      // Default value
+    $arr_pluginConf['items'][] = array('Development: Add an item');
+    $arr_pluginConf['items'][] = array('Development: Add an item');
+    $arr_pluginConf['items'][] = array('-------------------------------------------', '');
+
+
+      // Require classes, init page id, page object and TypoScript object
+    $bool_success = $this->init($arr_pluginConf);
+    if(!$bool_success)
+    {
+      return $arr_pluginConf;
+    }
+
+//      // TypoScript configuration for extension templates
+//    $arr_extensions = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['template.']['extensions.'];
+//
+//    if (!(is_array($arr_extensions) && count($arr_extensions)))
+//    {
+//      return $arr_pluginConf;
+//    }
+//
+//      // Loop through all extensions and templates
+//    foreach((array) $arr_extensions as $extensionWiDot => $arr_templates)
+//    {
+//      $extension = substr($extensionWiDot, 0, strlen($extensionWiDot) - 1);
+//      foreach((array) $arr_templates as $arr_template)
+//      {
+//        $label = $arr_template['name'].' ('.$extension.')';
+//        $value = $arr_template['file'];
+//        $arr_pluginConf['items'][] = array($label, $value);
+//      }
+//    }
+//      // Loop through all extensions and templates
+
+    return $arr_pluginConf;
+
   }
 
 

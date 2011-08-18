@@ -1,6 +1,11 @@
+4.0.0
+  110817
+  NEW FEATURES
+  * #29042: Calendar (first part and inofficial. Calendar should be official in version 4.2.0 in 2012)
+  
 3.7.0
   110801, 110729
-  New Feature
+  New Features
   * #27041: Record browser for the single view / Prev-next Switcher in the single view
             * single views got the marker ###RECORD_BROWSER### in the HTML templates
               * Affected files:

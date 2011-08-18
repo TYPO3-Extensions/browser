@@ -41,7 +41,7 @@
  *
  *              SECTION: Sheets
  * 1038:     function sheet_advanced()
- * 1238:     function sheet_development()
+ * 1238:     function sheet_evaluate()
  * 1319:     function sheet_javascript()
  * 1480:     function sheet_sDEF()
  * 1730:     function sheet_socialmedia()
@@ -218,10 +218,10 @@ class tx_browser_pi1_flexform {
 
     //////////////////////////////////////////////////////////////////////
     //
-    // Sheet development controlls the DRS
+    // Sheet evaluate controlls the DRS
 
-    $this->sheet_development();
-    // Sheet development controlls the DRS
+    $this->sheet_evaluate();
+    // Sheet evaluate controlls the DRS
 
     //////////////////////////////////////////////////////////////////////
     //
@@ -995,7 +995,7 @@ class tx_browser_pi1_flexform {
    * @since   3.4.5
    * @version 3.4.5
    */
-  function sheet_development() {
+  function sheet_evaluate() {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
     $str_lang = $this->pObj->lang->lang;
@@ -1006,12 +1006,12 @@ class tx_browser_pi1_flexform {
     //
     // Field dontUseDRS
 
-    $this->pObj->bool_dontUseDRS = $this->pObj->pi_getFFvalue($arr_piFlexform, 'dontUseDRS', 'development', 'lDEF', 'vDEF');
+    $this->pObj->bool_dontUseDRS = $this->pObj->pi_getFFvalue($arr_piFlexform, 'dontUseDRS', 'evaluate', 'lDEF', 'vDEF');
     //var_dump('conf 1024', $this->pObj->bool_dontUseDRS);
 
     //////////////////////////////////////////////////////////////////////
     //
-    // Plugin sheet [development]: Don't use the DRS
+    // Plugin sheet [evaluate]: Don't use the DRS
 
     if ($this->pObj->bool_dontUseDRS) {
       if ($this->pObj->arr_extConf['drs_mode'] != 'Don\'t log anything') {
@@ -1028,13 +1028,13 @@ class tx_browser_pi1_flexform {
         t3lib_div :: devLog('[INFO/PERFORMANCE]: ' . ($endTime - $this->pObj->startTime) . ' ms', $this->pObj->extKey, 0);
       }
     }
-    // Plugin sheet [development]: Don't use the DRS
+    // Plugin sheet [evaluate]: Don't use the DRS
 
     //////////////////////////////////////////////////////////////////////
     //
     // Field debugJSS
 
-    $this->pObj->bool_debugJSS = $this->pObj->pi_getFFvalue($arr_piFlexform, 'debugJSS', 'development', 'lDEF', 'vDEF');
+    $this->pObj->bool_debugJSS = $this->pObj->pi_getFFvalue($arr_piFlexform, 'debugJSS', 'evaluate', 'lDEF', 'vDEF');
     //var_dump('conf 1024', $this->pObj->bool_debugJSS);
 
     return;

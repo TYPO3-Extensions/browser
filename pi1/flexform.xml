@@ -12,7 +12,7 @@
     <advanced>EXT:browser/pi1/flexform_sheet_advanced.xml</advanced>
     <socialmedia>EXT:browser/pi1/flexform_sheet_socialmedia.xml</socialmedia>
     <tca>EXT:browser/pi1/flexform_sheet_tca.xml</tca>
-    <checklist>EXT:browser/pi1/flexform_sheet_checklist.xml</checklist>
-    <development>EXT:browser/pi1/flexform_sheet_development.xml</development>
+    <extend>EXT:browser/pi1/flexform_sheet_extend.xml</extend>
+    <evaluate>EXT:browser/pi1/flexform_sheet_evaluate.xml</evaluate>
   </sheets>
 </T3DataStructure>
