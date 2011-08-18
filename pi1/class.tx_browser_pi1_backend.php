@@ -382,14 +382,14 @@ class tx_browser_pi1_backend
 
 
   /**
- * extend_calendar: Renders a TCE form select box with calendar plugins.
- *                  Three cases will be handled:
- *                  1. There isn't any calendar plugin available:
- *                     * returns a prompt only
- *                  2. Thera are calendar plugins available, but anyone isn't selected:
- *                     * returns a prompt with a select box
- *                  3. Thera are calendar plugins available and one is selected:
- *                     * returns a select box with a prompt
+ * extend_cal_ui: Renders a TCE form select box with calendar plugins.
+ *                Three cases will be handled:
+ *                1. There isn't any calendar plugin available:
+ *                   * returns a prompt only
+ *                2. Thera are calendar plugins available, but no one isn't selected:
+ *                   * returns a prompt with a select box
+ *                3. Thera are calendar plugins available and one is selected:
+ *                   * returns a select box with a prompt
  *
  * Tab [extend]
  *
@@ -399,7 +399,7 @@ class tx_browser_pi1_backend
  * @version 4.0.0
  * @since 4.0.0
  */
-  public function extend_calendar($arr_pluginConf, $obj_TCEform)
+  public function extend_cal_ui($arr_pluginConf, $obj_TCEform)
   {
       //.message-notice
       //.message-information
@@ -433,7 +433,7 @@ class tx_browser_pi1_backend
 
       // The default first item
     $value          = 0;
-    $label          = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.select.firstItem');
+    $label          = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_ui.select.firstItem');
     $arr_items[]    = '<option value="' . $value . '%selected%">' . $label . '</option>';
       // The default first item
 
@@ -452,7 +452,7 @@ class tx_browser_pi1_backend
 
         // Render the item
       $value        = $row['uid'];
-      $label        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.select.prependItem') . ': ' . htmlspecialchars($row['header']) . ' (' . $row['uid'] . ')';
+      $label        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_ui.select.prependItem') . ': ' . htmlspecialchars($row['header']) . ' (' . $row['uid'] . ')';
       $arr_items[]  = '<option value="' . $value . '"'. $selected . '>' . $label . '</option>';
         // Render the item
     }
@@ -483,7 +483,7 @@ class tx_browser_pi1_backend
       $str_prompt = $str_prompt.'
         <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.info.info') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_ui.info.info') . '
           </div>
         </div>
         ';
@@ -501,7 +501,7 @@ class tx_browser_pi1_backend
       <div class="t3-form-field t3-form-field-flex">
         <input type="hidden" name="' . $arr_pluginConf['itemFormElName'] . '_selIconVal" value="1" />
         <select
-          id        = "tceforms-select-tx-browser-pi1-extend-calendar-calendar"
+          id        = "tceforms-select-tx-browser-pi1-extend-cal-ui"
           name      = "' . $arr_pluginConf['itemFormElName'] . '"
           class     = "select"
           size      = "1"
@@ -523,7 +523,7 @@ class tx_browser_pi1_backend
       $str_prompt = $str_prompt.'
         <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.select.info') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_ui.select.info') . '
           </div>
         </div>
         ';
@@ -534,19 +534,19 @@ class tx_browser_pi1_backend
 
 
 
-//      ///////////////////////////////////////////////////////////////////////////////
-//      //
-//      // A calendar plugin is selected
-//
-//    $str_prompt = $str_prompt.'
-//      <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
-//        <div class="message-body" style="max-width:600px;">
-//          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.select.ok') . '
-//        </div>
-//      </div>
-//      ';
-//    $str_prompt = $formField . $str_prompt;
-//      // A calendar plugin is selected
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // A cal_ui plugin is selected
+
+    $str_prompt = $str_prompt.'
+      <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
+        <div class="message-body" style="max-width:600px;">
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_ui.success.ok') . '
+        </div>
+      </div>
+      ';
+    $str_prompt = $formField . $str_prompt;
+      // A cal_ui plugin is selected
 
 
 
@@ -554,7 +554,6 @@ class tx_browser_pi1_backend
         //
         // RETURN the select box (TCE form)
 
-      $str_prompt = $formField;
       return $str_prompt;
         // RETURN the select box (TCE form)
   }
@@ -567,13 +566,13 @@ class tx_browser_pi1_backend
 
 
   /**
- * extend_calendar_view: Renders a TCE form select box with calendar plugins.
+ * extend_cal_view: Renders a TCE form select box with available views.
  *                  Three cases will be handled:
- *                  1. There isn't any calendar plugin available:
+ *                  1. There isn't any view available:
  *                     * returns a prompt only
- *                  2. Thera are calendar plugins available, but anyone isn't selected:
+ *                  2. Thera are views available, but no one isn't selected:
  *                     * returns a prompt with a select box
- *                  3. Thera are calendar plugins available and one is selected:
+ *                  3. Thera are views available and one is selected:
  *                     * returns a select box with a prompt
  *
  * Tab [extend]
@@ -584,7 +583,7 @@ class tx_browser_pi1_backend
  * @version 4.0.0
  * @since 4.0.0
  */
-  public function extend_calendar_view($arr_pluginConf, $obj_TCEform)
+  public function extend_cal_view($arr_pluginConf, $obj_TCEform)
   {
       //.message-notice
       //.message-information
@@ -614,7 +613,7 @@ class tx_browser_pi1_backend
 
       // Get current browser calendar plugin
     $arr_xml    = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
-    $int_plugin = $arr_xml['data']['extend']['lDEF']['calendar']['vDEF'];
+    $int_plugin = $arr_xml['data']['extend']['lDEF']['cal_ui']['vDEF'];
       // Get current browser calendar plugin
 
     if( empty( $int_plugin ) )
@@ -638,7 +637,7 @@ class tx_browser_pi1_backend
       // The default first item
     $arr_items    = null;
     $value        = 0;
-    $label        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.select.firstItem');
+    $label        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_view.select.firstItem');
     $arr_items[]  = '<option value="' . $value . '%selected%">' . $label . '</option>';
       // The default first item
 
@@ -654,6 +653,7 @@ class tx_browser_pi1_backend
       }
 
       $selected = null;
+
         // Current view is selected
       if($value == $arr_pluginConf['itemFormElValue'])
       {
@@ -663,17 +663,17 @@ class tx_browser_pi1_backend
         // Current view is selected
 
         // Render the item
-      $label = $arr_extensions = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['views.']['list.'][$value . '.']['name'];
+      $label = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['views.']['list.'][$value . '.']['name'];
       if( empty ( $label ) )
       {
-        $label = $arr_extensions = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['views.']['list.'][$value];
+        $label = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['views.']['list.'][$value];
       }
       if( empty ( $label ) )
       {
-        $label = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.select.no_name');
+        $label = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_view.select.no_name');
       }
       $label        = $value . ' (' . $label . ')';
-      $label        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.select.prependItem') . ': ' . $label;
+      $label        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_view.select.prependItem') . ': ' . $label;
       $arr_items[]  = '<option value="' . $value . '"'. $selected . '>' . $label . '</option>';
         // Render the item
     }
@@ -701,12 +701,12 @@ class tx_browser_pi1_backend
       $str_prompt = $str_prompt.'
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.error') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_view.error') . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.info') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_view.info') . '
           </div>
         </div>
         ';
@@ -724,7 +724,7 @@ class tx_browser_pi1_backend
       <div class="t3-form-field t3-form-field-flex">
         <input type="hidden" name="' . $arr_pluginConf['itemFormElName'] . '_selIconVal" value="1" />
         <select
-          id        = "tceforms-select-tx-browser-pi1-extend-calendar-calendar"
+          id        = "tceforms-select-tx-browser-pi1-extend-cal-view"
           name      = "' . $arr_pluginConf['itemFormElName'] . '"
           class     = "select"
           size      = "1"
@@ -746,7 +746,7 @@ class tx_browser_pi1_backend
       $str_prompt = $str_prompt.'
         <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.select.info') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_view.select.info') . '
           </div>
         </div>
         ';
@@ -759,34 +759,259 @@ class tx_browser_pi1_backend
 
       ///////////////////////////////////////////////////////////////////////////////
       //
-      // RETURN an object CALENDAR is missing in the view
+      // A view is selected
 
+    $str_prompt = $str_prompt.'
+      <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
+        <div class="message-body" style="max-width:600px;">
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_view.success.ok') . '
+        </div>
+      </div>
+      ';
+    $str_prompt = $formField . $str_prompt;
+      // A view is selected
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN the select box (TCE form)
+
+      return $str_prompt;
+      // RETURN the select box (TCE form)
+  }
+
+
+
+
+
+
+
+
+  /**
+ * extend_cal_field:  Renders a TCE form select box with available fields.
+ *                    Three cases will be handled:
+ *                    1. There isn't any field available:
+ *                       * returns a prompt only
+ *                    2. Thera are fields available, but no one isn't selected:
+ *                       * returns a prompt with a select box
+ *                    3. Thera are fields available and one is selected:
+ *                       * returns a select box with a prompt
+ *
+ * Tab [extend]
+ *
+ * @param array   $arr_pluginConf:  Current plugin/flexform configuration
+ * @param array   $obj_TCEform:     Current TCE form object
+ * @return  string    $str_prompt: HTML prompt or HTML prompt and TCE select form with calendar plugins
+ * @version 4.0.0
+ * @since 4.0.0
+ */
+  public function extend_cal_field($arr_pluginConf, $obj_TCEform)
+  {
+      //.message-notice
+      //.message-information
+      //.message-ok
+      //.message-warning
+      //.message-error
+
+
+
+      // Require classes, init page id, page object and TypoScript object
+    $bool_success = $this->init($arr_pluginConf);
+    if(!$bool_success)
+    {
+      return $arr_pluginConf;
+    }
+
+
+
+    $arr_items  = null;
+    $str_prompt = null;
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN there isn't any view selected
+
+      // Get current view
+    $arr_xml  = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
+    $str_view = $arr_xml['data']['extend']['lDEF']['cal_view']['vDEF'];
+      // Get current view
+
+    if( empty( $str_view ) )
+    {
+      return null;
+    }
+      // RETURN there isn't any view selected
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // A view is selected
+
+      // Get fields
+    $str_fields_csv = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['views.']['list.'][$str_view . '.']['select'];
+    $str_fields_csv = str_replace(' ',  null, $str_fields_csv);
+    $str_fields_csv = str_replace("\n", null, $str_fields_csv);
+    $str_fields_csv = str_replace("\l", null, $str_fields_csv);
+    $str_fields_csv = str_replace("\r", null, $str_fields_csv);
+    $arr_fields_csv = explode(',', $str_fields_csv);
+      // Get fields
+
+      // The default first item
+    $arr_items    = null;
+    $value        = 0;
+    $label        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field.select.firstItem');
+    $arr_items[]  = '<option value="' . $value . '%selected%">' . $label . '</option>';
+      // The default first item
+
+      // LOOP fields
+    $bool_selected  = false;
+    foreach( $arr_fields_csv as $tableField)
+    {
+      if( empty( $tableField ) )
+      {
+        continue;
+      }
+
+      list( $table, $field ) = explode('.', $tableField );
+      
+        // TCA eval value
+      if (!is_array($GLOBALS['TCA'][$table]['columns']))
+      {
+        t3lib_div::loadTCA($table);
+      }
+      $eval           = $GLOBALS['TCA'][$table]['columns'][$field]['config']['eval'];
+      $bool_timestamp = false;
+      switch( true )
+      {
+        case( !( strpos( $eval, 'date' ) === false ) ):
+          $bool_timestamp = true;
+          break;
+        case( !( strpos( $eval, 'time' ) === false ) ):
+          $bool_timestamp = true;
+          break;
+        case( !( strpos( $eval, 'year' ) === false ) ):
+          $bool_timestamp = true;
+          break;
+      }
+      if( !$bool_timestamp )
+      {
+        continue;
+      }
+        // TCA eval value
+      
+      $selected = null;
+        // Current field is selected
+      if($tableField == $arr_pluginConf['itemFormElValue'])
+      {
+        $bool_selected  = true;
+        $selected       = ' selected="selected"';
+      }
+        // Current field is selected
+
+        // Render the item
+      $value  = $tableField;
+      $label  = $tableField;
+      $arr_items[]  = '<option value="' . $value . '"'. $selected . '>' . $label . '</option>';
+        // Render the item
+    }
+      // LOOP fields
+
+      // Set default firstItem selected or not
+    if($bool_selected) {
+      $arr_items[0] = str_replace('%selected%', null, $arr_items[0]);
+    }
+    if(!$bool_selected) {
+      $arr_items[0] = str_replace('%selected%', ' selected="selected"', $arr_items[0]);
+    }
+    $items = implode("\n" . '          ', (array) $arr_items);
+      // Set default firstItem selected or not
+      // LOOP views
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN there isn't any field available
+
+    if( count($arr_items) < 2)
+    {
       $str_prompt = $str_prompt.'
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.select.no_calObj.error') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field.error') . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.view.select.no_calObj.info') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field.info') . '
+          </div>
+        </div>
+        ';
+      $str_prompt = str_replace( '%view%', $str_view, $str_prompt );
+      return $str_prompt;
+    }
+      // RETURN there isn't any view available
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Render the select box (TCE form)
+
+    $formField = '
+      <div class="t3-form-field t3-form-field-flex">
+        <input type="hidden" name="' . $arr_pluginConf['itemFormElName'] . '_selIconVal" value="1" />
+        <select
+          id        = "tceforms-select-tx-browser-pi1-extend-cal-field"
+          name      = "' . $arr_pluginConf['itemFormElName'] . '"
+          class     = "select"
+          size      = "1"
+          onchange  = "if (this.options[this.selectedIndex].value==\'--div--\') {this.selectedIndex=1;} ' . htmlspecialchars(implode('', $arr_pluginConf['fieldChangeFunc'])) . 'if (confirm(TBE_EDITOR.labels.onChangeAlert) &amp;&amp; TBE_EDITOR.checkSubmit(-1)){ TBE_EDITOR.submitForm() };">
+          ' . $items . '
+        </select>
+      </div>
+      ';
+      // Render the select box (TCE form)
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN no view is selected
+
+    if(!$bool_selected)
+    {
+      $str_prompt = $str_prompt.'
+        <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body" style="max-width:600px;">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field.select.info') . '
           </div>
         </div>
         ';
       $str_prompt = $str_prompt . $formField;
       return $str_prompt;
-      // RETURN an object CALENDAR is missing in the view
+    }
+      // RETURN no plugin is selected
 
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // A view is selected
 
     $str_prompt = $str_prompt.'
       <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
         <div class="message-body" style="max-width:600px;">
-          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar.select.ok') . '
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field.success.ok') . '
         </div>
       </div>
       ';
     $str_prompt = $formField . $str_prompt;
-      // A calendar plugin is selected
+      // A view is selected
 
 
 

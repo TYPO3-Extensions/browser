@@ -6,25 +6,36 @@
     </TCEforms>
     <type>array</type>
     <el>
-      <calendar>
+      <cal_ui>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.calendar</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_ui</label>
           <config>
             <type>user</type>
-            <userFunc>tx_browser_pi1_backend->extend_calendar</userFunc>
+            <userFunc>tx_browser_pi1_backend->extend_cal_ui</userFunc>
           </config>
         </TCEforms>
-      </calendar>
-      <calendar_view>
+      </cal_ui>
+      <cal_view>
         <TCEforms>
           <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_view</label>
           <config>
             <type>user</type>
-            <userFunc>tx_browser_pi1_backend->extend_calendar_view</userFunc>
+            <userFunc>tx_browser_pi1_backend->extend_cal_view</userFunc>
           </config>
         </TCEforms>
-      </calendar_view>
+      </cal_view>
+      <cal_field>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field</label>
+          <config>
+            <type>user</type>
+            <userFunc>tx_browser_pi1_backend->extend_cal_field</userFunc>
+          </config>
+        </TCEforms>
+      </cal_field>
     </el>
   </ROOT>
 </T3DataStructure>
