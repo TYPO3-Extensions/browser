@@ -29,7 +29,8 @@
  * @package    TYPO3
  * @subpackage    tx_browser
  *
- * @version 3.6.5
+ * @version 4.0.0
+ * @since 1.0.0
  */
 
   /**
@@ -79,6 +80,8 @@ class tx_browser_pi1_template
   // [Array] The TypoScript configuration array of the current view
   var $conf_path  = false;
   // [String] TypoScript path to the current view. I.e. views.single.1
+  var $ignore_empty_rows_rule = false;
+  // [Booelan] If true, workflow will executed in case of empty rows too
   // Variables set by the pObj (by class.tx_browser_pi1.php)
 
 
@@ -633,35 +636,50 @@ class tx_browser_pi1_template
       //
       // RETURN: Without rows no listview table
 
-    if (count($rows) == 0 || !is_array($rows))
+    // 110823, dwildt
+    // if (count($rows) == 0 || !is_array($rows))
+    if ( empty ( $rows ) )
     {
-      if ($this->pObj->conf['displayList.']['noItemMessage'])
+      if( $this->ignore_empty_rows_rule )
       {
-        $noItemMessage = $this->pObj->objWrapper->general_stdWrap('X', $this->pObj->conf['displayList.']['noItemMessage.']);
-        $template = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $noItemMessage, true);
         if ($this->pObj->b_drs_templating)
         {
-          t3lib_div::devlog('[INFO/TEMPLATING] Returned Template is the noItemMessage.', $this->pObj->extKey, 0);
-          t3lib_div::devLog('[HELP/TEMPLATING] Change it? Configure '.$this->conf_path.'.displayList.noItemMessage.', $this->pObj->extKey, 1);
+          t3lib_div::devlog('[INFO/TEMPLATING] Rows are empty and ignore_empty_rows_rule is true. Workflow will executed.', $this->pObj->extKey, 0);
         }
       }
-      if (!$this->pObj->conf['displayList.']['noItemMessage'])
+      if( ! $this->ignore_empty_rows_rule )
       {
-        $template = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', '', true);
+        if ($this->pObj->conf['displayList.']['noItemMessage'])
+        {
+          $noItemMessage = $this->pObj->objWrapper->general_stdWrap('X', $this->pObj->conf['displayList.']['noItemMessage.']);
+          $template = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $noItemMessage, true);
+          if ($this->pObj->b_drs_templating)
+          {
+            t3lib_div::devlog('[INFO/TEMPLATING] Returned Template is the noItemMessage.', $this->pObj->extKey, 0);
+            t3lib_div::devLog('[HELP/TEMPLATING] Change it? Configure '.$this->conf_path.'.displayList.noItemMessage.', $this->pObj->extKey, 1);
+          }
+        }
+        if (!$this->pObj->conf['displayList.']['noItemMessage'])
+        {
+          $template = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', '', true);
+        }
+        $markerArray    = $this->pObj->objWrapper->constant_markers();
+
+          /////////////////////////////////////
+          //
+          // Workaround
+
+          // In case of ###LISTHEADITEM### is part of ###SEARCHFORM###
+        $markerArray['###ITEM###']  = false;
+          // Workaround
+
+        $template       = $this->pObj->cObj->substituteMarkerArray($template, $markerArray);
+        if ($this->pObj->b_drs_warn)
+        {
+          t3lib_div::devlog('[WARN/TEMPLATING] There isn\t any row.', $this->pObj->extKey, 0);
+        }
+        return $template;
       }
-//var_dump(__METHOD__ . ': ' . __LINE__);
-      $markerArray    = $this->pObj->objWrapper->constant_markers();
-
-        /////////////////////////////////////
-        //
-        // Workaround
-
-        // In case of ###LISTHEADITEM### is part of ###SEARCHFORM###
-      $markerArray['###ITEM###']  = false;
-        // Workaround
-
-      $template       = $this->pObj->cObj->substituteMarkerArray($template, $markerArray);
-      return $template;
     }
       // RETURN: Without rows no listview table
 
@@ -829,6 +847,14 @@ class tx_browser_pi1_template
         // elements
       foreach((array) $rows as $elements)
       {
+        if( $this->ignore_empty_rows_rule )
+        {
+          if ($this->pObj->b_drs_warn)
+          {
+            t3lib_div::devLog('[WARN/TEMPLATING] CONTINUE because of ignore_empty_rows_rule!', $this->pObj->extKey, 2);
+          }
+          continue;
+        }
           // In case of the first group and a new group
         $str_next_group = $this->groupBy_get_groupname($elements);
         if($this->bool_groupby)
@@ -888,22 +914,32 @@ class tx_browser_pi1_template
 
 
 
-      if($this->bool_groupby)
+      if( ! $this->ignore_empty_rows_rule )
       {
-        // Allocates the collected rows to the current group
-        $arr_htmlGroupby[$int_groupCounter] = $this->pObj->cObj->substituteSubpart(
-                                                $arr_htmlGroupby[$int_groupCounter],
-                                                '###LISTBODY###', $bodyRows, true);
-        $str_htmlGroupby = implode("\n",$arr_htmlGroupby);
-        $template = $this->pObj->cObj->substituteSubpart($template, '###GROUPBY###', $str_htmlGroupby, true);
+        if($this->bool_groupby)
+        {
+          // Allocates the collected rows to the current group
+          $arr_htmlGroupby[$int_groupCounter] = $this->pObj->cObj->substituteSubpart(
+                                                  $arr_htmlGroupby[$int_groupCounter],
+                                                  '###LISTBODY###', $bodyRows, true);
+          $str_htmlGroupby = implode("\n",$arr_htmlGroupby);
+          $template = $this->pObj->cObj->substituteSubpart($template, '###GROUPBY###', $str_htmlGroupby, true);
+        }
+        if(!$this->bool_groupby)
+        {
+          // #10762 ###CLASS### won't be replaced
+          // $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODYITEM###', $bodyRows, true);
+          $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODY###', $bodyRows, true);
+        }
+        // ###LISTBODY###: Table body with elements in columns
       }
-      if(!$this->bool_groupby)
+      if( $this->ignore_empty_rows_rule )
       {
-        // #10762 ###CLASS### won't be replaced
-        // $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODYITEM###', $bodyRows, true);
-        $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODY###', $bodyRows, true);
+        if ( $this->pObj->b_drs_templating )
+        {
+          t3lib_div::devLog('[INFO/TEMPLATING] ###LISTBODY###, ###GROUPBY### are ignored because of ignore_empty_rows_rule!', $this->pObj->extKey, 0);
+        }
       }
-      // ###LISTBODY###: Table body with elements in columns
     }
       // With ###ITEM###
 
@@ -913,12 +949,13 @@ class tx_browser_pi1_template
       //
       // DRS - Performance
 
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
+    if ( $this->pObj->b_drs_perform )
+    {
+      if( $this->pObj->bool_typo3_43 )
       {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
+        $endTime = $this->pObj->TT->getDifferenceToStarttime( );
       }
-      if(!$this->pObj->bool_typo3_43)
+      if( ! $this->pObj->bool_typo3_43 )
       {
         $endTime = $this->pObj->TT->mtime();
       }
@@ -964,10 +1001,17 @@ class tx_browser_pi1_template
       {
         $arr_wrap_grouptitle = array(false, false);
       }
-
         // Rows
       foreach((array) $rows as $row => $elements)
       {
+        if( $this->ignore_empty_rows_rule )
+        {
+          if ($this->pObj->b_drs_warn)
+          {
+            t3lib_div::devLog('[WARN/TEMPLATING] CONTINUE because of ignore_empty_rows_rule!', $this->pObj->extKey, 2);
+          }
+          continue;
+        }
           // In case of the first group and a new group
         $str_next_group = $this->groupBy_get_groupname($elements);
         if($this->bool_groupby)
@@ -1034,21 +1078,45 @@ class tx_browser_pi1_template
         // Rows
       unset($markerArray);
 
-
-
-      if($this->bool_groupby)
+        // GROUP BY true
+      if( $this->bool_groupby )
       {
-        // Allocates the collected rows to the current group
-        $arr_htmlGroupby[$int_groupCounter] = $this->pObj->cObj->substituteSubpart(
-                                                $arr_htmlGroupby[$int_groupCounter],
-                                                '###LISTBODY###', $tmpl_rows, true);
-        $str_htmlGroupby = implode("\n",$arr_htmlGroupby);
-        $template = $this->pObj->cObj->substituteSubpart($template, '###GROUPBY###', $str_htmlGroupby, true);
+        if( $this->ignore_empty_rows_rule )
+        {
+          if ($this->pObj->b_drs_templating)
+          {
+            t3lib_div::devlog('[INFO/TEMPLATING] ###LISTBODY###, ###GROUPBY### will ignored bevause of ignore_empty_rows_rule.', $this->pObj->extKey, 0);
+          }
+        }
+        if( ! $this->ignore_empty_rows_rule )
+        {
+          // Allocates the collected rows to the current group
+          $arr_htmlGroupby[$int_groupCounter] = $this->pObj->cObj->substituteSubpart(
+                                                  $arr_htmlGroupby[$int_groupCounter],
+                                                  '###LISTBODY###', $tmpl_rows, true);
+          $str_htmlGroupby = implode("\n",$arr_htmlGroupby);
+          $template = $this->pObj->cObj->substituteSubpart($template, '###GROUPBY###', $str_htmlGroupby, true);
+        }
       }
-      if(!$this->bool_groupby)
+        // GROUP BY true
+
+        // GROUP BY false
+      if( ! $this->bool_groupby )
       {
-        $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODY###', $tmpl_rows, true);
+        if( $this->ignore_empty_rows_rule )
+        {
+          if ($this->pObj->b_drs_templating)
+          {
+            t3lib_div::devlog('[INFO/TEMPLATING] ###LISTBODY### will ignored bevause of ignore_empty_rows_rule.', $this->pObj->extKey, 0);
+          }
+        }
+        if( ! $this->ignore_empty_rows_rule )
+        {
+          $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODY###', $tmpl_rows, true);
+        }
       }
+        // GROUP BY false
+
       $this->pObj->rows = $rows;
         // ###LISTBODY### Content
 
@@ -1088,7 +1156,6 @@ class tx_browser_pi1_template
     $listview       = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
     $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $listview, true);
     unset($markerArray);
-//var_dump(__METHOD__ . ': ' . __LINE__);
     $markerArray    = $this->pObj->objWrapper->constant_markers();
     $template       = $this->pObj->cObj->substituteMarkerArray($template, $markerArray);
       // Fill up the template with content
@@ -2114,14 +2181,18 @@ class tx_browser_pi1_template
         {
           foreach((array) $values as $value)
           {
-            if(!empty($value))
+              // #29186, 110823, dwildt
+            //if(empty($value))
+            if( $value == null )
             {
               $str_hidden = $str_hidden."\n".$str_space_left.'<input type="hidden" name="'.$piVar_key.'" value="'.$value.'">';
 //              $str_param  = $str_param.'&'.$piVar_key.'='.$value;
             }
           }
         }
-        if(!is_array($values) && !empty($values))
+          // #29186, 110823, dwildt
+        //if(!is_array($values) && !empty($values))
+        if( ! is_array( $values ) && ! ( $values == null ) )
         {
           $str_hidden = $str_hidden."\n".$str_space_left.'<input type="hidden" name="'.$piVar_key.'" value="'.$values.'">';
 //          $str_param  = $str_param.'&'.$piVar_key.'='.$value;
@@ -2260,7 +2331,9 @@ class tx_browser_pi1_template
     {
       $str_elements = implode('', $elements);
         // RETURN: All elements are empty, the current row is empty
-      if(empty($str_elements))
+        // #29186, 110823, dwildt
+      //if(empty($str_elements))
+      if($str_elements == null )
       {
         if ($this->pObj->b_drs_templating)
         {
@@ -2480,7 +2553,9 @@ class tx_browser_pi1_template
       {
         if($this->pObj->view == 'single')
         {
-          if(empty($value))
+            // #29186, 110823, dwildt
+          //if(empty($value))
+          if( $value == null )
           {
             if ($this->pObj->b_drs_templating)
             {

@@ -34,25 +34,28 @@
 */
 
  /**
-* [CLASS/FUNCTION INDEX of SCRIPT]
-*
-*
-*
-*   56: class tx_browser_pi1_marker
-*   87:     function __construct($parentObj)
-*
-*              SECTION: Session markers
-*  114:     function session_marker($arr_tsConf, $elements)
-*
-*              SECTION: Markers
-*  178:     function substitute_tablefield_marker($arr_multi_dimensional)
-*  400:     function substitute_marker_recurs($arr_multi_dimensional, $elements)
-*  715:     function extend_marker_wi_pivars($markerArray)
-*
-* TOTAL FUNCTIONS: 5
-* (This index is automatically created/updated by the extension "extdeveval")
-*
-*/
+ * [CLASS/FUNCTION INDEX of SCRIPT]
+ *
+ *
+ *
+ *   59: class tx_browser_pi1_marker
+ *   90:     function __construct($parentObj)
+ *
+ *              SECTION: Session markers
+ *  117:     function session_marker($arr_tsConf, $elements)
+ *
+ *              SECTION: Markers
+ *  191:     function substitute_tablefield_marker($arr_multi_dimensional)
+ *  419:     function substitute_marker($arr_multi_dimensional, $marker)
+ *  575:     function substitute_marker_recurs($arr_multi_dimensional, $elements)
+ *  895:     function extend_marker_wi_cObjData($markerArray)
+ *  933:     function extend_marker_wi_pivars($markerArray)
+ *  972:     function replace_left_over($str_content)
+ *
+ * TOTAL FUNCTIONS: 8
+ * (This index is automatically created/updated by the extension "extdeveval")
+ *
+ */
   class tx_browser_pi1_marker
   {
 
@@ -110,7 +113,6 @@
  * @param string    $arr_tsConf: The current TypoScript configuration
  * @param array   $elements: Array with the element session
  * @return  string    The value from the TSFE array
- * 
  */
   function session_marker($arr_tsConf, $elements)
   {
@@ -178,7 +180,7 @@
  *                                  Replace all markers in the given multidimensional array like the TypoScript
  *                                  configuration with the real values from the SQL result (with table.field values)
  *                                  * The method extends the SQL result with all piVar values. ###CHASH### has a process.
- *                                  * This method should supersede the deprecated method substitute_marker_recursive () 
+ *                                  * This method should supersede the deprecated method substitute_marker_recursive ()
  *
  * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
  * @param array   $elements: The current row of the SQL result
@@ -237,7 +239,7 @@
       // This array should be array of uids. We don't need any process for uids here.
       if (!is_array($value_pivar))
       {
-          // dwildt, 110320: Prevent to override database values in $elements by piVars 
+          // dwildt, 110320: Prevent to override database values in $elements by piVars
         if(!isset($elements[strtolower($key_pivar)]))
         {
           $elements[strtolower($key_pivar)] = $value_pivar;
@@ -406,7 +408,7 @@
  *                       Replace all markers in the given multidimensional array like the TypoScript configuration
  *                       with the values from the given marker array
  *                                  * The method extends the SQL result with all piVar values. ###CHASH### has a process.
- *                                  * This method should supersede the deprecated method substitute_marker_recursive () 
+ *                                  * This method should supersede the deprecated method substitute_marker_recursive ()
  *
  * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
  * @param array   $elements: The current row of the SQL result
@@ -439,7 +441,7 @@
       // This array should be array of uids. We don't need any process for uids here.
       if (!is_array($value_pivar))
       {
-          // dwildt, 110320: Prevent to override database values in $marker by piVars 
+          // dwildt, 110320: Prevent to override database values in $marker by piVars
         if(!isset($marker['###' . strtoupper($key_pivar) . '###']))
         {
           $marker['###' . strtoupper($key_pivar) . '###'] = $value_pivar;
@@ -887,7 +889,6 @@
  *
  * @param array   $markerArray: Array with markers
  * @return  array   $markerArray: Array with markers extended
- * 
  * @version 3.7.0
  * @since 3.7.0
  */
@@ -905,6 +906,8 @@
         $markerArray['###TT_CONTENT.'.strtoupper($key_cObjData).'###'] = $value_cObjData;
         if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
         {
+            // Make serial array line-break-able
+          $value_cObjData = str_replace(';', '; ', $value_cObjData);
           t3lib_div::devlog('[INFO/TEMPLATING] The cObjData ['.$key_cObjData.'] is available.', $this->pObj->extKey, 0);
           t3lib_div::devlog('[HELP/TEMPLATING] If you use the marker ###TT_CONTENT.'.strtoupper($key_cObjData).'###, it will become '.$value_cObjData, $this->pObj->extKey, 1);
         }
@@ -926,7 +929,6 @@
  *
  * @param array   $markerArray: Array with markers
  * @return  array   $markerArray: Array with markers extended
- * 
  * @version 2.0.0
  * @since 2.0.0
  */
@@ -965,7 +967,7 @@
  *                      Feature: #28657
  *
  * @param array   $str_content: current content
- * @return  string  $str_content: rendered content
+ * @return  string    $str_content: rendered content
  * @version 3.7.0
  * @since 3.7.0
  */

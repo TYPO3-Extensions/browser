@@ -202,175 +202,185 @@ class tx_browser_pi1_backend
       //
       // Check the plugin
 
-    $str_prompt_evaluationResult = null;
+      // RETURN plugin isn't never saved
 
-      // TypoScript static template isn't included
-    if(empty($str_prompt_evaluationResult))
+    if( empty ( $arr_pluginConf['row']['pi_flexform'] ) )
     {
-      if( !is_array ( $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.'] ) )
-      {
-        $str_prompt_evaluationResult  = '
-          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.error.no_ts_template') . '
-            </div>
-          </div>
-          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_ts_template') . '
-            </div>
-          </div>
-          ';
-      }
-    }
-      // TypoScript static template isn't included
-
-      // There isn't any view configured
-    if(empty($str_prompt_evaluationResult))
-    {
-      if( !is_array ( $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['views.'] ) )
-      {
-        $str_prompt_evaluationResult  = '
-          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.error.no_view') . '
-            </div>
-          </div>
-          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_view') . '
-            </div>
-          </div>
-          ';
-      }
-    }
-      // There isn't any view configured
-
-      // There isn't any record storage page
-    if(empty($str_prompt_evaluationResult))
-    {
-      if( empty ( $arr_pluginConf['row']['pages'] ) )
-      {
-        $str_prompt_evaluationResult  = '
-          <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.warn.no_record_storage_pid') . '
-            </div>
-          </div>
-          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_record_storage_pid') . '
-            </div>
-          </div>
-          ';
-      }
-    }
-      // There isn't any record storage page
-
-      // There isn't any AJAX page object
-    if(empty($str_prompt_evaluationResult))
-    {
-        // Is AJAX enabled? AJAX page object II
-      $bool_AJAXenabled = false;
-      //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
-      $arr_xml = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
-      //var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
-      $record_browser = $arr_xml['data']['viewSingle']['lDEF']['record_browser']['vDEF'];
-
-      //var_dump(__METHOD__, __LINE__, '$record_browser', $record_browser);
-      switch ($record_browser)
-      {
-        case ('disabled') :
-          $bool_AJAXenabled = false;
-          break;
-        case ('by_flexform') :
-          $bool_AJAXenabled = true;
-          break;
-        case ('ts') :
-        default :
-          $bool_AJAXenabled = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
-          break;
-      }
-        // Is AJAX enabled? AJAX page object II
-
-        // AJAX is enabled. AJAX page object II
-      //var_dump(__METHOD__, __LINE__, '$bool_AJAXenabled', $bool_AJAXenabled);
-      if( $bool_AJAXenabled )
-      {
-          // Get default typeNum of AJAX page object
-        //var_dump(__METHOD__, __LINE__, $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum']);
-        if( !isset ($this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum']))
-        {
-          $str_prompt_evaluationResult  = '
-            <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
-              <div class="message-body">
-                ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum') . '
-              </div>
-            </div>
-            <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-              <div class="message-body">
-                ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum') . '
-              </div>
-            </div>
-            ';
-        }
-          // Get default typeNum of AJAX page object
-          // Get name of AJAX page object
-        if( isset ($this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum']))
-        {
-          $AJAX_defaultTypeNum    = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum'];
-          $AJAX_nameOfPageObject  = $this->obj_TypoScript->setup['types.'][$AJAX_defaultTypeNum];
-            // There is no AJAX page object
-          //var_dump(__METHOD__, __LINE__, '$AJAX_nameOfPageObject', $AJAX_nameOfPageObject);
-          if( empty($AJAX_nameOfPageObject))
-          {
-          $str_prompt_evaluationResult  = '
-            <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
-              <div class="message-body">
-                ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.error.no_AJAXpageObject') . '
-              </div>
-            </div>
-            <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-              <div class="message-body">
-                ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_AJAXpageObject') . '
-              </div>
-            </div>
-            ';
-            $str_prompt_evaluationResult = str_replace( '%typeNum%', $AJAX_defaultTypeNum, $str_prompt_evaluationResult);
-          }
-            // There is no AJAX page object
-        }
-          // Get name of AJAX page object
-      }
-        // AJAX is enabled. AJAX page object II
-    }
-      // There isn't any AJAX page object
-
-      // Evaluation result: default message in case of success
-    if(empty($str_prompt_evaluationResult))
-    {
-      $str_prompt_evaluationResult  = '
-        <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
+      $str_prompt = '
+        <div class="typo3-message message-error">
           <div class="message-body">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.ok') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.error.saved_never') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.saved_never') . '
           </div>
         </div>
         ';
+      return $str_prompt;
     }
+      // RETURN plugin isn't never saved
+
+      // RETURN TypoScript static template isn't included
+    if( !is_array ( $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.'] ) )
+    {
+      $str_prompt = '
+        <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.error.no_ts_template') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_ts_template') . '
+          </div>
+        </div>
+        ';
+      return $str_prompt . $str_prompt_info_tutorialAndForum;
+    }
+      // RETURN TypoScript static template isn't included
+
+      // RETURN There isn't any view configured
+    if( !is_array ( $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['views.'] ) )
+    {
+      $str_prompt = '
+        <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.error.no_view') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_view') . '
+          </div>
+        </div>
+        ';
+      return $str_prompt . $str_prompt_info_tutorialAndForum;
+    }
+      // RETURN There isn't any view configured
+
+      // RETURN There isn't any record storage page
+    if( empty ( $arr_pluginConf['row']['pages'] ) )
+    {
+      $str_prompt = '
+        <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.warn.no_record_storage_pid') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_record_storage_pid') . '
+          </div>
+        </div>
+        ';
+      return $str_prompt . $str_prompt_info_tutorialAndForum;
+    }
+      // RETURN There isn't any record storage page
+
+      // RETURN There isn't any AJAX page object
+      // Is AJAX enabled? AJAX page object II
+    $bool_AJAXenabled = false;
+    //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
+    $arr_xml = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
+    //var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
+    $record_browser = $arr_xml['data']['viewSingle']['lDEF']['record_browser']['vDEF'];
+
+    //var_dump(__METHOD__, __LINE__, '$record_browser', $record_browser);
+    switch ($record_browser)
+    {
+      case ('disabled') :
+        $bool_AJAXenabled = false;
+        break;
+      case ('by_flexform') :
+        $bool_AJAXenabled = true;
+        break;
+      case ('ts') :
+      default :
+        $bool_AJAXenabled = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
+        break;
+    }
+      // Is AJAX enabled? AJAX page object II
+
+      // AJAX is enabled. AJAX page object II
+    //var_dump(__METHOD__, __LINE__, '$bool_AJAXenabled', $bool_AJAXenabled);
+    if( $bool_AJAXenabled )
+    {
+        // RETURN there isn't any default typeNum of AJAX page object
+      //var_dump(__METHOD__, __LINE__, $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum']);
+      if( !isset ($this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum']))
+      {
+        $str_prompt = '
+          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum') . '
+            </div>
+          </div>
+          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum') . '
+            </div>
+          </div>
+          ';
+        return $str_prompt . $str_prompt_info_tutorialAndForum;
+      }
+        // RETURN there isn't any default typeNum of AJAX page object
+
+        // RETURN there is no AJAX page object
+      $AJAX_defaultTypeNum    = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum'];
+      $AJAX_nameOfPageObject  = $this->obj_TypoScript->setup['types.'][$AJAX_defaultTypeNum];
+        // There is no AJAX page object
+      //var_dump(__METHOD__, __LINE__, '$AJAX_nameOfPageObject', $AJAX_nameOfPageObject);
+      if( empty( $AJAX_nameOfPageObject ) )
+      {
+        $str_prompt = '
+          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.error.no_AJAXpageObject') . '
+            </div>
+          </div>
+          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_AJAXpageObject') . '
+            </div>
+          </div>
+          ';
+        $str_prompt = str_replace( '%typeNum%', $AJAX_defaultTypeNum, $str_prompt);
+        return $str_prompt . $str_prompt_info_tutorialAndForum;
+      }
+        // RETURN there is no AJAX page object
+    }
+      // AJAX is enabled. AJAX page object II
+
+      // Evaluation result: default message in case of success
+    $str_prompt = '
+      <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
+        <div class="message-body">
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.ok') . '
+        </div>
+      </div>
+      ';
+      // Evaluation result: default message in case of success
+
+      // DRS is enabled
+    $arr_extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['browser']);
+    if ($arr_extConf['drs_mode'] != 'Don\'t log anything')
+    {
+      $str_prompt = $str_prompt . '
+        <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.drs.warn') . '
+          </div>
+        </div>
+        ';
+      $str_prompt = str_replace( '%status%', $arr_extConf['drs_mode'], $str_prompt );
+    }
+      // DRS is enabled
+
+
       // Check the plugin
-
-
-
-      ///////////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN the prompt
-
-    $str_prompt = $str_prompt . $str_prompt_evaluationResult . $str_prompt_info_tutorialAndForum;
-      // RETURN the prompt
-
-
-
-    return $str_prompt;
+    return $str_prompt . $str_prompt_info_tutorialAndForum;
   }
 
 
@@ -409,6 +419,19 @@ class tx_browser_pi1_backend
 
     $arr_items  = null;
     $str_prompt = null;
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Reset session data
+
+      // Get the extra from fields from the session
+    $arr_session = $GLOBALS['BE_USER']->getSessionData('tx_browser_pi5');
+      // (Re)set cal_ui eval to false
+    $arr_session['sheets']['extend']['cal_ui']['eval'] = false;
+    $GLOBALS['BE_USER']->setAndSaveSessionData('tx_browser_pi5', array( 'sheets' => $arr_session['sheets']));
+      // Reset session data
 
 
 
@@ -538,15 +561,28 @@ class tx_browser_pi1_backend
       //
       // A cal_ui plugin is selected
 
-    $str_prompt = $str_prompt.'
-      <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
-        <div class="message-body" style="max-width:600px;">
-          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_ui.success.ok') . '
-        </div>
-      </div>
-      ';
+//    if( !$arr_session['sheets']['extend']['cal_view']['eval'])
+//    {
+//      $str_prompt = $str_prompt.'
+//        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+//          <div class="message-body" style="max-width:600px;">
+//            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_ui.success.info') . '
+//          </div>
+//        </div>
+//        ';
+//    }
     $str_prompt = $formField . $str_prompt;
       // A cal_ui plugin is selected
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Set session data
+
+    $arr_session['sheets']['extend']['cal_ui']['eval'] = true;
+    $GLOBALS['BE_USER']->setAndSaveSessionData('tx_browser_pi5', array( 'sheets' => $arr_session['sheets']));
+      // Set session data
 
 
 
@@ -609,6 +645,19 @@ class tx_browser_pi1_backend
 
       ///////////////////////////////////////////////////////////////////////////////
       //
+      // Reset session data
+
+      // Get the extra from fields from the session
+    $arr_session = $GLOBALS['BE_USER']->getSessionData('tx_browser_pi5');
+      // (Re)set cal_ui eval to false
+    $arr_session['sheets']['extend']['cal_view']['eval'] = false;
+    $GLOBALS['BE_USER']->setAndSaveSessionData('tx_browser_pi5', array( 'sheets' => $arr_session['sheets']));
+      // Reset session data
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
       // RETURN there isn't any plugin Browser Calendar selected
 
       // Get current browser calendar plugin
@@ -621,6 +670,21 @@ class tx_browser_pi1_backend
       return null;
     }
       // RETURN there isn't any plugin Browser Calendar selected
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN: session data cal_ui eval is false
+
+      // Get the extra from fields from the session
+    $arr_session = $GLOBALS['BE_USER']->getSessionData('tx_browser_pi5');
+      // (Re)set cal_ui eval to false
+    if( !$arr_session['sheets']['extend']['cal_ui']['eval'] )
+    {
+      return null;
+    }
+      // RETURN: session data cal_ui eval is false
 
 
 
@@ -761,15 +825,28 @@ class tx_browser_pi1_backend
       //
       // A view is selected
 
-    $str_prompt = $str_prompt.'
-      <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
-        <div class="message-body" style="max-width:600px;">
-          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_view.success.ok') . '
-        </div>
-      </div>
-      ';
+//    if( !$arr_session['sheets']['extend']['cal_field_start']['eval'])
+//    {
+//      $str_prompt = $str_prompt.'
+//        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+//          <div class="message-body" style="max-width:600px;">
+//            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_view.success.info') . '
+//          </div>
+//        </div>
+//        ';
+//    }
     $str_prompt = $formField . $str_prompt;
       // A view is selected
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Set session data
+
+    $arr_session['sheets']['extend']['cal_view']['eval'] = true;
+    $GLOBALS['BE_USER']->setAndSaveSessionData('tx_browser_pi5', array( 'sheets' => $arr_session['sheets']));
+      // Set session data
 
 
 
@@ -789,7 +866,7 @@ class tx_browser_pi1_backend
 
 
   /**
- * extend_cal_field:  Renders a TCE form select box with available fields.
+ * extend_cal_field_start:  Renders a TCE form select box with available fields.
  *                    Three cases will be handled:
  *                    1. There isn't any field available:
  *                       * returns a prompt only
@@ -806,7 +883,7 @@ class tx_browser_pi1_backend
  * @version 4.0.0
  * @since 4.0.0
  */
-  public function extend_cal_field($arr_pluginConf, $obj_TCEform)
+  public function extend_cal_field_start($arr_pluginConf, $obj_TCEform)
   {
       //.message-notice
       //.message-information
@@ -820,6 +897,7 @@ class tx_browser_pi1_backend
     $bool_success = $this->init($arr_pluginConf);
     if(!$bool_success)
     {
+//      var_dump( __METHOD__, __LINE__, 'RETURN', $bool_success);
       return $arr_pluginConf;
     }
 
@@ -827,6 +905,19 @@ class tx_browser_pi1_backend
 
     $arr_items  = null;
     $str_prompt = null;
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Reset session data
+
+      // Get the extra from fields from the session
+    $arr_session = $GLOBALS['BE_USER']->getSessionData('tx_browser_pi5');
+      // (Re)set cal_ui eval to false
+    $arr_session['sheets']['extend']['cal_field_start']['eval'] = false;
+    $GLOBALS['BE_USER']->setAndSaveSessionData('tx_browser_pi5', array( 'sheets' => $arr_session['sheets']));
+      // Reset session data
 
 
 
@@ -841,9 +932,26 @@ class tx_browser_pi1_backend
 
     if( empty( $str_view ) )
     {
+//      var_dump( __METHOD__, __LINE__, 'RETURN', $str_view);
       return null;
     }
       // RETURN there isn't any view selected
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN: session data cal_view eval is false
+
+      // Get the extra from fields from the session
+    $arr_session = $GLOBALS['BE_USER']->getSessionData('tx_browser_pi5');
+      // (Re)set cal_ui eval to false
+    if( !$arr_session['sheets']['extend']['cal_view']['eval'] )
+    {
+//      var_dump( __METHOD__, __LINE__, 'RETURN', $arr_session);
+      return null;
+    }
+      // RETURN: session data cal_view eval is false
 
 
 
@@ -863,7 +971,7 @@ class tx_browser_pi1_backend
       // The default first item
     $arr_items    = null;
     $value        = 0;
-    $label        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field.select.firstItem');
+    $label        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field_start.select.firstItem');
     $arr_items[]  = '<option value="' . $value . '%selected%">' . $label . '</option>';
       // The default first item
 
@@ -942,12 +1050,12 @@ class tx_browser_pi1_backend
       $str_prompt = $str_prompt.'
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field.error') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field_start.error') . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field.info') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field_start.info') . '
           </div>
         </div>
         ';
@@ -966,7 +1074,7 @@ class tx_browser_pi1_backend
       <div class="t3-form-field t3-form-field-flex">
         <input type="hidden" name="' . $arr_pluginConf['itemFormElName'] . '_selIconVal" value="1" />
         <select
-          id        = "tceforms-select-tx-browser-pi1-extend-cal-field"
+          id        = "tceforms-select-tx-browser-pi1-extend-cal-field-start"
           name      = "' . $arr_pluginConf['itemFormElName'] . '"
           class     = "select"
           size      = "1"
@@ -988,7 +1096,294 @@ class tx_browser_pi1_backend
       $str_prompt = $str_prompt.'
         <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body" style="max-width:600px;">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field.select.info') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field_start.select.info') . '
+          </div>
+        </div>
+        ';
+      $str_prompt = $str_prompt . $formField;
+      return $str_prompt;
+    }
+      // RETURN no plugin is selected
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // A view is selected
+
+//    if( !$arr_session['sheets']['extend']['cal_field_end']['eval'])
+//    {
+//      $str_prompt = $str_prompt.'
+//        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+//          <div class="message-body" style="max-width:600px;">
+//            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field_start.success.info') . '
+//          </div>
+//        </div>
+//        ';
+//    }
+    $str_prompt = $formField . $str_prompt;
+      // A view is selected
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Set session data
+
+    $arr_session['sheets']['extend']['cal_field_start']['eval'] = true;
+    $GLOBALS['BE_USER']->setAndSaveSessionData('tx_browser_pi5', array( 'sheets' => $arr_session['sheets']));
+      // Set session data
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN the select box (TCE form)
+
+      return $str_prompt;
+      // RETURN the select box (TCE form)
+  }
+
+
+
+
+
+
+
+
+  /**
+ * extend_cal_field_end:  Renders a TCE form select box with available fields.
+ *                    Three cases will be handled:
+ *                    1. There isn't any field available:
+ *                       * returns a prompt only
+ *                    2. Thera are fields available, but no one isn't selected:
+ *                       * returns a prompt with a select box
+ *                    3. Thera are fields available and one is selected:
+ *                       * returns a select box with a prompt
+ *
+ * Tab [extend]
+ *
+ * @param array   $arr_pluginConf:  Current plugin/flexform configuration
+ * @param array   $obj_TCEform:     Current TCE form object
+ * @return  string    $str_prompt: HTML prompt or HTML prompt and TCE select form with calendar plugins
+ * @version 4.0.0
+ * @since 4.0.0
+ */
+  public function extend_cal_field_end($arr_pluginConf, $obj_TCEform)
+  {
+      //.message-notice
+      //.message-information
+      //.message-ok
+      //.message-warning
+      //.message-error
+
+
+
+      // Require classes, init page id, page object and TypoScript object
+    $bool_success = $this->init($arr_pluginConf);
+    if(!$bool_success)
+    {
+      return $arr_pluginConf;
+    }
+
+
+
+    $arr_items  = null;
+    $str_prompt = null;
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Reset session data
+
+      // Get the extra from fields from the session
+    $arr_session = $GLOBALS['BE_USER']->getSessionData('tx_browser_pi5');
+      // (Re)set cal_ui eval to false
+    $arr_session['sheets']['extend']['cal_field_end']['eval'] = false;
+    $GLOBALS['BE_USER']->setAndSaveSessionData('tx_browser_pi5', array( 'sheets' => $arr_session['sheets']));
+      // Reset session data
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN there isn't any field start selected
+
+      // Get current view
+    $arr_xml          = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
+    $str_field_start  = $arr_xml['data']['extend']['lDEF']['cal_field_start']['vDEF'];
+      // Get current view
+
+    if( empty( $str_field_start ) )
+    {
+      return null;
+    }
+      // RETURN there isn't any field start selected
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN: session data cal_field_start eval is false
+
+      // Get the extra from fields from the session
+    $arr_session = $GLOBALS['BE_USER']->getSessionData('tx_browser_pi5');
+      // (Re)set cal_ui eval to false
+    if( !$arr_session['sheets']['extend']['cal_field_start']['eval'] )
+    {
+      return null;
+    }
+      // RETURN: session data cal_field_start eval is false
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // A view is selected
+
+      // Get current view
+    $arr_xml  = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
+    $str_view = $arr_xml['data']['extend']['lDEF']['cal_view']['vDEF'];
+
+      // Get fields
+    $str_fields_csv = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['views.']['list.'][$str_view . '.']['select'];
+    $str_fields_csv = str_replace(' ',  null, $str_fields_csv);
+    $str_fields_csv = str_replace("\n", null, $str_fields_csv);
+    $str_fields_csv = str_replace("\l", null, $str_fields_csv);
+    $str_fields_csv = str_replace("\r", null, $str_fields_csv);
+    $arr_fields_csv = explode(',', $str_fields_csv);
+      // Get fields
+
+      // The default first item
+    $arr_items    = null;
+    $value        = 0;
+    $label        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field_end.select.firstItem');
+    $arr_items[]  = '<option value="' . $value . '%selected%">' . $label . '</option>';
+      // The default first item
+
+      // LOOP fields
+    $bool_selected  = false;
+    foreach( $arr_fields_csv as $tableField)
+    {
+      if( empty( $tableField ) )
+      {
+        continue;
+      }
+
+      list( $table, $field ) = explode('.', $tableField );
+      
+        // TCA eval value
+      if (!is_array($GLOBALS['TCA'][$table]['columns']))
+      {
+        t3lib_div::loadTCA($table);
+      }
+      $eval           = $GLOBALS['TCA'][$table]['columns'][$field]['config']['eval'];
+      $bool_timestamp = false;
+      switch( true )
+      {
+        case( !( strpos( $eval, 'date' ) === false ) ):
+          $bool_timestamp = true;
+          break;
+        case( !( strpos( $eval, 'time' ) === false ) ):
+          $bool_timestamp = true;
+          break;
+        case( !( strpos( $eval, 'year' ) === false ) ):
+          $bool_timestamp = true;
+          break;
+      }
+      if( !$bool_timestamp )
+      {
+        continue;
+      }
+        // TCA eval value
+      
+      $selected = null;
+        // Current field is selected
+      if($tableField == $arr_pluginConf['itemFormElValue'])
+      {
+        $bool_selected  = true;
+        $selected       = ' selected="selected"';
+      }
+        // Current field is selected
+
+        // Render the item
+      $value  = $tableField;
+      $label  = $tableField;
+      $arr_items[]  = '<option value="' . $value . '"'. $selected . '>' . $label . '</option>';
+        // Render the item
+    }
+      // LOOP fields
+
+      // Set default firstItem selected or not
+    if($bool_selected) {
+      $arr_items[0] = str_replace('%selected%', null, $arr_items[0]);
+    }
+    if(!$bool_selected) {
+      $arr_items[0] = str_replace('%selected%', ' selected="selected"', $arr_items[0]);
+    }
+    $items = implode("\n" . '          ', (array) $arr_items);
+      // Set default firstItem selected or not
+      // LOOP views
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN there isn't any field available
+
+    if( count($arr_items) < 2)
+    {
+      $str_prompt = $str_prompt.'
+        <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body" style="max-width:600px;">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field_end.error') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body" style="max-width:600px;">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field_end.info') . '
+          </div>
+        </div>
+        ';
+      $str_prompt = str_replace( '%view%', $str_view, $str_prompt );
+      return $str_prompt;
+    }
+      // RETURN there isn't any view available
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Render the select box (TCE form)
+
+    $formField = '
+      <div class="t3-form-field t3-form-field-flex">
+        <input type="hidden" name="' . $arr_pluginConf['itemFormElName'] . '_selIconVal" value="1" />
+        <select
+          id        = "tceforms-select-tx-browser-pi1-extend-cal-field-end"
+          name      = "' . $arr_pluginConf['itemFormElName'] . '"
+          class     = "select"
+          size      = "1"
+          onchange  = "if (this.options[this.selectedIndex].value==\'--div--\') {this.selectedIndex=1;} ' . htmlspecialchars(implode('', $arr_pluginConf['fieldChangeFunc'])) . 'if (confirm(TBE_EDITOR.labels.onChangeAlert) &amp;&amp; TBE_EDITOR.checkSubmit(-1)){ TBE_EDITOR.submitForm() };">
+          ' . $items . '
+        </select>
+      </div>
+      ';
+      // Render the select box (TCE form)
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN no view is selected
+
+    if(!$bool_selected)
+    {
+      $str_prompt = $str_prompt.'
+        <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body" style="max-width:600px;">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field_end.select.info') . '
           </div>
         </div>
         ';
@@ -1006,12 +1401,22 @@ class tx_browser_pi1_backend
     $str_prompt = $str_prompt.'
       <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
         <div class="message-body" style="max-width:600px;">
-          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field.success.ok') . '
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_extend.cal_field_end.success.ok') . '
         </div>
       </div>
       ';
     $str_prompt = $formField . $str_prompt;
       // A view is selected
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Set session data
+
+    $arr_session['sheets']['extend']['cal_field_end']['eval'] = true;
+    $GLOBALS['BE_USER']->setAndSaveSessionData('tx_browser_pi5', array( 'sheets' => $arr_session['sheets']));
+      // Set session data
 
 
 

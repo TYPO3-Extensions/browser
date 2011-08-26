@@ -879,7 +879,7 @@ class tx_browser_pi1_filter {
 
       // SELECT
     $str_select = $conf_view['filter.'][$table . '.'][$field . '.']['sql.']['select'];
-    if (!empty ($str_select)) 
+    if ( ! empty ( $str_select ) ) 
     {
       $str_select = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($str_select);
       if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql) 
@@ -887,7 +887,7 @@ class tx_browser_pi1_filter {
         t3lib_div :: devlog('[INFO/FILTER+SQL] Select Override is activated. ' . $str_select, $this->pObj->extKey, 0);
       }
     }
-    if (empty ($str_select)) 
+    if (empty ( $str_select ) ) 
     {
       $str_select = $table . ".uid AS 'uid',\n" .
       "         " . $table . "." . $field . " AS 'value',\n";
@@ -902,11 +902,11 @@ class tx_browser_pi1_filter {
 
       // FROM
     $str_from = $conf_view['filter.'][$table . '.'][$field . '.']['sql.']['from'];
-    if ($str_from) 
+    if ( $str_from ) 
     {
       $str_from = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($str_from);
     }
-    if (!$str_from) 
+    if (! $str_from ) 
     {
       $str_from = $table;
     }

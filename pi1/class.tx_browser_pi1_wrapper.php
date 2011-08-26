@@ -306,65 +306,65 @@ class tx_browser_pi1_wrapper
 //}
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // Flag for DRS prompting
+      //////////////////////////////////////////////////////////////
+      //
+      // Flag for DRS prompting
 
-    // Prompt only, if it is the first row
+      // Prompt only, if it is the first row
     $boolPrompt = false;
     if($this->pObj->boolFirstRow && $this->pObj->b_drs_discover)
     {
       $boolPrompt = true;
     }
-    // Flag for DRS prompting
+      // Flag for DRS prompting
 
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // Get table and field name
+      //////////////////////////////////////////////////////////////
+      //
+      // Get table and field name
 
     list($table, $field) = explode('.', $tableField);
-    // Get table and field name
+      // Get table and field name
 
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // Flags for link process management
+      //////////////////////////////////////////////////////////////
+      //
+      // Flags for link process management
 
-    // Only one is possible
+      // Only one is possible
     $boolDoNotLink = false;
-    // Don't link
+      // Don't link
     $boolDoJssAlert = false;
-    // Link to a javascript alert, if there isn't a single view (only in a list view)
+      // Link to a javascript alert, if there isn't a single view (only in a list view)
     $boolDoLinkToSingle = false;
-    // Link to a single view, if there is one (only in a list view)
+      // Link to a single view, if there is one (only in a list view)
     $boolDoTsTypolink = false;
-    // Wrap the value with the values of the typolink array, which were setted by the user in TypoScript
-    // This has priority over all others
-    // Flags for link process management
+      // Wrap the value with the values of the typolink array, which were setted by the user in TypoScript
+      // This has priority over all others
+      // Flags for link process management
 
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // Flag for list views: Is there a single view?
+      //////////////////////////////////////////////////////////////
+      //
+      // Flag for list views: Is there a single view?
 
     $boolSingleViewExist = false;
     if ($view == 'list') {
       if(is_array($conf['views.']['single.'][$mode.'.'])) {
-        // We are in a list and it is possible to link on a single view
+          // We are in a list and it is possible to link on a single view
         $boolSingleViewExist = true;
       }
     }
-    // Flag for list views: Is there a single view?
+      // Flag for list views: Is there a single view?
 
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // Do we have a typolink configuration in the TS?
+      //////////////////////////////////////////////////////////////
+      //
+      // Do we have a typolink configuration in the TS?
 
     $tsArrTypolink = $conf['views.'][$viewWiDot][$mode.'.'][$table.'.'][$field.'.']['typolink.'];
     if(is_array($tsArrTypolink)) {
@@ -372,13 +372,13 @@ class tx_browser_pi1_wrapper
       $boolDoTsTypolink = true;
       if($boolPrompt) t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.' has a local typolink array.', $this->pObj->extKey, 0);
     }
-    // Do we have a typolink configuration in the TS?
+      // Do we have a typolink configuration in the TS?
 
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // Should we set in list views an jssAlert, if there isn't a single view?
+      //////////////////////////////////////////////////////////////
+      //
+      // Should we set in list views an jssAlert, if there isn't a single view?
 
     if ($view == 'list') {
       // We have a list view
@@ -391,7 +391,7 @@ class tx_browser_pi1_wrapper
         $boolDoJssAlert = $lDisplayList['display.']['jssAlert'];
       }
     }
-    // Should we set in list views an jssAlert, if there isn't a single view?
+      // Should we set in list views an jssAlert, if there isn't a single view?
 
 
 
@@ -495,9 +495,9 @@ class tx_browser_pi1_wrapper
 
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
+      //////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
 
     if ($bool_firsttime)
     {
@@ -513,31 +513,31 @@ class tx_browser_pi1_wrapper
         t3lib_div::devLog('[INFO/PERFORMANCE] After prepaire link process: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
       }
     }
-    // DRS - Performance
+      // DRS - Performance
 
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // If we need it, set the singlePid
+      //////////////////////////////////////////////////////////////
+      //
+      // If we need it, set the singlePid
 
     if($boolDoLinkToSingle) 
     {
       $singlePid             = $this->pObj->objZz->get_singlePid_for_listview();
       $this->pObj->singlePid = $singlePid;
     }
-    // If we need it, set the singlePid
+      // If we need it, set the singlePid
 
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // COA Process management
+      //////////////////////////////////////////////////////////////
+      //
+      // COA Process management
 
     $lCObjType = 'TEXT';
 
-    // COA default type
-    // Is there a COA array in the TypoScript setup?
+      // COA default type
+      // Is there a COA array in the TypoScript setup?
     if(is_array($conf['views.'][$viewWiDot][$mode.'.'][$table.'.'][$field.'.'])) 
     {
         // Get the COA type, set it to 'TEXT', if there isn't a value
@@ -549,12 +549,12 @@ class tx_browser_pi1_wrapper
         // Get the COA array
       $lConfCObj['10.'] = $conf['views.'][$viewWiDot][$mode.'.'][$table.'.'][$field.'.'];
     }
-    // Is there a COA array in the TypoScript setup?
+      // Is there a COA array in the TypoScript setup?
 
 
-    ///////////////////////////////////
-    //
-    // Get the local or gloabl autoconfig array - #9879
+      ///////////////////////////////////
+      //
+      // Get the local or global autoconfig array - #9879
 
     $lAutoconf = $conf_view['autoconfig.'];
     $view_path = $viewWiDot.$mode;
@@ -568,7 +568,7 @@ class tx_browser_pi1_wrapper
       $view_path  = null;
       $lAutoconf  = $conf['autoconfig.'];
     }
-    // Get the local or gloabl autoconfig array - #9879
+      // Get the local or global autoconfig array - #9879
 
 
 // 110125, dwildt
@@ -619,9 +619,9 @@ class tx_browser_pi1_wrapper
 
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
+      //////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
 
     if ($bool_firsttime)
     {
@@ -637,30 +637,30 @@ class tx_browser_pi1_wrapper
         t3lib_div::devLog('[INFO/PERFORMANCE] After COA process: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
       }
     }
-    // DRS - Performance
+      // DRS - Performance
 
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // Process management
+      //////////////////////////////////////////////////////////////
+      //
+      // Process management
 
     switch(true) {
       case($boolDoTsTypolink):
-        // There is a typolink array in the TS of the user. This has priority over all others
+          // There is a typolink array in the TS of the user. This has priority over all others
         if($boolPrompt) t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.' has a local typolink array.', $this->pObj->extKey, 0);
         break;
       case($boolDoLinkToSingle):
-        // Remove piVars, if they should not used in the realUrl path
+          // Remove piVars, if they should not used in the realUrl path
         $this->pObj->objZz->advanced_remove_piVars();
-        // #8368
+          // #8368
         $this->pObj->objZz->advanced_remove_piVars_filter();
-        // We have to set the link to the single view
+          // We have to set the link to the single view
         if($boolPrompt) t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.' gets a link to single view.', $this->pObj->extKey, 0);
         // Building the URI parameters
         $additionalParams = '';
 
-        // Alias for showUid? #9599
+          // Alias for showUid? #9599
         if(empty($this->pObj->piVar_alias_showUid))
         {
           $this->pObj->piVars['showUid'] = $recordId;
@@ -671,7 +671,7 @@ class tx_browser_pi1_wrapper
           $this->pObj->objZz->tmp_piVars['showUid'] = null;
           $this->pObj->piVars[$this->pObj->piVar_alias_showUid] = $recordId;
         }
-        // Alias for showUid? #9599
+          // Alias for showUid? #9599
 
         foreach((array) $this->pObj->piVars as $paramKey => $paramValue)
         {
@@ -685,7 +685,7 @@ class tx_browser_pi1_wrapper
           //$additionalParams .= '&'.$this->pObj->prefixId.'['.$paramKey.']='.$paramValue;
         }
         $cHash_calc = $this->pObj->objZz->get_cHash('&id='.$singlePid.$additionalParams);
-        // Building the typolink array
+          // Building the typolink array
         if(is_array($lConfCObj['10.']['typolink.']))
         {
           if ($this->pObj->b_drs_templating && $this->pObj->boolFirstRow)
@@ -706,9 +706,9 @@ class tx_browser_pi1_wrapper
           }
         }
         $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
-        // Replace all ###MARKER### in Typoscript with its values.
+          // Replace all ###MARKER### in Typoscript with its values.
 
-        // Recover piVars, if they weren't used in the realUrl path
+          // Recover piVars, if they weren't used in the realUrl path
         if ($this->pObj->objZz->tmp_piVars)
         {
           $this->pObj->piVars = $this->pObj->objZz->tmp_piVars;
@@ -721,10 +721,10 @@ class tx_browser_pi1_wrapper
           }
           unset($this->pObj->objZz->tmp_piVars);
         }
-        // Recover piVars, if they weren't used in the realUrl path
+          // Recover piVars, if they weren't used in the realUrl path
         break;
       case($boolDoJssAlert):
-        // There is no single view. We have to set a link to a javascript alert
+          // There is no single view. We have to set a link to a javascript alert
         if($boolPrompt) t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.' gets a link with a javascript alert: No single view!', $this->pObj->extKey, 0);
         $promptJSS = $this->pObj->pi_getLL('error_views_single_noview');
         $promptJSS = t3lib_div::slashJS($promptJSS, false, "'");
@@ -751,11 +751,11 @@ class tx_browser_pi1_wrapper
         }
         break;
       case($boolDoNotLink):
-        // We don't have to process any link
+          // We don't have to process any link
         if($boolPrompt) t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.' don\'t get any link.', $this->pObj->extKey, 0);
         break;
       default:
-        // This case isn't defined
+          // This case isn't defined
         if($this->pObj->b_drs_error && $this->pObj->boolFirstRow)
         {
 //          t3lib_div::devLog('[ERROR/DRS] Method wrapAndLinkValue() has an undefined case in \'Process management\'.', $this->pObj->extKey, 3);
@@ -765,13 +765,13 @@ class tx_browser_pi1_wrapper
         }
     }
     // Process management
-    // COA Process management
+      // COA Process management
 
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
+      //////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
 
     if ($bool_firsttime)
     {
@@ -787,13 +787,13 @@ class tx_browser_pi1_wrapper
         t3lib_div::devLog('[INFO/PERFORMANCE] After process management: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
       }
     }
-    // DRS - Performance
+      // DRS - Performance
 
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // general_stdWrap
+      //////////////////////////////////////////////////////////////
+      //
+      // general_stdWrap
 
     $bool_wrap_children = false;
     if(is_array($this->pObj->arr_children_to_devide))
@@ -812,13 +812,13 @@ class tx_browser_pi1_wrapper
       // $ext: If "INT" then the cObject is a "COBJ_ARRAY_INT" (non-cached), otherwise just "COBJ_ARRAY" (cached)
       $value = $this->general_stdWrap($this->pObj->local_cObj->COBJ_ARRAY($lConfCObj, $ext=''), false);
     }
-    // general_stdWrap
+      // general_stdWrap
 
 
 
-    //////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
+      //////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
 
     if ($bool_firsttime)
     {
@@ -834,7 +834,7 @@ class tx_browser_pi1_wrapper
         t3lib_div::devLog('[INFO/PERFORMANCE] After general stdWrap: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
       }
     }
-    // DRS - Performance
+      // DRS - Performance
 
 
 

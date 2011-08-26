@@ -1,7 +1,11 @@
 4.0.0
   110817
-  NEW FEATURES
+  New Features
   * #29042: Calendar (first part and inofficial. Calendar should be official in version 4.2.0 in 2012)
+  Improvements
+  * #29198: Simplifying stdWrap of SQL query parts
+  Bugfixes
+  * #29186: Empty rows are tested with ==null instead of empty( )
   
 3.7.0
   110801, 110729

@@ -61,7 +61,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    browser
- * @version 3.7.0
+ * @version 4.0.0
  * @since  2.0.0
  */
 class tx_browser_pi1_flexform {
@@ -112,7 +112,18 @@ class tx_browser_pi1_flexform {
   var $bool_linkToSingle_wi_piVar_sort = false;
   // [boolean] Should the URL to a single view contain the parameter sort?
 
-  //[javascript]
+  //[sheet/extend]
+    // Uid in tt_content of the Browser Calender User Interface
+  var $sheet_extend_cal_ui            = null;
+    // Uid of the view in the TypoScript setup
+  var $sheet_extend_cal_view          = null;
+    // table.field-name of the date begin field
+  var $sheet_extend_cal_field_start   = null;
+    // table.field-name of the date end field
+  var $sheet_extend_cal_field_end     = null;
+  //[sheet/extend]
+
+  //[sheet/javascript]
   // #9659, 101013 fsander
   var $bool_ajax_enabled = false;
   // [boolean] AJAX enabled?
@@ -138,7 +149,7 @@ class tx_browser_pi1_flexform {
   var $bool_css_jqui = false;
   // [boolean] jQuery UI CSS should included
 
-  //[socialmedia]
+  //[sheet/socialmedia]
   var $str_socialmedia_bookmarks_enabled = false;
   // [boolean] Are socalmedia bookmarks enabled?
   var $str_socialmedia_bookmarks_tableFieldSite_list = false;
@@ -153,14 +164,14 @@ class tx_browser_pi1_flexform {
   // [string] csvList with the keys of the bookmars in in the TypoScript, which should displayed in list views
   var $strCsv_socialmedia_bookmarks_single = false;
   // [string] csvList with the keys of the bookmars in in the TypoScript, which should displayed in single views
-  //[socialmedia]
+  //[sheet/socialmedia]
 
-  //[templating]
+  //[sheet/templating]
   var $int_templating_dataQuery = false;
   // [int] key of the dataQuery in the TypoScript, which should added in list views
   var $bool_wrapInBaseClass = true;
   // [boolean] wrap the plugin in with pi_wrapInBaseClass
-  //[templating]
+  //[sheet/templating]
 
   // Vars set by methods in the current class
 
@@ -176,37 +187,52 @@ class tx_browser_pi1_flexform {
 
   }
 
+
+
+
+
+
+
+
+
   /**
-   * Process the values from the pi_flexform field. Process each sheet. Allocates values to TypoScript.
+   * main():  Process the values from the pi_flexform field.
+   *          Process each sheet.
+   *          Allocates values to TypoScript.
    *
    * @return  void
    * @version 3.7.0
    */
-  function main() {
+  function main()
+  {
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Init methods for pi_flexform
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Init methods for pi_flexform
 
     $this->pObj->pi_initPIflexForm();
-    // Init methods for pi_flexform
+      // Init methods for pi_flexform
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Development
 
-    // Display values from pi_flexform as an tree
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Development
+
+      // Display values from pi_flexform as an tree
     if (1 == 0) {
       $treeDat = $this->pObj->cObj->data['pi_flexform'];
       $treeDat = t3lib_div :: resolveAllSheetsInDS($treeDat);
       var_dump(t3lib_div :: view_array($treeDat));
     }
-    // Display values from pi_flexform as an tree
-    // Development
+      // Display values from pi_flexform as an tree
+      // Development
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Development Reporting System
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
 
     if ($this->pObj->b_drs_flexform) {
       $str_header = $this->pObj->cObj->data['header'];
@@ -214,41 +240,51 @@ class tx_browser_pi1_flexform {
       $int_pid = $this->pObj->cObj->data['pid'];
       t3lib_div :: devlog('[INFO/FLEXFORM] \'' . $str_header . '\' (pid: ' . $int_pid . ', uid: ' . $int_uid . ')', $this->pObj->extKey, 0);
     }
-    // DRS - Development Reporting System
+      // DRS - Development Reporting System
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Sheet evaluate controlls the DRS
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Sheet evaluate controlls the DRS
 
     $this->sheet_evaluate();
-    // Sheet evaluate controlls the DRS
+      // Sheet evaluate controlls the DRS
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Init Language
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Init Language
 
     if (!$this->pObj->lang) {
       $this->pObj->objZz->initLang();
     }
-    // Init Language
+      // Init Language
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Prepare piVars
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Prepare piVars
 
     $this->prepare_piVars();
-    // Prepare piVars
+      // Prepare piVars
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Process Fields with Priority
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Process Fields with Priority
 
     $this->sheet_sDEF_views();
-    // Process Fields with Priority
+      // Process Fields with Priority
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Process the Sheets
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Process the Sheets
 
     $this->sheet_javascript();
     $this->sheet_sDEF();
@@ -259,15 +295,26 @@ class tx_browser_pi1_flexform {
     //$this->sheet_templating();
     $this->sheet_tca();
     $this->sheet_advanced();
-    // Process the Sheets
+    $this->sheet_extend();
+      // Process the Sheets
 
   }
+
+
+
+
+
+
+
+
 
   /***********************************************
    *
    * piVars
    *
    **********************************************/
+
+
 
   /**
    * Changes the piVars array, if there is more than one plugin on the current page.
@@ -988,57 +1035,146 @@ class tx_browser_pi1_flexform {
     return;
   }
 
+
+
   /**
-   * Development configuration for the current plugin
+   * Sheet evaluate: Configuration for evaluation
    *
    * @return  void
-   * @since   3.4.5
-   * @version 3.4.5
+   * @version 4.0.0
+   * @since   4.0.0
    */
-  function sheet_evaluate() {
-
+  function sheet_evaluate( )
+  {
+    $sheet          = 'evaluate';
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
-    $str_lang = $this->pObj->lang->lang;
-    $modeWiDot = (int) $this->mode . '.';
-    $viewWiDot = $this->pObj->view . '.';
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field dontUseDRS
 
-    $this->pObj->bool_dontUseDRS = $this->pObj->pi_getFFvalue($arr_piFlexform, 'dontUseDRS', 'evaluate', 'lDEF', 'vDEF');
-    //var_dump('conf 1024', $this->pObj->bool_dontUseDRS);
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Plugin sheet [evaluate]: Don't use the DRS
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field dontUseDRS
 
-    if ($this->pObj->bool_dontUseDRS) {
-      if ($this->pObj->arr_extConf['drs_mode'] != 'Don\'t log anything') {
+    $this->pObj->bool_dontUseDRS = $this->pObj->pi_getFFvalue($arr_piFlexform, 'dontUseDRS', $sheet, 'lDEF', 'vDEF');
+    if ($this->pObj->bool_dontUseDRS) 
+    {
+      if ($this->pObj->arr_extConf['drs_mode'] != 'Don\'t log anything') 
+      {
         t3lib_div :: devlog('[INFO/DRS] Plugin Sheet [Development] set the boolean Don\'t use DRS.', $this->pObj->extKey, 0);
         $this->pObj->arr_extConf['drs_mode'] = 'Don\'t log anything';
         $this->pObj->init_drs();
         t3lib_div :: devlog('[WARN/DRS] DRS is disabled.', $this->pObj->extKey, 2);
-        if ($this->pObj->bool_typo3_43) {
+        if ($this->pObj->bool_typo3_43) 
+        {
           $endTime = $this->pObj->TT->getDifferenceToStarttime();
         }
-        if (!$this->pObj->bool_typo3_43) {
+        if (!$this->pObj->bool_typo3_43) 
+        {
           $endTime = $this->pObj->TT->mtime();
         }
         t3lib_div :: devLog('[INFO/PERFORMANCE]: ' . ($endTime - $this->pObj->startTime) . ' ms', $this->pObj->extKey, 0);
       }
     }
-    // Plugin sheet [evaluate]: Don't use the DRS
+      // Field dontUseDRS
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field debugJSS
 
-    $this->pObj->bool_debugJSS = $this->pObj->pi_getFFvalue($arr_piFlexform, 'debugJSS', 'evaluate', 'lDEF', 'vDEF');
-    //var_dump('conf 1024', $this->pObj->bool_debugJSS);
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field debugJSS
+
+    $this->pObj->bool_debugJSS = $this->pObj->pi_getFFvalue($arr_piFlexform, 'debugJSS', $sheet, 'lDEF', 'vDEF');
+      //var_dump('conf 1024', $this->pObj->bool_debugJSS);
 
     return;
   }
+
+
+
+
+
+
+  /**
+   * Sheet extend:  Administration of extensions for the Browser.
+   *                New in version 4.0
+   *                Available extension only: Browser Calendar UI
+   *
+   * @return  void
+   * @version 4.0.0
+   * @since   4.0.0
+   */
+  function sheet_extend( )
+  {
+
+    $sheet          = 'extend';
+    $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field cal_ui
+  
+    $field = 'cal_ui';
+    $this->sheet_extend_cal_ui = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
+    if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_cal )
+    {
+      t3lib_div :: devlog('[INFO/FLEXFORM+CAL/UI] ' .
+      $sheet . '.' . $field . ': \'' . $this->sheet_extend_cal_ui . '\'', $this->pObj->extKey, 0);
+    }
+      // Field cal_ui
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field cal_view
+  
+    $field = 'cal_view';
+    $this->sheet_extend_cal_view = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
+    if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_cal )
+    {
+      t3lib_div :: devlog('[INFO/FLEXFORM+CAL/UI] ' .
+      $sheet . '.' . $field . ': \'' . $this->sheet_extend_cal_view . '\'', $this->pObj->extKey, 0);
+    }
+      // Field cal_view
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field cal_field_start
+  
+    $field = 'cal_field_start';
+    $this->sheet_extend_cal_field_start = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
+    if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_cal )
+    {
+      t3lib_div :: devlog('[INFO/FLEXFORM+CAL/UI] ' .
+      $sheet . '.' . $field . ': \'' . $this->sheet_extend_cal_field_start . '\'', $this->pObj->extKey, 0);
+    }
+      // Field cal_field_start
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field cal_field_end
+  
+    $field = 'cal_field_end';
+    $this->sheet_extend_cal_field_end = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
+    if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_cal )
+    {
+      t3lib_div :: devlog('[INFO/FLEXFORM+CAL/UI] ' .
+      $sheet . '.' . $field . ': \'' . $this->sheet_extend_cal_field_end . '\'', $this->pObj->extKey, 0);
+    }
+      // Field cal_field_end
+
+
+
+    return;
+  }
+
+
 
   /**
    * sheet_javascript(): If the current plugin has views selected, only the selected views are available for the plugin.

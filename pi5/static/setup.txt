@@ -14,72 +14,336 @@ plugin.tx_browser_pi1 {
 
   flexform {
     pi5 {
-      calendar {
-          // [String] year, month (default), week, day
-        initialView = month
+      sDEF {
+        initialView {
+          stdWrap = TEXT
+          stdWrap {
+              // [String] Initial view: year, month (default), week, day. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+            value = month
+          }
+        }
+        colours {
+          10 = TEXT
+          10 {
+              // blue night
+            value = rgb(0,69,114)
+          }
+          20 = TEXT
+          20 {
+              // sunset
+            value = rgb(255,66,14)
+          }
+          30 = TEXT
+          30 {
+              // citron
+            value = rgb(255,211,32)
+          }
+          40 = TEXT
+          40 {
+              // grass
+            value = rgb(87,157,28)
+          }
+          50 = TEXT
+          50 {
+              // chimney
+            value = rgb(126,0,33)
+          }
+          60 = TEXT
+          60 {
+              // ocean
+            value = rgb(131,202,255)
+          }
+          70 = TEXT
+          70 {
+              // forest
+            value = rgb(49,64,4)
+          }
+          80 = TEXT
+          80 {
+              // frog
+            value = rgb(174,201,0)
+          }
+          90 = TEXT
+          90 {
+              // purple
+            value = rgb(75,31,111)
+          }
+          100 = TEXT
+          100 {
+              // orange
+            value = rgb(255,149,14)
+          }
+          110 = TEXT
+          110 {
+              // red
+            value = rgb(197,0,11)
+          }
+          120 = TEXT
+          120 {
+              // dolphin
+            value = rgb(0,132,209)
+          }
+        }
       }
-      yaer {
+      year {
         schedule {
-            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
-          display = 1
-            // [String] relative (default), absolute, ts. Can be overriden by the flexform while runtime!
-          configuration = relative
-            // [String] +999 to -999 and currentYear (default). Can be overriden by the flexform while runtime!
-          relative = currentYear
-            // [Integer/Year] Any year. I.e: 1963. Can be overriden by the flexform while runtime!
-          absolute =
+          display {
+            stdWrap = TEXT
+            stdWrap {
+                // [String] Display the schedule: yes (default), no. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = yes
+            }
+          }
+          startingpoint {
+            stdWrap = TEXT
+            stdWrap {
+                // [String] Startingpoint mode: relative (default), absolute. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = relative
+            }
+            relative {
+              stdWrap = TEXT
+              stdWrap {
+                  // [String] Startingpoint: +999 to -999 and today 0:00 (default). Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+                value = today 0:00
+              }
+            }
+            absolute {
+              stdWrap = TEXT
+              stdWrap {
+                  // [Integer] Staringpoint: any year. I.e: 31.12.1963, 01.01.2011 (default). Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+                value = 01.01.2011
+              }
+            }
+          }
         }
         navigator {
-            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
-          display = 1
+          display {
+            stdWrap = TEXT
+            stdWrap {
+                // [String] Display the navigator: yes (default), no. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = yes
+            }
+          }
         }
       }
       month {
         schedule {
-            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
-          display = 1
-            // [String] relative (default), absolute, ts. Can be overriden by the flexform while runtime!
-          configuration = relative
-            // [String] +999 to -999 and currentYear (default). Can be overriden by the flexform while runtime!
-          relative = currentYear
-            // [Integer/Year] Any year. I.e: 1963. Can be overriden by the flexform while runtime!
-          absolute =
+          display {
+            stdWrap = TEXT
+            stdWrap {
+                // [String] Display the schedule: yes (default), no. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = yes
+            }
+          }
+          startingpoint {
+            stdWrap = TEXT
+            stdWrap {
+                // [String] Startingpoint mode: relative (default), absolute. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = relative
+            }
+            relative {
+              stdWrap = TEXT
+              stdWrap {
+                  // [String] Startingpoint: +11 to -11 or today 0:00 (default). Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+                value = today 0:00
+              }
+            }
+            absolute {
+              stdWrap = TEXT
+              stdWrap {
+                  // [Integer] Startingpoint - number of the month: 1 (default), ..., 12. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+                value = 1
+              }
+            }
+          }
         }
         navigator {
-            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
-          display = 1
+          display {
+            stdWrap = TEXT
+            stdWrap {
+                // [String] Display the navigator: yes (default), no. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = yes
+            }
+          }
         }
       }
       week {
         schedule {
-            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
-          display = 1
-            // [String] relative (default), absolute, ts. Can be overriden by the flexform while runtime!
-          configuration = relative
-            // [String] +999 to -999 and currentYear (default). Can be overriden by the flexform while runtime!
-          relative = currentYear
-            // [Integer/Year] Any year. I.e: 1963. Can be overriden by the flexform while runtime!
-          absolute =
+          display {
+            stdWrap = TEXT
+            stdWrap {
+                // [String] Display the schedule: yes (default), no. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = yes
+            }
+          }
+          startingpoint {
+            stdWrap = TEXT
+            stdWrap {
+                // [String] Startingpoint mode: relative (default), absolute. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = relative
+            }
+            relative {
+              stdWrap = TEXT
+              stdWrap {
+                  // [String] Startingpoint: +10 to -10 or today 0:00 (default). Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+                value = today 0:00
+              }
+            }
+            absolute {
+              stdWrap = TEXT
+              stdWrap {
+                  // [Integer] Startingpoint - number of the week: 1 (default), ..., 53. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+                value = 1
+              }
+            }
+          }
+          begin {
+            stdWrap = TEXT
+            stdWrap {
+                // [Integer] hours [0-24]. I.e: 8 (default). Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = 8
+            }
+          }
+          end {
+            stdWrap = TEXT
+            stdWrap {
+                // [Integer] hours [0-24]. I.e: 22 (default). Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = 22
+            }
+          }
+          time_unit {
+            stdWrap = TEXT
+            stdWrap {
+                // [Integer] minutes. I.e: 15, 30, 60 (default), 180. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = 60
+            }
+          }
         }
         navigator {
-            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
-          display = 1
+          display {
+            stdWrap = TEXT
+            stdWrap {
+                // [String] Display the navigator: yes (default), no. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = yes
+            }
+          }
         }
       }
       day {
         schedule {
-            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
-          display = 1
-            // [String] relative (default), absolute, ts. Can be overriden by the flexform while runtime!
-          configuration = relative
-            // [String] +999 to -999 and currentYear (default). Can be overriden by the flexform while runtime!
-          relative = currentYear
-            // [Integer/Year] Any year. I.e: 1963. Can be overriden by the flexform while runtime!
-          absolute =
+          display {
+            stdWrap = TEXT
+            stdWrap {
+                // [String] Display the schedule: yes (default), no. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = yes
+            }
+          }
+          labels {
+            cal_date {
+              devider {
+                stdWrap = TEXT
+                stdWrap {
+                  value = <br />
+                }
+              }
+              stdWrap = TEXT
+              stdWrap {
+                value   = dates
+                lang.de = Termine
+              }
+            }
+            cal_period {
+              stdWrap = TEXT
+              stdWrap {
+                  // [String] Leave it empty: Than it will allocated while runtime with the due day
+                value =
+                  // PHP strftime: i.e  %a, %d. %b: Mi, 24. Mär (it is localized)
+                strftime = %a, %d. %b
+              }
+            }
+            summary {
+              stdWrap = TEXT
+              stdWrap {
+                  // [String] Leave it empty, if you don't want a table summary
+                value       = +Browser Plugin User Interface
+                noTrimWrap  = | summary="|"|
+              }
+            }
+            caption {
+              stdWrap = TEXT
+              stdWrap {
+                  // [String] Leave it empty, if you don't want a table caption
+                value   = A day's schedule generated by TYPO3 and the +Browser Plugin User Interface
+                lang.de = Ein Tageskalender erstellt auf Basis von TYPO3 und dem +Browser Plugin User Interface
+                wrap    = <caption>|</caption>
+              }
+            }
+          }
+          startingpoint {
+            stdWrap = TEXT
+            stdWrap {
+                // [String] Startingpoint mode: relative (default), absolute. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = relative
+            }
+            relative {
+              use_php_strtotime = 1 // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+              stdWrap = TEXT
+              stdWrap {
+                  // [String] Startingpoint: i.e: +10 days, last monday, -1 week, today 0:00 (default). Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+                value = today 0:00
+              }
+            }
+            absolute {
+              stdWrap = TEXT
+              stdWrap {
+                  // [Integer] Startingpoint - number of the day: 1 (default), ..., 31. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+                value = 1
+              }
+            }
+          }
+          begin {
+            stdWrap = TEXT
+            stdWrap {
+                // [Integer] hours [0-24]. I.e: 8 (default). Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = 8
+            }
+              // PHP strftime: i.e %d.%B %Y %H:%M:%S 31.Dezember 2011 13:14:22 (it is localized)
+            strftime = %H:%M
+          }
+          end {
+            stdWrap = TEXT
+            stdWrap {
+                // [Integer] hours [0-24]. I.e: 22 (default). Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = 22
+            }
+              // PHP strftime: i.e %d.%B %Y %H:%M:%S 31.Dezember 2011 13:14:22 (it is localized)
+            strftime = %H:%M
+          }
+          time_unit {
+              // [String] HTML class for odd columns and odd rows (tr, th, td)
+            oddClass = ui-priority-secondary
+            stdWrap = TEXT
+            stdWrap {
+                // [Integer] minutes. I.e: 15, 30, 60 (default), 180. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = 60
+            }
+          }
+          devider {
+            stdWrap = TEXT
+            stdWrap {
+              value       = -
+              noTrimWrap  = | | |
+            }
+          }
         }
         navigator {
-            // [Boolean] 1 (default): schedule will displayed. 0: schedule won't displayed. Can be overriden by the flexform while runtime!
-          display = 1
+          display {
+            stdWrap = TEXT
+            stdWrap {
+                // [String] Display the navigator: yes (default), no. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
+              value = yes
+            }
+          }
         }
       }
     }

@@ -25,29 +25,29 @@
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
-            <default>ts</default>
+            <default>yes</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>
         </TCEforms>
       </schedule.display>
-      <schedule.configuration>
+      <schedule.startingpoint>
         <TCEforms>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_month.schedule.configuration</label>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_month.schedule.startingpoint</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_month.schedule.configuration.relative</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_month.schedule.startingpoint.item.relative</numIndex>
                 <numIndex index="1">relative</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_month.schedule.configuration.absolute</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_month.schedule.startingpoint.item.absolute</numIndex>
                 <numIndex index="1">absolute</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_month.schedule.configuration.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_month.schedule.startingpoint.item.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
@@ -56,11 +56,11 @@
             <size>1</size>
           </config>
         </TCEforms>
-      </schedule.configuration>
-      <schedule.configuration.relative.start>
+      </schedule.startingpoint>
+      <schedule.startingpoint.relative>
         <TCEforms>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_month.schedule.configuration.relative.start</label>
-          <displayCond>FIELD:schedule.configuration:=:relative</displayCond>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_month.schedule.startingpoint.relative</label>
+          <displayCond>FIELD:schedule.startingpoint:=:relative</displayCond>
           <config>
             <type>select</type>
             <multiple>0</multiple>
@@ -72,29 +72,23 @@
             <itemListStyle>width:200px</itemListStyle>
             <items type="array"></items>
             <itemsProcFunc>tx_browser_pi5_backend->month_selectRelative</itemsProcFunc>
-            <default>currentMonth</default>
+            <default>today 0:00</default>
           </config>
         </TCEforms>
-      </schedule.configuration.relative.start>
-      <schedule.configuration.absolute.start>
+      </schedule.startingpoint.relative>
+      <schedule.startingpoint.absolute>
         <TCEforms>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_month.schedule.configuration.absolute.start</label>
-          <displayCond>FIELD:schedule.configuration:=:absolute</displayCond>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_month.schedule.startingpoint.absolute</label>
+          <displayCond>FIELD:schedule.startingpoint:=:absolute</displayCond>
           <config>
-            <type>select</type>
-            <multiple>0</multiple>
-            <size>1</size>
-            <minitems>0</minitems>
-            <maxitems>1</maxitems>
-            <allowNonIdValues>1</allowNonIdValues>
-            <selectedListStyle>width:200px</selectedListStyle>
-            <itemListStyle>width:200px</itemListStyle>
-            <items type="array"></items>
-            <itemsProcFunc>tx_browser_pi5_backend->month_selectAbsolute</itemsProcFunc>
-            <default>1</default>
+            <type>input</type>
+            <size>10</size>
+            <max>10</max>
+            <eval>date</eval>
+            <default>1293840000</default>
           </config>
         </TCEforms>
-      </schedule.configuration.absolute.start>
+      </schedule.startingpoint.absolute>
       <navigator.display>
         <TCEforms>
           <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_month.navigator.display</label>
@@ -114,7 +108,7 @@
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
-            <default>ts</default>
+            <default>yes</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>

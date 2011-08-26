@@ -28,7 +28,8 @@
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage    tx_browser
- * @version 3.6.3
+ * @version 4.0.0
+ * @since 1.0
  */
 
  /**
@@ -36,12 +37,12 @@
  *
  *
  *
- *   50: class tx_browser_pi1_views
- *   69:     function __construct($parentObj)
+ *   51: class tx_browser_pi1_views
+ *   70:     function __construct($parentObj)
  *
  *              SECTION: Building the views
- *   99:     function listView($template)
- * 1065:     function singleView($template)
+ *  102:     function listView($template)
+ * 1261:     function singleView($template)
  *
  * TOTAL FUNCTIONS: 3
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -95,8 +96,8 @@ class tx_browser_pi1_views
  *
  * @param string    $template: Template
  * @return  void
- * 
- * @version 3.6.2
+ * @version 4.0.0
+ * @since 1.0.0
  */
   function listView($template)
   {
@@ -205,7 +206,7 @@ class tx_browser_pi1_views
       //
       // DRS - Performance
 
-    if ($this->pObj->b_drs_perform) 
+    if ($this->pObj->b_drs_perform)
     {
       if($this->pObj->bool_typo3_43)
       {
@@ -383,7 +384,7 @@ class tx_browser_pi1_views
        * and the user has selected a filter
        * than the query below will select only default language records
        */
-  
+
       // User selected a non default language
     if($this->pObj->objLocalize->int_localization_mode >= 3)
     {
@@ -714,7 +715,7 @@ class tx_browser_pi1_views
       /////////////////////////////////////////////////////////////////
       //
       // Ordering the children
-  
+
       // 13803, dwildt, 110312
     $rows = $this->pObj->objMultisort->multisort_mm_children($rows);
       // Ordering the children
@@ -993,6 +994,54 @@ class tx_browser_pi1_views
     $template     = $this->pObj->objTemplate->tmplSearchBox($template, $bool_display);
       // HTML search form
 
+
+
+      ////////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
+
+    if ($this->pObj->b_drs_perform) {
+      if($this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->getDifferenceToStarttime();
+      }
+      if(!$this->pObj->bool_typo3_43)
+      {
+        $endTime = $this->pObj->TT->mtime();
+      }
+      t3lib_div::devLog('[INFO/PERFORMANCE] Before Extension +Browser Calendar: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+    }
+      // DRS - Performance
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Extension Browser Calendar
+
+      // Will executed in case, that the Browser is extended with the Browser Calendar user Interface
+    //$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    //if ( ! ( $pos === false ) )
+    //{
+    //  var_dump(__METHOD__. ' (' . __LINE__ . '): ', $template);
+    //}
+    $arr_result   = $this->pObj->objCal->cal( $rows, $template );
+    $rows         = $arr_result['rows'];
+    $template     = $arr_result['template'];
+    $bool_success = $arr_result['success'];
+    if( $bool_success )
+    {
+      $this->pObj->objTemplate->ignore_empty_rows_rule = true;
+      if ($this->pObj->b_drs_warn)
+      {
+        t3lib_div::devLog('[WARN/TEMPLATING/CAL/UI]: +Browser Calendar set ignore_empty_rows_rule to true!', $this->pObj->extKey, 2);
+      }
+    }
+    $this->pObj->rows = $rows;
+      // Extension Browser Calendar
+
+
+
       /////////////////////////////////////
       //
       // HTML a-z-browser
@@ -1032,6 +1081,8 @@ class tx_browser_pi1_views
     }
       // DRS - Performance
 
+
+
       /////////////////////////////////////
       //
       // record browser
@@ -1043,6 +1094,8 @@ class tx_browser_pi1_views
       return $this->pObj->pi_wrapInBaseClass($prompt);
     }
       // record browser
+
+
 
       // DRS - Performance
     if ($this->pObj->b_drs_perform)
@@ -1058,6 +1111,8 @@ class tx_browser_pi1_views
       t3lib_div::devLog('[INFO/PERFORMANCE] After record browser: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
     }
       // DRS - Performance
+
+
 
       /////////////////////////////////////
       //
@@ -1216,7 +1271,6 @@ class tx_browser_pi1_views
  *
  * @param string    $template: HTML template with TYPO3 subparts and markers
  * @return  void
- * 
  * @version 3.6.3
  */
   function singleView($template)
@@ -1557,7 +1611,7 @@ class tx_browser_pi1_views
       /////////////////////////////////////////////////////////////////
       //
       // #9838: Simplified relation building
-  
+
     $this->pObj->objConsolidate->children_relation();
     $rows = $this->pObj->rows;
       // #9838: Simplified relation building
@@ -1621,7 +1675,7 @@ class tx_browser_pi1_views
       /////////////////////////////////////
       //
       // DRS - Development Reporting System
-  
+
     $bool_displayFirstRow = false;
     if (count($rows) == 0)
     {
@@ -1705,7 +1759,7 @@ class tx_browser_pi1_views
       ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
       //
       // Do we have a HTML template with markers or a Typoscript Template Container (TTC)?
-  
+
     $b_ttc = false;
     // dwildt, 101012
     if(is_array($conf['views.'][$viewWiDot][$mode.'.']))

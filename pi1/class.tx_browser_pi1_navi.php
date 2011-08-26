@@ -1588,7 +1588,7 @@ class tx_browser_pi1_navi
       //
       // RETURN with an error, if there are no views
 
-    if(!is_array($this->conf['views.']))
+    if( ! is_array( $this->conf['views.'] ) )
     {
       $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_typoscript_h1').'</h1>';
       $str_prompt  = '<p style="color:red; font-weight:bold;">'.$this->pObj->pi_getLL('error_views_noview').'</p>';
@@ -1606,27 +1606,26 @@ class tx_browser_pi1_navi
       // DRS - Development Reporting System
 
     $langKey = $GLOBALS['TSFE']->lang;
-    if($langKey == 'en')
+    if( $langKey == 'en' )
     {
       $langKey = 'default';
     }
-    if(is_array($this->conf['views.'][$this->view.'.']))
+
+    foreach( (array) $this->conf['views.'][$this->view . '.'] as $keyView => $arrView )
     {
-      foreach((array) $this->conf['views.'][$this->view.'.'] as $keyView => $arrView)
+      // We don't need the typoscript array dot
+      $mode                       = substr( $keyView, 0, strlen( $keyView ) - 1 );
+      $llMode                     = $this->pObj->pi_getLL( $this->view.'_mode_' . $mode, $mode    );
+      $arr_return['data'][$mode]  = $this->pObj->pi_getLL( $this->view.'_mode_' . $mode, $llMode  );
+      if ( $this->pObj->b_drs_locallang && $mode == $llMode )
       {
-        // We don't need the typoscript array dot
-        $mode                       = substr($keyView, 0, strlen($keyView) - 1);
-        $llMode                     = $this->pObj->pi_getLL($this->view.'_mode_'.$mode, $mode);
-        $arr_return['data'][$mode]  = $this->pObj->pi_getLL($this->view.'_mode_'.$mode, $llMode);
-        if ($this->pObj->b_drs_locallang && $mode == $llMode)
-        {
-          t3lib_div::devlog('[WARN/LOCALLANG] '.$this->conf_path.' hasn\'t any value in _LOCAL_LANG', $this->pObj->extKey, 2);
-          $prompt = 'Please configure _LOCAL_LANG.'.$langKey.'.'.$this->view.'_mode_'.$mode.'.';
-          t3lib_div::devlog('[HELP/LOCALLANG] '.$prompt, $this->pObj->extKey, 1);
-        }
+        t3lib_div::devlog( '[WARN/LOCALLANG] ' . $this->conf_path . ' hasn\'t any value in _LOCAL_LANG', $this->pObj->extKey, 2);
+        $prompt = 'Please configure _LOCAL_LANG.'.$langKey.'.'.$this->view.'_mode_'.$mode.'.';
+        t3lib_div::devlog('[HELP/LOCALLANG] '.$prompt, $this->pObj->extKey, 1);
       }
     }
       // DRS - Development Reporting System
+
     return $arr_return;
   }
 
@@ -1651,6 +1650,7 @@ class tx_browser_pi1_navi
     $arr_items  = $arr_data['arrModeItems'];
 
 
+
       /////////////////////////////////////
       //
       // Without items don't display any tabs
@@ -1658,6 +1658,9 @@ class tx_browser_pi1_navi
     if (count($arr_items) <= 1) {
         // We don't have a mode selector
       $template = $this->pObj->cObj->substituteSubpart($template, '###MODESELECTOR###', '', true);
+      if ($this->pObj->b_drs_browser) {
+        t3lib_div::devlog('[INFO/BROWSER] RETURN. There isn\'t any item for the mode selector.', $this->pObj->extKey, 0);
+      }
       return $template;
     }
 
@@ -1674,7 +1677,23 @@ class tx_browser_pi1_navi
     while (list($str_item_key, $str_item_value) = each($arr_items))
     {
       $tabClass         = ($i_counter < ($i_max_counter - 1)) ? 'tab-'.$i_counter : 'tab-'.$i_counter.' last';
+        // 110825, dwildt-
+      //$class            = $this->mode == $str_item_key ? ' class="'.$tabClass.' selected"' : ' class="'.$tabClass.'"';
+        // 110825, dwildt+
+      switch( true )
+      {
+        case( $this->mode == $str_item_key ) :
+          $class                                  = ' class="'.$tabClass.' selected"';
+          $markerArray['###UI-STATE-ACTIVE###']   = ' ui-state-active';
+          $markerArray['###UI-TABS-SELECTED###']  = ' ui-tabs-selected';
+          break;
+        default:
+          $class                                  = ' class="'.$tabClass.'"';
+          $markerArray['###UI-STATE-ACTIVE###']   = null;
+          $markerArray['###UI-TABS-SELECTED###']  = null;
+      }
       $class            = $this->mode == $str_item_key ? ' class="'.$tabClass.' selected"' : ' class="'.$tabClass.'"';
+        // 110825, dwildt+
       $str_item_value   = htmlspecialchars($str_item_value);
       if ($this->conf['navigation.']['modeSelector.']['wrap'] != '') {
         $str_item_value = str_replace('|', $str_item_value, $this->conf['navigation.']['modeSelector.']['wrap']);
@@ -1702,6 +1721,13 @@ class tx_browser_pi1_navi
     $modeSelector = $this->pObj->cObj->substituteMarkerArray($modeSelector, $markerArray);
     $modeSelector = $this->pObj->cObj->substituteSubpart($modeSelector, '###MODESELECTORTABS###', $tabs,          true);
     $template     = $this->pObj->cObj->substituteSubpart($template,     '###MODESELECTOR###',     $modeSelector,  true);
+
+//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if ( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__. ' (' . __LINE__ . '): ', $this->pObj->piVars);
+//      die( );
+//    }
     return $template;
       // Building and Return the template
 

@@ -25,29 +25,29 @@
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
-            <default>ts</default>
+            <default>yes</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>
         </TCEforms>
       </schedule.display>
-      <schedule.configuration>
+      <schedule.startingpoint>
         <TCEforms>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.configuration</label>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.startingpoint</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.configuration.item.relative</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.startingpoint.item.relative</numIndex>
                 <numIndex index="1">relative</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.configuration.item.absolute</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.startingpoint.item.absolute</numIndex>
                 <numIndex index="1">absolute</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.configuration.item.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.startingpoint.item.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
@@ -56,11 +56,11 @@
             <size>1</size>
           </config>
         </TCEforms>
-      </schedule.configuration>
-      <schedule.configuration.relative>
+      </schedule.startingpoint>
+      <schedule.startingpoint.relative>
         <TCEforms>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.configuration.relative</label>
-          <displayCond>FIELD:schedule.configuration:=:relative</displayCond>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.startingpoint.relative</label>
+          <displayCond>FIELD:schedule.startingpoint:=:relative</displayCond>
           <config>
             <type>select</type>
             <multiple>0</multiple>
@@ -72,21 +72,23 @@
             <itemListStyle>width:200px</itemListStyle>
             <items type="array"></items>
             <itemsProcFunc>tx_browser_pi5_backend->year_selectRelative</itemsProcFunc>
-            <default>currentYear</default>
+            <default>today 0:00</default>
           </config>
         </TCEforms>
-      </schedule.configuration.relative>
-      <schedule.configuration.absolute>
+      </schedule.startingpoint.relative>
+      <schedule.startingpoint.absolute>
         <TCEforms>
-          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.configuration.absolute</label>
-          <displayCond>FIELD:schedule.configuration:=:absolute</displayCond>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.startingpoint.absolute</label>
+          <displayCond>FIELD:schedule.startingpoint:=:absolute</displayCond>
           <config>
             <type>input</type>
-            <size>4</size>
-            <eval>year</eval>
+            <size>10</size>
+            <max>10</max>
+            <eval>date</eval>
+            <default>1293840000</default>
           </config>
         </TCEforms>
-      </schedule.configuration.absolute>
+      </schedule.startingpoint.absolute>
       <navigator.display>
         <TCEforms>
           <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.navigator.display</label>
@@ -106,7 +108,7 @@
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
-            <default>ts</default>
+            <default>yes</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>

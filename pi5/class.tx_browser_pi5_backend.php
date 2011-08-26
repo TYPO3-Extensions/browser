@@ -80,8 +80,8 @@ class tx_browser_pi5_backend
  * sDef_getArrViewsList: Get data query (and andWhere) for all list views of the current plugin.
  * Tab [General/sDEF]
  *
- * @param	[type]		$arr_pluginConf: ...
- * @return	Array		with the names of the views list
+ * @param [type]    $arr_pluginConf: ...
+ * @return  Array   with the names of the views list
  */
   public function sDef_getArrViewsList($arr_pluginConf)
   {
@@ -231,8 +231,8 @@ class tx_browser_pi5_backend
  * sDEF_getExtensionTemplates: Get templates from the browser and third party extensions
  * Tab [sDEF]
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	array		$arr_pluginConf: Extended with the templates
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  array   $arr_pluginConf: Extended with the templates
  */
   public function sDEF_getExtensionTemplates($arr_pluginConf)
   {
@@ -349,6 +349,12 @@ class tx_browser_pi5_backend
       //.message-error
     $str_prompt = null;
 
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Set some default prompts
+
       // WARNING: Completly support initial in 4.2
     $str_prompt_warning_version_420 = '
       <div class="typo3-message message-warning">
@@ -358,33 +364,67 @@ class tx_browser_pi5_backend
       </div>
       ';
 
+      // INFO: DRS
+    $str_prompt_info_drs = '
+      <div class="typo3-message message-notice" style="max-width:' . $this->maxWidth . ';">
+        <div class="message-body">
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.info.drs') . '
+        </div>
+      </div>
+      ';
+
+      // INFO: Include this plugin into the Browser sheet.extend
+    $str_prompt_info_includePi5 = '
+      <div class="typo3-message message-information">
+        <div class="message-body">
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.info.includePi5') . '
+        </div>
+      </div>
+      ';
+
       // INFO: Link to the tutorial and to the browser forum
     $str_prompt_info_tutorialAndForum = '
-      <div class="typo3-message message-information">
+      <div class="typo3-message message-notice">
         <div class="message-body">
           ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.info.tutorialAndForum') . '
         </div>
       </div>
       ';
-
-      // Evaluation result: default message in case of success
-    $str_prompt_evaluationResult  = '
-      <div class="typo3-message message-ok">
-        <div class="message-body">
-          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.ok') . '
-        </div>
-      </div>
-      ';
+      // Set some default prompts
 
 
 
       ///////////////////////////////////////////////////////////////////////////////
       //
-      // Check the plugin
+      // RETURN plugin isn't never saved
+
+    if( empty ( $arr_pluginConf['row']['pi_flexform'] ) )
+    {
+      $str_prompt = '
+        <div class="typo3-message message-error">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.error.saved_never') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.info.saved_never') . '
+          </div>
+        </div>
+        ';
+      return $str_prompt;
+    }
+      // RETURN plugin isn't never saved
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN no TypoScript template
 
     if( !is_array ( $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['pi5.'] ) )
     {
-      $str_prompt_evaluationResult  = '
+      $str_prompt = '
         <div class="typo3-message message-error">
           <div class="message-body">
             ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.error.no_ts_template') . '
@@ -396,62 +436,32 @@ class tx_browser_pi5_backend
           </div>
         </div>
         ';
+
+      $str_prompt = $str_prompt . $str_prompt_info_tutorialAndForum;
+      return $str_prompt;
     }
-      // Check the plugin
+      // RETURN no TypoScript template
 
 
 
       ///////////////////////////////////////////////////////////////////////////////
       //
-      // RETURN the prompt
+      // RETURN success
 
-    $str_prompt = $str_prompt . $str_prompt_warning_version_420 . $str_prompt_evaluationResult . $str_prompt_info_tutorialAndForum;
+    $str_prompt = '
+      <div class="typo3-message message-ok">
+        <div class="message-body">
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.plugin.ok') . '
+        </div>
+      </div>
+      ';
+    $str_prompt = $str_prompt . $str_prompt_info_includePi5 . $str_prompt_info_tutorialAndForum . 
+                  $str_prompt_info_drs . $str_prompt_warning_version_420;
       // RETURN the prompt
 
 
 
     return $str_prompt;
-  }
-
-
-
-
-
-
-
-
-
-
-
-  /**
- * day_selectAbsolute:  Get items for a select box.
- *                      Returns a list with items like this:
- *                      1, ... , 31
- * Tab [day]
- *
- * @param array   $arr_pluginConf: Current plugin/flexform configuration
- * @return  array   $arr_pluginConf: Extended with the items
- */
-  public function day_selectAbsolute($arr_pluginConf)
-  {
-      // Localize lables
-    $ll_dayNom       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.nom');
-
-      // Start and end position
-    $int_firstDayOfAMonth =  1;
-    $int_lastDayOfAMonth  = 31;
-
-      // LOOP from first day to last day of a month
-    for($int_day = $int_firstDayOfAMonth; $int_day <= $int_lastDayOfAMonth; $int_day++)
-    {
-      $str_day  = $int_day . '. ' . $ll_dayNom;
-      $label    = $str_day;
-      $value    = $int_day;
-      $arr_pluginConf['items'][] = array($label, $value);
-    }
-      // LOOP from first day to last day of a month
-
-    return $arr_pluginConf;
   }
 
 
@@ -494,9 +504,9 @@ class tx_browser_pi5_backend
     $int_endDay    = $int_currDay + 10;
 
       // Default items for select box
-    $arr_pluginConf['items'][] = array($ll_currDayDat . ' ('. $str_currDay . ') - ' . $ll_default,  'currentDay'  );
-    $arr_pluginConf['items'][] = array($ll_takeItFromTs,                           'ts'          );
-    $arr_pluginConf['items'][] = array('-------------------------------------------',       null          );
+    $arr_pluginConf['items'][] = array($ll_currDayDat . ' ('. $str_currDay . ') - ' . $ll_default,  'today 0:00' );
+    $arr_pluginConf['items'][] = array($ll_takeItFromTs,                                            'ts'  );
+    $arr_pluginConf['items'][] = array('-------------------------------------------',               null  );
 
       // Last days
     $ll_last        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.last');
@@ -603,58 +613,15 @@ class tx_browser_pi5_backend
         $label = '-------------------------------------------';
         $value = null;
         $arr_pluginConf['items'][] = array($label, $value);
-        $strPlus = '+ ';
+        $strPlus = '+';
         continue;
       }
 
       $label = $strPosition . ' ('. $str_day . ')';
-      $value = $strPosition;
+      $value = $strPosition . ' day';
       $arr_pluginConf['items'][] = array($label, $value);
     }
       // LOOP items from ( current day ./. 10 ) to (current day + 10)
-
-    return $arr_pluginConf;
-  }
-
-
-
-
-
-
-
-
-
-
-
-  /**
- * month_selectAbsolute:  Get items for a select box.
- *                        Returns a list with items like this:
- *                      - 10, ... , -1, current month, +1, ..., +10
- * Tab [year]
- *
- * @param array   $arr_pluginConf: Current plugin/flexform configuration
- * @return  array   $arr_pluginConf: Extended with the items
- */
-  public function month_selectAbsolute($arr_pluginConf)
-  {
-
-      // Start and end position
-    $int_firstMonthOfYear =  1;
-    $int_lastMonthOfYear  = 12;
-
-      // LOOP items from first to last month of a year
-    for($int_month = $int_firstMonthOfYear; $int_month <= $int_lastMonthOfYear; $int_month++)
-    {
-      $year   = date('Y');
-      $month  = $int_month;
-      $day    = 1;
-        // Month represented by three characters. Non localized (there is bug with set_locale and german Umlaute).
-      $str_month = date ( 'M', mktime(0, 0, 0, $month, $day, $year));
-      $label = $str_month;
-      $value = $int_month;
-      $arr_pluginConf['items'][] = array($label, $value);
-    }
-      // LOOP items from first to last month of a year
 
     return $arr_pluginConf;
   }
@@ -696,9 +663,9 @@ class tx_browser_pi5_backend
     $int_endMonth    = $int_currMonth + 11;
 
       // Default items for select box
-    $arr_pluginConf['items'][] = array($ll_currMonthDat . ' ('. $str_currMonth . ') - ' . $ll_default,  'currentMonth'  );
-    $arr_pluginConf['items'][] = array($ll_takeItFromTs,                               'ts'            );
-    $arr_pluginConf['items'][] = array('-------------------------------------------',           null            );
+    $arr_pluginConf['items'][] = array($ll_currMonthDat . ' ('. $str_currMonth . ') - ' . $ll_default,  'today 0:00' );
+    $arr_pluginConf['items'][] = array($ll_takeItFromTs,                                                'ts'  );
+    $arr_pluginConf['items'][] = array('-------------------------------------------',                   null  );
 
       // LOOP items from ( current month ./. 11 ) to (current month + 11)
     $strPlus = null;
@@ -712,56 +679,15 @@ class tx_browser_pi5_backend
         $label = '-------------------------------------------';
         $value = null;
         $arr_pluginConf['items'][] = array($label, $value);
-        $strPlus = '+ ';
+        $strPlus = '+';
         continue;
       }
 
       $label = $strPosition . ' ('. $str_month . ')';
-      $value = $strPosition;
+      $value = $strPosition . ' month';
       $arr_pluginConf['items'][] = array($label, $value);
     }
       // LOOP items from ( current month ./. 11 ) to (current month + 11)
-
-    return $arr_pluginConf;
-  }
-
-
-
-
-
-
-
-
-
-
-
-  /**
- * week_selectAbsolute: Get items for a select box.
- *                      Returns a list with items like this:
- *                      1, ... , 53
- * Tab [week]
- *
- * @param array   $arr_pluginConf: Current plugin/flexform configuration
- * @return  array   $arr_pluginConf: Extended with the items
- */
-  public function week_selectAbsolute($arr_pluginConf)
-  {
-      // Localize lables
-    $ll_weekNom       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.week.nom');
-
-      // Start and end position
-    $int_firstWeekOfAYear =  1;
-    $int_lastWeekOfAYear  = 53;
-
-      // LOOP from first week to last week of a year
-    for($int_week = $int_firstWeekOfAYear; $int_week <= $int_lastWeekOfAYear; $int_week++)
-    {
-      $str_week = $int_week . '. ' . $ll_weekNom;
-      $label    = $str_week;
-      $value    = $int_week;
-      $arr_pluginConf['items'][] = array($label, $value);
-    }
-      // LOOP from first week to last week of a year
 
     return $arr_pluginConf;
   }
@@ -804,9 +730,9 @@ class tx_browser_pi5_backend
     $int_endWeek    = $int_currWeek + 10;
 
       // Default items for select box
-    $arr_pluginConf['items'][] = array($ll_currWeekDat . ' ('. $str_currWeek . ') - ' . $ll_default,  'currentWeek' );
-    $arr_pluginConf['items'][] = array($ll_takeItFromTs,                             'ts'          );
-    $arr_pluginConf['items'][] = array('-------------------------------------------',         null          );
+    $arr_pluginConf['items'][] = array($ll_currWeekDat . ' ('. $str_currWeek . ') - ' . $ll_default,  'today 0:00' );
+    $arr_pluginConf['items'][] = array($ll_takeItFromTs,                                              'ts'  );
+    $arr_pluginConf['items'][] = array('-------------------------------------------',                 null  );
 
       // LOOP items from ( current week ./. 10 ) to (current week + 10)
     $strPlus = null;
@@ -820,12 +746,12 @@ class tx_browser_pi5_backend
         $label = '-------------------------------------------';
         $value = null;
         $arr_pluginConf['items'][] = array($label, $value);
-        $strPlus = '+ ';
+        $strPlus = '+';
         continue;
       }
 
       $label = $strPosition . ' ('. $str_week . ')';
-      $value = $strPosition;
+      $value = $strPosition . ' week';
       $arr_pluginConf['items'][] = array($label, $value);
     }
       // LOOP items from ( current week ./. 10 ) to (current week + 10)
@@ -870,9 +796,9 @@ class tx_browser_pi5_backend
     $int_endYear    = $int_currYear + 10;
 
       // Default items for select box
-    $arr_pluginConf['items'][] = array($ll_currYearDat . ' ('. $str_currYear . ') - ' . $ll_default, 'currentYear' );
-    $arr_pluginConf['items'][] = array($ll_takeItFromTs,                    'ts' );
-    $arr_pluginConf['items'][] = array('-------------------------------------------', null );
+    $arr_pluginConf['items'][] = array($ll_currYearDat . ' ('. $str_currYear . ') - ' . $ll_default,  'today 0:00' );
+    $arr_pluginConf['items'][] = array($ll_takeItFromTs,                                              'ts'  );
+    $arr_pluginConf['items'][] = array('-------------------------------------------',                 null  );
 
       // LOOP items from ( current year ./. 10 ) to (current year + 10)
     $strPlus = null;
@@ -885,12 +811,12 @@ class tx_browser_pi5_backend
         $label = '-------------------------------------------';
         $value = null;
         $arr_pluginConf['items'][] = array($label, $value);
-        $strPlus = '+ ';
+        $strPlus = '+';
         continue;
       }
 
       $label = $strPosition . ' ('. $ll_wouldBe . ' ' . $int_year . ')';
-      $value = $strPosition;
+      $value = $strPosition . ' year';
       $arr_pluginConf['items'][] = array($label, $value);
     }
       // LOOP items from ( current year ./. 10 ) to (current year + 10)
@@ -909,8 +835,8 @@ class tx_browser_pi5_backend
   /**
  * socialmedia_getArrBookmarks: Get bookmarks for flexform. Tab [Socialmedia]
  *
- * @param	[type]		$arr_pluginConf: ...
- * @return	Array		with the bookmarks
+ * @param [type]    $arr_pluginConf: ...
+ * @return  Array   with the bookmarks
  */
   public function socialmedia_getArrBookmarks($arr_pluginConf)
   {
@@ -968,8 +894,8 @@ class tx_browser_pi5_backend
  * templating_getArrDataQuery: Get data query (and andWhere) for all list views of the current plugin.
  * Tab [Templating]
  *
- * @param	[type]		$arr_pluginConf: ...
- * @return	Array		with the bookmarks
+ * @param [type]    $arr_pluginConf: ...
+ * @return  Array   with the bookmarks
  */
   public function templating_getArrDataQuery($arr_pluginConf)
   {
@@ -1050,8 +976,8 @@ class tx_browser_pi5_backend
   /**
  * init(): Initiate this class.
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	boolean		TRUE: success. FALSE: error.
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  boolean   TRUE: success. FALSE: error.
  * @since 3.4.5
  * @version 3.4.5
  */
@@ -1091,8 +1017,8 @@ class tx_browser_pi5_backend
   /**
  * init_pageObj(): Initiate an page object.
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	boolean		FALSE
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  boolean   FALSE
  * @since 3.4.5
  * @version 3.4.5
  */
@@ -1123,8 +1049,8 @@ class tx_browser_pi5_backend
   /**
  * init_pageUid(): Initiate the page uid.
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	boolean		FALSE
+ * @param array   $arr_pluginConf: Current plugin/flexform configuration
+ * @return  boolean   FALSE
  * @since 3.4.5
  * @version 3.4.5
  */
@@ -1173,8 +1099,8 @@ class tx_browser_pi5_backend
   /**
  * init_tsObj(): Initiate the TypoScript of the current page.
  *
- * @param	array		$arr_rows_of_all_pages_inRootLine: Agregate the TypoScript of all pages in the rootline
- * @return	boolean		FALSE
+ * @param array   $arr_rows_of_all_pages_inRootLine: Agregate the TypoScript of all pages in the rootline
+ * @return  boolean   FALSE
  * @since 3.4.5
  * @version 3.4.5
  */
@@ -1201,59 +1127,39 @@ class tx_browser_pi5_backend
 
 
 
-
-
-
   /**
- * zz: Get templates from the browser and third party extensions
- * Tab [sDEF]
+ * zz_hours:  Get the hours of one day
+ *            Returns a list with items like this:
+ *            00:00, 01:00, ..., 23:00, 24:00
+ * Tab [year]
  *
  * @param array   $arr_pluginConf: Current plugin/flexform configuration
  * @return  array   $arr_pluginConf: Extended with the items
  */
-  public function zz($arr_pluginConf)
+  public function zz_hours( $arr_pluginConf )
   {
-      // Default value
-    $arr_pluginConf['items'][] = array('Development: Add an item');
-    $arr_pluginConf['items'][] = array('Development: Add an item');
-    $arr_pluginConf['items'][] = array('-------------------------------------------', '');
+      // Localize lables
+    $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.takeItFromTs');
 
+      // Default items for select box
+    $arr_pluginConf['items'][] = array($ll_takeItFromTs,                              'ts'  );
+    $arr_pluginConf['items'][] = array('-------------------------------------------', null  );
 
-      // Require classes, init page id, page object and TypoScript object
-    $bool_success = $this->init($arr_pluginConf);
-    if(!$bool_success)
+      // Start and end position
+    $int_firstHourOfDay =  0;
+    $int_lastHourOfDay  = 24;
+
+      // LOOP items from first to last hour of a day
+    for( $int_hour = $int_firstHourOfDay; $int_hour <= $int_lastHourOfDay; $int_hour++ )
     {
-      return $arr_pluginConf;
+      $label = sprintf ( '%02d:00', $int_hour );
+      $value = $int_hour;
+      $arr_pluginConf['items'][] = array($label, $value);
     }
-
-//      // TypoScript configuration for extension templates
-//    $arr_extensions = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['template.']['extensions.'];
-//
-//    if (!(is_array($arr_extensions) && count($arr_extensions)))
-//    {
-//      return $arr_pluginConf;
-//    }
-//
-//      // Loop through all extensions and templates
-//    foreach((array) $arr_extensions as $extensionWiDot => $arr_templates)
-//    {
-//      $extension = substr($extensionWiDot, 0, strlen($extensionWiDot) - 1);
-//      foreach((array) $arr_templates as $arr_template)
-//      {
-//        $label = $arr_template['name'].' ('.$extension.')';
-//        $value = $arr_template['file'];
-//        $arr_pluginConf['items'][] = array($label, $value);
-//      }
-//    }
-//      // Loop through all extensions and templates
+      // LOOP items from first to last hour of a day
 
     return $arr_pluginConf;
-
   }
-
-
-
-
 
 
 

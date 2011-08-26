@@ -9,29 +9,29 @@
       <label index="tt_content.list_type_pi1">Browser</label>
       <label index="tt_content.list_type_pi3">Browser Manuals</label>
       <label index="tt_content.list_type_pi4">Browser (no cache)</label>
-      <label index="tt_content.list_type_pi5">Browser Calendar</label>
+      <label index="tt_content.list_type_pi5">+Browser Calendar</label>
       <label index="wizard.list_type_pi1">Browser - the TYPO3-Frontend-Engine</label>
       <label index="wizard.list_type_pi1.desc">Browser: The plugin for your data. Don't forget to include the static template!</label>
       <label index="wizard.list_type_pi3">Browser Manuals</label>
       <label index="wizard.list_type_pi3.desc">List with descriptions of all Browser manuals. Links to the online documentation in the TYPO3 repository.</label>
       <label index="wizard.list_type_pi4">Browser - the TYPO3-Frontend-Engine - without cache</label>
       <label index="wizard.list_type_pi4.desc">Browser uncached. Don't forget to include both static templates: browser and +browser (no cache)!</label>
-      <label index="wizard.list_type_pi5">Browser Calendar</label>
-      <label index="wizard.list_type_pi5.desc">Publish your data based on a calendar. Don't forget to include both static templates: browser and +browser calendar!</label>
+      <label index="wizard.list_type_pi5">+Browser Calendar</label>
+      <label index="wizard.list_type_pi5.desc">Publish your data based on a calendar. Set up your timetables with the Browser Calender user interface. You need both plugins on the same page: Browser and +Browser Calender. Extend the Browser with the Calender in the tab [Extend it!].</label>
     </languageKey>
     <languageKey index="de" type="array">
       <label index="tt_content.list_type_pi1">Browser</label>
-      <label index="tt_content.list_type_pi3"><![CDATA[Browser Handbücher]]></label>
+      <label index="tt_content.list_type_pi3">Browser Handb<![CDATA[ü]]>cher</label>
       <label index="tt_content.list_type_pi4">Browser (ohne Cache)</label>
-      <label index="tt_content.list_type_pi5">Browser Kalender</label>
+      <label index="tt_content.list_type_pi5">+Browser Kalender</label>
       <label index="wizard.list_type_pi1">Browser - die TYPO3-Frontend-Engine</label>
-      <label index="wizard.list_type_pi1.desc"><![CDATA[Browser: Das Plugin für Deine Daten. Vergiß nicht, dass Static Template einzubinden!]]></label>
-      <label index="wizard.list_type_pi3"><![CDATA[Browser Handbücher]]></label>
-      <label index="wizard.list_type_pi3.desc"><![CDATA[Liste mit allen Browser Handbüchern. Link zur jeweiligen Online-Dokumentation im TYPO3-Repository.]]></label>
+      <label index="wizard.list_type_pi1.desc">Browser: Das Plugin f<![CDATA[ü]]>r Deine Daten. Vergiß nicht, dass Static Template einzubinden!</label>
+      <label index="wizard.list_type_pi3">Browser Handb<![CDATA[ü]]>cher</label>
+      <label index="wizard.list_type_pi3.desc">Liste mit allen Browser Handb<![CDATA[ü]]>chern. Link zur jeweiligen Online-Dokumentation im TYPO3-Repository.</label>
       <label index="wizard.list_type_pi4">Browser - die TYPO3-Frontend-Engine - ohne Cache</label>
-      <label index="wizard.list_type_pi4.desc"><![CDATA[Browser: Das Plugin ungecacht. Vergiß nicht, beide Static Template einzubinden: Browser und +Browser (ohne Cache)!]]></label>
-      <label index="wizard.list_type_pi5">Browser Kalender</label>
-      <label index="wizard.list_type_pi5.desc"><![CDATA[Veröffentliche Deine Daten mit einem Kalender. Vergiß nicht, beide Static Template einzubinden: Browser und +Browser Kalender!]]></label>
+      <label index="wizard.list_type_pi4.desc">Browser: Das Plugin ungecacht. Vergi<![CDATA[ß]]> nicht, beide Static Template einzubinden: Browser und +Browser (ohne Cache)!</label>
+      <label index="wizard.list_type_pi5">+Browser Kalender</label>
+      <label index="wizard.list_type_pi5.desc">Ver<![CDATA[ö]]>ffentliche Deine Daten mit einem Kalender. Gestalte Deinen Kalender mit dem Browser Kalendar User Interface. Du ben<![CDATA[ö]]>tigst beide Plugins: Browser und +Browser Kalender! Den Browser erweiterst Du im Reiter [Erweitern] mit dem Kalender.</label>
     </languageKey>
   </data>
 </T3locallang>

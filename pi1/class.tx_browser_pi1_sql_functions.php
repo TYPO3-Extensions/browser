@@ -28,7 +28,8 @@
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *
-* @version   3.4.3
+* @version   4.0.0
+* @since  2.0.0
 *
 * @package    TYPO3
 * @subpackage    tx_browser
@@ -1430,6 +1431,12 @@ class tx_browser_pi1_sql_functions
       $arr_return['data']['arr_used_tableFields'] = $arr_used_tableFields;
       $arr_return['data']['andWhere']             = $str_andWhere;
 
+//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if ( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__. ' (' . __LINE__ . '): ', $arr_return );
+//      die( );
+//    }
       return $arr_return;
     }
 
@@ -2174,6 +2181,8 @@ class tx_browser_pi1_sql_functions
  * @param	string		$str_tsValue:    the TypoScript value like: tt_news.title, tt_news.short
  * @param	array		$arr_tsArray:    the TypoScript array like select. or override.select.
  * @return	string		wrapped value, if there is a stdWrap configuration
+ * 
+ * @version 4.0.0
  */
   function global_stdWrap($str_tsProperty, $str_tsValue, $arr_tsArray)
   {
@@ -2253,17 +2262,21 @@ class tx_browser_pi1_sql_functions
 
 
 
-    $cObj      = $this->pObj->cObj;
     $lConfCObj = false;
     $elements  = false;
 
-    $lConfCObj['10']  = $str_tsValue;
-    $lConfCObj['10.'] = $arr_tsArray;
-    $lConfCObj        = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $elements);
-    $lConfCObj        = $this->pObj->objZz->substitute_t3globals_recurs($lConfCObj);
-    $str_tsValue      = $this->pObj->objWrapper->general_stdWrap($this->pObj->local_cObj->COBJ_ARRAY($lConfCObj, $ext=''), false);
+      // #29198, 110824, dwildt-
+//    $lConfCObj['10']  = $str_tsValue;
+//    $lConfCObj['10.'] = $arr_tsArray;
+//    $lConfCObj        = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $elements);
+//    $lConfCObj        = $this->pObj->objZz->substitute_t3globals_recurs($lConfCObj);
+      // #29198, 110824, dwildt-
 
-//if(t3lib_div::_GP('dev')) var_dump('sqlFun 2979', $lConfCObj, $this->pObj->local_cObj->COBJ_ARRAY($lConfCObj, $ext=''), $str_tsValue);
+      // #29198, 110824, dwildt-
+//    $str_tsValue      = $this->pObj->objWrapper->general_stdWrap($this->pObj->local_cObj->COBJ_ARRAY($lConfCObj, $ext=''), false);
+      // #29198, 110824, dwildt+
+    $str_tsValue = $this->pObj->cObj->cObjGetSingle($str_tsValue, $arr_tsArray);
+
     if ($this->pObj->b_drs_sql)
     {
       t3lib_div::devlog('[INFO/SQL] '.$conf_path.$str_tsProperty.' is wrapped: '.$str_tsValue, $this->pObj->extKey, 0);
