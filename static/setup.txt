@@ -1378,7 +1378,7 @@ plugin.tx_browser_pi1 {
                   // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
                 use_php_strtotime = 1
                 stdWrap {
-                    // Examples with strtotime: last Monday, -1 day, now, next Monday
+                    // Examples with strtotime: last Monday, -1 day, now, today 0:00, next Monday
                   value = last Monday
                 }
               }
@@ -1403,7 +1403,7 @@ plugin.tx_browser_pi1 {
                   // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
                 use_php_strtotime = 1
                 stdWrap {
-                    // Examples with strtotime: -3 weeks, now, next week
+                    // Examples with strtotime: -3 weeks, now, today 0:00, next week
                   value = last week
                 }
               }
@@ -1432,7 +1432,7 @@ plugin.tx_browser_pi1 {
                   // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
                 use_php_strtotime = 1
                 stdWrap {
-                    // Examples with strtotime: January, -1 month, now, next month
+                    // Examples with strtotime: January, -1 month, now, today 0:00, next month
                   value = now
                 }
               }
@@ -1457,7 +1457,7 @@ plugin.tx_browser_pi1 {
                   // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
                 use_php_strtotime = 1
                 stdWrap {
-                    // Examples with strtotime: -1 year, 2010, now, next year
+                    // Examples with strtotime: -1 year, 2010, now, today 0:00, next year
                   value = -1 year
                 }
               }
