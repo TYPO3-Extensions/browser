@@ -29,7 +29,7 @@
 * @package    TYPO3
 * @subpackage    browser
 *
-* @version 3.7.0
+* @version 4.0.0
 * @since 3.0.0
 */
 
@@ -283,7 +283,8 @@ class tx_browser_pi1_wrapper
  * @param string    $value: The value, which should be wrapped
  * @param integer   $recordId: Id of the record, which should be displayed in a single view
  * @return  string    The wrapped and linked value
- * @version 3.5.0
+ * @version 4.0.0
+ * @since 2.0.0
  */
   function wrapAndLinkValue($tableField, $value, $recordId=0)
   {
@@ -402,7 +403,10 @@ class tx_browser_pi1_wrapper
     $arr_prompt_drs = null;
     switch(true)
     {
-      case(empty($value)) :
+        // 110831, dwildt-
+//      case( empty ( $value ) ) :
+        // 110831, dwildt+
+      case( $value == null ) :
           // There isn't any value, don't set a link. This has priority over all below.
         $arr_prompt_drs[]   = '!$value || $value == \'\'';
         $boolDoNotLink      = false;
@@ -1160,14 +1164,21 @@ class tx_browser_pi1_wrapper
  * @param string    $content: the content which will be wrapped
  * @return  string    the wrapped content
  * 
- * @version 3.7.0
+ * @version 4.0.0
  * @since 3.7.0
  */
   function wrapInBaseIdClass($content)
   {
+      // Rendering the id.  I.e. c1149-tx-browser-pi1-list-11083102
+      //                    c1149:          uid in the tt_content table / uid of the plugin
+      //                    tx-browser-pi1: prefix-id withreplaced _
+      //                    view:           list
+      //                    mode:           11083102
+      //                    #29042
+    $uidPlugin      = 'c' . $this->pObj->cObj->data['uid'];
     $local_prefixId = str_replace('_', '-', $this->pObj->prefixId);
-    $id             = ' id="c' . $this->pObj->cObj->data['uid'] . '-' . $local_prefixId . '"';
-    $class          = ' class="' . $local_prefixId . '"';
+    $id             = ' id="' . $uidPlugin . '-' . $local_prefixId . '-' . $this->pObj->view . '-' . $this->pObj->piVar_mode . '"';
+    $class          = ' class="' . $local_prefixId . ' ' . $uidPlugin . '-' . $local_prefixId . '-' . $this->pObj->view . '"';
     
     $wrap['start']  = '<div' . $id . $class . '>';
     $wrap['end']    = '</div>';

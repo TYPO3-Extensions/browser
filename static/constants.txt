@@ -50,6 +50,8 @@ plugin.tx_browser_pi1 {
 
   # cat=Browser - the TYPO3-Frontend-Engine//410;       type=int+;    label= AJAX page object: Type number (typenum) of the AJAX page object. Default: 28562
   typeNum.ajaxPageObj = 28562
+  # cat=Browser - the TYPO3-Frontend-Engine//411;       type=int+;    label= CSV page object: Type number (typenum) of the CSV page object. Default: 29370
+  typeNum.csvPageObj = 29370
   # cat=Browser - the TYPO3-Frontend-Engine//420;       type=string;  label= Format for strftime
   strftime = %a, %d.%b.%y
 

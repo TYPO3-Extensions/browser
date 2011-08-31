@@ -66,45 +66,55 @@ class tx_browser_pi1_template
 {
 
 
-  //////////////////////////////////////////////////////
-  //
-  // Variables set by the pObj (by class.tx_browser_pi1.php)
+    //////////////////////////////////////////////////////
+    //
+    // Variables set by the pObj (by class.tx_browser_pi1.php)
 
+    // [Array] The current TypoScript configuration array
   var $conf       = false;
-  // [Array] The current TypoScript configuration array
+    // [Integer] The current mode (from modeselector)
   var $mode       = false;
-  // [Integer] The current mode (from modeselector)
+    // [String] 'list' or 'single': The current view
   var $view       = false;
-  // [String] 'list' or 'single': The current view
+    // [Array] The TypoScript configuration array of the current view
   var $conf_view  = false;
-  // [Array] The TypoScript configuration array of the current view
+    // [String] TypoScript path to the current view. I.e. views.single.1
   var $conf_path  = false;
-  // [String] TypoScript path to the current view. I.e. views.single.1
+    // [Booelan] If true, workflow will executed in case of empty rows too
   var $ignore_empty_rows_rule = false;
-  // [Booelan] If true, workflow will executed in case of empty rows too
-  // Variables set by the pObj (by class.tx_browser_pi1.php)
+    // Variables set by the pObj (by class.tx_browser_pi1.php)
 
 
-  //////////////////////////////////////////////////////
-  //
-  // Variables set by this class
 
+    //////////////////////////////////////////////////////
+    //
+    // Variables set by this class
+
+    // [Array]Array with the fields of the SQL result
   var $arr_select;
-  // [Array]Array with the fields of the SQL result
+    // [Array] Array with fields from orderBy from TS
   var $arr_orderBy;
-  // [Array] Array with fields from orderBy from TS
-  var $arr_rmFields;
-  // [Array] Array with fields from functions.clean_up.csvTableFields from TS
+    // [Array] Array with fields from functions.clean_up.csvTableFields from TS
+  var $arr_rmFields   = null;
+    // [Array] Local or global TypoScript array with the displaySingle properties
   var $lDisplaySingle;
-  // [Array] Local or global TypoScript array with the displaySingle properties
+    // [Array] Local or global TypoScript array with the displayList properties
   var $lDisplayList;
-  // [Array] Local or global TypoScript array with the displayList properties
+    // [array] Array with default markers
+  var $markerArray    = null;
+    // [Integer] Amount of elements, which should dislayed
+  var $max_elements   = null;
+    // [string] HTML class for odd columns (th, td)
+  var $oddClassColumns  = null;
+    // [string] HTML class for odd rows (tr)
+  var $oddClassRows   = null;
+    // [Boolean] true, if rows should grouped, false, if rows shouldn't grouped
   var $bool_groupby;
-  // [Boolean] true, if rows should grouped, false, if rows shouldn't grouped
+    // [Array] Array [table.field] = $value.
+    // It is needed by social media bookmarks in a default single view.
   var $arr_curr_value = false;
-  // [Array] Array [table.field] = $value.
-  // It is needed by social media bookmarks in a default single view.
-  // 3.4.0
+    // 3.4.0
+    // Variables set by this class
 
 
 
@@ -144,7 +154,9 @@ class tx_browser_pi1_template
  * @param string    $template: The current template part
  * @param string    $display : display the searchbox or not
  * @return  string    $template: The HTML template part
- * @version 3.5.0
+ * 
+ * @version 4.0.0
+ * @since 1.0.0
  */
   function tmplSearchBox($template, $display)
   {
@@ -271,8 +283,12 @@ class tx_browser_pi1_template
       // Recover piVars
 
 
-
-    $markerArray                  = $this->pObj->objWrapper->constant_markers();
+      // 110829, dwildt+
+    $this->tmpl_marker( );
+    $markerArray = $this->markerArray;
+      // 110829, dwildt+
+      // 110829, dwildt-
+//    $markerArray                  = $this->pObj->objWrapper->constant_markers();
     $markerArray['###ACTION###']  = $str_action;
     $str_sword                    = stripslashes($this->pObj->piVars['sword']);
     $str_sword                    = htmlspecialchars($str_sword);
@@ -523,7 +539,8 @@ class tx_browser_pi1_template
  * @param array   Array with the records of the SQL result
  * @return  void
  *
- * @version 3.6.0
+ * @version 4.0.0
+ * @since 1.0.0
  */
   function tmplListview($template, $rows)
   {
@@ -534,6 +551,11 @@ class tx_browser_pi1_template
 
     $template = $this->groupBy_verify($template);
       // Set the groupby mode and get a proper template
+
+
+
+      // Set the global arr_rmFields
+    $this->tmpl_rmFields( );
 
 
 
@@ -562,8 +584,14 @@ class tx_browser_pi1_template
       //
       // Replace mode and view in the whole template
 
-    $template = str_replace('###MODE###', $this->pObj->piVar_mode, $template);
-    $template = str_replace('###VIEW###', $this->pObj->view, $template);
+      // 110829, dwildt+
+    $this->tmpl_marker( );
+    $markerArray = $this->markerArray;
+      // 110829, dwildt+
+      // 110829, dwildt-
+//    $template = str_replace('###MODE###', $this->pObj->piVar_mode, $template);
+//    $template = str_replace('###VIEW###', $this->pObj->view, $template);
+      // 110829, dwildt-
       // Replace mode an view in the whole template
 
 
@@ -595,7 +623,10 @@ class tx_browser_pi1_template
         $str_emptyList  = $this->pObj->objWrapper->general_stdWrap('', $conf_emptyList);
 
         $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $str_emptyList, true);
-        $markerArray    = $this->pObj->objWrapper->constant_markers();
+          // 110829, dwildt+
+        $this->tmpl_marker( );
+        // 110829, dwildt-
+//        $markerArray    = $this->pObj->objWrapper->constant_markers();
         $template       = $this->pObj->cObj->substituteMarkerArray($template, $markerArray);
         return $template;
       }
@@ -663,7 +694,10 @@ class tx_browser_pi1_template
         {
           $template = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', '', true);
         }
-        $markerArray    = $this->pObj->objWrapper->constant_markers();
+          // 110829, dwildt+
+        $this->tmpl_marker( );
+          // 110829, dwildt-
+        //$markerArray    = $this->pObj->objWrapper->constant_markers();
 
           /////////////////////////////////////
           //
@@ -704,8 +738,19 @@ class tx_browser_pi1_template
       // Init the global array $arrHandleAs
 
     $this->pObj->objTca->setArrHandleAs();
-    $this->pObj->rows     = $rows;  //:todo: function parameter without rows
+    $this->pObj->rows = $rows;
       // Init the global array $arrHandleAs
+
+
+
+      //////////////////////////////////////////////////////////////////
+      //
+      // Get oddClasses
+
+      // #28562: 110830, dwildt+
+    $this->oddClassColumns  = $lDisplayList['templateMarker.']['oddClass.']['columns'];
+    $this->oddClassRows     = $lDisplayList['templateMarker.']['oddClass.']['rows'];
+      // Get oddClasses
 
 
 
@@ -843,9 +888,30 @@ class tx_browser_pi1_template
       }
 
 
+        // #28562: 110830, dwildt+
+      $counter_tr = 0;
+      $max_tr     = count( $rows ) - 1;
+      $firstKey         = key($rows);
+      $row              = $rows[$firstKey];
+      $max_elements     = 0;
+      $addedTableFields = $this->pObj->arrConsolidate['addedTableFields'];
+      foreach( $row as $key => $value)
+      {
+        if ( in_array( $key, (array) $addedTableFields ) )
+        {
+          continue;
+        }
+        if( in_array( $key, (array) $this->arr_rmFields ) )
+        {
+          continue;
+        }
+        $max_elements++;
+      }
+      $this->max_elements = $max_elements;
+        // #28562: 110830, dwildt+
 
         // elements
-      foreach((array) $rows as $elements)
+      foreach( ( array ) $rows as $elements )
       {
         if( $this->ignore_empty_rows_rule )
         {
@@ -885,11 +951,29 @@ class tx_browser_pi1_template
         $listBodyRow  = $this->pObj->cObj->getSubpart($template, '###LISTBODY###');
         $listBodyRow  = $this->pObj->cObj->substituteSubpart($listBodyRow, '###LISTBODYITEM###', $htmlRows, true);
 
+          // #28562: 110830, dwildt+
+        $markerArray['###TR_COUNTER###']  = $counter_tr;
+        switch(true)
+        {
+          case( $counter_tr == 0 ):
+            $markerArray['###TR_FIRST_LAST###'] = 'first';
+            break;
+          case( $counter_tr >=  $max_tr ):
+            $markerArray['###TR_FIRST_LAST###'] = 'last';
+            break;
+          default:
+            $markerArray['###TR_FIRST_LAST###'] = null;
+            break;
+        }
+        $markerArray['###TR_EVEN_OR_ODD###']  = $counter_tr%2 ? $this->oddClassRows : null;
+        $counter_tr++;
+          // #28562: 110830, dwildt+
+
           // Suggestion #8856,  dwildt, 100812
           // Bugfix     #10762, dwildt, 101201
           //$markerBodyRows['###CLASS###'] = ($c++%2 ? ' class="odd"' : '');
         $str_class = null;
-        if($c - 2 == 0)
+        if( ( $c - 2 ) == 0 )
         {
           $str_class = 'first ';
         }
@@ -1156,7 +1240,11 @@ class tx_browser_pi1_template
     $listview       = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
     $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $listview, true);
     unset($markerArray);
-    $markerArray    = $this->pObj->objWrapper->constant_markers();
+      // 110829, dwildt-
+    //$markerArray    = $this->pObj->objWrapper->constant_markers();
+      // 110829, dwildt+
+    $this->tmpl_marker( );
+    $markerArray    = $this->markerArray;
     $template       = $this->pObj->cObj->substituteMarkerArray($template, $markerArray);
       // Fill up the template with content
 
@@ -1201,8 +1289,9 @@ class tx_browser_pi1_template
  * @param string    Name of the current table
  * @param array   The SQL result as rows array
  * @return  void
- * @since 1.x.x
- * @version 3.6.5
+ * 
+ * @version 4.0.0
+ * @since 1.0.0
  */
   function tmplSingleview($template, $rows)
   {
@@ -1326,7 +1415,12 @@ class tx_browser_pi1_template
           t3lib_div::devLog('[HELP/TEMPLATING] Change it? Configure '.$this->conf_path.'.displayList.noItemMessage.', $this->pObj->extKey, 1);
         }
       }
-      $markerArray    = $this->pObj->objWrapper->constant_markers();
+        // 110829, dwildt+
+      $this->tmpl_marker( );
+      $markerArray = $this->markerArray;
+        // 110829, dwildt+
+        // 110829, dwildt-
+//      $markerArray    = $this->pObj->objWrapper->constant_markers();
       $template       = $this->pObj->cObj->substituteMarkerArray($template, $markerArray);
       return $template;
     }
@@ -1692,7 +1786,12 @@ class tx_browser_pi1_template
     $singleview   = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
     $template     = $this->pObj->cObj->substituteSubpart($template, '###SINGLEVIEW###', $singleview, true);
     unset($markerArray);
-    $markerArray  = $this->pObj->objWrapper->constant_markers();
+      // 110829, dwildt+
+    $this->tmpl_marker( );
+    $markerArray = $this->markerArray;
+      // 110829, dwildt+
+      // 110829, dwildt-
+//    $markerArray  = $this->pObj->objWrapper->constant_markers();
     $template     = $this->pObj->cObj->substituteMarkerArray($template, $markerArray);
     // Fill up the template with content
 
@@ -1717,7 +1816,9 @@ class tx_browser_pi1_template
  *
  * @param string    Template
  * @return  string    Template
- * @version 3.6.1
+ * 
+ * @version 4.0.0
+ * @since 1.0.0
  */
   function tmplTableHead($template)
   {
@@ -1759,25 +1860,8 @@ class tx_browser_pi1_template
 
 
 
-      ///////////////////////////////////////////
-      //
-      // Get the field names, which should not displayed
-
-    $conf_rmFields    = $this->conf_view['functions.']['clean_up.']['csvTableFields'];
-    $arr_rmFields     = $this->pObj->objZz->getCSVasArray($conf_rmFields);
-    $lArr_RmFields[0] = array_flip($arr_rmFields);
-    $arr_result       = $this->pObj->objSqlFun->rows_with_cleaned_up_fields($lArr_RmFields);
-    $lArr_RmFields    = $arr_result['data']['rows'];
-    $arr_rmFields     = array_flip($lArr_RmFields[0]);
-    if (!is_array($arr_rmFields))
-    {
-      $arr_rmFields = array();
-    }
-    unset($arr_result);
-    $this->arr_rmFields = $arr_rmFields;
-      // Get the field names from the SQL result
-      // Get the field names, which should not displayed
-
+      // Set the global arr_rmFields
+    $this->tmpl_rmFields( );
 
       // Get the global $arrHandleAs array
     $handleAs = $this->pObj->arrHandleAs;
@@ -1826,22 +1910,19 @@ class tx_browser_pi1_template
 
         // We don't want fields from global arrConsolidate['addedTableFields']
       $addedTableFields = $this->pObj->arrConsolidate['addedTableFields'];
-      if (is_array($addedTableFields))
+      if ( in_array( trim( $columnValue ), ( array ) $addedTableFields ) )
       {
-        if (in_array(trim($columnValue), $addedTableFields))
+        unset($arrColumns[$columnKey]);
+        $maxColumns--;
+        if ($this->pObj->b_drs_templating)
         {
-          unset($arrColumns[$columnKey]);
-          $maxColumns--;
-          if ($this->pObj->b_drs_templating)
-          {
-            t3lib_div::devLog('[INFO/TEMPLATING] Table Head: '.$columnValue.' is removed.', $this->pObj->extKey, 0);
-          }
+          t3lib_div::devLog('[INFO/TEMPLATING] Table Head: '.$columnValue.' is removed.', $this->pObj->extKey, 0);
         }
       }
         // We don't want fields from global arrConsolidate['addedTableFields']
 
         // We don't want fields from functions.clean_up.csvTableFields
-      if (in_array(trim($columnValue), $arr_rmFields))
+      if (in_array(trim($columnValue), $this->arr_rmFields))
       {
         unset($arrColumns[$columnKey]);
         $maxColumns--;
@@ -1885,16 +1966,27 @@ class tx_browser_pi1_template
       // Building the table head or the select box for ordering
 
     $currentColumn  = 0;
-    $markerArray    = $this->pObj->objWrapper->constant_markers();
+      // 110829, dwildt+
+    $this->tmpl_marker( );
+    $markerArray = $this->markerArray;
+      // 110829, dwildt+
+      // 110829, dwildt-
+//    $markerArray    = $this->pObj->objWrapper->constant_markers();
     $bool_first     = true;
 
+      // #28562: 110830, dwildt+
+    $counter_th = 0;
+    $max_th     = count( $arrColumns ) - 1;
+
+
+
       // Loop: All columns / keys of first record
-    foreach((array) $arrColumns as $columnValue)
+    foreach( ( array ) $arrColumns as $columnValue )
     {
-      list($table, $field) = explode('.', trim($columnValue));
-      $field    = trim($columnValue);
-      $fieldLL  = $this->pObj->objZz->getTableFieldLL($field);
-      // Order the list
+      list( $table, $field ) = explode( '.', trim( $columnValue ) );
+      $field    = trim( $columnValue );
+      $fieldLL  = $this->pObj->objZz->getTableFieldLL( $field );
+        // Order the list
       $sort = false;
       if (in_array($field, $arrOrderByFields))
       {
@@ -1909,6 +2001,23 @@ class tx_browser_pi1_template
         $sort = array('sort' => $field.':'.$b_asc);
       }
         // Order the list
+
+        // #28562: 110830, dwildt+
+      $markerArray['###TH_COUNTER###'] = $counter_th;
+      switch(true)
+      {
+        case( $counter_th == 0 ):
+          $markerArray['###TH_FIRST_LAST###'] = 'first';
+          break;
+        case( $counter_th >=  $max_th ):
+          $markerArray['###TH_FIRST_LAST###'] = 'last';
+          break;
+        default:
+          $markerArray['###TH_FIRST_LAST###'] = null;
+          break;
+      }
+      $markerArray['###TH_EVEN_OR_ODD###']  = $counter_th%2 ? $this->oddClassColumns : null;
+        // #28562: 110830, dwildt+
 
         // Building the table head
       if($bool_table)
@@ -1967,6 +2076,7 @@ class tx_browser_pi1_template
       }
         // Building the select box for ordering
       $bool_first = false;
+      $counter_th++;
     }
       // Loop: All columns / keys of first record
 
@@ -2309,8 +2419,9 @@ class tx_browser_pi1_template
  * @param string    The subpart marker, which is the template for a row
  * @param string    Template
  * @return  string    FALSE || HTML string
- * @since 1.x.x
- * @version 3.6.2
+ * 
+ * @version 4.0.0
+ * @since 1.0.0
  */
   function tmplRows($elements, $subpart, $template)
   {
@@ -2530,7 +2641,12 @@ class tx_browser_pi1_template
     $htmlRow              = false;
     $bool_drs_handleCase  = false;
 
-    $markerArray          = $this->pObj->objWrapper->constant_markers();
+      // 110829, dwildt-
+//    $markerArray  = $this->pObj->objWrapper->constant_markers();
+      // 110829, dwildt+
+    $this->tmpl_marker( );
+    $markerArray = $this->markerArray;
+      // 110829, dwildt+
 
       // #12723, mbless, 110310
     $this->_elements                = $elements;
@@ -2870,11 +2986,7 @@ class tx_browser_pi1_template
 
         // Remove fields, which where added because of missing uid and pid
         $addedTableFields = $this->pObj->arrConsolidate['addedTableFields'];
-        if (!is_array($addedTableFields))
-        {
-          $addedTableFields = array();
-        }
-        if (in_array($key, $addedTableFields))
+        if ( in_array( $key, (array) $addedTableFields ) )
         {
           if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
           {
@@ -2956,14 +3068,49 @@ class tx_browser_pi1_template
       // foreach
     $this->hook_template_elements_transformed();
 
+      // #28562: 110830, dwildt+
+    $counter_td       = 0;
+    $max_td           = $this->max_elements - 1;
+    $addedTableFields = $this->pObj->arrConsolidate['addedTableFields'];
+      // #28562: 110830, dwildt+
+
     foreach ($this->_elementsTransformed as $key => $value)
     {
       $boolSubstitute = $this->_elementsBoolSubstitute[$key];
         // #12723, mbless, 110310
 
-        // Substitute the template marker
-      if ($boolSubstitute)
+        // #28562: 110830, dwildt+
+      if ( in_array( $key, (array) $addedTableFields ) )
       {
+        continue;
+      }
+      if( in_array( $key, (array) $this->arr_rmFields ) )
+      {
+        continue;
+      }
+        // #28562: 110830, dwildt+
+
+        // Substitute the template marker
+      if ( $boolSubstitute )
+      {
+          // #28562: 110830, dwildt+
+        $markerArray['###TD_COUNTER###']  = $counter_td;
+        switch(true)
+        {
+          case( $counter_td == 0 ):
+            $markerArray['###TD_FIRST_LAST###'] = 'first';
+            break;
+          case( $counter_td >=  $max_td ):
+            $markerArray['###TD_FIRST_LAST###'] = 'last';
+            break;
+          default:
+            $markerArray['###TD_FIRST_LAST###'] = null;
+            break;
+        }
+        $markerArray['###TD_EVEN_OR_ODD###']  = $counter_td%2 ? $this->oddClassColumns : null;
+        $counter_td++;
+          // #28562: 110830, dwildt+
+
         $htmlSubpart = $this->pObj->cObj->getSubpart($template, $subpart);
         if($this->view == 'list' && $bool_design_default)
         {
@@ -3056,6 +3203,69 @@ class tx_browser_pi1_template
     $this->pObj->boolFirstRow = false;
     return $htmlRow;
   }
+
+
+
+
+
+
+
+
+
+  /**
+ * cal_marker(): Set some global marker
+ *
+ * @return  void
+ * @version 4.0.0
+ * @since 4.0.0
+ */
+  private function tmpl_marker( )
+  {
+      // Set marker
+    $this->markerArray['###MODE###']  = $this->pObj->piVar_mode;
+    $this->markerArray['###VIEW###']  = $this->pObj->view;
+    $this->markerArray                = $this->pObj->objMarker->extend_marker_wi_cObjData( $this->markerArray );
+    $markerArray                      = $this->pObj->objWrapper->constant_markers( );
+    foreach( (array) $markerArray as $key => $value)
+    {
+      $this->markerArray[$key] = $value;
+    }
+      // Set marker
+  }
+
+
+
+
+
+
+
+
+
+ /**
+ * tmpl_rmFields( ):  Get the field names, which should not displayed.
+ *                    Set the global arr_rmFields
+ *
+ * @return  void
+ * 
+ * @version 4.0.0
+ * @since 4.0.0
+ */
+  private function tmpl_rmFields( )
+  {
+      // RETURN global $arr_rmFields is set
+    if( is_array( $this->arr_rmFields ) )
+    {
+      return;
+    }
+      // RETURN global $arr_rmFields is set
+    $conf_rmFields      = $this->conf_view['functions.']['clean_up.']['csvTableFields'];
+    $arr_rmFields       = $this->pObj->objZz->getCSVasArray($conf_rmFields);
+    $lArr_RmFields[0]   = array_flip($arr_rmFields);
+    $arr_result         = $this->pObj->objSqlFun->rows_with_cleaned_up_fields($lArr_RmFields);
+    $lArr_RmFields      = $arr_result['data']['rows'];
+    $this->arr_rmFields = ( array ) $arr_rmFields;
+  }
+
 
 
 

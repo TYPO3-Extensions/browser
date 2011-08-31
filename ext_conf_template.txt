@@ -14,7 +14,7 @@ currentIP = 0
 updateWizardAllowedIPs = 127.0.0.1, 127.0.0.2
 
 
-  # cat=basic/dev/930;                type=options[Don't log anything,---------------------------------------,Auto Discover development,Calendar,Filter and Category Menu,Flexform,Hooks,Javascript,Labeling Support/Localization,PageBrowser and A-Z-Browser,Performance,Realurl,Search,SEO (Search Engine Optimization),Session Management,Social media,SQL development,Templating,Typoscript Template Container,Typoscript Update Checker,---------------------------------------,All]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
+  # cat=basic/dev/930;                type=options[Don't log anything,---------------------------------------,Auto Discover development,Calendar,Export,Filter and Category Menu,Flexform,Hooks,Javascript,Labeling Support/Localization,PageBrowser and A-Z-Browser,Performance,Realurl,Search,SEO (Search Engine Optimization),Session Management,Social media,SQL development,Templating,Typoscript Template Container,Typoscript Update Checker,---------------------------------------,All]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
 drs_mode = Don't log anything
 
   # cat=basic/others/999;             type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links

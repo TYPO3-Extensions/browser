@@ -1701,6 +1701,7 @@ class tx_browser_pi1_navi
       $item             = $this->pObj->pi_linkTP_keepPIvars($str_item_value, array('mode' => $str_item_key), $this->pObj->boolCache);
       $markerArray['###CLASS###'] = $class;
       $markerArray['###TABS###']  = $item;
+      $markerArray['###MODE###']  = $str_item_key;
       $modeSelectorTabs           = $this->pObj->cObj->getSubpart($template, '###MODESELECTORTABS###');
       $tabs                      .= $this->pObj->cObj->substituteMarkerArray($modeSelectorTabs, $markerArray);
       $i_counter++;

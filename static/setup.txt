@@ -574,6 +574,14 @@ plugin.tx_browser_pi1 {
     }
 
     templateMarker = ###TEMPLATE_SINGLE###
+    templateMarker {
+      oddClass {
+          // [String] HTML class for odd columns (th, td)
+        columns = odd
+          // [String] HTML class for odd rows (tr)
+        rows    = ui-priority-secondary
+      }
+    }
 
     content_stdWrap {
       parseFunc < lib.parseFunc_RTE
@@ -816,6 +824,14 @@ plugin.tx_browser_pi1 {
 
 
     templateMarker = ###TEMPLATE_LIST###
+    templateMarker {
+      oddClass {
+          // [String] HTML class for odd columns (th, td)
+        columns = odd
+          // [String] HTML class for odd rows (tr)
+        rows    = ui-priority-secondary
+      }
+    }
 
     selectBox_orderBy {
         // [Boolean] 1: Display the select box for ordering (default), 0: don't display.
@@ -1978,7 +1994,7 @@ plugin.tx_browser_pi1 {
           // [STRING] Path to the jss file of the t3browser plugin.
         t3browser {
             // [STRING] Path to the jss file of the t3browser plugin
-          plugin = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.1.js
+          plugin = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.2.js
           plugin {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
@@ -2147,6 +2163,40 @@ plugin.tx_browser_pi1 {
     general {
         // [STRING] Path to Javascript file general methods
       file = EXT:browser/res/js/tx_browser_pi1.js
+    }
+  }
+
+  export {
+    csv {
+      page = PAGE
+      page {
+        typeNum = {$plugin.tx_browser_pi1.typeNum.csvPageObj}
+        config {
+          disableAllHeaderCode  = 1
+          disablePrefixComment  = 1
+          xhtml_cleaning        = 0
+          admPanel              = 0
+          additionalHeaders     = Content-Type: text/csv
+        }
+        10 = CONTENT
+        10 {
+          table=tt_content
+          select{
+              // use current language
+            languageField = sys_language_uid
+            andWhere {
+              cObject = COA
+              cObject {
+                  // choose all Browser plugins...
+                10 = TEXT
+                10 {
+                  value = list_type = 'browser_pi1'
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 

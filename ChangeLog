@@ -1,12 +1,22 @@
 4.0.0
   110817
   New Features
+  * #29370: CSV export
   * #29042: Calendar (first part and inofficial. Calendar should be official in version 4.2.0 in 2012)
+  * #28562: Integration jQuery UI. Here: oddClass.
+            * New marker
+              * ###TD_COUNTER###, ###TD_FIRST_LAST###, ###TD_EVEN_OR_ODD###
+              * ###TH_COUNTER###, ###TH_FIRST_LAST###, ###TH_EVEN_OR_ODD###
+              * ###TR_COUNTER###, ###TR_FIRST_LAST###, ###TR_EVEN_OR_ODD###
+            * See: displayList.templateMarker.oddClass
   Improvements
   * #29198: Simplifying stdWrap of SQL query parts
+  * #29042: HTML id of the plugin moved from cXX-tx-browser-pi1 to cXX-tx-browser-pi1-view-mode
+            where XX is the id in the table tt_content, view is list or single and mode is the id of the mode
   Bugfixes
   * #29186: Empty rows are tested with ==null instead of empty( )
-  
+  * #29323: method ajaxifyOrderBy is undefined. Affected file: res/js/tx_browser_pi1.js
+    
 3.7.0
   110801, 110729
   New Features

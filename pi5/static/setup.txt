@@ -321,7 +321,10 @@ plugin.tx_browser_pi1 {
           }
           time_unit {
               // [String] HTML class for odd columns and odd rows (tr, th, td)
-            oddClass = ui-priority-secondary
+            oddClass {
+              columns = odd
+              rows    = ui-priority-secondary
+            }
             stdWrap = TEXT
             stdWrap {
                 // [Integer] minutes. I.e: 15, 30, 60 (default), 180. Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'

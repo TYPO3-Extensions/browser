@@ -60,7 +60,8 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * @package    TYPO3
  * @subpackage    tx_browser
  *
- * @version 3.6.5
+ * @version 4.0.0
+ * @since 1.0.0
  */
 
 /**
@@ -552,6 +553,16 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
+      // Get the typeNum
+//:TODO:
+      // #29370, 110831, dwildt
+    $this->objExport->set_typeNum( );
+      // Get the typeNum
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Get the HTML template
 
     $arr_data['view'] = $this->view;
@@ -1029,6 +1040,7 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->b_drs_browser      = false;
     $this->b_drs_cal          = false;
     $this->b_drs_discover     = false;
+    $this->b_drs_export       = false;
     $this->b_drs_filter       = false;
     $this->b_drs_flexform     = false;
     $this->b_drs_hooks        = false;
@@ -1063,6 +1075,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_browser      = true;
       $this->b_drs_cal          = true;
       $this->b_drs_discover     = true;
+      $this->b_drs_export       = true;
       $this->b_drs_filter       = true;
       $this->b_drs_flexform     = true;
       $this->b_drs_hooks        = true;
@@ -1098,6 +1111,14 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_warn       = true;
       $this->b_drs_info       = true;
       $this->b_drs_cal        = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Export')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_export     = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
     if ($this->arr_extConf['drs_mode'] == 'Filter and Category Menu')
@@ -1278,6 +1299,10 @@ class tx_browser_pi1 extends tslib_pibase {
       // Class with methods for consolidating rows
     require_once('class.tx_browser_pi1_consolidate.php');
     $this->objConsolidate = new tx_browser_pi1_consolidate($this);
+
+      // Class with methods for exporting rows
+    require_once('class.tx_browser_pi1_export.php');
+    $this->objExport = new tx_browser_pi1_export($this);
 
       // Class with realurl methods
     require_once('class.tx_browser_pi1_filter.php');

@@ -113,10 +113,14 @@ class tx_browser_pi1_cal
   var $due_day_error  = null;
     // [array] Array for the group filter: table.field, value
   var $groupFilter   = null;
+    // [boolean] Is the calender plugin loaded?
+  var $is_loaded      = false;
     // [array] Array with default markers
   var $markerArray    = null;
-    // [string] HTML class for odd columns and odd rows (tr, th, td)
-  var $oddClass       = null;
+    // [string] HTML class for odd columns (th, td)
+  var $oddClassColumns  = null;
+    // [string] HTML class for odd rows (tr)
+  var $oddClassRows   = null;
     // [array] periods: schedule's data, frame with time units containing the rows
   var $periods        = null;
     // [integer] Uid of the current record
@@ -349,6 +353,7 @@ class tx_browser_pi1_cal
     $arr_return['template'] = $template;
 
     $arr_return['success']  = true;
+    $this->is_loaded        = true;
     return $arr_return;
       // RETURN success
   }
@@ -711,6 +716,8 @@ class tx_browser_pi1_cal
  */
   private function cal_template( )
   {
+    $this->cal_marker( );
+
       /////////////////////////////////////////////////////////////////
       //
       // Get fields and set marker
@@ -726,21 +733,17 @@ class tx_browser_pi1_cal
     $cObj_conf  = $this->conf_schedule['labels.'][$field . '.']['stdWrap.'];
     $summary    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
 
-    $this->oddClass = $this->conf_schedule['time_unit.']['oddClass'];
+    $this->oddClassColumns  = $this->conf_schedule['time_unit.']['oddClass.']['columns'];
+    $this->oddClassRows     = $this->conf_schedule['time_unit.']['oddClass.']['rows'];
       // Get fields
 
       // Set marker
     $this->markerArray['###CAPTION###'] = $caption;
     $this->markerArray['###SUMMARY###'] = $summary;
-    $this->markerArray                  = $this->markerArray + (array) $this->pObj->objWrapper->constant_markers();
       // Set marker
       // Get fields and set marker
 
-//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if ( ! ( $pos === false ) )
-//    {
-//      var_dump(__METHOD__. ' (' . __LINE__ . '): ', $this->template);
-//    }
+
 
       // Initial group
     $this->cal_group_check( );
@@ -749,28 +752,12 @@ class tx_browser_pi1_cal
       // Handle the body section
     $this->cal_template_body( );
 
-//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if ( ! ( $pos === false ) )
-//    {
-//      var_dump(__METHOD__. ' (' . __LINE__ . '): ', $this->template);
-//    }
-
     $template         = $this->template;
     $subPrt_listView  = $this->pObj->cObj->getSubpart($template, '###LISTVIEW###');
     $subPrt_listView  = $this->pObj->cObj->substituteMarkerArray($subPrt_listView, $this->markerArray);
     $subPrt_listView  = '<!-- ###LISTVIEW### begin -->' . $subPrt_listView . '<!-- ###LISTVIEW### end -->';
     $template         = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $subPrt_listView, true);
-    //$this->template   = $template;
 
-//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if ( ! ( $pos === false ) )
-//    {
-//      var_dump(__METHOD__. ' (' . __LINE__ . '): ', $template);
-////      die( );
-//    }
-
-
-//    $arr_return['template'] = $this->template;
     $arr_return['template'] = $template;
     $arr_return['success']  = true;
 
@@ -831,7 +818,8 @@ class tx_browser_pi1_cal
     $markerArray['###CAL_DATE###']    = $cal_date;
     $markerArray['###CAL_PERIOD###']  = $cal_period;
     $this->markerArray = (array) $this->markerArray + (array) $markerArray;
-    $this->markerArray = (array) $this->markerArray + (array) $this->pObj->objWrapper->constant_markers();
+    // 110827, dwildt
+    //$this->markerArray = (array) $this->markerArray + (array) $this->pObj->objWrapper->constant_markers();
       // Set marker
 
 
@@ -865,7 +853,7 @@ class tx_browser_pi1_cal
             break;
         }
         
-        $markerArray['###TH_EVEN_OR_ODD###']  = $counter_th%2 ? $this->oddClass : null;
+        $markerArray['###TH_EVEN_OR_ODD###']  = $counter_th%2 ? $this->oddClassColumns : null;
         $field      = 'label';
         $cObj_name  = $this->conf_schedule['group.'][$key_group][$field . '.']['stdWrap'];
         $cObj_conf  = $this->conf_schedule['group.'][$key_group][$field . '.']['stdWrap.'];
@@ -881,7 +869,7 @@ class tx_browser_pi1_cal
     }
     $counter_th = 0;
     $markerArray['###TH_FIRST_LAST###']   = 'first';
-    $markerArray['###TH_EVEN_OR_ODD###']  = 0%2 ? $this->oddClass : null;
+    $markerArray['###TH_EVEN_OR_ODD###']  = 0%2 ? $this->oddClassColumns : null;
     $listHead = $this->pObj->cObj->substituteMarkerArray($listHead, $markerArray);
     $template = $this->pObj->cObj->substituteSubpart($template, '###LISTHEAD###', $listHead, true);
       // Substitute marker in the template
@@ -962,14 +950,14 @@ class tx_browser_pi1_cal
           break;
       }
       
-      $markerArray['###TR_EVEN_OR_ODD###']  = $counter_tr%2 ? $this->oddClass : null;
+      $markerArray['###TR_EVEN_OR_ODD###']  = $counter_tr%2 ? $this->oddClassRows : null;
 
         // No group
       if( ! $this->bool_group )
       {
         $markerArray['###TD_COUNTER###']      = 1;
         $markerArray['###TD_FIRST_LAST###']   = 'last';
-        $markerArray['###TD_EVEN_OR_ODD###']  = 0%2 ? $this->oddClass : null;
+        $markerArray['###TD_EVEN_OR_ODD###']  = 0%2 ? $this->oddClassColumns : null;
           // Get the dates for the current period
         $str_dates                      = $this->cal_template_body_calDate( $arr_data_period['rows'], $subPrt_date );
           // Set the template subpart
@@ -1006,7 +994,7 @@ class tx_browser_pi1_cal
               break;
           }
           
-          $markerArray['###TD_EVEN_OR_ODD###']  = $counter_td%2 ? $this->oddClass : null;
+          $markerArray['###TD_EVEN_OR_ODD###']  = $counter_td%2 ? $this->oddClassColumns : null;
 
           $this->groupFilter['tableField']      = $this->conf_schedule['group.'][$key_conf_group]['tableField'];
           $this->groupFilter['value']           = $this->conf_schedule['group.'][$key_conf_group]['value'];
@@ -1028,7 +1016,7 @@ class tx_browser_pi1_cal
         $counter_td = 0;
         $markerArray['###TD_COUNTER###']      = 0;
         $markerArray['###TD_FIRST_LAST###']   = 'first';
-        $markerArray['###TD_EVEN_OR_ODD###']  = 0%2 ? $this->oddClass : null;
+        $markerArray['###TD_EVEN_OR_ODD###']  = 0%2 ? $this->oddClassColumns : null;
           // Implode group items
         $str_groups                     = implode( null, $arr_group );
           // Set the template subpart
@@ -1137,17 +1125,20 @@ class tx_browser_pi1_cal
       {
         $value = $this->zz_tableFieldStdWrap( $tableField, $value, $elements, $linkToSingle=true );
         $markerArray['###' . strtoupper( $tableField ) . '###'] = $value;
+//if( $tableField == 'cal_colour' )
+//{
+//  var_dump( __METHOD__, __LINE__, '###' . strtoupper( $tableField ) . '###' . ': ' . $markerArray['###' . strtoupper( $tableField ) . '###']);
+//}
         if( ! empty( $value ) || $value === 0 )
         {
           $bool_value = true;
         }
-//if( $tableField == 'tx_org_npzch.type' )
-//{
-//  var_dump( __METHOD__, __LINE__, $tableField, $bool_value);
-//}
       }
       $arr_calDate[$row] = trim( $subPrt_calDate );
+//var_dump( __METHOD__, __LINE__, $arr_calDate[$row], $markerArray);
       $arr_calDate[$row] = $this->pObj->cObj->substituteMarkerArray($arr_calDate[$row], $markerArray);
+//var_dump( __METHOD__, __LINE__, $arr_calDate[$row]);
+//var_dump( __METHOD__, __LINE__, '###' . strtoupper( 'cal_colour' ) . '###' . ': ' . $markerArray['###' . strtoupper( 'cal_colour' ) . '###']);
       if( ! $bool_value )
       {
         unset( $arr_calDate[$row] );
@@ -1188,7 +1179,6 @@ class tx_browser_pi1_cal
 
 
 
-
   /**
  * cal_colours(): Initial the corlor array
  *
@@ -1200,11 +1190,13 @@ class tx_browser_pi1_cal
   {
     $sheet        = 'sDEF';
     $field        = 'colours';
+//:TODO: global/local
     $conf_colours = $this->pObj->conf['flexform.']['pi5.'][$sheet . '.'][$field . '.'];
     
     foreach( $conf_colours as $key_colour => $value_colour)
     {
-      if( $key_colour === (int) rtrim( $key_colour,  '.' ) )
+        // Take keys with a dot (i.e. 10.) only
+      if( $key_colour === (int) rtrim( $key_colour, '.' ) )
       {
         $cObj_name  = $conf_colours[$key_colour];
         $cObj_conf  = $conf_colours[$key_colour . '.'];
@@ -1706,19 +1698,20 @@ class tx_browser_pi1_cal
 
 
 
-      // Extend rows with colours
+      // Set the colours array
     $this->cal_colours( );
-    $curr_colour  = 0;
-    $max_colours  = count( $this->date_colours );
-    foreach( $rows as $key_rows => $elements )
-    {
-      if( $curr_colour >= $max_colours)
-      {
-        $curr_colour = 0;
-      }
-      $rows[$key_rows]['cal_colour'] = $this->date_colours[$curr_colour];
-      $curr_colour++;
-    }
+    $colour_counter = 0;
+    $max_colours    = count( $this->date_colours );
+//    foreach( $rows as $key_rows => $elements )
+//    {
+//      if( $colour_counter >= $max_colours)
+//      {
+//        $colour_counter = 0;
+//      }
+//      $rows[$key_rows]['cal_colour'] = $this->date_colours[$colour_counter];
+//      $colour_counter++;
+//    }
+//var_dump( __METHOD__, __LINE__, $rows);
       // Extend rows with colours
 
 
@@ -1775,6 +1768,17 @@ class tx_browser_pi1_cal
           // It doesn't
 
           // It does
+          // Extend row with colour
+        if( empty ( $rows[$key_rows]['cal_colour'] ) )
+        {
+          if( $colour_counter >= $max_colours)
+          {
+            $colour_counter = 0;
+          }
+          $rows[$key_rows]['cal_colour'] = $this->date_colours[$colour_counter];
+          $colour_counter++;
+        }
+          // Extend row with colour
         $arr_periods[$key_period]['rows'][$key_rows]          = $rows[$key_rows];
           // Extend the rows ...
         list($table, $field)  = explode('.', $begin);
@@ -1895,6 +1899,35 @@ class tx_browser_pi1_cal
     }
     $this->bool_group = true;
       // SUCCESS group is configured, CAL_DATE_GROUP subparts are part of the HTML template
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * cal_marker(): Set some global marker
+ *
+ * @return  void
+ * @version 4.0.0
+ * @since 4.0.0
+ */
+  private function cal_marker( )
+  {
+      // Set marker
+    $this->markerArray['###MODE###']  = $this->pObj->piVar_mode;
+    $this->markerArray['###VIEW###']  = $this->pObj->view;
+    $this->markerArray                = $this->pObj->objMarker->extend_marker_wi_cObjData( $this->markerArray );
+    $markerArray                      = $this->pObj->objWrapper->constant_markers( );
+    foreach( (array) $markerArray as $key => $value)
+    {
+      $this->markerArray[$key] = $value;
+    }
+      // Set marker
   }
 
 
@@ -2876,9 +2909,22 @@ class tx_browser_pi1_cal
       // Set link to single view
 
       // Substitute marker recursive
+//:TODO: npz.ch Fehler: 
+/*
+ * Marker werden scheinbar in $this->conf_view[$table . '.'][$field . '.'] ersetzt!
+ */
+//if( $tableField == 'tx_org_npzch.type')
+//{
+//  var_dump( __METHOD__ . ' (' . __LINE__ . ')', $this->conf_view[$table . '.'][$field . '.'] );
+////  var_dump( __METHOD__, __LINE__, $cObj_conf );
+//}
     $cObj_conf  = $this->pObj->cObj->substituteMarkerInObject( $cObj_conf, $markerArray );
       // Wrap the value
     $value      = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+//if( $tableField == 'tx_org_npzch.type')
+//{
+//  var_dump( __METHOD__, __LINE__, $value );
+//}
       // RETURN the wrapped value
     return $value;
   }

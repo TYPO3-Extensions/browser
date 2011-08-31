@@ -880,6 +880,10 @@ class tx_browser_pi1_javascript
 
 
 
+      //////////////////////////////////////////////////////////////////////
+      //
+      // AJAX (modul I) is enabled
+
     if ($this->objFlexform->bool_ajax_enabled)
     {
         // name has to correspondend with similar code in tx_browser_pi1_template.php
@@ -896,6 +900,50 @@ class tx_browser_pi1_javascript
       $path_tsConf  = 'javascript.ajax.file';
       $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
     }
+      // AJAX (modul I) is enabled
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // +Browser Calendar is loaded
+
+    if ($this->pObj->objCal->is_loaded)
+    {
+      $arr_conf_pi5_jss = $this->pObj->conf['javascript.']['jquery.']['pi5.'];
+      
+      foreach( (array) $arr_conf_pi5_jss as $key_extension => $arr_properties)
+      {
+          // Take keys with a dot (i.e. 10.) only
+        if( strpos ( $key_extension , '.' ) === false )
+        {
+          continue;
+        }
+        foreach( $arr_properties as $key_property => $value_property)
+        {
+            // Take keys with a dot (i.e. 10.) only
+          if( strpos ( $key_property , '.' ) === false )
+          {
+            continue;
+          }
+          $name         = 'jquery_' . rtrim( $key_extension, '.' ) . '_' . rtrim( $key_property, '.' );
+          $path         = $arr_properties[rtrim( $key_property, '.' )];
+          $bool_inline  = $arr_properties[$key_property]['inline'];
+          $path_tsConf  = 'javascript.jquery.pi5.' . $key_extension . rtrim( $key_property, '.' );
+          $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+  
+          $inline_jss   = $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name];
+  //        $inline_jss = str_replace('###MODE###', $this->pObj->piVar_mode,  $inline_jss);
+  //        $inline_jss = str_replace('###VIEW###', $this->pObj->view,        $inline_jss);
+            // :TODO: move markerArray to class.tx_browser_pi1.php 
+          $markerArray = $this->pObj->objCal->markerArray;
+          $inline_jss  = $this->pObj->cObj->substituteMarkerArray($inline_jss, $markerArray);
+          $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
+        }
+      }
+    }
+      // +Browser Calendar is loaded
+
   }
 
 
@@ -920,7 +968,7 @@ class tx_browser_pi1_javascript
  * @since 3.7.0
  * @version 3.7.0
  */
-  private function addFile($path, $ie_condition=null, $name, $keyPathTs, $str_type, $bool_inline = false)
+  public function addFile($path, $ie_condition=null, $name, $keyPathTs, $str_type, $bool_inline = false)
   {
       // RETURN file is loaded
     if(isset ($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]))

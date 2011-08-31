@@ -1017,28 +1017,27 @@ class tx_browser_pi1_views
 
       /////////////////////////////////////////////////////////////////
       //
-      // Extension Browser Calendar
+      // Extension pi5: +Browser Calendar
 
       // Will executed in case, that the Browser is extended with the Browser Calendar user Interface
-    //$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    //if ( ! ( $pos === false ) )
-    //{
-    //  var_dump(__METHOD__. ' (' . __LINE__ . '): ', $template);
-    //}
     $arr_result   = $this->pObj->objCal->cal( $rows, $template );
-    $rows         = $arr_result['rows'];
-    $template     = $arr_result['template'];
     $bool_success = $arr_result['success'];
     if( $bool_success )
     {
+      $rows         = $arr_result['rows'];
+      $template     = $arr_result['template'];
       $this->pObj->objTemplate->ignore_empty_rows_rule = true;
+      if ($this->pObj->b_drs_cal || $this->pObj->b_drs_templating)
+      {
+        t3lib_div::devLog('[INFO/TEMPLATING/CAL/UI]: +Browser Calendar User Interface is loaded.', $this->pObj->extKey, 0);
+      }
       if ($this->pObj->b_drs_warn)
       {
         t3lib_div::devLog('[WARN/TEMPLATING/CAL/UI]: +Browser Calendar set ignore_empty_rows_rule to true!', $this->pObj->extKey, 2);
       }
     }
     $this->pObj->rows = $rows;
-      // Extension Browser Calendar
+      // Extension pi5: +Browser Calendar
 
 
 
