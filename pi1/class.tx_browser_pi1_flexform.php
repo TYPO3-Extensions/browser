@@ -173,6 +173,11 @@ class tx_browser_pi1_flexform {
   // [boolean] wrap the plugin in with pi_wrapInBaseClass
   //[sheet/templating]
 
+  //[sheet/view]
+    // [boolean] Enable CSV export
+  var $sheet_viewList_csvexport       = null;
+  //[sheet/extend]
+
   // Vars set by methods in the current class
 
   /**
@@ -1296,9 +1301,9 @@ class tx_browser_pi1_flexform {
     switch ($jquery_plugins_t3browser)
     {
       case ('own') :
-        $plugin   = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_plugins.t3browser.own.plugin', $sheet, 'lDEF', 'vDEF');
-        $library  = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_plugins.t3browser.own.library', $sheet, 'lDEF', 'vDEF');
-        $library  = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_plugins.t3browser.own.localization', $sheet, 'lDEF', 'vDEF');
+        $plugin       = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_plugins.t3browser.own.plugin', $sheet, 'lDEF', 'vDEF');
+        $library      = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_plugins.t3browser.own.library', $sheet, 'lDEF', 'vDEF');
+        $localization = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_plugins.t3browser.own.localization', $sheet, 'lDEF', 'vDEF');
         $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin']       = $plugin;
         $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library']      = $library;
         $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localization'] = $localization;
@@ -2103,52 +2108,91 @@ class tx_browser_pi1_flexform {
     return;
   }
 
+
+
+
+
+
+
+
+
   /**
    * If the current plugin has views selected, only the selected views are available for the plugin.
    * The method removes "unavailable" views from the TypoScript.
    *
    * @return  void
-   * @version 3.5.0
+   * @version 4.0.0
    */
-  function sheet_viewList() {
+  function sheet_viewList( )
+  {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
-    $str_lang = $this->pObj->lang->lang;
+    $str_lang       = $this->pObj->lang->lang;
+    $sheet          = 'viewList';
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field title
 
-    // Get the title for the list view
-    $str_title = $this->pObj->pi_getFFvalue($arr_piFlexform, 'title', 'viewList', 'lDEF', 'vDEF');
-    if ($str_title) {
-      if ($this->pObj->b_drs_flexform) {
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field title
+
+      // Get the title for the list view
+    $str_title = $this->pObj->pi_getFFvalue($arr_piFlexform, 'title', $sheet, 'lDEF', 'vDEF');
+
+      // Remove the title in case of csv export
+      // #29370, 110831, dwildt+
+    switch( $this->pObj->objExport->str_typeNum )
+    {
+      case( 'csv' ) :
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        {
+          t3lib_div::devlog('[INFO/EXPORT] title is ' . $str_title . ' but it will removed.',  $this->pObj->extKey, 0);
+        }
+        $str_title = null;
+        break;
+      default:
+        // Do nothing;
+    }
+      // #29370, 110831, dwildt+
+      // Remove the title in case of csv export
+
+    if ( $str_title != null )
+    {
+      if ( $this->pObj->b_drs_flexform )
+      {
         t3lib_div :: devlog('[INFO/FLEXFORM] viewList/title: \'' . $str_title . '\'!', $this->pObj->extKey, 0);
       }
     }
-    if (!$str_title) {
-      if ($this->pObj->b_drs_flexform) {
+    if ( $str_title == null )
+    {
+      if ( $this->pObj->b_drs_flexform )
+      {
         t3lib_div :: devlog('[INFO/FLEXFORM] viewList/title is empty.', $this->pObj->extKey, 0);
       }
     }
-    // Get the title for the list view
+      // Get the title for the list view
 
-    // View has a local marker array with my_title
+      // View has a local marker array with my_title
     $conf_title = false;
-    $str_path = false;
-    if ($str_lang == 'default') {
-      if (isset ($this->pObj->conf['views.']['list.'][$this->mode . '.']['marker.']['my_title.']['value'])) {
+    $str_path   = false;
+    if ( $str_lang == 'default' )
+    {
+      if (isset ($this->pObj->conf['views.']['list.'][$this->mode . '.']['marker.']['my_title.']['value']))
+      {
         $conf_title = $this->pObj->conf['views.']['list.'][$this->mode . '.']['marker.']['my_title.']['value'];
-        $str_path = 'views.list.' . $this->mode . '.marker.my_title.value';
+        $str_path   = 'views.list.' . $this->mode . '.marker.my_title.value';
       }
     }
-    if ($str_lang != 'default') {
-      if (isset ($this->pObj->conf['views.']['list.'][$this->mode . '.']['marker.']['my_title.']['lang.'][$str_lang])) {
+    if (  $str_lang != 'default'  )
+    {
+      if (isset ($this->pObj->conf['views.']['list.'][$this->mode . '.']['marker.']['my_title.']['lang.'][$str_lang]))
+      {
         $conf_title = $this->pObj->conf['views.']['list.'][$this->mode . '.']['marker.']['my_title.']['lang.'][$str_lang];
-        $str_path = 'views.list.' . $this->mode . '.marker.my_title.lang.' . $str_lang;
+        $str_path   = 'views.list.' . $this->mode . '.marker.my_title.lang.' . $str_lang;
       }
     }
-    if ($str_path) {
+    if ( $str_path )
+    {
       if ($this->pObj->b_drs_flexform) {
         t3lib_div :: devlog('[INFO/FLEXFORM] ' . $str_path . ': \'' . $conf_title . '\'', $this->pObj->extKey, 0);
       }
@@ -2179,27 +2223,33 @@ class tx_browser_pi1_flexform {
         }
       }
     }
-    // View has a local display array with a single pid
+      // View has a local marker array with my_title
 
-    // View hasn't any local single pid, we take the global one
-    if (!$conf_title) {
-      if ($str_lang == 'default') {
+      // View hasn't a local marker array with my_title, we take the global one
+    if ( ! $conf_title )
+    {
+      if ($str_lang == 'default')
+      {
         $conf_title = $this->pObj->conf['marker.']['my_title.']['value'];
         $str_path = 'marker.my_title.value';
       }
-      if ($str_lang != 'default') {
+      if ($str_lang != 'default')
+      {
         $conf_title = $this->pObj->conf['marker.']['my_title.']['lang.'][$str_lang];
         $str_path = 'marker.my_title.lang.' . $str_lang;
       }
-      if ($this->pObj->b_drs_flexform) {
+      if ($this->pObj->b_drs_flexform)
+      {
         t3lib_div :: devlog('[INFO/FLEXFORM] ' . $str_path . ': \'' . $conf_title . '\'', $this->pObj->extKey, 0);
       }
-      if ($conf_title) {
+      if ($conf_title)
+      {
         if ($this->pObj->b_drs_flexform) {
           t3lib_div :: devlog('[INFO/FLEXFORM] The TypoScript value has priority: \'' . $conf_title . '\'!', $this->pObj->extKey, 0);
         }
       }
-      if (!$conf_title) {
+      if (!$conf_title)
+      {
         $conf_title = $str_title;
         if ($str_lang == 'default') {
           $this->pObj->conf['marker.']['my_title.']['value'] = $conf_title;
@@ -2212,15 +2262,17 @@ class tx_browser_pi1_flexform {
         }
       }
     }
-    // View hasn't any local single pid, we take the global one
-    // Field title
+      // View hasn't a local marker array with my_title, we take the global one
+      // Field title
+
+
 
     //////////////////////////////////////////////////////////////////////
     //
     // Field titleWrap
 
     // Get the titleWrap for the list view
-    $str_titleWrap = $this->pObj->pi_getFFvalue($arr_piFlexform, 'titleWrap', 'viewList', 'lDEF', 'vDEF');
+    $str_titleWrap = $this->pObj->pi_getFFvalue($arr_piFlexform, 'titleWrap', $sheet, 'lDEF', 'vDEF');
     if ($str_titleWrap) {
       if ($this->pObj->b_drs_flexform) {
         t3lib_div :: devlog('[INFO/FLEXFORM] viewList/titleWrap: \'' . htmlspecialchars($str_titleWrap) . '\'!', $this->pObj->extKey, 0);
@@ -2301,12 +2353,42 @@ class tx_browser_pi1_flexform {
     // View hasn't any local marker array with my_titleWrap, we take the global one
     // Field titleWrap
 
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // csv export
+
+      // #29370, 110831, dwildt+
+      // Remove the title in case of csv export
+    switch( $this->pObj->objExport->str_typeNum )
+    {
+      case( 'csv' ) :
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        {
+          t3lib_div::devlog('[INFO/EXPORT] title won\'t be handled.',  $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/EXPORT] views.list.' . $this->mode . '.marker.my_title is removed.',  $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/EXPORT] marker.my_title is removed.',  $this->pObj->extKey, 0);
+        }
+        unset( $this->pObj->conf['views.']['list.'][$this->mode . '.']['marker.']['my_title'] );
+        unset( $this->pObj->conf['views.']['list.'][$this->mode . '.']['marker.']['my_title.'] );
+        unset( $this->pObj->conf['marker.']['my_title'] );
+        unset( $this->pObj->conf['marker.']['my_title.'] );
+        break;
+      default:
+        // Do nothing;
+    }
+      // Remove the title in case of csv export
+      // csv export
+
+
+
     //////////////////////////////////////////////////////////////////////
     //
     // Field grouptitleWrap
 
     // Get the grouptitleWrap for the list view
-    $str_grouptitleWrap = $this->pObj->pi_getFFvalue($arr_piFlexform, 'grouptitleWrap', 'viewList', 'lDEF', 'vDEF');
+    $str_grouptitleWrap = $this->pObj->pi_getFFvalue($arr_piFlexform, 'grouptitleWrap', $sheet, 'lDEF', 'vDEF');
     if ($str_grouptitleWrap) {
       if ($this->pObj->b_drs_flexform) {
         t3lib_div :: devlog('[INFO/FLEXFORM] viewList/grouptitleWrap: \'' . htmlspecialchars($str_grouptitleWrap) . '\'!', $this->pObj->extKey, 0);
@@ -2323,41 +2405,45 @@ class tx_browser_pi1_flexform {
     // Get the grouptitleWrap for the list view
     // Field grouptitleWrap
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field limit
 
-    // Get the limit for the list view
-    // #27354, uherrmann, 110611
-    // Get the limit (offset) for the list view
-    $str_limit_offset = $this->pObj->pi_getFFvalue($arr_piFlexform, 'limitOffset', 'viewList', 'lDEF', 'vDEF');
-    // downwards compatibility < 3.6.5:
-    // offset is NULL if flexform was never saved with this field:
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field limit
+
+      // Get the limit for the list view
+      // #27354, uherrmann, 110611
+      // Get the limit (offset) for the list view
+    $str_limit_offset = $this->pObj->pi_getFFvalue($arr_piFlexform, 'limitOffset', $sheet, 'lDEF', 'vDEF');
+      // downwards compatibility < 3.6.5:
+      // offset is NULL if flexform was never saved with this field:
     $str_limit_offset = (int) $str_limit_offset;
-    // #27354, uherrmann, 110611
+      // #27354, uherrmann, 110611
 
-    $str_limit = $this->pObj->pi_getFFvalue($arr_piFlexform, 'limit', 'viewList', 'lDEF', 'vDEF');
-    if ($str_limit) {
+    $str_limit = $this->pObj->pi_getFFvalue($arr_piFlexform, 'limit', $sheet, 'lDEF', 'vDEF');
+    if ( $str_limit )
+    {
       if ($this->pObj->b_drs_flexform) {
         t3lib_div :: devlog('[INFO/FLEXFORM] viewList/limit: \'' . htmlspecialchars($str_limit) . '\'!', $this->pObj->extKey, 0);
       }
     }
-    if (!$str_limit) {
+    if ( ! $str_limit )
+    {
       $str_limit = 20;
       if ($this->pObj->b_drs_flexform) {
         t3lib_div :: devlog('[INFO/FLEXFORM] viewList/limit is empty.', $this->pObj->extKey, 0);
         t3lib_div :: devlog('[INFO/FLEXFORM] viewList/limit: We allocates it with 20.', $this->pObj->extKey, 0);
       }
     }
-    // #27354, uherrmann, 110611
-    ##$str_limit = '0,'.$str_limit;
+      // #27354, uherrmann, 110611
+      ##$str_limit = '0,'.$str_limit;
     $str_limit = $str_limit_offset . ',' . $str_limit;
-    // #27354, uherrmann, 110611
-    // Get the limit for the list view
+      // #27354, uherrmann, 110611
+      // Get the limit for the list view
 
-    // View has a local limit
+      // View has a local limit
     $conf_limit = false;
-    $str_path = false;
+    $str_path   = false;
     if (isset ($this->pObj->conf['views.']['list.'][$this->mode . '.']['limit'])) {
       $conf_limit = $this->pObj->conf['views.']['list.'][$this->mode . '.']['limit'];
       $str_path = 'views.list.' . $this->mode . '.limit';
@@ -2378,14 +2464,39 @@ class tx_browser_pi1_flexform {
     }
     $conf_limit = $str_limit;
     $this->pObj->conf['views.']['list.'][$this->mode . '.']['limit'] = $conf_limit;
-    // View has a local limit
-    // Field limit
+      // View has a local limit
+      // Field limit
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // csv export
+
+      // #29370, 110831, dwildt+
+      // Remove the title in case of csv export
+    switch( $this->pObj->objExport->str_typeNum )
+    {
+      case( 'csv' ) :
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        {
+          t3lib_div::devlog('[INFO/EXPORT] limit won\'t be handled. views.list.' . $this->mode . '.limit is removed.',  $this->pObj->extKey, 0);
+        }
+        unset( $this->pObj->conf['views.']['list.'][$this->mode . '.']['limit'] );
+        break;
+      default:
+        // Do nothing;
+    }
+      // Remove the title in case of csv export
+      // csv export
+
+
 
     //////////////////////////////////////////////////////////////////////
     //
     // Field navigation
 
-    $int_navigation = $this->pObj->pi_getFFvalue($arr_piFlexform, 'navigation', 'viewList', 'lDEF', 'vDEF');
+    $int_navigation = $this->pObj->pi_getFFvalue($arr_piFlexform, 'navigation', $sheet, 'lDEF', 'vDEF');
 
     // Set default value
     // #27352, uherrmann, 110610
@@ -2435,11 +2546,37 @@ class tx_browser_pi1_flexform {
     }
     // Field navigation
 
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // csv export
+
+      // #29370, 110831, dwildt+
+      // Remove the title in case of csv export
+    switch( $this->pObj->objExport->str_typeNum )
+    {
+      case( 'csv' ) :
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        {
+          t3lib_div::devlog('[INFO/EXPORT] azBrowser and pageBrowser won\'t be handled. Both are set to 0.',  $this->pObj->extKey, 0);
+        }
+        $this->bool_azBrowser   = 0;
+        $this->bool_pageBrowser = 0;
+        break;
+      default:
+        // Do nothing;
+    }
+      // Remove the title in case of csv export
+      // csv export
+
+
+
     //////////////////////////////////////////////////////////////////////
     //
     // Field records
 
-    $int_records = $this->pObj->pi_getFFvalue($arr_piFlexform, 'records', 'viewList', 'lDEF', 'vDEF');
+    $int_records = $this->pObj->pi_getFFvalue($arr_piFlexform, 'records', $sheet, 'lDEF', 'vDEF');
 
     $this->bool_emptyAtStart = false;
     switch ($int_records) {
@@ -2469,12 +2606,14 @@ class tx_browser_pi1_flexform {
     }
     // Field records
 
+
+
     //////////////////////////////////////////////////////////////////////
     //
     // Field emptyValues
 
     // 110110, dwildt, 11603
-    $int_emptyValues = $this->pObj->pi_getFFvalue($arr_piFlexform, 'emptyValues', 'viewList', 'lDEF', 'vDEF');
+    $int_emptyValues = $this->pObj->pi_getFFvalue($arr_piFlexform, 'emptyValues', $sheet, 'lDEF', 'vDEF');
     // Set default value
     if ($int_emptyValues == null) {
       $int_emptyValues = $this->bool_dontHandleEmptyValues = true;
@@ -2508,21 +2647,23 @@ class tx_browser_pi1_flexform {
     //var_dump('config 2500', $this->bool_dontHandleEmptyValues);
     // Field emptyValues
 
+
+
     //////////////////////////////////////////////////////////////////////
     //
     // Field search
 
-    $str_search = $this->pObj->pi_getFFvalue($arr_piFlexform, 'search', 'viewList', 'lDEF', 'vDEF');
+    $str_search = $this->pObj->pi_getFFvalue($arr_piFlexform, 'search', $sheet, 'lDEF', 'vDEF');
     $bool_handleSearch = true;
 
     // Don't handle search properties'
     if (!$str_search || $str_search == 'default') {
-      $this->bool_searchForm = true;
-      $this->bool_searchForm_wiPhrase = true;
-      $this->bool_searchForm_wiColoredSwords = true;
-      $this->bool_searchForm_wiColoredSwordsSingle = false;
-      $this->pObj->bool_searchWildcardsManual = false;
-      $this->pObj->str_searchWildcardCharManual = '*';
+      $this->bool_searchForm                        = true;
+      $this->bool_searchForm_wiPhrase               = true;
+      $this->bool_searchForm_wiColoredSwords        = true;
+      $this->bool_searchForm_wiColoredSwordsSingle  = false;
+      $this->pObj->bool_searchWildcardsManual       = false;
+      $this->pObj->str_searchWildcardCharManual     = '*';
       if ($this->pObj->b_drs_flexform) {
         t3lib_div :: devlog('[INFO/FLEXFORM] viewList/search: \'default\'. Nothing to do.', $this->pObj->extKey, 0);
       }
@@ -2531,7 +2672,8 @@ class tx_browser_pi1_flexform {
     // Don't handle search properties'
 
     // Handle search properties'
-    if ($bool_handleSearch) {
+    if ($bool_handleSearch)
+    {
       // DRS - Development Reporting System
       if ($this->pObj->b_drs_flexform) {
         t3lib_div :: devlog('[INFO/FLEXFORM] viewList/search: \'' . $str_search . '\'.', $this->pObj->extKey, 0);
@@ -2543,7 +2685,7 @@ class tx_browser_pi1_flexform {
       //
       // Field searchForm
 
-      $int_searchForm = $this->pObj->pi_getFFvalue($arr_piFlexform, 'searchForm', 'viewList', 'lDEF', 'vDEF');
+      $int_searchForm = $this->pObj->pi_getFFvalue($arr_piFlexform, 'searchForm', $sheet, 'lDEF', 'vDEF');
 
       $this->bool_searchForm = (($int_searchForm & 1) == 1);
       $this->bool_searchForm_wiPhrase = (($int_searchForm & 2) == 2);
@@ -2560,11 +2702,13 @@ class tx_browser_pi1_flexform {
       }
       // Field searchForm
 
+
+
       //////////////////////////////////////////////////////////////////////
       //
       // Field searchWildcards
 
-      $str_searchWildcards = $this->pObj->pi_getFFvalue($arr_piFlexform, 'searchWildcards', 'viewList', 'lDEF', 'vDEF');
+      $str_searchWildcards = $this->pObj->pi_getFFvalue($arr_piFlexform, 'searchWildcards', $sheet, 'lDEF', 'vDEF');
 
       if ($str_searchWildcards == 'default') {
         $this->pObj->bool_searchWildcardsManual = 0;
@@ -2582,7 +2726,7 @@ class tx_browser_pi1_flexform {
       //
       // Field searchWildcardChar
 
-      $str_searchWildcardChar = $this->pObj->pi_getFFvalue($arr_piFlexform, 'searchWildcardChar', 'viewList', 'lDEF', 'vDEF');
+      $str_searchWildcardChar = $this->pObj->pi_getFFvalue($arr_piFlexform, 'searchWildcardChar', $sheet, 'lDEF', 'vDEF');
 
       $this->pObj->str_searchWildcardCharManual = $str_searchWildcardChar;
       if ($this->pObj->b_drs_flexform) {
@@ -2594,12 +2738,84 @@ class tx_browser_pi1_flexform {
     }
     // Handle search properties'
 
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // csv export
+
+      // #29370, 110831, dwildt+
+      // Remove the title in case of csv export
+    switch( $this->pObj->objExport->str_typeNum )
+    {
+      case( 'csv' ) :
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        {
+          t3lib_div::devlog('[INFO/EXPORT] searchform won\'t be handled. It is set to 0.',  $this->pObj->extKey, 0);
+        }
+        $this->bool_searchForm = false;
+        break;
+      default:
+        // Do nothing;
+    }
+      // Remove the title in case of csv export
+      // csv export
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field csvexport
+      // #29370, dwildt, 110831
+
+    $field      = 'csvexport';
+    $csvexport  = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
+
+    if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+    {
+      t3lib_div :: devlog( '[INFO/FLEXFORM+EXPORT] ' .
+      'csvexport: \'' . $csvexport . '\'', $this->pObj->extKey, 0 );
+    }
+
+    switch ( $csvexport )
+    {
+      case ( 'enabled' ) :
+        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = true;
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        {
+          t3lib_div :: devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . '.stdWrap.value is set to true.', $this->pObj->extKey, 0);
+        }
+        break;
+      case ( 'ts' ) :
+        // Do nothing;
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        {
+          t3lib_div :: devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . '.stdWrap.value isn\'t changed by the flexform.', $this->pObj->extKey, 0);
+        }
+        break;
+      case ( 'disabled' ) :
+      default :
+        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = false;
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        {
+          t3lib_div :: devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . '.stdWrap.value is set to false.', $this->pObj->extKey, 0);
+        }
+    }
+    $this->sheet_viewList_csvexport = $this->pObj->conf['flexform.'][$sheet . '.'][$field];
+    if ( $this->pObj->b_drs_export )
+    {
+      t3lib_div :: devlog('[INFO/EXPORT] global sheet_viewList_csvexport is set to ' . $this->sheet_viewList_csvexport, $this->pObj->extKey, 0);
+    }
+      // Field csvexport
+
+
+
     //////////////////////////////////////////////////////////////////////
     //
     // Field simulateSingleUid
 
     // Get the simulateSingleUid for the list view
-    $int_simulateSingleUid = $this->pObj->pi_getFFvalue($arr_piFlexform, 'simulateSingleUid', 'viewList', 'lDEF', 'vDEF');
+    $int_simulateSingleUid = $this->pObj->pi_getFFvalue($arr_piFlexform, 'simulateSingleUid', $sheet, 'lDEF', 'vDEF');
     if (!empty ($int_simulateSingleUid)) {
       $this->int_singlePid = (int) $int_simulateSingleUid;
       if ($this->pObj->b_drs_flexform) {

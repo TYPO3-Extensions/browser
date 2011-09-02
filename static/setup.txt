@@ -1398,6 +1398,14 @@ plugin.tx_browser_pi1 {
                   value = last Monday
                 }
               }
+              selected_period {
+                  // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                    // Examples with strtotime: last Monday, -1 day, now, today 0:00, next Monday
+                  value = today 0:00
+                }
+              }
               times_stdWrap {
                   // [INTEGER] Display the period n times
                 value = 7
@@ -1421,6 +1429,14 @@ plugin.tx_browser_pi1 {
                 stdWrap {
                     // Examples with strtotime: -3 weeks, now, today 0:00, next week
                   value = last week
+                }
+              }
+              selected_period {
+                  // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                    // Examples with strtotime: last Monday, -1 day, now, today 0:00, next Monday
+                  value = today 0:00
                 }
               }
               times_stdWrap {
@@ -1452,6 +1468,14 @@ plugin.tx_browser_pi1 {
                   value = now
                 }
               }
+              selected_period {
+                  // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                    // Examples with strtotime: last Monday, -1 day, now, today 0:00, next Monday
+                  value = today 0:00
+                }
+              }
               times_stdWrap {
                   // [INTEGER] Display the period n times
                 value = 6
@@ -1475,6 +1499,14 @@ plugin.tx_browser_pi1 {
                 stdWrap {
                     // Examples with strtotime: -1 year, 2010, now, today 0:00, next year
                   value = -1 year
+                }
+              }
+              selected_period {
+                  // [BOOLEAN] 1: Value is handled after stdWrap with php strtotime. 0: stdWrap only.
+                use_php_strtotime = 1
+                stdWrap {
+                    // Examples with strtotime: last Monday, -1 day, now, today 0:00, next Monday
+                  value = today 0:00
                 }
               }
               times_stdWrap {
@@ -1582,6 +1614,14 @@ plugin.tx_browser_pi1 {
     my_search_legend = TEXT
     my_search_legend {
       data = LLL:EXT:browser/pi1/locallang.xml:label_search_legend
+    }
+        // markers can use TEXT or COA
+    my_csv_export = TEXT
+    my_csv_export {
+      value = Export
+      lang {
+        de = Export
+      }
     }
         // markers can use TEXT or COA
     my_week = TEXT
@@ -1980,6 +2020,33 @@ plugin.tx_browser_pi1 {
         }
       }
     }
+    viewList {
+        // [BOOLEAN] false (default) || true. Can be overriden while runtime by the flexform value.
+      csvexport = false
+      csvexport {
+        devider {
+            // [STRING] field devider. Usually a comma: ,
+          stdWrap = TEXT
+          stdWrap {
+            value = ,
+          }
+        }
+        enclosure {
+            // [STRING] field enclosure. Usually a double quote: "
+          stdWrap = TEXT
+          stdWrap {
+            value = "
+          }
+        }
+        strip_tag {
+            // [BOOLEAN] true (recommended) || false. Remove HTML tags
+          stdWrap = TEXT
+          stdWrap {
+            value = true
+          }
+        }
+      }
+    }
   }
 
   javascript {
@@ -1999,7 +2066,7 @@ plugin.tx_browser_pi1 {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
           }
-          library = EXT:browser/res/js/jquery/tx_browser_pi1.js
+          library = EXT:browser/res/js/jquery/tx_browser_pi1-0.0.2.js
           library {
               // [Boolean] 0: link to the script file, 1 (default): include the script inline
             inline = 1
@@ -2020,9 +2087,13 @@ plugin.tx_browser_pi1 {
                   returnLast = url
                 }
               }
-              typenum = TEXT
-              typenum {
+              typenum_ajax = TEXT
+              typenum_ajax {
                 value = {$plugin.tx_browser_pi1.typeNum.ajaxPageObj}
+              }
+              typenum_csv = TEXT
+              typenum_csv {
+                value = {$plugin.tx_browser_pi1.typeNum.csvPageObj}
               }
             }
           }
@@ -2633,3 +2704,14 @@ plugin.tx_browser_pi1 {
   }
 
 }
+
+  // TYPO3-Browser: ajax page object II. In case of localisation: Configure the id of sys_languagein the Constant Editor. Move in this line ...jQuery.default to ...jQuery.de (i.e.)
+browser_ajax < plugin.tx_browser_pi1.javascript.ajax.jQuery.default
+
+  // TYPO3-Browser: CSV export page object
+browser_csv < plugin.tx_browser_pi1.export.csv.page
+
+[globalVar = GP:type = {$plugin.tx_browser_pi1.typeNum.csvPageObj}]
+    // Don't wrap the content of the CSV export page object by default
+  tt_content.stdWrap >
+[global]

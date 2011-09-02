@@ -27,8 +27,8 @@
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *
+* @version  4.0.0
 * @since    3.5.0
-* @version  3.6.5
 *
 * @package    TYPO3
 * @subpackage    tx_browser
@@ -70,8 +70,8 @@ class tx_browser_pi1_javascript
     /**
  * Constructor. The method initiate the parent object
  *
- * @param	object		The parent object
- * @return	void
+ * @param object    The parent object
+ * @return  void
  */
   function __construct($parentObj)
   {
@@ -117,12 +117,12 @@ class tx_browser_pi1_javascript
  * class_wi_ajax_onchange(): Set an HTML class for AJAX onload depending on
  *                           some circumstances
  *
- * @param	string		$obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
- * @param	array		$arr_ts: The TypoScript configuration of the object
- * @param	string		$conf_item: The current item wrap
- * @param	integer		$number_of_items: The number of items
- * @param	string		$str_order: asc or desc
- * @return	string		Returns the wrapped item
+ * @param string    $obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
+ * @param array   $arr_ts: The TypoScript configuration of the object
+ * @param string    $conf_item: The current item wrap
+ * @param integer   $number_of_items: The number of items
+ * @param string    $str_order: asc or desc
+ * @return  string    Returns the wrapped item
  * @since 3.5.0
  * @version 3.5.0
  */
@@ -367,8 +367,8 @@ class tx_browser_pi1_javascript
     /**
  * wrap_ajax_div(): Wrap the template in a div AJAX tag, if segement[cObj] is set
  *
- * @param	string		$template:
- * @return	string		$template unchanged or wrapped in div ajax tag
+ * @param string    $template:
+ * @return  string    $template unchanged or wrapped in div ajax tag
  * @since 3.5.0
  * @version 3.5.0
  */
@@ -421,7 +421,7 @@ class tx_browser_pi1_javascript
     // #9659, 101017 fsander
     $str_ajax_class .= ' dynamicFilters';
       // Generate the AJAX class
-
+//:TODO:
 
 
       //////////////////////////////////////////////////////////////////////
@@ -492,7 +492,7 @@ class tx_browser_pi1_javascript
  * load_jQuery(): Load the TYPO3 jQuery class and JSS file. If it is missed,
  *                load file from the browser ressources
  *
- * @return	boolean		True: success. False: error.
+ * @return  boolean   True: success. False: error.
  * @since 3.5.0
  * @version 3.6.5
  */
@@ -599,10 +599,10 @@ class tx_browser_pi1_javascript
 /**
  * addJssFile(): Add a JavaScript file the the HTML head
  *
- * @param	string		$path: Path to the Javascript
- * @param	string		$name: For the key of additionalHeaderData
- * @param	string		$keyPathTs: The TypoScript element path to $path for the DRS
- * @return	boolean		True: success. False: error.
+ * @param string    $path: Path to the Javascript
+ * @param string    $name: For the key of additionalHeaderData
+ * @param string    $keyPathTs: The TypoScript element path to $path for the DRS
+ * @return  boolean   True: success. False: error.
  *
  * @version 3.6.5
  * @since 3.5.0
@@ -665,18 +665,6 @@ class tx_browser_pi1_javascript
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     /***********************************************
     *
     * Helper
@@ -688,10 +676,13 @@ class tx_browser_pi1_javascript
 
 
 
+
+
+
 /**
  * set_arrSegment(): Catch the segments to output for AJAX
  *
- * @return	void
+ * @return  void
  * @since 3.5.0
  * @version 3.5.0
  */
@@ -864,8 +855,10 @@ class tx_browser_pi1_javascript
           $inline_jss = str_replace($hashKeyMarker, $marker[$hashKeyMarker], $inline_jss);
         }
       }
-      $inline_jss = str_replace('###MODE###', $this->pObj->piVar_mode,  $inline_jss);
-      $inline_jss = str_replace('###VIEW###', $this->pObj->view,        $inline_jss);
+      $load_all_modes = $this->dyn_method_load_all_modes( );
+      $inline_jss     = str_replace( '###MODE###',           $this->pObj->piVar_mode,   $inline_jss );
+      $inline_jss     = str_replace( '###VIEW###',           $this->pObj->view,         $inline_jss );
+      $inline_jss     = str_replace( '###LOAD_ALL_MODES###', $load_all_modes,           $inline_jss );
       $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
 
       $name         = 'jquery_plugins_t3browser_localization';
@@ -1123,6 +1116,85 @@ class tx_browser_pi1_javascript
 
   }
 
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * Dynamic methods
+    *
+    **********************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * dyn_method_load_all_modes(): Catch the segments to output for AJAX
+ *
+ * @return  void
+ * @since 4.0.0
+ * @version 4.0.0
+ */
+  function dyn_method_load_all_modes( )
+  {
+    $conf       = $this->pObj->conf;
+    $mode       = $this->pObj->piVar_mode;
+    $view       = $this->pObj->view;
+    $viewWiDot  = $view.'.';
+    $views      = $conf['views.'][$viewWiDot];
+    
+    $js_snippet   = '' . 
+'  ###TAB###setTimeout(function() {
+  ###TAB###  load_mode( ###CURR_VIEW### );
+  ###NEXT_VIEW###
+  ###TAB###}, int_seconds );';
+    $js_complete  = null;
+    $tab          = null;
+    $bool_first   = true;
+    
+    foreach( $views as $key_viewWiDot => $arr_view)
+    {
+      if( strpos ( $key_viewWiDot , '.' ) === false )
+      {
+        continue;
+      }
+      if( $bool_first )
+      {
+        $bool_first = false;
+        continue;
+      }
+      $key_viewWoDot = rtrim( $key_viewWiDot, '.' );
+      switch( true )
+      {
+        case( empty( $js_complete ) ) :
+          $js_complete = $js_snippet;
+          break;
+        default :
+          $js_complete = str_replace( '###NEXT_VIEW###', $js_snippet, $js_complete );
+      }
+      $js_complete = str_replace( '###CURR_VIEW###',  $key_viewWoDot, $js_complete );
+      $js_complete = str_replace( '###TAB###',        $tab,           $js_complete );
+      $tab = $tab . '  ';
+    }
+    $js_complete = str_replace( '###NEXT_VIEW###', null, $js_complete );
+    
+    if( empty( $js_complete ) )
+    {
+      $js_complete = '  // There isn\'t any loader set, because there is one view only.';
+    }
+    
+    return $js_complete;
+  }
 
 
 

@@ -353,6 +353,74 @@ class tx_browser_pi1_backend
     }
       // AJAX is enabled. AJAX page object II
 
+      // RETURN There isn't any CSV page object
+      // Is CSV export enabled?
+    $bool_CSVenabled  = false;
+    $arr_xml          = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
+    $csvexport        = $arr_xml['data']['viewList']['lDEF']['csvexport']['vDEF'];
+
+    switch ( $csvexport )
+    {
+      case ( 'enabled' ) :
+        $bool_CSVenabled = true;
+        break;
+      case ('ts') :
+        $bool_CSVenabled = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['viewList.']['csvexport.']['stdWrap.']['value'];
+        break;
+      case ( 'disabled' ) :
+      default :
+        $bool_CSVenabled = false;
+        break;
+    }
+      // Is CSV export enabled?
+
+      // CSV export is enabled.
+    if( $bool_CSVenabled )
+    {
+        // RETURN there isn't any default typeNum of CSV export page object
+      if( ! isset ($this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['export.']['csv.']['page.']['typeNum']))
+      {
+        $str_prompt = '
+          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.error.no_CSV_defaultTypeNum') . '
+            </div>
+          </div>
+          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_CSV_defaultTypeNum') . '
+            </div>
+          </div>
+          ';
+        return $str_prompt . $str_prompt_info_tutorialAndForum;
+      }
+        // RETURN there isn't any default typeNum of CSV export page object
+
+        // RETURN there is no CSV export page object
+      $CSV_defaultTypeNum    = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['export.']['csv.']['page.']['typeNum'];
+      $CSV_nameOfPageObject  = $this->obj_TypoScript->setup['types.'][$CSV_defaultTypeNum];
+        // There is no CSV export page object
+      if( empty( $CSV_nameOfPageObject ) )
+      {
+        $str_prompt = '
+          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.error.no_CSVpageObject') . '
+            </div>
+          </div>
+          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.plugin.info.no_CSVpageObject') . '
+            </div>
+          </div>
+          ';
+        $str_prompt = str_replace( '%typeNum%', $CSV_defaultTypeNum, $str_prompt);
+        return $str_prompt . $str_prompt_info_tutorialAndForum;
+      }
+        // RETURN there is no CSV export page object
+    }
+      // CSV export is enabled.
+
       // Evaluation result: default message in case of success
     $str_prompt = '
       <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">

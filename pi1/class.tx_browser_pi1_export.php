@@ -39,22 +39,32 @@
  *
  *
  *
- *   52: class tx_browser_pi1_export
- *   70:     function __construct($pObj)
+ *   56: class tx_browser_pi1_export
+ *   83:     function __construct($pObj)
  *
  *              SECTION: typeNum
- *  104:     public function set_typeNum( )
+ *  118:     public function set_typeNum( )
  *
- * TOTAL FUNCTIONS: 2
+ *              SECTION: CSV helper
+ *  189:     public function csv_init_config( )
+ *  225:     public function csv_value( $value )
+ *
+ * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
 class tx_browser_pi1_export
 {
+    // [string] Devider for CSV fields. Usually: ;
+  var $csv_devider    = null;
+    // [string] Wrapper for CSV fields. Usually "
+  var $csv_enclosure  = null;
+    // [boolean] HTML tags will removed
+  var $csv_striptag   = null;
     // [Integer] Number of the current typeNum
-  var $int_typeNum = null;
+  var $int_typeNum    = null;
     // [String] Name of the current typeNum
-  var $str_typeNum = null;
+  var $str_typeNum    = null;
 
 
 
@@ -98,7 +108,8 @@ class tx_browser_pi1_export
 
 
   /**
- * set_typeNum():
+ * set_typeNum(): Set the globals $int_typeNum and $str_typeNum.
+ *                The globals are needed by other classes while runtime.
  *
  * @return  void
  * @version 4.0.0
@@ -106,6 +117,7 @@ class tx_browser_pi1_export
  */
   public function set_typeNum( )
   {
+      // Get the typeNum form the current URL parameters
     $typeNum = (int) t3lib_div::_GP( 'type' );
 
       // RETURN typeNum is 0 or empty
@@ -115,29 +127,122 @@ class tx_browser_pi1_export
     }
       // RETURN typeNum is 0 or empty
 
+      // Check the proper typeNum
     $conf = $this->pObj->conf;
     switch (true)
     {
       case( $typeNum == $conf['export.']['csv.']['page.']['typeNum'] ) :
+          // Given typeNum is the internal typeNum for CSV export
         $this->int_typeNum = $typeNum;
         $this->str_typeNum = 'csv';
         break;
       default :
+          // Given typeNum isn't the internal typeNum for CSV export
         $this->str_typeNum = 'undefined';
     }
+      // Check the proper typeNum
+
+      // DRS - Development Reporting System
     if ($this->pObj->b_drs_export)
     {
       t3lib_div::devLog('[INFO/Export] typeNum is ' . $typeNum . '. Name is ' . $this->str_typeNum . '.', $this->pObj->extKey, 0);
     }
+      // DRS - Development Reporting System
 
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ', (int) t3lib_div::_GP( 'type' ) );
-      die( );
-    }
+//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if ( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__. ' (' . __LINE__ . '): ', (int) t3lib_div::_GP( 'type' ) );
+//      die( );
+//    }
   }
 
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * CSV helper
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+  /**
+ * csv_init_config( ): Init the globals $csv_devider, $csv_enclosure and $csv_striptag
+ *
+ * @return  void
+ * @version 4.0.0
+ * @since 4.0.0
+ */
+  public function csv_init_config( )
+  {
+      // RETURN typeNum isn't the csv typeNum
+    if( $this->str_typeNum != 'csv' )
+    {
+      return;
+    }
+      // RETURN typeNum isn't the csv typeNum
+
+    $cObj_name            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['devider.']['stdWrap'];
+    $cObj_conf            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['devider.']['stdWrap.'];
+    $this->csv_devider    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+    $cObj_name            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['enclosure.']['stdWrap'];
+    $cObj_conf            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['enclosure.']['stdWrap.'];
+    $this->csv_enclosure  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+    $cObj_name            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['strip_tag.']['stdWrap'];
+    $cObj_conf            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['strip_tag.']['stdWrap.'];
+    $this->csv_striptag   = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * csv_value( ):  Change a value to a proper csv value: HTML tags will removed, value will enclosed,
+ *                the csv devider will added.
+ *
+ * @param   string    $value: value for csv export
+ * @return  string    $value: proper csv value
+ * @version 4.0.0
+ * @since 4.0.0
+ */
+  public function csv_value( $value )
+  {
+      // RETURN typeNum isn't the csv typeNum
+    if( $this->str_typeNum != 'csv' )
+    {
+      return $value;
+    }
+      // RETURN typeNum isn't the csv typeNum
+
+      // Remove HTML tags
+    if( $this->csv_striptag )
+    {
+      $value = strip_tags( $value );
+    }
+      // If value contains the enclosure char, double this char. I.e: " will become ""
+    $value = str_replace( $this->csv_enclosure,  $this->csv_enclosure . $this->csv_enclosure, $value);
+      // Enclose the value with the enclosure char and add the devider
+    $value = $this->csv_enclosure . $value . $this->csv_enclosure . $this->csv_devider;
+    return $value;
+  }
 
 
 

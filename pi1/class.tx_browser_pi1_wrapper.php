@@ -499,6 +499,32 @@ class tx_browser_pi1_wrapper
 
 
 
+      //////////////////////////////////////////////////////////////////////
+      //
+      // csv export
+
+      // #29370, 110831, dwildt+
+      // Remove the title in case of csv export
+    switch( $this->pObj->objExport->str_typeNum )
+    {
+      case( 'csv' ) :
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        {
+          t3lib_div::devlog('[INFO/EXPORT] Don\'t link to a single view. All booleans are set to false!',  $this->pObj->extKey, 0);
+        }
+        $boolDoNotLink      = false;
+        $boolDoJssAlert     = false;
+        $boolDoLinkToSingle = false;
+        $boolDoTsTypolink   = false;
+        break;
+      default:
+        // Do nothing;
+    }
+      // Remove the title in case of csv export
+      // csv export
+
+
+
       //////////////////////////////////////////////////////////////
       //
       // DRS - Performance

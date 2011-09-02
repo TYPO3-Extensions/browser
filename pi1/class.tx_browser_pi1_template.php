@@ -189,29 +189,6 @@ class tx_browser_pi1_template
 
     $arr_currPiVars  = $this->pObj->piVars;
 
-    // dwildt, 101219
-//      // Remove sword temporarily
-//    if(isset($this->pObj->piVars['sword']))
-//    {
-//      unset($this->pObj->piVars['sword']);
-//    }
-//      // Remove sword temporarily
-//
-//      // Remove sort temporarily
-//    if(isset($this->pObj->piVars['sort']))
-//    {
-//      unset($this->pObj->piVars['sort']);
-//    }
-//      // Remove sort temporarily
-//
-//      // #9495, fsander
-//      // Remove pointer temporarily
-//    if(isset($this->pObj->piVars['pointer']))
-//    {
-//      unset($this->pObj->piVars['pointer']);
-//    }
-//      // Remove pointer temporarily
-
       // Remove pointer temporarily
     $arr_removePiVars = array('sword', 'sort', 'pointer');
         // #11576, dwildt, 101219
@@ -313,18 +290,30 @@ class tx_browser_pi1_template
     $markerArray['###BUTTON###']        = $this->pObj->pi_getLL('pi_list_searchBox_search', 'Search', true);
     $markerArray['###POINTER###']       = $this->pObj->prefixId.'[pointer]';
       // 110110, cweiske, #11886
-    $markerArray['###FLEXFORM###']        = $this->pObj->piVars['plugin'];
+    $markerArray['###FLEXFORM###']      = $this->pObj->piVars['plugin'];
     $markerArray['###MODE###']          = $this->pObj->piVar_mode;
     $markerArray['###VIEW###']          = $this->pObj->view;
     $markerArray['###RESULTPHRASE###']  = $this->resultphrase();
 
     $subpart    = $this->pObj->cObj->getSubpart($template, '###SEARCHFORM###');
-    $searchBox  = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
     // 3.5.0: We need the subpartmarker for the filter again
     $searchBox  = '<!-- ###SEARCHFORM### begin -->
         '.$this->pObj->cObj->substituteMarkerArray($subpart, $markerArray).'
 <!-- ###SEARCHFORM### end -->';
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // csv export: remove the csv export button
+
+      // #29370, 110831, dwildt+
+    if( ! $this->pObj->objFlexform->sheet_viewList_csvexport )
+    {
+      $searchBox = $this->pObj->cObj->substituteSubpart($searchBox, '###BUTTON_CSV-EXPORT###', null, true);
+    }
     $template   = $this->pObj->cObj->substituteSubpart($template, '###SEARCHFORM###', $searchBox, true);
+      // csv export: remove the csv export button
 
     $this->pObj->piVars   = $arr_currPiVars;
     $GLOBALS['TSFE']->id = $int_tsfeId; // #9458
@@ -829,6 +818,16 @@ class tx_browser_pi1_template
 
 
 
+      //////////////////////////////////////////////////////////////////////
+      //
+      // csv export: Set CSV field devider and field enclosure
+
+    $this->pObj->objExport->csv_init_config( );
+      // #29370, 110831, dwildt+
+      // csv export: Set CSV field devider and field enclosure
+
+
+
       //////////////////////////////////////////////////////////////////
       //
       // HTML-Template with ###ITEM### ?
@@ -948,6 +947,14 @@ class tx_browser_pi1_template
           // ###LISTBODYITEM###: bodyRows
         $this->pObj->elements = $elements;
         $htmlRows     = $this->tmplRows($elements, '###LISTBODYITEM###', $template);
+
+          // #29370, 110831, dwildt+
+          // Remove last devider in case of csv export
+        if( $this->pObj->objExport->str_typeNum == 'csv' )
+        {
+          $htmlRows = rtrim( $htmlRows, $this->pObj->objExport->csv_devider );
+        }
+
         $listBodyRow  = $this->pObj->cObj->getSubpart($template, '###LISTBODY###');
         $listBodyRow  = $this->pObj->cObj->substituteSubpart($listBodyRow, '###LISTBODYITEM###', $htmlRows, true);
 
@@ -1126,6 +1133,13 @@ class tx_browser_pi1_template
         $this->pObj->elements    = $elements;
         $this->pObj->rows[$row]  = $rows[$row];
         $tmpl_row                = $this->tmplRows($elements, '###LISTBODYITEM###', $template); //:todo: Performance
+
+          // Remove last devider in case of csv export
+          // #29370, 110831, dwildt+
+        if( $this->pObj->objExport->str_typeNum == 'csv' )
+        {
+          $tmpl_row = rtrim( $tmpl_row, $this->pObj->objExport->csv_devider );
+        }
 
           // Suggestion #8856,  dwildt, 100812
           // Bugfix     #10762, dwildt, 101201
@@ -1860,6 +1874,19 @@ class tx_browser_pi1_template
 
 
 
+      // csv export: Header fields shouldn't get the order property
+      // #29370, 110831, dwildt+
+    if( $this->pObj->objExport->str_typeNum == 'csv' )
+    {
+      if ( $this->pObj->b_drs_templating || $this->pObj->b_drs_export )
+      {
+        t3lib_div::devlog('[INFO/EXPORT] Don\'t link header fields. $arrOrderByFields is unset.',  $this->pObj->extKey, 0);
+      }
+      unset( $arrOrderByFields );
+    }
+
+
+
       // Set the global arr_rmFields
     $this->tmpl_rmFields( );
 
@@ -1961,6 +1988,27 @@ class tx_browser_pi1_template
 
 
 
+      //////////////////////////////////////////////////////////////////////
+      //
+      // csv export: with ###ITEM### in every case
+
+      // #29370, 110831, dwildt+
+    switch( $this->pObj->objExport->str_typeNum )
+    {
+      case( 'csv' ) :
+        if ( $this->pObj->b_drs_templating || $this->pObj->b_drs_export )
+        {
+          t3lib_div::devlog('[INFO/EXPORT] Template with ###ITEM### in ###LISTHEAD###.',  $this->pObj->extKey, 0);
+        }
+        $bool_table = true;
+        break;
+      default:
+        // Do nothing;
+    }
+      // csv export: with ###ITEM### in every case
+
+
+
       ////////////////////////////////////////////////////////////////////////////////
       //
       // Building the table head or the select box for ordering
@@ -2041,6 +2089,11 @@ class tx_browser_pi1_template
         $listHeadItem = $this->pObj->cObj->getSubpart($template, '###LISTHEADITEM###');
         $markerArray['###CLASS###'] = ' class="'.$class.'"';
         $str_href                   = $fieldLL;
+
+          // csv export: move value to a proper csv value
+          // #29370, 110831, dwildt+
+        $str_href = $this->pObj->objExport->csv_value( $str_href );
+
         if (in_array($field, $arrOrderByFields))
         {
           $str_href                 = $this->pObj->pi_linkTP_keepPIvars($fieldLL, $sort, $this->pObj->boolCache);
@@ -2080,7 +2133,12 @@ class tx_browser_pi1_template
     }
       // Loop: All columns / keys of first record
 
-
+      // Remove last devider in case of csv export
+      // #29370, 110831, dwildt+
+    if( $this->pObj->objExport->str_typeNum == 'csv' )
+    {
+      $items = rtrim( $items, $this->pObj->objExport->csv_devider );
+    }
 
       // Don't display selectBox_orderBy
       // #12005, 110107, dwildt
@@ -2219,7 +2277,7 @@ class tx_browser_pi1_template
             }
           }
         }
-        $conf_item  = $this->pObj->objFilter->get_wrappedItemSelected(null, $tmp_value, $arr_piVar, $conf_selected, $conf_item);
+        $conf_item  = $this->pObj->objFilter->get_wrappedItemSelected(null, $tmp_value, $arr_piVar, $arr_ts, $conf_selected, $conf_item);
           // Wrap the value
         $conf_item  = str_replace('|', $label, $conf_item);
         $conf_item  = $conf_item."\n";
@@ -3089,6 +3147,10 @@ class tx_browser_pi1_template
         continue;
       }
         // #28562: 110830, dwildt+
+
+        // csv export: move value to a proper csv value
+        // #29370, 110831, dwildt+
+      $value = $this->pObj->objExport->csv_value( $value );
 
         // Substitute the template marker
       if ( $boolSubstitute )

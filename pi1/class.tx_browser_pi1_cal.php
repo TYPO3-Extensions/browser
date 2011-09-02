@@ -92,6 +92,8 @@ class tx_browser_pi1_cal
   var $arr_hits = null;
     // [array] Array with area url and its real tsKey
   var $arr_url_tsKey = null;
+    // [String/Integer] default period, if no period is selected by the category menu
+  var $selected_period = null;
     // [AREA]
 
     // [SCHEDULE]
@@ -1190,8 +1192,19 @@ class tx_browser_pi1_cal
   {
     $sheet        = 'sDEF';
     $field        = 'colours';
-//:TODO: global/local
-    $conf_colours = $this->pObj->conf['flexform.']['pi5.'][$sheet . '.'][$field . '.'];
+
+    $conf_flexform_pi5 = $this->conf_view['flexform.']['pi5.'];
+    if( empty ( $conf_flexform_pi5 ) )
+    {
+      $conf_flexform_pi5 = $this->pObj->conf['flexform.']['pi5.'];
+      if ($this->pObj->b_drs_cal)
+      {
+        t3lib_div :: devLog('[INFO/CAL/UI] There was no local flexform.pi5 configuration. The global is taken.', $this->pObj->extKey, 0);
+        t3lib_div :: devLog('[HELP/CAL/UI] Change it? Configure the local array flexform.pi5.', $this->pObj->extKey, 1);
+      }
+    }
+
+    $conf_colours = $conf_flexform_pi5[$sheet . '.'][$field . '.'];
     
     foreach( $conf_colours as $key_colour => $value_colour)
     {
@@ -1275,7 +1288,8 @@ class tx_browser_pi1_cal
       //
       // Move due day to a timestamp
 
-    $arr_result = $this->zz_strtotime(true, $piVar_due_day);
+//:TODO:
+    $arr_result = $this->zz_strtotime( true, $piVar_due_day );
     $timestamp  = $arr_result['result'];
     $ISO_8601   = $arr_result['ISO_8601'];
     $bool_error = $arr_result['error'];
@@ -2563,17 +2577,18 @@ class tx_browser_pi1_cal
       //
       // Get period configuration
 
+      // Field start_period
     $arr_period_conf    = $arr_interval[$this->str_area_case . '.'];
     $start_period       = $arr_period_conf['start_period.']['stdWrap.']['value'];
     $start_period_conf  = $arr_period_conf['start_period.']['stdWrap.'];
     $start_period_conf  = $this->pObj->objZz->substitute_t3globals_recurs($start_period_conf);
     $start_period       = $this->pObj->local_cObj->stdWrap($start_period, $start_period_conf);
+      // Field start_period
 
       // 110820, dwildt +
     $bool_strtotime = $arr_period_conf['start_period.']['use_php_strtotime'];
     $arr_result     = $this->zz_strtotime( $bool_strtotime, $start_period );
     $start_period   = $arr_result['result'];
-
       // 110820, dwildt +
       // 110820, dwildt -
 //    if($arr_period_conf['start_period.']['use_php_strtotime'])
@@ -2597,6 +2612,18 @@ class tx_browser_pi1_cal
 //      }
 //    }
       // 110820, dwildt -
+
+      // #29444: 110901, dwildt+
+      // default period, if no period is selected by the category menu
+    $selected_period        = $arr_period_conf['selected_period.']['stdWrap.']['value'];
+    $selected_period_conf   = $arr_period_conf['selected_period.']['stdWrap.'];
+    $selected_period_conf   = $this->pObj->objZz->substitute_t3globals_recurs($selected_period_conf);
+    $selected_period        = $this->pObj->local_cObj->stdWrap($selected_period, $selected_period_conf);
+    $bool_strtotime         = $arr_period_conf['selected_period.']['use_php_strtotime'];
+    $arr_result             = $this->zz_strtotime( $bool_strtotime, $selected_period );
+    $this->selected_period  = $arr_result['result'];
+      // #29444: 110901, dwildt+
+
 
 
 
@@ -2761,10 +2788,25 @@ class tx_browser_pi1_cal
     $arr_return['ISO_8601'] = null;
     $arr_return['error']    = true;
 
-    if( !$bool_strtotime )
+    if( ! $bool_strtotime )
     {
       return $arr_return;
     }
+
+//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if ( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__. ' (' . __LINE__ . '): ', $bool_strtotime, $strtotime, ( int ) $strtotime, ( (string) $strtotime === (string) ( int ) $strtotime ) );
+//    }
+      // $strtotime is a timestamp
+    if( (string) $strtotime === (string) ( int ) $strtotime )
+    {
+      $arr_return['result']   = $strtotime;
+      $arr_return['ISO_8601'] = date('c', $strtotime);
+      $arr_return['error']    = false;
+      return $arr_return;
+    }
+      // $strtotime is a timestamp
 
     $timestamp = strtotime( $strtotime );
 

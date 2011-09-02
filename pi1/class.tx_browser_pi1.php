@@ -486,6 +486,16 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
+      // Get the typeNum
+//:TODO:
+      // #29370, 110831, dwildt
+    $this->objExport->set_typeNum( );
+      // Get the typeNum
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Get Configuration out of the Plugin (Flexform) but [Templating]
 
     $this->objFlexform->main();
@@ -548,16 +558,6 @@ class tx_browser_pi1 extends tslib_pibase {
       t3lib_div::devLog('[INFO/PERFORMANCE] substitute_t3globals_recurs: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
     }
       // DRS - Performance
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // Get the typeNum
-//:TODO:
-      // #29370, 110831, dwildt
-    $this->objExport->set_typeNum( );
-      // Get the typeNum
 
 
 
@@ -860,6 +860,36 @@ class tx_browser_pi1 extends tslib_pibase {
       return trim($str_template_completed);
     }
       // XML/RSS: return the result (XML string) without wrapInBaseClass
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // csv export: return the result (HTML string) without wrapInBaseClass
+
+      // #29370, 110831, dwildt+
+    switch( $this->objExport->str_typeNum )
+    {
+        // typeNum name is csv
+      case( 'csv' ) :
+        switch ( $this->objFlexform->sheet_viewList_csvexport )
+        {
+            // CSV export is enabled
+          case( true ) :
+            return trim($str_template_completed);
+            break;
+            // CSV export isn't enabled
+          case( false ) :
+          default :
+            return 'CSV export isn\'t enabled. Please enable it in the plugin/flexform of your TYPO3-Browser.';
+            break;
+        }
+        break;
+        // typeNum name isn't csv: Follow the workflow
+      default:
+        // Do nothing here, follow the workflow
+    }
+      // csv export: Set CSV field devider and field wrapper
 
 
 

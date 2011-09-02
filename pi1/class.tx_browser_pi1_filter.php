@@ -1619,11 +1619,21 @@ class tx_browser_pi1_filter {
         $conf_item = $this->get_wrappedItemStyle($arr_ts, $conf_item, false);
           // Wrap the item uid
         $conf_item = $this->get_wrappedItemKey($arr_ts, $uid, $conf_item);
+//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//if ( ! ( $pos === false ) )
+//{
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_ts['area.']['interval.']['options.']['fields.']);
+//} 
           // Wrap the item URL
         $conf_item = $this->get_wrappedItemURL($arr_ts, $tableField, $uid, $conf_item);
 
           // Get the item selected (or not selected)
-        $conf_item = $this->get_wrappedItemSelected($uid, $value, $arr_piVar, $conf_selected, $conf_item);
+        $conf_item = $this->get_wrappedItemSelected($uid, $value, $arr_piVar, $arr_ts, $conf_selected, $conf_item);
+//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//if ( ! ( $pos === false ) )
+//{
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $conf_item);
+//} 
           // Remove empty class
         $conf_item = str_replace(' class=""', null, $conf_item);;
 
@@ -2167,34 +2177,60 @@ class tx_browser_pi1_filter {
  * @param string    $conf_slected: The selected configuration from TS
  * @param string    $conf_item: The current item wrap
  * @return  string    Returns the wrapped item selected or not selected
+ * 
+ * @version 4.0.0
+ * @since 3.6.0
  */
-  function get_wrappedItemSelected($uid, $value, $arr_piVar, $conf_selected, $conf_item) 
+  function get_wrappedItemSelected($uid, $value, $arr_piVar, $arr_ts, $conf_selected, $conf_item) 
   {
-//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false)) var_dump('filter 2007', $uid, $value, $arr_piVar);
+    //$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    //if ( ! ( $pos === false ) )
+    //{
+    //  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->pObj->objCal->selected_period, $arr_ts['area.']['interval.']['options.']['fields.'][$uid . '.']['value_stdWrap.']['value'], $arr_piVar, $this->pObj->piVars);
+    //} 
 
       // dwildt, 110102
       // Workaround: Because of new feature to filter a local table field
     $bool_inArray = false;
-    if($uid)
+    if( $uid )
     {
-      if (in_array($uid, $arr_piVar)) 
+      if( in_array( $uid, $arr_piVar ) )
       {
         $bool_inArray = true;
       }
     }
-    if($value)
+    if( $value )
     {
-      if (in_array($value, $arr_piVar)) 
+      if( in_array( $value, $arr_piVar ) )
       {
         $bool_inArray = true;
       }
     }
-    if(!$bool_inArray)
+      // #29444: 110902, dwildt+
+    $value_from_ts_area = $arr_ts['area.']['interval.']['options.']['fields.'][$uid . '.']['value_stdWrap.']['value'];
+    if( $value_from_ts_area )
+    {
+      if( in_array( $value_from_ts_area, $arr_piVar ) )
+      {
+        $bool_inArray = true;
+      }
+    }
+    if( empty ( $arr_piVar ) )
+    {
+      if( $this->pObj->objCal->selected_period )
+      {
+        if( $this->pObj->objCal->selected_period == $value_from_ts_area )
+        {
+          $bool_inArray = true;
+        }
+      }
+    }
+      // #29444: 110902, dwildt+
+    if( ! $bool_inArray )
     {
       $conf_selected = null;
     }
-    $conf_item = str_replace('###ITEM_SELECTED###', $conf_selected, $conf_item);
+    $conf_item = str_replace( '###ITEM_SELECTED###', $conf_selected, $conf_item );
       #8337
 
     return $conf_item;

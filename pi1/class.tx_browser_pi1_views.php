@@ -978,14 +978,65 @@ class tx_browser_pi1_views
 
 
 
+      // #29370, 110831, dwildt-
+//      /////////////////////////////////////
+//      //
+//      // Building the template
+//
+//      // HTML template
+//    $str_marker = $this->pObj->lDisplayList['templateMarker'];
+//    $template   = $this->pObj->cObj->getSubpart($template, $str_marker);
+//      // HTML template
+      // #29370, 110831, dwildt-
+
+
+
+      // #29370, 110831, dwildt+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // csv export
+
+      // #29370, 110831, dwildt+
+      // Remove the title in case of csv export
+    $str_marker = $this->pObj->lDisplayList['templateMarker'];
+    switch( $this->pObj->objExport->str_typeNum )
+    {
+      case( 'csv' ) :
+        if ( $this->pObj->b_drs_templating || $this->pObj->b_drs_export )
+        {
+          t3lib_div::devlog('[INFO/TEMPLATING+EXPORT] ' . $str_marker . ' is ignored. ###TEMPLATE_CSV### is used as template marker.',  $this->pObj->extKey, 0);
+        }
+        $str_marker = '###TEMPLATE_CSV###';
+        break;
+      default:
+        // Do nothing;
+    }
+      // Remove the title in case of csv export
+      // csv export
+      // #29370, 110831, dwildt+
+
+
+
+      // #29370, 110831, dwildt+
       /////////////////////////////////////
       //
       // Building the template
 
       // HTML template
-    $str_marker = $this->pObj->lDisplayList['templateMarker'];
     $template   = $this->pObj->cObj->getSubpart($template, $str_marker);
       // HTML template
+      // #29370, 110831, dwildt+
+
+
+
+//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if ( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__. ' (' . __LINE__ . '): ', $template );
+//      die( );
+//    }
+
+
 
       // HTML search form
       // #9659, 101011, fsander
@@ -1164,7 +1215,7 @@ class tx_browser_pi1_views
       //
       // In case of limit, limit the rows
 
-    if(isset($conf_view['limit']))
+    if( isset( $conf_view['limit'] ) )
     {
       $arr_limit        = explode(',', $conf_view['limit']);
       $int_start        = (int) trim($arr_limit[0]);
@@ -1198,7 +1249,7 @@ class tx_browser_pi1_views
       }
         // DRS - Development Reporting System
     }
-    if(!isset($conf_view['limit']))
+    if( ! isset( $conf_view['limit'] ) )
     {
       if ($this->pObj->b_drs_templating)
       {

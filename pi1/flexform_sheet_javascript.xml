@@ -199,7 +199,7 @@
             <type>input</type>
             <size>255</size>
             <eval>trim,required,nospace</eval>
-            <default>EXT:browser/res/js/tx_browser_pi1.js</default>
+            <default>EXT:browser/res/js/tx_browser_pi1-0.0.2.js</default>
           </config>
         </TCEforms>
       </browser_libraries_general>
