@@ -35,7 +35,7 @@
       hlpUrlSelectorLabel:        "Be aware of the jQuery selector:",
       hlpUrlSelectorPrmpt:        "The request takes content into account only if this selector gets a result: {0}",
       hlpGetRidOfLabel:           "Get rid of this messages?",
-      hlpGetRidOfPrmpt:           "Deactivate the jQuery plugin t3browser. But you won't have any AJAX support.",
+      hlpGetRidOfPrmpt:           "Deactivate the jQuery plugin t3browser. But you won't have any AJAX support."
     },
     templates: {
       uiErr : '<div class="ui-widget">' +
@@ -55,7 +55,7 @@
                     '{1}' +
                   '</p>' +
                 '</div>' +
-              '</div>',
+              '</div>'
     }
   };
 
@@ -128,7 +128,21 @@
                         }
                           // ERROR server has an error and has send a message
 
-			var id_of_loaded_content = "#" + $( "#tmp-container div" ).attr( "id" )
+
+                        if( ! $( "#tmp-container div" ).length ) {
+                          alert( "ERROR: Content is empty!\n" +
+                            "Please check the link manually:\n" +
+                            url + "\n" +
+                            "\n" +
+                            "Reason can be:\n" +
+                            "- The TYPO3 colPos of your content isn't 0.\n" +
+                            "\n" +
+                            "Please take care of a proper TypoScript."
+                          );
+                          return;
+                        }
+
+                        var id_of_loaded_content = "#" + $( "#tmp-container div" ).attr( "id" )
                         $( id_of_loaded_content ).unwrap( );
                         $( id_of_loaded_content ).hide( );
 
@@ -269,7 +283,7 @@
                       else if ( selectedEffect === "slide" )
                       {
                         options = {
-                                    mode      : 'hide',
+                                    mode      : 'hide'
 //                                    direction : 'right'
                                   };
                       }
@@ -479,7 +493,7 @@
                       url = url + "?" + param;
                     }
                     return url;
-                  },
+                  }
                     // url_autoQm
   };
 
@@ -506,3 +520,4 @@
   };
 
 })( jQuery );
+
