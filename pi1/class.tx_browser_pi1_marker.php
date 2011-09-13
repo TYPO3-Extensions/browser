@@ -975,7 +975,8 @@
   {
 
       // Get configuration from the flexform
-    $sheet = 'development';
+      // Bugfix     #29738, uherrmann, 110913
+    $sheet = 'evaluate';
     $field = 'handle_marker';
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
     $handle_marker  = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
