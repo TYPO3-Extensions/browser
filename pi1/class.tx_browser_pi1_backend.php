@@ -730,7 +730,8 @@ class tx_browser_pi1_backend
 
       // Get current browser calendar plugin
     $arr_xml    = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
-    $int_plugin = $arr_xml['data']['extend']['lDEF']['cal_ui']['vDEF'];
+      // Bugfix     #29732, uherrmann, 110913
+    $int_plugin = (is_array($arr_xml)) ? $arr_xml['data']['extend']['lDEF']['cal_ui']['vDEF'] : '';
       // Get current browser calendar plugin
 
     if( empty( $int_plugin ) )
@@ -995,7 +996,8 @@ class tx_browser_pi1_backend
 
       // Get current view
     $arr_xml  = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
-    $str_view = $arr_xml['data']['extend']['lDEF']['cal_view']['vDEF'];
+      // Bugfix     #29732, uherrmann, 110913
+    $str_view = (is_array($arr_xml)) ? $arr_xml['data']['extend']['lDEF']['cal_view']['vDEF'] : '';
       // Get current view
 
     if( empty( $str_view ) )
@@ -1280,7 +1282,8 @@ class tx_browser_pi1_backend
 
       // Get current view
     $arr_xml          = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
-    $str_field_start  = $arr_xml['data']['extend']['lDEF']['cal_field_start']['vDEF'];
+      // Bugfix     #29732, uherrmann, 110913
+    $str_field_start  = (is_array($arr_xml)) ? $arr_xml['data']['extend']['lDEF']['cal_field_start']['vDEF'] : '';
       // Get current view
 
     if( empty( $str_field_start ) )
