@@ -1635,7 +1635,9 @@ class tx_browser_pi1_filter {
 //  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $conf_item);
 //} 
           // Remove empty class
-        $conf_item = str_replace(' class=""', null, $conf_item);;
+        $conf_item = str_replace(' class=""', null, $conf_item);
+          // Workaround: 110913, dwildt
+        $conf_item = str_replace('class=" ', 'class="', $conf_item);
 
           // Wrap the hits
         if ($bool_display_hits) 
@@ -1979,22 +1981,28 @@ class tx_browser_pi1_filter {
  * @return  string    Returns the wrapped item
  * @version 3.5.0
  */
-  function get_wrappedItemClass($arr_ts, $conf_item, $str_order) {
+  function get_wrappedItemClass($arr_ts, $conf_item, $str_order)
+  {
 
     $conf_item_class = null;
-    if (is_array($arr_ts['wrap.'])) {
-      if (is_array($arr_ts['wrap.']['item.'])) {
+    if (is_array($arr_ts['wrap.']))
+    {
+      if (is_array($arr_ts['wrap.']['item.']))
+      {
         $conf_item_class = $arr_ts['wrap.']['item.']['class'];
       }
     }
 
-    if ($str_order) {
-      if (!empty ($arr_ts['wrap.']['item.']['class.'][$str_order])) {
+    if ($str_order)
+    {
+      if (!empty ($arr_ts['wrap.']['item.']['class.'][$str_order]))
+      {
         $conf_item_class = $arr_ts['wrap.']['item.']['class.'][$str_order];
       }
     }
 
-    if ($conf_item_class) {
+    if ($conf_item_class)
+    {
       $conf_item_class = ' class="' . $conf_item_class . '"';
     }
 

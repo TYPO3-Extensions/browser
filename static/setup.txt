@@ -2245,9 +2245,11 @@ plugin.tx_browser_pi1 {
         config {
           disableAllHeaderCode  = 1
           disablePrefixComment  = 1
+            // CSV has a one byte charset!
+          metaCharset           = iso-8859-15
           xhtml_cleaning        = 0
           admPanel              = 0
-          additionalHeaders     = Content-Type: text/csv
+          additionalHeaders     = Content-Type: text/csv | Content-Disposition: attachment; filename="export.csv"
         }
         10 = CONTENT
         10 {

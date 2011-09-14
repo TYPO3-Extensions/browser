@@ -1288,7 +1288,6 @@ class tx_browser_pi1_cal
       //
       // Move due day to a timestamp
 
-//:TODO:
     $arr_result = $this->zz_strtotime( true, $piVar_due_day );
     $timestamp  = $arr_result['result'];
     $ISO_8601   = $arr_result['ISO_8601'];

@@ -487,7 +487,7 @@ class tx_browser_pi1 extends tslib_pibase {
       //////////////////////////////////////////////////////////////////////
       //
       // Get the typeNum
-//:TODO:
+
       // #29370, 110831, dwildt
     $this->objExport->set_typeNum( );
       // Get the typeNum
@@ -876,6 +876,9 @@ class tx_browser_pi1 extends tslib_pibase {
         {
             // CSV export is enabled
           case( true ) :
+            //header('Content-type: text/csv');
+            //header('Content-type: application/msexcel');
+            //header('Content-Disposition: attachment; filename="downloaded.csv"');
             return trim($str_template_completed);
             break;
             // CSV export isn't enabled

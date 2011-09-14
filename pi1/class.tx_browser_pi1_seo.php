@@ -203,7 +203,9 @@ class tx_browser_pi1_seo
               $cleanedArrKeywd[$key] = trim($value);
             }
           }
-          $cleanedArrKeywd = array_unique($cleanedArrKeywd);
+            // 110914, dwildt
+          //$cleanedArrKeywd = array_unique($cleanedArrKeywd);
+          $cleanedArrKeywd = array_unique( (array) $cleanedArrKeywd );
           $metaKeywd       = implode(',', $cleanedArrKeywd);
           if (is_array($tmpSeo['htmlHead.']['meta.']['keywords.']))
           {
