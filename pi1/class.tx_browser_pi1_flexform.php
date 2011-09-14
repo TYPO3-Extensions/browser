@@ -1938,7 +1938,9 @@ class tx_browser_pi1_flexform {
           t3lib_div :: devlog('[INFO/FLEXFORM] template.css.browser is set to ' . $css, $this->pObj->extKey, 0);
         }
         break;
-      case ('none') :
+        // #29778, 110915, dwildt
+      //case ('none') :
+      case ('no') :
         $this->pObj->conf['template.']['css.']['browser'] = null;
         $this->bool_css_browser = false;
         if ($this->pObj->b_drs_flexform) {
