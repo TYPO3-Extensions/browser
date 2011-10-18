@@ -877,7 +877,9 @@ class tx_browser_pi1_javascript
       //
       // AJAX (modul I) is enabled
 
-    if ($this->objFlexform->bool_ajax_enabled)
+      // dwildt, 111018: 31077
+    //if ($this->objFlexform->bool_ajax_enabled)
+    if ($this->pObj->objFlexform->bool_ajax_enabled)
     {
         // name has to correspondend with similar code in tx_browser_pi1_template.php
       $name         = 'ajaxLL';

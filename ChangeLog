@@ -1,5 +1,5 @@
 4.0.0
-  110817
+  111018
   New Features
   * #29370: CSV export
   * #29042: Calendar (first part and inofficial. Calendar should be official in version 4.2.0 in 2012)
@@ -14,6 +14,7 @@
   * #29042: HTML id of the plugin moved from cXX-tx-browser-pi1 to cXX-tx-browser-pi1-view-mode
             where XX is the id in the table tt_content, view is list or single and mode is the id of the mode
   Bugfixes
+  * #31077: AJAX: JSS files are missing in some cases
   * #29444: Category menu: Selected isn't detected
   * #29186: Empty rows are tested with ==null instead of empty( )
   * #29323: method ajaxifyOrderBy is undefined. Affected file: res/js/tx_browser_pi1.js
