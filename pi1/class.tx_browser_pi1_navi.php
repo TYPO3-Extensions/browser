@@ -29,7 +29,7 @@
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage    browser
- * @version       3.7.0
+ * @version       3.7.3
  * @since 2.0.0
  */
 
@@ -57,31 +57,33 @@
 class tx_browser_pi1_navi
 {
 
-  //////////////////////////////////////////////////////
-  //
-  // Variables set by the pObj (by class.tx_browser_pi1.php)
+    //////////////////////////////////////////////////////
+    //
+    // Variables set by the pObj (by class.tx_browser_pi1.php)
 
   var $conf       = false;
-  // [Array] The current TypoScript configuration array
+    // [Array] The current TypoScript configuration array
   var $mode       = false;
-  // [Integer] The current mode (from modeselector)
+    // [Integer] The current mode (from modeselector)
   var $view       = false;
-  // [String] 'list' or 'single': The current view
+    // [String] 'list' or 'single': The current view
   var $conf_view  = false;
-  // [Array] The TypoScript configuration array of the current view
+    // [Array] The TypoScript configuration array of the current view
   var $conf_path  = false;
-  // [String] TypoScript path to the current view. I.e. views.single.1
-  // Variables set by the pObj (by class.tx_browser_pi1.php)
+    // [String] TypoScript path to the current view. I.e. views.single.1
+    // Variables set by the pObj (by class.tx_browser_pi1.php)
 
 
-  //////////////////////////////////////////////////////
-  //
-  // Variables set by this class
+    //////////////////////////////////////////////////////
+    //
+    // Variables set by this class
 
   var $bool_synonyms    = false;
-  // [Boolean] It's true, if there are used synonyms
+    // [Boolean] It's true, if there are used synonyms
+  var $bool_utf8        = true;
+    // [Boolean] true, if current charset is utf-8. Is set by zz::b_TYPO3_utf8() while runtime
   var $sql_initialField = false;
-  // The initial field name in the SQL result (azRows)
+    // The initial field name in the SQL result (azRows)
 
 
 
@@ -98,12 +100,16 @@ class tx_browser_pi1_navi
   *
   * @param  object    The parent object
   * @return void
+  * 
+  * @version  3.7.3
+  * @since    2.0.0
   */
   public function __construct($parentObj)
   {
     // Set the Parent Object
     $this->pObj = $parentObj;
-
+      // 111023, uherrmann, #9912: t3lib_div::convUmlauts() is deprecated
+    $this->t3lib_cs_obj = t3lib_div::makeInstance('t3lib_cs');
   }
 
 
@@ -134,6 +140,9 @@ class tx_browser_pi1_navi
  *
  * @param array   Array with elements rows and template
  * @return  array   Array with the syntax array[table][] = field
+ *
+ * @version 3.7.3
+ * @since 2.0.0
  */
   public function azBrowser($arr_data)
   {
@@ -144,6 +153,16 @@ class tx_browser_pi1_navi
     $arr_return['data']['template'] = $template;
 
     $lDisplay = $this->pObj->lDisplayList['display.'];
+    
+    
+
+      /////////////////////////////////////
+      //
+      // Set global bool_-_utf8
+
+      // + 111023, dwildt, #9912: t3lib_div::convUmlauts() is deprecated
+    $this->bool_utf8 = $this->pObj->objZz->b_TYPO3_utf8();
+      // Set global bool_-_utf8
 
 
 
@@ -421,28 +440,18 @@ class tx_browser_pi1_navi
     foreach((array) $lArrTabs as $key_tab => $arr_tab)
     {
       $str_label  = $lArrTabs[$key_tab]['label'];
-        // #8333, fsander
-        // #9912, dwildt
-//:TODO:
-//  /**
-//   * Converts special chars (like ���, umlauts etc) to ascii equivalents (usually double-bytes, like �=> ae etc.)
-//   *
-//   * @param string    Character set of string
-//   * @param string    Input string to convert
-//   * @return  string    The converted string
-//   */
-//  function specCharsToASCII($charset,$string) {
-//    if ($charset == 'utf-8')  {
-      $str_piVar = t3lib_div::convUmlauts(strip_tags(html_entity_decode($str_label)));
-//var_dump('navi 419', $this->pObj->objZz->char_single_multi_byte($str_label), $str_piVar);
-      //$str_piVar = t3lib_cs::specCharsToASCII(strip_tags(html_entity_decode($str_label)));
-      // #9708, fsander
-      // $str_piVar = strtolower(ereg_replace('[^a-zA-Z0-9]','',$str_piVar));
-      $str_piVar = strtolower(preg_replace('/[^a-zA-Z0-9]*/','',$str_piVar));
+
+        // - 111023, dwildt/uherrmann, #9912: t3lib_div::convUmlauts() is deprecated
+        // $str_piVar = t3lib_div::convUmlauts(strip_tags(html_entity_decode($str_label)));
+        // + 111023, dwildt/uherrmann, #9912
+      $str_piVar = $this->t3lib_cs_obj->specCharsToASCII( $this->bool_utf8, strip_tags( html_entity_decode( $str_label ) ) );
+        // #9708, fsander
+        // $str_piVar = strtolower(ereg_replace('[^a-zA-Z0-9]','',$str_piVar));
+        // - 111023, dwildt, #31200
+        //$str_piVar  = strtolower(preg_replace('/[^a-zA-Z0-9]*/','',$str_piVar));
+        // + 111023, dwildt, #31200
+      $str_piVar  = strtolower(preg_replace('/[^a-zA-Z0-9-_]*/','',$str_piVar));
       $str_class  = $str_piVar;
-      //$str_class  = $str_label;
-      //$str_piVar  = $str_label;
-      // #8333, fsander
 
       if ($lArrTabs[$key_tab]['wrap'] != "")
       {
@@ -766,16 +775,17 @@ class tx_browser_pi1_navi
       $lArrTabs[$key_lArrTab]['wrap'] = $str_wrap;
       // wrap
 
-      // active status
-      // #8333: fsander
-      // #9912, dwildt
-//:TODO:
-      $str_label_cleaned = t3lib_div::convUmlauts(strip_tags(html_entity_decode($str_label)));
-      // #9708 fsander
-      //$str_label_cleaned = strtolower(ereg_replace('[^a-zA-Z0-9]','',$str_label));
-      $str_label_cleaned = strtolower(preg_replace('[^a-zA-Z0-9]','',$str_label));
-      //if($str_label == $this->pObj->piVar_azTab)
-      // #8333: fsander
+        // active status
+        // - 111023, dwildt/uherrmann, #9912: t3lib_div::convUmlauts() is deprecated
+        //$str_label_cleaned = t3lib_div::convUmlauts(strip_tags(html_entity_decode($str_label)));
+        // + 111023, dwildt/uherrmann, #9912
+      $str_label_cleaned = $this->t3lib_cs_obj->specCharsToASCII( $this->bool_utf8, strip_tags( html_entity_decode( $str_label ) ) );
+
+        // #9708 fsander
+        // - 111023, dwildt, #31200
+        //$str_label_cleaned = strtolower(preg_replace('[^a-zA-Z0-9]','',$str_label_cleaned));
+        // + 111023, dwildt, #31200
+      $str_label_cleaned = strtolower(preg_replace('[^a-zA-Z0-9-_]','',$str_label_cleaned));
 
       $lArrTabs[$key_lArrTab]['active'] = false;
       if($str_label_cleaned == $this->pObj->piVar_azTab)
@@ -783,15 +793,14 @@ class tx_browser_pi1_navi
         $lArrTabs[$key_lArrTab]['active'] = true;
         $arr_tsId['active']               = $key_lArrTab;
       }
-      // #10054
-      //var_dump('navi 771', $this->pObj->piVar_azTab, $str_label_cleaned);
+        // #10054
       if((strtolower($this->pObj->piVar_azTab) == $str_label_cleaned) && ($int_key_defaultTab == $key_lArrTab))
       {
         $lArrTabs[$key_lArrTab]['active'] = true;
         $arr_tsId['active']               = $key_lArrTab;
       }
-      // #10054
-      // active status
+        // #10054
+        // active status
 
       // displayWithoutItems
       $str_displayWithoutItems = $conf_tab['displayWithoutItems'];

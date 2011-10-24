@@ -14,11 +14,24 @@
   * #29042: HTML id of the plugin moved from cXX-tx-browser-pi1 to cXX-tx-browser-pi1-view-mode
             where XX is the id in the table tt_content, view is list or single and mode is the id of the mode
   Bugfixes
-  * #31077: AJAX: JSS files are missing in some cases
   * #29444: Category menu: Selected isn't detected
   * #29186: Empty rows are tested with ==null instead of empty( )
   * #29323: method ajaxifyOrderBy is undefined. Affected file: res/js/tx_browser_pi1.js
-    
+
+3.7.3
+  111023
+  New Feature
+  * #31156: Option to display list view instead of single in single view mode
+  Improvement
+  * #9912: Browser is fit for TYPO3 4.6
+  Bugfix
+  * #31200: A-Z-Browser had removed '-' and '_' in URL
+
+3.7.2
+  111020
+  Bugfixes
+  * #31077: AJAX: JSS files are missing in some cases
+
 3.7.1
   110915
   Bugfixes

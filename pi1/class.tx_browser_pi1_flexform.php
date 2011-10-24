@@ -2775,8 +2775,7 @@ class tx_browser_pi1_flexform {
 
     if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
     {
-      t3lib_div :: devlog( '[INFO/FLEXFORM+EXPORT] ' .
-      'csvexport: \'' . $csvexport . '\'', $this->pObj->extKey, 0 );
+      t3lib_div::devlog( '[INFO/FLEXFORM+EXPORT] ' . 'csvexport: \'' . $csvexport . '\'', $this->pObj->extKey, 0 );
     }
 
     switch ( $csvexport )
@@ -2785,7 +2784,7 @@ class tx_browser_pi1_flexform {
         $this->pObj->conf['flexform.'][$sheet . '.'][$field] = true;
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
         {
-          t3lib_div :: devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . '.stdWrap.value is set to true.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . '.stdWrap.value is set to true.', $this->pObj->extKey, 0);
         }
         break;
       case ( 'ts' ) :
@@ -2837,13 +2836,77 @@ class tx_browser_pi1_flexform {
   *
   * @return  void
   * @since 3.7.0
-  * @version 3.7.0
+  * @version 3.7.3
   */
   function sheet_viewSingle()
   {
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
     $modeWiDot = (int) $this->mode . '.';
     $viewWiDot = $this->pObj->view . '.';
+    
+    
+    
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field display_listview
+      // #31156, dwildt, 110806
+
+    $sheet = 'viewSingle';
+    $field = 'display_listview';
+    $display_listview = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+
+    if ( $this->pObj->b_drs_flexform )
+    {
+      t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $field . ': \'' . $display_listview . '\'', $this->pObj->extKey, 0 );
+    }
+
+    switch ( $display_listview )
+    {
+      case ( null ) :
+      case ( '' ) :
+      case ( 'no' ) :
+        $this->pObj->conf['flexform.']['viewSingle.']['display_listview'] = 0;
+        if ( $this->pObj->b_drs_flexform )
+        {
+          t3lib_div :: devlog('[INFO/FLEXFORM] flexform.viewSingle.display_listview is set to ' . 0, $this->pObj->extKey, 0);
+        }
+        break;
+      case ( 'yes' ) :
+        $this->pObj->conf['flexform.']['viewSingle.']['display_listview'] = 1;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div :: devlog('[INFO/FLEXFORM] flexform.viewSingle.display_listview is set to ' . 1, $this->pObj->extKey, 0);
+        }
+        break;
+      case ('ts') :
+          // Do nothing;
+        if ($this->pObj->b_drs_flexform)
+        {
+          $value = $this->pObj->conf['flexform.']['viewSingle.']['display_listview'];
+          t3lib_div :: devlog('[INFO/FLEXFORM] flexform.viewSingle.display_listview isn\'t changed: ' . $value, $this->pObj->extKey, 0);
+        }
+        break;
+      default :
+        $prompt = '
+                  <div style="background:white; font-weight:bold;border:.4em solid orange;">
+                    <h1>
+                      WARNING
+                    </h1>
+                    <p>
+                      Flexform field has an invalid value. The value isn\'t defined.<br />
+                      sheet: ' . $sheet . '<br />
+                      field: ' . $field . '<br />
+                      value: ' . $display_listview . '<br />
+                      ' . __METHOD__ . ' (' . __LINE__ . ')
+                    </p>
+                    <p>
+                      Please save the plugin/flexform of the browser. The bug will be fixed probably.
+                    </p>
+                  </div>';
+        echo $prompt;
+    }
+      // #31156, dwildt, 110806
+      // Field display_listview
 
 
 

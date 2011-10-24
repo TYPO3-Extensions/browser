@@ -28,7 +28,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    tx_browser
- * @version 3.6.2
+ * @version 3.7.3
  */
 
  /**
@@ -172,7 +172,7 @@
  * Prepaire piVars. Allocates values to $this->piVars and $this->pi_isOnlyFields
  *
  * @return  void
- * @version 3.6.1
+ * @version 3.7.3
  */
   function prepairePiVars()
   {
@@ -325,6 +325,24 @@
     }
       // RELOAD the HTML page with another URL, if showUid isn't proper
       // Security showUid
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field display_listview
+      // #31156, dwildt, 110806
+
+    if( $this->pObj->conf['flexform.']['viewSingle.']['display_listview'] )
+    {
+      unset($this->pObj->piVars['showUid']);
+      if ($this->pObj->b_drs_all)
+      {
+        t3lib_div :: devlog('[INFO/ALL] piVar showUid is unset, because flexform.viewSingle.display_listview is true.', $this->pObj->extKey, 0);
+      }
+    }
+      // #31156, dwildt, 110806
+      // Field display_listview
 
 
 
