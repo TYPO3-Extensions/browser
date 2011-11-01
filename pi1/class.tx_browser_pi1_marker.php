@@ -1002,6 +1002,8 @@
           // Replace the left over markers
         $str_content = preg_replace('|###.*?###|i', '', $str_content);
         break;
+      case(''):
+      case(null):
       case('none'):
           // Do nothing;
         break;

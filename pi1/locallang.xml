@@ -103,7 +103,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="label_azbrowser_all">Alle</label>
       <label index="label_azbrowser_others">Andere</label>
       <label index="label_filter_firstitem_default"><![CDATA[Alle Einträge]]></label>
-      <label index="label_first_visit">Klicke n Sie auf einen Buchstaben oder senden Sie eine Suchabfrage.</label>
+      <label index="label_first_visit">Klicken Sie auf einen Buchstaben oder senden Sie eine Suchabfrage.</label>
       <label index="label_from">Von</label>
       <label index="label_fromTo">Von bis</label>
       <label index="label_noImageFile"><![CDATA[Es ist kein Bild verfügbar.]]></label>
