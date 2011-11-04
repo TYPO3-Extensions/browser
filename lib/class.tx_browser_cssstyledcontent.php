@@ -95,7 +95,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     //                              i.e. tx_org_repertoire.documents
 
 
-
       // the result
     $out = '';
 
@@ -170,6 +169,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       foreach($fileArray as $key => $fileName)
       {
         $absPath = t3lib_div::getFileAbsFileName($path.$fileName);
+
           // file is a file
         if (@is_file($absPath)) 
         {
@@ -189,6 +189,21 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           $GLOBALS['TSFE']->register['fileSize']      = $filesData[$key]['filesize'];
           $GLOBALS['TSFE']->register['fileExtension'] = $filesData[$key]['fileextension'];
           $GLOBALS['TSFE']->register['description']   = $filesData[$key]['description'];
+// dwildt, 111104, test
+var_dump(
+							explode
+                                                          (
+                                                            '//**//',
+                                                            $this->cObj->filelink
+                                                            (
+                                                              $fileName,
+                                                              $conf['linkProc.']
+                                                            )
+                                                          )
+);
+// Gibt zwei Elemente zurueck: Link mit Bild/Icon und Link ohne Bild/Icon
+// Beruecksichtigt jumpurl
+// dwildt, 111104, test
           $filesData[$key]['linkedFilenameParts']     = $this->beautifyFileLink
                                                         (
                                                           explode
@@ -214,6 +229,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
         // render the list
       $outputEntries = array();
+
         // LOOP: files
       foreach($filesData as $key => $fileData)
       {
