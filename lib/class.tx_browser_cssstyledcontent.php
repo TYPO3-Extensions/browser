@@ -190,17 +190,20 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           $GLOBALS['TSFE']->register['fileExtension'] = $filesData[$key]['fileextension'];
           $GLOBALS['TSFE']->register['description']   = $filesData[$key]['description'];
 // dwildt, 111104, test
-var_dump(
-							explode
-                                                          (
-                                                            '//**//',
-                                                            $this->cObj->filelink
-                                                            (
-                                                              $fileName,
-                                                              $conf['linkProc.']
-                                                            )
-                                                          )
-);
+          if( 1 == 0 )
+          {
+            var_dump(
+                          explode
+                                                                      (
+                                                                        '//**//',
+                                                                        $this->cObj->filelink
+                                                                        (
+                                                                          $fileName,
+                                                                          $conf['linkProc.']
+                                                                        )
+                                                                      )
+            );
+          }
 // Gibt zwei Elemente zurueck: Link mit Bild/Icon und Link ohne Bild/Icon
 // Beruecksichtigt jumpurl
 // dwildt, 111104, test
