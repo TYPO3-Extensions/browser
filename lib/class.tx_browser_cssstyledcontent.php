@@ -210,7 +210,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 // dwildt, 111106, -
 // dwildt, 111106, +
             // Replace the URL, if there is a tx_browser_pi1 configuration
-          $arr_filelinks = $this->helper_replace_url( $content, $conf, $key, $filename );
+          $arr_filelinks = $this->helper_replace_url( $content, $conf, $key, $fileName );
 
             // Beautify the links
           $filesData[$key]['linkedFilenameParts'] = $this->beautifyFileLink
@@ -303,11 +303,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
    * @param       string          $content:   Content input. Not used, ignore.
    * @param       array           $conf:      TypoScript configuration
    * @param       array           $key:       Position of current document
-   * @param       array           $filename:  Filename of current document
+   * @param       array           $fileName:  Filename of current document
    * @return      string          Replaced URL
    * @access private
    */
-  function helper_replace_url( $content, $conf, $key, $filename )
+  function helper_replace_url( $content, $conf, $key, $fileName )
   {
       // Link the current file with and without an icon (two links)
     $str_filelinks = $this->cObj->filelink( $fileName, $conf['linkProc.'] );
@@ -336,8 +336,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
           // Get the tx_browser_pi1 configuration
         $conf_browser         = $this->cObj->cObjGetSingle($conf['linkProc.']['tx_browser_pi1'], $conf['linkProc.']['tx_browser_pi1.'] );
+        $conf_browser         = rawurldecode( $conf_browser );
+var_dump($conf_browser);
         $conf_browser         = str_replace( '###KEY###',       $key,       $conf_browser );
-        $conf_browser         = str_replace( '###FILENAME###',  $filename,  $conf_browser );
+        $conf_browser         = str_replace( '###FILENAME###',  $fileName,  $conf_browser );
+        $conf_browser         = rawurlencode( $conf_browser );
+var_dump($conf_browser);
         $arr_link_current[1]  = $conf_browser;
           // Get the tx_browser_pi1 configuration
 
