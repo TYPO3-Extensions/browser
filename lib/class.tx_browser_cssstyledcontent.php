@@ -28,7 +28,7 @@
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
 * @subpackage    browser
-* @version 3.6.4
+* @version 3.9.3
 * @since 3.6.4
 */
 
@@ -243,11 +243,23 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $GLOBALS['TSFE']->register['fileSize']      = $fileData['filesize'];
         $GLOBALS['TSFE']->register['fileExtension'] = $fileData['fileextension'];
 
-        $outputEntries[]  = $this->cObj->cObjGetSingle
+// dwildt, 111106, -
+//        $outputEntries[]  = $this->cObj->cObjGetSingle
+//                            (
+//                              $splitConf[$key]['itemRendering'],
+//                              $splitConf[$key]['itemRendering.']
+//                            );
+// dwildt, 111106, -
+// dwildt, 111106, +
+        $str_outputEntry  = $this->cObj->cObjGetSingle
                             (
-                              $splitConf[$key]['itemRendering'], 
+                              $splitConf[$key]['itemRendering'],
                               $splitConf[$key]['itemRendering.']
                             );
+        $str_outputEntry  = str_replace( rawurlencode( '###KEY###' ),       $key,       $str_outputEntry );
+        $str_outputEntry  = str_replace( rawurlencode( '###FILENAME###' ),  $fileName,  $str_outputEntry );
+        $outputEntries[]  = $str_outputEntry;
+// dwildt, 111106, +
       }
         // LOOP: files
         // render the list
@@ -276,7 +288,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $out = $this->cObj->stdWrap($out, $conf['stdWrap.']);
     }
 
-      // Return the result
+        // Return the result
     return $out;
   }
 
@@ -336,8 +348,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
           // Get the tx_browser_pi1 configuration
         $str_url              = $this->cObj->cObjGetSingle($conf['linkProc.']['tx_browser_pi1'], $conf['linkProc.']['tx_browser_pi1.'] );
-        $str_url              = str_replace( rawurlencode( '###KEY###' ),       $key,       $str_url );
-        $str_url              = str_replace( rawurlencode( '###FILENAME###' ),  $fileName,  $str_url );
         $arr_link_current[1]  = $str_url;
           // Get the tx_browser_pi1 configuration
 

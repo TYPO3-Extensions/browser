@@ -28,3 +28,8 @@
   padding-top:1em;
   text-align:right;
 }
+
+.tx-browser-pi1 div.csc-uploads-thumbnail {
+  float:left;
+  padding-right:1em;
+}
