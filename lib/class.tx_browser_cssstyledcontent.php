@@ -217,8 +217,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
             //
           if( isset( $conf['linkProc.']['tx_browser_pi1'] ) )
           {
-            $conf_browser = $this->cObj->cObjGetSingle($conf['linkProc.']['tx_browser_pi1'], $conf['linkProc.']['tx_browser_pi1.'] );
-
               // Replace the link in case of an existing TypoScript configuration
             foreach( $arr_filelinks as $key => $value)
             {
@@ -234,8 +232,10 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
               }
                 // ERROR: prompt. Don't change anything
 
-              $arr_link_current[1] = $conf_browser;
-              $arr_filelinks[$key] = implode( '"', $arr_link_current);
+              $conf_browser         = $this->cObj->cObjGetSingle($conf['linkProc.']['tx_browser_pi1'], $conf['linkProc.']['tx_browser_pi1.'] );
+var_dump( $conf_browser );
+              $arr_link_current[1]  = $conf_browser;
+              $arr_filelinks[$key]  = implode( '"', $arr_link_current);
             }
           }
 
