@@ -209,22 +209,40 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //                                                        );
 // dwildt, 111106, -
 // dwildt, 111106, +
-          $filelink = $this->cObj->filelink( $fileName, $conf['linkProc.'] );
+            // Link the current file with and withou an icon (two links)
+          $str_filelinks = $this->cObj->filelink( $fileName, $conf['linkProc.'] );
+            // Devide the two links from a string to two elements
+          list( $arr_filelinks[0], $arr_filelinks[1] ) = explode( '//**//', $str_filelinks );
           if( 1 == 0 )
           {
-            var_dump( $filelink );
+            var_dump( $arr_filelinks );
           }
-          $filesData[$key]['linkedFilenameParts']     = $this->beautifyFileLink
-                                                        (
-                                                          explode
-                                                          (
-                                                            '//**//',
-                                                            $filelink
-                                                          ),
-                                                          $fileName,
-                                                          $conf['useSpacesInLinkText'],
-                                                          $conf['stripFileExtensionFromLinkText']
-                                                        );
+            // Replace the link in case of an existing TypoScript configuration
+          foreach( $arr_filelinks as $key => $value)
+          {
+            $arr_link_current = explode( '"', $arr_filelinks[$key]);
+              // ERROR: prompt. Don't change anything
+            if( $arr_link_current[0] != '<a href=' )
+            {
+              echo 'TYPO3-Browser ERROR:<br />' .
+                'First element of the current array has to be "<a href=" but it is "'. $arr_link_current[0] . '"<br />' .
+                'TypoScript configuration will be ignored.<br />' .
+                __METHOD__ . ' (' . __LINE__ . ')';
+              continue;
+            }
+              // ERROR: prompt. Don't change anything
+
+            $arr_link_current[1] = 'http://google.com/';
+            $arr_filelinks[$key] = implode( '"', $arr_link_current);
+          }
+            // Beautify the links
+          $filesData[$key]['linkedFilenameParts'] = $this->beautifyFileLink
+                                                    (
+                                                      $arr_filelinks,
+                                                      $fileName,
+                                                      $conf['useSpacesInLinkText'],
+                                                      $conf['stripFileExtensionFromLinkText']
+                                                    );
           if( 1 == 0 )
           {
             var_dump(
