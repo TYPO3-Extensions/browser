@@ -335,14 +335,10 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           // ERROR: prompt. Don't change anything
 
           // Get the tx_browser_pi1 configuration
-        $conf_browser         = $this->cObj->cObjGetSingle($conf['linkProc.']['tx_browser_pi1'], $conf['linkProc.']['tx_browser_pi1.'] );
-        $conf_browser         = rawurldecode( $conf_browser );
-var_dump($conf_browser);
-        $conf_browser         = str_replace( '###KEY###',       $key,       $conf_browser );
-        $conf_browser         = str_replace( '###FILENAME###',  $fileName,  $conf_browser );
-        $conf_browser         = rawurlencode( $conf_browser );
-var_dump($conf_browser);
-        $arr_link_current[1]  = $conf_browser;
+        $str_url              = $this->cObj->cObjGetSingle($conf['linkProc.']['tx_browser_pi1'], $conf['linkProc.']['tx_browser_pi1.'] );
+        $str_url              = str_replace( rawurlencode( '###KEY###' ),       $key,       $str_url );
+        $str_url              = str_replace( rawurlencode( '###FILENAME###' ),  $fileName,  $str_url );
+        $arr_link_current[1]  = $str_url;
           // Get the tx_browser_pi1 configuration
 
           // Update the current rendered link
