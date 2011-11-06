@@ -56,7 +56,6 @@ if(!file_exists(PATH_site . 'typo3/sysext/css_styled_content/pi1/class.tx_csssty
 }
 
 require_once(PATH_site . 'typo3/sysext/css_styled_content/pi1/class.tx_cssstyledcontent_pi1.php');
-require_once(PATH_site . 'typo3conf/ext/browser/lib/class.tx_browser_tslibcobj.php');
 
 class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 {
@@ -192,7 +191,40 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           $GLOBALS['TSFE']->register['fileSize']      = $filesData[$key]['filesize'];
           $GLOBALS['TSFE']->register['fileExtension'] = $filesData[$key]['fileextension'];
           $GLOBALS['TSFE']->register['description']   = $filesData[$key]['description'];
-// dwildt, 111104, test
+// dwildt, 111106, -
+//          $filesData[$key]['linkedFilenameParts']     = $this->beautifyFileLink
+//                                                        (
+//                                                          explode
+//                                                          (
+//                                                            '//**//',
+//                                                            $this->cObj->filelink
+//                                                            (
+//                                                              $fileName,
+//                                                              $conf['linkProc.']
+//                                                            )
+//                                                          ),
+//                                                          $fileName,
+//                                                          $conf['useSpacesInLinkText'],
+//                                                          $conf['stripFileExtensionFromLinkText']
+//                                                        );
+// dwildt, 111106, -
+// dwildt, 111106, +
+          $filelink = $this->cObj->filelink( $fileName, $conf['linkProc.'] );
+          if( 1 == 0 )
+          {
+            var_dump( $filelink );
+          }
+          $filesData[$key]['linkedFilenameParts']     = $this->beautifyFileLink
+                                                        (
+                                                          explode
+                                                          (
+                                                            '//**//',
+                                                            $filelink
+                                                          ),
+                                                          $fileName,
+                                                          $conf['useSpacesInLinkText'],
+                                                          $conf['stripFileExtensionFromLinkText']
+                                                        );
           if( 1 == 0 )
           {
             var_dump(
@@ -209,22 +241,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           }
 // Gibt zwei Elemente zurueck: Link mit Bild/Icon und Link ohne Bild/Icon
 // Beruecksichtigt jumpurl
-// dwildt, 111104, test
-          $filesData[$key]['linkedFilenameParts']     = $this->beautifyFileLink
-                                                        (
-                                                          explode
-                                                          (
-                                                            '//**//',
-                                                            $this->cObj->filelink
-                                                            (
-                                                              $fileName,
-                                                              $conf['linkProc.']
-                                                            )
-                                                          ),
-                                                          $fileName,
-                                                          $conf['useSpacesInLinkText'],
-                                                          $conf['stripFileExtensionFromLinkText']
-                                                        );
+// dwildt, 111106, +
         }
           // file is a file
       }
