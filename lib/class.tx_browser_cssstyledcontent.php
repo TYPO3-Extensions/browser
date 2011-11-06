@@ -56,6 +56,7 @@ if(!file_exists(PATH_site . 'typo3/sysext/css_styled_content/pi1/class.tx_csssty
 }
 
 require_once(PATH_site . 'typo3/sysext/css_styled_content/pi1/class.tx_cssstyledcontent_pi1.php');
+require_once(PATH_site . 'typo3/typo3conf/ext/browser/lib/class.tx_browser_tslibcobj.php');
 
 class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 {
