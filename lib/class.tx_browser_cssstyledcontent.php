@@ -209,35 +209,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //                                                        );
 // dwildt, 111106, -
 // dwildt, 111106, +
-            // Link the current file with and without an icon (two links)
-          $str_filelinks = $this->cObj->filelink( $fileName, $conf['linkProc.'] );
-            // Devide the two links from a string to two elements
-          list( $arr_filelinks[0], $arr_filelinks[1] ) = explode( '//**//', $str_filelinks );
-
-            //
-          if( isset( $conf['linkProc.']['tx_browser_pi1'] ) )
-          {
-              // Replace the link in case of an existing TypoScript configuration
-            foreach( $arr_filelinks as $key => $value)
-            {
-              $arr_link_current = explode( '"', $arr_filelinks[$key]);
-                // ERROR: prompt. Don't change anything
-              if( $arr_link_current[0] != '<a href=' )
-              {
-                echo 'TYPO3-Browser ERROR:<br />' .
-                  'First element of the current array has to be "<a href=" but it is "'. $arr_link_current[0] . '"<br />' .
-                  'TypoScript configuration will be ignored.<br />' .
-                  __METHOD__ . ' (' . __LINE__ . ')';
-                continue;
-              }
-                // ERROR: prompt. Don't change anything
-
-              $conf_browser         = $this->cObj->cObjGetSingle($conf['linkProc.']['tx_browser_pi1'], $conf['linkProc.']['tx_browser_pi1.'] );
-var_dump( $conf_browser );
-              $arr_link_current[1]  = $conf_browser;
-              $arr_filelinks[$key]  = implode( '"', $arr_link_current);
-            }
-          }
+            // Replace the URL, if there is a tx_browser_pi1 configuration
+          $arr_filelinks = $this->helper_replace_url( $content, $conf, $key, $filename );
 
             // Beautify the links
           $filesData[$key]['linkedFilenameParts'] = $this->beautifyFileLink
@@ -247,10 +220,6 @@ var_dump( $conf_browser );
                                                       $conf['useSpacesInLinkText'],
                                                       $conf['stripFileExtensionFromLinkText']
                                                     );
-          if( 1 == 0 )
-          {
-            var_dump( $arr_filelinks );
-          }
 // dwildt, 111106, +
         }
           // file is a file
@@ -312,6 +281,84 @@ var_dump( $conf_browser );
   }
 
 
+
+
+
+
+
+
+
+
+  /***********************************************
+   *
+   * Helper
+   *
+   **********************************************/
+
+
+
+  /**
+   * helper_replace_url( ):  This method replaces the url in an HTML link.
+   *
+   * @param       string          $content:   Content input. Not used, ignore.
+   * @param       array           $conf:      TypoScript configuration
+   * @param       array           $key:       Position of current document
+   * @param       array           $filename:  Filename of current document
+   * @return      string          Replaced URL
+   * @access private
+   */
+  function helper_replace_url( $content, $conf, $key, $filename )
+  {
+      // Link the current file with and without an icon (two links)
+    $str_filelinks = $this->cObj->filelink( $fileName, $conf['linkProc.'] );
+      // Devide the two rendered links from a string to two elements
+    list( $arr_filelinks[0], $arr_filelinks[1] ) = explode( '//**//', $str_filelinks );
+
+      // Replace the URL: there is a tx_browser_pi1 configuration
+    if( isset( $conf['linkProc.']['tx_browser_pi1'] ) )
+    {
+        // Loop the links (with and without icon)
+      foreach( $arr_filelinks as $key_filelinks => $value_filelinks)
+      {
+          // Current link
+        $arr_link_current = explode( '"', $arr_filelinks[$key_filelinks]);
+
+          // ERROR: prompt. Don't change anything
+        if( $arr_link_current[0] != '<a href=' )
+        {
+          echo 'TYPO3-Browser ERROR:<br />' .
+            'First element of the current array has to be "<a href=" but it is "'. $arr_link_current[0] . '"<br />' .
+            'TypoScript configuration will be ignored.<br />' .
+            __METHOD__ . ' (' . __LINE__ . ')';
+          continue;
+        }
+          // ERROR: prompt. Don't change anything
+
+          // Get the tx_browser_pi1 configuration
+        $conf_browser         = $this->cObj->cObjGetSingle($conf['linkProc.']['tx_browser_pi1'], $conf['linkProc.']['tx_browser_pi1.'] );
+        $conf_browser         = str_replace( '###KEY###',       $key,       $conf_browser );
+        $conf_browser         = str_replace( '###FILENAME###',  $filename,  $conf_browser );
+        $arr_link_current[1]  = $conf_browser;
+          // Get the tx_browser_pi1 configuration
+
+          // Update the current rendered link
+        $arr_filelinks[$key_filelinks]  = implode( '"', $arr_link_current);
+      }
+        // Loop the links (with and without icon)
+    }
+      // Replace the URL: there is a tx_browser_pi1 configuration
+
+    return ( $arr_filelinks );
+  }
+
+
+
+
+
+
+
+
+  
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/lib/class.tx_browser_typoscript.php'])
