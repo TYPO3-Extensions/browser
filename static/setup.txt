@@ -1,4 +1,7 @@
 includeLibs {
+    // From version 3.9.3
+  tx_browser_userfunc = EXT:browser/lib/class.tx_browser_userfunc.php
+    // Up to version 3.9.2
   tx_browser_typoscript = EXT:browser/lib/class.tx_browser_typoscript.php
   tx_browser_cssstyledcontent = EXT:browser/lib/class.tx_browser_cssstyledcontent.php
 }

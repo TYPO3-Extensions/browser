@@ -1,4 +1,4 @@
-4.0.0
+3.9.3
   111018
   New Features
   * #29370: CSV export
@@ -9,10 +9,12 @@
               * ###TH_COUNTER###, ###TH_FIRST_LAST###, ###TH_EVEN_OR_ODD###
               * ###TR_COUNTER###, ###TR_FIRST_LAST###, ###TR_EVEN_OR_ODD###
             * See: displayList.templateMarker.oddClass
+  * #00000: New tutorial "Browser User Defined Functions" (browser_tut_userdefined_en)
   Improvements
   * #29198: Simplifying stdWrap of SQL query parts
   * #29042: HTML id of the plugin moved from cXX-tx-browser-pi1 to cXX-tx-browser-pi1-view-mode
             where XX is the id in the table tt_content, view is list or single and mode is the id of the mode
+  * #00000: userfuncs became one PHP class
   Bugfixes
   * #29444: Category menu: Selected isn't detected
   * #29186: Empty rows are tested with ==null instead of empty( )
