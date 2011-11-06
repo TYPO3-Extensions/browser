@@ -69,10 +69,25 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
   /**
-   * render_uploads():  Extended render_uploads method
-   *                    It enables to use and configure tt_content.uploads.20
-   *                    for records of every database. You need the browser - he TYPO3 frontend engine 
-   *                    Rendering the "Filelinks" type content element, called from TypoScript (tt_content.uploads.20)
+   * render_uploads():  This method extends the origin render_uploads method (version TYPO3 4.5.0).
+   *                    The method interprets the TypoScript of tt_content.uploads.20 in principle.
+   *                    The origin method is limited for records from tt_content only.
+   *                    This method extends it for using records of every table.
+   * 
+   *                    If you like to use the method, you hav to configure this TypoScript snippet:
+   *
+   *                    tt_content.uploads.20 {
+   *                      fields {
+   *                        layout  (stdWrap) ->  0: link only, 1: with application icon, 2: with based icon
+   *                                              i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSLAYOUT###
+   *                        files   (stdWrap) ->  name of the files
+   *                                              i.e: ###TX_ORG_REPERTOIRE.DOCUMENTS###
+   *                        caption (stdWrap) ->  caption of the files, devided by LF
+   *                                              i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSCAPTION###
+   *                      }
+   *                      tableField  (stdWrap) ->  current table.field.
+   *                                                i.e. tx_org_repertoire.documents
+   *                    }
    *
    * @param       string          Content input. Not used, ignore.
    * @param       array           TypoScript configuration
@@ -81,19 +96,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
    */
   function render_uploads($content,$conf) 
   {
-    // You have to extend your TypoScript tt_content.uploads.20:
-    //
-    //    fields {
-    //      layout  (stdWrap) ->  0: link only, 1: with application icon, 2: with based icon
-    //                            i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSLAYOUT###
-    //      files   (stdWrap) ->  name of the files
-    //                            i.e: ###TX_ORG_REPERTOIRE.DOCUMENTS###
-    //      caption (stdWrap) ->  caption of the files, devided by LF
-    //                            i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSCAPTION###
-    //    }
-    //    tableField  (stdWrap) ->  current table.field. 
-    //                              i.e. tx_org_repertoire.documents
-
 
       // the result
     $out = '';

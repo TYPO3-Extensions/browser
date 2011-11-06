@@ -14,7 +14,6 @@
   * #29198: Simplifying stdWrap of SQL query parts
   * #29042: HTML id of the plugin moved from cXX-tx-browser-pi1 to cXX-tx-browser-pi1-view-mode
             where XX is the id in the table tt_content, view is list or single and mode is the id of the mode
-  * #00000: userfuncs became one PHP class
   Bugfixes
   * #29444: Category menu: Selected isn't detected
   * #29186: Empty rows are tested with ==null instead of empty( )

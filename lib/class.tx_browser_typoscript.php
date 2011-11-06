@@ -23,12 +23,12 @@
 ***************************************************************/
 
 /**
-* Class provides methods for the TCA.
+* Class provides userfuncs based on tslib_pibase
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
 * @subpackage    browser
-* @version 3.6.4
+* @version 3.9.3
 * @since 3.6.1
 */
 
