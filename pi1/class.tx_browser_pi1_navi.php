@@ -2295,7 +2295,7 @@ class tx_browser_pi1_navi
 
     $this->pObj->objSession->sessionIsEnabled( );
       // Get the name of the session data space
-    $str_data_space = $this->getNameOfDataSpace( );
+    $str_data_space = $this->pObj->objSession->getNameOfDataSpace( );
       // Set status of the session management
 
 
