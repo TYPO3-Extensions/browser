@@ -142,6 +142,7 @@ class tx_browser_pi1_statistics
     {
       //var_dump(__METHOD__. ' (' . __LINE__ . '): ', $this->pObj->piVars);
       var_dump(__METHOD__. ' (' . __LINE__ . '): ', $this->pObj->piVars, $this->pObj->localTable, $this->pObj->arrLocalTable );
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ', $this->pObj->conf['flexform.']['sDEF.'] );
       die( );
     }
       // RETURN: Boolean is set before
