@@ -77,8 +77,8 @@ class tx_browser_pi1_statistics
     //
     // Variables set by this class
 
-    // [Boolean] True, if session management is enabled. Will set while runtime
-  //var $bool_session_enabled = null;
+    // [Boolean] True, if statistics module is enabled. Will set while runtime
+  var $bool_statistics_enabled = null;
     // Variables set by this class
 
 
@@ -123,6 +123,66 @@ class tx_browser_pi1_statistics
 
 
   /**
+ * statisticsIsEnabled( ):  Sets the global $bool_statistics_enabled.
+ *                          The boolean is controlled by the flexform / TypoScript.
+ *                          The User can enable and disable the statistics module.
+ *
+ * @return	void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  public function statisticsIsEnabled( )
+  {
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN: Boolean is set before
+
+    if( ! ( $this->bool_statistics_enabled === null ) )
+    {
+      return;
+    }
+      // RETURN: Boolean is set before
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Enable statistics module
+
+    $coa_name = $this->pObj->conf['flexform.']['sDEF.']['statistics.']['enabled'];
+    $coa_conf = $this->pObj->conf['flexform.']['sDEF.']['statistics.']['enabled.'];
+    $this->bool_statistics_enabled = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);;
+      // Enable statistics module
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // User disabled the statistics module
+
+    if( ! $this->bool_statistics_enabled )
+    {
+      if ( $this->pObj->b_drs_statistics )
+      {
+        $value = $this->bool_statistics_enabled;
+        t3lib_div::devlog( '[INFO/STATISTICS] flexform.sDEF.statistics.enabled is \'' . $value . '\' '.
+          'Statistics data won\'t collect.', $this->pObj->extKey, 0 );
+      }
+    }
+      // User disabled the statistics module
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
+  /**
  * countViewSingleRecord( ):  Sets the global $bool_session_enabled.
  *                            The boolean is controlled by the flexform / TypoScript.
  *                            The User can enable and disable session management.
@@ -133,6 +193,31 @@ class tx_browser_pi1_statistics
  */
   public function countViewSingleRecord( )
   {
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Set status of the statistics module
+
+    $this->statisticsIsEnabled( );
+      // Set status of the statistics module
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN: statistics module is disabled
+
+    if( ! $this->bool_statistics_enabled )
+    {
+      if ($this->pObj->b_drs_statistics)
+      {
+        t3lib_div::devlog('[INFO/STATISTICS] single view won\'t counted for statistics.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[HELP/STATISTICS] Enable flexform.sDEF.statistics.enabled.', $this->pObj->extKey, 1);
+      }
+      return;
+    }
+      // RETURN: statistics module is disabled
+
+
+
       ///////////////////////////////////////////////////////////////////////////////
       //
       // RETURN: Boolean is set before
@@ -159,201 +244,11 @@ class tx_browser_pi1_statistics
 
 
 
-
-  /**
- * getNameOfDataSpace( ): Get the name of the session data space.
- *                        The name is user, if a frontend user is logged in.
- *                        The name is ses, if any frontend user isn't logged in.
- *
- * @return	string		user || ses
- * @version 3.9.3
- * @since 3.9.3
- */
-  public function getNameOfDataSpace( )
-  {
-    switch( $GLOBALS['TSFE']->loginUser )
-    {
-      case( true ):
-        return 'user';
-      default:
-        return 'ses';
-    }
-  }
-
-
-
-
-
-
-
-
   /***********************************************
   *
-  * Cache
+  * Hits
   *
   **********************************************/
-
-
-
-
-
-
-
-
-
-  /**
- * cacheOfListView(): The method caches list view data in the session cache.
- *                    The result will stored in the global $this->pObj->uids_of_all_rows too.
- *                    If session managment is disabled, the method will call the list view method.
- *                    The result will stored in the global $this->pObj->uids_of_all_rows too but
- *                    without any caching.
- *
- * @return	void
- * @version 3.9.3
- * @since 3.9.3
- */
-  public function cacheOfListView( )
-  {
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Set status of the session management
-
-    $this->sessionIsEnabled( );
-      // Set status of the session management
-
-
-      // Uid of the current plugin
-    $tt_content_uid = $this->pObj->cObj->data['uid'];
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN: no session, get data from the list view. Call it!
-
-    if( ! $this->bool_session_enabled )
-    {
-      if ($this->pObj->b_drs_perform || $this->pObj->b_drs_session)
-      {
-        t3lib_div::devlog('[WARN/PERFORMANCE+SESSION] list view is called. Uids of all rows are needed. '.
-          'Be aware of less performance!', $this->pObj->extKey, 2);
-        t3lib_div::devlog('[HELP/PERFORMANCE+SESSION] Enable session for better performance!', $this->pObj->extKey, 1);
-      }
-        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows']
-      $this->pObj->objNav->recordbrowser_callListView();
-// dwildt, 111107
-      return;
-    }
-      // RETURN: no session, get data from the list view. Call it!
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Development Reporting System
-
-    if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
-    {
-      t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session: uid of all rows should delivered by the session data '.
-        '(best performance).', $this->pObj->extKey, 0);
-    }
-      // DRS - Development Reporting System
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Get the name of the session data space
-
-    $str_data_space = $this->getNameOfDataSpace( );
-      // Get the name of the session data space
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Get tx_browser-pi1 session data
-
-    $arr_browser_session = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
-      // Get tx_browser-pi1 session data
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Development Reporting System
-
-    if( empty( $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] ) )
-    {
-      if ($this->pObj->b_drs_warn)
-      {
-        t3lib_div::devlog('[INFO/WARN] Session array [' . $str_data_space . ']' .
-          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][mode-' . $this->mode . '][uids_of_all_rows] is empty!',
-          $this->pObj->extKey, 2);
-      }
-    }
-    if( ! empty( $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] ) )
-    {
-      if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
-      {
-        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session array [' . $str_data_space . ']' .
-          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
-          '#' . count($arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
-      }
-    }
-      // DRS - Development Reporting System
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Session data is not set: set tx_browser_pi1['uids_of_all_rows'] !
-
-    if( ! isset( $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] ) )
-    {
-        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows']
-      $this->pObj->objNavi->recordbrowser_callListView( );
-        // Set the session array uids_of_all_rows
-      $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'];
-        // Write session data tx_browser_pi1
-      $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_browser_session);
-        // DRS - Development Reporting System
-      if ( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
-      {
-        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session array [' . $str_data_space . ']' .
-          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
-          '#' . count($this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
-      }
-// dwildt, 111107
-//          // Get uids of all records
-//        $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'];
-    }
-      // Session data is not set: set tx_browser_pi1['uids_of_all_rows'] !
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Set the global $this->pObj->uids_of_all_rows
-
-    $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'];
-    return;
-      // Set the global $this->pObj->uids_of_all_rows
-  }
-
-
-
-
-
-
-
-
-  /***********************************************
-  *
-  * Statistics
-  *
-  **********************************************/
-
 
 
 

@@ -1087,6 +1087,7 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->b_drs_seo          = false;
     $this->b_drs_session      = false;
     $this->b_drs_socialmedia  = false;
+    $this->b_drs_statistics   = false;
     $this->b_drs_sql          = false;
     $this->b_drs_tca          = false;
     $this->b_drs_templating   = false;
@@ -1124,6 +1125,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_socialmedia  = true;
       $this->b_drs_sql          = true;
       $this->b_drs_session      = true;
+      $this->b_drs_statistics   = true;
       $this->b_drs_tca          = true;
       $this->b_drs_templating   = true;
       $this->b_drs_tsUpdate     = true;
