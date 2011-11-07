@@ -1239,7 +1239,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_error      = true;
       $this->b_drs_warn       = true;
       $this->b_drs_info       = true;
-      $this->b_drs_session      = true;
+      $this->b_drs_session    = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
     if ($this->arr_extConf['drs_mode'] == 'Social media')
@@ -1366,6 +1366,10 @@ class tx_browser_pi1 extends tslib_pibase {
     require_once('class.tx_browser_pi1_seo.php');
     $this->objSeo = new tx_browser_pi1_seo($this);
 
+      // Class with session methods for the session management
+    require_once('class.tx_browser_pi1_session.php');
+    $this->objSession = new tx_browser_pi1_session($this);
+
       // Class with methods for social media
     require_once('class.tx_browser_pi1_socialmedia.php');
     $this->objSocialmedia = new tx_browser_pi1_socialmedia($this);
@@ -1460,6 +1464,23 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objNavi->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
       // [String] TypoScript path to the current view. I.e. views.single.1
     $this->objNavi->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_socialmedia.php
+
+      // [Array] The current TypoScript configuration array
+    $this->objSession->conf      = $this->conf;
+      // [Integer] The current mode (from modeselector)
+    $this->objSession->mode      = $this->piVar_mode;
+      // [String] 'list' or 'single': The current view
+    $this->objSession->view      = $this->view;
+      // [Array] The TypoScript configuration array of the current view
+    $this->objSession->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+      // [String] TypoScript path to the current view. I.e. views.single.1
+    $this->objSession->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
 
 
 

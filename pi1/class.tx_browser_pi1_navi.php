@@ -1801,128 +1801,12 @@ class tx_browser_pi1_navi
 
 
 
-      /////////////////////////////////////
-      //
-      // Session isn't enabled
-
-    $bool_session = true;
-    if(!$this->pObj->conf['advanced.']['session_manager.']['session.']['enabled'])
-    {
-      $bool_session = false;
-      if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
-      {
-        $value = $this->pObj->conf['advanced.']['session_manager.']['session.']['enabled'];
-        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] advanced.session_manager.session.enabled is \'' . $value . '\' '.
-          'Record browser won\'t get its data from session (less performance).', $this->pObj->extKey, 0);
-      }
-    }
-      // Session isn't enabled
-
-
-
       //////////////////////////////////////////////////////////////////////////
       //
-      // No session: get data from the list view. Call it!
+      // Set the global $this->pObj->uids_of_all_rows
 
-    if(!$bool_session)
-    {
-      if ($this->pObj->b_drs_perform)
-      {
-        t3lib_div::devlog('[WARN/PERFORMANCE] list view is called. Uids of all rows are needed. '.
-          'Be aware of less performance!', $this->pObj->extKey, 2);
-        t3lib_div::devlog('[HELP/PERFORMANCE] Enable session for better performance!', $this->pObj->extKey, 1);
-      }
-        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']
-      $this->recordbrowser_callListView();
-    }
-      // No session: get data from the list view. Call it!
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Session: get the tx_browser_pi1 session array 
-
-    if($bool_session)
-    {
-        // DRS - Development Reporting System
-      if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
-      {
-        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session: uid of all rows should delivered by the session data '.
-          '(best performance).', $this->pObj->extKey, 0);
-      }
-        // DRS - Development Reporting System
-
-        // Set the data space
-      if($GLOBALS['TSFE']->loginUser)
-      {
-        $str_data_space = 'user';
-      }
-      if(!$GLOBALS['TSFE']->loginUser)
-      {
-        $str_data_space = 'ses';
-      }
-        // Set the data space
-      $arr_browser_session = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
-      if(empty($arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']))
-      {
-        if ($this->pObj->b_drs_warn)
-        {
-          t3lib_div::devlog('[INFO/WARN] Session array [' . $str_data_space . ']' .
-            '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][mode-' . $this->mode . '][uids_of_all_rows] is empty!',
-            $this->pObj->extKey, 2);
-        }
-      }
-      if(!empty($arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']))
-      {
-        if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
-        {
-          t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session array [' . $str_data_space . ']' .
-            '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
-            '#' . count($arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
-        }
-      }
-    }
-      // Session: get the tx_browser_pi1 session array 
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Session: tx_browser_pi1['uids_of_all_rows'] isn't set
-
-    if($bool_session && !isset($arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']))
-    {
-        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']
-      $this->recordbrowser_callListView();
-        // Set the session array uids_of_all_rows
-      $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'];
-        // Write session data tx_browser_pi1
-      $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_browser_session);
-        // DRS - Development Reporting System
-      if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
-      {
-        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session array [' . $str_data_space . ']' .
-          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
-          '#' . count($this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
-      }
-        // Get uids of all records
-      $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'];
-    }
-      // Session: tx_browser_pi1['uids_of_all_rows'] isn't set
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Session: set $this->pObj->uids_of_all_rows
-
-    if($bool_session)
-    {
-        // Get uids of all records
-      $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'];
-    }
-      // Session: set $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']
+    $this->pObj->objSession->cacheOfListView( );
+      // Set the global $this->pObj->uids_of_all_rows
 
 
 
@@ -2371,7 +2255,7 @@ class tx_browser_pi1_navi
 
  /**
   * recordbrowser_set_session_data: Set session data for the record browser.
-  *                                 * We need the record browser in the sngle view.
+  *                                 * We need the record browser in the single view.
   *                                 * This method must be called, before the page browser 
   *                                   changes the rows array (before limiting).
   *                                 * Feature: #27041
@@ -2389,13 +2273,13 @@ class tx_browser_pi1_navi
 
 
 
-      /////////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
       //
       // RETURN record browser isn't enabled
 
-    if(!($this->pObj->conf['navigation.']['record_browser'] == 1))
+    if( ! ( $this->pObj->conf['navigation.']['record_browser'] == 1 ) )
     {
-      if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
+      if ( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
       {
         $value = $this->pObj->conf['navigation.']['record_browser'];
         t3lib_div::devlog('[INFO/SESSION+TEMPLATING] navigation.record_browser is \'' . $value . '\' '.
@@ -2407,26 +2291,16 @@ class tx_browser_pi1_navi
 
 
 
-      /////////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
       //
-      // Session isn't enabled
+      // Set status of the session management
 
-    $bool_session = true;
-    if(!$this->pObj->conf['advanced.']['session_manager.']['session.']['enabled'])
-    {
-      $bool_session = false;
-      if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
-      {
-        $value = $this->pObj->conf['advanced.']['session_manager.']['session.']['enabled'];
-        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] advanced.session_manager.session.enabled is \'' . $value . '\' '.
-          'Record browser won\'t get its data from session (less performance).', $this->pObj->extKey, 0);
-      }
-    }
-      // Session isn't enabled
+    $this->pObj->objSession->sessionIsEnabled( );
+      // Set status of the session management
 
 
 
-      /////////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
       //
       // RETURN rows are empty
 
@@ -2448,21 +2322,21 @@ class tx_browser_pi1_navi
 
 
 
-      /////////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
       //
       // Get table.field for uid of the local table
 
     $key_for_uid = $this->pObj->arrLocalTable['uid'];
     
       // RETURN uid table.field isn't any key
-    $key = key($rows);
-    if(!isset($rows[$key][$key_for_uid]))
+    $key = key( $rows );
+    if( ! isset( $rows[$key][$key_for_uid] ) )
     {
       $arr_return['error']['status'] = true;
       $arr_return['error']['header'] = '<h1 style="color:red">Error Record Browser</h1>';
       $arr_return['error']['prompt'] = '<p style="color:red">Key is missing in $rows. Key is ' . $key_for_uid . '</p>';
       $arr_return['error']['prompt'] = $arr_return['error']['prompt'] . '<p>' . __METHOD__ . ' (' . __LINE__ . ')</p>';
-      if ($this->pObj->b_drs_error)
+      if ( $this->pObj->b_drs_error )
       {
         t3lib_div::devlog('[INFO/ERROR] table.field for uid of the local table is not a key.' . $this->mode . '][uids_of_all_rows] will be empty.',  $this->pObj->extKey, 0);
       }
@@ -2473,12 +2347,12 @@ class tx_browser_pi1_navi
 
 
 
-      /////////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
       //
       // LOOP rows: set the array with uids
 
-    $arr_uid = array();
-    foreach((array) $rows as $row => $elements)
+    $arr_uid = array( );
+    foreach( (array) $rows as $row => $elements )
     {
       $arr_uid[] = $elements[$key_for_uid];
     }
@@ -2487,18 +2361,19 @@ class tx_browser_pi1_navi
 
 
 
-      /////////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
       //
       // No session: set global array
 
-    $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = array();
-    if(!$bool_session)
+    $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = array( );
+    if( ! $this->pObj->objSession->bool_session_enabled )
     {
       $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = $arr_uid;
-      if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
+      if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
       {
-        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] No session (less performance): global array uids_of_all_rows is set with ' .
-          '#' . count($arr_uid) . ' uids.',  $this->pObj->extKey, 0);
+        t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] No session (less performance): ' .
+          'global array uids_of_all_rows is set with ' .
+          '#' . count( $arr_uid ) . ' uids.',  $this->pObj->extKey, 0 );
       }
       return false;
     }
@@ -2506,28 +2381,26 @@ class tx_browser_pi1_navi
 
 
 
-      /////////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Get the name of the session data space
+
+    $str_data_space = $this->pObj->objSession->getNameOfDataSpace( );
+      // Get the name of the session data space
+
+
+
+      //////////////////////////////////////////////////////////////////////////
       //
       // Set the session array
 
-      // Get the data space 
-    if($GLOBALS['TSFE']->loginUser)
-    {
-      $str_data_space = 'user';
-    }
-    if(!$GLOBALS['TSFE']->loginUser)
-    {
-      $str_data_space = 'ses';
-    }
-      // Get the data space 
-
       // Get the tx_browser_pi1 session array 
-    $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
+    $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey( $str_data_space, $this->pObj->prefixId );
       // Overwrite the array with the uids of all rows 
     $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = $arr_uid;
       // Set the tx_browser_pi1 session array
-    $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_browser_session);
-    if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
+    $GLOBALS['TSFE']->fe_user->setKey( $str_data_space, $this->pObj->prefixId, $arr_browser_session );
+    if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
     {
       t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . '][' . $this->pObj->prefixId . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
         '#' . count($arr_uid) . ' uids.',  $this->pObj->extKey, 0);

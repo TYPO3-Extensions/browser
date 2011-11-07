@@ -24,13 +24,13 @@
 ***************************************************************/
 
 /**
-* The class tx_browser_pi1_filter bundles methods for rendering and processing calender based content, filters and category menues
+* The class tx_browser_pi1_cal bundles methods for rendering and processing calender based content, filters and category menues
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
 * @subpackage    tx_browser
 *
-* @version 4.0.0
+* @version 3.9.3
 * @since 3.6.0
 */
 
