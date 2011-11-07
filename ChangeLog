@@ -1,6 +1,7 @@
 3.9.3
   111018
   New Features
+  * #31230, 31229: Statistics module
   * #29370: CSV export
   * #29042: Calendar (first part and inofficial. Calendar should be official in version 4.2.0 in 2012)
   * #28562: Integration jQuery UI. Here: oddClass.

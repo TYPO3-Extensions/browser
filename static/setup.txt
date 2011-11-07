@@ -1636,6 +1636,50 @@ plugin.tx_browser_pi1 {
   }
 
   flexform {
+    sDef {
+      statistics {
+          // Enable the statistics module
+        enabled = TEXT
+        enabled {
+            // [Boolean] The statistics module is disabled by default
+          value = 0
+        }
+        adjustment {
+          fields {
+              // Name of the field for counting downloads (with respect for timeout)
+            downloads = TEXT
+            downloads {
+                // [String] Name of the field in the SQL table
+              value = statistics_downloads
+            }
+              // Name of the field for counting hits (without any respect for timeout)
+            hits = TEXT
+            hits {
+                // [String] Name of the field in the SQL table
+              value = statistics_hits
+            }
+              // Name of the field for counting visits (hits with respect for timeout)
+            visits = TEXT
+            visits {
+                // [String] Name of the field in the SQL table
+              value = statistics_visits
+            }
+          }
+            // Period between a current and a new download and visit in seconds
+          timeout = TEXT
+          timeout {
+              // [Integer] Period in seconds. Default is 1800 (60 sec x 30 min = 1.800 sec)
+            value = 1800
+          }
+            // List of IPs, which won't counted for downloads, hits and visits
+          dontAccountIPsOfList = TEXT
+          dontAccountIPsOfList {
+              [String/csv] Comma seperated list of IPs, which won't counted
+            value = 127.0.0.1, 127.0.0.2
+          }
+        }
+      }
+    }
     socialmedia {
       socialbookmarks {
         wraps {
