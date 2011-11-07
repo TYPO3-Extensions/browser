@@ -229,6 +229,10 @@ class tx_browser_pi1_session
       // Set status of the session management
 
 
+      // Uid of the current plugin
+    $tt_content_uid = $this->pObj->cObj->data['uid'];
+
+
 
       //////////////////////////////////////////////////////////////////////////
       //
