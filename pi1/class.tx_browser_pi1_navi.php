@@ -1865,7 +1865,7 @@ class tx_browser_pi1_navi
   * @version  3.7.0
   * @since    3.7.0
   */
-  private function recordbrowser_callListView()
+  public function recordbrowser_callListView()
   {
       //////////////////////////////////////////////////////////////////////
       //
