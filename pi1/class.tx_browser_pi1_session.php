@@ -315,7 +315,7 @@ class tx_browser_pi1_session
     if( ! isset( $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] ) )
     {
         // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']
-      $this->recordbrowser_callListView( );
+      $this->pObj->objNavi->recordbrowser_callListView( );
         // Set the session array uids_of_all_rows
       $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'];
         // Write session data tx_browser_pi1
