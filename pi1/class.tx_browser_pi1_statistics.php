@@ -38,6 +38,20 @@
  * [CLASS/FUNCTION INDEX of SCRIPT]
  *
  *
+ *
+ *   56: class tx_browser_pi1_statistics
+ *   98:     function __construct($pObj)
+ *
+ *              SECTION: Initial
+ *  134:     public function countViewSingleRecord( )
+ *  170:     public function getNameOfDataSpace( )
+ *
+ *              SECTION: Cache
+ *  213:     public function cacheOfListView( )
+ *
+ * TOTAL FUNCTIONS: 4
+ * (This index is automatically created/updated by the extension "extdeveval")
+ *
  */
 class tx_browser_pi1_statistics
 {
@@ -78,8 +92,8 @@ class tx_browser_pi1_statistics
   /**
  * Constructor. The method initiate the parent object
  *
- * @param object    The parent object
- * @return  void
+ * @param	object		The parent object
+ * @return	void
  */
   function __construct($pObj)
   {
@@ -113,7 +127,7 @@ class tx_browser_pi1_statistics
  *                            The boolean is controlled by the flexform / TypoScript.
  *                            The User can enable and disable session management.
  *
- * @return  void
+ * @return	void
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -149,7 +163,7 @@ class tx_browser_pi1_statistics
  *                        The name is user, if a frontend user is logged in.
  *                        The name is ses, if any frontend user isn't logged in.
  *
- * @return  string    user || ses
+ * @return	string		user || ses
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -192,7 +206,7 @@ class tx_browser_pi1_statistics
  *                    The result will stored in the global $this->pObj->uids_of_all_rows too but
  *                    without any caching.
  *
- * @return  void
+ * @return	void
  * @version 3.9.3
  * @since 3.9.3
  */
