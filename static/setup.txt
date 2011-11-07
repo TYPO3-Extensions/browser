@@ -1636,7 +1636,7 @@ plugin.tx_browser_pi1 {
   }
 
   flexform {
-    sDef {
+    sDEF {
       statistics {
           // Enable the statistics module
         enabled = TEXT
