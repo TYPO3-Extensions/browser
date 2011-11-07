@@ -78,7 +78,17 @@ class tx_browser_pi1_statistics
     // Variables set by this class
 
     // [Boolean] True, if statistics module is enabled. Will set while runtime
-  var $bool_statistics_enabled = null;
+  var $bool_statistics_enabled  = null;
+    // [String/csv] Comma seperated list of IPs, which won't counted
+  var $dontAccountIPsOfCsvList  = null;
+    // [Integer] Period between a current and a new download and visit in seconds
+  var $timeout                  = null;
+    // [String] Name of the field for counting downloads (with respect for timeout)
+  var $fieldDownloads           = null;
+    // [String] Name of the field for counting hits (without any respect for timeout)
+  var $fieldHits                = null;
+    // [String] Name of the field for counting visits (hits with respect for timeout)
+  var $fieldVisits              = null;
     // Variables set by this class
 
 
@@ -123,6 +133,59 @@ class tx_browser_pi1_statistics
 
 
   /**
+ * statisticsInitVars( ):
+ *
+ * @return	void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  private function statisticsInitVars( )
+  {
+      // Get the adjustment configuration
+    $conf_adjustment = $this->pObj->conf['flexform.']['sDEF.']['statistics.']['adjustment.'];
+
+      // List of IPs, which should ignored
+    $coa_name                       = $conf_adjustment['dontAccountIPsOfCsvList'];
+    $coa_conf                       = $conf_adjustment['dontAccountIPsOfCsvList.'];
+    $this->dontAccountIPsOfCsvList  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+
+      // Timeout (for downloads and visits
+    $coa_name       = $conf_adjustment['timeout'];
+    $coa_conf       = $conf_adjustment['timeout.'];
+    $this->timeout  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+
+      // Field for counting downloads
+    $coa_name             = $conf_adjustment['fields.']['downloads'];
+    $coa_conf             = $conf_adjustment['fields.']['downloads.'];
+    $this->fieldDownloads = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+
+      // Field for counting hits
+    $coa_name             = $conf_adjustment['fields.']['hits'];
+    $coa_conf             = $conf_adjustment['fields.']['hits.'];
+    $this->fieldHits      = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+
+      // Field for counting visits
+    $coa_name             = $conf_adjustment['fields.']['visits'];
+    $coa_conf             = $conf_adjustment['fields.']['visits.'];
+    $this->fieldVisits    = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ', $this->dontAccountIPsOfCsvList, $this->timeout, $this->fieldDownloads, $this->fieldHits, $this->fieldVisits );
+    }
+
+  }
+
+
+
+
+
+
+
+
+
+  /**
  * statisticsIsEnabled( ):  Sets the global $bool_statistics_enabled.
  *                          The boolean is controlled by the flexform / TypoScript.
  *                          The User can enable and disable the statistics module.
@@ -151,7 +214,7 @@ class tx_browser_pi1_statistics
 
     $coa_name = $this->pObj->conf['flexform.']['sDEF.']['statistics.']['enabled'];
     $coa_conf = $this->pObj->conf['flexform.']['sDEF.']['statistics.']['enabled.'];
-    $this->bool_statistics_enabled = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);;
+    $this->bool_statistics_enabled = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
       // Enable statistics module
 
 
@@ -168,8 +231,18 @@ class tx_browser_pi1_statistics
         t3lib_div::devlog( '[INFO/STATISTICS] flexform.sDEF.statistics.enabled is \'' . $value . '\' '.
           'Statistics data won\'t collect.', $this->pObj->extKey, 0 );
       }
+      return;
     }
       // User disabled the statistics module
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // init the variables of the statistics module
+
+    $this->statisticsInitVars( );
+      // init the variables of the statistics module
 
     return;
   }
