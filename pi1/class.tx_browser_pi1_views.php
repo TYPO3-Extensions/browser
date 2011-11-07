@@ -1860,12 +1860,21 @@ class tx_browser_pi1_views
 
 
 
-      /////////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
       //
       // Record Browser
 
     $template = $this->pObj->objNavi->recordbrowser_get($template);
       // Record Browser
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Statistics: Count the visit
+
+    $this->pObj->objStat->countViewSingleRecord( );
+      // Statistics: Count the visit
 
 
 

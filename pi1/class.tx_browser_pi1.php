@@ -246,6 +246,7 @@ class tx_browser_pi1 extends tslib_pibase {
   var $b_drs_session      = false;
   var $b_drs_socialmedia  = false;
   var $b_drs_sql          = false;
+  var $b_drs_statistics   = false;
   var $b_drs_templating   = false;
   var $b_drs_tca          = false;
   var $b_drs_tsUpdate     = false;
@@ -1122,6 +1123,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_session      = true;
       $this->b_drs_socialmedia  = true;
       $this->b_drs_sql          = true;
+      $this->b_drs_session      = true;
       $this->b_drs_tca          = true;
       $this->b_drs_templating   = true;
       $this->b_drs_tsUpdate     = true;
@@ -1260,6 +1262,14 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_tca        = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
+    if ($this->arr_extConf['drs_mode'] == 'Statistics')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_statistics = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
     if ($this->arr_extConf['drs_mode'] == 'Templating')
     {
       $this->b_drs_error      = true;
@@ -1386,6 +1396,10 @@ class tx_browser_pi1 extends tslib_pibase {
     require_once('class.tx_browser_pi1_sql_manual.php');
     $this->objSqlMan = new tx_browser_pi1_sql_manual($this);
 
+      // Class with methods for statistics requirement
+    require_once('class.tx_browser_pi1_statistics.php');
+    $this->objStat = new tx_browser_pi1_statistics($this);
+
       // Class with TCA methods, which evaluate the TYPO3 TCA array
     require_once('class.tx_browser_pi1_tca.php');
     $this->objTca = new tx_browser_pi1_tca($this);
@@ -1469,7 +1483,7 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
-      // class.tx_browser_pi1_socialmedia.php
+      // class.tx_browser_pi1_session.php
 
       // [Array] The current TypoScript configuration array
     $this->objSession->conf      = $this->conf;
@@ -1498,6 +1512,23 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objSocialmedia->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
       // [String] TypoScript path to the current view. I.e. views.single.1
     $this->objSocialmedia->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+
+    
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_statistics.php
+
+      // [Array] The current TypoScript configuration array
+    $this->objStat->conf      = $this->conf;
+      // [Integer] The current mode (from modeselector)
+    $this->objStat->mode      = $this->piVar_mode;
+      // [String] 'list' or 'single': The current view
+    $this->objStat->view      = $this->view;
+      // [Array] The TypoScript configuration array of the current view
+    $this->objStat->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+      // [String] TypoScript path to the current view. I.e. views.single.1
+    $this->objStat->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
 
 
 
