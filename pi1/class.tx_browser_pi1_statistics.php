@@ -131,7 +131,7 @@ class tx_browser_pi1_statistics
  * @version 3.9.3
  * @since 3.9.3
  */
-  public function statisticsIsEnabled( )
+  private function statisticsIsEnabled( )
   {
       ///////////////////////////////////////////////////////////////////////////////
       //
@@ -182,10 +182,22 @@ class tx_browser_pi1_statistics
 
 
 
+  /***********************************************
+  *
+  * Counter
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
   /**
- * countViewSingleRecord( ):  Sets the global $bool_session_enabled.
- *                            The boolean is controlled by the flexform / TypoScript.
- *                            The User can enable and disable session management.
+ * countViewSingleRecord( ):  
  *
  * @return	void
  * @version 3.9.3
@@ -200,6 +212,7 @@ class tx_browser_pi1_statistics
     $this->statisticsIsEnabled( );
       // Set status of the statistics module
 
+    
 
       //////////////////////////////////////////////////////////////////////////
       //
@@ -218,9 +231,17 @@ class tx_browser_pi1_statistics
 
 
 
-      ///////////////////////////////////////////////////////////////////////////////
+      //////////////////////////////////////////////////////////////////////////
       //
-      // RETURN: Boolean is set before
+      // Counting
+
+      // Count the hit
+    $this->countHit( );
+      // Count the visit
+    $this->countVisit( );
+      // Counting
+
+
 
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
@@ -230,7 +251,6 @@ class tx_browser_pi1_statistics
       var_dump(__METHOD__. ' (' . __LINE__ . '): ', $this->pObj->conf['flexform.']['sDEF.'] );
       die( );
     }
-      // RETURN: Boolean is set before
 
 
 
@@ -244,11 +264,113 @@ class tx_browser_pi1_statistics
 
 
 
+
+  /**
+ * countHit( ):
+ *
+ * @return	void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  private function countHit( )
+  {
+      // The current table hasn't any field for counting hits
+    if( ! $this->helperFieldForHits( ) )
+    {
+      return;
+    }
+      // The current table hasn't any field for counting hits
+
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): Counting a hit' );
+    }
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * countVisit( ):
+ *
+ * @return	void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  private function countVisit( )
+  {
+      // The current table hasn't any field for counting visits
+    if( ! $this->helperFieldForVisits( ) )
+    {
+      return;
+    }
+      // The current table hasn't any field for counting visits
+
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): Counting a visit' );
+    }
+  }
+
+
+
+
+
+
+
+
   /***********************************************
   *
-  * Hits
+  * Helper
   *
   **********************************************/
+
+
+
+
+
+
+
+
+
+  /**
+ * helperFieldForHits( ): The current table has a field for counting hits
+ *
+ * @return	boolean
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  private function helperFieldForHits( )
+  {
+    return true;
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * helperFieldForVisits( ): The current table has a field for counting visits
+ *
+ * @return	boolean
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  private function helperFieldForVisits( )
+  {
+    return true;
+  }
 
 
 
