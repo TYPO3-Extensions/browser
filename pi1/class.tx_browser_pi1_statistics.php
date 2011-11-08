@@ -151,10 +151,15 @@ class tx_browser_pi1_statistics
     $coa_conf                       = $conf_adjustment['dontAccountIPsOfCsvList.'];
     $this->dontAccountIPsOfCsvList  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
-      // Timeout (for downloads and visits
-    $coa_name       = $conf_adjustment['timeout'];
-    $coa_conf       = $conf_adjustment['timeout.'];
-    $this->timeout  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+      // Report in the frontend in case of an unexpected sql result
+    $coa_name                       = $conf_adjustment['debugging'];
+    $coa_conf                       = $conf_adjustment['debugging.'];
+    $this->debugging             = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+
+      // Timeout (for downloads and visits)
+    $coa_name                       = $conf_adjustment['timeout'];
+    $coa_conf                       = $conf_adjustment['timeout.'];
+    $this->timeout                  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Field for counting downloads
     $coa_name                     = $conf_adjustment['fields.']['downloads'];
@@ -287,10 +292,10 @@ class tx_browser_pi1_statistics
   {
       //////////////////////////////////////////////////////////////////////////
       //
-      // Set status of the statistics module
+      // Set status of the statistics module and init it
 
     $this->statisticsIsEnabled( );
-      // Set status of the statistics module
+      // Set status of the statistics module and init it
 
     
 
@@ -308,6 +313,26 @@ class tx_browser_pi1_statistics
       return;
     }
       // RETURN: statistics module is disabled
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN: Don't count for a defined IP
+
+    $pos = strpos( $this->dontAccountIPsOfCsvList, t3lib_div :: getIndpEnv('REMOTE_ADDR') );
+    if ( ! ( $pos === false ) )
+    {
+      if ($this->pObj->b_drs_statistics)
+      {
+        t3lib_div::devlog('[INFO/STATISTICS] Current IP is an element of the "don\'t account IP list".', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/STATISTICS] Current IP is ' . t3lib_div :: getIndpEnv('REMOTE_ADDR') , $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/STATISTICS] List of IPs is ' . $this->dontAccountIPsOfCsvList , $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/STATISTICS] No counting for statistics!', $this->pObj->extKey, 0);
+      }
+      return;
+    }
+      // RETURN: Don't count for a defined IP
 
 
 
@@ -358,56 +383,8 @@ class tx_browser_pi1_statistics
     $field = $this->fieldHits;
     $uid   = $this->pObj->piVars['showUid'];
 
-      // The current table hasn't any field for counting hits
-    if( ! $this->helperFieldInTable( $field ) )
-    {
-      return;
-    }
-      // The current table hasn't any field for counting hits
-
-    $query = '' .
-      'UPDATE `' . $table . '` ' .
-      'SET    `' . $field . '` = `' . $field . '` + 1 ' .
-      'WHERE  `uid` = ' . $uid ;
-
-    $GLOBALS['TYPO3_DB']->sql_query( $query );
-    $affected_rows  = $GLOBALS['TYPO3_DB']->sql_affected_rows( );
-    $error          = $GLOBALS['TYPO3_DB']->sql_error( );
-
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' . $query, $affected_rows, $error );
-    }
-      ///////////////////////////////////////////////
-      //
-      // DRS - Development Reporting System
-
-    if ($error != '')
-    {
-      if ($this->pObj->b_drs_error)
-      {
-        t3lib_div::devlog('[ERROR/SQL] '.$query,  $this->pObj->extKey, 3);
-        t3lib_div::devlog('[ERROR/SQL] '.$error,  $this->pObj->extKey, 3);
-        t3lib_div::devlog('[ERROR/SQL] ABORT.',   $this->pObj->extKey, 3);
-      }
-      $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
-      if ($this->pObj->b_drs_error)
-      {
-        $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">'.$this->pObj->pi_getLL('drs_security').'</p>';
-        $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$error.'</p>';
-        $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$query.'</p>';
-      }
-      else
-      {
-        $str_prompt = '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">'.$this->pObj->pi_getLL('drs_sql_prompt').'</p>';
-      }
-      $arr_return['error']['status'] = true;
-      $arr_return['error']['header'] = $str_warn.$str_header;
-      $arr_return['error']['prompt'] = $str_prompt;
-      return $arr_return;
-    }
-      // DRS - Development Reporting System
+      // Count the hit
+    $this->sql_update_statistics( $table, $field, $uid );
 
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
@@ -446,6 +423,158 @@ class tx_browser_pi1_statistics
       var_dump(__METHOD__. ' (' . __LINE__ . '): Counting a visit' );
     }
   }
+
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * SQL
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+  /**
+ * sql_update_statistics( ):  The method increases the value of the given field in the SQL table.
+ *                            The method checks, if the field is existing.
+ *                            If there is an SQL error or if there isn't any affected row,
+ *                            the method logs in the DRS.
+ *                            If the user has enabled the SQL debug by the flexform / TypoScript,
+ *                            the method echos it in the frontend.
+ *
+ * @return	void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  private function sql_update_statistics( $table, $field, $uid )
+  {
+      // The current table hasn't any field for counting hits
+    if( ! $this->helperFieldInTable( $field ) )
+    {
+      return;
+    }
+      // The current table hasn't any field for counting hits
+
+      // Build the query
+    $query = '' .
+      'UPDATE `' . $table . '` ' .
+      'SET    `' . $field . '` = `' . $field . '` + 1 ' .
+      'WHERE  `uid` = ' . $uid ;
+
+      // Execute the query
+    $GLOBALS['TYPO3_DB']->sql_query( $query );
+
+      // Evaluate the query
+    $affected_rows  = $GLOBALS['TYPO3_DB']->sql_affected_rows( );
+    $error          = $GLOBALS['TYPO3_DB']->sql_error( );
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // ERROR: debug report in the frontend
+
+    if( ! empty( $error ) )
+    {
+      if( $this->debugging )
+      {
+        $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">'.$this->pObj->pi_getLL('drs_security').'</p>';
+        $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
+        $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$error.'</p>';
+        $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$query.'</p>';
+        echo $str_warn.$str_header.$str_prompt;
+      }
+    }
+      // ERROR: debug report in the frontend
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
+
+    if( ! empty( $error ) )
+    {
+      if( $this->pObj->b_drs_error )
+      {
+        t3lib_div::devlog('[ERROR/SQL] '.$query,  $this->pObj->extKey, 3);
+        t3lib_div::devlog('[ERROR/SQL] '.$error,  $this->pObj->extKey, 3);
+      }
+    }
+      // DRS - Development Reporting System
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN: error
+
+    if( ! empty( $error ) )
+    {
+      return;
+    }
+      // RETURN: error
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // WARNING: any row isn't effected
+
+    if( $affected_rows < 1 )
+    {
+      if( $this->debugging )
+      {
+        $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">'.$this->pObj->pi_getLL('drs_security').'</p>';
+        $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
+        $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">Any row isn\'t affected!</p>';
+        $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$query.'</p>';
+        echo $str_warn.$str_header.$str_prompt;
+      }
+    }
+      // WARNING: any row isn't effected
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
+
+    if( $affected_rows < 1 )
+    {
+      if( $this->pObj->b_drs_error )
+      {
+        t3lib_div::devlog('[WARN/SQL] ' . $query,  $this->pObj->extKey, 2);
+        t3lib_div::devlog('[WARN/SQL] Any row isn\'t affected!',  $this->pObj->extKey, 2);
+      }
+    }
+      // DRS - Development Reporting System
+
+
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -512,10 +641,18 @@ class tx_browser_pi1_statistics
       default:
           // Hit field isn't any element of the current table
         $this->arr_checkedTables[$table][$field] = false;
+        $prompt_01 = $field . ' isn\'t any field of the table ' . $table . ' in the TCA. Hit can\'t counted!';
+        $prompt_02 = 'Please extend your TCA table ' . $table . ' with the field ' . $field . '.';
         if( $this->pObj->b_drs_statistics )
         {
-          t3lib_div::devlog('[WARN/STATISTICS] ' . $field . ' isn\'t any field of the table ' . $table . '. Hit can\'t counted!', $this->pObj->extKey, 2);
-          t3lib_div::devlog('[HELP/STATISTICS] Please extend your table ' . $table . ' with the field ' . $field . '.', $this->pObj->extKey, 1);
+          t3lib_div::devlog('[WARN/STATISTICS] ' . $prompt_01, $this->pObj->extKey, 2);
+          t3lib_div::devlog('[HELP/STATISTICS] ' . $prompt_02, $this->pObj->extKey, 1);
+        }
+        if( $this->debugging )
+        {
+          $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $prompt_01 . '</p>';
+          $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $prompt_02 . '</p>';
+          echo $str_prompt;
         }
     }
       // Check, if the field is an element of the current table
