@@ -135,7 +135,7 @@ class tx_browser_pi1_statistics
 
 
   /**
- * statisticsInitVars( ):
+ * statisticsInitVars( ): The method inits the global class variables
  *
  * @return	void
  * @version 3.9.3
@@ -181,12 +181,6 @@ class tx_browser_pi1_statistics
     $coa_conf                     = $conf_adjustment['fields.']['visits.'];
     $this->fieldVisits            = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      //var_dump(__METHOD__. ' (' . __LINE__ . '): ', $this->dontAccountIPsOfCsvList, $this->timeout, $this->fieldDownloads, $this->fieldHits, $this->fieldVisits );
-    }
-
   }
 
 
@@ -198,7 +192,7 @@ class tx_browser_pi1_statistics
 
 
   /**
- * statisticsIsEnabled( ):  Sets the global $bool_statistics_enabled.
+ * statisticsIsEnabled( ):  The method sets the global $bool_statistics_enabled.
  *                          The boolean is controlled by the flexform / TypoScript.
  *                          The User can enable and disable the statistics module.
  *
@@ -282,7 +276,8 @@ class tx_browser_pi1_statistics
 
 
   /**
- * countViewSingleRecord( ):  
+ * countViewSingleRecord( ):  The method counts the hits and visits for a record in the single view
+ *                            There isn't any counting, if the page is cached.
  *
  * @return	void
  * @version 3.9.3
@@ -360,7 +355,8 @@ class tx_browser_pi1_statistics
 
 
   /**
- * countHit( ):
+ * countHit( ): The method counts the hits for a record in the singleView.
+ *              There isn't any counting, if the page is cached.
  *
  * @return	void
  * @version 3.9.3
@@ -391,7 +387,9 @@ class tx_browser_pi1_statistics
 
 
   /**
- * countVisit( ):
+ * countVisit( ): The method counts the visits for a record in the singleView.
+ *                Visits are managed by the method $this->pObj->objSession->statisticsNewVisit.
+ *                There isn't any counting, if the page is cached.
  *
  * @return	void
  * @version 3.9.3
@@ -420,12 +418,7 @@ class tx_browser_pi1_statistics
 
       // Count the hit
     $this->sql_update_statistics( $table, $field, $uid );
-
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): Counting a visit' );
-    }
+    return;
   }
 
 
