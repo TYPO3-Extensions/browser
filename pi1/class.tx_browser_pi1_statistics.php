@@ -184,7 +184,7 @@ class tx_browser_pi1_statistics
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ', $this->dontAccountIPsOfCsvList, $this->timeout, $this->fieldDownloads, $this->fieldHits, $this->fieldVisits );
+      //var_dump(__METHOD__. ' (' . __LINE__ . '): ', $this->dontAccountIPsOfCsvList, $this->timeout, $this->fieldDownloads, $this->fieldHits, $this->fieldVisits );
     }
 
   }
@@ -348,17 +348,6 @@ class tx_browser_pi1_statistics
 
 
 
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      //var_dump(__METHOD__. ' (' . __LINE__ . '): ', $this->pObj->piVars);
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ', $this->pObj->piVars, $this->pObj->localTable, $this->pObj->arrLocalTable );
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ', $this->pObj->conf['flexform.']['sDEF.'] );
-      die( );
-    }
-
-
-
     return;
   }
 
@@ -410,12 +399,27 @@ class tx_browser_pi1_statistics
  */
   private function countVisit( )
   {
-      // The current table hasn't any field for counting visits
-    if( ! $this->helperFieldInTable( $this->fieldVisits ) )
+    $table = $this->pObj->localTable;
+    $field = $this->fieldVisits;
+    $uid   = $this->pObj->piVars['showUid'];
+
+      // RETURN: no new visit
+    $bool_newVisit = $this->pObj->objSession->statisticsNewVisit( );
+    if( ! $bool_newVisit )
     {
+        // DRS - Development Reporting System
+      if( $this->pObj->b_drs_statistics )
+      {
+        $prompt = 'No new visit, no counting.';
+        t3lib_div::devlog('[INFO/STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
+      }
+        // DRS - Development Reporting System
       return;
     }
-      // The current table hasn't any field for counting visits
+      // RETURN: no new visit
+
+      // Count the hit
+    $this->sql_update_statistics( $table, $field, $uid );
 
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
@@ -423,7 +427,6 @@ class tx_browser_pi1_statistics
       var_dump(__METHOD__. ' (' . __LINE__ . '): Counting a visit' );
     }
   }
-
 
 
 
@@ -537,11 +540,10 @@ class tx_browser_pi1_statistics
     {
       if( $this->debugging )
       {
-        $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">'.$this->pObj->pi_getLL('drs_security').'</p>';
         $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('warn_sql_h1').'</h1>';
         $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">Any row isn\'t affected!</p>';
         $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$query.'</p>';
-        echo $str_warn.$str_header.$str_prompt;
+        echo $str_header.$str_prompt;
       }
     }
       // WARNING: any row isn't effected
@@ -550,19 +552,33 @@ class tx_browser_pi1_statistics
 
       ///////////////////////////////////////////////////////////////////////////////
       //
-      // DRS - Development Reporting System
+      // RETURN: Any affected row
 
     if( $affected_rows < 1 )
     {
+        // DRS - Development Reporting System
       if( $this->pObj->b_drs_error )
       {
         t3lib_div::devlog('[WARN/SQL] ' . $query,  $this->pObj->extKey, 2);
         t3lib_div::devlog('[WARN/SQL] Any row isn\'t affected!',  $this->pObj->extKey, 2);
       }
+        // DRS - Development Reporting System
+      return;
     }
+      // RETURN: Any affected row
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
       // DRS - Development Reporting System
 
-
+    if( $this->pObj->b_drs_statistics )
+    {
+      $prompt = 'Counter is increased for ' . $table . ', record[' . $uid . ']: field ' . $field . '.';
+      t3lib_div::devlog('[INFO/STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
+    }
+      // DRS - Development Reporting System
 
     return;
   }

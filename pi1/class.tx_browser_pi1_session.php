@@ -260,7 +260,7 @@ class tx_browser_pi1_session
           'Be aware of less performance!', $this->pObj->extKey, 2);
         t3lib_div::devlog('[HELP/PERFORMANCE+SESSION] Enable session for better performance!', $this->pObj->extKey, 1);
       }
-        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']
+        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows']
       $this->pObj->objNav->recordbrowser_callListView();
 // dwildt, 111107
       return;
@@ -295,7 +295,7 @@ class tx_browser_pi1_session
       //
       // Get tx_browser-pi1 session data
 
-    $arr_browser_session = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
+    $arr_session_browser = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
       // Get tx_browser-pi1 session data
 
 
@@ -304,22 +304,22 @@ class tx_browser_pi1_session
       //
       // DRS - Development Reporting System
 
-    if( empty( $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] ) )
+    if( empty( $arr_session_browser[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] ) )
     {
       if ($this->pObj->b_drs_warn)
       {
         t3lib_div::devlog('[INFO/WARN] Session array [' . $str_data_space . ']' .
-          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][mode-' . $this->mode . '][uids_of_all_rows] is empty!',
+          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][cache][mode-' . $this->mode . '][uids_of_all_rows] is empty!',
           $this->pObj->extKey, 2);
       }
     }
-    if( ! empty( $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] ) )
+    if( ! empty( $arr_session_browser[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] ) )
     {
       if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
       {
         t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session array [' . $str_data_space . ']' .
-          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
-          '#' . count($arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
+          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][cache][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
+          '#' . count($arr_session_browser[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
       }
     }
       // DRS - Development Reporting System
@@ -330,24 +330,24 @@ class tx_browser_pi1_session
       //
       // Session data is not set: set tx_browser_pi1['uids_of_all_rows'] !
 
-    if( ! isset( $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] ) )
+    if( ! isset( $arr_session_browser[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] ) )
     {
-        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']
+        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows']
       $this->pObj->objNavi->recordbrowser_callListView( );
         // Set the session array uids_of_all_rows
-      $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'];
+      $arr_session_browser[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'];
         // Write session data tx_browser_pi1
-      $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_browser_session);
+      $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_session_browser);
         // DRS - Development Reporting System
       if ( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
       {
         t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session array [' . $str_data_space . ']' .
-          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
-          '#' . count($this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
+          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][cache][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
+          '#' . count($this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
       }
 // dwildt, 111107
 //          // Get uids of all records
-//        $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'];
+//        $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $arr_session_browser[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'];
     }
       // Session data is not set: set tx_browser_pi1['uids_of_all_rows'] !
 
@@ -357,7 +357,7 @@ class tx_browser_pi1_session
       //
       // Set the global $this->pObj->uids_of_all_rows
 
-    $this->pObj->uids_of_all_rows[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'] = $arr_browser_session[$tt_content_uid]['mode-' . $this->mode]['uids_of_all_rows'];
+    $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $arr_session_browser[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'];
     return;
       // Set the global $this->pObj->uids_of_all_rows
   }
@@ -374,6 +374,160 @@ class tx_browser_pi1_session
   * Statistics
   *
   **********************************************/
+
+
+
+
+
+
+
+
+
+  /**
+ * statisticsNewVisit():  The method checks, if the previous visit is older than current time minus
+ *                        the user defined timeout. It manages the session data for the visit.
+ *                        Workflow:
+ *                        * Is session management disabled? Return false
+ *                        * Isn't previous visit older than current time minus timeout? Return false
+ *
+ * @return	boolean   $bool_newVisit: true in case of a new visit, otherwise false
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  public function statisticsNewVisit( )
+  {
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Set status of the session management
+
+    $this->sessionIsEnabled( );
+      // Boolean for status of visit
+    $bool_newVisit = false;
+      // Set status of the session management
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN: no session, no counting of visits
+
+    if( ! $this->bool_session_enabled )
+    {
+        // DRS - Development Reporting System
+      if( $this->pObj->b_drs_session || $this->pObj->b_drs_statistics )
+      {
+        $prompt = 'Session management is disabled. Visits can\'t count.';
+        t3lib_div::devlog('[WARN/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 2);
+        $prompt = 'Enable session for better performance!';
+        t3lib_div::devlog('[HELP/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 1);
+      }
+        // DRS - Development Reporting System
+
+      return $bool_newVisit ;
+    }
+      // RETURN: no session, no counting of visits
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Init variables
+
+      // Uid of the current Browser plugin
+    $tt_content_uid       = $this->pObj->cObj->data['uid'];
+      // Get the name of the session data space
+    $str_data_space       = $this->getNameOfDataSpace( );
+      // Current table
+    $table                = $this->pObj->localTable;
+      // Name of the field for statistics data
+    $field                = $this->pObj->objStat->fieldVisits;
+      // Uid of the current record
+    $uid                  = $this->pObj->piVars['showUid'];
+      // Period between a current and a new download and visit in seconds
+    $timeout              = $this->pObj->objStat->timeout;
+      // Timestamp of now
+    $time                 = time( );
+      // Get tx_browser-pi1 session data
+    $arr_session_browser  = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
+    $arr_session_visit    = $arr_session_browser[$tt_content_uid]['statistics']['visit'];
+      // Get tx_browser-pi1 session data
+      // Init variables
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN: first visit
+
+    if( empty( $arr_session_visit[$table][$uid][$field] ) )
+    {
+        // Set the new visit
+      $arr_session_browser[$tt_content_uid]['statistics']['visit'][$table][$uid][$field] = $time;
+      $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_session_browser);
+        // Set the new visit
+
+        // DRS - Development Reporting System
+      if( $this->pObj->b_drs_session || $this->pObj->b_drs_statistics )
+      {
+        $prompt = 'First visit.';
+        t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = $table . '.record[' . $uid . '][' . $field . '] is set to: ' . $time;
+        t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
+      }
+        // DRS - Development Reporting System
+
+        // RETURN
+      $bool_newVisit = true;
+      return $bool_newVisit;
+    }
+      // RETURN: first visit
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Repeated visit
+
+    $timeLastVisit    = $arr_session_visit[$table][$uid][$field];
+    $timeMinusTimeout = $time - $timeout;
+    switch( true )
+    {
+      case( $timeLastVisit <= $timeMinusTimeout ):
+          // new visit
+          // Set the new visit
+        $arr_session_browser[$tt_content_uid]['statistics']['visit'][$table][$uid][$field] = $time;
+        $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_session_browser);
+          // Set the new visit
+
+          // DRS - Development Reporting System
+        if( $this->pObj->b_drs_session || $this->pObj->b_drs_statistics )
+        {
+          $prompt = 'New visit: previous visit (' . $timeLastVisit . ' ) is older than ' . $timeMinusTimeout . '.';
+          t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
+          $prompt = $table . '.record[' . $uid . '][' . $field . '] is set to: ' . $time;
+          t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
+        }
+          // DRS - Development Reporting System
+
+        $bool_newVisit = true;
+        break;
+          // new visit
+      default:
+          // no new visit
+        $bool_newVisit = false;
+          // no new visit
+    }
+      // Repeated visit
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN
+
+    return $bool_newVisit;
+      // RETURN
+  }
 
 
 
