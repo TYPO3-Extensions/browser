@@ -538,7 +538,7 @@ class tx_browser_pi1_statistics
       if( $this->debugging )
       {
         $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">'.$this->pObj->pi_getLL('drs_security').'</p>';
-        $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
+        $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('warn_sql_h1').'</h1>';
         $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">Any row isn\'t affected!</p>';
         $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$query.'</p>';
         echo $str_warn.$str_header.$str_prompt;
