@@ -347,12 +347,59 @@ class tx_browser_pi1_statistics
  */
   private function countHit( )
   {
+    $table = $this->pObj->localTable;
+    $field = $this->fieldHits;
+    $uid   = $this->pObj->piVars['showUid'];
+
       // The current table hasn't any field for counting hits
-    if( ! $this->helperFieldInTable( $this->fieldHits ) )
+    if( ! $this->helperFieldInTable( $field ) )
     {
       return;
     }
       // The current table hasn't any field for counting hits
+
+    $query = '' .
+      'UPDATE ' . $table .
+      'SET    ' . $field . ' = ' . $field . ' + 1 ' .
+      'WHERE  uid = ' . $uid ;
+
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' . $query );
+    }
+    //$res   = $GLOBALS['TYPO3_DB']->sql_query($query);
+    //$error = $GLOBALS['TYPO3_DB']->sql_error();
+
+      ///////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
+
+    if ($error != '')
+    {
+      if ($this->pObj->b_drs_error)
+      {
+        t3lib_div::devlog('[ERROR/SQL] '.$query,  $this->pObj->extKey, 3);
+        t3lib_div::devlog('[ERROR/SQL] '.$error,  $this->pObj->extKey, 3);
+        t3lib_div::devlog('[ERROR/SQL] ABORT.',   $this->pObj->extKey, 3);
+      }
+      $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
+      if ($this->pObj->b_drs_error)
+      {
+        $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">'.$this->pObj->pi_getLL('drs_security').'</p>';
+        $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$error.'</p>';
+        $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$query.'</p>';
+      }
+      else
+      {
+        $str_prompt = '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">'.$this->pObj->pi_getLL('drs_sql_prompt').'</p>';
+      }
+      $arr_return['error']['status'] = true;
+      $arr_return['error']['header'] = $str_warn.$str_header;
+      $arr_return['error']['prompt'] = $str_prompt;
+      return $arr_return;
+    }
+      // DRS - Development Reporting System
 
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
