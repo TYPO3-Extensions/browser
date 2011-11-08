@@ -85,6 +85,8 @@ class tx_browser_pi1_statistics
   var $timeout                  = null;
     // [String] Name of the field for counting downloads (with respect for timeout)
   var $fieldDownloads           = null;
+    // [String] Name of the field for counting downloads (with respect for timeout)
+  var $fieldDownloadsByVisits   = null;
     // [String] Name of the field for counting hits (without any respect for timeout)
   var $fieldHits                = null;
     // [String] Name of the field for counting visits (hits with respect for timeout)
@@ -155,19 +157,24 @@ class tx_browser_pi1_statistics
     $this->timeout  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Field for counting downloads
-    $coa_name             = $conf_adjustment['fields.']['downloads'];
-    $coa_conf             = $conf_adjustment['fields.']['downloads.'];
-    $this->fieldDownloads = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+    $coa_name                     = $conf_adjustment['fields.']['downloads'];
+    $coa_conf                     = $conf_adjustment['fields.']['downloads.'];
+    $this->fieldDownloads         = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+
+      // Field for counting downloads by visits
+    $coa_name                     = $conf_adjustment['fields.']['downloads'];
+    $coa_conf                     = $conf_adjustment['fields.']['downloads.'];
+    $this->fieldDownloadsByVisits = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Field for counting hits
-    $coa_name             = $conf_adjustment['fields.']['hits'];
-    $coa_conf             = $conf_adjustment['fields.']['hits.'];
-    $this->fieldHits      = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+    $coa_name                     = $conf_adjustment['fields.']['hits'];
+    $coa_conf                     = $conf_adjustment['fields.']['hits.'];
+    $this->fieldHits              = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Field for counting visits
-    $coa_name             = $conf_adjustment['fields.']['visits'];
-    $coa_conf             = $conf_adjustment['fields.']['visits.'];
-    $this->fieldVisits    = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+    $coa_name                     = $conf_adjustment['fields.']['visits'];
+    $coa_conf                     = $conf_adjustment['fields.']['visits.'];
+    $this->fieldVisits            = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
@@ -363,15 +370,15 @@ class tx_browser_pi1_statistics
       'SET    `' . $field . '` = `' . $field . '` + 1 ' .
       'WHERE  `uid` = ' . $uid ;
 
+    $GLOBALS['TYPO3_DB']->sql_query( $query );
+    $affected_rows  = $GLOBALS['TYPO3_DB']->sql_affected_rows( );
+    $error          = $GLOBALS['TYPO3_DB']->sql_error( );
+
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' . $query );
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' . $query, $affected_rows, $error );
     }
-    //$res            = $GLOBALS['TYPO3_DB']->sql_query( $query );
-    //$affected_rows  = $GLOBALS['TYPO3_DB']->sql_affected_rows( );
-    //$error          = $GLOBALS['TYPO3_DB']->sql_error( );
-
       ///////////////////////////////////////////////
       //
       // DRS - Development Reporting System

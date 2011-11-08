@@ -1646,11 +1646,17 @@ plugin.tx_browser_pi1 {
         }
         adjustment {
           fields {
-              // Name of the field for counting downloads (with respect for timeout)
+              // Name of the field for counting downloads
             downloads = TEXT
             downloads {
                 // [String] Name of the field in the SQL table
               value = statistics_downloads
+            }
+              // Name of the field for counting downloads (with respect for timeout)
+            downloadsByVisits = TEXT
+            downloadsByVisits {
+                // [String] Name of the field in the SQL table
+              value = statistics_downloads_by_visits
             }
               // Name of the field for counting hits (without any respect for timeout)
             hits = TEXT
