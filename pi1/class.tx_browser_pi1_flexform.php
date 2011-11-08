@@ -1740,6 +1740,8 @@ class tx_browser_pi1_flexform {
       //
       // Field statistics.enabled
 
+      // #31230, 31229: Statistics module
+
     $bool_statisticsEnable  = false;
     $field_1                = 'statistics';
     $field_2                = 'enabled';

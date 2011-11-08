@@ -63,6 +63,8 @@
  */
 class tx_browser_pi1_statistics
 {
+    // #31230, 31229: Statistics module
+  
     //////////////////////////////////////////////////////
     //
     // Variables set by the pObj (by class.tx_browser_pi1.php)

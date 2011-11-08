@@ -392,6 +392,7 @@ class tx_browser_pi1_session
  *                        Workflow:
  *                        * Is session management disabled? Return false
  *                        * Isn't previous visit older than current time minus timeout? Return false
+ *                        #31230, 31229: Statistics module
  *
  * @return	boolean		$bool_newVisit: true in case of a new visit, otherwise false
  * @version 3.9.3
