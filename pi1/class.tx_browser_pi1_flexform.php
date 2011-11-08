@@ -1759,6 +1759,7 @@ class tx_browser_pi1_flexform {
         }
         break;
       case( 'yes' ) :
+        $bool_statisticsEnable = true;
         $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.']['value'] = 1;
         if ( $this->pObj->b_drs_flexform )
         {
