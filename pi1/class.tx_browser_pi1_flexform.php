@@ -1490,14 +1490,15 @@ class tx_browser_pi1_flexform {
   * @since 2.x.x
   * @version 3.4.4
   */
-  function sheet_sDEF() {
+  function sheet_sDEF( )
+  {
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
     $modeWiDot = (int) $this->mode . '.';
     $viewWiDot = $this->pObj->view . '.';
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field relations_select
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field relations_select
 
     $relations = false;
     $joins = -1;
@@ -1514,11 +1515,13 @@ class tx_browser_pi1_flexform {
         t3lib_div :: devlog('[INFO/FLEXFORM] root is set to 0.', $this->pObj->extKey, 0);
       }
     }
-    // Field relations_select
+      // Field relations_select
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field relations
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field relations
 
     if (!$relations) {
       $relations = $this->pObj->pi_getFFvalue($arr_piFlexform, 'relations', 'sDEF', 'lDEF', 'vDEF');

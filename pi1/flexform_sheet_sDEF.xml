@@ -302,6 +302,138 @@
           </config>
         </TCEforms>
       </session.type>
+      <statistics>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.disabled</numIndex>
+                <numIndex index="1">disabled</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.enabled</numIndex>
+                <numIndex index="1">enabled</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+            </items>
+            <default>disabled</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </statistics>
+      <statistics_adjustment_timeout>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.timeout</label>
+          <displayCond>FIELD:statistics:=:enabled</displayCond>
+          <config>
+            <type>input</type>
+            <size>10</size>
+            <max>10</max>
+            <eval>trim,int,required</eval>
+            <default>1800</default>
+          </config>
+        </TCEforms>
+      </statistics_adjustment_timeout>
+      <statistics_adjustment_dontAccountIPsOfCsvList>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.dontAccountIPsOfCsvList</label>
+          <displayCond>FIELD:statistics:=:enabled</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim,required</eval>
+            <default>1800</default>
+          </config>
+        </TCEforms>
+      </statistics_adjustment_dontAccountIPsOfCsvList>
+      <statistics_adjustment_debugging>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.debugging</label>
+          <displayCond>FIELD:statistics:=:enabled</displayCond>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.debugging.disabled</numIndex>
+                <numIndex index="1">disabled</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.debugging.enabled</numIndex>
+                <numIndex index="1">enabled</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.debugging.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+            </items>
+            <default>disabled</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </statistics_adjustment_debugging>
+      <statistics_adjustment_fields_hits>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.fields.hits</label>
+          <displayCond>FIELD:statistics:=:enabled</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim,required</eval>
+            <default>statistics_hits</default>
+          </config>
+        </TCEforms>
+      </statistics_adjustment_fields_hits>
+      <statistics_adjustment_fields_visits>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.fields.visits</label>
+          <displayCond>FIELD:statistics:=:enabled</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim,required</eval>
+            <default>statistics_visits</default>
+          </config>
+        </TCEforms>
+      </statistics_adjustment_fields_visits>
+      <statistics_adjustment_fields_downloads>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.fields.downloads</label>
+          <displayCond>FIELD:statistics:=:enabled</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim,required</eval>
+            <default>statistics_downloads</default>
+          </config>
+        </TCEforms>
+      </statistics_adjustment_fields_downloads>
+      <statistics_adjustment_fields_downloadsByVisits>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.fields.downloadsByVisits</label>
+          <displayCond>FIELD:statistics:=:enabled</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim,required</eval>
+            <default>statistics_downloadsByVisits</default>
+          </config>
+        </TCEforms>
+      </statistics_adjustment_fields_downloadsByVisits>
     </el>
   </ROOT>
 </T3DataStructure>
