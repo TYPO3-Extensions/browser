@@ -39,17 +39,20 @@
  *
  *
  *
- *   56: class tx_browser_pi1_session
- *   98:     function __construct($pObj)
+ *   59: class tx_browser_pi1_session
+ *  101:     function __construct($pObj)
  *
  *              SECTION: Initial
- *  134:     public function sessionIsEnabled( )
- *  193:     public function getNameOfDataSpace( )
+ *  137:     public function sessionIsEnabled( )
+ *  196:     public function getNameOfDataSpace( )
  *
  *              SECTION: Cache
- *  236:     public function cacheOfListView( )
+ *  239:     public function cacheOfListView( )
  *
- * TOTAL FUNCTIONS: 4
+ *              SECTION: Statistics
+ *  400:     public function statisticsNewVisit( )
+ *
+ * TOTAL FUNCTIONS: 5
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -390,7 +393,7 @@ class tx_browser_pi1_session
  *                        * Is session management disabled? Return false
  *                        * Isn't previous visit older than current time minus timeout? Return false
  *
- * @return	boolean   $bool_newVisit: true in case of a new visit, otherwise false
+ * @return	boolean		$bool_newVisit: true in case of a new visit, otherwise false
  * @version 3.9.3
  * @since 3.9.3
  */

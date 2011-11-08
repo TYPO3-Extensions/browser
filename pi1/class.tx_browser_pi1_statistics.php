@@ -39,17 +39,25 @@
  *
  *
  *
- *   56: class tx_browser_pi1_statistics
- *   98:     function __construct($pObj)
+ *   64: class tx_browser_pi1_statistics
+ *  118:     function __construct($pObj)
  *
  *              SECTION: Initial
- *  134:     public function countViewSingleRecord( )
- *  170:     public function getNameOfDataSpace( )
+ *  152:     private function statisticsInitVars( )
+ *  211:     private function statisticsIsEnabled( )
  *
- *              SECTION: Cache
- *  213:     public function cacheOfListView( )
+ *              SECTION: Counter
+ *  294:     public function countViewSingleRecord( )
+ *  373:     private function countHit( )
+ *  406:     private function countVisit( )
  *
- * TOTAL FUNCTIONS: 4
+ *              SECTION: SQL
+ *  468:     private function sql_update_statistics( $table, $field, $uid )
+ *
+ *              SECTION: Helper
+ *  631:     private function helperFieldInTable( $field )
+ *
+ * TOTAL FUNCTIONS: 8
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -292,7 +300,7 @@ class tx_browser_pi1_statistics
     $this->statisticsIsEnabled( );
       // Set status of the statistics module and init it
 
-    
+
 
       //////////////////////////////////////////////////////////////////////////
       //
@@ -450,6 +458,9 @@ class tx_browser_pi1_statistics
  *                            If the user has enabled the SQL debug by the flexform / TypoScript,
  *                            the method echos it in the frontend.
  *
+ * @param	[type]		$$table: ...
+ * @param	[type]		$field: ...
+ * @param	[type]		$uid: ...
  * @return	void
  * @version 3.9.3
  * @since 3.9.3
@@ -612,7 +623,8 @@ class tx_browser_pi1_statistics
  *                        The result will be stored in the global
  *                        $this->arr_checkedTables[$table][$field]
  *
- * @return	boolean       $this->arr_checkedTables[$table][$field]
+ * @param	[type]		$$field: ...
+ * @return	boolean		$this->arr_checkedTables[$table][$field]
  * @version 3.9.3
  * @since 3.9.3
  */
