@@ -489,6 +489,8 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // Get the typeNum
 
+      // #31230, 111108, dwildt
+    $this->objDownload->set_typeNum( );
       // #29370, 110831, dwildt
     $this->objExport->set_typeNum( );
       // Get the typeNum
@@ -866,6 +868,31 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
+      // download: return the result ...
+
+      // #31230, 111108, dwildt+
+    switch( $this->objDownload->str_typeNum )
+    {
+        // typeNum name is download
+      case( 'download' ) :
+        //header('Content-type: text/csv');
+        //header('Content-type: application/msexcel');
+        //header('Content-Disposition: attachment; filename="downloaded.csv"');
+        return trim($str_template_completed);
+        break;
+        // CSV export isn't enabled
+      case( false ) :
+      default :
+        // Do nothing
+        //return 'CSV export isn\'t enabled. Please enable it in the plugin/flexform of your TYPO3-Browser.';
+        break;
+    }
+     // download: return the result ...
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // csv export: return the result (HTML string) without wrapInBaseClass
 
       // #29370, 110831, dwildt+
@@ -1074,6 +1101,7 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->b_drs_browser      = false;
     $this->b_drs_cal          = false;
     $this->b_drs_discover     = false;
+    $this->b_drs_download     = false;
     $this->b_drs_export       = false;
     $this->b_drs_filter       = false;
     $this->b_drs_flexform     = false;
@@ -1110,6 +1138,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_browser      = true;
       $this->b_drs_cal          = true;
       $this->b_drs_discover     = true;
+      $this->b_drs_download     = true;
       $this->b_drs_export       = true;
       $this->b_drs_filter       = true;
       $this->b_drs_flexform     = true;
@@ -1148,6 +1177,14 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_warn       = true;
       $this->b_drs_info       = true;
       $this->b_drs_cal        = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Download')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_download   = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
     if ($this->arr_extConf['drs_mode'] == 'Export')
@@ -1344,6 +1381,10 @@ class tx_browser_pi1 extends tslib_pibase {
       // Class with methods for consolidating rows
     require_once('class.tx_browser_pi1_consolidate.php');
     $this->objConsolidate = new tx_browser_pi1_consolidate($this);
+
+      // Class with methods for manage downloads
+    require_once('class.tx_browser_pi1_download.php');
+    $this->objDownload = new tx_browser_pi1_download($this);
 
       // Class with methods for exporting rows
     require_once('class.tx_browser_pi1_export.php');

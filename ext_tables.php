@@ -7,6 +7,7 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
     //
     // INDEX
     
+    // Configuration by the extension manager
     // Methods for backend workflows
     // TypoScript: Include Static Templates
     // Plugin general configuration
@@ -14,6 +15,26 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
     // Plugin 1 configuration
     // Plugin 4 configuration
     // Plugin 3 configuration
+    // Add default page and user TSconfig
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Configuration by the extension manager
+
+  $confArr = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['browser']);
+
+    // Language for labels of static templates and page tsConfig
+  $llStatic = $confArr['LLstatic'];
+  switch($llStatic) {
+    case($llStatic == 'German'):
+      $llStatic = 'de';
+      break;
+    default:
+      $llStatic = 'default';
+  }
+    // Language for labels of static templates and page tsConfig
 
 
 
@@ -30,16 +51,38 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
     //
     // TypoScript: Include Static Templates
     
-    // Plugin 1
-  t3lib_extMgm::addStaticFile($_EXTKEY,'static/', 'Browser');
-    // Plugin 5
-  t3lib_extMgm::addStaticFile($_EXTKEY,'pi5/static/', '+Browser Calendar');
-    // Plugin 4
-  t3lib_extMgm::addStaticFile($_EXTKEY,'pi4/static/', '+Browser (no cache)');
-    // Plugin 1: sample tt_news
-  t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/tt_news/', '+Browser Sample for tt_news');
-    // Plugin 3
-  t3lib_extMgm::addStaticFile($_EXTKEY,'pi3/static/', 'Browser Manual');
+    // Case $llStatic
+  switch(true) {
+    case($llStatic == 'de'):
+      // German
+      // Plugin 1
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/', 'Browser');
+        // Plugin 5
+      t3lib_extMgm::addStaticFile($_EXTKEY,'pi5/static/', '+Browser Kalender');
+        // Plugin 4
+      t3lib_extMgm::addStaticFile($_EXTKEY,'pi4/static/', '+Browser (kein Cache)');
+        // Plugin 1: sample tt_news
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/tt_news/', '+Browser Beispiel fuer tt_news');
+        // Plugin 3
+      t3lib_extMgm::addStaticFile($_EXTKEY,'pi3/static/', 'Browser Handbuecher');
+        // TypoScript: Include Static Templates
+      break;
+    default:
+      // English
+      // Plugin 1
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/', 'Browser');
+        // Plugin 5
+      t3lib_extMgm::addStaticFile($_EXTKEY,'pi5/static/', '+Browser Calendar');
+        // Plugin 4
+      t3lib_extMgm::addStaticFile($_EXTKEY,'pi4/static/', '+Browser (no cache)');
+        // Plugin 1: sample tt_news
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/tt_news/', '+Browser Sample for tt_news');
+        // Plugin 3
+      t3lib_extMgm::addStaticFile($_EXTKEY,'pi3/static/', 'Browser Manuals');
+        // TypoScript: Include Static Templates
+      break;
+  }
+    // Case $llStatic
     // TypoScript: Include Static Templates
 
 
@@ -134,4 +177,13 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
     // Add the Flexform to the Plugin List
     // Plugin 3 configuration
 
+
+
+
+  /////////////////////////////////////////////////
+  //
+  // Add default page and user TSconfig
+
+//t3lib_extMgm::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . $_EXTKEY . '/tsConfig/' . $llStatic . '/page.txt">');
+  // Add default page and user TSconfig
 ?>

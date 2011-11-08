@@ -117,7 +117,7 @@ class tx_browser_pi1_export
  */
   public function set_typeNum( )
   {
-      // Get the typeNum form the current URL parameters
+      // Get the typeNum from the current URL parameters
     $typeNum = (int) t3lib_div::_GP( 'type' );
 
       // RETURN typeNum is 0 or empty
@@ -149,12 +149,6 @@ class tx_browser_pi1_export
     }
       // DRS - Development Reporting System
 
-//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if ( ! ( $pos === false ) )
-//    {
-//      var_dump(__METHOD__. ' (' . __LINE__ . '): ', (int) t3lib_div::_GP( 'type' ) );
-//      die( );
-//    }
   }
 
 
