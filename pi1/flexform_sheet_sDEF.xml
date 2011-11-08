@@ -302,33 +302,33 @@
           </config>
         </TCEforms>
       </session.type>
-      <statistics>
+      <statistics.enabled>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.enabled</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.disabled</numIndex>
-                <numIndex index="1">disabled</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.enabled.no</numIndex>
+                <numIndex index="1">no</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.enabled</numIndex>
-                <numIndex index="1">enabled</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.enabled.yes</numIndex>
+                <numIndex index="1">yes</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.enabled.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
-            <default>disabled</default>
+            <default>no</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>
         </TCEforms>
-      </statistics>
-      <statistics_adjustment_timeout>
+      </statistics.enabled>
+      <statistics.adjustment.timeout>
         <TCEforms>
           <exclude>1</exclude>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.timeout</label>
@@ -341,8 +341,8 @@
             <default>1800</default>
           </config>
         </TCEforms>
-      </statistics_adjustment_timeout>
-      <statistics_adjustment_dontAccountIPsOfCsvList>
+      </statistics.adjustment.timeout>
+      <statistics.adjustment.dontAccountIPsOfCsvList>
         <TCEforms>
           <exclude>1</exclude>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.dontAccountIPsOfCsvList</label>
@@ -354,8 +354,8 @@
             <default>127.0.0.1, 127.0.0.2</default>
           </config>
         </TCEforms>
-      </statistics_adjustment_dontAccountIPsOfCsvList>
-      <statistics_adjustment_debugging>
+      </statistics.adjustment.dontAccountIPsOfCsvList>
+      <statistics.adjustment.debugging>
         <TCEforms>
           <exclude>1</exclude>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.debugging</label>
@@ -364,25 +364,25 @@
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.debugging.disabled</numIndex>
-                <numIndex index="1">disabled</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.debugging.no</numIndex>
+                <numIndex index="1">no</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.debugging.enabled</numIndex>
-                <numIndex index="1">enabled</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.debugging.yes</numIndex>
+                <numIndex index="1">yes</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.debugging.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
-            <default>disabled</default>
+            <default>no</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>
         </TCEforms>
-      </statistics_adjustment_debugging>
-      <statistics_adjustment_fields_hits>
+      </statistics.adjustment.debugging>
+      <statistics.adjustment.fields.hits>
         <TCEforms>
           <exclude>1</exclude>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.fields.hits</label>
@@ -394,8 +394,8 @@
             <default>statistics_hits</default>
           </config>
         </TCEforms>
-      </statistics_adjustment_fields_hits>
-      <statistics_adjustment_fields_visits>
+      </statistics.adjustment.fields.hits>
+      <statistics.adjustment.fields.visits>
         <TCEforms>
           <exclude>1</exclude>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.fields.visits</label>
@@ -407,8 +407,8 @@
             <default>statistics_visits</default>
           </config>
         </TCEforms>
-      </statistics_adjustment_fields_visits>
-      <statistics_adjustment_fields_downloads>
+      </statistics.adjustment.fields.visits>
+      <statistics.adjustment.fields.downloads>
         <TCEforms>
           <exclude>1</exclude>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.fields.downloads</label>
@@ -420,8 +420,8 @@
             <default>statistics_downloads</default>
           </config>
         </TCEforms>
-      </statistics_adjustment_fields_downloads>
-      <statistics_adjustment_fields_downloadsByVisits>
+      </statistics.adjustment.fields.downloads>
+      <statistics.adjustment.fields.downloadsByVisits>
         <TCEforms>
           <exclude>1</exclude>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.fields.downloadsByVisits</label>
@@ -433,7 +433,7 @@
             <default>statistics_downloadsByVisits</default>
           </config>
         </TCEforms>
-      </statistics_adjustment_fields_downloadsByVisits>
+      </statistics.adjustment.fields.downloadsByVisits>
     </el>
   </ROOT>
 </T3DataStructure>

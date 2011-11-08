@@ -1496,14 +1496,18 @@ class tx_browser_pi1_flexform {
     $modeWiDot = (int) $this->mode . '.';
     $viewWiDot = $this->pObj->view . '.';
 
+    $sheet = 'sDEF';
+
+
       //////////////////////////////////////////////////////////////////////
       //
       // Field relations_select
 
+    $field = 'relations_select';
     $relations = false;
     $joins = -1;
     $root = -1;
-    $relations_select = $this->pObj->pi_getFFvalue($arr_piFlexform, 'relations_select', 'sDEF', 'lDEF', 'vDEF');
+    $relations_select = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
     if ($relations_select == 'default' OR empty ($relations_select)) {
       $relations = 'all';
       $joins = 1;
@@ -1523,8 +1527,9 @@ class tx_browser_pi1_flexform {
       //
       // Field relations
 
+    $field = 'relations';
     if (!$relations) {
-      $relations = $this->pObj->pi_getFFvalue($arr_piFlexform, 'relations', 'sDEF', 'lDEF', 'vDEF');
+      $relations = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
     }
     if ($this->pObj->b_drs_flexform) {
       t3lib_div :: devlog('[INFO/FLEXFORM] relations: \'' . $relations . '\'!', $this->pObj->extKey, 0);
@@ -1620,7 +1625,7 @@ class tx_browser_pi1_flexform {
 
     #9879
     if ($joins < 0) {
-      $joins = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'joins', 'sDEF', 'lDEF', 'vDEF');
+      $joins = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'joins', $sheet, 'lDEF', 'vDEF');
     }
     if (!empty ($this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.'])) {
       $this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.']['relations.']['left_join'] = $joins;
@@ -1643,7 +1648,7 @@ class tx_browser_pi1_flexform {
     // Field root
 
     if ($root < 0) {
-      $root = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'root', 'sDEF', 'lDEF', 'vDEF');
+      $root = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'root', $sheet, 'lDEF', 'vDEF');
     }
     if ($root == 1) {
       if ($this->pObj->b_drs_flexform) {
@@ -1671,12 +1676,14 @@ class tx_browser_pi1_flexform {
     }
     // Field root
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field session
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field session
 
     $int_sessionType = -1;
-    $int_session = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'session', 'sDEF', 'lDEF', 'vDEF');
+    $int_session = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'session', $sheet, 'lDEF', 'vDEF');
     if ($int_session == 0 OR empty ($int_session)) {
       $int_sessionType = 1; // Session is enabled
       if ($this->pObj->b_drs_flexform) {
@@ -1684,17 +1691,18 @@ class tx_browser_pi1_flexform {
         t3lib_div :: devlog('[INFO/FLEXFORM] session.type is set to 1.', $this->pObj->extKey, 0);
       }
     }
-    // Field session
+      // Field session
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field session.type
 
-    // session.type isn't set above 
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field session.type
+
+      // session.type isn't set above
     if ($int_sessionType < 0) {
-      $int_sessionType = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'session.type', 'sDEF', 'lDEF', 'vDEF');
+      $int_sessionType = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'session.type', $sheet, 'lDEF', 'vDEF');
     }
-    // session.type isn't set above 
+      // session.type isn't set above
 
     if ($this->pObj->b_drs_flexform) {
       t3lib_div :: devlog('[INFO/FLEXFORM] session.type: \'' . $int_sessionType . '\'!', $this->pObj->extKey, 0);
@@ -1724,10 +1732,245 @@ class tx_browser_pi1_flexform {
         }
         break;
     }
-    // Field session.type
+      // Field session.type
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field statistics.enabled
+
+    $bool_statisticsEnable  = false;
+    $field_1                = 'statistics';
+    $field_2                = 'enabled';
+    $field                  = $field_1 . '.' . $field_2;
+    $value                  = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+
+    switch( $value )
+    {
+      case( '' ) :
+      case( null ) :
+      case( 'no' ) :
+        $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.']['value'] = 0;
+        if ( $this->pObj->b_drs_flexform )
+        {
+          $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
+          t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+        }
+        break;
+      case( 'yes' ) :
+        $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.']['value'] = 1;
+        if ( $this->pObj->b_drs_flexform )
+        {
+          $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
+          t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+        }
+        break;
+      case( 'ts' ) :
+        // Do nothing
+        if ( $this->pObj->b_drs_flexform )
+        {
+          $prompt = $sheet . '.' . $field . ' is \'' . $value . '\'. Nothing will changed.';
+          t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+        }
+        break;
+    }
+      // Field statistics.enabled
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field statistics.adjustment.timeout
+
+    $field_1          = 'statistics';
+    $field_2          = 'adjustment';
+    $field_3          = 'timeout';
+    $field            = $field_1 . '.' . $field_2. '.' . $field_3;
+    $value            = (int) $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+
+    if( $bool_statisticsEnable )
+    {
+      $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.']['value'] = $value;
+      if ( $this->pObj->b_drs_flexform )
+      {
+        $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
+        t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+      }
+    }
+      // Field statistics.adjustment.timeout
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field statistics.adjustment.dontAccountIPsOfCsvList
+
+    $field_1          = 'statistics';
+    $field_2          = 'adjustment';
+    $field_3          = 'dontAccountIPsOfCsvList';
+    $field            = $field_1 . '.' . $field_2. '.' . $field_3;
+    $value            = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+
+    if( $bool_statisticsEnable )
+    {
+      $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.']['value'] = $value;
+      if ( $this->pObj->b_drs_flexform )
+      {
+        $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
+        t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+      }
+    }
+      // Field statistics.adjustment.dontAccountIPsOfCsvList
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field statistics.adjustment.debugging
+
+    $field_1          = 'statistics';
+    $field_2          = 'adjustment';
+    $field_3          = 'debugging';
+    $field            = $field_1 . '.' . $field_2. '.' . $field_3;
+    $value            = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+
+    if( $bool_statisticsEnable )
+    {
+      switch( $value )
+      {
+        case( '' ) :
+        case( null ) :
+        case( 'no' ) :
+          $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.']['value'] = 0;
+          if ( $this->pObj->b_drs_flexform )
+          {
+            $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
+            t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+          }
+          break;
+        case( 'yes' ) :
+          $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.']['value'] = 1;
+          if ( $this->pObj->b_drs_flexform )
+          {
+            $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
+            t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+          }
+          break;
+        case( 'ts' ) :
+          // Do nothing
+          if ( $this->pObj->b_drs_flexform )
+          {
+            $prompt = $sheet . '.' . $field . ' is \'' . $value . '\'. Nothing will changed.';
+            t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+          }
+          break;
+      }
+    }
+      // Field statistics.adjustment.debugging
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field statistics.adjustment.fields.hits
+
+    $field_1          = 'statistics';
+    $field_2          = 'adjustment';
+    $field_3          = 'fields';
+    $field_4          = 'hits';
+    $field            = $field_1 . '.' . $field_2. '.' . $field_3. '.' . $field_4;
+    $value            = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+
+    if( $bool_statisticsEnable )
+    {
+      $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'][$field_4 . '.']['value'] = $value;
+      if ( $this->pObj->b_drs_flexform )
+      {
+        $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
+        t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+      }
+    }
+      // Field statistics.adjustment.fields.hits
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field statistics.adjustment.fields.visits
+
+    $field_1          = 'statistics';
+    $field_2          = 'adjustment';
+    $field_3          = 'fields';
+    $field_4          = 'visits';
+    $field            = $field_1 . '.' . $field_2. '.' . $field_3. '.' . $field_4;
+    $value            = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+
+    if( $bool_statisticsEnable )
+    {
+      $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'][$field_4 . '.']['value'] = $value;
+      if ( $this->pObj->b_drs_flexform )
+      {
+        $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
+        t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+      }
+    }
+      // Field statistics.adjustment.fields.visits
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field statistics.adjustment.fields.downloads
+
+    $field_1          = 'statistics';
+    $field_2          = 'adjustment';
+    $field_3          = 'fields';
+    $field_4          = 'downloads';
+    $field            = $field_1 . '.' . $field_2. '.' . $field_3. '.' . $field_4;
+    $value            = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+
+    if( $bool_statisticsEnable )
+    {
+      $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'][$field_4 . '.']['value'] = $value;
+      if ( $this->pObj->b_drs_flexform )
+      {
+        $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
+        t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+      }
+    }
+      // Field statistics.adjustment.fields.downloads
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field statistics.adjustment.fields.downloadsByVisits
+
+    $field_1          = 'statistics';
+    $field_2          = 'adjustment';
+    $field_3          = 'fields';
+    $field_4          = 'downloadsByVisits';
+    $field            = $field_1 . '.' . $field_2. '.' . $field_3. '.' . $field_4;
+    $value            = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+
+    if( $bool_statisticsEnable )
+    {
+      $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'][$field_4 . '.']['value'] = $value;
+      if ( $this->pObj->b_drs_flexform )
+      {
+        $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
+        t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+      }
+    }
+      // Field statistics.adjustment.fields.downloadsByVisits
+
 
     return;
   }
+
+
+
 
   /**
    * The sheet socialmedia administrates bookmarks.
