@@ -2817,3 +2817,6 @@ browser_csv < plugin.tx_browser_pi1.export.csv.page
     // Don't wrap the content of the CSV export page object by default
   tt_content.stdWrap >
 [global]
+
+  // TYPO3-Browser: Download page object
+browser_download < plugin.tx_browser_pi1.download.page
