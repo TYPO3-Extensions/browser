@@ -348,7 +348,7 @@ class tx_browser_pi1_statistics
   private function countHit( )
   {
       // The current table hasn't any field for counting hits
-    if( ! $this->helperFieldForHits( ) )
+    if( ! $this->helperFieldInTable( $this->fieldHits ) )
     {
       return;
     }
@@ -379,7 +379,7 @@ class tx_browser_pi1_statistics
   private function countVisit( )
   {
       // The current table hasn't any field for counting visits
-    if( ! $this->helperFieldForVisits( ) )
+    if( ! $this->helperFieldInTable( $this->fieldVisits ) )
     {
       return;
     }
@@ -414,35 +414,66 @@ class tx_browser_pi1_statistics
 
 
   /**
- * helperFieldForHits( ): The current table has a field for counting hits
+ * helperFieldInTable( ): The method checks, if the needed field for statistics data
+ *                        is an element of the local table.
+ *                        The result will be stored in the global
+ *                        $this->arr_checkedTables[$table][$field]
  *
- * @return	boolean
+ * @return	boolean       $this->arr_checkedTables[$table][$field]
  * @version 3.9.3
  * @since 3.9.3
  */
-  private function helperFieldForHits( )
+  private function helperFieldInTable( $field )
   {
-    return true;
-  }
+    $table = $this->pObj->localTable;
 
 
 
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN: table.field is checked before
+
+    if( isset( $this->arr_checkedTables[$table][$field] ) )
+    {
+      return $this->arr_checkedTables[$table][$field];
+    }
+      // RETURN: table.field is checked before
 
 
 
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Set the global $this->arr_checkedTables[$table][$field]
+
+      // Load the TCA for the current table
+    $this->pObj->objZz->loadTCA($table);
+      // Check, if the field is an element of the current table
+    switch( isset($GLOBALS['TCA'][$table]['columns'][$field] ) )
+    {
+      case( true ):
+          // Hit field is an element of the current table
+        $this->arr_checkedTables[$table][$field] = true;
+        break;
+      default:
+          // Hit field isn't any element of the current table
+        $this->arr_checkedTables[$table][$field] = false;
+        if( $this->pObj->b_drs_statistics )
+        {
+          t3lib_div::devlog('[WARN/STATISTICS] ' . $field . ' isn\'t any field of the table ' . $table . '. Hit can\'t counted!', $this->pObj->extKey, 2);
+          t3lib_div::devlog('[HELP/STATISTICS] Please extend your table ' . $table . ' with the field ' . $field . '.', $this->pObj->extKey, 1);
+        }
+    }
+      // Check, if the field is an element of the current table
+      // Set the global $this->arr_checkedTables[$table][$field]
 
 
 
-  /**
- * helperFieldForVisits( ): The current table has a field for counting visits
- *
- * @return	boolean
- * @version 3.9.3
- * @since 3.9.3
- */
-  private function helperFieldForVisits( )
-  {
-    return true;
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN
+
+    return $this->arr_checkedTables[$table][$field];
+      // RETURN
   }
 
 
