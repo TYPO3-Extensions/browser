@@ -177,7 +177,7 @@ $LOCAL_LANG = array(
     'sheet_sDEF.statistics.adjustment.fields.hits'              => 'Statistics: fieldlabel for hits',
     'sheet_sDEF.statistics.adjustment.fields.visits'            => 'Statistics: fieldlabel for visits',
     'sheet_sDEF.statistics.adjustment.timeout'                  => 'Statistics: period for a visit (in seconds)',
-    'sheet_sDEF.statistics.adjustment.dontAccountIPsOfCsvList'  => 'Statistics: Don\'t count, if IP is in this list',
+    'sheet_sDEF.statistics.adjustment.dontAccountIPsOfCsvList'  => 'Statistics: Don\'t count, if IP is in this list (csv / comma seperated values)',
     'sheet_sDEF.statistics.adjustment.debugging'                => 'Statistics: debug report (in the frontend)',
 
     'sheet_search'                              => 'Search / Filter',
@@ -520,7 +520,7 @@ $LOCAL_LANG = array(
     'sheet_sDEF.statistics.adjustment.fields.hits'              => 'Statistik: Feldbezeichnung fuer Aufrufe (Hits)',
     'sheet_sDEF.statistics.adjustment.fields.visits'            => 'Statistik: Feldbezeichnung fuer Besuche (Visits)',
     'sheet_sDEF.statistics.adjustment.timeout'                  => 'Statistik: Dauer eines Besuchs in Sekunden',
-    'sheet_sDEF.statistics.adjustment.dontAccountIPsOfCsvList'  => 'Statistik: Bei diese IPs nicht zaehlen',
+    'sheet_sDEF.statistics.adjustment.dontAccountIPsOfCsvList'  => 'Statistik: Bei diesen IPs nicht zaehlen (CSV / Komma getrennte Liste'),
     'sheet_sDEF.statistics.adjustment.debugging'                => 'Statistik: Fehlerbericht (im Frontend)',
     'sheet_sDEF.statistics.adjustment.debugging.disabled'       => 'Deaktiviert (Standard)',
     'sheet_sDEF.statistics.adjustment.debugging.enabled'        => 'Aktiviert',
