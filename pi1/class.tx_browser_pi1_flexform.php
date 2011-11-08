@@ -1061,19 +1061,19 @@ class tx_browser_pi1_flexform {
       // Field dontUseDRS
 
     $this->pObj->bool_dontUseDRS = $this->pObj->pi_getFFvalue($arr_piFlexform, 'dontUseDRS', $sheet, 'lDEF', 'vDEF');
-    if ($this->pObj->bool_dontUseDRS) 
+    if ($this->pObj->bool_dontUseDRS)
     {
-      if ($this->pObj->arr_extConf['drs_mode'] != 'Don\'t log anything') 
+      if ($this->pObj->arr_extConf['drs_mode'] != 'Don\'t log anything')
       {
         t3lib_div :: devlog('[INFO/DRS] Plugin Sheet [Development] set the boolean Don\'t use DRS.', $this->pObj->extKey, 0);
         $this->pObj->arr_extConf['drs_mode'] = 'Don\'t log anything';
         $this->pObj->init_drs();
         t3lib_div :: devlog('[WARN/DRS] DRS is disabled.', $this->pObj->extKey, 2);
-        if ($this->pObj->bool_typo3_43) 
+        if ($this->pObj->bool_typo3_43)
         {
           $endTime = $this->pObj->TT->getDifferenceToStarttime();
         }
-        if (!$this->pObj->bool_typo3_43) 
+        if (!$this->pObj->bool_typo3_43)
         {
           $endTime = $this->pObj->TT->mtime();
         }
@@ -1119,7 +1119,7 @@ class tx_browser_pi1_flexform {
       //////////////////////////////////////////////////////////////////////
       //
       // Field cal_ui
-  
+
     $field = 'cal_ui';
     $this->sheet_extend_cal_ui = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
     if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_cal )
@@ -1134,7 +1134,7 @@ class tx_browser_pi1_flexform {
       //////////////////////////////////////////////////////////////////////
       //
       // Field cal_view
-  
+
     $field = 'cal_view';
     $this->sheet_extend_cal_view = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
     if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_cal )
@@ -1149,7 +1149,7 @@ class tx_browser_pi1_flexform {
       //////////////////////////////////////////////////////////////////////
       //
       // Field cal_field_start
-  
+
     $field = 'cal_field_start';
     $this->sheet_extend_cal_field_start = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
     if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_cal )
@@ -1164,7 +1164,7 @@ class tx_browser_pi1_flexform {
       //////////////////////////////////////////////////////////////////////
       //
       // Field cal_field_end
-  
+
     $field = 'cal_field_end';
     $this->sheet_extend_cal_field_end = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
     if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_cal )
@@ -1320,7 +1320,7 @@ class tx_browser_pi1_flexform {
         $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library']      = null;
         $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localization'] = null;
         $this->bool_jquery_plugins_t3browser = false;
-        if ($this->pObj->b_drs_flexform) 
+        if ($this->pObj->b_drs_flexform)
         {
           t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.plugin is set to null.',       $this->pObj->extKey, 0);
           t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.library is set to null.',      $this->pObj->extKey, 0);
@@ -1754,7 +1754,7 @@ class tx_browser_pi1_flexform {
         $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.']['value'] = 0;
         if ( $this->pObj->b_drs_flexform )
         {
-          $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
+          $prompt = $sheet . '.' . $field . ' is set to \'0\'.';
           t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
         }
         break;
@@ -1762,7 +1762,7 @@ class tx_browser_pi1_flexform {
         $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.']['value'] = 1;
         if ( $this->pObj->b_drs_flexform )
         {
-          $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
+          $prompt = $sheet . '.' . $field . ' is set to \'1\'.';
           t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
         }
         break;
@@ -1845,7 +1845,7 @@ class tx_browser_pi1_flexform {
           $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.']['value'] = 0;
           if ( $this->pObj->b_drs_flexform )
           {
-            $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
+            $prompt = $sheet . '.' . $field . ' is set to \'0\'.';
             t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
           }
           break;
@@ -1853,7 +1853,7 @@ class tx_browser_pi1_flexform {
           $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.']['value'] = 1;
           if ( $this->pObj->b_drs_flexform )
           {
-            $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
+            $prompt = $sheet . '.' . $field . ' is set to \'1\'.';
             t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
           }
           break;
@@ -2102,7 +2102,7 @@ class tx_browser_pi1_flexform {
    * @return  void
    * @version 3.6.2
    */
-  function sheet_templating() 
+  function sheet_templating()
   {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
@@ -3089,9 +3089,9 @@ class tx_browser_pi1_flexform {
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
     $modeWiDot = (int) $this->mode . '.';
     $viewWiDot = $this->pObj->view . '.';
-    
-    
-    
+
+
+
       //////////////////////////////////////////////////////////////////////
       //
       // Field display_listview
@@ -3182,7 +3182,7 @@ class tx_browser_pi1_flexform {
         }
         break;
     }
-    if ($this->pObj->b_drs_flexform) 
+    if ($this->pObj->b_drs_flexform)
     {
       t3lib_div :: devlog('[INFO/FLEXFORM] navigation.record_browser is set to ' . $record_browser . '.', $this->pObj->extKey, 0);
     }
