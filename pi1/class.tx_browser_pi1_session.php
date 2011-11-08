@@ -513,6 +513,16 @@ class tx_browser_pi1_session
         break;
           // new visit
       default:
+          // DRS - Development Reporting System
+        if( $this->pObj->b_drs_session || $this->pObj->b_drs_statistics )
+        {
+          $prompt = 'No new visit: previous visit (' . $timeLastVisit . ' ) isn\'t older than ' . $timeMinusTimeout . '.';
+          t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
+          $prompt = $table . '.record[' . $uid . '][' . $field . '] is left to: ' . $timeLastVisit;
+          t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
+        }
+          // DRS - Development Reporting System
+
           // no new visit
         $bool_newVisit = false;
           // no new visit
