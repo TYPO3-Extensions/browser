@@ -359,17 +359,18 @@ class tx_browser_pi1_statistics
       // The current table hasn't any field for counting hits
 
     $query = '' .
-      'UPDATE ' . $table .
-      'SET    ' . $field . ' = ' . $field . ' + 1 ' .
-      'WHERE  uid = ' . $uid ;
+      'UPDATE `' . $table . '` ' .
+      'SET    `' . $field . '` = `' . $field . '` + 1 ' .
+      'WHERE  `uid` = ' . $uid ;
 
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
       var_dump(__METHOD__. ' (' . __LINE__ . '): ' . $query );
     }
-    //$res   = $GLOBALS['TYPO3_DB']->sql_query($query);
-    //$error = $GLOBALS['TYPO3_DB']->sql_error();
+    //$res            = $GLOBALS['TYPO3_DB']->sql_query( $query );
+    //$affected_rows  = $GLOBALS['TYPO3_DB']->sql_affected_rows( );
+    //$error          = $GLOBALS['TYPO3_DB']->sql_error( );
 
       ///////////////////////////////////////////////
       //
