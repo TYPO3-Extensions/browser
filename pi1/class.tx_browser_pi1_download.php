@@ -121,6 +121,11 @@ class tx_browser_pi1_download
       // Initialize new fileFunc object
 		$this->fileFunc = t3lib_div::makeInstance( 't3lib_basicFileFunctions' );
 
+    if( ! $this->download_init( ) )
+    {
+      return 'ERROR $this->download_init( )';
+    }
+
     $this->statistics( 'plus' );
       // EXIT in case of success!
     $prompt_error = $this->delivery_andExit( );
@@ -128,6 +133,43 @@ class tx_browser_pi1_download
     $this->statistics( 'minus' );
 
     return $prompt_error;
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * download_init( ): Init the globals $csv_devider, $csv_enclosure and $csv_striptag
+ *
+ * @return  void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  private function download_init( )
+  {
+    // Parameter auswerten
+    // Dateinamen und Pfad holen
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' . $this->pObj->piVars );
+    }
+
+    return;
+    $cObj_name            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['devider.']['stdWrap'];
+    $cObj_conf            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['devider.']['stdWrap.'];
+    $this->csv_devider    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+    $cObj_name            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['enclosure.']['stdWrap'];
+    $cObj_conf            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['enclosure.']['stdWrap.'];
+    $this->csv_enclosure  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+    $cObj_name            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['strip_tag.']['stdWrap'];
+    $cObj_conf            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['strip_tag.']['stdWrap.'];
+    $this->csv_striptag   = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
   }
 
 
