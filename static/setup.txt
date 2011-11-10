@@ -2356,15 +2356,14 @@ plugin.tx_browser_pi1 {
           andWhere {
             cObject = COA
             cObject {
-                // choose all Browser plugins...
+                // choose the current Browser plugin
               10 = TEXT
               10 {
-                value = list_type = 'browser_pi1'
+                data = GP:tx_browser_pi1|plugin
+                wrap = uid=|
               }
             }
           }
-            // Only one browser plugin is needed
-          max = 1
         }
       }
     }
