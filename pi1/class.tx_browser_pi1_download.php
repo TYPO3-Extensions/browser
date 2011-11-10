@@ -117,9 +117,73 @@ class tx_browser_pi1_download
     }
       // RETURN typeNum isn't the csv typeNum
 
+    $this->statistics( );
+    $this->delivery( );
     return 'DOWNLOAD';
   }
 
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * Delivery
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+  /**
+ * delivery():
+ *
+ * @return  void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  private function delivery( )
+  {
+    $this->delivery_sendFile( );
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * delivery_sendFile():
+ *
+ * @return  void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  private function delivery_sendFile( )
+  {
+		// Send file to browser
+		$file = t3lib_div::getFileAbsFileName( $this->filePath . $download[0]['file'] );
+		$fileInformation = $this->fileFunc->getTotalFileInfo( $file );
+
+		header( 'Content-Description: Modern Downloads File Transfer' );
+		header( 'Content-type: application/force-download' );
+		header( 'Content-Disposition: attachment; filename="' . $download[0]['file'] . '"' );
+		header( 'Content-Length: ' . $fileInformation['size'] );
+		//@readfile( $file ) || die ( __METHOD__ . ' (' . __LINE__ . '): No file!' );
+		exit;
+  }
 
 
 
@@ -147,8 +211,8 @@ class tx_browser_pi1_download
  *                The globals are needed by other classes while runtime.
  *
  * @return  void
- * @version 4.0.0
- * @since 4.0.0
+ * @version 3.9.3
+ * @since 3.9.3
  */
   public function set_typeNum( )
   {
@@ -184,6 +248,79 @@ class tx_browser_pi1_download
     }
       // DRS - Development Reporting System
 
+  }
+
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * Statistics
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+  /**
+ * download_statistics():
+ *
+ * @return  void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  private function statistics( )
+  {
+    //$this->statistics_download( )
+    //$this->statistics_downloadByVisit( )
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * statistics_download():
+ *
+ * @return  void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  private function statistics_download( )
+  {
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * statistics_downloadByVisit():
+ *
+ * @return  void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  private function statistics_downloadByVisit( )
+  {
   }
 
   
