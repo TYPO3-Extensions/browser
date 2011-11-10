@@ -117,6 +117,10 @@ class tx_browser_pi1_download
     }
       // RETURN typeNum isn't the csv typeNum
 
+    require_once( PATH_t3lib . 'class.t3lib_basicfilefunc.php' );
+      // Initialize new fileFunc object
+		$this->fileFunc = t3lib_div::makeInstance( 't3lib_basicFileFunctions' );
+
     $this->statistics( );
     $this->delivery( );
     return 'DOWNLOAD';
