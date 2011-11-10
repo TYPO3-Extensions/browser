@@ -123,11 +123,11 @@ class tx_browser_pi1_download
 
     $this->statistics( 'plus' );
       // EXIT in case of success!
-    $this->delivery_andExit( );
+    $prompt_error = $this->delivery_andExit( );
     
     $this->statistics( 'minus' );
 
-    return 'DOWNLOAD ERROR';
+    return $prompt_error;
   }
 
 
@@ -161,7 +161,7 @@ class tx_browser_pi1_download
  */
   private function delivery_andExit( )
   {
-    $this->delivery_sendFile( );
+    return $this->delivery_sendFile( );
   }
 
 

@@ -573,10 +573,10 @@ class tx_browser_pi1 extends tslib_pibase {
     {
         // EXIT:  $this->objDownload->download will exit in case of success
         //        There is a prompt only in case of an error
-      $prompt = $this->objDownload->download( );
+      $prompt_error = $this->objDownload->download( );
 
         // RETURN in case of an error
-      return $this->objWrapper->wrapInBaseIdClass($prompt);
+      return $this->objWrapper->wrapInBaseIdClass( $prompt_error );
     }
       // Download: send the file ...
 
