@@ -261,9 +261,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
                               $splitConf[$key]['itemRendering'],
                               $splitConf[$key]['itemRendering.']
                             );
-        $str_outputEntry  = str_replace( rawurlencode( '###KEY###' ),             $key,                             $str_outputEntry );
-        $str_outputEntry  = str_replace( rawurlencode( '###FILENAME###' ),        $fileName,                        $str_outputEntry );
-        $str_outputEntry  = str_replace( rawurlencode( '###TT_CONTENT.UID###' ),  $this->pObj->cObj->data['uid'],   $str_outputEntry );
+        $str_outputEntry  = str_replace( rawurlencode( '###KEY###' ),             $key,                       $str_outputEntry );
+        $str_outputEntry  = str_replace( rawurlencode( '###FILENAME###' ),        $fileName,                  $str_outputEntry );
+        $str_outputEntry  = str_replace( rawurlencode( '###TT_CONTENT.UID###' ),  $this->cObj->data['uid'],   $str_outputEntry );
 //        $markerArray['###KEY###']       = $key;
 //        $markerArray['###FILENAME###']  = $fileName;
 //        $str_outputEntry                = $this->pObj->cObj->substituteMarkerArray($str_outputEntry, $markerArray);
