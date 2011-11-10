@@ -566,6 +566,32 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
+      // download: return the result ...
+
+      // #31230, 111108, dwildt+
+    switch( $this->objDownload->str_typeNum )
+    {
+        // typeNum name is download
+      case( 'download' ) :
+        //header('Content-type: text/csv');
+        //header('Content-type: application/msexcel');
+        //header('Content-Disposition: attachment; filename="downloaded.csv"');
+        return 'Download';
+        return trim($str_template_completed);
+        break;
+        // CSV export isn't enabled
+      case( false ) :
+      default :
+        // Do nothing
+        //return 'CSV export isn\'t enabled. Please enable it in the plugin/flexform of your TYPO3-Browser.';
+        break;
+    }
+      // download: return the result ...
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Get the HTML template
 
     $arr_data['view'] = $this->view;
@@ -863,31 +889,6 @@ class tx_browser_pi1 extends tslib_pibase {
       return trim($str_template_completed);
     }
       // XML/RSS: return the result (XML string) without wrapInBaseClass
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // download: return the result ...
-
-      // #31230, 111108, dwildt+
-    switch( $this->objDownload->str_typeNum )
-    {
-        // typeNum name is download
-      case( 'download' ) :
-        //header('Content-type: text/csv');
-        //header('Content-type: application/msexcel');
-        //header('Content-Disposition: attachment; filename="downloaded.csv"');
-        return trim($str_template_completed);
-        break;
-        // CSV export isn't enabled
-      case( false ) :
-      default :
-        // Do nothing
-        //return 'CSV export isn\'t enabled. Please enable it in the plugin/flexform of your TYPO3-Browser.';
-        break;
-    }
-     // download: return the result ...
 
 
 
