@@ -89,6 +89,47 @@ class tx_browser_pi1_download
 
   /***********************************************
   *
+  * Main
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+  /**
+ * download( ): 
+ *
+ * @return  void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  public function download( )
+  {
+      // RETURN typeNum isn't the csv typeNum
+    if( $this->str_typeNum != 'download' )
+    {
+      return;
+    }
+      // RETURN typeNum isn't the csv typeNum
+
+    return 'DOWNLOAD';
+  }
+
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
   * typeNum
   *
   **********************************************/
