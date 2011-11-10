@@ -166,7 +166,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $conf['linkProc.']['removePrependedNumbers'] = 0;
       }
 
-        // LOOP: files
+      // dwildt, 111110, +
+    $markerArray = array();
+    $markerArray = $this->pObj->objMarker->extend_marker_wi_cObjData($markerArray);
+    $markerArray = $this->pObj->objMarker->extend_marker_wi_pivars($markerArray);
+
+    // LOOP: files
       $filesData = array();
       foreach($fileArray as $key => $fileName)
       {
@@ -256,9 +261,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
                               $splitConf[$key]['itemRendering'],
                               $splitConf[$key]['itemRendering.']
                             );
-        $str_outputEntry  = str_replace( rawurlencode( '###KEY###' ),       $key,       $str_outputEntry );
-        $str_outputEntry  = str_replace( rawurlencode( '###FILENAME###' ),  $fileName,  $str_outputEntry );
-        $outputEntries[]  = $str_outputEntry;
+//        $str_outputEntry  = str_replace( rawurlencode( '###KEY###' ),       $key,       $str_outputEntry );
+//        $str_outputEntry  = str_replace( rawurlencode( '###FILENAME###' ),  $fileName,  $str_outputEntry );
+        $markerArray['###KEY###']       = $key;
+        $markerArray['###FILENAME###']  = $fileName;
+        $str_outputEntry                = $this->pObj->cObj->substituteMarkerArray($str_outputEntry, $markerArray);
+        $outputEntries[]                = $str_outputEntry;
 // dwildt, 111106, +
       }
         // LOOP: files
