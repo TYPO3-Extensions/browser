@@ -121,9 +121,13 @@ class tx_browser_pi1_download
       // Initialize new fileFunc object
 		$this->fileFunc = t3lib_div::makeInstance( 't3lib_basicFileFunctions' );
 
-    $this->statistics( );
-    $this->delivery( );
-    return 'DOWNLOAD';
+    $this->statistics( 'plus' );
+      // EXIT in case of success!
+    $this->delivery_andExit( );
+    
+    $this->statistics( 'minus' );
+
+    return 'DOWNLOAD ERROR';
   }
 
 
@@ -155,7 +159,7 @@ class tx_browser_pi1_download
  * @version 3.9.3
  * @since 3.9.3
  */
-  private function delivery( )
+  private function delivery_andExit( )
   {
     $this->delivery_sendFile( );
   }
@@ -179,13 +183,23 @@ class tx_browser_pi1_download
   {
 		// Send file to browser
 		$file = t3lib_div::getFileAbsFileName( $this->filePath . $download[0]['file'] );
+
+    if( ! file_exists($file) )
+    {
+      return 'The file ' . $file . ' does not exist.';
+    }
+
 		$fileInformation = $this->fileFunc->getTotalFileInfo( $file );
 
+      //header('Content-type: text/csv');
+      //header('Content-type: application/msexcel');
+      //header('Content-Disposition: attachment; filename="downloaded.csv"');
 		header( 'Content-Description: Modern Downloads File Transfer' );
 		header( 'Content-type: application/force-download' );
 		header( 'Content-Disposition: attachment; filename="' . $download[0]['file'] . '"' );
 		header( 'Content-Length: ' . $fileInformation['size'] );
-		//@readfile( $file ) || die ( __METHOD__ . ' (' . __LINE__ . '): No file!' );
+    // Read the file and write it to the output buffer.
+		@readfile( $file ) || die ( __METHOD__ . ' (' . __LINE__ . '): ' . readfile( $file ) );
 		exit;
   }
 

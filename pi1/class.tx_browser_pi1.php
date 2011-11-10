@@ -566,17 +566,19 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
-      // download: return the result ...
+      // Download: send the file ...
 
-      // #31230, 111108, dwildt+
+      // #31230, 111110, dwildt+
     if( $this->objDownload->str_typeNum == 'download' )
     {
-      //header('Content-type: text/csv');
-      //header('Content-type: application/msexcel');
-      //header('Content-Disposition: attachment; filename="downloaded.csv"');
-      return $this->objDownload->download( );
+        // EXIT:  $this->objDownload->download will exit in case of success
+        //        There is a prompt only in case of an error
+      $prompt = $this->objDownload->download( );
+
+        // RETURN in case of an error
+      return $this->objWrapper->wrapInBaseIdClass($prompt);
     }
-      // download: return the result ...
+      // Download: send the file ...
 
 
 
