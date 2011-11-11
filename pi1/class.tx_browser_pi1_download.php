@@ -213,11 +213,11 @@ class tx_browser_pi1_download
       // Is table.field part of the select?
     $select = $this->pObj->conf['views.'][$this->view . '.'][$this->mode . '.']['select'];
     $pos    = strpos($select, $this->table . '.' . $this->field );
-    if ( ! ( $pos === false ) )
+    if ( $pos === false )
     {
       $prompt = ''.
       'Security check: ' . $this->table . '.' . $this->field . ' ' .
-      'isn\'t part of plugin.tx_browser_pi1.views.' . $this->view . '. ' . $this->mode . '.select.<br />' .
+      'isn\'t part of plugin.tx_browser_pi1.views.' . $this->view . '.' . $this->mode . '.select.<br />' .
       __METHOD__ . ' (' . __LINE__ . ')';
       return $prompt;
     }
