@@ -59,9 +59,22 @@ class tx_browser_pi1_download
   var $int_typeNum    = null;
     // [String] Name of the current typeNum
   var $str_typeNum    = null;
+
     // [Boolean] Is dwonloading allowed?
   var $bool_downloadsAllowed  = false;
 
+    // [String] view: list || single
+  var $view   = null;
+    // [Integer] mode (index) of the current view
+  var $mode   = null;
+    // [String] table: label of the current table
+  var $table  = null;
+    // [Integer] uid: uid of the current record
+  var $uid    = null;
+    // [String] field: label of the field with the files
+  var $field  = null;
+    // [Integer] key: index of the file
+  var $key    = null;
 
 
 
@@ -112,21 +125,44 @@ class tx_browser_pi1_download
  */
   public function download( )
   {
-      // RETURN typeNum isn't the csv typeNum
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN typeNum isn't the download typeNum
+
     if( $this->str_typeNum != 'download' )
     {
       return;
     }
-      // RETURN typeNum isn't the csv typeNum
+      // RETURN typeNum isn't the download typeNum
 
-    $this->download_init( );
 
-    if( ! $this->bool_downloadsAllowed )
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Init global class vars
+
+    $prompt_error = $this->download_init( );
+    if( $prompt_error )
     {
-      $prompt = ''.
-      'Downloading isn\'t allowed. Please enable the TypoScript property flexform.sDEF.downloads.allowed.';
-      return $prompt;
+      return $prompt_error;
     }
+      // Init global class vars
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Check table, field and TypoScript
+
+    $prompt_error = $this->download_check( );
+    if( $prompt_error )
+    {
+      return $prompt_error;
+    }
+      // Check table, field and TypoScript
+
+
+
 
     // Parameter auswerten
     // Dateinamen und Pfad holen
@@ -156,7 +192,62 @@ class tx_browser_pi1_download
 
 
   /**
- * download_init( ): Init the globals $csv_devider, $csv_enclosure and $csv_striptag
+ * download_init( ):
+ *
+ * @return  void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  private function download_check( )
+  {
+      // Does the view and the mode exist?
+    if( ! isset( $this->pObj->conf['views.'][$this->view . '.'][$this->mode . '.']['select'] ) )
+    {
+      $prompt = ''.
+      'Security check: TypoScript property ' .
+      'plugin.tx_browser_pi1.views.' . $this->view . '. ' . $this->mode . '.select doesn\t exist.<br />' .
+      __METHOD__ . ' (' . __LINE__ . ')';
+      return $prompt;
+    }
+
+      // Is table.field part of the select?
+    $select = $this->pObj->conf['views.'][$this->view . '.'][$this->mode . '.']['select'];
+    $pos    = strpos($select, $this->table . '.' . $this->field );
+    if ( ! ( $pos === false ) )
+    {
+      $prompt = ''.
+      'Security check: ' . $this->table . '.' . $this->field . ' ' .
+      'isn\'t part of plugin.tx_browser_pi1.views.' . $this->view . '. ' . $this->mode . '.select.<br />' .
+      __METHOD__ . ' (' . __LINE__ . ')';
+      return $prompt;
+    }
+
+      // Is table.field part of the TCA? Is field a file type?
+      // Load the TCA for the current table
+    $this->pObj->objZz->loadTCA($this->table);
+      // Check, if the field is an element of the current table
+    if( ! isset($GLOBALS['TCA'][$this->table]['columns'][$this->field] ) )
+    {
+      $prompt = ''.
+      'Security check: ' . $this->table . '.' . $this->field . ' ' .
+      'isn\'t part of the TCA.<br />' .
+      __METHOD__ . ' (' . __LINE__ . ')';
+      return $prompt;
+    }
+
+    return false;
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * download_init( ):
  *
  * @return  void
  * @version 3.9.3
@@ -164,9 +255,45 @@ class tx_browser_pi1_download
  */
   private function download_init( )
   {
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN: Downloading isn\'t allowed
+
     $cObj_name                    = $this->pObj->conf['flexform.']['sDEF.']['downloads.']['allowed'];
     $cObj_conf                    = $this->pObj->conf['flexform.']['sDEF.']['downloads.']['allowed.'];
     $this->bool_downloadsAllowed  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+
+    if( ! $this->bool_downloadsAllowed )
+    {
+      $prompt = ''.
+      'Downloading isn\'t allowed. Please enable the TypoScript property flexform.sDEF.downloads.allowed.';
+      return $prompt;
+    }
+      // RETURN: Downloading isn\'t allowed
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Set all needed informations global
+
+      // piVars['file']: i.e. single.301.tx_org_doc.9.documents.0
+    $arr_file = explode('.' , $this->pObj->piVars['file'] );
+      // view: list || single
+    $this->view   = $arr_file[0];
+      // mode (index) of the current view
+    $this->mode   = $arr_file[1];
+      // table: label of the current table
+    $this->table  = $arr_file[2];
+      // uid: uid of the current record
+    $this->uid    = (int) $arr_file[3];
+      // field: label of the field with the files
+    $this->field  = $arr_file[4];
+      // key: index of the file
+    $this->key    = (int) $arr_file[5];
+      // Set all needed informations global
+
+    return false;
 
   }
 
