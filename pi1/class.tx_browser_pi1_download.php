@@ -381,6 +381,11 @@ class tx_browser_pi1_download
     $select_fields  = $this->field;
     $from_table     = $this->table;
     $where_clause   = 'uid = ' . $this->uid;
+    $enablefields   = $this->pObj->cObj->enableFields( $this->table );
+    if( $enablefields )
+    {
+      $where_clause = $where_clause . ' AND ' . $enablefields;
+    }
     $query = $GLOBALS['TYPO3_DB']->SELECTquery( $select_fields, $from_table, $where_clause, $groupBy = '', $orderBy = '', $limit = '' );
     if ( $this->pObj->b_drs_sql || $this->pObj->b_drs_download )
     {
