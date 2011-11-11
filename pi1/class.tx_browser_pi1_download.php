@@ -59,6 +59,8 @@ class tx_browser_pi1_download
   var $int_typeNum    = null;
     // [String] Name of the current typeNum
   var $str_typeNum    = null;
+    // [Boolean] Is dwonloading allowed?
+  var $bool_downloadsAllowed  = false;
 
 
 
@@ -117,14 +119,24 @@ class tx_browser_pi1_download
     }
       // RETURN typeNum isn't the csv typeNum
 
-    require_once( PATH_t3lib . 'class.t3lib_basicfilefunc.php' );
-      // Initialize new fileFunc object
-		$this->fileFunc = t3lib_div::makeInstance( 't3lib_basicFileFunctions' );
+    $this->download_init( );
 
-    if( ! $this->download_init( ) )
+    if( ! $this->bool_downloadsAllowed )
     {
-      return 'ERROR $this->download_init( )';
+      $prompt = ''.
+      'Downloading isn\'t allowed. Please enable the TypoScript property flexform.sDEF.downloads.allowed.';
+      return $prompt;
     }
+
+    // Parameter auswerten
+    // Dateinamen und Pfad holen
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $this->pObj->piVars );
+    }
+
+    return;
 
     $this->statistics( 'plus' );
       // EXIT in case of success!
@@ -152,24 +164,10 @@ class tx_browser_pi1_download
  */
   private function download_init( )
   {
-    // Parameter auswerten
-    // Dateinamen und Pfad holen
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $this->pObj->piVars, $this->pObj->conf['flexform.']['sDEF.']['downloads.']['allowed.'] );
-    }
+    $cObj_name                    = $this->pObj->conf['flexform.']['sDEF.']['downloads.']['allowed'];
+    $cObj_conf                    = $this->pObj->conf['flexform.']['sDEF.']['downloads.']['allowed.'];
+    $this->bool_downloadsAllowed  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
 
-    return;
-    $cObj_name            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['devider.']['stdWrap'];
-    $cObj_conf            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['devider.']['stdWrap.'];
-    $this->csv_devider    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
-    $cObj_name            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['enclosure.']['stdWrap'];
-    $cObj_conf            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['enclosure.']['stdWrap.'];
-    $this->csv_enclosure  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
-    $cObj_name            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['strip_tag.']['stdWrap'];
-    $cObj_conf            = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['strip_tag.']['stdWrap.'];
-    $this->csv_striptag   = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
   }
 
 
@@ -230,6 +228,10 @@ class tx_browser_pi1_download
     {
       return 'The file ' . $file . ' does not exist.';
     }
+
+    require_once( PATH_t3lib . 'class.t3lib_basicfilefunc.php' );
+      // Initialize new fileFunc object
+		$this->fileFunc = t3lib_div::makeInstance( 't3lib_basicFileFunctions' );
 
 		$fileInformation = $this->fileFunc->getTotalFileInfo( $file );
 
