@@ -445,7 +445,7 @@ class tx_browser_pi1_download
       // RETURN: There is no file whith the current key
     if( empty( $str_file ) )
     {
-      $prompt_01 =  'There isn\'t any file. Key is ' . $this->key;
+      $prompt_01 =  'There isn\'t any file. Key is \'' . $this->key . '\'.';
       if ($this->pObj->b_drs_error)
       {
         t3lib_div::devlog( '[ERROR/DOWNLOAD] '  . $prompt_01, $this->pObj->extKey, 0 );
@@ -470,33 +470,29 @@ class tx_browser_pi1_download
 
 
 
-//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if ( ! ( $pos === false ) )
-//    {
-//      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $rows[0][$this->field] );
-//    }
-//    return;
-
-
-
       //////////////////////////////////////////////////////////////////////////
       //
-      // Send the file
+      // filefunc object
 
       // Require fileFunc class
     require_once( PATH_t3lib . 'class.t3lib_basicfilefunc.php' );
       // Initialize new fileFunc object
 		$this->fileFunc = t3lib_div::makeInstance( 't3lib_basicFileFunctions' );
+      // Get fileinfo
+		$fileInfo       = $this->fileFunc->getTotalFileInfo( $str_pathFile );
+      // filefunc object
 
-		$fileInfo = $this->fileFunc->getTotalFileInfo( $str_pathFile );
+//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if ( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $fileInfo );
+//    }
+//    return;
 
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $fileInfo );
-    }
-    return;
 
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Send the file
 
       //header('Content-type: text/csv');
       //header('Content-type: application/msexcel');
