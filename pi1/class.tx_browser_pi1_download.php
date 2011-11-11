@@ -422,6 +422,10 @@ class tx_browser_pi1_download
       // RETURN typeNum is 0 or empty
     if( empty ( $typeNum ) )
     {
+      if( $this->pObj->b_drs_download )
+      {
+        t3lib_div::devLog('[INFO/download] typeNum is 0 or empty.', $this->pObj->extKey, 0);
+      }
       return;
     }
       // RETURN typeNum is 0 or empty
@@ -442,7 +446,7 @@ class tx_browser_pi1_download
       // Check the proper typeNum
 
       // DRS - Development Reporting System
-    if ($this->pObj->b_drs_download)
+    if( $this->pObj->b_drs_download )
     {
       t3lib_div::devLog('[INFO/download] typeNum is ' . $typeNum . '. Name is ' . $this->str_typeNum . '.', $this->pObj->extKey, 0);
     }
