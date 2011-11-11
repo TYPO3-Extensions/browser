@@ -345,6 +345,7 @@ class tx_browser_pi1_download
   {
       //////////////////////////////////////////////////////////////////////////
       //
+      // RETURN: Any upload folder isn't configured
 
     $uploadFolder = $GLOBALS['TCA'][$this->table]['columns'][$this->field]['config']['uploadfolder'];
     if( empty( $uploadFolder ) )
@@ -358,28 +359,38 @@ class tx_browser_pi1_download
         t3lib_div::devlog( '[HELP/DOWNLOAD] ' . $prompt_02, $this->pObj->extKey, 1 );
       }
       return $prompt_01 . ' ' . $prompt_02;
-      
+    }
+      // RETURN: Any upload folder isn't configured
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Get the absoluite path
+
+		$str_pathAbsolute = t3lib_div::getFileAbsFileName( $uploadFolder );
+    $str_pathAbsolute = rtrim( $str_pathAbsolute, '/' ) . '/';
+      // Get the absoluite path
+
+
+ 
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Get the file
+
+    $select_fields  = $this->field;
+    $from_table     = $this->table;
+    $where_clause   = 'uid = ' . $this->uid;
+    $query = $GLOBALS['TYPO3_DB']->SELECTquery( $select_fields, $from_table, $where_clause, $groupBy = '', $orderBy = '', $limit = '' );
+    if ( $this->pObj->b_drs_sql || $this->pObj->b_drs_download )
+    {
+      t3lib_div::devlog( '[INFO/SQL+DOWNLOAD] ' . $query, $this->pObj->extKey, 3 );
     }
 
-//      // Is table.field part of the TCA? Is field a file type?
-//      // Load the TCA for the current table
-//    $this->pObj->objZz->loadTCA($this->table);
-//      // Check, if the field is an element of the current table
-//    if( ! isset($GLOBALS['TCA'][$this->table]['columns'][$this->field] ) )
-//    {
-//      $prompt = ''.
-//      'Security check: ' . $this->table . '.' . $this->field . ' ' .
-//      'isn\'t part of the TCA.<br />' .
-//      __METHOD__ . ' (' . __LINE__ . ')';
-//      return $prompt;
-//    }
-
-		// Send file to browser
-		$str_pathAbsolute = t3lib_div::getFileAbsFileName( $uploadFolder );
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $str_pathAbsolute );
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $str_pathAbsolute, $query );
     }
 
     return;
