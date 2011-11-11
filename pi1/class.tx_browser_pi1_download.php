@@ -343,19 +343,46 @@ class tx_browser_pi1_download
  */
   private function delivery_sendFile( )
   {
-    // Parameter auswerten
-    // Dateinamen und Pfad holen
+      //////////////////////////////////////////////////////////////////////////
+      //
+
+    $uploadFolder = $GLOBALS['TCA'][$this->table]['columns'][$this->field]['config']['uploadfolder'];
+    if( empty( $uploadFolder ) )
+    {
+      $prompt_01 =  'Any upload folder is configured in the TCA.';
+      $prompt_02 =  'Please take care of a proper configuration: ';
+                    '$TCA. ' . $this->table . 'columns.' . $this->field . 'config.uploadfolder.';
+      if ( $this->pObj->b_drs_download )
+      {
+        t3lib_div::devlog( '[ERROR/DOWNLOAD] ' . $prompt_01, $this->pObj->extKey, 3 );
+        t3lib_div::devlog( '[HELP/DOWNLOAD] ' . $prompt_02, $this->pObj->extKey, 1 );
+      }
+      return $prompt_01 . ' ' . $prompt_02;
+      
+    }
+
+//      // Is table.field part of the TCA? Is field a file type?
+//      // Load the TCA for the current table
+//    $this->pObj->objZz->loadTCA($this->table);
+//      // Check, if the field is an element of the current table
+//    if( ! isset($GLOBALS['TCA'][$this->table]['columns'][$this->field] ) )
+//    {
+//      $prompt = ''.
+//      'Security check: ' . $this->table . '.' . $this->field . ' ' .
+//      'isn\'t part of the TCA.<br />' .
+//      __METHOD__ . ' (' . __LINE__ . ')';
+//      return $prompt;
+//    }
+
+		// Send file to browser
+		$str_pathAbsolute = t3lib_div::getFileAbsFileName( $uploadFolder );
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $this->pObj->piVars );
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $str_pathAbsolute );
     }
 
     return;
-
-
-		// Send file to browser
-		$file = t3lib_div::getFileAbsFileName( $this->filePath . $download[0]['file'] );
 
     if( ! file_exists( $file ) )
     {
@@ -364,7 +391,7 @@ class tx_browser_pi1_download
       {
         t3lib_div::devlog( '[ERROR/DOWNLOAD] ' . $prompt, $this->pObj->extKey, 3 );
       }
-      return 'The file \'' . $file . '\' does not exist.';
+      return $prompt;
     }
 
     require_once( PATH_t3lib . 'class.t3lib_basicfilefunc.php' );
@@ -424,7 +451,7 @@ class tx_browser_pi1_download
     {
       if( $this->pObj->b_drs_download )
       {
-        t3lib_div::devLog('[INFO/download] typeNum is 0 or empty.', $this->pObj->extKey, 0);
+        t3lib_div::devLog('[INFO/DOWNLOAD] typeNum is 0 or empty.', $this->pObj->extKey, 0);
       }
       return;
     }
@@ -448,7 +475,7 @@ class tx_browser_pi1_download
       // DRS - Development Reporting System
     if( $this->pObj->b_drs_download )
     {
-      t3lib_div::devLog('[INFO/download] typeNum is ' . $typeNum . '. Name is ' . $this->str_typeNum . '.', $this->pObj->extKey, 0);
+      t3lib_div::devLog('[INFO/DOWNLOAD] typeNum is \'' . $typeNum . '\'. Name is \'' . $this->str_typeNum . '\'.', $this->pObj->extKey, 0);
     }
       // DRS - Development Reporting System
 
