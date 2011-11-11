@@ -157,19 +157,19 @@ class tx_browser_pi1_statistics
     $conf_adjustment = $this->pObj->conf['flexform.']['sDEF.']['statistics.']['adjustment.'];
 
       // List of IPs, which should ignored
-    $coa_name                       = $conf_adjustment['dontAccountIPsOfCsvList'];
-    $coa_conf                       = $conf_adjustment['dontAccountIPsOfCsvList.'];
-    $this->dontAccountIPsOfCsvList  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+    $coa_name                     = $conf_adjustment['dontAccountIPsOfCsvList'];
+    $coa_conf                     = $conf_adjustment['dontAccountIPsOfCsvList.'];
+    $this->dontAccountIPsOfCsvLt  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Report in the frontend in case of an unexpected sql result
-    $coa_name                       = $conf_adjustment['debugging'];
-    $coa_conf                       = $conf_adjustment['debugging.'];
-    $this->debugging             = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+    $coa_name                     = $conf_adjustment['debugging'];
+    $coa_conf                     = $conf_adjustment['debugging.'];
+    $this->debugging              = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Timeout (for downloads and visits)
-    $coa_name                       = $conf_adjustment['timeout'];
-    $coa_conf                       = $conf_adjustment['timeout.'];
-    $this->timeout                  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+    $coa_name                     = $conf_adjustment['timeout'];
+    $coa_conf                     = $conf_adjustment['timeout.'];
+    $this->timeout                = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Field for counting downloads
     $coa_name                     = $conf_adjustment['fields.']['downloads'];

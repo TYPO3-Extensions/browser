@@ -164,16 +164,6 @@ class tx_browser_pi1_download
 
 
 
-    // Parameter auswerten
-    // Dateinamen und Pfad holen
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $this->pObj->piVars );
-    }
-
-    return;
-
     $this->statistics( 'plus' );
       // EXIT in case of success!
     $prompt_error = $this->delivery_andExit( );
@@ -265,9 +255,14 @@ class tx_browser_pi1_download
 
     if( ! $this->bool_downloadsAllowed )
     {
-      $prompt = ''.
-      'Downloading isn\'t allowed. Please enable the TypoScript property flexform.sDEF.downloads.allowed.';
-      return $prompt;
+      $prompt_01 = 'Downloading isn\'t allowed.';
+      $prompt_02 = 'Please enable the Flexform/TypoScript property flexform.sDEF.downloads.allowed.';
+      if ( $this->pObj->b_drs_download )
+      {
+        t3lib_div::devlog( '[INFO/DOWNLOAD] ' . $prompt_01, $this->pObj->extKey, 0 );
+        t3lib_div::devlog( '[HELP/DOWNLOAD] ' . $prompt_02, $this->pObj->extKey, 1 );
+      }
+      return $prompt_01 . ' ' . $prompt_02;
     }
       // RETURN: Downloading isn\'t allowed
 
@@ -348,12 +343,28 @@ class tx_browser_pi1_download
  */
   private function delivery_sendFile( )
   {
+    // Parameter auswerten
+    // Dateinamen und Pfad holen
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $this->pObj->piVars );
+    }
+
+    return;
+
+
 		// Send file to browser
 		$file = t3lib_div::getFileAbsFileName( $this->filePath . $download[0]['file'] );
 
-    if( ! file_exists($file) )
+    if( ! file_exists( $file ) )
     {
-      return 'The file ' . $file . ' does not exist.';
+      $prompt = 'The file \'' . $file . '\' does not exist.';
+      if ( $this->pObj->b_drs_download )
+      {
+        t3lib_div::devlog( '[ERROR/DOWNLOAD] ' . $prompt, $this->pObj->extKey, 3 );
+      }
+      return 'The file \'' . $file . '\' does not exist.';
     }
 
     require_once( PATH_t3lib . 'class.t3lib_basicfilefunc.php' );
