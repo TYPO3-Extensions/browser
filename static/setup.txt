@@ -1637,6 +1637,14 @@ plugin.tx_browser_pi1 {
 
   flexform {
     sDEF {
+      downloads {
+          // Allow to download files
+        allowed = TEXT
+        allowed {
+            // [Boolean] Downloading is forbidden by default
+          value = 0
+        }
+      }
       statistics {
           // Enable the statistics module
         enabled = TEXT
