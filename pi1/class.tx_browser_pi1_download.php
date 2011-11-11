@@ -376,26 +376,68 @@ class tx_browser_pi1_download
  
       //////////////////////////////////////////////////////////////////////////
       //
-      // Get the file
+      // Build and execute the query for getting files
 
+      // Build the query
     $select_fields  = $this->field;
     $from_table     = $this->table;
     $where_clause   = 'uid = ' . $this->uid;
     $enablefields   = $this->pObj->cObj->enableFields( $this->table );
     if( $enablefields )
     {
-      $where_clause = $where_clause . ' AND ' . $enablefields;
+      $where_clause = $where_clause . $enablefields;
     }
     $query = $GLOBALS['TYPO3_DB']->SELECTquery( $select_fields, $from_table, $where_clause, $groupBy = '', $orderBy = '', $limit = '' );
-    if ( $this->pObj->b_drs_sql || $this->pObj->b_drs_download )
+    if( $this->pObj->b_drs_sql || $this->pObj->b_drs_download )
     {
       t3lib_div::devlog( '[INFO/SQL+DOWNLOAD] ' . $query, $this->pObj->extKey, 3 );
     }
+      // Build the query
+
+      // Execute the query
+    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery( $select_fields, $from_table, $where_clause, $groupBy = '', $orderBy = '', $limit = '' );
+      // Execute the query
+      // Build and execute the query for getting files
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Evaluate the query
+
+      // LOOP count rows of the SQL result
+    $rows             = array( );
+    $int_rows_counter = 0;
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+      $rows[$int_rows_counter] = $row;
+      $int_rows_counter++;
+    }
+      // LOOP count rows of the SQL result
+
+      // Free the SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result($res);
+
+      // RETURN: There are 0 ore more than one rows
+    if( $int_rows_counter != 1 )
+    {
+      $prompt_01 =  'query: ' . $query;
+      $prompt_02 =  'RETURN: Result are #' . $int_rows_counter . ' rows.';
+      if ($this->pObj->b_drs_error)
+      {
+        t3lib_div::devlog( '[INFO/DOWNLOAD] '   . $prompt_01, $this->pObj->extKey, 3 );
+        t3lib_div::devlog( '[ERROR/DOWNLOAD] '  . $prompt_02, $this->pObj->extKey, 0 );
+      }
+      return $prompt_01 . '<br />' . $prompt_02;
+    }
+      // RETURN: There are 0 ore more than one rows
+      // Evaluate the query
+
 
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $str_pathAbsolute, $query );
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $rows[0][$this->field] );
     }
 
     return;
