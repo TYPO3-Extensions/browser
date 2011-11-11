@@ -441,9 +441,21 @@ class tx_browser_pi1_download
 
     $arr_files    = explode(',', $rows[0][$this->field]);
     $str_file     = $arr_files[$this->key];
-    $str_pathFile = $str_pathAbsolute . $str_file;
+
+      // RETURN: There is no file whith the current key
+    if( empty( $str_file ) )
+    {
+      $prompt_01 =  'There isn\'t any file. Key is ' . $this->key;
+      if ($this->pObj->b_drs_error)
+      {
+        t3lib_div::devlog( '[ERROR/DOWNLOAD] '  . $prompt_01, $this->pObj->extKey, 0 );
+      }
+      return $prompt_01;
+    }
+      // RETURN: There is no file whith the current key
 
       // RETURN: file doesn't exist
+    $str_pathFile = $str_pathAbsolute . $str_file;
     if( ! file_exists( $str_pathFile ) )
     {
       $prompt = 'The file \'' . $str_pathFile . '\' does not exist.';
@@ -455,7 +467,6 @@ class tx_browser_pi1_download
     }
       // RETURN: file doesn't exist
       // Get the file
-
 
 
 
