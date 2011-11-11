@@ -434,40 +434,70 @@ class tx_browser_pi1_download
       // Evaluate the query
 
 
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $rows[0][$this->field] );
-    }
 
-    return;
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Get the file
 
-    if( ! file_exists( $file ) )
+    $arr_files    = explode(',', $rows[0][$this->field]);
+    $str_file     = $arr_files[$this->key];
+    $str_pathFile = $str_pathAbsolute . $str_file;
+
+      // RETURN: file doesn't exist
+    if( ! file_exists( $str_pathFile ) )
     {
-      $prompt = 'The file \'' . $file . '\' does not exist.';
+      $prompt = 'The file \'' . $str_pathFile . '\' does not exist.';
       if ( $this->pObj->b_drs_download )
       {
         t3lib_div::devlog( '[ERROR/DOWNLOAD] ' . $prompt, $this->pObj->extKey, 3 );
       }
       return $prompt;
     }
+      // RETURN: file doesn't exist
+      // Get the file
 
+
+
+
+//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if ( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $rows[0][$this->field] );
+//    }
+//    return;
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Send the file
+
+      // Require fileFunc class
     require_once( PATH_t3lib . 'class.t3lib_basicfilefunc.php' );
       // Initialize new fileFunc object
 		$this->fileFunc = t3lib_div::makeInstance( 't3lib_basicFileFunctions' );
 
-		$fileInformation = $this->fileFunc->getTotalFileInfo( $file );
+		$fileInfo = $this->fileFunc->getTotalFileInfo( $str_pathFile );
+
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $fileInfo );
+    }
+    return;
+
 
       //header('Content-type: text/csv');
       //header('Content-type: application/msexcel');
       //header('Content-Disposition: attachment; filename="downloaded.csv"');
 		header( 'Content-Description: Modern Downloads File Transfer' );
 		header( 'Content-type: application/force-download' );
-		header( 'Content-Disposition: attachment; filename="' . $download[0]['file'] . '"' );
-		header( 'Content-Length: ' . $fileInformation['size'] );
+		header( 'Content-Disposition: attachment; filename="' . $str_file . '"' );
+		header( 'Content-Length: ' . $fileInfo['size'] );
     // Read the file and write it to the output buffer.
-		@readfile( $file ) || die ( __METHOD__ . ' (' . __LINE__ . '): ' . readfile( $file ) );
+		@readfile( $str_pathFile ) || die ( __METHOD__ . ' (' . __LINE__ . '): ' . readfile( $str_pathFile ) );
 		exit;
+      // Send the file
   }
 
 
