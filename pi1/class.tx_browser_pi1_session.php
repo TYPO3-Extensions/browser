@@ -563,7 +563,7 @@ class tx_browser_pi1_session
  * @version 3.9.3
  * @since 3.9.3
  */
-  public function statisticsNewDownload( )
+  public function statisticsNewDownload( $table, $field, $uid )
   {
       //////////////////////////////////////////////////////////////////////////
       //
@@ -606,12 +606,12 @@ class tx_browser_pi1_session
     $tt_content_uid       = $this->pObj->cObj->data['uid'];
       // Get the name of the session data space
     $str_data_space       = $this->getNameOfDataSpace( );
-      // Current table
-    $table                = $this->pObj->localTable;
-      // Name of the field for statistics data
-    $field                = $this->pObj->objStat->fieldVisits;
-      // Uid of the current record
-    $uid                  = $this->pObj->piVars['showUid'];
+//      // Current table
+//    $table                = $this->pObj->localTable;
+//      // Name of the field for statistics data
+//    $field                = $this->pObj->objStat->fieldVisits;
+//      // Uid of the current record
+//    $uid                  = $this->pObj->piVars['showUid'];
       // Period between a current and a new download and visit in seconds
     $timeout              = $this->pObj->objStat->timeout;
       // Timestamp of now
