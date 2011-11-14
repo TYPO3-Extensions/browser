@@ -656,8 +656,12 @@ class tx_browser_pi1_statistics
     switch( isset($GLOBALS['TCA'][$table]['columns'][$field] ) )
     {
       case( true ):
-
         $conf_fields = $this->pObj->conf['flexform.']['sDEF.']['statistics.']['adjustment.']['fields.'];
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf_fields );
+    }
 
           // List of IPs, which should ignored
         $coa_name     = $conf_fields[$field . '.']['type'];
