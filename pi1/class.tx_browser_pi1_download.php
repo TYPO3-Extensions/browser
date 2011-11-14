@@ -640,16 +640,16 @@ class tx_browser_pi1_download
   /**
  * download_statistics():
    *
-   * @param string    $str_operator: + or -
+   * @param string    $operator: + or -
  *
  * @return  void
  * @version 3.9.3
  * @since 3.9.3
  */
-  private function statistics( $str_operator )
+  private function statistics( $operator )
   {
-    //$this->statistics_download( )
-    //$this->statistics_downloadByVisit( )
+    $this->statistics_download( $operator );
+    $this->statistics_downloadByVisit( $operator );
   }
 
 
