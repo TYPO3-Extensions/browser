@@ -624,6 +624,14 @@ class tx_browser_pi1_session
 
 
 
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_session_browser );
+    }
+
+
+
       //////////////////////////////////////////////////////////////////////////
       //
       // RETURN: first visit
@@ -634,6 +642,12 @@ class tx_browser_pi1_session
       $arr_session_browser[$tt_content_uid]['statistics']['download'][$table][$uid][$field] = $time;
       $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_session_browser);
         // Set the new visit
+
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_session_browser );
+    }
 
         // DRS - Development Reporting System
       if( $this->pObj->b_drs_session || $this->pObj->b_drs_statistics )
