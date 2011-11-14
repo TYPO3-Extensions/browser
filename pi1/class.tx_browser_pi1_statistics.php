@@ -210,7 +210,7 @@ class tx_browser_pi1_statistics
  * @version 3.9.3
  * @since 3.9.3
  */
-  private function statisticsIsEnabled( )
+  public function statisticsIsEnabled( )
   {
       ///////////////////////////////////////////////////////////////////////////////
       //
@@ -470,15 +470,6 @@ class tx_browser_pi1_statistics
  */
   public function sql_update_statistics( $table, $field, $uid, $operator )
   {
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Set status of the statistics module and init it
-
-    $this->statisticsIsEnabled( );
-      // Set status of the statistics module and init it
-
-
-
       // The current table hasn't any field for counting hits
     if( ! $this->helperFieldInTable( $table, $field ) )
     {
