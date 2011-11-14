@@ -196,22 +196,22 @@ class tx_browser_pi1_statistics
       // Type for field for counting downloads
     $coa_name                     = $conf_adjustment['fields.']['downloads.']['type'];
     $coa_conf                     = $conf_adjustment['fields.']['downloads.']['type.'];
-    $this->arr_fieldType['$this->fieldDownloads']     = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+    $this->arr_fieldType[$this->fieldDownloads]     = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Type for field for counting downloads by visits
     $coa_name                     = $conf_adjustment['fields.']['downloadsByVisits.']['type'];
     $coa_conf                     = $conf_adjustment['fields.']['downloadsByVisits.']['type.'];
-    $this->arr_fieldType['$this->fieldDownloadsByVisits'] = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+    $this->arr_fieldType[$this->fieldDownloadsByVisits] = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Type for field for counting hits
     $coa_name                     = $conf_adjustment['fields.']['hits.']['type'];
     $coa_conf                     = $conf_adjustment['fields.']['hits.']['type.'];
-    $this->arr_fieldType['$this->fieldHits']          = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+    $this->arr_fieldType[$this->fieldHits]          = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Type for field for counting visits
     $coa_name                     = $conf_adjustment['fields.']['visits.']['type'];
     $coa_conf                     = $conf_adjustment['fields.']['visits.']['type.'];
-    $this->arr_fieldType['$this->fieldVisits']        = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+    $this->arr_fieldType[$this->fieldVisits]        = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
   }
 
 
