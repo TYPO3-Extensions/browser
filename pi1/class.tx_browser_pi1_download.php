@@ -487,10 +487,15 @@ class tx_browser_pi1_download
     {
       var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $fileInfo );
     }
-    return;
 
 
-//    array(12) {
+    if( isset ( $type->pObj->conf['download.']['mimetypes.']['fileext.'][$fileInfo['fileext'] )
+    {
+      $str_apllication = $type->pObj->conf['download.']['mimetypes.']['fileext.'][$fileInfo . 'fileext'];
+  		header( 'Content-type: ' . $str_apllication);
+    }
+
+////    array(12) {
 //    ["path"]=>
 //    string(65) "/home/www/htdocs/www.typo3-browser-forum.de/typo3/uploads/tx_org/"
 //    ["file"]=>
@@ -522,14 +527,10 @@ class tx_browser_pi1_download
       //
       // Send the file
 
-      //header('Content-type: text/csv');
-      //header('Content-type: application/msexcel');
-      //header('Content-Disposition: attachment; filename="downloaded.csv"');
-		header( 'Content-Description: Modern Downloads File Transfer' );
-		header( 'Content-type: application/force-download' );
+		header( 'Content-Description: TYPO3 Browser Download Modul' );
 		header( 'Content-Disposition: attachment; filename="' . $str_file . '"' );
 		header( 'Content-Length: ' . $fileInfo['size'] );
-    // Read the file and write it to the output buffer.
+      // Read the file and write it to the output buffer.
 		@readfile( $str_pathFile ) || die ( __METHOD__ . ' (' . __LINE__ . '): ' . readfile( $str_pathFile ) );
 		exit;
       // Send the file
