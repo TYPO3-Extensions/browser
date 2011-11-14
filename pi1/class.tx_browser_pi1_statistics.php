@@ -657,14 +657,14 @@ class tx_browser_pi1_statistics
     {
       case( true ):
 
-        $str_TsType   = $this->pObj->conf['flexform.']['sDEF.']['statistics.']['adjustment.']['fields.'][$field]['label.']['type'];
+        $str_TsType   = $this->pObj->conf['flexform.']['sDEF.']['statistics.']['adjustment.']['fields.'][$field]['type'];
         $str_TcaType  = $GLOBALS['TCA'][$table]['columns'][$field]['config']['type'];
         if( $str_TsType != $str_TcaType )
         {
             // Hit field isn't any element of the current table
           $this->arr_checkedTables[$table][$field] = false;
           $prompt_01 = 'TCA type of \'' . $field . '\' is \'' . $str_TcaType . '\' in the TCA, but it is \'' . $str_TsType . '\' in the TypoScript.';
-          $prompt_02 = 'Please take care of a proper TCA and TypoScript. See flexform.sDEF.statistics.adjustment.fields.' . $field . '.label.type.';
+          $prompt_02 = 'Please take care of a proper TCA and TypoScript. See flexform.sDEF.statistics.adjustment.fields.' . $field . '.type.';
           if( $this->pObj->b_drs_statistics )
           {
             t3lib_div::devlog('[WARN/STATISTICS] ' . $prompt_01, $this->pObj->extKey, 2);
