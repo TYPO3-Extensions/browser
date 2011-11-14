@@ -471,7 +471,7 @@ class tx_browser_pi1_statistics
   public function sql_update_statistics( $table, $field, $uid, $operator )
   {
       // The current table hasn't any field for counting hits
-    if( ! $this->helperFieldInTable( $field ) )
+    if( ! $this->helperFieldInTable( $table, $field ) )
     {
       return;
     }
@@ -626,12 +626,13 @@ class tx_browser_pi1_statistics
  *                        The result will be stored in the global
  *                        $this->arr_checkedTables[$table][$field]
  *
- * @param	[type]		$$field: ...
+ * @param	string      $table: current table
+ * @param	string      $field: current field
  * @return	boolean		$this->arr_checkedTables[$table][$field]
  * @version 3.9.3
  * @since 3.9.3
  */
-  private function helperFieldInTable( $field )
+  private function helperFieldInTable( $table, $field )
   {
     $table = $this->pObj->localTable;
 
