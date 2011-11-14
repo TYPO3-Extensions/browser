@@ -660,7 +660,7 @@ class tx_browser_pi1_statistics
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf_fields );
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf_fields[$field . '.'], $field );
     }
 
           // List of IPs, which should ignored
