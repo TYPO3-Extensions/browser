@@ -468,7 +468,7 @@ class tx_browser_pi1_statistics
  * @version 3.9.3
  * @since 3.9.3
  */
-  private function sql_update_statistics( $table, $field, $uid, $operator )
+  public function sql_update_statistics( $table, $field, $uid, $operator )
   {
       // The current table hasn't any field for counting hits
     if( ! $this->helperFieldInTable( $field ) )
