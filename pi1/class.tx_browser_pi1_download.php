@@ -490,6 +490,34 @@ class tx_browser_pi1_download
     return;
 
 
+//    array(12) {
+//    ["path"]=>
+//    string(65) "/home/www/htdocs/www.typo3-browser-forum.de/typo3/uploads/tx_org/"
+//    ["file"]=>
+//    string(10) "klumet.PDF"
+//    ["filebody"]=>
+//    string(6) "klumet"
+//    ["fileext"]=>
+//    string(3) "pdf"
+//    ["realFileext"]=>
+//    string(3) "PDF"
+//    ["tstamp"]=>
+//    int(1321278000)
+//    ["size"]=>
+//    int(40877)
+//    ["type"]=>
+//    string(4) "file"
+//    ["owner"]=>
+//    int(30)
+//    ["perms"]=>
+//    int(33184)
+//    ["writable"]=>
+//    bool(false)
+//    ["readable"]=>
+//    bool(false)
+//    }
+
+
       //////////////////////////////////////////////////////////////////////////
       //
       // Send the file
