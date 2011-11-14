@@ -648,13 +648,6 @@ class tx_browser_pi1_download
  */
   private function statistics( $operator )
   {
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Set status of the statistics module and init it
-
-    $this->pObj->objStat->statisticsIsEnabled( );
-      // Set status of the statistics module and init it
-
     $this->statistics_download( $operator );
     $this->statistics_downloadByVisit( $operator );
   }
