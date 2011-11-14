@@ -655,6 +655,25 @@ class tx_browser_pi1_download
     $this->pObj->objStat->statisticsIsEnabled( );
       // Set status of the statistics module and init it
 
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN: statistics module is disabled
+
+    if( ! $this->pObj->objStat->bool_statistics_enabled )
+    {
+      if ($this->pObj->b_drs_statistics)
+      {
+        t3lib_div::devlog('[INFO/STATISTICS] single view won\'t counted for statistics.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[HELP/STATISTICS] Enable flexform.sDEF.statistics.enabled.', $this->pObj->extKey, 1);
+      }
+      return;
+    }
+      // RETURN: statistics module is disabled
+
+
+
     $this->statistics_download( $operator );
     $this->statistics_downloadByVisit( $operator );
   }
