@@ -721,8 +721,9 @@ class tx_browser_pi1_download
  */
   private function statistics_downloadByVisit( $operator )
   {
+    $field = $this->pObj->objStat->fieldDownloadsByVisits;
        // RETURN: no new visit
-    $bool_newVisit = $this->pObj->objSession->statisticsNewDownload( $this->table, $this->field, $this->uid );
+    $bool_newVisit = $this->pObj->objSession->statisticsNewDownload( $this->table, $field, $this->uid );
     if( ! $bool_newVisit )
     {
         // DRS - Development Reporting System

@@ -609,7 +609,7 @@ class tx_browser_pi1_session
 //      // Current table
 //    $table                = $this->pObj->localTable;
 //      // Name of the field for statistics data
-//    $field                = $this->pObj->objStat->fieldVisits;
+//    $field                = $this->pObj->objStat->fieldDownloadsByVisits;
 //      // Uid of the current record
 //    $uid                  = $this->pObj->piVars['showUid'];
       // Period between a current and a new download and visit in seconds
