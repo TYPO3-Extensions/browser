@@ -177,8 +177,8 @@ class tx_browser_pi1_statistics
     $this->fieldDownloads         = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Field for counting downloads by visits
-    $coa_name                     = $conf_adjustment['fields.']['downloads'];
-    $coa_conf                     = $conf_adjustment['fields.']['downloads.'];
+    $coa_name                     = $conf_adjustment['fields.']['downloadsByVisit'];
+    $coa_conf                     = $conf_adjustment['fields.']['downloadsByVisit.'];
     $this->fieldDownloadsByVisits = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Field for counting hits
