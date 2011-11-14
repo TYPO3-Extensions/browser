@@ -88,19 +88,21 @@ class tx_browser_pi1_statistics
     // Variables set by this class
 
     // [Boolean] True, if statistics module is enabled. Will set while runtime
-  var $bool_statistics_enabled  = null;
+  var $bool_statistics_enabled      = null;
     // [String/csv] Comma seperated list of IPs, which won't counted
-  var $dontAccountIPsOfCsvList  = null;
+  var $dontAccountIPsOfCsvList      = null;
     // [Integer] Period between a current and a new download and visit in seconds
-  var $timeout                  = null;
+  var $timeout                      = null;
     // [String] Name of the field for counting downloads (with respect for timeout)
-  var $fieldDownloads           = null;
-    // [String] Name of the field for counting downloads (with respect for timeout)
-  var $fieldDownloadsByVisits   = null;
-    // [String] Name of the field for counting hits (without any respect for timeout)
-  var $fieldHits                = null;
-    // [String] Name of the field for counting visits (hits with respect for timeout)
-  var $fieldVisits              = null;
+  var $fieldDownloads               = null;
+    // [String] Label of the field for counting downloads (with respect for timeout)
+  var $fieldDownloadsByVisits       = null;
+    // [String] Label of the field for counting hits (without any respect for timeout)
+  var $fieldHits                    = null;
+    // [String] Label of the field for counting visits (hits with respect for timeout)
+  var $fieldVisits                  = null;
+    // [Array] Array with the type of the fields. Labels of the element are the labels of the fields
+  var $arr_fieldType                  = null;
     // Variables set by this class
 
 
@@ -191,6 +193,25 @@ class tx_browser_pi1_statistics
     $coa_conf                     = $conf_adjustment['fields.']['visits.']['label.'];
     $this->fieldVisits            = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
+      // Type for field for counting downloads
+    $coa_name                     = $conf_adjustment['fields.']['downloads.']['type'];
+    $coa_conf                     = $conf_adjustment['fields.']['downloads.']['type.'];
+    $this->arr_fieldType['$this->fieldDownloads']     = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+
+      // Type for field for counting downloads by visits
+    $coa_name                     = $conf_adjustment['fields.']['downloadsByVisits.']['type'];
+    $coa_conf                     = $conf_adjustment['fields.']['downloadsByVisits.']['type.'];
+    $this->arr_fieldType['$this->fieldDownloadsByVisits'] = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+
+      // Type for field for counting hits
+    $coa_name                     = $conf_adjustment['fields.']['hits.']['type'];
+    $coa_conf                     = $conf_adjustment['fields.']['hits.']['type.'];
+    $this->arr_fieldType['$this->fieldHits']          = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+
+      // Type for field for counting visits
+    $coa_name                     = $conf_adjustment['fields.']['visits.']['type'];
+    $coa_conf                     = $conf_adjustment['fields.']['visits.']['type.'];
+    $this->arr_fieldType['$this->fieldVisits']        = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
   }
 
 
@@ -656,17 +677,7 @@ class tx_browser_pi1_statistics
     switch( isset($GLOBALS['TCA'][$table]['columns'][$field] ) )
     {
       case( true ):
-        $conf_fields = $this->pObj->conf['flexform.']['sDEF.']['statistics.']['adjustment.']['fields.'];
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf_fields[$field . '.'], $field );
-    }
-
-          // List of IPs, which should ignored
-        $coa_name     = $conf_fields[$field . '.']['type'];
-        $coa_conf     = $conf_fields[$field . '.']['type.'];
-        $str_TsType   = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+        $str_TsType   = $this->arr_fieldType[$field];
         $str_TcaType  = $GLOBALS['TCA'][$table]['columns'][$field]['config']['type'];
         if( $str_TsType != $str_TcaType )
         {
