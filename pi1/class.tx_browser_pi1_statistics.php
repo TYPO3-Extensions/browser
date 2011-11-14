@@ -172,23 +172,23 @@ class tx_browser_pi1_statistics
     $this->timeout                = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Field for counting downloads
-    $coa_name                     = $conf_adjustment['fields.']['downloads']['label'];
-    $coa_conf                     = $conf_adjustment['fields.']['downloads']['label.'];
+    $coa_name                     = $conf_adjustment['fields.']['downloads.']['label'];
+    $coa_conf                     = $conf_adjustment['fields.']['downloads.']['label.'];
     $this->fieldDownloads         = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Field for counting downloads by visits
-    $coa_name                     = $conf_adjustment['fields.']['downloadsByVisits']['label'];
-    $coa_conf                     = $conf_adjustment['fields.']['downloadsByVisits']['label.'];
+    $coa_name                     = $conf_adjustment['fields.']['downloadsByVisits.']['label'];
+    $coa_conf                     = $conf_adjustment['fields.']['downloadsByVisits.']['label.'];
     $this->fieldDownloadsByVisits = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Field for counting hits
-    $coa_name                     = $conf_adjustment['fields.']['hits']['label'];
-    $coa_conf                     = $conf_adjustment['fields.']['hits']['label.'];
+    $coa_name                     = $conf_adjustment['fields.']['hits.']['label'];
+    $coa_conf                     = $conf_adjustment['fields.']['hits.']['label.'];
     $this->fieldHits              = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Field for counting visits
-    $coa_name                     = $conf_adjustment['fields.']['visits']['label'];
-    $coa_conf                     = $conf_adjustment['fields.']['visits']['label.'];
+    $coa_name                     = $conf_adjustment['fields.']['visits.']['label'];
+    $coa_conf                     = $conf_adjustment['fields.']['visits.']['label.'];
     $this->fieldVisits            = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
   }
