@@ -618,7 +618,7 @@ class tx_browser_pi1_session
     $time                 = time( );
       // Get tx_browser-pi1 session data
     $arr_session_browser  = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
-    $arr_session_visit    = $arr_session_browser[$tt_content_uid]['statistics']['download'];
+    $arr_session_visit    = $arr_session_browser[$tt_content_uid]['statistics']['visit'];
       // Get tx_browser-pi1 session data
       // Init variables
 
@@ -639,7 +639,7 @@ class tx_browser_pi1_session
     if( empty( $arr_session_visit[$table][$uid][$field] ) )
     {
         // Set the new visit
-      $arr_session_browser[$tt_content_uid]['statistics']['download'][$table][$uid][$field] = $time;
+      $arr_session_browser[$tt_content_uid]['statistics']['visit'][$table][$uid][$field] = $time;
       $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_session_browser);
         // Set the new visit
 
@@ -679,7 +679,7 @@ class tx_browser_pi1_session
       case( $timeLastVisit <= $timeMinusTimeout ):
           // new visit
           // Set the new visit
-        $arr_session_browser[$tt_content_uid]['statistics']['download'][$table][$uid][$field] = $time;
+        $arr_session_browser[$tt_content_uid]['statistics']['visit'][$table][$uid][$field] = $time;
         $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_session_browser);
           // Set the new visit
 
