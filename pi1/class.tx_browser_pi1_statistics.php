@@ -657,7 +657,7 @@ class tx_browser_pi1_statistics
     {
       case( true ):
 
-        $str_TsType   = $this->pObj->conf['flexform.']['sDEF.']['statistics.']['adjustment.']['fields.'][$field]['type'];
+        $str_TsType   = $this->pObj->conf['flexform.']['sDEF.']['statistics.']['adjustment.']['fields.'][$field . '.']['type'];
         $str_TcaType  = $GLOBALS['TCA'][$table]['columns'][$field]['config']['type'];
         if( $str_TsType != $str_TcaType )
         {
