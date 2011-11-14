@@ -533,12 +533,12 @@ class tx_browser_pi1_download
 //    {
 //      t3lib_div::devlog( '[ERROR/DOWNLOAD] ' . $prompt, $this->pObj->extKey, 3 );
 //    }
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $fileInfo, $fileInfo['fileext'], $this->pObj->conf['download.']['mimetypes.']['fileext.'][$fileInfo['fileext']], $arr_header );
-      return;
-    }
+//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if ( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $fileInfo, $fileInfo['fileext'], $this->pObj->conf['download.']['mimetypes.']['fileext.'][$fileInfo['fileext']], $arr_header );
+//      return;
+//    }
 
 
     foreach( $arr_header as $str_header )
