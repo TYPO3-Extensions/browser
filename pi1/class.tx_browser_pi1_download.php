@@ -718,7 +718,7 @@ class tx_browser_pi1_download
 
       // Count the hit
     $field = $this->pObj->objStat->fieldDownloadsByVisits;
-    $this->pObj->objStat->sql_update_statistics( $this->table, $field, $this->uid, $operator );
+    $this->pObj->objStat->sql_update_statistics( $this->table, $this->field, $this->uid, $operator );
 
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
