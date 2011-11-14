@@ -657,7 +657,12 @@ class tx_browser_pi1_statistics
     {
       case( true ):
 
-        $str_TsType   = $this->pObj->conf['flexform.']['sDEF.']['statistics.']['adjustment.']['fields.'][$field . '.']['type'];
+        $conf_fields = $this->pObj->conf['flexform.']['sDEF.']['statistics.']['adjustment.']['fields.'];
+
+          // List of IPs, which should ignored
+        $coa_name     = $conf_fields[$field . '.']['type'];
+        $coa_conf     = $conf_fields[$field . '.']['type.'];
+        $str_TsType   = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
         $str_TcaType  = $GLOBALS['TCA'][$table]['columns'][$field]['config']['type'];
         if( $str_TsType != $str_TcaType )
         {
