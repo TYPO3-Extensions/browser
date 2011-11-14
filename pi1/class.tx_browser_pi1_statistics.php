@@ -634,10 +634,6 @@ class tx_browser_pi1_statistics
  */
   private function helperFieldInTable( $table, $field )
   {
-    $table = $this->pObj->localTable;
-
-
-
       ///////////////////////////////////////////////////////////////////////////////
       //
       // RETURN: table.field is checked before
