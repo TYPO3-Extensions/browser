@@ -468,6 +468,8 @@ class tx_browser_pi1_session
         // Set the new visit
       $arr_session_browser[$tt_content_uid]['statistics']['visit'][$table][$uid][$field] = $time;
       $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_session_browser);
+        // Storing session data now (is proper in context with an PHP exit!)
+      $GLOBALS["TSFE"]->storeSessionData();
         // Set the new visit
 
         // DRS - Development Reporting System
@@ -501,6 +503,8 @@ class tx_browser_pi1_session
           // Set the new visit
         $arr_session_browser[$tt_content_uid]['statistics']['visit'][$table][$uid][$field] = $time;
         $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_session_browser);
+          // Storing session data now (is proper in context with an PHP exit!)
+        $GLOBALS["TSFE"]->storeSessionData();
           // Set the new visit
 
           // DRS - Development Reporting System
