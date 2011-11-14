@@ -642,9 +642,10 @@ class tx_browser_pi1_statistics
 
 
   /**
- * helperFieldInTable( ): The method checks, if the needed field for statistics data
- *                        is an element of the local table.
- *                        The result will be stored in the global
+ * helperFieldInTable( ): The method checks,
+ *                        * if the needed field for statistics data is an element of the local table
+ *                        * if the type in the TCA is the type in the TypoScript
+ *                        The result will be stored in the class var
  *                        $this->arr_checkedTables[$table][$field]
  *
  * @param	string      $table: current table
@@ -677,11 +678,12 @@ class tx_browser_pi1_statistics
     switch( isset($GLOBALS['TCA'][$table]['columns'][$field] ) )
     {
       case( true ):
+          // Compare to type of the field in the TypoScript with the type in the TCA
         $str_TsType   = $this->arr_fieldType[$field];
         $str_TcaType  = $GLOBALS['TCA'][$table]['columns'][$field]['config']['type'];
+          // Type isn't the same
         if( $str_TsType != $str_TcaType )
         {
-            // Hit field isn't any element of the current table
           $this->arr_checkedTables[$table][$field] = false;
           $prompt_01 = 'TCA type of \'' . $field . '\' is \'' . $str_TcaType . '\' in the TCA, but it is \'' . $str_TsType . '\' in the TypoScript.';
           $prompt_02 = 'Please take care of a proper TCA and TypoScript. See flexform.sDEF.statistics.adjustment.fields.' . $field . '.type.';
@@ -696,12 +698,14 @@ class tx_browser_pi1_statistics
             $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $prompt_02 . '</p>';
             echo $str_prompt;
           }
+          // Type isn't the same
         }
+          // Type is the same
         if( $str_TsType == $str_TcaType )
         {
-            // Hit field isn't any element of the current table
           $this->arr_checkedTables[$table][$field] = true;
         }
+          // Type is the same
         break;
       default:
           // Hit field isn't any element of the current table

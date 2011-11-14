@@ -727,11 +727,6 @@ class tx_browser_pi1_download
  */
   private function statistics_downloadByVisit( $operator )
   {
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $this->table, $this->field, $this->uid );
-    }
        // RETURN: no new visit
     $bool_newVisit = $this->pObj->objSession->statisticsNewDownload( $this->table, $this->field, $this->uid );
     if( ! $bool_newVisit )
@@ -751,11 +746,6 @@ class tx_browser_pi1_download
     $field = $this->pObj->objStat->fieldDownloadsByVisits;
     $this->pObj->objStat->sql_update_statistics( $this->table, $field, $this->uid, $operator );
 
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): Changing (' . $operator . ') the download hits' );
-    }
     return;
   }
 
