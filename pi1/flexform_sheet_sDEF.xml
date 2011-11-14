@@ -430,7 +430,7 @@
             <type>input</type>
             <size>40</size>
             <eval>trim,required</eval>
-            <default>statistics_downloadsByVisits</default>
+            <default>statistics_downloads_by_visits</default>
           </config>
         </TCEforms>
       </statistics.adjustment.fields.downloadsByVisits>
