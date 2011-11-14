@@ -398,7 +398,7 @@ class tx_browser_pi1_session
  * @version 3.9.3
  * @since 3.9.3
  */
-  public function statisticsNewVisit( )
+  public function statisticsNewVisit( $table, $field, $uid )
   {
       //////////////////////////////////////////////////////////////////////////
       //
@@ -441,12 +441,12 @@ class tx_browser_pi1_session
     $tt_content_uid       = $this->pObj->cObj->data['uid'];
       // Get the name of the session data space
     $str_data_space       = $this->getNameOfDataSpace( );
-      // Current table
-    $table                = $this->pObj->localTable;
-      // Name of the field for statistics data
-    $field                = $this->pObj->objStat->fieldVisits;
-      // Uid of the current record
-    $uid                  = $this->pObj->piVars['showUid'];
+//      // Current table
+//    $table                = $this->pObj->localTable;
+//      // Name of the field for statistics data
+//    $field                = $this->pObj->objStat->fieldVisits;
+//      // Uid of the current record
+//    $uid                  = $this->pObj->piVars['showUid'];
       // Period between a current and a new download and visit in seconds
     $timeout              = $this->pObj->objStat->timeout;
       // Timestamp of now
@@ -641,15 +641,9 @@ class tx_browser_pi1_session
         // Set the new visit
       $arr_session_browser[$tt_content_uid]['statistics']['visit'][$table][$uid][$field] = $time;
       $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_session_browser);
+        // Storing session data now (is proper in context with an PHP exit!)
       $GLOBALS["TSFE"]->storeSessionData();
         // Set the new visit
-
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId) );
-      exit;
-    }
 
         // DRS - Development Reporting System
       if( $this->pObj->b_drs_session || $this->pObj->b_drs_statistics )

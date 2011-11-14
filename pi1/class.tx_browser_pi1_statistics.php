@@ -433,7 +433,7 @@ class tx_browser_pi1_statistics
     $uid   = $this->pObj->piVars['showUid'];
 
       // RETURN: no new visit
-    $bool_newVisit = $this->pObj->objSession->statisticsNewVisit( );
+    $bool_newVisit = $this->pObj->objSession->statisticsNewVisit( $table, $field, $uid );
     if( ! $bool_newVisit )
     {
         // DRS - Development Reporting System
