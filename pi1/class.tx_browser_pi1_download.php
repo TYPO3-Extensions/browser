@@ -488,8 +488,8 @@ class tx_browser_pi1_download
 
     if( isset ( $this->pObj->conf['download.']['mimetypes.']['fileext.'][$fileInfo['fileext']] ) )
     {
-      $str_apllication    = $this->pObj->conf['download.']['mimetypes.']['fileext.'][$fileInfo . 'fileext'];
-  		$arr_header['type'] = 'Content-type: ' . $str_apllication;
+      $str_application    = $this->pObj->conf['download.']['mimetypes.']['fileext.'][$fileInfo['fileext']];
+  		$arr_header['type'] = 'Content-type: ' . $str_application;
     }
 
 ////    array(12) {
