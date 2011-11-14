@@ -647,7 +647,7 @@ class tx_browser_pi1_session
     if ( ! ( $pos === false ) )
     {
       var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId) );
-      exit;
+//      exit;
     }
 
         // DRS - Development Reporting System
