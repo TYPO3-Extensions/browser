@@ -482,17 +482,13 @@ class tx_browser_pi1_download
 		$fileInfo       = $this->fileFunc->getTotalFileInfo( $str_pathFile );
       // filefunc object
 
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $fileInfo );
-    }
 
 
+    $arr_header = null;
     if( isset ( $type->pObj->conf['download.']['mimetypes.']['fileext.'][$fileInfo['fileext']] ) )
     {
-      $str_apllication = $type->pObj->conf['download.']['mimetypes.']['fileext.'][$fileInfo . 'fileext'];
-  		header( 'Content-type: ' . $str_apllication);
+      $str_apllication    = $type->pObj->conf['download.']['mimetypes.']['fileext.'][$fileInfo . 'fileext'];
+  		$arr_header['type'] = 'Content-type: ' . $str_apllication;
     }
 
 ////    array(12) {
@@ -527,9 +523,28 @@ class tx_browser_pi1_download
       //
       // Send the file
 
-		header( 'Content-Description: TYPO3 Browser Download Modul' );
-		header( 'Content-Disposition: attachment; filename="' . $str_file . '"' );
-		header( 'Content-Length: ' . $fileInfo['size'] );
+    $arr_header['description']  = 'Content-Description: TYPO3 Browser Download Modul';
+    $arr_header['disposition']  = 'Content-Disposition: attachment; filename="' . $str_file . '"';
+    $arr_header['length']       = 'Content-Length: ' . $fileInfo['size'];
+
+//    $prompt = 'The file \'' . $str_pathFile . '\' does not exist.';
+//    if ( $this->pObj->b_drs_download )
+//    {
+//      t3lib_div::devlog( '[ERROR/DOWNLOAD] ' . $prompt, $this->pObj->extKey, 3 );
+//    }
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $fileInfo, $arr_header );
+      return;
+    }
+
+
+    foreach( $arr_header as $str_header )
+    {
+      header( $str_header );
+    }
+
       // Read the file and write it to the output buffer.
 		@readfile( $str_pathFile ) || die ( __METHOD__ . ' (' . __LINE__ . '): ' . readfile( $str_pathFile ) );
 		exit;
