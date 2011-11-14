@@ -603,7 +603,16 @@ class tx_browser_pi1_statistics
 
     if( $this->pObj->b_drs_statistics )
     {
-      $prompt = 'Counter is increased for ' . $table . ', record[' . $uid . ']: field ' . $field . '.';
+      switch( $operator )
+      {
+        case( '+' ):
+          $str_inOrDecreased = 'increased';
+          break;
+        case( '-' ):
+          $str_inOrDecreased = 'decreased';
+          break;
+      }
+      $prompt = 'Counter is ' . $str_inOrDecreased . ' (' . $operator . ') for ' . $table . ', record[' . $uid . ']: field ' . $field . '.';
       t3lib_div::devlog('[INFO/STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
     }
       // DRS - Development Reporting System
