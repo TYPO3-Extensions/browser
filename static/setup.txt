@@ -1654,29 +1654,65 @@ plugin.tx_browser_pi1 {
         }
         adjustment {
           fields {
-              // Name of the field for counting downloads
-            downloads = TEXT
+              // Label and type of the field for counting downloads
             downloads {
-                // [String] Name of the field in the SQL table
-              value = statistics_downloads
+                // Label of the field for counting downloads
+              label = TEXT
+              label {
+                  // [String] Name of the field in the SQL table. Will be overriden by flexform value while runtime.
+                value = statistics_downloads
+              }
+                // Type of the field in the TCA
+              type = TEXT
+              type {
+                  // [String] Type of the field in the TCA
+                value = none
+              }
             }
-              // Name of the field for counting downloads (with respect for timeout)
-            downloadsByVisits = TEXT
+              // Label and type of the field for counting downloadsByVisits
             downloadsByVisits {
-                // [String] Name of the field in the SQL table
-              value = statistics_downloads_by_visits
+                // Label of the field for counting downloads (with respect for timeout)
+              label = TEXT
+              label {
+                  // [String] Name of the field in the SQL table. Will be overriden by flexform value while runtime.
+                value = statistics_downloads_by_visits
+              }
+                // Type of the field in the TCA
+              type = TEXT
+              type {
+                  // [String] Type of the field in the TCA
+                value = none
+              }
             }
-              // Name of the field for counting hits (without any respect for timeout)
-            hits = TEXT
+              // Label and type of the field for counting hits
             hits {
-                // [String] Name of the field in the SQL table
-              value = statistics_hits
+                // Label of the field for counting hits (without any respect for timeout)
+              label = TEXT
+              label {
+                  // [String] Name of the field in the SQL table. Will be overriden by flexform value while runtime.
+                value = statistics_hits
+              }
+                // Type of the field in the TCA
+              type = TEXT
+              type {
+                  // [String] Type of the field in the TCA
+                value = none
+              }
             }
-              // Name of the field for counting visits (hits with respect for timeout)
-            visits = TEXT
+              // Label and type of the field for counting visits
             visits {
-                // [String] Name of the field in the SQL table
-              value = statistics_visits
+                // Label of the field for counting visits (hits with respect for timeout)
+              label = TEXT
+              label {
+                  // [String] Name of the field in the SQL table. Will be overriden by flexform value while runtime.
+                value = statistics_visits
+              }
+                // Type of the field in the TCA
+              type = TEXT
+              type {
+                  // [String] Type of the field in the TCA
+                value = none
+              }
             }
           }
             // Period between a current and a new download and visit in seconds

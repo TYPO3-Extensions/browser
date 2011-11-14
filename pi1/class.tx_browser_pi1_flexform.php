@@ -1887,7 +1887,7 @@ class tx_browser_pi1_flexform {
 
     if( $bool_statisticsEnable )
     {
-      $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'][$field_4 . '.']['value'] = $value;
+      $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'][$field_4 . '.']['label.']['value'] = $value;
       if ( $this->pObj->b_drs_flexform )
       {
         $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
@@ -1911,7 +1911,7 @@ class tx_browser_pi1_flexform {
 
     if( $bool_statisticsEnable )
     {
-      $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'][$field_4 . '.']['value'] = $value;
+      $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'][$field_4 . '.']['label.']['value'] = $value;
       if ( $this->pObj->b_drs_flexform )
       {
         $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
@@ -1935,7 +1935,7 @@ class tx_browser_pi1_flexform {
 
     if( $bool_statisticsEnable )
     {
-      $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'][$field_4 . '.']['value'] = $value;
+      $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'][$field_4 . '.']['label.']['value'] = $value;
       if ( $this->pObj->b_drs_flexform )
       {
         $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';
@@ -1959,7 +1959,7 @@ class tx_browser_pi1_flexform {
 
     if( $bool_statisticsEnable )
     {
-      $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'][$field_4 . '.']['value'] = $value;
+      $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'][$field_4 . '.']['label.']['value'] = $value;
       if ( $this->pObj->b_drs_flexform )
       {
         $prompt = $sheet . '.' . $field . ' is set to \'' . $value . '\'.';

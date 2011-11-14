@@ -172,23 +172,23 @@ class tx_browser_pi1_statistics
     $this->timeout                = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Field for counting downloads
-    $coa_name                     = $conf_adjustment['fields.']['downloads'];
-    $coa_conf                     = $conf_adjustment['fields.']['downloads.'];
+    $coa_name                     = $conf_adjustment['fields.']['downloads']['label'];
+    $coa_conf                     = $conf_adjustment['fields.']['downloads']['label.'];
     $this->fieldDownloads         = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Field for counting downloads by visits
-    $coa_name                     = $conf_adjustment['fields.']['downloadsByVisits'];
-    $coa_conf                     = $conf_adjustment['fields.']['downloadsByVisits.'];
+    $coa_name                     = $conf_adjustment['fields.']['downloadsByVisits']['label'];
+    $coa_conf                     = $conf_adjustment['fields.']['downloadsByVisits']['label.'];
     $this->fieldDownloadsByVisits = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Field for counting hits
-    $coa_name                     = $conf_adjustment['fields.']['hits'];
-    $coa_conf                     = $conf_adjustment['fields.']['hits.'];
+    $coa_name                     = $conf_adjustment['fields.']['hits']['label'];
+    $coa_conf                     = $conf_adjustment['fields.']['hits']['label.'];
     $this->fieldHits              = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       // Field for counting visits
-    $coa_name                     = $conf_adjustment['fields.']['visits'];
-    $coa_conf                     = $conf_adjustment['fields.']['visits.'];
+    $coa_name                     = $conf_adjustment['fields.']['visits']['label'];
+    $coa_conf                     = $conf_adjustment['fields.']['visits']['label.'];
     $this->fieldVisits            = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
   }
@@ -656,8 +656,32 @@ class tx_browser_pi1_statistics
     switch( isset($GLOBALS['TCA'][$table]['columns'][$field] ) )
     {
       case( true ):
-          // Hit field is an element of the current table
-        $this->arr_checkedTables[$table][$field] = true;
+
+        $str_TsType   = $this->pObj->conf['flexform.']['sDEF.']['statistics.']['adjustment.']['fields.'][$field]['label.']['type'];
+        $str_TcaType  = $GLOBALS['TCA'][$table]['columns'][$field]['config']['type'];
+        if( $str_TsType != $str_TcaType )
+        {
+            // Hit field isn't any element of the current table
+          $this->arr_checkedTables[$table][$field] = false;
+          $prompt_01 = 'TCA type of \'' . $field . '\' is \'' . $str_TcaType . '\' in the TCA, but it is \'' . $str_TsType . '\' in the TypoScript.';
+          $prompt_02 = 'Please take care of a proper TCA and TypoScript. See flexform.sDEF.statistics.adjustment.fields.' . $field . '.label.type.';
+          if( $this->pObj->b_drs_statistics )
+          {
+            t3lib_div::devlog('[WARN/STATISTICS] ' . $prompt_01, $this->pObj->extKey, 2);
+            t3lib_div::devlog('[HELP/STATISTICS] ' . $prompt_02, $this->pObj->extKey, 1);
+          }
+          if( $this->debugging )
+          {
+            $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $prompt_01 . '</p>';
+            $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $prompt_02 . '</p>';
+            echo $str_prompt;
+          }
+        }
+        if( $str_TsType == $str_TcaType )
+        {
+            // Hit field isn't any element of the current table
+          $this->arr_checkedTables[$table][$field] = true;
+        }
         break;
       default:
           // Hit field isn't any element of the current table
