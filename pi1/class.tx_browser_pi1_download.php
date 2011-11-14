@@ -117,9 +117,12 @@ class tx_browser_pi1_download
 
 
   /**
- * download( ): 
+ * download( ): Main method for downloading the requested file.
+ *              If there is an failure, the method retirns a failure prompt.
+ *              If there is success, this class will send the header, the file
+ *              and will exit the PHP script.
  *
- * @return  void
+ * @return  string    Prompt, in case of a failure
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -164,11 +167,11 @@ class tx_browser_pi1_download
 
 
 
-    $this->statistics( 'plus' );
+    $this->statistics( '+' );
       // EXIT in case of success!
-    $prompt_error = $this->delivery_andExit( );
+    $prompt_error = $this->sendFileAndExit( );
     
-    $this->statistics( 'minus' );
+    $this->statistics( '-' );
 
     return $prompt_error;
   }
@@ -182,9 +185,12 @@ class tx_browser_pi1_download
 
 
   /**
- * download_init( ):
+ * download_check( ): The method checks
+ *                    * view and mode has to exist
+ *                    * table.field has to be a part of the TypoScript select property
+ *                    * table.field has to be configured in the TCA
  *
- * @return  void
+ * @return  string    Prompt, in case of a failure
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -237,9 +243,20 @@ class tx_browser_pi1_download
 
 
   /**
- * download_init( ):
+ * download_init( ):  The method sets some class variables
+ *                    The method checks, if download is allowed. User have to allow the download
+ *                    in the flexform / TypoScript
+ *                    The method explodes the given URL.
+ *                    Example:
+ *                    * URL is: single.301.tx_org_doc.9.documents.0
+ *                    * $this->view   = single
+ *                    * $this->mode   = 301
+ *                    * $this->table  = tx_org_doc
+ *                    * $this->uid    = 9
+ *                    * $this->field  = documents
+ *                    * $this->key    = 0
  *
- * @return  void
+ * @return  string    Prompt, in case of any downloading isn't allowed
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -288,7 +305,76 @@ class tx_browser_pi1_download
     $this->key    = (int) $arr_file[5];
       // Set all needed informations global
 
-    return false;
+    return;
+
+  }
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * typeNum
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+  /**
+ * set_typeNum(): Set the class variables $int_typeNum and $str_typeNum.
+ *                The class variables are needed by other classes while runtime.
+ *
+ * @return  void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  public function set_typeNum( )
+  {
+      // Get the typeNum from the current URL parameters
+    $typeNum = (int) t3lib_div::_GP( 'type' );
+
+      // RETURN typeNum is 0 or empty
+    if( empty ( $typeNum ) )
+    {
+      if( $this->pObj->b_drs_download )
+      {
+        t3lib_div::devLog('[INFO/DOWNLOAD] typeNum is 0 or empty.', $this->pObj->extKey, 0);
+      }
+      return;
+    }
+      // RETURN typeNum is 0 or empty
+
+      // Check the proper typeNum
+    $conf = $this->pObj->conf;
+    switch (true)
+    {
+      case( $typeNum == $conf['download.']['page.']['typeNum'] ) :
+          // Given typeNum is the internal typeNum for download
+        $this->int_typeNum = $typeNum;
+        $this->str_typeNum = 'download';
+        break;
+      default :
+          // Given typeNum isn't the internal typeNum for download
+        $this->str_typeNum = 'undefined';
+    }
+      // Check the proper typeNum
+
+      // DRS - Development Reporting System
+    if( $this->pObj->b_drs_download )
+    {
+      t3lib_div::devLog('[INFO/DOWNLOAD] typeNum is \'' . $typeNum . '\'. Name is \'' . $this->str_typeNum . '\'.', $this->pObj->extKey, 0);
+    }
+      // DRS - Development Reporting System
 
   }
 
@@ -302,7 +388,7 @@ class tx_browser_pi1_download
 
   /***********************************************
   *
-  * Delivery
+  * Sending
   *
   **********************************************/
 
@@ -315,33 +401,17 @@ class tx_browser_pi1_download
 
 
   /**
- * delivery():
+ * sendFileAndExit(): The method sends the file and exit in case of success
+ *                    The method checks:
+ *                    * upload folder is proper:  if there is a configuration in the TCA
+ *                    * sql result is proper:     if result is exactly one row
+ *                    * file is proper:           if the file does exist
  *
- * @return  void
+ * @return  string    Prompt, in case of a failure
  * @version 3.9.3
  * @since 3.9.3
  */
-  private function delivery_andExit( )
-  {
-    return $this->delivery_sendFile( );
-  }
-
-
-
-
-
-
-
-
-
-  /**
- * delivery_sendFile():
- *
- * @return  void
- * @version 3.9.3
- * @since 3.9.3
- */
-  private function delivery_sendFile( )
+  private function sendFileAndExit( )
   {
       //////////////////////////////////////////////////////////////////////////
       //
@@ -373,7 +443,7 @@ class tx_browser_pi1_download
       // Get the absoluite path
 
 
- 
+
       //////////////////////////////////////////////////////////////////////////
       //
       // Build and execute the query for getting files
@@ -390,7 +460,7 @@ class tx_browser_pi1_download
     $query = $GLOBALS['TYPO3_DB']->SELECTquery( $select_fields, $from_table, $where_clause, $groupBy = '', $orderBy = '', $limit = '' );
     if( $this->pObj->b_drs_sql || $this->pObj->b_drs_download )
     {
-      t3lib_div::devlog( '[INFO/SQL+DOWNLOAD] ' . $query, $this->pObj->extKey, 3 );
+      t3lib_div::devlog( '[INFO/SQL+DOWNLOAD] ' . $query, $this->pObj->extKey, 0 );
     }
       // Build the query
 
@@ -538,80 +608,11 @@ class tx_browser_pi1_download
       //////////////////////////////////////////////////////////////////////////
       //
       // Send the header and the file
-      
+
       // Read the file and write it to the output buffer.
 		@readfile( $str_pathFile ) || die ( __METHOD__ . ' (' . __LINE__ . '): ' . readfile( $str_pathFile ) );
 		exit;
       // Send the header and the file
-  }
-
-
-
-
-
-
-
-
-  /***********************************************
-  *
-  * typeNum
-  *
-  **********************************************/
-
-
-
-
-
-
-
-
-
-  /**
- * set_typeNum(): Set the globals $int_typeNum and $str_typeNum.
- *                The globals are needed by other classes while runtime.
- *
- * @return  void
- * @version 3.9.3
- * @since 3.9.3
- */
-  public function set_typeNum( )
-  {
-      // Get the typeNum from the current URL parameters
-    $typeNum = (int) t3lib_div::_GP( 'type' );
-
-      // RETURN typeNum is 0 or empty
-    if( empty ( $typeNum ) )
-    {
-      if( $this->pObj->b_drs_download )
-      {
-        t3lib_div::devLog('[INFO/DOWNLOAD] typeNum is 0 or empty.', $this->pObj->extKey, 0);
-      }
-      return;
-    }
-      // RETURN typeNum is 0 or empty
-
-      // Check the proper typeNum
-    $conf = $this->pObj->conf;
-    switch (true)
-    {
-      case( $typeNum == $conf['download.']['page.']['typeNum'] ) :
-          // Given typeNum is the internal typeNum for download
-        $this->int_typeNum = $typeNum;
-        $this->str_typeNum = 'download';
-        break;
-      default :
-          // Given typeNum isn't the internal typeNum for download
-        $this->str_typeNum = 'undefined';
-    }
-      // Check the proper typeNum
-
-      // DRS - Development Reporting System
-    if( $this->pObj->b_drs_download )
-    {
-      t3lib_div::devLog('[INFO/DOWNLOAD] typeNum is \'' . $typeNum . '\'. Name is \'' . $this->str_typeNum . '\'.', $this->pObj->extKey, 0);
-    }
-      // DRS - Development Reporting System
-
   }
 
 
@@ -638,12 +639,14 @@ class tx_browser_pi1_download
 
   /**
  * download_statistics():
+   *
+   * @param string    $str_operator: + or -
  *
  * @return  void
  * @version 3.9.3
  * @since 3.9.3
  */
-  private function statistics( )
+  private function statistics( $str_operator )
   {
     //$this->statistics_download( )
     //$this->statistics_downloadByVisit( )
@@ -660,12 +663,23 @@ class tx_browser_pi1_download
   /**
  * statistics_download():
  *
+ * @param	integer		$operator:  + or -
+ *
  * @return  void
  * @version 3.9.3
  * @since 3.9.3
  */
-  private function statistics_download( )
+  private function statistics_download( $operator )
   {
+    $field = $this->pObj->objStat->fieldDownloads;
+      // Count the hit
+    $this->sql_update_statistics( $this->table, $field, $this->uid, $operator );
+
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): Changing (' . $operator . ') the download hits' );
+    }
   }
 
 
@@ -679,12 +693,39 @@ class tx_browser_pi1_download
   /**
  * statistics_downloadByVisit():
  *
+ * @param	integer		$operator:  + or -
+ *
  * @return  void
  * @version 3.9.3
  * @since 3.9.3
  */
-  private function statistics_downloadByVisit( )
+  private function statistics_downloadByVisit( $operator )
   {
+       // RETURN: no new visit
+    $bool_newVisit = $this->pObj->objSession->statisticsNewDownload( );
+    if( ! $bool_newVisit )
+    {
+        // DRS - Development Reporting System
+      if( $this->pObj->b_drs_statistics )
+      {
+        $prompt = 'No new visit, no counting.';
+        t3lib_div::devlog('[INFO/STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
+      }
+        // DRS - Development Reporting System
+      return;
+    }
+      // RETURN: no new visit
+
+      // Count the hit
+    $field = $this->pObj->objStat->fieldDownloadsByVisits;
+    $this->sql_update_statistics( $this->table, $field, $this->uid, $operator );
+
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): Changing (' . $operator . ') the download hits' );
+    }
+    return;
   }
 
   

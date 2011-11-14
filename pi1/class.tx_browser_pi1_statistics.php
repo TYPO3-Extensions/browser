@@ -379,7 +379,7 @@ class tx_browser_pi1_statistics
     $uid   = $this->pObj->piVars['showUid'];
 
       // Count the hit
-    $this->sql_update_statistics( $table, $field, $uid );
+    $this->sql_update_statistics( $table, $field, $uid, '+' );
 
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
@@ -427,7 +427,7 @@ class tx_browser_pi1_statistics
       // RETURN: no new visit
 
       // Count the hit
-    $this->sql_update_statistics( $table, $field, $uid );
+    $this->sql_update_statistics( $table, $field, $uid, '+' );
     return;
   }
 
@@ -460,14 +460,15 @@ class tx_browser_pi1_statistics
  *                            If the user has enabled the SQL debug by the flexform / TypoScript,
  *                            the method echos it in the frontend.
  *
- * @param	[type]		$$table: ...
- * @param	[type]		$field: ...
- * @param	[type]		$uid: ...
+ * @param	string		$table:     table
+ * @param	string		$field:     field
+ * @param	integer		$uid:       uid of the current record
+ * @param	integer		$operator:  + or -
  * @return	void
  * @version 3.9.3
  * @since 3.9.3
  */
-  private function sql_update_statistics( $table, $field, $uid )
+  private function sql_update_statistics( $table, $field, $uid, $operator )
   {
       // The current table hasn't any field for counting hits
     if( ! $this->helperFieldInTable( $field ) )
@@ -479,7 +480,7 @@ class tx_browser_pi1_statistics
       // Build the query
     $query = '' .
       'UPDATE `' . $table . '` ' .
-      'SET    `' . $field . '` = `' . $field . '` + 1 ' .
+      'SET    `' . $field . '` = `' . $field . '` ' . $operator . ' 1 ' .
       'WHERE  `uid` = ' . $uid ;
 
       // Execute the query
