@@ -484,55 +484,48 @@ class tx_browser_pi1_download
 
 
 
-    $arr_header = null;
-
-    if( isset ( $this->pObj->conf['download.']['mimetypes.']['fileext.'][$fileInfo['fileext']] ) )
-    {
-      $str_application    = $this->pObj->conf['download.']['mimetypes.']['fileext.'][$fileInfo['fileext']];
-  		$arr_header['type'] = 'Content-type: ' . $str_application;
-    }
-
-////    array(12) {
-//    ["path"]=>
-//    string(65) "/home/www/htdocs/www.typo3-browser-forum.de/typo3/uploads/tx_org/"
-//    ["file"]=>
-//    string(10) "klumet.PDF"
-//    ["filebody"]=>
-//    string(6) "klumet"
-//    ["fileext"]=>
-//    string(3) "pdf"
-//    ["realFileext"]=>
-//    string(3) "PDF"
-//    ["tstamp"]=>
-//    int(1321278000)
-//    ["size"]=>
-//    int(40877)
-//    ["type"]=>
-//    string(4) "file"
-//    ["owner"]=>
-//    int(30)
-//    ["perms"]=>
-//    int(33184)
-//    ["writable"]=>
-//    bool(false)
-//    ["readable"]=>
-//    bool(false)
-//    }
-
-
       //////////////////////////////////////////////////////////////////////////
       //
-      // Send the file
+      // Set the header
+
+    $arr_header = null;
+
+      // Fileextension correspondends with a defined mimetype
+    $str_fileext = $fileInfo['fileext'];
+    if( isset ( $this->pObj->conf['download.']['mimetypes.']['fileext.'][$str_fileext] ) )
+    {
+      $str_application    = $this->pObj->conf['download.']['mimetypes.']['fileext.'][$str_fileext];
+  		$arr_header['type'] = 'Content-type: ' . $str_application;
+    }
+      // Fileextension correspondends with a defined mimetype
 
     $arr_header['description']  = 'Content-Description: TYPO3 Browser Download Modul';
     $arr_header['disposition']  = 'Content-Disposition: attachment; filename="' . $str_file . '"';
     $arr_header['length']       = 'Content-Length: ' . $fileInfo['size'];
 
-//    $prompt = 'The file \'' . $str_pathFile . '\' does not exist.';
-//    if ( $this->pObj->b_drs_download )
-//    {
-//      t3lib_div::devlog( '[ERROR/DOWNLOAD] ' . $prompt, $this->pObj->extKey, 3 );
-//    }
+    $str_header = implode( ' // ', $arr_header );
+
+      // DRS - Development Reporting System
+    if ( $this->pObj->b_drs_download )
+    {
+      t3lib_div::devlog( '[INFO/DOWNLOAD] file name: '      . $str_file,          $this->pObj->extKey, 0 );
+      t3lib_div::devlog( '[INFO/DOWNLOAD] file path: '      . $fileInfo['path'],  $this->pObj->extKey, 0 );
+      t3lib_div::devlog( '[INFO/DOWNLOAD] file size: '      . $fileInfo['size'],  $this->pObj->extKey, 0 );
+      t3lib_div::devlog( '[INFO/DOWNLOAD] file extension: ' . $str_fileext,       $this->pObj->extKey, 0 );
+      t3lib_div::devlog( '[INFO/DOWNLOAD] header: '         . $str_header,        $this->pObj->extKey, 0 );
+    }
+      // DRS - Development Reporting System
+
+      // Loop header
+    foreach( $arr_header as $str_header )
+    {
+      header( $str_header );
+    }
+      // Loop header
+      // Set the header
+
+
+
 //    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 //    if ( ! ( $pos === false ) )
 //    {
@@ -541,15 +534,15 @@ class tx_browser_pi1_download
 //    }
 
 
-    foreach( $arr_header as $str_header )
-    {
-      header( $str_header );
-    }
 
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Send the header and the file
+      
       // Read the file and write it to the output buffer.
 		@readfile( $str_pathFile ) || die ( __METHOD__ . ' (' . __LINE__ . '): ' . readfile( $str_pathFile ) );
 		exit;
-      // Send the file
+      // Send the header and the file
   }
 
 
