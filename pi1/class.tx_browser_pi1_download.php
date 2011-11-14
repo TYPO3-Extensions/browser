@@ -536,7 +536,7 @@ class tx_browser_pi1_download
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $fileInfo, $fileInfo['fileext'], $type->pObj->conf['download.']['mimetypes.']['fileext.'][$fileInfo['fileext'], $arr_header );
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $fileInfo, $fileInfo['fileext'], $type->pObj->conf['download.']['mimetypes.']['fileext.'][$fileInfo['fileext']], $arr_header );
       return;
     }
 
