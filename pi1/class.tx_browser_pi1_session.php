@@ -641,13 +641,14 @@ class tx_browser_pi1_session
         // Set the new visit
       $arr_session_browser[$tt_content_uid]['statistics']['visit'][$table][$uid][$field] = $time;
       $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_session_browser);
+      $GLOBALS["TSFE"]->storeSessionData();
         // Set the new visit
 
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
       var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId) );
-//      exit;
+      exit;
     }
 
         // DRS - Development Reporting System
