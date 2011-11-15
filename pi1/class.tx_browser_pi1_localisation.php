@@ -1946,7 +1946,7 @@ class tx_browser_pi1_localisation
 //LIMIT 0 , 30
         $where_clause = '( uid = \'' . $uid . '\' OR ' . $l10n_parent . ' = \'' . $uid . '\' )';
         $where_clause = '( ( uid = \'' . $uid . '\' OR ' . $l10n_parent . ' = \'' . $uid . '\' ) AND '.
-                        $sys_language_uid . ' = ' . $this->lang_id;
+                        $sys_language_uid . ' = ' . $this->lang_id . ' )';
         break;
     }
       // Get the where clause
