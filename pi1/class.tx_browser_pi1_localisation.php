@@ -1936,7 +1936,7 @@ class tx_browser_pi1_localisation
     {
       case( PI1_SELECTED_LANGUAGE_ONLY ):
         $where_clause = '( ( uid = \'' . $uid . '\' OR ' . $l10n_parent . ' = \'' . $uid . '\' ) AND '.
-                        $sys_language_uid . ' = ' . $this->lang_id;
+                        $sys_language_uid . ' = ' . $this->lang_id . ' )';
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
 //SELECT uid, l10n_parent, `sys_language_uid`
