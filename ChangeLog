@@ -122,7 +122,7 @@
 
   Bugfixes
   * 13573: Localisation: proper handle of languageField and transOrigPointerField
-  * 13505: Empty AND in some localization context
+  * 13505: Empty AND in some localisation context
   * 13464: foreach( ... ) is moved to foreach((array) ... )
   * 13008: Workflow devider will not be consolidated
 
@@ -293,7 +293,7 @@
   * 8856: First/Last/Odd/Even Classes for Items
   Bugfixes
   * 9025: Records won't be consolidated proper
-  * 9024: Filter and localization: default language only
+  * 9024: Filter and localisation: default language only
   * 8589: Javascript error message if no single view is configured needs to be encoded
   * 8523: Localized children records won't be grouped
   * 8368: Filters in URL to singleview -> overwriting tablefields
@@ -450,10 +450,10 @@
   Improvement
   * piVar azTab is removed, if there isn't used any a-z-browser
   Bugfix
-  * Localization
+  * Localisation
     * Orthography and syntax mistakes with exclude and mergeIfNotBlank
     * Counting mismatch for plugins
-    * Replace bug in case of localization but non localized foreign tables 
+    * Replace bug in case of localisation but non localized foreign tables 
 
 3.0.4
   09-10-13
@@ -479,7 +479,7 @@
   * New Features
     * Multiple Plugins
       * Browser Plugins are unlimited on every page
-    * Localization
+    * Localisation
       * Browser can handle localized records
     * Filter
       * You can add selectboxes to the search field
@@ -522,7 +522,7 @@
 2.6.4
   09-09-07
   Maintenance
-  * Localization Development
+  * Localisation Development
   TypoScript
   * a-z_Browser.defaultTab: Type is changed from string to integer. Value is now the key of the default tab and not the name.
 

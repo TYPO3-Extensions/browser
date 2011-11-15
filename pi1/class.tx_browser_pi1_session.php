@@ -555,172 +555,172 @@ class tx_browser_pi1_session
 
 
 
-  /**
- * statisticsNewDownload():  The method checks, if the previous visit is older than current time minus
- *                        the user defined timeout. It manages the session data for the visit.
- *                        Workflow:
- *                        * Is session management disabled? Return false
- *                        * Isn't previous visit older than current time minus timeout? Return false
- *                        #31230, 31229: Statistics module
- *
- * @return	boolean		$bool_newDownload: true in case of a new visit, otherwise false
- * @version 3.9.3
- * @since 3.9.3
- */
-  public function statisticsNewDownload( $table, $field, $uid )
-  {
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Set status of the session management
-
-    $this->sessionIsEnabled( );
-      // Boolean for status of visit
-    $bool_newDownload = false;
-      // Set status of the session management
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN: no session, no counting of visits
-
-    if( ! $this->bool_session_enabled )
-    {
-        // DRS - Development Reporting System
-      if( $this->pObj->b_drs_session || $this->pObj->b_drs_statistics )
-      {
-        $prompt = 'Session management is disabled. Visits can\'t count.';
-        t3lib_div::devlog('[WARN/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 2);
-        $prompt = 'Enable session for better performance!';
-        t3lib_div::devlog('[HELP/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 1);
-      }
-        // DRS - Development Reporting System
-
-      return $bool_newDownload ;
-    }
-      // RETURN: no session, no counting of visits
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Init variables
-
-      // Uid of the current Browser plugin
-    $tt_content_uid       = $this->pObj->cObj->data['uid'];
-      // Get the name of the session data space
-    $str_data_space       = $this->getNameOfDataSpace( );
-//      // Current table
-//    $table                = $this->pObj->localTable;
-//      // Name of the field for statistics data
-//    $field                = $this->pObj->objStat->fieldDownloadsByVisits;
-//      // Uid of the current record
-//    $uid                  = $this->pObj->piVars['showUid'];
-      // Period between a current and a new download and visit in seconds
-    $timeout              = $this->pObj->objStat->timeout;
-      // Timestamp of now
-    $time                 = time( );
-      // Get tx_browser-pi1 session data
-    $arr_session_browser  = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
-    $arr_session_visit    = $arr_session_browser[$tt_content_uid]['statistics']['visit'];
-      // Get tx_browser-pi1 session data
-      // Init variables
-
-
-
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId) );
-    }
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN: first visit
-
-    if( empty( $arr_session_visit[$table][$uid][$field] ) )
-    {
-        // Set the new visit
-      $arr_session_browser[$tt_content_uid]['statistics']['visit'][$table][$uid][$field] = $time;
-      $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_session_browser);
-        // Storing session data now (is proper in context with an PHP exit!)
-      $GLOBALS["TSFE"]->storeSessionData();
-        // Set the new visit
-
-        // DRS - Development Reporting System
-      if( $this->pObj->b_drs_session || $this->pObj->b_drs_statistics )
-      {
-        $prompt = 'First visit.';
-        t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
-        $prompt = $table . '.record[' . $uid . '][' . $field . '] is set to: ' . $time;
-        t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
-      }
-        // DRS - Development Reporting System
-
-        // RETURN
-      $bool_newDownload = true;
-      return $bool_newDownload;
-    }
-      // RETURN: first visit
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Repeated visit
-
-    $timeLastVisit    = $arr_session_visit[$table][$uid][$field];
-    $timeMinusTimeout = $time - $timeout;
-    switch( true )
-    {
-      case( $timeLastVisit <= $timeMinusTimeout ):
-          // new visit
-          // Set the new visit
-        $arr_session_browser[$tt_content_uid]['statistics']['visit'][$table][$uid][$field] = $time;
-        $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_session_browser);
-          // Set the new visit
-
-          // DRS - Development Reporting System
-        if( $this->pObj->b_drs_session || $this->pObj->b_drs_statistics )
-        {
-          $prompt = 'New visit: previous visit (' . $timeLastVisit . ' ) is older than ' . $timeMinusTimeout . '.';
-          t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
-          $prompt = $table . '.record[' . $uid . '][' . $field . '] is set to: ' . $time;
-          t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
-        }
-          // DRS - Development Reporting System
-
-        $bool_newDownload = true;
-        break;
-          // new visit
-      default:
-          // DRS - Development Reporting System
-        if( $this->pObj->b_drs_session || $this->pObj->b_drs_statistics )
-        {
-          $prompt = 'No new visit: previous visit (' . $timeLastVisit . ' ) isn\'t older than ' . $timeMinusTimeout . '.';
-          t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
-          $prompt = $table . '.record[' . $uid . '][' . $field . '] is left to: ' . $timeLastVisit;
-          t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
-        }
-          // DRS - Development Reporting System
-
-          // no new visit
-        $bool_newDownload = false;
-          // no new visit
-    }
-      // Repeated visit
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN
-
-    return $bool_newDownload;
-      // RETURN
-  }
+//  /**
+// * statisticsNewDownload():  The method checks, if the previous visit is older than current time minus
+// *                        the user defined timeout. It manages the session data for the visit.
+// *                        Workflow:
+// *                        * Is session management disabled? Return false
+// *                        * Isn't previous visit older than current time minus timeout? Return false
+// *                        #31230, 31229: Statistics module
+// *
+// * @return	boolean		$bool_newDownload: true in case of a new visit, otherwise false
+// * @version 3.9.3
+// * @since 3.9.3
+// */
+//  public function statisticsNewDownload( $table, $field, $uid )
+//  {
+//      //////////////////////////////////////////////////////////////////////////
+//      //
+//      // Set status of the session management
+//
+//    $this->sessionIsEnabled( );
+//      // Boolean for status of visit
+//    $bool_newDownload = false;
+//      // Set status of the session management
+//
+//
+//
+//      //////////////////////////////////////////////////////////////////////////
+//      //
+//      // RETURN: no session, no counting of visits
+//
+//    if( ! $this->bool_session_enabled )
+//    {
+//        // DRS - Development Reporting System
+//      if( $this->pObj->b_drs_session || $this->pObj->b_drs_statistics )
+//      {
+//        $prompt = 'Session management is disabled. Visits can\'t count.';
+//        t3lib_div::devlog('[WARN/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 2);
+//        $prompt = 'Enable session for better performance!';
+//        t3lib_div::devlog('[HELP/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 1);
+//      }
+//        // DRS - Development Reporting System
+//
+//      return $bool_newDownload ;
+//    }
+//      // RETURN: no session, no counting of visits
+//
+//
+//
+//      //////////////////////////////////////////////////////////////////////////
+//      //
+//      // Init variables
+//
+//      // Uid of the current Browser plugin
+//    $tt_content_uid       = $this->pObj->cObj->data['uid'];
+//      // Get the name of the session data space
+//    $str_data_space       = $this->getNameOfDataSpace( );
+////      // Current table
+////    $table                = $this->pObj->localTable;
+////      // Name of the field for statistics data
+////    $field                = $this->pObj->objStat->fieldDownloadsByVisits;
+////      // Uid of the current record
+////    $uid                  = $this->pObj->piVars['showUid'];
+//      // Period between a current and a new download and visit in seconds
+//    $timeout              = $this->pObj->objStat->timeout;
+//      // Timestamp of now
+//    $time                 = time( );
+//      // Get tx_browser-pi1 session data
+//    $arr_session_browser  = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
+//    $arr_session_visit    = $arr_session_browser[$tt_content_uid]['statistics']['visit'];
+//      // Get tx_browser-pi1 session data
+//      // Init variables
+//
+//
+//
+//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if ( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId) );
+//    }
+//
+//
+//
+//      //////////////////////////////////////////////////////////////////////////
+//      //
+//      // RETURN: first visit
+//
+//    if( empty( $arr_session_visit[$table][$uid][$field] ) )
+//    {
+//        // Set the new visit
+//      $arr_session_browser[$tt_content_uid]['statistics']['visit'][$table][$uid][$field] = $time;
+//      $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_session_browser);
+//        // Storing session data now (is proper in context with an PHP exit!)
+//      $GLOBALS["TSFE"]->storeSessionData();
+//        // Set the new visit
+//
+//        // DRS - Development Reporting System
+//      if( $this->pObj->b_drs_session || $this->pObj->b_drs_statistics )
+//      {
+//        $prompt = 'First visit.';
+//        t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
+//        $prompt = $table . '.record[' . $uid . '][' . $field . '] is set to: ' . $time;
+//        t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
+//      }
+//        // DRS - Development Reporting System
+//
+//        // RETURN
+//      $bool_newDownload = true;
+//      return $bool_newDownload;
+//    }
+//      // RETURN: first visit
+//
+//
+//
+//      //////////////////////////////////////////////////////////////////////////
+//      //
+//      // Repeated visit
+//
+//    $timeLastVisit    = $arr_session_visit[$table][$uid][$field];
+//    $timeMinusTimeout = $time - $timeout;
+//    switch( true )
+//    {
+//      case( $timeLastVisit <= $timeMinusTimeout ):
+//          // new visit
+//          // Set the new visit
+//        $arr_session_browser[$tt_content_uid]['statistics']['visit'][$table][$uid][$field] = $time;
+//        $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_session_browser);
+//          // Set the new visit
+//
+//          // DRS - Development Reporting System
+//        if( $this->pObj->b_drs_session || $this->pObj->b_drs_statistics )
+//        {
+//          $prompt = 'New visit: previous visit (' . $timeLastVisit . ' ) is older than ' . $timeMinusTimeout . '.';
+//          t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
+//          $prompt = $table . '.record[' . $uid . '][' . $field . '] is set to: ' . $time;
+//          t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
+//        }
+//          // DRS - Development Reporting System
+//
+//        $bool_newDownload = true;
+//        break;
+//          // new visit
+//      default:
+//          // DRS - Development Reporting System
+//        if( $this->pObj->b_drs_session || $this->pObj->b_drs_statistics )
+//        {
+//          $prompt = 'No new visit: previous visit (' . $timeLastVisit . ' ) isn\'t older than ' . $timeMinusTimeout . '.';
+//          t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
+//          $prompt = $table . '.record[' . $uid . '][' . $field . '] is left to: ' . $timeLastVisit;
+//          t3lib_div::devlog('[INFO/SESSION+STATISTICS] ' . $prompt, $this->pObj->extKey, 0);
+//        }
+//          // DRS - Development Reporting System
+//
+//          // no new visit
+//        $bool_newDownload = false;
+//          // no new visit
+//    }
+//      // Repeated visit
+//
+//
+//
+//      //////////////////////////////////////////////////////////////////////////
+//      //
+//      // RETURN
+//
+//    return $bool_newDownload;
+//      // RETURN
+//  }
 
 
 

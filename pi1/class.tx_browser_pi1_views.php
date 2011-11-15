@@ -386,7 +386,7 @@ class tx_browser_pi1_views
        */
 
       // User selected a non default language
-    if($this->pObj->objLocalize->int_localization_mode >= 3)
+    if($this->pObj->objLocalize->int_localisation_mode >= 3)
     {
       // User selected a filter
       if(!empty($this->pObj->arr_andWhereFilter))
@@ -413,7 +413,7 @@ class tx_browser_pi1_views
             }
             $where    = implode(' OR ', $arr_where);
             $where    = '('.$where.')';
-            $andWhere = $this->pObj->objLocalize->localizationFields_where($table);
+            $andWhere = $this->pObj->objLocalize->localisationFields_where($table);
               // 13505, 110302, dwildt
             if(!$andWhere)
             {
@@ -587,7 +587,7 @@ class tx_browser_pi1_views
 
       /////////////////////////////////////////////////////////////////
       //
-      // Consolidate Localization
+      // Consolidate Localisation
 
     if (!$this->pObj->b_sql_manual)
     {
@@ -598,10 +598,10 @@ class tx_browser_pi1_views
     {
       if ($this->pObj->b_drs_locallang)
       {
-        t3lib_div::devlog('[INFO/SQL] Manual SQL mode: Rows didn\'t get any localization consolidation.',  $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/SQL] Manual SQL mode: Rows didn\'t get any localisation consolidation.',  $this->pObj->extKey, 0);
       }
     }
-      // Consolidate Localization
+      // Consolidate Localisation
 
 
       ////////////////////////////////////////////////////////////////////////
@@ -617,7 +617,7 @@ class tx_browser_pi1_views
       {
         $endTime = $this->pObj->TT->mtime();
       }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After consolidate localization: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+      t3lib_div::devLog('[INFO/PERFORMANCE] After consolidate localisation: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
     }
       // DRS - Performance
 
@@ -1573,11 +1573,11 @@ class tx_browser_pi1_views
 
       /////////////////////////////////////////////////////////////////
       //
-      // Consolidate Localization
+      // Consolidate Localisation
 
     $rows = $this->pObj->objLocalize->consolidate_rows($rows, $this->pObj->localTable);
     $this->pObj->rows = $rows;
-      // Consolidate Localization
+      // Consolidate Localisation
 
 
 

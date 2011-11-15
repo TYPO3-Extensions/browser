@@ -25,8 +25,8 @@
       <label index="browser.browser_tut_images_en.description">Configuring images and galeries.</label>
       <label index="browser.browser_tut_labeling_en.title">Tutorial Labeling</label>
       <label index="browser.browser_tut_labeling_en.description">Labeling and field properties.</label>
-      <label index="browser.browser_tut_localization_en.title">Tutorial Localization</label>
-      <label index="browser.browser_tut_localization_en.description">Proper localization design for your database.</label>
+      <label index="browser.browser_tut_localisation_en.title">Tutorial Localisation</label>
+      <label index="browser.browser_tut_localisation_en.description">Proper localisation design for your database.</label>
       <label index="browser.browser_tut_marker_en.title">Tutorial Marker</label>
       <label index="browser.browser_tut_marker_en.description">Database marker, constant marker, browser system marker, piVars marker, TYPO3 GLOBALS Marker</label>
       <label index="browser.browser_tut_rss_en.title">Tutorial RSS/XML</label>
@@ -75,8 +75,8 @@
       <label index="browser.browser_tut_images_en.description">Bilder konfigurieren und Bildergalerien benutzen.</label>
       <label index="browser.browser_tut_labeling_en.title">Tutorial Labelling - Bezeichnungen</label>
       <label index="browser.browser_tut_labeling_en.description"><![CDATA[Felder bezeichnen und Eigenschaften ändern.]]></label>
-      <label index="browser.browser_tut_localization_en.title">Tutorial Localisation - Sprachen</label>
-      <label index="browser.browser_tut_localization_en.description">Wie funktioniert Lokalisierung. Wie sollte eine Datenbank aufgebaut sein, damit diese für verschiedene Sprachen verwendbar ist?</label>
+      <label index="browser.browser_tut_localisation_en.title">Tutorial Localisation - Sprachen</label>
+      <label index="browser.browser_tut_localisation_en.description">Wie funktioniert Lokalisierung. Wie sollte eine Datenbank aufgebaut sein, damit diese für verschiedene Sprachen verwendbar ist?</label>
       <label index="browser.browser_tut_marker_en.title">Tutorial Marker</label>
       <label index="browser.browser_tut_marker_en.description">Datenbank Marker, Konstanten, Browser-System-Marker, Marker für Parameter der aktuellen URL und alle Werte aus dem TYPO3-GLOBALS-Array.</label>
       <label index="browser.browser_tut_realurl_en.title">Tutorial RealURL</label>

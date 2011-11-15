@@ -2203,9 +2203,9 @@ plugin.tx_browser_pi1 {
               }
             }
           }
-            // [STRING] Path to the jss file of the t3browser localization. ###LANG### will be replacedwhile runtime
-          localization = EXT:browser/res/js/jquery/plugins/jquery.t3browser/localization.###LANG###.js
-          localization {
+            // [STRING] Path to the jss file of the t3browser localisation. ###LANG### will be replacedwhile runtime
+          localisation = EXT:browser/res/js/jquery/plugins/jquery.t3browser/localisation.###LANG###.js
+          localisation {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
           }
@@ -2789,7 +2789,7 @@ plugin.tx_browser_pi1 {
         }
       }
     }
-    localization {
+    localisation {
       realURL {
           // [BOOLEAN] Default 1 (it is compliant with realURL). 1: Record will get the link to the record in default language. I.e record title won't be translated in the realURL path. You can switch to the record in another language. 0: Record will get the link to the translated record. I.e record title will be translated in the realURL path. You can't switch to the record in another language.
         defaultLanguageLink = 1

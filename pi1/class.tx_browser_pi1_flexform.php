@@ -347,7 +347,7 @@ class tx_browser_pi1_flexform {
     $select_fields = "uid, header, " . $str_langField . ", " . $str_langPid;
     $from_table = "tt_content";
     $where_enable = $this->pObj->cObj->enableFields($from_table);
-    $where_locale = $this->pObj->objLocalize->localizationFields_where($from_table);
+    $where_locale = $this->pObj->objLocalize->localisationFields_where($from_table);
     if (!$where_locale) {
       $where_locale = 1;
     }
@@ -368,7 +368,7 @@ class tx_browser_pi1_flexform {
 
     //////////////////////////////////////////////////////////////////////
     //
-    // Consolidate the Rows in case of Localization
+    // Consolidate the Rows in case of Localisation
 
     $arr_rm_langParents = false;
     if (count($rows) > 1) {
@@ -390,7 +390,7 @@ class tx_browser_pi1_flexform {
       }
     }
     //var_dump($rows);
-    // Consolidate the Rows in case of Localization
+    // Consolidate the Rows in case of Localisation
 
     //////////////////////////////////////////////////////////////////////
     //
@@ -1303,28 +1303,28 @@ class tx_browser_pi1_flexform {
       case ('own') :
         $plugin       = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_plugins.t3browser.own.plugin', $sheet, 'lDEF', 'vDEF');
         $library      = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_plugins.t3browser.own.library', $sheet, 'lDEF', 'vDEF');
-        $localization = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_plugins.t3browser.own.localization', $sheet, 'lDEF', 'vDEF');
+        $localisation = $this->pObj->pi_getFFvalue($arr_piFlexform, 'jquery_plugins.t3browser.own.localisation', $sheet, 'lDEF', 'vDEF');
         $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin']       = $plugin;
         $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library']      = $library;
-        $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localization'] = $localization;
+        $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localisation'] = $localisation;
         $this->bool_jquery_plugins_t3browser = true;
         if ($this->pObj->b_drs_flexform)
         {
           t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.plugin is set to '       . $plugin, $this->pObj->extKey, 0);
           t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.library is set to '      . $library, $this->pObj->extKey, 0);
-          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.localization is set to ' . $localization, $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.localisation is set to ' . $localisation, $this->pObj->extKey, 0);
         }
         break;
       case ('no') :
         $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['plugin']       = null;
         $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library']      = null;
-        $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localization'] = null;
+        $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localisation'] = null;
         $this->bool_jquery_plugins_t3browser = false;
         if ($this->pObj->b_drs_flexform)
         {
           t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.plugin is set to null.',       $this->pObj->extKey, 0);
           t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.library is set to null.',      $this->pObj->extKey, 0);
-          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.localization is set to null.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.localisation is set to null.', $this->pObj->extKey, 0);
         }
         break;
       case ('ts') :
@@ -1334,7 +1334,7 @@ class tx_browser_pi1_flexform {
         {
           t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.plugin isn\'t changed by the flexform.', $this->pObj->extKey, 0);
           t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.library isn\'t changed by the flexform.', $this->pObj->extKey, 0);
-          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.localization isn\'t changed by the flexform.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.plugins.t3browser.localisation isn\'t changed by the flexform.', $this->pObj->extKey, 0);
         }
         break;
     }

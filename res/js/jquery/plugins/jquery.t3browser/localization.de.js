@@ -1,6 +1,6 @@
 /**
  *
- * Localization file for jquery.t3browser
+ * Localisation file for jquery.t3browser
 
  * Copyright (c) 2011 Dirk Wildt
  * http://wildt.at.die-netzmacher.de/

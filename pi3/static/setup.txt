@@ -246,24 +246,24 @@ plugin.tx_browser_pi3 {
         }
       }
     }
-    // browser_tut_localization_en
+    // browser_tut_localisation_en
     1170 < plugin.tx_browser_pi3.template
     1170 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_localization_en/current/
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_localisation_en/current/
           }
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_localization_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_localisation_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_localization_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_localisation_en.description
         }
       }
     }

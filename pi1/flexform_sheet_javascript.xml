@@ -152,18 +152,18 @@
           </config>
         </TCEforms>
       </jquery_plugins.t3browser.own.library>
-      <jquery_plugins.t3browser.own.localization>
+      <jquery_plugins.t3browser.own.localisation>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.own.localization</label>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.own.localisation</label>
           <displayCond>FIELD:jquery_plugins.t3browser:IN:own</displayCond>
           <config>
             <type>input</type>
             <size>255</size>
             <eval>trim,required,nospace</eval>
-            <default>EXT:browser/res/js/jquery/plugins/jquery.t3browser/localization.###LANG###.js</default>
+            <default>EXT:browser/res/js/jquery/plugins/jquery.t3browser/localisation.###LANG###.js</default>
           </config>
         </TCEforms>
-      </jquery_plugins.t3browser.own.localization>
+      </jquery_plugins.t3browser.own.localisation>
       <browser_libraries>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries</label>

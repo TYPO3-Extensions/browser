@@ -1873,7 +1873,7 @@ getRows(): Building the SQL query. Execute the query. Return the result as rows.
     list ($table, $field) = explod
 [...]
 date_filter($rows);
-    // Consolidate Localization
+    // Consolidate Localisation
 
     $arr_return['data']['rows'] = $rows;
     return $arr_return;
@@ -2152,26 +2152,26 @@ ter.php']) {
   {";}s:12:"H_15e5af0bba";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:12;s:15:"_functionHeader";s:77:"function andWhere_foreignTable($obj_ts, $arr_ts, $arr_piVar, $tableField)
   {";}s:12:"H_1355bbd23a";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:8;s:15:"_functionHeader";s:31:"function getRows($tableField) {";}s:12:"H_81b416ef72";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:8;s:15:"_functionHeader";s:31:"function wrapRows($arr_input) {";}s:12:"H_dd57e9f72d";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:3;s:5:"TOTAL";i:3;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_03987cc836";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_template.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:33;s:15:"_functionHeader";s:61:"function get_nice_piVar($obj_ts, $arr_ts, $conf_tableField) {";}s:12:"H_4ca88602f6";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:17;s:15:"_functionHeader";s:73:"function renderHtmlFilter($obj_ts, $arr_ts, $arr_values, $tableField)
   {";}s:12:"H_cc6949472f";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_03987cc836";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_template.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:55;s:15:"_functionHeader";s:70:"function items_order_and_addFirst($arr_ts, $arr_values, $tableField) {";}s:12:"H_f6bd76fc75";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_03987cc836";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_template.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:38;s:15:"_functionHeader";s:54:"function wrap_objectTitle($arr_ts, $conf_tableField) {";}s:12:"H_a2e9495278";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_03987cc836";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_template.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:42;s:15:"_functionHeader";s:64:"function get_wrappedItemClass($arr_ts, $conf_item, $str_order) {";}s:12:"H_00d979d97a";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_03987cc836";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_template.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:42;s:15:"_functionHeader";s:64:"function get_wrappedItemStyle($arr_ts, $conf_item, $str_order) {";}s:12:"H_9779add519";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:20;s:15:"_functionHeader";s:47:"function get_wrappedItemUid($uid, $conf_item) {";}s:12:"H_98859edc15";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:20;s:15:"_functionHeader";s:64:"function get_wrappedItemURL($tableField, $value, $conf_item)
-  {";}s:12:"H_77b59ef691";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_03987cc836";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_template.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:55;s:15:"_functionHeader";s:80:"function get_wrappedItemSelected($uid, $arr_piVar, $conf_selected, $conf_item) {";}s:12:"H_6f514ee322";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_03987cc836";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_template.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:34;s:15:"_functionHeader";s:89:"function wrap_allItems($obj_ts, $arr_ts, $str_nice_piVar, $key_piVar, $number_of_items) {";}s:12:"H_a63b136f57";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:24:"_searchtime_milliseconds";d:10;s:15:"_functionHeader";s:28:"function get_tableFields() {";}}}s:14:"MD5_97b7f86d2f";a:5:{s:8:"filename";s:41:"pi1/class.tx_browser_pi1_localization.php";s:8:"filesize";i:55803;s:6:"header";a:5:{s:4:"text";s:99:"
+  {";}s:12:"H_77b59ef691";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_03987cc836";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_template.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:55;s:15:"_functionHeader";s:80:"function get_wrappedItemSelected($uid, $arr_piVar, $conf_selected, $conf_item) {";}s:12:"H_6f514ee322";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_03987cc836";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_template.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:34;s:15:"_functionHeader";s:89:"function wrap_allItems($obj_ts, $arr_ts, $str_nice_piVar, $key_piVar, $number_of_items) {";}s:12:"H_a63b136f57";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:24:"_searchtime_milliseconds";d:10;s:15:"_functionHeader";s:28:"function get_tableFields() {";}}}s:14:"MD5_97b7f86d2f";a:5:{s:8:"filename";s:41:"pi1/class.tx_browser_pi1_localisation.php";s:8:"filesize";i:55803;s:6:"header";a:5:{s:4:"text";s:99:"
 
-The class tx_browser_pi1_localization bundles methods for localization for the extension browser
-";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}s:5:"other";a:3:{i:0;s:57:"@author    Dirk Wildt <http://wildt.at.die-netzmacher.de>";i:1;s:17:"@package    TYPO3";i:2;s:25:"@subpackage    tx_browser";}s:11:"other_index";a:3:{s:7:"@author";a:1:{i:0;s:46:"Dirk Wildt <http://wildt.at.die-netzmacher.de>";}s:8:"@package";a:1:{i:0;s:6:"TYPO3 ";}s:11:"@subpackage";a:1:{i:0;s:11:"tx_browser ";}}}s:3:"DAT";a:10:{i:1;a:8:{s:6:"header";s:35:"class tx_browser_pi1_localization
-{";s:5:"class";i:1;s:11:"parentClass";s:27:"tx_browser_pi1_localization";s:4:"cDat";a:3:{s:4:"text";s:770:"
+The class tx_browser_pi1_localisation bundles methods for localisation for the extension browser
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}s:5:"other";a:3:{i:0;s:57:"@author    Dirk Wildt <http://wildt.at.die-netzmacher.de>";i:1;s:17:"@package    TYPO3";i:2;s:25:"@subpackage    tx_browser";}s:11:"other_index";a:3:{s:7:"@author";a:1:{i:0;s:46:"Dirk Wildt <http://wildt.at.die-netzmacher.de>";}s:8:"@package";a:1:{i:0;s:6:"TYPO3 ";}s:11:"@subpackage";a:1:{i:0;s:11:"tx_browser ";}}}s:3:"DAT";a:10:{i:1;a:8:{s:6:"header";s:35:"class tx_browser_pi1_localisation
+{";s:5:"class";i:1;s:11:"parentClass";s:27:"tx_browser_pi1_localisation";s:4:"cDat";a:3:{s:4:"text";s:770:"
 
 [CLASS/FUNCTION INDEX of SCRIPT]
 
 
 
-  61: class tx_browser_pi1_localization
+  61: class tx_browser_pi1_localisation
  111:     function __construct($parentObj)
 
              SECTION: SQL query parts
- 165:     function localizationFields_select($table)
- 403:     function localizationFields_where($table)
- 506:     function localizationSingle_where($table)
+ 165:     function localisationFields_select($table)
+ 403:     function localisationFields_where($table)
+ 506:     function localisationSingle_where($table)
 
-             SECTION: Configuring Localization
- 649:     function localizationConfig()
+             SECTION: Configuring Localisation
+ 649:     function localisationConfig()
 
              SECTION: Consolidation
  729:     function consolidate_filter($rows)
@@ -2206,16 +2206,16 @@ TOTAL FUNCTIONS: 9
   //
   // Variables set by this class
 
-  var $int_localization_mode;
-  // [Integer] See defines in the contructor. Set by localizationConfig().
+  var $int_localisation_mode;
+  // [Integer] See defines in the contructor. Set by localisationConfig().
   var $lang_id;
-  // [Integer] $GLOBALS['TSFE']->sys_language_content. Set by localizationConfig().
+  // [Integer] $GLOBALS['TSFE']->sys_language_content. Set by localisationConfig().
   var $overlay_mode;
-  // [String] $GLOBALS['TSFE']->sys_language_contentOL. Set by localizationConfig().
-  var $conf_localization      = FALSE;
-  // [Array] The The current TypoScript configuration array local or global: advanced.localization
-  var $conf_localization_path = FALSE;
-  // [String] The The current TypoScript configuration path local or global: advanced.localization
+  // [String] $GLOBALS['TSFE']->sys_language_contentOL. Set by localisationConfig().
+  var $conf_localisation      = FALSE;
+  // [Array] The The current TypoScript configuration array local or global: advanced.localisation
+  var $conf_localisation_path = FALSE;
+  // [String] The The current TypoScript configuration path local or global: advanced.localisation
 
 
 
@@ -2226,7 +2226,7 @@ TOTAL FUNCTIONS: 9
 
 
 ";i:1;i:-1;}s:12:"content_size";i:1314;s:13:"content_lines";i:42;s:6:"atLine";i:59;}i:3;a:7:{s:6:"header";s:36:"function __construct($parentObj)
-  {";s:11:"parentClass";s:27:"tx_browser_pi1_localization";s:4:"cDat";a:3:{s:4:"text";s:53:"
+  {";s:11:"parentClass";s:27:"tx_browser_pi1_localisation";s:4:"cDat";a:3:{s:4:"text";s:53:"
 
 Constructor. The method initiate the parent object
 ";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"object";i:1;s:17:"The parent object";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";a:2:{i:0;s:578:"    $this->pObj = $parentObj;
@@ -2236,7 +2236,7 @@ Constructor. The method initiate the parent object
     define('PI1_DEFAULT_LANGUAGE_ONLY',         2);
     define('PI1_SELECTED_OR_DEFAULT_LANGUAGE',  3);
     define('PI1_SELECTED_LANGUAGE_ONLY',        4);
-    // See method localizationConfig()
+    // See method localisationConfig()
     // See class.tx_browser_pi1_views.php: Workaround filter and localisation - Bugfix #9024
 
   }
@@ -2264,13 +2264,13 @@ Constructor. The method initiate the parent object
 
 
 
-  ";i:1;i:0;}s:12:"content_size";i:578;s:13:"content_lines";i:35;s:6:"atLine";i:109;}i:5;a:8:{s:6:"header";s:46:"function localizationFields_select($table)
-  {";s:11:"parentClass";s:27:"tx_browser_pi1_localization";s:11:"sectionText";a:1:{i:0;s:15:"SQL query parts";}s:4:"cDat";a:3:{s:4:"text";s:702:"
+  ";i:1;i:0;}s:12:"content_size";i:578;s:13:"content_lines";i:35;s:6:"atLine";i:109;}i:5;a:8:{s:6:"header";s:46:"function localisationFields_select($table)
+  {";s:11:"parentClass";s:27:"tx_browser_pi1_localisation";s:11:"sectionText";a:1:{i:0;s:15:"SQL query parts";}s:4:"cDat";a:3:{s:4:"text";s:702:"
 
-Returns different SELECT statements with the localization or overlay fields from the current table.
-Localization field i.e.: tt_news.sys_language_content
+Returns different SELECT statements with the localisation or overlay fields from the current table.
+Localisation field i.e.: tt_news.sys_language_content
 Overlay field i.e.:      tt_news_cat.title_lang_ol
-Result depends on localization mode and on the TCA.
+Result depends on localisation mode and on the TCA.
 woAlias:     and SELECT statement with syntax table.field, table,field
 filter:      and SELECT statement with syntax table.field AS `table.field`, table,field  AS `table.field`
 wiAlias:     same as filter
@@ -2291,7 +2291,7 @@ The mothod supports languageField and transOrigPointerField only.
       {
         t3lib_div::devlog('[INFO/LOCALIZATION] $GLOBALS[\'TCA\'][\''.$table.'
 [...]
- query if we have fields for localization or overlay
+ query if we have fields for localisation or overlay
     // Building AND SELECT
 
     return $arr_andSelect;
@@ -2308,11 +2308,11 @@ The mothod supports languageField and transOrigPointerField only.
 
 
 
- ";i:1;i:1;}s:12:"content_size";i:8941;s:13:"content_lines";i:227;s:6:"atLine";i:163;}i:7;a:7:{s:6:"header";s:45:"function localizationFields_where($table)
-  {";s:11:"parentClass";s:27:"tx_browser_pi1_localization";s:4:"cDat";a:3:{s:4:"text";s:205:"
+ ";i:1;i:1;}s:12:"content_size";i:8941;s:13:"content_lines";i:227;s:6:"atLine";i:163;}i:7;a:7:{s:6:"header";s:45:"function localisationFields_where($table)
+  {";s:11:"parentClass";s:27:"tx_browser_pi1_localisation";s:4:"cDat";a:3:{s:4:"text";s:205:"
 
-Returns an AND WHERE statement with the localization fields from the current table,
-Result depends on the localization mode and on TCA.
+Returns an AND WHERE statement with the localisation fields from the current table,
+Result depends on the localisation mode and on TCA.
 
 The mothod supports languageField and transOrigPointerField only.
 ";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:56:"$table: Name of the table in the TYPO3 database / in TCA";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:36:"$str_addSelect: An add select string";}}s:7:"content";a:2:{i:0;s:507:"
@@ -2349,11 +2349,11 @@ id_field']." = ".intval($this->lang_id)." ";
 
 
 
- ";i:1;i:1;}s:12:"content_size";i:2643;s:13:"content_lines";i:94;s:6:"atLine";i:401;}i:9;a:7:{s:6:"header";s:45:"function localizationSingle_where($table)
-  {";s:11:"parentClass";s:27:"tx_browser_pi1_localization";s:4:"cDat";a:3:{s:4:"text";s:180:"
+ ";i:1;i:1;}s:12:"content_size";i:2643;s:13:"content_lines";i:94;s:6:"atLine";i:401;}i:9;a:7:{s:6:"header";s:45:"function localisationSingle_where($table)
+  {";s:11:"parentClass";s:27:"tx_browser_pi1_localisation";s:4:"cDat";a:3:{s:4:"text";s:180:"
 
 Returns an AND WHERE statement either 'AND table.uid = showuid' or 'AND (table.uid = showuid OR table.l18n_parent = showuid)'
-Result depends on the localization mode and on TCA.
+Result depends on the localisation mode and on TCA.
 ";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:56:"$table: Name of the table in the TYPO3 database / in TCA";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:36:"$str_andWhere: An andWhere statement";}}s:7:"content";a:2:{i:0;s:507:"
     ////////////////////////////////////////////////////////////////////////////////
     //
@@ -2368,17 +2368,17 @@ Result depends on the localization mode and on TCA.
 [...]
 ******************************
   *
-  * Configuring Localization
+  * Configuring Localisation
   *
   **********************************************/
 
 
 
 
-   ";i:1;i:1;}s:12:"content_size";i:3735;s:13:"content_lines";i:132;s:6:"atLine";i:504;}i:11;a:8:{s:6:"header";s:33:"function localizationConfig()
-  {";s:11:"parentClass";s:27:"tx_browser_pi1_localization";s:11:"sectionText";a:1:{i:0;s:24:"Configuring Localization";}s:4:"cDat";a:3:{s:4:"text";s:312:"
+   ";i:1;i:1;}s:12:"content_size";i:3735;s:13:"content_lines";i:132;s:6:"atLine";i:504;}i:11;a:8:{s:6:"header";s:33:"function localisationConfig()
+  {";s:11:"parentClass";s:27:"tx_browser_pi1_localisation";s:11:"sectionText";a:1:{i:0;s:24:"Configuring Localisation";}s:4:"cDat";a:3:{s:4:"text";s:312:"
 
-Get the localization configuration out of TypoScript config. Set the class vars $lang_id and
+Get the localisation configuration out of TypoScript config. Set the class vars $lang_id and
 $overlay_mode. Returns one of the constants:
 PI1_ANY_LANGUAGE, PI1_DEFAULT_LANGUAGE_ONLY, PI1_DEFAULT_LANGUAGE, PI1_SELECTED_LANGUAGE_ONLY, PI1_SELECTED_OR_DEFAULT_LANGUAGE
 
@@ -2402,7 +2402,7 @@ Constants were defined in the constructor.
 
 
   ";i:1;i:1;}s:12:"content_size";i:1769;s:13:"content_lines";i:71;s:6:"atLine";i:647;}i:13;a:8:{s:6:"header";s:38:"function consolidate_filter($rows)
-  {";s:11:"parentClass";s:27:"tx_browser_pi1_localization";s:11:"sectionText";a:1:{i:0;s:13:"Consolidation";}s:4:"cDat";a:3:{s:4:"text";s:140:"
+  {";s:11:"parentClass";s:27:"tx_browser_pi1_localisation";s:11:"sectionText";a:1:{i:0;s:13:"Consolidation";}s:4:"cDat";a:3:{s:4:"text";s:140:"
 
 Removes all default language records, which have a translation.
 Process SQL result rows in case of PI1_SELECTED_OR_DEFAULT_LANGUAGE only.
@@ -2429,7 +2429,7 @@ anguage overlay, if there are lang_ol fields
 
 
   ";i:1;i:1;}s:12:"content_size";i:5953;s:13:"content_lines";i:162;s:6:"atLine";i:727;}i:15;a:7:{s:6:"header";s:44:"function consolidate_rows($rows, $table)
-  {";s:11:"parentClass";s:27:"tx_browser_pi1_localization";s:4:"cDat";a:3:{s:4:"text";s:154:"
+  {";s:11:"parentClass";s:27:"tx_browser_pi1_localisation";s:4:"cDat";a:3:{s:4:"text";s:154:"
 
 Consolidate the SQL-Result: The non current language records will be deleted.
 Process SQL result rows in case of PI1_SELECTED_OR_DEFAULT_LANGUAGE only.
@@ -2456,15 +2456,15 @@ Process SQL result rows in case of PI1_SELECTED_OR_DEFAULT_LANGUAGE only.
 
 
   ";i:1;i:1;}s:12:"content_size";i:22378;s:13:"content_lines";i:629;s:6:"atLine";i:899;}i:17;a:5:{s:6:"header";s:30:"function init_typoscript()
-  {";s:11:"parentClass";s:27:"tx_browser_pi1_localization";s:11:"sectionText";a:1:{i:0;s:14:"Little Helpers";}s:4:"cDat";a:3:{s:4:"text";s:85:"
+  {";s:11:"parentClass";s:27:"tx_browser_pi1_localisation";s:11:"sectionText";a:1:{i:0;s:14:"Little Helpers";}s:4:"cDat";a:3:{s:4:"text";s:85:"
 
-Load the local or global TypoScript configuration array from advanced.localization
+Load the local or global TypoScript configuration array from advanced.localisation
 ";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:6:"atLine";i:1535;}i:19;a:7:{s:6:"header";s:54:"function propper_locArray($arr_langFields, $table)
-  {";s:11:"parentClass";s:27:"tx_browser_pi1_localization";s:4:"cDat";a:3:{s:4:"text";s:114:"
+  {";s:11:"parentClass";s:27:"tx_browser_pi1_localisation";s:4:"cDat";a:3:{s:4:"text";s:114:"
 
-Make the array propper for localization fields.
+Make the array propper for localisation fields.
 Empty elements will removed. Field names become a table prefix.
-";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:66:"$arr_langFields: Array with the field names of localization fields";}i:1;a:2:{i:0;s:6:"string";i:1;s:56:"$table: Name of the table in the TYPO3 database / in TCA";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:33:"$arr_langFields: Cleaned up array";}}s:7:"content";a:2:{i:0;s:507:"
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:66:"$arr_langFields: Array with the field names of localisation fields";}i:1;a:2:{i:0;s:6:"string";i:1;s:56:"$table: Name of the table in the TYPO3 database / in TCA";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:33:"$arr_langFields: Cleaned up array";}}s:7:"content";a:2:{i:0;s:507:"
     ////////////////////////////////////////////////////////////////////////////////
     //
     // Return, if we don't have an array
@@ -2483,19 +2483,19 @@ Empty elements will removed. Field names become a table prefix.
     for
 [...]
 p']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_localization.php']);
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_localisation.php']);
 }
 
-?>";i:1;i:1;}s:12:"content_size";i:1557;s:13:"content_lines";i:89;s:6:"atLine";i:1589;}}s:10:"usageCount";a:10:{s:12:"H_a70aa4637a";a:2:{s:24:"_searchtime_milliseconds";d:92;s:15:"_functionHeader";s:35:"class tx_browser_pi1_localization
+?>";i:1;i:1;}s:12:"content_size";i:1557;s:13:"content_lines";i:89;s:6:"atLine";i:1589;}}s:10:"usageCount";a:10:{s:12:"H_a70aa4637a";a:2:{s:24:"_searchtime_milliseconds";d:92;s:15:"_functionHeader";s:35:"class tx_browser_pi1_localisation
 {";}s:12:"H_93b6f2f6aa";a:2:{s:24:"_searchtime_milliseconds";d:6;s:15:"_functionHeader";s:36:"function __construct($parentObj)
-  {";}s:12:"H_1f0070aad0";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:3;s:5:"TOTAL";i:3;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_5a50847a3b";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_sql_auto.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:26;s:15:"_functionHeader";s:46:"function localizationFields_select($table)
-  {";}s:12:"H_1a5258667a";a:7:{s:3:"ALL";a:2:{s:11:"objectUsage";i:4;s:5:"TOTAL";i:4;}s:14:"MD5_325a9e3273";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_config.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_5a50847a3b";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_sql_auto.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_8148de96b5";a:3:{s:8:"fileName";s:34:"pi1/class.tx_browser_pi1_views.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:51;s:15:"_functionHeader";s:45:"function localizationFields_where($table)
-  {";}s:12:"H_5e4780f116";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_5a50847a3b";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_sql_auto.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:31;s:15:"_functionHeader";s:45:"function localizationSingle_where($table)
-  {";}s:12:"H_e127a2af73";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:5;s:5:"TOTAL";i:5;}s:14:"MD5_97b7f86d2f";a:3:{s:8:"fileName";s:41:"pi1/class.tx_browser_pi1_localization.php";s:11:"objectUsage";i:5;s:5:"TOTAL";i:5;}s:24:"_searchtime_milliseconds";d:14;s:15:"_functionHeader";s:33:"function localizationConfig()
+  {";}s:12:"H_1f0070aad0";a:5:{s:3:"ALL";a:2:{s:11:"objectUsage";i:3;s:5:"TOTAL";i:3;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_5a50847a3b";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_sql_auto.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:26;s:15:"_functionHeader";s:46:"function localisationFields_select($table)
+  {";}s:12:"H_1a5258667a";a:7:{s:3:"ALL";a:2:{s:11:"objectUsage";i:4;s:5:"TOTAL";i:4;}s:14:"MD5_325a9e3273";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_config.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_5a50847a3b";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_sql_auto.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_8148de96b5";a:3:{s:8:"fileName";s:34:"pi1/class.tx_browser_pi1_views.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:51;s:15:"_functionHeader";s:45:"function localisationFields_where($table)
+  {";}s:12:"H_5e4780f116";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_5a50847a3b";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_sql_auto.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:31;s:15:"_functionHeader";s:45:"function localisationSingle_where($table)
+  {";}s:12:"H_e127a2af73";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:5;s:5:"TOTAL";i:5;}s:14:"MD5_97b7f86d2f";a:3:{s:8:"fileName";s:41:"pi1/class.tx_browser_pi1_localisation.php";s:11:"objectUsage";i:5;s:5:"TOTAL";i:5;}s:24:"_searchtime_milliseconds";d:14;s:15:"_functionHeader";s:33:"function localisationConfig()
   {";}s:12:"H_cef6478549";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_5a371f7822";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_filter.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:17;s:15:"_functionHeader";s:38:"function consolidate_filter($rows)
   {";}s:12:"H_7088bd7046";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:14:"MD5_8148de96b5";a:3:{s:8:"fileName";s:34:"pi1/class.tx_browser_pi1_views.php";s:11:"objectUsage";i:2;s:5:"TOTAL";i:2;}s:24:"_searchtime_milliseconds";d:16;s:15:"_functionHeader";s:44:"function consolidate_rows($rows, $table)
   {";}s:12:"H_24bfe9bc8a";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_4097240a74";a:3:{s:8:"fileName";s:28:"pi1/class.tx_browser_pi1.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:18;s:15:"_functionHeader";s:30:"function init_typoscript()
-  {";}s:12:"H_acd9229744";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:3;s:5:"TOTAL";i:3;}s:14:"MD5_97b7f86d2f";a:3:{s:8:"fileName";s:41:"pi1/class.tx_browser_pi1_localization.php";s:11:"objectUsage";i:3;s:5:"TOTAL";i:3;}s:24:"_searchtime_milliseconds";d:11;s:15:"_functionHeader";s:54:"function propper_locArray($arr_langFields, $table)
+  {";}s:12:"H_acd9229744";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:3;s:5:"TOTAL";i:3;}s:14:"MD5_97b7f86d2f";a:3:{s:8:"fileName";s:41:"pi1/class.tx_browser_pi1_localisation.php";s:11:"objectUsage";i:3;s:5:"TOTAL";i:3;}s:24:"_searchtime_milliseconds";d:11;s:15:"_functionHeader";s:54:"function propper_locArray($arr_langFields, $table)
   {";}}}s:14:"MD5_8b3dd71d4a";a:5:{s:8:"filename";s:35:"pi1/class.tx_browser_pi1_marker.php";s:8:"filesize";i:26309;s:6:"header";a:5:{s:4:"text";s:80:"
 
 The class tx_browser_pi1_marker bundles zz methods for the extension browser
@@ -7615,7 +7615,7 @@ _pi1_zz.php']) {
   {";}s:12:"H_3451b7a826";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_37e67e1c02";a:3:{s:8:"fileName";s:31:"pi1/class.tx_browser_pi1_zz.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:10;s:15:"_functionHeader";s:45:"function search_values($str_sword_phrase)
   {";}s:12:"H_479c640e66";a:6:{s:3:"ALL";a:3:{s:11:"objectUsage";i:9;s:5:"TOTAL";i:10;s:14:"nonObjectUsage";i:1;}s:14:"MD5_8b3dd71d4a";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_marker.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_03987cc836";a:4:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_template.php";s:11:"objectUsage";i:7;s:5:"TOTAL";i:8;s:14:"nonObjectUsage";i:1;}s:14:"MD5_37e67e1c02";a:3:{s:8:"fileName";s:31:"pi1/class.tx_browser_pi1_zz.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:48;s:15:"_functionHeader";s:46:"function color_swords($tableField, $value)
   {";}s:12:"H_df13e673df";a:5:{s:3:"ALL";a:3:{s:11:"objectUsage";i:6;s:5:"TOTAL";i:7;s:14:"nonObjectUsage";i:1;}s:14:"MD5_325a9e3273";a:3:{s:8:"fileName";s:35:"pi1/class.tx_browser_pi1_config.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_37e67e1c02";a:4:{s:8:"fileName";s:31:"pi1/class.tx_browser_pi1_zz.php";s:11:"objectUsage";i:5;s:5:"TOTAL";i:6;s:14:"nonObjectUsage";i:1;}s:24:"_searchtime_milliseconds";d:36;s:15:"_functionHeader";s:48:"function secure_piVar($str_value, $str_type)
-  {";}s:12:"H_01c2d5cdb6";a:10:{s:3:"ALL";a:3:{s:14:"nonObjectUsage";i:12;s:5:"TOTAL";i:13;s:11:"objectUsage";i:1;}s:14:"MD5_78af9ebebb";a:3:{s:8:"fileName";s:14:"ext_tables.php";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_4097240a74";a:3:{s:8:"fileName";s:28:"pi1/class.tx_browser_pi1.php";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_8c33ed2a7e";a:4:{s:8:"fileName";s:40:"pi1/class.tx_browser_pi1_consolidate.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:2;s:14:"nonObjectUsage";i:1;}s:14:"MD5_97b7f86d2f";a:3:{s:8:"fileName";s:41:"pi1/class.tx_browser_pi1_localization.php";s:14:"nonObjectUsage";i:3;s:5:"TOTAL";i:3;}s:14:"MD5_5a50847a3b";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_sql_auto.php";s:14:"nonObjectUsage";i:3;s:5:"TOTAL";i:3;}s:14:"MD5_c1ba2d592c";a:3:{s:8:"fileName";s:32:"pi1/class.tx_browser_pi1_tca.php";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_37e67e1c02";a:3:{s:8:"fileName";s:31:"pi1/class.tx_browser_pi1_zz.php";s:14:"nonObjectUsage";i:2;s:5:"TOTAL";i:2;}s:24:"_searchtime_milliseconds";d:56;s:15:"_functionHeader";s:32:"function loadTCA($str_table)
+  {";}s:12:"H_01c2d5cdb6";a:10:{s:3:"ALL";a:3:{s:14:"nonObjectUsage";i:12;s:5:"TOTAL";i:13;s:11:"objectUsage";i:1;}s:14:"MD5_78af9ebebb";a:3:{s:8:"fileName";s:14:"ext_tables.php";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_4097240a74";a:3:{s:8:"fileName";s:28:"pi1/class.tx_browser_pi1.php";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_8c33ed2a7e";a:4:{s:8:"fileName";s:40:"pi1/class.tx_browser_pi1_consolidate.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:2;s:14:"nonObjectUsage";i:1;}s:14:"MD5_97b7f86d2f";a:3:{s:8:"fileName";s:41:"pi1/class.tx_browser_pi1_localisation.php";s:14:"nonObjectUsage";i:3;s:5:"TOTAL";i:3;}s:14:"MD5_5a50847a3b";a:3:{s:8:"fileName";s:37:"pi1/class.tx_browser_pi1_sql_auto.php";s:14:"nonObjectUsage";i:3;s:5:"TOTAL";i:3;}s:14:"MD5_c1ba2d592c";a:3:{s:8:"fileName";s:32:"pi1/class.tx_browser_pi1_tca.php";s:14:"nonObjectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_37e67e1c02";a:3:{s:8:"fileName";s:31:"pi1/class.tx_browser_pi1_zz.php";s:14:"nonObjectUsage";i:2;s:5:"TOTAL";i:2;}s:24:"_searchtime_milliseconds";d:56;s:15:"_functionHeader";s:32:"function loadTCA($str_table)
   {";}s:12:"H_2cbedb41b5";a:2:{s:24:"_searchtime_milliseconds";d:6;s:15:"_functionHeader";s:27:"function b_TYPO3_utf8()
   {";}s:12:"H_da6370c1a1";a:4:{s:3:"ALL";a:2:{s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:14:"MD5_9d3d5d3c10";a:3:{s:8:"fileName";s:33:"pi1/class.tx_browser_pi1_navi.php";s:11:"objectUsage";i:1;s:5:"TOTAL";i:1;}s:24:"_searchtime_milliseconds";d:10;s:15:"_functionHeader";s:46:"function char_single_multi_byte($str_char)
   {";}}}s:14:"MD5_dbea598ae8";a:5:{s:8:"filename";s:28:"pi2/class.tx_browser_pi2.php";s:8:"filesize";i:4192;s:6:"header";a:5:{s:4:"text";s:104:"

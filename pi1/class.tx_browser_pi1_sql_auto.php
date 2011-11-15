@@ -383,13 +383,13 @@ class tx_browser_pi1_sql_auto
 
     ////////////////////////////////////////////////////////////////////
     //
-    // Add localization fields
+    // Add localisation fields
 
     $arr_addedTableFields = array();
     // Loop through all used tables
     foreach ($this->pObj->arr_realTables_arrFields as $table => $arrFields)
     {
-      $arr_result = $this->pObj->objLocalize->localizationFields_select($table);
+      $arr_result = $this->pObj->objLocalize->localisationFields_select($table);
       // Get the and SELECT statement with aliases
       if ($arr_result['wiAlias'])
       {
@@ -430,7 +430,7 @@ class tx_browser_pi1_sql_auto
       }
       // Loop through all new table.fields
     }
-    // Add localization fields
+    // Add localisation fields
 
 
     ////////////////////////////////////////////////////////////////////
@@ -1660,14 +1660,14 @@ class tx_browser_pi1_sql_auto
 
     ////////////////////////////////////////////////////////////////////
     //
-    // Add localization fields
+    // Add localisation fields
 
-    $str_local_where = $this->pObj->objLocalize->localizationFields_where($this->pObj->localTable);
+    $str_local_where = $this->pObj->objLocalize->localisationFields_where($this->pObj->localTable);
     if ($str_local_where)
     {
       $whereClause      = $whereClause." AND ".$str_local_where;
     }
-    // Add localization fields
+    // Add localisation fields
 
 
     //////////////////////////////////////////////////////////////////////////
@@ -1748,7 +1748,7 @@ class tx_browser_pi1_sql_auto
       case('single'):
         // Add the uid of the choosen record
         //$whereClause .= ' AND '.$this->pObj->arrLocalTable['uid'].' = '.$this->pObj->piVars['showUid'];
-        $whereClause .= $this->pObj->objLocalize->localizationSingle_where($this->pObj->localTable);
+        $whereClause .= $this->pObj->objLocalize->localisationSingle_where($this->pObj->localTable);
         break;
       case('list'):
         // Add the search clause, if there is a search (sword)

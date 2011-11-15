@@ -1223,7 +1223,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_perform    = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
-    if ($this->arr_extConf['drs_mode'] == 'Labeling Support/Localization')
+    if ($this->arr_extConf['drs_mode'] == 'Labeling Support/Localisation')
     {
       $this->b_drs_error      = true;
       $this->b_drs_warn       = true;
@@ -1405,9 +1405,9 @@ class tx_browser_pi1 extends tslib_pibase {
     require_once('class.tx_browser_pi1_navi.php');
     $this->objNavi = new tx_browser_pi1_navi($this);
 
-      // Class with localization methods
-    require_once('class.tx_browser_pi1_localization.php');
-    $this->objLocalize = new tx_browser_pi1_localization($this);
+      // Class with localisation methods
+    require_once('class.tx_browser_pi1_localisation.php');
+    $this->objLocalize = new tx_browser_pi1_localisation($this);
 
       // Class with seo methods for Search Engine Optimization
     require_once('class.tx_browser_pi1_seo.php');
@@ -1485,7 +1485,7 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
-      // class.tx_browser_pi1_localization.php
+      // class.tx_browser_pi1_localisation.php
 
       // [Array] The current Typoscript configuration array
     $this->objLocalize->conf      = $this->conf;

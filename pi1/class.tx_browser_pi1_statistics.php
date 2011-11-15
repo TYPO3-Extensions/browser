@@ -402,11 +402,11 @@ class tx_browser_pi1_statistics
       // Count the hit
     $this->sql_update_statistics( $table, $field, $uid, '+' );
 
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): Counting a hit' );
-    }
+//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if ( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__. ' (' . __LINE__ . '): Counting a hit' );
+//    }
   }
 
 
@@ -474,7 +474,8 @@ class tx_browser_pi1_statistics
 
 
   /**
- * sql_update_statistics( ):  The method increases the value of the given field in the SQL table.
+ * sql_update_statistics( ):  The method increases or decreases the value of the given field
+ *                            in the SQL table.
  *                            The method checks, if the field is existing.
  *                            If there is an SQL error or if there isn't any affected row,
  *                            the method logs in the DRS.
@@ -497,6 +498,8 @@ class tx_browser_pi1_statistics
       return;
     }
       // The current table hasn't any field for counting hits
+
+// Take care of the language / localisation
 
       // Build the query
     $query = '' .

@@ -861,11 +861,11 @@ class tx_browser_pi1_javascript
       $inline_jss     = str_replace( '###LOAD_ALL_MODES###', $load_all_modes,           $inline_jss );
       $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
 
-      $name         = 'jquery_plugins_t3browser_localization';
-      $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localization'];
+      $name         = 'jquery_plugins_t3browser_localisation';
+      $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localisation'];
       $path         = str_replace('###LANG###', $GLOBALS['TSFE']->lang, $path);
-      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localization.']['inline'];
-      $path_tsConf  = 'javascript.jquery.plugins.t3browser.localization';
+      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localisation.']['inline'];
+      $path_tsConf  = 'javascript.jquery.plugins.t3browser.localisation';
       $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
 
     }
