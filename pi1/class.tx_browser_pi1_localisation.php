@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 - 2010 Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2008 - 2011 Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,6 +28,9 @@
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
 * @subpackage    tx_browser
+*
+* @version 3.9.3
+* @since 2.0.0
 */
 
   /**
@@ -1526,6 +1529,25 @@ class tx_browser_pi1_localisation
   * Little Helpers
   *
   **********************************************/
+
+
+
+
+  /**
+ * get_localisedUid( ): 
+ *
+ * @return	void
+ */
+  function get_localisedUid( $table, $uid )
+  {
+
+    return $uid;
+  }
+
+
+
+
+
 
 
 
