@@ -1923,6 +1923,7 @@ class tx_browser_pi1_localisation
       //
       // Get the query
 
+      // Default values
     $l10n_parent      = $this->arr_localisedTableFields[$table]['pid_field'];
     $sys_language_uid = $this->arr_localisedTableFields[$table]['id_field'];
     $select_fields    = 'uid, ' . $l10n_parent . ', ' . $sys_language_uid;
@@ -1930,6 +1931,7 @@ class tx_browser_pi1_localisation
     $groupBy          = null;
     $orderBy          = null;
     $limit            = null;
+      // Default values
 
       // Get the where clause
     switch( $this->int_localisation_mode )
@@ -1939,35 +1941,162 @@ class tx_browser_pi1_localisation
                         $sys_language_uid . ' = ' . $this->lang_id . ' )';
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
-//SELECT uid, l10n_parent, `sys_language_uid`
-//FROM `tx_org_doc`
-//WHERE uid = '1'
-//OR l10n_parent = '1'
-//LIMIT 0 , 30
         $where_clause = '( uid = \'' . $uid . '\' OR ' . $l10n_parent . ' = \'' . $uid . '\' )';
-        $where_clause = '( ( uid = \'' . $uid . '\' OR ' . $l10n_parent . ' = \'' . $uid . '\' ) AND '.
-                        $sys_language_uid . ' = ' . $this->lang_id . ' )';
         break;
     }
       // Get the where clause
+
+      // Query for evaluation
+    $query = $GLOBALS['TYPO3_DB']->SELECTquery
+                                    (
+                                      $select_fields,
+                                      $from_table,
+                                      $where_clause,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Query for evaluation
+
+      // DRS - Development Reporting System
+    if ($this->pObj->b_drs_locallang || $this->pObj->b_drs_sql)
+    {
+      t3lib_div::devlog('[INFO/LOCALISATION] ' . $query, $this->pObj->extKey, 0);
+    }
+//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if ( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__. ' (' . __LINE__ . ')', $query );
+//    }
+      // DRS - Development Reporting System
       // Get the query
 
 
 
-        $query = $GLOBALS['TYPO3_DB']->SELECTquery(
-                                $select_fields,
-                                $from_table,
-                                $where_clause,
-                                $groupBy,
-                                $orderBy,
-                                $limit
-                              );
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Execute the query
+
+    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+                                    (
+                                      $select_fields,
+                                      $from_table,
+                                      $where_clause,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Execute the query
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // ERROR
+
+      // ERROR: debug report in the frontend
+    $error  = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( ! empty( $error ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . ')', $query );
+      if( $this->debugging )
+      {
+        $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">'.$this->pObj->pi_getLL('drs_security').'</p>';
+        $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
+        $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$error.'</p>';
+        $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$query.'</p>';
+        echo $str_warn.$str_header.$str_prompt;
+      }
     }
-        $uid = $uid;
+      // ERROR: debug report in the frontend
+
+      // DRS - Development Reporting System
+    if( ! empty( $error ) )
+    {
+      if( $this->pObj->b_drs_error )
+      {
+        t3lib_div::devlog('[ERROR/SQL] '.$query,  $this->pObj->extKey, 3);
+        t3lib_div::devlog('[ERROR/SQL] '.$error,  $this->pObj->extKey, 3);
+      }
+    }
+      // DRS - Development Reporting System
+      // ERROR
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Handle the SQL result
+
+      // LOOP: SQL result to rows
+    $rows             = array( );
+    $int_rows_counter = 0;
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+      if( $row[$l10n_parent] == 0 )
+      {
+        $arr_uid['def_language'] = $int_rows_counter;
+      }
+      if( $row[$sys_language_uid] == $this->lang_id )
+      {
+        $arr_uid['sys_language'] = $int_rows_counter;
+      }
+      $rows[$int_rows_counter] = $row;
+      $int_rows_counter++;
+    }
+      // LOOP: SQL result to rows
+
+      // Free the SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result($res);
+      // Handle the SQL result
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Get the uid
+
+    $uid_origin = $uid;
+    $uid        = $arr_uid['sys_language'];
+      // Try to set localised uid
+    switch( $this->int_localisation_mode )
+    {
+      case( PI1_SELECTED_LANGUAGE_ONLY ):
+        if( empty( $uid ) )
+        {
+          if( $this->pObj->b_drs_warn )
+          {
+            $prompt_01 = 'Record ' . $table . '.' . $uid_origin .  ' doesn\'t have any localised record!';
+            $prompt_02 = $query;
+            t3lib_div::devlog('[WARN/LOCALISATION] ' . $prompt_01,  $this->pObj->extKey, 2);
+            t3lib_div::devlog('[WARN/LOCALISATION] ' . $prompt_02,  $this->pObj->extKey, 2);
+          }
+          $uid = $arr_uid['def_language'];
+        }
+        break;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+        if( empty( $uid ) )
+        {
+          $uid = $arr_uid['def_language'];
+        }
+        break;
+    }
+      // Try to set localised uid
+      // DRS - Development Reporting System
+    if ($this->pObj->b_drs_locallang)
+    {
+      if( $uid_origin != $uid )
+      {
+        $prompt = 'Uid of default language record is ' . $table . '.' . $uid_origin . ', uid of the localised record is ' . $table . '.' . $uid . '.';
+        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+      }
+      if( $uid_origin == $uid )
+      {
+        $prompt = 'The default language record ' . $table . '.' . $uid_origin . ' hasn\'t any localised record with the sys_language_uid ' . $this->lang_id . '.';
+        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+      }
+    }
+      // DRS - Development Reporting System
+      // Get the uid
 
 
       ////////////////////////////////////////////////////////////////////////////////
