@@ -485,7 +485,7 @@ class tx_browser_pi5_backend
  */
   public function day_selectRelative($arr_pluginConf)
   {
-      // Localize lables
+      // Localise lables
     $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.default');
     $ll_dayNom        = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.nom');
     $ll_currDayDat    = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.day.current.dat');
@@ -647,7 +647,7 @@ class tx_browser_pi5_backend
  */
   public function month_selectRelative($arr_pluginConf)
   {
-      // Localize lables
+      // Localise lables
     $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.default');
     $ll_currMonthDat  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.month.current.dat');
     $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.takeItFromTs');
@@ -713,7 +713,7 @@ class tx_browser_pi5_backend
  */
   public function week_selectRelative($arr_pluginConf)
   {
-      // Localize lables
+      // Localise lables
     $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.default');
     $ll_weekNom       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.week.nom');
     $ll_currWeekDat   = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.week.current.dat');
@@ -780,7 +780,7 @@ class tx_browser_pi5_backend
  */
   public function year_selectRelative($arr_pluginConf)
   {
-      // Localize lables
+      // Localise lables
     $ll_default       = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.default');
     $ll_currYearDat   = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.year.current.dat');
     $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.takeItFromTs');
@@ -1138,7 +1138,7 @@ class tx_browser_pi5_backend
  */
   public function zz_hours( $arr_pluginConf )
   {
-      // Localize lables
+      // Localise lables
     $ll_takeItFromTs  = $GLOBALS['LANG']->sL('LLL:EXT:browser/pi5/flexform_locallang.xml:labels.takeItFromTs');
 
       // Default items for select box

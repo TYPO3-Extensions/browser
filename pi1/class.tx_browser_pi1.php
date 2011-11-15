@@ -223,7 +223,7 @@ class tx_browser_pi1 extends tslib_pibase {
   // [Array] Array with consolidating information. Syntax [addedTableFields][] = table.field.
   var $arr_realTables_localized;
   // [Array] Array with localized tables
-  var $arr_realTables_notLocalized;
+  var $arr_realTables_notLocalised;
   // [Array] Array with tables, which aren't localized
   var $arr_children_to_devide;
   // [Array] Array with the tables.fields of children records, which have to devide while stdWrap
@@ -1408,7 +1408,7 @@ class tx_browser_pi1 extends tslib_pibase {
 
       // Class with localisation methods
     require_once('class.tx_browser_pi1_localisation.php');
-    $this->objLocalize = new tx_browser_pi1_localisation($this);
+    $this->objLocalise = new tx_browser_pi1_localisation($this);
 
       // Class with seo methods for Search Engine Optimization
     require_once('class.tx_browser_pi1_seo.php');
@@ -1489,16 +1489,16 @@ class tx_browser_pi1 extends tslib_pibase {
       // class.tx_browser_pi1_localisation.php
 
       // [Array] The current Typoscript configuration array
-    $this->objLocalize->conf      = $this->conf;
+    $this->objLocalise->conf      = $this->conf;
       // [Integer] The current mode (from modeselector)
-    $this->objLocalize->mode      = $this->piVar_mode;
+    $this->objLocalise->mode      = $this->piVar_mode;
       // [String] 'list' or 'single': The current view
-    $this->objLocalize->view      = $this->view;
+    $this->objLocalise->view      = $this->view;
       // [Array] The TypoScript configuration array of the current view
-    $this->objLocalize->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+    $this->objLocalise->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
       // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objLocalize->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
-    $this->objLocalize->init_typoscript();
+    $this->objLocalise->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+    $this->objLocalise->init_typoscript();
 
 
 

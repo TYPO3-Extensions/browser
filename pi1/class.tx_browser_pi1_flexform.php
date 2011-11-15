@@ -347,7 +347,7 @@ class tx_browser_pi1_flexform {
     $select_fields = "uid, header, " . $str_langField . ", " . $str_langPid;
     $from_table = "tt_content";
     $where_enable = $this->pObj->cObj->enableFields($from_table);
-    $where_locale = $this->pObj->objLocalize->localisationFields_where($from_table);
+    $where_locale = $this->pObj->objLocalise->localisationFields_where($from_table);
     if (!$where_locale) {
       $where_locale = 1;
     }

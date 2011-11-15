@@ -500,6 +500,7 @@ class tx_browser_pi1_statistics
       // The current table hasn't any field for counting hits
 
 // Take care of the language / localisation
+    $uid = $this->pObj->objLocalise->
 
       // Build the query
     $query = '' .

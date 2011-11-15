@@ -386,7 +386,7 @@ class tx_browser_pi1_views
        */
 
       // User selected a non default language
-    if($this->pObj->objLocalize->int_localisation_mode >= 3)
+    if($this->pObj->objLocalise->int_localisation_mode >= 3)
     {
       // User selected a filter
       if(!empty($this->pObj->arr_andWhereFilter))
@@ -413,7 +413,7 @@ class tx_browser_pi1_views
             }
             $where    = implode(' OR ', $arr_where);
             $where    = '('.$where.')';
-            $andWhere = $this->pObj->objLocalize->localisationFields_where($table);
+            $andWhere = $this->pObj->objLocalise->localisationFields_where($table);
               // 13505, 110302, dwildt
             if(!$andWhere)
             {
@@ -591,7 +591,7 @@ class tx_browser_pi1_views
 
     if (!$this->pObj->b_sql_manual)
     {
-      $rows = $this->pObj->objLocalize->consolidate_rows($rows, $this->pObj->localTable);
+      $rows = $this->pObj->objLocalise->consolidate_rows($rows, $this->pObj->localTable);
       $this->pObj->rows = $rows;
     }
     if ($this->pObj->b_sql_manual)
@@ -1575,7 +1575,7 @@ class tx_browser_pi1_views
       //
       // Consolidate Localisation
 
-    $rows = $this->pObj->objLocalize->consolidate_rows($rows, $this->pObj->localTable);
+    $rows = $this->pObj->objLocalise->consolidate_rows($rows, $this->pObj->localTable);
     $this->pObj->rows = $rows;
       // Consolidate Localisation
 

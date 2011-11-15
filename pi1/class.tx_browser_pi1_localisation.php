@@ -187,14 +187,14 @@ class tx_browser_pi1_localisation
     //
     // Do we need translated/localized records?
 
-    $bool_dontLocalize = FALSE;
+    $bool_dontLocalise = FALSE;
     if(!isset($this->int_localisation_mode))
     {
       $this->int_localisation_mode = $this->localisationConfig();
     }
     if($this->int_localisation_mode == PI1_DEFAULT_LANGUAGE)
     {
-      $bool_dontLocalize = TRUE;
+      $bool_dontLocalise = TRUE;
       if ($this->pObj->b_drs_locallang)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localize!', $this->pObj->extKey, 0);
@@ -202,7 +202,7 @@ class tx_browser_pi1_localisation
     }
     if($this->int_localisation_mode == PI1_DEFAULT_LANGUAGE_ONLY)
     {
-      $bool_dontLocalize = TRUE;
+      $bool_dontLocalise = TRUE;
       if ($this->pObj->b_drs_locallang)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localize!', $this->pObj->extKey, 0);
@@ -224,20 +224,20 @@ class tx_browser_pi1_localisation
     //
     // Do we have a localized table?
 
-    $bool_tableIsLocalized = FALSE;
+    $bool_tableIsLocalised = FALSE;
     if ($arr_localize['id_field'] && $arr_localize['pid_field'])
     {
-      $bool_tableIsLocalized = TRUE;
+      $bool_tableIsLocalised = TRUE;
     }
-    if($bool_tableIsLocalized and $bool_dontLocalize)
+    if($bool_tableIsLocalised and $bool_dontLocalise)
     {
-      $bool_tableIsLocalized = FALSE;
+      $bool_tableIsLocalised = FALSE;
       if ($this->pObj->b_drs_locallang)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] '.$table.' is localized. But we ignore it!', $this->pObj->extKey, 0);
       }
     }
-    if ($bool_tableIsLocalized)
+    if ($bool_tableIsLocalised)
     {
       $this->pObj->arr_realTables_localized[] = $table;
       if ($this->pObj->b_drs_locallang)
@@ -245,9 +245,9 @@ class tx_browser_pi1_localisation
         t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' is localized.', $this->pObj->extKey, 0);
       }
     }
-    if (!$bool_tableIsLocalized)
+    if (!$bool_tableIsLocalised)
     {
-      $this->pObj->arr_realTables_notLocalized[] = $table;
+      $this->pObj->arr_realTables_notLocalised[] = $table;
       if ($this->pObj->b_drs_locallang)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' isn\'t localized.', $this->pObj->extKey, 0);
@@ -261,9 +261,9 @@ class tx_browser_pi1_localisation
     //
     // Do we have translated fields in case of a not localized table?
 
-    if (!$bool_tableIsLocalized and !$bool_dontLocalize)
+    if (!$bool_tableIsLocalised and !$bool_dontLocalise)
     {
-      $bool_fieldIsLocalized = FALSE;
+      $bool_fieldIsLocalised = FALSE;
       $conf_tca = $this->conf_localisation['TCA.'];
 //var_dump('localisation 229', $conf_tca, $table, $this->pObj->arr_realTables_arrFields[$table]);
       // Loop through the array with all used tableFields
@@ -287,14 +287,14 @@ class tx_browser_pi1_localisation
             $arr_tables['filter'][]                           = "'".intval($this->lang_id)."' AS `table." . $arr_localize['id_field'] . "`, ".
             $arr_tables['wiAlias'][]                          = $table.'.'.$str_field_lang_ol." AS `".$table.'.'.$str_field_lang_ol."`";
               // 13573, 110303, dwildt
-            $bool_fieldIsLocalized = TRUE;
+            $bool_fieldIsLocalised = TRUE;
           }
           // Has the table a field for tranlation (syntax i.e.: field_lang_ol)?
         }
       }
       // Loop through the array with all used tableFields
 
-      if (!$bool_fieldIsLocalized)
+      if (!$bool_fieldIsLocalised)
       {
         if ($this->pObj->b_drs_locallang)
         {
@@ -1139,8 +1139,8 @@ class tx_browser_pi1_localisation
 
 
     // 4. In case of a non localized table: Copy values from default to current language record
-//var_dump('localisation 1059', $this->pObj->arr_realTables_notLocalized);
-    if(is_array($this->pObj->arr_realTables_notLocalized))
+//var_dump('localisation 1059', $this->pObj->arr_realTables_notLocalised);
+    if(is_array($this->pObj->arr_realTables_notLocalised))
     {
       $arr_lang_ol        = FALSE;
       $conf_tca           = $this->conf_localisation['TCA.'];
@@ -1154,7 +1154,7 @@ class tx_browser_pi1_localisation
       foreach ($rows[$firstKey] as $tableField_ol => $dummy)
       {
         list($table_ol, $field_ol) = explode('.', $tableField_ol);
-        if(in_array($table_ol, $this->pObj->arr_realTables_notLocalized))
+        if(in_array($table_ol, $this->pObj->arr_realTables_notLocalised))
         {
           $arr_lang_ol[] = $tableField_ol;
         }
