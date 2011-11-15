@@ -1873,40 +1873,70 @@ class tx_browser_pi1_localisation
  */
   private function sql_localisedUid( $table, $uid )
   {
-
-
-
       ////////////////////////////////////////////////////////////////////////////////
       //
-      // Get the localised uid
+      // RETURN conditions
 
+    $bool_return = true;
     switch( $this->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
-          // Do nothing
+          // RETURN: Current language is the default language
+        $bool_return = true;
         if ($this->pObj->b_drs_locallang)
         {
           $prompt = '$this->int_localisation_mode is PI1_DEFAULT_LANGUAGE. SQL query won\'t be executed.';
           t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
         }
         break;
+          // RETURN: Current language is the default language
       case( PI1_SELECTED_LANGUAGE_ONLY ):
-        $select_fields  = '';
-        $from_table     = '';
-        $where_clause   = '';
-        $groupBy        = '';
-        $orderBy        = '';
-        $limit          = '';
-        $GLOBALS['TYPO3_DB']->SELECTquery(
-                                $select_fields,
-                                $from_table,
-                                $where_clause,
-                                $groupBy,
-                                $orderBy,
-                                $limit
-                              );
-        //$GLOBALS['TYPO3_DB']->exec_SELECTquery($select_fields,$from_table,$where_clause,$groupBy='',$orderBy='',$limit='') ;
-        $uid = $uid;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+          // DON'T RETURN: localisation mode
+        $bool_return = false;
+        break;
+          // DON'T RETURN: localisation mode
+      default:
+          // RETURN: localisation mode is undefined
+        $bool_return = true;
+        if( $this->pObj->b_drs_warn )
+        {
+          $prompt_01 = '$this->int_localisation_mode has an undefined value: \'' . $this->int_localisation_mode . '\'.';
+          $prompt_02 = 'SQL query won\'t be executed.';
+          t3lib_div::devlog('[WARN/LOCALISATION] ' . $prompt_01, $this->pObj->extKey, 2);
+          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt_02, $this->pObj->extKey, 0);
+        }
+        break;
+          // RETURN: localisation mode is undefined
+    }
+      // RETURN
+    if( $bool_return )
+    {
+      return $uid;
+    }
+      // RETURN
+      // RETURN conditions
+
+  
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Get the query
+
+    $l10n_parent      = $this->arr_localisedTableFields[$table]['pid_field'];
+    $sys_language_uid = $this->arr_localisedTableFields[$table]['id_field'];
+    $select_fields    = 'uid, ' . $l10n_parent . ', ' . $sys_language_uid;
+    $from_table       = $table;
+    $groupBy          = null;
+    $orderBy          = null;
+    $limit            = null;
+
+      // Get the where clause
+    switch( $this->int_localisation_mode )
+    {
+      case( PI1_SELECTED_LANGUAGE_ONLY ):
+        $where_clause = '( ( uid = \'' . $uid . '\' OR ' . $l10n_parent . ' = \'' . $uid . '\' ) AND '.
+                        $sys_language_uid . ' = ' . $this->lang_id;
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
 //SELECT uid, l10n_parent, `sys_language_uid`
@@ -1914,14 +1944,16 @@ class tx_browser_pi1_localisation
 //WHERE uid = '1'
 //OR l10n_parent = '1'
 //LIMIT 0 , 30
-        $l10n_parent      = $this->arr_localisedTableFields[$table]['pid_field'];
-        $sys_language_uid = $this->arr_localisedTableFields[$table]['id_field'];
-        $select_fields    = 'uid, ' . $l10n_parent . ', ' . $sys_language_uid;
-        $from_table       = $table;
-        $where_clause     = '( uid = \'' . $uid . '\' OR ' . $l10n_parent . ' = \'' . $uid . '\' )';
-        $groupBy          = null;
-        $orderBy          = null;
-        $limit            = null;
+        $where_clause = '( uid = \'' . $uid . '\' OR ' . $l10n_parent . ' = \'' . $uid . '\' )';
+        $where_clause = '( ( uid = \'' . $uid . '\' OR ' . $l10n_parent . ' = \'' . $uid . '\' ) AND '.
+                        $sys_language_uid . ' = ' . $this->lang_id;
+        break;
+    }
+      // Get the where clause
+      // Get the query
+
+
+
         $query = $GLOBALS['TYPO3_DB']->SELECTquery(
                                 $select_fields,
                                 $from_table,
@@ -1936,20 +1968,6 @@ class tx_browser_pi1_localisation
       var_dump(__METHOD__. ' (' . __LINE__ . ')', $query );
     }
         $uid = $uid;
-        break;
-      default:
-          // Do nothing
-        if( $this->pObj->b_drs_warn )
-        {
-          $prompt_01 = '$this->int_localisation_mode has an undefined value: \'' . $this->int_localisation_mode . '\'.';
-          $prompt_02 = 'SQL query won\'t be executed.';
-          t3lib_div::devlog('[WARN/LOCALISATION] ' . $prompt_01, $this->pObj->extKey, 2);
-          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt_02, $this->pObj->extKey, 0);
-        }
-        break;
-    }
-      // Get the localised uid
-
 
 
       ////////////////////////////////////////////////////////////////////////////////
