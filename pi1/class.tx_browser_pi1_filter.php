@@ -897,7 +897,7 @@ class tx_browser_pi1_filter {
       }
     }
     $str_select = $str_select . "\n" .
-    "         '" . $tableField . "' AS 'table.field'###LOCALIZATION_SELECT###";
+    "         '" . $tableField . "' AS 'table.field'###LOCALISATION_SELECT###";
       // SELECT
 
       // FROM
@@ -950,7 +950,7 @@ class tx_browser_pi1_filter {
       // QUERY
     $query = "  SELECT " . $str_select . "\n" .
     "  FROM " . $str_from . "\n" .
-    "  WHERE 1 " . $this->pObj->cObj->enableFields($table) . "###LOCALIZATION_WHERE###\n" .
+    "  WHERE 1 " . $this->pObj->cObj->enableFields($table) . "###LOCALISATION_WHERE###\n" .
     $str_andWhere .
     $str_groupBy .
     $str_orderBy; // Bugfix #7264
@@ -1012,13 +1012,13 @@ class tx_browser_pi1_filter {
       $str_local_select = ",\n" .
       "         " . $str_local_select . "\n";
     }
-    $query = str_replace('###LOCALIZATION_SELECT###', $str_local_select, $query);
+    $query = str_replace('###LOCALISATION_SELECT###', $str_local_select, $query);
     $str_local_where = $this->pObj->objLocalize->localisationFields_where($table);
     if ($str_local_where) 
     {
       $str_local_where = " AND " . $str_local_where;
     }
-    $query = str_replace('###LOCALIZATION_WHERE###', $str_local_where, $query);
+    $query = str_replace('###LOCALISATION_WHERE###', $str_local_where, $query);
       // Build the SQL query.
 
       /////////////////////////////////////////////////////////////////

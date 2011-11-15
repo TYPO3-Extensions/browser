@@ -2289,7 +2289,7 @@ The mothod supports languageField and transOrigPointerField only.
       t3lib_div::loadTCA($table);
       if ($this->pObj->b_drs_locallang)
       {
-        t3lib_div::devlog('[INFO/LOCALIZATION] $GLOBALS[\'TCA\'][\''.$table.'
+        t3lib_div::devlog('[INFO/LOCALISATION] $GLOBALS[\'TCA\'][\''.$table.'
 [...]
  query if we have fields for localisation or overlay
     // Building AND SELECT
@@ -2325,7 +2325,7 @@ The mothod supports languageField and transOrigPointerField only.
       t3lib_div::loadTCA($table);
       if ($this->pObj->b_drs_locallang)
       {
-        t3lib_div::devlog('[INFO/LOCALIZATION] $GLOBALS[\'TCA\'][\''.$table.'
+        t3lib_div::devlog('[INFO/LOCALISATION] $GLOBALS[\'TCA\'][\''.$table.'
 [...]
 id_field']." = ".intval($this->lang_id)." ";
     }
@@ -2364,7 +2364,7 @@ Result depends on the localisation mode and on TCA.
       t3lib_div::loadTCA($table);
       if ($this->pObj->b_drs_locallang)
       {
-        t3lib_div::devlog('[INFO/LOCALIZATION] $GLOBALS[\'TCA\'][\''.$table.'
+        t3lib_div::devlog('[INFO/LOCALISATION] $GLOBALS[\'TCA\'][\''.$table.'
 [...]
 ******************************
   *
@@ -2389,8 +2389,8 @@ Constants were defined in the constructor.
 
     if ($this->pObj->b_drs_locallang)
     {
-      t3lib_div::devlog('[INFO/LOCALIZATION] config.sys_language_uid = '.$this->lang_id, $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/LOCALIZATION] config.sys_language_overlay = '.$thi
+      t3lib_div::devlog('[INFO/LOCALISATION] config.sys_language_uid = '.$this->lang_id, $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/LOCALISATION] config.sys_language_overlay = '.$thi
 [...]
 ******************************************
   *
@@ -2414,7 +2414,7 @@ Process SQL result rows in case of PI1_SELECTED_OR_DEFAULT_LANGUAGE only.
     {
       if ($this->pObj->b_drs_locallang)
       {
-        t3lib_div::devlog('[WARN/LOCALIZATION] Rows aren\'t an array. Is it ok?', $this->pObj->extKey, 2);
+        t3lib_div::devlog('[WARN/LOCALISATION] Rows aren\'t an array. Is it ok?', $this->pObj->extKey, 2);
         t3lib_div::devlog('[
 [...]
 anguage overlay, if there are lang_ol fields
@@ -2443,7 +2443,7 @@ Process SQL result rows in case of PI1_SELECTED_OR_DEFAULT_LANGUAGE only.
     {
       if ($this->pObj->b_drs_locallang)
       {
-        t3lib_div::devlog('[WARN/LOCALIZATION] Rows aren\'t an array. Is it ok?', $this->pObj->extKey, 2);
+        t3lib_div::devlog('[WARN/LOCALISATION] Rows aren\'t an array. Is it ok?', $this->pObj->extKey, 2);
         t3lib_div::devlog(
 [...]
 *****************************************
