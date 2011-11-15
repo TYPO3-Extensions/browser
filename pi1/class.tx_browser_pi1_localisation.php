@@ -185,7 +185,7 @@ class tx_browser_pi1_localisation
 
     ////////////////////////////////////////////////////////////////////////////////
     //
-    // Do we need translated/localized records?
+    // Do we need translated/localised records?
 
     $bool_dontLocalise = FALSE;
     if(!isset($this->int_localisation_mode))
@@ -197,7 +197,7 @@ class tx_browser_pi1_localisation
       $bool_dontLocalise = TRUE;
       if ($this->pObj->b_drs_locallang)
       {
-        t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localize!', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localise!', $this->pObj->extKey, 0);
       }
     }
     if($this->int_localisation_mode == PI1_DEFAULT_LANGUAGE_ONLY)
@@ -205,27 +205,27 @@ class tx_browser_pi1_localisation
       $bool_dontLocalise = TRUE;
       if ($this->pObj->b_drs_locallang)
       {
-        t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localize!', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localise!', $this->pObj->extKey, 0);
       }
     }
-    // Do we need translated/localized records?
+    // Do we need translated/localised records?
 
 
     ////////////////////////////////////////////////////////////////////////////////
     //
     // Get the field names for sys_language_content and for l10n_parent
 
-    $arr_localize['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
-    $arr_localize['pid_field']  = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+    $arr_localise['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+    $arr_localise['pid_field']  = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
     // Get the field names for sys_language_content and for l10n_parent
 
 
     ////////////////////////////////////////////////////////////////////////////////
     //
-    // Do we have a localized table?
+    // Do we have a localised table?
 
     $bool_tableIsLocalised = FALSE;
-    if ($arr_localize['id_field'] && $arr_localize['pid_field'])
+    if ($arr_localise['id_field'] && $arr_localise['pid_field'])
     {
       $bool_tableIsLocalised = TRUE;
     }
@@ -234,15 +234,15 @@ class tx_browser_pi1_localisation
       $bool_tableIsLocalised = FALSE;
       if ($this->pObj->b_drs_locallang)
       {
-        t3lib_div::devlog('[INFO/LOCALISATION] '.$table.' is localized. But we ignore it!', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALISATION] '.$table.' is localised. But we ignore it!', $this->pObj->extKey, 0);
       }
     }
     if ($bool_tableIsLocalised)
     {
-      $this->pObj->arr_realTables_localized[] = $table;
+      $this->pObj->arr_realTables_localised[] = $table;
       if ($this->pObj->b_drs_locallang)
       {
-        t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' is localized.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' is localised.', $this->pObj->extKey, 0);
       }
     }
     if (!$bool_tableIsLocalised)
@@ -250,16 +250,16 @@ class tx_browser_pi1_localisation
       $this->pObj->arr_realTables_notLocalised[] = $table;
       if ($this->pObj->b_drs_locallang)
       {
-        t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' isn\'t localized.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' isn\'t localised.', $this->pObj->extKey, 0);
         t3lib_div::devlog('[INFO/LOCALISATION] Localisation isn\'t needed.', $this->pObj->extKey, 0);
       }
     }
-    // Do we have a localized table?
+    // Do we have a localised table?
 
 
     ////////////////////////////////////////////////////////////////////////////////
     //
-    // Do we have translated fields in case of a not localized table?
+    // Do we have translated fields in case of a not localised table?
 
     if (!$bool_tableIsLocalised and !$bool_dontLocalise)
     {
@@ -284,7 +284,7 @@ class tx_browser_pi1_localisation
             $this->pObj->arrConsolidate['addedTableFields'][] = $table.'.'.$str_field_lang_ol;
             $arr_tables['woAlias'][]                          = $table.'.'.$str_field_lang_ol;
             $arr_tables['filter'][]                           = $table.'.'.$str_field_lang_ol." AS `table.".$str_field_lang_ol."`";
-            $arr_tables['filter'][]                           = "'".intval($this->lang_id)."' AS `table." . $arr_localize['id_field'] . "`, ".
+            $arr_tables['filter'][]                           = "'".intval($this->lang_id)."' AS `table." . $arr_localise['id_field'] . "`, ".
             $arr_tables['wiAlias'][]                          = $table.'.'.$str_field_lang_ol." AS `".$table.'.'.$str_field_lang_ol."`";
               // 13573, 110303, dwildt
             $bool_fieldIsLocalised = TRUE;
@@ -304,26 +304,26 @@ class tx_browser_pi1_localisation
         return FALSE;
       }
     }
-    // Do we have translated fields in case of a not localized table?
+    // Do we have translated fields in case of a not localised table?
 
 
     ////////////////////////////////////////////////////////////////////////////////
     //
     // Clean up the array
 
-    $arr_localize = $this->propper_locArray($arr_localize, $table);
+    $arr_localise = $this->propper_locArray($arr_localise, $table);
     // Clean up the array
 
     ////////////////////////////////////////////////////////////////////////////////
     //
     // Building AND SELECT
 
-    $str_dummyFilter = "'".intval($this->lang_id)."' AS `table." . $arr_localize['id_field'] . "`, ".
-      "'' AS `table." . $arr_localize['pid_field'] . "` ";  // 13573, 110303, dwildt
+    $str_dummyFilter = "'".intval($this->lang_id)."' AS `table." . $arr_localise['id_field'] . "`, ".
+      "'' AS `table." . $arr_localise['pid_field'] . "` ";  // 13573, 110303, dwildt
     // The user can use more than one filter. If he uses more than one filter, it will be built a UNION SELECT
     // query. So every SELECT statement should have the same amount of fields. We need the dummy filter,
-    // because it is possible that one filter is a field from a localized table and another filter isn't a
-    // field from a localized table.
+    // because it is possible that one filter is a field from a localised table and another filter isn't a
+    // field from a localised table.
 
     $arr_andSelect['woAlias'] = FALSE;  // Default
     // Without Alias. I.e.: tx_bzdstaffdirectory_groups.sys_language_uid, tx_bzdstaffdirectory_groups.l18n_parent
@@ -347,9 +347,9 @@ class tx_browser_pi1_localisation
     // Case is PI1_SELECTED_OR_DEFAULT_LANGUAGE
     if ($this->int_localisation_mode == PI1_SELECTED_OR_DEFAULT_LANGUAGE)
     {
-      if (is_array($arr_localize))
+      if (is_array($arr_localise))
       {
-        foreach ($arr_localize as $tableField)
+        foreach ($arr_localise as $tableField)
         {
           list($table, $field) = explode('.', $tableField);
           $arr_tables['woAlias'][] = $tableField;
@@ -426,8 +426,8 @@ class tx_browser_pi1_localisation
     //
     // Get the field names for sys_language_content and for l10n_parent
 
-    $arr_localize['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
-    $arr_localize['pid_field']  = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+    $arr_localise['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+    $arr_localise['pid_field']  = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
     // Get the field names for sys_language_content and for l10n_parent
 
 
@@ -435,7 +435,7 @@ class tx_browser_pi1_localisation
     //
     // Clean up the array
 
-    $arr_localize = $this->propper_locArray($arr_localize, $table);
+    $arr_localise = $this->propper_locArray($arr_localise, $table);
     // Clean up the array
 
 
@@ -451,12 +451,12 @@ class tx_browser_pi1_localisation
     //
     // Return, if we don't have localisation fields
 
-    if (!$arr_localize)
+    if (!$arr_localise)
     {
       if ($this->pObj->b_drs_locallang)
       {
-        t3lib_div::devlog('[INFO/LOCALISATION] There isn\'t any localized field.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[INFO/LOCALISATION] A localized AND WHERE isn\'t needed.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALISATION] There isn\'t any localised field.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALISATION] A localised AND WHERE isn\'t needed.', $this->pObj->extKey, 0);
       }
       return FALSE;
     }
@@ -469,16 +469,16 @@ class tx_browser_pi1_localisation
 
     if ($this->int_localisation_mode == PI1_DEFAULT_LANGUAGE)
     {
-      $str_andWhere = $arr_localize['id_field']." <= 0 ";
+      $str_andWhere = $arr_localise['id_field']." <= 0 ";
     }
     if ($this->int_localisation_mode == PI1_SELECTED_OR_DEFAULT_LANGUAGE)
     {
-      $str_andWhere = "( ".$arr_localize['id_field']." <= 0 OR ".$arr_localize['id_field']." = ".intval($this->lang_id)." ) ";
+      $str_andWhere = "( ".$arr_localise['id_field']." <= 0 OR ".$arr_localise['id_field']." = ".intval($this->lang_id)." ) ";
       // These andWhere needs a consolidation
     }
     if ($this->int_localisation_mode == PI1_SELECTED_LANGUAGE_ONLY)
     {
-      $str_andWhere = $arr_localize['id_field']." = ".intval($this->lang_id)." ";
+      $str_andWhere = $arr_localise['id_field']." = ".intval($this->lang_id)." ";
     }
     // Building AND WHERE
 
@@ -529,7 +529,7 @@ class tx_browser_pi1_localisation
     //
     // Get the field names for for l10n_parent
 
-    $arr_localize['pid_field']  = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+    $arr_localise['pid_field']  = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
     // Get the field names for for l10n_parent
 
 
@@ -537,7 +537,7 @@ class tx_browser_pi1_localisation
     //
     // Clean up the array
 
-    $arr_localize = $this->propper_locArray($arr_localize, $table);
+    $arr_localise = $this->propper_locArray($arr_localise, $table);
     // Clean up the array
 
 
@@ -573,12 +573,12 @@ class tx_browser_pi1_localisation
     //
     // Return with default AND WHERE uid ..., if we don't have localisation fields
 
-    if (!$arr_localize)
+    if (!$arr_localise)
     {
       if ($this->pObj->b_drs_locallang)
       {
-        t3lib_div::devlog('[INFO/LOCALISATION] '.$table.' hasn\'t any localized field.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[INFO/LOCALISATION] A localized AND WHERE isn\'t needed.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALISATION] '.$table.' hasn\'t any localised field.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALISATION] A localised AND WHERE isn\'t needed.', $this->pObj->extKey, 0);
       }
       return $str_andWhere;
     }
@@ -600,7 +600,7 @@ class tx_browser_pi1_localisation
         '( '.
           $this->pObj->arrLocalTable['uid'].' = '.$this->pObj->piVars['showUid'].' '.
           'OR '.
-          $arr_localize['pid_field'].' = '.$this->pObj->piVars['showUid'].' '.
+          $arr_localise['pid_field'].' = '.$this->pObj->piVars['showUid'].' '.
         ')';
     }
     if ($this->int_localisation_mode == PI1_SELECTED_LANGUAGE_ONLY)
@@ -610,7 +610,7 @@ class tx_browser_pi1_localisation
         '( '.
           $this->pObj->arrLocalTable['uid'].' = '.$this->pObj->piVars['showUid'].' '.
           'OR '.
-          $arr_localize['pid_field'].' = '.$this->pObj->piVars['showUid'].' '.
+          $arr_localise['pid_field'].' = '.$this->pObj->piVars['showUid'].' '.
         ')';
     }
     // Building AND WHERE
@@ -649,8 +649,10 @@ class tx_browser_pi1_localisation
  * Constants were defined in the constructor.
  *
  * @return	integer		See description above
+ * @version 3.9.3
+ * @since 2.0.0
  */
-  function localisationConfig()
+  private function localisationConfig()
   {
 
     $this->lang_id      = $GLOBALS['TSFE']->sys_language_content;
@@ -679,6 +681,7 @@ class tx_browser_pi1_localisation
         t3lib_div::devlog('[INFO/LOCALISATION] Mode is PI1_DEFAULT_LANGUAGE', $this->pObj->extKey, 0);
       }
       // Display only records with sys_language_uid = 0 or -1
+      $this->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
       return PI1_DEFAULT_LANGUAGE;
     }
     if ($this->lang_id > 0 && $this->overlay_mode === 'hideNonTranslated')
@@ -687,6 +690,7 @@ class tx_browser_pi1_localisation
       {
         t3lib_div::devlog('[INFO/LOCALISATION] Mode is PI1_SELECTED_LANGUAGE_ONLY', $this->pObj->extKey, 0);
       }
+      $this->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
       return PI1_SELECTED_LANGUAGE_ONLY;
     }
     if ($this->lang_id > 0)
@@ -695,6 +699,7 @@ class tx_browser_pi1_localisation
       {
         t3lib_div::devlog('[INFO/LOCALISATION] Mode is PI1_SELECTED_OR_DEFAULT_LANGUAGE', $this->pObj->extKey, 0);
       }
+      $this->int_localisation_mode = PI1_SELECTED_OR_DEFAULT_LANGUAGE;
       return PI1_SELECTED_OR_DEFAULT_LANGUAGE;
     }
 
@@ -937,7 +942,7 @@ class tx_browser_pi1_localisation
     // 1. If language should not replaced RETURN
     // 2. Fetch all language default records
     // 3. Process l10n_mode in case of exclude or mergeIfNotBlank
-    // 4. In case of a non localized table: Copy values from default to current language record
+    // 4. In case of a non localised table: Copy values from default to current language record
     // 5. Remove the default records from $rows, if they have a translation.
     // 6. Set the default language record uid
     // 7. Language Overlay
@@ -994,8 +999,8 @@ class tx_browser_pi1_localisation
       }
       if ($int_sys_language > 0)
       {
-        $arr_localize[$table.'.uid'][$elements[$table.'.uid']][$langPidField]     = $int_languagePid;
-        $arr_localize[$table.'.uid'][$elements[$table.'.uid']]['keys_in_rows'][]  = $row;
+        $arr_localise[$table.'.uid'][$elements[$table.'.uid']][$langPidField]     = $int_languagePid;
+        $arr_localise[$table.'.uid'][$elements[$table.'.uid']]['keys_in_rows'][]  = $row;
       }
       $int_count++;
     }
@@ -1022,13 +1027,13 @@ class tx_browser_pi1_localisation
 
     // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
     $bool_l10n_mode = FALSE;
-    // Do we have localized records?
-    if(is_array($arr_localize))
+    // Do we have localised records?
+    if(is_array($arr_localise))
     {
       $bool_l10n_mode = TRUE;
     }
 
-    // We have localized records
+    // We have localised records
     if ($bool_l10n_mode)
     {
       reset($rows);
@@ -1065,21 +1070,21 @@ class tx_browser_pi1_localisation
       if (is_array($arr_l10n_mode))
       {
         // Loop through the array with localisation information
-//var_dump('localisation 998', $arr_localize);
-        foreach ($arr_localize as $tableFieldLUid => $arr_uid)
+//var_dump('localisation 998', $arr_localise);
+        foreach ($arr_localise as $tableFieldLUid => $arr_uid)
         {
           list($tableLoc, $fieldLoc) = explode('.', $tableFieldLUid);                   // tx_wine_main.uid
           $langPidField = $GLOBALS['TCA'][$tableLoc]['ctrl']['transOrigPointerField'];  // I.e: l18n_parent
 
           // Loop through the records with localisation information
-          foreach((array) $arr_uid as $uid_localize => $rec_localize)
+          foreach((array) $arr_uid as $uid_localise => $rec_localise)
           {
-//var_dump('localisation 1008', $uid_localize, $rec_localize);
-            $uid_default        = $rec_localize[$langPidField];
-            $arr_keysInRowsLoc  = $rec_localize['keys_in_rows'];
+//var_dump('localisation 1008', $uid_localise, $rec_localise);
+            $uid_default        = $rec_localise[$langPidField];
+            $arr_keysInRowsLoc  = $rec_localise['keys_in_rows'];
             $key_in_rowsDef     = $arr_default[$tableFieldLUid][$uid_default]['keys_in_rows'][0];
 
-            // Loop through all rows with localized records
+            // Loop through all rows with localised records
             foreach ($arr_keysInRowsLoc as $key_in_rowsLoc)
             {
               // Loop through the array with the l10n_mode fields
@@ -1088,7 +1093,7 @@ class tx_browser_pi1_localisation
                 $tableField     = key($arr_tableFieldMode);
                 $str_l10n_mode  = $arr_tableFieldMode[$tableField];
 //var_dump('localisation 1021', $str_l10n_mode.': $rows['.$key_in_rowsLoc.']['.$tableField.'] = $rows['.$key_in_rowsDef.']['.$tableField.']', $rows[$key_in_rowsDef][$tableField]);
-                // Allocates to the field of the localized row the value from the field out of the default row
+                // Allocates to the field of the localised row the value from the field out of the default row
                 if ($str_l10n_mode == 'exclude')
                 {
                   $rows[$key_in_rowsLoc][$tableField] = $rows[$key_in_rowsDef][$tableField];
@@ -1097,7 +1102,7 @@ class tx_browser_pi1_localisation
 //                    t3lib_div::devlog('[INFO/LOCALISATION] Exclude', $this->pObj->extKey, 0);
 //                  }
                 }
-                // Allocates to the field of the localized row the value from the field out of the default row, if localized field is empty
+                // Allocates to the field of the localised row the value from the field out of the default row, if localised field is empty
                 if ($str_l10n_mode == 'mergeIfNotBlank')
                 {
                   if ($rows[$key_in_rowsLoc][$tableField] == FALSE)
@@ -1108,7 +1113,7 @@ class tx_browser_pi1_localisation
               }
               // Loop through the array with the l10n_mode fields
             }
-            // Loop through all rows with localized records
+            // Loop through all rows with localised records
           }
           // Loop through the records with localisation information
         }
@@ -1116,7 +1121,7 @@ class tx_browser_pi1_localisation
       }
       // We have l10n_mode fields with the mode exclude or mergeIfNotBlank
     }
-    // We have localized records
+    // We have localised records
     // 3. Process l10n_mode in case of exclude and mergeIfNotBlank
 
 
@@ -1138,7 +1143,7 @@ class tx_browser_pi1_localisation
     // DRS - Performance
 
 
-    // 4. In case of a non localized table: Copy values from default to current language record
+    // 4. In case of a non localised table: Copy values from default to current language record
 //var_dump('localisation 1059', $this->pObj->arr_realTables_notLocalised);
     if(is_array($this->pObj->arr_realTables_notLocalised))
     {
@@ -1280,7 +1285,7 @@ class tx_browser_pi1_localisation
 
     unset($arr_default_lang_ol);
     unset($arr_lang_ol);
-    // 4. In case of a non localized table: Copy values from default to current language record
+    // 4. In case of a non localised table: Copy values from default to current language record
 
 
     ////////////////////////////////////////////////////////////////////////
@@ -1296,7 +1301,7 @@ class tx_browser_pi1_localisation
       {
         $endTime = $this->pObj->TT->mtime();
       }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After non localized tables: '. ($endTime - $startTime).' ms', $this->pObj->extKey, 0);
+      t3lib_div::devLog('[INFO/PERFORMANCE] After non localised tables: '. ($endTime - $startTime).' ms', $this->pObj->extKey, 0);
     }
     // DRS - Performance
 
@@ -1348,15 +1353,15 @@ class tx_browser_pi1_localisation
     $bool_defaultLanguageLink = $this->conf_localisation['realURL.']['defaultLanguageLink'];
     if ($bool_defaultLanguageLink)
     {
-      if (is_array($arr_localize))
+      if (is_array($arr_localise))
       {
         $langPidField = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField']; // I.e: l18n_parent
-        foreach((array) $arr_localize[$table.'.uid'] as $uid_localizeRecord => $row_localize)
+        foreach((array) $arr_localise[$table.'.uid'] as $uid_localiseRecord => $row_localise)
         {
-          foreach((array) $row_localize['keys_in_rows'] as $key_in_rows)
+          foreach((array) $row_localise['keys_in_rows'] as $key_in_rows)
           {
-            //var_dump('$rows['.$key_in_rows.']['.$table.'.uid] = '.$row_localize[$langPidField]);
-            $rows[$key_in_rows][$table.'.uid'] = $row_localize[$langPidField];
+            //var_dump('$rows['.$key_in_rows.']['.$table.'.uid] = '.$row_localise[$langPidField]);
+            $rows[$key_in_rows][$table.'.uid'] = $row_localise[$langPidField];
           }
         }
       }
@@ -1537,9 +1542,18 @@ class tx_browser_pi1_localisation
  * get_localisedUid( ): 
  *
  * @return	void
+ * @version 3.9.3
+ * @since 2.0.0
  */
-  function get_localisedUid( $table, $uid )
+  public function get_localisedUid( $table, $uid )
   {
+    $this->localisationConfig( );
+
+      // RETURN: Current language is the default language
+    if ( $this->int_localisation_mode == PI1_DEFAULT_LANGUAGE )
+    {
+      return $uid;
+    }
 
     return $uid;
   }

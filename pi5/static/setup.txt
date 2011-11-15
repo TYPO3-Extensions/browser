@@ -257,7 +257,7 @@ plugin.tx_browser_pi1 {
               stdWrap {
                   // [String] Leave it empty: Than it will allocated while runtime with the due day
                 value =
-                  // PHP strftime: i.e  %a, %d. %b: Mi, 24. Mär (it is localized)
+                  // PHP strftime: i.e  %a, %d. %b: Mi, 24. Mär (it is localised)
                 strftime = %a, %d. %b
               }
             }
@@ -307,7 +307,7 @@ plugin.tx_browser_pi1 {
                 // [Integer] hours [0-24]. I.e: 8 (default). Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
               value = 8
             }
-              // PHP strftime: i.e %d.%B %Y %H:%M:%S 31.Dezember 2011 13:14:22 (it is localized)
+              // PHP strftime: i.e %d.%B %Y %H:%M:%S 31.Dezember 2011 13:14:22 (it is localised)
             strftime = %H:%M
           }
           end {
@@ -316,7 +316,7 @@ plugin.tx_browser_pi1 {
                 // [Integer] hours [0-24]. I.e: 22 (default). Will be overriden while runtime, if flexform value isn't empty or isn't set to 'TypoScript'
               value = 22
             }
-              // PHP strftime: i.e %d.%B %Y %H:%M:%S 31.Dezember 2011 13:14:22 (it is localized)
+              // PHP strftime: i.e %d.%B %Y %H:%M:%S 31.Dezember 2011 13:14:22 (it is localised)
             strftime = %H:%M
           }
           time_unit {

@@ -373,11 +373,11 @@ class tx_browser_pi1_flexform {
     $arr_rm_langParents = false;
     if (count($rows) > 1) {
       foreach ((array) $rows as $row => $elements) {
-        // We have a localized record
+        // We have a localised record
         if ($elements[$str_langPid] > 0) {
           $arr_rm_langParents[] = $elements[$str_langPid];
         }
-        // We have a localized record
+        // We have a localised record
       }
     }
     if (is_array($arr_rm_langParents)) {

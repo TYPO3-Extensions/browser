@@ -379,7 +379,7 @@ class tx_browser_pi1_views
       /*
        * Description of the bug
        *
-       * If we have a localized website
+       * If we have a localised website
        * and the user has selected a non default language
        * and the user has selected a filter
        * than the query below will select only default language records
@@ -396,19 +396,19 @@ class tx_browser_pi1_views
           $arr_where = null;
           list($table, $field) = explode('.', $this->pObj->arrLocalTable['uid']);
             // Get the field names for sys_language_content and for l10n_parent
-          $arr_localize['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
-          $arr_localize['pid_field']  = $GLOBALS['TCA'][$table]['ctrl'][' '];
+          $arr_localise['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+          $arr_localise['pid_field']  = $GLOBALS['TCA'][$table]['ctrl'][' '];
             // Get the field names for sys_language_content and for l10n_parent
 
             // 13505, 110302, dwildt
           $where = null;
-          if ($arr_localize['id_field'] && $arr_localize['pid_field'])
+          if ($arr_localise['id_field'] && $arr_localise['pid_field'])
           {
             while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
             {
               $uid          = $row[$table.'.'.$field];
               $arr_where[]  = '('.$table.'.'.$field.' = '.$uid.
-                              ' OR '.$table.'.' . $arr_localize['pid_field'] . ' = '.$uid.')';
+                              ' OR '.$table.'.' . $arr_localise['pid_field'] . ' = '.$uid.')';
                                 // 13573, 110303, dwildt
             }
             $where    = implode(' OR ', $arr_where);

@@ -323,7 +323,7 @@ class tx_browser_pi2_checker
     }
     // DRS - Development Reporting system
 
-    // Get the localized header
+    // Get the localised header
     if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['header']))
     {
       $str_h1 = $arr_ticket['header'][$GLOBALS['TSFE']->lang];
@@ -332,9 +332,9 @@ class tx_browser_pi2_checker
     {
       $str_h1 = $arr_ticket['header']['default'];
     }
-    // Get the localized header
+    // Get the localised header
 
-    // Get the localized prompt
+    // Get the localised prompt
     if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['prompt']))
     {
       $str_prompt = $arr_ticket['prompt'][$GLOBALS['TSFE']->lang];
@@ -343,9 +343,9 @@ class tx_browser_pi2_checker
     {
       $str_prompt = $arr_ticket['prompt']['default'];
     }
-    // Get the localized prompt
+    // Get the localised prompt
 
-    // Get the localized example prompt
+    // Get the localised example prompt
     if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['expl']['prompt']))
     {
       $str_expl_prompt = $arr_ticket['expl']['prompt'][$GLOBALS['TSFE']->lang];
@@ -354,7 +354,7 @@ class tx_browser_pi2_checker
     {
       $str_expl_prompt = $arr_ticket['expl']['prompt']['default'];
     }
-    // Get the localized example prompt
+    // Get the localised example prompt
 
     // Get the formated ticket number
     $str_ticketNo       = sprintf("%04d", $int_ticketNo);
@@ -463,7 +463,7 @@ class tx_browser_pi2_checker
     }
     // DRS - Development Reporting system
 
-    // Get the localized header
+    // Get the localised header
     if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['header']))
     {
       $str_h1 = $arr_ticket['header'][$GLOBALS['TSFE']->lang];
@@ -472,9 +472,9 @@ class tx_browser_pi2_checker
     {
       $str_h1 = $arr_ticket['header']['default'];
     }
-    // Get the localized header
+    // Get the localised header
 
-    // Get the localized prompt
+    // Get the localised prompt
     if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['prompt']))
     {
       $str_prompt = $arr_ticket['prompt'][$GLOBALS['TSFE']->lang];
@@ -483,7 +483,7 @@ class tx_browser_pi2_checker
     {
       $str_prompt = $arr_ticket['prompt']['default'];
     }
-    // Get the localized prompt
+    // Get the localised prompt
 
     // Get the formated ticket number
     $str_ticketNo       = sprintf("%04d", $int_ticketNo);
@@ -599,7 +599,7 @@ class tx_browser_pi2_checker
     }
       // DRS - Development Reporting system
 
-      // Get the localized header
+      // Get the localised header
     if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['header']))
     {
       $str_h1 = $arr_ticket['header'][$GLOBALS['TSFE']->lang];
@@ -608,9 +608,9 @@ class tx_browser_pi2_checker
     {
       $str_h1 = $arr_ticket['header']['default'];
     }
-      // Get the localized header
+      // Get the localised header
 
-      // Get the localized prompt
+      // Get the localised prompt
     if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['prompt']))
     {
       $str_prompt = $arr_ticket['prompt'][$GLOBALS['TSFE']->lang];
@@ -619,7 +619,7 @@ class tx_browser_pi2_checker
     {
       $str_prompt = $arr_ticket['prompt']['default'];
     }
-      // Get the localized prompt
+      // Get the localised prompt
 
       // Get the formated ticket number
     $str_ticketNo       = sprintf("%04d", $int_ticketNo);
@@ -708,7 +708,7 @@ class tx_browser_pi2_checker
     }
     // DRS - Development Reporting system
 
-    // Get the localized header
+    // Get the localised header
     if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['header']))
     {
       $str_h1 = $arr_ticket['header'][$GLOBALS['TSFE']->lang];
@@ -717,9 +717,9 @@ class tx_browser_pi2_checker
     {
       $str_h1 = $arr_ticket['header']['default'];
     }
-    // Get the localized header
+    // Get the localised header
 
-    // Get the localized prompt
+    // Get the localised prompt
     if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['prompt']))
     {
       $str_prompt = $arr_ticket['prompt'][$GLOBALS['TSFE']->lang];
@@ -728,7 +728,7 @@ class tx_browser_pi2_checker
     {
       $str_prompt = $arr_ticket['prompt']['default'];
     }
-    // Get the localized prompt
+    // Get the localised prompt
 
     // Get the formated ticket number
     $str_ticketNo       = sprintf("%04d", $int_ticketNo);
@@ -814,7 +814,7 @@ class tx_browser_pi2_checker
     // Get the source value
     $str_srce_value = $arr_conf_oneDimension[$str_srce_path];
 
-    // Get the localized header
+    // Get the localised header
     if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['header']))
     {
       $str_h1 = $arr_ticket['header'][$GLOBALS['TSFE']->lang];
@@ -823,9 +823,9 @@ class tx_browser_pi2_checker
     {
       $str_h1 = $arr_ticket['header']['default'];
     }
-    // Get the localized header
+    // Get the localised header
 
-    // Get the localized prompt
+    // Get the localised prompt
     if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['prompt']))
     {
       $str_prompt = $arr_ticket['prompt'][$GLOBALS['TSFE']->lang];
@@ -834,7 +834,7 @@ class tx_browser_pi2_checker
     {
       $str_prompt = $arr_ticket['prompt']['default'];
     }
-    // Get the localized prompt
+    // Get the localised prompt
 
     // Get the formated ticket number
     $str_ticketNo       = sprintf("%04d", $int_ticketNo);
@@ -920,7 +920,7 @@ class tx_browser_pi2_checker
     }
     // DRS - Development Reporting system
 
-    // Get the localized header
+    // Get the localised header
     if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['header']))
     {
       $str_h1 = $arr_ticket['header'][$GLOBALS['TSFE']->lang];
@@ -929,9 +929,9 @@ class tx_browser_pi2_checker
     {
       $str_h1 = $arr_ticket['header']['default'];
     }
-    // Get the localized header
+    // Get the localised header
 
-    // Get the localized prompt
+    // Get the localised prompt
     if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['prompt']))
     {
       $str_prompt = $arr_ticket['prompt'][$GLOBALS['TSFE']->lang];
@@ -940,7 +940,7 @@ class tx_browser_pi2_checker
     {
       $str_prompt = $arr_ticket['prompt']['default'];
     }
-    // Get the localized prompt
+    // Get the localised prompt
 
     // Get the formated ticket number
     $str_ticketNo       = sprintf("%04d", $int_ticketNo);
@@ -1042,7 +1042,7 @@ class tx_browser_pi2_checker
     }
     // DRS - Development Reporting system
 
-    // Get the localized header
+    // Get the localised header
     if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['header']))
     {
       $str_h1 = $arr_ticket['header'][$GLOBALS['TSFE']->lang];
@@ -1051,9 +1051,9 @@ class tx_browser_pi2_checker
     {
       $str_h1 = $arr_ticket['header']['default'];
     }
-    // Get the localized header
+    // Get the localised header
 
-    // Get the localized prompt
+    // Get the localised prompt
     if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['prompt']))
     {
       $str_prompt = $arr_ticket['prompt'][$GLOBALS['TSFE']->lang];
@@ -1062,7 +1062,7 @@ class tx_browser_pi2_checker
     {
       $str_prompt = $arr_ticket['prompt']['default'];
     }
-    // Get the localized prompt
+    // Get the localised prompt
 
     // Get the formated ticket number
     $str_ticketNo       = sprintf("%04d", $int_ticketNo);

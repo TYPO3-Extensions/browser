@@ -1958,7 +1958,7 @@ class tx_browser_pi1_filter {
         $markerArray[$key_marker] = $value_marker;
         $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $markerArray);
         if ($this->pObj->b_drs_filter) {
-          t3lib_div :: devLog('[INFO/FILTER] ###TITLE### will be replaced with the localized value of \'' . $conf_tableField . '\': \'' . $value_marker . '\'.', $this->pObj->extKey, 0);
+          t3lib_div :: devLog('[INFO/FILTER] ###TITLE### will be replaced with the localised value of \'' . $conf_tableField . '\': \'' . $value_marker . '\'.', $this->pObj->extKey, 0);
           t3lib_div :: devLog('[HELP/FILTER] If you want another replacement, please configure ' . $conf_view_path . $conf_tableField . '.wrap.title_stdWrap', $this->pObj->extKey, 1);
         }
       }

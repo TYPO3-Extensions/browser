@@ -453,7 +453,7 @@
   * Localisation
     * Orthography and syntax mistakes with exclude and mergeIfNotBlank
     * Counting mismatch for plugins
-    * Replace bug in case of localisation but non localized foreign tables 
+    * Replace bug in case of localisation but non localised foreign tables 
 
 3.0.4
   09-10-13
@@ -480,7 +480,7 @@
     * Multiple Plugins
       * Browser Plugins are unlimited on every page
     * Localisation
-      * Browser can handle localized records
+      * Browser can handle localised records
     * Filter
       * You can add selectboxes to the search field
     * TypoSCript Update Assistent

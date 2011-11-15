@@ -157,10 +157,10 @@ TOTAL FUNCTIONS: 5
   // [Array] Array with tables for an autmatic relation building, Syntax [table][] = field.
   var $arrConsolidate;
   // [Array] Array with consolidating information. Syntax [addedTableFields][] = table.field.
-  var $arr_realTables_localized;
-  // [Array] Array with localized tables
+  var $arr_realTables_localised;
+  // [Array] Array with localised tables
   var $arr_realTables_notLocalised;
-  // [Array] Array with tables, which aren't localized
+  // [Array] Array with tables, which aren't localised
   var $arr_children_to_devide;
   // [Array] Array with the tables.fields of children records, which have to devide while stdWrap
 
