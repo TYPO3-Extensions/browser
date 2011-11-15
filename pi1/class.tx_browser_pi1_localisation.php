@@ -2034,11 +2034,11 @@ class tx_browser_pi1_localisation
     {
       if( $row[$l10n_parent] == 0 )
       {
-        $arr_uid['def_language'] = $int_rows_counter;
+        $arr_uid['def_language'] = $row['uid'];
       }
       if( $row[$sys_language_uid] == $this->lang_id )
       {
-        $arr_uid['sys_language'] = $int_rows_counter;
+        $arr_uid['sys_language'] = $row['uid'];
       }
       $rows[$int_rows_counter] = $row;
       $int_rows_counter++;
