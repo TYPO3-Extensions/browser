@@ -27,7 +27,7 @@
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *
-* @version  4.0.0
+* @version  3.9.3
 * @since    3.5.0
 *
 * @package    TYPO3
@@ -799,7 +799,7 @@ class tx_browser_pi1_javascript
  * addJssFiles(): Add all needed JavaScript files to the HTML head
  *
  * @return  void
- * @version 3.7.0
+ * @version 3.9.3
  * @since 3.7.0
  */
   public function addJssFiles()
@@ -861,12 +861,17 @@ class tx_browser_pi1_javascript
       $inline_jss     = str_replace( '###LOAD_ALL_MODES###', $load_all_modes,           $inline_jss );
       $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
 
-      $name         = 'jquery_plugins_t3browser_localisation';
-      $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localisation'];
-      $path         = str_replace('###LANG###', $GLOBALS['TSFE']->lang, $path);
-      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localisation.']['inline'];
-      $path_tsConf  = 'javascript.jquery.plugins.t3browser.localisation';
-      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+        // If current language isn't English
+      if( $GLOBALS['TSFE']->lang != 'en' )
+      {
+        $name         = 'jquery_plugins_t3browser_localisation';
+        $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localisation'];
+        $path         = str_replace('###LANG###', $GLOBALS['TSFE']->lang, $path);
+        $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['localisation.']['inline'];
+        $path_tsConf  = 'javascript.jquery.plugins.t3browser.localisation';
+        $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+      }
+        // If current language isn't English
 
     }
       // jquery_plugins_t3browser
@@ -979,7 +984,7 @@ class tx_browser_pi1_javascript
 
 
       // RETURN path is empty
-    if(empty($path))
+    if( empty( $path ) )
     {
       if ($this->pObj->b_drs_warn)
       {
@@ -1006,26 +1011,26 @@ class tx_browser_pi1_javascript
 
       // link to a file
     $bool_file_exists = true;
-    if(!isset($arr_parsed_url['scheme']))
+    if( ! isset( $arr_parsed_url['scheme'] ) )
     {
         // absolute path
       $absPath  = t3lib_div::getFileAbsFileName($path,$onlyRelative=1,$relToTYPO3_mainDir=0);
-      if (!file_exists($absPath))
+      if ( ! file_exists( $absPath ) )
       {
         $bool_file_exists = false;
       }
         // absolute path ./. root path
-      $rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT');
+      $rootPath = t3lib_div::getIndpEnv( 'TYPO3_DOCUMENT_ROOT' );
         // relative path
-      $path     = substr($absPath, strlen($rootPath.'/'));
+      $path     = substr( $absPath, strlen( $rootPath.'/' ) );
     }
       // link to a file
 
 
 
-    if(!$bool_file_exists)
+    if( ! $bool_file_exists )
     {
-      if ($this->pObj->b_drs_error)
+      if ( $this->pObj->b_drs_error )
       {
         t3lib_div::devlog('[ERROR/JSS] script can not be included. File doesn\'t exist: '.$path, $this->pObj->extKey, 3);
         t3lib_div::devlog('[HELP/JSS] Solve it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
