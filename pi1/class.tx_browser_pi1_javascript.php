@@ -861,7 +861,7 @@ class tx_browser_pi1_javascript
       $inline_jss     = str_replace( '###LOAD_ALL_MODES###', $load_all_modes,           $inline_jss );
       $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
 
-        // If current language isn't English
+        // Include localised file, if current language isn't English
       if( $GLOBALS['TSFE']->lang != 'en' )
       {
         $name         = 'jquery_plugins_t3browser_localisation';
@@ -871,7 +871,7 @@ class tx_browser_pi1_javascript
         $path_tsConf  = 'javascript.jquery.plugins.t3browser.localisation';
         $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
       }
-        // If current language isn't English
+        // Include localised file, if current language isn't English
 
     }
       // jquery_plugins_t3browser

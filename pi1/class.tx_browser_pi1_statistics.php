@@ -87,6 +87,8 @@ class tx_browser_pi1_statistics
     //
     // Variables set by this class
 
+    // [Array] Array with checked tables: $arr_checkedTables[table][field]
+  var $arr_checkedTables            = null;
     // [Boolean] True, if statistics module is enabled. Will set while runtime
   var $bool_statistics_enabled      = null;
     // [String/csv] Comma seperated list of IPs, which won't counted
