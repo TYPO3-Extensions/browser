@@ -170,7 +170,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       //
       // RETURN there isn't any language configured
 
-    $this->str_developer_csvIp = '91.57.82.46';
+    $this->str_developer_csvIp = '79.237.182.65';
     $rows = $this->objLocalise->sql_getLanguages( );
     if( empty ( $rows ) )
     {
