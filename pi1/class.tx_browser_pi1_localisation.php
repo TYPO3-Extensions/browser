@@ -2189,14 +2189,14 @@ class tx_browser_pi1_localisation
     switch( $this->int_localisation_mode )
     {
       case( PI1_SELECTED_LANGUAGE_ONLY ):
-        if( intvar( $this->lang_id ) > 0 )
+        if( intval( $this->lang_id ) > 0 )
         {
 //        $where_clause = '( ( uid = \'' . $uid . '\' OR ' . $l10n_parent . ' = \'' . $uid . '\' ) AND '.
 //                        $sys_language_uid . ' = ' . $this->lang_id . ' )';
           $where_clause = '( ' . $l10n_parent . ' = \'' . $uid . '\' AND '.
                           $sys_language_uid . ' = ' . $this->lang_id . ' )';
         }
-        if( intvar( $this->lang_id ) <= 0 )
+        if( intval( $this->lang_id ) <= 0 )
         {
           $where_clause = 'uid = \'' . $uid . '\'';
         }
