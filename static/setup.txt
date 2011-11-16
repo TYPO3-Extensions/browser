@@ -1639,8 +1639,8 @@ plugin.tx_browser_pi1 {
     sDEF {
       downloads {
           // Allow to download files
-        allowed = TEXT
-        allowed {
+        enabled = TEXT
+        enabled {
             // [Boolean] Downloading is forbidden by default
           value = 0
         }

@@ -266,14 +266,14 @@ class tx_browser_pi1_download
       //
       // RETURN: Downloading isn\'t allowed
 
-    $cObj_name                    = $this->pObj->conf['flexform.']['sDEF.']['downloads.']['allowed'];
-    $cObj_conf                    = $this->pObj->conf['flexform.']['sDEF.']['downloads.']['allowed.'];
+    $cObj_name                    = $this->pObj->conf['flexform.']['sDEF.']['downloads.']['enabled'];
+    $cObj_conf                    = $this->pObj->conf['flexform.']['sDEF.']['downloads.']['enabled.'];
     $this->bool_downloadsAllowed  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
 
     if( ! $this->bool_downloadsAllowed )
     {
       $prompt_01 = 'Downloading isn\'t allowed.';
-      $prompt_02 = 'Please enable the Flexform/TypoScript property flexform.sDEF.downloads.allowed.';
+      $prompt_02 = 'Please enable the Flexform/TypoScript property flexform.sDEF.downloads.enabled.';
       if ( $this->pObj->b_drs_download )
       {
         t3lib_div::devlog( '[INFO/DOWNLOAD] ' . $prompt_01, $this->pObj->extKey, 0 );
