@@ -188,7 +188,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       //
       // Remove 'L' from linkVars
 
-    $str_linkVars = $GLOBALS['TSFE']->linkVar;
+    $str_linkVars = $GLOBALS['TSFE']->linkVars;
     $arr_linkVars = explode( '&', $str_linkVars );
     foreach( $arr_linkVars as $str_linkVar )
     {
@@ -231,7 +231,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     }
 
 
-    $GLOBALS['TSFE']->linkVar = $str_linkVars;
+    $GLOBALS['TSFE']->linkVars = $str_linkVars;
 
     return $out;
   }
