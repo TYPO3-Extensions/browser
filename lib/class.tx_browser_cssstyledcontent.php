@@ -227,6 +227,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // ... code ...
       
       $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang . $str_linkVarsWoL;
+      $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+      if ( ! ( $pos === false ) )
+      {
+        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GLOBALS['TSFE']->linkVars );
+      }
       $out = $out . $this->render_uploads_per_language( $content, $conf );
     }
 
