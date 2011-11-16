@@ -249,6 +249,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $arr_one_dimensional = t3lib_BEfunc::implodeTSParams($conf2);
 
     $this->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
+    $lang_id = $this->objLocalise->lang_id;
+
       // LOOP all languages
     foreach( $rows as $key_lang => $arr_lang )
     {
@@ -275,6 +277,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Reset $GLOBALS['TSFE']->linkVars
 
     $this->objLocalise->int_localisation_mode = null;
+    $this->objLocalise->lang_id = $lang_id;
     $GLOBALS['TSFE']->linkVars = $str_linkVars;
       // Reset $GLOBALS['TSFE']->linkVars
 
