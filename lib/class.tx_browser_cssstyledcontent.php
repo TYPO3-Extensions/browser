@@ -128,6 +128,34 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
 
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Enable the DRS
+
+    $bool_drs = false;
+    if( isset( $conf['userFunc.']['drs'] ) )
+    {
+      $coa_name = $conf['userFunc.']['drs'];
+      $coa_conf = $conf['userFunc.']['drs.'];
+      $bool_drs = intval($this->cObj->stdWrap( $coa_name, $coa_conf ) );
+    }
+    if( $bool_drs )
+    {
+      $this->b_drs_error        = true;
+      $this->b_drs_warn         = true;
+      $this->b_drs_info         = true;
+      $this->b_drs_download     = true;
+      $this->b_drs_localisation = true;
+      $this->b_drs_statistics   = true;
+      $prompt_01 = 'The DRS - Development Reporting System is enabled by TypoScript.';
+      $prompt_02 = 'Change it: Please look for userFunc = tx_browser_cssstyledcontent->render_uploads and for userFunc.drs.'
+      t3lib_div::devlog('[INFO/DRS] ' . $prompt_01, $this->extKey, 0);
+      t3lib_div::devlog('[HELP/DRS] ' . $prompt_02, $this->extKey, 1);
+    }
+      // Enable the DRS
+
+
+
     // Get all languages
     // Current language should be first
     // LOOP all languages
@@ -135,11 +163,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $this->objLocalise = new tx_browser_pi1_localisation ($this );
 
     $this->str_developer_csvIp = '91.57.82.46';
-    $this->objLocalise->get_languages( );
+    $rows = $this->objLocalise->sql_getLanguages( );
     $pos = strpos('91.57.82.46', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf['userFunc.'] );
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $rows );
       exit;
     }
 

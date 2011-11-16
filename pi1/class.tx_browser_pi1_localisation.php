@@ -1608,61 +1608,6 @@ class tx_browser_pi1_localisation
 
 
 
-  /**
- * get_languages( ):
- *
- * @return	void
- * @version 3.9.3
- * @since 3.9.3
- */
-  public function get_languages( )
-  {
-      ////////////////////////////////////////////////////////////////////////////////
-      //
-      // Get the query
-
-      // Values
-    $select_fields  = 'uid, title,flag';
-    $from_table     = 'sys_language';
-    $where_clause   = 'pid = 0 AND hidden = 0';
-    $groupBy        = null;
-    $orderBy        = null;
-    $limit          = null;
-      // Values
-
-      // Query for evaluation
-    $query = $GLOBALS['TYPO3_DB']->SELECTquery
-                                    (
-                                      $select_fields,
-                                      $from_table,
-                                      $where_clause,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
-      // Query for evaluation
-
-      // DRS - Development Reporting System
-    if ($this->pObj->b_drs_localisation || $this->pObj->b_drs_sql)
-    {
-      t3lib_div::devlog('[INFO/LOCALISATION] ' . $query, $this->pObj->extKey, 0);
-    }
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . ')', $query );
-    }
-      var_dump(__METHOD__. ' (' . __LINE__ . ')', $this->pObj->str_developer_csvIp, $query );
-      // DRS - Development Reporting System
-      // Get the query
-
-
-
-  }
-
-
-
-
 
 
 
@@ -1921,6 +1866,136 @@ class tx_browser_pi1_localisation
   * SQL
   *
   **********************************************/
+
+
+
+
+  /**
+ * sql_getLanguages( ):
+ *
+ * @return	void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  public function sql_getLanguages( )
+  {
+    $rows = null;
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Get the query
+
+      // Values
+    $select_fields  = 'uid, title, flag';
+    $from_table     = 'sys_language';
+    $where_clause   = 'pid = 0 AND hidden = 0';
+    $groupBy        = null;
+    $orderBy        = null;
+    $limit          = null;
+      // Values
+
+      // Query for evaluation
+    $query = $GLOBALS['TYPO3_DB']->SELECTquery
+                                    (
+                                      $select_fields,
+                                      $from_table,
+                                      $where_clause,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Query for evaluation
+
+      // DRS - Development Reporting System
+    if ( $this->pObj->b_drs_localisation || $this->pObj->b_drs_sql )
+    {
+      t3lib_div::devlog('[INFO/LOCALISATION] ' . $query, $this->pObj->extKey, 0);
+    }
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . ')', $query );
+    }
+      // DRS - Development Reporting System
+      // Get the query
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Execute the query
+
+    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+                                    (
+                                      $select_fields,
+                                      $from_table,
+                                      $where_clause,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Execute the query
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // ERROR
+
+      // ERROR: debug report in the frontend
+    $error  = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( ! empty( $error ) )
+    {
+      if( $this->debugging )
+      {
+        $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">'.$this->pObj->pi_getLL('drs_security').'</p>';
+        $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
+        $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$error.'</p>';
+        $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$query.'</p>';
+        echo $str_warn.$str_header.$str_prompt;
+      }
+    }
+      // ERROR: debug report in the frontend
+
+      // DRS - Development Reporting System
+    if( ! empty( $error ) )
+    {
+      if( $this->pObj->b_drs_error )
+      {
+        t3lib_div::devlog('[ERROR/SQL] '.$query,  $this->pObj->extKey, 3);
+        t3lib_div::devlog('[ERROR/SQL] '.$error,  $this->pObj->extKey, 3);
+      }
+    }
+      // DRS - Development Reporting System
+      // ERROR
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Handle the SQL result
+
+      // LOOP: SQL result to rows
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+      $rows[] = $row;
+    }
+      // LOOP: SQL result to rows
+
+      // Free the SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result($res);
+      // Handle the SQL result
+
+
+    return $rows;
+  }
+
+
+
+
+
 
 
 
