@@ -2189,7 +2189,7 @@ class tx_browser_pi1_localisation
     switch( $this->int_localisation_mode )
     {
       case( PI1_SELECTED_LANGUAGE_ONLY ):
-        if( $sys_language_uid > 0 )
+        if( $this->lang_id > 0 )
         {
 //        $where_clause = '( ( uid = \'' . $uid . '\' OR ' . $l10n_parent . ' = \'' . $uid . '\' ) AND '.
 //                        $sys_language_uid . ' = ' . $this->lang_id . ' )';
