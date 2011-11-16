@@ -98,6 +98,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   */
   public function render_uploads( $content, $conf )
   {
+    $this->str_developer_csvIp = '79.237.182.65';
     $out = null;
 
       //////////////////////////////////////////////////////////////////////////
@@ -152,6 +153,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       t3lib_div::devlog('[INFO/DRS] ' . $prompt_01, $this->extKey, 0);
       t3lib_div::devlog('[HELP/DRS] ' . $prompt_02, $this->extKey, 1);
     }
+    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $bool_drs, $this->extKey );
+      //exit;
+    }
+
       // Enable the DRS
 
 
@@ -170,7 +178,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       //
       // RETURN there isn't any language configured
 
-    $this->str_developer_csvIp = '79.237.182.65';
     $rows = $this->objLocalise->sql_getLanguages( );
     if( empty ( $rows ) )
     {
@@ -191,7 +198,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     if ( ! ( $pos === false ) )
     {
       var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $rows );
-      //exit;
     }
 
     foreach( $rows as $key_lang => $arr_lang )
