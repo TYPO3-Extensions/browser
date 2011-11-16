@@ -1355,10 +1355,10 @@ class tx_browser_pi1_wrapper
         $summaryLL = $this->pObj->pi_getLL($view.'_'.$mode.'_summary', '['.$view.'_'.$mode.'_summary]');
         switch(true) {
           case($summaryLL == '['.$view.'_'.$mode.'_summary]'):
-            if ($this->pObj->b_drs_locallang) {
+            if ($this->pObj->b_drs_localisation) {
               t3lib_div::devlog('[WARN/LOCALLANG] '.$view.'_'.$mode.'_summary hasn\'t any value in _LOCAL_LANG', $this->pObj->extKey, 2);
-              t3lib_div::devlog('[INFO/LOCALLANG] If you use a table it won\'t have any summary.', $this->pObj->extKey, 0);
-              t3lib_div::devlog('[INFO/LOCALLANG] This wouldn\'t according to the guidelines of the Web Accessibility Initiative (WAI)', $this->pObj->extKey, 0);
+              t3lib_div::devlog('[INFO/LOCALISATION] If you use a table it won\'t have any summary.', $this->pObj->extKey, 0);
+              t3lib_div::devlog('[INFO/LOCALISATION] This wouldn\'t according to the guidelines of the Web Accessibility Initiative (WAI)', $this->pObj->extKey, 0);
               $prompt = 'Please configure _LOCAL_LANG.'.$langKey.'.'.$view.'_'.$mode.'_summary.';
               t3lib_div::devlog('[HELP/LOCALLANG] '.$prompt, $this->pObj->extKey, 1);
             }
@@ -1395,10 +1395,10 @@ class tx_browser_pi1_wrapper
         $captionLL = $this->pObj->pi_getLL($view.'_'.$mode.'_caption', '['.$view.'_'.$mode.'_caption]');
         switch(true) {
           case($captionLL == '['.$view.'_'.$mode.'_caption]'):
-            if ($this->pObj->b_drs_locallang) {
+            if ($this->pObj->b_drs_localisation) {
               t3lib_div::devlog('[WARN/LOCALLANG] '.$view.'_'.$mode.'_caption hasn\'t any value in _LOCAL_LANG', $this->pObj->extKey, 2);
-              t3lib_div::devlog('[INFO/LOCALLANG] If you use a table it won\'t have any caption.', $this->pObj->extKey, 0);
-              t3lib_div::devlog('[INFO/LOCALLANG] This wouldn\'t according to the guidelines of the Web Accessibility Initiative (WAI)', $this->pObj->extKey, 0);
+              t3lib_div::devlog('[INFO/LOCALISATION] If you use a table it won\'t have any caption.', $this->pObj->extKey, 0);
+              t3lib_div::devlog('[INFO/LOCALISATION] This wouldn\'t according to the guidelines of the Web Accessibility Initiative (WAI)', $this->pObj->extKey, 0);
             }
             $caption = '';
             break;

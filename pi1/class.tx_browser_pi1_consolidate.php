@@ -126,7 +126,7 @@ class tx_browser_pi1_consolidate
 
     if (!is_array($rows))
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[WARN/SQL] Rows aren\'t an array. Is it ok?', $this->pObj->extKey, 2);
         t3lib_div::devlog('[INFO/SQL] Without rows we don\'t need any consolidtaion.', $this->pObj->extKey, 0);
@@ -135,7 +135,7 @@ class tx_browser_pi1_consolidate
     }
     if (count($rows) < 1)
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[WARN/SQL] Rows aren\'t an array. Is it ok?', $this->pObj->extKey, 2);
         t3lib_div::devlog('[INFO/SQL] Without rows we don\'t need any consolidtaion.', $this->pObj->extKey, 0);

@@ -1040,7 +1040,7 @@ class tx_browser_pi1_sql_auto
         if (!is_array($GLOBALS['TCA'][$localTable]['columns']))
         {
           t3lib_div::loadTCA($localTable);
-          if ($this->pObj->b_drs_locallang)
+          if ($this->pObj->b_drs_localisation)
           {
             t3lib_div::devlog('[INFO/SQL] $GLOBALS[\'TCA\'][\''.$localTable.'\'] is loaded.', $this->pObj->extKey, 0);
           }

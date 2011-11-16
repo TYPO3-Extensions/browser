@@ -596,7 +596,7 @@ class tx_browser_pi1_views
     }
     if ($this->pObj->b_sql_manual)
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/SQL] Manual SQL mode: Rows didn\'t get any localisation consolidation.',  $this->pObj->extKey, 0);
       }
@@ -638,7 +638,7 @@ class tx_browser_pi1_views
     }
     if ($this->pObj->b_sql_manual)
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/SQL] Manual SQL mode: Rows didn\'t get any general consolidation.',  $this->pObj->extKey, 0);
       }
@@ -1597,7 +1597,7 @@ class tx_browser_pi1_views
     }
     if ($this->pObj->b_sql_manual)
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/SQL] Manual SQL mode: Rows didn\'t get any general consolidation.',  $this->pObj->extKey, 0);
       }

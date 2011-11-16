@@ -194,7 +194,7 @@ class tx_browser_pi1_localisation
     if($this->int_localisation_mode == PI1_DEFAULT_LANGUAGE)
     {
       $bool_dontLocalise = true;
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localise!', $this->pObj->extKey, 0);
       }
@@ -202,7 +202,7 @@ class tx_browser_pi1_localisation
     if($this->int_localisation_mode == PI1_DEFAULT_LANGUAGE_ONLY)
     {
       $bool_dontLocalise = true;
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] Localisation mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localise!', $this->pObj->extKey, 0);
       }
@@ -231,7 +231,7 @@ class tx_browser_pi1_localisation
     if($bool_tableIsLocalised and $bool_dontLocalise)
     {
       $bool_tableIsLocalised = false;
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] '.$table.' is localised. But we ignore it!', $this->pObj->extKey, 0);
       }
@@ -239,7 +239,7 @@ class tx_browser_pi1_localisation
     if ($bool_tableIsLocalised)
     {
       $this->pObj->arr_realTables_localised[] = $table;
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' is localised.', $this->pObj->extKey, 0);
       }
@@ -247,7 +247,7 @@ class tx_browser_pi1_localisation
     if (!$bool_tableIsLocalised)
     {
       $this->pObj->arr_realTables_notLocalised[] = $table;
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' isn\'t localised.', $this->pObj->extKey, 0);
         t3lib_div::devlog('[INFO/LOCALISATION] Localisation isn\'t needed.', $this->pObj->extKey, 0);
@@ -274,7 +274,7 @@ class tx_browser_pi1_localisation
           // Has the table a field for tranlation (syntax i.e.: field_lang_ol)?
           if (is_array($GLOBALS['TCA'][$table]['columns'][$str_field_lang_ol]))
           {
-            if ($this->pObj->b_drs_locallang)
+            if ($this->pObj->b_drs_localisation)
             {
               t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'.'.$str_field.'\' is translated in '.$str_field_lang_ol.'.', $this->pObj->extKey, 0);
             }
@@ -295,7 +295,7 @@ class tx_browser_pi1_localisation
 
       if (!$bool_fieldIsLocalised)
       {
-        if ($this->pObj->b_drs_locallang)
+        if ($this->pObj->b_drs_localisation)
         {
           t3lib_div::devlog('[INFO/LOCALISATION] \''.$table.'\' hasn\'t any field with appendix '.$conf_tca['field.']['appendix'].'.', $this->pObj->extKey, 0);
           t3lib_div::devlog('[INFO/LOCALISATION] Overlay isn\'t needed.', $this->pObj->extKey, 0);
@@ -447,7 +447,7 @@ class tx_browser_pi1_localisation
 
     if (!$arr_localise)
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] There isn\'t any localised field.', $this->pObj->extKey, 0);
         t3lib_div::devlog('[INFO/LOCALISATION] A localised AND WHERE isn\'t needed.', $this->pObj->extKey, 0);
@@ -564,7 +564,7 @@ class tx_browser_pi1_localisation
 
     if (!$arr_localise)
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] '.$table.' hasn\'t any localised field.', $this->pObj->extKey, 0);
         t3lib_div::devlog('[INFO/LOCALISATION] A localised AND WHERE isn\'t needed.', $this->pObj->extKey, 0);
@@ -647,7 +647,7 @@ class tx_browser_pi1_localisation
     $this->lang_id      = $GLOBALS['TSFE']->sys_language_content;
     $this->overlay_mode = $GLOBALS['TSFE']->sys_language_contentOL;
 
-    if ($this->pObj->b_drs_locallang)
+    if ($this->pObj->b_drs_localisation)
     {
       t3lib_div::devlog('[INFO/LOCALISATION] config.sys_language_uid = '.$this->lang_id, $this->pObj->extKey, 0);
       t3lib_div::devlog('[INFO/LOCALISATION] config.sys_language_overlay = '.$this->overlay_mode, $this->pObj->extKey, 0);
@@ -665,7 +665,7 @@ class tx_browser_pi1_localisation
 //    }
     if ($this->lang_id == 0)
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] Mode is PI1_DEFAULT_LANGUAGE', $this->pObj->extKey, 0);
       }
@@ -675,7 +675,7 @@ class tx_browser_pi1_localisation
     }
     if ($this->lang_id > 0 && $this->overlay_mode === 'hideNonTranslated')
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] Mode is PI1_SELECTED_LANGUAGE_ONLY', $this->pObj->extKey, 0);
       }
@@ -684,7 +684,7 @@ class tx_browser_pi1_localisation
     }
     if ($this->lang_id > 0)
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] Mode is PI1_SELECTED_OR_DEFAULT_LANGUAGE', $this->pObj->extKey, 0);
       }
@@ -732,7 +732,7 @@ class tx_browser_pi1_localisation
 
     if (!is_array($rows))
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[WARN/LOCALISATION] Rows aren\'t an array. Is it ok?', $this->pObj->extKey, 2);
         t3lib_div::devlog('[INFO/LOCALISATION] Without rows we don\'t need any consolidation.', $this->pObj->extKey, 0);
@@ -741,7 +741,7 @@ class tx_browser_pi1_localisation
     }
     if (count($rows) < 1)
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[WARN/LOCALISATION] Rows are #0. Is it ok?', $this->pObj->extKey, 2);
         t3lib_div::devlog('[INFO/LOCALISATION] Without rows we don\'t need any consolidation.', $this->pObj->extKey, 0);
@@ -906,7 +906,7 @@ class tx_browser_pi1_localisation
 
     if (!is_array($rows))
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[WARN/LOCALISATION] Rows aren\'t an array. Is it ok?', $this->pObj->extKey, 2);
         t3lib_div::devlog('[INFO/LOCALISATION] Without rows we don\'t need any consolidation.', $this->pObj->extKey, 0);
@@ -915,7 +915,7 @@ class tx_browser_pi1_localisation
     }
     if (count($rows) < 1)
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[WARN/LOCALISATION] Rows are #0. Is it ok?', $this->pObj->extKey, 2);
         t3lib_div::devlog('[INFO/LOCALISATION] Without rows we don\'t need any consolidation.', $this->pObj->extKey, 0);
@@ -944,7 +944,7 @@ class tx_browser_pi1_localisation
       $this->int_localisation_mode = $this->localisationConfig();
       if ($this->int_localisation_mode != PI1_SELECTED_OR_DEFAULT_LANGUAGE)
       {
-        if ($this->pObj->b_drs_locallang)
+        if ($this->pObj->b_drs_localisation)
         {
           t3lib_div::devlog('[INFO/LOCALISATION] Records in default language should ignored in every case.', $this->pObj->extKey, 0);
           t3lib_div::devlog('[INFO/LOCALISATION] We don\'t need any consolidation.', $this->pObj->extKey, 0);
@@ -1086,7 +1086,7 @@ class tx_browser_pi1_localisation
                 if ($str_l10n_mode == 'exclude')
                 {
                   $rows[$key_in_rowsLoc][$tableField] = $rows[$key_in_rowsDef][$tableField];
-//                  if ($this->pObj->b_drs_locallang)
+//                  if ($this->pObj->b_drs_localisation)
 //                  {
 //                    t3lib_div::devlog('[INFO/LOCALISATION] Exclude', $this->pObj->extKey, 0);
 //                  }
@@ -1363,7 +1363,7 @@ class tx_browser_pi1_localisation
     $arr_lang_ol        = false;
     $conf_tca           = $this->conf_localisation['TCA.'];
     $str_field_lang_ol  = $str_field.$conf_tca['field.']['appendix'];
-    if ($this->pObj->b_drs_locallang)
+    if ($this->pObj->b_drs_localisation)
     {
       t3lib_div::devlog('[INFO/LOCALISATION] Fields with the appendix '.$str_field_lang_ol.' will be used for language overlaying.', $this->pObj->extKey, 0);
       t3lib_div::devlog('[HELP/LOCALISATION] If you want to use another appendix please configure:<br />'.
@@ -1371,7 +1371,7 @@ class tx_browser_pi1_localisation
     }
     $str_devider        = $str_field.$conf_tca['value.']['devider'];
     $bool_langPrefix    = $str_field.$conf_tca['value.']['langPrefix'];
-    if ($this->pObj->b_drs_locallang)
+    if ($this->pObj->b_drs_localisation)
     {
       if ($bool_langPrefix)
       {
@@ -1631,14 +1631,14 @@ class tx_browser_pi1_localisation
 
     if (is_array($this->conf_localisation))
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] '.$this->conf_localisation_path.' is configured.', $this->pObj->extKey, 0);
       }
     }
     if (!is_array($this->conf_localisation))
     {
-      if ($this->pObj->b_drs_locallang)
+      if ($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[INFO/LOCALISATION] '.$this->conf_localisation_path.' isn\'t configured. We take the global array.', $this->pObj->extKey, 0);
       }
@@ -1709,7 +1709,7 @@ class tx_browser_pi1_localisation
           // RETURN table isn't localised
         $this->arr_localisedTables[$table]          = false;
         $this->pObj->arr_realTables_notLocalised[]  = $table;
-        if ($this->pObj->b_drs_locallang)
+        if ($this->pObj->b_drs_localisation)
         {
           $prompt = 'Field languageField is missing. ' . $table . ' isn\'t localised.';
           t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
@@ -1721,7 +1721,7 @@ class tx_browser_pi1_localisation
           // RETURN table isn't localised
         $this->arr_localisedTables[$table]          = false;
         $this->pObj->arr_realTables_notLocalised[]  = $table;
-        if ($this->pObj->b_drs_locallang)
+        if ($this->pObj->b_drs_localisation)
         {
           $prompt = 'Field transOrigPointerField is missing. ' . $table . ' isn\'t localised.';
           t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
@@ -1733,7 +1733,7 @@ class tx_browser_pi1_localisation
           // Table will handled like a localised table
         $this->arr_localisedTables[$table]      = true;
         $this->pObj->arr_realTables_localised[] = $table;
-        if ($this->pObj->b_drs_locallang)
+        if ($this->pObj->b_drs_localisation)
         {
           $prompt_01 = 'Field transOrigDiffSourceField is missing. Maybe ' . $table . ' isn\'t proper localised.';
           $prompt_02 = 'But ' . $table . ' will handled like a localised table.';
@@ -1883,7 +1883,7 @@ class tx_browser_pi1_localisation
       case( PI1_DEFAULT_LANGUAGE ):
           // RETURN: Current language is the default language
         $bool_return = true;
-        if ($this->pObj->b_drs_locallang)
+        if ($this->pObj->b_drs_localisation)
         {
           $prompt = '$this->int_localisation_mode is PI1_DEFAULT_LANGUAGE. SQL query won\'t be executed.';
           t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
@@ -1959,7 +1959,7 @@ class tx_browser_pi1_localisation
       // Query for evaluation
 
       // DRS - Development Reporting System
-    if ($this->pObj->b_drs_locallang || $this->pObj->b_drs_sql)
+    if ($this->pObj->b_drs_localisation || $this->pObj->b_drs_sql)
     {
       t3lib_div::devlog('[INFO/LOCALISATION] ' . $query, $this->pObj->extKey, 0);
     }
@@ -2082,7 +2082,7 @@ class tx_browser_pi1_localisation
     }
       // Try to set localised uid
       // DRS - Development Reporting System
-    if ($this->pObj->b_drs_locallang)
+    if ($this->pObj->b_drs_localisation)
     {
       if( $uid_origin != $uid )
       {

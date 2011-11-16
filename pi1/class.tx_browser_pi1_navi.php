@@ -484,7 +484,7 @@ class tx_browser_pi1_navi
         {
           // The a-tag
           $title = htmlspecialchars($this->pObj->pi_getLL('browserItem', 'Item', true));
-          if(($this->pObj->b_drs_locallang || $this->pObj->b_drs_browser) && !$boolPrompt_1)
+          if(($this->pObj->b_drs_localisation || $this->pObj->b_drs_browser) && !$boolPrompt_1)
           {
             t3lib_div::devlog('[INFO/LOCALLANG+BROWSER] Label for one item is: '.$title, $this->pObj->extKey, 0);
             $prompt = 'If you want another label, please configure _LOCAL_LANG.'.$langKey.'.browserItem';
@@ -535,7 +535,7 @@ class tx_browser_pi1_navi
         if($tsDisplayTitleTag)
         {
           $title = htmlspecialchars($this->pObj->pi_getLL('browserItems', 'Items', true));
-          if(($this->pObj->b_drs_locallang || $this->pObj->b_drs_browser) && !$boolPrompt_2)
+          if(($this->pObj->b_drs_localisation || $this->pObj->b_drs_browser) && !$boolPrompt_2)
           {
             t3lib_div::devlog('[INFO/LOCALLANG+BROWSER] Label for items is: '.$title, $this->pObj->extKey, 0);
             $prompt = 'If you want another label, please configure _LOCAL_LANG.'.$langKey.'.browserItems';
@@ -1626,7 +1626,7 @@ class tx_browser_pi1_navi
       $mode                       = substr( $keyView, 0, strlen( $keyView ) - 1 );
       $llMode                     = $this->pObj->pi_getLL( $this->view.'_mode_' . $mode, $mode    );
       $arr_return['data'][$mode]  = $this->pObj->pi_getLL( $this->view.'_mode_' . $mode, $llMode  );
-      if ( $this->pObj->b_drs_locallang && $mode == $llMode )
+      if ( $this->pObj->b_drs_localisation && $mode == $llMode )
       {
         t3lib_div::devlog( '[WARN/LOCALLANG] ' . $this->conf_path . ' hasn\'t any value in _LOCAL_LANG', $this->pObj->extKey, 2);
         $prompt = 'Please configure _LOCAL_LANG.'.$langKey.'.'.$this->view.'_mode_'.$mode.'.';

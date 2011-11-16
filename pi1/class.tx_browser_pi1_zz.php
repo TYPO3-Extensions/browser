@@ -1861,9 +1861,9 @@
     //
     // TCA
 
-    if($this->pObj->b_drs_locallang)
+    if($this->pObj->b_drs_localisation)
     {
-      t3lib_div::devlog('[INFO/LOCALLANG] Label for '.$tableField.': try the TCA.', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/LOCALISATION] Label for '.$tableField.': try the TCA.', $this->pObj->extKey, 0);
     }
 
     list($table, $field) = explode('.', $tableField);
@@ -1872,7 +1872,7 @@
       t3lib_div::loadTCA($table);
       if ($this->pObj->b_drs_tca)
       {
-        t3lib_div::devlog('[INFO/LOCALLANG] $GLOBALS[\'TCA\'][\''.$table.'\'] is loaded.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALISATION] $GLOBALS[\'TCA\'][\''.$table.'\'] is loaded.', $this->pObj->extKey, 0);
       }
     }
     if($GLOBALS['TCA'][$table]['columns'][$field]['label'])
@@ -1885,9 +1885,9 @@
       if($langKey == 'en') $langKey = 'default';
 
       $llFieldName = $this->pObj->lang->sL($GLOBALS['TCA'][$table]['columns'][$field]['label']);
-      if($this->pObj->b_drs_locallang)
+      if($this->pObj->b_drs_localisation)
       {
-        t3lib_div::devlog('[INFO/LOCALLANG] Label is: '.$llFieldName, $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALISATION] Label is: '.$llFieldName, $this->pObj->extKey, 0);
         t3lib_div::devlog('[HELP/LOCALLANG] If you want another label, '.
           'please configure _LOCAL_LANG.'.$langKey.'.'.$tableFieldWoDot, $this->pObj->extKey, 1);
       }
@@ -1895,7 +1895,7 @@
     }
     else
     {
-      if($this->pObj->b_drs_locallang)
+      if($this->pObj->b_drs_localisation)
       {
         t3lib_div::devlog('[WARN/LOCALLANG] We didn\'t get a value from the TCA.', $this->pObj->extKey, 2);
       }
@@ -1909,7 +1909,7 @@
     $langKey = $GLOBALS['TSFE']->lang;
     if($langKey == 'en') $langKey = 'default';
 
-    if($this->pObj->b_drs_locallang)
+    if($this->pObj->b_drs_localisation)
     {
       t3lib_div::devlog('[HELP/LOCALLANG] Please configure _LOCAL_LANG.'.$langKey.'.'.$tableFieldWoDot, $this->pObj->extKey, 1);
     }
@@ -1930,10 +1930,10 @@
     require_once(PATH_typo3.'sysext/lang/lang.php');
     $this->pObj->lang = t3lib_div::makeInstance('language');
     $this->pObj->lang->init($GLOBALS['TSFE']->lang);
-    if($this->pObj->b_drs_locallang)
+    if($this->pObj->b_drs_localisation)
     {
-      t3lib_div::devlog('[INFO/LOCALLANG] Init a language object.', $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/LOCALLANG] Value of $GLOBALS[TSFE]->lang :'.$GLOBALS['TSFE']->lang, $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/LOCALISATION] Init a language object.', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/LOCALISATION] Value of $GLOBALS[TSFE]->lang :'.$GLOBALS['TSFE']->lang, $this->pObj->extKey, 0);
     }
   }
 

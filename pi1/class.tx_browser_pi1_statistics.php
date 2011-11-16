@@ -513,7 +513,7 @@ class tx_browser_pi1_statistics
       // DRS - Development Reporting System
     if( $this->pObj->b_drs_sql || $this->pObj->b_drs_statistics )
     {
-      t3lib_div::devlog( '[INFO/SQL+DOWNLOAD] ' . $query, $this->pObj->extKey, 0 );
+      t3lib_div::devlog( '[INFO/SQL+STATISTICS] ' . $query, $this->pObj->extKey, 0 );
     }
       // DRS - Development Reporting System
 

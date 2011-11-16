@@ -274,7 +274,7 @@ class tx_browser_pi1_template
     if(!$str_sword)
     {
       $str_sword = $str_sword_default;
-      if ($this->pObj->b_drs_locallang || $this->pObj->b_drs_templating)
+      if ($this->pObj->b_drs_localisation || $this->pObj->b_drs_templating)
       {
         t3lib_div::devLog('[INFO/LANG+TEMPLATING] Empty Sword becomes the default value: \''.$str_sword.'\'.', $this->pObj->extKey, 0);
         $langKey = $GLOBALS['TSFE']->lang;
