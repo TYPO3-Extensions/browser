@@ -296,17 +296,22 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // CONTINUE there isn't any localised record
 
         // Get record data
+      $marker = null;
       $marker = $this->sql_marker( $select, $table, $llUid );
       $conf   = $this->cObj->substituteMarkerInObject( $conf2, $marker );
-      $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-      if ( ! ( $pos === false ) )
-      {
-        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $llUid, $marker );
-      }
 
       $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang . $str_linkVarsWoL;
 
-      $out = $out . $this->render_uploads_per_language( $content, $conf );
+      $llOut = $this->render_uploads_per_language( $content, $conf );
+
+      $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+      if ( ! ( $pos === false ) )
+      {
+        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $llUid, $marker, $llOut );
+      }
+      
+
+      $out = $out . $llOut;
     }
       // LOOP all languages
 
