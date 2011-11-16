@@ -2196,7 +2196,7 @@ class tx_browser_pi1_localisation
           $where_clause = '( ' . $l10n_parent . ' = \'' . $uid . '\' AND '.
                           $sys_language_uid . ' = ' . $this->lang_id . ' )';
         }
-        if( empty( $sys_language_uid ) )
+        if( empty( $this->lang_id ) )
         {
           $where_clause = 'uid = \'' . $uid . '\'';
         }
