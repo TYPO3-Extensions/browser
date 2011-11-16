@@ -2048,9 +2048,9 @@ class tx_browser_pi1_localisation
     $int_currLangUid = $GLOBALS['TSFE']->sys_language_content;
     if( isset( $rows[$int_currLangUid] ) )
     {
-      $arr_tmp = $rows[$int_currLangUid];
+      $arr_currLangUid = $rows[$int_currLangUid];
       unset( $rows[$int_currLangUid] );
-      $rows = array( $int_currLangUid => $rows[$int_currLangUid] ) + $rows;
+      $rows = array( $int_currLangUid => $arr_currLangUid ) + $rows;
     }
 
       //////////////////////////////////////////////////////////////////////////
