@@ -302,6 +302,32 @@
           </config>
         </TCEforms>
       </session.type>
+      <downloads.enabled>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.downloads.enabled</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.downloads.enabled.no</numIndex>
+                <numIndex index="1">no</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.downloads.enabled.yes</numIndex>
+                <numIndex index="1">yes</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.downloads.enabled.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+            </items>
+            <default>no</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </downloads.enabled>
       <statistics.enabled>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.enabled</label>
