@@ -2331,8 +2331,8 @@ class tx_browser_pi1_localisation
             t3lib_div::devlog('[WARN/LOCALISATION] ' . $prompt_01,  $this->pObj->extKey, 2);
             t3lib_div::devlog('[WARN/LOCALISATION] ' . $prompt_02,  $this->pObj->extKey, 2);
           }
-          $uid = $arr_uid['def_language'];
-          $uid = null;
+//          $uid = $arr_uid['def_language'];
+//          $uid = null;
         }
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
@@ -2348,8 +2348,9 @@ class tx_browser_pi1_localisation
     {
       switch( true )
       {
-        case( $uid === null ):
-        case( $uid_origin == $uid ):
+        case( $uid        === null ):
+        case( $uid        === 0 ):
+        case( $uid_origin ==  $uid ):
           $prompt = 'The default language record ' . $table . '.' . $uid_origin . ' hasn\'t any localised record with the sys_language_uid ' . $this->lang_id . '.';
           t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
           break;
