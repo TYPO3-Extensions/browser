@@ -163,6 +163,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
     require_once( PATH_typo3conf . 'ext/browser/pi1/class.tx_browser_pi1_localisation.php' );
     $this->objLocalise = new tx_browser_pi1_localisation ($this );
+    require_once( PATH_typo3conf . 'ext/browser/pi1/class.tx_browser_pi1_zz.php' );
+    $this->objZz = new tx_browser_pi1_localisation ($this );
       // Init the browser localisation object
 
 
