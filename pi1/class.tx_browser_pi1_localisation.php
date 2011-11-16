@@ -1621,16 +1621,14 @@ class tx_browser_pi1_localisation
       //
       // Get the query
 
-      // Default values
+      // Values
     $select_fields  = 'uid, title,flag';
     $from_table     = 'sys_language';
     $where_clause   = 'pid = 0 AND hidden = 0';
     $groupBy        = null;
     $orderBy        = null;
     $limit          = null;
-      // Default values
-
-      // Get the where clause
+      // Values
 
       // Query for evaluation
     $query = $GLOBALS['TYPO3_DB']->SELECTquery
@@ -1649,11 +1647,12 @@ class tx_browser_pi1_localisation
     {
       t3lib_div::devlog('[INFO/LOCALISATION] ' . $query, $this->pObj->extKey, 0);
     }
-//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if ( ! ( $pos === false ) )
-//    {
-//      var_dump(__METHOD__. ' (' . __LINE__ . ')', $query );
-//    }
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . ')', $query );
+    }
+      var_dump(__METHOD__. ' (' . __LINE__ . ')', $query );
       // DRS - Development Reporting System
       // Get the query
 

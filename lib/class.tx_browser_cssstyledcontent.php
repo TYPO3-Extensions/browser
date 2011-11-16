@@ -131,8 +131,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     // Get all languages
     // Current language should be first
     // LOOP all languages
-    require_once( PATH_typo3conf . 'ext/browser/pi1/class.tx_browser_pi1_localisation.php');
-    $this->objLocalise = new tx_browser_pi1_localisation($this);
+    require_once( PATH_typo3conf . 'ext/browser/pi1/class.tx_browser_pi1_localisation.php' );
+    $this->objLocalise = new tx_browser_pi1_localisation ($this );
 
     $this->str_developer_csvIp = '91.57.82.46';
     $this->objLocalise->get_languages( );
