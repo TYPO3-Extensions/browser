@@ -68,33 +68,84 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
 
-  /**
-   * render_uploads():  This method extends the origin render_uploads method (version TYPO3 4.5.0).
-   *                    The method interprets the TypoScript of tt_content.uploads.20 in principle.
-   *                    The origin method is limited for records from tt_content only.
-   *                    This method extends it for using records of every table.
-   * 
-   *                    If you like to use the method, you hav to configure this TypoScript snippet:
-   *
-   *                    tt_content.uploads.20 {
-   *                      fields {
-   *                        layout  (stdWrap) ->  0: link only, 1: with application icon, 2: with based icon
-   *                                              i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSLAYOUT###
-   *                        files   (stdWrap) ->  name of the files
-   *                                              i.e: ###TX_ORG_REPERTOIRE.DOCUMENTS###
-   *                        caption (stdWrap) ->  caption of the files, devided by LF
-   *                                              i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSCAPTION###
-   *                      }
-   *                      tableField  (stdWrap) ->  current table.field.
-   *                                                i.e. tx_org_repertoire.documents
-   *                    }
-   *
-   * @param       string          Content input. Not used, ignore.
-   * @param       array           TypoScript configuration
-   * @return      string          HTML output.
-   * @access private
-   */
-  function render_uploads($content,$conf) 
+ /**
+  * render_uploads():  This method extends the origin render_uploads method (version TYPO3 4.5.0).
+  *                    The method interprets the TypoScript of tt_content.uploads.20 in principle.
+  *                    The origin method is limited for records from tt_content only.
+  *                    This method extends it for using records of every table.
+  *
+  *                    If you like to use the method, you hav to configure this TypoScript snippet:
+  *
+  *                    tt_content.uploads.20 {
+  *                      fields {
+  *                        layout  (stdWrap) ->  0: link only, 1: with application icon, 2: with based icon
+  *                                              i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSLAYOUT###
+  *                        files   (stdWrap) ->  name of the files
+  *                                              i.e: ###TX_ORG_REPERTOIRE.DOCUMENTS###
+  *                        caption (stdWrap) ->  caption of the files, devided by LF
+  *                                              i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSCAPTION###
+  *                      }
+  *                      tableField  (stdWrap) ->  current table.field.
+  *                                                i.e. tx_org_repertoire.documents
+  *                    }
+  *
+  * @param       string          Content input. Not used, ignore.
+  * @param       array           TypoScript configuration
+  * @return      string          HTML output.
+  * @version 3.9.3
+  * @since 3.9.3
+  * @access public
+  */
+  public function render_uploads( $content, $conf )
+  {
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf );
+    }
+
+    $out = $this->render_uploads_per_language( $content, $conf );
+
+    return $out;
+  }
+
+
+
+
+
+
+
+
+
+ /**
+  * render_uploads_per_language(): This method extends the origin render_uploads method (version TYPO3 4.5.0).
+  *                                The method interprets the TypoScript of tt_content.uploads.20 in principle.
+  *                                The origin method is limited for records from tt_content only.
+  *                                This method extends it for using records of every table.
+  *
+  *                    If you like to use the method, you hav to configure this TypoScript snippet:
+  *
+  *                    tt_content.uploads.20 {
+  *                      fields {
+  *                        layout  (stdWrap) ->  0: link only, 1: with application icon, 2: with based icon
+  *                                              i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSLAYOUT###
+  *                        files   (stdWrap) ->  name of the files
+  *                                              i.e: ###TX_ORG_REPERTOIRE.DOCUMENTS###
+  *                        caption (stdWrap) ->  caption of the files, devided by LF
+  *                                              i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSCAPTION###
+  *                      }
+  *                      tableField  (stdWrap) ->  current table.field.
+  *                                                i.e. tx_org_repertoire.documents
+  *                    }
+  *
+  * @param       string          Content input. Not used, ignore.
+  * @param       array           TypoScript configuration
+  * @return      string          HTML output.
+  * @version 3.9.3
+  * @since 3.6.4
+  * @access public
+  */
+  private function render_uploads_per_language( $content, $conf )
   {
 
       // the result
