@@ -1878,7 +1878,7 @@ class tx_browser_pi1_localisation
  *                      the row of the default language get the label and flag from
  *                      the page TSconfig
  *
- * @return	array       $rows: null, if table sys_language is empty.
+ * @return	array       $rows: rows of lanuages. Null, if table sys_language is empty.
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -2044,7 +2044,10 @@ class tx_browser_pi1_localisation
       // Set the default language at the first position
 
 
-      // Current language should be first
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Set current language as first row
+
     $int_currLangUid = $GLOBALS['TSFE']->sys_language_content;
     if( isset( $rows[$int_currLangUid] ) )
     {
@@ -2052,7 +2055,10 @@ class tx_browser_pi1_localisation
       unset( $rows[$int_currLangUid] );
       $rows = array( $int_currLangUid => $arr_currLangUid ) + $rows;
     }
+      // Set current language as first row
 
+
+    
       //////////////////////////////////////////////////////////////////////////
       //
       // RETURN the rows

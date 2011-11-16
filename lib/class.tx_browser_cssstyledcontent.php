@@ -184,14 +184,14 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
     
     // LOOP all languages
-    //$rows = array('0' => array('0', ))
 
     $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $rows );
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf );
     }
 
+    $conf = $conf['userFunc.']['filelink.'];
     foreach( $rows as $key_lang => $arr_lang )
     {
         // Is there a localised record?
