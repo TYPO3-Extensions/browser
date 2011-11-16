@@ -182,7 +182,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     }
       // RETURN there isn't any language configured
 
-    // Current language should be first
     
     // LOOP all languages
     //$rows = array('0' => array('0', ))
