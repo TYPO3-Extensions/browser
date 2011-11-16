@@ -256,6 +256,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang . $str_linkVarsWoL;
 
         // Is there a localised record?
+      $this->objLocalise->lang_id = intval( $key_lang );
       $llUid = $this->objLocalise->get_localisedUid( $table, $uid );
         // ... code ...
 
