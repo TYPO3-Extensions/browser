@@ -99,15 +99,30 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   public function render_uploads( $content, $conf )
   {
     $out = null;
-    $GLOBALS['TSFE']->linkVars = '&L=0';
+
+    $bool_currLangOnly = true;
+
+    if( isset( $conf['userFunc.']['renderCurrentLanguageOnly'] ) )
+    {
+      $coa_name           = $conf['userFunc.']['renderCurrentLanguageOnly'];
+      $coa_conf           = $conf['userFunc.']['renderCurrentLanguageOnly.'];
+      $bool_currLangOnly  = intval($this->cObj->stdWrap( $coa_name, $coa_conf ) );
+    }
+
+    if( $bool_currLangOnly )
+    {
+      $out = $out . $this->render_uploads_per_language( $content, $conf );
+      return $out;
+    }
+
 //    $pos = strpos('91.57.82.46', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 //    if ( ! ( $pos === false ) )
 //    {
 //      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GLOBALS['TSFE']->linkVars );
 //    }
 
+    $GLOBALS['TSFE']->linkVars = '&L=0';
     $out = $out . $this->render_uploads_per_language( $content, $conf );
-
     $GLOBALS['TSFE']->linkVars = '&L=1';
     $out = $out . $this->render_uploads_per_language( $content, $conf );
     return $out;
