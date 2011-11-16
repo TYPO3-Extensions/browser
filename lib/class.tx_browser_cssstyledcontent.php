@@ -177,7 +177,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       if ( $this->b_drs_localisation )
       {
         $prompt = 'RETURN ' . __METHOD__ .  ': Any language is configured!';
-        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
       }
     }
       // RETURN there isn't any language configured
@@ -206,7 +206,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       if ( $this->b_drs_localisation )
       {
         $prompt = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
-        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
       }
 
       return $out;
