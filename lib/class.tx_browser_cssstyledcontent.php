@@ -156,15 +156,38 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
 
-    // Get all languages
-    // Current language should be first
-    // LOOP all languages
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Init the browser localisation object
+
     require_once( PATH_typo3conf . 'ext/browser/pi1/class.tx_browser_pi1_localisation.php' );
     $this->objLocalise = new tx_browser_pi1_localisation ($this );
+      // Init the browser localisation object
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN there isn't any language configured
 
     $this->str_developer_csvIp = '91.57.82.46';
     $rows = $this->objLocalise->sql_getLanguages( );
-    $pos = strpos('91.57.82.46', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if( empty ( $rows ) )
+    {
+      if ( $this->b_drs_localisation )
+      {
+        $prompt = 'RETURN ' . __METHOD__ .  ': Any language is configured!';
+        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+      }
+    }
+      // RETURN there isn't any language configured
+
+    // Current language should be first
+    
+    // LOOP all languages
+    //$rows = array('0' => array('0', ))
+
+    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
       var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $rows );

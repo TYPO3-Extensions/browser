@@ -1980,7 +1980,7 @@ class tx_browser_pi1_localisation
       // LOOP: SQL result to rows
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
-      $rows[] = $row;
+      $rows[$row['uid']] = $row;
     }
       // LOOP: SQL result to rows
 
@@ -1988,7 +1988,10 @@ class tx_browser_pi1_localisation
     $GLOBALS['TYPO3_DB']->sql_free_result($res);
       // Handle the SQL result
 
-
+    if( ! empty( $rows ) )
+    {
+      $rows = array('0' => array( 0, 'default', null ) ) + $rows;
+    }
     return $rows;
   }
 
