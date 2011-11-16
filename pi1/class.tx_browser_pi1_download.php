@@ -147,6 +147,8 @@ class tx_browser_pi1_download
     $prompt_error = $this->download_init( );
     if( $prompt_error )
     {
+      $prompt_error = ''.
+      '<div style="border:1em solid red;text-align:center"><h1>TYPO3 Browser</h1>' . $prompt_error . '</div>';
       return $prompt_error;
     }
       // Init global class vars
@@ -160,6 +162,8 @@ class tx_browser_pi1_download
     $prompt_error = $this->download_check( );
     if( $prompt_error )
     {
+      $prompt_error = ''.
+      '<div style="border:1em solid red;text-align:center"><h1>TYPO3 Browser</h1>' . $prompt_error . '</div>';
       return $prompt_error;
     }
       // Check table, field and TypoScript
@@ -173,6 +177,8 @@ class tx_browser_pi1_download
     
     $this->statistics( '-' );
 
+    $prompt_error = ''.
+    '<div style="border:1em solid red;text-align:center"><h1>TYPO3 Browser</h1>' . $prompt_error . '</div>';
     return $prompt_error;
   }
 
