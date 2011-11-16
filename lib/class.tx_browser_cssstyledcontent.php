@@ -252,11 +252,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // LOOP all languages
     foreach( $rows as $key_lang => $arr_lang )
     {
+      
+      $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang . $str_linkVarsWoL;
+
         // Is there a localised record?
       $llUid = $this->objLocalise->get_localisedUid( $table, $uid );
         // ... code ...
-      
-      $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang . $str_linkVarsWoL;
+
       $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
       if ( ! ( $pos === false ) )
       {
