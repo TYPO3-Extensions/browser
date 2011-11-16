@@ -1911,12 +1911,7 @@ class tx_browser_pi1_localisation
       // DRS - Development Reporting System
     if ( $this->pObj->b_drs_localisation || $this->pObj->b_drs_sql )
     {
-      t3lib_div::devlog('[INFO/LOCALISATION] ' . $query, $this->pObj->extKey, 0);
-    }
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . ')', $query );
+      t3lib_div::devlog('[INFO/SQL+LOCALISATION] ' . $query, $this->pObj->extKey, 0);
     }
       // DRS - Development Reporting System
       // Get the query
@@ -1996,6 +1991,7 @@ class tx_browser_pi1_localisation
 
     if( ! empty( $rows ) )
     {
+var_dump( t3lib_BEfunc::BEgetRootLine( 1354 ) );
       $rows = array('0' => array( 'uid' => '0', 'title' => 'default', 'flag' => null ) ) + $rows;
     }
       // Set the default language at the first position

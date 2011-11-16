@@ -111,11 +111,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $coa_name           = $conf['userFunc.']['renderCurrentLanguageOnly'];
       $coa_conf           = $conf['userFunc.']['renderCurrentLanguageOnly.'];
       $bool_currLangOnly  = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' ) );
-      $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-      if ( ! ( $pos === false ) )
-      {
-        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf['userFunc.']['drs'], $conf['userFunc.']['drs.'], $bool_currLangOnly, $this->extKey );
-      }
     }
       // filelinks for the current language only (default)?
 
@@ -144,11 +139,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $coa_name = $conf['userFunc.']['drs'];
       $coa_conf = $conf['userFunc.']['drs.'];
       $bool_drs = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' ) );
-      $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-      if ( ! ( $pos === false ) )
-      {
-        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf['userFunc.']['drs'], $conf['userFunc.']['drs.'], $bool_drs, $this->extKey );
-      }
     }
     if( $bool_drs )
     {
@@ -163,12 +153,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       t3lib_div::devlog('[INFO/DRS] ' . $prompt_01, $this->extKey, 0);
       t3lib_div::devlog('[HELP/DRS] ' . $prompt_02, $this->extKey, 1);
     }
-    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf['userFunc.']['drs'], $conf['userFunc.']['drs.'], $bool_drs, $this->extKey );
-    }
-
       // Enable the DRS
 
 
