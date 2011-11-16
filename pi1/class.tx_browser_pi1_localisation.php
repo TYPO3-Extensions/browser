@@ -1991,13 +1991,15 @@ class tx_browser_pi1_localisation
 
     if( ! empty( $rows ) )
     {
-$arr_rows_of_all_pages_inRootLine = t3lib_BEfunc::BEgetRootLine( 1354 );
-    $this->obj_TypoScript = t3lib_div::makeInstance('t3lib_tsparser_ext');
-    $this->obj_TypoScript->tt_track = 0;
-    $this->obj_TypoScript->init();
-    $this->obj_TypoScript->runThroughTemplates($arr_rows_of_all_pages_inRootLine);
-    $this->obj_TypoScript->generateConfig();
-var_dump( $this->obj_TypoScript->setup );
+//$arr_rows_of_all_pages_inRootLine = t3lib_BEfunc::BEgetRootLine( 1354 );
+//    $this->obj_TypoScript = t3lib_div::makeInstance('t3lib_tsparser_ext');
+//    $this->obj_TypoScript->tt_track = 0;
+//    $this->obj_TypoScript->init();
+//    $this->obj_TypoScript->runThroughTemplates($arr_rows_of_all_pages_inRootLine);
+//    $this->obj_TypoScript->generateConfig();
+//var_dump( $this->obj_TypoScript->setup );
+var_dump( t3lib_BEfunc::getModTSconfig( 1354 ,'mod.' ) );
+
       $rows = array('0' => array( 'uid' => '0', 'title' => 'default', 'flag' => null ) ) + $rows;
     }
       // Set the default language at the first position
