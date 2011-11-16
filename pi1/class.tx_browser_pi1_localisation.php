@@ -2348,9 +2348,16 @@ class tx_browser_pi1_localisation
     {
       switch( true )
       {
-        case( $uid        === null ):
-        case( $uid        === 0 ):
-        case( $uid_origin ==  $uid ):
+        case( $this->lang_id == 0 ):
+          $prompt = 'sys_language_uid is \'' . $this->lang_id . '\'. The default language record is ' . $table . '.' . $uid_origin . '.';
+          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+          break;
+        case( $uid === null ):
+        case( $uid === 0 ):
+          $prompt = 'The default language record ' . $table . '.' . $uid_origin . ' hasn\'t any localised record.';
+          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+          break;
+        case( $uid_origin == $uid ):
           $prompt = 'The default language record ' . $table . '.' . $uid_origin . ' hasn\'t any localised record with the sys_language_uid ' . $this->lang_id . '.';
           t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
           break;
