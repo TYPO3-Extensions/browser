@@ -111,6 +111,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $coa_name           = $conf['userFunc.']['renderCurrentLanguageOnly'];
       $coa_conf           = $conf['userFunc.']['renderCurrentLanguageOnly.'];
       $bool_currLangOnly  = intval( $this->cObj->stdWrap( $coa_name, $coa_conf ) );
+      $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+      if ( ! ( $pos === false ) )
+      {
+        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf['userFunc.']['drs'], $conf['userFunc.']['drs.'], $bool_currLangOnly, $this->extKey );
+      }
     }
       // filelinks for the current language only (default)?
 
@@ -143,7 +148,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       if ( ! ( $pos === false ) )
       {
         var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf['userFunc.']['drs'], $conf['userFunc.']['drs.'], $bool_drs, $this->extKey );
-        //exit;
       }
     }
     if( $bool_drs )
