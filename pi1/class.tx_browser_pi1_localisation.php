@@ -2375,7 +2375,7 @@ class tx_browser_pi1_localisation
       //
       // RETURN the localised uid
 
-    return $uid;
+    return intval( $uid );
       // RETURN the localised uid
   }
 
