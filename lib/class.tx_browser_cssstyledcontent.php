@@ -148,7 +148,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $this->b_drs_localisation = true;
       $this->b_drs_statistics   = true;
       $prompt_01 = 'The DRS - Development Reporting System is enabled by TypoScript.';
-      $prompt_02 = 'Change it: Please look for userFunc = tx_browser_cssstyledcontent->render_uploads and for userFunc.drs.'
+      $prompt_02 = 'Change it: Please look for userFunc = tx_browser_cssstyledcontent->render_uploads and for userFunc.drs.';
       t3lib_div::devlog('[INFO/DRS] ' . $prompt_01, $this->extKey, 0);
       t3lib_div::devlog('[HELP/DRS] ' . $prompt_02, $this->extKey, 1);
     }
