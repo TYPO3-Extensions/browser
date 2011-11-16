@@ -1871,9 +1871,14 @@ class tx_browser_pi1_localisation
 
 
   /**
- * sql_getLanguages( ):
+ * sql_getLanguages( ): Get the rows of languages out of the table sys_language.
+ *                      The method returns null, if there isn't any row in the table.
+ *                      If there is a row, the default language will be the first row.
+ *                      If there is a page TSconfig for the default language,
+ *                      the row of the default language get the label and flag from
+ *                      the page TSconfig
  *
- * @return	void
+ * @return	array       $rows: null, if table sys_language is empty.
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -1987,25 +1992,55 @@ class tx_browser_pi1_localisation
 
       //////////////////////////////////////////////////////////////////////////
       //
+      // RETURN rows are empty
+
+    if( empty( $rows ) )
+    {
+      return $rows;
+    }
+      // RETURN rows are empty
+
+
+    
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Get label and flag of the default language out of the page TSconfig
+
+    $pid    = $GLOBALS['TSFE']->id;
+    $page_TSconfig = t3lib_BEfunc :: getPagesTSconfig( $pid, $rootLine='', $returnPartArray=0 );
+    $title  = $page_TSconfig['mod.']['SHARED.']['defaultLanguageLabel'];
+    $flag   = $page_TSconfig['mod.']['SHARED.']['defaultLanguageFlag'];
+    if( empty( $title ) )
+    {
+      $title = 'default';
+      if( $this->pObj->b_drs_warn )
+      {
+        $prompt_01 = 'Any label insn\'t configured for the default language!';
+        $prompt_02 = 'Please configure in your page TSconfig mod.SHARED.defaultLanguageLabel.';
+        t3lib_div::devlog('[WARN/LOCALISATION] ' . $prompt_01,  $this->pObj->extKey, 2);
+        t3lib_div::devlog('[HELP/LOCALISATION] ' . $prompt_02,  $this->pObj->extKey, 1);
+      }
+    }
+    if( empty( $flag ) )
+    {
+      $flag = null;
+      if( $this->pObj->b_drs_warn )
+      {
+        $prompt_01 = 'Any flag insn\'t configured for the default language!';
+        $prompt_02 = 'Please configure in your page TSconfig mod.SHARED.defaultLanguageFlag.';
+        t3lib_div::devlog('[WARN/LOCALISATION] ' . $prompt_01,  $this->pObj->extKey, 2);
+        t3lib_div::devlog('[HELP/LOCALISATION] ' . $prompt_02,  $this->pObj->extKey, 1);
+      }
+    }
+      // Get label and flag of the default language out of the page TSconfig
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
       // Set the default language at the first position
 
-    if( ! empty( $rows ) )
-    {
-//$arr_rows_of_all_pages_inRootLine = t3lib_BEfunc::BEgetRootLine( 1354 );
-//    $this->obj_TypoScript = t3lib_div::makeInstance('t3lib_tsparser_ext');
-//    $this->obj_TypoScript->tt_track = 0;
-//    $this->obj_TypoScript->init();
-//    $this->obj_TypoScript->runThroughTemplates($arr_rows_of_all_pages_inRootLine);
-//    $this->obj_TypoScript->generateConfig();
-//var_dump( $this->obj_TypoScript->setup );
-$page_TSconfig = t3lib_BEfunc :: getPagesTSconfig( 1354, $rootLine='', $returnPartArray=0 );
-var_dump(  $GLOBALS['TSFE']->id );
-var_dump(  $page_TSconfig['mod.']['SHARED.']['defaultLanguageFlag'] );
-var_dump(  $page_TSconfig['mod.']['SHARED.']['defaultLanguageLabel'] );
-exit;
-
-      $rows = array('0' => array( 'uid' => '0', 'title' => 'default', 'flag' => null ) ) + $rows;
-    }
+    $rows = array('0' => array( 'uid' => '0', 'title' => $title, 'flag' => $flag ) ) + $rows;
       // Set the default language at the first position
 
 
