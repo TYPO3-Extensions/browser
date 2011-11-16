@@ -110,7 +110,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     {
       $coa_name           = $conf['userFunc.']['renderCurrentLanguageOnly'];
       $coa_conf           = $conf['userFunc.']['renderCurrentLanguageOnly.'];
-      $bool_currLangOnly  = intval( $this->cObj->stdWrap( $coa_name, $coa_conf ) );
+      $bool_currLangOnly  = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' ) );
       $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
       if ( ! ( $pos === false ) )
       {
@@ -143,7 +143,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     {
       $coa_name = $conf['userFunc.']['drs'];
       $coa_conf = $conf['userFunc.']['drs.'];
-      $bool_drs = intval( $this->cObj->stdWrap( $coa_name, $coa_conf ) );
+      $bool_drs = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' ) );
       $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
       if ( ! ( $pos === false ) )
       {
