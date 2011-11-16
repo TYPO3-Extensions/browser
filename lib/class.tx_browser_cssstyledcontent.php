@@ -234,7 +234,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
       //////////////////////////////////////////////////////////////////////////
       //
-      // Get the current uid
+      // Get the current uid (of the default language record)
 
     $uid = 'no_record_is_defined';
     if( isset( $conf['userFunc.']['record'] ) )
@@ -243,35 +243,64 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $coa_conf = $conf['userFunc.']['record.'];
       $uid      = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' ) );
     }
-      // Get the current record
+      // Get the current uid (of the default language record)
 
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Get the select
+
+    $select = 'no_seelct_is_defined';
+    if( isset( $conf['userFunc.']['select'] ) )
+    {
+      $coa_name = $conf['userFunc.']['select'];
+      $coa_conf = $conf['userFunc.']['select.'];
+      $select   = $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' );
+      $select   = $this->objZz->cleanUp_lfCr_doubleSpace( $select );
+    }
+      // Get the select
+
+
+    
     $conf2 = $conf['userFunc.']['filelink.'];
     $arr_one_dimensional = t3lib_BEfunc::implodeTSParams($conf2);
 
     $this->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
     $lang_id = $this->objLocalise->lang_id;
 
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
       // LOOP all languages
+
     foreach( $rows as $key_lang => $arr_lang )
     {
-        // Is there a localised record?
+        // Get the localised uid
       $this->objLocalise->lang_id = intval( $key_lang );
-      $llUid = $this->objLocalise->get_localisedUid( $table, $uid );
-      $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-      if ( ! ( $pos === false ) )
-      {
-        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $uid, $llUid );
-      }
-      if( empty( $llUid ) )
+      $uid = $this->objLocalise->get_localisedUid( $table, $uid );
+        // Get the localised uid
+
+      // CONTINUE there isn't any localised record
+      if( empty( $uid ) )
       {
         continue;
       }
-        // ... code ...
+        // CONTINUE there isn't any localised record
+
+        // Get record data
+      $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+      if ( ! ( $pos === false ) )
+      {
+        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $uid, $select );
+      }
 
       $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang . $str_linkVarsWoL;
 
       $out = $out . $this->render_uploads_per_language( $content, $conf );
     }
+      // LOOP all languages
 
 
 

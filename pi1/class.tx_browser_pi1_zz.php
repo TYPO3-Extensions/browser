@@ -28,7 +28,8 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    tx_browser
- * @version 3.7.3
+ * @version 3.9.3
+ * @since 1.0.0
  */
 
  /**
@@ -1380,22 +1381,23 @@
  *
  * @param string    Comma seperated list of values
  * @return  array   Cleaned up comma seperated list of values
+ * @version 3.9.3
+ * @since 1.0.0
  */
   function cleanUp_lfCr_doubleSpace($csvValue)
   {
-    $conf = $this->pObj->conf;
-
     $csvValue = str_replace(chr(10), '', $csvValue); // Linefeed
     $csvValue = str_replace(chr(13), '', $csvValue); // Carriage return
 
-    $int_levelRecursMax = $this->int_advanced_recursionGard;
+    //$int_levelRecursMax = $this->int_advanced_recursionGard;
     $int_levelRecurs = 0;
     do
     {
       $csvValue = str_replace('  ', ' ', $csvValue);
       $int_levelRecurs++;
     }
-    while (!(strpos($csvValue, '  ') === false) && ($int_levelRecurs < $int_levelRecursMax));
+    //while (!(strpos($csvValue, '  ') === false) && ($int_levelRecurs < $int_levelRecursMax));
+    while ( ! ( strpos( $csvValue, '  ' ) === false ) );
     $csvValue = trim($csvValue);
     return $csvValue;
   }
