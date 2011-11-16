@@ -1998,7 +1998,7 @@ class tx_browser_pi1_localisation
 //    $this->obj_TypoScript->runThroughTemplates($arr_rows_of_all_pages_inRootLine);
 //    $this->obj_TypoScript->generateConfig();
 //var_dump( $this->obj_TypoScript->setup );
-var_dump( t3lib_BEfunc::getModTSconfig( 1354 ,'mod.' ) );
+var_dump( t3lib_BEfunc :: getPagesTSconfig( 1354, $rootLine='', $returnPartArray=0 ) );
 
       $rows = array('0' => array( 'uid' => '0', 'title' => 'default', 'flag' => null ) ) + $rows;
     }
