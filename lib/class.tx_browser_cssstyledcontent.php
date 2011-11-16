@@ -193,7 +193,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     foreach( $arr_linkVars as $str_linkVar )
     {
       list( $key_linkVar, $value_linkVar ) = explode( '=', $str_linkVar );
-      if( $key_linkVar != 'L' )
+      if( $key_linkVar != 'L' && ! empty( $key_linkVar ) )
       {
         $arr_linkVarsWoL[] = $key_linkVar . '=' . $value_linkVar;
       }
