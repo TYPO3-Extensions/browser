@@ -1990,7 +1990,7 @@ class tx_browser_pi1_localisation
 
     if( ! empty( $rows ) )
     {
-      $rows = array('0' => array( 0, 'default', null ) ) + $rows;
+      $rows = array('0' => array( 'uid' => 0, 'title' => 'default', 'flag' => null ) ) + $rows;
     }
     return $rows;
   }
