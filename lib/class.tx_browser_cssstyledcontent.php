@@ -203,7 +203,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $out = $out . $this->render_uploads_per_language( $content, $conf );
     }
 
-    return $out;
+      if ( $this->b_drs_localisation )
+      {
+        $prompt = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+      }
+
+      return $out;
   }
 
 
