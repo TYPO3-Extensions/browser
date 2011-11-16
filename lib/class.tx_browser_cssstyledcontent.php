@@ -203,15 +203,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     {
       $str_linkVarsWoL = '&' . $str_linkVarsWoL;
     }
-    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $str_linkVars, $str_linkVarsWoL );
-    }
     if ( $this->b_drs_localisation )
     {
-      $prompt = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
-      t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
+      if ( $str_linkVars != $str_linkVarsWoL )
+      {
+        $prompt = '\'L=' . $GLOBALS['TSFE']->sys_language_content . '\' is removed temporarily from linkVars.';
+        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
+      }
     }
       // Remove 'L' from linkVars
 
@@ -220,6 +218,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $conf2 = $conf['userFunc.']['filelink.'];
     $arr_one_dimensional = t3lib_BEfunc::implodeTSParams($conf2);
 
+    $this->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
       // LOOP all languages
     foreach( $rows as $key_lang => $arr_lang )
     {
@@ -230,15 +229,29 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
       if ( ! ( $pos === false ) )
       {
-        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GLOBALS['TSFE']->linkVars );
+        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GLOBALS['TSFE']->linkVars, $this->objLocalise->int_localisation_mode );
       }
       $out = $out . $this->render_uploads_per_language( $content, $conf );
     }
 
 
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Reset $GLOBALS['TSFE']->linkVars
+
+    $this->objLocalise->int_localisation_mode = null;
     $GLOBALS['TSFE']->linkVars = $str_linkVars;
+      // Reset $GLOBALS['TSFE']->linkVars
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN the content
 
     return $out;
+      // RETURN the content
   }
 
 

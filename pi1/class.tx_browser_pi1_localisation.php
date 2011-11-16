@@ -643,15 +643,33 @@ class tx_browser_pi1_localisation
  */
   private function localisationConfig()
   {
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN $this->int_localisation_mode is set before
+
+    if( ! ( $this->int_localisation_mode === null ) )
+    {
+      return $this->int_localisation_mode;
+    }
+      // RETURN $this->int_localisation_mode is set before
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Get localisation configuration
 
     $this->lang_id      = $GLOBALS['TSFE']->sys_language_content;
     $this->overlay_mode = $GLOBALS['TSFE']->sys_language_contentOL;
 
+      // DRS - Development Reporting System
     if ($this->pObj->b_drs_localisation)
     {
       t3lib_div::devlog('[INFO/LOCALISATION] config.sys_language_uid = '.$this->lang_id, $this->pObj->extKey, 0);
       t3lib_div::devlog('[INFO/LOCALISATION] config.sys_language_overlay = '.$this->overlay_mode, $this->pObj->extKey, 0);
     }
+      // DRS - Development Reporting System
+      // Get localisation configuration
 
 //    if ($this->lang_id == 0 && $this->overlay_mode === 0)
 //    {
@@ -663,6 +681,13 @@ class tx_browser_pi1_localisation
 //      // Display only records with sys_language_uid = 0
 //      return PI1_DEFAULT_LANGUAGE_ONLY;
 //    }
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN current language is default language
+
     if ($this->lang_id == 0)
     {
       if ($this->pObj->b_drs_localisation)
@@ -673,6 +698,14 @@ class tx_browser_pi1_localisation
       $this->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
       return PI1_DEFAULT_LANGUAGE;
     }
+      // RETURN current language is default language
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN display selected language only
+
     if ($this->lang_id > 0 && $this->overlay_mode === 'hideNonTranslated')
     {
       if ($this->pObj->b_drs_localisation)
@@ -682,6 +715,14 @@ class tx_browser_pi1_localisation
       $this->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
       return PI1_SELECTED_LANGUAGE_ONLY;
     }
+      // RETURN display selected language only
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN display selected or default language
+
     if ($this->lang_id > 0)
     {
       if ($this->pObj->b_drs_localisation)
@@ -691,7 +732,7 @@ class tx_browser_pi1_localisation
       $this->int_localisation_mode = PI1_SELECTED_OR_DEFAULT_LANGUAGE;
       return PI1_SELECTED_OR_DEFAULT_LANGUAGE;
     }
-
+      // RETURN display selected or default language
   }
 
 
