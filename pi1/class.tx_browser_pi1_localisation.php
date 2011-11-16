@@ -1999,7 +1999,7 @@ class tx_browser_pi1_localisation
 //    $this->obj_TypoScript->generateConfig();
 //var_dump( $this->obj_TypoScript->setup );
 $page_TSconfig = t3lib_BEfunc :: getPagesTSconfig( 1354, $rootLine='', $returnPartArray=0 );
-var_dump(  $GLOBALS['TSFE'] );
+var_dump(  $GLOBALS['TSFE']->id );
 var_dump(  $page_TSconfig['mod.']['SHARED.']['defaultLanguageFlag'] );
 var_dump(  $page_TSconfig['mod.']['SHARED.']['defaultLanguageLabel'] );
 exit;
