@@ -1652,7 +1652,7 @@ class tx_browser_pi1_localisation
     {
       var_dump(__METHOD__. ' (' . __LINE__ . ')', $query );
     }
-      var_dump(__METHOD__. ' (' . __LINE__ . ')', $query );
+      var_dump(__METHOD__. ' (' . __LINE__ . ')', $this->pObj->str_developer_csvIp, $query );
       // DRS - Development Reporting System
       // Get the query
 
