@@ -1528,7 +1528,13 @@ class tx_browser_pi1_localisation
 
 
   /**
- * get_localisedUid( ): 
+ * get_localisedUid( ): Method returns the uid of the localised record.
+ *                      The method checks some conditions:
+ *                      * It returns the given uid, if current language is the default language
+ *                      * It returns the given uid, if the current table isn't localised
+ *                      The method returns a localised uid in case of $this->int_localisation_mode is
+ *                      * PI1_SELECTED_LANGUAGE_ONLY or
+ *                      * PI1_SELECTED_OR_DEFAULT_LANGUAGE
  *
  * @return	void
  * @version 3.9.3
@@ -1597,6 +1603,62 @@ class tx_browser_pi1_localisation
 
     return $uid;
       // RETURN the localised uid
+  }
+
+
+
+
+  /**
+ * get_languages( ):
+ *
+ * @return	void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  public function get_languages( )
+  {
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Get the query
+
+      // Default values
+    $select_fields  = 'uid, title,flag';
+    $from_table     = 'sys_language';
+    $where_clause   = 'pid = 0 AND hidden = 0';
+    $groupBy        = null;
+    $orderBy        = null;
+    $limit          = null;
+      // Default values
+
+      // Get the where clause
+
+      // Query for evaluation
+    $query = $GLOBALS['TYPO3_DB']->SELECTquery
+                                    (
+                                      $select_fields,
+                                      $from_table,
+                                      $where_clause,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Query for evaluation
+
+      // DRS - Development Reporting System
+    if ($this->pObj->b_drs_localisation || $this->pObj->b_drs_sql)
+    {
+      t3lib_div::devlog('[INFO/LOCALISATION] ' . $query, $this->pObj->extKey, 0);
+    }
+//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if ( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__. ' (' . __LINE__ . ')', $query );
+//    }
+      // DRS - Development Reporting System
+      // Get the query
+
+
+
   }
 
 

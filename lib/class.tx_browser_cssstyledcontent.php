@@ -100,21 +100,42 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   {
     $out = null;
 
-    $bool_currLangOnly = true;
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // filelinks for the current language only (default)?
 
+    $bool_currLangOnly = true;
     if( isset( $conf['userFunc.']['renderCurrentLanguageOnly'] ) )
     {
       $coa_name           = $conf['userFunc.']['renderCurrentLanguageOnly'];
       $coa_conf           = $conf['userFunc.']['renderCurrentLanguageOnly.'];
       $bool_currLangOnly  = intval($this->cObj->stdWrap( $coa_name, $coa_conf ) );
     }
+      // filelinks for the current language only (default)?
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN filelink for the current language only
 
     if( $bool_currLangOnly )
     {
       $out = $out . $this->render_uploads_per_language( $content, $conf );
       return $out;
     }
+      // RETURN filelink for the current language only
 
+
+
+    // Get all languages
+    // Current language should be first
+    // LOOP all languages
+    require_once( PATH_typo3conf . 'browser/pi1/class.tx_browser_pi1_localisation.php');
+    $this->objLocalise = new tx_browser_pi1_localisation($this);
+
+    $this->str_developer_csvIp = '91.57.82.46';
+    $this->objLocalise->get_languages( );
     $pos = strpos('91.57.82.46', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
