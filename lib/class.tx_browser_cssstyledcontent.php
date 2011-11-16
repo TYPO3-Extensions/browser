@@ -298,7 +298,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // Get record data
       $marker = null;
       $marker = $this->sql_marker( $select, $table, $llUid );
+      $serialized_conf2 = serialize($conf2);
       $conf   = $this->cObj->substituteMarkerInObject( $conf2, $marker );
+      $con2   = unserialize($serialized_conf2);
 
       $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang . $str_linkVarsWoL;
 

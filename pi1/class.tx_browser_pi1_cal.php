@@ -2949,23 +2949,15 @@ class tx_browser_pi1_cal
     }
       // Set link to single view
 
+      // Workaround "npz.ch" because of bug: $this->conf_view[$table . '.'][$field . '.'] will be changed, but it should not!
+    $serialized_conf = serialize($this->conf_view[$table . '.'][$field . '.']);
       // Substitute marker recursive
-//:TODO: npz.ch Fehler: 
-/*
- * Marker werden scheinbar in $this->conf_view[$table . '.'][$field . '.'] ersetzt!
- */
-//if( $tableField == 'tx_org_npzch.type')
-//{
-//  var_dump( __METHOD__ . ' (' . __LINE__ . ')', $this->conf_view[$table . '.'][$field . '.'] );
-////  var_dump( __METHOD__, __LINE__, $cObj_conf );
-//}
     $cObj_conf  = $this->pObj->cObj->substituteMarkerInObject( $cObj_conf, $markerArray );
       // Wrap the value
     $value      = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
-//if( $tableField == 'tx_org_npzch.type')
-//{
-//  var_dump( __METHOD__, __LINE__, $value );
-//}
+      // Workaround "npz.ch"
+    $this->conf_view[$table . '.'][$field . '.'] = unserialize($serialized_conf);
+
       // RETURN the wrapped value
     return $value;
   }
