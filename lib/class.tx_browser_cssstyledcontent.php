@@ -191,13 +191,18 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     if ( ! ( $pos === false ) )
     {
       var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $rows );
-      exit;
+      //exit;
     }
 
-    $GLOBALS['TSFE']->linkVars = '&L=0';
-    $out = $out . $this->render_uploads_per_language( $content, $conf );
-    $GLOBALS['TSFE']->linkVars = '&L=1';
-    $out = $out . $this->render_uploads_per_language( $content, $conf );
+    foreach( $rows as $key_lang => $arr_lang )
+    {
+        // Is there a localised record?
+        // ... code ...
+      
+      $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang;
+      $out = $out . $this->render_uploads_per_language( $content, $conf );
+    }
+
     return $out;
   }
 

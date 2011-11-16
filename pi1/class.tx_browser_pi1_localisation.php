@@ -1988,11 +1988,26 @@ class tx_browser_pi1_localisation
     $GLOBALS['TYPO3_DB']->sql_free_result($res);
       // Handle the SQL result
 
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Set the default language at the first position
+
     if( ! empty( $rows ) )
     {
-      $rows = array('0' => array( 'uid' => 0, 'title' => 'default', 'flag' => null ) ) + $rows;
+      $rows = array('0' => array( 'uid' => '0', 'title' => 'default', 'flag' => null ) ) + $rows;
     }
+      // Set the default language at the first position
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN the rows
+
     return $rows;
+      // RETURN the rows
   }
 
 
