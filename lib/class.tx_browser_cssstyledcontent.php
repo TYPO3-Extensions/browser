@@ -68,6 +68,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
 
+
+
+
+
+
+
  /**
   * render_uploads():  This method extends the origin render_uploads method (version TYPO3 4.5.0).
   *                    The method interprets the TypoScript of tt_content.uploads.20 in principle.
@@ -290,10 +296,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // CONTINUE there isn't any localised record
 
         // Get record data
+      $marker = $this->sql_marker( $select, $table, $uid );
       $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
       if ( ! ( $pos === false ) )
       {
-        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $uid, $select );
+        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $uid, $select, $marker );
       }
 
       $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang . $str_linkVarsWoL;
@@ -636,6 +643,134 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     return ( $arr_filelinks );
   }
 
+
+
+
+
+
+
+
+
+ /**
+  * sql_marker( ):
+  *
+  * @param       string          Content input. Not used, ignore.
+  * @param       array           TypoScript configuration
+  * @return      string          HTML output.
+  * @version 3.9.3
+  * @since 3.9.3
+  * @access public
+  */
+  public function sql_marker( $select_fields, $from_table, $uid )
+  {
+    $marker = null;
+    
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Get the query
+
+      // Values
+    $where_clause   = 'uid = ' . intval( $uid ) . '';
+    $groupBy        = null;
+    $orderBy        = null;
+    $limit          = null;
+      // Values
+
+      // Query for evaluation
+    $query = $GLOBALS['TYPO3_DB']->SELECTquery
+                                    (
+                                      $select_fields,
+                                      $from_table,
+                                      $where_clause,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Query for evaluation
+
+      // DRS - Development Reporting System
+    if ( $this->pObj->b_drs_localisation || $this->pObj->b_drs_sql )
+    {
+      t3lib_div::devlog('[INFO/SQL+LOCALISATION] ' . $query, $this->pObj->extKey, 0);
+    }
+      // DRS - Development Reporting System
+      // Get the query
+
+
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Execute the query
+
+    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+                                    (
+                                      $select_fields,
+                                      $from_table,
+                                      $where_clause,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Execute the query
+
+
+
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // ERROR
+
+      // ERROR: debug report in the frontend
+    $error  = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( ! empty( $error ) )
+    {
+      if( $this->debugging )
+      {
+        $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">'.$this->pObj->pi_getLL('drs_security').'</p>';
+        $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
+        $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$error.'</p>';
+        $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$query.'</p>';
+        echo $str_warn.$str_header.$str_prompt;
+      }
+    }
+      // ERROR: debug report in the frontend
+
+      // DRS - Development Reporting System
+    if( ! empty( $error ) )
+    {
+      if( $this->pObj->b_drs_error )
+      {
+        t3lib_div::devlog('[ERROR/SQL] '.$query,  $this->pObj->extKey, 3);
+        t3lib_div::devlog('[ERROR/SQL] '.$error,  $this->pObj->extKey, 3);
+      }
+    }
+      // DRS - Development Reporting System
+      // ERROR
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Handle the SQL result
+
+    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
+      // Free the SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result($res);
+      // Handle the SQL result
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN rows are empty
+
+    foreach( $row as $key => $value )
+    {
+      $marker['###TABLE.' . strtoupper( $key ) . '###'] = $value;
+    }
+      // RETURN rows are empty
+
+    return $marker;
+  }
 
 
 
