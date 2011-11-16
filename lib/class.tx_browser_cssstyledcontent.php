@@ -183,31 +183,57 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // RETURN there isn't any language configured
 
     
-    // LOOP all languages
 
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Remove 'L' from linkVars
+
+    $str_linkVars = $GLOBALS['TSFE']->linkVar;
+    $arr_linkVars = explode( '&', $str_linkVars );
+    foreach( $arr_linkVars as $str_linkVar )
+    {
+      list( $key_linkVar, $value_linkVar ) = explode( '=', $str_linkVar );
+      if( $key_linkVar != 'L' )
+      {
+        $arr_linkVarsWoL[] = $key_linkVar . '=' . $value_linkVar;
+      }
+    }
+    $str_linkVarsWoL = implode( '&', $arr_linkVarsWoL );
+    if( ! empty( $str_linkVarsWoL ) )
+    {
+      $str_linkVarsWoL = '&' . $str_linkVarsWoL;
+    }
     $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf );
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $str_linkVarsWoL );
     }
+    if ( $this->b_drs_localisation )
+    {
+      $prompt = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+      t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
+    }
+      // Remove 'L' from linkVars
 
-    $conf = $conf['userFunc.']['filelink.'];
+
+
+    $conf2 = $conf['userFunc.']['filelink.'];
+    $arr_one_dimensional = t3lib_BEfunc::implodeTSParams($conf2);
+
+      // LOOP all languages
     foreach( $rows as $key_lang => $arr_lang )
     {
         // Is there a localised record?
         // ... code ...
       
-      $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang;
+      $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang . $str_linkVarsWoL;
       $out = $out . $this->render_uploads_per_language( $content, $conf );
     }
 
-      if ( $this->b_drs_localisation )
-      {
-        $prompt = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
-        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
-      }
 
-      return $out;
+    $GLOBALS['TSFE']->linkVar = $str_linkVars;
+
+    return $out;
   }
 
 
