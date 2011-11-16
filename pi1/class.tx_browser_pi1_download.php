@@ -449,9 +449,10 @@ class tx_browser_pi1_download
       // Build and execute the query for getting files
 
       // Build the query
+    $uid            = $this->pObj->objLocalise->get_localisedUid( $this->table, $this->uid );
     $select_fields  = $this->field;
     $from_table     = $this->table;
-    $where_clause   = 'uid = ' . $this->uid;
+    $where_clause   = 'uid = ' . $uid;
     $enablefields   = $this->pObj->cObj->enableFields( $this->table );
     if( $enablefields )
     {

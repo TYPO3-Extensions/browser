@@ -510,6 +510,13 @@ class tx_browser_pi1_statistics
       'SET    `' . $field . '` = `' . $field . '` ' . $operator . ' 1 ' .
       'WHERE  `uid` = ' . $uid ;
 
+      // DRS - Development Reporting System
+    if( $this->pObj->b_drs_sql || $this->pObj->b_drs_statistics )
+    {
+      t3lib_div::devlog( '[INFO/SQL+DOWNLOAD] ' . $query, $this->pObj->extKey, 0 );
+    }
+      // DRS - Development Reporting System
+
       // Execute the query
     $GLOBALS['TYPO3_DB']->sql_query( $query );
 
