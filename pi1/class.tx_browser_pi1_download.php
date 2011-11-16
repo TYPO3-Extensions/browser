@@ -279,7 +279,7 @@ class tx_browser_pi1_download
     if( ! $this->bool_downloadsAllowed )
     {
       $prompt_01 = 'This current TYPO3 Browser plugin hasn\'t any permission to handle the download page object.';
-      $prompt_02 = 'Please enable the Flexform/TypoScript property flexform.sDEF.downloads.enabled.';
+      $prompt_02 = 'Please enable the property in the flexform tab [General] or in your TypoScript. See flexform.sDEF.downloads.enabled.';
       if ( $this->pObj->b_drs_download )
       {
         t3lib_div::devlog( '[INFO/DOWNLOAD] ' . $prompt_01, $this->pObj->extKey, 0 );
