@@ -300,7 +300,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
       if ( ! ( $pos === false ) )
       {
-        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $uid, $select, $marker, substituteMarkerInObject( $conf2, $marker ) );
+        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $uid, $select, $marker, $this->cObj->substituteMarkerInObject( $conf2, $marker ) );
       }
 
       $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang . $str_linkVarsWoL;
