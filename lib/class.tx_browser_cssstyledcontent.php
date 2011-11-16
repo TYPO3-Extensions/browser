@@ -285,23 +285,24 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     {
         // Get the localised uid
       $this->objLocalise->lang_id = intval( $key_lang );
-      $uid = $this->objLocalise->get_localisedUid( $table, $uid );
+      $llUid = $this->objLocalise->get_localisedUid( $table, $uid );
         // Get the localised uid
 
       // CONTINUE there isn't any localised record
-      if( empty( $uid ) )
+      if( empty( $llUid ) )
       {
         continue;
       }
         // CONTINUE there isn't any localised record
 
         // Get record data
-      $marker = $this->sql_marker( $select, $table, $uid );
-      $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-      if ( ! ( $pos === false ) )
-      {
-        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $uid, $select, $marker, $this->cObj->substituteMarkerInObject( $conf2, $marker ) );
-      }
+      $marker = $this->sql_marker( $select, $table, $llUid );
+      $conf   = $this->cObj->substituteMarkerInObject( $conf2, $marker );
+//      $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//      if ( ! ( $pos === false ) )
+//      {
+//        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $llUid, $select, $marker, $this->cObj->substituteMarkerInObject( $conf2, $marker ) );
+//      }
 
       $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang . $str_linkVarsWoL;
 
@@ -661,7 +662,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   * @since 3.9.3
   * @access public
   */
-  public function sql_marker( $select_fields, $from_table, $uid )
+  public function sql_marker( $select_fields, $from_table, $llUid )
   {
     $marker = null;
     
@@ -670,7 +671,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Get the query
 
       // Values
-    $where_clause   = 'uid = ' . intval( $uid ) . '';
+    $where_clause   = 'uid = ' . intval( $llUid ) . '';
     $groupBy        = null;
     $orderBy        = null;
     $limit          = null;
