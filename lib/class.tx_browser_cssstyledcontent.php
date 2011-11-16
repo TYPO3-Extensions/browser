@@ -75,25 +75,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
  /**
-  * render_uploads():  This method extends the origin render_uploads method (version TYPO3 4.5.0).
-  *                    The method interprets the TypoScript of tt_content.uploads.20 in principle.
-  *                    The origin method is limited for records from tt_content only.
-  *                    This method extends it for using records of every table.
-  *
-  *                    If you like to use the method, you hav to configure this TypoScript snippet:
-  *
-  *                    tt_content.uploads.20 {
-  *                      fields {
-  *                        layout  (stdWrap) ->  0: link only, 1: with application icon, 2: with based icon
-  *                                              i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSLAYOUT###
-  *                        files   (stdWrap) ->  name of the files
-  *                                              i.e: ###TX_ORG_REPERTOIRE.DOCUMENTS###
-  *                        caption (stdWrap) ->  caption of the files, devided by LF
-  *                                              i.e: ###TX_ORG_REPERTOIRE.DOCUMENTSCAPTION###
-  *                      }
-  *                      tableField  (stdWrap) ->  current table.field.
-  *                                                i.e. tx_org_repertoire.documents
-  *                    }
+  * render_uploads(): The method enables to link to files of each language at the same time.
+  *                   The method is based on $this->render_uploads_per_language( ). See below.
+  *                   Conditions
+  *                   * userFunc.renderCurrentLanguageOnly has to be true
+  *                   * the table sys_language has to contain one record at least
   *
   * @param       string          Content input. Not used, ignore.
   * @param       array           TypoScript configuration
@@ -104,12 +90,18 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   */
   public function render_uploads( $content, $conf )
   {
-    $this->str_developer_csvIp = '79.237.182.65';
+//    $this->str_developer_csvIp = '79.237.182.65';
+//    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if ( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $this->str_developer_csvIp );
+//    }
+
     $out = null;
 
       //////////////////////////////////////////////////////////////////////////
       //
-      // filelinks for the current language only (default)?
+      // Link the file for the current language only (default)?
 
     $bool_currLangOnly = true;
     if( isset( $conf['userFunc.']['renderCurrentLanguageOnly'] ) )
@@ -118,7 +110,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $coa_conf           = $conf['userFunc.']['renderCurrentLanguageOnly.'];
       $bool_currLangOnly  = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' ) );
     }
-      // filelinks for the current language only (default)?
+      // Link the file for the current language only (default)?
 
 
 
@@ -137,7 +129,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
       //////////////////////////////////////////////////////////////////////////
       //
-      // Enable the DRS
+      // Enable the DRS by TypoScript
 
     $bool_drs = false;
     if( isset( $conf['userFunc.']['drs'] ) )
@@ -148,18 +140,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     }
     if( $bool_drs )
     {
-      $this->b_drs_error        = true;
-      $this->b_drs_warn         = true;
-      $this->b_drs_info         = true;
-      $this->b_drs_download     = true;
-      $this->b_drs_localisation = true;
-      $this->b_drs_statistics   = true;
-      $prompt_01 = 'The DRS - Development Reporting System is enabled by TypoScript.';
-      $prompt_02 = 'Change it: Please look for userFunc = tx_browser_cssstyledcontent->render_uploads and for userFunc.drs.';
-      t3lib_div::devlog('[INFO/DRS] ' . $prompt_01, $this->extKey, 0);
-      t3lib_div::devlog('[HELP/DRS] ' . $prompt_02, $this->extKey, 1);
+      $this->helper_init_drs( );
     }
-      // Enable the DRS
+      // Enable the DRS by TypoScript
 
 
 
@@ -189,37 +172,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       }
     }
       // RETURN there isn't any language configured
-
-    
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Remove 'L' from linkVars
-
-    $str_linkVars = $GLOBALS['TSFE']->linkVars;
-    $arr_linkVars = explode( '&', $str_linkVars );
-    foreach( $arr_linkVars as $str_linkVar )
-    {
-      list( $key_linkVar, $value_linkVar ) = explode( '=', $str_linkVar );
-      if( $key_linkVar != 'L' && ! empty( $key_linkVar ) )
-      {
-        $arr_linkVarsWoL[] = $key_linkVar . '=' . $value_linkVar;
-      }
-    }
-    $str_linkVarsWoL = implode( '&', $arr_linkVarsWoL );
-    if( ! empty( $str_linkVarsWoL ) )
-    {
-      $str_linkVarsWoL = '&' . $str_linkVarsWoL;
-    }
-    if ( $this->b_drs_localisation )
-    {
-      if ( $str_linkVars != $str_linkVarsWoL )
-      {
-        $prompt = '\'L=' . $GLOBALS['TSFE']->sys_language_content . '\' is removed temporarily from linkVars.';
-        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
-      }
-    }
-      // Remove 'L' from linkVars
 
 
 
@@ -269,11 +221,26 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
     
-    $conf2 = $conf['userFunc.']['filelink.'];
-    //$arr_one_dimensional = t3lib_BEfunc::implodeTSParams($conf2);
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Get the configuration
 
+    $userFunc_conf = $conf['userFunc.']['conf.'];
+      // Get the configuration
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Set and get localisation configuration
+
+      // Remove 'L' from linkVars
+    $str_linkVarsWoL                          = $this->helper_linkVarsWoL( );
+      // Don't substitute non localised records with default language
     $this->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
-    $lang_id = $this->objLocalise->lang_id;
+      // Save the language id for the reset below
+    $lang_id                                  = $this->objLocalise->lang_id;
+      // Set and get localisation configuration
 
 
 
@@ -295,30 +262,25 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       }
         // CONTINUE there isn't any localised record
 
-        // Get record data
+        // Set data of the localised record as a marker array
       $marker = null;
       $marker = $this->sql_marker( $select, $table, $llUid );
-      $serialized_conf2 = serialize( $conf2 );
-      $conf   = $this->cObj->substituteMarkerInObject( $conf2, $marker );
-      $conf2  = unserialize( $serialized_conf2 );
+        // Set data of the localised record as a marker array
 
+        // Replace the marker in the TypoScript recursively
+        // Workaround because of bug: $userFunc_conf will be changed, but it should not!
+      $serialized_conf  = serialize( $userFunc_conf );
+      $conf             = $this->cObj->substituteMarkerInObject( $userFunc_conf, $marker );
+      $userFunc_conf    = unserialize( $serialized_conf );
+        // Replace the marker in the TypoScript recursively
+
+        // Update the linkVars
       $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang . $str_linkVarsWoL;
 
-      $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-      if ( ! ( $pos === false ) )
-      {
-        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $llUid, $marker, $conf );
-      }
-
+        // Render the $conf
       $llOut = $this->render_uploads_per_language( $content, $conf );
-
-      $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-      if ( ! ( $pos === false ) )
-      {
-        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $llOut );
-      }
       
-
+        // Concatenate the localized output
       $out = $out . $llOut;
     }
       // LOOP all languages
@@ -327,12 +289,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
       //////////////////////////////////////////////////////////////////////////
       //
-      // Reset $GLOBALS['TSFE']->linkVars
+      // Reset some variables, which are changed above
 
     $this->objLocalise->int_localisation_mode = null;
-    $this->objLocalise->lang_id = $lang_id;
-    $GLOBALS['TSFE']->linkVars = $str_linkVars;
-      // Reset $GLOBALS['TSFE']->linkVars
+    $this->objLocalise->lang_id               = $lang_id;
+    $GLOBALS['TSFE']->linkVars                = $str_linkVars;
+      // Reset some variables, which are changed above
 
 
 
@@ -454,9 +416,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 //      // dwildt, 111110, +
       list( $cR_table, $cR_uid) = explode( ':', $GLOBALS['TSFE']->currentRecord );
-//    $markerArray = array();
-//    $markerArray = $this->pObj->objMarker->extend_marker_wi_cObjData($markerArray);
-//    $markerArray = $this->pObj->objMarker->extend_marker_wi_pivars($markerArray);
 
     // LOOP: files
       $filesData = array();
@@ -551,10 +510,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $str_outputEntry  = str_replace( rawurlencode( '###KEY###' ),             $key,       $str_outputEntry );
         $str_outputEntry  = str_replace( rawurlencode( '###FILENAME###' ),        $fileName,  $str_outputEntry );
         $str_outputEntry  = str_replace( rawurlencode( '###TT_CONTENT.UID###' ),  $cR_uid,    $str_outputEntry );
-//        $markerArray['###KEY###']       = $key;
-//        $markerArray['###FILENAME###']  = $fileName;
-//        $str_outputEntry                = $this->pObj->cObj->substituteMarkerArray($str_outputEntry, $markerArray);
-        $outputEntries[]                = $str_outputEntry;
+        $outputEntries[]  = $str_outputEntry;
 // dwildt, 111106, +
       }
         // LOOP: files
@@ -606,6 +562,88 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
   /**
+   * helper_linkVarsWoL( ): Remove parameter 'L' from linkVars
+   *
+   * @return string         $str_linkVarsWoL: linkVars without 'L'
+   * @access private
+   */
+  private function helper_linkVarsWoL( )
+  {
+      // Get linkVars
+    $str_linkVars = $GLOBALS['TSFE']->linkVars;
+
+      // LOOP linkVars: remove 'L'
+    $arr_linkVars = explode( '&', $str_linkVars );
+    foreach( $arr_linkVars as $str_linkVar )
+    {
+      list( $key_linkVar, $value_linkVar ) = explode( '=', $str_linkVar );
+        // remove 'L'
+      if( $key_linkVar != 'L' && ! empty( $key_linkVar ) )
+      {
+        $arr_linkVarsWoL[] = $key_linkVar . '=' . $value_linkVar;
+      }
+        // remove 'L'
+    }
+      // LOOP linkVars: remove 'L'
+
+      // Set linkVars without 'L'
+    $str_linkVarsWoL = implode( '&', $arr_linkVarsWoL );
+    if( ! empty( $str_linkVarsWoL ) )
+    {
+      $str_linkVarsWoL = '&' . $str_linkVarsWoL;
+    }
+      // Set linkVars without 'L'
+
+      // DRS - Development Reporting System
+    if ( $this->b_drs_localisation )
+    {
+      if ( $str_linkVars != $str_linkVarsWoL )
+      {
+        $prompt = '\'L=' . $GLOBALS['TSFE']->sys_language_content . '\' is removed temporarily from linkVars.';
+        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
+      }
+    }
+      // DRS - Development Reporting System
+
+      // RETURN linkVars without 'L'
+    return $str_linkVarsWoL;
+  }
+
+
+
+
+
+
+
+
+  /**
+   * helper_init_drs( ): Init the DRS - Development Reportinmg System
+   *
+   * @return void
+   * @access private
+   */
+  private function helper_init_drs( )
+  {
+    $this->b_drs_error        = true;
+    $this->b_drs_warn         = true;
+    $this->b_drs_info         = true;
+    $this->b_drs_download     = true;
+    $this->b_drs_localisation = true;
+    $this->b_drs_statistics   = true;
+    $prompt_01 = 'The DRS - Development Reporting System is enabled by TypoScript.';
+    $prompt_02 = 'Change it: Please look for userFunc = tx_browser_cssstyledcontent->render_uploads and for userFunc.drs.';
+    t3lib_div::devlog('[INFO/DRS] ' . $prompt_01, $this->extKey, 0);
+    t3lib_div::devlog('[HELP/DRS] ' . $prompt_02, $this->extKey, 1);
+  }
+
+
+
+
+
+
+
+
+  /**
    * helper_replace_url( ):  This method replaces the url in an HTML link.
    *
    * @param       string          $content:   Content input. Not used, ignore.
@@ -615,7 +653,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
    * @return      string          Replaced URL
    * @access private
    */
-  function helper_replace_url( $content, $conf, $key, $fileName )
+  private function helper_replace_url( $content, $conf, $key, $fileName )
   {
       // Link the current file with and without an icon (two links)
     $str_filelinks = $this->cObj->filelink( $fileName, $conf['linkProc.'] );
@@ -664,13 +702,22 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
 
+  /***********************************************
+   *
+   * SQL
+   *
+   **********************************************/
+
+
 
  /**
-  * sql_marker( ):
+  * sql_marker( ):  The method select the values of the given table and select and
+  *                 returns the values as a marker array
   *
-  * @param       string          Content input. Not used, ignore.
-  * @param       array           TypoScript configuration
-  * @return      string          HTML output.
+  * @param  string       $select_fields:  fields for the SQL select
+  * @param  string       $from_table:     table for the SQL from
+  * @param  integer      $llUid:          uid of the localised record
+  * @return array        $marker:         Array with the elements '###FIELD###' => 'value'
   * @version 3.9.3
   * @since 3.9.3
   * @access public
@@ -681,7 +728,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     
       ////////////////////////////////////////////////////////////////////////////////
       //
-      // Get the query
+      // Set the query
 
       // Values
     $where_clause   = 'uid = ' . intval( $llUid ) . '';
@@ -708,7 +755,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       t3lib_div::devlog('[INFO/SQL+LOCALISATION] ' . $query, $this->pObj->extKey, 0);
     }
       // DRS - Development Reporting System
-      // Get the query
+      // Set the query
 
 
 
@@ -766,24 +813,27 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       //
       // Handle the SQL result
 
+      // Fetch one row only
     $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
       // Free the SQL result
-    $GLOBALS['TYPO3_DB']->sql_free_result($res);
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+
+      // Set the marker array
+    foreach( $row as $key => $value )
+    {
+      $marker['###TABLE.' . strtoupper( $key ) . '###'] = $value;
+    }
+      // Set the marker array
       // Handle the SQL result
 
 
 
       //////////////////////////////////////////////////////////////////////////
       //
-      // RETURN rows are empty
-
-    foreach( $row as $key => $value )
-    {
-      $marker['###TABLE.' . strtoupper( $key ) . '###'] = $value;
-    }
-      // RETURN rows are empty
+      // RETURN the marker array
 
     return $marker;
+      // RETURN the marker array
   }
 
 
