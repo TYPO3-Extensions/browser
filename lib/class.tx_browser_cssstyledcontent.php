@@ -115,11 +115,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       return $out;
     }
 
-//    $pos = strpos('91.57.82.46', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if ( ! ( $pos === false ) )
-//    {
-//      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GLOBALS['TSFE']->linkVars );
-//    }
+    $pos = strpos('91.57.82.46', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf['userfunc.'] );
+      exit;
+    }
 
     $GLOBALS['TSFE']->linkVars = '&L=0';
     $out = $out . $this->render_uploads_per_language( $content, $conf );
