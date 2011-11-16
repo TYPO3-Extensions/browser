@@ -2323,6 +2323,7 @@ class tx_browser_pi1_localisation
             t3lib_div::devlog('[WARN/LOCALISATION] ' . $prompt_02,  $this->pObj->extKey, 2);
           }
           $uid = $arr_uid['def_language'];
+          $uid = null;
         }
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
@@ -2336,15 +2337,17 @@ class tx_browser_pi1_localisation
       // DRS - Development Reporting System
     if ($this->pObj->b_drs_localisation)
     {
-      if( $uid_origin != $uid )
+      switch( true )
       {
-        $prompt = 'Uid of default language record is ' . $table . '.' . $uid_origin . ', uid of the localised record is ' . $table . '.' . $uid . '.';
-        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
-      }
-      if( $uid_origin == $uid )
-      {
-        $prompt = 'The default language record ' . $table . '.' . $uid_origin . ' hasn\'t any localised record with the sys_language_uid ' . $this->lang_id . '.';
-        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+        case( $uid === null ):
+        case( $uid_origin == $uid ):
+          $prompt = 'The default language record ' . $table . '.' . $uid_origin . ' hasn\'t any localised record with the sys_language_uid ' . $this->lang_id . '.';
+          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+          break;
+        case( $uid_origin != $uid ):
+          $prompt = 'Uid of default language record is ' . $table . '.' . $uid_origin . ', uid of the localised record is ' . $table . '.' . $uid . '.';
+          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0);
+          break;
       }
     }
       // DRS - Development Reporting System

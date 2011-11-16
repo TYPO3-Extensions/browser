@@ -215,6 +215,34 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
 
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Get the current table
+
+    $table = 'no_table_is_defined';
+    if( isset( $conf['userFunc.']['table'] ) )
+    {
+      $coa_name = $conf['userFunc.']['table'];
+      $coa_conf = $conf['userFunc.']['table.'];
+      $table    = $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' );
+    }
+      // Get the current table
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Get the current uid
+
+    $uid = 'no_record_is_defined';
+    if( isset( $conf['userFunc.']['record'] ) )
+    {
+      $coa_name = $conf['userFunc.']['record'];
+      $coa_conf = $conf['userFunc.']['record.'];
+      $uid      = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' ) );
+    }
+      // Get the current record
+
     $conf2 = $conf['userFunc.']['filelink.'];
     $arr_one_dimensional = t3lib_BEfunc::implodeTSParams($conf2);
 
@@ -223,13 +251,14 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     foreach( $rows as $key_lang => $arr_lang )
     {
         // Is there a localised record?
+      $llUid = $this->objLocalise->get_localisedUid( $table, $uid );
         // ... code ...
       
       $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang . $str_linkVarsWoL;
       $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
       if ( ! ( $pos === false ) )
       {
-        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GLOBALS['TSFE']->linkVars, $this->objLocalise->int_localisation_mode );
+        var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $uid );
       }
       $out = $out . $this->render_uploads_per_language( $content, $conf );
     }
