@@ -2047,10 +2047,11 @@ class tx_browser_pi1_localisation
       //
       // Get label and flag of the default language out of the page TSconfig
 
-    $pid    = $GLOBALS['TSFE']->id;
-    $page_TSconfig = t3lib_BEfunc :: getPagesTSconfig( $pid, $rootLine='', $returnPartArray=0 );
-    $title  = $page_TSconfig['mod.']['SHARED.']['defaultLanguageLabel'];
-    $flag   = $page_TSconfig['mod.']['SHARED.']['defaultLanguageFlag'];
+    $pid            = $GLOBALS['TSFE']->id;
+    $page_TSconfig  = t3lib_BEfunc :: getPagesTSconfig( $pid, $rootLine='', $returnPartArray=0 );
+    $title          = $page_TSconfig['mod.']['SHARED.']['defaultLanguageLabel'];
+      // Take the name without extension. I.e de.gif will become de
+    list($flag)     = explode( '.', $page_TSconfig['mod.']['SHARED.']['defaultLanguageFlag'] );
     if( empty( $title ) )
     {
       $title = 'default';
