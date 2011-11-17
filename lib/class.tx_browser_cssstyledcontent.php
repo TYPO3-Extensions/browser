@@ -267,6 +267,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $marker                             = $this->sql_marker( $select, $table, $llUid );
       $marker['###SYS_LANGUAGE.FLAG###']  = $llRows[$flag]['flag'];
       $marker['###SYS_LANGUAGE.TITLE###'] = $llRows[$flag]['title'];
+    $this->str_developer_csvIp = '91.57.79.144';
+    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $select, $table, $llUid, $marker );
+    }
         // Set data of the localised record as a marker array
 
         // Replace the marker in the TypoScript recursively
@@ -281,12 +287,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
         // Render the $conf
       $llOut = $this->render_uploads_per_language( $content, $conf );
-    $this->str_developer_csvIp = '91.57.79.144';
-    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $userFunc_conf, $conf, $llOut );
-    }
       
         // Concatenate the localized output
       $out = $out . $llOut;
