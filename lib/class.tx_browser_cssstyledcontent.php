@@ -251,6 +251,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     foreach( $llRows as $flag => $arr_lang )
     {
         // Get the localised uid
+    $this->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
       $this->objLocalise->lang_id = intval( $llRows[$flag]['uid'] );
       $llUid = $this->objLocalise->get_localisedUid( $table, $uid );
     $this->str_developer_csvIp = '91.57.79.144';

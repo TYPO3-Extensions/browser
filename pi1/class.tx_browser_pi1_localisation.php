@@ -2356,7 +2356,7 @@ class tx_browser_pi1_localisation
     }
       // Try to set localised uid
       // DRS - Development Reporting System
-    if ($this->pObj->b_drs_localisation)
+    if( $this->pObj->b_drs_localisation )
     {
       switch( true )
       {
