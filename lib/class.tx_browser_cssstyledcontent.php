@@ -524,7 +524,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 // dwildt, 111106, -
 // dwildt, 111106, +
         $flag = $GLOBALS['TSFE']->lang;
-        if( empty( $lang ) )
+        if( empty( $flag ) )
         {
           $flag = 'gb';
         }
