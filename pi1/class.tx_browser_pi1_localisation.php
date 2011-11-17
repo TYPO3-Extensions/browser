@@ -2082,7 +2082,7 @@ class tx_browser_pi1_localisation
       //
       // Set the default language at the first position
 
-    $rows = array('0' => array( 'uid' => '0', 'title' => $title, 'flag' => $flag ) ) + $rows;
+    $rows = array($flag => array( 'uid' => '0', 'title' => $title, 'flag' => $flag ) ) + $rows;
       // Set the default language at the first position
 
 
