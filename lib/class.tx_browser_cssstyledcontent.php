@@ -420,7 +420,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // Get table.uid
       list( $cR_table, $cR_uid) = explode( ':', $GLOBALS['TSFE']->currentRecord );
 
-        // Get configurede languages
+        // Get configured languages
+        // Init the browser localisation object
+      require_once( PATH_typo3conf . 'ext/browser/pi1/class.tx_browser_pi1_localisation.php' );
+      $this->objLocalise = new tx_browser_pi1_localisation ($this );
+      require_once( PATH_typo3conf . 'ext/browser/pi1/class.tx_browser_pi1_zz.php' );
+      $this->objZz = new tx_browser_pi1_zz ($this );
       $llRows = $this->objLocalise->sql_getLanguages( );
       if( empty ( $llRows ) )
       {
@@ -430,6 +435,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
         }
       }
+        // Get configured languages
         // dwildt, 111110, +
 
     // LOOP: files
