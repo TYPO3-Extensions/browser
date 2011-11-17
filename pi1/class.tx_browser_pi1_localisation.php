@@ -2098,7 +2098,7 @@ class tx_browser_pi1_localisation
 //      $rows = array( $int_currLangUid => $arr_currLangUid ) + $rows;
 //    }
     $flag = $GLOBALS['TSFE']->lang;
-    if( empty( $flag ) )
+    if( empty( $flag ) || ( $flag = 'en' ))
     {
       $flag = 'gb';
     }
