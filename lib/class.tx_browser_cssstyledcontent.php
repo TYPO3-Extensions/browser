@@ -528,7 +528,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         if( isset ( $llRows[$flag] ) )
         {
           $marker['###SYS_LANGUAGE.FLAG###']  = $llRows[$flag]['flag'];
-          $marker['###SYS_LANGUAGE.TITLE###'] = $llRows[$flag]['title']
+          $marker['###SYS_LANGUAGE.TITLE###'] = $llRows[$flag]['title'];
         }
         $marker['###KEY###']                = $key;
         $marker['###FILENAME###']           = $fileName;
