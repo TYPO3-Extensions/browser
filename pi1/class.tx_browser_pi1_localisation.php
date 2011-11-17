@@ -2090,12 +2090,19 @@ class tx_browser_pi1_localisation
       //
       // Set current language as first row
 
-    $int_currLangUid = $GLOBALS['TSFE']->sys_language_content;
-    if( isset( $rows[$int_currLangUid] ) )
+//    $int_currLangUid = $GLOBALS['TSFE']->sys_language_content;
+//    if( isset( $rows[$int_currLangUid] ) )
+//    {
+//      $arr_currLangUid = $rows[$int_currLangUid];
+//      unset( $rows[$int_currLangUid] );
+//      $rows = array( $int_currLangUid => $arr_currLangUid ) + $rows;
+//    }
+    $flag = $GLOBALS['TSFE']->lang;
+    if( isset( $rows[$flag] ) )
     {
-      $arr_currLangUid = $rows[$int_currLangUid];
-      unset( $rows[$int_currLangUid] );
-      $rows = array( $int_currLangUid => $arr_currLangUid ) + $rows;
+      $arr_currLangUid = $rows[$flag];
+      unset( $rows[$flag] );
+      $rows = array( $flag => $arr_currLangUid ) + $rows;
     }
       // Set current language as first row
 
