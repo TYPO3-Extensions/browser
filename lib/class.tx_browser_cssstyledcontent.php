@@ -162,8 +162,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       //
       // RETURN there isn't any language configured
 
-    $rows = $this->objLocalise->sql_getLanguages( );
-    if( empty ( $rows ) )
+    $llRows = $this->objLocalise->sql_getLanguages( );
+    if( empty ( $llRows ) )
     {
       if ( $this->b_drs_localisation )
       {
@@ -248,10 +248,10 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       //
       // LOOP all languages
 
-    foreach( $rows as $key_lang => $arr_lang )
+    foreach( $llRows as $flag => $arr_lang )
     {
         // Get the localised uid
-      $this->objLocalise->lang_id = intval( $key_lang );
+      $this->objLocalise->lang_id = intval( $llRows[$flag]['uid'] );
       $llUid = $this->objLocalise->get_localisedUid( $table, $uid );
         // Get the localised uid
 
@@ -265,8 +265,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // Set data of the localised record as a marker array
       $marker                             = null;
       $marker                             = $this->sql_marker( $select, $table, $llUid );
-      $marker['###SYS_LANGUAGE.FLAG###']  = $rows[$key_lang]['flag'];
-      $marker['###SYS_LANGUAGE.TITLE###'] = $rows[$key_lang]['title'];
+      $marker['###SYS_LANGUAGE.FLAG###']  = $llRows[$flag]['flag'];
+      $marker['###SYS_LANGUAGE.TITLE###'] = $llRows[$flag]['title'];
         // Set data of the localised record as a marker array
 
         // Replace the marker in the TypoScript recursively
@@ -277,7 +277,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // Replace the marker in the TypoScript recursively
 
         // Update the linkVars
-      $GLOBALS['TSFE']->linkVars = '&L=' . $key_lang . $str_linkVarsWoL;
+      $GLOBALS['TSFE']->linkVars = '&L=' . $llRows[$flag]['uid'] . $str_linkVarsWoL;
 
         // Render the $conf
       $llOut = $this->render_uploads_per_language( $content, $conf );
@@ -416,8 +416,21 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $conf['linkProc.']['removePrependedNumbers'] = 0;
       }
 
-//      // dwildt, 111110, +
+        // dwildt, 111110, +
+        // Get table.uid
       list( $cR_table, $cR_uid) = explode( ':', $GLOBALS['TSFE']->currentRecord );
+
+        // Get configurede languages
+      $llRows = $this->objLocalise->sql_getLanguages( );
+      if( empty ( $llRows ) )
+      {
+        if ( $this->b_drs_localisation )
+        {
+          $prompt = __METHOD__ .  ': Any language is configured!';
+          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
+        }
+      }
+        // dwildt, 111110, +
 
     // LOOP: files
       $filesData = array();
@@ -504,13 +517,19 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //                            );
 // dwildt, 111106, -
 // dwildt, 111106, +
-        $marker                             = null;
-        $marker['###SYS_LANGUAGE.FLAG###']  = $GLOBALS['TSFE']->lang;
-        if( empty( $marker['###SYS_LANGUAGE.FLAG###'] ) )
+        $flag = $GLOBALS['TSFE']->lang;
+        if( empty( $lang ) )
         {
-          $marker['###SYS_LANGUAGE.FLAG###'] = 'en';
+          $flag = 'gb';
         }
-        $marker['###SYS_LANGUAGE.TITLE###'] = strtoupper( $marker['###SYS_LANGUAGE.FLAG###'] );
+        $marker                             = null;
+        $marker['###SYS_LANGUAGE.FLAG###']  = 'gb';
+        $marker['###SYS_LANGUAGE.TITLE###'] = 'Any language is configured';
+        if( isset ( $llRows[$flag] ) )
+        {
+          $marker['###SYS_LANGUAGE.FLAG###']  = $llRows[$flag]['flag'];
+          $marker['###SYS_LANGUAGE.TITLE###'] = $llRows[$flag]['title']
+        }
         $marker['###KEY###']                = $key;
         $marker['###FILENAME###']           = $fileName;
         $marker['###TT_CONTENT.UID###']     = $cR_uid;

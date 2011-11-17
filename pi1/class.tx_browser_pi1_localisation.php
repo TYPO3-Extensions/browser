@@ -2021,7 +2021,7 @@ class tx_browser_pi1_localisation
       // LOOP: SQL result to rows
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
-      $rows[$row['uid']] = $row;
+      $rows[$row['flag']] = $row;
     }
       // LOOP: SQL result to rows
 
