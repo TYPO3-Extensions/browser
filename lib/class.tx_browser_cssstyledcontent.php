@@ -504,14 +504,33 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //                            );
 // dwildt, 111106, -
 // dwildt, 111106, +
+        $marker['###SYS_LANGUAGE.FLAG###']  = $GLOBALS['TSFE']->lang;
+        if( empty( $marker['###SYS_LANGUAGE.FLAG###'] ) )
+        {
+          $marker['###SYS_LANGUAGE.FLAG###'] = 'en';
+        }
+        $marker['###SYS_LANGUAGE.TITLE###'] = strtoupper( $marker['###SYS_LANGUAGE.FLAG###'] );
+        $marker['###KEY###']                = $key;
+        $marker['###FILENAME###']           = $fileName;
+        $marker['###TT_CONTENT.UID###']     = $cR_uid;
+
+          // Replace the marker in the TypoScript recursively
+          // Workaround because of bug: $splitConf[$key]['itemRendering.']
+          // will be changed, but it should not!
+        $serialized_conf  = serialize( $splitConf[$key]['itemRendering.'] );
+        $conf             = $this->cObj->substituteMarkerInObject
+                            (
+                              $splitConf[$key]['itemRendering.'],
+                              $marker
+                            );
+        $splitConf[$key]['itemRendering.'] = unserialize( $serialized_conf );
+          // Replace the marker in the TypoScript recursively
+
         $str_outputEntry  = $this->cObj->cObjGetSingle
                             (
                               $splitConf[$key]['itemRendering'],
-                              $splitConf[$key]['itemRendering.']
+                              $conf
                             );
-        $str_outputEntry  = str_replace( rawurlencode( '###KEY###' ),             $key,       $str_outputEntry );
-        $str_outputEntry  = str_replace( rawurlencode( '###FILENAME###' ),        $fileName,  $str_outputEntry );
-        $str_outputEntry  = str_replace( rawurlencode( '###TT_CONTENT.UID###' ),  $cR_uid,    $str_outputEntry );
         $outputEntries[]  = $str_outputEntry;
 // dwildt, 111106, +
       }
