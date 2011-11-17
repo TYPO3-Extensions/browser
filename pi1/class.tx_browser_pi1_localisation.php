@@ -2037,6 +2037,14 @@ class tx_browser_pi1_localisation
 
     if( empty( $rows ) )
     {
+      if ( $this->pObj->b_drs_warn )
+      {
+        $prompt_01 =  'Any language isn\'t configured.';
+        $prompt_02 =  'Please configure your backend languages, ' .
+                      'if you will have any unexpected result in context with localisation.';
+        t3lib_div::devlog('[WARN/LOCALISATION] ' . $prompt_01,  $this->pObj->extKey, 2);
+        t3lib_div::devlog('[HELP/LOCALISATION] ' . $prompt_02,  $this->pObj->extKey, 1);
+      }
       return $rows;
     }
       // RETURN rows are empty

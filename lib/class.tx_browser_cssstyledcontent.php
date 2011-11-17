@@ -101,34 +101,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
       //////////////////////////////////////////////////////////////////////////
       //
-      // Link the file for the current language only (default)?
-
-    $bool_currLangOnly = true;
-    if( isset( $conf['userFunc.']['renderCurrentLanguageOnly'] ) )
-    {
-      $coa_name           = $conf['userFunc.']['renderCurrentLanguageOnly'];
-      $coa_conf           = $conf['userFunc.']['renderCurrentLanguageOnly.'];
-      $bool_currLangOnly  = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' ) );
-    }
-      // Link the file for the current language only (default)?
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN filelink for the current language only
-
-    if( $bool_currLangOnly )
-    {
-      $out = $out . $this->render_uploads_per_language( $content, $conf );
-      return $out;
-    }
-      // RETURN filelink for the current language only
-
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
       // Enable the DRS by TypoScript
 
     $bool_drs = false;
@@ -160,18 +132,38 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
       //////////////////////////////////////////////////////////////////////////
       //
-      // RETURN there isn't any language configured
+      // Link the file for the current language only (default)?
+
+    $bool_currLangOnly = true;
+    if( isset( $conf['userFunc.']['renderCurrentLanguageOnly'] ) )
+    {
+      $coa_name           = $conf['userFunc.']['renderCurrentLanguageOnly'];
+      $coa_conf           = $conf['userFunc.']['renderCurrentLanguageOnly.'];
+      $bool_currLangOnly  = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' ) );
+    }
+      // Link the file for the current language only (default)?
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN the filelink for the current language only
+
+    if( $bool_currLangOnly )
+    {
+      $out = $out . $this->render_uploads_per_language( $content, $conf );
+      return $out;
+    }
+      // RETURN the filelink for the current language only
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Get configured languages
 
     $llRows = $this->objLocalise->sql_getLanguages( );
-    if( empty ( $llRows ) )
-    {
-      if ( $this->b_drs_localisation )
-      {
-        $prompt = 'RETURN ' . __METHOD__ .  ': Any language is configured!';
-        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
-      }
-    }
-      // RETURN there isn't any language configured
+      // Get configured languages
 
 
 
@@ -236,8 +228,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
       // Remove 'L' from linkVars
     $str_linkVarsWoL                          = $this->helper_linkVarsWoL( );
-      // Don't substitute non localised records with default language
-    $this->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
       // Save the language id for the reset below
     $lang_id                                  = $this->objLocalise->lang_id;
       // Set and get localisation configuration
@@ -251,18 +241,14 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     foreach( $llRows as $flag => $arr_lang )
     {
         // Get the localised uid
-    $this->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
-      $this->objLocalise->lang_id = intval( $llRows[$flag]['uid'] );
+        // Don't substitute non localised records with default language
+      $this->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
+        // Set current language
+      $this->objLocalise->lang_id               = intval( $llRows[$flag]['uid'] );
       $llUid = $this->objLocalise->get_localisedUid( $table, $uid );
-    $this->str_developer_csvIp = '91.57.79.144';
-    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $this->objLocalise->int_localisation_mode, $this->objLocalise->lang_id, $uid, $llUid );
-    }
         // Get the localised uid
 
-      // CONTINUE there isn't any localised record
+        // CONTINUE there isn't any localised record
       if( empty( $llUid ) )
       {
         continue;
@@ -428,24 +414,10 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       list( $cR_table, $cR_uid) = explode( ':', $GLOBALS['TSFE']->currentRecord );
 
         // Get configured languages
-        // Init the browser localisation object
-      require_once( PATH_typo3conf . 'ext/browser/pi1/class.tx_browser_pi1_localisation.php' );
-      $this->objLocalise = new tx_browser_pi1_localisation ($this );
-      require_once( PATH_typo3conf . 'ext/browser/pi1/class.tx_browser_pi1_zz.php' );
-      $this->objZz = new tx_browser_pi1_zz ($this );
       $llRows = $this->objLocalise->sql_getLanguages( );
-      if( empty ( $llRows ) )
-      {
-        if ( $this->b_drs_localisation )
-        {
-          $prompt = __METHOD__ .  ': Any language is configured!';
-          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
-        }
-      }
-        // Get configured languages
         // dwildt, 111110, +
 
-    // LOOP: files
+        // LOOP: files
       $filesData = array();
       foreach($fileArray as $key => $fileName)
       {
@@ -530,6 +502,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //                            );
 // dwildt, 111106, -
 // dwildt, 111106, +
+
+          // Set marker array
         $flag = $GLOBALS['TSFE']->lang;
         if( empty( $flag ) )
         {
@@ -546,12 +520,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $marker['###KEY###']                = $key;
         $marker['###FILENAME###']           = $fileName;
         $marker['###TT_CONTENT.UID###']     = $cR_uid;
+          // Set marker array
 
           // Replace the marker in the TypoScript recursively
           // Workaround because of bug: $splitConf[$key]['itemRendering.']
           // will be changed, but it should not!
         $serialized_conf  = serialize( $splitConf[$key]['itemRendering.'] );
-        $conf             = $this->cObj->substituteMarkerInObject
+        $coa_conf         = $this->cObj->substituteMarkerInObject
                             (
                               $splitConf[$key]['itemRendering.'],
                               $marker
@@ -559,10 +534,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $splitConf[$key]['itemRendering.'] = unserialize( $serialized_conf );
           // Replace the marker in the TypoScript recursively
 
+        $coa_name         = $splitConf[$key]['itemRendering'];
         $str_outputEntry  = $this->cObj->cObjGetSingle
                             (
-                              $splitConf[$key]['itemRendering'],
-                              $conf
+                              $coa_name,
+                              $coa_conf
                             );
         $outputEntries[]  = $str_outputEntry;
 // dwildt, 111106, +
