@@ -528,6 +528,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         {
           $flag = 'gb';
         }
+    $this->str_developer_csvIp = '91.57.79.144';
+    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $this->str_developer_csvIp );
+    }
         $marker                             = null;
         $marker['###SYS_LANGUAGE.FLAG###']  = 'gb';
         $marker['###SYS_LANGUAGE.TITLE###'] = 'Any language is configured';
