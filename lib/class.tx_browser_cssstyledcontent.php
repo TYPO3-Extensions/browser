@@ -263,8 +263,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // CONTINUE there isn't any localised record
 
         // Set data of the localised record as a marker array
-      $marker = null;
-      $marker = $this->sql_marker( $select, $table, $llUid );
+      $marker               = null;
+      $marker               = $this->sql_marker( $select, $table, $llUid );
+      $marker['###FLAG###'] = $rows[$key_lang]['flag'];
         // Set data of the localised record as a marker array
 
         // Replace the marker in the TypoScript recursively
