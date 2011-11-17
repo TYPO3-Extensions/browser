@@ -253,6 +253,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // Get the localised uid
       $this->objLocalise->lang_id = intval( $llRows[$flag]['uid'] );
       $llUid = $this->objLocalise->get_localisedUid( $table, $uid );
+    $this->str_developer_csvIp = '91.57.79.144';
+    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $this->objLocalise->int_localisation_mode, $this->objLocalise->lang_id, $uid, $llUid );
+    }
         // Get the localised uid
 
       // CONTINUE there isn't any localised record
@@ -267,12 +273,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $marker                             = $this->sql_marker( $select, $table, $llUid );
       $marker['###SYS_LANGUAGE.FLAG###']  = $llRows[$flag]['flag'];
       $marker['###SYS_LANGUAGE.TITLE###'] = $llRows[$flag]['title'];
-    $this->str_developer_csvIp = '91.57.79.144';
-    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $select, $table, $llUid, $marker );
-    }
         // Set data of the localised record as a marker array
 
         // Replace the marker in the TypoScript recursively
