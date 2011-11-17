@@ -273,6 +273,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // Workaround because of bug: $userFunc_conf will be changed, but it should not!
       $serialized_conf  = serialize( $userFunc_conf );
       $conf             = $this->cObj->substituteMarkerInObject( $userFunc_conf, $marker );
+    $this->str_developer_csvIp = '91.57.79.144';
+    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf );
+    }
       $userFunc_conf    = unserialize( $serialized_conf );
         // Replace the marker in the TypoScript recursively
 
@@ -528,12 +534,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         {
           $flag = 'gb';
         }
-    $this->str_developer_csvIp = '91.57.79.144';
-    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $flag, $GLOBALS['TSFE']->lang, $llRows );
-    }
         $marker                             = null;
         $marker['###SYS_LANGUAGE.FLAG###']  = 'gb';
         $marker['###SYS_LANGUAGE.TITLE###'] = 'Any language is configured';
