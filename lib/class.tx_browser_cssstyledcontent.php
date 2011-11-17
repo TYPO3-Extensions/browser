@@ -277,7 +277,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf );
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $userFunc_conf, $conf );
     }
       $userFunc_conf    = unserialize( $serialized_conf );
         // Replace the marker in the TypoScript recursively
