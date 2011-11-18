@@ -22,7 +22,7 @@ $( document ).ready( function( )
     //
     // UI for buttons in the searchbox form
 
-  $( "input:submit, input:button, a.backbutton", ".tx-browser-pi1" ).button( );
+  $( "button, input:submit, input:button, a.backbutton", ".tx-browser-pi1" ).button( );
     // UI for buttons in the searchbox form
 
 
