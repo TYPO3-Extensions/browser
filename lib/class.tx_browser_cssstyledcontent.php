@@ -725,7 +725,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           $serialized_conf  = serialize( $conf['linkProc.']['tx_browser_pi1.'] );
           $coa_conf         = $this->cObj->substituteMarkerInObject
                               (
-                                $conf,
+                                $conf['linkProc.']['tx_browser_pi1.'],
                                 $marker
                               );
           $conf['linkProc.']['tx_browser_pi1.'] = unserialize( $serialized_conf );
