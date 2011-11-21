@@ -258,6 +258,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // Set data of the localised record as a marker array
       $marker                             = null;
       $marker                             = $this->sql_marker( $select, $table, $llUid );
+      list( $cR_table, $cR_uid)           = explode( ':', $GLOBALS['TSFE']->currentRecord );
+      $marker['###TT_CONTENT.UID###']     = $cR_uid;
       $marker['###SYS_LANGUAGE.FLAG###']  = $llRows[$flag]['flag'];
       $marker['###SYS_LANGUAGE.TITLE###'] = $llRows[$flag]['title'];
         // Set data of the localised record as a marker array
@@ -411,36 +413,36 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
         // dwildt, 111110, +
         // Get table.uid
-      list( $cR_table, $cR_uid) = explode( ':', $GLOBALS['TSFE']->currentRecord );
+//      list( $cR_table, $cR_uid) = explode( ':', $GLOBALS['TSFE']->currentRecord );
 
-        // Set marker array
-      $flag = $GLOBALS['TSFE']->lang;
-      if( empty( $flag ) )
-      {
-        $flag = 'gb';
-      }
-      $marker                             = null;
-      $marker['###SYS_LANGUAGE.FLAG###']  = 'gb';
-      $marker['###SYS_LANGUAGE.TITLE###'] = 'Any language is configured';
-      if( isset ( $llRows[$flag] ) )
-      {
-        $marker['###SYS_LANGUAGE.FLAG###']  = $llRows[$flag]['flag'];
-        $marker['###SYS_LANGUAGE.TITLE###'] = $llRows[$flag]['title'];
-      }
-      $marker['###TT_CONTENT.UID###']     = $cR_uid;
-        // Set marker array
-
-        // Replace the marker in the TypoScript recursively
-        // Workaround because of bug: $splitConf[$key]['itemRendering.']
-        // will be changed, but it should not!
-      //$serialized_conf  = serialize( $splitConf[$key]['itemRendering.'] );
-      $conf         = $this->cObj->substituteMarkerInObject
-                          (
-                            $conf,
-                            $marker
-                          );
-      //$splitConf[$key]['itemRendering.'] = unserialize( $serialized_conf );
-        // Replace the marker in the TypoScript recursively
+//        // Set marker array
+//      $flag = $GLOBALS['TSFE']->lang;
+//      if( empty( $flag ) )
+//      {
+//        $flag = 'gb';
+//      }
+//      $marker                             = null;
+//      $marker['###SYS_LANGUAGE.FLAG###']  = 'gb';
+//      $marker['###SYS_LANGUAGE.TITLE###'] = 'Any language is configured';
+//      if( isset ( $llRows[$flag] ) )
+//      {
+//        $marker['###SYS_LANGUAGE.FLAG###']  = $llRows[$flag]['flag'];
+//        $marker['###SYS_LANGUAGE.TITLE###'] = $llRows[$flag]['title'];
+//      }
+//      $marker['###TT_CONTENT.UID###']     = $cR_uid;
+//        // Set marker array
+//
+//        // Replace the marker in the TypoScript recursively
+//        // Workaround because of bug: $splitConf[$key]['itemRendering.']
+//        // will be changed, but it should not!
+//      //$serialized_conf  = serialize( $splitConf[$key]['itemRendering.'] );
+//      $conf         = $this->cObj->substituteMarkerInObject
+//                          (
+//                            $conf,
+//                            $marker
+//                          );
+//      //$splitConf[$key]['itemRendering.'] = unserialize( $serialized_conf );
+//        // Replace the marker in the TypoScript recursively
 
         // Get configured languages
       $llRows = $this->objLocalise->sql_getLanguages( );
@@ -726,22 +728,22 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         }
           // ERROR: prompt. Don't change anything
 
-            // Set marker array
-          $marker['###KEY###']                = $key;
-          $marker['###FILENAME###']           = $fileName;
-            // Set marker array
+          // Set marker array
+        $marker['###KEY###']                = $key;
+        $marker['###FILENAME###']           = $fileName;
+          // Set marker array
 
-            // Replace the marker in the TypoScript recursively
-            // Workaround because of bug: $splitConf[$key]['itemRendering.']
-            // will be changed, but it should not!
-          $serialized_conf  = serialize( $conf['linkProc.']['tx_browser_pi1.'] );
-          $coa_conf         = $this->cObj->substituteMarkerInObject
-                              (
-                                $conf['linkProc.']['tx_browser_pi1.'],
-                                $marker
-                              );
-          $conf['linkProc.']['tx_browser_pi1.'] = unserialize( $serialized_conf );
-            // Replace the marker in the TypoScript recursively
+          // Replace the marker in the TypoScript recursively
+          // Workaround because of bug: $splitConf[$key]['itemRendering.']
+          // will be changed, but it should not!
+        $serialized_conf  = serialize( $conf['linkProc.']['tx_browser_pi1.'] );
+        $coa_conf         = $this->cObj->substituteMarkerInObject
+                            (
+                              $conf['linkProc.']['tx_browser_pi1.'],
+                              $marker
+                            );
+        $conf['linkProc.']['tx_browser_pi1.'] = unserialize( $serialized_conf );
+          // Replace the marker in the TypoScript recursively
 
         $coa_name = $conf['linkProc.']['tx_browser_pi1'];
 
