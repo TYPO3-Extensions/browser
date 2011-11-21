@@ -478,25 +478,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 // dwildt, 111106, -
 // dwildt, 111106, +
 
-            // Set marker array
-          $marker['###KEY###']                = $key;
-          $marker['###FILENAME###']           = $fileName;
-            // Set marker array
-
-            // Replace the marker in the TypoScript recursively
-            // Workaround because of bug: $splitConf[$key]['itemRendering.']
-            // will be changed, but it should not!
-          $serialized_conf  = serialize( $conf );
-          $coa_conf         = $this->cObj->substituteMarkerInObject
-                              (
-                                $conf,
-                                $marker
-                              );
-          $conf = unserialize( $serialized_conf );
-            // Replace the marker in the TypoScript recursively
-
             // Replace the URL, if there is a tx_browser_pi1 configuration
-          $arr_filelinks = $this->helper_replace_url( $content, $coa_conf, $key, $fileName );
+          $arr_filelinks = $this->helper_replace_url( $content, $conf, $key, $fileName );
 
             // Beautify the links
           $filesData[$key]['linkedFilenameParts'] = $this->beautifyFileLink
@@ -731,8 +714,27 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         }
           // ERROR: prompt. Don't change anything
 
+            // Set marker array
+          $marker['###KEY###']                = $key;
+          $marker['###FILENAME###']           = $fileName;
+            // Set marker array
+
+            // Replace the marker in the TypoScript recursively
+            // Workaround because of bug: $splitConf[$key]['itemRendering.']
+            // will be changed, but it should not!
+          $serialized_conf  = serialize( $conf['linkProc.']['tx_browser_pi1.'] );
+          $coa_conf         = $this->cObj->substituteMarkerInObject
+                              (
+                                $conf,
+                                $marker
+                              );
+          $conf['linkProc.']['tx_browser_pi1.'] = unserialize( $serialized_conf );
+            // Replace the marker in the TypoScript recursively
+
+        $coa_name = $conf['linkProc.']['tx_browser_pi1'];
+
           // Get the tx_browser_pi1 configuration
-        $str_url              = $this->cObj->cObjGetSingle($conf['linkProc.']['tx_browser_pi1'], $conf['linkProc.']['tx_browser_pi1.'] );
+        $str_url              = $this->cObj->cObjGetSingle($coa_name, $coa_conf );
         $arr_link_current[1]  = $str_url;
           // Get the tx_browser_pi1 configuration
 
