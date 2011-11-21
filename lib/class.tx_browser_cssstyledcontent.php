@@ -814,14 +814,14 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $error  = $GLOBALS['TYPO3_DB']->sql_error( );
     if( ! empty( $error ) )
     {
-      if( $this->debugging )
-      {
+//      if( $this->debugging )
+//      {
         $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">'.$this->pObj->pi_getLL('drs_security').'</p>';
         $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
         $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$error.'</p>';
         $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$query.'</p>';
         echo $str_warn.$str_header.$str_prompt;
-      }
+//      }
     }
       // ERROR: debug report in the frontend
 
@@ -830,8 +830,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     {
       if( $this->pObj->b_drs_error )
       {
-        t3lib_div::devlog('[ERROR/SQL] '.$query,  $this->pObj->extKey, 3);
-        t3lib_div::devlog('[ERROR/SQL] '.$error,  $this->pObj->extKey, 3);
+        t3lib_div::devlog('[ERROR/SQL] '. $query,  $this->pObj->extKey, 3);
+        t3lib_div::devlog('[ERROR/SQL] '. $error,  $this->pObj->extKey, 3);
       }
     }
       // DRS - Development Reporting System
