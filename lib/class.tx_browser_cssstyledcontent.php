@@ -711,23 +711,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Replace the URL: there is a tx_browser_pi1 configuration
     if( isset( $conf['linkProc.']['tx_browser_pi1'] ) )
     {
-        // Loop the links (with and without icon)
-      foreach( $arr_filelinks as $key_filelinks => $value_filelinks)
-      {
-          // Current link
-        $arr_link_current = explode( '"', $arr_filelinks[$key_filelinks]);
-
-          // ERROR: prompt. Don't change anything
-        if( $arr_link_current[0] != '<a href=' )
-        {
-          echo 'TYPO3-Browser ERROR:<br />' .
-            'First element of the current array has to be "<a href=" but it is "'. $arr_link_current[0] . '"<br />' .
-            'TypoScript configuration will be ignored.<br />' .
-            __METHOD__ . ' (' . __LINE__ . ')';
-          continue;
-        }
-          // ERROR: prompt. Don't change anything
-
           // Set marker array
         $marker['###KEY###']                = $key;
         $marker['###FILENAME###']           = $fileName;
@@ -746,6 +729,23 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           // Replace the marker in the TypoScript recursively
 
         $coa_name = $conf['linkProc.']['tx_browser_pi1'];
+
+        // Loop the links (with and without icon)
+      foreach( $arr_filelinks as $key_filelinks => $value_filelinks)
+      {
+          // Current link
+        $arr_link_current = explode( '"', $arr_filelinks[$key_filelinks]);
+
+          // ERROR: prompt. Don't change anything
+        if( $arr_link_current[0] != '<a href=' )
+        {
+          echo 'TYPO3-Browser ERROR:<br />' .
+            'First element of the current array has to be "<a href=" but it is "'. $arr_link_current[0] . '"<br />' .
+            'TypoScript configuration will be ignored.<br />' .
+            __METHOD__ . ' (' . __LINE__ . ')';
+          continue;
+        }
+          // ERROR: prompt. Don't change anything
 
           // Get the tx_browser_pi1 configuration
         $str_url              = $this->cObj->cObjGetSingle($coa_name, $coa_conf );
