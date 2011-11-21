@@ -460,6 +460,38 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //                                                        );
 // dwildt, 111106, -
 // dwildt, 111106, +
+
+          // Set marker array
+        $flag = $GLOBALS['TSFE']->lang;
+        if( empty( $flag ) )
+        {
+          $flag = 'gb';
+        }
+        $marker                             = null;
+        $marker['###SYS_LANGUAGE.FLAG###']  = 'gb';
+        $marker['###SYS_LANGUAGE.TITLE###'] = 'Any language is configured';
+        if( isset ( $llRows[$flag] ) )
+        {
+          $marker['###SYS_LANGUAGE.FLAG###']  = $llRows[$flag]['flag'];
+          $marker['###SYS_LANGUAGE.TITLE###'] = $llRows[$flag]['title'];
+        }
+        $marker['###KEY###']                = $key;
+        $marker['###FILENAME###']           = $fileName;
+        $marker['###TT_CONTENT.UID###']     = $cR_uid;
+          // Set marker array
+
+          // Replace the marker in the TypoScript recursively
+          // Workaround because of bug: $splitConf[$key]['itemRendering.']
+          // will be changed, but it should not!
+        $serialized_conf  = serialize( $conf );
+        $coa_conf         = $this->cObj->substituteMarkerInObject
+                            (
+                              $conf,
+                              $marker
+                            );
+        $conf = unserialize( $serialized_conf );
+          // Replace the marker in the TypoScript recursively
+
             // Replace the URL, if there is a tx_browser_pi1 configuration
           $arr_filelinks = $this->helper_replace_url( $content, $conf, $key, $fileName );
 
