@@ -493,7 +493,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           // Replace the marker in the TypoScript recursively
 
             // Replace the URL, if there is a tx_browser_pi1 configuration
-          $arr_filelinks = $this->helper_replace_url( $content, $conf, $key, $fileName );
+          $arr_filelinks = $this->helper_replace_url( $content, $coa_conf, $key, $fileName );
 
             // Beautify the links
           $filesData[$key]['linkedFilenameParts'] = $this->beautifyFileLink
