@@ -430,6 +430,18 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $marker['###TT_CONTENT.UID###']     = $cR_uid;
         // Set marker array
 
+        // Replace the marker in the TypoScript recursively
+        // Workaround because of bug: $splitConf[$key]['itemRendering.']
+        // will be changed, but it should not!
+      //$serialized_conf  = serialize( $splitConf[$key]['itemRendering.'] );
+      $conf         = $this->cObj->substituteMarkerInObject
+                          (
+                            $conf,
+                            $marker
+                          );
+      //$splitConf[$key]['itemRendering.'] = unserialize( $serialized_conf );
+        // Replace the marker in the TypoScript recursively
+
         // Get configured languages
       $llRows = $this->objLocalise->sql_getLanguages( );
         // dwildt, 111110, +
