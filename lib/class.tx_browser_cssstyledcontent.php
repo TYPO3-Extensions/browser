@@ -277,12 +277,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // Render the $conf
       $llOut = $this->render_uploads_per_language( $content, $coa_conf );
       
-    $this->str_developer_csvIp = '87.177.85.92';
-    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $coa_conf['linkProc.']['tx_browser_pi1.']['typolink.']['additionalParams'] );
-    }
+$this->str_developer_csvIp = '87.177.85.92';
+$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $coa_conf['linkProc.']['tx_browser_pi1.']['typolink.']['additionalParams'] );
+}
 
         // Concatenate the localized output
       $out = $out . $llOut;
@@ -500,7 +500,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 // dwildt, 111106, +
 
             // Replace the URL, if there is a tx_browser_pi1 configuration
-          $arr_filelinks = $this->helper_replace_url( $content, $conf, $key, $fileName );
+          $arr_filelinks = $this->helper_replace_url( $conf, $key, $fileName );
 
             // Beautify the links
           $filesData[$key]['linkedFilenameParts'] = $this->beautifyFileLink
@@ -701,14 +701,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   /**
    * helper_replace_url( ):  This method replaces the url in an HTML link.
    *
-   * @param       string          $content:   Content input. Not used, ignore.
    * @param       array           $conf:      TypoScript configuration
    * @param       array           $key:       Position of current document
    * @param       array           $fileName:  Filename of current document
    * @return      string          Replaced URL
    * @access private
    */
-  private function helper_replace_url( $content, $conf, $key, $fileName )
+  private function helper_replace_url( $conf, $key, $fileName )
   {
       // Link the current file with and without an icon (two links)
     $str_filelinks = $this->cObj->filelink( $fileName, $conf['linkProc.'] );
@@ -736,6 +735,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // Replace the marker in the TypoScript recursively
 
       $coa_name = $conf['linkProc.']['tx_browser_pi1'];
+
+$this->str_developer_csvIp = '87.177.85.92';
+$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $coa_conf['typolink.']['additionalParams'] );
+}
 
         // Loop the links (with and without icon)
       foreach( $arr_filelinks as $key_filelinks => $value_filelinks)
