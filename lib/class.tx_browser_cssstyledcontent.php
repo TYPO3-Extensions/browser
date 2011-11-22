@@ -733,6 +733,12 @@ if ( ! ( $pos === false ) )
 
           // Get the tx_browser_pi1 configuration
         $str_url              = $this->cObj->cObjGetSingle($coa_name, $coa_conf );
+$this->str_developer_csvIp = '87.177.91.252';
+$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_filelinks );
+}
         $arr_link_current[1]  = $str_url;
           // Get the tx_browser_pi1 configuration
 
