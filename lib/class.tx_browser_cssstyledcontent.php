@@ -290,12 +290,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // Render the $conf
       $llOut = $this->render_uploads_per_language( $content, $coa_conf );
       
-$this->str_developer_csvIp = '87.177.85.92';
-$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $coa_conf['linkProc.']['tx_browser_pi1.']['typolink.']['additionalParams'] );
-}
+//$this->str_developer_csvIp = '87.177.85.92';
+//$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//if ( ! ( $pos === false ) )
+//{
+//  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $coa_conf['linkProc.']['tx_browser_pi1.']['typolink.']['additionalParams'] );
+//}
 
         // Concatenate the localized output
       $out = $out . $llOut;
