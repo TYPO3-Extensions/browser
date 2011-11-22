@@ -689,7 +689,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Workaround because of bug: $splitConf[$key]['itemRendering.']
       // will be changed, but it should not!
     $serialized_conf    = serialize( $conf['linkProc.'] );
-    $coa_conf           = $this->cObj->substituteMarkerInObject
+    $coa_confLinkProc   = $this->cObj->substituteMarkerInObject
                           (
                             $conf['linkProc.']['tx_browser_pi1.'],
                             $marker
@@ -697,33 +697,37 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $conf['linkProc.']  = unserialize( $serialized_conf );
       // Replace the marker in the TypoScript recursively
 
-    if( ! isset( $coa_conf['tx_browser_pi1'] ) )
+    if( ! isset( $coa_confLinkProc['tx_browser_pi1'] ) )
     {
         // Link the current file with and without an icon (two links)
-      $str_filelinks = $this->cObj->filelink( $fileName, $coa_conf );
+      $str_filelinks = $this->cObj->filelink( $fileName, $coa_confLinkProc );
         // Devide the two rendered links from a string to two elements
       list( $arr_filelinks[0], $arr_filelinks[1] ) = explode( '//**//', $str_filelinks );
+$this->str_developer_csvIp = '87.177.91.252';
+$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_filelinks );
+}
       return ( $arr_filelinks );
     }
 
-//$this->str_developer_csvIp = '87.177.91.252';
-//$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if ( ! ( $pos === false ) )
-//{
-//  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_filelinks );
-//}
 
 
-    $str_filelinks              = $this->cObj->cObjGetSingle($coa_conf['tx_browser_pi1'], $coa_conf['tx_browser_pi1.'] );
+    $str_filelinks =  $this->cObj->cObjGetSingle
+                      (
+                        $coa_confLinkProc['tx_browser_pi1'],
+                        $coa_confLinkProc['tx_browser_pi1.']
+                      );
       // Devide the two rendered links from a string to two elements
     list( $arr_filelinks[0], $arr_filelinks[1] ) = explode( '//**//', $str_filelinks );
 
-//$this->str_developer_csvIp = '87.177.91.252';
-//$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if ( ! ( $pos === false ) )
-//{
-//  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_filelinks );
-//}
+$this->str_developer_csvIp = '87.177.91.252';
+$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_filelinks );
+}
 
     return ( $arr_filelinks );
   }
