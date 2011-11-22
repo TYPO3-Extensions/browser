@@ -266,16 +266,16 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
         // Replace the marker in the TypoScript recursively
         // Workaround because of bug: $userFunc_conf will be changed, but it should not!
-      $serialized_conf  = serialize( $conf );
-      $coa_conf         = $this->cObj->substituteMarkerInObject( $conf, $marker );
-      $conf             = unserialize( $serialized_conf );
+      $serialized_conf  = serialize( $userFunc_conf );
+      $coa_conf         = $this->cObj->substituteMarkerInObject( $userFunc_conf, $marker );
+      $userFunc_conf    = unserialize( $serialized_conf );
         // Replace the marker in the TypoScript recursively
 
         // Update the linkVars
       $GLOBALS['TSFE']->linkVars = '&L=' . $llRows[$flag]['uid'] . $str_linkVarsWoL;
 
         // Render the $conf
-      $llOut = $this->render_uploads_per_language( $content, $coa_conf );
+      $llOut = $this->render_uploads_per_language( $content, $userFunc_conf );
       
         // Concatenate the localized output
       $out = $out . $llOut;
