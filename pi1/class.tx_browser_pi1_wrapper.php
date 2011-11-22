@@ -1203,8 +1203,12 @@ class tx_browser_pi1_wrapper
       //                    #29042
     $uidPlugin      = 'c' . $this->pObj->cObj->data['uid'];
     $local_prefixId = str_replace('_', '-', $this->pObj->prefixId);
-    $id             = ' id="' . $uidPlugin . '-' . $local_prefixId . '-' . $this->pObj->view . '-' . $this->pObj->piVar_mode . '"';
-    $class          = ' class="' . $local_prefixId . ' ' . $uidPlugin . '-' . $local_prefixId . '-' . $this->pObj->view . '"';
+    $id             = ' id="' .
+                      $uidPlugin . '-' . $local_prefixId . '-' . $this->pObj->view . '-' . $this->pObj->piVar_mode . '"';
+    $class          = ' class="' . 
+                      $local_prefixId . ' ' .
+                      $local_prefixId . '-' . $this->pObj->view . ' ' .
+                      $uidPlugin . '-' . $local_prefixId . '-' . $this->pObj->view . '"';
     
     $wrap['start']  = '<div' . $id . $class . '>';
     $wrap['end']    = '</div>';
