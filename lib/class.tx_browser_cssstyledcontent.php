@@ -266,16 +266,16 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
         // Replace the marker in the TypoScript recursively
         // Workaround because of bug: $userFunc_conf will be changed, but it should not!
-      $serialized_conf  = serialize( $userFunc_conf );
-      $conf             = $this->cObj->substituteMarkerInObject( $userFunc_conf, $marker );
-      $userFunc_conf    = unserialize( $serialized_conf );
+      $serialized_conf  = serialize( $conf );
+      $coa_conf         = $this->cObj->substituteMarkerInObject( $conf, $marker );
+      $conf             = unserialize( $serialized_conf );
         // Replace the marker in the TypoScript recursively
 
         // Update the linkVars
       $GLOBALS['TSFE']->linkVars = '&L=' . $llRows[$flag]['uid'] . $str_linkVarsWoL;
 
         // Render the $conf
-      $llOut = $this->render_uploads_per_language( $content, $conf );
+      $llOut = $this->render_uploads_per_language( $content, $coa_conf );
       
         // Concatenate the localized output
       $out = $out . $llOut;
@@ -711,24 +711,24 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Replace the URL: there is a tx_browser_pi1 configuration
     if( isset( $conf['linkProc.']['tx_browser_pi1'] ) )
     {
-          // Set marker array
-        $marker['###KEY###']                = $key;
-        $marker['###FILENAME###']           = $fileName;
-          // Set marker array
+        // Set marker array
+      $marker['###KEY###']                = $key;
+      $marker['###FILENAME###']           = $fileName;
+        // Set marker array
 
-          // Replace the marker in the TypoScript recursively
-          // Workaround because of bug: $splitConf[$key]['itemRendering.']
-          // will be changed, but it should not!
-        $serialized_conf  = serialize( $conf['linkProc.']['tx_browser_pi1.'] );
-        $coa_conf         = $this->cObj->substituteMarkerInObject
-                            (
-                              $conf['linkProc.']['tx_browser_pi1.'],
-                              $marker
-                            );
-        $conf['linkProc.']['tx_browser_pi1.'] = unserialize( $serialized_conf );
-          // Replace the marker in the TypoScript recursively
+        // Replace the marker in the TypoScript recursively
+        // Workaround because of bug: $splitConf[$key]['itemRendering.']
+        // will be changed, but it should not!
+      $serialized_conf  = serialize( $conf['linkProc.']['tx_browser_pi1.'] );
+      $coa_conf         = $this->cObj->substituteMarkerInObject
+                          (
+                            $conf['linkProc.']['tx_browser_pi1.'],
+                            $marker
+                          );
+      $conf['linkProc.']['tx_browser_pi1.'] = unserialize( $serialized_conf );
+        // Replace the marker in the TypoScript recursively
 
-        $coa_name = $conf['linkProc.']['tx_browser_pi1'];
+      $coa_name = $conf['linkProc.']['tx_browser_pi1'];
 
         // Loop the links (with and without icon)
       foreach( $arr_filelinks as $key_filelinks => $value_filelinks)
