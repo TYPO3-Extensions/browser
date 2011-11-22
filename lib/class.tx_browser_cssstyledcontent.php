@@ -471,7 +471,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 // dwildt, 111106, +
 
             // Replace the URL, if there is a tx_browser_pi1 configuration
-          $arr_filelinks = $this->helper_replace_url( $conf, $key, $fileName );
+          $arr_filelinks = $this->helper_browser_linkProc( $conf, $key, $fileName );
 
             // Beautify the links
           $filesData[$key]['linkedFilenameParts'] = $this->beautifyFileLink
@@ -587,6 +587,90 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
 
+
+
+
+
+
+  /**
+   * helper_browser_linkProc( ):  This method handles the linkProc configuration
+   *                              If linkProc has an element tx_browser_pi1, this element
+   *                              will rendered instead of the default linkProc configuration
+   *
+   * @param       array           $conf:      TypoScript configuration
+   * @param       array           $key:       Position of current document
+   * @param       array           $fileName:  Filename of current document
+   * @return      string          Replaced URL
+   * @access private
+   */
+  private function helper_browser_linkProc( $conf, $key, $fileName )
+  {
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Replace markers
+
+      // Set marker array
+    $marker['###KEY###']                = $key;
+    $marker['###FILENAME###']           = $fileName;
+      // Set marker array
+
+      // Replace the marker in the TypoScript recursively
+      // Workaround because of bug: $splitConf[$key]['itemRendering.']
+      // will be changed, but it should not!
+    $serialized_conf    = serialize( $conf['linkProc.'] );
+    $coa_confLinkProc   = $this->cObj->substituteMarkerInObject
+                          (
+                            $conf['linkProc.'],
+                            $marker
+                          );
+    $conf['linkProc.']  = unserialize( $serialized_conf );
+      // Replace the marker in the TypoScript recursively
+      // Replace markers
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN by handling the default linkProc configuration array
+
+    if( ! isset( $coa_confLinkProc['tx_browser_pi1'] ) )
+    {
+        // Link the current file with and without an icon (two links)
+      $str_filelinks = $this->cObj->filelink( $fileName, $coa_confLinkProc );
+        // Devide the two rendered links from a string to two elements
+      list( $arr_filelinks[0], $arr_filelinks[1] ) = explode( '//**//', $str_filelinks );
+        // RETURN the result
+      return ( $arr_filelinks );
+    }
+      // RETURN by handling the default linkProc configuration array
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN by handling the tx_browser_pi1 linkProc configuration array
+
+    $str_filelinks =  $this->cObj->cObjGetSingle
+                      (
+                        $coa_confLinkProc['tx_browser_pi1'],
+                        $coa_confLinkProc['tx_browser_pi1.']
+                      );
+      // Devide the two rendered links from a string to two elements
+    list( $arr_filelinks[0], $arr_filelinks[1] ) = explode( '//**//', $str_filelinks );
+        // RETURN the result
+    return ( $arr_filelinks );
+      // RETURN by handling the tx_browser_pi1 linkProc configuration array
+  }
+
+
+
+
+
+
+
+
+
+  
   /**
    * helper_linkVarsWoL( ): Remove parameter 'L' from linkVars
    *
@@ -660,166 +744,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $prompt_02 = 'Change it: Please look for userFunc = tx_browser_cssstyledcontent->render_uploads and for userFunc.drs.';
     t3lib_div::devlog('[INFO/DRS] ' . $prompt_01, $this->extKey, 0);
     t3lib_div::devlog('[HELP/DRS] ' . $prompt_02, $this->extKey, 1);
-  }
-
-
-
-
-
-
-
-
-  /**
-   * helper_replace_url( ):  This method replaces the url in an HTML link.
-   *
-   * @param       array           $conf:      TypoScript configuration
-   * @param       array           $key:       Position of current document
-   * @param       array           $fileName:  Filename of current document
-   * @return      string          Replaced URL
-   * @access private
-   */
-  private function helper_replace_url( $conf, $key, $fileName )
-  {
-      // Set marker array
-    $marker['###KEY###']                = $key;
-    $marker['###FILENAME###']           = $fileName;
-      // Set marker array
-
-      // Replace the marker in the TypoScript recursively
-      // Workaround because of bug: $splitConf[$key]['itemRendering.']
-      // will be changed, but it should not!
-    $serialized_conf    = serialize( $conf['linkProc.'] );
-    $coa_confLinkProc   = $this->cObj->substituteMarkerInObject
-                          (
-                            $conf['linkProc.'],
-                            $marker
-                          );
-    $conf['linkProc.']  = unserialize( $serialized_conf );
-      // Replace the marker in the TypoScript recursively
-
-    if( ! isset( $coa_confLinkProc['tx_browser_pi1'] ) )
-    {
-        // Link the current file with and without an icon (two links)
-      $str_filelinks = $this->cObj->filelink( $fileName, $coa_confLinkProc );
-        // Devide the two rendered links from a string to two elements
-      list( $arr_filelinks[0], $arr_filelinks[1] ) = explode( '//**//', $str_filelinks );
-$this->str_developer_csvIp = '87.177.91.252';
-$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_filelinks );
-}
-      return ( $arr_filelinks );
-    }
-
-
-
-    $str_filelinks =  $this->cObj->cObjGetSingle
-                      (
-                        $coa_confLinkProc['tx_browser_pi1'],
-                        $coa_confLinkProc['tx_browser_pi1.']
-                      );
-      // Devide the two rendered links from a string to two elements
-    list( $arr_filelinks[0], $arr_filelinks[1] ) = explode( '//**//', $str_filelinks );
-
-$this->str_developer_csvIp = '87.177.91.252';
-$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_filelinks );
-}
-
-    return ( $arr_filelinks );
-  }
-
-
-
-
-
-
-
-
-  /**
-   * helper_replace_url( ):  This method replaces the url in an HTML link.
-   *
-   * @param       array           $conf:      TypoScript configuration
-   * @param       array           $key:       Position of current document
-   * @param       array           $fileName:  Filename of current document
-   * @return      string          Replaced URL
-   * @access private
-   */
-  private function XXX_helper_replace_url( $conf, $key, $fileName )
-  {
-      // Link the current file with and without an icon (two links)
-    $str_filelinks = $this->cObj->filelink( $fileName, $conf['linkProc.'] );
-    // Devide the two rendered links from a string to two elements
-    list( $arr_filelinks[0], $arr_filelinks[1] ) = explode( '//**//', $str_filelinks );
-
-$this->str_developer_csvIp = '87.177.91.252';
-$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_filelinks );
-}
-
-      // Replace the URL: there is a tx_browser_pi1 configuration
-    if( isset( $conf['linkProc.']['tx_browser_pi1'] ) )
-    {
-        // Set marker array
-      $marker['###KEY###']                = $key;
-      $marker['###FILENAME###']           = $fileName;
-        // Set marker array
-
-        // Replace the marker in the TypoScript recursively
-        // Workaround because of bug: $splitConf[$key]['itemRendering.']
-        // will be changed, but it should not!
-      $serialized_conf  = serialize( $conf['linkProc.']['tx_browser_pi1.'] );
-      $coa_conf         = $this->cObj->substituteMarkerInObject
-                          (
-                            $conf['linkProc.']['tx_browser_pi1.'],
-                            $marker
-                          );
-      $conf['linkProc.']['tx_browser_pi1.'] = unserialize( $serialized_conf );
-        // Replace the marker in the TypoScript recursively
-
-      $coa_name = $conf['linkProc.']['tx_browser_pi1'];
-
-        // Loop the links (with and without icon)
-      foreach( $arr_filelinks as $key_filelinks => $value_filelinks)
-      {
-          // Current link
-        $arr_link_current = explode( '"', $arr_filelinks[$key_filelinks]);
-
-          // ERROR: prompt. Don't change anything
-        if( $arr_link_current[0] != '<a href=' )
-        {
-          echo 'TYPO3-Browser ERROR:<br />' .
-            'First element of the current array has to be "<a href=" but it is "'. $arr_link_current[0] . '"<br />' .
-            'TypoScript configuration will be ignored.<br />' .
-            __METHOD__ . ' (' . __LINE__ . ')';
-          continue;
-        }
-          // ERROR: prompt. Don't change anything
-
-          // Get the tx_browser_pi1 configuration
-        $str_url              = $this->cObj->cObjGetSingle($coa_name, $coa_conf );
-$this->str_developer_csvIp = '87.177.91.252';
-$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_filelinks );
-}
-        $arr_link_current[1]  = $str_url;
-          // Get the tx_browser_pi1 configuration
-
-          // Update the current rendered link
-        $arr_filelinks[$key_filelinks]  = implode( '"', $arr_link_current);
-      }
-        // Loop the links (with and without icon)
-    }
-      // Replace the URL: there is a tx_browser_pi1 configuration
-
-    return ( $arr_filelinks );
   }
 
 
