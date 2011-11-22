@@ -680,6 +680,73 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
    */
   private function helper_replace_url( $conf, $key, $fileName )
   {
+    if( ! isset( $conf['linkProc.']['tx_browser_pi1'] ) )
+    {
+        // Link the current file with and without an icon (two links)
+      $str_filelinks = $this->cObj->filelink( $fileName, $conf['linkProc.'] );
+        // Devide the two rendered links from a string to two elements
+      list( $arr_filelinks[0], $arr_filelinks[1] ) = explode( '//**//', $str_filelinks );
+      return ( $arr_filelinks );
+    }
+
+$this->str_developer_csvIp = '87.177.91.252';
+$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_filelinks );
+}
+
+      // Set marker array
+    $marker['###KEY###']                = $key;
+    $marker['###FILENAME###']           = $fileName;
+      // Set marker array
+
+      // Replace the marker in the TypoScript recursively
+      // Workaround because of bug: $splitConf[$key]['itemRendering.']
+      // will be changed, but it should not!
+    $serialized_conf  = serialize( $conf['linkProc.']['tx_browser_pi1.'] );
+    $coa_conf         = $this->cObj->substituteMarkerInObject
+                        (
+                          $conf['linkProc.']['tx_browser_pi1.'],
+                          $marker
+                        );
+    $conf['linkProc.']['tx_browser_pi1.'] = unserialize( $serialized_conf );
+      // Replace the marker in the TypoScript recursively
+
+    $coa_name = $conf['linkProc.']['tx_browser_pi1'];
+
+    $str_filelinks              = $this->cObj->cObjGetSingle($coa_name, $coa_conf );
+      // Devide the two rendered links from a string to two elements
+    list( $arr_filelinks[0], $arr_filelinks[1] ) = explode( '//**//', $str_filelinks );
+
+$this->str_developer_csvIp = '87.177.91.252';
+$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_filelinks );
+}
+
+    return ( $arr_filelinks );
+  }
+
+
+
+
+
+
+
+
+  /**
+   * helper_replace_url( ):  This method replaces the url in an HTML link.
+   *
+   * @param       array           $conf:      TypoScript configuration
+   * @param       array           $key:       Position of current document
+   * @param       array           $fileName:  Filename of current document
+   * @return      string          Replaced URL
+   * @access private
+   */
+  private function XXX_helper_replace_url( $conf, $key, $fileName )
+  {
       // Link the current file with and without an icon (two links)
     $str_filelinks = $this->cObj->filelink( $fileName, $conf['linkProc.'] );
     // Devide the two rendered links from a string to two elements
