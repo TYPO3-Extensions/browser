@@ -273,17 +273,15 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // Set data of the localised record as a marker array
       $marker                             = null;
       $marker                             = $this->sql_marker( $select, $table, $llUid );
-      list( $cR_table, $cR_uid)           = explode( ':', $GLOBALS['TSFE']->currentRecord );
-      $marker['###TT_CONTENT.UID###']     = $cR_uid;
       $marker['###SYS_LANGUAGE.FLAG###']  = $llRows[$flag]['flag'];
       $marker['###SYS_LANGUAGE.TITLE###'] = $llRows[$flag]['title'];
         // Set data of the localised record as a marker array
 
         // Replace the marker in the TypoScript recursively
         // Workaround because of bug: $userFunc_conf will be changed, but it should not!
-      $serialized_conf  = serialize( $userFunc_conf );
-      $coa_conf         = $this->cObj->substituteMarkerInObject( $userFunc_conf, $marker );
-      $userFunc_conf    = unserialize( $serialized_conf );
+      $serialized_conf  = serialize( $conf['userFunc.']['conf.'] );
+      $coa_conf         = $this->cObj->substituteMarkerInObject( $conf['userFunc.']['conf.'], $marker );
+      $conf['userFunc.']['conf.']    = unserialize( $serialized_conf );
         // Replace the marker in the TypoScript recursively
 
       // Update the linkVars
