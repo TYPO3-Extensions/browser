@@ -730,6 +730,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Replace the URL: there is a tx_browser_pi1 configuration
     if( isset( $conf['linkProc.']['tx_browser_pi1'] ) )
     {
+$this->str_developer_csvIp = '87.177.85.92';
+$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf['linkProc.']['tx_browser_pi1.']['typolink.']['additionalParams'] );
+}
         // Set marker array
       $marker['###KEY###']                = $key;
       $marker['###FILENAME###']           = $fileName;
