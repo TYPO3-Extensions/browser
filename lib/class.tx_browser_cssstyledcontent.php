@@ -145,6 +145,21 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
 
+        // Set data of the localised record as a marker array
+      $marker                             = null;
+      list( $cR_table, $cR_uid)           = explode( ':', $GLOBALS['TSFE']->currentRecord );
+      $marker['###TT_CONTENT.UID###']     = $cR_uid;
+        // Set data of the localised record as a marker array
+
+        // Replace the marker in the TypoScript recursively
+        // Workaround because of bug: $userFunc_conf will be changed, but it should not!
+      //$serialized_conf  = serialize( $conf );
+      $conf         = $this->cObj->substituteMarkerInObject( $conf, $marker );
+      //$conf             = unserialize( $serialized_conf );
+        // Replace the marker in the TypoScript recursively
+
+
+      
       //////////////////////////////////////////////////////////////////////////
       //
       // RETURN the filelink for the current language only
