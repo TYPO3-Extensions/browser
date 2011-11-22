@@ -145,18 +145,15 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
 
-        // Set data of the localised record as a marker array
-      $marker                             = null;
-      list( $cR_table, $cR_uid)           = explode( ':', $GLOBALS['TSFE']->currentRecord );
-      $marker['###TT_CONTENT.UID###']     = $cR_uid;
-        // Set data of the localised record as a marker array
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Set tt_content.uid
 
-        // Replace the marker in the TypoScript recursively
-        // Workaround because of bug: $userFunc_conf will be changed, but it should not!
-      //$serialized_conf  = serialize( $conf );
-      $conf         = $this->cObj->substituteMarkerInObject( $conf, $marker );
-      //$conf             = unserialize( $serialized_conf );
-        // Replace the marker in the TypoScript recursively
+    $marker                         = null;
+    list( $cR_table, $cR_uid)       = explode( ':', $GLOBALS['TSFE']->currentRecord );
+    $marker['###TT_CONTENT.UID###'] = $cR_uid;
+    $conf                           = $this->cObj->substituteMarkerInObject( $conf, $marker );
+      // Set tt_content.uid
 
 
       
@@ -279,9 +276,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
         // Replace the marker in the TypoScript recursively
         // Workaround because of bug: $userFunc_conf will be changed, but it should not!
-      $serialized_conf  = serialize( $conf['userFunc.']['conf.'] );
-      $coa_conf         = $this->cObj->substituteMarkerInObject( $conf['userFunc.']['conf.'], $marker );
-      $conf['userFunc.']['conf.']    = unserialize( $serialized_conf );
+      $serialized_conf            = serialize( $conf['userFunc.']['conf.'] );
+      $coa_conf                   = $this->cObj->substituteMarkerInObject( $conf['userFunc.']['conf.'], $marker );
+      $conf['userFunc.']['conf.'] = unserialize( $serialized_conf );
         // Replace the marker in the TypoScript recursively
 
       // Update the linkVars
@@ -290,13 +287,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // Render the $conf
       $llOut = $this->render_uploads_per_language( $content, $coa_conf );
       
-//$this->str_developer_csvIp = '87.177.85.92';
-//$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if ( ! ( $pos === false ) )
-//{
-//  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $coa_conf['linkProc.']['tx_browser_pi1.']['typolink.']['additionalParams'] );
-//}
-
         // Concatenate the localized output
       $out = $out . $llOut;
     }
@@ -432,38 +422,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       }
 
         // dwildt, 111110, +
-        // Get table.uid
-//      list( $cR_table, $cR_uid) = explode( ':', $GLOBALS['TSFE']->currentRecord );
-
-//        // Set marker array
-//      $flag = $GLOBALS['TSFE']->lang;
-//      if( empty( $flag ) )
-//      {
-//        $flag = 'gb';
-//      }
-//      $marker                             = null;
-//      $marker['###SYS_LANGUAGE.FLAG###']  = 'gb';
-//      $marker['###SYS_LANGUAGE.TITLE###'] = 'Any language is configured';
-//      if( isset ( $llRows[$flag] ) )
-//      {
-//        $marker['###SYS_LANGUAGE.FLAG###']  = $llRows[$flag]['flag'];
-//        $marker['###SYS_LANGUAGE.TITLE###'] = $llRows[$flag]['title'];
-//      }
-//      $marker['###TT_CONTENT.UID###']     = $cR_uid;
-//        // Set marker array
-//
-//        // Replace the marker in the TypoScript recursively
-//        // Workaround because of bug: $splitConf[$key]['itemRendering.']
-//        // will be changed, but it should not!
-//      //$serialized_conf  = serialize( $splitConf[$key]['itemRendering.'] );
-//      $conf         = $this->cObj->substituteMarkerInObject
-//                          (
-//                            $conf,
-//                            $marker
-//                          );
-//      //$splitConf[$key]['itemRendering.'] = unserialize( $serialized_conf );
-//        // Replace the marker in the TypoScript recursively
-
         // Get configured languages
       $llRows = $this->objLocalise->sql_getLanguages( );
         // dwildt, 111110, +
@@ -730,12 +688,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Replace the URL: there is a tx_browser_pi1 configuration
     if( isset( $conf['linkProc.']['tx_browser_pi1'] ) )
     {
-$this->str_developer_csvIp = '87.177.85.92';
-$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $conf['linkProc.']['tx_browser_pi1.']['typolink.']['additionalParams'] );
-}
         // Set marker array
       $marker['###KEY###']                = $key;
       $marker['###FILENAME###']           = $fileName;
@@ -754,13 +706,6 @@ if ( ! ( $pos === false ) )
         // Replace the marker in the TypoScript recursively
 
       $coa_name = $conf['linkProc.']['tx_browser_pi1'];
-
-$this->str_developer_csvIp = '87.177.85.92';
-$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $coa_conf['typolink.']['additionalParams'] );
-}
 
         // Loop the links (with and without icon)
       foreach( $arr_filelinks as $key_filelinks => $value_filelinks)
