@@ -275,7 +275,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $GLOBALS['TSFE']->linkVars = '&L=' . $llRows[$flag]['uid'] . $str_linkVarsWoL;
 
         // Render the $conf
-      $llOut = $this->render_uploads_per_language( $content, $userFunc_conf );
+      $llOut = $this->render_uploads_per_language( $content, $coa_conf );
       
         // Concatenate the localized output
       $out = $out . $llOut;
