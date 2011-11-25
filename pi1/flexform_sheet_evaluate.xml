@@ -2,7 +2,7 @@
 <T3DataStructure>
   <ROOT>
     <TCEforms>
-      <sheetTitle>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate</sheetTitle>
+      <sheetTitle>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate</sheetTitle>
     </TCEforms>
     <type>array</type>
     <el>
@@ -18,12 +18,12 @@
       <dontUseDRS>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.dontUseDRS.label</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.dontUseDRS.label</label>
           <config>
             <type>check</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.dontUseDRS.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.dontUseDRS.0</numIndex>
               </numIndex>
             </items>
           </config>
@@ -32,12 +32,12 @@
       <debugJSS>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.debugJSS.label</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.debugJSS.label</label>
           <config>
             <type>check</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.debugJSS.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.debugJSS.0</numIndex>
               </numIndex>
             </items>
           </config>
@@ -46,16 +46,16 @@
       <handle_marker>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.handle_marker</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.handle_marker</label>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.handle_marker.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.handle_marker.0</numIndex>
                 <numIndex index="1">remove_empty_markers</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_evaluate.handle_marker.1</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.handle_marker.1</numIndex>
                 <numIndex index="1">none</numIndex>
               </numIndex>
             </items>

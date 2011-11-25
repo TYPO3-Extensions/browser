@@ -2,27 +2,27 @@
 <T3DataStructure>
   <ROOT>
     <TCEforms>
-      <sheetTitle>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle</sheetTitle>
+      <sheetTitle>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle</sheetTitle>
     </TCEforms>
     <type>array</type>
     <el>
       <display_listview>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.display_listview</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.display_listview</label>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.display_listview.no</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.display_listview.no</numIndex>
                 <numIndex index="1">no</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.display_listview.yes</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.display_listview.yes</numIndex>
                 <numIndex index="1">yes</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.display_listview.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.display_listview.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
@@ -35,21 +35,21 @@
       <record_browser>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.disabled</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.disabled</numIndex>
                 <numIndex index="1">disabled</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.by_flexform</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.by_flexform</numIndex>
                 <numIndex index="1">by_flexform</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
@@ -62,14 +62,14 @@
       <record_browser.tutorial>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.tutorial</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.tutorial</label>
           <displayCond>FIELD:record_browser:=:by_flexform</displayCond>
           <config>
             <type>check</type>
             <cols>1</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.tutorial.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.tutorial.0</numIndex>
                 <numIndex index="1">0</numIndex>
               </numIndex>
             </items>
@@ -79,21 +79,21 @@
       <record_browser.display.withoutResult>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.withoutResult</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.display.withoutResult</label>
           <displayCond>FIELD:record_browser:=:by_flexform</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.withoutResult.no</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.display.withoutResult.no</numIndex>
                 <numIndex index="1">no</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.withoutResult.yes</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.display.withoutResult.yes</numIndex>
                 <numIndex index="1">yes</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.withoutResult.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.display.withoutResult.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
@@ -106,21 +106,21 @@
       <record_browser.display.buttonsWithoutLink>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.buttonsWithoutLink</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.display.buttonsWithoutLink</label>
           <displayCond>FIELD:record_browser:=:by_flexform</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.buttonsWithoutLink.no</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.display.buttonsWithoutLink.no</numIndex>
                 <numIndex index="1">no</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.buttonsWithoutLink.yes</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.display.buttonsWithoutLink.yes</numIndex>
                 <numIndex index="1">yes</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.buttonsWithoutLink.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.display.buttonsWithoutLink.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
@@ -133,21 +133,21 @@
       <record_browser.display.firstAndLastButton>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.firstAndLastButton</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.display.firstAndLastButton</label>
           <displayCond>FIELD:record_browser:=:by_flexform</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.firstAndLastButton.no</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.display.firstAndLastButton.no</numIndex>
                 <numIndex index="1">no</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.firstAndLastButton.yes</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.display.firstAndLastButton.yes</numIndex>
                 <numIndex index="1">yes</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.display.firstAndLastButton.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.display.firstAndLastButton.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
@@ -160,29 +160,29 @@
       <record_browser.labeling>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.labeling</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.labeling</label>
           <displayCond>FIELD:record_browser:=:by_flexform</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.labeling.chars</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.labeling.chars</numIndex>
                 <numIndex index="1">chars</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.labeling.icons</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.labeling.icons</numIndex>
                 <numIndex index="1">icons</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.labeling.position</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.labeling.position</numIndex>
                 <numIndex index="1">position</numIndex>
               </numIndex>
               <numIndex index="3" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.labeling.text</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.labeling.text</numIndex>
                 <numIndex index="1">text</numIndex>
               </numIndex>
               <numIndex index="4" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_viewSingle.record_browser.labeling.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewSingle.record_browser.labeling.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>

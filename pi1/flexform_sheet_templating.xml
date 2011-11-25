@@ -2,20 +2,20 @@
 <T3DataStructure>
   <ROOT>
     <TCEforms>
-      <sheetTitle>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_templating</sheetTitle>
+      <sheetTitle>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating</sheetTitle>
     </TCEforms>
     <type>array</type>
     <el>
       <template.tutorial>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_templating.template.tutorial</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating.template.tutorial</label>
           <config>
             <type>check</type>
             <cols>1</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_templating.template.tutorial.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating.template.tutorial.0</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
@@ -24,7 +24,7 @@
       </template.tutorial>
       <template>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_templating.template</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating.template</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
@@ -44,7 +44,7 @@
       <path>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_templating.path</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating.path</label>
           <displayCond>FIELD:template:=:adjusted</displayCond>
           <config>
             <type>group</type>
@@ -134,7 +134,7 @@
       <dataQuery>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_templating.dataQuery</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating.dataQuery</label>
           <config>
             <type>select</type>
             <multiple>0</multiple>
@@ -151,13 +151,13 @@
       <wrapBaseClass>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_templating.wrapBaseClass</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating.wrapBaseClass</label>
           <config>
             <type>check</type>
             <cols>1</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_templating.wrapBaseClass.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating.wrapBaseClass.0</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>

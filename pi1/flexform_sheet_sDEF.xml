@@ -2,23 +2,23 @@
 <T3DataStructure>
   <ROOT>
     <TCEforms>
-      <sheetTitle>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF</sheetTitle>
+      <sheetTitle>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF</sheetTitle>
     </TCEforms>
     <type>array</type>
     <el>
       <views>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.views</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.views</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.views.all</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.views.all</numIndex>
                 <numIndex index="1">all</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.views.selected</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.views.selected</numIndex>
                 <numIndex index="1">selected</numIndex>
               </numIndex>
             </items>
@@ -31,22 +31,22 @@
       <viewsTutorial>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.viewsTutorial</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsTutorial</label>
           <displayCond>FIELD:views:=:selected</displayCond>
           <config>
             <type>check</type>
             <cols>1</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.viewsTutorial.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsTutorial.0</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.viewsTutorial.1</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsTutorial.1</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.viewsTutorial.2</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsTutorial.2</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
@@ -56,7 +56,7 @@
       <viewsHandleFromTemplateOnly>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.viewsHandleFromTemplateOnly</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsHandleFromTemplateOnly</label>
           <onChange>reload</onChange>
           <displayCond>FIELD:views:=:selected</displayCond>
           <config>
@@ -64,7 +64,7 @@
             <cols>1</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.viewsHandleFromTemplateOnly.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsHandleFromTemplateOnly.0</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
@@ -75,7 +75,7 @@
       <viewsList>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.viewsList</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsList</label>
           <displayCond>FIELD:views:=:selected</displayCond>
           <config>
             <type>select</type>
@@ -93,7 +93,7 @@
       <viewsSinglePid>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.viewsSinglePid</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsSinglePid</label>
           <displayCond>FIELD:views:=:selected</displayCond>
           <config>
             <type>group</type>
@@ -109,7 +109,7 @@
       <viewsListPid>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.viewsListPid</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsListPid</label>
           <displayCond>FIELD:views:=:selected</displayCond>
           <config>
             <type>group</type>
@@ -124,17 +124,17 @@
       </viewsListPid>
       <piVars>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.piVars</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.piVars</label>
           <displayCond>FIELD:views:=:selected</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.piVars.pluginThis</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.piVars.pluginThis</numIndex>
                 <numIndex index="1">default</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.piVars.pluginAll</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.piVars.pluginAll</numIndex>
                 <numIndex index="1">all</numIndex>
               </numIndex>
             </items>
@@ -146,17 +146,17 @@
       </piVars>
       <relations_select>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations.default</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.default</numIndex>
                 <numIndex index="1">default</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations.configured</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.configured</numIndex>
                 <numIndex index="1">configured</numIndex>
               </numIndex>
             </items>
@@ -169,14 +169,14 @@
       <relationsTutorial>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relationsTutorial</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relationsTutorial</label>
           <displayCond>FIELD:relations_select:=:configured</displayCond>
           <config>
             <type>check</type>
             <cols>1</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relationsTutorial.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relationsTutorial.0</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
@@ -186,25 +186,25 @@
       <relations>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations.relations</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.relations</label>
           <displayCond>FIELD:relations_select:=:configured</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations.relations.all</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.relations.all</numIndex>
                 <numIndex index="1">all</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations.relations.mm</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.relations.mm</numIndex>
                 <numIndex index="1">mm</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations.relations.single</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.relations.single</numIndex>
                 <numIndex index="1">single</numIndex>
               </numIndex>
               <numIndex index="3" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations.relations.typoscript</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.relations.typoscript</numIndex>
                 <numIndex index="1">typoscript</numIndex>
               </numIndex>
             </items>
@@ -217,17 +217,17 @@
       <joins>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations.joins</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.joins</label>
           <displayCond>FIELD:relations_select:=:configured</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations.joins.full</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.joins.full</numIndex>
                 <numIndex index="1">0</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations.joins.left</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.joins.left</numIndex>
                 <numIndex index="1">1</numIndex>
               </numIndex>
             </items>
@@ -240,13 +240,13 @@
       <root>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations.root</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.root</label>
           <displayCond>FIELD:relations_select:=:configured</displayCond>
           <config>
             <type>check</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.relations.root.display</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.root.display</numIndex>
                 <numIndex index="1">1</numIndex>
               </numIndex>
             </items>
@@ -255,17 +255,17 @@
       </root>
       <session>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.session</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.session</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.session.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.session.0</numIndex>
                 <numIndex index="1">0</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.session.1</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.session.1</numIndex>
                 <numIndex index="1">1</numIndex>
               </numIndex>
             </items>
@@ -278,21 +278,21 @@
       <session.type>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.session.type</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.session.type</label>
           <displayCond>FIELD:session:=:1</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.session.type.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.session.type.0</numIndex>
                 <numIndex index="1">0</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.session.type.1</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.session.type.1</numIndex>
                 <numIndex index="1">1</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.session.type.2</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.session.type.2</numIndex>
                 <numIndex index="1">2</numIndex>
               </numIndex>
             </items>
@@ -304,21 +304,21 @@
       </session.type>
       <downloads.enabled>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.downloads.enabled</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.downloads.enabled</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.downloads.enabled.no</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.downloads.enabled.no</numIndex>
                 <numIndex index="1">no</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.downloads.enabled.yes</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.downloads.enabled.yes</numIndex>
                 <numIndex index="1">yes</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.downloads.enabled.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.downloads.enabled.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
@@ -330,21 +330,21 @@
       </downloads.enabled>
       <statistics.enabled>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.enabled</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.enabled</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.enabled.no</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.enabled.no</numIndex>
                 <numIndex index="1">no</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.enabled.yes</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.enabled.yes</numIndex>
                 <numIndex index="1">yes</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.enabled.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.enabled.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
@@ -357,7 +357,7 @@
       <statistics.adjustment.timeout>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.timeout</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.timeout</label>
           <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
           <config>
             <type>input</type>
@@ -371,7 +371,7 @@
       <statistics.adjustment.dontAccountIPsOfCsvList>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.dontAccountIPsOfCsvList</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.dontAccountIPsOfCsvList</label>
           <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
           <config>
             <type>input</type>
@@ -384,21 +384,21 @@
       <statistics.adjustment.debugging>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.debugging</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.debugging</label>
           <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.debugging.no</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.debugging.no</numIndex>
                 <numIndex index="1">no</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.debugging.yes</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.debugging.yes</numIndex>
                 <numIndex index="1">yes</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.debugging.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.debugging.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
@@ -411,7 +411,7 @@
       <statistics.adjustment.fields.hits>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.fields.hits</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.fields.hits</label>
           <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
           <config>
             <type>input</type>
@@ -424,7 +424,7 @@
       <statistics.adjustment.fields.visits>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.fields.visits</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.fields.visits</label>
           <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
           <config>
             <type>input</type>
@@ -437,7 +437,7 @@
       <statistics.adjustment.fields.downloads>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.fields.downloads</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.fields.downloads</label>
           <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
           <config>
             <type>input</type>
@@ -450,7 +450,7 @@
       <statistics.adjustment.fields.downloadsByVisits>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_sDEF.statistics.adjustment.fields.downloadsByVisits</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.fields.downloadsByVisits</label>
           <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
           <config>
             <type>input</type>

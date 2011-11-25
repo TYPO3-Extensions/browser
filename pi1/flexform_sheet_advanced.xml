@@ -2,23 +2,23 @@
 <T3DataStructure>
   <ROOT>
     <TCEforms>
-      <sheetTitle>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced</sheetTitle>
+      <sheetTitle>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced</sheetTitle>
     </TCEforms>
     <type>array</type>
     <el>
       <performance_select>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.performance_select</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_select</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.performance_select.default</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_select.default</numIndex>
                 <numIndex index="1">default</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.performance_select.configured</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_select.configured</numIndex>
                 <numIndex index="1">configured</numIndex>
               </numIndex>
             </items>
@@ -31,14 +31,14 @@
       <performanceTutorial>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.performanceTutorial</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performanceTutorial</label>
           <displayCond>FIELD:performance_select:=:configured</displayCond>
           <config>
             <type>check</type>
             <cols>1</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.performanceTutorial.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performanceTutorial.0</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
@@ -48,14 +48,14 @@
       <performance_costs>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.performance_costs</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_costs</label>
           <displayCond>FIELD:performance_select:=:configured</displayCond>
           <config>
             <type>check</type>
             <cols>1</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.performance_costs.look_for_globals</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_costs.look_for_globals</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
@@ -65,17 +65,17 @@
       </performance_costs>
       <realUrl_select>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.realUrl_select</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl_select</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.realUrl_select.default</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl_select.default</numIndex>
                 <numIndex index="1">default</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.realUrl_select.configured</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl_select.configured</numIndex>
                 <numIndex index="1">configured</numIndex>
               </numIndex>
             </items>
@@ -88,14 +88,14 @@
       <realUrlTutorial>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.realUrlTutorial</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrlTutorial</label>
           <displayCond>FIELD:realUrl_select:=:configured</displayCond>
           <config>
             <type>check</type>
             <cols>1</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.realUrlTutorial.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrlTutorial.0</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
@@ -105,30 +105,30 @@
       <realUrl>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.realUrl</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl</label>
           <displayCond>FIELD:realUrl_select:=:configured</displayCond>
           <config>
             <type>check</type>
             <cols>2</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.realUrl.piVar_azTab</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl.piVar_azTab</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.realUrl.piVar_mode</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl.piVar_mode</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.realUrl.piVar_pointer</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl.piVar_pointer</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
               <numIndex index="3" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.realUrl.piVar_plugin</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl.piVar_plugin</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
               <numIndex index="4" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.realUrl.piVar_sort</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl.piVar_sort</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
@@ -139,14 +139,14 @@
       <realUrl_checkpoint>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.realUrl_checkpoint</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl_checkpoint</label>
           <displayCond>FIELD:realUrl_select:=:configured</displayCond>
           <config>
             <type>check</type>
             <cols>1</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_advanced.realUrl_checkpoint.prompt</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl_checkpoint.prompt</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>

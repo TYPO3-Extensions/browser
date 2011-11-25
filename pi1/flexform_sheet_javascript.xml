@@ -2,31 +2,31 @@
 <T3DataStructure>
   <ROOT>
     <TCEforms>
-      <sheetTitle>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript</sheetTitle>
+      <sheetTitle>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript</sheetTitle>
     </TCEforms>
     <type>array</type>
     <el>
       <jquery_library>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_library</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_library</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_library.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_library.0</numIndex>
                 <numIndex index="1">typoscript</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_library.1</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_library.1</numIndex>
                 <numIndex index="1">http://code.jquery.com/jquery-1.6.min.js</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_library.2</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_library.2</numIndex>
                 <numIndex index="1">configured</numIndex>
               </numIndex>
               <numIndex index="3" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_library.3</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_library.3</numIndex>
                 <numIndex index="1">none</numIndex>
               </numIndex>
             </items>
@@ -39,7 +39,7 @@
       <jquery_library_own>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_library_own</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_library_own</label>
           <displayCond>FIELD:jquery_library:IN:configured</displayCond>
           <config>
             <type>input</type>
@@ -94,21 +94,21 @@
       </jquery_ui.own.path>
       <jquery_plugins.t3browser>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.own</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser.own</numIndex>
                 <numIndex index="1">own</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.no</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser.no</numIndex>
                 <numIndex index="1">no</numIndex>
               </numIndex>
             </items>
@@ -121,7 +121,7 @@
       <jquery_plugins.t3browser.own.plugin>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.own.plugin</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser.own.plugin</label>
           <displayCond>FIELD:jquery_plugins.t3browser:IN:own</displayCond>
           <config>
             <type>group</type>
@@ -138,7 +138,7 @@
       <jquery_plugins.t3browser.own.library>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.own.library</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser.own.library</label>
           <displayCond>FIELD:jquery_plugins.t3browser:IN:own</displayCond>
           <config>
             <type>group</type>
@@ -154,7 +154,7 @@
       </jquery_plugins.t3browser.own.library>
       <jquery_plugins.t3browser.own.localisation>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.jquery_plugins.t3browser.own.localisation</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser.own.localisation</label>
           <displayCond>FIELD:jquery_plugins.t3browser:IN:own</displayCond>
           <config>
             <type>input</type>
@@ -166,21 +166,21 @@
       </jquery_plugins.t3browser.own.localisation>
       <browser_libraries>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries.0</numIndex>
                 <numIndex index="1">typoscript</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries.1</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries.1</numIndex>
                 <numIndex index="1">configured</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries.2</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries.2</numIndex>
                 <numIndex index="1">none</numIndex>
               </numIndex>
             </items>
@@ -193,7 +193,7 @@
       <browser_libraries_general>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries_general</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries_general</label>
           <displayCond>FIELD:browser_libraries:IN:configured</displayCond>
           <config>
             <type>input</type>
@@ -206,7 +206,7 @@
       <browser_libraries_ajax>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries_ajax</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries_ajax</label>
           <displayCond>FIELD:browser_libraries:IN:configured</displayCond>
           <config>
             <type>input</type>
@@ -219,7 +219,7 @@
       <browser_libraries_ajaxLL>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.browser_libraries_ajaxLL</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries_ajaxLL</label>
           <displayCond>FIELD:browser_libraries:IN:configured</displayCond>
           <config>
             <type>input</type>
@@ -231,21 +231,21 @@
       </browser_libraries_ajaxLL>
       <mode>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.mode</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.mode</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.mode.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.mode.0</numIndex>
                 <numIndex index="1">disabled</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.mode.1</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.mode.1</numIndex>
                 <numIndex index="1">list_only</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.mode.2</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.mode.2</numIndex>
                 <numIndex index="1">list_and_single</numIndex>
               </numIndex>
             </items>
@@ -258,14 +258,14 @@
       <ajaxTutorial>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.ajaxTutorial</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.ajaxTutorial</label>
           <displayCond>FIELD:mode:IN:list_only,list_and_single</displayCond>
           <config>
             <type>check</type>
             <cols>1</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.ajaxTutorial.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.ajaxTutorial.0</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
@@ -275,14 +275,14 @@
       <ajaxChecklist>
         <TCEforms>
           <exclude>1</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.ajaxChecklist</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.ajaxChecklist</label>
           <displayCond>FIELD:mode:IN:list_only,list_and_single</displayCond>
           <config>
             <type>check</type>
             <cols>1</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.ajaxChecklist.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.ajaxChecklist.0</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
             </items>
@@ -291,17 +291,17 @@
       </ajaxChecklist>
       <list_transition>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.list_transition</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.list_transition</label>
           <displayCond>FIELD:mode:IN:list_only,list_and_single</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.list_transition.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.list_transition.0</numIndex>
                 <numIndex index="1">none</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.list_transition.1</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.list_transition.1</numIndex>
                 <numIndex index="1">collapse</numIndex>
               </numIndex>
             </items>
@@ -313,17 +313,17 @@
       </list_transition>
       <single_transition>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.single_transition</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.single_transition</label>
           <displayCond>FIELD:mode:=:list_and_single</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.single_transition.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.single_transition.0</numIndex>
                 <numIndex index="1">none</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.single_transition.1</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.single_transition.1</numIndex>
                 <numIndex index="1">collapse</numIndex>
               </numIndex>
             </items>
@@ -335,21 +335,21 @@
       </single_transition>
       <list_on_single>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.list_on_single</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.list_on_single</label>
           <displayCond>FIELD:mode:=:list_and_single</displayCond>
           <config>
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.list_on_single.0</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.list_on_single.0</numIndex>
                 <numIndex index="1">listAndSingle</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.list_on_single.1</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.list_on_single.1</numIndex>
                 <numIndex index="1">listCollapsableAndSingle</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.php:sheet_javascript.list_on_single.2</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.list_on_single.2</numIndex>
                 <numIndex index="1">single</numIndex>
               </numIndex>
             </items>
