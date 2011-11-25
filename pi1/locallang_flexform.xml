@@ -2,13 +2,13 @@
 <T3locallang>
   <meta type="array">
     <type>module</type>
-    <description>Language labels for plugin <![CDATA[&quot;]]>tx_browser_pi1<![CDATA[&quot;]]></description>
+    <description>Language labels for plugin "tx_browser_pi1"</description>
   </meta>
   <data type="array">
     <languageKey index="default" type="array">
       <label index="radio.on">On</label>
       <label index="radio.off">Off</label>
-      <label index="sheet_advanced">Marker & RealUrl</label>
+      <label index="sheet_advanced">Marker <![CDATA[&]]> RealUrl</label>
       <label index="sheet_advanced.performance_select">Marker</label>
       <label index="sheet_advanced.performance_select.default">Default</label>
       <label index="sheet_advanced.performance_select.configured">Configured</label>
@@ -46,16 +46,16 @@
       <label index="sheet_evaluate.plugin.error.no_view">Bug: There isn't any view configured.</label>
       <label index="sheet_evaluate.plugin.error.saved_never">Bug: This plugin isn't saved never.</label>
       <label index="sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum">Fix it: Configure javascript.ajax.jQuery.default.typeNum</label>
-      <label index="sheet_evaluate.plugin.info.no_AJAXpageObject">Fix it? The Browser has a template. Copy it. Code f.e.: browser_ajax <![CDATA[&lt;]]> plugin.tx_browser_pi1.javascript.ajax.jQuery.default. The typeNum has to be %typeNum%. Alternate: don't use AJAX.</label>
+      <label index="sheet_evaluate.plugin.info.no_AJAXpageObject">Fix it? The Browser has a template. Copy it. Code f.e.: browser_ajax < plugin.tx_browser_pi1.javascript.ajax.jQuery.default. The typeNum has to be %typeNum%. Alternate: don't use AJAX.</label>
       <label index="sheet_evaluate.plugin.info.no_CSV_defaultTypeNum">Fix it: Configure export.csv.page.typeNum</label>
-      <label index="sheet_evaluate.plugin.info.no_CSVpageObject">Fix it? The Browser has a template. Copy it. Code f.e.: browser_csv <![CDATA[&lt;]]> plugin.tx_browser_pi1.export.csv.page. The typeNum has to be %typeNum%. Alternate: don't use the CSV export.</label>
+      <label index="sheet_evaluate.plugin.info.no_CSVpageObject">Fix it? The Browser has a template. Copy it. Code f.e.: browser_csv < plugin.tx_browser_pi1.export.csv.page. The typeNum has to be %typeNum%. Alternate: don't use the CSV export.</label>
       <label index="sheet_evaluate.plugin.info.no_record_storage_pid">Fix it? Configure the general storage pid. See tab [Behaviour] field [Record Storage Page]. Bear in mind to set more than one pid, if your data are stored in more than one folder.</label>
-      <label index="sheet_evaluate.plugin.info.no_ts_template">Fix it: include the Static Template <![CDATA[&quot;]]>Browser<![CDATA[&quot;]]>!</label>
+      <label index="sheet_evaluate.plugin.info.no_ts_template">Fix it: include the Static Template "Browser"!</label>
       <label index="sheet_evaluate.plugin.info.no_view">Fix it: configure your TypoScript like plugin.tx_browser_pi1.views.list.1 { ... }</label>
       <label index="sheet_evaluate.plugin.info.drs">If you get an unexpected result nevertheless, please check with the TYPO3 Browser Update Assistent, if your plugin and if your TypoScript is up-to-date. You enable the Update Assistent in the extension manager.</label>
       <label index="sheet_evaluate.plugin.info.updateAssistent">If you get an unexpected result nevertheless, you can enable the DRS - the Development Reporting System. You will get a report with all rendered SQL queries among others. You enable the DRS in the extension manager.</label>
       <label index="sheet_evaluate.plugin.info.saved_never">Fix it: Save the Flexform once.</label>
-      <label index="sheet_evaluate.plugin.info.tutorialAndForum">If you have any question about the Browser, please refer to the online manual <![CDATA[&lt;]]>a href=<![CDATA[&quot;]]>http://typo3.org/extensions/repository/view/browser/current/<![CDATA[&quot;]]> target=<![CDATA[&quot;]]>_blank<![CDATA[&quot;]]><![CDATA[&gt;]]>Browser<![CDATA[&lt;]]>/a<![CDATA[&gt;]]>. If you need interactive help, please post your question in the <![CDATA[&lt;]]>a href=<![CDATA[&quot;]]>http://typo3-browser-forum.de/<![CDATA[&quot;]]> target=<![CDATA[&quot;]]>_blank<![CDATA[&quot;]]><![CDATA[&gt;]]>TYPO3 Browser Forum<![CDATA[&lt;]]>/a<![CDATA[&gt;]]>. Posts are welcome in English and German.</label>
+      <label index="sheet_evaluate.plugin.info.tutorialAndForum">If you have any question about the Browser, please refer to the online manual <a href="http://typo3.org/extensions/repository/view/browser/current/" target="_blank">Browser</a>. If you need interactive help, please post your question in the <a href="http://typo3-browser-forum.de/" target="_blank">TYPO3 Browser Forum</a>. Posts are welcome in English and German.</label>
       <label index="sheet_evaluate.plugin.ok">Congratulations! Your configuration is checked. Everything seems ok!</label>
       <label index="sheet_evaluate.plugin.warn.no_record_storage_pid">Warning: There isn't any record storage pid configured. Propably the missing pid is the reason, if you don't get any result in the frontend.</label>
       <label index="sheet_extend">Extend it!</label>
@@ -63,13 +63,13 @@
       <label index="sheet_extend.cal_field_end.error">Missing requirement: no fields are available.</label>
       <label index="sheet_extend.cal_field_end.info">Solve it? Please check the TypoScript views.list.%view%.select</label>
       <label index="sheet_extend.cal_field_end.select.firstItem">Please select the date end field</label>
-      <label index="sheet_extend.cal_field_end.select.info">Please select the field, which should be the date end field for the Browser Calendar user interface.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>It's possible to take the field date begin.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>Only fields will take into account, which are evaluated in the TCA as date, datetime, time, timesec or year.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>Fields are needed as timestamp.</label>
+      <label index="sheet_extend.cal_field_end.select.info">Please select the field, which should be the date end field for the Browser Calendar user interface.<br />It's possible to take the field date begin.<br />Only fields will take into account, which are evaluated in the TCA as date, datetime, time, timesec or year.<br />Fields are needed as timestamp.</label>
       <label index="sheet_extend.cal_field_end.success.ok">Success: you have extended the Browser with the Browser Calendar user interface successful.</label>
       <label index="sheet_extend.cal_field_start">Calendar 3. step: field date begin</label>
       <label index="sheet_extend.cal_field_start.error">Missing requirement: no fields are available.</label>
       <label index="sheet_extend.cal_field_start.info">Solve it? Please check the TypoScript views.list.%view%.select</label>
       <label index="sheet_extend.cal_field_start.select.firstItem">Please select the date start field</label>
-      <label index="sheet_extend.cal_field_start.select.info">Please select the field, which should be the date start field for the Browser Calendar user interface.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>Only fields will take into account, which are evaluated in the TCA as date, datetime, time, timesec or year.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>Fields are needed as timestamp.</label>
+      <label index="sheet_extend.cal_field_start.select.info">Please select the field, which should be the date start field for the Browser Calendar user interface.<br />Only fields will take into account, which are evaluated in the TCA as date, datetime, time, timesec or year.<br />Fields are needed as timestamp.</label>
       <label index="sheet_extend.cal_field_start.success.info">3. step is succesfull. Please take the last step.</label>
       <label index="sheet_extend.cal_view">Calendar 2. step: view</label>
       <label index="sheet_extend.cal_view.error">Missing requirement: any view is selected.</label>
@@ -80,12 +80,12 @@
       <label index="sheet_extend.cal_view.select.prependItem">Browser Calendar View</label>
       <label index="sheet_extend.cal_view.success.info">2. step is succesfull. Please take step 3.</label>
       <label index="sheet_extend.cal_ui">Calendar 1. step: user interface</label>
-      <label index="sheet_extend.cal_ui.info.info">You can extend the Browser with a Calendar user interface:<![CDATA[&lt;]]>br /<![CDATA[&gt;]]><![CDATA[&lt;]]>br /<![CDATA[&gt;]]>1. You have to add the plugin <![CDATA[&quot;]]>Browser Calendar<![CDATA[&quot;]]> to this page.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>2. Than select the added plugin here.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]><![CDATA[&lt;]]>br /<![CDATA[&gt;]]>The plugin Browser Calendar is a powerful user interface for setting up a calendar.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>It is a need, to configure the TypoScript view too.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>If you have any question, please refer to the online manual <![CDATA[&lt;]]>a href=<![CDATA[&quot;]]>http://typo3.org/extensions/repository/view/browser_tut_calendar_en/current/<![CDATA[&quot;]]> target=<![CDATA[&quot;]]>_blank<![CDATA[&quot;]]><![CDATA[&gt;]]>Browser Calendar<![CDATA[&lt;]]>/a<![CDATA[&gt;]]>.</label>
+      <label index="sheet_extend.cal_ui.info.info">You can extend the Browser with a Calendar user interface:<br /><br />1. You have to add the plugin "Browser Calendar" to this page.<br />2. Than select the added plugin here.<br /><br />The plugin Browser Calendar is a powerful user interface for setting up a calendar.<br />It is a need, to configure the TypoScript view too.<br />If you have any question, please refer to the online manual <a href="http://typo3.org/extensions/repository/view/browser_tut_calendar_en/current/" target="_blank">Browser Calendar</a>.</label>
       <label index="sheet_extend.cal_ui.select.firstItem">Don't extend the Browser with a Calendar user interface</label>
       <label index="sheet_extend.cal_ui.select.info">Please select a calendar plugin, if you want to extend the Browser with the Browser Calendar user interace.</label>
       <label index="sheet_extend.cal_ui.select.prependItem">Browser Calendar</label>
       <label index="sheet_extend.cal_ui.success.info">1. step is succesfull. Please take step 2.</label>
-      <label index="sheet_javascript">jQuery & AJAX</label>
+      <label index="sheet_javascript">jQuery <![CDATA[&]]> AJAX</label>
       <label index="sheet_javascript.jquery_library">jQuery library</label>
       <label index="sheet_javascript.jquery_library.0">Take the value from TypoScript (recommended)</label>
       <label index="sheet_javascript.jquery_library.1">jquery.com (data privacy risk)</label>
@@ -202,7 +202,7 @@
       <label index="sheet_search.search.wildcards">Search: wildcards</label>
       <label index="sheet_search.search.wildcards.default">Self-acting (recommended)</label>
       <label index="sheet_search.search.wildcards.manual">User have to add wildcards</label>
-      <label index="sheet_search.search.wildcards.char">Search: char for a wildcard (i.e <![CDATA[&quot;]]>*<![CDATA[&quot;]]>)</label>
+      <label index="sheet_search.search.wildcards.char">Search: char for a wildcard (i.e "*")</label>
       <label index="sheet_search.filter">Filter</label>
       <label index="sheet_search.filter.default">Default</label>
       <label index="sheet_search.filter.adjusted">Configured</label>
@@ -277,12 +277,12 @@
       <label index="sheet_templating.css.jqui.z_own.path">CSS jQuery UI *.css (i.e. fileadmin/..., http://..., EXT:...)</label>
       <label index="sheet_templating.css.jqui.z_ts">Take the value from TypoScript</label>
       <label index="sheet_templating.dataQuery">Data: query</label>
-      <label index="sheet_templating.wrapBaseClass">Templating: default <![CDATA[&lt;]]>div<![CDATA[&gt;]]> container for this plugin</label>
+      <label index="sheet_templating.wrapBaseClass">Templating: default <div> container for this plugin</label>
       <label index="sheet_templating.wrapBaseClass.0">Wrap in base class (recommended)</label>
       <label index="sheet_viewList">List View</label>
       <label index="sheet_viewList.title">Title (substitutes ###MY_TITLE###)</label>
-      <label index="sheet_viewList.titleWrap">Title Wrap (i.e. <![CDATA[&lt;]]>h1<![CDATA[&gt;]]>|<![CDATA[&lt;]]>/h1<![CDATA[&gt;]]>)</label>
-      <label index="sheet_viewList.grouptitleWrap">Group Title Wrap (i.e. <![CDATA[&lt;]]>h2<![CDATA[&gt;]]>|<![CDATA[&lt;]]>/h2<![CDATA[&gt;]]>)</label>
+      <label index="sheet_viewList.titleWrap">Title Wrap (i.e. <h1>|</h1>)</label>
+      <label index="sheet_viewList.grouptitleWrap">Group Title Wrap (i.e. <h2>|</h2>)</label>
       <label index="sheet_viewList.limitOffset">Limit: start/offset (from 1st record = 0)</label>
       <label index="sheet_viewList.limit">Limit: records per page (from 1 to 1000)</label>
       <label index="sheet_viewList.navigation">Display: Navigation</label>
@@ -309,7 +309,7 @@
       <label index="sheet_viewList.search.wildcards">Search: wildcards</label>
       <label index="sheet_viewList.search.wildcards.default">Self-acting (recommended)</label>
       <label index="sheet_viewList.search.wildcards.manual">User have to add wildcards</label>
-      <label index="sheet_viewList.search.wildcards.char">Search: char for a wildcard (i.e <![CDATA[&quot;]]>*<![CDATA[&quot;]]>)</label>
+      <label index="sheet_viewList.search.wildcards.char">Search: char for a wildcard (i.e "*")</label>
       <label index="sheet_viewList.csvexport">CSV export</label>
       <label index="sheet_viewList.csvexport.disabled">Disabled (default)</label>
       <label index="sheet_viewList.csvexport.enabled">Enabled</label>
@@ -337,7 +337,7 @@
       <label index="sheet_viewSingle.record_browser.display.withoutResult.yes">... display the record browser nevertheless (recommended)</label>
       <label index="sheet_viewSingle.record_browser.display.withoutResult.ts">... take the value from TypoScript</label>
       <label index="sheet_viewSingle.record_browser.labeling">Record Browser: labeling</label>
-      <label index="sheet_viewSingle.record_browser.labeling.chars">Chars - i.e: <![CDATA[&lt;]]><![CDATA[&lt;]]> <![CDATA[&lt;]]> ... <![CDATA[&gt;]]> <![CDATA[&gt;]]><![CDATA[&gt;]]> (recommended)</label>
+      <label index="sheet_viewSingle.record_browser.labeling.chars">Chars - i.e: << < ... > >> (recommended)</label>
       <label index="sheet_viewSingle.record_browser.labeling.icons">icons (with jQuery UI CSS only!)</label>
       <label index="sheet_viewSingle.record_browser.labeling.position">Numbers - i.e: 1, 234, 235, 236, 723</label>
       <label index="sheet_viewSingle.record_browser.labeling.text">Text - i.e: first, previous, ..., next, last</label>
@@ -348,7 +348,7 @@
     <languageKey index="de" type="array">
       <label index="radio.on">Eingeblendet</label>
       <label index="radio.off">Ausgeblendet</label>
-      <label index="sheet_advanced">Marker & RealURL</label>
+      <label index="sheet_advanced">Marker <![CDATA[&]]> RealURL</label>
       <label index="sheet_advanced.performance_select">Marker</label>
       <label index="sheet_advanced.performance_select.default">Standard</label>
       <label index="sheet_advanced.performance_select.configured">Konfiguriert</label>
@@ -377,55 +377,55 @@
       <label index="sheet_evaluate.handle_marker">Marker</label>
       <label index="sheet_evaluate.handle_marker.0">Nicht ersetzte Marker entfernen</label>
       <label index="sheet_evaluate.handle_marker.1">Nicht ersetzte Marker anzeigen (Debugging)</label>
-      <label index="sheet_evaluate.plugin.drs.warn">Das DRS - Development Reporting System - ist aktiviert. Das kostet Performance und ist ein Sicherheitsrisiko f&amp;uuml;r jedes operative Sytem. Du kannst das DRS im Extension Manager abschalten. Status: %status%.</label>
-      <label index="sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum">Fehler: Du m&amp;ouml;chtest AJAX verwenden. Es fehlt aber die typeNum f&amp;uuml;r das AJAX Page Objekt.</label>
-      <label index="sheet_evaluate.plugin.error.no_AJAXpageObject">Fehler: Du m&amp;ouml;chtest AJAX verwenden. Es fehlt aber das AJAX Page Objekt.</label>
-      <label index="sheet_evaluate.plugin.error.no_CSV_defaultTypeNum">Fehler: Du m&amp;ouml;chtest den CSV-Export verwenden. Es fehlt aber die typeNum f&amp;uuml;r das CSV-Export Page Objekt.</label>
-      <label index="sheet_evaluate.plugin.error.no_CSVpageObject">Fehler: Du m&amp;ouml;chtest den CSV-Export verwenden. Es fehlt aber das CSV-Export Page Objekt.</label>
-      <label index="sheet_evaluate.plugin.error.no_ts_template">Fehler: Es gibt keine TypoScript-Konfiguration f&amp;uuml;r dieses Plugin.</label>
+      <label index="sheet_evaluate.plugin.drs.warn">Das DRS - Development Reporting System - ist aktiviert. Das kostet Performance und ist ein Sicherheitsrisiko f<![CDATA[ü]]>r jedes operative Sytem. Du kannst das DRS im Extension Manager abschalten. Status: %status%.</label>
+      <label index="sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum">Fehler: Du m<![CDATA[ö]]>chtest AJAX verwenden. Es fehlt aber die typeNum f<![CDATA[ü]]>r das AJAX Page Objekt.</label>
+      <label index="sheet_evaluate.plugin.error.no_AJAXpageObject">Fehler: Du m<![CDATA[ö]]>chtest AJAX verwenden. Es fehlt aber das AJAX Page Objekt.</label>
+      <label index="sheet_evaluate.plugin.error.no_CSV_defaultTypeNum">Fehler: Du m<![CDATA[ö]]>chtest den CSV-Export verwenden. Es fehlt aber die typeNum f<![CDATA[ü]]>r das CSV-Export Page Objekt.</label>
+      <label index="sheet_evaluate.plugin.error.no_CSVpageObject">Fehler: Du m<![CDATA[ö]]>chtest den CSV-Export verwenden. Es fehlt aber das CSV-Export Page Objekt.</label>
+      <label index="sheet_evaluate.plugin.error.no_ts_template">Fehler: Es gibt keine TypoScript-Konfiguration f<![CDATA[ü]]>r dieses Plugin.</label>
       <label index="sheet_evaluate.plugin.error.no_view">Fehler: Es ist keine View konfiguriert.</label>
       <label index="sheet_evaluate.plugin.error.saved_never">Fehler: Dieses Plugin ist noch nie gespeichert worden.</label>
       <label index="sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum">Fehler beheben: konfiguriere javascript.ajax.jQuery.default.typeNum</label>
-      <label index="sheet_evaluate.plugin.info.no_AJAXpageObject">Fehler beheben? Der Browser hat ein Template. Kopiere es. Code z.B.: browser_ajax <![CDATA[&lt;]]> plugin.tx_browser_pi1.javascript.ajax.jQuery.default. Der typeNum muss %typeNum% lauten. Alternative: verzichte auf AJAX.</label>
+      <label index="sheet_evaluate.plugin.info.no_AJAXpageObject">Fehler beheben? Der Browser hat ein Template. Kopiere es. Code z.B.: browser_ajax < plugin.tx_browser_pi1.javascript.ajax.jQuery.default. Der typeNum muss %typeNum% lauten. Alternative: verzichte auf AJAX.</label>
       <label index="sheet_evaluate.plugin.info.no_CSV_defaultTypeNum">Fehler beheben: konfiguriere export.csv.page.typeNum</label>
-      <label index="sheet_evaluate.plugin.info.no_CSVpageObject">Fehler beheben? Der Browser hat ein Template. Kopiere es. Code z.B.: browser_csv <![CDATA[&lt;]]> plugin.tx_browser_pi1.export.csv.page. Der typeNum muss %typeNum% lauten. Alternative: verzichte auf den CSV-Export.</label>
+      <label index="sheet_evaluate.plugin.info.no_CSVpageObject">Fehler beheben? Der Browser hat ein Template. Kopiere es. Code z.B.: browser_csv < plugin.tx_browser_pi1.export.csv.page. Der typeNum muss %typeNum% lauten. Alternative: verzichte auf den CSV-Export.</label>
       <label index="sheet_evaluate.plugin.info.no_record_storage_pid">Fehler beheben? Konfigure das Feld [Datensatzsammlung]. Siehe Reiter [Verhalten] Feld [Datensatzsammlung]. Denk' d'ran: Wenn Du Deine Daten in mehr als einem Ordner speicherst, musst Du auch diese Ordner angeben.</label>
-      <label index="sheet_evaluate.plugin.info.no_ts_template">Fehler beheben: binde das Static Template <![CDATA[&quot;]]>Browser<![CDATA[&quot;]]> ein!</label>
+      <label index="sheet_evaluate.plugin.info.no_ts_template">Fehler beheben: binde das Static Template "Browser" ein!</label>
       <label index="sheet_evaluate.plugin.info.no_view">Fehler beheben: konfiguriere Dein TypoScript etwa so: plugin.tx_browser_pi1.views.list.1 { ... }</label>
       <label index="sheet_evaluate.plugin.info.drs">Wenn Du trotzdem ein unerwartetes Ergebnis bekommst, check mit dem TYPO3-Browser-Update-Assistenten, ob Dein Plugin und Dein TypoScript aktuell sind. Du aktivierst den Update-Assistenten im Extension Manager.</label>
       <label index="sheet_evaluate.plugin.info.saved_never">Beheb' den Fehler: Speicher das Plugin einmal ab.</label>
       <label index="sheet_evaluate.plugin.info.updateAssistent">Wenn Du trotzdem ein unerwartetes Ergebnis bekommst, kannst Du das DRS - das Development Reporting System - zur Fehleranaylse benutzen. Du bekommst einen Bericht unter anderem mit allen erzeugten SQL-Abfragen. Du aktivierts das DRS im Extension Manager.</label>
-      <label index="sheet_evaluate.plugin.info.tutorialAndForum">Wenn Du eine Frage zum Browser hast, wirf einen Blick in das Online-Handbuch <![CDATA[&lt;]]>a href=<![CDATA[&quot;]]>http://typo3.org/extensions/repository/view/browser/current/<![CDATA[&quot;]]> target=<![CDATA[&quot;]]>_blank<![CDATA[&quot;]]><![CDATA[&gt;]]>Browser<![CDATA[&lt;]]>/a<![CDATA[&gt;]]>. Wenn Du interaktive Hilfe ben&amp;ouml;tigst, ver&amp;ouml;ffentliche Dein Anliegen im <![CDATA[&lt;]]>a href=<![CDATA[&quot;]]>http://typo3-browser-forum.de/<![CDATA[&quot;]]> target=<![CDATA[&quot;]]>_blank<![CDATA[&quot;]]><![CDATA[&gt;]]>TYPO3 Browser Forum<![CDATA[&lt;]]>/a<![CDATA[&gt;]]>. Beitr&amp;auml;ge in Englisch und Deutsch sind willkommen.</label>
-      <label index="sheet_evaluate.plugin.ok">Gl&amp;uuml;ckwunsch! Deine Konfiguration ist gechecked. Es scheint alles in Ordnung zu sein!</label>
-      <label index="sheet_evaluate.plugin.warn.no_record_storage_pid">Warnung: Es gibt keinen Eintrag im Feld [Datensatzsammlung]. Wenn Du im Frontend eine leere Liste bekommst, ist die fehlende Pid h&amp;ouml;chstwahrscheinlich der Grund daf&amp;uuml;r.</label>
+      <label index="sheet_evaluate.plugin.info.tutorialAndForum">Wenn Du eine Frage zum Browser hast, wirf einen Blick in das Online-Handbuch <a href="http://typo3.org/extensions/repository/view/browser/current/" target="_blank">Browser</a>. Wenn Du interaktive Hilfe ben<![CDATA[ö]]>tigst, ver<![CDATA[ö]]>ffentliche Dein Anliegen im <a href="http://typo3-browser-forum.de/" target="_blank">TYPO3 Browser Forum</a>. Beitr<![CDATA[Ä]]>ge in Englisch und Deutsch sind willkommen.</label>
+      <label index="sheet_evaluate.plugin.ok">Gl<![CDATA[ü]]>ckwunsch! Deine Konfiguration ist gechecked. Es scheint alles in Ordnung zu sein!</label>
+      <label index="sheet_evaluate.plugin.warn.no_record_storage_pid">Warnung: Es gibt keinen Eintrag im Feld [Datensatzsammlung]. Wenn Du im Frontend eine leere Liste bekommst, ist die fehlende Pid h<![CDATA[ö]]>chstwahrscheinlich der Grund daf<![CDATA[ü]]>r.</label>
       <label index="sheet_extend">Erweitern!</label>
       <label index="sheet_extend.cal_field_end">Kalender 4. Schritt: Feld Termin Ende</label>
-      <label index="sheet_extend.cal_field_end.error">Voraussetzung nicht erf&amp;uuml;llt: es ist kein Feld verf&amp;uuml;gbar.</label>
-      <label index="sheet_extend.cal_field_end.info">&amp;Auml;ndern? Bitte pr&amp;uuml;fe im TypoScript views.list.%view%.select</label>
-      <label index="sheet_extend.cal_field_end.select.firstItem">Feld ausw&amp;auml;hlen</label>
-      <label index="sheet_extend.cal_field_end.select.info">Bitte w&amp;auml;hle das Feld aus, dass das Termin-Ende-Feld f&amp;uuml;r das Browser Kalender User Interface sein soll.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>Es kann darf das gleiche Feld sein, wie das Termin-Beginn-Feld.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>Es werden nur Felder angezeigt, die im TCA als date, datetime, time, timesec oder year evaluiert werden.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>Das Feld muss ein timestamp sein.</label>
-      <label index="sheet_extend.cal_field_end.success.ok">Gl&amp;uuml;ckwunsch: Du hast den Browser erfolgreich mit the Browser Kalender User Interface erweitert.</label>
+      <label index="sheet_extend.cal_field_end.error">Voraussetzung nicht erf<![CDATA[ü]]>llt: es ist kein Feld verf<![CDATA[ü]]>gbar.</label>
+      <label index="sheet_extend.cal_field_end.info"><![CDATA[Ä]]>ndern? Bitte pr<![CDATA[ü]]>fe im TypoScript views.list.%view%.select</label>
+      <label index="sheet_extend.cal_field_end.select.firstItem">Feld ausw<![CDATA[Ä]]>hlen</label>
+      <label index="sheet_extend.cal_field_end.select.info">Bitte w<![CDATA[Ä]]>hle das Feld aus, dass das Termin-Ende-Feld f<![CDATA[ü]]>r das Browser Kalender User Interface sein soll.<br />Es kann darf das gleiche Feld sein, wie das Termin-Beginn-Feld.<br />Es werden nur Felder angezeigt, die im TCA als date, datetime, time, timesec oder year evaluiert werden.<br />Das Feld muss ein timestamp sein.</label>
+      <label index="sheet_extend.cal_field_end.success.ok">Gl<![CDATA[ü]]>ckwunsch: Du hast den Browser erfolgreich mit the Browser Kalender User Interface erweitert.</label>
       <label index="sheet_extend.cal_field_start">Kalender 3. Schritt: Feld Termin Beginn</label>
-      <label index="sheet_extend.cal_field_start.error">Voraussetzung nicht erf&amp;uuml;llt: es ist kein Feld verf&amp;uuml;gbar.</label>
-      <label index="sheet_extend.cal_field_start.info">&amp;Auml;ndern? Bitte pr&amp;uuml;fe im TypoScript views.list.%view%.select</label>
-      <label index="sheet_extend.cal_field_start.select.firstItem">Feld ausw&amp;auml;hlen</label>
-      <label index="sheet_extend.cal_field_start.select.info">Bitte w&amp;auml;hle das Feld aus, dass das Termin-Beginn-Feld f&amp;uuml;r das Browser Kalender User Interface sein soll.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>Es werden nur Felder angezeigt, die im TCA als date, datetime, time, timesec oder year evaluiert werden.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>Das Feld muss ein timestamp sein.</label>
-      <label index="sheet_extend.cal_field_start.success.info">Gl&amp;uuml;ckwunsch: Du hast den Browser erfolgreich mit dem Browser Kalender User Interface erweitert.</label>
+      <label index="sheet_extend.cal_field_start.error">Voraussetzung nicht erf<![CDATA[ü]]>llt: es ist kein Feld verf<![CDATA[ü]]>gbar.</label>
+      <label index="sheet_extend.cal_field_start.info"><![CDATA[Ä]]>ndern? Bitte pr<![CDATA[ü]]>fe im TypoScript views.list.%view%.select</label>
+      <label index="sheet_extend.cal_field_start.select.firstItem">Feld ausw<![CDATA[Ä]]>hlen</label>
+      <label index="sheet_extend.cal_field_start.select.info">Bitte w<![CDATA[Ä]]>hle das Feld aus, dass das Termin-Beginn-Feld f<![CDATA[ü]]>r das Browser Kalender User Interface sein soll.<br />Es werden nur Felder angezeigt, die im TCA als date, datetime, time, timesec oder year evaluiert werden.<br />Das Feld muss ein timestamp sein.</label>
+      <label index="sheet_extend.cal_field_start.success.info">Gl<![CDATA[ü]]>ckwunsch: Du hast den Browser erfolgreich mit dem Browser Kalender User Interface erweitert.</label>
       <label index="sheet_extend.cal_view">Kalender 2. Schritt: View</label>
-      <label index="sheet_extend.cal_view.error">Voraussetzung nicht erf&amp;uuml;llt: Es ist keine View ausgew&amp;auml;hlt.</label>
-      <label index="sheet_extend.cal_view.info">&amp;Auml;ndern? Bitte gebe im Reiter [Allgemein] im Feld [Views: aktivierte List Views]. Eventuell musst Du die Select Box 'Views' auf [konfiguriert] setzen.</label>
-      <label index="sheet_extend.cal_view.select.firstItem">View ausw&amp;auml;hlen</label>
-      <label index="sheet_extend.cal_view.select.info">W&amp;auml;hle eine View aus, die mit Browser Calendar User Interace verbunden werden soll.</label>
+      <label index="sheet_extend.cal_view.error">Voraussetzung nicht erf<![CDATA[ü]]>llt: Es ist keine View ausgew<![CDATA[Ä]]>hlt.</label>
+      <label index="sheet_extend.cal_view.info"><![CDATA[Ä]]>ndern? Bitte gebe im Reiter [Allgemein] im Feld [Views: aktivierte List Views]. Eventuell musst Du die Select Box 'Views' auf [konfiguriert] setzen.</label>
+      <label index="sheet_extend.cal_view.select.firstItem">View ausw<![CDATA[Ä]]>hlen</label>
+      <label index="sheet_extend.cal_view.select.info">W<![CDATA[Ä]]>hle eine View aus, die mit Browser Calendar User Interace verbunden werden soll.</label>
       <label index="sheet_extend.cal_view.select.no_name">View ohne Bezeichnung</label>
       <label index="sheet_extend.cal_view.select.prependItem">Browser Kalender View</label>
       <label index="sheet_extend.cal_view.success.info">2. Schritt erfolgreich abgeschlossen. Erledige Schritt 3.</label>
       <label index="sheet_extend.cal_ui">Kalender 1. Schritt: User Interface</label>
-      <label index="sheet_extend.cal_ui.info.info">Du kannst den Browser mit einem Kalender User Interface erweitern:<![CDATA[&lt;]]>br /<![CDATA[&gt;]]><![CDATA[&lt;]]>br /<![CDATA[&gt;]]>1. F&amp;uuml;ge das Plugin <![CDATA[&quot;]]>Browser Kalender<![CDATA[&quot;]]> auf dieser Seite ein.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>2. Du kannst dann das Plugin an dieser Stelle ausw&amp;auml;hlen.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]><![CDATA[&lt;]]>br /<![CDATA[&gt;]]>Das Plugin Browser Kalender ist ein m&amp;auml;chtiges User Interface, um einen Kalender einzurichten.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>Es ist notwendig, TypoScript zu konfigurieren.<![CDATA[&lt;]]>br /<![CDATA[&gt;]]>Wenn Du eine Frage hast, wirf einen Blick in das Online-Handbuch <![CDATA[&lt;]]>a href=<![CDATA[&quot;]]>http://typo3.org/extensions/repository/view/browser_tut_calendar_en/current/<![CDATA[&quot;]]> target=<![CDATA[&quot;]]>_blank<![CDATA[&quot;]]><![CDATA[&gt;]]>Browser Kalender<![CDATA[&lt;]]>/a<![CDATA[&gt;]]>.</label>
+      <label index="sheet_extend.cal_ui.info.info">Du kannst den Browser mit einem Kalender User Interface erweitern:<br /><br />1. F<![CDATA[ü]]>ge das Plugin "Browser Kalender" auf dieser Seite ein.<br />2. Du kannst dann das Plugin an dieser Stelle ausw<![CDATA[Ä]]>hlen.<br /><br />Das Plugin Browser Kalender ist ein m<![CDATA[Ä]]>chtiges User Interface, um einen Kalender einzurichten.<br />Es ist notwendig, TypoScript zu konfigurieren.<br />Wenn Du eine Frage hast, wirf einen Blick in das Online-Handbuch <a href="http://typo3.org/extensions/repository/view/browser_tut_calendar_en/current/" target="_blank">Browser Kalender</a>.</label>
       <label index="sheet_extend.cal_ui.select.firstItem">Den Browser nicht mit einem Kalender User Interface erweitern</label>
-      <label index="sheet_extend.cal_ui.select.info">Bitte w&amp;auml;hle ein Kalender Plugin aus, wenn Du den Browser mit dem Browser Calender User Interface erweitern m&amp;ouml;chtest.</label>
+      <label index="sheet_extend.cal_ui.select.info">Bitte w<![CDATA[Ä]]>hle ein Kalender Plugin aus, wenn Du den Browser mit dem Browser Calender User Interface erweitern m<![CDATA[ö]]>chtest.</label>
       <label index="sheet_extend.cal_ui.select.prependItem">Browser Kalender</label>
       <label index="sheet_extend.cal_ui.success.info">1. Schritt erfolgreich abgeschlossen. Erledige Schritt 2.</label>
-      <label index="sheet_javascript">jQuery & AJAX</label>
+      <label index="sheet_javascript">jQuery <![CDATA[&]]> AJAX</label>
       <label index="sheet_javascript.jquery_library">jQuery Bibliothek</label>
       <label index="sheet_javascript.jquery_library.0">TypoScript (empfohlen)</label>
       <label index="sheet_javascript.jquery_library.1">jquery.com (Risiko: Datenschutz)</label>
@@ -460,10 +460,10 @@
       <label index="sheet_javascript.ajaxChecklist.0">Ja, ich habe dem TypoScript meiner Seite ein AJAX page object hinzugefuegt (siehe Tutorial).</label>
       <label index="sheet_javascript.list_transition">Uebergang fuer Listenansicht</label>
       <label index="sheet_javascript.list_transition.0">ohne Effekt</label>
-      <label index="sheet_javascript.list_transition.1">verkleinern und vergr&amp;ouml;&amp;szlig;ern</label>
+      <label index="sheet_javascript.list_transition.1">verkleinern und vergr<![CDATA[ö]]><![CDATA[ß]]>ern</label>
       <label index="sheet_javascript.single_transition">Uebergang fuer Einzelansicht</label>
       <label index="sheet_javascript.single_transition.0">ohne Effekt</label>
-      <label index="sheet_javascript.single_transition.1">verkleinern und vergr&amp;ouml;&amp;szlig;ern</label>
+      <label index="sheet_javascript.single_transition.1">verkleinern und vergr<![CDATA[ö]]><![CDATA[ß]]>ern</label>
       <label index="sheet_javascript.list_on_single">Einzelansicht</label>
       <label index="sheet_javascript.list_on_single.0">Liste und Einzelansicht</label>
       <label index="sheet_javascript.list_on_single.1">Liste (aufklappbar) und Einzelansicht</label>
@@ -541,7 +541,7 @@
       <label index="sheet_search.search.wildcards">Suche: Platzhalter (Wildcards)</label>
       <label index="sheet_search.search.wildcards.default">Automatisch (empfohlen)</label>
       <label index="sheet_search.search.wildcards.manual">Besucher muss Platzhalter selbst hinzufuegen</label>
-      <label index="sheet_search.search.wildcards.char">Suche: Zeichen fuer den Platzhalter (z.B.: <![CDATA[&quot;]]>*<![CDATA[&quot;]]>)</label>
+      <label index="sheet_search.search.wildcards.char">Suche: Zeichen fuer den Platzhalter (z.B.: "*")</label>
       <label index="sheet_search.filter">Filter</label>
       <label index="sheet_search.filter.default">Standard</label>
       <label index="sheet_search.filter.adjusted">Konfiguriert</label>
@@ -614,12 +614,12 @@
       <label index="sheet_templating.css.jqui.z_own.path">CSS jQuery UI: Datei</label>
       <label index="sheet_templating.css.jqui.z_ts">Nimm den Wert aus TypoScript</label>
       <label index="sheet_templating.dataQuery">Daten: Abfrage</label>
-      <label index="sheet_templating.wrapBaseClass">Templating: Standard <![CDATA[&lt;]]>div<![CDATA[&gt;]]>-Container fuer dieses Plugin</label>
+      <label index="sheet_templating.wrapBaseClass">Templating: Standard <div>-Container fuer dieses Plugin</label>
       <label index="sheet_templating.wrapBaseClass.0">Mit Basis-Klasse umschliessen (empfohlen)</label>
       <label index="sheet_viewList">Listenansicht</label>
       <label index="sheet_viewList.title">Titel (ersetzt ###MY_TITLE###)</label>
-      <label index="sheet_viewList.titleWrap">Titel Wrap (z.B.. <![CDATA[&lt;]]>h1<![CDATA[&gt;]]>|<![CDATA[&lt;]]>/h1<![CDATA[&gt;]]>)</label>
-      <label index="sheet_viewList.grouptitleWrap">Gruppentitel Wrap (z.B. <![CDATA[&lt;]]>h2<![CDATA[&gt;]]>|<![CDATA[&lt;]]>/h2<![CDATA[&gt;]]>)</label>
+      <label index="sheet_viewList.titleWrap">Titel Wrap (z.B.. <h1>|</h1>)</label>
+      <label index="sheet_viewList.grouptitleWrap">Gruppentitel Wrap (z.B. <h2>|</h2>)</label>
       <label index="sheet_viewList.limitOffset">Limit: Startpunkt/Offset (ab 1. Datensatz = 0)</label>
       <label index="sheet_viewList.limit">Limit: Datensaetze pro Seite (1 bis 1000)</label>
       <label index="sheet_viewList.navigation">Ansicht: Navigation</label>
@@ -646,7 +646,7 @@
       <label index="sheet_viewList.search.wildcards">Suche: Platzhalter (Wildcards)</label>
       <label index="sheet_viewList.search.wildcards.default">Automatisch (empfohlen)</label>
       <label index="sheet_viewList.search.wildcards.manual">Besucher muss Platzhalter selbst hinzufuegen</label>
-      <label index="sheet_viewList.search.wildcards.char">Suche: Zeichen fuer den Platzhalter (z.B.: <![CDATA[&quot;]]>*<![CDATA[&quot;]]>)</label>
+      <label index="sheet_viewList.search.wildcards.char">Suche: Zeichen fuer den Platzhalter (z.B.: "*")</label>
       <label index="sheet_viewList.csvexport">CSV Export</label>
       <label index="sheet_viewList.csvexport.disabled">Deaktiviert (Standard)</label>
       <label index="sheet_viewList.csvexport.enabled">Aktiviert</label>
@@ -674,8 +674,8 @@
       <label index="sheet_viewSingle.record_browser.display.withoutResult.yes">... zeige den Datensatz-Browser immer an (empfohlen)</label>
       <label index="sheet_viewSingle.record_browser.display.withoutResult.ts">... beachte TypoScript</label>
       <label index="sheet_viewSingle.record_browser.labeling">Datensatz-Browser: Bezeichnungen</label>
-      <label index="sheet_viewSingle.record_browser.labeling.chars">Zeichen: <![CDATA[&lt;]]><![CDATA[&lt;]]> <![CDATA[&lt;]]> ... <![CDATA[&gt;]]> <![CDATA[&gt;]]><![CDATA[&gt;]]></label>
-      <label index="sheet_viewSingle.record_browser.labeling.text">Text: Erster, vorheriger, ... n&amp;auml;chster, letzter</label>
+      <label index="sheet_viewSingle.record_browser.labeling.chars">Zeichen: << < ... > >></label>
+      <label index="sheet_viewSingle.record_browser.labeling.text">Text: Erster, vorheriger, ... n<![CDATA[Ä]]>chster, letzter</label>
       <label index="sheet_viewSingle.record_browser.labeling.icons">Symbole (nur mit jQuery UI CSS)</label>
       <label index="sheet_viewSingle.record_browser.labeling.position">Position: 1, 237, ..., 239, 714</label>
       <label index="sheet_viewSingle.record_browser.tutorial">Datensatz-Browser: Tutorial</label>
