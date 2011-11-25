@@ -1637,6 +1637,28 @@ plugin.tx_browser_pi1 {
 
   flexform {
     sDEF {
+      controlling {
+          // Control the display of the plugin by URL parameters
+        enabled = TEXT
+        enabled {
+            // [Boolean] The display of the plugin isn't controlled by URL parameters (default)
+          value = 0
+        }
+        adjustment {
+            // Display the plugin, if one of the following parameters is part of the URL ...
+          display_if_parameter_is_in_list = TEXT
+          display_if_parameter_is_in_list {
+              // [String/csv] Comma separated list of parameters
+            value = 
+          }
+            // Hide the plugin, if one of the following parameters is part of the URL ...
+          hide_if_parameter_is_in_list = TEXT
+          hide_if_parameter_is_in_list {
+              // [String/csv] Comma separated list of parameters
+            value = ignore
+          }
+        }
+      }
       downloads {
           // Allow to download files
         enabled = TEXT
