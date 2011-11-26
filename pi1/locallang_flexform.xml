@@ -150,6 +150,7 @@
       <label index="sheet_sDEF.controlling.enabled.no">Disabled (default)</label>
       <label index="sheet_sDEF.controlling.enabled.yes">Enabled</label>
       <label index="sheet_sDEF.controlling.enabled.ts">Take the value from TypoScript</label>
+      <label index="sheet_sDEF.controlling.adjustment.display_if_in_list">Control the plugin:  Display it only, if one of the following parameters is part of the URL ... (Example: tx_browser_pi1[downloadcatUid], tx_browser_pi1[newsUid]. CSV, comma separated list)</label>
       <label index="sheet_sDEF.controlling.adjustment.hide_if_in_list">Control the plugin:  Hide it, if one of the following parameters is part of the URL ... (Example: tx_browser_pi1[downloadcatUid], tx_browser_pi1[newsUid]. CSV, comma separated list)</label>
       <label index="sheet_sDEF.relations">Relations Configuration</label>
       <label index="sheet_sDEF.relations.default">Default</label>

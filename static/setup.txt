@@ -1645,6 +1645,12 @@ plugin.tx_browser_pi1 {
           value = 0
         }
         adjustment {
+            // Display the plugin only, if one of the following parameters is part of the URL ...
+          display_if_in_list = TEXT
+          display_if_in_list {
+              // [String/csv] Comma separated list of parameters
+            value = 
+          }
             // Hide the plugin, if one of the following parameters is part of the URL ...
           hide_if_in_list = TEXT
           hide_if_in_list {
