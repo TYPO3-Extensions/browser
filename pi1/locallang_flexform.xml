@@ -46,9 +46,9 @@
       <label index="sheet_evaluate.plugin.error.no_view">Bug: There isn't any view configured.</label>
       <label index="sheet_evaluate.plugin.error.saved_never">Bug: This plugin isn't saved never.</label>
       <label index="sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum">Fix it: Configure javascript.ajax.jQuery.default.typeNum</label>
-      <label index="sheet_evaluate.plugin.info.no_AJAXpageObject">Fix it? The Browser has a template. Copy it. Code f.e.: browser_ajax < plugin.tx_browser_pi1.javascript.ajax.jQuery.default. The typeNum has to be %typeNum%. Alternate: don't use AJAX.</label>
+      <label index="sheet_evaluate.plugin.info.no_AJAXpageObject">Fix it? The Browser has a template. Copy it. Code f.e.: browser_ajax <![CDATA[<]]> plugin.tx_browser_pi1.javascript.ajax.jQuery.default. The typeNum has to be %typeNum%. Alternate: don't use AJAX.</label>
       <label index="sheet_evaluate.plugin.info.no_CSV_defaultTypeNum">Fix it: Configure export.csv.page.typeNum</label>
-      <label index="sheet_evaluate.plugin.info.no_CSVpageObject">Fix it? The Browser has a template. Copy it. Code f.e.: browser_csv < plugin.tx_browser_pi1.export.csv.page. The typeNum has to be %typeNum%. Alternate: don't use the CSV export.</label>
+      <label index="sheet_evaluate.plugin.info.no_CSVpageObject">Fix it? The Browser has a template. Copy it. Code f.e.: browser_csv <![CDATA[<]]> plugin.tx_browser_pi1.export.csv.page. The typeNum has to be %typeNum%. Alternate: don't use the CSV export.</label>
       <label index="sheet_evaluate.plugin.info.no_record_storage_pid">Fix it? Configure the general storage pid. See tab [Behaviour] field [Record Storage Page]. Bear in mind to set more than one pid, if your data are stored in more than one folder.</label>
       <label index="sheet_evaluate.plugin.info.no_ts_template">Fix it: include the Static Template "Browser"!</label>
       <label index="sheet_evaluate.plugin.info.no_view">Fix it: configure your TypoScript like plugin.tx_browser_pi1.views.list.1 { ... }</label>
@@ -277,7 +277,7 @@
       <label index="sheet_templating.css.jqui.z_own.path">CSS jQuery UI *.css (i.e. fileadmin/..., http://..., EXT:...)</label>
       <label index="sheet_templating.css.jqui.z_ts">Take the value from TypoScript</label>
       <label index="sheet_templating.dataQuery">Data: query</label>
-      <label index="sheet_templating.wrapBaseClass">Templating: default <div> container for this plugin</label>
+      <label index="sheet_templating.wrapBaseClass">Templating: default <![CDATA[<div>]]>-container for this plugin</label>
       <label index="sheet_templating.wrapBaseClass.0">Wrap in base class (recommended)</label>
       <label index="sheet_viewList">List View</label>
       <label index="sheet_viewList.title">Title (substitutes ###MY_TITLE###)</label>
@@ -337,7 +337,7 @@
       <label index="sheet_viewSingle.record_browser.display.withoutResult.yes">... display the record browser nevertheless (recommended)</label>
       <label index="sheet_viewSingle.record_browser.display.withoutResult.ts">... take the value from TypoScript</label>
       <label index="sheet_viewSingle.record_browser.labeling">Record Browser: labeling</label>
-      <label index="sheet_viewSingle.record_browser.labeling.chars">Chars - i.e: << < ... > >> (recommended)</label>
+      <label index="sheet_viewSingle.record_browser.labeling.chars">Chars - i.e: <![CDATA[<< < ... > >>]]> (recommended)</label>
       <label index="sheet_viewSingle.record_browser.labeling.icons">icons (with jQuery UI CSS only!)</label>
       <label index="sheet_viewSingle.record_browser.labeling.position">Numbers - i.e: 1, 234, 235, 236, 723</label>
       <label index="sheet_viewSingle.record_browser.labeling.text">Text - i.e: first, previous, ..., next, last</label>
@@ -386,9 +386,9 @@
       <label index="sheet_evaluate.plugin.error.no_view">Fehler: Es ist keine View konfiguriert.</label>
       <label index="sheet_evaluate.plugin.error.saved_never">Fehler: Dieses Plugin ist noch nie gespeichert worden.</label>
       <label index="sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum">Fehler beheben: konfiguriere javascript.ajax.jQuery.default.typeNum</label>
-      <label index="sheet_evaluate.plugin.info.no_AJAXpageObject">Fehler beheben? Der Browser hat ein Template. Kopiere es. Code z.B.: browser_ajax < plugin.tx_browser_pi1.javascript.ajax.jQuery.default. Der typeNum muss %typeNum% lauten. Alternative: verzichte auf AJAX.</label>
+      <label index="sheet_evaluate.plugin.info.no_AJAXpageObject">Fehler beheben? Der Browser hat ein Template. Kopiere es. Code z.B.: browser_ajax <![CDATA[<]]> plugin.tx_browser_pi1.javascript.ajax.jQuery.default. Der typeNum muss %typeNum% lauten. Alternative: verzichte auf AJAX.</label>
       <label index="sheet_evaluate.plugin.info.no_CSV_defaultTypeNum">Fehler beheben: konfiguriere export.csv.page.typeNum</label>
-      <label index="sheet_evaluate.plugin.info.no_CSVpageObject">Fehler beheben? Der Browser hat ein Template. Kopiere es. Code z.B.: browser_csv < plugin.tx_browser_pi1.export.csv.page. Der typeNum muss %typeNum% lauten. Alternative: verzichte auf den CSV-Export.</label>
+      <label index="sheet_evaluate.plugin.info.no_CSVpageObject">Fehler beheben? Der Browser hat ein Template. Kopiere es. Code z.B.: browser_csv <![CDATA[<]]> plugin.tx_browser_pi1.export.csv.page. Der typeNum muss %typeNum% lauten. Alternative: verzichte auf den CSV-Export.</label>
       <label index="sheet_evaluate.plugin.info.no_record_storage_pid">Fehler beheben? Konfigure das Feld [Datensatzsammlung]. Siehe Reiter [Verhalten] Feld [Datensatzsammlung]. Denk' d'ran: Wenn Du Deine Daten in mehr als einem Ordner speicherst, musst Du auch diese Ordner angeben.</label>
       <label index="sheet_evaluate.plugin.info.no_ts_template">Fehler beheben: binde das Static Template "Browser" ein!</label>
       <label index="sheet_evaluate.plugin.info.no_view">Fehler beheben: konfiguriere Dein TypoScript etwa so: plugin.tx_browser_pi1.views.list.1 { ... }</label>
@@ -614,7 +614,7 @@
       <label index="sheet_templating.css.jqui.z_own.path">CSS jQuery UI: Datei</label>
       <label index="sheet_templating.css.jqui.z_ts">Nimm den Wert aus TypoScript</label>
       <label index="sheet_templating.dataQuery">Daten: Abfrage</label>
-      <label index="sheet_templating.wrapBaseClass">Templating: Standard <div>-Container fuer dieses Plugin</label>
+      <label index="sheet_templating.wrapBaseClass">Templating: Standard <![CDATA[<div>]]>-Container fuer dieses Plugin</label>
       <label index="sheet_templating.wrapBaseClass.0">Mit Basis-Klasse umschliessen (empfohlen)</label>
       <label index="sheet_viewList">Listenansicht</label>
       <label index="sheet_viewList.title">Titel (ersetzt ###MY_TITLE###)</label>
@@ -674,7 +674,7 @@
       <label index="sheet_viewSingle.record_browser.display.withoutResult.yes">... zeige den Datensatz-Browser immer an (empfohlen)</label>
       <label index="sheet_viewSingle.record_browser.display.withoutResult.ts">... beachte TypoScript</label>
       <label index="sheet_viewSingle.record_browser.labeling">Datensatz-Browser: Bezeichnungen</label>
-      <label index="sheet_viewSingle.record_browser.labeling.chars">Zeichen: << < ... > >></label>
+      <label index="sheet_viewSingle.record_browser.labeling.chars">Zeichen: <![CDATA[<< < ... > >>]]></label>
       <label index="sheet_viewSingle.record_browser.labeling.text">Text: Erster, vorheriger, ... n<![CDATA[Ä]]>chster, letzter</label>
       <label index="sheet_viewSingle.record_browser.labeling.icons">Symbole (nur mit jQuery UI CSS)</label>
       <label index="sheet_viewSingle.record_browser.labeling.position">Position: 1, 237, ..., 239, 714</label>

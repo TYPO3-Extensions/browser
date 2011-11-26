@@ -1936,8 +1936,11 @@ class tx_browser_pi1_backend
       default:
         $lang = 'default';
     }
-    require_once('locallang_flexform.xml');
-    $this->locallang = $LOCAL_LANG[$lang];
+    // 111126, dwildt-
+    //require_once('locallang_flexform.xml');
+    // 111126, dwildt+
+    $GLOBALS['LANG']->includeLLFile('EXT:browser/pi1/locallang_flexform.xml');
+    //$this->locallang = $LOCAL_LANG[$lang];
   }
 
 
