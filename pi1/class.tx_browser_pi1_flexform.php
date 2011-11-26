@@ -1732,7 +1732,7 @@ class tx_browser_pi1_flexform {
     $field_2          = 'adjustment';
     $field_3          = 'display_if_in_list';
     $field            = $field_1 . '.' . $field_2. '.' . $field_3;
-    $value            = (int) $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+    $value            = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
 
     if( $bool_statisticsEnable )
     {
@@ -1755,7 +1755,7 @@ class tx_browser_pi1_flexform {
     $field_2          = 'adjustment';
     $field_3          = 'hide_if_in_list';
     $field            = $field_1 . '.' . $field_2. '.' . $field_3;
-    $value            = (int) $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+    $value            = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
 
     if( $bool_statisticsEnable )
     {
