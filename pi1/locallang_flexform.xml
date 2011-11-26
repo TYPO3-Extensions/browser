@@ -146,6 +146,12 @@
       <label index="sheet_sDEF.piVars">Views: piVars (parameters in the URL) from foreign plugins:</label>
       <label index="sheet_sDEF.piVars.pluginThis">Ignore it (default)</label>
       <label index="sheet_sDEF.piVars.pluginAll">Handle it</label>
+      <label index="sheet_sDEF.controlling.enabled">Control the plugin by URL parameters</label>
+      <label index="sheet_sDEF.controlling.enabled.no">Disabled (default)</label>
+      <label index="sheet_sDEF.controlling.enabled.yes">Enabled</label>
+      <label index="sheet_sDEF.controlling.enabled.ts">Take the value from TypoScript</label>
+      <label index="sheet_sDEF.controlling.adjustment.display_if_in_list">Display the plugin, if one of the following parameters is part of the URL ... (CSV, comma separated list)</label>
+      <label index="sheet_sDEF.controlling.adjustment.hide_if_in_list">Hide the plugin, if one of the following parameters is part of the URL ... (CSV, comma separated list)</label>
       <label index="sheet_sDEF.relations">Relations Configuration</label>
       <label index="sheet_sDEF.relations.default">Default</label>
       <label index="sheet_sDEF.relations.configured">Configured</label>

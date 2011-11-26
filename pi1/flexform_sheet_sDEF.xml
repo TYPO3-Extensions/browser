@@ -144,6 +144,58 @@
           </config>
         </TCEforms>
       </piVars>
+      <controlling.enabled>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.controlling.enabled</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.controlling.enabled.no</numIndex>
+                <numIndex index="1">no</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.controlling.enabled.yes</numIndex>
+                <numIndex index="1">yes</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.controlling.enabled.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+            </items>
+            <default>no</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </controlling.enabled>
+      <controlling.adjustment.display_if_in_list>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.controlling.adjustment.display_if_in_list</label>
+          <displayCond>FIELD:controlling.enabled:=:yes</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <max>255</max>
+            <eval>trim</eval>
+          </config>
+        </TCEforms>
+      </controlling.adjustment.display_if_in_list>
+      <controlling.adjustment.hide_if_in_list>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.controlling.adjustment.hide_if_in_list</label>
+          <displayCond>FIELD:controlling.enabled:=:yes</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <max>255</max>
+            <eval>trim</eval>
+          </config>
+        </TCEforms>
+      </controlling.adjustment.hide_if_in_list>
       <relations_select>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations</label>
