@@ -1924,6 +1924,9 @@ class tx_browser_pi1_backend
  * getLL(): Get the locallang for class use out of an XML file
  *
  * @return  array   Array of the locallang data
+ *
+ * @version 4.0.0
+ * @since 3.0.0
  */
   private function getLL()
   {
