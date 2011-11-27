@@ -2049,6 +2049,18 @@ class tx_browser_pi1_views
       // LOOP each parameter from csv list
     foreach( $csvArray as $param )
     {
+        // CONTINUE $csvArray is empty
+      if( empty ( $param ) )
+      {
+        if ( $this->pObj->b_drs_templating )
+        {
+          $prompt = 'The list of URL parameter for hiding this plugin doesn\'t contain any parameter.';
+          t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        continue;
+      }
+        // CONTINUE $csvArray is empty
+        
         // Get key=value pair
       list( $paramKey, $paramValue) = explode( '=', $param );
       $paramKey   = trim( $paramKey );
@@ -2109,7 +2121,7 @@ class tx_browser_pi1_views
       {
         if ( $this->pObj->b_drs_templating )
         {
-          $prompt = 'The list of URL parameter for hiding this plugin contains ' . $paramKey . '.';
+          $prompt = 'The list of URL parameter for hiding this plugin contains \'' . $paramKey . '\'.';
           t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
           $prompt = $paramKey . ' isn\'t any part of the URL. This plugin won\'t hidden.';
           t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
@@ -2136,6 +2148,19 @@ class tx_browser_pi1_views
     $csvValues  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
     $csvArray   = $this->pObj->objZz->getCSVasArray( $csvValues );
       // Get the csv list as an array out of the TypoScript
+
+      // RETURN true: $csvArray is empty
+    if( empty ( $csvArray ) )
+    {
+      if ( $this->pObj->b_drs_templating )
+      {
+        $prompt = 'The list of URL parameter for display this plugin doesn\'t contain any parameter.';
+        t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return true;
+      continue;
+    }
+      // RETURN true: $csvArray is empty
 
       // LOOP each parameter from csv list
     foreach( $csvArray as $param )
