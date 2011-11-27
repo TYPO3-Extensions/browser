@@ -474,7 +474,7 @@ if ( ! ( $pos === false ) )
       //
       // RETURN true: any condition isn't defined
 
-    if( isset ( $arr_ts['condition'] ) )
+    if( ! ( isset ( $arr_ts['condition'] ) ) )
     {
       if ( $this->pObj->b_drs_filter )
       {
