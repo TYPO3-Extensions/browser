@@ -1940,46 +1940,59 @@ class tx_browser_pi1_views
       // Build the arr_GPparams
 
       // Merge $_POST and $_GET ($Post has precedence)
-    $_POST['tx_browser_pi1[showUid]'] = null;
-    $GP           = $_POST + $_GET;
-    $GP           = array_unique( $GP );
+    $GP = t3lib_div::_POST + t3lib_div::_GET;
+    $GP = array_unique( $GP );
       // Merge $_POST and $_GET ($Post has precedence)
 
     $arr_GPparam  = null;
-      // LOOP each param
-    foreach( $GP as $GPparam => $GPvalue )
+      // LOOP first level
+    foreach( $GP as $key_01 => $value_01 )
     {
-        // LOOP param is an array
-      if( is_array( $GPvalue ) )
+        // Element is an array
+      if( is_array( $value_01 ) )
       {
-          // LOOP each param element
-        foreach( $GPvalue as $GPvalueParam => $GPvalueValue )
+          // LOOP second level
+        foreach( $value_01 as $key_02 => $value_02 )
         {
-            // ERROR: param array is an array. This won't handled.
-          if( is_array( $GPvalueValue ) )
+            // Element is an array
+          if( is_array( $value_02 ) )
           {
-            if ( $this->pObj->b_drs_error )
+              // LOOP third level
+            foreach( $value_02 as $key_03 => $value_03 )
             {
-              $param      = $GPparam . '[' . $GPvalueParam . '][' . $GPvalueValue .  ']';
-              $prompt_01  = 'ERROR: URL parameter can\'t evaluate. Parameter is a three dimensional array at least: \'' . $param . '\'';
-              $prompt_02  = 'HELP: The PHP code of the browser has to adapt to this requirement. Please publish it in the typo3-browser-forum.de.';
-              t3lib_div::devLog( '[ERROR/TEMPLATING] ' . $prompt_01, $this->pObj->extKey, 0 );
-              t3lib_div::devLog( '[HELP/TEMPLATING] ' . $prompt_02, $this->pObj->extKey, 0 );
+                // Element is an array
+                // ERROR: param array is an array. This won't handled.
+              if( is_array( $value_03 ) )
+              {
+                if ( $this->pObj->b_drs_error )
+                {
+                  $param      = $key_01 . '[' . $key_02 . '][' . $key_03 . ']';
+                  $prompt_01  = 'ERROR: URL parameter can\'t evaluate. Parameter is a forth dimensional array at least: \'' . $param . '\'';
+                  $prompt_02  = 'HELP: The PHP code of the browser has to adapt to this requirement. Please publish it in the typo3-browser-forum.de.';
+                  t3lib_div::devLog( '[ERROR/TEMPLATING] ' . $prompt_01, $this->pObj->extKey, 3 );
+                  t3lib_div::devLog( '[HELP/TEMPLATING] ' . $prompt_02, $this->pObj->extKey, 1 );
+                }
+                continue;
+              }
+                // Element is an array
+                // ERROR: param array is an array. This won't handled.
+                // Set the param array
+              $arr_GPparam[$key_01 . '[' . $key_02 . '][' . $key_03 . ']'] = $value_03;
             }
+              // LOOP third level
             continue;
           }
-            // ERROR: param array is an array. This won't handled.
             // Set the param array
-          $arr_GPparam[$GPparam . '[' . $GPvalueParam . ']'] = $GPvalueValue;
+          $arr_GPparam[$key_01 . '[' . $key_02 . ']'] = $value_02;
         }
-          // LOOP each param element
+          // LOOP second level
         continue;
       }
-        // LOOP param is an array
+        // Element is an array
         // Set the param
-      $arr_GPparam[$GPparam] = $GPvalue;
+      $arr_GPparam[$key_01] = $value_01;
     }
-      // LOOP each param
+      // LOOP first level
       // Build the arr_GPparams
 
 //array(3) {
