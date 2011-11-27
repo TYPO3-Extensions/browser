@@ -1940,7 +1940,7 @@ class tx_browser_pi1_views
       // Build the arr_GPparams
 
       // Merge $_POST and $_GET ($Post has precedence)
-    $GP = t3lib_div::_POST + t3lib_div::_GET;
+    $GP = t3lib_div::_POST() + t3lib_div::_GET();
     $GP = array_unique( $GP );
       // Merge $_POST and $_GET ($Post has precedence)
 
