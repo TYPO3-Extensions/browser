@@ -2008,7 +2008,7 @@ class tx_browser_pi1_views
       //
       // RETURN false: Any Parameter of the list for displaying this plugin is part of the URL
 
-var_dump( $sheet, $field, $csvValues );
+//var_dump( $sheet, $field, $csvValues );
     switch( true )
     {
       case( ! ( $csvValues == '' ) ):
