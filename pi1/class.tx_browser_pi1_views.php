@@ -2020,13 +2020,13 @@ class tx_browser_pi1_views
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_GPparam[$paramKey], $paramKey );
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_GPparam[$paramKey], $paramKey, $paramValue );
     }
       if( isset( $arr_GPparam[$paramKey] ) )
       {
         switch( true )
         {
-          case( ! ( $paramValue === null ) ):
+          case( ! ( $paramValue == null ) ):
             if( $arr_GPparam[$paramKey] === $paramValue )
             {
               if ( $this->pObj->b_drs_templating )
@@ -2075,7 +2075,7 @@ class tx_browser_pi1_views
       $paramValue = trim( $paramValue );
     if ( ! ( $pos === false ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_GPparam[$paramKey], $paramKey );
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_GPparam[$paramKey], $paramKey, $paramValue );
     }
       if( isset( $arr_GPparam[$paramKey] ) )
       {
