@@ -150,8 +150,8 @@
       <label index="sheet_sDEF.controlling.enabled.no">Disabled (default)</label>
       <label index="sheet_sDEF.controlling.enabled.yes">Enabled</label>
       <label index="sheet_sDEF.controlling.enabled.ts">Take the value from TypoScript</label>
-      <label index="sheet_sDEF.controlling.adjustment.display_if_in_list">Control the plugin: Display this plugin only, if one of the following parameters is part of the URL ... (Example: tx_browser_pi1[downloadcatUid], tx_browser_pi1[newsUid]. CSV, comma separated list)</label>
-      <label index="sheet_sDEF.controlling.adjustment.hide_if_in_list">Control the plugin: Hide this plugin, if one of the following parameters is part of the URL ... (Example: tx_browser_pi1[downloadcatUid], tx_browser_pi1[newsUid]. CSV, comma separated list)</label>
+      <label index="sheet_sDEF.controlling.adjustment.display_if_in_list">Control the plugin: Display this plugin only, if one of the following parameters is part of the URL ... (Example: sword, tx_browser_pi1[newsUid]=163, tx_browser_pi1[tx_org_downloadscat.uid][*]. CSV, comma separated list)</label>
+      <label index="sheet_sDEF.controlling.adjustment.hide_if_in_list">Control the plugin: Hide this plugin, if one of the following parameters is part of the URL ... (Example: sword, tx_browser_pi1[newsUid]=163, tx_browser_pi1[tx_org_downloadscat.uid][*]. CSV, comma separated list)</label>
       <label index="sheet_sDEF.relations">Relations Configuration</label>
       <label index="sheet_sDEF.relations.default">Default</label>
       <label index="sheet_sDEF.relations.configured">Configured</label>
@@ -495,8 +495,8 @@
       <label index="sheet_sDEF.controlling.enabled.no">Deaktiviert (Standard)</label>
       <label index="sheet_sDEF.controlling.enabled.yes">Aktiviert</label>
       <label index="sheet_sDEF.controlling.enabled.ts">Nimm den Wert aus TypoScript</label>
-      <label index="sheet_sDEF.controlling.adjustment.display_if_in_list">Plugin-Steuerung: Zeige dieses Plugin nur, wenn einer der folgenden Paremeter Teil der URL ist ... (Beispiel: tx_browser_pi1[downloadcatUid], tx_browser_pi1[newsUid]. CSV, Komma-separierte-Liste)</label>
-      <label index="sheet_sDEF.controlling.adjustment.hide_if_in_list">Plugin-Steuerung: Verstecke dieses Plugin, wenn einer der folgenden Paremeter Teil der URL ist ... (Beispiel: tx_browser_pi1[downloadcatUid], tx_browser_pi1[newsUid]. CSV, Komma-separierte-Liste)</label>
+      <label index="sheet_sDEF.controlling.adjustment.display_if_in_list">Plugin-Steuerung: Zeige dieses Plugin nur, wenn einer der folgenden Paremeter Teil der URL ist ... (Beispiel: sword, tx_browser_pi1[newsUid]=163, tx_browser_pi1[tx_org_downloadscat.uid][*]. CSV, Komma-separierte-Liste)</label>
+      <label index="sheet_sDEF.controlling.adjustment.hide_if_in_list">Plugin-Steuerung: Verstecke dieses Plugin, wenn einer der folgenden Paremeter Teil der URL ist ... (Beispiel: sword, tx_browser_pi1[newsUid]=163, tx_browser_pi1[tx_org_downloadscat.uid][*]. CSV, Komma-separierte-Liste)</label>
       <label index="sheet_sDEF.relations">Relations: Konfiguration</label>
       <label index="sheet_sDEF.relations.default">Standard</label>
       <label index="sheet_sDEF.relations.configured">Konfiguriert</label>
