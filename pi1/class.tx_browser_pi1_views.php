@@ -2043,6 +2043,7 @@ class tx_browser_pi1_views
         switch( true )
         {
           case( ! ( $paramValue == '' ) ):
+          case( ! ( $paramValue == null ) ):
             if( $arr_GPparam[$paramKey] === $paramValue )
             {
               if ( $this->pObj->b_drs_templating )
@@ -2098,6 +2099,7 @@ class tx_browser_pi1_views
         switch( true )
         {
           case( ! ( $paramValue == '' ) ):
+          case( ! ( $paramValue == null ) ):
             if( $arr_GPparam[$paramKey] === $paramValue )
             {
               if ( $this->pObj->b_drs_templating )
@@ -2132,16 +2134,19 @@ class tx_browser_pi1_views
       // RETURN false: Any Parameter of the list for displaying this plugin is part of the URL
 
 //var_dump( $sheet, $field, $csvValues );
-    if( ! ( $csvValues === '' ) )
+    switch( true )
     {
-      if ( $this->pObj->b_drs_templating )
-      {
-        $prompt = 'This is the list of needed URL parameter for displaying this plugin: \'' . $csvValues . '\'.';
-        t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
-        $prompt = 'But any parameter is part of the URL. This plugin won\'t displayed.';
-        t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-      return false;
+      case( ! ( $paramValue == '' ) ):
+      case( ! ( $paramValue == null ) ):
+        if ( $this->pObj->b_drs_templating )
+        {
+          $prompt = 'This is the list of needed URL parameter for displaying this plugin: \'' . $csvValues . '\'.';
+          t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = 'But any parameter is part of the URL. This plugin won\'t displayed.';
+          t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        return false;
+        break;
     }
       // RETURN false: Any Parameter of the list for displaying this plugin is part of the URL
 
