@@ -1933,53 +1933,54 @@ class tx_browser_pi1_views
     }
       // RETURN true. Plugin shouldn't controlled by URL parameters
 
-//$_POST['post'] = post;
-//$_GET['post']   = get;
-$GP           = $_POST + $_GET;
-$GP           = array_unique( $GP );
-$str_GPparam  = null;
-foreach( $GP as $GPparam => $GPvalue )
-{
-  if( is_array( $GPvalue ) )
-  {
-    foreach( $GPvalue as $GPvalueParam => $GPvalueValue )
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Build the arr_GPparams
+
+      // Merge $_POST and $_GET ($Post has precedence)
+    $GP           = $_POST + $_GET;
+    $GP           = array_unique( $GP );
+      // Merge $_POST and $_GET ($Post has precedence)
+
+    $arr_GPparam  = null;
+      // LOOP each param
+    foreach( $GP as $GPparam => $GPvalue )
     {
-      if( is_array( $GPvalueValue ) )
+        // LOOP param is an array
+      if( is_array( $GPvalue ) )
       {
-        if ( $this->pObj->b_drs_error )
+          // LOOP each param element
+        foreach( $GPvalue as $GPvalueParam => $GPvalueValue )
         {
-          $param      = $GPparam . '[' . $GPvalueParam . '][' . $GPvalueValue .  ']';
-          $prompt_01  = 'ERROR: URL parameter can\'t evaluate. Parameter is a three dimensional array at least: \'' . $param . '\'';
-          $prompt_02  = 'HELP: The PHP code of the browser has to adapt to this requirement. Please publish it in the typo3-browser-forum.de.';
-          t3lib_div::devLog( '[ERROR/TEMPLATING] ' . $prompt_01, $this->pObj->extKey, 0 );
-          t3lib_div::devLog( '[HELP/TEMPLATING] ' . $prompt_02, $this->pObj->extKey, 0 );
+            // ERROR: param array is an array. This won't handled.
+          if( is_array( $GPvalueValue ) )
+          {
+            if ( $this->pObj->b_drs_error )
+            {
+              $param      = $GPparam . '[' . $GPvalueParam . '][' . $GPvalueValue .  ']';
+              $prompt_01  = 'ERROR: URL parameter can\'t evaluate. Parameter is a three dimensional array at least: \'' . $param . '\'';
+              $prompt_02  = 'HELP: The PHP code of the browser has to adapt to this requirement. Please publish it in the typo3-browser-forum.de.';
+              t3lib_div::devLog( '[ERROR/TEMPLATING] ' . $prompt_01, $this->pObj->extKey, 0 );
+              t3lib_div::devLog( '[HELP/TEMPLATING] ' . $prompt_02, $this->pObj->extKey, 0 );
+            }
+            continue;
+          }
+            // ERROR: param array is an array. This won't handled.
+            // Set the param array
+          $arr_GPparam[$GPparam . '[' . $GPvalueParam . ']'] = $GPvalueValue;
+          continue;
         }
+          // LOOP each param element
       }
-      continue;
+        // LOOP param is an array
+        // Set the param
+      $arr_GPparam[$GPparam] = $GPvalue;
     }
-//    switch( true )
-//    {
-      $arr_GPparam[$GPparam . '[' . $GPvalueParam . ']'] = $GPvalueValue;
-//      case( ! ( $GPvalue === null ) ):
-//        $arr_GPparam[] = $GPparam . '[' . $GPvalueParam . ']=' . $GPvalueValue;
-//        break;
-//      default:
-//        $arr_GPparam[] = $GPparam . '[' . $GPvalueParam . ']';
-//        break;
-//    }
-    continue;
-  }
-//  switch( true )
-//  {
-    $arr_GPparam[$GPparam] = $GPvalue;
-//    case( ! ( $GPvalue === null ) ):
-//      $arr_GPparam[$GPparam] = $GPparam . '=' . $GPvalue;
-//      break;
-//    default:
-//      $arr_GPparam[$GPparam] = $GPparam;
-//      break;
-//  }
-}
+      // LOOP each param
+      // Build the arr_GPparams
+
     $this->pObj->str_developer_csvIp = '87.177.77.43';
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
