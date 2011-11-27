@@ -1919,7 +1919,9 @@ class tx_browser_pi1_views
       //
       // RETURN true: Plugin shouldn't controlled by URL parameters
 
-    if( ! $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.']['value'] )
+    $coa_name = $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2];
+    $coa_conf = $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'];
+    $value    = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
     {
       if ( $this->pObj->b_drs_templating )
       {
@@ -1940,7 +1942,9 @@ class tx_browser_pi1_views
     $field_2    = 'adjustment';
     $field_3    = 'hide_if_in_list';
     $field      = $field_1 . '.' . $field_2. '.' . $field_3;
-    $csvValues  = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+    $coa_name   = $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3];
+    $coa_conf   = $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'];
+    $csvValues  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
     $csvArray   = $this->pObj->objZz->getCSVasArray( $csvValues );
     foreach( $csvArray as $paramKey )
     {
@@ -1973,7 +1977,9 @@ class tx_browser_pi1_views
     $field_2    = 'adjustment';
     $field_3    = 'display_if_in_list';
     $field      = $field_1 . '.' . $field_2. '.' . $field_3;
-    $csvValues  = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+    $coa_name   = $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3];
+    $coa_conf   = $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'];
+    $csvValues  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
     $csvArray   = $this->pObj->objZz->getCSVasArray( $csvValues );
     foreach( $csvArray as $paramKey )
     {
@@ -2002,7 +2008,6 @@ class tx_browser_pi1_views
       //
       // RETURN false: Any Parameter of the list for displaying this plugin is part of the URL
 
-    $csvValues = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
 var_dump( $sheet, $field, $csvValues );
     switch( true )
     {
