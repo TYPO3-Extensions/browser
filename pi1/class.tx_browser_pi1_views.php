@@ -2049,7 +2049,7 @@ if ( ! ( $pos === false ) )
 {
   var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $paramKey, $paramValue, $arr_GPparam[$paramKey], isset( $arr_GPparam[$paramKey] ) );
 }
-      if( isset( $arr_GPparam[$paramKey] ) )
+      if( in_array( $paramKey, array_keys ( $arr_GPparam ) ) )
       {
         switch( true )
         {
@@ -2114,7 +2114,7 @@ if ( ! ( $pos === false ) )
 {
   var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $paramKey, $paramValue, $arr_GPparam[$paramKey], isset( $arr_GPparam[$paramKey] ) );
 }
-      if( isset( $arr_GPparam[$paramKey] ) )
+      if( in_array( $paramKey, array_keys ( $arr_GPparam ) ) )
       {
         switch( true )
         {
