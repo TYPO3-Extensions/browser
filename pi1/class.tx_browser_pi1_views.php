@@ -1972,6 +1972,7 @@ class tx_browser_pi1_views
                   t3lib_div::devLog( '[ERROR/TEMPLATING] ' . $prompt_01, $this->pObj->extKey, 3 );
                   t3lib_div::devLog( '[HELP/TEMPLATING] ' . $prompt_02, $this->pObj->extKey, 1 );
                 }
+                $arr_GPparam[$key_01 . '[' . $key_02 . '][' . $key_03 . '][]'] = null;
                 continue;
               }
                 // Element is an array
@@ -1980,12 +1981,14 @@ class tx_browser_pi1_views
               $arr_GPparam[$key_01 . '[' . $key_02 . '][' . $key_03 . ']'] = $value_03;
             }
               // LOOP third level
+            $arr_GPparam[$key_01 . '[' . $key_02 . '][]'] = null;
             continue;
           }
             // Set the param array
           $arr_GPparam[$key_01 . '[' . $key_02 . ']'] = $value_02;
         }
           // LOOP second level
+        $arr_GPparam[$key_01 . '[]'] = null;
         continue;
       }
         // Element is an array
