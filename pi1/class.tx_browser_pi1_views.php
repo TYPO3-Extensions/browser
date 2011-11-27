@@ -1962,7 +1962,7 @@ class tx_browser_pi1_views
       }
     }
       // RETURN false: Parameter is in the list for hiding this plugin
-
+var_dump( $_POST, $_GET, $paramKey);
 
 
       //////////////////////////////////////////////////////////////////////
