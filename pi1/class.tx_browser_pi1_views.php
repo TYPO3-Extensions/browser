@@ -2086,6 +2086,16 @@ if ( ! ( $pos === false ) )
             break;
         }
       }
+      if( ! ( in_array( $paramKey, array_keys ( $arr_GPparam ) ) ) )
+      {
+        if ( $this->pObj->b_drs_templating )
+        {
+          $prompt = 'The list of URL parameter for hiding this plugin contains ' . $paramKey . '.';
+          t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = $paramKey . ' isn\'t any part of the URL. This plugin won\'t hidden.';
+          t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+      }
     }
       // RETURN false: Parameter is in the list for hiding this plugin
 
@@ -2093,7 +2103,7 @@ if ( ! ( $pos === false ) )
 
       //////////////////////////////////////////////////////////////////////
       //
-      // RETURN true: Parameter is in the list for displaying this plugin
+      // RETURN true or false: Parameter is in the list for displaying this plugin
 
     $field_1    = 'controlling';
     $field_2    = 'adjustment';
@@ -2131,28 +2141,41 @@ if ( ! ( $pos === false ) )
               }
               return true;
             }
-            if ( $this->pObj->b_drs_templating )
-            {
-              $prompt = 'The list of needed URL parameter for displaying this plugin: ' . $param . '.';
-              t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
-              $prompt = 'URL parameter: ' . $str_GPparam . '.';
-              t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
-            }
+//            if ( $this->pObj->b_drs_templating )
+//            {
+//              $prompt = 'The list of needed URL parameter for displaying this plugin: ' . $param . '.';
+//              t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+//              $prompt = 'URL parameter has a different value: ' . $paramKey . '=' . $arr_GPparam[$paramKey] . '. ' .
+//                        'This plugin won\'t displayed.';
+//              t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+//            }
+//            return false;
             break;
           default:
             if ( $this->pObj->b_drs_templating )
             {
               $prompt = 'The list of needed URL parameter for displaying this plugin contains ' . $paramKey . '.';
               t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
-              $prompt = 'And ' . $paramKey . ' is part of the URL. This plugin will displayed.';
+              $prompt = 'And ' . $paramKey . ' isn\t part of the URL. This plugin will displayed.';
               t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
             }
             return true;
             break;
         }
       }
+//      if( ! ( in_array( $paramKey, array_keys ( $arr_GPparam ) ) ) )
+//      {
+//        if ( $this->pObj->b_drs_templating )
+//        {
+//          $prompt = 'The list of needed URL parameter for displaying this plugin contains ' . $paramKey . '.';
+//          t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+//          $prompt = $paramKey . ' isn\'t any part of the URL. This plugin won\'t displayed.';
+//          t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+//        }
+//        return false;
+//      }
     }
-      // RETURN false: Parameter is in the list for hiding this plugin
+      // RETURN true or false: Parameter is in the list for displaying this plugin
     
 
 
@@ -2163,8 +2186,8 @@ if ( ! ( $pos === false ) )
 //var_dump( $sheet, $field, $csvValues );
     switch( true )
     {
-      case( ! ( $paramValue == '' ) ):
-      case( ! ( $paramValue == null ) ):
+      case( ! ( $csvArray == '' ) ):
+      case( ! ( $csvArray == null ) ):
         if ( $this->pObj->b_drs_templating )
         {
           $prompt = 'This is the list of needed URL parameter for displaying this plugin: \'' . $csvValues . '\'.';
