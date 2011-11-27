@@ -2016,6 +2016,12 @@ class tx_browser_pi1_views
       list( $paramKey, $paramValue) = explode( '=', $param );
       $paramKey   = trim( $paramKey );
       $paramValue = trim( $paramValue );
+    $this->pObj->str_developer_csvIp = '87.177.77.43';
+    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_GPparam[$paramKey], $arr_GPparam[$paramKey );
+    }
       if( isset( $arr_GPparam[$paramKey] ) )
       {
         switch( true )
@@ -2067,6 +2073,10 @@ class tx_browser_pi1_views
       list( $paramKey, $paramValue) = explode( '=', $param );
       $paramKey   = trim( $paramKey );
       $paramValue = trim( $paramValue );
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_GPparam[$paramKey], $arr_GPparam[$paramKey );
+    }
       if( isset( $arr_GPparam[$paramKey] ) )
       {
         switch( true )
