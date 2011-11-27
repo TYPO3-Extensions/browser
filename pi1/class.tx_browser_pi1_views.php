@@ -1933,15 +1933,56 @@ class tx_browser_pi1_views
     }
       // RETURN true. Plugin shouldn't controlled by URL parameters
 
-$_POST['post'] = post;
-$_GET['post'] = get;
-$GP = $_POST + $_GET;
-$GP = array_unique( $GP );
+//$_POST['post'] = post;
+//$_GET['post']   = get;
+$GP           = $_POST + $_GET;
+$GP           = array_unique( $GP );
+$str_GPparam  = null;
+foreach( $GP as $GPparam => $GPvalue )
+{
+  if( is_array( $GPvalue ) )
+  {
+    foreach( $GPvalue as $GPvalueParam => $GPvalueValue )
+    {
+      if( is_array( $GPvalueValue ) )
+      {
+        if ( $this->pObj->b_drs_error )
+        {
+          $param      = $GPparam . '[' . $GPvalueParam . '][' . $GPvalueValue .  ']';
+          $prompt_01  = 'ERROR: URL parameter can\'t evaluate. Parameter is a three dimensional array at least: \'' . $param . '\'';
+          $prompt_02  = 'HELP: The PHP code of the browser has to adapt to this requirement. Please publish it in the typo3-browser-forum.de.';
+          t3lib_div::devLog( '[ERROR/TEMPLATING] ' . $prompt_01, $this->pObj->extKey, 0 );
+          t3lib_div::devLog( '[HELP/TEMPLATING] ' . $prompt_02, $this->pObj->extKey, 0 );
+        }
+      }
+      continue;
+    }
+    switch( true )
+    {
+      case( ! ( $GPvalue === null ) ):
+        $arr_GPparam[] = $GPparam . '[' . $GPvalueParam . ']=' . $GPvalueValue;
+        break;
+      default:
+        $arr_GPparam[] = $GPparam . '[' . $GPvalueParam . ']';
+        break;
+    }
+    continue;
+  }
+  switch( true )
+  {
+    case( ! ( $GPvalue === null ) ):
+      $arr_GPparam[] = $GPparam . '=' . $GPvalue;
+      break;
+    default:
+      $arr_GPparam[] = $GPparam;
+      break;
+  }
+}
     $this->pObj->str_developer_csvIp = '87.177.77.43';
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GP );
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GP, $arr_GPparam );
     }
 //var_dump( $_POST, $_GET, $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.']);
 
