@@ -1945,6 +1945,7 @@ class tx_browser_pi1_views
       // Merge $_POST and $_GET ($Post has precedence)
 
     $arr_GPparam  = null;
+    $str_GPparam  = null;
       // LOOP first level
     foreach( $GP as $key_01 => $value_01 )
     {
@@ -1973,29 +1974,39 @@ class tx_browser_pi1_views
                   t3lib_div::devLog( '[HELP/TEMPLATING] ' . $prompt_02, $this->pObj->extKey, 1 );
                 }
                 $arr_GPparam[$key_01 . '[' . $key_02 . '][' . $key_03 . '][*]'] = null;
+                $str_GPparam = $str_GPparam . ', ' . $key_01 . '[' . $key_02 . '][' . $key_03 . '][*]';
                 continue;
               }
                 // Element is an array
                 // ERROR: param array is an array. This won't handled.
                 // Set the param array
               $arr_GPparam[$key_01 . '[' . $key_02 . '][' . $key_03 . ']'] = $value_03;
+              $str_GPparam = $str_GPparam . ', ' . $key_01 . '[' . $key_02 . '][' . $key_03 . ']=' . $value_03;
             }
               // LOOP third level
             $arr_GPparam[$key_01 . '[' . $key_02 . '][*]'] = null;
+            $str_GPparam = $str_GPparam . ', ' . $key_01 . '[' . $key_02 . '][*]';
             continue;
           }
             // Set the param array
           $arr_GPparam[$key_01 . '[' . $key_02 . ']'] = $value_02;
+          $str_GPparam = $str_GPparam . ', ' . $key_01 . '[' . $key_02 . ']=' . $value_02;
         }
           // LOOP second level
         $arr_GPparam[$key_01 . '[*]'] = null;
+        $str_GPparam = $str_GPparam . ', ' . $key_01 . '[*]';
         continue;
       }
         // Element is an array
         // Set the param
       $arr_GPparam[$key_01] = $value_01;
+      $str_GPparam = $str_GPparam . ', ' . $key_01 . '=' . $value_01;
     }
       // LOOP first level
+    if( $str_GPparam )
+    {
+      $str_GPparam = ltrim( $str_GPparam, ', ' );
+    }
       // Build the arr_GPparams
 
 //array(3) {
@@ -2055,6 +2066,13 @@ class tx_browser_pi1_views
               }
               return false;
             }
+            if ( $this->pObj->b_drs_templating )
+            {
+              $prompt = 'The list of URL parameter for hiding this plugin: ' . $param . '.';
+              t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+              $prompt = 'URL parameter: ' . $str_GPparam . '.';
+              t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+            }
             break;
           default:
             if ( $this->pObj->b_drs_templating )
@@ -2110,6 +2128,13 @@ class tx_browser_pi1_views
                 t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
               }
               return true;
+            }
+            if ( $this->pObj->b_drs_templating )
+            {
+              $prompt = 'The list of needed URL parameter for displaying this plugin: ' . $param . '.';
+              t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+              $prompt = 'URL parameter: ' . $str_GPparam . '.';
+              t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
             }
             break;
           default:
