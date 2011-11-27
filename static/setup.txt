@@ -920,6 +920,12 @@ plugin.tx_browser_pi1 {
         // Master template for a category menu
       category_menu = CATEGORY_MENU
       category_menu {
+          // If condition is met, filter will display. If not, filter will hide.
+        condition = TEXT
+        condition {
+            // True (default)
+          value = 1
+        }
           // [String/optional] Name for the piVar. Name must be unique.
         nice_piVar =
           // [Boolean] Should be added a default item?
@@ -1009,6 +1015,12 @@ plugin.tx_browser_pi1 {
       }
       checkbox = CHECKBOX
       checkbox {
+          // If condition is met, filter will display. If not, filter will hide.
+        condition = TEXT
+        condition {
+            // True (default)
+          value = 1
+        }
           // [String/optional] Name for the piVar. Name must be unique.
         nice_piVar =
           // [Boolean] Is a selecting obligatory?
@@ -1083,6 +1095,12 @@ plugin.tx_browser_pi1 {
         // Master template for radio buttons
       radiobuttons = RADIOBUTTONS
       radiobuttons {
+          // If condition is met, filter will display. If not, filter will hide.
+        condition = TEXT
+        condition {
+            // True (default)
+          value = 1
+        }
           // [String/optional] Name for the piVar. Name must be unique.
         nice_piVar =
           // [Boolean] Is a selecting obligatory?
@@ -1157,6 +1175,12 @@ plugin.tx_browser_pi1 {
         // Master template for a selectbox
       selectbox = SELECTBOX
       selectbox {
+          // If condition is met, filter will display. If not, filter will hide.
+        condition = TEXT
+        condition {
+            // True (default)
+          value = 1
+        }
           // [String/optional] Name for the piVar. Name must be unique.
         nice_piVar =
           // [Boolean] Should be added a default item?
