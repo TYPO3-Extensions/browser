@@ -1922,7 +1922,7 @@ class tx_browser_pi1_views
     $coa_name = $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2];
     $coa_conf = $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'];
     $value    = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
-    if( $value )
+    if( ! $value )
     {
       if ( $this->pObj->b_drs_templating )
       {
