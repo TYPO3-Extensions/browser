@@ -2106,7 +2106,7 @@ class tx_browser_pi1_views
       // RETURN false: Any Parameter of the list for displaying this plugin is part of the URL
 
 //var_dump( $sheet, $field, $csvValues );
-    if( ! ( $csvValues === null ) )
+    if( ! ( $csvValues === '' ) )
     {
       if ( $this->pObj->b_drs_templating )
       {
