@@ -1959,23 +1959,25 @@ foreach( $GP as $GPparam => $GPvalue )
     }
     switch( true )
     {
-      case( ! ( $GPvalue === null ) ):
-        $arr_GPparam[] = $GPparam . '[' . $GPvalueParam . ']=' . $GPvalueValue;
-        break;
-      default:
-        $arr_GPparam[] = $GPparam . '[' . $GPvalueParam . ']';
-        break;
+      $arr_GPparam[] = $GPparam . '[' . $GPvalueParam . ']=' . $GPvalueValue;
+//      case( ! ( $GPvalue === null ) ):
+//        $arr_GPparam[] = $GPparam . '[' . $GPvalueParam . ']=' . $GPvalueValue;
+//        break;
+//      default:
+//        $arr_GPparam[] = $GPparam . '[' . $GPvalueParam . ']';
+//        break;
     }
     continue;
   }
   switch( true )
   {
-    case( ! ( $GPvalue === null ) ):
-      $arr_GPparam[] = $GPparam . '=' . $GPvalue;
-      break;
-    default:
-      $arr_GPparam[] = $GPparam;
-      break;
+    $arr_GPparam[$GPparam] = $GPparam . '=' . $GPvalue;
+//    case( ! ( $GPvalue === null ) ):
+//      $arr_GPparam[$GPparam] = $GPparam . '=' . $GPvalue;
+//      break;
+//    default:
+//      $arr_GPparam[$GPparam] = $GPparam;
+//      break;
   }
 }
     $this->pObj->str_developer_csvIp = '87.177.77.43';
