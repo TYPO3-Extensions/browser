@@ -1372,7 +1372,14 @@ if ( ! ( $pos === false ) )
               $marker[$str_marker] = $this->renderHtmlFilter($obj_ts, $arr_ts, $arr_tableFields[$tableField], $tableField);
               break;
             default:
-              $marker[$str_marker] = '<input type="hidden" value="3" name="' . $tableField . '">';
+$this->pObj->str_developer_csvIp = '87.177.77.43';
+$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $this->pObj->piVars );
+}
+//              $filterValue = $this->pObj->piVars[$tableField];
+              $marker[$str_marker] = '<input type="hidden" value="' . $filterValue .  '" name="tx_browser_pi1[' . $tableField . '][]">';
               break;
           }
             // #32117, 111127, dwildt+
