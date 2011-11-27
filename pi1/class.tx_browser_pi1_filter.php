@@ -1378,8 +1378,12 @@ if ( ! ( $pos === false ) )
 {
   var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $this->pObj->piVars );
 }
-//              $filterValue = $this->pObj->piVars[$tableField];
-              $marker[$str_marker] = '<input type="hidden" value="' . $filterValue .  '" name="tx_browser_pi1[' . $tableField . '][]">';
+              $str_inputHidden = null;
+              foreach( $this->pObj->piVars[$tableField] as $filterValue )
+              {
+                $str_inputHidden = $str_inputHidden . '<input type="hidden" value="' . $filterValue .  '" name="tx_browser_pi1[' . $tableField . '][]">';
+              }
+              $marker[$str_marker] = $str_inputHidden;
               break;
           }
             // #32117, 111127, dwildt+
