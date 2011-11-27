@@ -1279,7 +1279,10 @@ $this->pObj->str_developer_csvIp = '87.177.77.43';
 $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 if ( ! ( $pos === false ) )
 {
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_ts['condition.'] );
+  $coa_name   = $arr_ts['condition'];
+  $coa_conf   = $arr_ts['condition.'];
+  $value      = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_ts['condition.'], $value );
 }
           $marker[$str_marker] = $this->renderHtmlFilter($obj_ts, $arr_ts, $arr_tableFields[$tableField], $tableField);
           break;
