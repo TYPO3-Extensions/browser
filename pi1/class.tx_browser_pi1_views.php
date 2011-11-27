@@ -2044,7 +2044,7 @@ class tx_browser_pi1_views
         {
           case( ! ( $paramValue == '' ) ):
           case( ! ( $paramValue == null ) ):
-            if( $arr_GPparam[$paramKey] === $paramValue )
+            if( $arr_GPparam[$paramKey] == $paramValue )
             {
               if ( $this->pObj->b_drs_templating )
               {
@@ -2100,7 +2100,7 @@ class tx_browser_pi1_views
         {
           case( ! ( $paramValue == '' ) ):
           case( ! ( $paramValue == null ) ):
-            if( $arr_GPparam[$paramKey] === $paramValue )
+            if( $arr_GPparam[$paramKey] == $paramValue )
             {
               if ( $this->pObj->b_drs_templating )
               {
