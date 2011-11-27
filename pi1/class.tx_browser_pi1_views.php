@@ -1932,6 +1932,7 @@ class tx_browser_pi1_views
       return true;
     }
       // RETURN true. Plugin shouldn't controlled by URL parameters
+var_dump( $_POST, $_GET, $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.']);
 
 
 
@@ -1967,7 +1968,6 @@ class tx_browser_pi1_views
       }
     }
       // RETURN false: Parameter is in the list for hiding this plugin
-//var_dump( $_POST, $_GET, $paramKey);
 
 
       //////////////////////////////////////////////////////////////////////
