@@ -2017,12 +2017,12 @@ class tx_browser_pi1_views
 //  ["no_cache"]=>
 //  string(1) "1"
 //}
-    $this->pObj->str_developer_csvIp = '87.177.77.43';
-    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GP, $arr_GPparam );
-    }
+//    $this->pObj->str_developer_csvIp = '87.177.77.43';
+//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if ( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GP, $arr_GPparam );
+//    }
 
 
 
@@ -2043,12 +2043,12 @@ class tx_browser_pi1_views
       list( $paramKey, $paramValue) = explode( '=', $param );
       $paramKey   = trim( $paramKey );
       $paramValue = trim( $paramValue );
-$this->pObj->str_developer_csvIp = '87.177.77.43';
-$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $paramKey, $paramValue, $arr_GPparam[$paramKey], isset( $arr_GPparam[$paramKey] ) );
-}
+//$this->pObj->str_developer_csvIp = '87.177.77.43';
+//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//if ( ! ( $pos === false ) )
+//{
+//  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $paramKey, $paramValue, $arr_GPparam[$paramKey], isset( $arr_GPparam[$paramKey] ) );
+//}
       if( in_array( $paramKey, array_keys ( $arr_GPparam ) ) )
       {
         switch( true )
@@ -2118,12 +2118,12 @@ if ( ! ( $pos === false ) )
       list( $paramKey, $paramValue) = explode( '=', $param );
       $paramKey   = trim( $paramKey );
       $paramValue = trim( $paramValue );
-$this->pObj->str_developer_csvIp = '87.177.77.43';
-$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $paramKey, $paramValue, $arr_GPparam[$paramKey], isset( $arr_GPparam[$paramKey] ) );
-}
+//$this->pObj->str_developer_csvIp = '87.177.77.43';
+//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//if ( ! ( $pos === false ) )
+//{
+//  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $paramKey, $paramValue, $arr_GPparam[$paramKey], isset( $arr_GPparam[$paramKey] ) );
+//}
       if( in_array( $paramKey, array_keys ( $arr_GPparam ) ) )
       {
         switch( true )
