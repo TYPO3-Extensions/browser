@@ -1940,6 +1940,7 @@ class tx_browser_pi1_views
       // Build the arr_GPparams
 
       // Merge $_POST and $_GET ($Post has precedence)
+    $_POST['tx_browser_pi1[showUid]'] = null;
     $GP           = $_POST + $_GET;
     $GP           = array_unique( $GP );
       // Merge $_POST and $_GET ($Post has precedence)
@@ -1981,13 +1982,20 @@ class tx_browser_pi1_views
       // LOOP each param
       // Build the arr_GPparams
 
+//array(3) {
+//  ["tx_browser_pi1[downloadscatUid]"]=>
+//  string(1) "4"
+//  ["cHash"]=>
+//  string(32) "e41a8246252a47f14dbc89b8ff554804"
+//  ["no_cache"]=>
+//  string(1) "1"
+//}
     $this->pObj->str_developer_csvIp = '87.177.77.43';
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
       var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GP, $arr_GPparam );
     }
-//var_dump( $_POST, $_GET, $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.']);
 
 
 
@@ -2003,26 +2011,43 @@ class tx_browser_pi1_views
     $coa_conf   = $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'];
     $csvValues  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
     $csvArray   = $this->pObj->objZz->getCSVasArray( $csvValues );
-    foreach( $csvArray as $paramKey )
+    foreach( $csvArray as $param )
     {
-      switch( true )
+      list( $paramKey, $paramValue) = explode( '=', $param );
+      $paramKey   = trim( $paramKey );
+      $paramValue = trim( $paramValue );
+      if( isset( $arr_GPparam[$paramKey] ) )
       {
-        case( isset( $_POST[$paramKey] ) ):
-        case( isset( $_GET[$paramKey] ) ):
-          if ( $this->pObj->b_drs_templating )
-          {
-            $prompt = 'The list of URL parameter for hiding this plugin contains ' . $paramKey . '.';
-            t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
-            $prompt = 'And ' . $paramKey . ' is part of the URL. This plugin will hidden.';
-            t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
-          }
-          return false;
-          break;
-        default:
-          // Go to the next condition
+        switch( true )
+        {
+          case( ! ( $paramValue === null ) ):
+            if( $arr_GPparam[$paramKey] === $paramValue )
+            {
+              if ( $this->pObj->b_drs_templating )
+              {
+                $prompt = 'The list of URL parameter for hiding this plugin contains ' . $param . '.';
+                t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+                $prompt = 'And ' . $param . ' is part of the URL. This plugin will hidden.';
+                t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+              }
+              return false;
+            }
+            break;
+          default:
+            if ( $this->pObj->b_drs_templating )
+            {
+              $prompt = 'The list of URL parameter for hiding this plugin contains ' . $paramKey . '.';
+              t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+              $prompt = 'And ' . $paramKey . ' is part of the URL. This plugin will hidden.';
+              t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+            }
+            return false;
+            break;
+        }
       }
     }
       // RETURN false: Parameter is in the list for hiding this plugin
+
 
 
       //////////////////////////////////////////////////////////////////////
@@ -2037,27 +2062,43 @@ class tx_browser_pi1_views
     $coa_conf   = $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.'];
     $csvValues  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
     $csvArray   = $this->pObj->objZz->getCSVasArray( $csvValues );
-    foreach( $csvArray as $paramKey )
+    foreach( $csvArray as $param )
     {
-      switch( true )
+      list( $paramKey, $paramValue) = explode( '=', $param );
+      $paramKey   = trim( $paramKey );
+      $paramValue = trim( $paramValue );
+      if( isset( $arr_GPparam[$paramKey] ) )
       {
-        case( isset( $_POST[$paramKey] ) ):
-        case( isset( $_GET[$paramKey] ) ):
-          if ( $this->pObj->b_drs_templating )
-          {
-            $prompt = 'The list of needed URL parameter for displaying this plugin contains ' . $paramKey . '.';
-            t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
-            $prompt = 'And ' . $paramKey . ' is part of the URL. This plugin will displayed.';
-            t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
-          }
-          return true;
-          break;
-        default:
-          // Go to next condition
+        switch( true )
+        {
+          case( ! ( $paramValue === null ) ):
+            if( $arr_GPparam[$paramKey] === $paramValue )
+            {
+              if ( $this->pObj->b_drs_templating )
+              {
+                $prompt = 'The list of needed URL parameter for displaying this plugin contains ' . $param . '.';
+                t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+                $prompt = 'And ' . $param . ' is part of the URL. This plugin will displayed.';
+                t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+              }
+              return true;
+            }
+            break;
+          default:
+            if ( $this->pObj->b_drs_templating )
+            {
+              $prompt = 'The list of needed URL parameter for displaying this plugin contains ' . $paramKey . '.';
+              t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+              $prompt = 'And ' . $paramKey . ' is part of the URL. This plugin will displayed.';
+              t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+            }
+            return true;
+            break;
+        }
       }
     }
-      // RETURN true: Parameter is in the list for displaying this plugin
-
+      // RETURN false: Parameter is in the list for hiding this plugin
+    
 
 
       //////////////////////////////////////////////////////////////////////
@@ -2065,20 +2106,16 @@ class tx_browser_pi1_views
       // RETURN false: Any Parameter of the list for displaying this plugin is part of the URL
 
 //var_dump( $sheet, $field, $csvValues );
-    switch( true )
+    if( ! ( $csvValues === null ) )
     {
-      case( ! ( $csvValues == '' ) ):
-        if ( $this->pObj->b_drs_templating )
-        {
-          $prompt = 'This is the list of needed URL parameter for displaying this plugin: \'' . $csvValues . '\'.';
-          t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
-          $prompt = 'But any parameter is part of the URL. This plugin won\'t displayed.';
-          t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-        return false;
-        break;
-      default:
-        break;
+      if ( $this->pObj->b_drs_templating )
+      {
+        $prompt = 'This is the list of needed URL parameter for displaying this plugin: \'' . $csvValues . '\'.';
+        t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'But any parameter is part of the URL. This plugin won\'t displayed.';
+        t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return false;
     }
       // RETURN false: Any Parameter of the list for displaying this plugin is part of the URL
 
