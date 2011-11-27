@@ -1889,6 +1889,163 @@ class tx_browser_pi1_views
 
 
 
+  /***********************************************
+   *
+   * Helper
+   *
+   **********************************************/
+
+
+
+
+  /**
+ * displayThePlugin( ): Sets the global $bool_session_enabled.
+ *                      The boolean is controlled by the flexform / TypoScript.
+ *                      The User can enable and disable session management.
+ *
+ * @return	void
+ * @version 3.9.3
+ * @since 3.9.3
+ */
+  public function displayThePlugin( )
+  {
+    $sheet    = 'sDEF';
+    $field_1  = 'controlling';
+    $field_2  = 'enabled';
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // RETURN true: Plugin shouldn't controlled by URL parameters
+
+    if( ! $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.']['value'] )
+    {
+      if ( $this->pObj->b_drs_templating )
+      {
+        $prompt = 'RETURN. Plugin shouldn\'t controlled by URL parameters';
+        t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return true;
+    }
+      // RETURN true. Plugin shouldn't controlled by URL parameters
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // RETURN false: Parameter is in the list for hiding this plugin
+
+    $field_1    = 'controlling';
+    $field_2    = 'adjustment';
+    $field_3    = 'hide_if_in_list';
+    $field      = $field_1 . '.' . $field_2. '.' . $field_3;
+    $csvValues  = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+    $csvArray   = $this->pObj->objZz->getCSVasArray( $csvValues );
+    foreach( $csvArray as $paramKey )
+    {
+      switch( true )
+      {
+        case( isset( $_POST[$paramKey] ) ):
+        case( isset( $_GET[$paramKey] ) ):
+          if ( $this->pObj->b_drs_templating )
+          {
+            $prompt = 'The list of URL parameter for hiding this plugin contains ' . $paramKey . '.';
+            t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+            $prompt = 'And ' . $paramKey . ' is part of the URL. This plugin will hidden.';
+            t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+          }
+          return false;
+          break;
+        default:
+          // Go to the next condition
+      }
+    }
+      // RETURN false: Parameter is in the list for hiding this plugin
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // RETURN true: Parameter is in the list for displaying this plugin
+
+    $field_1    = 'controlling';
+    $field_2    = 'adjustment';
+    $field_3    = 'display_if_in_list';
+    $field      = $field_1 . '.' . $field_2. '.' . $field_3;
+    $csvValues  = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+    $csvArray   = $this->pObj->objZz->getCSVasArray( $csvValues );
+    foreach( $csvArray as $paramKey )
+    {
+      switch( true )
+      {
+        case( isset( $_POST[$paramKey] ) ):
+        case( isset( $_GET[$paramKey] ) ):
+          if ( $this->pObj->b_drs_templating )
+          {
+            $prompt = 'The list of needed URL parameter for displaying this plugin contains ' . $paramKey . '.';
+            t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+            $prompt = 'And ' . $paramKey . ' is part of the URL. This plugin will displayed.';
+            t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+          }
+          return true;
+          break;
+        default:
+          // Go to next condition
+      }
+    }
+      // RETURN true: Parameter is in the list for displaying this plugin
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // RETURN false: Any Parameter of the list for displaying this plugin is part of the URL
+
+    $csvValues = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+    switch( true )
+    {
+      case( ! ( $csvValues === null ) ):
+        if ( $this->pObj->b_drs_templating )
+        {
+          $prompt = 'This is the list of needed URL parameter for displaying this plugin: ' . $csvValues . '.';
+          t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = 'But any parameter is part of the URL. This plugin won\'t displayed.';
+          t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        return false;
+        break;
+      default:
+        break;
+    }
+      // RETURN false: Any Parameter of the list for displaying this plugin is part of the URL
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // RETURN true: This plugin doesn't need any URL parameter for displaying
+
+    if ( $this->pObj->b_drs_templating )
+    {
+      $prompt = 'This plugin doesn\'t need any URL parameter for displaying.';
+      t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+    return true;
+      // RETURN true: This plugin doesn't need any URL parameter for displaying
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

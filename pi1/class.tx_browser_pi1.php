@@ -537,6 +537,23 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
+      // Control the plugin by URL parameter
+
+      // #32099, 111126, dwildt*
+    if( ! $this->objViews->displayThePlugin( ) )
+    {
+      if ($this->b_drs_templating)
+      {
+        $prompt = 'RETURN. The current plugin should not handled';
+        t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->extKey, 0);
+      }
+      return;
+    }
+      // Control the plugin by URL parameter
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Replace TSFE markers
 
     $this->conf = $this->objZz->substitute_t3globals_recurs($this->conf);
