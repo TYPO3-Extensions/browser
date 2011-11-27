@@ -2003,7 +2003,7 @@ class tx_browser_pi1_views
       // RETURN false: Any Parameter of the list for displaying this plugin is part of the URL
 
     $csvValues = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
-//var_dump( $csvValues );
+var_dump( $csvValues );
     switch( true )
     {
       case( ! ( $csvValues == '' ) ):
