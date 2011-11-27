@@ -210,34 +210,43 @@ class tx_browser_pi1_wrapper
       {
           // I.e. $key_marker is 'title.', but we like the marker name without any dot
         $str_marker     = substr($key_marker, 0, strlen($key_marker) -1);
-          // #12472, 110123, dwildt
-        $tskey          = $conf_marker[$str_marker]; // TEXT or COA
-        $hashKeyMarker  = '###'.strtoupper($str_marker).'###';
-        switch($tskey)
-        {
-          case(null):
-          case('TEXT'):
-            $value          = $arr_marker['value'];
-              // The key name of the marker for the markerArray in the format ###MARKER###
-            $markerArray[$hashKeyMarker] = $this->general_stdWrap($value, $arr_marker);
-            break;
-          case('COA'):
-            $markerArray[$hashKeyMarker] = $this->general_stdWrap($this->pObj->local_cObj->COBJ_ARRAY($arr_marker, $ext=''), false);
-            break;
-          default:
-            var_dump('ERROR: '.$conf_marker[$str_marker]);
-            if ($this->pObj->b_drs_template)
-            {
-              t3lib_div::devlog('[ERROR/TEMPLATING] Type of marker \'' . $str_marker . '\' is ' .
-                $tskey . '. But markers could by TEXT or COA only!' .
-                $this->pObj->cObj->data['uid'], $this->pObj->extKey, 3);
-              t3lib_div::devlog('[WARN/TEMPLATING] Maybe you will get an unproper rendering result.' .
-                $this->pObj->cObj->data['uid'], $this->pObj->extKey, 2);
-              t3lib_div::devlog('[INFO/TEMPLATING] Please configure.' . $str_marker, 
-                $this->pObj->cObj->data['uid'], $this->pObj->extKey, 1);
-            }
-        }
-          // #12472, 110123, dwildt
+          // #32119, 111127, dwildt-
+//          // #12472, 110123, dwildt
+//        $tskey          = $conf_marker[$str_marker]; // TEXT or COA
+//        $hashKeyMarker  = '###'.strtoupper($str_marker).'###';
+//        switch($tskey)
+//        {
+//          case(null):
+//          case('TEXT'):
+//            $value          = $arr_marker['value'];
+//              // The key name of the marker for the markerArray in the format ###MARKER###
+//            $markerArray[$hashKeyMarker] = $this->general_stdWrap($value, $arr_marker);
+//            break;
+//          case('COA'):
+//            $markerArray[$hashKeyMarker] = $this->general_stdWrap($this->pObj->local_cObj->COBJ_ARRAY($arr_marker, $ext=''), false);
+//            break;
+//          default:
+//            var_dump('ERROR: '.$conf_marker[$str_marker]);
+//            if ($this->pObj->b_drs_template)
+//            {
+//              t3lib_div::devlog('[ERROR/TEMPLATING] Type of marker \'' . $str_marker . '\' is ' .
+//                $tskey . '. But markers could by TEXT or COA only!' .
+//                $this->pObj->cObj->data['uid'], $this->pObj->extKey, 3);
+//              t3lib_div::devlog('[WARN/TEMPLATING] Maybe you will get an unproper rendering result.' .
+//                $this->pObj->cObj->data['uid'], $this->pObj->extKey, 2);
+//              t3lib_div::devlog('[INFO/TEMPLATING] Please configure.' . $str_marker,
+//                $this->pObj->cObj->data['uid'], $this->pObj->extKey, 1);
+//            }
+//        }
+//          // #12472, 110123, dwildt
+          // #32119, 111127, dwildt-
+          // #32119, 111127, dwildt+
+        $coa_name                     = $conf_marker[$str_marker];
+        $coa_conf                     = $conf_marker[$str_marker . '.'];
+        $value                        = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+        $hashKeyMarker                = '###'.strtoupper($str_marker).'###';
+        $markerArray[$hashKeyMarker]  = $value;
+          // #32119, 111127, dwildt+
       }
     }
       // Building the marker array for replacement

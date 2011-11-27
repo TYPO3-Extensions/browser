@@ -1,6 +1,7 @@
 3.9.3
   111127
   New Features
+  * #32119: Marker becomes cObject
   * #32117: Condition for filters
   * #32099: Control plugins by URL parameters
   * #31230, 31229: Statistics module
