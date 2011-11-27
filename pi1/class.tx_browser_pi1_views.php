@@ -2186,8 +2186,8 @@ if ( ! ( $pos === false ) )
 //var_dump( $sheet, $field, $csvValues );
     switch( true )
     {
-      case( ! ( $csvArray == '' ) ):
-      case( ! ( $csvArray == null ) ):
+      case( ! ( $csvValues == '' ) ):
+      case( ! ( $csvValues == null ) ):
         if ( $this->pObj->b_drs_templating )
         {
           $prompt = 'This is the list of needed URL parameter for displaying this plugin: \'' . $csvValues . '\'.';
