@@ -30,7 +30,8 @@
 * @package    TYPO3
 * @subpackage    tx_browser
 *
-* @version 3.6.1
+* @version 3.9.3
+* @since 3.0.1
 */
 
 /**
@@ -192,7 +193,7 @@ class tx_browser_pi1_filter {
       //
       // Set the global $arr_conf_tableFields
 
-    if (empty ($this->arr_conf_tableFields))
+    if ( empty ($this->arr_conf_tableFields) )
     {
       $this->get_tableFields();
     }
@@ -228,7 +229,8 @@ class tx_browser_pi1_filter {
     foreach ($this->arr_conf_tableFields as $tableField)
     {
       list ($table, $field) = explode('.', $tableField);
-      if (is_array($this->rows_wo_limit)) {
+      if (is_array($this->rows_wo_limit))
+      {
         foreach ($this->rows_wo_limit as $row_wo_limit)
         {
           $arr_uids = null;
@@ -367,7 +369,8 @@ class tx_browser_pi1_filter {
  * @return  array   The array with the template at least
  * @version 3.5.0
  */
-  function filterLoop($template) {
+  function filterLoop($template)
+  {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
     $view = $this->pObj->view;
@@ -383,7 +386,8 @@ class tx_browser_pi1_filter {
     // Get rows
 
     // LOOP get rows per table.field
-    foreach ($this->arr_conf_tableFields as $tableField) {
+    foreach ( $this->arr_conf_tableFields as $tableField )
+    {
       $arr_result = $this->getRows($tableField);
       if ($arr_result['error']['status']) {
         return $arr_result;
@@ -1259,16 +1263,24 @@ class tx_browser_pi1_filter {
     //
     // Wrap table.fields
 
-    foreach ($arr_tableFields as $tableField => $rows) {
-      list ($table, $field) = explode('.', $tableField);
+    foreach ( $arr_tableFields as $tableField => $rows )
+    {
+      list ( $table, $field ) = explode( '.', $tableField );
       $obj_ts = $conf_view['filter.'][$table . '.'][$field];
       $arr_ts = $conf_view['filter.'][$table . '.'][$field . '.'];
-      $str_marker = '###' . strtoupper($tableField) . '###';
-      switch ($obj_ts) {
+      $str_marker = '###' . strtoupper( $tableField ) . '###';
+      switch ( $obj_ts )
+      {
         case ('CATEGORY_MENU') :
         case ('CHECKBOX') :
         case ('RADIOBUTTONS') :
         case ('SELECTBOX') :
+$this->pObj->str_developer_csvIp = '87.177.77.43';
+$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_ts['condition.'] );
+}
           $marker[$str_marker] = $this->renderHtmlFilter($obj_ts, $arr_ts, $arr_tableFields[$tableField], $tableField);
           break;
         default :
@@ -1385,9 +1397,9 @@ class tx_browser_pi1_filter {
  * @param array   $arr_values: The values for the selectbox
  * @param string    $tableField: The current table.field from the ts filter array
  * @return  array   Data array with the selectbox at least
- * @version 3.6.0
+ * @version 3.9.3
  */
-  function renderHtmlFilter($obj_ts, $arr_ts, $arr_values, $tableField)
+  private function renderHtmlFilter($obj_ts, $arr_ts, $arr_values, $tableField)
   {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -1408,7 +1420,7 @@ class tx_browser_pi1_filter {
       //
       // DRS - Development Reporting System
 
-    if ($this->pObj->b_drs_filter)
+    if ( $this->pObj->b_drs_filter )
     {
       t3lib_div :: devLog('[INFO/FILTER] \'' . $tableField . '\' is detected as a ' . $str_objType . '.', $this->pObj->extKey, 0);
       t3lib_div :: devLog('[HELP/FILTER] Configure the  ' . $str_objType . '? Please configure<br />' . $conf_view_path . $tableField . '.', $this->pObj->extKey, 1);
