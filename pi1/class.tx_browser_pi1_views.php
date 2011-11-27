@@ -1957,28 +1957,28 @@ foreach( $GP as $GPparam => $GPvalue )
       }
       continue;
     }
-    switch( true )
-    {
-      $arr_GPparam[] = $GPparam . '[' . $GPvalueParam . ']=' . $GPvalueValue;
+//    switch( true )
+//    {
+      $arr_GPparam[$GPparam . '[' . $GPvalueParam . ']'] = $GPvalueValue;
 //      case( ! ( $GPvalue === null ) ):
 //        $arr_GPparam[] = $GPparam . '[' . $GPvalueParam . ']=' . $GPvalueValue;
 //        break;
 //      default:
 //        $arr_GPparam[] = $GPparam . '[' . $GPvalueParam . ']';
 //        break;
-    }
+//    }
     continue;
   }
-  switch( true )
-  {
-    $arr_GPparam[$GPparam] = $GPparam . '=' . $GPvalue;
+//  switch( true )
+//  {
+    $arr_GPparam[$GPparam] = $GPvalue;
 //    case( ! ( $GPvalue === null ) ):
 //      $arr_GPparam[$GPparam] = $GPparam . '=' . $GPvalue;
 //      break;
 //    default:
 //      $arr_GPparam[$GPparam] = $GPparam;
 //      break;
-  }
+//  }
 }
     $this->pObj->str_developer_csvIp = '87.177.77.43';
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
