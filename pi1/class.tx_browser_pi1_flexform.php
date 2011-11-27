@@ -1684,7 +1684,7 @@ class tx_browser_pi1_flexform {
 
       // #31230, 31229: Statistics module
 
-    $bool_statisticsEnable  = false;
+    $bool_controllingEnable = false;
     $field_1                = 'controlling';
     $field_2                = 'enabled';
     $field                  = $field_1 . '.' . $field_2;
@@ -1703,7 +1703,7 @@ class tx_browser_pi1_flexform {
         }
         break;
       case( 'yes' ) :
-        $bool_statisticsEnable = true;
+        $bool_controllingEnable = true;
         $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.']['value'] = 1;
         if ( $this->pObj->b_drs_flexform )
         {
@@ -1734,7 +1734,7 @@ class tx_browser_pi1_flexform {
     $field            = $field_1 . '.' . $field_2. '.' . $field_3;
     $value            = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
 
-    if( $bool_statisticsEnable )
+    if( $bool_controllingEnable )
     {
       $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.']['value'] = $value;
       if ( $this->pObj->b_drs_flexform )
@@ -1757,7 +1757,7 @@ class tx_browser_pi1_flexform {
     $field            = $field_1 . '.' . $field_2. '.' . $field_3;
     $value            = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
 
-    if( $bool_statisticsEnable )
+    if( $bool_controllingEnable )
     {
       $this->pObj->conf['flexform.'][$sheet . '.'][$field_1 . '.'][$field_2 . '.'][$field_3 . '.']['value'] = $value;
       if ( $this->pObj->b_drs_flexform )
