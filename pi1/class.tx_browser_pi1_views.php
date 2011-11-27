@@ -2006,10 +2006,10 @@ class tx_browser_pi1_views
 //var_dump( $csvValues );
     switch( true )
     {
-      case( $csvValues == '' ):
+      case( ! ( $csvValues == '' ) ):
         if ( $this->pObj->b_drs_templating )
         {
-          $prompt = 'This is the list of needed URL parameter for displaying this plugin: ' . $csvValues . '.';
+          $prompt = 'This is the list of needed URL parameter for displaying this plugin: \'' . $csvValues . '\'.';
           t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
           $prompt = 'But any parameter is part of the URL. This plugin won\'t displayed.';
           t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
