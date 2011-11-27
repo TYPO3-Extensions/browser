@@ -1936,7 +1936,7 @@ class tx_browser_pi1_views
 $_POST['post'] = post;
 $_GET['post'] = get;
 $GP = $_POST + $_GET;
-$GP = unique( $GP );
+$GP = array_unique( $GP );
     $this->pObj->str_developer_csvIp = '87.177.77.43';
     $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
