@@ -1372,7 +1372,7 @@ if ( ! ( $pos === false ) )
               $marker[$str_marker] = $this->renderHtmlFilter($obj_ts, $arr_ts, $arr_tableFields[$tableField], $tableField);
               break;
             default:
-              $marker[$str_marker] = null;
+              $marker[$str_marker] = '<input type="hidden" value="3" name="' . $tableField . '">';
               break;
           }
             // #32117, 111127, dwildt+
