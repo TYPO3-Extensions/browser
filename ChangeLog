@@ -1,6 +1,7 @@
 3.9.3
-  111125
+  111127
   New Features
+  * #32117: Condition for filters
   * #32099: Control plugins by URL parameters
   * #31230, 31229: Statistics module
   * #29370: CSV export

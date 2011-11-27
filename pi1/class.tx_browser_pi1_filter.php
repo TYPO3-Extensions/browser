@@ -447,28 +447,25 @@ class tx_browser_pi1_filter {
 
 
   /**
-   * filterCondition( ):
-   *                     // #32117, 111127, dwildt+
+   * filterCondition( ):  Render the filter condition.
+   *                      // #32117, 111127, dwildt+
    *
    * @param string      $tableField: table.field of the current filter
    * @param array       $arr_ts: typoScript array of the current filter
-   * @return  boolen    True, if condition is meet. False, if it isn't.
+   * @return  boolen    True, if there isn't any condition or condition is meet. False, if it isn't.
    * @version 3.9.3
    * @since   3.9.3
    */
   function filterCondition( $tableField, $arr_ts )
   {
-    $bool_condition = true;
+      /////////////////////////////////////////////////////////////////
+      //
+      // Default values
 
-//$this->pObj->str_developer_csvIp = '87.177.77.43';
-//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if ( ! ( $pos === false ) )
-//{
-//  $coa_name   = $arr_ts['condition'];
-//  $coa_conf   = $arr_ts['condition.'];
-//  $value      = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
-//  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_ts['condition.'], $value );
-//}
+    $bool_condition = true;
+      // Default values
+
+    
 
       /////////////////////////////////////////////////////////////////
       //
@@ -515,7 +512,14 @@ class tx_browser_pi1_filter {
     }
       // Get condition result
 
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN condition result
+
     return $bool_condition;
+      // RETURN condition result
   }
 
   
@@ -1366,26 +1370,27 @@ class tx_browser_pi1_filter {
             // #32117, 111127, dwildt-
           //$marker[$str_marker] = $this->renderHtmlFilter($obj_ts, $arr_ts, $arr_tableFields[$tableField], $tableField);
             // #32117, 111127, dwildt+
+            // Evaluate the filter condition
           switch( $this->filterCondition( $tableField, $arr_ts ) )
           {
             case( true ):
+                // There isn't any condition or condition is met
+                // Display the filter
               $marker[$str_marker] = $this->renderHtmlFilter($obj_ts, $arr_ts, $arr_tableFields[$tableField], $tableField);
               break;
             default:
-//$this->pObj->str_developer_csvIp = '87.177.77.43';
-//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if ( ! ( $pos === false ) )
-//{
-//  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $this->pObj->piVars );
-//}
+                // Condition isn't met
+                // If there are filter values, add it as hidden fields
               $str_inputHidden = null;
               foreach( $this->pObj->piVars[$tableField] as $filterValue )
               {
                 $str_inputHidden = $str_inputHidden . '<input type="hidden" value="' . $filterValue .  '" name="tx_browser_pi1[' . $tableField . '][]">';
               }
               $marker[$str_marker] = $str_inputHidden;
+                // If there are filter values, add it as hidden fields
               break;
           }
+            // Evaluate the filter condition
             // #32117, 111127, dwildt+
           break;
         default :
