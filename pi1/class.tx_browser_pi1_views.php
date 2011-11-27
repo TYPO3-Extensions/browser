@@ -1962,7 +1962,7 @@ class tx_browser_pi1_views
       }
     }
       // RETURN false: Parameter is in the list for hiding this plugin
-var_dump( $_POST, $_GET, $paramKey);
+//var_dump( $_POST, $_GET, $paramKey);
 
 
       //////////////////////////////////////////////////////////////////////
@@ -2003,9 +2003,10 @@ var_dump( $_POST, $_GET, $paramKey);
       // RETURN false: Any Parameter of the list for displaying this plugin is part of the URL
 
     $csvValues = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+//var_dump( $csvValues );
     switch( true )
     {
-      case( ! ( $csvValues === null ) ):
+      case( $csvValues == '' ):
         if ( $this->pObj->b_drs_templating )
         {
           $prompt = 'This is the list of needed URL parameter for displaying this plugin: ' . $csvValues . '.';
