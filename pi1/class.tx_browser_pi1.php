@@ -539,7 +539,7 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // Control the plugin by URL parameter
 
-      // #32099, 111126, dwildt*
+      // #32099, 111126, dwildt+
     if( ! $this->objViews->displayThePlugin( ) )
     {
       if ($this->b_drs_templating)
