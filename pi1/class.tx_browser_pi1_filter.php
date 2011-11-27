@@ -438,6 +438,94 @@ class tx_browser_pi1_filter {
   *
   **********************************************/
 
+
+
+
+
+
+
+
+
+  /**
+   * filterCondition( ):
+   *                     // #32117, 111127, dwildt+
+   *
+   * @param string      $tableField: table.field of the current filter
+   * @param array       $arr_ts: typoScript array of the current filter
+   * @return  boolen    True, if condition is meet. False, if it isn't.
+   * @version 3.9.3
+   * @since   3.9.3
+   */
+  function filterCondition( $tableField, $arr_ts )
+  {
+    $bool_condition = true;
+
+$this->pObj->str_developer_csvIp = '87.177.77.43';
+$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) )
+{
+  $coa_name   = $arr_ts['condition'];
+  $coa_conf   = $arr_ts['condition.'];
+  $value      = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_ts['condition.'], $value );
+}
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN true: any condition isn't defined
+
+    if( isset ( $arr_ts['condition'] ) )
+    {
+      if ( $this->pObj->b_drs_filter )
+      {
+        $prompt = $tableField . ' hasn\'t any condition.';
+        t3lib_div :: devLog('[INFO/FILTER] ' . $prompt , $this->pObj->extKey, 0);
+      }
+      return $bool_condition;
+    }
+      // RETURN true: any condition isn't defined
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Get condition result
+
+    $coa_name   = $arr_ts['condition'];
+    $coa_conf   = $arr_ts['condition.'];
+    $value      = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+    switch( $value )
+    {
+      case( false ):
+        $bool_condition = false;
+        if ( $this->pObj->b_drs_filter )
+        {
+          $prompt = 'Condition of ' . $tableField . ' is false.';
+          t3lib_div :: devLog('[INFO/FILTER] ' . $prompt , $this->pObj->extKey, 0);
+        }
+        break;
+      default;
+        $bool_condition = true;
+        if ( $this->pObj->b_drs_filter )
+        {
+          $prompt = 'Condition of ' . $tableField . ' is true.';
+          t3lib_div :: devLog('[INFO/FILTER] ' . $prompt , $this->pObj->extKey, 0);
+        }
+        break;
+    }
+      // Get condition result
+
+    return $bool_condition;
+  }
+
+  
+  
+  
+  
+  
+  
+  
+  
   /**
  * Order the values by uid or value and ASC or DESC
  *
@@ -1259,9 +1347,9 @@ class tx_browser_pi1_filter {
 
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Wrap table.fields
+      /////////////////////////////////////////////////////////////////
+      //
+      // Wrap table.fields
 
     foreach ( $arr_tableFields as $tableField => $rows )
     {
@@ -1275,19 +1363,23 @@ class tx_browser_pi1_filter {
         case ('CHECKBOX') :
         case ('RADIOBUTTONS') :
         case ('SELECTBOX') :
-$this->pObj->str_developer_csvIp = '87.177.77.43';
-$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) )
-{
-  $coa_name   = $arr_ts['condition'];
-  $coa_conf   = $arr_ts['condition.'];
-  $value      = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_ts['condition.'], $value );
-}
-          $marker[$str_marker] = $this->renderHtmlFilter($obj_ts, $arr_ts, $arr_tableFields[$tableField], $tableField);
+            // #32117, 111127, dwildt-
+          //$marker[$str_marker] = $this->renderHtmlFilter($obj_ts, $arr_ts, $arr_tableFields[$tableField], $tableField);
+            // #32117, 111127, dwildt+
+          switch( $this->filterCondition( $tableField, $arr_ts ) )
+          {
+            case( true ):
+              $marker[$str_marker] = $this->renderHtmlFilter($obj_ts, $arr_ts, $arr_tableFields[$tableField], $tableField);
+              break;
+            default:
+              $marker[$str_marker] = null;
+              break;
+          }
+            // #32117, 111127, dwildt+
           break;
         default :
-          if ($this->pObj->b_drs_filter) {
+          if ( $this->pObj->b_drs_filter )
+          {
             t3lib_div :: devLog('[WARN/FILTER] \'' . $conf_view_path . '\' contents an undefined TS object: \'' . $obj_ts . '\'', $this->pObj->extKey, 2);
             t3lib_div :: devLog('[ERROR/FILTER] ABORTED.', $this->pObj->extKey, 3);
             t3lib_div :: devLog('[HELP/FILTER] Configure ' . $conf_view_path . $tableField . '.', $this->pObj->extKey, 1);
@@ -1300,7 +1392,7 @@ if ( ! ( $pos === false ) )
           return $arr_return;
       }
     }
-    // Wrap table.fields
+      // Wrap table.fields
 
     $arr_return['data']['marker'] = $marker;
     return $arr_return;
