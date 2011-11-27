@@ -1970,9 +1970,9 @@ class tx_browser_pi1_views
             // ERROR: param array is an array. This won't handled.
             // Set the param array
           $arr_GPparam[$GPparam . '[' . $GPvalueParam . ']'] = $GPvalueValue;
-          continue;
         }
           // LOOP each param element
+        continue;
       }
         // LOOP param is an array
         // Set the param
