@@ -263,7 +263,7 @@ function ajaxifyDynamicFilters(pObj) {
           if (pObj.hasClass('ajaxltcollapse')) {
             var listarea = pObj.find('.listarea');
             listarea.slideUp(300, function() {
-              pObj.find('.browser_ajax_temp').replaceWith(d).cue( function () {
+              pObj.find('.browser_ajax_temp').replaceWith(d).queue( function () {
                 $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
               });
               pObj.find('.listarea').slideUp(1, function() {
