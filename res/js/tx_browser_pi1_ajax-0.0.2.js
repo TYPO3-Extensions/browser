@@ -350,7 +350,6 @@ function ajaxifySingleLinks(pObj) {
           targetObj.slideUp(300, function() {
             $(this).replaceWith(d).queue( function () {
               $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
-              alert('ajaxifySingleLinks');
             });
             pObj.find('.singleview').slideUp(1, function() {
               $(this).slideDown(300);
