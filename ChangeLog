@@ -16,6 +16,8 @@
               * ###TR_COUNTER###, ###TR_FIRST_LAST###, ###TR_EVEN_OR_ODD###
             * See: displayList.templateMarker.oddClass
   * #00000: New tutorial "Browser User Defined Functions" (browser_tut_userdefined_en)
+  * #00000: Integration of the button method into the old ajax object.
+            res/js/tx_browser_pi1_ajax.js moves to res/js/tx_browser_pi1_ajax-0.0.2.js
   Improvements
   * #29198: Simplifying stdWrap of SQL query parts
   * #29042: HTML id of the plugin moved from cXX-tx-browser-pi1 to cXX-tx-browser-pi1-view-mode
