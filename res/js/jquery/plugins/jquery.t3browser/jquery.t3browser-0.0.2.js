@@ -484,6 +484,10 @@
                       // If url contains a question mark, param will added with ?param
                       // otrherwise with &param
 
+                    if( typeof url == "undefined" )
+                    {
+                      return;
+                    }
                     if( url.indexOf( "?" ) >= 0 )
                     {
                       url = url + "&" + param;
