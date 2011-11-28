@@ -8,7 +8,8 @@
  *
  * for more info visit http://typo3-browser-forum.de/
  * 
- * status: 25 Mar 2011  
+ * status: 28 Nov 2011
+ * version: 0.0.2
  *
  */
  
@@ -204,7 +205,9 @@ function ajaxifySearchFormSubmit(pObj) {
         });
         if (pObj.hasClass('ajaxltcollapse')) {
           targetObj.slideUp(300, function() {
-            pObj.find('.listarea').replaceWith(d);              
+            pObj.find('.listarea').replaceWith(d).queue( function () {
+              $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+            });
             pObj.find('.listarea').slideUp(1, function() {
               ajaxifyList(pObj);  
               setFocusTo(pObj.find('.listarea'), pObj);
@@ -214,7 +217,9 @@ function ajaxifySearchFormSubmit(pObj) {
         }
         else {
           // no transition
-          targetObj.replaceWith(d);
+          targetObj.replaceWith(d).queue( function () {
+            $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+          });
           ajaxifyList(pObj);  
         }                            
       },
@@ -343,7 +348,9 @@ function ajaxifySingleLinks(pObj) {
             });
           }
           targetObj.slideUp(300, function() {
-            $(this).replaceWith(d);
+            $(this).replaceWith(d).queue( function () {
+              $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+            });
             pObj.find('.singleview').slideUp(1, function() {
               $(this).slideDown(300);
               setFocusTo($(this), pObj);
@@ -352,7 +359,9 @@ function ajaxifySingleLinks(pObj) {
         }
         else {
           // no transition
-          targetObj.replaceWith(d);
+          targetObj.replaceWith(d).queue( function () {
+            $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+          });
           setFocusTo(pObj.find('.listarea'), pObj);  
         }                                    
       },
@@ -405,7 +414,9 @@ function ajaxifyListViewLinks(pObj) {
         });
         if (pObj.hasClass('ajaxltcollapse')) {
           targetObj.slideUp(300, function() {
-            pObj.find('.listarea').replaceWith(d);              
+            pObj.find('.listarea').replaceWith(d).queue( function () {
+              $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+            });
             pObj.find('.listarea').slideUp(1, function() {
               ajaxifyList(pObj);  
               setFocusTo(pObj.find('.listarea'), pObj);
@@ -415,7 +426,9 @@ function ajaxifyListViewLinks(pObj) {
         }
         else {
           // no transition
-          targetObj.replaceWith(d);
+          targetObj.replaceWith(d).queue( function () {
+            $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+          });
           ajaxifyList(pObj);
           setFocusTo(pObj.find('.listarea'), pObj);  
         }                            
@@ -487,7 +500,9 @@ function ajaxifyOrderBy(pObj) {
         });
         if (pObj.hasClass('ajaxltcollapse')) {
           targetObj.slideUp(300, function() {
-            pObj.find('.listarea').replaceWith(d);              
+            pObj.find('.listarea').replaceWith(d).queue( function () {
+              $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+            });
             pObj.find('.listarea').slideUp(1, function() {
               ajaxifyList(pObj);  
               setFocusTo(pObj.find('.listarea'), pObj);
@@ -497,7 +512,9 @@ function ajaxifyOrderBy(pObj) {
         }
         else {
           // no transition
-          pObj.find('.listarea').replaceWith(d);
+          pObj.find('.listarea').replaceWith(d).queue( function () {
+            $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+          });
           ajaxifyList(pObj);  
         }                            
       },
