@@ -269,7 +269,6 @@ function ajaxifyDynamicFilters(pObj) {
                 ajaxifyList(pObj);
                 $(this).slideDown(300, function() {
                   $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
-                  alert('Hallo schon wieder');
                 });
               });
             });
@@ -281,8 +280,6 @@ function ajaxifyDynamicFilters(pObj) {
             ajaxifyList(pObj);  
             setFocusTo(pObj.find('.searchbox'), pObj);                            
           }
-          $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
-          alert('Hallo Frank');
         },
         error: function(req, error) {
           showAjaxError($(this).find('.listarea'), error);
