@@ -342,6 +342,7 @@ plugin.tx_browser_pi1 {
           curr {
             value = &Oslash;
             typolink {
+              parameter = {page:uid},0
               additionalParams = &L={GP:L}
             }
             //noTrimWrap  = |<li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-record-browser"> | </li>|
