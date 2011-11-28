@@ -268,6 +268,8 @@ function ajaxifyDynamicFilters(pObj) {
                 ajaxifySearchBox(pObj);
                 ajaxifyList(pObj);
                 $(this).slideDown(300, function() {
+                  $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+                  alert('Hallo schon wieder');
                 });
               });
             });
