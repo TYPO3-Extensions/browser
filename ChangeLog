@@ -1,6 +1,8 @@
 3.9.3
   111127
   New Features
+  * #32145: Record browser: home button links to the list view
+  * #00000: Record browser: showUid can replace by TypoScript constant. See plugin.tx_browser_pi1.recordBrowser.uidName
   * #32119: Marker becomes cObject
   * #32117: Condition for filters
   * #32099: Control plugins by URL parameters
