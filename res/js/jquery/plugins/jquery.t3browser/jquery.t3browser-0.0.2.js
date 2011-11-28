@@ -486,7 +486,7 @@
 
                     if( typeof url == "undefined" )
                     {
-                      return;
+                      return null;
                     }
                     if( url.indexOf( "?" ) >= 0 )
                     {
