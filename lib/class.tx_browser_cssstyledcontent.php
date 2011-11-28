@@ -782,7 +782,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Set the query
 
       // Values
-    $where_clause   = 'uid = ' . intval( $llUid ) . '';
+    $enablefields   = $this->pObj->cObj->enableFields( $from_table );
+    $where_clause   = 'uid = ' . intval( $llUid ) . ' ' . $enablefields;
     $groupBy        = null;
     $orderBy        = null;
     $limit          = null;
