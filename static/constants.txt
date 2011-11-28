@@ -56,5 +56,7 @@ plugin.tx_browser_pi1 {
   typeNum.downloadPageObj = 31230
   # cat=Browser - the TYPO3-Frontend-Engine//420;       type=string;  label= Format for strftime
   strftime = %a, %d.%b.%y
+  # cat=Browser - the TYPO3-Frontend-Engine//430;       type=string;  label= Record Browser: uid name (default: showUid)
+  recordBrowser.uidName = showUid
 
 }
