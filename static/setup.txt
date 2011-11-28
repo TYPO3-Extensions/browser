@@ -324,7 +324,6 @@ plugin.tx_browser_pi1 {
               parameter {
                 insertData = 1
               }
-              //additionalParams  = &tx_browser_pi1[showUid]=###RECORD_UID###&L={GP:L}
               additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.recordBrowser.uidName}]=###RECORD_UID###&L={GP:L}
               additionalParams {
                 insertData = 1
@@ -338,10 +337,14 @@ plugin.tx_browser_pi1 {
             value = &lt;
           }
             // Current button of the record browser
-          curr = TEXT
+          //curr = TEXT
+          curr < .first
           curr {
             value = &Oslash;
-            noTrimWrap  = |<li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-record-browser"> | </li>|
+            typolink {
+              additionalParams = &L={GP:L}
+            }
+            //noTrimWrap  = |<li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-record-browser"> | </li>|
           }
             // Next button of the record browser
           next < .first
