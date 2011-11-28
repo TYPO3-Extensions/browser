@@ -416,6 +416,7 @@ function ajaxifyListViewLinks(pObj) {
           targetObj.slideUp(300, function() {
             pObj.find('.listarea').replaceWith(d).queue( function () {
               $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+              alert('ajaxifyListViewLinks');
             });
             pObj.find('.listarea').slideUp(1, function() {
               ajaxifyList(pObj);  
