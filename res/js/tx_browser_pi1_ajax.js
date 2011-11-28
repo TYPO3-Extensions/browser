@@ -280,6 +280,7 @@ function ajaxifyDynamicFilters(pObj) {
             setFocusTo(pObj.find('.searchbox'), pObj);                            
           }
           $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+          alert('Hallo Frank');
         },
         error: function(req, error) {
           showAjaxError($(this).find('.listarea'), error);
