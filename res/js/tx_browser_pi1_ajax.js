@@ -269,15 +269,15 @@ function ajaxifyDynamicFilters(pObj) {
               pObj.find('.listarea').slideUp(1, function() {
                 ajaxifySearchBox(pObj);
                 ajaxifyList(pObj);
-                $(this).slideDown(300, function() {
-//                  $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
-                });
+                $(this).slideDown(300);
               });
             });
           }
           else {
             // no transition
-            pObj.find('.browser_ajax_temp').replaceWith(d);
+            pObj.find('.browser_ajax_temp').replaceWith(d).queue( function () {
+              $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+            });
             ajaxifySearchBox(pObj);
             ajaxifyList(pObj);  
             setFocusTo(pObj.find('.searchbox'), pObj);                            
