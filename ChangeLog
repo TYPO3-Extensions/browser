@@ -1,9 +1,6 @@
 3.9.3
   111127
   New Features
-  * #32145: Record browser: home button links to the list view
-  * #00000: Record browser: showUid can replace by TypoScript constant. See plugin.tx_browser_pi1.recordBrowser.uidName
-  * #32119: Marker becomes cObject
   * #32117: Condition for filters
   * #32099: Control plugins by URL parameters
   * #31230, 31229: Statistics module
@@ -15,13 +12,18 @@
               * ###TH_COUNTER###, ###TH_FIRST_LAST###, ###TH_EVEN_OR_ODD###
               * ###TR_COUNTER###, ###TR_FIRST_LAST###, ###TR_EVEN_OR_ODD###
             * See: displayList.templateMarker.oddClass
-  * #00000: New tutorial "Browser User Defined Functions" (browser_tut_userdefined_en)
-  * #00000: Integration of the button method into the old ajax object.
-            res/js/tx_browser_pi1_ajax.js moves to res/js/tx_browser_pi1_ajax-0.0.2.js
+  * #00000: New tutorial "Browser Tutorial User Defined Functions" (browser_tut_userdefined_en)
+  * #00000: New tutorial "Browser Tutorial Download Module" (browser_tut_downloads_en)
+  * #00000: New tutorial "Browser Tutorial Statistics" (browser_tut_statistics_en)
   Improvements
+  * #32145: Record browser: home button links to the list view
+  * #00000: Record browser: showUid can replace by TypoScript constant. See plugin.tx_browser_pi1.recordBrowser.uidName
+  * #32119: Marker becomes cObject
   * #29198: Simplifying stdWrap of SQL query parts
   * #29042: HTML id of the plugin moved from cXX-tx-browser-pi1 to cXX-tx-browser-pi1-view-mode
             where XX is the id in the table tt_content, view is list or single and mode is the id of the mode
+  * #00000: Integration of the button method into the old ajax object.
+            res/js/tx_browser_pi1_ajax.js moves to res/js/tx_browser_pi1_ajax-0.0.2.js
   Bugfixes
   * #29444: Category menu: Selected isn't detected
   * #29186: Empty rows are tested with ==null instead of empty( )
