@@ -287,8 +287,8 @@
       <label index="sheet_templating.wrapBaseClass.0">Wrap in base class (recommended)</label>
       <label index="sheet_viewList">List View</label>
       <label index="sheet_viewList.title">Title (substitutes ###MY_TITLE###)</label>
-      <label index="sheet_viewList.titleWrap">Title Wrap (i.e. <h1>|</h1>)</label>
-      <label index="sheet_viewList.grouptitleWrap">Group Title Wrap (i.e. <h2>|</h2>)</label>
+      <label index="sheet_viewList.titleWrap">Title Wrap (i.e. <![CDATA[<h1>|</h1>]]>)</label>
+      <label index="sheet_viewList.grouptitleWrap">Group Title Wrap (i.e. <![CDATA[<h2>|</h2>]]>)</label>
       <label index="sheet_viewList.limitOffset">Limit: start/offset (from 1st record = 0)</label>
       <label index="sheet_viewList.limit">Limit: records per page (from 1 to 1000)</label>
       <label index="sheet_viewList.navigation">Display: Navigation</label>
@@ -630,8 +630,8 @@
       <label index="sheet_templating.wrapBaseClass.0">Mit Basis-Klasse umschliessen (empfohlen)</label>
       <label index="sheet_viewList">Listenansicht</label>
       <label index="sheet_viewList.title">Titel (ersetzt ###MY_TITLE###)</label>
-      <label index="sheet_viewList.titleWrap">Titel Wrap (z.B.. <h1>|</h1>)</label>
-      <label index="sheet_viewList.grouptitleWrap">Gruppentitel Wrap (z.B. <h2>|</h2>)</label>
+      <label index="sheet_viewList.titleWrap">Titel Wrap (z.B.. <![CDATA[<h1>|</h1>]]>)</label>
+      <label index="sheet_viewList.grouptitleWrap">Gruppentitel Wrap (z.B. <![CDATA[<h2>|</h2>]]>)</label>
       <label index="sheet_viewList.limitOffset">Limit: Startpunkt/Offset (ab 1. Datensatz = 0)</label>
       <label index="sheet_viewList.limit">Limit: Datensaetze pro Seite (1 bis 1000)</label>
       <label index="sheet_viewList.navigation">Ansicht: Navigation</label>
