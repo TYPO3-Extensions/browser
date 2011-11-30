@@ -2334,8 +2334,11 @@ class tx_browser_pi1_flexform {
           t3lib_div :: devlog('[INFO/FLEXFORM] template.css.browser is set to null', $this->pObj->extKey, 0);
         }
         break;
-      case ('ts') :
-        // Do nothing;
+      case ( null ) :
+      case ( '' ) :
+      case ( 'ts' ) :
+          // #29336, 111130, dwildt
+          // Do nothing;
         $this->bool_css_browser = true;
         if ($this->pObj->b_drs_flexform) {
           t3lib_div :: devlog('[INFO/FLEXFORM] template.css.browser isn\'t changed by the flexform.', $this->pObj->extKey, 0);
@@ -2396,7 +2399,6 @@ class tx_browser_pi1_flexform {
       case ('overcast') :
       case ('pepper_grinder') :
       case ('redmond') :
-      case ('smoothness') :
       case ('south_street') :
       case ('start') :
       case ('sunny') :
@@ -2432,24 +2434,18 @@ class tx_browser_pi1_flexform {
           t3lib_div :: devlog('[INFO/FLEXFORM] template.css.jquery_ui isn\'t changed by the flexform.', $this->pObj->extKey, 0);
         }
         break;
+      case ( null ) :
+      case ( '' ) :
+      case ( 'smoothness' ) :
       default :
-        $prompt = '
-                  <div style="background:white; font-weight:bold;border:.4em solid orange;">
-                    <h1>
-                      WARNING
-                    </h1>
-                    <p>
-                      Flexform field has an invalid value. The value isn\'t defined.<br />
-                      sheet: ' . $sheet . '<br />
-                      field: ' . $field . '<br />
-                      value: ' . $css_jqui . '<br />
-                      ' . __METHOD__ . ' (' . __LINE__ . ')
-                    </p>
-                    <p>
-                      Please save the plugin/flexform of the browser. The bug will be fixed probably.
-                    </p>
-                  </div>';
-        echo $prompt;
+          // #29336, 111130, dwildt
+        $css = $this->pObj->conf['flexform.']['templating.']['jquery_ui.']['smoothness.']['css'];
+        $this->pObj->conf['template.']['css.']['jquery_ui'] = $css;
+        $this->bool_css_jqui = true;
+        if ($this->pObj->b_drs_flexform) {
+          t3lib_div :: devlog('[INFO/FLEXFORM] template.css.jquery_ui is set to ' . $css, $this->pObj->extKey, 0);
+        }
+        break;
     }
     // #28562, dwildt, 110806
     // Field css.jqui
@@ -3252,6 +3248,7 @@ class tx_browser_pi1_flexform {
       case ( null ) :
       case ( '' ) :
       case ( 'no' ) :
+          // #29336, 111130, dwildt
         $this->pObj->conf['flexform.']['viewSingle.']['display_listview'] = 0;
         if ( $this->pObj->b_drs_flexform )
         {

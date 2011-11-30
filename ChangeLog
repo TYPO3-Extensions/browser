@@ -26,6 +26,7 @@
             res/js/tx_browser_pi1_ajax.js moves to res/js/tx_browser_pi1_ajax-0.0.2.js
   Bugfixes
   * #29444: Category menu: Selected isn't detected
+  * #29336: Flexform field has an invalid value
   * #29186: Empty rows are tested with ==null instead of empty( )
   * #29323: method ajaxifyOrderBy is undefined. Affected file: res/js/tx_browser_pi1.js
 
