@@ -802,7 +802,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Query for evaluation
 
       // DRS - Development Reporting System
-    if ( $this->pObj->b_drs_localisation || $this->pObj->b_drs_sql )
+    if ( $this->b_drs_localisation || $this->b_drs_sql )
     {
       t3lib_div::devlog('[INFO/SQL+LOCALISATION] ' . $query, $this->pObj->extKey, 0);
     }
@@ -851,7 +851,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // DRS - Development Reporting System
     if( ! empty( $error ) )
     {
-      if( $this->pObj->b_drs_error )
+      if( $this->b_drs_error )
       {
         t3lib_div::devlog('[ERROR/SQL] '. $query,  $this->pObj->extKey, 3);
         t3lib_div::devlog('[ERROR/SQL] '. $error,  $this->pObj->extKey, 3);
