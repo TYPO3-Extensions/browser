@@ -275,7 +275,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // Set data of the localised record as a marker array
 
 // 111201, dwildt+
-$marker['###TABLE.UID###'] = $llUid;
+//$marker['###TABLE.UID###'] = $llUid;
 
         // Replace the marker in the TypoScript recursively
         // Workaround because of bug: $userFunc_conf will be changed, but it should not!
@@ -286,7 +286,7 @@ $marker['###TABLE.UID###'] = $llUid;
 
       // Update the linkVars
 // 111201, dwildt-
-//      $GLOBALS['TSFE']->linkVars = '&L=' . $llRows[$flag]['uid'] . $str_linkVarsWoL;
+      $GLOBALS['TSFE']->linkVars = '&L=' . $llRows[$flag]['uid'] . $str_linkVarsWoL;
 
         // Render the $conf
       $llOut = $this->render_uploads_per_language( $content, $coa_conf );
