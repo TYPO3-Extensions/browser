@@ -1199,12 +1199,14 @@ class tx_browser_pi1_sql_auto
     $tables = $this->arr_relations_mm_simple['simple'];
     if (is_array($tables))
     {
-      //////////////////////////////////
-      //
-      // Convert Array
-      // from: ["tt_news"]["cruser_id"] = "be_users"
-      // to:   ["tt_news.cruser_id"]    = "be_users"
-      foreach((array) $tables as $keyTable => $arrFields)
+        //////////////////////////////////
+        //
+        // Convert Array
+        // from: ["tt_news"]["cruser_id"] = "be_users"
+        // to:   ["tt_news.cruser_id"]    = "be_users"
+
+        // LOOP tables
+      foreach( (array) $tables as $keyTable => $arrFields)
       {
         foreach((array) $arrFields as $keyField => $valueField)
         {
@@ -1218,9 +1220,12 @@ class tx_browser_pi1_sql_auto
         }
         unset($tables[$keyTable]);
       }
-      foreach((array) $tables as $localTableField => $foreignTable)
+        // LOOP tables
+
+        // LOOP tables
+      foreach( ( array ) $tables as $localTableField => $foreignTable )
       {
-        list ($localTable, $localField)     = explode('.', $localTableField);
+        list ($localTable, $localField) = explode('.', $localTableField);
           // #11650, cweiske, 101223
         //$foreignTableField = $foreignTable.'.uid';
         if (strpos($foreignTable, '.') !== false) 
@@ -1231,6 +1236,9 @@ class tx_browser_pi1_sql_auto
         {
           $foreignTableField = $foreignTable.'.uid';
         }
+
+          // #32254, 111201, dwildt+
+        $str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
 
           // #11843, fconstien, 110310
         $localTableFieldMaxItems = $GLOBALS['TCA'][$localTable]['columns'][$localField]['config']['maxitems'];
@@ -1265,7 +1273,8 @@ class tx_browser_pi1_sql_auto
           // #11650, cweiske, 101223
         if ($this->b_left_join)
         {
-          $str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
+            // #32254, 111201, dwildt-
+          //$str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
           $str_pidStatement         = $this->str_andWherePid($foreignTable);
           $str_pidStatement         = " AND " . $str_pidStatement . " " ;
           $str_left_join_uidforeign = " LEFT JOIN " . $foreignTable .
@@ -1291,6 +1300,7 @@ class tx_browser_pi1_sql_auto
           $this->pObj->arr_realTables_arrFields[$foreignTable][] = 'uid';
         }
       }
+        // LOOP tables
     }
     // simple-relation-building
 

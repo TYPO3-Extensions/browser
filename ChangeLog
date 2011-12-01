@@ -2,6 +2,8 @@
   111201
   Improvements
   * #32119: Marker becomes cObject downwards compatible
+  Bugfix
+  * #32254: Wrong relation building
 
 3.9.3
   111127

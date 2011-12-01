@@ -1503,10 +1503,10 @@ class tx_browser_pi1_flexform {
       //
       // Field relations_select
 
-    $field = 'relations_select';
-    $relations = false;
-    $joins = -1;
-    $root = -1;
+    $field      = 'relations_select';
+    $relations  = false;
+    $joins      = -1;
+    $root       = -1;
     $relations_select = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
     if ($relations_select == 'default' OR empty ($relations_select)) {
       $relations = 'all';
@@ -1624,13 +1624,26 @@ class tx_browser_pi1_flexform {
     // Field joins
 
     #9879
-    if ($joins < 0) {
-      $joins = (int) $this->pObj->pi_getFFvalue($arr_piFlexform, 'joins', $sheet, 'lDEF', 'vDEF');
+    if ( $joins < 0 )
+    {
+      $joins = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'joins', $sheet, 'lDEF', 'vDEF' );
+        // 111201, dwildt+
+        // default value
+      switch( true )
+      {
+        case( $joins === null ):
+        case( $joins === '' ):
+          $joins = true;
+      }
+        // 111201, dwildt+
+
     }
-    if (!empty ($this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.'])) {
+    if ( ! empty ( $this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.'] ) )
+    {
       $this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.']['relations.']['left_join'] = $joins;
     }
-    if (empty ($this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.'])) {
+    if ( empty ( $this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.'] ) )
+    {
       $this->pObj->conf['autoconfig.']['relations.']['left_join'] = $joins;
     }
     if ($this->pObj->b_drs_flexform) {
