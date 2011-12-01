@@ -1240,6 +1240,7 @@ class tx_browser_pi1_sql_auto
           // #32254, 111201, dwildt+
         $str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
         $str_pidStatement         = $this->str_andWherePid($foreignTable);
+        $str_pidStatement         = " AND " . $str_pidStatement . " " ;
           // #32254, 111201, dwildt+
 
           // #11843, fconstien, 110310
@@ -1278,8 +1279,8 @@ class tx_browser_pi1_sql_auto
             // #32254, 111201, dwildt-
           //$str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
           //$str_pidStatement         = $this->str_andWherePid($foreignTable);
+          //$str_pidStatement         = " AND " . $str_pidStatement . " " ;
             // #32254, 111201, dwildt-
-          $str_pidStatement         = " AND " . $str_pidStatement . " " ;
           $str_left_join_uidforeign = " LEFT JOIN " . $foreignTable .
                                       " ON ( " .
                                       $str_query_part .
