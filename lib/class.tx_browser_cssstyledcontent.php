@@ -805,7 +805,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // DRS - Development Reporting System
     if ( $this->b_drs_localisation || $this->b_drs_sql )
     {
-      t3lib_div::devlog('[INFO/SQL+LOCALISATION] ' . $query, $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/SQL+LOCALISATION] ' . $query, $this->extKey, 0);
     }
       // DRS - Development Reporting System
       // Set the query
@@ -854,8 +854,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     {
       if( $this->b_drs_error )
       {
-        t3lib_div::devlog('[ERROR/SQL] '. $query,  $this->pObj->extKey, 3);
-        t3lib_div::devlog('[ERROR/SQL] '. $error,  $this->pObj->extKey, 3);
+        t3lib_div::devlog('[ERROR/SQL] '. $query,  $this->extKey, 3);
+        t3lib_div::devlog('[ERROR/SQL] '. $error,  $this->extKey, 3);
       }
     }
       // DRS - Development Reporting System
