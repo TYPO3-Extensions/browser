@@ -1,3 +1,8 @@
+3.9.4
+  111201
+  Improvements
+  * #32119: Marker becomes cObject downwards compatible
+
 3.9.3
   111127
   New Features

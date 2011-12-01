@@ -242,6 +242,10 @@ class tx_browser_pi1_wrapper
           // #32119, 111127, dwildt-
           // #32119, 111127, dwildt+
         $coa_name                     = $conf_marker[$str_marker];
+        if( empty ( $coa_name) )
+        {
+          $coa_name = 'TEXT';
+        }
         $coa_conf                     = $conf_marker[$str_marker . '.'];
         $value                        = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
         $hashKeyMarker                = '###'.strtoupper($str_marker).'###';
