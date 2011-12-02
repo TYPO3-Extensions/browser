@@ -1,3 +1,8 @@
+3.9.5
+  111202
+  Bugfix
+  * #32220: Wrong path to jQuery UI and AJAX files when TYPO3 resides in a subdirectory
+
 3.9.4
   111201
   Improvements

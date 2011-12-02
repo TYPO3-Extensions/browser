@@ -618,12 +618,11 @@ class tx_browser_pi1_javascript
     {
       if(substr($path, 0, 4) == 'EXT:')
       {
-        // absolute path
-        $absPath  = t3lib_div::getFileAbsFileName($path,$onlyRelative=1,$relToTYPO3_mainDir=0);
-        // absolute path ./. root path
-        $rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT');
-        // relative path
-        $path     = substr($absPath, strlen($rootPath.'/'));
+        // relative path to the JssFile as measured from the PATH_site (frontend)
+          // #32220, uherrmann, 111202
+		preg_match('%^EXT:([a-z0-9_]*)/(.*)$%', $path, $matches);
+        $path = t3lib_extMgm::siteRelPath($matches[1]) . $matches[2];
+          // /#32220
       }
       $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
         '  <script src="'.$path.'" type="text/javascript"></script>';
@@ -1019,10 +1018,8 @@ class tx_browser_pi1_javascript
       {
         $bool_file_exists = false;
       }
-        // absolute path ./. root path
-      $rootPath = t3lib_div::getIndpEnv( 'TYPO3_DOCUMENT_ROOT' );
         // relative path
-      $path     = substr( $absPath, strlen( $rootPath.'/' ) );
+      $path = preg_replace('%' . PATH_site . '%', '', $absPath);
     }
       // link to a file
 
