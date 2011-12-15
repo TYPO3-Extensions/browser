@@ -501,6 +501,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       foreach($filesData as $key => $fileData)
       {
         $GLOBALS['TSFE']->register['linkedIcon']    = $fileData['linkedFilenameParts'][0];
+    $this->str_developer_csvIp = '87.177.88.86';
+    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GLOBALS['TSFE']->register['linkedIcon'] );
+    }
         $GLOBALS['TSFE']->register['linkedLabel']   = $fileData['linkedFilenameParts'][1];
         $GLOBALS['TSFE']->register['filename']      = $fileData['filename'];
         $GLOBALS['TSFE']->register['path']          = $fileData['path'];
