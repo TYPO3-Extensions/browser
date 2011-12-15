@@ -680,7 +680,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
       //////////////////////////////////////////////////////////////////////////
       //
-      // Set register CURR_ICON_REL_PATH
+      // Set register ICON_REL_PATH_FROM_LINCPROC
 
     $str_currIconRelPath      = $arr_default_filelinks[0];
       // I.e. <a href="uploads/tx_org/flyer_typo3_organiser_01.pdf" target="_blank" ><img src="typo3temp/pics/abfb01d4d2.jpg" width="200" height="408" alt="" /></a>
@@ -688,14 +688,14 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // I.e. typo3temp/pics/abfb01d4d2.jpg" width="200" height="408" alt="" /></a>
     list( $str_srce )         = explode( '"',     $str_srce );
       // I.e. typo3temp/pics/abfb01d4d2.jpg
-    $GLOBALS['TSFE']->register['CURR_ICON_REL_PATH'] = $str_srce;
+    $GLOBALS['TSFE']->register['ICON_REL_PATH_FROM_LINCPROC'] = $str_srce;
 $this->str_developer_csvIp = '87.177.88.86';
 $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 if ( ! ( $pos === false ) )
 {
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_default_filelinks[0], $GLOBALS['TSFE']->register['CURR_ICON_REL_PATH'] );
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_default_filelinks[0], $GLOBALS['TSFE']->register['ICON_REL_PATH_FROM_LINCPROC'] );
 }
-      // Set register CURR_ICON_REL_PATH
+      // Set register ICON_REL_PATH_FROM_LINCPROC
 
 
 
