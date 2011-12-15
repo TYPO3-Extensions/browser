@@ -274,8 +274,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $marker['###SYS_LANGUAGE.TITLE###'] = $llRows[$flag]['title'];
         // Set data of the localised record as a marker array
 
-// 111201, dwildt+
-//$marker['###TABLE.UID###'] = $llUid;
+      // 111215, dwildt+
+      $marker['###TABLE.UID###'] = $llUid;
 
         // Replace the marker in the TypoScript recursively
         // Workaround because of bug: $userFunc_conf will be changed, but it should not!
@@ -284,9 +284,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $conf['userFunc.']['conf.'] = unserialize( $serialized_conf );
         // Replace the marker in the TypoScript recursively
 
-      // Update the linkVars
-// 111201, dwildt-
-      $GLOBALS['TSFE']->linkVars = '&L=' . $llRows[$flag]['uid'] . $str_linkVarsWoL;
+        // Update the linkVars
+      // 111215, dwildt-
+      //$GLOBALS['TSFE']->linkVars = '&L=' . $llRows[$flag]['uid'] . $str_linkVarsWoL;
 
         // Render the $conf
       $llOut = $this->render_uploads_per_language( $content, $coa_conf );
