@@ -166,6 +166,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // 111215, dwildt-
     //$conf                           = $this->cObj->substituteMarkerInObject( $conf, $marker );
       // 111215, dwildt+
+$this->str_developer_csvIp = '87.177.88.86';
+$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ', $conf['fields.'] );
+}
     $serialized_conf  = serialize( $conf );
     $coa_conf         = $this->cObj->substituteMarkerInObject( $conf, $marker );
     $conf             = unserialize( $serialized_conf );
@@ -180,12 +186,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
     if( $bool_currLangOnly )
     {
-$this->str_developer_csvIp = '87.177.88.86';
-$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__. ' (' . __LINE__ . '): render_uploads_per_language 1' );
-}
       $out = $out . $this->render_uploads_per_language( $content, $coa_conf );
       return $out;
     }
