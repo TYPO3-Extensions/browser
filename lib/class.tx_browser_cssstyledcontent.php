@@ -518,12 +518,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       foreach($filesData as $key => $fileData)
       {
         $GLOBALS['TSFE']->register['linkedIcon']    = $fileData['linkedFilenameParts'][0];
-    $this->str_developer_csvIp = '87.177.88.86';
-    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $key, $GLOBALS['TSFE']->register['linkedIcon'], $fileData['linkedFilenameParts'] );
-    }
         $GLOBALS['TSFE']->register['linkedLabel']   = $fileData['linkedFilenameParts'][1];
         $GLOBALS['TSFE']->register['filename']      = $fileData['filename'];
         $GLOBALS['TSFE']->register['path']          = $fileData['path'];
@@ -623,7 +617,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   /**
    * helper_browser_linkProc( ):  This method handles the linkProc configuration
    *                              If linkProc has an element tx_browser_pi1, this element
-   *                              will rendered instead of the default linkProc configuration
+   *                              will rendered instead of the default linkProc configuration.
+   *                              It will be allocated the path to the current icon (preview or
+   *                              application icon) out of the linkProc result to the
+   *                              * register ICON_REL_PATH_FROM_LINCPROC
+   *                              The tx_browser_pi1 configuration wll have access to the register
+   *
    *
    * @param       array           $conf:      TypoScript configuration
    * @param       array           $key:       Position of current document
@@ -689,12 +688,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     list( $str_srce )         = explode( '"',     $str_srce );
       // I.e. typo3temp/pics/abfb01d4d2.jpg
     $GLOBALS['TSFE']->register['ICON_REL_PATH_FROM_LINCPROC'] = $str_srce;
-$this->str_developer_csvIp = '87.177.88.86';
-$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $arr_default_filelinks[0], $GLOBALS['TSFE']->register['ICON_REL_PATH_FROM_LINCPROC'] );
-}
       // Set register ICON_REL_PATH_FROM_LINCPROC
 
 
