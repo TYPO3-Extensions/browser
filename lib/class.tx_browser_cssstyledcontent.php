@@ -25,6 +25,8 @@
 /**
 * Class extends tx_cssstyledcontent_pi1
 *
+* See: typo3/sysext/css_styled_content/pi1/class.tx_cssstyledcontent_pi1.php
+*
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
 * @subpackage    browser
@@ -497,7 +499,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // render the list
       $outputEntries = array();
 
-        // LOOP: files
+        // LOOP: filesData
       foreach($filesData as $key => $fileData)
       {
         $GLOBALS['TSFE']->register['linkedIcon']    = $fileData['linkedFilenameParts'][0];
@@ -505,7 +507,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     if ( ! ( $pos === false ) )
     {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $GLOBALS['TSFE']->register['linkedIcon'] );
+      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $key, $GLOBALS['TSFE']->register['linkedIcon'] );
     }
         $GLOBALS['TSFE']->register['linkedLabel']   = $fileData['linkedFilenameParts'][1];
         $GLOBALS['TSFE']->register['filename']      = $fileData['filename'];
@@ -549,7 +551,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $outputEntries[]  = $str_outputEntry;
 // dwildt, 111106, +
       }
-        // LOOP: files
+        // LOOP: filesData
         // render the list
 
         // Wrap around the whole content
@@ -569,6 +571,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
       $out = $this->cObj->wrap(implode('', $outputEntries), $outerWrap);
     }
+      // there are files to list ...
 
       // stdWrap for the whole result
     if ($conf['stdWrap.']) 
