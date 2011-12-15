@@ -166,12 +166,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // 111215, dwildt-
     //$conf                           = $this->cObj->substituteMarkerInObject( $conf, $marker );
       // 111215, dwildt+
-$this->str_developer_csvIp = '87.177.88.86';
-$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ', $conf['fields.'] );
-}
     $serialized_conf  = serialize( $conf );
     $coa_conf         = $this->cObj->substituteMarkerInObject( $conf, $marker );
     $conf             = unserialize( $serialized_conf );
@@ -312,12 +306,6 @@ if ( ! ( $pos === false ) )
       //$GLOBALS['TSFE']->linkVars = '&L=' . $llRows[$flag]['uid'] . $str_linkVarsWoL;
 
         // Render the $conf
-    $this->str_developer_csvIp = '87.177.88.86';
-    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): render_uploads_per_language 2' );
-    }
       $llOut = $this->render_uploads_per_language( $content, $coa_conf_userFunc_conf );
       
         // Concatenate the localized output
@@ -395,15 +383,16 @@ $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR')
 if ( ! ( $pos === false ) ) {
   var_dump(__METHOD__. ' (' . __LINE__ . '): ', $conf['fields.'] );
 }
-    switch( true )
-    {
-      case( isset( $conf['fields.']['layout.'] ) ):
-        $type = intval( $this->cObj->stdWrap( $conf['fields.']['layout'], $conf['fields.']['layout.'] ) );
-        break;
-      default:
-        $type = intval( $conf['fields.']['layout'] );
-        break;
-    }
+//    switch( true )
+//    {
+//      case( isset( $conf['fields.']['layout.'] ) ):
+//        $type = intval( $this->cObj->stdWrap( $conf['fields.']['layout'], $conf['fields.']['layout.'] ) );
+//        break;
+//      default:
+//        $type = intval( $conf['fields.']['layout'] );
+//        break;
+//    }
+$type = intval( $this->cObj->stdWrap( $conf['fields.']['layout'], $conf['fields.']['layout.'] ) );
 $this->str_developer_csvIp = '87.177.88.86';
 $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 if ( ! ( $pos === false ) ) {
@@ -545,12 +534,6 @@ if ( ! ( $pos === false ) ) {
       $outputEntries = array();
 
         // LOOP: filesData
-    $this->str_developer_csvIp = '87.177.88.86';
-    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): LOOP files data' );
-    }
       foreach($filesData as $key => $fileData)
       {
         $GLOBALS['TSFE']->register['linkedIcon']    = $fileData['linkedFilenameParts'][0];
@@ -697,6 +680,11 @@ if ( ! ( $pos === false ) ) {
       //
       // RETURN by handling the default linkProc configuration array
 
+$this->str_developer_csvIp = '87.177.88.86';
+$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) ) {
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ', $coa_confLinkProc );
+}
     if( ! isset( $coa_confLinkProc['tx_browser_pi1'] ) )
     {
         // Link the current file with and without an icon (two links)
