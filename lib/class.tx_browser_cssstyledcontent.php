@@ -390,6 +390,11 @@ if ( ! ( $pos === false ) )
 
       // get layout type
       // 0: link only, 1: with application icon, 2: with based icon
+$this->str_developer_csvIp = '87.177.88.86';
+$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) ) {
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ', $conf['fields.'] );
+}
     switch( true )
     {
       case( isset( $conf['fields.']['layout.'] ) ):
