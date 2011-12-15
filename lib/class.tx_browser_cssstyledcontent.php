@@ -165,6 +165,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
     if( $bool_currLangOnly )
     {
+    $this->str_developer_csvIp = '87.177.88.86';
+    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): render_uploads_per_language 1' );
+    }
       $out = $out . $this->render_uploads_per_language( $content, $conf );
       return $out;
     }
@@ -291,6 +297,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       //$GLOBALS['TSFE']->linkVars = '&L=' . $llRows[$flag]['uid'] . $str_linkVarsWoL;
 
         // Render the $conf
+    $this->str_developer_csvIp = '87.177.88.86';
+    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): render_uploads_per_language 2' );
+    }
       $llOut = $this->render_uploads_per_language( $content, $coa_conf );
       
         // Concatenate the localized output
