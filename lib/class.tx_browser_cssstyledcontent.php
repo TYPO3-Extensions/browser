@@ -378,26 +378,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
       // get layout type
       // 0: link only, 1: with application icon, 2: with based icon
-$this->str_developer_csvIp = '87.177.88.86';
-$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) ) {
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ', $conf['fields.'] );
-}
-//    switch( true )
-//    {
-//      case( isset( $conf['fields.']['layout.'] ) ):
-//        $type = intval( $this->cObj->stdWrap( $conf['fields.']['layout'], $conf['fields.']['layout.'] ) );
-//        break;
-//      default:
-//        $type = intval( $conf['fields.']['layout'] );
-//        break;
-//    }
-$type = intval( $this->cObj->stdWrap( $conf['fields.']['layout'], $conf['fields.']['layout.'] ) );
-$this->str_developer_csvIp = '87.177.88.86';
-$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) ) {
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ', $type );
-}
+    $type = intval( $this->cObj->stdWrap( $conf['fields.']['layout'], $conf['fields.']['layout.'] ) );
 
       // set default path
     $path = 'uploads/media/';
@@ -676,20 +657,36 @@ if ( ! ( $pos === false ) ) {
 
 
 
+      // Link the current file with and without an icon (two links)
+    $str_default_filelinks = $this->cObj->filelink( $fileName, $coa_confLinkProc );
+      // Devide the two rendered links from a string into two elements
+    list( $arr_default_filelinks[0], $arr_default_filelinks[1] ) = explode( '//**//', $str_default_filelinks );
+
+
+
+
       //////////////////////////////////////////////////////////////////////////
       //
       // RETURN by handling the default linkProc configuration array
 
     if( ! isset( $coa_confLinkProc['tx_browser_pi1'] ) )
     {
-        // Link the current file with and without an icon (two links)
-      $str_filelinks = $this->cObj->filelink( $fileName, $coa_confLinkProc );
-        // Devide the two rendered links from a string to two elements
-      list( $arr_filelinks[0], $arr_filelinks[1] ) = explode( '//**//', $str_filelinks );
         // RETURN the result
-      return ( $arr_filelinks );
+      return ( $arr_default_filelinks );
     }
       // RETURN by handling the default linkProc configuration array
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Set register CURR_ICON_REL_PATH
+
+    $str_currIconRelPath = $arr_default_filelinks[0];
+    list( $str_srce )   = explode( 'src="', $str_currIconRelPath );
+    list( $str_srce )   = explode( '"',     $str_srce );
+    $GLOBALS['TSFE']->register['CURR_ICON_REL_PATH'] = $str_srce;
+      // Set register CURR_ICON_REL_PATH
 
 
 
@@ -706,16 +703,6 @@ if ( ! ( $pos === false ) ) {
     list( $arr_filelinks[0], $arr_filelinks[1] ) = explode( '//**//', $str_filelinks );
 
 
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Set register ICON_FILEAPPL_REL_PATH
-
-    $str_linkWiApplIcon = $arr_filelinks[0];
-    list( $str_srce )   = explode( 'src="', $str_linkWiApplIcon );
-    list( $str_srce )   = explode( '"',     $str_srce );
-    $GLOBALS['TSFE']->register['ICON_FILEAPPL_REL_PATH'] = $str_srce;
-      // Set register ICON_FILEAPPL_REL_PATH
 
       // RETURN the result
     return ( $arr_filelinks );
