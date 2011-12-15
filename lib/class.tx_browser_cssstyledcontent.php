@@ -500,6 +500,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $outputEntries = array();
 
         // LOOP: filesData
+    $this->str_developer_csvIp = '87.177.88.86';
+    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+    if ( ! ( $pos === false ) )
+    {
+      var_dump(__METHOD__. ' (' . __LINE__ . '): LOOP files data' );
+    }
       foreach($filesData as $key => $fileData)
       {
         $GLOBALS['TSFE']->register['linkedIcon']    = $fileData['linkedFilenameParts'][0];
