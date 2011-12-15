@@ -108,9 +108,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $bool_drs = false;
     if( isset( $conf['userFunc.']['drs'] ) )
     {
-      $coa_name = $conf['userFunc.']['drs'];
-      $coa_conf = $conf['userFunc.']['drs.'];
-      $bool_drs = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' ) );
+      $coa_name               = $conf['userFunc.']['drs'];
+      $coa_conf_userFunc_drs  = $conf['userFunc.']['drs.'];
+      $bool_drs               = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf_userFunc_drs, $TSkey='__' ) );
     }
     if( $bool_drs )
     {
@@ -139,9 +139,17 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $bool_currLangOnly = true;
     if( isset( $conf['userFunc.']['renderCurrentLanguageOnly'] ) )
     {
-      $coa_name           = $conf['userFunc.']['renderCurrentLanguageOnly'];
-      $coa_conf           = $conf['userFunc.']['renderCurrentLanguageOnly.'];
-      $bool_currLangOnly  = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' ) );
+      $coa_name                                     = $conf['userFunc.']['renderCurrentLanguageOnly'];
+      $coa_conf_userFunc_renderCurrentLanguageOnly  = $conf['userFunc.']['renderCurrentLanguageOnly.'];
+      $bool_currLangOnly                            = intval
+                                                      (
+                                                        $this->cObj->cObjGetSingle
+                                                        (
+                                                          $coa_name,
+                                                          $coa_conf_userFunc_renderCurrentLanguageOnly,
+                                                          $TSkey='__'
+                                                        )
+                                                      );
     }
       // Link the file for the current language only (default)?
 
@@ -154,7 +162,14 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $marker                         = null;
     list( $cR_table, $cR_uid)       = explode( ':', $GLOBALS['TSFE']->currentRecord );
     $marker['###TT_CONTENT.UID###'] = $cR_uid;
-    $conf                           = $this->cObj->substituteMarkerInObject( $conf, $marker );
+
+      // 111215, dwildt-
+    //$conf                           = $this->cObj->substituteMarkerInObject( $conf, $marker );
+      // 111215, dwildt+
+    $serialized_conf  = serialize( $conf );
+    $coa_conf         = $this->cObj->substituteMarkerInObject( $conf, $marker );
+    $conf             = unserialize( $serialized_conf );
+      // 111215, dwildt+
       // Set tt_content.uid
 
 
@@ -171,7 +186,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     {
       var_dump(__METHOD__. ' (' . __LINE__ . '): render_uploads_per_language 1' );
     }
-      $out = $out . $this->render_uploads_per_language( $content, $conf );
+      $out = $out . $this->render_uploads_per_language( $content, $coa_conf );
       return $out;
     }
       // RETURN the filelink for the current language only
@@ -192,11 +207,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Get the current table
 
     $table = 'no_table_is_defined';
-    if( isset( $conf['userFunc.']['table'] ) )
+    if( isset( $coa_conf['userFunc.']['table'] ) )
     {
-      $coa_name = $conf['userFunc.']['table'];
-      $coa_conf = $conf['userFunc.']['table.'];
-      $table    = $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' );
+      $coa_name                 = $coa_conf['userFunc.']['table'];
+      $coa_conf_userFunc_table  = $coa_conf['userFunc.']['table.'];
+      $table                    = $this->cObj->cObjGetSingle( $coa_name, $coa_conf_userFunc_table, $TSkey='__' );
     }
       // Get the current table
 
@@ -207,11 +222,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Get the current uid (of the default language record)
 
     $uid = 'no_record_is_defined';
-    if( isset( $conf['userFunc.']['record'] ) )
+    if( isset( $coa_conf['userFunc.']['record'] ) )
     {
-      $coa_name = $conf['userFunc.']['record'];
-      $coa_conf = $conf['userFunc.']['record.'];
-      $uid      = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' ) );
+      $coa_name                 = $coa_conf['userFunc.']['record'];
+      $coa_conf_userFunc_record = $coa_conf['userFunc.']['record.'];
+      $uid                      = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf_userFunc_record, $TSkey='__' ) );
     }
       // Get the current uid (of the default language record)
 
@@ -222,12 +237,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Get the select
 
     $select = 'no_select_is_defined';
-    if( isset( $conf['userFunc.']['select'] ) )
+    if( isset( $coa_conf['userFunc.']['select'] ) )
     {
-      $coa_name = $conf['userFunc.']['select'];
-      $coa_conf = $conf['userFunc.']['select.'];
-      $select   = $this->cObj->cObjGetSingle( $coa_name, $coa_conf, $TSkey='__' );
-      $select   = $this->objZz->cleanUp_lfCr_doubleSpace( $select );
+      $coa_name                 = $coa_conf['userFunc.']['select'];
+      $coa_conf_userFunc_select = $coa_conf['userFunc.']['select.'];
+      $select                   = $this->cObj->cObjGetSingle( $coa_name, $coa_conf_userFunc_select, $TSkey='__' );
+      $select                   = $this->objZz->cleanUp_lfCr_doubleSpace( $select );
     }
       // Get the select
 
@@ -237,7 +252,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       //
       // Get the configuration
 
-    $userFunc_conf = $conf['userFunc.']['conf.'];
+    $userFunc_conf = $coa_conf['userFunc.']['conf.'];
       // Get the configuration
 
 
@@ -287,9 +302,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
         // Replace the marker in the TypoScript recursively
         // Workaround because of bug: $userFunc_conf will be changed, but it should not!
-      $serialized_conf            = serialize( $conf['userFunc.']['conf.'] );
-      $coa_conf                   = $this->cObj->substituteMarkerInObject( $conf['userFunc.']['conf.'], $marker );
-      $conf['userFunc.']['conf.'] = unserialize( $serialized_conf );
+      $serialized_conf            = serialize( $coa_conf['userFunc.']['conf.'] );
+      $coa_conf_userFunc_conf     = $this->cObj->substituteMarkerInObject( $coa_conf['userFunc.']['conf.'], $marker );
+      $coa_conf['userFunc.']['conf.'] = unserialize( $serialized_conf );
         // Replace the marker in the TypoScript recursively
 
         // Update the linkVars
@@ -303,7 +318,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     {
       var_dump(__METHOD__. ' (' . __LINE__ . '): render_uploads_per_language 2' );
     }
-      $llOut = $this->render_uploads_per_language( $content, $coa_conf );
+      $llOut = $this->render_uploads_per_language( $content, $coa_conf_userFunc_conf );
       
         // Concatenate the localized output
       $out = $out . $llOut;
@@ -551,20 +566,20 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           // Replace the marker in the TypoScript recursively
           // Workaround because of bug: $splitConf[$key]['itemRendering.']
           // will be changed, but it should not!
-        $serialized_conf  = serialize( $splitConf[$key]['itemRendering.'] );
-        $coa_conf         = $this->cObj->substituteMarkerInObject
-                            (
-                              $splitConf[$key]['itemRendering.'],
-                              $marker
-                            );
-        $splitConf[$key]['itemRendering.'] = unserialize( $serialized_conf );
+        $serialized_conf                    = serialize( $splitConf[$key]['itemRendering.'] );
+        $coa_conf_itemRendering             = $this->cObj->substituteMarkerInObject
+                                            (
+                                              $splitConf[$key]['itemRendering.'],
+                                              $marker
+                                            );
+        $splitConf[$key]['itemRendering.']  = unserialize( $serialized_conf );
           // Replace the marker in the TypoScript recursively
 
         $coa_name         = $splitConf[$key]['itemRendering'];
         $str_outputEntry  = $this->cObj->cObjGetSingle
                             (
                               $coa_name,
-                              $coa_conf
+                              $coa_conf_itemRendering
                             );
         $outputEntries[]  = $str_outputEntry;
 // dwildt, 111106, +
