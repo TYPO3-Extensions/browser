@@ -392,7 +392,7 @@ if ( ! ( $pos === false ) )
       // 0: link only, 1: with application icon, 2: with based icon
     switch( true )
     {
-      case( isset( $this->cObj->stdWrap($conf['fields.']['layout.'] ) ) ):
+      case( isset( $conf['fields.']['layout.'] ) ):
         $type = intval( $this->cObj->stdWrap( $conf['fields.']['layout'], $conf['fields.']['layout.'] ) );
         break;
       default:
