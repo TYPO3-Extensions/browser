@@ -180,12 +180,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
     if( $bool_currLangOnly )
     {
-    $this->str_developer_csvIp = '87.177.88.86';
-    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-    if ( ! ( $pos === false ) )
-    {
-      var_dump(__METHOD__. ' (' . __LINE__ . '): render_uploads_per_language 1' );
-    }
+$this->str_developer_csvIp = '87.177.88.86';
+$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__. ' (' . __LINE__ . '): render_uploads_per_language 1' );
+}
       $out = $out . $this->render_uploads_per_language( $content, $coa_conf );
       return $out;
     }
@@ -391,6 +391,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // get layout type
       // 0: link only, 1: with application icon, 2: with based icon
     $type = intval($this->cObj->stdWrap($conf['fields.']['layout'], $conf['fields.']['layout.']));
+$this->str_developer_csvIp = '87.177.88.86';
+$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if ( ! ( $pos === false ) ) {
+  var_dump(__METHOD__. ' (' . __LINE__ . '): ', $type );
+}
 
       // set default path
     $path = 'uploads/media/';
