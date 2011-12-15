@@ -390,7 +390,15 @@ if ( ! ( $pos === false ) )
 
       // get layout type
       // 0: link only, 1: with application icon, 2: with based icon
-    $type = intval($this->cObj->stdWrap($conf['fields.']['layout'], $conf['fields.']['layout.']));
+    switch( true )
+    {
+      case( isset( $this->cObj->stdWrap($conf['fields.']['layout.'] ) ) ):
+        $type = intval( $this->cObj->stdWrap( $conf['fields.']['layout'], $conf['fields.']['layout.'] ) );
+        break;
+      default:
+        $type = intval( $conf['fields.']['layout'] );
+        break;
+    }
 $this->str_developer_csvIp = '87.177.88.86';
 $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 if ( ! ( $pos === false ) ) {
