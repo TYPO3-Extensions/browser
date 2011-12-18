@@ -695,38 +695,47 @@ class tx_browser_pi1_wrapper
         break;
       case($boolDoLinkToSingle):
           // Remove piVars, if they should not used in the realUrl path
-        $this->pObj->objZz->advanced_remove_piVars();
+        $this->pObj->objZz->advanced_remove_piVars( );
           // #8368
-        $this->pObj->objZz->advanced_remove_piVars_filter();
+        $this->pObj->objZz->advanced_remove_piVars_filter( );
           // We have to set the link to the single view
         if($boolPrompt) t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.' gets a link to single view.', $this->pObj->extKey, 0);
         // Building the URI parameters
         $additionalParams = '';
 
           // Alias for showUid? #9599
-        if(empty($this->pObj->piVar_alias_showUid))
+        if( empty( $this->pObj->piVar_alias_showUid ) )
         {
           $this->pObj->piVars['showUid'] = $recordId;
         }
-        if(!empty($this->pObj->piVar_alias_showUid))
+        if( ! empty( $this->pObj->piVar_alias_showUid ) )
         {
-          unset($this->pObj->piVars['showUid']);
+          unset( $this->pObj->piVars['showUid'] );
           $this->pObj->objZz->tmp_piVars['showUid'] = null;
           $this->pObj->piVars[$this->pObj->piVar_alias_showUid] = $recordId;
         }
           // Alias for showUid? #9599
 
-        foreach((array) $this->pObj->piVars as $paramKey => $paramValue)
+        foreach( ( array ) $this->pObj->piVars as $paramKey => $paramValue )
         {
             // 110807, dwildt +
-          if(!empty($paramValue))
+          if( ! empty( $paramValue ) )
           {
-            $additionalParams .= '&'.$this->pObj->prefixId.'['.$paramKey.']='.$paramValue;
+            $additionalParams .= '&' . $this->pObj->prefixId . '[' . $paramKey . ']=' . $paramValue;
           }
             // 110807, dwildt +
             // 110807, dwildt -
           //$additionalParams .= '&'.$this->pObj->prefixId.'['.$paramKey.']='.$paramValue;
         }
+
+// #32676, 111218, dwildt+
+if( count( $conf['views.'][$viewWiDot] ) > 1 )
+{
+  var_dump( __METHOD__ , __LINE__ , $this->pObj->piVar_mode, $this->pObj->piVars );
+}
+// #32676, 111218, dwildt+
+
+
         $cHash_calc = $this->pObj->objZz->get_cHash('&id='.$singlePid.$additionalParams);
           // Building the typolink array
         if(is_array($lConfCObj['10.']['typolink.']))
