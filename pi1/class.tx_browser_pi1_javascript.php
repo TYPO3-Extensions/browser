@@ -1158,7 +1158,7 @@ class tx_browser_pi1_javascript
     $views      = $conf['views.'][$viewWiDot];
     
       // RETURN
-    if( $view == 'list' )
+    if( $mode == 'single' )
     {
       $js_complete = '  // Browser method dyn_method_load_all_modes( ): There isn\'t any loader set, ' .
                      'because there current view is a single view.';
