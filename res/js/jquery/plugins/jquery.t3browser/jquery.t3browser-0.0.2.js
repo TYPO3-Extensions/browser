@@ -149,6 +149,8 @@
                             "Probably the first div is the header.\n" +
                             "If it is the header, please set it to [don\'t display header]."
                           );
+                            // Fade out the loading *.gif, initiate buttons again
+                          clean_up( html_element );
                           return;
                         }
                         $( id_of_loaded_content ).unwrap( );
