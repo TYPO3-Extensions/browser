@@ -262,6 +262,80 @@ plugin.tx_browser_pi1 {
       charset = auto
     }
 
+    map {
+        // Enable the map
+      enabled = TEXT
+      enabled {
+          // [BOOLEAN] false (default), true
+        value = false
+      }
+      template {
+          // [STRING] Path to the map template
+        file = EXT:browser/res/html/map.tmpl
+      }
+      database {
+          // [STRING] table and field of the latitude value. Syntax: table.field
+        latitude =
+          // [STRING] table and field of the longitude value. Syntax: table.field
+        longitude =
+      }
+      configuration {
+        MapControls = TEXT
+        MapControls {
+            // [STRING] customized control types
+          value = ['Navigation', 'PanZoomBar']
+        }
+        MapZoomLevels = TEXT
+        MapZoomLevels {
+            // [STRING] customized zoom levels
+          value = ['Navigation', 'PanZoomBar']
+        }
+        MapMarker = TEXT
+        MapMarker {
+            // [Boolean] standalone marker is allowed
+          value = true
+        }
+        MapMarkerInfo = TEXT
+        MapMarkerInfo {
+            // [BOOLEAN] marker with infolayer is allowed
+          value = true
+        }
+        MapMarkerEvent = TEXT
+        MapMarkerEvent {
+            // [STRING] customized marker events
+          value = 'click'
+        }
+      }
+      javascripts {
+        lib {
+            // [STRING] Path to openLayers script
+          openLayers = EXT:browser/res/js/map/lib/OpenLayers/OpenLayers.js
+          openLayers {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+            // [STRING] Path to openStreetMap script
+          openStreetMap = EXT:browser/res/js/map/lib/OpenStreetMap/OpenStreetMap.js
+          openStreetMap {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+        }
+          // [STRING] Path to map configuration script
+        config = EXT:browser/res/js/map/oxMapConfig.js
+        config {
+            // [Boolean] 0 (default): link to the script file, 1: include the script inline
+          inline = 0
+        }
+          // [STRING] Path to map rendering script
+        render = EXT:browser/res/js/map/oxRenderMap.js
+        render {
+            // [Boolean] 0 (default): link to the script file, 1: include the script inline
+          inline = 0
+        }
+      }
+    }
+
     modeSelector {
       wrap =
     }
@@ -1686,7 +1760,7 @@ plugin.tx_browser_pi1 {
           display_if_in_list = TEXT
           display_if_in_list {
               // [String/csv] Comma separated list of parameters
-            value = 
+            value =
           }
             // Hide the plugin, if one of the following parameters is part of the URL ...
           hide_if_in_list = TEXT

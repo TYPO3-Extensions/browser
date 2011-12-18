@@ -1117,7 +1117,8 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->b_drs_flexform     = false;
     $this->b_drs_hooks        = false;
     $this->b_drs_javascript   = false;
-    $this->b_drs_localisation    = false;
+    $this->b_drs_localisation = false;
+    $this->b_drs_map          = false;
     $this->b_drs_marker       = false;
     $this->b_drs_perform      = false;
     $this->b_drs_realurl      = false;
@@ -1154,7 +1155,8 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_flexform     = true;
       $this->b_drs_hooks        = true;
       $this->b_drs_javascript   = true;
-      $this->b_drs_localisation    = true;
+      $this->b_drs_localisation = true;
+      $this->b_drs_map          = true;
       $this->b_drs_marker       = true;
       $this->b_drs_perform      = true;
       $this->b_drs_realurl      = true;
@@ -1243,10 +1245,19 @@ class tx_browser_pi1 extends tslib_pibase {
     }
     if ($this->arr_extConf['drs_mode'] == 'Localisation')
     {
+      $this->b_drs_error        = true;
+      $this->b_drs_warn         = true;
+      $this->b_drs_info         = true;
+      $this->b_drs_localisation = true;
+      $this->b_drs_perform      = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == 'Map')
+    {
       $this->b_drs_error      = true;
       $this->b_drs_warn       = true;
       $this->b_drs_info       = true;
-      $this->b_drs_localisation  = true;
+      $this->b_drs_map        = true;
       $this->b_drs_perform    = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
@@ -1297,9 +1308,9 @@ class tx_browser_pi1 extends tslib_pibase {
     }
     if ($this->arr_extConf['drs_mode'] == 'Social media')
     {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
+      $this->b_drs_error        = true;
+      $this->b_drs_warn         = true;
+      $this->b_drs_info         = true;
       $this->b_drs_socialmedia  = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System: Social media.', $this->extKey, 0);
     }
@@ -1410,6 +1421,10 @@ class tx_browser_pi1 extends tslib_pibase {
       // Class with methods for ordering rows
     require_once('class.tx_browser_pi1_javascript.php');
     $this->objJss = new tx_browser_pi1_javascript($this);
+
+      // Class with methods for the map
+    require_once('class.tx_browser_pi1_map.php');
+    $this->objMap = new tx_browser_pi1_map($this);
 
       // Class with methods for the markers
     require_once('class.tx_browser_pi1_marker.php');
