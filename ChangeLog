@@ -7,6 +7,8 @@
               * Tab [General]:    Update the value of the selected view (optional)
   Imrovement
   * #00000: Localised records can push into the shopping card without param L now
+  Bugfixes:
+  * #32676: Link to single view without mode parameter
 
 3.9.5
   111202
