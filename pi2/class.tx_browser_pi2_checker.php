@@ -411,9 +411,11 @@ class tx_browser_pi2_checker
  */
   function value_is_out_of_date($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
   {
-    $str_srce_code = $arr_ticket['srce']['typoscript']['code'];
+    $str_srce_code          = $arr_ticket['srce']['typoscript']['code'];
+    $str_value_out_of_date  = $arr_ticket['srce']['value_out_of_date'];
+    $str_new_value          = $arr_ticket['srce']['new_value'];
 
-    // If there is no code to update RETURN
+      // If there is no code to update RETURN
     if (!array_key_exists($str_srce_code, $arr_conf_oneDimension))
     {
       if ($this->pObj->pObj->b_drs_tsUpdate)
@@ -422,26 +424,26 @@ class tx_browser_pi2_checker
       }
       return false;
     }
-    // If there is no code to update RETURN
+      // If there is no code to update RETURN
 
-    // Get the source value
+      // Get the source value
     $str_srce_value = $arr_conf_oneDimension[$str_srce_code];
 
-    // If we have an integer RETURN
-    if (is_numeric($str_srce_value))
+      // If TypoScript property doesn't contain the soruce code RETURN
+    if ( $str_srce_value == $str_value_out_of_date )
     {
       if ($this->pObj->pObj->b_drs_tsUpdate)
       {
-        t3lib_div::devlog('[INFO/UPDATE] '.$str_srce_code.' is an integer.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/UPDATE] ' . $str_srce_code . ' != ' . $str_value_out_of_date, $this->pObj->extKey, 0);
       }
       return false;
     }
-    // If we have an integer RETURN
+      // If TypoScript property doesn't contain the soruce code RETURN
 
     // DRS - Development Reporting system
     if ($this->pObj->pObj->b_drs_tsUpdate)
     {
-      t3lib_div::devlog('[WARN/UPDATE] '.$str_srce_code.' is a string. Update it to an integer!', $this->pObj->extKey, 2);
+      t3lib_div::devlog('[WARN/UPDATE] '.$str_srce_code.' is out of date. Update it to ' . $str_new_value, $this->pObj->extKey, 2);
     }
     // DRS - Development Reporting system
 
@@ -499,9 +501,10 @@ class tx_browser_pi2_checker
       <p>
           '.$str_img_info.' '.$str_todo.'
       </p>
-          <h3>'.$this->pObj->pi_getLL('ticket_phrase_srce').'</h3>
-      <p'.$this->str_style_ts.'>'.$str_srce_code.' = '.$str_srce_value.'</p>
+      <h3>'.$this->pObj->pi_getLL('ticket_phrase_srce').'</h3>
+      <p' . $this->str_style_ts. '>' . $str_srce_code . ' = ' . $str_value_out_of_date . '</p>
       <h3>'.$this->pObj->pi_getLL('ticket_phrase_dest').'</h3>
+      <p' . $this->str_style_ts. '>' . $str_srce_code . ' = ' . $str_new_value . '</p>
       <p>'.$str_expl_prompt.'</p>
       <p'.$this->str_style_ts.'>'.$arr_ticket['expl']['code'].'</p>
 

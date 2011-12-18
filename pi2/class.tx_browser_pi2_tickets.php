@@ -440,6 +440,7 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['version']                         = '3.9.6';
     $arr_release[$int_v][$int_t]['srce']['typoscript']['code']      = 'template.file';
     $arr_release[$int_v][$int_t]['srce']['value_out_of_date']       = 'EXT:browser/res/default.tmpl';
+    $arr_release[$int_v][$int_t]['srce']['new_value']               = 'EXT:browser/res/html/default.tmpl';
     $arr_release[$int_v][$int_t]['expl']['prompt']['default']       = 'Please update your TypoScript: move template.file = ' .
                                                                       'EXT:browser/res/default.tmpl to template.file = EXT:browser/res/html/default.tmpl. ' .
                                                                       'Please update the Browser plugin. Tab [Templating]: Update the value of the ' .
