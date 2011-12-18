@@ -1158,7 +1158,7 @@ class tx_browser_pi1_javascript
     $views      = $conf['views.'][$viewWiDot];
     
     $js_snippet   = '' . 
-'  ###TAB###setTimeout(function() {
+'  setTimeout(function() {
   ###TAB###  load_mode( ###CURR_VIEW### );
   ###NEXT_VIEW###
   ###TAB###}, int_seconds );';
@@ -1191,10 +1191,20 @@ class tx_browser_pi1_javascript
       $tab = $tab . '  ';
     }
     $js_complete = str_replace( '###NEXT_VIEW###', null, $js_complete );
-    
-    if( empty( $js_complete ) )
+
+    switch( true )
     {
-      $js_complete = '  // There isn\'t any loader set, because there is one view only.';
+      case( empty( $js_complete ) ):
+        $js_complete = '  // There isn\'t any loader set, because there is one view only.';
+        break;
+      default:
+       $prompt_01   = '    // Code is set by the Browser method dyn_method_load_all_modes( ) - BEGINN';
+       $prompt_02   = '    // Code is set by the Browser method dyn_method_load_all_modes( ) - END';
+       $js_complete = $prompt_01 . '
+' . $js_complete . '
+' . $prompt_02 . '
+';
+       break;
     }
     
     return $js_complete;
