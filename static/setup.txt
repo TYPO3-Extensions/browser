@@ -2332,13 +2332,13 @@ plugin.tx_browser_pi1 {
             disableAllHeaderCode  = 1
             xhtml_cleaning        = 0
             admPanel              = 0
-            metaCharset           = config.metaCharset
-            sys_language_uid      = config.sys_language_uid
-            sys_language_mode     = config.sys_language_mode
-            sys_language_overlay  = config.sys_language_overlay
-            language              = config.language
-            locale_all            = config.locale_all
-            htmlTag_langKey       = config.htmlTag_langKey
+            metaCharset           < config.metaCharset
+            sys_language_uid      < config.sys_language_uid
+            sys_language_mode     < config.sys_language_mode
+            sys_language_overlay  < config.sys_language_overlay
+            language              < config.language
+            locale_all            < config.locale_all
+            htmlTag_langKey       < config.htmlTag_langKey
           }
           10 < styles.content.get
         }
