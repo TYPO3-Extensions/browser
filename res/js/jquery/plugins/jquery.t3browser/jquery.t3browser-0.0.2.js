@@ -139,6 +139,8 @@
                             "\n" +
                             "Please take care of a proper TypoScript."
                           );
+                            // Fade out the loading *.gif, initiate buttons again
+                          clean_up( html_element );
                           return;
                         }
 
