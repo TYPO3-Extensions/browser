@@ -78,7 +78,7 @@
                     return this.each( function ( )
                     {
                         // ERROR html_element is missing. Don't use AJAX but forward
-                      if( !$( plugin_id ).length ) {
+                      if( ! $( plugin_id ).length ) {
                         prompt = format( settings.messages.errMissingTagPropertyPrmpt, plugin_id);
                         alert( settings.messages.errMissingTagPropertyLabel + " " + prompt );
                         prompt = format( settings.messages.hlpMissingTagPropertyPrmpt, plugin_id);
