@@ -134,8 +134,9 @@
                             "Please check the link manually:\n" +
                             url + "\n" +
                             "\n" +
-                            "Reason can be:\n" +
-                            "- The TYPO3 colPos of your content isn't 0.\n" +
+                            "Reasons can be:\n" +
+                            "* The TYPO3 colPos of your content isn't 0.\n" +
+                            "* The first element of the Browser plugin is a header. Please set it to [don\'t display header].\n" +
                             "\n" +
                             "Please take care of a proper TypoScript."
                           );
