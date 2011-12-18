@@ -149,6 +149,7 @@
                             "Probably the first div is the header.\n" +
                             "If it is the header, please set it to [don\'t display header]."
                           );
+                          $( "#tmp-container div" ).remove( );
                             // Fade out the loading *.gif, initiate buttons again
                           clean_up( html_element );
                           return;
