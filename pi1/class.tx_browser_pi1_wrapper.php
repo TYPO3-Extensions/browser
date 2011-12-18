@@ -736,6 +736,7 @@ class tx_browser_pi1_wrapper
           $firstKeyWiDot          = key( $this->pObj->conf['views.'][$viewWiDot] );
           $firstKeyWoDot          = substr( $firstKeyWiDot, 0, strlen($firstKeyWiDot ) - 1 );
             // Get the key of the first view
+          var_dump( __METHOD__ , __LINE__ , $this->pObj->piVar_mode, $firstKeyWoDot );
           if( $this->pObj->piVar_mode != $firstKeyWoDot )
           {
             $this->pObj->piVars['mode'] = $this->pObj->piVar_mode;
