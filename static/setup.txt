@@ -2935,6 +2935,10 @@ plugin.tx_browser_pi1 {
       /* 111218, 3.9.6, dwildt-*/
       /*height:1.4em;*/
     }
+    .tx-browser-pi1 div.azSelector {
+      /* 111218, 3.9.6, dwildt+*/
+      height:2em;
+    }
     .tx-browser-pi1 ul.azSelector,
     .tx-browser-pi1 ul.modeSelector {
       max-width: 100%;
