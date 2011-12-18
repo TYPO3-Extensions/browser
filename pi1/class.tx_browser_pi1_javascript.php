@@ -1146,8 +1146,8 @@ class tx_browser_pi1_javascript
  * dyn_method_load_all_modes(): Catch the segments to output for AJAX
  *
  * @return  void
- * @since 4.0.0
- * @version 4.0.0
+ * @since 3.9.3
+ * @version 3.9.6
  */
   function dyn_method_load_all_modes( )
   {
@@ -1157,6 +1157,14 @@ class tx_browser_pi1_javascript
     $viewWiDot  = $view.'.';
     $views      = $conf['views.'][$viewWiDot];
     
+      // RETURN
+    if( $view == 'list' )
+    {
+      $js_complete = '  // Browser method dyn_method_load_all_modes( ): There isn\'t any loader set, ' .
+                     'because there current view is a single view.';
+      return $js_complete;
+    }
+
     $js_snippet   = '' .
 '  setTimeout(function() {
   ###TAB###  load_mode( ###CURR_VIEW### );
