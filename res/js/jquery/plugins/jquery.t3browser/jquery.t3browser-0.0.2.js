@@ -136,7 +136,6 @@
                             "\n" +
                             "Reasons can be:\n" +
                             "* The TYPO3 colPos of your content isn't 0.\n" +
-                            "* The first element of the Browser plugin is a header. Please set it to [don\'t display header].\n" +
                             "\n" +
                             "Please take care of a proper TypoScript."
                           );
@@ -144,6 +143,14 @@
                         }
 
                         var id_of_loaded_content = "#" + $( "#tmp-container div" ).attr( "id" )
+
+                        if( ! $( id_of_loaded_content ).length ) {
+                          alert( "ERROR: The first <div> hasn\'t any id.\n" +
+                            "Probably the first div is the header.\n" +
+                            "If it is the header, please set it to [don\'t display header]."
+                          );
+                          return;
+                        }
                         $( id_of_loaded_content ).unwrap( );
                         $( id_of_loaded_content ).hide( );
 
