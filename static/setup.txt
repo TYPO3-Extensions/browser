@@ -2932,7 +2932,8 @@ plugin.tx_browser_pi1 {
     .tx-browser-pi1 div.azSelector,
     .tx-browser-pi1 div.modeSelector {
       padding:.4em 0;
-      height:1.4em;
+      /* 111218, 3.9.6, dwildt-*/
+      /*height:1.4em;*/
     }
     .tx-browser-pi1 ul.azSelector,
     .tx-browser-pi1 ul.modeSelector {
