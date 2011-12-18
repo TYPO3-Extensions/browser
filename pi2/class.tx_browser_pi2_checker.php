@@ -430,7 +430,7 @@ class tx_browser_pi2_checker
     $str_srce_value = $arr_conf_oneDimension[$str_srce_code];
 
       // If TypoScript property doesn't contain the soruce code RETURN
-    if ( $str_srce_value == $str_value_out_of_date )
+    if ( $str_srce_value != $str_value_out_of_date )
     {
       if ($this->pObj->pObj->b_drs_tsUpdate)
       {
