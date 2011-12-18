@@ -740,7 +740,7 @@ class tx_browser_pi1_wrapper
           if( $this->pObj->piVar_mode != $firstKeyWoDot )
           {
             //$this->pObj->piVars['mode'] = $this->pObj->piVar_mode;
-            $additionalParams .= '&' . $this->pObj->prefixId . '[mode]=' . = $this->pObj->piVar_mode;
+            $additionalParams .= '&' . $this->pObj->prefixId . '[mode]=' . $this->pObj->piVar_mode;
           }
           var_dump( __METHOD__ , __LINE__ , $additionalParams );
         }
