@@ -67,7 +67,9 @@ This template is the default template for all list views.
         ###MY_TITLE###
 <!-- ###LIST_TITLE### end -->
 <!-- ###SEARCHFORM### begin -->
-        <div id="c###TT_CONTENT.UID###-list-searchbox-###MODE###" class="searchbox searchbox-list-###MODE### ui-widget ui-widget-content ui-corner-all">
+          <!-- ###LISTTABS### begin -->
+          <div id="c###TT_CONTENT.UID###-list-tabs-###MODE###" class="ui-tabs ui-tabs-list-###MODE### ui-widget ui-widget-content ui-corner-all">
+        <div id="c###TT_CONTENT.UID###-list-searchbox-###MODE###" class="searchbox searchbox-list-###MODE###">
           <form action="###ACTION###" method="post" >
             <fieldset>
               <legend>###MY_SEARCH_LEGEND###</legend>
@@ -82,8 +84,6 @@ This template is the default template for all list views.
           ###RESULTPHRASE###
         </div><!-- ###SEARCHFORM### end -->
         <div class="listarea">
-          <!-- ###LISTTABS### begin -->
-          <div id="c###TT_CONTENT.UID###-list-tabs-###MODE###" class="ui-tabs ui-tabs-list-###MODE### ui-widget ui-widget-content ui-corner-all">
             <!-- ###CATEGORY_MENU### begin -->
             <!-- Enable the subpart CATEGORY_MENU: Set plugin.tx_browser_pi1.displayList.display.category_menu = 1 -->
             <div id="c###TT_CONTENT.UID###-category_menu-###MODE###" class="category_menu category_menu-list-###MODE###">
