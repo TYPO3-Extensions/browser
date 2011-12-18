@@ -478,23 +478,23 @@
       // +++ This snippet is corresponding with the mode snippet in tx_brwoser_pi1_config::prepare_piVars() !!!
 
       // Security
-    if (isset($this->pObj->piVars['mode']))
+    if ( isset( $this->pObj->piVars['mode'] ) )
     {
-      $this->pObj->piVars['mode'] = $this->secure_piVar($this->pObj->piVars['mode'], 'integer');
+      $this->pObj->piVars['mode'] = $this->secure_piVar( $this->pObj->piVars['mode'], 'integer' );
     }
       // Security
 
       // Set the global piVar_mode
-    if (!isset($this->pObj->piVars['mode']))
+    if ( ! isset($this->pObj->piVars['mode'] ) )
     {
-      if (is_array($this->pObj->conf['views.'][$viewWiDot]))
+      if ( is_array( $this->pObj->conf['views.'][$viewWiDot] ) )
       {
-        reset($this->pObj->conf['views.'][$viewWiDot]);
-        $firstKeyWiDot = key($this->pObj->conf['views.'][$viewWiDot]);
-        $firstKeyWoDot = substr($firstKeyWiDot, 0, strlen($firstKeyWiDot) - 1);
+        reset( $this->pObj->conf['views.'][$viewWiDot] );
+        $firstKeyWiDot 		= key( $this->pObj->conf['views.'][$viewWiDot] );
+        $firstKeyWoDot 		= substr( $firstKeyWiDot, 0, strlen($firstKeyWiDot ) - 1 );
         $this->pObj->piVar_mode = $firstKeyWoDot;
       }
-      if (!is_array($this->pObj->conf['views.'][$viewWiDot]))
+      if ( ! is_array( $this->pObj->conf['views.'][$viewWiDot] ) )
       {
         $this->pObj->piVar_mode = $this->pObj->piVars['mode'];
       }
@@ -504,20 +504,21 @@
       $this->pObj->piVar_mode = $this->pObj->piVars['mode'];
     }
       // Set the global piVar_mode
+var_dump( __LINE__ , $this->pObj->piVar_mode, $this->pObj->piVars );
 
       // Unset mode, if we have only one view
-    if (count($conf['views.'][$viewWiDot]) < 2)
+    if ( count( $conf['views.'][$viewWiDot] ) < 2 )
     {
         // We have one view only. We don't need any piVar_mode
-      unset($this->pObj->piVars['mode']);
-      if($this->pObj->b_drs_browser)
+      unset( $this->pObj->piVars['mode'] );
+      if( $this->pObj->b_drs_browser )
       {
         t3lib_div::devlog('[INFO/BROWSER] tx_browser_pi1[mode] is deleted, because there is one view only.', $this->pObj->extKey, 0);
       }
     }
       // Unset mode, if we have only one view
       // Unset mode, if we have only one view or if mode is empty
-
+var_dump( $this->pObj->piVars );
 
 
       //////////////////////////////////////
