@@ -10,9 +10,9 @@ plugin.tx_browser_pi1 {
     // [STRING] Path to the HTML template file
   template {
       // default file
-    file = EXT:browser/res/default.tmpl
+    file = EXT:browser/res/html/default.tmpl
     css {
-      browser = EXT:browser/res/default.css
+      browser = EXT:browser/res/html/default.css
       browser {
           // [Boolean] 0 (default): CSS as external file, 1: CSS inline
         inline = 0
@@ -27,11 +27,11 @@ plugin.tx_browser_pi1 {
       browser {
         table {
           name = Browser: Table
-          file = EXT:browser/res/default.tmpl
+          file = EXT:browser/res/html/default.tmpl
         }
         list {
           name = Browser: List
-          file = EXT:browser/res/default_ul.tmpl
+          file = EXT:browser/res/html/default_ul.tmpl
         }
       }
     }

@@ -1,5 +1,10 @@
 3.9.6
   111215
+  UPDATE:
+  * #00000: default.html and default_ul.html is moved from res/ to res/html/
+            You have to edit the Browser plugin:
+              * Tab [Templating]: Update the value of the template
+              * Tab [General]:    Update the value of the selected view (optional)
   Imrovement
   * #00000: Localised records can push into the shopping card without param L now
 

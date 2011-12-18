@@ -107,14 +107,14 @@ class tx_browser_pi2_checker
   *
   * @return	string		HTML report
   */
-  function loop_tickets()
+  function loop_tickets( )
   {
     //////////////////////////////////////////////////////////
     //
     // Get the Ticket array and the current Typoscript configuration
 
-    $arr_release_tickets = $this->pObj->arr_tickets;
-    $arr_conf_oneDimension = t3lib_BEfunc::implodeTSParams($this->conf, $prefixId = '');
+    $arr_release_tickets    = $this->pObj->arr_tickets;
+    $arr_conf_oneDimension  = t3lib_BEfunc::implodeTSParams($this->conf, $prefixId = '');
     // Get the Ticket array and the current Typoscript configuration
 
 
@@ -279,7 +279,7 @@ class tx_browser_pi2_checker
 
 
   /**
- * Check if the current TypoScript code value is a string and not a integer. Returns an HTML report.
+ * Check if the current TypoScript code value is a string and not an integer. Returns an HTML report.
  *
  * @param	integer		$int_release: The number of the release like 0, 1, 2, 3, ...
  * @param	integer		$int_ticketNo: The number of the ticket like 0, 123, 4567
@@ -399,6 +399,121 @@ class tx_browser_pi2_checker
 
 
 
+
+  /**
+ * Check if the given value exist. If yes, the value is out of date
+ *
+ * @param	integer		$int_release: The number of the release like 0, 1, 2, 3, ...
+ * @param	integer		$int_ticketNo: The number of the ticket like 0, 123, 4567
+ * @param	array		$arr_ticket: The array with the tiket properties
+ * @param	array		$arr_conf_oneDimension: The current TypoScript configuration
+ * @return	string		$str_html_return: HTML report
+ */
+  function value_is_out_of_date($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
+  {
+    $str_srce_code = $arr_ticket['srce']['typoscript']['code'];
+
+    // If there is no code to update RETURN
+    if (!array_key_exists($str_srce_code, $arr_conf_oneDimension))
+    {
+      if ($this->pObj->pObj->b_drs_tsUpdate)
+      {
+        t3lib_div::devlog('[INFO/UPDATE] '.$str_srce_code.' isn\'t a part of TypoSript.', $this->pObj->extKey, 0);
+      }
+      return false;
+    }
+    // If there is no code to update RETURN
+
+    // Get the source value
+    $str_srce_value = $arr_conf_oneDimension[$str_srce_code];
+
+    // If we have an integer RETURN
+    if (is_numeric($str_srce_value))
+    {
+      if ($this->pObj->pObj->b_drs_tsUpdate)
+      {
+        t3lib_div::devlog('[INFO/UPDATE] '.$str_srce_code.' is an integer.', $this->pObj->extKey, 0);
+      }
+      return false;
+    }
+    // If we have an integer RETURN
+
+    // DRS - Development Reporting system
+    if ($this->pObj->pObj->b_drs_tsUpdate)
+    {
+      t3lib_div::devlog('[WARN/UPDATE] '.$str_srce_code.' is a string. Update it to an integer!', $this->pObj->extKey, 2);
+    }
+    // DRS - Development Reporting system
+
+    // Get the localised header
+    if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['header']))
+    {
+      $str_h1 = $arr_ticket['header'][$GLOBALS['TSFE']->lang];
+    }
+    if (!array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['header']))
+    {
+      $str_h1 = $arr_ticket['header']['default'];
+    }
+    // Get the localised header
+
+    // Get the localised prompt
+    if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['prompt']))
+    {
+      $str_prompt = $arr_ticket['prompt'][$GLOBALS['TSFE']->lang];
+    }
+    if (!array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['prompt']))
+    {
+      $str_prompt = $arr_ticket['prompt']['default'];
+    }
+    // Get the localised prompt
+
+    // Get the localised example prompt
+    if (array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['expl']['prompt']))
+    {
+      $str_expl_prompt = $arr_ticket['expl']['prompt'][$GLOBALS['TSFE']->lang];
+    }
+    if (!array_key_exists($GLOBALS['TSFE']->lang, $arr_ticket['expl']['prompt']))
+    {
+      $str_expl_prompt = $arr_ticket['expl']['prompt']['default'];
+    }
+    // Get the localised example prompt
+
+    // Get the formated ticket number
+    $str_ticketNo       = sprintf("%04d", $int_ticketNo);
+    $str_status         = $this->pObj->pi_getLL('ticket_status_'.$arr_ticket['status']);
+    $str_todo           = $this->pObj->pi_getLL('ticket_todo_'.$arr_ticket['todo']);
+    $str_img_status     = '<img align="top" '.
+                          'alt="'.$str_status.'" title="'.$str_status.'" '.
+                          'src="'.$this->get_image_path($arr_ticket['status']).'"/>';
+    $str_img_info       = '<img align="top" '.
+                          'alt="'.$this->pObj->pi_getLL('ticket_phrase_todo').'" '.
+                          'title="'.$this->pObj->pi_getLL('ticket_phrase_todo').'" '.
+                          'src="'.$this->get_image_path(PI2_STATUS_HELP).'"/>';
+
+    $str_html_return = '
+      <h2>'.$str_img_status.' '.$str_h1.'</h2>
+      <p>
+        '.$str_prompt.'<br />
+        <strong>'.$this->pObj->pi_getLL('ticket_phrase_ticket').': </strong>'.$str_ticketNo.'
+      </p>
+      <p>
+          '.$str_img_info.' '.$str_todo.'
+      </p>
+          <h3>'.$this->pObj->pi_getLL('ticket_phrase_srce').'</h3>
+      <p'.$this->str_style_ts.'>'.$str_srce_code.' = '.$str_srce_value.'</p>
+      <h3>'.$this->pObj->pi_getLL('ticket_phrase_dest').'</h3>
+      <p>'.$str_expl_prompt.'</p>
+      <p'.$this->str_style_ts.'>'.$arr_ticket['expl']['code'].'</p>
+
+      '."\n";
+
+    $str_srce_value   = $arr_conf_oneDimension[$arr_ticket['srce']['typoscript']['code']];
+    $str_html_return  = str_replace('%value%', $str_srce_value, $str_html_return);
+    $str_html_return  = str_replace('%version%', $arr_ticket['version'], $str_html_return);
+
+    return $str_html_return;
+
+  }
 
 
 
