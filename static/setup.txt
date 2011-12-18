@@ -30,7 +30,7 @@ plugin.tx_browser_pi1 {
           file = EXT:browser/res/html/default.tmpl
         }
         table_until_3-9-6 {
-          name = Browser: Table (until Browser version 3.9.6)
+          name = Browser: Table (until version 4.0)
           file = EXT:browser/res/html/until_3.9.6/default.tmpl
         }
         list {
