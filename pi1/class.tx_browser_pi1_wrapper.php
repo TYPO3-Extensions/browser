@@ -736,15 +736,17 @@ class tx_browser_pi1_wrapper
           $firstKeyWiDot          = key( $this->pObj->conf['views.'][$viewWiDot] );
           $firstKeyWoDot          = substr( $firstKeyWiDot, 0, strlen($firstKeyWiDot ) - 1 );
             // Get the key of the first view
-          var_dump( __METHOD__ , __LINE__ , $this->pObj->piVar_mode, $firstKeyWoDot );
+          //var_dump( __METHOD__ , __LINE__ , $this->pObj->piVar_mode, $firstKeyWoDot );
+            // Add the parameter mode
           if( $this->pObj->piVar_mode != $firstKeyWoDot )
           {
             //$this->pObj->piVars['mode'] = $this->pObj->piVar_mode;
             $additionalParams .= '&' . $this->pObj->prefixId . '[mode]=' . $this->pObj->piVar_mode;
           }
-          var_dump( __METHOD__ , __LINE__ , $additionalParams );
+            // Add the parameter mode
+          //var_dump( __METHOD__ , __LINE__ , $additionalParams );
         }
-        // #32676, 111218, dwildt+
+          // #32676, 111218, dwildt+
 
 
         $cHash_calc = $this->pObj->objZz->get_cHash('&id='.$singlePid.$additionalParams);
