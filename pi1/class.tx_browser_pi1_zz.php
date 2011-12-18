@@ -504,7 +504,6 @@
       $this->pObj->piVar_mode = $this->pObj->piVars['mode'];
     }
       // Set the global piVar_mode
-var_dump( __LINE__ , $this->pObj->piVar_mode, $this->pObj->piVars );
 
       // Unset mode, if we have only one view
     if ( count( $conf['views.'][$viewWiDot] ) < 2 )
@@ -518,7 +517,6 @@ var_dump( __LINE__ , $this->pObj->piVar_mode, $this->pObj->piVars );
     }
       // Unset mode, if we have only one view
       // Unset mode, if we have only one view or if mode is empty
-var_dump( $this->pObj->piVars );
 
 
       //////////////////////////////////////
