@@ -431,9 +431,9 @@ class tx_browser_pi2_tickets
     $int_v++;
     $int_t++;
     $arr_release[$int_v][$int_t]['header']['default']               = 'Path to HTML template has chenged';
-    $arr_release[$int_v][$int_t]['prompt']['default']               = 'This porperty is moved in TypoScript since version %version%.';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'This value has changed in version %version%.';
     $arr_release[$int_v][$int_t]['header']['de']                    = 'Pfad zum HTML template hat sich ge&auml;ndert.';
-    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft ist seit Version %version% im TypoScript an anderer Stelle.';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Der Wert hat sich in Version %version% ge&auml;ndert.';
     $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
     $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
     $arr_release[$int_v][$int_t]['function']                        = 'value_is_out_of_date';
@@ -452,15 +452,16 @@ class tx_browser_pi2_tickets
 
     $int_t++;
     $arr_release[$int_v][$int_t]['header']['default']               = 'Path to HTML template has chenged';
-    $arr_release[$int_v][$int_t]['prompt']['default']               = 'This porperty is moved in TypoScript since version %version%.';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'This value has changed in version %version%.';
     $arr_release[$int_v][$int_t]['header']['de']                    = 'Pfad zum HTML template hat sich ge&auml;ndert.';
-    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft ist seit Version %version% im TypoScript an anderer Stelle.';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Der Wert hat sich in Version %version% ge&auml;ndert.';
     $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
     $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
     $arr_release[$int_v][$int_t]['function']                        = 'value_is_out_of_date';
     $arr_release[$int_v][$int_t]['version']                         = '3.9.6';
     $arr_release[$int_v][$int_t]['srce']['typoscript']['code']      = 'template.extensions.browser.table.file';
     $arr_release[$int_v][$int_t]['srce']['value_out_of_date']       = 'EXT:browser/res/default.tmpl';
+    $arr_release[$int_v][$int_t]['srce']['new_value']               = 'EXT:browser/res/html/default.tmpl';
     $arr_release[$int_v][$int_t]['expl']['prompt']['default']       = 'Please update your TypoScript: move template.file = ' .
                                                                       'EXT:browser/res/default.tmpl to template.file = EXT:browser/res/html/default.tmpl. ' .
                                                                       'Please update the Browser plugin. Tab [Templating]: Update the value of the ' .
@@ -472,15 +473,16 @@ class tx_browser_pi2_tickets
 
     $int_t++;
     $arr_release[$int_v][$int_t]['header']['default']               = 'Path to HTML template has chenged';
-    $arr_release[$int_v][$int_t]['prompt']['default']               = 'This porperty is moved in TypoScript since version %version%.';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'This value has changed in version %version%.';
     $arr_release[$int_v][$int_t]['header']['de']                    = 'Pfad zum HTML template hat sich ge&auml;ndert.';
-    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft ist seit Version %version% im TypoScript an anderer Stelle.';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Der Wert hat sich in Version %version% ge&auml;ndert.';
     $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
     $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
     $arr_release[$int_v][$int_t]['function']                        = 'value_is_out_of_date';
     $arr_release[$int_v][$int_t]['version']                         = '3.9.6';
     $arr_release[$int_v][$int_t]['srce']['typoscript']['code']      = 'template.extensions.browser.list.file';
     $arr_release[$int_v][$int_t]['srce']['value_out_of_date']       = 'EXT:browser/res/default_ul.tmpl';
+    $arr_release[$int_v][$int_t]['srce']['new_value']               = 'EXT:browser/res/html/default_ul.tmpl';
     $arr_release[$int_v][$int_t]['expl']['prompt']['default']       = 'Please update your TypoScript: move template.file = ' .
                                                                       'EXT:browser/res/default_ul.tmpl to template.file = EXT:browser/res/html/default_ul.tmpl. ' .
                                                                       'Please update the Browser plugin. Tab [Templating]: Update the value of the ' .
@@ -492,15 +494,16 @@ class tx_browser_pi2_tickets
 
     $int_t++;
     $arr_release[$int_v][$int_t]['header']['default']               = 'Path to CSS file has chenged';
-    $arr_release[$int_v][$int_t]['prompt']['default']               = 'This porperty is moved in TypoScript since version %version%.';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'This value has changed in version %version%.';
     $arr_release[$int_v][$int_t]['header']['de']                    = 'Pfad zur CSS-Datei hat sich ge&auml;ndert.';
-    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft ist seit Version %version% im TypoScript an anderer Stelle.';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Der Wert hat sich in Version %version% ge&auml;ndert.';
     $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
     $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
     $arr_release[$int_v][$int_t]['function']                        = 'value_is_out_of_date';
     $arr_release[$int_v][$int_t]['version']                         = '3.9.6';
     $arr_release[$int_v][$int_t]['srce']['typoscript']['code']      = 'template.css.browser';
     $arr_release[$int_v][$int_t]['srce']['value_out_of_date']       = 'EXT:browser/res/default.css';
+    $arr_release[$int_v][$int_t]['srce']['new_value']               = 'EXT:browser/res/html/default.css';
     $arr_release[$int_v][$int_t]['expl']['prompt']['default']       = 'Please update your TypoScript: move template.css.browser = ' .
                                                                       'EXT:browser/res/default.css to template.css.browser = EXT:browser/res/html/default.css.';
     $arr_release[$int_v][$int_t]['expl']['prompt']['de']            = 'Bitte &auml;ndere Dein TypoScript von template.css.browser = ' .
