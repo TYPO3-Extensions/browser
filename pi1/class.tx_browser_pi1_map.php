@@ -375,7 +375,9 @@ class tx_browser_pi1_map
     $str_mapMarker = '###MAP###';
 
       // Default content of the map marker
-    $str_map = '<div>' . __METHOD__ . ' (' . __LINE__ . '): Error. MAP isn\'t rendered</div>';
+    $str_map =  '<div style="border:2px solid red;text-align:center;color:red;padding:1em;">' .
+                  __METHOD__ . ' (' . __LINE__ . '): Error. MAP isn\'t rendered
+                </div>';
 
       // Get the map template
     $template = $this->pObj->cObj->fileResource($this->confMap['template.']['file']);
