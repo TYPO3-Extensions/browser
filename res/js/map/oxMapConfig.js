@@ -21,10 +21,10 @@ var oxMapConfig = {
                       icon:	['./img/test2.png', 14, 14, 0, 0],		//	icon -> url, width, height, offsetX, offsetY
                       data:	[9.5382032,48.9899851],  			//	coordinates for standalone marker
                       //,9.6075669,48.9459301,
-                      url:	'./dataInfoBox/text.txt'			//	url for infolayer data
+                      url:	'./test/text.txt'			//	url for infolayer data
                     },
                     'cat2': {                             //	marker with infolayer only
-                      url:	'./dataInfoBox/text2.txt'
+                      url:	'./test/text2.txt'
                     }
                   }
 };
