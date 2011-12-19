@@ -241,7 +241,7 @@ class tx_browser_pi1_map
         $prompt = 'Don\'t check, if map-marker is set.';
         t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
       }
-      return;
+      return $template;
     }
       // RETURN: map isn't enabled
 
