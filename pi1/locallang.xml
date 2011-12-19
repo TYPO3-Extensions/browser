@@ -30,6 +30,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
       <label index="error_sql_search"><![CDATA[The search fields have  an error. You get help in the log of devlog.<br /><br />Browser - the TYPO3-Frontend-Engine]]></label>
       <label index="error_table_no"><![CDATA[There aren't any tables for processing.<br /><br />Browser - the TYPO3-Frontend-Engine]]></label>
       <label index="error_template_array"><![CDATA[The returned template is an array. This is an error.<br /><br />Browser - the TYPO3-Frontend-Engine]]></label>
+      <label index="error_template_map_no"><![CDATA[There isn't any HTML template for the map.<br /><br />Browser - the TYPO3-Frontend-Engine]]></label>
       <label index="error_template_no"><![CDATA[There isn't any HTML template.<br /><br />Browser - the TYPO3-Frontend-Engine]]></label>
       <label index="error_template_render">The template isn't rendered. It seems that the TypoScript isn't configured proper. Please take a look in the Developer Log.</label>
       <label index="error_ttc_h1">ERROR: TypoScript-Template-Container (TTC)</label>
@@ -84,6 +85,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="error_sql_search"><![CDATA[Die im TypoScript angegenen Suchfelder haben einen Fehler. Weitere Hinweise erh&auml;ltst Du in den Log-Einträgen von devlog.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
       <label index="error_table_no"><![CDATA[Es konnten keine Tabellen für die Verarbeitung gefunden werden.]]></label>
       <label index="error_template_array"><![CDATA[Das Template ist ein Array. Das ist ein Fehler.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
+      <label index="error_template_map_no"><![CDATA[Es gibt kein HTML-Template f&uuml;r die OpenStreetMap-Karte.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
       <label index="error_template_no"><![CDATA[Es gibt kein HTML-Template.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
       <label index="error_template_render">Das HTML-Template ist nicht verarbeitet worden. Scheinbar ist die TypoScript-Konfiguration fehlerhaft. Der Bericht des Developer Log wird entsprechende Hinweise haben.</label>
       <label index="error_ttc_h1">FEHLER: TypoScript-Template-Container (TTC)</label>

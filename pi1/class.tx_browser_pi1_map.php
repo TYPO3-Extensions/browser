@@ -397,9 +397,9 @@ class tx_browser_pi1_map
                     $this->pObj->pi_getLL('error_readlog_h1') .
                   '</h1>
                   <p style="color:red;font-weight:bold;">' .
-                    $this->pObj->pi_getLL('error_template_no') .
+                    $this->pObj->pi_getLL('error_template_map_no') .
                   '</p>';
-
+var_dump( $confMap );
         // Replace the map marker in the template of the parent object
       $pObj_template = str_replace( $str_mapMarker, $str_map, $pObj_template );
         // RETURN the template
