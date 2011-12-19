@@ -288,9 +288,9 @@ class tx_browser_pi1_map
       $prompt_01 = 'The HTML template doesn\'t contain any marker ' . $str_mapMarker . '.';
       $prompt_02 = 'Marker ' . $str_mapMarker . ' will added before the last div-tag automatically.';
       $prompt_03 = 'But it would be better, you add the marker ' . $str_mapMarker . ' to your HTML template manually.';
-      t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2);
-      t3lib_div :: devLog('[OK/MAP] ' . $prompt , $this->pObj->extKey, -1);
-      t3lib_div :: devLog('[HELP/MAP] ' . $prompt , $this->pObj->extKey, 1);
+      t3lib_div :: devLog('[WARN/MAP] ' . $prompt_01 , $this->pObj->extKey, 2);
+      t3lib_div :: devLog('[OK/MAP] '   . $prompt_02 , $this->pObj->extKey, -1);
+      t3lib_div :: devLog('[HELP/MAP] ' . $prompt_03 , $this->pObj->extKey, 1);
     }
       // DRS - Development Reporting System
 
@@ -301,7 +301,7 @@ class tx_browser_pi1_map
       // Set marker before the last div-tag
 
     $arr_divs     = explode( '</div>', $template );
-    $pos_lastDiv  = count( $arr_divs ) - 1;
+    $pos_lastDiv  = count( $arr_divs ) - 2;
 
     $arr_divs[$pos_lastDiv] = $arr_divs[$pos_lastDiv] . '
       ' . $str_mapMarker;
