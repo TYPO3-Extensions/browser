@@ -3091,8 +3091,8 @@ plugin.tx_browser_pi1 {
 browser_ajax < plugin.tx_browser_pi1.javascript.ajax.jQuery.default
 
 [globalVar = GP:type = {$plugin.tx_browser_pi1.typeNum.ajaxPageObj}]
-    // Don't wrap the content of the CSV export page object by default
-  tt_content.stdWrap >
+    // Don't handle header of content element
+  lib.stdheader >
 [global]
 
   // TYPO3-Browser: CSV export page object
