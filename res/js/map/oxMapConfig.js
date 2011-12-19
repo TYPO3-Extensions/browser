@@ -18,7 +18,7 @@ var oxMapConfig = {
                   },
 	Marker:         {
                     'cat1': {                             //	combined type with standalone marker and marker with infolayer
-                      icon:	['./img/test2.png', 14, 14, 0, 0],		//	icon -> url, width, height, offsetX, offsetY
+                      icon:	['typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0],		//	icon -> url, width, height, offsetX, offsetY
                       data:	[9.5382032,48.9899851],  			//	coordinates for standalone marker
                       //,9.6075669,48.9459301,
                       url:	'typo3conf/ext/browser/res/js/map/test/text.txt'			//	url for infolayer data
