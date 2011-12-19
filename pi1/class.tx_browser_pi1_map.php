@@ -378,7 +378,7 @@ class tx_browser_pi1_map
     $str_map = '<div>' . __METHOD__ . ' (' . __LINE__ . '): Error. MAP isn\'t rendered</div>';
 
       // Get the map template
-    $template = $cObj->fileResource($confMap['template.']['file']);
+    $template = $this->pObj->cObj->fileResource($confMap['template.']['file']);
 
       //////////////////////////////////////////////////////////////////////
       //
