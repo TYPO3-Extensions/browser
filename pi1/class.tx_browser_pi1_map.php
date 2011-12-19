@@ -460,20 +460,118 @@ class tx_browser_pi1_map
     }
       // RETURN: no subpart marker
 
-    $markerArray['###FORM_FILTER###']       = 'form_filter'       . PHP_EOL;
-    $markerArray['###DIV_MAP###']           = 'div_map'           . PHP_EOL;
-    $markerArray['###SCRIPT_RENDERMAP###']  = 'script_rendermap'  . PHP_EOL;
-    $markerArray['###SCRIPT_FILTER###']     = 'script_filter'     . PHP_EOL;
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Substitute marker
+
+    $markerArray['###FORM_FILTER###']       = $this->marker_formFilter( );
+    $markerArray['###DIV_MAP###']           = $this->marker_divMap( );
+    $markerArray['###SCRIPT_RENDERMAP###']  = $this->marker_scriptRendermap( );
+    $markerArray['###SCRIPT_FILTER###']     = $this->marker_scriptFilter( );
     $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
+      // Substitute marker
+
+    
 
 var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $map_template );
       // Replace the map marker in the template of the parent object
-    $pObj_template = str_replace( $str_mapMarker, $str_map, $pObj_template );
+    $pObj_template = str_replace( $str_mapMarker, $map_template, $pObj_template );
 
       // RETURN the template
     return $pObj_template;
   }
 
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * Marker
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+  /**
+ * marker_divMap( ): get the content for the current marker
+ *
+ * @return  string   $content: current content
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function marker_divMap( )
+  {
+    return 'marker_divMap( )';
+  }
+
+
+
+
+
+
+
+
+  /**
+ * marker_formFilter( ): get the content for the current marker
+ *
+ * @return  string   $content: current content
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function marker_formFilter( )
+  {
+    return 'marker_formFilter( )';
+  }
+
+
+
+
+
+
+
+
+  /**
+ * marker_scriptFilter( ): get the content for the current marker
+ *
+ * @return  string   $content: current content
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function marker_scriptFilter( )
+  {
+    return 'marker_scriptFilter( )';
+  }
+
+
+
+
+
+
+
+
+  /**
+ * marker_scriptRendermap( ): get the content for the current marker
+ *
+ * @return  string   $content: current content
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function marker_scriptRendermap( )
+  {
+    return 'marker_scriptRendermap( )';
+  }
 
 
 
