@@ -48,9 +48,10 @@
 class tx_browser_pi1_map
 {
 
-    // [BOOLEAN] Is map enabled
-  var $bool_mapIsEnabled = null;
-
+    // [BOOLEAN] Is map enabled? Will set by init( ) while runtime
+  var $enabled  = null;
+    // [ARRAY] TypoScript configuration array. Will set by init( ) while runtime
+  var $confMap            = null;
 
 
 
@@ -94,7 +95,7 @@ class tx_browser_pi1_map
 
 
   /**
-// * init(): The method sets the global var $bool_mapIsEnabled
+// * init(): The method sets the globals $enabled and $confMap
  *
  * @return  void   
  * @version 3.9.6
@@ -104,13 +105,13 @@ class tx_browser_pi1_map
   {
       ///////////////////////////////////////////////////////////////////////////////
       //
-      // RETURN: $bool_mapIsEnabled isn't null
+      // RETURN: $enabled isn't null
       
-    if( ! ( $this->bool_mapIsEnabled === null ) )
+    if( ! ( $this->enabled === null ) )
     {
       if( $this->pObj->b_drs_map )
       {
-        switch( $this->bool_mapIsEnabled )
+        switch( $this->enabled )
         {
           case( true ):
             $prompt = 'Map is enabled.';
@@ -123,7 +124,7 @@ class tx_browser_pi1_map
       }
       return;
     }
-      // RETURN: $bool_mapIsEnabled isn't null
+      // RETURN: $enabled isn't null
 
 
 
@@ -140,23 +141,68 @@ class tx_browser_pi1_map
 
 
 
-      /////////////////////////////////////////////////////////////////
+      ///////////////////////////////////////////////////////////////
       //
-      // Local or global configuration
+      // Set the global $confMapLocal
 
     switch( true )
     {
       case( isset( $conf['views.'][$viewWiDot][$mode.'.']['navigation.']['map.'] ) ):
+          // local configuration
         $this->confMap = $conf['views.'][$viewWiDot][$mode.'.']['navigation.']['map.'];
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'Local configuration in: views.' . $viewWiDot . $mode . '.navigation.map';
+          t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+        }
         break;
+          // local configuration
       default:
+          // global configuration
         $this->confMap = $this->pObj->conf['navigation.']['map.'];
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'Global configuration in: navigation.map';
+          t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+        }
         break;
+          // global configuration
     }
+      // Set the global $confMapLocal
 
 
 
+      ///////////////////////////////////////////////////////////////
+      //
+      // Set the global $enabled
 
+    $cObj_name      = $this->confMap['enabled'];
+    $cObj_conf      = $this->confMap['enabled.'];
+    $this->enabled  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+      // Set the global $enabled
+
+    
+    
+      ///////////////////////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
+
+    if( $this->pObj->b_drs_map )
+    {
+      switch( $this->enabled )
+      {
+        case( true ):
+          $prompt = 'Map is enabled.';
+          break;
+        default:
+          $prompt = 'Map is disabled.';
+          break;
+      }
+      t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+    }
+      // DRS - Development Reporting System
+
+    return;
   }
 
   
@@ -177,6 +223,24 @@ class tx_browser_pi1_map
  */
   public function set_marker( $template )
   {
+    $this->init( );
+
+      ///////////////////////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
+
+    if( ! $this->enabled )
+    {
+      if( $this->pObj->b_drs_map )
+      {
+        $prompt = 'Don\'t map-marker will checked.';
+        t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+      }
+    }
+      // DRS - Development Reporting System
+
+
+
       /////////////////////////////////////////////////////////////////
       //
       // Get TypoScript configuration for the current view
@@ -213,6 +277,11 @@ class tx_browser_pi1_map
 
 
 
+      if( $this->pObj->b_drs_map )
+      {
+        $prompt = 'The HTML template doesn\'t contain the marker ###MAP###.';
+        t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2);
+      }
     return $template;
   }
 
