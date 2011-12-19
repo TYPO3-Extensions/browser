@@ -1023,10 +1023,10 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Set map marker
+      // Get the map
 
-    $str_template_completed = $this->objMap->set_marker( $str_template_completed );
-      // Set map marker
+    $str_template_completed = $this->objMap->get_map( $str_template_completed );
+      // Get the map
 
 
 

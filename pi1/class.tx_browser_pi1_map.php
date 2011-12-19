@@ -95,13 +95,73 @@ class tx_browser_pi1_map
 
 
   /**
-// * init(): The method sets the globals $enabled and $confMap
+ * get_map( ): Set the marker ###MAP###, if the current template hasn't any map-marker
+ *
+ * @param string    $template: Current HTML template
+ * @return  array   $template: Template with map marker
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  public function get_map( $template )
+  {
+      // init the map
+    $this->init( );
+
+
+ 
+      ///////////////////////////////////////////////////////////////
+      //
+      // RETURN: map isn't enabled
+
+    if( ! $this->enabled )
+    {
+      if( $this->pObj->b_drs_map )
+      {
+        $prompt = 'RETURN. Map is disabled.';
+        t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+      }
+      return $template;
+    }
+      // RETURN: map isn't enabled
+
+
+
+      // set the map marker (in case template is without the marker)
+    $template = $this->init_setMarker( $template );
+
+    return $template;
+  }
+
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * Init
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+  /**
+ * init(): The method sets the globals $enabled and $confMap
  *
  * @return  void   
  * @version 3.9.6
  * @since   3.9.6
  */
-  public function init(  )
+  private function init(  )
   {
       ///////////////////////////////////////////////////////////////////////////////
       //
@@ -204,7 +264,6 @@ class tx_browser_pi1_map
 
     return;
   }
-
   
   
   
@@ -214,36 +273,17 @@ class tx_browser_pi1_map
   
   
   /**
- * set_marker( ): Set the marker ###MAP###, if the current template hasn't any map-marker
+ * init_setMarker( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
  * @param string    $template: Current HTML template
  * @return  array   $template: Template with map marker
  * @version 3.9.6
  * @since   3.9.6
  */
-  public function set_marker( $template )
+  private function init_setMarker( $template )
   {
       // map marker
     $str_mapMarker = '###MAP###';
-      // init the map
-    $this->init( );
-
-
-
-      ///////////////////////////////////////////////////////////////
-      //
-      // RETURN: map isn't enabled
-
-    if( ! $this->enabled )
-    {
-      if( $this->pObj->b_drs_map )
-      {
-        $prompt = 'Don\'t check, if map-marker is set.';
-        t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
-      }
-      return $template;
-    }
-      // RETURN: map isn't enabled
 
 
 
@@ -304,7 +344,8 @@ class tx_browser_pi1_map
     $pos_lastDiv  = count( $arr_divs ) - 2;
 
     $arr_divs[$pos_lastDiv] = $arr_divs[$pos_lastDiv] . '
-      ' . $str_mapMarker;
+        ' . $str_mapMarker . '
+      ';
 
     $template     = implode( '</div>', $arr_divs );
 var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $template);
