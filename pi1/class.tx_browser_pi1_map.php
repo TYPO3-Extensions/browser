@@ -223,11 +223,16 @@ class tx_browser_pi1_map
  */
   public function set_marker( $template )
   {
+      // map marker
+    $str_mapMarker = '###MAP###';
+      // init the map
     $this->init( );
+
+
 
       ///////////////////////////////////////////////////////////////
       //
-      // DRS - Development Reporting System
+      // RETURN: map isn't enabled
 
     if( ! $this->enabled )
     {
@@ -238,7 +243,7 @@ class tx_browser_pi1_map
       }
       return;
     }
-      // DRS - Development Reporting System
+      // RETURN: map isn't enabled
 
 
 
@@ -254,21 +259,18 @@ class tx_browser_pi1_map
     $this->singlePid  = $this->pObj->objZz->get_singlePid_for_listview( );
       // Get TypoScript configuration for the current view
 
-    $str_mapMarker = '###MAP###';
-
 
 
       /////////////////////////////////////////////////////////////////
       //
       // RETURN: template contains the map marker
 
-// Fuer LIST- und SINGLE-view pruefen!!
     $pos = strpos( $str_mapMarker, $template );
     if( ! ( $pos === false ) )
     {
       if( $this->pObj->b_drs_map )
       {
-        $prompt = 'The HTML template contains the marker ###MAP###.';
+        $prompt = 'The HTML template contains the marker ' . $str_mapMarker . '.';
         t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
       }
       return $template;
@@ -277,12 +279,37 @@ class tx_browser_pi1_map
 
 
 
+      /////////////////////////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
 
-      if( $this->pObj->b_drs_map )
-      {
-        $prompt = 'The HTML template doesn\'t contain the marker ###MAP###.';
-        t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2);
-      }
+    if( $this->pObj->b_drs_map )
+    {
+      $prompt_01 = 'The HTML template doesn\'t contain any marker ' . $str_mapMarker . '.';
+      $prompt_02 = 'Marker ' . $str_mapMarker . ' will added before the last div-tag automatically.';
+      $prompt_03 = 'But it would be better, you add the marker ' . $str_mapMarker . ' to your HTML template manually.';
+      t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2);
+      t3lib_div :: devLog('[OK/MAP] ' . $prompt , $this->pObj->extKey, -1);
+      t3lib_div :: devLog('[HELP/MAP] ' . $prompt , $this->pObj->extKey, 1);
+    }
+      // DRS - Development Reporting System
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Set marker before the last div-tag
+
+    $arr_divs     = explode( '</div>', $template );
+    $pos_lastDiv  = count( $arr_divs ) - 1;
+
+    $arr_divs[$pos_lastDiv] = $arr_divs[$pos_lastDiv] . '
+      ' . $str_mapMarker;
+
+    $template     = implode( '</div>', $arr_divs );
+var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $template);
+exit;
+
     return $template;
   }
 
