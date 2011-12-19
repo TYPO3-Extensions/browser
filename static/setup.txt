@@ -266,8 +266,8 @@ plugin.tx_browser_pi1 {
         // Enable the map
       enabled = TEXT
       enabled {
-          // [BOOLEAN] false (default), true
-        value = false
+          // [BOOLEAN] 0 (default), 1
+        value = 0
       }
       template {
           // [STRING] Path to the map template
@@ -293,12 +293,12 @@ plugin.tx_browser_pi1 {
         MapMarker = TEXT
         MapMarker {
             // [Boolean] standalone marker is allowed
-          value = true
+          value = 1
         }
         MapMarkerInfo = TEXT
         MapMarkerInfo {
             // [BOOLEAN] marker with infolayer is allowed
-          value = true
+          value = 1
         }
         MapMarkerEvent = TEXT
         MapMarkerEvent {
