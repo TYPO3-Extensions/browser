@@ -426,7 +426,7 @@ class tx_browser_pi1_map
       // Get the subpart
 
     $str_marker   = '###TEMPLATE_MAP###';
-    $map_template = $this->pObj->cObj->getSubpart($template, $str_marker);
+    $map_template = $this->pObj->cObj->getSubpart($map_template, $str_marker);
       // Get the subpart
 
 
