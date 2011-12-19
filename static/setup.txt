@@ -339,6 +339,65 @@ plugin.tx_browser_pi1 {
         div_map {
           value = <div id="oxMapArea" class="oxMapArea"></div>
         }
+        form_filter = TEXT
+        form_filter {
+          value (
+            <form id="filter">
+              <input type="checkbox" name="cat1" value="1" checked />cat1
+              <input type="checkbox" name="cat2" value="1" checked />cat2
+            </form>
+)
+        }
+        form_filter = TEXT
+        form_filter {
+          value (
+            <form id="filter">
+              <input type="checkbox" name="cat1" value="1" checked />cat1
+              <input type="checkbox" name="cat2" value="1" checked />cat2
+            </form>
+)
+        }
+        jss_filter = TEXT
+        jss_filter {
+          value (
+            <script>
+            <!--
+              var filter = document.getElementsByTagName( 'input' );
+              for(var a=filter.length; a-- ; )
+              filter[a].onchange = function( )
+              {
+                startFilter( this, this.name, this.value );
+              };
+              function startFilter( element, name, value )
+              {
+                switchTo = value == 1 ? false : true;
+                element.value = switchTo == false ? 0 : 1;
+
+                /*	Beispielfilteranwendung
+                 *
+                 *	Das Beispiel liest den Wert einer Checkbox aus und ubergibt an die map.filterLayer-Methode Name und Sichtbarkeit
+                    map           map-Object              als Instance des oxMapRender-Konstruktors -> wird durch Einbettung der oxAPI
+                                                          oxRenderMap.js erzeugt;
+                    filterLayer		filter-Methode
+                      @param	name      STRING            Layer-Name -->	es wird zwischen Markern ohne und mit Informationlayer unterschieden
+                                                          - einfache Markername bestehen aus dem Kategorienamen   --> 'cat1'
+                                                          - Infolayernamen betehen aus Kategoriename und Suffix 'Info'  --> 'cat1Info'
+                                                          um alle Layer zu schließen, muss die Methode so oft wiederholt werden,
+                                                          bis alle Kategorienamen erfasst wurden
+                      @param  switchTo	BOOLEAN | FLOAT   Sichtbarkeitswert -->	true | false entspricht sichtbar bzw. unsichtbar
+                                                          Zahl zwischen 0 und 1 definiert Transparenzgrad
+                */
+                map.filterLayer( name, switchTo );
+                map.filterLayer( name + 'Info', switchTo );
+              }
+            //-->
+            </script>
+)
+        }
+        jss_renderMap = TEXT
+        jss_renderMap {
+          value = <script src="typo3conf/browser/js/map/oxRenderMap.js"></script>
+        }
       }
     }
 

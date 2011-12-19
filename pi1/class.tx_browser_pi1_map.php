@@ -477,8 +477,8 @@ class tx_browser_pi1_map
 
     $markerArray['###FORM_FILTER###']       = $this->marker_formFilter( );
     $markerArray['###DIV_MAP###']           = $this->marker_divMap( );
-    $markerArray['###SCRIPT_RENDERMAP###']  = $this->marker_scriptRendermap( );
-    $markerArray['###SCRIPT_FILTER###']     = $this->marker_scriptFilter( );
+    $markerArray['###SCRIPT_RENDERMAP###']  = $this->marker_jssRenderMap( );
+    $markerArray['###SCRIPT_FILTER###']     = $this->marker_jssFilter( );
     $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
       // Substitute marker
 
@@ -545,7 +545,11 @@ var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $map_template );
  */
   private function marker_formFilter( )
   {
-    return 'marker_formFilter( )';
+    $cObj_name  = $this->confMap['marker.']['form_filter'];
+    $cObj_conf  = $this->confMap['marker.']['form_filter.'];
+    $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+
+    return $content;
   }
 
 
@@ -556,15 +560,19 @@ var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $map_template );
 
 
   /**
- * marker_scriptFilter( ): get the content for the current marker
+ * marker_jssFilter( ): get the content for the current marker
  *
  * @return  string   $content: current content
  * @version 3.9.6
  * @since   3.9.6
  */
-  private function marker_scriptFilter( )
+  private function marker_jssFilter( )
   {
-    return 'marker_scriptFilter( )';
+    $cObj_name  = $this->confMap['marker.']['jss_filter'];
+    $cObj_conf  = $this->confMap['marker.']['jss_filter.'];
+    $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+
+    return $content;
   }
 
 
@@ -575,15 +583,19 @@ var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $map_template );
 
 
   /**
- * marker_scriptRendermap( ): get the content for the current marker
+ * marker_jssRenderMap( ): get the content for the current marker
  *
  * @return  string   $content: current content
  * @version 3.9.6
  * @since   3.9.6
  */
-  private function marker_scriptRendermap( )
+  private function marker_jssRenderMap( )
   {
-    return 'marker_scriptRendermap( )';
+    $cObj_name  = $this->confMap['marker.']['jss_renderMap'];
+    $cObj_conf  = $this->confMap['marker.']['jss_renderMap.'];
+    $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+
+    return $content;
   }
 
 
@@ -634,8 +646,8 @@ var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $map_template );
 
       // Include config
     $name         = 'config';
-    $path         = $this->confMap['javascripts.']['lib.']['config'];
-    $bool_inline  = $this->confMap['javascripts.']['lib.']['config.']['inline'];
+    $path         = $this->confMap['javascripts.']['config'];
+    $bool_inline  = $this->confMap['javascripts.']['config.']['inline'];
     $path_tsConf  = 'javascripts.lib.config';
     $this->pObj->objJss->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
       // Include config
