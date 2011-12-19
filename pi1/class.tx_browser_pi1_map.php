@@ -48,6 +48,9 @@
 class tx_browser_pi1_map
 {
 
+    // [BOOLEAN] Is map enabled
+  var $bool_mapIsEnabled = null;
+
 
 
 
@@ -91,26 +94,36 @@ class tx_browser_pi1_map
 
 
   /**
- * map(): Returns a map
+// * init(): The method sets the global var $bool_mapIsEnabled
  *
- * @param array   $rows: Consolidated rows
- * @param array   $template: Current HTML template
- * @return  array   $arr_return: rows, template, success
- * @version 4.0.0
- * @since 4.0.0
+ * @return  void   
+ * @version 3.9.6
+ * @since   3.9.6
  */
-  public function map( $rows, $template )
+  public function init(  )
   {
       ///////////////////////////////////////////////////////////////////////////////
       //
-      // Set default values
-
-    $this->rows             = $rows;
-    $this->template         = $template;
-    $arr_return['rows']     = $rows;
-    $arr_return['template'] = $template;
-    $arr_return['success']  = false;
-      // Set default values
+      // RETURN: $bool_mapIsEnabled isn't null
+      
+    if( ! ( $this->bool_mapIsEnabled === null ) )
+    {
+      if( $this->pObj->b_drs_map )
+      {
+        switch( $this->bool_mapIsEnabled )
+        {
+          case( true ):
+            $prompt = 'Map is enabled.';
+            break;
+          default:
+            $prompt = 'Map is disabled.';
+            break;
+        }
+        t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+      }
+      return;
+    }
+      // RETURN: $bool_mapIsEnabled isn't null
 
 
 
@@ -123,23 +136,84 @@ class tx_browser_pi1_map
     $view             = $this->pObj->view;
     $viewWiDot        = $view.'.';
     $this->conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
-    $this->singlePid  = $this->pObj->objZz->get_singlePid_for_listview( );
       // Get TypoScript configuration for the current view
 
 
 
-      ///////////////////////////////////////////////////////////////////////////////
+      /////////////////////////////////////////////////////////////////
       //
-      // RETURN current view isn't the list view
+      // Local or global configuration
 
-    if( $this->pObj->view != 'list' )
+    switch( true )
     {
-      if ($this->pObj->b_drs_map)
-      {
-        t3lib_div :: devLog('[INFO/CAL/UI] RETURN: Current view isn\'t the list view.', $this->pObj->extKey, 0);
-      }
+      case( isset( $conf['views.'][$viewWiDot][$mode.'.']['navigation.']['map.'] ) ):
+        $this->confMap = $conf['views.'][$viewWiDot][$mode.'.']['navigation.']['map.'];
+        break;
+      default:
+        $this->confMap = $this->pObj->conf['navigation.']['map.'];
+        break;
     }
-      // RETURN current view isn't the list view
+
+
+
+
+  }
+
+  
+  
+  
+  
+  
+  
+  
+  
+  /**
+ * set_marker( ): Set the marker ###MAP###, if the current template hasn't any map-marker
+ *
+ * @param string    $template: Current HTML template
+ * @return  array   $template: Template with map marker
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  public function set_marker( $template )
+  {
+      /////////////////////////////////////////////////////////////////
+      //
+      // Get TypoScript configuration for the current view
+
+    $conf             = $this->pObj->conf;
+    $mode             = $this->pObj->piVar_mode;
+    $view             = $this->pObj->view;
+    $viewWiDot        = $view.'.';
+    $this->conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
+    $this->singlePid  = $this->pObj->objZz->get_singlePid_for_listview( );
+      // Get TypoScript configuration for the current view
+
+    $str_mapMarker = '###MAP###';
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN: template contains the map marker
+
+// Fuer LIST- und SINGLE-view pruefen!!
+    $pos = strpos( $str_mapMarker, $template );
+    if( ! ( $pos === false ) )
+    {
+      if( $this->pObj->b_drs_map )
+      {
+        $prompt = 'The HTML template contains the marker ###MAP###.';
+        t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+      }
+      return $template;
+    }
+      // RETURN: template contains the map marker
+
+
+
+
+    return $template;
   }
 
 

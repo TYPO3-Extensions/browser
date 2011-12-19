@@ -3090,6 +3090,11 @@ plugin.tx_browser_pi1 {
   // TYPO3-Browser: ajax page object II. In case of localisation: Configure the id of sys_languagein the Constant Editor. Move in this line ...jQuery.default to ...jQuery.de (i.e.)
 browser_ajax < plugin.tx_browser_pi1.javascript.ajax.jQuery.default
 
+[globalVar = GP:type = {$plugin.tx_browser_pi1.typeNum.ajaxPageObj}]
+    // Don't wrap the content of the CSV export page object by default
+  tt_content.stdWrap >
+[global]
+
   // TYPO3-Browser: CSV export page object
 browser_csv < plugin.tx_browser_pi1.export.csv.page
 

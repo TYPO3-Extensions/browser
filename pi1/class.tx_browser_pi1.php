@@ -635,6 +635,16 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
+      // Set map marker
+
+    $this->str_template_raw = $this->objMap->set_marker( $this->str_template_raw );
+      // Set map marker
+
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Prepaire modeSelector
 
     $arr_result = $this->objNavi->prepaireModeSelector();
