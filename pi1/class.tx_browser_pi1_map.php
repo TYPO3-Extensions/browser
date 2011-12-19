@@ -464,7 +464,7 @@ class tx_browser_pi1_map
     $markerArray['###DIV_MAP###']           = 'div_map'           . PHP_EOL;
     $markerArray['###SCRIPT_RENDERMAP###']  = 'script_rendermap'  . PHP_EOL;
     $markerArray['###SCRIPT_FILTER###']     = 'script_filter'     . PHP_EOL;
-    $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
+    $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
 
 var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $map_template );
       // Replace the map marker in the template of the parent object
