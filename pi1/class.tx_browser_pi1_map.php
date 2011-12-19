@@ -347,7 +347,7 @@ class tx_browser_pi1_map
     $arr_divs     = explode( '</div>', $template );
     $pos_lastDiv  = count( $arr_divs ) - 2;
 
-    $arr_divs[$pos_lastDiv] = $arr_divs[$pos_lastDiv] . $str_mapMarker . $PHP_EOL . '      ';
+    $arr_divs[$pos_lastDiv] = $arr_divs[$pos_lastDiv] . $str_mapMarker . PHP_EOL . '      ';
 
     $template     = implode( '</div>', $arr_divs );
 
@@ -459,6 +459,12 @@ class tx_browser_pi1_map
       return $pObj_template;
     }
       // RETURN: no subpart marker
+
+    $markerArray['###FORM_FILTER###']       = 'form_filter'       . PHP_EOL;
+    $markerArray['###DIV_MAP###']           = 'div_map'           . PHP_EOL;
+    $markerArray['###SCRIPT_RENDERMAP###']  = 'script_rendermap'  . PHP_EOL;
+    $markerArray['###SCRIPT_FILTER###']     = 'script_filter'     . PHP_EOL;
+    $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
 
 var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $map_template );
       // Replace the map marker in the template of the parent object
