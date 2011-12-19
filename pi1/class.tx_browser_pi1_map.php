@@ -379,21 +379,31 @@ class tx_browser_pi1_map
                   __METHOD__ . ' (' . __LINE__ . '): Error. MAP isn\'t rendered
                 </div>';
 
-      // Get the map template
-    $map_template = $this->pObj->cObj->fileResource($this->confMap['template.']['file']);
+
 
       //////////////////////////////////////////////////////////////////////
       //
-      // DRS - Development Reporting System
+      // Get the template
+
+    $map_template = $this->pObj->cObj->fileResource($this->confMap['template.']['file']);
+      // Get the template
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // RETURN: no template
 
     if( empty( $map_template ) )
     {
+        // DRS - Development Reporting System
       if ($this->b_drs_error)
       {
         $prompt = 'There is no template file. Path: navigation.map.template.file.';
         t3lib_div::devLog('[ERROR/DRS] ' . $prompt, $this->extKey, 3);
         t3lib_div::devLog('[ERROR/DRS] ABORTED', $this->extKey, 0);
       }
+        // DRS - Development Reporting System
         // Error message
       $str_map  = '<h1 style="color:red;">' .
                     $this->pObj->pi_getLL('error_readlog_h1') .
@@ -401,14 +411,55 @@ class tx_browser_pi1_map
                   <p style="color:red;font-weight:bold;">' .
                     $this->pObj->pi_getLL('error_template_map_no') .
                   '</p>';
+        // Error message
         // Replace the map marker in the template of the parent object
       $pObj_template = str_replace( $str_mapMarker, $str_map, $pObj_template );
         // RETURN the template
       return $pObj_template;
     }
+      // RETURN: no template
 
-      // handle the $map_template
-    $map_template;
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Get the subpart
+
+    $str_marker   = '###TEMPLATE_MAP###';
+    $map_template = $this->pObj->cObj->getSubpart($template, $str_marker);
+      // Get the subpart
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // RETURN: no subpart marker
+
+    if( empty( $map_template ) )
+    {
+        // DRS - Development Reporting System
+      if ($this->b_drs_error)
+      {
+        $prompt = 'Template doesn\'t contain the subpart ###TEMPLATE_MAP###.';
+        t3lib_div::devLog('[ERROR/DRS] ' . $prompt, $this->extKey, 3);
+        t3lib_div::devLog('[ERROR/DRS] ABORTED', $this->extKey, 0);
+      }
+        // DRS - Development Reporting System
+        // Error message
+      $str_map  = '<h1 style="color:red;">' .
+                    $this->pObj->pi_getLL('error_readlog_h1') .
+                  '</h1>
+                  <p style="color:red;font-weight:bold;">' .
+                    $this->pObj->pi_getLL('error_template_map_no_subpart') .
+                  '</p>';
+        // Error message
+        // Replace the map marker in the template of the parent object
+      $pObj_template = str_replace( $str_mapMarker, $str_map, $pObj_template );
+        // RETURN the template
+      return $pObj_template;
+    }
+      // RETURN: no subpart marker
+
 var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $map_template );
       // Replace the map marker in the template of the parent object
     $pObj_template = str_replace( $str_mapMarker, $str_map, $pObj_template );
