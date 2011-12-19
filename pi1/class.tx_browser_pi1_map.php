@@ -369,79 +369,48 @@ class tx_browser_pi1_map
  * @version 3.9.6
  * @since   3.9.6
  */
-  private function render_map( $template )
+  private function render_map( $pObj_template )
   {
       // map marker
     $str_mapMarker = '###MAP###';
 
-    $str_map = '<div>MAP</div>';
+      // Default content of the map marker
+    $str_map = '<div>' . __METHOD__ . ' (' . __LINE__ . '): Error. MAP isn\'t rendered</div>';
 
-    $template = str_replace( $str_mapMarker, $str_map, $template );
-    return $template;
+      // Get the map template
+    $template = $cObj->fileResource($confMap['template.']['file']);
 
-
-
-      /////////////////////////////////////////////////////////////////
+      //////////////////////////////////////////////////////////////////////
       //
-      // Get TypoScript configuration for the current view
+      // DRS - Development Reporting System
 
-    $conf             = $this->pObj->conf;
-    $mode             = $this->pObj->piVar_mode;
-    $view             = $this->pObj->view;
-    $viewWiDot        = $view.'.';
-    $this->conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
-    $this->singlePid  = $this->pObj->objZz->get_singlePid_for_listview( );
-      // Get TypoScript configuration for the current view
-
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // RETURN: template contains the map marker
-
-    $pos = strpos( $str_mapMarker, $template );
-    if( ! ( $pos === false ) )
+    if( empty( $template ) )
     {
-      if( $this->pObj->b_drs_map )
+      if ($this->b_drs_error)
       {
-        $prompt = 'The HTML template contains the marker ' . $str_mapMarker . '.';
-        t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+        $prompt = 'There is no template file. Path: navigation.map.template.file.';
+        t3lib_div::devLog('[ERROR/DRS] ' . $prompt, $this->extKey, 3);
+        t3lib_div::devLog('[ERROR/DRS] ABORTED', $this->extKey, 0);
       }
-      return $template;
+        // Error message
+      $str_map  = '<h1 style="color:red;">' .
+                    $this->pObj->pi_getLL('error_readlog_h1') .
+                  '</h1>
+                  <p style="color:red;font-weight:bold;">' .
+                    $this->pObj->pi_getLL('error_template_no') .
+                  '</p>';
+
+        // Replace the map marker in the template of the parent object
+      $pObj_template = str_replace( $str_mapMarker, $str_map, $pObj_template );
+        // RETURN the template
+      return $pObj_template;
     }
-      // RETURN: template contains the map marker
 
+      // Replace the map marker in the template of the parent object
+    $pObj_template = str_replace( $str_mapMarker, $str_map, $pObj_template );
 
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // DRS - Development Reporting System
-
-    if( $this->pObj->b_drs_map )
-    {
-      $prompt_01 = 'The HTML template doesn\'t contain any marker ' . $str_mapMarker . '.';
-      $prompt_02 = 'Marker ' . $str_mapMarker . ' will added before the last div-tag automatically.';
-      $prompt_03 = 'But it would be better, you add the marker ' . $str_mapMarker . ' to your HTML template manually.';
-      t3lib_div :: devLog('[WARN/MAP] ' . $prompt_01 , $this->pObj->extKey, 2);
-      t3lib_div :: devLog('[OK/MAP] '   . $prompt_02 , $this->pObj->extKey, -1);
-      t3lib_div :: devLog('[HELP/MAP] ' . $prompt_03 , $this->pObj->extKey, 1);
-    }
-      // DRS - Development Reporting System
-
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Set marker before the last div-tag
-
-    $arr_divs     = explode( '</div>', $template );
-    $pos_lastDiv  = count( $arr_divs ) - 2;
-
-    $arr_divs[$pos_lastDiv] = $arr_divs[$pos_lastDiv] . $str_mapMarker . $PHP_EOL . '      ';
-
-    $template     = implode( '</div>', $arr_divs );
-
-    return $template;
+      // RETURN the template
+    return $pObj_template;
   }
 
 
