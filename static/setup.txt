@@ -263,7 +263,7 @@ plugin.tx_browser_pi1 {
     }
 
     map {
-        // Enable the map
+        // cObj: Enable the map
       enabled = TEXT
       enabled {
           // [BOOLEAN] 0 (default), 1

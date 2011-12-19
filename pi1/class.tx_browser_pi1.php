@@ -1025,7 +1025,7 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // Set map marker
 
-    $this->str_template_raw = $this->objMap->set_marker( $this->str_template_raw );
+    $str_template_completed = $this->objMap->set_marker( $str_template_completed );
       // Set map marker
 
 
