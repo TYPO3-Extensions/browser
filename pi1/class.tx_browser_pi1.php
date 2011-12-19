@@ -633,15 +633,6 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
-      //////////////////////////////////////////////////////////////////////
-      //
-      // Set map marker
-
-    $this->str_template_raw = $this->objMap->set_marker( $this->str_template_raw );
-      // Set map marker
-
-
-
 
       //////////////////////////////////////////////////////////////////////
       //
@@ -1032,10 +1023,19 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
+      // Set map marker
+
+    $this->str_template_raw = $this->objMap->set_marker( $this->str_template_raw );
+      // Set map marker
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Replace left over markers
 
       // 110801, dwildt, #28657
-    $str_template_completed = $this->objMarker->replace_left_over($str_template_completed);
+    $str_template_completed = $this->objMarker->replace_left_over( $str_template_completed );
       // Replace left over markers
 
 

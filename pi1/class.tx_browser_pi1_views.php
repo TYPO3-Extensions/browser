@@ -96,10 +96,10 @@ class tx_browser_pi1_views
  *
  * @param string    $template: Template
  * @return  void
- * @version 4.0.0
+ * @version 3.9.6
  * @since 1.0.0
  */
-  function listView($template)
+  function listView( $template )
   {
 
     $conf = $this->pObj->conf;

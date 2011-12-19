@@ -233,9 +233,10 @@ class tx_browser_pi1_map
     {
       if( $this->pObj->b_drs_map )
       {
-        $prompt = 'Don\'t map-marker will checked.';
+        $prompt = 'Don\'t check, if map-marker is set.';
         t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
       }
+      return;
     }
       // DRS - Development Reporting System
 
