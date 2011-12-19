@@ -545,7 +545,7 @@ var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $markerArray, $map_template );
  */
   private function marker_formFilter( )
   {
-var_dump( __METHOD__ . ' (' . __LINE__ . '): marker_formFilter' );
+var_dump( __METHOD__ . ' (' . __LINE__ . '): marker_formFilter', $this->confMap['marker.'] );
     $cObj_name  = $this->confMap['marker.']['form_filter'];
     $cObj_conf  = $this->confMap['marker.']['form_filter.'];
     $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
