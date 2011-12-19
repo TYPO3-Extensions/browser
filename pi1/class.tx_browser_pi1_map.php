@@ -127,8 +127,12 @@ class tx_browser_pi1_map
 
 
       // set the map marker (in case template is without the marker)
-    $template = $this->init_setMarker( $template );
+    $template = $this->init_marker( $template );
 
+      // render the map
+    $template = $this->render_map( $template );
+
+      // RETURN the template
     return $template;
   }
 
@@ -264,23 +268,23 @@ class tx_browser_pi1_map
 
     return;
   }
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
   /**
- * init_setMarker( ): Set the marker ###MAP###, if the current template hasn't any map-marker
+ * init_marker( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
  * @param string    $template: Current HTML template
  * @return  array   $template: Template with map marker
  * @version 3.9.6
  * @since   3.9.6
  */
-  private function init_setMarker( $template )
+  private function init_marker( $template )
   {
       // map marker
     $str_mapMarker = '###MAP###';
@@ -343,13 +347,99 @@ class tx_browser_pi1_map
     $arr_divs     = explode( '</div>', $template );
     $pos_lastDiv  = count( $arr_divs ) - 2;
 
-    $arr_divs[$pos_lastDiv] = $arr_divs[$pos_lastDiv] . '
-        ' . $str_mapMarker . '
-      ';
+    $arr_divs[$pos_lastDiv] = $arr_divs[$pos_lastDiv] . $str_mapMarker . $PHP_EOL . '      ';
 
     $template     = implode( '</div>', $arr_divs );
-var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $template);
-exit;
+
+    return $template;
+  }
+
+
+
+
+
+
+
+
+  /**
+ * render_map( ): Set the marker ###MAP###, if the current template hasn't any map-marker
+ *
+ * @param string    $template: Current HTML template
+ * @return  array   $template: Template with map marker
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function render_map( $template )
+  {
+      // map marker
+    $str_mapMarker = '###MAP###';
+
+    $str_map = '<div>MAP</div>';
+
+    $template = str_replace( $str_mapMarker, $str_map, $template );
+    return $template;
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Get TypoScript configuration for the current view
+
+    $conf             = $this->pObj->conf;
+    $mode             = $this->pObj->piVar_mode;
+    $view             = $this->pObj->view;
+    $viewWiDot        = $view.'.';
+    $this->conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
+    $this->singlePid  = $this->pObj->objZz->get_singlePid_for_listview( );
+      // Get TypoScript configuration for the current view
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN: template contains the map marker
+
+    $pos = strpos( $str_mapMarker, $template );
+    if( ! ( $pos === false ) )
+    {
+      if( $this->pObj->b_drs_map )
+      {
+        $prompt = 'The HTML template contains the marker ' . $str_mapMarker . '.';
+        t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+      }
+      return $template;
+    }
+      // RETURN: template contains the map marker
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
+
+    if( $this->pObj->b_drs_map )
+    {
+      $prompt_01 = 'The HTML template doesn\'t contain any marker ' . $str_mapMarker . '.';
+      $prompt_02 = 'Marker ' . $str_mapMarker . ' will added before the last div-tag automatically.';
+      $prompt_03 = 'But it would be better, you add the marker ' . $str_mapMarker . ' to your HTML template manually.';
+      t3lib_div :: devLog('[WARN/MAP] ' . $prompt_01 , $this->pObj->extKey, 2);
+      t3lib_div :: devLog('[OK/MAP] '   . $prompt_02 , $this->pObj->extKey, -1);
+      t3lib_div :: devLog('[HELP/MAP] ' . $prompt_03 , $this->pObj->extKey, 1);
+    }
+      // DRS - Development Reporting System
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Set marker before the last div-tag
+
+    $arr_divs     = explode( '</div>', $template );
+    $pos_lastDiv  = count( $arr_divs ) - 2;
+
+    $arr_divs[$pos_lastDiv] = $arr_divs[$pos_lastDiv] . $str_mapMarker . $PHP_EOL . '      ';
+
+    $template     = implode( '</div>', $arr_divs );
 
     return $template;
   }

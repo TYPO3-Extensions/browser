@@ -512,7 +512,7 @@ class tx_browser_pi1_javascript
     }
     if (!t3lib_extMgm::isLoaded('t3jquery'))
     {
-      if ($this->pObj->b_drs_warn)
+      if ( $this->pObj->b_drs_javascript )
       {
         t3lib_div::devlog('[INFO/JSS] Extension t3jquery isn\'t loaded.', $this->pObj->extKey, 0);
         t3lib_div::devlog('[INFO/JSS] We try to get another jQuery source.', $this->pObj->extKey, 0);
@@ -523,7 +523,7 @@ class tx_browser_pi1_javascript
     if (T3JQUERY === true)
     {
       tx_t3jquery::addJqJS();
-      if ($this->pObj->b_drs_info)
+      if ( $this->pObj->b_drs_javascript )
       {
         t3lib_div::devlog('[INFO/JSS] Success: tx_t3jquery::addJqJS()', $this->pObj->extKey, 0);
       }
