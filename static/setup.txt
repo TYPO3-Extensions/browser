@@ -396,7 +396,7 @@ plugin.tx_browser_pi1 {
         }
         jss_renderMap = TEXT
         jss_renderMap {
-          value = <script src="typo3conf/ext/browser/js/map/oxRenderMap.js"></script>
+          value = <script src="typo3conf/ext/browser/res/js/map/oxRenderMap.js"></script>
         }
       }
     }
