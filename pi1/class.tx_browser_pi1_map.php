@@ -364,8 +364,8 @@ class tx_browser_pi1_map
   /**
  * render_map( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
- * @param string    $template: Current HTML template
- * @return  array   $template: Template with map marker
+ * @param string    $pObj_template: current HTML template of the parent object
+ * @return  array   $pObj_template: parent object template with map marker
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -380,13 +380,13 @@ class tx_browser_pi1_map
                 </div>';
 
       // Get the map template
-    $template = $this->pObj->cObj->fileResource($this->confMap['template.']['file']);
+    $map_template = $this->pObj->cObj->fileResource($this->confMap['template.']['file']);
 
       //////////////////////////////////////////////////////////////////////
       //
       // DRS - Development Reporting System
 
-    if( empty( $template ) )
+    if( empty( $map_template ) )
     {
       if ($this->b_drs_error)
       {
@@ -401,13 +401,15 @@ class tx_browser_pi1_map
                   <p style="color:red;font-weight:bold;">' .
                     $this->pObj->pi_getLL('error_template_map_no') .
                   '</p>';
-var_dump( $confMap );
         // Replace the map marker in the template of the parent object
       $pObj_template = str_replace( $str_mapMarker, $str_map, $pObj_template );
         // RETURN the template
       return $pObj_template;
     }
 
+      // handle the $map_template
+    $map_template;
+var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $map_template );
       // Replace the map marker in the template of the parent object
     $pObj_template = str_replace( $str_mapMarker, $str_map, $pObj_template );
 
