@@ -484,7 +484,7 @@ class tx_browser_pi1_map
 
     
 
-var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $markerArray, $map_template );
+//var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $markerArray, $map_template );
       // Replace the map marker in the template of the parent object
     $pObj_template = str_replace( $str_mapMarker, $map_template, $pObj_template );
 
@@ -545,7 +545,6 @@ var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $markerArray, $map_template );
  */
   private function marker_formFilter( )
   {
-var_dump( __METHOD__ . ' (' . __LINE__ . '): marker_formFilter', $this->confMap['marker.'] );
     $cObj_name  = $this->confMap['marker.']['form_filter'];
     $cObj_conf  = $this->confMap['marker.']['form_filter.'];
     $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
