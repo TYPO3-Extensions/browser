@@ -334,6 +334,12 @@ plugin.tx_browser_pi1 {
           inline = 0
         }
       }
+      marker {
+        div_map = TEXT
+        div_map {
+          value = <div id="oxMapArea" class="oxMapArea"></div>
+        }
+      }
     }
 
     modeSelector {

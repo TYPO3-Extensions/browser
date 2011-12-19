@@ -513,7 +513,12 @@ var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $map_template );
  */
   private function marker_divMap( )
   {
-    return 'marker_divMap( )';
+
+    $cObj_name  = $this->confMap['marker.']['div_map'];
+    $cObj_conf  = $this->confMap['marker.']['div_map.'];
+    $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+
+    return $content;
   }
 
 
