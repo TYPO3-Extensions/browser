@@ -607,26 +607,26 @@ class tx_browser_pi1_javascript
  * @version 3.6.5
  * @since 3.5.0
  */
-  function addJssFile($path, $name, $keyPathTs)
+  function addJssFile( $path, $name, $keyPathTs )
   {
     if(isset ($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]))
     {
       return true;
     }
 
-    if (!empty($path))
+    if ( ! empty( $path ) )
     {
-      if(substr($path, 0, 4) == 'EXT:')
+      if( substr( $path, 0, 4 ) == 'EXT:' )
       {
-        // relative path to the JssFile as measured from the PATH_site (frontend)
+          // relative path to the JssFile as measured from the PATH_site (frontend)
           // #32220, uherrmann, 111202
-		preg_match('%^EXT:([a-z0-9_]*)/(.*)$%', $path, $matches);
+        preg_match( '%^EXT:([a-z0-9_]*)/(.*)$%', $path, $matches );
         $path = t3lib_extMgm::siteRelPath($matches[1]) . $matches[2];
           // /#32220
       }
       $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
         '  <script src="'.$path.'" type="text/javascript"></script>';
-      if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
+      if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
       {
         t3lib_div::devlog('[INFO/FLEXFORM+JSS] file is included: '.$path, $this->pObj->extKey, 0);
         t3lib_div::devlog('[HELP/FLEXFORM+JSS] Change it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
@@ -636,9 +636,9 @@ class tx_browser_pi1_javascript
 
       // #13429, dwildt, 110519
       // RETURN, there isn't any file for embedding
-    if(empty($this->pObj->objFlexform->str_browser_libraries))
+    if( empty( $this->pObj->objFlexform->str_browser_libraries ) )
     {
-      if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
+      if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
       {
         t3lib_div::devlog('[INFO/FLEXFORM+JSS] Flexform Javascript|browser_libraries is empty.', $this->pObj->extKey, 0);
         t3lib_div::devlog('[INFO/FLEXFORM+JSS] Script isn\'t included. ', $this->pObj->extKey, 0);
@@ -648,7 +648,7 @@ class tx_browser_pi1_javascript
       // RETURN, there isn't any file for embedding
       // #13429, dwildt, 110519
 
-    if ($this->pObj->b_drs_error)
+    if ( $this->pObj->b_drs_error )
     {
       t3lib_div::devlog('[ERROR/JSS] script can not be included: '.$path, $this->pObj->extKey, 3);
       t3lib_div::devlog('[HELP/JSS] Solve it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);

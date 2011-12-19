@@ -464,6 +464,15 @@ class tx_browser_pi1_map
 
       //////////////////////////////////////////////////////////////////////
       //
+      // Add javascripts to the HTML header
+
+    $this->jss_setScriptsHeader( );
+      // Add javascripts to the HTML header
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Substitute marker
 
     $markerArray['###FORM_FILTER###']       = $this->marker_formFilter( );
@@ -577,6 +586,60 @@ var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $map_template );
     return 'marker_scriptRendermap( )';
   }
 
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * JavaScripts
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+  /**
+ * jss_setScriptsHeader( ):
+ *
+ * @return  void
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function jss_setScriptsHeader( )
+  {
+      // Include openLayers
+    $name         = 'openLayers';
+    $path         = $this->confMap['javascripts.']['lib.']['openLayers'];
+    $bool_inline  = $this->confMap['javascripts.']['lib.']['openLayers.']['inline'];
+    $path_tsConf  = 'javascripts.lib.openLayers';
+    $this->pObj->objJss->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+      // Include openLayers
+
+      // Include openStreetMap
+    $name         = 'openStreetMap';
+    $path         = $this->confMap['javascripts.']['lib.']['openStreetMap'];
+    $bool_inline  = $this->confMap['javascripts.']['lib.']['openStreetMap.']['inline'];
+    $path_tsConf  = 'javascripts.lib.openStreetMap';
+    $this->pObj->objJss->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+      // Include openStreetMap
+
+      // Include config
+    $name         = 'config';
+    $path         = $this->confMap['javascripts.']['lib.']['config'];
+    $bool_inline  = $this->confMap['javascripts.']['lib.']['config.']['inline'];
+    $path_tsConf  = 'javascripts.lib.config';
+    $this->pObj->objJss->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+      // Include config
+  }
 
 
 
