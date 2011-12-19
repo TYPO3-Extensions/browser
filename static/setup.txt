@@ -270,8 +270,14 @@ plugin.tx_browser_pi1 {
         value = 0
       }
       template {
-          // [STRING] Path to the map template
-        file = EXT:browser/res/html/map.tmpl
+          // [STRING] Path to the map CSS file
+        css = EXT:browser/res/html/map/default.css
+        css {
+            // [Boolean] 0 (default): link to the css file, 1: include the css inline
+          inline = 0
+        }
+          // [STRING] Path to the map HTML template
+        file = EXT:browser/res/html/map/default.tmpl
       }
       database {
           // [STRING] table and field of the latitude value. Syntax: table.field

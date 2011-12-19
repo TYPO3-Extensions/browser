@@ -464,9 +464,18 @@ class tx_browser_pi1_map
 
       //////////////////////////////////////////////////////////////////////
       //
+      // Add css to the HTML header
+
+    $this->css_setHeader( );
+      // Add css to the HTML header
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Add javascripts to the HTML header
 
-    $this->jss_setScriptsHeader( );
+    $this->jss_setHeader( );
       // Add javascripts to the HTML header
 
 
@@ -608,6 +617,46 @@ class tx_browser_pi1_map
 
   /***********************************************
   *
+  * CSS
+  *
+  **********************************************/
+
+  
+
+
+
+
+
+
+
+  /**
+ * css_setHeader( ):
+ *
+ * @return  void
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function css_setHeader( )
+  {
+      // Include openStreetMap
+    $name         = 'openStreetMap';
+    $path         = $this->confMap['template.']['css'];
+    $bool_inline  = $this->confMap['template.']['css']['inline'];
+    $path_tsConf  = 'template.css';
+    $this->pObj->objJss->addFile($path, false, $name, $path_tsConf, 'css', $bool_inline);
+      // Include openStreetMap
+  }
+
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
   * JavaScripts
   *
   **********************************************/
@@ -619,14 +668,15 @@ class tx_browser_pi1_map
 
 
 
+
   /**
- * jss_setScriptsHeader( ):
+ * jss_setHeader( ):
  *
  * @return  void
  * @version 3.9.6
  * @since   3.9.6
  */
-  private function jss_setScriptsHeader( )
+  private function jss_setHeader( )
   {
       // Include openLayers
     $name         = 'openLayers';
