@@ -638,8 +638,10 @@ class tx_browser_pi1_map
  */
   private function css_setHeader( )
   {
+    $name_prefix = 'css_';
+
       // Include openStreetMap
-    $name         = 'openStreetMap';
+    $name         = $name_prefix . 'openStreetMap';
     $path         = $this->confMap['template.']['css'];
     $bool_inline  = $this->confMap['template.']['css']['inline'];
     $path_tsConf  = 'template.css';
@@ -678,8 +680,10 @@ class tx_browser_pi1_map
  */
   private function jss_setHeader( )
   {
+    $name_prefix = 'jss_';
+
       // Include openLayers
-    $name         = 'openLayers';
+    $name         = $name_prefix . 'openLayers';
     $path         = $this->confMap['javascripts.']['lib.']['openLayers'];
     $bool_inline  = $this->confMap['javascripts.']['lib.']['openLayers.']['inline'];
     $path_tsConf  = 'javascripts.lib.openLayers';
@@ -687,7 +691,7 @@ class tx_browser_pi1_map
       // Include openLayers
 
       // Include openStreetMap
-    $name         = 'openStreetMap';
+    $name         = $name_prefix . 'openStreetMap';
     $path         = $this->confMap['javascripts.']['lib.']['openStreetMap'];
     $bool_inline  = $this->confMap['javascripts.']['lib.']['openStreetMap.']['inline'];
     $path_tsConf  = 'javascripts.lib.openStreetMap';
@@ -695,7 +699,7 @@ class tx_browser_pi1_map
       // Include openStreetMap
 
       // Include config
-    $name         = 'config';
+    $name         = $name_prefix . 'config';
     $path         = $this->confMap['javascripts.']['config'];
     $bool_inline  = $this->confMap['javascripts.']['config.']['inline'];
     $path_tsConf  = 'javascripts.lib.config';
