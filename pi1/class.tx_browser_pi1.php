@@ -1025,6 +1025,7 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // Get the map
 
+      // #32654, 111219, dwildt
     $str_template_completed = $this->objMap->get_map( $str_template_completed );
       // Get the map
 
