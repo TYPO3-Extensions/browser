@@ -1367,6 +1367,7 @@ class tx_browser_pi1_filter {
         case ('CHECKBOX') :
         case ('RADIOBUTTONS') :
         case ('SELECTBOX') :
+        case ('TREEVIEW') :
             // #32117, 111127, dwildt-
           //$marker[$str_marker] = $this->renderHtmlFilter($obj_ts, $arr_ts, $arr_tableFields[$tableField], $tableField);
             // #32117, 111127, dwildt+
@@ -1437,6 +1438,7 @@ class tx_browser_pi1_filter {
         break;
       case ('CATEGORY_MENU') :
       case ('RADIOBUTTONS') :
+      case ('TREEVIEW') :
         $conf_multiple = false;
         break;
       case ('SELECTBOX') :
@@ -1588,6 +1590,7 @@ class tx_browser_pi1_filter {
         break;
       case ('CATEGORY_MENU') :
       case ('SELECTBOX') :
+      case ('TREEVIEW') :
       default :
         $maxItemsPerRow = false;
     }
@@ -2388,6 +2391,7 @@ class tx_browser_pi1_filter {
         break;
       case ('CATEGORY_MENU') :
       case ('RADIOBUTTONS') :
+      case ('TREEVIEW') :
         $conf_size = null;
         $conf_multiple = false;
         break;

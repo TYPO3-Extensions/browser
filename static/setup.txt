@@ -1428,6 +1428,78 @@ plugin.tx_browser_pi1 {
           // [BOOLEAN] You have to allocate one of the areas of the master template. Tutorial: http://typo3.org/extensions/repository/view/browser_tut_search_en/current/
         area = 0
       }
+      treeview = TREEVIEW
+      treeview {
+          // If condition is met, filter will display. If not, filter will hide.
+        condition = TEXT
+        condition {
+            // True (default)
+          value = 1
+        }
+          // [String/optional] Name for the piVar. Name must be unique.
+        nice_piVar =
+          // [Boolean] Is a selecting obligatory?
+        required = 0
+          // [String] Wrap the object
+          // [Boolean]: 1: If value is changing, AJAX will reload the form. 0: No auto reload.
+        ajax_onchange = 1
+        wrap (
+<fieldset class="treeview ###ONCHANGE###">
+              <legend>###TITLE###</legend>
+                |
+            </fieldset>
+)
+        wrap {
+            // [Integer] Space characters from left margin in the HTML code
+          nice_html_spaceLeft = 12
+          title_stdWrap {
+              // [String] Title of the object. If it shouldn't display, please delete the title array
+            value = ###TABLE.FIELD###
+            wrap  = |
+          }
+            // [String] Wrap the items
+          object = <ul id="tx-browser-pi1-tree">|</ul>
+            // [String] Wrap one item
+          item_XXX    = <input###CLASS######STYLE### ###ITEM_SELECTED###> |
+          item    = <li><a ###ITEM_SELECTED### ###STYLE### href="?###TABLE.FIELD###[###UID###]">|</a></li> |
+          item {
+              // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+            display_without_any_hit = 0
+              // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+            display_hits = 1
+            display_hits {
+                // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
+              behindItem = 1
+              stdWrap {
+                noTrimWrap = | (|)|
+              }
+            }
+              // [Integer] Space characters from left margin in the HTML code
+            nice_html_spaceLeft = 16
+              // [String] HTML code for a selected item
+            selected = class="selected"
+              // [String] Default HTML class
+            class =
+              // [String] Default HTML style
+            style =
+            stdWrap {
+              crop = 60 | ... | 1
+            }
+          }
+        }
+        order {
+            // [String] value || uid
+          field = value
+            // [String] ASC || DESC
+          orderFlag = ASC
+        }
+        sql {
+            // [String, SQL] And where statement. Example: tt_news_cat.author.field LIKE 'A%' AND tt_news.uid < 99
+          andWhere =
+        }
+          // [BOOLEAN] You have to allocate one of the areas of the mastertemplate
+        area = 0
+      }
       areas {
         sample_currency = 1
         sample_currency {
