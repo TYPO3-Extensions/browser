@@ -1171,6 +1171,7 @@ plugin.tx_browser_pi1 {
           // [BOOLEAN] 1: Display an area filter, 0: Don't display an area (default)
         area = 0
       }
+        // Master template for a check box
       checkbox = CHECKBOX
       checkbox {
           // If condition is met, filter will display. If not, filter will hide.
@@ -1428,6 +1429,7 @@ plugin.tx_browser_pi1 {
           // [BOOLEAN] You have to allocate one of the areas of the master template. Tutorial: http://typo3.org/extensions/repository/view/browser_tut_search_en/current/
         area = 0
       }
+        // Master template for a tree view
       treeview = TREEVIEW
       treeview {
           // If condition is met, filter will display. If not, filter will hide.
