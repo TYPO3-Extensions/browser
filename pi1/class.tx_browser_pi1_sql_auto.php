@@ -1276,7 +1276,7 @@ class tx_browser_pi1_sql_auto
           // #11650, cweiske, 101223
         if ($this->b_left_join)
         {
-            // #32254, 111201, dwildt-
+            // #32254, 11120, dwildt-
           //$str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
           //$str_pidStatement         = $this->str_andWherePid($foreignTable);
           //$str_pidStatement         = " AND " . $str_pidStatement . " " ;
