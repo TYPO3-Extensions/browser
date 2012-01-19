@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 - 2011 Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2009-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage    tx_browser
 *
-* @version 3.9.3
+* @version 3.9.6
 * @since 3.0.1
 */
 
@@ -381,11 +381,11 @@ class tx_browser_pi1_filter {
     //3.5.0
     $arr_rows = null;
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Get rows
+      /////////////////////////////////////////////////////////////////
+      //
+      // Get rows
 
-    // LOOP get rows per table.field
+      // LOOP get rows per table.field
     foreach ( $this->arr_conf_tableFields as $tableField )
     {
       $arr_result = $this->getRows($tableField);
@@ -395,8 +395,9 @@ class tx_browser_pi1_filter {
       $arr_rows[$tableField] = $arr_result['data']['rows'];
       unset ($arr_result);
     }
-    // LOOP get rows per table.field
-    // Get rows
+      // LOOP get rows per table.field
+      // Get rows
+//
 // dwildt, 110309
 //var_dump(__METHOD__ . ': ' . __LINE__, $arr_rows['tx_org_workshop.rating']);
 //var_dump(__METHOD__ . ': ' . __LINE__, $arr_rows);
@@ -406,20 +407,24 @@ class tx_browser_pi1_filter {
 
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Wrap rows
+      /////////////////////////////////////////////////////////////////
+      //
+      // Wrap rows
 
     $arr_input['data']['rows']      = $arr_rows;
     $arr_input['data']['template']  = $template;
     $arr_result = $this->wrapRows($arr_input);
-    $marker = $arr_result['data']['marker'];
-    if ($arr_result['error']['status']) {
+    $marker     = $arr_result['data']['marker'];
+    if( $arr_result['error']['status'] )
+    {
       return $arr_result;
     }
-    unset ($arr_result);
-    // Wrap rows
+    unset( $arr_result );
+      // Wrap rows
 
+
+
+      // RETURN the result
     $arr_return['data']['marker'] = $marker;
     return $arr_return;
   }
@@ -954,7 +959,8 @@ class tx_browser_pi1_filter {
  *
  * @param string    $tableField: table.field
  * @return  array   Data array with rows
- * @version 3.5.0
+ * @version 3.9.6
+ * @ since 3.0.1
  */
   function getRows($tableField) 
   {
@@ -996,12 +1002,15 @@ class tx_browser_pi1_filter {
       // #32223, 120119, dwildt+
       // Load the TCA for the current table
     $this->pObj->objZz->loadTCA( $table );
-      // Check, if the field is an element of the current table
+      // Table has a treeParentField
     if( isset( $GLOBALS['TCA'][$table]['ctrl']['treeParentField'] ) )
     {
+        // Add treeParentField to the SELECT statement
       $treeParentField = $GLOBALS['TCA'][$table]['ctrl']['treeParentField'];
       $str_select .= "         " . $table . "." . $treeParentField . " AS 'treeParentField'," . PHP_EOL;
+        // Add treeParentField to the SELECT statement
     }
+      // Table has a treeParentField
       // #32223, 120119, dwildt+
 
     $str_select = $str_select . "\n" .
@@ -1287,7 +1296,8 @@ class tx_browser_pi1_filter {
  * @return  array   The array with the template at least
  * @version 3.5.0
  */
-  function wrapRows($arr_input) {
+  function wrapRows( $arr_input )
+  {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
     $view = $this->pObj->view;
@@ -1301,9 +1311,11 @@ class tx_browser_pi1_filter {
     $template = $arr_input['data']['template'];
     unset ($arr_input);
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // RETURN / ERROR: All filters are empty
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN / ERROR: All filters are empty
 
     if (empty ($arr_rows)) {
       if ($this->pObj->b_drs_error) {
@@ -1314,11 +1326,13 @@ class tx_browser_pi1_filter {
       $arr_return['error']['prompt'] = 'All filters are empty';
       return $arr_return;
     }
-    // RETURN / ERROR: All filters are empty
+      // RETURN / ERROR: All filters are empty
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Convert the rows
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Convert the rows
 
     // From -------------------------------------------------------------
     // array[0]["table.field"] = "tx_bzdstaffdirectory_locations.title"
@@ -1334,23 +1348,28 @@ class tx_browser_pi1_filter {
     // array["tx_bzdstaffdirectory_groups.group_name"][3] = ...
     // ------------------------------------------------------------------
 
-    // LOOP table.field
+      // LOOP table.field
     $arr_tableFields = null;
-    foreach ($arr_rows as $tableField => $rows) {
-      // DRS - Development Reporting System
-      // Rows are empty
-      if (count($rows) < 1) {
-        if ($this->pObj->b_drs_warn) {
+    foreach ( $arr_rows as $tableField => $rows )
+    {
+        // DRS - Development Reporting System
+        // Rows are empty
+      if ( count( $rows ) < 1 )
+      {
+        if ( $this->pObj->b_drs_warn )
+        {
           t3lib_div :: devlog('[WARN/FILTER] SQL result for ' . $tableField . ' ' .
           'is empty. This is an error probably.', $this->pObj->extKey, 2);
         }
       }
-      // Rows are empty
-      // DRS - Development Reporting System
+        // Rows are empty
+        // DRS - Development Reporting System
 
-      // Convert the rows
-      if (is_array($rows)) {
-        foreach ($rows as $key => $row) {
+        // Convert the rows
+      if ( is_array( $rows ) )
+      {
+        foreach ($rows as $key => $row)
+        {
           $arr_tableFields[$tableField][$row['uid']] = $row['value'];
         }
         unset ($rows);
@@ -1358,8 +1377,8 @@ class tx_browser_pi1_filter {
       }
       // Convert the rows
     }
-    // LOOP table.field
-    // Convert the rows
+      // LOOP table.field
+      // Convert the rows
 
 
 
@@ -1838,7 +1857,7 @@ class tx_browser_pi1_filter {
     if ($conf_wrap) {
       $str_html = str_replace('|', "\n" . $str_html . "\n" . $str_space_left, $conf_wrap);
     }
-    // Wrap all items / the object
+      // Wrap all items / the object
 
     return $str_html;
   }

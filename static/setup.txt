@@ -1123,6 +1123,8 @@ plugin.tx_browser_pi1 {
           object {
               // [Integer] Space characters from left margin in the HTML code
             nice_html_spaceLeft = 14
+              // [String] Wrap a sublevel - in case of treeParentField only
+            sublevel_wrap = <ul>|</ul>
           }
             // [String] Wrap one item
           item    = <li><a href="###URL###" ###CLASS### ###STYLE### title="">|</a></li>
