@@ -1000,7 +1000,7 @@ class tx_browser_pi1_filter {
     if( isset( $GLOBALS['TCA'][$table]['ctrl']['treeParentField'] ) )
     {
       $treeParentField = $GLOBALS['TCA'][$table]['ctrl']['treeParentField'];
-      $str_select .= "         " . $table . "." . treeParentField . " AS 'treeParentField'," . PHP_EOL;
+      $str_select .= "         " . $table . "." . $treeParentField . " AS 'treeParentField'," . PHP_EOL;
     }
       // #32223, 120119, dwildt+
 
