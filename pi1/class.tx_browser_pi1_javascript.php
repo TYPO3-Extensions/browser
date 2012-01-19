@@ -143,7 +143,6 @@ class tx_browser_pi1_javascript
         break;
       case ('CHECKBOX') :
       case ('RADIOBUTTONS') :
-      case ('TREEVIEW') :
         $conf_object = $arr_ts['wrap'];
         break;
       case ('SELECTBOX') :
@@ -221,7 +220,6 @@ class tx_browser_pi1_javascript
           break;
         case('CHECKBOX'):
         case('RADIOBUTTONS'):
-        case ('TREEVIEW') :
           $arr_ts['wrap'] = $conf_object;
           break;
         case('SELECTBOX'):
@@ -270,7 +268,6 @@ class tx_browser_pi1_javascript
           // Don't reload by AJAX, if there is more than one checkbox
         break;
       case('RADIOBUTTONS'):
-      case ('TREEVIEW') :
           // Reload by AJAX
         $conf_object = str_replace($marker_onchange, $class_onchange, $conf_object);
         break;
@@ -334,7 +331,6 @@ class tx_browser_pi1_javascript
         break;
       case ('CHECKBOX'):
       case ('RADIOBUTTONS'):
-      case ('TREEVIEW') :
         $arr_ts['wrap'] = $conf_object;
         break;
       case ('SELECTBOX'):

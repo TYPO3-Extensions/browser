@@ -985,13 +985,25 @@ class tx_browser_pi1_filter {
     }
     if (empty ( $str_select ) ) 
     {
-      $str_select = $table . ".uid AS 'uid',\n" .
-      "         " . $table . "." . $field . " AS 'value',\n";
-      if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql) 
+      $str_select = $table . ".uid AS 'uid'," . PHP_EOL .
+      "         " . $table . "." . $field . " AS 'value'," . PHP_EOL;
+      if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql)
       {
         t3lib_div :: devlog('[INFO/FILTER+SQL] There is no select override. ' . $str_select, $this->pObj->extKey, 0);
       }
     }
+
+      // #32223, 120119, dwildt+
+      // Load the TCA for the current table
+    $this->pObj->objZz->loadTCA( $table );
+      // Check, if the field is an element of the current table
+    if( isset( $GLOBALS['TCA'][$table]['ctrl']['treeParentField'] ) )
+    {
+      $treeParentField = $GLOBALS['TCA'][$table]['ctrl']['treeParentField'];
+      $str_select .= "         " . $table . "." . treeParentField . " AS 'treeParentField'," . PHP_EOL;
+    }
+      // #32223, 120119, dwildt+
+
     $str_select = $str_select . "\n" .
     "         '" . $tableField . "' AS 'table.field'###LOCALISATION_SELECT###";
       // SELECT
@@ -1367,7 +1379,6 @@ class tx_browser_pi1_filter {
         case ('CHECKBOX') :
         case ('RADIOBUTTONS') :
         case ('SELECTBOX') :
-        case ('TREEVIEW') :
             // #32117, 111127, dwildt-
           //$marker[$str_marker] = $this->renderHtmlFilter($obj_ts, $arr_ts, $arr_tableFields[$tableField], $tableField);
             // #32117, 111127, dwildt+
@@ -1438,7 +1449,6 @@ class tx_browser_pi1_filter {
         break;
       case ('CATEGORY_MENU') :
       case ('RADIOBUTTONS') :
-      case ('TREEVIEW') :
         $conf_multiple = false;
         break;
       case ('SELECTBOX') :
@@ -1590,7 +1600,6 @@ class tx_browser_pi1_filter {
         break;
       case ('CATEGORY_MENU') :
       case ('SELECTBOX') :
-      case ('TREEVIEW') :
       default :
         $maxItemsPerRow = false;
     }
@@ -2391,7 +2400,6 @@ class tx_browser_pi1_filter {
         break;
       case ('CATEGORY_MENU') :
       case ('RADIOBUTTONS') :
-      case ('TREEVIEW') :
         $conf_size = null;
         $conf_multiple = false;
         break;
