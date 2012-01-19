@@ -381,6 +381,8 @@ class tx_browser_pi1_filter {
     //3.5.0
     $arr_rows = null;
 
+
+
       /////////////////////////////////////////////////////////////////
       //
       // Get rows
@@ -1192,7 +1194,6 @@ class tx_browser_pi1_filter {
 
 
 
-
       ////////////////////////////////////
       //
       // Building the rows
@@ -1207,12 +1208,15 @@ class tx_browser_pi1_filter {
     }
       // Building the rows
 
+
+
       /////////////////////////////////////////////////////////////////
       //
       // Consolidate Localisation
 
     $rows = $this->pObj->objLocalise->consolidate_filter($rows);
       // Consolidate Localisation
+
 
 
       //////////////////////////////////////////////////////////////////////////
@@ -1273,7 +1277,9 @@ class tx_browser_pi1_filter {
 //}
       // Hook for handle the consolidated rows
 
-    
+
+
+      // RETURN the result
     $arr_return['data']['rows'] = $rows;
 // dwildt, 110309
 //var_dump(__METHOD__ . ': ' . __LINE__ , $arr_return['data']['rows']);
@@ -1347,6 +1353,12 @@ class tx_browser_pi1_filter {
     // array["tx_bzdstaffdirectory_locations.title"][3]   = "Istanbul"
     // array["tx_bzdstaffdirectory_groups.group_name"][3] = ...
     // ------------------------------------------------------------------
+
+$pos = strpos('91.23.167.133 ', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_rows );
+}
 
       // LOOP table.field
     $arr_tableFields = null;
