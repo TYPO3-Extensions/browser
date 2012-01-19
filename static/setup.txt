@@ -1463,7 +1463,7 @@ plugin.tx_browser_pi1 {
           object = <ul id="tx-browser-pi1-tree">|</ul>
             // [String] Wrap one item
           item_XXX    = <input###CLASS######STYLE### ###ITEM_SELECTED###> |
-          item    = <li><a ###ITEM_SELECTED### ###STYLE### href="?###TABLE.FIELD###[###UID###]">|</a></li> |
+          item    = <li><a ###ITEM_SELECTED### ###STYLE### href="?###TABLE.FIELD###[###UID###]">|</a></li>
           item {
               // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
             display_without_any_hit = 0
