@@ -2389,6 +2389,13 @@ plugin.tx_browser_pi1 {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
           }
+          plugins {
+            cookie = EXT:browser/res/js/jquery/plugins/jquery.jstree/_lib/jquery.cookie.js
+            cookie {
+                // [Boolean] 0 (default): link to the script file, 1: include the script inline
+              inline = 0
+            }
+          }
           library = EXT:browser/res/js/jquery/tx_browser_pi1_jstree-0.0.1.js
           library {
               // [Boolean] 0: link to the script file, 1 (default): include the script inline
