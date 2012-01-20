@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010-2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2010-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -798,7 +798,7 @@ class tx_browser_pi1_javascript
  * addJssFiles(): Add all needed JavaScript files to the HTML head
  *
  * @return  void
- * @version 3.9.3
+ * @version 3.9.6
  * @since 3.7.0
  */
   public function addJssFiles()
@@ -943,6 +943,51 @@ class tx_browser_pi1_javascript
     }
       // +Browser Calendar is loaded
 
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // jquery_plugins_jstree
+
+    if ( $this->pObj->objFlexform->bool_jquery_plugins_jstree || 1 )
+    {
+      $name         = 'jquery_plugins_jstree_plugin';
+      $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugin'];
+      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugin.']['inline'];
+      $path_tsConf  = 'javascript.jquery.plugins.jstree.plugin';
+      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+
+      $name         = 'jquery_plugins_jstree_library';
+      $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['library'];
+      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['library.']['inline'];
+      $path_tsConf  = 'javascript.jquery.plugins.jstree.library';
+      $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+
+      $inline_jss   = $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name];
+      $conf_marker  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['library.']['marker.'];
+      foreach((array) $conf_marker as $key_conf_marker => $arr_conf_marker)
+      {
+        if(substr($key_conf_marker, -1, 1) == '.')
+        {
+            // I.e. $key_conf_marker is 'title.', but we like the marker name without any dot
+          $str_marker             = substr($key_conf_marker, 0, strlen($key_conf_marker) -1);
+          $hashKeyMarker          = '###'.strtoupper($str_marker).'###';
+          $marker[$hashKeyMarker] = $this->pObj->cObj->cObjGetSingle
+                                    (
+                                      $conf_marker[$str_marker],
+                                      $conf_marker[$str_marker . '.']
+                                    );
+          $inline_jss = str_replace($hashKeyMarker, $marker[$hashKeyMarker], $inline_jss);
+        }
+      }
+      $load_all_modes = $this->dyn_method_load_all_modes( );
+      $inline_jss     = str_replace( '###MODE###',           $this->pObj->piVar_mode,   $inline_jss );
+      $inline_jss     = str_replace( '###VIEW###',           $this->pObj->view,         $inline_jss );
+      $inline_jss     = str_replace( '###LOAD_ALL_MODES###', $load_all_modes,           $inline_jss );
+      $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
+
+    }
+      // jquery_plugins_jstree
   }
 
 
@@ -967,7 +1012,7 @@ class tx_browser_pi1_javascript
  * @since 3.7.0
  * @version 3.7.0
  */
-  public function addFile($path, $ie_condition=null, $name, $keyPathTs, $str_type, $bool_inline = false)
+  public function addFile($path, $ie_condition, $name, $keyPathTs, $str_type, $bool_inline )
   {
       // RETURN file is loaded
     if(isset ($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]))

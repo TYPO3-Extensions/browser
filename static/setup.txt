@@ -2383,7 +2383,44 @@ plugin.tx_browser_pi1 {
         inline = 0
       }
       plugins {
-          // [STRING] Path to the jss file of the t3browser plugin.
+        jstree {
+          plugin = EXT:browser/res/js/jquery/plugins/jquery.jstree/jquery.jstree.js
+          plugin {
+              // [Boolean] 0 (default): link to the script file, 1: include the script inline
+            inline = 0
+          }
+          library = EXT:browser/res/js/jquery/tx_browser_pi1_jstree-0.0.1.js
+          library {
+              // [Boolean] 0: link to the script file, 1 (default): include the script inline
+            inline = 1
+            marker {
+              ajax_url_single = TEXT
+              ajax_url_single {
+                dataWrap = {getIndpEnv:TYPO3_SITE_URL}|
+                typolink {
+                  parameter = {page:uid},{$plugin.tx_browser_pi1.typeNum.ajaxPageObj}
+                  parameter {
+                    insertData = 1
+                  }
+                  //additionalParams = &tx_browser_pi1[showUid]=###SHOWUID###&###CHASH###
+                  additionalParams = &tx_browser_pi1[showUid]={GP:tx_browser_pi1|showUid}
+                  additionalParams {
+                    insertData = 1
+                  }
+                  returnLast = url
+                }
+              }
+              typenum_ajax = TEXT
+              typenum_ajax {
+                value = {$plugin.tx_browser_pi1.typeNum.ajaxPageObj}
+              }
+              typenum_csv = TEXT
+              typenum_csv {
+                value = {$plugin.tx_browser_pi1.typeNum.csvPageObj}
+              }
+            }
+          }
+        }
         t3browser {
             // [STRING] Path to the jss file of the t3browser plugin
           plugin = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.2.js
