@@ -958,8 +958,8 @@ class tx_browser_pi1_javascript
       $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
 
       $name         = 'jquery_plugins_jstree_plugins_cookie';
-      $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugin.']['cookie'];
-      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugin.']['cookie.']['inline'];
+      $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugins.']['cookie'];
+      $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugins.']['cookie.']['inline'];
       $path_tsConf  = 'javascript.jquery.plugins.jstree.plugins.cookie';
       $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
 
