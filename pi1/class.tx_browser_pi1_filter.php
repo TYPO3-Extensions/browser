@@ -75,15 +75,30 @@
  */
 class tx_browser_pi1_filter {
 
+    // [array] Array with all table.fields, which are configured in the TypoScript views.x.filter
   var $arr_conf_tableFields = null;
-  // [array] Array with all table.fields, which are configured in the TypoScript views.x.filter
 
+    // [array] Array with the current SQL after consolidation but before any limit
+    //         Will be set from outside: @views
   var $rows_wo_limit = null;
-  // [array] Array with the current SQL after consolidation but before any limit
-  //         Will be set from outside: @views
 
+    // [array] Hits per tablefield (filter) and item
   var $arr_hits = null;
-  // [array] Hits per tablefield (filter) and  item
+
+    // [array] Rows of the SQL query after consolidation
+  var $arr_rows = array( );
+    // [array] Tables with a treeParentField field
+  var $arr_tablesWiTreeparentfield  = array( );
+    // [array] SQL rows of the current table.field
+  var $arr_rowsTablefield           = array( );
+    // [array] ...
+  var $arr_rowsTablefieldMetadata   = array( );
+    // [array] Rows ordered by tree
+  var $arr_tmpOrderedByTree         = array( );
+    // [string] HTML output for development only
+  var $str_tmpDevTreeOrdered        = null;
+    // [integer] Uid of previous row
+  var $int_previousUid              = 0;
 
 
 
@@ -316,7 +331,7 @@ class tx_browser_pi1_filter {
     $str_subpart  = $this->pObj->cObj->getSubpart($template, '###SEARCHFORM###');
     $str_subpart  = $this->pObj->cObj->substituteMarkerArray($str_subpart, $markerArray);
       // Add the subparts marker, because another method (the search template) need this subpart marker
-    $str_subpart  = '<!-- ###SEARCHFORM### begin -->' . "\n" . $str_subpart . '<!-- ###SEARCHFORM### end -->' . "\n";
+    $str_subpart  = '<!-- ###SEARCHFORM### begin -->' . PHP_EOL . $str_subpart . '<!-- ###SEARCHFORM### end -->' . PHP_EOL;
     $template     = $this->pObj->cObj->substituteSubpart($template, '###SEARCHFORM###', $str_subpart, true);
       // Replace filters in the HTML template
 
@@ -399,13 +414,6 @@ class tx_browser_pi1_filter {
     }
       // LOOP get rows per table.field
       // Get rows
-//
-// dwildt, 110309
-//var_dump(__METHOD__ . ': ' . __LINE__, $arr_rows['tx_org_workshop.rating']);
-//var_dump(__METHOD__ . ': ' . __LINE__, $arr_rows);
-//foreach ($this->rows_wo_limit as $rKey => $rVal) {
-//  var_dump($rVal['tx_org_workshop.uid'] . ': ' . $rVal['tx_org_workshop.rating']);
-//}
 
 
 
@@ -544,7 +552,8 @@ class tx_browser_pi1_filter {
  * @param string    $conf_tableField: table and field in table.field syntax
  * @return  array   Array with ordered values
  */
-  function orderValues($arr_values, $conf_tableField) {
+  function orderValues( $arr_values, $conf_tableField )
+  {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
     $view = $this->pObj->view;
@@ -554,42 +563,57 @@ class tx_browser_pi1_filter {
     $conf_view = $conf['views.'][$viewWiDot][$mode . '.'];
     $conf_view_path = 'views.' . $viewWiDot . $mode . '.filter.';
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Don't order values, if there aren't values
 
-    if (!is_array($arr_values)) {
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN there aren't values for ordering
+
+    if ( ! is_array( $arr_values ) )
+    {
       return $arr_values;
     }
-    if (count($arr_values) < 1) {
+    if ( count( $arr_values ) < 1 )
+    {
       return $arr_values;
     }
-    // Don't order values, if there aren't values
+      // RETURN there aren't values for ordering
+
+
 
     list ($table, $field) = explode('.', $conf_tableField);
     $arr_ts = $conf_view['filter.'][$table . '.'][$field . '.'];
 
-    if ($arr_ts['order.']['field'] == 'uid') {
-      $arr_values = array_flip($arr_values);
-      if ($this->pObj->b_drs_filter) {
+    if ( $arr_ts['order.']['field'] == 'uid' )
+    {
+      $arr_values = array_flip( $arr_values );
+      if ( $this->pObj->b_drs_filter )
+      {
         t3lib_div :: devLog('[INFO/FILTER] Values are ordered by uid.', $this->pObj->extKey, 0);
         t3lib_div :: devLog('[HELP/FILTER] If you want order values by there values, please configure ' . $conf_view_path . $conf_tableField . '.order.field.', $this->pObj->extKey, 1);
       }
     }
-    if (strtolower($arr_ts['order.']['orderFlag']) == 'desc') {
-      arsort($arr_values);
-      if ($this->pObj->b_drs_filter) {
+
+    if ( strtolower( $arr_ts['order.']['orderFlag'] ) == 'desc' )
+    {
+      arsort( $arr_values );
+      if ( $this->pObj->b_drs_filter )
+      {
         t3lib_div :: devLog('[INFO/FILTER] Values are ordered descending.', $this->pObj->extKey, 0);
         t3lib_div :: devLog('[HELP/FILTER] If you want to order ascending, please configure ' . $conf_view_path . $conf_tableField . '.order.orderFlag = ASC.', $this->pObj->extKey, 1);
       }
-    } else {
-      asort($arr_values);
-      if ($this->pObj->b_drs_filter) {
+    }
+    else
+    {
+      asort( $arr_values );
+      if ( $this->pObj->b_drs_filter )
+      {
         t3lib_div :: devLog('[INFO/FILTER] Values are ordered ascending.', $this->pObj->extKey, 0);
         t3lib_div :: devLog('[HELP/FILTER] If you want to order descending, please configure ' . $conf_view_path . $conf_tableField . '.order.orderFlag = DESC.', $this->pObj->extKey, 1);
       }
     }
-    if ($arr_ts['order.']['field'] == ('uid')) {
+    if ($arr_ts['order.']['field'] == ('uid'))
+    {
       $arr_values = array_flip($arr_values);
     }
 
@@ -975,6 +999,8 @@ class tx_browser_pi1_filter {
 
     $arr_return['error']['status'] = false;
 
+
+
       /////////////////////////////////////////////////////////////////
       //
       // Build the SQL query.
@@ -1011,11 +1037,12 @@ class tx_browser_pi1_filter {
       $treeParentField = $GLOBALS['TCA'][$table]['ctrl']['treeParentField'];
       $str_select .= "         " . $table . "." . $treeParentField . " AS 'treeParentField'," . PHP_EOL;
         // Add treeParentField to the SELECT statement
+      $this->arr_tablesWiTreeparentfield[] = $table;
     }
       // Table has a treeParentField
       // #32223, 120119, dwildt+
 
-    $str_select = $str_select . "\n" .
+    $str_select = $str_select . PHP_EOL .
     "         '" . $tableField . "' AS 'table.field'###LOCALISATION_SELECT###";
       // SELECT
 
@@ -1036,7 +1063,7 @@ class tx_browser_pi1_filter {
     if ($str_orderBy) 
     {
       $str_orderBy = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($str_orderBy);
-      $str_orderBy = "  ORDER BY " . $str_orderBy . "\n";
+      $str_orderBy = "  ORDER BY " . $str_orderBy . PHP_EOL;
     }
       // ORDER BY
 
@@ -1045,7 +1072,7 @@ class tx_browser_pi1_filter {
     if ($str_groupBy)
     {
       $str_groupBy = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($str_groupBy);
-      $str_groupBy = "  GROUP BY " . $str_groupBy . "\n";
+      $str_groupBy = "  GROUP BY " . $str_groupBy . PHP_EOL;
     }
       // GROUP BY
 
@@ -1054,7 +1081,7 @@ class tx_browser_pi1_filter {
     $str_andWhere = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($str_andWhere);
     if ($str_andWhere) 
     {
-      $str_andWhere = "    AND " . $str_andWhere . "\n";
+      $str_andWhere = "    AND " . $str_andWhere . PHP_EOL;
     }
       // AND WHERE
 
@@ -1067,8 +1094,8 @@ class tx_browser_pi1_filter {
       // AND WHERE PID LIST
 
       // QUERY
-    $query = "  SELECT " . $str_select . "\n" .
-    "  FROM " . $str_from . "\n" .
+    $query = "  SELECT " . $str_select . PHP_EOL .
+    "  FROM " . $str_from . PHP_EOL .
     "  WHERE 1 " . $this->pObj->cObj->enableFields($table) . "###LOCALISATION_WHERE###\n" .
     $str_andWhere .
     $str_groupBy .
@@ -1129,7 +1156,7 @@ class tx_browser_pi1_filter {
     if ($str_local_select) 
     {
       $str_local_select = ",\n" .
-      "         " . $str_local_select . "\n";
+      "         " . $str_local_select . PHP_EOL;
     }
     $query = str_replace('###LOCALISATION_SELECT###', $str_local_select, $query);
     $str_local_where = $this->pObj->objLocalise->localisationFields_where($table);
@@ -1184,7 +1211,7 @@ class tx_browser_pi1_filter {
     if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql) 
     {
         // 100629, dwildt
-        // $query_br = str_replace("\n", '<br />', $query);
+        // $query_br = str_replace(PHP_EOL, '<br />', $query);
         //t3lib_div::devlog('[INFO/FILTER+SQL] Query:<br /><br />'.$query_br, $this->pObj->extKey, 0);
       t3lib_div :: devlog('[INFO/FILTER+SQL] Query:<br /><br />' . $query, $this->pObj->extKey, 0);
     }
@@ -1314,6 +1341,8 @@ class tx_browser_pi1_filter {
     $conf_view_path = 'views.' . $viewWiDot . $mode . '.filter.';
 
     $arr_rows = $arr_input['data']['rows'];
+      // #32223, 120119, dwildt+
+    $this->arr_rows = $arr_rows;
     $template = $arr_input['data']['template'];
     unset ($arr_input);
 
@@ -1341,24 +1370,19 @@ class tx_browser_pi1_filter {
       // Convert the rows
 
     // From -------------------------------------------------------------
-    // array[0]["table.field"] = "tx_bzdstaffdirectory_locations.title"
-    // array[0]["uid"]         = "1"
-    // array[0]["value"]       = "Berlin"
-    // array[1]["table.field"] = "tx_bzdstaffdirectory_groups.group_name"
-    // array[1]["uid"]         = "3"
+    // array["tx_org_newscat.title"][0]["table.field"] = "tx_org_newscat.title"
+    // array["tx_org_newscat.title"][0]["uid"]         = "1"
+    // array["tx_org_newscat.title"][0]["value"]       = "Berlin"
+    // array["tx_org_newscat.title"][1]["table.field"] = "tx_org_newscat.title"
+    // array["tx_org_newscat.title"][1]["uid"]         = "3"
+    // array["tx_org_newscat.title"][1]["value"]       = "Istanbul"
     // ...
     // To ---------------------------------------------------------------
-    // array["tx_bzdstaffdirectory_locations.title"][1]   = "Berlin"
-    // array["tx_bzdstaffdirectory_locations.title"][2]   = "Wien"
-    // array["tx_bzdstaffdirectory_locations.title"][3]   = "Istanbul"
-    // array["tx_bzdstaffdirectory_groups.group_name"][3] = ...
+    // array["tx_org_newscat.title"][1]   = "Berlin"
+    // array["tx_org_newscat.title"][2]   = "Wien"
+    // array["tx_org_newscat.title"][3]   = "Istanbul"
+    // ...
     // ------------------------------------------------------------------
-
-$pos = strpos('91.23.167.133 ', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_rows );
-}
 
       // LOOP table.field
     $arr_tableFields = null;
@@ -1377,17 +1401,24 @@ if( ! ( $pos === false ) )
         // Rows are empty
         // DRS - Development Reporting System
 
-        // Convert the rows
-      if ( is_array( $rows ) )
+      list( $table, $field ) = explode( '.', $tableField);
+      switch( true )
       {
-        foreach ($rows as $key => $row)
-        {
-          $arr_tableFields[$tableField][$row['uid']] = $row['value'];
-        }
-        unset ($rows);
-        // Convert the rows
+        case( in_array( $table, $this->arr_tablesWiTreeparentfield ) ):
+            // #32223, 120119, dwildt+
+          $arr_tableFields[$tableField] = $this->get_treeOrdered( $arr_rows, $tableField );
+          break;
+        default:
+            // Convert the rows
+          foreach ( ( array ) $rows as $key => $row)
+          {
+            $arr_tableFields[$tableField][$row['uid']] = $row['value'];
+          }
+          unset ($rows);
+            // Convert the rows
+          break;
       }
-      // Convert the rows
+
     }
       // LOOP table.field
       // Convert the rows
@@ -1552,6 +1583,7 @@ if( ! ( $pos === false ) )
  * @param string    $tableField: The current table.field from the ts filter array
  * @return  array   Data array with the selectbox at least
  * @version 3.9.3
+ * @since   3.0.1
  */
   private function renderHtmlFilter($obj_ts, $arr_ts, $arr_values, $tableField)
   {
@@ -1622,7 +1654,7 @@ if( ! ( $pos === false ) )
         if ($maxItemsPerRow > 0) {
           $str_row_wrap     = $arr_ts['wrap.']['itemsPerRow.']['wrap'];
           $arr_row_wrap     = explode('|', $str_row_wrap);
-          $str_html         = $str_html . "\n" . $str_space_left . $arr_row_wrap[0];
+          $str_html         = $str_html . PHP_EOL . $str_space_left . $arr_row_wrap[0];
           $str_html         = str_replace('###EVEN_ODD###', 'even', $str_html);
           $str_noItemValue  = $arr_ts['wrap.']['itemsPerRow.']['noItemValue'];
           $int_count_row    = 0;
@@ -1669,9 +1701,9 @@ if( ! ( $pos === false ) )
       // Current table is the local table
 
       // Area
-    if (!empty ($this->pObj->objCal->arr_area[$tableField]['key']))
+    if ( ! empty ($this->pObj->objCal->arr_area[$tableField]['key'] ) )
     {
-      switch ($this->pObj->objCal->arr_area[$tableField]['key'])
+      switch ( $this->pObj->objCal->arr_area[$tableField]['key'] )
       {
         case ('strings') :
           $arr_result = $this->pObj->objCal->area_strings($arr_ts, $arr_values, $tableField);
@@ -1716,23 +1748,25 @@ if( ! ( $pos === false ) )
     unset ($arr_result);
     $conf_selected = ' ' . $arr_ts['wrap.']['item.']['selected'];
 
-//var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_values);
-
-
     $int_count_displayItem = 0;
 
+//$pos = strpos('91.23.167.133 ', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//if( ! ( $pos === false ) )
+//{
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_values, $this->arr_rowsTablefieldMetadata );
+//}
       // Loop through the rows of the SQL result
-    foreach ((array) $arr_values as $uid => $value) 
+    foreach ( (array) $arr_values as $uid => $value )
     {
         // #8337, 101012, dwildt
-      if (!($maxItemsPerRow === false)) 
+      if ( ! ( $maxItemsPerRow === false ) )
       {
-        if ($int_count_item >= $maxItemsPerRow) 
+        if ( $int_count_item >= $maxItemsPerRow )
         {
-          $str_html       = $str_html . $arr_row_wrap[1] . "\n" . $str_space_left . $arr_row_wrap[0];
+          $str_html       = $str_html . $arr_row_wrap[1] . PHP_EOL . $str_space_left . $arr_row_wrap[0];
           $int_count_row  = $int_count_row +1;
-          $str_evenOdd    = ($int_count_row % 2 ? 'odd' : 'even');
-          $str_html       = str_replace('###EVEN_ODD###', $str_evenOdd, $str_html);
+          $str_evenOdd    = $int_count_row % 2 ? 'odd' : 'even';
+          $str_html       = str_replace( '###EVEN_ODD###', $str_evenOdd, $str_html );
           $int_count_item = 0;
         }
       }
@@ -1785,21 +1819,11 @@ if( ! ( $pos === false ) )
         $conf_item = $this->get_wrappedItemStyle($arr_ts, $conf_item, false);
           // Wrap the item uid
         $conf_item = $this->get_wrappedItemKey($arr_ts, $uid, $conf_item);
-//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if ( ! ( $pos === false ) )
-//{
-//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_ts['area.']['interval.']['options.']['fields.']);
-//} 
           // Wrap the item URL
         $conf_item = $this->get_wrappedItemURL($arr_ts, $tableField, $uid, $conf_item);
 
           // Get the item selected (or not selected)
         $conf_item = $this->get_wrappedItemSelected($uid, $value, $arr_piVar, $arr_ts, $conf_selected, $conf_item);
-//$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if ( ! ( $pos === false ) )
-//{
-//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $conf_item);
-//} 
           // Remove empty class
         $conf_item = str_replace(' class=""', null, $conf_item);
           // Workaround: 110913, dwildt
@@ -1826,23 +1850,36 @@ if( ! ( $pos === false ) )
           // #8337, 101011, dwildt
         $conf_item = str_replace('###TABLE.FIELD###', $key_piVar, $conf_item);
 
+          //#32223, 120119, dwildt+
+        if( isset( $this->arr_rowsTablefieldMetadata[$tableField][$uid]['ul'] ) )
+        {
+          $ul         = $this->arr_rowsTablefieldMetadata[$tableField][$uid]['ul'];
+          $conf_item  = str_replace('###LI###', $ul, $conf_item);
+        }
+        if( ! ( isset( $this->arr_rowsTablefieldMetadata[$tableField][$uid]['ul'] ) ) )
+        {
+          $ul         = $this->arr_rowsTablefieldMetadata[$tableField][$uid]['ul'];
+          $conf_item  = str_replace('###LI###', '</li>', $conf_item);
+        }
+          //#32223, 120119, dwildt+
+
         $conf_item              = str_replace('|', $value, $conf_item);
-        $conf_item              = $conf_item . "\n";
+        $conf_item              = $conf_item . PHP_EOL;
         $str_html               = $str_html . $str_space_left . $conf_item;
         $int_count_displayItem  = $int_count_displayItem +1;
           // Wrap the whole value
       }
         // Wrap the item
-      if (!($maxItemsPerRow === false)) 
+      if ( ! ( $maxItemsPerRow === false ) )
       {
         $int_count_item = $int_count_item +1;
       }
     }
       // Loop through the rows of the SQL result
 
-    if (!($maxItemsPerRow === false)) 
+    if ( ! ($maxItemsPerRow === false) )
     {
-      $str_html = $str_html . $arr_row_wrap[1] . "\n";
+      $str_html = $str_html . $arr_row_wrap[1] . PHP_EOL;
     }
 
       // Delete the last line break
@@ -1860,25 +1897,31 @@ if( ! ( $pos === false ) )
       $arr_ts = $this->pObj->objJss->class_onchange($obj_ts, $arr_ts, $int_count_displayItem);
     }
     $conf_object  = $this->wrap_allItems($obj_ts, $arr_ts, $str_nice_piVar, $key_piVar, $int_count_displayItem);
-    $str_html     = str_replace('|', "\n" . $str_html . "\n" . $str_space_left, $conf_object);
+    $str_html     = str_replace('|', PHP_EOL . $str_html . PHP_EOL . $str_space_left, $conf_object);
     // Wrap the object title
     $conf_wrap    = $this->wrap_objectTitle($arr_ts, $tableField);
     // Wrap the object
     $int_space_left = $arr_ts['wrap.']['nice_html_spaceLeft'];
     $str_space_left = str_repeat(' ', $int_space_left);
     if ($conf_wrap) {
-      $str_html = str_replace('|', "\n" . $str_html . "\n" . $str_space_left, $conf_wrap);
+      $str_html = str_replace('|', PHP_EOL . $str_html . PHP_EOL . $str_space_left, $conf_wrap);
     }
       // Wrap all items / the object
 
     return $str_html;
   }
 
+
+
+
   /***********************************************
   *
   * Rendering items
   *
   **********************************************/
+
+
+
 
   /**
  * Order the items, add the first item and wrap all items
@@ -1887,9 +1930,11 @@ if( ! ( $pos === false ) )
  * @param array   $arr_values: The values for the object
  * @param string    $tableField: The current table.field from the ts filter array
  * @return  array   Return the processed items
- * @version 3.6.0
+ * @version 3.9.6
+ * @since   3.0.1
  */
-  function items_order_and_addFirst($arr_ts, $arr_values, $tableField) {
+  function items_order_and_addFirst($arr_ts, $arr_values, $tableField)
+  {
 
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -1900,14 +1945,25 @@ if( ! ( $pos === false ) )
     $conf_view = $conf['views.'][$viewWiDot][$mode . '.'];
     $conf_view_path = 'views.' . $viewWiDot . $mode . '.filter.';
 
+    list( $table, $field ) = explode( '.', $tableField);
+
 
 
       /////////////////////////////////////////////////////////////////
       //
       // Order the values and save the order!
 
-      // #11407: Ordering filter items hasn't any effect
-    $arr_values = $this->orderValues($arr_values, $tableField);
+    switch( true )
+    {
+      case( in_array( $table, $this->arr_tablesWiTreeparentfield ) ):
+          // #32223, 120119, dwildt+
+          // Do nothing
+        break;
+      default:
+          // #11407: Ordering filter items hasn't any effect
+        $arr_values = $this->orderValues($arr_values, $tableField);
+        break;
+    }
       // Order the values and save the order!
 
 
@@ -2137,6 +2193,175 @@ if( ! ( $pos === false ) )
 
     return $conf_wrap;
   }
+
+
+
+  /**
+ * get_treeOrdered: ...
+ *
+ * @param array     $arr_rows   : Result of the SQL query
+ * @param string    $tableField : Current table.field
+ * @internal        #32223, 120119, dwildt+
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function get_treeOrdered( $arr_rows, $tableField )
+  {
+    $conf = $this->pObj->conf;
+    $mode = $this->pObj->piVar_mode;
+    $view = $this->pObj->view;
+
+    $viewWiDot = $view . '.';
+
+    $conf_view = $conf['views.'][$viewWiDot][$mode . '.'];
+    $arr_ts = $conf_view['filter.'][$table . '.'][$field . '.'];
+
+
+      // Parent uid of the root records: 0 of course
+    $uid_parent = 0;
+      // Superior level: 0 of course
+    $level      = 0;
+      // Needed for dev_display_children( )
+    $this->arr_rowsTablefield = $arr_rows[$tableField];
+
+      // Get the values for ordering
+    foreach ( $this->arr_rowsTablefield as $key => $row )
+    {
+      $arr_value[$key] = $row['value'];
+    }
+      // Get the values for ordering
+
+      // Set DESC or ASC
+    if ( strtolower( $arr_ts['order.']['orderFlag'] ) == 'desc' )
+    {
+      $order = SORT_DESC;
+    }
+    if ( strtolower( $arr_ts['order.']['orderFlag'] ) != 'desc' )
+    {
+      $order = SORT_ASC;
+    }
+      // Set DESC or ASC
+
+      // Order the rows
+    array_multisort($arr_value, $order, $this->arr_rowsTablefield);
+
+      // Get rows of the current tablefield ordered by the needs of a tree
+    $this->get_treeOrderedArray( $tableField, $uid_parent, $level);
+    $arr_tableFields = $this->arr_tmpOrderedByTree;
+
+      // Print the result in HTML - for development only!
+//    $pos = strpos('91.23.167.133 ', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    //$pos = false; // Set it to true - for development only!
+//    if( ! ( $pos === false ) )
+//    {
+//      $prompt = PHP_EOL . '<ul>' .  PHP_EOL . $this->str_tmpDevTreeOrdered . '</ul>' . PHP_EOL;
+//      var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_tableFields, $prompt, $this->arr_rowsTablefieldMetadata );
+//    }
+      // Print the result in HTML - for development only!
+
+      // Unset the temp global arrays
+    unset( $this->str_tmpDevTreeOrdered );
+    unset( $this->arr_tmpOrderedByTree );
+
+      // RETURN the ordered rows of the current tablefield
+    return $arr_tableFields;
+  }
+
+
+
+
+
+
+  /**
+ * get_treeOrderedArray:  Method allocates the rsult rto the gflobals:
+ *                        * $this->str_tmpDevTreeOrdered
+ *                        * $this->arr_tmpOrderedByTree
+ * @param string    $tableField : Current table.field.
+ * @param integer   $uid_parent : Parent uid of the current record - for recursive calls.
+ *                                It is 0 while starting.
+ * @param integer   $level      : Current level - for recursive calls.
+ *                                It is 0 while starting.
+ * @internal        #32223, 120119, dwildt+
+ * @version 3.9.6
+ * @since   3.9.6
+
+ */
+  private function get_treeOrderedArray( $tableField, $uid_parent, $level )
+  {
+      // set an empty $uid_parent to 0
+    $uid_parent = ( int ) $uid_parent;
+
+    $arr_rowsTablefield       = $this->arr_rowsTablefield;
+    $repeat                   = $level;
+    $bool_ulChildrenIsPrinted = false;
+
+      // LOOP rows
+    foreach( $this->arr_rowsTablefield as $key => $row )
+    {
+        // CONTINUE current row isn't row with current $uid_parent
+      if( $row['treeParentField'] != $uid_parent )
+      {
+        continue;
+      }
+        // CONTINUE current row isn't row with current $uid_parent
+
+        // Add <ul> to sublevel
+      if( ! $bool_ulChildrenIsPrinted )
+      {
+        if( $level > 0 )
+        {
+          $repeat = $repeat * 2;
+          $this->str_tmpDevTreeOrdered =  $this->str_tmpDevTreeOrdered .
+                                          str_repeat('  ', $repeat ) .
+                                          '<ul id="uid_parent_' . $uid_parent . '">' . PHP_EOL;
+          $bool_ulChildrenIsPrinted = true;
+          $this->arr_rowsTablefieldMetadata[$tableField][$this->int_previousUid]['ul'] = '<ul>';
+        }
+      }
+        // Add <ul> to sublevel
+
+        // Display each child
+      $this->str_tmpDevTreeOrdered =  $this->str_tmpDevTreeOrdered .
+                                      str_repeat('  ', $repeat) .
+                                      '  <li id="uid_' . $row['uid'] . '">' . PHP_EOL;
+      $this->str_tmpDevTreeOrdered =  $this->str_tmpDevTreeOrdered .
+                                      str_repeat('  ', $repeat) .
+                                      '    ' . $row['value'] . ' ' . PHP_EOL;
+      $this->arr_tmpOrderedByTree[$row['uid']] = $row['value'];
+      $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['uid']    = $row['uid'];
+      $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['level']  = $level;
+      $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['ul']     = '</li>';
+      $this->int_previousUid = $row['uid'];
+      
+        // Unset current element - better for performance in a recursive method
+      unset( $arr_rowsTablefield[$key] );
+
+        // Call this function for child's children
+      $this->get_treeOrderedArray( $tableField, $row['uid'], $level + 1 );
+
+        // Close list item
+      $this->str_tmpDevTreeOrdered =  $this->str_tmpDevTreeOrdered .
+                                      str_repeat('  ', $repeat) .
+                                      '  </li>' . PHP_EOL;
+    }
+      // LOOP rows
+
+      // Close sublevel
+    if( $bool_ulChildrenIsPrinted )
+    {
+      if( $level > 0 )
+      {
+        $this->str_tmpDevTreeOrdered =  $this->str_tmpDevTreeOrdered .
+                                        str_repeat('  ', $repeat ) .
+                                        '</ul>' .  PHP_EOL;
+        $this->arr_rowsTablefieldMetadata[$tableField][$this->int_previousUid]['ul'] = '</li></ul>';
+        $repeat = $repeat / 2;
+      }
+    }
+  }
+
+
+
 
   /**
  * Get the wrapped item class
