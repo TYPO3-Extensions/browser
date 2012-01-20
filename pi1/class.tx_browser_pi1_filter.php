@@ -1975,7 +1975,8 @@ class tx_browser_pi1_filter {
           }
           $conf_item = str_replace('|', '###VALUE###', $conf_item);
         }
-        $conf_item  = str_replace('###VALUE###', $value, $conf_item);
+        $conf_item  = str_replace('###VALUE###',  $value, $conf_item);
+        $conf_item  = str_replace('###UID###',    $uid,   $conf_item);
           //#32223, 120119, dwildt+
 
         $conf_item              = $conf_item . PHP_EOL;
