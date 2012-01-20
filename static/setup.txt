@@ -1084,6 +1084,12 @@ plugin.tx_browser_pi1 {
             // True (default)
           value = 1
         }
+          // Disable the treeview. Enable is recommended. Has an effect only in case of cps_tcatree and a proper TCA configuration.
+        treeview = TEXT
+        treeview {
+            // True (default)
+          value = 1
+        }
           // [String/optional] Name for the piVar. Name must be unique.
         nice_piVar =
           // [Boolean] Should be added a default item?
@@ -1127,7 +1133,7 @@ plugin.tx_browser_pi1 {
             sublevel_wrap = <ul>|</ul>
           }
             // [String] Wrap one item
-          item    = <li><a href="###URL###" ###CLASS### ###STYLE### title="">|</a></li>
+          item  = <a href="###URL###" ###CLASS### ###STYLE### title="">###VALUE###</a>
           item {
               // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
             display_without_any_hit = 0
@@ -1149,14 +1155,11 @@ plugin.tx_browser_pi1 {
               // [String] Default HTML style
             style =
             stdWrap {
-              htmlSpecialChars = 1
-              crop             = 60 | ... | 1
-//              typolink {
-//                parameter = {page:uid}
-//                parameter {
-//                  insertData = 1
-//                }
-//              }
+              wrap = <li>|</li>
+            }
+            value_stdWrap {
+              htmlSpecialChars  = 1
+              crop              = 60 | ... | 1
             }
           }
         }
@@ -1206,7 +1209,7 @@ plugin.tx_browser_pi1 {
             // [String] Wrap the items
           object = |
             // [String] Wrap one item
-          item    = <input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###> |
+          item = ###VALUE###
           item {
               // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
             display_without_any_hit = 0
@@ -1228,6 +1231,9 @@ plugin.tx_browser_pi1 {
               // [String] Default HTML style
             style =
             stdWrap {
+              wrap = |<input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>  ||
+            }
+            value_stdWrap {
               crop = 60 | ... | 1
             }
           }
@@ -1286,7 +1292,7 @@ plugin.tx_browser_pi1 {
             // [String] Wrap the items
           object = |
             // [String] Wrap one item
-          item    = <input###CLASS######STYLE### type="radio" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###> |
+          item = ###VALUE###
           item {
               // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
             display_without_any_hit = 0
@@ -1308,6 +1314,9 @@ plugin.tx_browser_pi1 {
               // [String] Default HTML style
             style =
             stdWrap {
+              noTrimWrap = |<input###CLASS######STYLE### type="radio" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###> ||
+            }
+            value_stdWrap {
               crop = 60 | ... | 1
             }
           }
@@ -1391,7 +1400,7 @@ plugin.tx_browser_pi1 {
             nice_html_spaceLeft = 14
           }
             // [String] Wrap one item
-          item    = <option###CLASS######STYLE### value="###UID###"###ITEM_SELECTED###>|</option>
+          item = ###VALUE###
           item {
               // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
             display_without_any_hit = 0
@@ -1413,6 +1422,9 @@ plugin.tx_browser_pi1 {
               // [String] Default HTML style
             style =
             stdWrap {
+              wrap = <option###CLASS######STYLE### value="###UID###"###ITEM_SELECTED###>|</option>
+            }
+            value_stdWrap {
               htmlSpecialChars = 1
               crop             = 60 | ... | 1
             }
