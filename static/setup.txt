@@ -2401,29 +2401,13 @@ plugin.tx_browser_pi1 {
               // [Boolean] 0: link to the script file, 1 (default): include the script inline
             inline = 1
             marker {
-              ajax_url_single = TEXT
-              ajax_url_single {
-                dataWrap = {getIndpEnv:TYPO3_SITE_URL}|
-                typolink {
-                  parameter = {page:uid},{$plugin.tx_browser_pi1.typeNum.ajaxPageObj}
-                  parameter {
-                    insertData = 1
-                  }
-                  //additionalParams = &tx_browser_pi1[showUid]=###SHOWUID###&###CHASH###
-                  additionalParams = &tx_browser_pi1[showUid]={GP:tx_browser_pi1|showUid}
-                  additionalParams {
-                    insertData = 1
-                  }
-                  returnLast = url
-                }
+              selector = TEXT
+              selector {
+                value = #tree
               }
-              typenum_ajax = TEXT
-              typenum_ajax {
-                value = {$plugin.tx_browser_pi1.typeNum.ajaxPageObj}
-              }
-              typenum_csv = TEXT
-              typenum_csv {
-                value = {$plugin.tx_browser_pi1.typeNum.csvPageObj}
+              theme = TEXT
+              theme {
+                value = apple
               }
             }
           }
