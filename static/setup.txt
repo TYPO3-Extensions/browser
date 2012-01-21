@@ -1125,12 +1125,12 @@ plugin.tx_browser_pi1 {
             wrap  = <div class="category_menu_title">|</div>
           }
             // [String] Wrap the items
-          object = <ul>|</ul>
+          object = <div id="tree"><ul id="tree_ul_0">|</ul></div>
           object {
               // [Integer] Space characters from left margin in the HTML code
             nice_html_spaceLeft = 14
               // [String] Wrap a sublevel - in case of treeParentField only
-            sublevel_wrap = <ul>|</ul>
+            sublevel_wrap = <ul id="tree_ul_###UID###">|</ul>
           }
             // [String] Wrap one item
           item  = <a href="###URL###" ###CLASS### ###STYLE### title="">###VALUE###</a>
@@ -1155,7 +1155,7 @@ plugin.tx_browser_pi1 {
               // [String] Default HTML style
             style =
             stdWrap {
-              wrap = <li>|</li>
+              wrap = <li id="tree_li_###UID###">|</li>
             }
             value_stdWrap {
               htmlSpecialChars  = 1

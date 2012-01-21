@@ -2000,8 +2000,6 @@ class tx_browser_pi1_filter {
       // Delete the last line break
     $str_html = substr($str_html, 0, -1);
 
-    $str_html = str_replace('###UID###', 0, $str_html );
-
       // Wrap the items
 
 
