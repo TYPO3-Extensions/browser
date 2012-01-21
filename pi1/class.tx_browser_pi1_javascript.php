@@ -949,7 +949,8 @@ class tx_browser_pi1_javascript
       //
       // jquery_plugins_jstree
 
-    if ( $this->pObj->objFlexform->bool_jquery_plugins_jstree || 1 )
+      // There are tables with a treeparentfield
+    if ( count( $this->pObj->objFilter->arr_tablesWiTreeparentfield ) >= 1 )
     {
       $name         = 'jquery_plugins_jstree_plugin';
       $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugin'];
@@ -993,6 +994,7 @@ class tx_browser_pi1_javascript
       $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
 
     }
+      // There are tables with a treeparentfield
       // jquery_plugins_jstree
   }
 

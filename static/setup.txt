@@ -1015,7 +1015,7 @@ plugin.tx_browser_pi1 {
           // [Boolean] Should be added a default item?
         first_item = 1
         first_item {
-          stdWrap {
+          value_stdWrap {
             data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_firstitem_default
           }
             // [STRING, unique] Value attribute in the option tag (#11401)
@@ -1106,7 +1106,7 @@ plugin.tx_browser_pi1 {
               noTrimWrap = | (|)|
             }
           }
-          stdWrap {
+          value_stdWrap {
             data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
           }
             // [STRING, unique] Value attribute in the option tag (#11401)
@@ -1367,7 +1367,7 @@ plugin.tx_browser_pi1 {
               noTrimWrap = | (|)|
             }
           }
-          stdWrap {
+          value_stdWrap {
             data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
           }
             // [STRING, unique] Value attribute in the option tag (#11401)
@@ -2407,6 +2407,7 @@ plugin.tx_browser_pi1 {
               }
               theme = TEXT
               theme {
+                  [string] supported are: apple, classic, default, default-rtl
                 value = apple
               }
             }

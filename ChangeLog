@@ -13,6 +13,10 @@
                 * ... checkbox.wrap.item.stdWrap
                 * ... radiobuttons.wrap.item.stdWrap
                 * ... selectbox.wrap.item.stdWrap
+                * ... category_menu.first_item.stdWrap
+                * ... checkbox.first_item.stdWrap
+                * ... radiobuttons.first_item.stdWrap
+                * ... selectbox.first_item.stdWrap
                 is moved to value_stdWrap
   * #32654: Integration of Open Street Map
   Imrovement

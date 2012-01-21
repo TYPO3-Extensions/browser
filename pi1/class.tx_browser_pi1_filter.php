@@ -1736,14 +1736,19 @@ class tx_browser_pi1_filter {
         // Convert key, values and hits
       foreach ($arr_values as $uid => $value) 
       {
-        if ($uid == $arr_ts['first_item.']['option_value']) 
+          // Key of first item
+        if ($uid == $arr_ts['first_item.']['option_value'])
         {
           $key = $uid;
         }
+          // Key of first item
+          // Key of all other items
         if ($uid != $arr_ts['first_item.']['option_value']) 
         {
           $key = $value;
         }
+          // Key of all other items
+        
         $arr_values_localTable[$key] = $value;
         if (!isset ($arr_hits_localTable[$tableField][$key])) 
         {
@@ -1818,26 +1823,36 @@ class tx_browser_pi1_filter {
     {
       case( in_array( $table, $this->arr_tablesWiTreeparentfield ) ):
           // #32223, 120119, dwildt+
-        $local_bool_display_without_any_hit = true;
-        if( $arr_ts['wrap.']['item.']['display_without_any_hit'] == false )
+        $first_item_display_without_any_hit = true;
+        $records_display_without_any_hit    = true;
+          // DRS - Development Reporting System
+        if( $this->pObj->b_drs_filter )
         {
-          if( $this->pObj->b_drs_filter )
+          if( $arr_ts['first_item.']['display_without_any_hit'] == false )
+          {
+            $prompt = 'first_item.display_without_any_hit is false. But ' . $table . ' is displayed in a tree view: display_without_any_hit is set to true!';
+            t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+          }
+          if( $arr_ts['wrap.']['item.']['display_without_any_hit'] == false )
           {
             $prompt = 'wrap.item.display_without_any_hit is false. But ' . $table . ' is displayed in a tree view: display_without_any_hit is set to true!';
             t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
           }
         }
+          // DRS - Development Reporting System
           // #32223, 120119, dwildt+
         break;
       default:
-          // Display item without any hit
-        $local_bool_display_without_any_hit = $arr_ts['wrap.']['item.']['display_without_any_hit'];
+        $first_item_display_without_any_hit = $arr_ts['first_item.']['display_without_any_hit'];
+        $records_display_without_any_hit    = $arr_ts['wrap.']['item.']['display_without_any_hit'];
         break;
     }
       // Display item without any hit
 
-      // Display hits for the current item
-    $local_bool_display_hits = $arr_ts['wrap.']['item.']['display_hits'];
+      // Display hits for the first item
+    $first_item_display_hits   = $arr_ts['first_item.']['display_hits'];
+      // Display hits for all other items
+    $records_bool_display_hits = $arr_ts['wrap.']['item.']['display_hits'];
 
 
     $int_count_displayItem = 0;
@@ -1858,36 +1873,30 @@ class tx_browser_pi1_filter {
         }
       }
 
-        // Item added by the TYPO3 user (first item)
         // dwildt, 101211, #11401
-        //if(empty($uid))
+        // Display configuration of the first item
       if ( $uid == $arr_ts['first_item.']['option_value'] )
       {
-          // Item is configured by the TYPO3 user
-        $bool_display_without_any_hit = true;
+        $bool_display_without_any_hit = $first_item_display_without_any_hit;
+          // Hits of first item are rendered before
         $bool_display_hits            = false;
       }
+        // Display configuration of the first item
+        // Display configuration of all other items
       if ( ! ( $uid == $arr_ts['first_item.']['option_value'] ) )
       {
-          // Item is configured by the TYPO3 user
-        $bool_display_without_any_hit = $local_bool_display_without_any_hit;
-        $bool_display_hits            = $local_bool_display_hits;
+        $bool_display_without_any_hit = $records_display_without_any_hit;
+        $bool_display_hits            = $records_bool_display_hits;
+        $int_hits                     = $this->arr_hits[$tableField][$uid];
       }
-        // Item added by the TYPO3 user (first item)
-
-        // Real item (not the first item)
+        // Display configuration of all other items
         // dwildt, 101211, #11401
-        //if(!empty($uid))
-      if ($uid != $arr_ts['first_item.']['option_value']) 
-      {
-        $int_hits = $this->arr_hits[$tableField][$uid];
-      }
-        // Real item (not the first item)
+
 
         // 0: Default value for missing hits
-      if ($bool_display_hits) 
+      if( $bool_display_hits )
       {
-        if (empty ($int_hits)) 
+        if( empty( $int_hits ) )
         {
           $int_hits = 0;
         }
@@ -2065,69 +2074,48 @@ class tx_browser_pi1_filter {
 
 
 
-//      /////////////////////////////////////////////////////////////////
-//      //
-//      // Order the values and save the order!
-//
-//    switch( true )
-//    {
-//      case( in_array( $table, $this->arr_tablesWiTreeparentfield ) ):
-//          // #32223, 120119, dwildt+
-//          // Do nothing
-//        break;
-//      default:
-//          // #11407: Ordering filter items hasn't any effect
-//        $arr_values = $this->orderValues($arr_values, $tableField);
-//        break;
-//    }
-//      // Order the values and save the order!
-//
-//
-//
       /////////////////////////////////////////////////////////////////
       //
       // Handle the first_item
 
     if ($arr_ts['first_item']) 
     {
-      $bool_handle  = true;
       $int_hits     = $this->arr_hits[$tableField]['sum'];
 
         // Wrap the first item and prepaire it for adding
-      if ($bool_handle) 
+        // Wrap the item
+      $value  = $arr_ts['first_item.']['value_stdWrap.']['value'];
+      $tsConf = $arr_ts['first_item.']['value_stdWrap.'];
+      $value  = $this->pObj->local_cObj->stdWrap( $value, $tsConf);
+
+        // Wrap the hits and add it to the item
+      $bool_display_hits = $arr_ts['first_item.']['display_hits'];
+      if ($bool_display_hits)
       {
-          // Wrap the item
-        $value = $this->pObj->local_cObj->stdWrap($arr_ts['first_item.']['stdWrap.']['value'], $arr_ts['first_item.']['stdWrap.']);
-
-          // Wrap the hits and add it to the item
-        $bool_display_hits = $arr_ts['first_item.']['display_hits'];
-        if ($bool_display_hits) 
+        $conf_hits = $arr_ts['first_item.']['display_hits.']['stdWrap.'];
+        $str_hits = $this->pObj->objWrapper->general_stdWrap($int_hits, $conf_hits);
+        $bool_behindItem = $arr_ts['first_item.']['display_hits.']['behindItem'];
+        if ($bool_behindItem)
         {
-          $conf_hits = $arr_ts['first_item.']['display_hits.']['stdWrap.'];
-          $str_hits = $this->pObj->objWrapper->general_stdWrap($int_hits, $conf_hits);
-          $bool_behindItem = $arr_ts['first_item.']['display_hits.']['behindItem'];
-          if ($bool_behindItem) 
-          {
-            $value = $value . $str_hits;
-          }
-          if (!$bool_behindItem) 
-          {
-            $value = $str_hits . $value;
-          }
+          $value = $value . $str_hits;
         }
-          // Wrap the hits and add it to the item
-
-          // Prepaire item for adding
-          // dwildt, 101211, #11401
-        //$arr_new_values[0] = $value;
-        $arr_new_values[$arr_ts['first_item.']['option_value']] = $value;
-        if ($this->pObj->b_drs_filter) 
+        if (!$bool_behindItem)
         {
-          t3lib_div :: devLog('[INFO/FILTER] \'' . $value . '\' is added as the first item.', $this->pObj->extKey, 0);
-          t3lib_div :: devLog('[HELP/FILTER] If you don\'t want a default item, please configure ' . $conf_view_path . $tableField . '.first_item.', $this->pObj->extKey, 1);
+          $value = $str_hits . $value;
         }
-          // Prepaire item for adding
       }
+        // Wrap the hits and add it to the item
+
+        // Prepaire item for adding
+        // dwildt, 101211, #11401
+      //$arr_new_values[0] = $value;
+      $arr_new_values[$arr_ts['first_item.']['option_value']] = $value;
+      if ($this->pObj->b_drs_filter)
+      {
+        t3lib_div :: devLog('[INFO/FILTER] \'' . $value . '\' is added as the first item.', $this->pObj->extKey, 0);
+        t3lib_div :: devLog('[HELP/FILTER] If you don\'t want a default item, please configure ' . $conf_view_path . $tableField . '.first_item.', $this->pObj->extKey, 1);
+      }
+        // Prepaire item for adding
         // Wrap the first item and prepaire it for adding
     }
       // Handle the first_item
@@ -2464,12 +2452,29 @@ class tx_browser_pi1_filter {
  */
   private function get_treeOrderedArray( $tableField, $uid_parent, $level )
   {
+    static $bool_firstLoop  = true;
+    static $first_key       = null;
+    static $last_key        = null;
+    
       // set an empty $uid_parent to 0
     $uid_parent = ( int ) $uid_parent;
 
     $arr_rowsTablefield       = $this->arr_rowsTablefield;
     $repeat                   = $level;
     $bool_ulChildrenIsPrinted = false;
+
+    if( $bool_firstLoop )
+    {
+      reset( $this->arr_rowsTablefield );
+      $first_key  = key( $this->arr_rowsTablefield );
+      end( $this->arr_rowsTablefield );
+      $last_key   = key( $this->arr_rowsTablefield );
+$pos = strpos('79.204.96.75', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $first_key, $last_key );
+}
+    }
 
       // LOOP rows
     foreach( $this->arr_rowsTablefield as $key => $row )
@@ -2491,8 +2496,7 @@ class tx_browser_pi1_filter {
                                           str_repeat('  ', $repeat ) .
                                           '<ul id="uid_parent_' . $uid_parent . '">' . PHP_EOL;
           $bool_ulChildrenIsPrinted = true;
-          $openTag = $this->arr_wrapSublevel[0];
-          $this->arr_rowsTablefieldMetadata[$tableField][$this->int_previousUid]['ul'] = PHP_EOL . $openTag;
+          $this->arr_rowsTablefieldMetadata[$tableField][$this->int_previousUid]['ul'] = PHP_EOL . $this->arr_wrapSublevel[0];
         }
       }
         // Add <ul> to sublevel
@@ -2508,6 +2512,16 @@ class tx_browser_pi1_filter {
       $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['uid']    = $row['uid'];
       $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['level']  = $level;
       $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['ul']     = null;
+      if( $key == $first_key )
+      {
+//        $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['ul'] = PHP_EOL . $this->arr_wrapSublevel[0];
+        $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['ul'] = PHP_EOL . 'X';
+      }
+      if( $key == $last_key )
+      {
+//        $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['ul'] = PHP_EOL . $this->arr_wrapSublevel[1];
+        $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['ul'] = PHP_EOL . 'Y';
+      }
       $this->int_previousUid = $row['uid'];
       
         // Unset current element - better for performance in a recursive method
@@ -2531,8 +2545,7 @@ class tx_browser_pi1_filter {
         $this->str_tmpDevTreeOrdered =  $this->str_tmpDevTreeOrdered .
                                         str_repeat('  ', $repeat ) .
                                         '</ul>' .  PHP_EOL;
-        $closeTag = $this->arr_wrapSublevel[1];
-        $this->arr_rowsTablefieldMetadata[$tableField][$this->int_previousUid]['ul'] = PHP_EOL . $closeTag;
+        $this->arr_rowsTablefieldMetadata[$tableField][$this->int_previousUid]['ul'] = PHP_EOL . $this->arr_wrapSublevel[1];
         $repeat = $repeat / 2;
       }
     }
