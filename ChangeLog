@@ -9,15 +9,17 @@
   * #32223: Category Tree
             * static/setup.txt
               * displayList.master_templates ...
-                * ... category_menu.wrap.item.stdWrap
-                * ... checkbox.wrap.item.stdWrap
-                * ... radiobuttons.wrap.item.stdWrap
-                * ... selectbox.wrap.item.stdWrap
                 * ... category_menu.first_item.stdWrap
                 * ... checkbox.first_item.stdWrap
                 * ... radiobuttons.first_item.stdWrap
                 * ... selectbox.first_item.stdWrap
                 is moved to value_stdWrap
+              * displayList.master_templates ...
+                * ... category_menu.wrap.item.stdWrap
+                * ... checkbox.wrap.item.stdWrap
+                * ... radiobuttons.wrap.item.stdWrap
+                * ... selectbox.wrap.item.stdWrap
+                is moved to ... item.wraps.value.stdWrap
   * #32654: Integration of Open Street Map
   Imrovement
   * #00000: Localised records can push into the shopping card without param L now

@@ -1178,14 +1178,6 @@ plugin.tx_browser_pi1 {
                 stdWrap {
                   wrap = <li id="tree_li_###UID###">|</li>
                 }
-                sublevel {
-                  begin_stdWrap {
-                    wrap = <li id="tree_li_###UID###">|<ul>
-                  }
-                  end_stdWrap {
-                    wrap = </ul></li><li id="tree_li_###UID###">|</li>
-                  }
-                }
               }
               value {
                 stdWrap {

@@ -616,6 +616,179 @@ class tx_browser_pi1_filter {
     return $arr_values;
   }
 
+  /**
+   * Order the items, add the first item and wrap all items
+   *
+   * @param array   $arr_ts: The TypoScript configuration of the object
+   * @param array   $arr_values: The values for the object
+   * @param string    $tableField: The current table.field from the ts filter array
+   * @return  array   Return the processed items
+   * @version 3.6.0
+   */
+  function items_order_and_addFirst($arr_ts, $arr_values, $tableField) {
+  
+    $conf = $this->pObj->conf;
+    $mode = $this->pObj->piVar_mode;
+    $view = $this->pObj->view;
+
+    $viewWiDot = $view . '.';
+
+    $conf_view = $conf['views.'][$viewWiDot][$mode . '.'];
+    $conf_view_path = 'views.' . $viewWiDot . $mode . '.filter.';
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // Order the values and save the order!
+
+    // #11407: Ordering filter items hasn't any effect
+    $arr_values = $this->orderValues($arr_values, $tableField);
+    // Order the values and save the order!
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // Handle the first_item
+
+    if ($arr_ts['first_item'])
+
+    {
+      $bool_handle = true;
+      
+      // :todo: 101019, dwildt: Next section seems to have an unproper effect
+      //      $bool_display_without_any_hit = $arr_ts['first_item.']['display_without_any_hit'];
+      $int_hits = $this->arr_hits[$tableField]['sum'];
+      //
+      //      // There is no hit
+      //      if($int_hits < 1)
+      //      {
+      //        $bool_handle = false;
+      //        $int_hits  = 0;
+      //      }
+      //      // There is no hit
+      
+      // Wrap the first item and prepaire it for adding
+      //if($bool_handle || $bool_display_without_any_hit)
+      if ($bool_handle) {
+        // Wrap the item
+        $value = $this->pObj->local_cObj->stdWrap($arr_ts['first_item.']['stdWrap.']['value'], $arr_ts['first_item.']['stdWrap.']);
+        
+        // Wrap the hits and add it to the item
+        $bool_display_hits = $arr_ts['first_item.']['display_hits'];
+        if ($bool_display_hits) {
+          $conf_hits = $arr_ts['first_item.']['display_hits.']['stdWrap.'];
+          $str_hits = $this->pObj->objWrapper->general_stdWrap($int_hits, $conf_hits);
+          $bool_behindItem = $arr_ts['first_item.']['display_hits.']['behindItem'];
+          if ($bool_behindItem)
+          {
+            $value = $value . $str_hits;
+          }
+          if (!$bool_behindItem)
+          {
+            $value = $str_hits . $value;
+          }
+        }
+          // Wrap the hits and add it to the item
+
+          // Prepaire item for adding
+          // dwildt, 101211, #11401
+        //$arr_new_values[0] = $value;
+        $arr_new_values[$arr_ts['first_item.']['option_value']] = $value;
+        if ($this->pObj->b_drs_filter)
+        {
+          t3lib_div :: devLog('[INFO/FILTER] \'' . $value . '\' is added as the first item.', $this->pObj->extKey, 0);
+          t3lib_div :: devLog('[HELP/FILTER] If you don\'t want a default item, please configure ' . $conf_view_path . $tableField . '.first_item.', $this->pObj->extKey, 1);
+        }
+          // Prepaire item for adding
+      }  
+        // Wrap the first item and prepaire it for adding
+    }    
+      // Handle the first_item
+//if (t3lib_div :: getIndpEnv('REMOTE_ADDR') == '84.184.226.247')
+//  var_dump('filter 1399', $arr_values, $arr_new_values);
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Order the values and save the order!
+
+      // #11407: Ordering filter items hasn't any effect
+//    if (is_array($arr_new_values))
+//    {
+//      $arr_values = $this->orderValues($arr_values, $tableField);
+//      if (count($arr_values) > 0) {
+//        // Order the values
+//        foreach ($arr_values as $uid => $value)
+//        {
+//          $arr_new_values[$uid] = $value;
+//        }
+//        unset ($arr_values);
+//        $arr_values = $arr_new_values;
+//        unset ($arr_new_values);
+//      }
+//    }
+      // #11407: Ordering filter items hasn't any effect
+      // Order the values and save the order!
+
+
+
+      /////////////////////////////////////////////////////////////////
+      // 
+      // Add the first_item
+      // #11407: Ordering filter items hasn't any effect
+
+    if (is_array($arr_new_values))
+    {    
+      if (count($arr_values) > 0)
+      {  
+        foreach ($arr_values as $uid => $value)
+        {
+          $arr_new_values[$uid] = $value;
+        }
+      }  
+      unset ($arr_values);
+      $arr_values = $arr_new_values;
+      unset ($arr_new_values);
+    }    
+      // Add the first_item
+      // #11407: Ordering filter items hasn't any effect
+
+
+      /////////////////////////////////////////////////////////////////
+      // 
+      // stdWrap all items but the first item
+
+    if (count($arr_values) > 0)
+    {
+      foreach ($arr_values as $key => $value)
+      {
+        if ($key != $arr_ts['first_item.']['option_value'])
+        {
+          if(is_array($this->pObj->objCal->arr_area[$tableField]))
+          {
+            // Do noting. Items were wrapped.
+          }
+          if(!is_array($this->pObj->objCal->arr_area[$tableField]))
+          {
+            $tsConf = $arr_ts['wrap.']['item.']['stdWrap.'];
+            $value  = $this->pObj->local_cObj->stdWrap($value, $tsConf);
+//var_dump(__METHOD__ . ' (' . __LINE__ . ')', $value);
+          }
+        }
+        $arr_values[$key] = $value;
+      }
+    }
+      // stdWrap all items but the first item
+
+
+
+    $arr_return['data']['values'] = $arr_values;
+    return $arr_return;
+  }
+
+
 
 
 
@@ -2216,7 +2389,7 @@ class tx_browser_pi1_filter {
  * @param array   $arr_ts: The TypoScript configuration of the object
  * @param string    $conf_tableField: The current table.field from the ts filter array
  * @return  string    Returns the wrapped title
- * @version 3.5.0
+ * @version 3.9.6
  */
   function wrap_objectTitle($arr_ts, $conf_tableField) {
     $conf = $this->pObj->conf;
@@ -2228,63 +2401,71 @@ class tx_browser_pi1_filter {
     $conf_view = $conf['views.'][$viewWiDot][$mode . '.'];
     $conf_view_path = 'views.' . $viewWiDot . $mode . '.filter.';
 
-    //    $arr_ts    = $this->pObj->objJss->class_onchange($obj_ts, $arr_ts, $number_of_items);
     $conf_wrap = $arr_ts['wrap'];
 
-    // Don't wrap the object title
-    if (!is_array($arr_ts['wrap.']['title_stdWrap.'])) {
-      // It isn't any title configured. Delete the marker.
-      $conf_wrap = str_replace('###TITLE###', '', $conf_wrap);
-      if ($this->pObj->b_drs_filter) {
+      // Don't wrap the object title
+    if ( ! is_array( $arr_ts['wrap.']['title_stdWrap.'] ) )
+    {
+        // It isn't any title configured. Delete the marker.
+      $conf_wrap = str_replace( '###TITLE###', '', $conf_wrap );
+      if ( $this->pObj->b_drs_filter )
+      {
         t3lib_div :: devLog('[INFO/FILTER] There is no title_stdWrap. The object won\'t get a title.', $this->pObj->extKey, 0);
         t3lib_div :: devLog('[HELP/FILTER] If you want a title, please configure ' . $conf_view_path . $conf_tableField . '.wrap.title_stdWrap.', $this->pObj->extKey, 1);
       }
     }
-    // Don't wrap the object title
+      // Don't wrap the object title
 
-    // Wrap the object title (TypoScript stdWrap)
-    if (is_array($arr_ts['wrap.']['title_stdWrap.'])) {
+      // Wrap the object title (TypoScript stdWrap)
+    if ( is_array( $arr_ts['wrap.']['title_stdWrap.'] ) )
+    {
       $lConfCObj = $arr_ts['wrap.']['title_stdWrap.'];
 
-      // Get the local or gloabl autoconfig array - #9879
+        // Get the local or gloabl autoconfig array - #9879
       $lAutoconf = $conf_view['autoconfig.'];
       $view_path = $viewWiDot . $mode;
-      if (!is_array($lAutoconf)) {
-        if ($this->pObj->b_drs_sql) {
+      if ( ! is_array( $lAutoconf ) )
+      {
+        if ( $this->pObj->b_drs_sql )
+        {
           t3lib_div :: devlog('[INFO/SQL] views.' . $view_path . ' hasn\'t any autoconf array.<br />
                       We take the global one.', $this->pObj->extKey, 0);
         }
         $lAutoconf = $conf['autoconfig.'];
         $view_path = null;
       }
-      // Get the local or gloabl autoconfig array - #9879
+        // Get the local or gloabl autoconfig array - #9879
 
-      // Don't replace markers recursive
-      if (!$lAutoconf['marker.']['typoScript.']['replacement']) {
-        if ($this->pObj->b_drs_filter) {
+        // Don't replace markers recursive
+      if ( ! $lAutoconf['marker.']['typoScript.']['replacement'] )
+      {
+        if ( $this->pObj->b_drs_filter )
+        {
           t3lib_div :: devLog('[INFO/FILTER] Replacement for markers in TypoScript is deactivated.', $this->pObj->extKey, 0);
           t3lib_div :: devLog('[HELP/FILTER] If you want a replacement, please configure ' . $view_path . 'autoconfig.marker.typoScript.replacement.', $this->pObj->extKey, 1);
         }
       }
-      // Don't replace markers recursive
+        // Don't replace markers recursive
 
-      // Replace ###TABLE.FIELD### recursive
+        // Replace ###TABLE.FIELD### recursive
       $value_marker = $this->pObj->objZz->getTableFieldLL($conf_tableField);
-      if ($lAutoconf['marker.']['typoScript.']['replacement']) {
+      if ( $lAutoconf['marker.']['typoScript.']['replacement'] )
+      {
         $key_marker = '###' . strtoupper($conf_tableField) . '###';
         $markerArray[$key_marker] = $value_marker;
         $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $markerArray);
-        if ($this->pObj->b_drs_filter) {
+        if ($this->pObj->b_drs_filter)
+        {
           t3lib_div :: devLog('[INFO/FILTER] ###TITLE### will be replaced with the localised value of \'' . $conf_tableField . '\': \'' . $value_marker . '\'.', $this->pObj->extKey, 0);
           t3lib_div :: devLog('[HELP/FILTER] If you want another replacement, please configure ' . $conf_view_path . $conf_tableField . '.wrap.title_stdWrap', $this->pObj->extKey, 1);
         }
       }
-      // Replace ###TABLE.FIELD### recursive
+        // Replace ###TABLE.FIELD### recursive
 
-      $str_stdWrap = $this->pObj->local_cObj->stdWrap($value_marker, $lConfCObj);
-      $conf_wrap = str_replace('###TITLE###', $str_stdWrap, $conf_wrap);
+      $str_stdWrap  = $this->pObj->local_cObj->stdWrap( $value_marker, $lConfCObj );
+      $conf_wrap    = str_replace( '###TITLE###', $str_stdWrap, $conf_wrap );
     }
-    // Wrap the object title (TypoScript stdWrap)
+      // Wrap the object title (TypoScript stdWrap)
 
     return $conf_wrap;
   }
