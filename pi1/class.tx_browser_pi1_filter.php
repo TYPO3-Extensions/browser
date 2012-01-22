@@ -618,6 +618,7 @@ class tx_browser_pi1_filter {
 
   /**
    * Order the items, add the first item and wrap all items
+   * Is used by class template only. dwildt, 120121
    *
    * @param array   $arr_ts: The TypoScript configuration of the object
    * @param array   $arr_values: The values for the object
