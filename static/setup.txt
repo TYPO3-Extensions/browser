@@ -1015,7 +1015,7 @@ plugin.tx_browser_pi1 {
           // [Boolean] Should be added a default item?
         first_item = 1
         first_item {
-          value_stdWrap {
+          stdWrap {
             data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_firstitem_default
           }
             // [STRING, unique] Value attribute in the option tag (#11401)
@@ -1084,11 +1084,19 @@ plugin.tx_browser_pi1 {
             // True (default)
           value = 1
         }
-          // Disable the treeview. Enable is recommended. Has an effect only in case of cps_tcatree and a proper TCA configuration.
-        treeview = TEXT
         treeview {
-            // True (default)
-          value = 1
+            // [String] HTML id of the treeview. Should correspondend with javascript.jquery.plugins.jstree.library.marker.selector.
+          html_id = TEXT
+          html_id {
+              // treeview (default)
+            value = treeview
+          }
+            // [Boolean] Disable the treeview. Enable is recommended. Has an effect only in case of cps_tcatree and a proper TCA configuration.
+          enabled = TEXT
+          enabled {
+              // True (default)
+            value = 1
+          }
         }
           // [String/optional] Name for the piVar. Name must be unique.
         nice_piVar =
@@ -1125,12 +1133,10 @@ plugin.tx_browser_pi1 {
             wrap  = <div class="category_menu_title">|</div>
           }
             // [String] Wrap the items
-          object = <div id="tree"><ul id="tree_ul_0">|</ul></div>
+          object = <ul>|</ul>
           object {
               // [Integer] Space characters from left margin in the HTML code
             nice_html_spaceLeft = 14
-              // [String] Wrap a sublevel - in case of treeParentField only
-            sublevel_wrap = <ul id="tree_ul_###UID###">|</ul>
           }
             // [String] Wrap one item
           item  = <a href="###URL###" ###CLASS### ###STYLE### title="">###VALUE###</a>
@@ -1151,15 +1157,21 @@ plugin.tx_browser_pi1 {
               // [String] Class for a selected item
             selected = selected
               // [String] Default HTML class
-            class = ###ITEM_SELECTED######ONCHANGE###
+            class = ###ITEM_SELECTED### ###ONCHANGE###
               // [String] Default HTML style
             style =
-            stdWrap {
-              wrap = <li id="tree_li_###UID###">|</li>
-            }
-            value_stdWrap {
-              htmlSpecialChars  = 1
-              crop              = 60 | ... | 1
+            wraps {
+              item {
+                stdWrap {
+                  wrap = <li>|</li>
+                }
+              }
+              value {
+                stdWrap {
+                  htmlSpecialChars  = 1
+                  crop              = 60 | ... | 1
+                }
+              }
             }
           }
         }
@@ -1231,10 +1243,22 @@ plugin.tx_browser_pi1 {
               // [String] Default HTML style
             style =
             stdWrap {
-              wrap = |<input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>  ||
+              noTrimWrap = |<input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>  ||
             }
             value_stdWrap {
               crop = 60 | ... | 1
+            }
+            wraps {
+              item {
+                stdWrap {
+                  noTrimWrap = |<input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>  ||
+                }
+              }
+              value {
+                stdWrap {
+                  crop = 60 | ... | 1
+                }
+              }
             }
           }
             // [Integer] Maximum items per row. 0: unlimited
@@ -1318,6 +1342,18 @@ plugin.tx_browser_pi1 {
             }
             value_stdWrap {
               crop = 60 | ... | 1
+            }
+            wraps {
+              item {
+                stdWrap {
+                  noTrimWrap = |<input###CLASS######STYLE### type="radio" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###> ||
+                }
+              }
+              value {
+                stdWrap {
+                  crop = 60 | ... | 1
+                }
+              }
             }
           }
             // [Integer] Maximum items per row. 0: unlimited
@@ -1427,6 +1463,19 @@ plugin.tx_browser_pi1 {
             value_stdWrap {
               htmlSpecialChars = 1
               crop             = 60 | ... | 1
+            }
+            wraps {
+              item {
+                stdWrap {
+                  wrap = <option###CLASS######STYLE### value="###UID###"###ITEM_SELECTED###>|</option>
+                }
+              }
+              value {
+                stdWrap {
+                  htmlSpecialChars = 1
+                  crop             = 60 | ... | 1
+                }
+              }
             }
           }
         }
@@ -2401,20 +2450,21 @@ plugin.tx_browser_pi1 {
               // [Boolean] 0: link to the script file, 1 (default): include the script inline
             inline = 1
             marker {
+                // Id of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
               selector = TEXT
               selector {
-                value = #tree
+                value = #treeview
               }
               theme = TEXT
               theme {
-                  [string] supported are: apple, classic, default, default-rtl
+                  // [String] supported are: apple, classic, default, default-rtl
                 value = apple
               }
             }
           }
         }
         t3browser {
-            // [STRING] Path to the jss file of the t3browser plugin
+            // [String] Path to the jss file of the t3browser plugin
           plugin = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.2.js
           plugin {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline

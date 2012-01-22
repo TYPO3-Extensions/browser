@@ -59,7 +59,7 @@
  * 1208:     function renderHtmlFilter($obj_ts, $arr_ts, $arr_values, $tableField)
  *
  *              SECTION: Rendering items
- * 1500:     function items_order_and_addFirst($arr_ts, $arr_values, $tableField)
+ * 1500:     function wrap_values_and_add_first_value($arr_ts, $arr_values, $tableField)
  * 1672:     function wrap_objectTitle($arr_ts, $conf_tableField)
  * 1752:     function get_wrappedItemClass($arr_ts, $conf_item, $str_order)
  * 1784:     function get_wrappedItemStyle($arr_ts, $conf_item, $str_order)
@@ -87,22 +87,14 @@ class tx_browser_pi1_filter {
 
     // [array] Rows of the SQL query after consolidation
   var $arr_rows = array( );
-    // [array] Open and close tag of a sublevel object. <ul>|</ul> is the default.
-  var $arr_wrapSublevel             = null;
     // [array] Tables with a treeParentField field
   var $arr_tablesWiTreeparentfield  = array( );
     // [array] SQL rows of the current table.field
   var $arr_rowsTablefield           = array( );
-    // [array] ...
-  var $arr_rowsTablefieldMetadata   = array( );
 
-  var $treeviewEnabled              = true;
-    // [array] Rows ordered by tree
-  var $arr_tmpOrderedByTree         = array( );
-    // [string] HTML output for development only
-  var $str_tmpDevTreeOrdered        = null;
-    // [integer] Uid of previous row
-  var $int_previousUid              = 0;
+    // [array] temporarily array for the recursive method setTreeOneDim( )
+  var $tmpOneDim  = array( );
+
 
 
 
@@ -1038,16 +1030,16 @@ class tx_browser_pi1_filter {
       // Set the global $treeviewEnabled
 
       // #32223, 120120, dwildt+
-    $cObj_name              = $conf_view['filter.'][$table . '.'][$field . '.']['treeview'];
-    $cObj_conf              = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.'];
-    $this->treeviewEnabled  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+    $cObj_name        = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['enabled'];
+    $cObj_conf        = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['enabled.'];
+    $treeviewEnabled  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
     if( $this->pObj->b_drs_filter )
     {
-      if( $this->treeviewEnabled )
+      if( $treeviewEnabled )
       {
         $prompt = 'treeview is enabled. Has an effect only in case of cps_tcatree and a proper TCA configuration.';
       }
-      if( ! $this->treeviewEnabled )
+      if( ! $treeviewEnabled )
       {
         $prompt = 'treeview is disabled. Has an effect only in case of cps_tcatree and a proper TCA configuration.';
       }
@@ -1063,7 +1055,7 @@ class tx_browser_pi1_filter {
       // Table has a treeParentField
 
       // #32223, 120119, dwildt+
-    if( $this->treeviewEnabled )
+    if( $treeviewEnabled )
     {
         // Load the TCA for the current table
       $this->pObj->objZz->loadTCA( $table );
@@ -1462,6 +1454,11 @@ class tx_browser_pi1_filter {
         case( in_array( $table, $this->arr_tablesWiTreeparentfield ) ):
             // #32223, 120119, dwildt+
           $arr_tableFields[$tableField] = $this->get_treeOrdered( $arr_rows, $tableField );
+//$pos = strpos('79.204.110.26', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//if( ! ( $pos === false ) )
+//{
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_tableFields[$tableField] );
+//}
           break;
         default:
             // #32223, 120119, dwildt-
@@ -1476,7 +1473,6 @@ class tx_browser_pi1_filter {
 
             // #32223, 120119, dwildt+
           $arr_tableFields[$tableField] = $this->get_ordered( $arr_rows, $tableField );
-//        $arr_values = $this->orderValues($arr_values, $tableField);
           break;
       }
 
@@ -1756,13 +1752,11 @@ class tx_browser_pi1_filter {
         }
         $arr_hits_localTable[$tableField][$key] = $arr_hits_localTable[$tableField][$key] + $this->arr_hits[$tableField][$uid];
       }
-      // Convert key, values and hits
-      //if(t3lib_div::getIndpEnv('REMOTE_ADDR') == '84.184.226.247')
-      //  var_dump('filter 1395', $arr_values, $this->arr_hits[$tableField], $arr_values_localTable, $arr_hits_localTable[$tableField]);
-      // Allocate new keys and hits
+        // Convert key, values and hits
+        // Allocate new keys and hits
       $arr_values = $arr_values_localTable;
       $this->arr_hits[$tableField] = $arr_hits_localTable[$tableField];
-      // Allocate new keys and hits
+        // Allocate new keys and hits
     }
       // Current table is the local table
 
@@ -1806,18 +1800,19 @@ class tx_browser_pi1_filter {
 
       /////////////////////////////////////////////////////////////////
       //
-      // Wrap the items
+      // Wrap values
   
-      // Order the items, add a first item, process stdWrap
-    $arr_result = $this->items_order_and_addFirst($arr_ts, $arr_values, $tableField);
+    $arr_result = $this->wrap_values_and_add_first_value($arr_ts, $arr_values, $tableField);
     $arr_values = $arr_result['data']['values'];
     unset ($arr_result);
     $conf_selected = ' ' . $arr_ts['wrap.']['item.']['selected'];
+      // Wrap values
 
+    
 
       /////////////////////////////////////////////////////////////////
       //
-      // Display item without any hit
+      // Configure the display of items without any hit
 
     switch( true )
     {
@@ -1847,17 +1842,17 @@ class tx_browser_pi1_filter {
         $records_display_without_any_hit    = $arr_ts['wrap.']['item.']['display_without_any_hit'];
         break;
     }
-      // Display item without any hit
+      // Configure the display of items without any hit
 
-      // Display hits for the first item
+      // Bool: display hits for the first item
     $first_item_display_hits   = $arr_ts['first_item.']['display_hits'];
-      // Display hits for all other items
+      // Bool: display hits for all other items
     $records_bool_display_hits = $arr_ts['wrap.']['item.']['display_hits'];
 
 
-    $int_count_displayItem = 0;
 
       // Loop through the rows of the SQL result
+    $int_count_displayItem = 0;
     foreach ( (array) $arr_values as $uid => $value )
     {
         // #8337, 101012, dwildt
@@ -1910,27 +1905,22 @@ class tx_browser_pi1_filter {
         {
           $arr_ts = $this->pObj->objJss->class_onchange($obj_ts, $arr_ts, $int_count_displayItem);
         }
-        $conf_item = $arr_ts['wrap.']['item'];
 
-          //#32223, 120119, dwildt+
-        if( isset( $this->arr_rowsTablefieldMetadata[$tableField][$uid]['ul'] ) )
+        if( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
         {
-          $ul         = $this->arr_rowsTablefieldMetadata[$tableField][$uid]['ul'];
-          //$conf_item  = str_replace('###LI###', $ul, $conf_item);
-          $conf_item  = $conf_item . $ul;
+          $conf_item = $value;
         }
-        if( ! ( isset( $this->arr_rowsTablefieldMetadata[$tableField][$uid]['ul'] ) ) )
+        if( ! in_array( $table, $this->arr_tablesWiTreeparentfield ) )
         {
-          $ul         = $this->arr_rowsTablefieldMetadata[$tableField][$uid]['ul'];
-          //$conf_item  = str_replace('###LI###', '</li>', $conf_item);
-          $conf_item  = $conf_item . $ul;
+          $conf_item = $arr_ts['wrap.']['item'];
+            //#32223, 120119, dwildt+
+  //        $tsConf     = $arr_ts['wrap.']['item.']['stdWrap.'];
+          $tsConf = $arr_ts['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
+          $conf_item  = $this->pObj->local_cObj->stdWrap( $conf_item, $tsConf );
+            //#32223, 120119, dwildt+
         }
-          //#32223, 120119, dwildt+
 
-          //#32223, 120119, dwildt+
-        $tsConf     = $arr_ts['wrap.']['item.']['stdWrap.'];
-        $conf_item  = $this->pObj->local_cObj->stdWrap( $conf_item, $tsConf );
-          //#32223, 120119, dwildt+
+
 
           // Wrap the item class
         $conf_item = $this->get_wrappedItemClass($arr_ts, $conf_item, false);
@@ -1949,18 +1939,33 @@ class tx_browser_pi1_filter {
         $conf_item = str_replace('class=" ', 'class="', $conf_item);
 
           // Wrap the hits
-        if ($bool_display_hits) 
+        if ( $bool_display_hits )
         {
           $conf_hits        = $arr_ts['wrap.']['item.']['display_hits.']['stdWrap.'];
           $str_hits         = $this->pObj->objWrapper->general_stdWrap($int_hits, $conf_hits);
           $bool_behindItem  = $arr_ts['wrap.']['item.']['display_hits.']['behindItem'];
-          if ( $bool_behindItem )
+          switch( $bool_behindItem )
           {
-            $value = $value . $str_hits;
-          }
-          if ( ! $bool_behindItem )
-          {
-            $value = $str_hits . $value;
+            case( true ):
+              if( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
+              {
+                $conf_item = str_replace( '###HITS_BEHIND###', $str_hits, $conf_item );
+              }
+              if( ! in_array( $table, $this->arr_tablesWiTreeparentfield ) )
+              {
+                $value = $value . $str_hits;
+              }
+              break;
+            default:
+              if( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
+              {
+                $conf_item = str_replace( '###HITS_BEFORE###', $str_hits, $conf_item );
+              }
+              if( ! in_array( $table, $this->arr_tablesWiTreeparentfield ) )
+              {
+                $value = $str_hits . $value;
+              }
+              break;
           }
         }
           // Wrap the hits
@@ -2008,10 +2013,12 @@ class tx_browser_pi1_filter {
 
       // Delete the last line break
     $str_html = substr($str_html, 0, -1);
+    $str_html = str_replace( '###HITS_BEFORE###', null, $str_html );
+    $str_html = str_replace( '###HITS_BEHIND###', null, $str_html );
 
       // Wrap the items
 
-
+    
 
       /////////////////////////////////////////////////////////////////
       //
@@ -2021,7 +2028,14 @@ class tx_browser_pi1_filter {
     {
       $arr_ts = $this->pObj->objJss->class_onchange($obj_ts, $arr_ts, $int_count_displayItem);
     }
-    $conf_object  = $this->wrap_allItems($obj_ts, $arr_ts, $str_nice_piVar, $key_piVar, $int_count_displayItem);
+    if( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
+    {
+      $conf_object = '|';
+    }
+    if( ! in_array( $table, $this->arr_tablesWiTreeparentfield ) )
+    {
+      $conf_object  = $this->wrap_allItems($obj_ts, $arr_ts, $str_nice_piVar, $key_piVar, $int_count_displayItem);
+    }
     $str_html     = str_replace('|', PHP_EOL . $str_html . PHP_EOL . $str_space_left, $conf_object);
       // Wrap the object title
     $conf_wrap    = $this->wrap_objectTitle($arr_ts, $tableField);
@@ -2049,18 +2063,17 @@ class tx_browser_pi1_filter {
 
 
   /**
- * Order the items, add the first item and wrap all items
+ * wrap_values_and_add_first_value( ): Wrap values (value_stdWrap) and add the first value
  *
  * @param array   $arr_ts: The TypoScript configuration of the object
  * @param array   $arr_values: The values for the object
  * @param string    $tableField: The current table.field from the ts filter array
- * @return  array   Return the processed items
+ * @return  array   Return the wrapped values
  * @version 3.9.6
  * @since   3.0.1
  */
-  function items_order_and_addFirst($arr_ts, $arr_values, $tableField)
+  private function wrap_values_and_add_first_value($arr_ts, $arr_values, $tableField)
   {
-
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
     $view = $this->pObj->view;
@@ -2076,13 +2089,26 @@ class tx_browser_pi1_filter {
 
       /////////////////////////////////////////////////////////////////
       //
-      // Handle the first_item
+      // RETURN tablefield is a treeview
 
-    if ($arr_ts['first_item']) 
+    if( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
+    {
+      $arr_return['data']['values'] = $arr_values;
+      return $arr_return;
+    }
+      // RETURN tablefield is a treeview
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Wrap the value of the first item
+
+    if ($arr_ts['first_item'])
     {
       $int_hits     = $this->arr_hits[$tableField]['sum'];
 
-        // Wrap the first item and prepaire it for adding
+        // Wrap the value of the first item and prepaire it for adding
         // Wrap the item
       $value  = $arr_ts['first_item.']['value_stdWrap.']['value'];
       $tsConf = $arr_ts['first_item.']['value_stdWrap.'];
@@ -2090,10 +2116,10 @@ class tx_browser_pi1_filter {
 
         // Wrap the hits and add it to the item
       $bool_display_hits = $arr_ts['first_item.']['display_hits'];
-      if ($bool_display_hits)
+      if ( $bool_display_hits )
       {
-        $conf_hits = $arr_ts['first_item.']['display_hits.']['stdWrap.'];
-        $str_hits = $this->pObj->objWrapper->general_stdWrap($int_hits, $conf_hits);
+        $conf_hits  = $arr_ts['first_item.']['display_hits.']['stdWrap.'];
+        $str_hits   = $this->pObj->objWrapper->general_stdWrap( $int_hits, $conf_hits );
         $bool_behindItem = $arr_ts['first_item.']['display_hits.']['behindItem'];
         if ($bool_behindItem)
         {
@@ -2116,9 +2142,8 @@ class tx_browser_pi1_filter {
         t3lib_div :: devLog('[HELP/FILTER] If you don\'t want a default item, please configure ' . $conf_view_path . $tableField . '.first_item.', $this->pObj->extKey, 1);
       }
         // Prepaire item for adding
-        // Wrap the first item and prepaire it for adding
     }
-      // Handle the first_item
+      // Wrap the value of the first item
 
 
 
@@ -2127,18 +2152,15 @@ class tx_browser_pi1_filter {
       // Add the first_item
       // #11407: Ordering filter items hasn't any effect
 
-    if (is_array($arr_new_values))
+    if ( is_array( $arr_new_values ) )
     {
-      if (count($arr_values) > 0)
+      foreach ( (array) $arr_values as $uid => $value )
       {
-        foreach ($arr_values as $uid => $value)
-        {
-          $arr_new_values[$uid] = $value;
-        }
+        $arr_new_values[$uid] = $value;
       }
-      unset ($arr_values);
+      unset ( $arr_values );
       $arr_values = $arr_new_values;
-      unset ($arr_new_values);
+      unset ( $arr_new_values );
     }
       // Add the first_item
       // #11407: Ordering filter items hasn't any effect
@@ -2147,36 +2169,39 @@ class tx_browser_pi1_filter {
 
       /////////////////////////////////////////////////////////////////
       //
-      // stdWrap all items but the first item
+      // Wrap values of all items but the first item
 
-    if (count($arr_values) > 0)
+    foreach ( ( array ) $arr_values as $key => $value )
     {
-      foreach ($arr_values as $key => $value)
+      if ( $key != $arr_ts['first_item.']['option_value'] )
       {
-        if ($key != $arr_ts['first_item.']['option_value'])
+        if( is_array( $this->pObj->objCal->arr_area[$tableField] ) )
         {
-          if(is_array($this->pObj->objCal->arr_area[$tableField]))
-          {
-            // Do noting. Items were wrapped.
-          }
-          if(!is_array($this->pObj->objCal->arr_area[$tableField]))
-          {
-              //#32223, 120119, dwildt-
-            //$tsConf = $arr_ts['wrap.']['item.']['stdWrap.'];
-              //#32223, 120119, dwildt+
-            $tsConf = $arr_ts['wrap.']['item.']['value_stdWrap.'];
-            $value  = $this->pObj->local_cObj->stdWrap( $value, $tsConf );
-          }
+          // Do noting. Items were wrapped.
         }
-        $arr_values[$key] = $value;
+        if( ! is_array( $this->pObj->objCal->arr_area[$tableField] ) )
+        {
+            //#32223, 120119, dwildt-
+          //$tsConf = $arr_ts['wrap.']['item.']['stdWrap.'];
+            //#32223, 120119, dwildt+
+//          $tsConf = $arr_ts['wrap.']['item.']['value_stdWrap.'];
+          $tsConf = $arr_ts['wrap.']['item.']['wraps.']['value.']['stdWrap.'];
+          $value  = $this->pObj->local_cObj->stdWrap( $value, $tsConf );
+        }
       }
+      $arr_values[$key] = $value;
     }
-      // stdWrap all items but the first item
+      // Wrap values of all items but the first item
 
 
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN the result
 
     $arr_return['data']['values'] = $arr_values;
     return $arr_return;
+      // RETURN the result
   }
 
 
@@ -2323,16 +2348,6 @@ class tx_browser_pi1_filter {
       $arr_tableFields[$row['uid']] = $row['value'];
     }
 
-      // Print the result in HTML - for development only!
-//    $pos = strpos('91.23.167.133 ', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    //$pos = false; // Set it to true - for development only!
-//    if( ! ( $pos === false ) )
-//    {
-//      $prompt = PHP_EOL . '<ul>' .  PHP_EOL . $this->str_tmpDevTreeOrdered . '</ul>' . PHP_EOL;
-//      var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_tableFields, $prompt, $this->arr_rowsTablefieldMetadata );
-//    }
-      // Print the result in HTML - for development only!
-
       // RETURN the ordered rows of the current tablefield
     return $arr_tableFields;
   }
@@ -2340,10 +2355,11 @@ class tx_browser_pi1_filter {
 
 
   /**
- * get_treeOrdered: ...
+ * get_treeOrdered: Get the elements ordered to the needs of a tree.
  *
- * @param array     $arr_rows   : Result of the SQL query
- * @param string    $tableField : Current table.field
+ * @param   array     $arr_rows         : Result of the SQL query
+ * @param   string    $tableField       : Current table.field
+ * @return  array     $arr_tableFields  : Array with the values. Values are wrapped with ul- and li-tags.
  * @internal        #32223, 120119, dwildt+
  * @version 3.9.6
  * @since   3.9.6
@@ -2360,23 +2376,11 @@ class tx_browser_pi1_filter {
     list($table, $field) = explode( '.', $tableField );
     $arr_ts     = $conf_view['filter.'][$table . '.'][$field . '.'];
 
-      // Set global $arr_wrapSublevel
-    if( $arr_ts['wrap.']['object.']['sublevel_wrap'] )
-    {
-      $this->arr_wrapSublevel = explode( '|', $arr_ts['wrap.']['object.']['sublevel_wrap'] );
-    }
-    if( ! $arr_ts['wrap.']['object.']['sublevel_wrap'] )
-    {
-      $this->arr_wrapSublevel = explode( '|', '<ul>|</ul>' );
-    }
-      // Set global $arr_wrapSublevel
-
-
       // Parent uid of the root records: 0 of course
     $uid_parent = 0;
-      // Superior level: 0 of course
+      // Current level of the treeview: 0 of course
     $level      = 0;
-      // Needed for dev_display_children( )
+      // Needed for set_treeOneDim( )
     $this->arr_rowsTablefield = $arr_rows[$tableField];
 
 
@@ -2408,26 +2412,15 @@ class tx_browser_pi1_filter {
       // Order the values
 
 
+    unset( $this->tmpOneDim );
+      // Set rows of the current tablefield to a one dimensional array
+    $this->set_treeOneDim( $tableField, $uid_parent );
+      // Get the renderd tree. Each element of the returned array contains HTML tags.
+    $arr_tableFields = $this->get_treeRendered( $arr_ts );
+    unset( $this->tmpOneDim );
 
-      // Get rows of the current tablefield ordered by the needs of a tree
-    $this->get_treeOrderedArray( $tableField, $uid_parent, $level);
-    $arr_tableFields = $this->arr_tmpOrderedByTree;
 
-      // Print the result in HTML - for development only!
-//    $pos = strpos('91.23.167.133 ', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    //$pos = false; // Set it to true - for development only!
-//    if( ! ( $pos === false ) )
-//    {
-//      $prompt = PHP_EOL . '<ul>' .  PHP_EOL . $this->str_tmpDevTreeOrdered . '</ul>' . PHP_EOL;
-//      var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_tableFields, $prompt, $this->arr_rowsTablefieldMetadata );
-//    }
-      // Print the result in HTML - for development only!
-
-      // Unset the temp global arrays
-    unset( $this->str_tmpDevTreeOrdered );
-    unset( $this->arr_tmpOrderedByTree );
-
-      // RETURN the ordered rows of the current tablefield
+      // RETURN the ordered and rendered rows of the current tablefield
     return $arr_tableFields;
   }
 
@@ -2437,44 +2430,23 @@ class tx_browser_pi1_filter {
 
 
   /**
- * get_treeOrderedArray:  Method allocates the rsult rto the gflobals:
- *                        * $this->str_tmpDevTreeOrdered
- *                        * $this->arr_tmpOrderedByTree
+ * set_treeOneDim:  Recursive method. It generates a one dimensional array.
+ *                  Each array has upto three elements:
+ *                  * [obligate] uid   : uid of the record
+ *                  * [obligate] value : value of the record
+ *                  * [optional] array : if the record has children ...
  * @param string    $tableField : Current table.field.
  * @param integer   $uid_parent : Parent uid of the current record - for recursive calls.
  *                                It is 0 while starting.
- * @param integer   $level      : Current level - for recursive calls.
- *                                It is 0 while starting.
+ * @return  void    Result will be allocated to the global $tmpOneDim
  * @internal        #32223, 120119, dwildt+
  * @version 3.9.6
  * @since   3.9.6
 
  */
-  private function get_treeOrderedArray( $tableField, $uid_parent, $level )
+  private function set_treeOneDim( $tableField, $uid_parent )
   {
-    static $bool_firstLoop  = true;
-    static $first_key       = null;
-    static $last_key        = null;
-    
-      // set an empty $uid_parent to 0
-    $uid_parent = ( int ) $uid_parent;
-
-    $arr_rowsTablefield       = $this->arr_rowsTablefield;
-    $repeat                   = $level;
-    $bool_ulChildrenIsPrinted = false;
-
-    if( $bool_firstLoop )
-    {
-      reset( $this->arr_rowsTablefield );
-      $first_key  = key( $this->arr_rowsTablefield );
-      end( $this->arr_rowsTablefield );
-      $last_key   = key( $this->arr_rowsTablefield );
-$pos = strpos('79.204.96.75', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $first_key, $last_key );
-}
-    }
+    static $tsPath = null;
 
       // LOOP rows
     foreach( $this->arr_rowsTablefield as $key => $row )
@@ -2486,69 +2458,189 @@ if( ! ( $pos === false ) )
       }
         // CONTINUE current row isn't row with current $uid_parent
 
-        // Add <ul> to sublevel
-      if( ! $bool_ulChildrenIsPrinted )
-      {
-        if( $level > 0 )
-        {
-          $repeat = $repeat * 2;
-          $this->str_tmpDevTreeOrdered =  $this->str_tmpDevTreeOrdered .
-                                          str_repeat('  ', $repeat ) .
-                                          '<ul id="uid_parent_' . $uid_parent . '">' . PHP_EOL;
-          $bool_ulChildrenIsPrinted = true;
-          $this->arr_rowsTablefieldMetadata[$tableField][$this->int_previousUid]['ul'] = PHP_EOL . $this->arr_wrapSublevel[0];
-        }
-      }
-        // Add <ul> to sublevel
+      $lastPath = $tsPath;
+      $tsPath   = $tsPath . $key . '.' ;
+      $this->tmpOneDim[$tsPath . 'uid']    = $row['uid'];
+      $this->tmpOneDim[$tsPath . 'value']  = $row['value'];
 
-        // Display each child
-      $this->str_tmpDevTreeOrdered =  $this->str_tmpDevTreeOrdered .
-                                      str_repeat('  ', $repeat) .
-                                      '  <li id="uid_' . $row['uid'] . '">' . PHP_EOL;
-      $this->str_tmpDevTreeOrdered =  $this->str_tmpDevTreeOrdered .
-                                      str_repeat('  ', $repeat) .
-                                      '    ' . $row['value'] . ' ' . PHP_EOL;
-      $this->arr_tmpOrderedByTree[$row['uid']] = $row['value'];
-      $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['uid']    = $row['uid'];
-      $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['level']  = $level;
-      $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['ul']     = null;
-      if( $key == $first_key )
-      {
-//        $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['ul'] = PHP_EOL . $this->arr_wrapSublevel[0];
-        $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['ul'] = PHP_EOL . 'X';
-      }
-      if( $key == $last_key )
-      {
-//        $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['ul'] = PHP_EOL . $this->arr_wrapSublevel[1];
-        $this->arr_rowsTablefieldMetadata[$tableField][$row['uid']]['ul'] = PHP_EOL . 'Y';
-      }
-      $this->int_previousUid = $row['uid'];
-      
-        // Unset current element - better for performance in a recursive method
-      unset( $arr_rowsTablefield[$key] );
-
-        // Call this function for child's children
-      $this->get_treeOrderedArray( $tableField, $row['uid'], $level + 1 );
-
-        // Close list item
-      $this->str_tmpDevTreeOrdered =  $this->str_tmpDevTreeOrdered .
-                                      str_repeat('  ', $repeat) .
-                                      '  </li>' . PHP_EOL;
+      $this->set_treeOneDim( $tableField, $row['uid'] );
+      $tsPath   = $lastPath;
     }
       // LOOP rows
+  }
 
-      // Close sublevel
-    if( $bool_ulChildrenIsPrinted )
+
+
+
+
+
+  /**
+ * get_treeRendered:  Method converts a one dimensional array to a multidimensional array.
+ *                    It wraps every element of the array with ul and or li tags.
+ *                    Wrapping depends in position and level of the element in the tree.
+ * @param   array     $arr_ts     : configuration of the current table.field.
+ * @return  array     $arr_result : Array with the rendered elements
+ * @internal        #32223, 120119, dwildt+
+ * @version 3.9.6
+ * @since   3.9.6
+
+ */
+  private function get_treeRendered( $arr_ts )
+  {
+      // Render uid and value of the first item
+    $first_item_uid   = $arr_ts['first_item.']['option_value'];
+    $tsValue          = $arr_ts['first_item.']['value_stdWrap.']['value'];
+    $tsConf           = $arr_ts['first_item.']['value_stdWrap.'];
+    $first_item_value = $this->pObj->local_cObj->stdWrap( $tsValue, $tsConf );
+      // Render uid and value of the first item
+
+      // Add first item
+    $tmpOneDim    = array( 'uid'   => $first_item_uid   ) +
+                    array( 'value' => $first_item_value ) +
+                    $this->tmpOneDim;
+      // Add first item
+
+      // Move one dimensional array to an iterator
+    $tmpArray     = $this->pObj->objTyposcript->oneDim_to_tree( $tmpOneDim );
+    $rcrsArrIter  = new RecursiveArrayIterator( $tmpArray );
+    $iterator     = new RecursiveIteratorIterator( $rcrsArrIter );
+      // Move one dimensional array to an iterator
+
+      // Code for an item (an a-tag usually)
+    $conf_item    = $arr_ts['wrap.']['item'];
+
+      // HTML id
+    $cObj_name  = $arr_ts['treeview.']['html_id'];
+    $cObj_conf  = $arr_ts['treeview.']['html_id.'];
+    $html_id    = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+
+
+
+      //////////////////////////////////////////////////////
+      //
+      // Loop values
+
+      // Initial depth
+    $last_depth = -1;
+
+      // LOOP
+    foreach ($iterator as $key => $value)
     {
-      if( $level > 0 )
+        // CONTINUE $key is the uid. Save the uid.
+      if( $key == 'uid' )
       {
-        $this->str_tmpDevTreeOrdered =  $this->str_tmpDevTreeOrdered .
-                                        str_repeat('  ', $repeat ) .
-                                        '</ul>' .  PHP_EOL;
-        $this->arr_rowsTablefieldMetadata[$tableField][$this->int_previousUid]['ul'] = PHP_EOL . $this->arr_wrapSublevel[1];
-        $repeat = $repeat / 2;
+        $curr_uid = $value;
+        continue;
       }
+        // CONTINUE $key is the uid. Save the uid.
+
+        // ERROR/CONTINUE $key isn't value
+      if( $key != 'value' )
+      {
+        echo 'ERROR: key != value.' . PHP_EOL . __METHOD__ . ' (Line: ' . __LINE__ . ')' . PHP_EOL;
+        continue;
+      }
+        // ERROR/CONTINUE $key isn't value
+
+        // Render the value
+      $value      = '###HITS_BEFORE###' . $value . '###HITS_BEHIND###';
+      $value      = str_replace('###VALUE###', $value, $conf_item );
+        // Render the value
+
+        // Vars
+      $curr_depth = $iterator->getDepth( );
+      $indent     = str_repeat( '  ', ( $iterator->getDepth( ) + 1 ) );
+        // Vars
+
+        // Render the start tag
+      switch( true )
+      {
+        case( $curr_depth > $last_depth ):
+            // Start of sublevel
+          $delta_depth  = $curr_depth - $last_depth;
+          $startTag     = PHP_EOL . 
+                          str_repeat
+                          (
+                            $indent . '<ul id="' . $html_id . '_ul_' . $curr_uid . '">' . PHP_EOL .
+                            $indent . '  <li id="' . $html_id . '_li_' . $curr_uid . '">', $delta_depth
+                          );
+          $last_depth   = $curr_depth;
+          break;
+            // Start of sublevel
+        case( $curr_depth < $last_depth ):
+            // Stop of sublevel
+          $delta_depth  = $last_depth - $curr_depth;
+          $startTag     = '</li>' . PHP_EOL .
+                          str_repeat
+                          (
+                            $indent .' </ul>' . PHP_EOL .
+                            $indent . '</li>', $delta_depth
+                          ) .
+                          '<li id="' . $html_id . '_li_' . $curr_uid . '">';
+          $last_depth   = $curr_depth;
+          break;
+            // Stop of sublevel
+        default:
+          $startTag = '</li>' . PHP_EOL . 
+                      $indent . '<li id="' . $html_id . '_li_' . $curr_uid . '">';
+          break;
+      }
+        // Render the start tag
+
+        // String result for printing
+      $str_result =  $str_result . $startTag . $curr_uid . ': ' . $value;
+
+        // Result array
+      $arr_result[$curr_uid] = $startTag . $value;
     }
+      // LOOP
+      // Loop values
+
+      // Render the end tag of the last item
+    $endTag =                 '</li>' .
+                              str_repeat
+                              (
+                                '</ul>' . PHP_EOL . $indent . '</li>',
+                                $curr_depth
+                              ) .
+                              PHP_EOL .
+                              $indent . '</ul>' . PHP_EOL;
+    $str_result =             $str_result . $endTag . PHP_EOL .
+                              '</div>';
+    $arr_result[$curr_uid] =  $arr_result[$curr_uid] . $endTag . '</div>';
+      // Render the end tag of the last item
+
+    $arr_result[$first_item_uid] =  '<div id="' . $html_id . '">' . $arr_result[$first_item_uid];
+      // Development
+//    $pos = strpos('79.204.110.26', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__ . ' (' . __LINE__ . ')', $str_result );
+//    }
+      // Development
+
+      // Development
+//    $pos = strpos('79.204.110.26', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
+//      echo "<pre>";
+//      foreach ($iterator as $key => $value)
+//      {
+//        $indent = str_repeat( '  ', ( $iterator->getDepth( ) + 1 ) );
+//        if( $key == 'uid')
+//        {
+//          $curr_uid = $value;
+//          continue;
+//        }
+//        echo $iterator->getDepth() . $indent . $curr_uid . ': ' . $value . "\n";
+//      }
+//      echo "</pre>";
+//    }
+      // Development
+
+      // RETURN the result
+    return $arr_result;
   }
 
 
@@ -2797,6 +2889,7 @@ if( ! ( $pos === false ) )
       }
     }
       // #29444: 110902, dwildt+
+// 120121, ???, value_stdWrap :TODO:
     $value_from_ts_area = $arr_ts['area.']['interval.']['options.']['fields.'][$uid . '.']['value_stdWrap.']['value'];
     if( $value_from_ts_area )
     {
@@ -2835,9 +2928,10 @@ if( ! ( $pos === false ) )
  * @param string    $key_piVar: The real name of the piVar
  * @param integer   $number_of_items: The number of items
  * @return  string    Returns the wrapped items/object
- * @version 3.5.0
+ * @version 3.9.6
+ * @sice    3.0.1
  */
-  function wrap_allItems($obj_ts, $arr_ts, $str_nice_piVar, $key_piVar, $number_of_items) {
+  private function wrap_allItems($obj_ts, $arr_ts, $str_nice_piVar, $key_piVar, $number_of_items) {
 
     // #8337, 101011, dwildt
     switch ($obj_ts) {
