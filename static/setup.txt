@@ -1242,12 +1242,6 @@ plugin.tx_browser_pi1 {
             class =
               // [String] Default HTML style
             style =
-            stdWrap {
-              noTrimWrap = |<input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>  ||
-            }
-            value_stdWrap {
-              crop = 60 | ... | 1
-            }
             wraps {
               item {
                 stdWrap {
@@ -1337,12 +1331,6 @@ plugin.tx_browser_pi1 {
             class =
               // [String] Default HTML style
             style =
-            stdWrap {
-              noTrimWrap = |<input###CLASS######STYLE### type="radio" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###> ||
-            }
-            value_stdWrap {
-              crop = 60 | ... | 1
-            }
             wraps {
               item {
                 stdWrap {
@@ -1457,13 +1445,6 @@ plugin.tx_browser_pi1 {
             class =
               // [String] Default HTML style
             style =
-            stdWrap {
-              wrap = <option###CLASS######STYLE### value="###UID###"###ITEM_SELECTED###>|</option>
-            }
-            value_stdWrap {
-              htmlSpecialChars = 1
-              crop             = 60 | ... | 1
-            }
             wraps {
               item {
                 stdWrap {

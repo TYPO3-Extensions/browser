@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009-2010 -  Dirk Wildt http://wildt.at.die-netzmacher.de
+ *  (c) 2009-2012 -  Dirk Wildt http://wildt.at.die-netzmacher.de
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,6 +28,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    tx_browser
+ * @version   3.9.6
  */
 
 /**
@@ -430,7 +431,7 @@ class tx_browser_pi2_tickets
 
     $int_v++;
     $int_t++;
-    $arr_release[$int_v][$int_t]['header']['default']               = 'Path to HTML template has chenged';
+    $arr_release[$int_v][$int_t]['header']['default']               = 'Path to HTML template has changed';
     $arr_release[$int_v][$int_t]['prompt']['default']               = 'This value has changed in version %version%.';
     $arr_release[$int_v][$int_t]['header']['de']                    = 'Pfad zum HTML template hat sich ge&auml;ndert.';
     $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Der Wert hat sich in Version %version% ge&auml;ndert.';
@@ -451,7 +452,7 @@ class tx_browser_pi2_tickets
                                                                       'Felds template. Reiter [Allgemein]: Aktualisiere den Wert der augewählten View.';
 
     $int_t++;
-    $arr_release[$int_v][$int_t]['header']['default']               = 'Path to HTML template has chenged';
+    $arr_release[$int_v][$int_t]['header']['default']               = 'Path to HTML template has changed';
     $arr_release[$int_v][$int_t]['prompt']['default']               = 'This value has changed in version %version%.';
     $arr_release[$int_v][$int_t]['header']['de']                    = 'Pfad zum HTML template hat sich ge&auml;ndert.';
     $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Der Wert hat sich in Version %version% ge&auml;ndert.';
@@ -472,7 +473,7 @@ class tx_browser_pi2_tickets
                                                                       'Felds template. Reiter [Allgemein]: Aktualisiere den Wert der augewählten View.';
 
     $int_t++;
-    $arr_release[$int_v][$int_t]['header']['default']               = 'Path to HTML template has chenged';
+    $arr_release[$int_v][$int_t]['header']['default']               = 'Path to HTML template has changed';
     $arr_release[$int_v][$int_t]['prompt']['default']               = 'This value has changed in version %version%.';
     $arr_release[$int_v][$int_t]['header']['de']                    = 'Pfad zum HTML template hat sich ge&auml;ndert.';
     $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Der Wert hat sich in Version %version% ge&auml;ndert.';
@@ -493,7 +494,7 @@ class tx_browser_pi2_tickets
                                                                       'Felds template. Reiter [Allgemein]: Aktualisiere den Wert der augewählten View.';
 
     $int_t++;
-    $arr_release[$int_v][$int_t]['header']['default']               = 'Path to CSS file has chenged';
+    $arr_release[$int_v][$int_t]['header']['default']               = 'Path to CSS file has changed';
     $arr_release[$int_v][$int_t]['prompt']['default']               = 'This value has changed in version %version%.';
     $arr_release[$int_v][$int_t]['header']['de']                    = 'Pfad zur CSS-Datei hat sich ge&auml;ndert.';
     $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Der Wert hat sich in Version %version% ge&auml;ndert.';
@@ -509,7 +510,102 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['expl']['prompt']['de']            = 'Bitte &auml;ndere Dein TypoScript von template.css.browser = ' .
                                                                       'EXT:browser/res/default.css zu template.file = EXT:browser/res/html/default.css.';
 
-//:TODO:
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array first_item.stdWrap is renamed';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'The TypoScript array has since version %version% another name. Please rename it to the new position.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Array first_item.stdWrap ist umbenannt';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Das TypoScript Array hat seit Version %version% einen anderen Namen. Bitte benenne das Array um.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
+    $arr_release[$int_v][$int_t]['version']                         = '3.9.6';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'displayList.master_templates.category_menu.first_item.stdWrap';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'displayList.master_templates.category_menu.first_item.value_stdWrap';
+
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array first_item.stdWrap is renamed';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'The TypoScript array has since version %version% another name. Please rename it to the new position.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Array first_item.stdWrap ist umbenannt';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Das TypoScript Array hat seit Version %version% einen anderen Namen. Bitte benenne das Array um.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
+    $arr_release[$int_v][$int_t]['version']                         = '3.9.6';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'displayList.master_templates.checkbox.first_item.stdWrap';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'displayList.master_templates.checkbox.first_item.value_stdWrap';
+
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array first_item.stdWrap is renamed';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'The TypoScript array has since version %version% another name. Please rename it to the new position.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Array first_item.stdWrap ist umbenannt';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Das TypoScript Array hat seit Version %version% einen anderen Namen. Bitte benenne das Array um.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
+    $arr_release[$int_v][$int_t]['version']                         = '3.9.6';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'displayList.master_templates.radiobuttons.first_item.stdWrap';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'displayList.master_templates.radiobuttons.first_item.value_stdWrap';
+
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array first_item.stdWrap is renamed';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'The TypoScript array has since version %version% another name. Please rename it to the new position.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Array first_item.stdWrap ist umbenannt';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Das TypoScript Array hat seit Version %version% einen anderen Namen. Bitte benenne das Array um.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
+    $arr_release[$int_v][$int_t]['version']                         = '3.9.6';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'displayList.master_templates.selectbox.first_item.stdWrap';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'displayList.master_templates.selectbox.first_item.value_stdWrap';
+
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array item.stdWrap is moved';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'The TypoScript array is moved to another position since version %version%. Please move it to the new position.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Array item.stdWrap ist verschoben';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Das TypoScript Array hat seit Version %version% einen anderen Ort. Bitte verschiebe das Array an die neue Position.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
+    $arr_release[$int_v][$int_t]['version']                         = '3.9.6';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'displayList.master_templates.category_menu.wrap.item.stdWrap';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'displayList.master_templates.category_menu.wrap.item.wraps.value.stdWrap';
+
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array item.stdWrap is moved';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'The TypoScript array is moved to another position since version %version%. Please move it to the new position.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Array item.stdWrap ist verschoben';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Das TypoScript Array hat seit Version %version% einen anderen Ort. Bitte verschiebe das Array an die neue Position.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
+    $arr_release[$int_v][$int_t]['version']                         = '3.9.6';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'displayList.master_templates.checkbox.wrap.item.stdWrap';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'displayList.master_templates.checkbox.wrap.item.wraps.value.stdWrap';
+
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array item.stdWrap is moved';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'The TypoScript array is moved to another position since version %version%. Please move it to the new position.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Array item.stdWrap ist verschoben';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Das TypoScript Array hat seit Version %version% einen anderen Ort. Bitte verschiebe das Array an die neue Position.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
+    $arr_release[$int_v][$int_t]['version']                         = '3.9.6';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'displayList.master_templates.radiobuttons.wrap.item.stdWrap';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'displayList.master_templates.radiobuttons.wrap.item.wraps.value.stdWrap';
+
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array item.stdWrap is moved';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'The TypoScript array is moved to another position since version %version%. Please move it to the new position.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Array item.stdWrap ist verschoben';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Das TypoScript Array hat seit Version %version% einen anderen Ort. Bitte verschiebe das Array an die neue Position.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
+    $arr_release[$int_v][$int_t]['version']                         = '3.9.6';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'displayList.master_templates.selectbox.wrap.item.stdWrap';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'displayList.master_templates.selectbox.wrap.item.wraps.value.stdWrap';
+
     // Set the Ticket array
 
 
