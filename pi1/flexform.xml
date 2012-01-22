@@ -4,6 +4,7 @@
     <langDisable>1</langDisable>
   </meta>
   <sheets>
+    <extend>EXT:browser/pi1/flexform_sheet_extend.xml</extend>
     <sDEF>EXT:browser/pi1/flexform_sheet_sDEF.xml</sDEF>
     <viewList>EXT:browser/pi1/flexform_sheet_viewList.xml</viewList>
     <viewSingle>EXT:browser/pi1/flexform_sheet_viewSingle.xml</viewSingle>
@@ -13,6 +14,5 @@
     <socialmedia>EXT:browser/pi1/flexform_sheet_socialmedia.xml</socialmedia>
     <tca>EXT:browser/pi1/flexform_sheet_tca.xml</tca>
     <evaluate>EXT:browser/pi1/flexform_sheet_evaluate.xml</evaluate>
-    <extend>EXT:browser/pi1/flexform_sheet_extend.xml</extend>
   </sheets>
 </T3DataStructure>
