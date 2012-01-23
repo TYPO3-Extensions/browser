@@ -3113,7 +3113,7 @@ class tx_browser_pi1_filter {
  * @version 3.9.6
  * @sice    3.0.1
  */
-  private function wrap_allItems($obj_ts, $arr_ts, $str_nice_piVar, $key_piVar, $number_of_items) {
+  public function wrap_allItems($obj_ts, $arr_ts, $str_nice_piVar, $key_piVar, $number_of_items) {
 
     // #8337, 101011, dwildt
     switch ($obj_ts) {

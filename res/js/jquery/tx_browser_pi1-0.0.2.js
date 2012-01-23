@@ -20,10 +20,10 @@ $( document ).ready( function( )
 
     //////////////////////////////////////////////////////////
     //
-    // UI for buttons in the searchbox form
+    // UI for buttons in areas with the class tx-browser-pi1
 
   $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
-    // UI for buttons in the searchbox form
+    // UI for buttons in areas with the class tx-browser-pi1
 
 
 
@@ -44,7 +44,7 @@ $( document ).ready( function( )
         // RETURN selected id isn't part of the DOM
       if( ! $( "#c###TT_CONTENT.UID###-singleview-###MODE###" ).length )
       {
-        alert( "ERROR: #c###TT_CONTENT.UID###-singleview-###MODE### isn't part of the DOM!");
+        alert( "ERROR: The selctor \"#c###TT_CONTENT.UID###-singleview-###MODE###\" isn't part of the DOM!");
         return;
       }
         // Update the content with the id #c###TT_CONTENT.UID###-###VIEW###view-###MODE###
@@ -63,14 +63,14 @@ $( document ).ready( function( )
     // User has clicked the CSV export button
   $( "#c###TT_CONTENT.UID###-list-submit-csv-export-###MODE###" ).live(
     'click',
-    function ( )
+    function ( e )
     {
         // RETURN selected form with fieldset isn't part of the DOM
       if( ! $( "#c###TT_CONTENT.UID###-list-searchbox-form-###MODE### fieldset" ).length )
       {
           // Don't execute the click
         e.preventDefault( );
-        alert( "ERROR: #c###TT_CONTENT.UID###-list-searchbox-form-###MODE### fieldset isn't part of the DOM!");
+        alert( "ERROR: The selector \"#c###TT_CONTENT.UID###-list-searchbox-form-###MODE### fieldset\" isn't part of the DOM!");
         return;
       }
         // Append the TYPO3 typeNum of the csv export page object
@@ -150,7 +150,7 @@ $( document ).ready( function( )
         // RETURN plugin_id isn't part of the DOM
       if( ! $( plugin_id ).length )
       {
-        alert( "ERROR: " + plugin_id + " isn't part of the DOM!");
+        alert( "ERROR: \"" + plugin_id + "\" isn't part of the DOM!");
         return;
       }
         // Append the content of plugin_id_wi_selector as html_element at the bottom of the plugin_id 

@@ -180,7 +180,8 @@ function ajaxifySearchFormSubmit(pObj) {
   if (pObj.hasClass('hidesubmit')) {
     searchform.find(':submit').hide();
   }
-  searchform.submit( function () { 
+  searchform.submit( function ( e ) {
+    //alert( e.target.id + ' ' + e.currentTarget.id + ' ' + e.type ); 
     var listarea = pObj.find('.listarea');
     var baseUrl = $('base').attr('href');
     var action = baseUrl + $(this).attr('action');
@@ -452,8 +453,6 @@ function ajaxifyList(pObj) {
     ajaxifySingleLinks(pObj);
   }
 }
-
-
 
 
 function ajaxifySearchBox(pObj) {

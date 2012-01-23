@@ -295,6 +295,37 @@ class tx_browser_pi1_template
     $markerArray['###VIEW###']          = $this->pObj->view;
     $markerArray['###RESULTPHRASE###']  = $this->resultphrase();
 
+// TEST, 120123, dwildt+
+      $str_hidden = null;
+      foreach( ( array ) $this->pObj->piVars as $key => $values )
+      {
+        $piVar_key = $this->pObj->prefixId.'['.$key.']';
+        if( is_array( $values ) )
+        {
+          foreach( ( array ) $values as $value )
+          {
+            if( $value != null )
+            {
+              $str_hidden = $str_hidden . PHP_EOL .
+                            $str_space_left . '<input type="hidden" name="' . $piVar_key . '" value="' . $value . '">';
+            }
+          }
+        }
+        if( ! is_array( $values ) && ! ( $values == null ) )
+        {
+          $str_hidden = $str_hidden . PHP_EOL .
+                        $str_space_left . '<input type="hidden" name="' . $piVar_key . '" value="' . $values . '">';
+        }
+      }
+      $markerArray['###HIDDEN###']  = $str_hidden;
+
+// TEST, 120123, dwildt+
+//$pos = strpos('91.23.189.79', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//if( ! ( $pos === false ) )
+//{
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $str_hidden );
+//}
+
     $subpart    = $this->pObj->cObj->getSubpart($template, '###SEARCHFORM###');
     // 3.5.0: We need the subpartmarker for the filter again
     $searchBox  = '<!-- ###SEARCHFORM### begin -->
@@ -315,7 +346,7 @@ class tx_browser_pi1_template
     $template   = $this->pObj->cObj->substituteSubpart($template, '###SEARCHFORM###', $searchBox, true);
       // csv export: remove the csv export button
 
-    $this->pObj->piVars   = $arr_currPiVars;
+    $this->pObj->piVars  = $arr_currPiVars;
     $GLOBALS['TSFE']->id = $int_tsfeId; // #9458
     // action without filters and sword
 
