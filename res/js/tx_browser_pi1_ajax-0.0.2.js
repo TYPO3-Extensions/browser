@@ -158,6 +158,7 @@ function ajaxifyResetButton(pObj) {
             pObj.append("<div class=\"singleview byjs\">\n\t</div>\n");
           }
         }
+        cleanup( );
       },
       error: function(req, error) {
         showAjaxError($(this).find('.listarea'), error);
@@ -463,7 +464,15 @@ function ajaxifySearchBox(pObj) {
 
 
 
-
+function cleanup( pObj )
+{
+    // Return: Error: undefined // Logisch: ist keine Funktion
+  //alert( jQuery.isFunction( button );
+    // Return: false // Logisch: Ist keine Funktion
+  //alert( jQuery.isFunction( $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( ) ) );
+    // Folgende Zeile hat keinen Effekt, dwildt, 120123
+  //$( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+}
 // =========================================================
  
  

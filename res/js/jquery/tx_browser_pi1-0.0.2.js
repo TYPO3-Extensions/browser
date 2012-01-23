@@ -22,6 +22,7 @@ $( document ).ready( function( )
     //
     // UI for buttons in areas with the class tx-browser-pi1
 
+  //alert( jQuery.isFunction( $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( ) ) );
   $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
     // UI for buttons in areas with the class tx-browser-pi1
 
