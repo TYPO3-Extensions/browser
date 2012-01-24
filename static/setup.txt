@@ -2509,6 +2509,25 @@ plugin.tx_browser_pi1 {
           // [Boolean] 0 (default): link to the script file, 1: include the script inline
         inline = 0
       }
+      cleanup {
+        library = EXT:browser/res/js/jquery/tx_browser_pi1-0.0.3_cleanup.js
+        library {
+            // [Boolean] 0: link to the script file, 1 (default): include the script inline
+          inline = 1
+          marker {
+              // Id of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+            selector = TEXT
+            selector {
+              value = #treeview
+            }
+            theme = TEXT
+            theme {
+                // [String] supported are: apple, classic, default, default-rtl
+              value = apple
+            }
+          }
+        }
+      }
     }
     ajax {
         // [STRING] Path to Javascript file with ajax methods

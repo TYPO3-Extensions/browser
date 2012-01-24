@@ -59,4 +59,8 @@ plugin.tx_browser_pi1 {
   # cat=Browser - the TYPO3-Frontend-Engine//430;       type=string;  label= Record Browser: uid name (default: showUid)
   recordBrowser.uidName = showUid
 
+  # cat=Browser - the TYPO3-Frontend-Engine//510;       type=string;  label= jQuery.plugin.jstree selector: HTML class of div tags which contains a tree view
+  jQuery.plugin.jstree.selector = tx-browser-pi1-jstree
+  # cat=Browser - the TYPO3-Frontend-Engine//511;       type=options[apple,classic,default,default-rtl];  label= jQuery.plugin.jstree theme: Name of the theme of tree views
+  jQuery.plugin.jstree.theme    = apple
 }

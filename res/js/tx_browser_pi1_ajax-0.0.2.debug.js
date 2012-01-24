@@ -8,8 +8,8 @@
  *
  * for more info visit http://typo3-browser-forum.de/
  * 
- * status: 28 Nov 2011
- * version: 0.0.2
+ * status: 24 Jan 2012
+ * version: 0.0.3
  *
  */
  
@@ -133,10 +133,7 @@ function ajaxifyResetButton(pObj) {
         if (pObj.hasClass('ajaxltcollapse')) {
           targetObj.slideUp(300, function() {
             targetObj.empty().html(d);
-            //targetObj.empty().html(d).queue( function () {
-            //  cleanup( );
-            //  //$( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
-            //});
+            cleanup( );
             $(this).slideUp(1, function() {
               ajaxifySearchBox(pObj);
               ajaxifyList(pObj);
@@ -150,10 +147,7 @@ function ajaxifyResetButton(pObj) {
         else {
           // no transition
           targetObj.empty().html(d);
-          //targetObj.empty().html(d).queue( function () {
-          //  cleanup( );
-          //  //$( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
-          //});;
+          cleanup( );
           ajaxifySearchBox(pObj);
           ajaxifyList(pObj);  
           pObj.find('.searchbox').unwrap();
@@ -181,8 +175,8 @@ function ajaxifyResetButton(pObj) {
 
 
 
-function ajaxifySearchFormSubmit(pObj) {
-  //var pObj;
+function ajaxifySearchFormSubmit( pObj )
+{
   var searchform = pObj.find('.searchbox form');
   if (pObj.hasClass('debugjss')) {
     searchform.find(':submit').css('border', '2px solid ' + debugColor);
@@ -191,12 +185,24 @@ function ajaxifySearchFormSubmit(pObj) {
     searchform.find(':submit').hide();
   }
   searchform.submit( function ( e ) {
-    //alert( e.target.id + ' ' + e.currentTarget.id + ' ' + e.type ); 
-    var listarea = pObj.find('.listarea');
-    var baseUrl = $('base').attr('href');
-    var action = baseUrl + $(this).attr('action');
+
+      // Send the submit directly - without any AJAX request
+      // 120124, dwildt+
+    if( bool_sendAjaxRequest != true )
+    {
+      //alert( e.target.id + ' ' + e.currentTarget.id + ' ' + e.type ); 
+      //alert( true ); 
+      //searchform.submit( );
+      return true;
+    }
+      // 120124, dwildt+
+      // Send the submit directly - without any AJAX request
+
+    var listarea   = pObj.find('.listarea');
+    var baseUrl    = $('base').attr('href');
+    var action     = baseUrl + $(this).attr('action');
     var dataString = insertParam($(this).serialize(), 'tx_browser_pi1[segment]', 'list');
-    dataString = insertParam(dataString, 'type', typeNum);
+    dataString     = insertParam(dataString, 'type', typeNum);
     listarea.addClass('loading');
     listarea.prepend("\t<div class='txbrowserpi1loader'></div>\n");
     listarea.find('.txbrowserpi1loader').fadeOut(0).fadeIn(200);
@@ -481,23 +487,50 @@ function ajaxifySearchBox(pObj) {
 
 
 
+/*
+ * cleanup(): Reload thinks like CSS for buttons or for the CSS tree
+ *
+ * @param  object	pObj: parent object
+ *
+ * @author Dirk Wildt <http://wildt.at.die-netzmacher.de/>
+ * @version: 0.0.3
+ *
+ */
+
 function cleanup( pObj )
 {
-  //alert( "X " + $( ".tx-browser-pi1" ).length );
-  $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
-  alert( jQuery.isFunction( jQuery.jstree ) );
-  if( $( "#treeview" ).length )
+    // jQuery button
+  try {
+    $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+  }
+  catch( err )
   {
-    $("#treeview").jstree({
-      "themes" : {
-        "theme" : "apple",
-        "dots"  : true,
-        "icons" : true
-      },
-      "plugins" : ["themes", "html_data", "cookies"]
-    });
-  };
+    // jQuery is compiled without button method. Don't worry!
+  }
+    // jQuery button
+
+    // jQuery plugin jstree
+  try {
+    if( $( "#treeview" ).length )
+    {
+      $("#treeview").jstree({
+        "themes" : {
+          "theme" : "apple",
+          "dots"  : true,
+          "icons" : true
+        },
+        "plugins" : ["themes", "html_data", "cookies"]
+      });
+    }
+  }
+  catch( err )
+  {
+    // jQuery plugin jstree isn't included. Don't worry!
+  }
+    // jQuery plugin jstree
+
 }
+
 // =========================================================
  
  
@@ -574,8 +607,7 @@ this.setup_browserAJAX = function() {
   $('.ajax').each( function(i) {
     if ($(this).hasClass('debugjss')) {
       var debugLang = $(this).attr('lang');
-      console.info('[tx_browser_pi1 [' + i + ']] AJAX initialisation started\n\tdetected language: ' + debugLang + '\n\ttime out settings: ' 
-+ ajaxTimeout + ' ms');     
+      console.info('[tx_browser_pi1 [' + i + ']] AJAX initialisation started\n\tdetected language: ' + debugLang + '\n\ttime out settings: ' + ajaxTimeout + ' ms');     
       console.time('[tx_browser_pi1 [' + i + ']] AJAX initialisation');     
     }
     var browser = $(this);
@@ -603,7 +635,10 @@ this.setup_browserAJAX = function() {
 // =========================================================
  
  
- 
+  // [Boolean] true (default) || false: Send an AJAX request. Variable can changed by external methods.
+  //                                    Example: the export button can't need any ajax request
+  // 120124, dwildt+
+var bool_sendAjaxRequest = true;
  
 // starting the script on page load
 $(document).ready( function() {
