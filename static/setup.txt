@@ -2464,7 +2464,7 @@ plugin.tx_browser_pi1 {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
           }
-          library = EXT:browser/res/js/jquery/tx_browser_pi1-0.0.2.js
+          library = EXT:browser/res/js/jquery/tx_browser_pi1-0.0.3.js
           library {
               // [Boolean] 0: link to the script file, 1 (default): include the script inline
             inline = 1
