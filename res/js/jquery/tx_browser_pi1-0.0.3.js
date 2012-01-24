@@ -77,7 +77,10 @@ $( document ).ready( function( )
       }
         // Append the TYPO3 typeNum of the csv export page object
       $( "#c###TT_CONTENT.UID###-list-searchbox-form-###MODE### fieldset" )
-        .append( '<input id="c###TT_CONTENT.UID###-button-export-###MODE###" type="hidden" name="type" value="###TYPENUM_CSV###" />' );
+        .append(
+          '<input id="c###TT_CONTENT.UID###-button-export-###MODE###" type="hidden" name="type" value="###TYPENUM_CSV###" />'
+        );
+      bool_sendAjaxRequest = false;
     }
   );
     // Append a hidden field with TYPO3 page type for csv export
@@ -86,6 +89,7 @@ $( document ).ready( function( )
     function ( e ) 
     {
       $( "#c###TT_CONTENT.UID###-button-export-###MODE###" ).remove( )
+      bool_sendAjaxRequest = true;
     }
   );
     // Remove the hidden field after submitting the form
