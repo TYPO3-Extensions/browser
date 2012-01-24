@@ -2452,7 +2452,7 @@ plugin.tx_browser_pi1 {
               theme = TEXT
               theme {
                   // [String] supported are: apple, classic, default, default-rtl
-                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
               }
             }
           }
@@ -2523,7 +2523,7 @@ plugin.tx_browser_pi1 {
             theme = TEXT
             theme {
                 // [String] supported are: apple, classic, default, default-rtl
-              value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
+              value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
             }
           }
         }
