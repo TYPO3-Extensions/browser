@@ -133,7 +133,7 @@ function ajaxifyResetButton(pObj) {
         if (pObj.hasClass('ajaxltcollapse')) {
           targetObj.slideUp(300, function() {
             targetObj.empty().html(d);
-            cleanup( );
+            ext_funcCleanup( );
             $(this).slideUp(1, function() {
               ajaxifySearchBox(pObj);
               ajaxifyList(pObj);
@@ -147,7 +147,7 @@ function ajaxifyResetButton(pObj) {
         else {
           // no transition
           targetObj.empty().html(d);
-          cleanup( );
+          ext_funcCleanup( );
           ajaxifySearchBox(pObj);
           ajaxifyList(pObj);  
           pObj.find('.searchbox').unwrap();
@@ -163,9 +163,6 @@ function ajaxifyResetButton(pObj) {
       error: function(req, error) {
         showAjaxError($(this).find('.listarea'), error);
       },
-      complete: function( xhr, status ) {
-        cleanup( pObj );
-      }
     });
     return false;
   });
@@ -223,8 +220,7 @@ function ajaxifySearchFormSubmit( pObj )
         if (pObj.hasClass('ajaxltcollapse')) {
           targetObj.slideUp(300, function() {
             pObj.find('.listarea').replaceWith(d).queue( function () {
-              cleanup( );
-              //$( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+              ext_funcCleanup( );
             });
             pObj.find('.listarea').slideUp(1, function() {
               ajaxifyList(pObj);  
@@ -236,8 +232,7 @@ function ajaxifySearchFormSubmit( pObj )
         else {
           // no transition
           targetObj.replaceWith(d).queue( function () {
-            cleanup( );
-            //$( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+            ext_funcCleanup( );
           });
           ajaxifyList(pObj);  
         }                            
@@ -288,8 +283,7 @@ function ajaxifyDynamicFilters(pObj) {
             var listarea = pObj.find('.listarea');
             listarea.slideUp(300, function() {
               pObj.find('.browser_ajax_temp').replaceWith(d).queue( function () {
-                cleanup( );
-                //$( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+                ext_funcCleanup( );
               });
               pObj.find('.listarea').slideUp(1, function() {
                 ajaxifySearchBox(pObj);
@@ -301,8 +295,7 @@ function ajaxifyDynamicFilters(pObj) {
           else {
             // no transition
             pObj.find('.browser_ajax_temp').replaceWith(d).queue( function () {
-              cleanup( );
-              //$( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+              ext_funcCleanup( );
             });
             ajaxifySearchBox(pObj);
             ajaxifyList(pObj);  
@@ -370,8 +363,7 @@ function ajaxifySingleLinks(pObj) {
           }
           targetObj.slideUp(300, function() {
             $(this).replaceWith(d).queue( function () {
-              cleanup( );
-              //$( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+              ext_funcCleanup( );
             });
             pObj.find('.singleview').slideUp(1, function() {
               $(this).slideDown(300);
@@ -382,8 +374,7 @@ function ajaxifySingleLinks(pObj) {
         else {
           // no transition
           targetObj.replaceWith(d).queue( function () {
-            cleanup( );
-            //$( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+            ext_funcCleanup( );
           });
           setFocusTo(pObj.find('.listarea'), pObj);  
         }                                    
@@ -438,8 +429,7 @@ function ajaxifyListViewLinks(pObj) {
         if (pObj.hasClass('ajaxltcollapse')) {
           targetObj.slideUp(300, function() {
             pObj.find('.listarea').replaceWith(d).queue( function () {
-              cleanup( );
-              //$( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+              ext_funcCleanup( );
             });
             pObj.find('.listarea').slideUp(1, function() {
               ajaxifyList(pObj);  
@@ -451,8 +441,7 @@ function ajaxifyListViewLinks(pObj) {
         else {
           // no transition
           targetObj.replaceWith(d).queue( function () {
-            cleanup( );
-            //$( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+            ext_funcCleanup( );
           });
           ajaxifyList(pObj);
           setFocusTo(pObj.find('.listarea'), pObj);  
@@ -488,46 +477,26 @@ function ajaxifySearchBox(pObj) {
 
 
 /*
- * cleanup(): Reload thinks like CSS for buttons or for the CSS tree
- *
- * @param  object	pObj: parent object
+ * ext_funcCleanup(): Call the external function cleanup_afterAJAXrequest( ).
+ *                    Don't worry, if function doesn't exist.
  *
  * @author Dirk Wildt <http://wildt.at.die-netzmacher.de/>
  * @version: 0.0.3
  *
  */
 
-function cleanup( pObj )
+function ext_funcCleanup( )
 {
-    // jQuery button
+    // cleanup_afterAJAXrequest
   try {
-    $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+    cleanup_afterAJAXrequest( );
+    //$( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
   }
   catch( err )
   {
-    // jQuery is compiled without button method. Don't worry!
+    // There isn't any method external function cleanup_afterAJAXrequest. Don't worry!
   }
-    // jQuery button
-
-    // jQuery plugin jstree
-  try {
-    if( $( "#treeview" ).length )
-    {
-      $("#treeview").jstree({
-        "themes" : {
-          "theme" : "apple",
-          "dots"  : true,
-          "icons" : true
-        },
-        "plugins" : ["themes", "html_data", "cookies"]
-      });
-    }
-  }
-  catch( err )
-  {
-    // jQuery plugin jstree isn't included. Don't worry!
-  }
-    // jQuery plugin jstree
+    // cleanup_afterAJAXrequest
 
 }
 
@@ -567,8 +536,7 @@ function ajaxifyOrderBy(pObj) {
         if (pObj.hasClass('ajaxltcollapse')) {
           targetObj.slideUp(300, function() {
             pObj.find('.listarea').replaceWith(d).queue( function () {
-              cleanup( );
-              //$( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+              ext_funcCleanup( );
             });
             pObj.find('.listarea').slideUp(1, function() {
               ajaxifyList(pObj);  
@@ -580,8 +548,7 @@ function ajaxifyOrderBy(pObj) {
         else {
           // no transition
           pObj.find('.listarea').replaceWith(d).queue( function () {
-            cleanup( );
-            //$( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
+            ext_funcCleanup( );
           });
           ajaxifyList(pObj);  
         }                            
