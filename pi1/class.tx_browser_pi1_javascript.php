@@ -996,6 +996,41 @@ class tx_browser_pi1_javascript
     }
       // There are tables with a treeparentfield
       // jquery_plugins_jstree
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // jquery_cleanup
+
+    $name         = 'jquery_cleanup';
+    $path         = $this->pObj->conf['javascript.']['jquery.']['cleanup.']['library'];
+    $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['cleanup.']['library.']['inline'];
+    $path_tsConf  = 'javascript.jquery.cleanup.library';
+    $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+
+    $inline_jss   = $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name];
+    $conf_marker  = $this->pObj->conf['javascript.']['jquery.']['cleanup.']['library.']['marker.'];
+    foreach((array) $conf_marker as $key_conf_marker => $arr_conf_marker)
+    {
+      if(substr($key_conf_marker, -1, 1) == '.')
+      {
+          // I.e. $key_conf_marker is 'title.', but we like the marker name without any dot
+        $str_marker             = substr($key_conf_marker, 0, strlen($key_conf_marker) -1);
+        $hashKeyMarker          = '###'.strtoupper($str_marker).'###';
+        $marker[$hashKeyMarker] = $this->pObj->cObj->cObjGetSingle
+                                  (
+                                    $conf_marker[$str_marker],
+                                    $conf_marker[$str_marker . '.']
+                                  );
+        $inline_jss = str_replace($hashKeyMarker, $marker[$hashKeyMarker], $inline_jss);
+      }
+    }
+    $load_all_modes = $this->dyn_method_load_all_modes( );
+    $inline_jss     = str_replace( '###MODE###',           $this->pObj->piVar_mode,   $inline_jss );
+    $inline_jss     = str_replace( '###VIEW###',           $this->pObj->view,         $inline_jss );
+    $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
+      // jquery_cleanup
   }
 
 
