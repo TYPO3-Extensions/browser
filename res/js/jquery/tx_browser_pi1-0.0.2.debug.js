@@ -82,6 +82,9 @@ $( document ).ready( function( )
   );
     // Append a hidden field with TYPO3 page type for csv export
     // Remove the hidden field after submitting the form
+    //
+    // IMPORTANT +++ IMPORTANT +++ IMPORTANT +++ IMPORTANT +++ IMPORTANT +++ IMPORTANT
+    //     Any alert is disallowed between click event and blur event    //
   $( "#c###TT_CONTENT.UID###-list-submit-csv-export-###MODE###" ).blur(
     function ( e ) 
     {

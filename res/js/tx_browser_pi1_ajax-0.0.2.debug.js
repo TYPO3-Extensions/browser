@@ -471,7 +471,7 @@ function ajaxifyListViewLinks(pObj) {
 
 function ajaxifyList(pObj) {
   ajaxifyListViewLinks(pObj);  
-  if (window.initOrderBy) { initOrderBy(pObj); }  
+  if (window.initOrderBy) {initOrderBy(pObj);}  
     
   if (pObj.hasClass('ajax_single')) {
     ajaxifySingleLinks(pObj);
