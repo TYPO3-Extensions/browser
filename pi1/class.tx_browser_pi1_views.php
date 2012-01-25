@@ -1033,18 +1033,24 @@ class tx_browser_pi1_views
     {
       if( empty( $template ) )
       {
-        $prompt = '<div style="border:2em solid red;color:red;">
+        $prompt = '<div style="border:2em solid red;color:red;padding:2em;text-align:center;">
             <h1>
               TYPO3 Browser Error
             </h1>
             <h2>
+              EN: Subpart is missing
+            </h2>
+            <p>
               English: Current HTML template doesn\'t contain the subpart ###TEMPLATE_CSV###.<br />
               Please take care of a proper template.<br />
-            </h2>
+            </p>
             <h2>
+              DE: Subpart fehlt
+            </h2>
+            <p>
               Deutsch: Dem aktuellen HTML-Template fehlt der Subpart ###TEMPLATE_CSV###.<br />
               Bitte k&uuml;mmere Dich um ein korrektes Template.<br />
-            </h2>
+            </p>
           </div>';
         die( $prompt );
       }
