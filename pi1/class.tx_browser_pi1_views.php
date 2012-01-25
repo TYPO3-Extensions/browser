@@ -1029,6 +1029,26 @@ class tx_browser_pi1_views
 
 
 
+    if( $str_marker == '###TEMPLATE_CSV###' )
+    {
+      if( empty( $template ) )
+      {
+        $prompt = '<div style="border:2em solid red;color:red;">
+            <h1>
+              TYPO3 Browser Error
+            </h1>
+            <h2>
+              English: Current HTML template doesn\'t contain the subpart ###TEMPLATE_CSV###.<br />
+              Please take care of a proper template.<br />
+            </h2>
+            <h2>
+              Deutsch: Dem aktuellen HTML-Template fehlt der Subpart ###TEMPLATE_CSV###.<br />
+              Bitte k&uuml;mmere Dich um ein korrektes Template.<br />
+            </h2>
+          </div>';
+        die( $prompt );
+      }
+    }
 //    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 //    if ( ! ( $pos === false ) )
 //    {
