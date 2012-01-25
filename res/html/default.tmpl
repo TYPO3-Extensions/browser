@@ -68,13 +68,16 @@ This template is the default template for all list views.
 <!-- ###LIST_TITLE### end -->
 <!-- ###SEARCHFORM### begin -->
         <div id="c###TT_CONTENT.UID###-list-searchbox-###MODE###" class="searchbox searchbox-list-###MODE###">
-          <form action="###ACTION###" method="post" >
+          <form id="c###TT_CONTENT.UID###-list-searchbox-form-###MODE###" action="###ACTION###" method="post" >
             <fieldset>
               <legend>###MY_SEARCH_LEGEND###</legend>
               <input type="hidden" name="no_cache" value="1" />
               <input type="hidden" name="tx_browser_pi1[plugin]" value="###PLUGIN###" />
               <input class="sword" type="text" name="tx_browser_pi1[sword]" onfocus="if(this.value =='###SWORD_DEFAULT###') this.value=''" value="###SWORD###" />
               <input class="button hidesubmit" type="submit" value="###MY_SEARCH###" />
+              <!-- ###BUTTON_CSV-EXPORT### begin -->
+                <input id="c###TT_CONTENT.UID###-list-submit-csv-export-###MODE###" class="button hidesubmit"  type="submit"  value="###MY_CSV_EXPORT###" />
+              <!-- ###BUTTON_CSV-EXPORT### end -->
               <input class="button reset" type="button" onclick="location='###MY_URL###'" value="###MY_RESET###" />
               <!-- Add filters with the ###TABLE.FIELD### syntax and configure your filters with TypoScript -->
             </fieldset>
@@ -108,7 +111,7 @@ This template is the default template for all list views.
               </ul>
             </div><!-- ###MODESELECTOR### end -->
             <!-- ###LISTVIEW### begin -->
-            <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="listview listview-###MODE###">
+            <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="###VIEW###view ###VIEW###view-content ###VIEW###view-###MODE### ###VIEW###view-content-###MODE###">
               <!-- ###GROUPBY### begin -->
               <!-- ###GROUPBYHEAD### begin -->
               ###GROUPBY_GROUPNAME###
@@ -211,6 +214,15 @@ plugin.tx_browser_pi1.views.single.XX.template.default = 1
         <!-- ###SINGLEVIEW### end -->
 <!-- ###TEMPLATE_SINGLE### end -->
 
+
+
+<em>
+  Position of subpart markers is impportant for line beaks!
+</em>
+<!-- ###TEMPLATE_CSV### begin --><!-- ###LISTVIEW### begin --><!-- ###LISTHEAD### begin --><!-- ###LISTHEADITEM### begin -->###ITEM###<!-- 
+###LISTHEADITEM### end --><!-- ###LISTHEAD### end -->
+<!-- ###LISTBODY### begin --><!-- ###LISTBODYITEM### begin -->###ITEM###<!-- ###LISTBODYITEM### end -->
+<!-- ###LISTBODY### end --><!-- ###LISTVIEW### end --><!-- ###TEMPLATE_CSV### end -->
 
 
 </pre>
