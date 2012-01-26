@@ -3183,14 +3183,14 @@ class tx_browser_pi1_flexform {
         $this->pObj->conf['flexform.'][$sheet . '.'][$field] = true;
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
         {
-          t3lib_div::devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . '.stdWrap.value is set to true.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . ' is set to true.', $this->pObj->extKey, 0);
         }
         break;
       case ( 'ts' ) :
         // Do nothing;
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
         {
-          t3lib_div :: devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . '.stdWrap.value isn\'t changed by the flexform.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . ' isn\'t changed by the flexform.', $this->pObj->extKey, 0);
         }
         break;
       case ( 'disabled' ) :
@@ -3198,7 +3198,7 @@ class tx_browser_pi1_flexform {
         $this->pObj->conf['flexform.'][$sheet . '.'][$field] = false;
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
         {
-          t3lib_div :: devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . '.stdWrap.value is set to false.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . ' is set to false.', $this->pObj->extKey, 0);
         }
     }
     $this->sheet_viewList_csvexport = $this->pObj->conf['flexform.'][$sheet . '.'][$field];
@@ -3232,14 +3232,14 @@ class tx_browser_pi1_flexform {
         $this->pObj->conf['flexform.'][$sheet . '.'][$field] = true;
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
         {
-          t3lib_div::devlog('[INFO/FLEXFORM+JSS] flexform.' . $sheet . '.' . $field . '.stdWrap.value is set to true.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM+JSS] flexform.' . $sheet . '.' . $field . ' is set to true.', $this->pObj->extKey, 0);
         }
         break;
       case ( 'ts' ) :
         // Do nothing;
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
         {
-          t3lib_div :: devlog('[INFO/FLEXFORM+JSS] flexform.' . $sheet . '.' . $field . '.stdWrap.value isn\'t changed by the flexform.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM+JSS] flexform.' . $sheet . '.' . $field . ' isn\'t changed by the flexform.', $this->pObj->extKey, 0);
         }
         break;
       case ( 'disabled' ) :
@@ -3247,7 +3247,7 @@ class tx_browser_pi1_flexform {
         $this->pObj->conf['flexform.'][$sheet . '.'][$field] = false;
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
         {
-          t3lib_div :: devlog('[INFO/FLEXFORM+JSS] flexform.' . $sheet . '.' . $field . '.stdWrap.value is set to false.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM+JSS] flexform.' . $sheet . '.' . $field . ' is set to false.', $this->pObj->extKey, 0);
         }
     }
     $this->sheet_viewList_rotateviews = $this->pObj->conf['flexform.'][$sheet . '.'][$field];
