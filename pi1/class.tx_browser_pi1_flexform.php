@@ -2528,11 +2528,6 @@ class tx_browser_pi1_flexform {
   {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
-$pos = strpos('87.177.83.237', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if ( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__. ' (' . __LINE__ . '): ', $arr_piFlexform, $this->pObj->cObj->data );
-}    $str_lang       = $this->pObj->lang->lang;
     $sheet          = 'viewList';
 
 
