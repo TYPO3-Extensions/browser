@@ -3230,14 +3230,14 @@ class tx_browser_pi1_flexform {
     {
       case ( 'enabled' ) :
         $this->pObj->conf['flexform.'][$sheet . '.'][$field] = true;
-        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
         {
           t3lib_div::devlog('[INFO/FLEXFORM+JSS] flexform.' . $sheet . '.' . $field . ' is set to true.', $this->pObj->extKey, 0);
         }
         break;
       case ( 'ts' ) :
         // Do nothing;
-        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
         {
           t3lib_div :: devlog('[INFO/FLEXFORM+JSS] flexform.' . $sheet . '.' . $field . ' isn\'t changed by the flexform.', $this->pObj->extKey, 0);
         }
@@ -3245,7 +3245,7 @@ class tx_browser_pi1_flexform {
       case ( 'disabled' ) :
       default :
         $this->pObj->conf['flexform.'][$sheet . '.'][$field] = false;
-        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
         {
           t3lib_div :: devlog('[INFO/FLEXFORM+JSS] flexform.' . $sheet . '.' . $field . ' is set to false.', $this->pObj->extKey, 0);
         }
