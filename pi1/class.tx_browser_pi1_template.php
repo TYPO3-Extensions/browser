@@ -373,8 +373,9 @@ class tx_browser_pi1_template
               Ein Beispiel findest Du in der Datei: res/html/default.tmpl<br />
             </p>
           </div>';
-        die( $prompt );
+        //die( $prompt );
       }
+      $template = $prompt . $template;
     }
       // #00000, 120126, dwildt+
 
