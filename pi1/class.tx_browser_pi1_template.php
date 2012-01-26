@@ -350,9 +350,9 @@ class tx_browser_pi1_template
       $templateCSV = $this->pObj->cObj->getSubpart($searchBox, '###BUTTON_CSV-EXPORT###');
       if( empty( $templateCSV ) )
       {
-        $prompt = '<div style="border:2em solid red;color:red;padding:2em;text-align:center;">
+        $prompt = '<div style="border:1em solid orange;padding:1em;text-align:center;">
             <h1>
-              TYPO3 Browser Error
+              TYPO3 Browser Warning
             </h1>
             <h2>
               EN: Subpart is missing
