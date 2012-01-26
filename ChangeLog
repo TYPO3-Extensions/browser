@@ -1,5 +1,5 @@
 3.9.6
-  120118
+  120126
   UPDATE:
   * #00000: default.html and default_ul.html is moved from res/ to res/html/
             You have to edit the Browser plugin:
@@ -20,6 +20,7 @@
                 * ... radiobuttons.wrap.item.stdWrap
                 * ... selectbox.wrap.item.stdWrap
                 is moved to ... item.wraps.value.stdWrap
+  * #00000: DRS displays warnings and errors eclusive
   * #32654: Integration of Open Street Map
   Imrovement
   * #00000: Localised records can push into the shopping card without param L now

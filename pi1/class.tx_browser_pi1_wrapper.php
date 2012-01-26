@@ -821,7 +821,7 @@ class tx_browser_pi1_wrapper
         break;
       default:
           // This case isn't defined
-        if($this->pObj->b_drs_error && $this->pObj->boolFirstRow)
+        if($this->pObj->b_drs_info && $this->pObj->boolFirstRow)
         {
 //          t3lib_div::devLog('[ERROR/DRS] Method wrapAndLinkValue() has an undefined case in \'Process management\'.', $this->pObj->extKey, 3);
 //          t3lib_div::devlog('[HELP/DRS] Please contact the developer:<br />'.$this->pObj->developer_contact, $this->pObj->extKey, 1);
