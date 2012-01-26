@@ -125,16 +125,16 @@ class tx_browser_pi1_flexform {
 
   //[sheet/javascript]
   // #9659, 101013 fsander
+    // [boolean] AJAX enabled?
   var $bool_ajax_enabled = false;
-  // [boolean] AJAX enabled?
+    // [boolean] AJAX also used for single view?
   var $bool_ajax_single = false;
-  // [boolean] AJAX also used for single view?
+    // [string] AJAX transition for list view
   var $str_ajax_list_transition = false;
-  // [string] AJAX transition for list view
+    // [string] AJAX transition for single view
   var $str_ajax_single_transition = false;
-  // [string] AJAX transition for single view
+    // [string] AJAX mode for list in single view
   var $str_ajax_list_on_single = false;
-  // [string] AJAX mode for list in single view
   // #9659, 101013 fsander
   var $str_browser_libraries = 'typoscript';
   var $str_jquery_library = 'typoscript';
@@ -176,6 +176,8 @@ class tx_browser_pi1_flexform {
   //[sheet/view]
     // [boolean] Enable CSV export
   var $sheet_viewList_csvexport       = null;
+    // [boolean] Enable CSV export
+  var $sheet_viewList_rotateviews     = null;
   //[sheet/extend]
 
   // Vars set by methods in the current class
@@ -2951,7 +2953,7 @@ class tx_browser_pi1_flexform {
       // csv export
 
       // #29370, 110831, dwildt+
-      // Remove the title in case of csv export
+      // Remove the a-z-browser and the page browser in case of csv export
     switch( $this->pObj->objExport->str_typeNum )
     {
       case( 'csv' ) :
@@ -2965,7 +2967,7 @@ class tx_browser_pi1_flexform {
       default:
         // Do nothing;
     }
-      // Remove the title in case of csv export
+      // Remove the a-z-browser and the page browser in case of csv export
       // csv export
 
 
@@ -3143,7 +3145,7 @@ class tx_browser_pi1_flexform {
       // csv export
 
       // #29370, 110831, dwildt+
-      // Remove the title in case of csv export
+      // Remove the search form in case of csv export
     switch( $this->pObj->objExport->str_typeNum )
     {
       case( 'csv' ) :
@@ -3156,7 +3158,7 @@ class tx_browser_pi1_flexform {
       default:
         // Do nothing;
     }
-      // Remove the title in case of csv export
+      // Remove the search form in case of csv export
       // csv export
 
 
@@ -3204,6 +3206,55 @@ class tx_browser_pi1_flexform {
       t3lib_div :: devlog('[INFO/EXPORT] global sheet_viewList_csvexport is set to ' . $this->sheet_viewList_csvexport, $this->pObj->extKey, 0);
     }
       // Field csvexport
+
+
+
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field rotateviews
+      // #29370, dwildt, 110831
+
+    $field      = 'rotateviews';
+    $rotateviews  = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
+
+    if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+    {
+      t3lib_div::devlog( '[INFO/FLEXFORM+EXPORT] ' . 'rotateviews: \'' . $rotateviews . '\'', $this->pObj->extKey, 0 );
+    }
+
+    switch ( $rotateviews )
+    {
+      case ( 'enabled' ) :
+        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = true;
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . '.stdWrap.value is set to true.', $this->pObj->extKey, 0);
+        }
+        break;
+      case ( 'ts' ) :
+        // Do nothing;
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        {
+          t3lib_div :: devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . '.stdWrap.value isn\'t changed by the flexform.', $this->pObj->extKey, 0);
+        }
+        break;
+      case ( 'disabled' ) :
+      default :
+        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = false;
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+        {
+          t3lib_div :: devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . '.stdWrap.value is set to false.', $this->pObj->extKey, 0);
+        }
+    }
+    $this->sheet_viewList_rotateviews = $this->pObj->conf['flexform.'][$sheet . '.'][$field];
+    if ( $this->pObj->b_drs_export )
+    {
+      t3lib_div :: devlog('[INFO/EXPORT] global sheet_viewList_rotateviews is set to ' . $this->sheet_viewList_rotateviews, $this->pObj->extKey, 0);
+    }
+      // Field rotateviews
 
 
 

@@ -320,6 +320,10 @@
       <label index="sheet_viewList.csvexport.disabled">Disabled (default)</label>
       <label index="sheet_viewList.csvexport.enabled">Enabled</label>
       <label index="sheet_viewList.csvexport.ts">Take the value from TypoScript!</label>
+      <label index="sheet_viewList.rotateviews">Rotate views (if there are more than one view)</label>
+      <label index="sheet_viewList.rotateviews.disabled">Disabled (recommended)</label>
+      <label index="sheet_viewList.rotateviews.enabled">Enabled</label>
+      <label index="sheet_viewList.rotateviews.ts">Take the value from TypoScript!</label>
       <label index="sheet_viewList.simulateSingleUid">Display record with UID (single view)</label>
       <label index="sheet_viewSingle">Single View</label>
       <label index="sheet_viewSingle.display_listview">Single-View</label>
@@ -663,6 +667,10 @@
       <label index="sheet_viewList.csvexport.disabled">Deaktiviert (Standard)</label>
       <label index="sheet_viewList.csvexport.enabled">Aktiviert</label>
       <label index="sheet_viewList.csvexport.ts">Nimm den Wert aus TypoScript!</label>
+      <label index="sheet_viewList.rotateviews">Views rotieren lassen (wenn mehr als eine View angezeigt wird)</label>
+      <label index="sheet_viewList.rotateviews.disabled">Deaktiviert (empfohlen)</label>
+      <label index="sheet_viewList.rotateviews.enabled">Aktiviert</label>
+      <label index="sheet_viewList.rotateviews.ts">Nimm den Wert aus TypoScript!</label>
       <label index="sheet_viewList.simulateSingleUid">Zeige Datensatz mit der UID (Detailansicht)</label>
       <label index="sheet_viewSingle">Detailansicht</label>
       <label index="sheet_viewSingle.display_listview">Detailansicht</label>

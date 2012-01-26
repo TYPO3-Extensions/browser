@@ -1231,9 +1231,9 @@ class tx_browser_pi1_javascript
 
 
 /**
- * dyn_method_load_all_modes(): Catch the segments to output for AJAX
+ * dyn_method_load_all_modes(): Return a script for background loading of each view
  *
- * @return  void
+ * @return  string    $js_complete: JSS skript
  * @since 3.9.3
  * @version 3.9.6
  */
@@ -1245,22 +1245,41 @@ class tx_browser_pi1_javascript
     $viewWiDot  = $view.'.';
     $views      = $conf['views.'][$viewWiDot];
     
-      // RETURN
+      // RETURN script is disabled by the plugin/flexform
+    if( $this->pObj->objFlexform->sheet_viewList_rotateviews )
+    {
+      $js_complete = '  // Browser method dyn_method_load_all_modes( ): There isn\'t any loader set, ' .
+                     'because script is disabled by the user in the plugin/flexform.';
+      return $js_complete;
+    }
+      // RETURN script is disabled by the plugin/flexform
+
+      // RETURN single view doesn't need the JSS script
     if( $view == 'single' )
     {
       $js_complete = '  // Browser method dyn_method_load_all_modes( ): There isn\'t any loader set, ' .
                      'because there current view is a single view.';
       return $js_complete;
     }
+      // RETURN single view doesn't need the JSS script
 
-    $js_snippet   = '' .
-'  setTimeout(function() {
-  ###TAB###  load_mode( ###CURR_VIEW### );
-  ###NEXT_VIEW###
-  ###TAB###}, int_seconds );';
+      // RETURN: AJAX object I is enabled in list views
+    if( $this->pObj->objFlexform->bool_ajax_enabled )
+    {
+      $js_complete = '  // Browser method dyn_method_load_all_modes( ): There isn\'t any loader set, ' .
+                     'because AJAX object I is enabled for list views.';
+      return $js_complete;
+    }
+      // RETURN: AJAX object I is enabled in list views
+
     $js_complete  = null;
     $tab          = null;
     $bool_first   = true;
+    $js_snippet   = '' .
+'###TAB###  setTimeout(function() {
+  ###TAB###  load_mode( ###CURR_VIEW### );
+  ###NEXT_VIEW###
+  ###TAB###}, int_seconds );';
     
     foreach( $views as $key_viewWiDot => $arr_view)
     {

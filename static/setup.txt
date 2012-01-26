@@ -2416,6 +2416,9 @@ plugin.tx_browser_pi1 {
           marker  = ###TEMPLATE_CSV###
         }
       }
+        // [BOOLEAN] false (default) || true. Can be overriden while runtime by the flexform value.
+      rotateviews = false
+      }
     }
     viewSingle {
         // [BOOLEAN] 0 (default): Don't display the listview. 1: Display the listview.
