@@ -3172,7 +3172,7 @@ class tx_browser_pi1_flexform {
     $field      = 'csvexport';
     $csvexport  = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
 
-    if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
+    if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
     {
       t3lib_div::devlog( '[INFO/FLEXFORM+EXPORT] ' . 'csvexport: \'' . $csvexport . '\'', $this->pObj->extKey, 0 );
     }
@@ -3202,7 +3202,7 @@ class tx_browser_pi1_flexform {
         }
     }
     $this->sheet_viewList_csvexport = $this->pObj->conf['flexform.'][$sheet . '.'][$field];
-    if ( $this->pObj->b_drs_javascript )
+    if ( $this->pObj->b_drs_export )
     {
       t3lib_div :: devlog('[INFO/EXPORT] global sheet_viewList_csvexport is set to ' . $this->sheet_viewList_csvexport, $this->pObj->extKey, 0);
     }
@@ -3221,9 +3221,9 @@ class tx_browser_pi1_flexform {
     $field      = 'rotateviews';
     $rotateviews  = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
 
-    if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+    if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
     {
-      t3lib_div::devlog( '[INFO/FLEXFORM+EXPORT] ' . 'rotateviews: \'' . $rotateviews . '\'', $this->pObj->extKey, 0 );
+      t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . 'rotateviews: \'' . $rotateviews . '\'', $this->pObj->extKey, 0 );
     }
 
     switch ( $rotateviews )
@@ -3232,14 +3232,14 @@ class tx_browser_pi1_flexform {
         $this->pObj->conf['flexform.'][$sheet . '.'][$field] = true;
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
         {
-          t3lib_div::devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . '.stdWrap.value is set to true.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM+JSS] flexform.' . $sheet . '.' . $field . '.stdWrap.value is set to true.', $this->pObj->extKey, 0);
         }
         break;
       case ( 'ts' ) :
         // Do nothing;
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
         {
-          t3lib_div :: devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . '.stdWrap.value isn\'t changed by the flexform.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM+JSS] flexform.' . $sheet . '.' . $field . '.stdWrap.value isn\'t changed by the flexform.', $this->pObj->extKey, 0);
         }
         break;
       case ( 'disabled' ) :
@@ -3247,13 +3247,13 @@ class tx_browser_pi1_flexform {
         $this->pObj->conf['flexform.'][$sheet . '.'][$field] = false;
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
         {
-          t3lib_div :: devlog('[INFO/FLEXFORM+EXPORT] flexform.' . $sheet . '.' . $field . '.stdWrap.value is set to false.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM+JSS] flexform.' . $sheet . '.' . $field . '.stdWrap.value is set to false.', $this->pObj->extKey, 0);
         }
     }
     $this->sheet_viewList_rotateviews = $this->pObj->conf['flexform.'][$sheet . '.'][$field];
-    if ( $this->pObj->b_drs_export )
+    if ( $this->pObj->b_drs_javascript )
     {
-      t3lib_div :: devlog('[INFO/EXPORT] global sheet_viewList_rotateviews is set to ' . $this->sheet_viewList_rotateviews, $this->pObj->extKey, 0);
+      t3lib_div :: devlog('[INFO/JSS] global sheet_viewList_rotateviews is set to ' . $this->sheet_viewList_rotateviews, $this->pObj->extKey, 0);
     }
       // Field rotateviews
 
