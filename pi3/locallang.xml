@@ -29,8 +29,8 @@
       <label index="browser.browser_tut_localisation_en.description">Proper localisation design for your database.</label>
       <label index="browser.browser_tut_marker_en.title">Tutorial Marker</label>
       <label index="browser.browser_tut_marker_en.description">Database marker, constant marker, browser system marker, piVars marker, TYPO3 GLOBALS Marker</label>
-      <label index="browser.browser_tut_rss_en.title">Tutorial RSS/XML</label>
-      <label index="browser.browser_tut_rss_en.description">Publish your data in RSS/XML format</label>
+      <label index="browser.browser_tut_rss_en.title">Tutorial CSV/RSS/XML</label>
+      <label index="browser.browser_tut_rss_en.description">Export your data into in CSV file (comma separated values). Publish your data in form of an RSS feed or in XML.</label>
       <label index="browser.browser_tut_realurl_en.title">Tutorial RealURL</label>
       <label index="browser.browser_tut_realurl_en.description">Search Engine Optimisation</label>
       <label index="browser.browser_tut_search_en.title">Tutorial Search</label>
@@ -82,7 +82,7 @@
       <label index="browser.browser_tut_realurl_en.title">Tutorial RealURL</label>
       <label index="browser.browser_tut_realurl_en.description">RealURL für die eigene Datenbank nutzen.</label>
       <label index="browser.browser_tut_rss_en.title">Tutorial RSS/XML</label>
-      <label index="browser.browser_tut_rss_en.description"><![CDATA[Veröffentliche Deine Daten im RSS- und XML-Format!]]></label>
+      <label index="browser.browser_tut_rss_en.description"><![CDATA[Exportiere Deine Daten als CSV-Datei (Komma separierte Liste). Veröffentliche Deine Daten als RSS-Feed und im XML-Format!]]></label>
       <label index="browser.browser_tut_search_en.title">Tutorial Search - Suche</label>
       <label index="browser.browser_tut_search_en.description">Die Browser interne Suchmaschine konfigurieren und Datensätze filtern.</label>
       <label index="browser.browser_tut_severalplugins_en.title">Tutorial Several Plugins</label>
