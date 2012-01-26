@@ -183,9 +183,30 @@ plugin.tx_browser_pi3 {
         }
       }
     }
-    // browser_tut_hooks_en
+    // browser_tut_rss_en
     1145 < plugin.tx_browser_pi3.template
     1145 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_rss_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_rss_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_rss_en.description
+        }
+      }
+    }
+    // browser_tut_hooks_en
+    1146 < plugin.tx_browser_pi3.template
+    1146 {
       10 {
         11 {
           typolink {
@@ -306,27 +327,6 @@ plugin.tx_browser_pi3 {
       20 {
         stdWrap {
           data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_realurl_en.description
-        }
-      }
-    }
-    // browser_tut_rss_en
-    1191 < plugin.tx_browser_pi3.template
-    1191 {
-      10 {
-        11 {
-          typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_rss_en/current/
-          }
-        }
-        30 {
-          stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_rss_en.title
-          }
-        }
-      }
-      20 {
-        stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_rss_en.description
         }
       }
     }
