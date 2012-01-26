@@ -1236,7 +1236,8 @@ class tx_browser_pi1_flexform {
         echo $prompt;
         exit;
     }
-    if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript) {
+    if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
+    {
       t3lib_div :: devlog('[INFO/FLEXFORM+JSS] ' .
       'jquery_library: \'' . $this->str_jquery_library . '\'', $this->pObj->extKey, 0);
     }
@@ -3171,7 +3172,7 @@ class tx_browser_pi1_flexform {
     $field      = 'csvexport';
     $csvexport  = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
 
-    if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
+    if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
     {
       t3lib_div::devlog( '[INFO/FLEXFORM+EXPORT] ' . 'csvexport: \'' . $csvexport . '\'', $this->pObj->extKey, 0 );
     }
@@ -3201,7 +3202,7 @@ class tx_browser_pi1_flexform {
         }
     }
     $this->sheet_viewList_csvexport = $this->pObj->conf['flexform.'][$sheet . '.'][$field];
-    if ( $this->pObj->b_drs_export )
+    if ( $this->pObj->b_drs_javascript )
     {
       t3lib_div :: devlog('[INFO/EXPORT] global sheet_viewList_csvexport is set to ' . $this->sheet_viewList_csvexport, $this->pObj->extKey, 0);
     }
