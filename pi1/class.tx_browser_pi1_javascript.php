@@ -1246,7 +1246,7 @@ class tx_browser_pi1_javascript
     $views      = $conf['views.'][$viewWiDot];
     
       // RETURN script is disabled by the plugin/flexform
-    if( $this->pObj->objFlexform->sheet_viewList_rotateviews )
+    if( ! $this->pObj->objFlexform->sheet_viewList_rotateviews )
     {
       $js_complete = '  // Browser method dyn_method_load_all_modes( ): There isn\'t any loader set, ' .
                      'because script is disabled by the user in the plugin/flexform.';
