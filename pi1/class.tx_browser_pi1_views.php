@@ -1006,7 +1006,9 @@ class tx_browser_pi1_views
         {
           t3lib_div::devlog('[INFO/TEMPLATING+EXPORT] ' . $str_marker . ' is ignored. ###TEMPLATE_CSV### is used as template marker.',  $this->pObj->extKey, 0);
         }
-        $str_marker = '###TEMPLATE_CSV###';
+        $str_marker     = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
+        $template_path  = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['template.']['file'];
+        $template       = $this->pObj->cObj->fileResource($template_path);
         break;
       default:
         // Do nothing;

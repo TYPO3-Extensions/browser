@@ -343,6 +343,41 @@ class tx_browser_pi1_template
     {
       $searchBox = $this->pObj->cObj->substituteSubpart($searchBox, '###BUTTON_CSV-EXPORT###', null, true);
     }
+      // #29370, 110831, dwildt+
+      // #00000, 120126, dwildt+
+    if( $this->pObj->objFlexform->sheet_viewList_csvexport )
+    {
+      $templateCSV = $this->pObj->cObj->getSubpart($searchBox, '###BUTTON_CSV-EXPORT###');
+      if( empty( $templateCSV ) )
+      {
+        $prompt = '<div style="border:2em solid red;color:red;padding:2em;text-align:center;">
+            <h1>
+              TYPO3 Browser Error
+            </h1>
+            <h2>
+              EN: Subpart is missing
+            </h2>
+            <p>
+              English: You enabled the CSV export in the plugin/flexform.<br />
+              But the current HTML template doesn\'t contain the subpart ###BUTTON_CSV-EXPORT###.<br />
+              Please take care of a proper template and add the subpart.<br />
+              See example in res/html/default.templ.<br />
+            </p>
+            <h2>
+              DE: Subpart fehlt
+            </h2>
+            <p>
+              Deutsch: Du hast im Plugin/inxder Flexform den CSV-Export aktiviert.<br />
+              Aber das aktuellen HTML-Template hat keinen Subpart ###BUTTON_CSV-EXPORT###.<br />
+              Bitte k&uuml;mmere Dich um ein korrektes Template und f&uuml;ge den Subpart hinzu.<br />
+              Ein Beispiel findest Du in der Datei: res/html/default.tmpl<br />
+            </p>
+          </div>';
+        die( $prompt );
+      }
+    }
+      // #00000, 120126, dwildt+
+
     $template   = $this->pObj->cObj->substituteSubpart($template, '###SEARCHFORM###', $searchBox, true);
       // csv export: remove the csv export button
 

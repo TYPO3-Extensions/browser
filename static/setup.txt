@@ -2409,6 +2409,12 @@ plugin.tx_browser_pi1 {
             value = true
           }
         }
+          // [STRING] Path to the HTML template file
+        template {
+            // default file
+          file    = EXT:browser/res/html/csv_export.tmpl
+          marker  = ###TEMPLATE_CSV###
+        }
       }
     }
     viewSingle {
