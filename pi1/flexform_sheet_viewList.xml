@@ -248,6 +248,32 @@
           </config>
         </TCEforms>
       </searchWildcardChar>
+      <filter_hits>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.filter_hits</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.filter_hits.for_all_records</numIndex>
+                <numIndex index="1">for_all_records</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.filter_hits.for_filtered_records</numIndex>
+                <numIndex index="1">for_filtered_records</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.filter_hits.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+            </items>
+            <default>disabled</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </filter_hits>
       <csvexport>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.csvexport</label>
