@@ -16,7 +16,7 @@
  
 
   // [integer] milliseconds
-var ajaxTimeout = 30000; // 30 seconds
+var ajaxTimeout = 60000; // 60 seconds
 var typeNum = 0;
 
 var debugColor = '#ee6600';

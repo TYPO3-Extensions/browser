@@ -6,7 +6,7 @@
               * Tab [Templating]: Update the value of the template
               * Tab [General]:    Update the value of the selected view (optional)
   New Features
-  * #32223: Category Tree
+  * #32223: Category tree
             * static/setup.txt
               * displayList.master_templates ...
                 * ... category_menu.first_item.stdWrap
@@ -21,7 +21,7 @@
                 * ... selectbox.wrap.item.stdWrap
                 is moved to ... item.wraps.value.stdWrap
   * #32654: Integration of Open Street Map
-  * #30912: Filter: count items with no relation to category
+  * #30912: Filter: independent total items
   * #00000: DRS displays warnings and errors eclusive
   Imrovement
   * #00000: Localised records can push into the shopping card without param L now
