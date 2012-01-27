@@ -235,56 +235,10 @@ class tx_browser_pi1_filter {
 
       /////////////////////////////////////////////////////////////////
       //
-      // Hits per filter item
+      // Count the hits per filter item
 
     $this->hits_per_filter_item( $str_devider );
-//    foreach ($this->arr_conf_tableFields as $tableField)
-//    {
-//      list ($table, $field) = explode('.', $tableField);
-//        // 120127, dwildt
-//      if ( ! is_array( $this->rows_wo_limit ) )
-//      {
-//        continue;
-//      }
-//      foreach ( $this->rows_wo_limit as $row_wo_limit )
-//      {
-//        $arr_uids = null;
-//        if ( $str_devider )
-//        {
-//          $arr_uids = explode( $str_devider, $row_wo_limit[$table . '.uid'] );
-//        }
-//        if ( is_array( $arr_uids ) )
-//        {
-//          foreach ( $arr_uids as $uid )
-//          {
-//            if( ! empty( $uid ) )
-//            {
-//              $this->arr_hits[$tableField][$uid]++;
-//              $this->arr_hits[$tableField]['sum']++;
-//            }
-//          }
-//        }
-//        if ( $arr_uids == null )
-//        {
-//          $uid = $row_wo_limit[$table . '.uid'];
-//          if( ! empty( $uid ) )
-//          {
-//            $this->arr_hits[$tableField][$uid]++;
-//            $this->arr_hits[$tableField]['sum']++;
-//          }
-//        }
-//      }
-//    }
-//      // DRS - Development Reporting System
-//    if ( $this->pObj->b_drs_warn )
-//    {
-//      if ( empty ( $this->arr_hits ) )
-//      {
-//        t3lib_div :: devlog('[WARN/FILTER] Any filter item hasn\'t any hit!', $this->pObj->extKey, 0);
-//      }
-//    }
-//      // DRS - Development Reporting System
-//      // Hits per filter item
+      // Count the hits per filter item
 
 
 
@@ -3329,18 +3283,21 @@ class tx_browser_pi1_filter {
  */
   function hits_per_filter_item( $str_devider )
   {
+        // RETURN there are no rows
+      if ( ! is_array( $this->rows_wo_limit ) )
+      {
+        return;
+      }
+        // RETURN there are no rows
+
+
+
       /////////////////////////////////////////////////////////////////
       //
       // LOOP each filter
 
     foreach ($this->arr_conf_tableFields as $tableField)
     {
-// Wieso im LOOP? Kann doch auch davor oder?
-      if ( ! is_array( $this->rows_wo_limit ) )
-      {
-        continue;
-      }
-// Wieso im LOOP? Kann doch auch davor oder?
 
       list ($table, $field) = explode('.', $tableField);
 
