@@ -174,6 +174,8 @@ class tx_browser_pi1_flexform {
   //[sheet/templating]
 
   //[sheet/view]
+    // [string] independent (default) || controlled: Calculate total hits.
+  var $sheet_viewList_total_hits      = null;
     // [boolean] Enable CSV export
   var $sheet_viewList_csvexport       = null;
     // [boolean] Enable CSV export
@@ -3160,6 +3162,52 @@ class tx_browser_pi1_flexform {
     }
       // Remove the search form in case of csv export
       // csv export
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field total_hits
+      // #32654, dwildt, 120127
+
+    $field      = 'total_hits';
+    $total_hits = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
+
+    if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
+    {
+      t3lib_div::devlog( '[INFO/FLEXFORM+FILTER] ' . 'total_hits: \'' . $total_hits . '\'', $this->pObj->extKey, 0 );
+    }
+
+    switch ( $total_hits )
+    {
+      case ( 'controlled' ) :
+        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = 'controlled';
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
+        {
+          t3lib_div::devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' is set to controlled.', $this->pObj->extKey, 0);
+        }
+        break;
+      case ( 'ts' ) :
+        // Do nothing;
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
+        {
+          t3lib_div :: devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' isn\'t changed by the flexform.', $this->pObj->extKey, 0);
+        }
+        break;
+      case ( 'independent' ) :
+      default :
+        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = 'independent';
+        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
+        {
+          t3lib_div :: devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' is set to independent.', $this->pObj->extKey, 0);
+        }
+    }
+    $this->sheet_viewList_total_hits = $this->pObj->conf['flexform.'][$sheet . '.'][$field];
+    if ( $this->pObj->b_drs_filter )
+    {
+      t3lib_div :: devlog('[INFO/FILTER] global sheet_viewList_total_hits is set to ' . $this->sheet_viewList_total_hits, $this->pObj->extKey, 0);
+    }
+      // Field total_hits
 
 
 

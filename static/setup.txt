@@ -2385,8 +2385,10 @@ plugin.tx_browser_pi1 {
       }
     }
     viewList {
+        // [STRING] independent (default) || controlled: Calculate total hits. Can be overriden while runtime by the flexform value.
+      total_hits = false
         // [BOOLEAN] false (default) || true. Can be overriden while runtime by the flexform value.
-      csvexport = false
+      csvexport = independent
       csvexport {
         devider {
             // [STRING] field devider. Usually a comma: ,
