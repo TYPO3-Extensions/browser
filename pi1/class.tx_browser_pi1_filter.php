@@ -963,7 +963,7 @@ class tx_browser_pi1_filter {
         {
           $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
             // #30912, 120127, dwildt+
-          $this->arr_filter_condition[$tableField]['value_is_equal_or_bigger'] = mysql_real_escape_string( $from );
+          $this->arr_filter_condition[$tableField]['equal_or_bigger'] = mysql_real_escape_string( $from );
         }
 
         $to         = $arr_currField['valueTo_stdWrap.']['value'];
@@ -974,7 +974,7 @@ class tx_browser_pi1_filter {
         {
           $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
             // #30912, 120127, dwildt+
-          $this->arr_filter_condition[$tableField]['value_is_equal_or_smaller'] = mysql_real_escape_string( $to );
+          $this->arr_filter_condition[$tableField]['equal_or_smaller'] = mysql_real_escape_string( $to );
         }
 
         if( is_array( $arr_item ) )
@@ -1079,7 +1079,7 @@ class tx_browser_pi1_filter {
         {
           $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
             // #30912, 120127, dwildt+
-          $this->arr_filter_condition[$tableField]['value_is_equal_or_bigger'] = mysql_real_escape_string( $from );
+          $this->arr_filter_condition[$tableField]['equal_or_bigger'] = mysql_real_escape_string( $from );
         }
 
         $to         = $arr_currField['valueTo_stdWrap.']['value'];
@@ -1090,7 +1090,7 @@ class tx_browser_pi1_filter {
         {
           $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
             // #30912, 120127, dwildt+
-          $this->arr_filter_condition[$tableField]['value_is_equal_or_smaller'] = mysql_real_escape_string( $to );
+          $this->arr_filter_condition[$tableField]['equal_or_smaller'] = mysql_real_escape_string( $to );
         }
 
         if( is_array( $arr_item ) )
@@ -1117,7 +1117,7 @@ class tx_browser_pi1_filter {
       $str_uidList = implode(', ', $arr_piVar);
       $str_andWhere = $table . ".uid IN (" . $str_uidList . ")\n";
         // #30912, 120127, dwildt+
-      $this->arr_filter_condition[$tableField]['uid_list'] = $arr_piVar;
+      $this->arr_filter_condition[$tableField]['uid_in_list'] = $arr_piVar;
     }
       // Handle without area filter
 
