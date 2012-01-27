@@ -194,7 +194,12 @@ class tx_browser_pi1_views
 
       // 3.5.0
     $arr_andWhereFilter = $this->pObj->objFilter->andWhere_filter();
-    if (!empty($arr_andWhereFilter))
+$pos = strpos('91.23.187.149', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_andWhereFilter );
+}
+    if ( ! empty( $arr_andWhereFilter ) )
     {
       $this->pObj->arr_andWhereFilter = $arr_andWhereFilter;
     }
@@ -793,7 +798,7 @@ class tx_browser_pi1_views
 
       /////////////////////////////////////////////////////////////////
       //
-      // Development Log: Show the first row
+      // DRS - Show the first row
 
     if ($this->pObj->b_drs_sql)
     {
@@ -808,7 +813,7 @@ class tx_browser_pi1_views
         t3lib_div::devlog('[INFO/SQL] '.$str_prompt, $this->pObj->extKey, 0);
       }
     }
-      // Development Log: Show the first row
+      // DRS - Show the first row
 
 
 
