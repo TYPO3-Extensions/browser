@@ -422,10 +422,55 @@ $pos = strpos('91.23.187.149', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 if( ! ( $pos === false ) )
 {
   var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
-  $arr_andWhereFilter = null;
 }
-    $this->rows_wo_limit;
+if( $pos === false )
+{
+  return;
+}
+      // LOOP rows
+    foreach( $this->rows_wo_limit as $key => $row)
+    {
+        // LOOP conditions
+      foreach( $this->arr_filter_condition as $tableField => $condition )
+      {
+        switch( key( $condition ) )
+        {
+          case( 'equal_or_bigger' ):
+            if ( ! ( $row[$tableField] >= $condition ) )
+            {
+              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition );
+              unset( $this->rows_wo_limit[$key] );
+              continue 2;
+            }
+            break;
+          case( 'equal_or_smaller' ):
+            if ( ! ( $row[$tableField] <= $condition ) )
+            {
+              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' <= ' . $condition );
+              unset( $this->rows_wo_limit[$key] );
+              continue 2;
+            }
+            break;
+          case( 'uid_in_list' ):
+            var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $row[$tableField] . ', ' . $condition . ') ' );
+            if ( ! ( in_array( $row[$tableField], $condition ) ) )
+            {
+              unset( $this->rows_wo_limit[$key] );
+              continue 2;
+            }
+            break;
+          case( 'like' ):
+//            break;
+          default:
+            die( __METHOD__ . ' (' . __LINE__ . '): key "' . key( $condition ) . '" is undefined.' );
+        }
+      }
+        // LOOP conditions
+    }
+      // LOOP rows
+
+    var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
+    var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
   }
 
 
@@ -1148,7 +1193,7 @@ if( ! ( $pos === false ) )
       $str_uidList = implode(', ', $arr_piVar);
       $str_andWhere = $table . ".uid IN (" . $str_uidList . ")\n";
         // #30912, 120127, dwildt+
-      $this->arr_filter_condition[$tableField]['uid_in_list'] = $arr_piVar;
+      $this->arr_filter_condition[$table . '.uid']['uid_in_list'] = $arr_piVar;
     }
       // Handle without area filter
 
