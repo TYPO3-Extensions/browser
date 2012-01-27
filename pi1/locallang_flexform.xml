@@ -316,7 +316,7 @@
       <label index="sheet_viewList.search.wildcards.default">Self-acting (recommended)</label>
       <label index="sheet_viewList.search.wildcards.manual">User have to add wildcards</label>
       <label index="sheet_viewList.search.wildcards.char">Search: char for a wildcard (i.e "*")</label>
-      <label index="sheet_viewList.total_hits">Total hits</label>
+      <label index="sheet_viewList.total_hits">Filter: total hits</label>
       <label index="sheet_viewList.total_hits.independent">Independent on selected filters (recommended)</label>
       <label index="sheet_viewList.total_hits.controlled">Controlled by selected filters</label>
       <label index="sheet_viewList.total_hits.ts">Take the value from TypoScript!</label>
@@ -667,7 +667,7 @@
       <label index="sheet_viewList.search.wildcards.default">Automatisch (empfohlen)</label>
       <label index="sheet_viewList.search.wildcards.manual">Besucher muss Platzhalter selbst hinzufuegen</label>
       <label index="sheet_viewList.search.wildcards.char">Suche: Zeichen fuer den Platzhalter (z.B.: "*")</label>
-      <label index="sheet_viewList.total_hits">Gesamtzahl Treffer</label>
+      <label index="sheet_viewList.total_hits">Filter: Gesamtzahl Treffer</label>
       <label index="sheet_viewList.total_hits.independent">Unabh<![CDATA[&auml;]]>ngig von gesetzten Filtern (empfohlen)</label>
       <label index="sheet_viewList.total_hits.controlled">Abh<![CDATA[&auml;]]>ngig von gesetzten Filtern</label>
       <label index="sheet_viewList.total_hits.ts">Nimm den Wert aus TypoScript!</label>
