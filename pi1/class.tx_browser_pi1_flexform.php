@@ -3180,11 +3180,18 @@ class tx_browser_pi1_flexform {
 
     switch ( $total_hits )
     {
-      case ( 'controlled' ) :
-        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = 'controlled';
+//      case ( 'controlled' ) :
+//        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = 'controlled';
+//        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
+//        {
+//          t3lib_div::devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' is set to controlled.', $this->pObj->extKey, 0);
+//        }
+//        break;
+      case ( 'independent' ) :
+        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = 'independent';
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
         {
-          t3lib_div::devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' is set to controlled.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' is set to independent.', $this->pObj->extKey, 0);
         }
         break;
       case ( 'ts' ) :
@@ -3194,7 +3201,8 @@ class tx_browser_pi1_flexform {
           t3lib_div :: devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' isn\'t changed by the flexform.', $this->pObj->extKey, 0);
         }
         break;
-      case ( 'independent' ) :
+//      case ( 'independent' ) :
+      case ( 'controlled' ) :
       default :
         $this->pObj->conf['flexform.'][$sheet . '.'][$field] = 'independent';
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
