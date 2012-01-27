@@ -36,11 +36,11 @@
  *
  *
  *
- *   48: class tx_browser_pi2_tickets
- *   62:     function __construct($parentObj)
+ *   49: class tx_browser_pi2_tickets
+ *   63:     function __construct($parentObj)
  *
  *              SECTION: Array with all Tickets
- *  127:     function init_tickets()
+ *  128:     function init_tickets()
  *
  * TOTAL FUNCTIONS: 2
  * (This index is automatically created/updated by the extension "extdeveval")

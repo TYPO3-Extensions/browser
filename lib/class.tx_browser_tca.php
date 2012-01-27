@@ -38,10 +38,10 @@
  *
  *
  *
- *   49: class tx_org_extmanager
- *   67:     function promptQuickstart()
+ *   48: class tx_browser_tca
+ *   73:     function static_country_zones($params)
  *
- * TOTAL FUNCTIONS: 2
+ * TOTAL FUNCTIONS: 1
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -67,8 +67,8 @@ class tx_browser_tca
  *                      row             Record row
  *                      field           Field name
  *
- * @param       array           itemsProcFunc data array:
- * @return      void            The $items array may have been modified
+ * @param	array		itemsProcFunc data array:
+ * @return	void		The $items array may have been modified
  */
   function static_country_zones($params)
   {
@@ -87,15 +87,15 @@ class tx_browser_tca
 
       // get the uid of the current country
     $uid_StaticCountries  = $params['row'][$str_tcaFieldForStaticCountries];
-    
-      // Build the SELECT statement    
+
+      // Build the SELECT statement
     $select   = 'static_country_zones.uid as itemKey, static_country_zones.zn_name_local as itemValue';
     $from     = 'static_country_zones, static_countries';
     $where    = 'static_countries.cn_iso_nr  = static_country_zones.zn_country_iso_nr AND static_countries.uid = '.$uid_StaticCountries;
     $groupBy  = null;
     $orderBy  = 'zn_name_local';
     $limit    = null;
-    
+
       // Exexcute the SELECT statemant
     $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select, $from, $where, $groupBy, $orderBy, $limit);
 
@@ -108,7 +108,7 @@ class tx_browser_tca
 
       // Free the SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result($res);
-    
+
       // If there isn't any state/zone, deliver an empty value
     if(empty($params['items']))
     {

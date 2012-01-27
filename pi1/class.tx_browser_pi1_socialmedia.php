@@ -28,7 +28,7 @@
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
 * @subpackage    tx_browser
-* 
+*
 * @version 3.6.4
 */
 
@@ -37,15 +37,15 @@
  *
  *
  *
- *   52: class tx_browser_pi1_socialmedia
- *  105:     function __construct($parentObj)
+ *   54: class tx_browser_pi1_socialmedia
+ *  107:     function __construct($parentObj)
  *
  *              SECTION: Bookmarks
- *  156:     function get_htmlBookmarks($elements, $key, $bool_defaultTemplate)
+ *  159:     function get_htmlBookmarks($elements, $key, $bool_defaultTemplate)
  *
  *              SECTION: Initial methods
- *  382:     function init_htmlBookmarks()
- *  670:     function init_default_stdWraps()
+ *  431:     function init_htmlBookmarks()
+ *  719:     function init_default_stdWraps()
  *
  * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -154,7 +154,6 @@ class tx_browser_pi1_socialmedia
  * @param	string		$key: The name current table.field
  * @param	boolean		$bool_defaultTemplate: TRUE if we have a default HTML template (with ###ITEM### marker)
  * @return	string		$str_items or FALSE. $str_items are the rendered bookmarks
- * 
  * @version 3.6.4
  */
   function get_htmlBookmarks($elements, $key, $bool_defaultTemplate)

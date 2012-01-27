@@ -36,20 +36,26 @@
  *
  *
  *
- *   56: class tx_browser_pi5_backend
- *   86:     public function sDef_getArrViewsList($arr_pluginConf)
- *  237:     public function sDEF_getExtensionTemplates($arr_pluginConf)
- *  290:     public function socialmedia_getArrBookmarks($arr_pluginConf)
- *  349:     public function templating_getArrDataQuery($arr_pluginConf)
+ *   62: class tx_browser_pi5_backend
+ *   92:     public function sDef_getArrViewsList($arr_pluginConf)
+ *  243:     public function sDEF_getExtensionTemplates($arr_pluginConf)
+ *  302:     public function evaluate_externalLinks($arr_pluginConf, $obj_TCEform)
+ *  340:     public function evaluate_plugin($arr_pluginConf, $obj_TCEform)
+ *  492:     public function day_selectRelative($arr_pluginConf)
+ *  654:     public function month_selectRelative($arr_pluginConf)
+ *  720:     public function week_selectRelative($arr_pluginConf)
+ *  787:     public function year_selectRelative($arr_pluginConf)
+ *  847:     public function socialmedia_getArrBookmarks($arr_pluginConf)
+ *  906:     public function templating_getArrDataQuery($arr_pluginConf)
  *
  *              SECTION: Helper Methods
- *  426:     function getLL()
- *  455:     function init($arr_pluginConf)
- *  496:     function init_pageObj($arr_pluginConf)
- *  528:     function init_pageUid($arr_pluginConf)
- *  578:     function init_tsObj($arr_rows_of_all_pages_inRootLine)
+ *  990:     function init($arr_pluginConf)
+ * 1031:     function init_pageObj($arr_pluginConf)
+ * 1063:     function init_pageUid($arr_pluginConf)
+ * 1113:     function init_tsObj($arr_rows_of_all_pages_inRootLine)
+ * 1145:     public function zz_hours( $arr_pluginConf )
  *
- * TOTAL FUNCTIONS: 9
+ * TOTAL FUNCTIONS: 15
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -80,8 +86,8 @@ class tx_browser_pi5_backend
  * sDef_getArrViewsList: Get data query (and andWhere) for all list views of the current plugin.
  * Tab [General/sDEF]
  *
- * @param array    $arr_pluginConf: Configuration of the plugin
- * @return  array   with the names of the views list
+ * @param	array		$arr_pluginConf: Configuration of the plugin
+ * @return	array		with the names of the views list
  */
   public function sDef_getArrViewsList($arr_pluginConf)
   {
@@ -231,8 +237,8 @@ class tx_browser_pi5_backend
  * sDEF_getExtensionTemplates: Get templates from the browser and third party extensions
  * Tab [sDEF]
  *
- * @param array   $arr_pluginConf: Current plugin/flexform configuration
- * @return  array   $arr_pluginConf: Extended with the templates
+ * @param	array		$arr_pluginConf: Current plugin/flexform configuration
+ * @return	array		$arr_pluginConf: Extended with the templates
  */
   public function sDEF_getExtensionTemplates($arr_pluginConf)
   {
@@ -286,12 +292,12 @@ class tx_browser_pi5_backend
 
   /**
  * evaluate_externalLinks: HTML content with external links
- * 
+ *
  * Tab [evaluate]
  *
- * @param array   $arr_pluginConf:  Current plugin/flexform configuration
- * @param array   $obj_TCEform:     Current TCE form object
- * @return  string   $str_prompt: HTML prompt
+ * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
+ * @param	array		$obj_TCEform:     Current TCE form object
+ * @return	string		$str_prompt: HTML prompt
  */
   public function evaluate_externalLinks($arr_pluginConf, $obj_TCEform)
   {
@@ -324,12 +330,12 @@ class tx_browser_pi5_backend
   /**
  * evaluate_plugin: Evaluates the plugin, flexform, TypoScript
  *                  Returns a HTML report
- * 
+ *
  * Tab [evaluate]
  *
- * @param array   $arr_pluginConf:  Current plugin/flexform configuration
- * @param array   $obj_TCEform:     Current TCE form object
- * @return  string   $str_prompt: HTML prompt
+ * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
+ * @param	array		$obj_TCEform:     Current TCE form object
+ * @return	string		$str_prompt: HTML prompt
  */
   public function evaluate_plugin($arr_pluginConf, $obj_TCEform)
   {
@@ -455,7 +461,7 @@ class tx_browser_pi5_backend
         </div>
       </div>
       ';
-    $str_prompt = $str_prompt . $str_prompt_info_includePi5 . $str_prompt_info_tutorialAndForum . 
+    $str_prompt = $str_prompt . $str_prompt_info_includePi5 . $str_prompt_info_tutorialAndForum .
                   $str_prompt_info_drs . $str_prompt_warning_version_420;
       // RETURN the prompt
 
@@ -480,8 +486,8 @@ class tx_browser_pi5_backend
  *                      10, ... , -1, current week, +1, ..., +10
  * Tab [day]
  *
- * @param array   $arr_pluginConf: Current plugin/flexform configuration
- * @return  array   $arr_pluginConf: Extended with the items
+ * @param	array		$arr_pluginConf: Current plugin/flexform configuration
+ * @return	array		$arr_pluginConf: Extended with the items
  */
   public function day_selectRelative($arr_pluginConf)
   {
@@ -497,7 +503,7 @@ class tx_browser_pi5_backend
     $int_currDay    = (int) date ( 'j' );                 // Integer value of current day.
     $str_currMonth  = date ( 'M' );                       // Month represented by three characters
     $str_currDay    = $ll_wouldBeToday . ' ' . $int_currDay . '. ' . $str_currMonth;   // Something like 22. day
-    
+
 
       // Start and end position
     $int_startDay  = $int_currDay - 10;
@@ -642,8 +648,8 @@ class tx_browser_pi5_backend
  *                      - 10, ... , -1, current month, +1, ..., +10
  * Tab [year]
  *
- * @param array   $arr_pluginConf: Current plugin/flexform configuration
- * @return  array   $arr_pluginConf: Extended with the items
+ * @param	array		$arr_pluginConf: Current plugin/flexform configuration
+ * @return	array		$arr_pluginConf: Extended with the items
  */
   public function month_selectRelative($arr_pluginConf)
   {
@@ -656,7 +662,7 @@ class tx_browser_pi5_backend
 
       // Configure current month
     $str_currMonth   = $ll_wouldBeToday . ' ' . date ( 'M' );        // Month represented by three characters
-    $int_currMonth   = (int) date ( 'n' );  // Integer value of current month 
+    $int_currMonth   = (int) date ( 'n' );  // Integer value of current month
 
       // Start and end position
     $int_startMonth  = $int_currMonth - 11;
@@ -708,8 +714,8 @@ class tx_browser_pi5_backend
  *                      - 10, ... , -1, current week, +1, ..., +10
  * Tab [year]
  *
- * @param array   $arr_pluginConf: Current plugin/flexform configuration
- * @return  array   $arr_pluginConf: Extended with the items
+ * @param	array		$arr_pluginConf: Current plugin/flexform configuration
+ * @return	array		$arr_pluginConf: Extended with the items
  */
   public function week_selectRelative($arr_pluginConf)
   {
@@ -775,8 +781,8 @@ class tx_browser_pi5_backend
  *                      -10, ... , -1, current year, +1, ..., +10
  * Tab [year]
  *
- * @param array   $arr_pluginConf: Current plugin/flexform configuration
- * @return  array   $arr_pluginConf: Extended with the items
+ * @param	array		$arr_pluginConf: Current plugin/flexform configuration
+ * @return	array		$arr_pluginConf: Extended with the items
  */
   public function year_selectRelative($arr_pluginConf)
   {
@@ -835,8 +841,8 @@ class tx_browser_pi5_backend
   /**
  * socialmedia_getArrBookmarks: Get bookmarks for flexform. Tab [Socialmedia]
  *
- * @param array    $arr_pluginConf: Configuration of the plugin
- * @return  array   with the bookmarks
+ * @param	array		$arr_pluginConf: Configuration of the plugin
+ * @return	array		with the bookmarks
  */
   public function socialmedia_getArrBookmarks($arr_pluginConf)
   {
@@ -894,8 +900,8 @@ class tx_browser_pi5_backend
  * templating_getArrDataQuery: Get data query (and andWhere) for all list views of the current plugin.
  * Tab [Templating]
  *
- * @param array    $arr_pluginConf: Configuration of the plugin
- * @return  array   with the bookmarks
+ * @param	array		$arr_pluginConf: Configuration of the plugin
+ * @return	array		with the bookmarks
  */
   public function templating_getArrDataQuery($arr_pluginConf)
   {
@@ -976,8 +982,8 @@ class tx_browser_pi5_backend
   /**
  * init(): Initiate this class.
  *
- * @param array   $arr_pluginConf: Current plugin/flexform configuration
- * @return  boolean   TRUE: success. FALSE: error.
+ * @param	array		$arr_pluginConf: Current plugin/flexform configuration
+ * @return	boolean		TRUE: success. FALSE: error.
  * @since 3.4.5
  * @version 3.4.5
  */
@@ -1017,8 +1023,8 @@ class tx_browser_pi5_backend
   /**
  * init_pageObj(): Initiate an page object.
  *
- * @param array   $arr_pluginConf: Current plugin/flexform configuration
- * @return  boolean   FALSE
+ * @param	array		$arr_pluginConf: Current plugin/flexform configuration
+ * @return	boolean		FALSE
  * @since 3.4.5
  * @version 3.4.5
  */
@@ -1049,8 +1055,8 @@ class tx_browser_pi5_backend
   /**
  * init_pageUid(): Initiate the page uid.
  *
- * @param array   $arr_pluginConf: Current plugin/flexform configuration
- * @return  boolean   FALSE
+ * @param	array		$arr_pluginConf: Current plugin/flexform configuration
+ * @return	boolean		FALSE
  * @since 3.4.5
  * @version 3.4.5
  */
@@ -1099,8 +1105,8 @@ class tx_browser_pi5_backend
   /**
  * init_tsObj(): Initiate the TypoScript of the current page.
  *
- * @param array   $arr_rows_of_all_pages_inRootLine: Agregate the TypoScript of all pages in the rootline
- * @return  boolean   FALSE
+ * @param	array		$arr_rows_of_all_pages_inRootLine: Agregate the TypoScript of all pages in the rootline
+ * @return	boolean		FALSE
  * @since 3.4.5
  * @version 3.4.5
  */
@@ -1133,8 +1139,8 @@ class tx_browser_pi5_backend
  *            00:00, 01:00, ..., 23:00, 24:00
  * Tab [year]
  *
- * @param array   $arr_pluginConf: Current plugin/flexform configuration
- * @return  array   $arr_pluginConf: Extended with the items
+ * @param	array		$arr_pluginConf: Current plugin/flexform configuration
+ * @return	array		$arr_pluginConf: Extended with the items
  */
   public function zz_hours( $arr_pluginConf )
   {

@@ -38,27 +38,31 @@
  *
  *
  *
- *   64: class tx_browser_pi1_template
- *  116:     function __construct($parentObj)
+ *   69: class tx_browser_pi1_template
+ *  133:     function __construct($parentObj)
  *
  *              SECTION: Rendering HTML
- *  146:     function tmplSearchBox($template, $display)
- *  335:     function resultphrase()
- *  528:     function tmplListview($template, $rows)
- * 1074:     function tmplSingleview($template, $rows)
- * 1516:     function tmplTableHead($template)
- * 2053:     function tmplRows($elements, $subpart, $template)
+ *  164:     function tmplSearchBox($template, $display)
+ *  407:     function resultphrase()
+ *  602:     function tmplListview($template, $rows)
+ * 1377:     function tmplSingleview($template, $rows)
+ * 1903:     function tmplTableHead($template)
+ * 2549:     function tmplRows($elements, $subpart, $template)
+ * 3349:     private function tmpl_marker( )
+ * 3379:     private function tmpl_rmFields( )
  *
  *              SECTION: GroupBy
- * 2734:     function groupBy_verify($template)
- * 2811:     function groupBy_remove($template)
- * 2834:     function groupBy_get_groupname($elements)
- * 2859:     function groupBy_stdWrap($elements)
+ * 3419:     function groupBy_verify($template)
+ * 3496:     function groupBy_remove($template)
+ * 3519:     function groupBy_get_groupname($elements)
+ * 3544:     function groupBy_stdWrap($elements)
  *
  *              SECTION: Handle As
- * 2950:     function render_handleAs($elements, $handleAs, $markerArray)
+ * 3635:     function render_handleAs($elements, $handleAs, $markerArray)
+ * 3795:     function hook_template_elements()
+ * 3813:     function hook_template_elements_transformed()
  *
- * TOTAL FUNCTIONS: 12
+ * TOTAL FUNCTIONS: 16
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -123,8 +127,8 @@ class tx_browser_pi1_template
 /**
  * Constructor. The method initiate the parent object
  *
- * @param object    The parent object
- * @return  void
+ * @param	object		The parent object
+ * @return	void
  */
   function __construct($parentObj)
   {
@@ -151,10 +155,9 @@ class tx_browser_pi1_template
 /**
  * Building the searchbox as a form.
  *
- * @param string    $template: The current template part
- * @param string    $display : display the searchbox or not
- * @return  string    $template: The HTML template part
- * 
+ * @param	string		$template: The current template part
+ * @param	string		$display : display the searchbox or not
+ * @return	string		$template: The HTML template part
  * @version 4.0.0
  * @since 1.0.0
  */
@@ -399,7 +402,7 @@ class tx_browser_pi1_template
 /**
  * Building the result phrase for the search form.
  *
- * @return  string    Rendered rusult phrase
+ * @return	string		Rendered rusult phrase
  */
   function resultphrase()
   {
@@ -590,10 +593,9 @@ class tx_browser_pi1_template
 /**
  * Building the table with the result in the list view
  *
- * @param string    A HTML template with the TYPO3 subparts and markers
- * @param array   Array with the records of the SQL result
- * @return  void
- *
+ * @param	string		A HTML template with the TYPO3 subparts and markers
+ * @param	array		Array with the records of the SQL result
+ * @return	void
  * @version 4.0.0
  * @since 1.0.0
  */
@@ -1366,10 +1368,9 @@ class tx_browser_pi1_template
   /**
  * Building the table with the result in the single view. There can be more than one rows in case of 1:N Relations
  *
- * @param string    Name of the current table
- * @param array   The SQL result as rows array
- * @return  void
- * 
+ * @param	string		Name of the current table
+ * @param	array		The SQL result as rows array
+ * @return	void
  * @version 4.0.0
  * @since 1.0.0
  */
@@ -1894,9 +1895,8 @@ class tx_browser_pi1_template
       /**
  * Building a row for the HTML table tag <thead> out of the given record and write it to the global $template
  *
- * @param string    Template
- * @return  string    Template
- * 
+ * @param	string		Template
+ * @return	string		Template
  * @version 4.0.0
  * @since 1.0.0
  */
@@ -2539,11 +2539,10 @@ class tx_browser_pi1_template
   /**
  * Building a row out of the given record
  *
- * @param array   The SQL row (elements)
- * @param string    The subpart marker, which is the template for a row
- * @param string    Template
- * @return  string    FALSE || HTML string
- * 
+ * @param	array		The SQL row (elements)
+ * @param	string		The subpart marker, which is the template for a row
+ * @param	string		Template
+ * @return	string		FALSE || HTML string
  * @version 4.0.0
  * @since 1.0.0
  */
@@ -3343,7 +3342,7 @@ class tx_browser_pi1_template
   /**
  * cal_marker(): Set some global marker
  *
- * @return  void
+ * @return	void
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -3370,14 +3369,13 @@ class tx_browser_pi1_template
 
 
  /**
- * tmpl_rmFields( ):  Get the field names, which should not displayed.
- *                    Set the global arr_rmFields
- *
- * @return  void
- * 
- * @version 4.0.0
- * @since 4.0.0
- */
+  * tmpl_rmFields( ):  Get the field names, which should not displayed.
+  *                    Set the global arr_rmFields
+  *
+  * @return	void
+  * @version 4.0.0
+  * @since 4.0.0
+  */
   private function tmpl_rmFields( )
   {
       // RETURN global $arr_rmFields is set
@@ -3415,8 +3413,8 @@ class tx_browser_pi1_template
  * template will be removed. If groupby is configured in TypoScript, but the template hasn't any GROUPBY marker
  * there will be a log in devlog.
  *
- * @param string    $template: The HTML template with the GROUPBY-markers
- * @return  string    $template: The HTML template with or without the GROUPBY-by-markers
+ * @param	string		$template: The HTML template with the GROUPBY-markers
+ * @return	string		$template: The HTML template with or without the GROUPBY-by-markers
  */
   function groupBy_verify($template)
   {
@@ -3492,8 +3490,8 @@ class tx_browser_pi1_template
 /**
  * Remove all GROUPBY marker
  *
- * @param string    $template: The HTML template with the groupby-markers
- * @return  string    $template: The HTML template without the groupby-markers
+ * @param	string		$template: The HTML template with the groupby-markers
+ * @return	string		$template: The HTML template without the groupby-markers
  */
   function groupBy_remove($template)
   {
@@ -3515,8 +3513,8 @@ class tx_browser_pi1_template
 /**
  * Get the name of the group in the current record, if there is one.
  *
- * @param array   $elements: The current record
- * @return  string    $str_return: Value of the group field. FALSE, if we aren't in group mode
+ * @param	array		$elements: The current record
+ * @return	string		$str_return: Value of the group field. FALSE, if we aren't in group mode
  */
   function groupBy_get_groupname($elements)
   {
@@ -3540,8 +3538,8 @@ class tx_browser_pi1_template
 /**
  * groupBy_stdWrap: Wrap the group name, if it has a stdWrap
  *
- * @param array   $elements: The current record
- * @return  string    $str_return: Value of the group field wrapped by stdWrap if we have a TSconfig
+ * @param	array		$elements: The current record
+ * @return	string		$str_return: Value of the group field wrapped by stdWrap if we have a TSconfig
  */
   function groupBy_stdWrap($elements)
   {
@@ -3629,10 +3627,10 @@ class tx_browser_pi1_template
   /**
  * Wraps field values in respect to the TypoScript configuration an the handleAs cases
  *
- * @param array   $elements: SQL row
- * @param array   $handleAs: Array with the fieldnames which have a special handling like title, images or documents
- * @param array   $markerArray: Array with the current markers
- * @return  array   $markerArray: Array with the current markers
+ * @param	array		$elements: SQL row
+ * @param	array		$handleAs: Array with the fieldnames which have a special handling like title, images or documents
+ * @param	array		$markerArray: Array with the current markers
+ * @return	array		$markerArray: Array with the current markers
  */
   function render_handleAs($elements, $handleAs, $markerArray)
   {
@@ -3790,10 +3788,9 @@ class tx_browser_pi1_template
   /**
  * hook_template_elements(): hook to manipulate the elements of a row BEFORE the elements are linked or transformed by typoscript
  *
+ * @return	void
  * @author 	Martin Bless
- * @return  void
- *
- * @internal 	#12723, mbless, 110310 
+ * @internal 	#12723, mbless, 110310
  */
   function hook_template_elements() {
       // debug($this->_elements,'$this->_elements',__LINE__,__FILE__);
@@ -3809,10 +3806,9 @@ class tx_browser_pi1_template
   /**
  * hook_template_elements_transformed( ): hook to manipulate the elements of a row AFTER the elements are linked or transformed by typoscript
  *
+ * @return	void
  * @author 	Martin Bless
- * @return  void
- *
- * @internal 	#12723, mbless, 110310 
+ * @internal 	#12723, mbless, 110310
  */
   function hook_template_elements_transformed() {
       // debug($this->_elementsTransformed,'$this->_elementsTransformed',__LINE__,__FILE__);

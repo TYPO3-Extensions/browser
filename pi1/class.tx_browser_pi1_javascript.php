@@ -39,21 +39,27 @@
  *
  *
  *
- *   60: class tx_browser_pi1_javascript
- *   76:     function __construct($parentObj)
+ *   66: class tx_browser_pi1_javascript
+ *   82:     function __construct($parentObj)
  *
  *              SECTION: CSS
- *  129:     function class_onchange($obj_ts, $arr_ts, $number_of_items)
- *  375:     function wrap_ajax_div($template)
+ *  135:     function class_onchange($obj_ts, $arr_ts, $number_of_items)
+ *  381:     function wrap_ajax_div($template)
  *
  *              SECTION: Files
- *  499:     function load_jQuery()
- *  568:     function addJssFile($path, $name, $keyPathTs)
+ *  505:     function load_jQuery()
+ *  615:     function addJssFile( $path, $name, $keyPathTs )
  *
  *              SECTION: Helper
- *  642:     function set_arrSegment()
+ *  693:     function set_arrSegment()
+ *  759:     public function addCssFiles()
+ *  809:     public function addJssFiles()
+ * 1063:     public function addFile($path, $ie_condition, $name, $keyPathTs, $str_type, $bool_inline )
  *
- * TOTAL FUNCTIONS: 6
+ *              SECTION: Dynamic methods
+ * 1245:     function dyn_method_load_all_modes( )
+ *
+ * TOTAL FUNCTIONS: 10
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -70,8 +76,8 @@ class tx_browser_pi1_javascript
     /**
  * Constructor. The method initiate the parent object
  *
- * @param object    The parent object
- * @return  void
+ * @param	object		The parent object
+ * @return	void
  */
   function __construct($parentObj)
   {
@@ -117,12 +123,12 @@ class tx_browser_pi1_javascript
  * class_wi_ajax_onchange(): Set an HTML class for AJAX onload depending on
  *                           some circumstances
  *
- * @param string    $obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
- * @param array   $arr_ts: The TypoScript configuration of the object
- * @param string    $conf_item: The current item wrap
- * @param integer   $number_of_items: The number of items
- * @param string    $str_order: asc or desc
- * @return  string    Returns the wrapped item
+ * @param	string		$obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
+ * @param	array		$arr_ts: The TypoScript configuration of the object
+ * @param	string		$conf_item: The current item wrap
+ * @param	integer		$number_of_items: The number of items
+ * @param	string		$str_order: asc or desc
+ * @return	string		Returns the wrapped item
  * @since 3.5.0
  * @version 3.5.0
  */
@@ -367,8 +373,8 @@ class tx_browser_pi1_javascript
     /**
  * wrap_ajax_div(): Wrap the template in a div AJAX tag, if segement[cObj] is set
  *
- * @param string    $template: The current content of the template
- * @return  string    $template unchanged or wrapped in div ajax tag
+ * @param	string		$template: The current content of the template
+ * @return	string		$template unchanged or wrapped in div ajax tag
  * @since 3.5.0
  * @version 3.5.0
  */
@@ -492,7 +498,7 @@ class tx_browser_pi1_javascript
  * load_jQuery(): Load the TYPO3 jQuery class and JSS file. If it is missed,
  *                load file from the browser ressources
  *
- * @return  boolean   True: success. False: error.
+ * @return	boolean		True: success. False: error.
  * @since 3.5.0
  * @version 3.6.5
  */
@@ -599,11 +605,10 @@ class tx_browser_pi1_javascript
 /**
  * addJssFile(): Add a JavaScript file the the HTML head
  *
- * @param string    $path: Path to the Javascript
- * @param string    $name: For the key of additionalHeaderData
- * @param string    $keyPathTs: The TypoScript element path to $path for the DRS
- * @return  boolean   True: success. False: error.
- *
+ * @param	string		$path: Path to the Javascript
+ * @param	string		$name: For the key of additionalHeaderData
+ * @param	string		$keyPathTs: The TypoScript element path to $path for the DRS
+ * @return	boolean		True: success. False: error.
  * @version 3.6.5
  * @since 3.5.0
  */
@@ -681,7 +686,7 @@ class tx_browser_pi1_javascript
 /**
  * set_arrSegment(): Catch the segments to output for AJAX
  *
- * @return  void
+ * @return	void
  * @since 3.5.0
  * @version 3.5.0
  */
@@ -747,7 +752,7 @@ class tx_browser_pi1_javascript
 /**
  * addCssFiles(): Add all needed CSS files to the HTML head
  *
- * @return  void
+ * @return	void
  * @version 3.7.0
  * @since 3.7.0
  */
@@ -763,7 +768,7 @@ class tx_browser_pi1_javascript
       $path         = $this->pObj->conf['template.']['css.']['browser'];
       $bool_inline  = $this->pObj->conf['template.']['css.']['browser.']['inline'];
       $path_tsConf  = 'template.css.browser';
-  
+
       $this->addFile($path, false, $name, $path_tsConf, 'css', $bool_inline);
     }
       // css_browser
@@ -780,7 +785,7 @@ class tx_browser_pi1_javascript
       $path         = $this->pObj->conf['template.']['css.']['jquery_ui'];
       $bool_inline  = $this->pObj->conf['template.']['css.']['jquery_ui.']['inline'];
       $path_tsConf  = 'template.css.jquery_ui';
-  
+
       $this->addFile($path, false, $name, $path_tsConf, 'css', $bool_inline);
     }
       // css_jquery_ui
@@ -797,7 +802,7 @@ class tx_browser_pi1_javascript
 /**
  * addJssFiles(): Add all needed JavaScript files to the HTML head
  *
- * @return  void
+ * @return	void
  * @version 3.9.6
  * @since 3.7.0
  */
@@ -836,7 +841,7 @@ class tx_browser_pi1_javascript
       $bool_inline  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library.']['inline'];
       $path_tsConf  = 'javascript.jquery.plugins.t3browser.library';
       $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-      
+
       $inline_jss   = $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name];
       $conf_marker  = $this->pObj->conf['javascript.']['jquery.']['plugins.']['t3browser.']['library.']['marker.'];
       foreach((array) $conf_marker as $key_conf_marker => $arr_conf_marker)
@@ -910,7 +915,7 @@ class tx_browser_pi1_javascript
     if ($this->pObj->objCal->is_loaded)
     {
       $arr_conf_pi5_jss = $this->pObj->conf['javascript.']['jquery.']['pi5.'];
-      
+
       foreach( (array) $arr_conf_pi5_jss as $key_extension => $arr_properties)
       {
           // Take keys with a dot (i.e. 10.) only
@@ -930,11 +935,11 @@ class tx_browser_pi1_javascript
           $bool_inline  = $arr_properties[$key_property]['inline'];
           $path_tsConf  = 'javascript.jquery.pi5.' . $key_extension . rtrim( $key_property, '.' );
           $this->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-  
+
           $inline_jss   = $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name];
   //        $inline_jss = str_replace('###MODE###', $this->pObj->piVar_mode,  $inline_jss);
   //        $inline_jss = str_replace('###VIEW###', $this->pObj->view,        $inline_jss);
-            // :TODO: move markerArray to class.tx_browser_pi1.php 
+            // :TODO: move markerArray to class.tx_browser_pi1.php
           $markerArray = $this->pObj->objCal->markerArray;
           $inline_jss  = $this->pObj->cObj->substituteMarkerArray($inline_jss, $markerArray);
           $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
@@ -1045,13 +1050,13 @@ class tx_browser_pi1_javascript
 /**
  * addJssFile(): Add a JavaScript file the the HTML head
  *
- * @param string    $path:          Path to the Javascript or CSS
- * @param string    $ie_condition:  Optional condition for Internet Explorer
- * @param string    $name:          For the key of additionalHeaderData
- * @param string    $keyPathTs:     The TypoScript element path to $path for the DRS
- * @param string    $str_type:      css or jss
- * @param boolean   $bool_inline:   true: include css/jss inline. false: include it as a file
- * @return  boolean   True: success. False: error.
+ * @param	string		$path:          Path to the Javascript or CSS
+ * @param	string		$ie_condition:  Optional condition for Internet Explorer
+ * @param	string		$name:          For the key of additionalHeaderData
+ * @param	string		$keyPathTs:     The TypoScript element path to $path for the DRS
+ * @param	string		$str_type:      css or jss
+ * @param	boolean		$bool_inline:   true: include css/jss inline. false: include it as a file
+ * @return	boolean		True: success. False: error.
  * @since 3.7.0
  * @version 3.7.0
  */
@@ -1233,7 +1238,7 @@ class tx_browser_pi1_javascript
 /**
  * dyn_method_load_all_modes(): Return a script for background loading of each view
  *
- * @return  string    $js_complete: JSS skript
+ * @return	string		$js_complete: JSS skript
  * @since 3.9.3
  * @version 3.9.6
  */
@@ -1244,7 +1249,7 @@ class tx_browser_pi1_javascript
     $view       = $this->pObj->view;
     $viewWiDot  = $view.'.';
     $views      = $conf['views.'][$viewWiDot];
-    
+
       // RETURN script is disabled by the plugin/flexform
     if( ! $this->pObj->objFlexform->sheet_viewList_rotateviews )
     {
@@ -1280,7 +1285,7 @@ class tx_browser_pi1_javascript
   ###TAB###  load_mode( ###CURR_VIEW### );
   ###NEXT_VIEW###
   ###TAB###}, int_seconds );';
-    
+
     foreach( $views as $key_viewWiDot => $arr_view)
     {
       if( strpos ( $key_viewWiDot , '.' ) === false )
@@ -1321,7 +1326,7 @@ class tx_browser_pi1_javascript
 ';
        break;
     }
-    
+
     return $js_complete;
   }
 

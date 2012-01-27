@@ -36,23 +36,25 @@
  *
  *
  *
- *   58: class tx_browser_pi2_checker
- *   73:     function __construct($parentObj)
+ *   61: class tx_browser_pi2_checker
+ *   76:     function __construct($parentObj)
  *
  *              SECTION: Main
- *  109:     function loop_tickets()
- *  211:     function get_image_path($int_status)
+ *  112:     function loop_tickets( )
+ *  214:     function get_image_path($int_status)
  *
  *              SECTION: Checker Methods
- *  289:     function str_to_int($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
- *  419:     function moved_value_into_array($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
- *  544:     function moved_value($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
- *  658:     function remove_value($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
- *  766:     function moved_from_ts_to_plugin($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
- *  872:     function moved_from_plugin_to_plugin($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
- *  992:     function prompt_otherBrowserPlugins()
+ *  292:     function str_to_int($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
+ *  414:     function value_is_out_of_date($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
+ *  540:     function moved_value_into_array($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
+ *  661:     function moved_array($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
+ *  796:     function moved_value($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
+ *  910:     function remove_value($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
+ * 1018:     function moved_from_ts_to_plugin($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
+ * 1124:     function moved_from_plugin_to_plugin($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
+ * 1244:     function prompt_otherBrowserPlugins()
  *
- * TOTAL FUNCTIONS: 10
+ * TOTAL FUNCTIONS: 12
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -649,11 +651,11 @@ class tx_browser_pi2_checker
     /**
  * Check if the current TypoScript array isn't moved to the destination array. Returns an HTML report.
  *
- * @param integer   $int_release: The number of the release like 0, 1, 2, 3, ...
- * @param integer   $int_ticketNo: The number of the ticket like 0, 123, 4567
- * @param array   $arr_ticket: The array with the tiket properties
- * @param array   $arr_conf_oneDimension: The current TypoScript configuration
- * @return  string    $str_html_return: HTML report
+ * @param	integer		$int_release: The number of the release like 0, 1, 2, 3, ...
+ * @param	integer		$int_ticketNo: The number of the ticket like 0, 123, 4567
+ * @param	array		$arr_ticket: The array with the tiket properties
+ * @param	array		$arr_conf_oneDimension: The current TypoScript configuration
+ * @return	string		$str_html_return: HTML report
  * @version 3.7.0
  */
   function moved_array($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
@@ -665,8 +667,8 @@ class tx_browser_pi2_checker
 //    foreach((array) $arr_conf_oneDimension as $key => $value)
 //    {
 //      $pos = strpos($key, $str_dest_path);
-////      if (!($pos === false)) 
-//      if ($pos === 0) 
+////      if (!($pos === false))
+//      if ($pos === 0)
 //      {
 //        if ($this->pObj->pObj->b_drs_tsUpdate)
 //        {
@@ -676,7 +678,7 @@ class tx_browser_pi2_checker
 //        foreach((array) $arr_conf_oneDimension as $key2 => $value2)
 //        {
 //          $pos = strpos($key2, $str_srce_path);
-//          if (!($pos === false)) 
+//          if (!($pos === false))
 //          {
 //            if ($this->pObj->pObj->b_drs_tsUpdate)
 //            {
@@ -696,7 +698,7 @@ class tx_browser_pi2_checker
     foreach((array) $arr_conf_oneDimension as $key2 => $value2)
     {
       $pos = strpos($key2, $str_srce_path);
-//      if (!($pos === false)) 
+//      if (!($pos === false))
       if ($pos === 0)
       {
         $bool_srce = true;
@@ -785,11 +787,11 @@ class tx_browser_pi2_checker
     /**
  * Check if the current TypoScript array isn't moved to the destination array. Returns an HTML report.
  *
- * @param integer   $int_release: The number of the release like 0, 1, 2, 3, ...
- * @param integer   $int_ticketNo: The number of the ticket like 0, 123, 4567
- * @param array   $arr_ticket: The array with the tiket properties
- * @param array   $arr_conf_oneDimension: The current TypoScript configuration
- * @return  string    $str_html_return: HTML report
+ * @param	integer		$int_release: The number of the release like 0, 1, 2, 3, ...
+ * @param	integer		$int_ticketNo: The number of the ticket like 0, 123, 4567
+ * @param	array		$arr_ticket: The array with the tiket properties
+ * @param	array		$arr_conf_oneDimension: The current TypoScript configuration
+ * @return	string		$str_html_return: HTML report
  */
   function moved_value($int_release, $int_ticketNo, $arr_ticket, $arr_conf_oneDimension)
   {

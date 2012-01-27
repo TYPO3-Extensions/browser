@@ -43,14 +43,14 @@
  *   85:     function __construct($parentObj)
  *  106:     function consolidate($rows)
  *  616:     function init_arrConsolidation()
- *  704:     function addUidAndPid()
+ *  708:     function addUidAndPid()
  *
  *              SECTION: Consolidate Children (Single View and Development only)
- *  804:     function children_relation()
- *  993:     function fields_wi_relation()
- * 1061:     function fields_wi_marker($arr_fields_wi_relation)
- * 1112:     function tsConf_TEXT_path_wi_marker($arr_fields_wi_relation)
- * 1226:     function manipulate_tsConf($arr_tsConf_TEXT_path_wi_marker, $arr_fields_wi_relation)
+ *  808:     function children_relation()
+ * 1012:     function fields_wi_relation()
+ * 1080:     function fields_wi_marker($arr_fields_wi_relation)
+ * 1131:     function tsConf_TEXT_path_wi_marker($arr_fields_wi_relation)
+ * 1245:     function manipulate_tsConf($arr_tsConf_TEXT_path_wi_marker, $arr_fields_wi_relation)
  *
  * TOTAL FUNCTIONS: 9
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -79,8 +79,8 @@ class tx_browser_pi1_consolidate
     /**
  * Constructor. The method initiate the parent object
  *
- * @param object    The parent object
- * @return  void
+ * @param	object		The parent object
+ * @return	void
  */
   function __construct($parentObj)
   {
@@ -99,8 +99,8 @@ class tx_browser_pi1_consolidate
  *                The mothod requires a TypoScript permission:
  *                  autoconfig.consolidation.sql.rows.unique = true
  *
- * @param array   $rows: The rows form the SQL result
- * @return  array   $rows_new: Consolidated rows.
+ * @param	array		$rows: The rows form the SQL result
+ * @return	array		$rows_new: Consolidated rows.
  * @version   3.4.3
  */
   function consolidate($rows)
@@ -611,7 +611,7 @@ class tx_browser_pi1_consolidate
  * init_arrConsolidation:   Inits the consolidation boolean and array.
  *                          Values are out of the TypoScript.
  *
- * @return  boolean   False
+ * @return	boolean		False
  */
   function init_arrConsolidation()
   {
@@ -703,7 +703,7 @@ class tx_browser_pi1_consolidate
  * addUidAndPid:    Returns an array with table.uid, which are missing in the select statement
  *                  It depends on the consolidation parameters in TypoScript
  *
- * @return  array   Array with completed arr_realTables_arrFields and with missing table.uids
+ * @return	array		Array with completed arr_realTables_arrFields and with missing table.uids
  */
   function addUidAndPid()
   {
@@ -800,7 +800,7 @@ class tx_browser_pi1_consolidate
     /**
  * children_relation():     Consolidate children
  *
- * @return  void
+ * @return	void
  * @internal  http://forge.typo3.org/issues/9838
  * @since     3.4.4
  * @version   3.4.4
@@ -843,7 +843,7 @@ class tx_browser_pi1_consolidate
       //
       // Set global arr_row_current and arr_fields_current
 
-      // 110811, pochart: Core: Error handler (FE): PHP Warning: key() [<a href='function.key'>function.key</a>]: Passed variable is not an array or object in typo3conf/ext/browser/pi1/class.tx_browser_pi1_consolidate.php line 847 
+      // 110811, pochart: Core: Error handler (FE): PHP Warning: key() [<a href='function.key'>function.key</a>]: Passed variable is not an array or object in typo3conf/ext/browser/pi1/class.tx_browser_pi1_consolidate.php line 847
     if(is_array($rows))
     {
       reset($rows);
@@ -851,7 +851,7 @@ class tx_browser_pi1_consolidate
       $this->arr_row_current    = $rows[$firstKey];
       $this->arr_fields_current = array_keys($rows[$firstKey]);
     }
-      // 110811, dwildt + 
+      // 110811, dwildt +
     if(!is_array($rows))
     {
       if ($this->pObj->b_drs_warn)
@@ -861,7 +861,7 @@ class tx_browser_pi1_consolidate
       $this->arr_row_current    = null;
       $this->arr_fields_current = null;
     }
-      // 110811, dwildt + 
+      // 110811, dwildt +
       // Set global arr_row_current and arr_fields_current
 
 
@@ -1004,7 +1004,7 @@ class tx_browser_pi1_consolidate
  *                        Return an array with relaion information like foreign_table,
  *                        MM and MM_opposite_field
  *
- * @return  array   $arr_fields_wi_relation : array with all table.fields with a relation
+ * @return	array		$arr_fields_wi_relation : array with all table.fields with a relation
  * @internal  http://forge.typo3.org/issues/9838
  * @since     3.4.4
  * @version   3.4.4
@@ -1071,8 +1071,8 @@ class tx_browser_pi1_consolidate
     /**
  * fields_wi_marker(): Find marker with foreign tables in the TypoScript
  *
- * @param array   $arr_fields_wi_relation : Current rows
- * @return  array   $arr_fields_wi_relation : array with fields with relation and marker
+ * @param	array		$arr_fields_wi_relation : Current rows
+ * @return	array		$arr_fields_wi_relation : array with fields with relation and marker
  * @internal  http://forge.typo3.org/issues/9838
  * @since     3.4.4
  * @version   3.4.4
@@ -1122,8 +1122,8 @@ class tx_browser_pi1_consolidate
  * tsConf_TEXT_path_wi_marker():  Return array with TypoScript paths of all TEXT arrays
  *                                 with markers for foreign tables in the element value
  *
- * @param array   $arr_fields_wi_relation         : Array with table.fields with relations
- * @return  array   $arr_tsConf_TEXT_path_wi_marker : Array with TypoScript paths
+ * @param	array		$arr_fields_wi_relation         : Array with table.fields with relations
+ * @return	array		$arr_tsConf_TEXT_path_wi_marker : Array with TypoScript paths
  * @internal  http://forge.typo3.org/issues/9838
  * @since     3.4.4
  * @version   3.4.4
@@ -1235,9 +1235,9 @@ class tx_browser_pi1_consolidate
     /**
  * manipulate_tsConf(): Simplifing relation building. Enabling several relations to one foreign table.
  *
- * @param array   $arr_tsConf_TEXT_path_wi_marker : Array with TypoScript paths
- * @param array   $arr_fields_wi_relation         : Array with table.fields with relations
- * @return  void
+ * @param	array		$arr_tsConf_TEXT_path_wi_marker : Array with TypoScript paths
+ * @param	array		$arr_fields_wi_relation         : Array with table.fields with relations
+ * @return	void
  * @internal  http://forge.typo3.org/issues/9838
  * @since     3.4.4
  * @version   3.4.4

@@ -38,26 +38,32 @@
  *
  *
  *
- *   61: class tx_browser_pi1_localisation
- *  111:     function __construct($parentObj)
+ *   70: class tx_browser_pi1_localisation
+ *  124:     function __construct($parentObj)
  *
  *              SECTION: SQL query parts
- *  165:     function localisationFields_select($table)
- *  403:     function localisationFields_where($table)
- *  506:     function localisationSingle_where($table)
+ *  180:     function localisationFields_select($table)
+ *  414:     function localisationFields_where($table)
+ *  512:     function localisationSingle_where($table)
  *
  *              SECTION: Configuring Localisation
- *  649:     function localisationConfig()
+ *  650:     private function localisationConfig()
  *
  *              SECTION: Consolidation
- *  729:     function consolidate_filter($rows)
- *  901:     function consolidate_rows($rows, $table)
+ *  774:     function consolidate_filter($rows)
+ *  946:     function consolidate_rows($rows, $table)
  *
  *              SECTION: Little Helpers
- * 1537:     function init_typoscript()
- * 1591:     function propper_locArray($arr_langFields, $table)
+ * 1592:     public function get_localisedUid( $table, $uid )
+ * 1670:     function init_typoscript()
+ * 1735:     private function is_tableLocalised( $table )
+ * 1846:     function propper_locArray($arr_langFields, $table)
  *
- * TOTAL FUNCTIONS: 9
+ *              SECTION: SQL
+ * 1935:     public function sql_getLanguages( )
+ * 2157:     private function sql_localisedUid( $table, $uid )
+ *
+ * TOTAL FUNCTIONS: 13
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -79,7 +85,7 @@ class tx_browser_pi1_localisation
   var $conf_path  = false;
     // Variables set by the pObj (by class.tx_browser_pi1.php)
 
-  
+
 
     //////////////////////////////////////////////////////
     //
@@ -414,7 +420,7 @@ class tx_browser_pi1_localisation
     $this->pObj->objZz->loadTCA($table);
       // Load the TCA, if we don't have an table.columns array
 
-    
+
 
     ////////////////////////////////////////////////////////////////////////////////
     //
@@ -512,7 +518,7 @@ class tx_browser_pi1_localisation
     $this->pObj->objZz->loadTCA($table);
       // Load the TCA, if we don't have an table.columns array
 
-    
+
 
     ////////////////////////////////////////////////////////////////////////////////
     //
@@ -1576,9 +1582,9 @@ class tx_browser_pi1_localisation
  *                      The method returns a localised uid in case of $this->int_localisation_mode is
  *                      * PI1_SELECTED_LANGUAGE_ONLY or
  *                      * PI1_SELECTED_OR_DEFAULT_LANGUAGE
- * @param string   $table : name of the cirrent table
- * @param integer  $uid   : current uid
  *
+ * @param	string		$table : name of the cirrent table
+ * @param	integer		$uid   : current uid
  * @return	void
  * @version 3.9.3
  * @since 3.9.3
@@ -1721,8 +1727,8 @@ class tx_browser_pi1_localisation
  *                        * $this->pObj->arr_realTables_localised
  *                        * $this->pObj->arr_realTables_notLocalised
  *
- * @param string          name of the current table
- * @return	boolean       True, if tbale is localised, false if not.
+ * @param	string		name of the current table
+ * @return	boolean		True, if tbale is localised, false if not.
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -1801,7 +1807,7 @@ class tx_browser_pi1_localisation
       // Is table localised?
 
 
-    
+
       ////////////////////////////////////////////////////////////////////////////////
       //
       // Set the field names for sys_language_content and for l10n_parent
@@ -1922,7 +1928,7 @@ class tx_browser_pi1_localisation
  *                      the row of the default language get the label and flag from
  *                      the page TSconfig
  *
- * @return	array       $rows: rows of lanuages. Null, if table sys_language is empty.
+ * @return	array		$rows: rows of lanuages. Null, if table sys_language is empty.
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -2053,7 +2059,7 @@ class tx_browser_pi1_localisation
       // RETURN rows are empty
 
 
-    
+
       //////////////////////////////////////////////////////////////////////////
       //
       // Get label and flag of the default language out of the page TSconfig
@@ -2122,7 +2128,7 @@ class tx_browser_pi1_localisation
       // Set current language as first row
 
 
-    
+
       //////////////////////////////////////////////////////////////////////////
       //
       // RETURN the rows
@@ -2140,11 +2146,10 @@ class tx_browser_pi1_localisation
 
 
   /**
- * sql_localisedUid( ): Get the uid of the localised record 
+ * sql_localisedUid( ): Get the uid of the localised record
  *
- * @param string     name of the current table
- * @param integer    uid of the cirrent row
- *
+ * @param	string		name of the current table
+ * @param	integer		uid of the cirrent row
  * @return	void
  * @version 3.9.3
  * @since 3.9.3
@@ -2195,7 +2200,7 @@ class tx_browser_pi1_localisation
       // RETURN
       // RETURN conditions
 
-  
+
 
       ////////////////////////////////////////////////////////////////////////////////
       //

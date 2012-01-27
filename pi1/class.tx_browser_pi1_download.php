@@ -39,17 +39,26 @@
  *
  *
  *
- *   56: class tx_browser_pi1_download
- *   83:     function __construct($pObj)
+ *   65: class tx_browser_pi1_download
+ *  101:     function __construct($pObj)
+ *
+ *              SECTION: Main
+ *  138:     public function download( )
+ *  212:     private function download_check( )
+ *  278:     private function download_init( )
  *
  *              SECTION: typeNum
- *  118:     public function set_typeNum( )
+ *  356:     public function set_typeNum( )
  *
- *              SECTION: CSV helper
- *  189:     public function csv_init_config( )
- *  225:     public function csv_value( $value )
+ *              SECTION: Sending
+ *  429:     private function sendFileAndExit( )
  *
- * TOTAL FUNCTIONS: 4
+ *              SECTION: Statistics
+ *  664:     private function statistics( $operator )
+ *  712:     private function statistics_download( $operator )
+ *  735:     private function statistics_downloadByVisit( $operator )
+ *
+ * TOTAL FUNCTIONS: 9
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -86,8 +95,8 @@ class tx_browser_pi1_download
   /**
  * Constructor. The method initiate the parent object
  *
- * @param object    The parent object
- * @return  void
+ * @param	object		The parent object
+ * @return	void
  */
   function __construct($pObj)
   {
@@ -122,7 +131,7 @@ class tx_browser_pi1_download
  *              If there is success, this class will send the header, the file
  *              and will exit the PHP script.
  *
- * @return  string    Prompt, in case of a failure
+ * @return	string		Prompt, in case of a failure
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -174,7 +183,7 @@ class tx_browser_pi1_download
     $this->statistics( '+' );
       // EXIT in case of success!
     $prompt_error = $this->sendFileAndExit( );
-    
+
     $this->statistics( '-' );
 
     $prompt_error = ''.
@@ -196,7 +205,7 @@ class tx_browser_pi1_download
  *                    * table.field has to be a part of the TypoScript select property
  *                    * table.field has to be configured in the TCA
  *
- * @return  string    Prompt, in case of a failure
+ * @return	string		Prompt, in case of a failure
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -262,7 +271,7 @@ class tx_browser_pi1_download
  *                    * $this->field  = documents
  *                    * $this->key    = 0
  *
- * @return  string    Prompt, in case of any downloading isn't allowed
+ * @return	string		Prompt, in case of any downloading isn't allowed
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -340,7 +349,7 @@ class tx_browser_pi1_download
  * set_typeNum(): Set the class variables $int_typeNum and $str_typeNum.
  *                The class variables are needed by other classes while runtime.
  *
- * @return  void
+ * @return	void
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -413,7 +422,7 @@ class tx_browser_pi1_download
  *                    * sql result is proper:     if result is exactly one row
  *                    * file is proper:           if the file does exist
  *
- * @return  string    Prompt, in case of a failure
+ * @return	string		Prompt, in case of a failure
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -647,9 +656,8 @@ class tx_browser_pi1_download
   /**
  * download_statistics(): Inits the statistic module
  *
- * @param string    $operator: operator has to be + or -
- *
- * @return  void
+ * @param	string		$operator: operator has to be + or -
+ * @return	void
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -696,9 +704,8 @@ class tx_browser_pi1_download
   /**
  * statistics_download(): Count the hit
  *
- * @param string    $operator: operator has to be + or -
- *
- * @return  void
+ * @param	string		$operator: operator has to be + or -
+ * @return	void
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -720,9 +727,8 @@ class tx_browser_pi1_download
   /**
  * statistics_downloadByVisit(): Count the hit by visit
  *
- * @param string    $operator: operator has to be + or -
- *
- * @return  void
+ * @param	string		$operator: operator has to be + or -
+ * @return	void
  * @version 3.9.3
  * @since 3.9.3
  */
@@ -752,15 +758,15 @@ class tx_browser_pi1_download
     return;
   }
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_download.php']) {

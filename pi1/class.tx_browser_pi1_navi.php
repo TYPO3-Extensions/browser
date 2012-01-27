@@ -38,19 +38,29 @@
  *
  *
  *
- *   55: class tx_browser_pi1_navi
- *  100:     function __construct($parentObj)
- *  131:     function azBrowser($arr_data)
- *  339:     function azTemplate($arr_data)
- *  616:     function azTabArray($arr_data)
- * 1056:     function azRowsInitial($arr_data)
- * 1321:     function tmplPageBrowser($arr_data)
+ *   67: class tx_browser_pi1_navi
+ *  116:     public function __construct($parentObj)
  *
- *              SECTION: ModeSelector
- * 1532:     function prepaireModeSelector()
- * 1600:     function tmplModeSelector($arr_data)
+ *              SECTION: A-Z browser
+ *  155:     public function azBrowser($arr_data)
+ *  383:     public function azTemplate($arr_data)
+ *  649:     public function azTabArray($arr_data)
+ * 1089:     public function azRowsInitial($arr_data)
  *
- * TOTAL FUNCTIONS: 8
+ *              SECTION: pagebrowser
+ * 1357:     public function tmplPageBrowser($arr_data)
+ *
+ *              SECTION: mode selector
+ * 1596:     public function prepaireModeSelector()
+ * 1663:     public function tmplModeSelector($arr_data)
+ *
+ *              SECTION: record browser
+ * 1785:     public function recordbrowser_get($str_content)
+ * 1872:     public function recordbrowser_callListView()
+ * 1941:     private function recordbrowser_rendering()
+ * 2271:     public function recordbrowser_set_session_data($rows)
+ *
+ * TOTAL FUNCTIONS: 12
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -98,9 +108,8 @@ class tx_browser_pi1_navi
  /**
   * Constructor. The method initiate the parent object
   *
-  * @param  object    The parent object
-  * @return void
-  * 
+  * @param	object		The parent object
+  * @return	void
   * @version  3.7.3
   * @since    2.0.0
   */
@@ -138,9 +147,8 @@ class tx_browser_pi1_navi
  * Returns an array with used tables and fields out of the TypoScript SQL query parts.
  * The tables will have real names
  *
- * @param array   Array with elements rows and template
- * @return  array   Array with the syntax array[table][] = field
- *
+ * @param	array		Array with elements rows and template
+ * @return	array		Array with the syntax array[table][] = field
  * @version 3.7.3
  * @since 2.0.0
  */
@@ -153,8 +161,8 @@ class tx_browser_pi1_navi
     $arr_return['data']['template'] = $template;
 
     $lDisplay = $this->pObj->lDisplayList['display.'];
-    
-    
+
+
 
       /////////////////////////////////////
       //
@@ -369,8 +377,8 @@ class tx_browser_pi1_navi
  /**
   * Building the HTML template with the A-Z-Browser
   *
-  * @param  array   Array with elements azTabArray, tabIds, template
-  * @return array   Array data with the element template
+  * @param	array		Array with elements azTabArray, tabIds, template
+  * @return	array		Array data with the element template
   */
   public function azTemplate($arr_data)
   {
@@ -634,8 +642,8 @@ class tx_browser_pi1_navi
  /**
   * Generates an array with informations for every tab
   *
-  * @param  array   Array with elements azRows and rows
-  * @return array   Array data with elements azTabArray, tabIds and rows
+  * @param	array		Array with elements azRows and rows
+  * @return	array		Array data with elements azTabArray, tabIds and rows
   * @version        3.4.3
   */
   public function azTabArray($arr_data)
@@ -1075,8 +1083,8 @@ class tx_browser_pi1_navi
  /**
   * Building the SQL query for the A-Z-Browser. Exxecute the query. Return the rows.
   *
-  * @param  array   Array with the current rows
-  * @return array   Array data with the element azRows
+  * @param	array		Array with the current rows
+  * @return	array		Array data with the element azRows
   */
   public function azRowsInitial($arr_data)
   {
@@ -1343,8 +1351,8 @@ class tx_browser_pi1_navi
  /**
   * Building the page browser. Returns the HTML template
   *
-  * @param  array   Array with elements template and display
-  * @return string    template
+  * @param	array		Array with elements template and display
+  * @return	string		template
   */
   public function tmplPageBrowser($arr_data)
   {
@@ -1583,7 +1591,7 @@ class tx_browser_pi1_navi
     /**
  * Prepaire an array for the mode selector. Allocate a value to $this->piVar_mode.
  *
- * @return  array   Array with the modeSelector names
+ * @return	array		Array with the modeSelector names
  */
   public function prepaireModeSelector()
   {
@@ -1649,8 +1657,8 @@ class tx_browser_pi1_navi
  /**
   * Building the mode selector HTML code.
   *
-  * @param  array   Array with the template and the mode selector tabs
-  * @return string    template
+  * @param	array		Array with the template and the mode selector tabs
+  * @return	string		template
   */
   public function tmplModeSelector($arr_data)
   {
@@ -1769,9 +1777,8 @@ class tx_browser_pi1_navi
   * recordbrowser_get:  Rplace the marker ###RECORD_BROWSER### with the rendered record browser
   *                     * Feature: #27041
   *
-  * @param  string   $str_content: current content
-  * @return  string   $str_content: content with rendered marker ###RECORD_BROWSER###
-  * 
+  * @param	string		$str_content: current content
+  * @return	string		$str_content: content with rendered marker ###RECORD_BROWSER###
   * @version 3.7.0
   * @since 3.7.0
   */
@@ -1858,8 +1865,7 @@ class tx_browser_pi1_navi
   *                             * Session management is disabled
   *                             * Single view is called without calling the list view before
   *
-  * @return  void
-  * 
+  * @return	void
   * @version  3.7.0
   * @since    3.7.0
   */
@@ -1928,8 +1934,7 @@ class tx_browser_pi1_navi
  /**
   * recordbrowser_rendering: Render the record browser (HTML code)
   *
-  * @return  string   $record_browser: HTML code
-  * 
+  * @return	string		$record_browser: HTML code
   * @version  3.7.0
   * @since    3.7.0
   */
@@ -1982,7 +1987,7 @@ class tx_browser_pi1_navi
       {
         if ($this->pObj->b_drs_templating)
         {
-          t3lib_div::devlog('[INFO/TEMPLATING] uids_of_all_rows is empty. ' . 
+          t3lib_div::devlog('[INFO/TEMPLATING] uids_of_all_rows is empty. ' .
             'record browser should not displayed in case of an empty result: RETURN',  $this->pObj->extKey, 0);
         }
         return $record_browser;
@@ -1997,9 +2002,9 @@ class tx_browser_pi1_navi
       // Get first, current and last positions and the position array
 
     $uids_of_all_rows = $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'];
-      // Position array: the position (0, 1, ... , n) will be the value, the uid of the record will be the key 
+      // Position array: the position (0, 1, ... , n) will be the value, the uid of the record will be the key
     $pos_of_all_rows  = array_flip($uids_of_all_rows);
-    
+
     $pos_of_first_row               = 0;
     $pos_of_curr_row                = $pos_of_all_rows[$singlePid];
     $pos_of_last_row                = $pos_of_all_rows[end($uids_of_all_rows)];
@@ -2254,13 +2259,12 @@ class tx_browser_pi1_navi
  /**
   * recordbrowser_set_session_data: Set session data for the record browser.
   *                                 * We need the record browser in the single view.
-  *                                 * This method must be called, before the page browser 
+  *                                 * This method must be called, before the page browser
   *                                   changes the rows array (before limiting).
   *                                 * Feature: #27041
   *
-  * @param  array   $rows: Array with all available rows of the list view in order of the list view
-  * @return  array   $arr_return: false in case of success, otherwise array with an error message
-  * 
+  * @param	array		$rows: Array with all available rows of the list view in order of the list view
+  * @return	array		$arr_return: false in case of success, otherwise array with an error message
   * @version 3.7.0
   * @since 3.7.0
   */
@@ -2306,9 +2310,9 @@ class tx_browser_pi1_navi
 
     if(empty($rows))
     {
-        // Get the tx_browser_pi1 session array 
+        // Get the tx_browser_pi1 session array
       $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
-        // Empty the array with the uids of all rows 
+        // Empty the array with the uids of all rows
       $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = array();
         // Set the tx_browser_pi1 session array
       $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_browser_session);
@@ -2327,7 +2331,7 @@ class tx_browser_pi1_navi
       // Get table.field for uid of the local table
 
     $key_for_uid = $this->pObj->arrLocalTable['uid'];
-    
+
       // RETURN uid table.field isn't any key
     $key = key( $rows );
     if( ! isset( $rows[$key][$key_for_uid] ) )
@@ -2394,9 +2398,9 @@ class tx_browser_pi1_navi
       //
       // Set the session array
 
-      // Get the tx_browser_pi1 session array 
+      // Get the tx_browser_pi1 session array
     $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey( $str_data_space, $this->pObj->prefixId );
-      // Overwrite the array with the uids of all rows 
+      // Overwrite the array with the uids of all rows
     $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $arr_uid;
       // Set the tx_browser_pi1 session array
     $GLOBALS['TSFE']->fe_user->setKey( $str_data_space, $this->pObj->prefixId, $arr_browser_session );
@@ -2420,7 +2424,7 @@ class tx_browser_pi1_navi
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi.php']) 
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi.php'])
 {
   include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi.php']);
 }

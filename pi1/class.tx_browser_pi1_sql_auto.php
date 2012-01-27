@@ -29,7 +29,7 @@
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage    tx_browser
- * 
+ *
  * @version 3.6.3
  */
 
@@ -38,34 +38,34 @@
  *
  *
  *
- *   72: class tx_browser_pi1_sql_auto
- *   93:     function __construct($parentObj)
+ *   74: class tx_browser_pi1_sql_auto
+ *   97:     function __construct($parentObj)
  *
  *              SECTION: Main method
- *  116:     function get_query_array()
+ *  120:     function get_query_array()
  *
  *              SECTION: SQL relation building with user defined SELECT only
- *  270:     function select()
- *  458:     function sql_from()
- *  612:     function orderBy()
- *  760:     function groupBy()
- *  873:     function get_joins()
+ *  274:     function select()
+ *  462:     function sql_from()
+ *  616:     function orderBy()
+ *  764:     function groupBy()
+ *  877:     function get_joins()
  *
  *              SECTION: SQL relation building WHERE
- * 1287:     function whereSearch()
- * 1544:     function whereClause()
- * 1758:     function andWhere()
- * 1842:     function arr_andWherePid()
- * 1878:     function str_andWherePid($realTable)
- * 1947:     function arr_andWhereEnablefields()
- * 1983:     function str_enableFields($realTable)
+ * 1369:     function whereSearch()
+ * 1626:     function whereClause()
+ * 1840:     function andWhere()
+ * 1924:     function arr_andWherePid()
+ * 1960:     function str_andWherePid($realTable)
+ * 2029:     function arr_andWhereEnablefields()
+ * 2065:     function str_enableFields($realTable)
  *
  *              SECTION: Methods for automatic SQL relation building
- * 2020:     function get_ts_autoconfig_relation()
- * 2086:     function get_arr_relations_mm_simple()
+ * 2102:     function get_ts_autoconfig_relation()
+ * 2168:     function get_arr_relations_mm_simple()
  *
  *              SECTION: Manual SQL Query Building
- * 2487:     function get_sql_query($select, $from, $where, $group, $order, $limit)
+ * 2569:     function get_sql_query($select, $from, $where, $group, $order, $limit)
  *
  * TOTAL FUNCTIONS: 17
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -91,8 +91,8 @@ class tx_browser_pi1_sql_auto
   /**
  * Constructor. The method initiate the parent object
  *
- * @param object    The parent object
- * @return  void
+ * @param	object		The parent object
+ * @return	void
  */
   function __construct($parentObj)
   {
@@ -115,7 +115,7 @@ class tx_browser_pi1_sql_auto
  * It returns the parts for a SQL query. OrderBy and GroupBy aren't used in the SQL statement.
  * OrderBy is used in php multisort. GroupBy is used in context with consolidation.
  *
- * @return  array   array with the elements error and data. Data has the elements select, from, where, orderBy, groupBy.
+ * @return	array		array with the elements error and data. Data has the elements select, from, where, orderBy, groupBy.
  */
   function get_query_array()
   {
@@ -269,7 +269,7 @@ class tx_browser_pi1_sql_auto
  * If tables hasn't any uid in the SELECT, table.uid will be added.
  *  If orderBy contains further tableFields, they will added to the select query.
  *
- * @return  string    SQL select or FALSE, if there is an error
+ * @return	string		SQL select or FALSE, if there is an error
  */
   function select()
   {
@@ -457,7 +457,7 @@ class tx_browser_pi1_sql_auto
   /**
  * The method returns the FROM clause for the SQL query
  *
- * @return  string    SQL from
+ * @return	string		SQL from
  */
   function sql_from()
   {
@@ -611,7 +611,7 @@ class tx_browser_pi1_sql_auto
  * If there aren't piVars and there aren't a TypoSCript configuration, it will be empty.
  * If there are aliases, the aliases will be deleted.
  *
- * @return  string    $orderBy: SQL ORDER BY clause.
+ * @return	string		$orderBy: SQL ORDER BY clause.
  */
   function orderBy()
   {
@@ -759,7 +759,7 @@ class tx_browser_pi1_sql_auto
  * If there is more than one value, all other values will be removed
  * If there are aliases, the aliases will be deleted.
  *
- * @return  string    $groupBy: The first groupBy value with ASC or DESC, if there is one
+ * @return	string		$groupBy: The first groupBy value with ASC or DESC, if there is one
  */
   function groupBy()
   {
@@ -872,7 +872,7 @@ class tx_browser_pi1_sql_auto
   /**
  * Relation method: Building the relation part for the where clause
  *
- * @return  string    TRUE || FALSE or the SQL-where-clause
+ * @return	string		TRUE || FALSE or the SQL-where-clause
  */
   function get_joins()
   {
@@ -1026,7 +1026,7 @@ class tx_browser_pi1_sql_auto
       //  array["tx_ships_main"]["tx_ships_main_g3_application_mm"] = "tx_ships_application"
       //  array["tx_ships_main"]["tx_ships_main_g3_rigortype_mm"]   = "tx_ships_rigortype"
       //  ...
-      
+
         // Loop: tables
       foreach ($tables as $localTable => $foreignTables)
       {
@@ -1046,7 +1046,7 @@ class tx_browser_pi1_sql_auto
           }
         }
           // Load the TCA, if we don't have an table.columns array
-        
+
           // Loop: foreignTables
         foreach((array) $foreignTables as $mmTable => $foreignTable)
         {
@@ -1123,7 +1123,7 @@ class tx_browser_pi1_sql_auto
                 // Use current LEFT JOIN once only
             }
               // left join: true
-          
+
               // left join: false
             if (!$this->b_left_join)
             {
@@ -1188,7 +1188,7 @@ class tx_browser_pi1_sql_auto
       }
         // Loop: tables
     }
-    
+
       // MM-relation-building
 
 
@@ -1228,7 +1228,7 @@ class tx_browser_pi1_sql_auto
         list ($localTable, $localField) = explode('.', $localTableField);
           // #11650, cweiske, 101223
         //$foreignTableField = $foreignTable.'.uid';
-        if (strpos($foreignTable, '.') !== false) 
+        if (strpos($foreignTable, '.') !== false)
         {
           list($foreignTable, $foreignTableField) = explode('.', $foreignTable);
         }
@@ -1364,7 +1364,7 @@ class tx_browser_pi1_sql_auto
  * The SQL result will be true:
  * - If every sword will be once in one field at least
  *
- * @return  string    SQL query string
+ * @return	string		SQL query string
  */
   function whereSearch()
   {
@@ -1621,7 +1621,7 @@ class tx_browser_pi1_sql_auto
   /**
  * Relation method: Building the whole where clause
  *
- * @return  string    FALSE or the SQL-where-clause
+ * @return	string		FALSE or the SQL-where-clause
  */
   function whereClause()
   {
@@ -1835,7 +1835,7 @@ class tx_browser_pi1_sql_auto
   /**
  * Relation method: Building a further part for the where clause
  *
- * @return  string    TRUE || FALSE or the SQL-where-clause
+ * @return	string		TRUE || FALSE or the SQL-where-clause
  */
   function andWhere()
   {
@@ -1919,7 +1919,7 @@ class tx_browser_pi1_sql_auto
  * table.pid IN (pidlist). pidlist is a comma seperated list of uids.
  * If aliases are configured, table will become an alias.
  *
- * @return  array   $arr_andWherePid: Array with statements: table.pid IN (pidlist)
+ * @return	array		$arr_andWherePid: Array with statements: table.pid IN (pidlist)
  */
   function arr_andWherePid()
   {
@@ -1954,8 +1954,8 @@ class tx_browser_pi1_sql_auto
   /**
  * Return the AND WHERE statement for the pid
  *
- * @param string    $realTable: Name of the current table
- * @return  string    $str_andWherePid: String with statement: table.pid IN (pidlist)
+ * @param	string		$realTable: Name of the current table
+ * @return	string		$str_andWherePid: String with statement: table.pid IN (pidlist)
  */
   function str_andWherePid($realTable)
   {
@@ -2024,7 +2024,7 @@ class tx_browser_pi1_sql_auto
  * table.deleted = 0 AND table.hidden = 0.
  * If aliases are configured, table will become an alias.
  *
- * @return  array   $arr_andWhereEnablefields: Array with enablefields statements
+ * @return	array		$arr_andWhereEnablefields: Array with enablefields statements
  */
   function arr_andWhereEnablefields()
   {
@@ -2059,8 +2059,8 @@ class tx_browser_pi1_sql_auto
   /**
  * Get the AND WHERE enablefields for the current table. Replace the real name with an alias, if there is an alias.
  *
- * @param string    $realTable: Name of the current table
- * @return  array   $arr_andWhereEnablefields: Array with enablefields statements
+ * @param	string		$realTable: Name of the current table
+ * @return	array		$arr_andWhereEnablefields: Array with enablefields statements
  */
   function str_enableFields($realTable)
   {
@@ -2097,7 +2097,7 @@ class tx_browser_pi1_sql_auto
   /**
  * Checks if there should be an automatic configuration process. If yes it fills up $arr_ts_autoconf_relation and $boolAutorelation
  *
- * @return  array   FALSE || $arr_ts_autoconf_relation
+ * @return	array		FALSE || $arr_ts_autoconf_relation
  */
   function get_ts_autoconfig_relation()
   {
@@ -2163,7 +2163,7 @@ class tx_browser_pi1_sql_auto
   /**
  * Generating the $this->arr_relations_mm_simple, an array with the arrays MM and/or simple
  *
- * @return  string    TRUE or $arr_return
+ * @return	string		TRUE or $arr_return
  */
   function get_arr_relations_mm_simple()
   {
@@ -2558,13 +2558,13 @@ class tx_browser_pi1_sql_auto
   /**
  * The method returns a SQL query.
  *
- * @param string    $select: SELECT clause
- * @param string    $from:   FROM clause
- * @param string    $where:  WHERE clause
- * @param string    $group:  GROUP clause
- * @param string    $order:  ORDER clause
- * @param string    $limit:  LIMIT clause
- * @return  string    SQL query
+ * @param	string		$select: SELECT clause
+ * @param	string		$from:   FROM clause
+ * @param	string		$where:  WHERE clause
+ * @param	string		$group:  GROUP clause
+ * @param	string		$order:  ORDER clause
+ * @param	string		$limit:  LIMIT clause
+ * @return	string		SQL query
  */
   function get_sql_query($select, $from, $where, $group, $order, $limit)
   {

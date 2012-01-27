@@ -36,21 +36,21 @@
  *
  *
  *
- *   58: class tx_browser_pi1_typoscript
- *  110:     function __construct($parentObj)
+ *   59: class tx_browser_pi1_typoscript
+ *  111:     function __construct($parentObj)
  *
  *              SECTION: TypoScript Management
- *  150:     function oneDim_to_tree($conf_oneDim)
+ *  151:     function oneDim_to_tree($conf_oneDim)
  *
  *              SECTION: Get used tables from the TypoScript
- *  224:     function fetch_realTables_arrFields()
- *  363:     function fetch_localTable()
+ *  225:     function fetch_realTables_arrFields()
+ *  364:     function fetch_localTable()
  *
  *              SECTION: Helper Functions
- *  496:     function set_confSql()
- *  768:     function set_confSql_groupBy()
- *  846:     function set_confSqlDevider()
- *  902:     function fetch_realTableWiField($str_queryPart)
+ *  497:     function set_confSql()
+ *  788:     function set_confSql_groupBy()
+ *  866:     function set_confSqlDevider()
+ *  922:     function fetch_realTableWiField($str_queryPart)
  *
  * TOTAL FUNCTIONS: 8
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -105,8 +105,8 @@ class tx_browser_pi1_typoscript
 /**
  * Constructor. The method initiate the parent object
  *
- * @param object    The parent object
- * @return  void
+ * @param	object		The parent object
+ * @return	void
  */
   function __construct($parentObj)
   {
@@ -143,8 +143,8 @@ class tx_browser_pi1_typoscript
  *                      will become
  *                    - $conf['views.']['single.']['1.']['select'] = tt_news.title
  *
- * @param array   $conf_oneDim  : TypoScript configuration array (one dimension)
- * @return  array   $conf         : TypoScript configuration array
+ * @param	array		$conf_oneDim  : TypoScript configuration array (one dimension)
+ * @return	array		$conf         : TypoScript configuration array
  * @since     3.4.3
  * @version   3.4.3
  */
@@ -220,7 +220,7 @@ class tx_browser_pi1_typoscript
  * Returns an array with used tables and fields out of the TypoScript SQL query parts.
  * The tables will have real names
  *
- * @return  array   Array with the syntax array[table][] = field
+ * @return	array		Array with the syntax array[table][] = field
  */
   function fetch_realTables_arrFields()
   {
@@ -359,7 +359,7 @@ class tx_browser_pi1_typoscript
  /**
   * Rteurns the values for the array with the local table. The local table is the main table.
   *
-  * @return array   $arr_localTable: Array with the syntax: array[uid] = table.field, array[pid] = table.field
+  * @return	array		$arr_localTable: Array with the syntax: array[uid] = table.field, array[pid] = table.field
   */
   function fetch_localTable()
   {
@@ -492,7 +492,7 @@ class tx_browser_pi1_typoscript
   * If there is a 'deal_as_table', SQL function will replaced.
   * All tables become an alias, functions too.
   *
-  * @return array   $conf_sql:
+  * @return	array		$conf_sql:
   */
   function set_confSql()
   {
@@ -783,7 +783,7 @@ class tx_browser_pi1_typoscript
   * If there is more than one value, all other values will be removed
   * If there are aliases, the aliases will be deleted.
   *
-  * @return string    $groupBy: The first groupBy value with ASC or DESC, if there is one
+  * @return	string		$groupBy: The first groupBy value with ASC or DESC, if there is one
   */
   function set_confSql_groupBy() {
 
@@ -861,7 +861,7 @@ class tx_browser_pi1_typoscript
  /**
   * Sets the global vars $str_sqlDeviderDisplay and $str_sqlDeviderWorkflow
   *
-  * @return boolean   false
+  * @return	boolean		false
   */
   function set_confSqlDevider()
   {
@@ -916,8 +916,8 @@ class tx_browser_pi1_typoscript
 /**
  * Allocates the class array arr_table_wi_arrFields with realname tables and there fields
  *
- * @param string    $str_queryPart: The query part out of the global conf_sql.
- * @return  boolean   false
+ * @param	string		$str_queryPart: The query part out of the global conf_sql.
+ * @return	boolean		false
  */
   function fetch_realTableWiField($str_queryPart) {
 

@@ -69,20 +69,20 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  *
  *
  *
- *   90: class tx_browser_pi1 extends tslib_pibase
+ *   91: class tx_browser_pi1 extends tslib_pibase
  *
  *              SECTION: Main Process
- *  326:     function main($content, $conf)
+ *  331:     function main($content, $conf)
  *
  *              SECTION: DRS - Development Reporting System
- *  956:     function init_drs()
+ * 1087:     function init_drs()
  *
  *              SECTION: Classes
- * 1222:     function require_classes()
- * 1326:     function init_classVars()
+ * 1405:     function require_classes()
+ * 1531:     function init_classVars()
  *
  *              SECTION: Template
- * 1465:     function getTemplate($cObj, $conf, $arr_data)
+ * 1683:     function getTemplate($cObj, $conf, $arr_data)
  *
  * TOTAL FUNCTIONS: 5
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -323,14 +323,12 @@ class tx_browser_pi1 extends tslib_pibase {
   /**
  * Main method of your PlugIn
  *
- * @param string    $content: The content of the PlugIn
- * @param array   $conf: The PlugIn Configuration
- * @return  string    The content that should be displayed on the website
- * 
+ * @param	string		$content: The content of the PlugIn
+ * @param	array		$conf: The PlugIn Configuration
+ * @return	string		The content that should be displayed on the website
  * @version 3.6.2
- 
  */
-  function main($content, $conf) 
+  function main($content, $conf)
   {
     $this->conf = $conf;
 
@@ -892,7 +890,7 @@ class tx_browser_pi1 extends tslib_pibase {
       //////////////////////////////////////////////////////////////////////
       //
       // XML/RSS: return the result (XML string) without wrapInBaseClass
-  
+
       // #28855, 110809, dwildt
     if(substr($str_template_completed, 0, strlen('<?xml')) == '<?xml')
     {
@@ -963,7 +961,7 @@ class tx_browser_pi1 extends tslib_pibase {
         t3lib_div::devlog('[INFO/JSS] jQuery will be loaded.', $this->extKey, 0);
       }
       $bool_load_jQuery = true;
-    }  
+    }
     if ($this->objFlexform->bool_jquery_ui)
     {
       if ($this->b_drs_javascript)
@@ -972,7 +970,7 @@ class tx_browser_pi1 extends tslib_pibase {
         t3lib_div::devlog('[INFO/JSS] jQuery will be loaded.', $this->extKey, 0);
       }
       $bool_load_jQuery = true;
-    }  
+    }
 
     if($bool_load_jQuery)
     {
@@ -1084,7 +1082,7 @@ class tx_browser_pi1 extends tslib_pibase {
   /**
  * Set the booleans for Warnings, Errors and DRS - Development Reporting System
  *
- * @return  void
+ * @return	void
  */
   function init_drs()
   {
@@ -1402,7 +1400,7 @@ class tx_browser_pi1 extends tslib_pibase {
   /**
  * Init the helper classes
  *
- * @return  void
+ * @return	void
  */
   function require_classes()
   {
@@ -1528,7 +1526,7 @@ class tx_browser_pi1 extends tslib_pibase {
   /**
  * Set variables in the helper classes
  *
- * @return  boolean   FALSE
+ * @return	boolean		FALSE
  */
   function init_classVars()
   {
@@ -1600,7 +1598,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // [String] TypoScript path to the current view. I.e. views.single.1
     $this->objSocialmedia->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
 
-    
+
 
       //////////////////////////////////////////////////////////////////////
       //
@@ -1676,11 +1674,11 @@ class tx_browser_pi1 extends tslib_pibase {
   /**
  * Get the value for the var $template
  *
- * @param array   Global cObj
- * @param array   TS configuration array
- * @param array   Input array with the elements view and mode
- * @param integer   The current view
- * @return  array   template
+ * @param	array		Global cObj
+ * @param	array		TS configuration array
+ * @param	array		Input array with the elements view and mode
+ * @param	integer		The current view
+ * @return	array		template
  */
   function getTemplate($cObj, $conf, $arr_data)
   {
@@ -1753,7 +1751,7 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1.php']) 
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1.php'])
 {
   include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1.php']);
 }

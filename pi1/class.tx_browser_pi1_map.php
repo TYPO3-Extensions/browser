@@ -39,9 +39,30 @@
  *
  *
  *
- *   83: class tx_browser_pi1_map
- *  137:     function __construct($pObj)
- * TOTAL FUNCTIONS: 21
+ *   69: class tx_browser_pi1_map
+ *   91:     function __construct($pObj)
+ *
+ *              SECTION: Map
+ *  126:     public function get_map( $template )
+ *
+ *              SECTION: Init
+ *  189:     private function init(  )
+ *  308:     private function init_marker( $template )
+ *  393:     private function render_map( $pObj_template )
+ *
+ *              SECTION: Marker
+ *  553:     private function marker_divMap( )
+ *  576:     private function marker_formFilter( )
+ *  599:     private function marker_jssFilter( )
+ *  622:     private function marker_jssRenderMap( )
+ *
+ *              SECTION: CSS
+ *  660:     private function css_setHeader( )
+ *
+ *              SECTION: JavaScripts
+ *  702:     private function jss_setHeader( )
+ *
+ * TOTAL FUNCTIONS: 11
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -64,8 +85,8 @@ class tx_browser_pi1_map
   /**
  * Constructor. The method initiate the parent object
  *
- * @param object    The parent object
- * @return  void
+ * @param	object		The parent object
+ * @return	void
  */
   function __construct($pObj)
   {
@@ -97,8 +118,8 @@ class tx_browser_pi1_map
   /**
  * get_map( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
- * @param string    $template: Current HTML template
- * @return  array   $template: Template with map marker
+ * @param	string		$template: Current HTML template
+ * @return	array		$template: Template with map marker
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -108,7 +129,7 @@ class tx_browser_pi1_map
     $this->init( );
 
 
- 
+
       ///////////////////////////////////////////////////////////////
       //
       // RETURN: map isn't enabled
@@ -161,7 +182,7 @@ class tx_browser_pi1_map
   /**
  * init(): The method sets the globals $enabled and $confMap
  *
- * @return  void   
+ * @return	void
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -170,7 +191,7 @@ class tx_browser_pi1_map
       ///////////////////////////////////////////////////////////////////////////////
       //
       // RETURN: $enabled isn't null
-      
+
     if( ! ( $this->enabled === null ) )
     {
       if( $this->pObj->b_drs_map )
@@ -245,8 +266,8 @@ class tx_browser_pi1_map
     $this->enabled  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
       // Set the global $enabled
 
-    
-    
+
+
       ///////////////////////////////////////////////////////////////
       //
       // DRS - Development Reporting System
@@ -279,8 +300,8 @@ class tx_browser_pi1_map
   /**
  * init_marker( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
- * @param string    $template: Current HTML template
- * @return  array   $template: Template with map marker
+ * @param	string		$template: Current HTML template
+ * @return	array		$template: Template with map marker
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -364,8 +385,8 @@ class tx_browser_pi1_map
   /**
  * render_map( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
- * @param string    $pObj_template: current HTML template of the parent object
- * @return  array   $pObj_template: parent object template with map marker
+ * @param	string		$pObj_template: current HTML template of the parent object
+ * @return	array		$pObj_template: parent object template with map marker
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -491,7 +512,7 @@ class tx_browser_pi1_map
     $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
       // Substitute marker
 
-    
+
 
 //var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $markerArray, $map_template );
       // Replace the map marker in the template of the parent object
@@ -525,7 +546,7 @@ class tx_browser_pi1_map
   /**
  * marker_divMap( ): get the content for the current marker
  *
- * @return  string   $content: current content
+ * @return	string		$content: current content
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -548,7 +569,7 @@ class tx_browser_pi1_map
   /**
  * marker_formFilter( ): get the content for the current marker
  *
- * @return  string   $content: current content
+ * @return	string		$content: current content
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -571,7 +592,7 @@ class tx_browser_pi1_map
   /**
  * marker_jssFilter( ): get the content for the current marker
  *
- * @return  string   $content: current content
+ * @return	string		$content: current content
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -594,7 +615,7 @@ class tx_browser_pi1_map
   /**
  * marker_jssRenderMap( ): get the content for the current marker
  *
- * @return  string   $content: current content
+ * @return	string		$content: current content
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -621,7 +642,7 @@ class tx_browser_pi1_map
   *
   **********************************************/
 
-  
+
 
 
 
@@ -632,7 +653,7 @@ class tx_browser_pi1_map
   /**
  * css_setHeader( ): Include CSS for openStreetMap
  *
- * @return  void
+ * @return	void
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -674,7 +695,7 @@ class tx_browser_pi1_map
   /**
  * jss_setHeader( ): Include JSS for openStreetMap
  *
- * @return  void
+ * @return	void
  * @version 3.9.6
  * @since   3.9.6
  */

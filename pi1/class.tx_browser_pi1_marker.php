@@ -49,8 +49,8 @@
  *  419:     function substitute_marker($arr_multi_dimensional, $marker)
  *  575:     function substitute_marker_recurs($arr_multi_dimensional, $elements)
  *  895:     function extend_marker_wi_cObjData($markerArray)
- *  933:     function extend_marker_wi_pivars($markerArray)
- *  972:     function replace_left_over($str_content)
+ *  935:     function extend_marker_wi_pivars($markerArray)
+ *  974:     function replace_left_over($str_content)
  *
  * TOTAL FUNCTIONS: 8
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -84,8 +84,8 @@
 /**
  * Constructor. The method initiate the parent object
  *
- * @param object    The parent object
- * @return  void
+ * @param	object		The parent object
+ * @return	void
  */
   function __construct($parentObj)
   {
@@ -110,9 +110,9 @@
     /**
  * Returns the value for a $GLOBALS marker
  *
- * @param string    $arr_tsConf: The current TypoScript configuration
- * @param array   $elements: Array with the element session
- * @return  string    The value from the TSFE array
+ * @param	string		$arr_tsConf: The current TypoScript configuration
+ * @param	array		$elements: Array with the element session
+ * @return	string		The value from the TSFE array
  */
   function session_marker($arr_tsConf, $elements)
   {
@@ -182,9 +182,9 @@
  *                                  * The method extends the SQL result with all piVar values. ###CHASH### has a process.
  *                                  * This method should supersede the deprecated method substitute_marker_recursive ()
  *
- * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
- * @param array   $elements: The current row of the SQL result
- * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
+ * @param	array		$elements: The current row of the SQL result
+ * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
  * @version 3.7.0
  * @since   3.6.0
  */
@@ -410,9 +410,9 @@
  *                                  * The method extends the SQL result with all piVar values. ###CHASH### has a process.
  *                                  * This method should supersede the deprecated method substitute_marker_recursive ()
  *
- * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
- * @param array   $elements: The current row of the SQL result
- * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
+ * @param	array		$elements: The current row of the SQL result
+ * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
  * @version 3.7.0
  * @since   3.6.0
  */
@@ -567,9 +567,9 @@
  * substitute_marker_recurs(): Replace all markers in a multi-dimensional array like an TypoScript array with the real values from the SQL result
  * The method extends the SQL result with all piVar values. ###CHASH### has a process.
  *
- * @param array   $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
- * @param array   $elements: The current row of the SQL result
- * @return  array   $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
+ * @param	array		$elements: The current row of the SQL result
+ * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
  * @version 3.6.2
  */
   function substitute_marker_recurs($arr_multi_dimensional, $elements)
@@ -887,8 +887,8 @@
  * extend_marker_wi_cObjData: Extend the given marker array with key/values from cObj->data,
  *                            the data of the tt_content record of the browser plugin
  *
- * @param array   $markerArray: Array with markers
- * @return  array   $markerArray: Array with markers extended
+ * @param	array		$markerArray: Array with markers
+ * @return	array		$markerArray: Array with markers extended
  * @version 3.7.0
  * @since 3.7.0
  */
@@ -927,8 +927,8 @@
   /**
  * extend_marker_wi_pivars: Extend the given marker array with key/values from the piVars
  *
- * @param array   $markerArray: Array with markers
- * @return  array   $markerArray: Array with markers extended
+ * @param	array		$markerArray: Array with markers
+ * @return	array		$markerArray: Array with markers extended
  * @version 2.0.0
  * @since 2.0.0
  */
@@ -966,8 +966,8 @@
  * replace_left_over(): Replace all markers, which are left over
  *                      Feature: #28657
  *
- * @param array   $str_content: current content
- * @return  string    $str_content: rendered content
+ * @param	array		$str_content: current content
+ * @return	string		$str_content: rendered content
  * @version 3.7.0
  * @since 3.7.0
  */

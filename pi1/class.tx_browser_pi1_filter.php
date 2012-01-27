@@ -39,37 +39,47 @@
  *
  *
  *
- *   75: class tx_browser_pi1_filter
- *  101:     function __construct($pObj)
+ *   86: class tx_browser_pi1_filter
+ *  126:     function __construct($pObj)
  *
- *              SECTION: Filter and
- *  128:     function filter($template)
- *  368:     function filterLoop($template)
+ *              SECTION: Filter
+ *  153:     function filter($template)
+ *  374:     function filterLoop($template)
+ *  444:     private function filter_fetch_rows( )
  *
  *              SECTION: Little Helpers
- *  434:     function orderValues($arr_values, $conf_tableField)
- *  500:     function andWhere_filter()
- *  655:     function andWhere_localTable($obj_ts, $arr_ts, $arr_piVar, $tableField)
- *  738:     function andWhere_foreignTable($obj_ts, $arr_ts, $arr_piVar, $tableField)
- *  808:     function getRows($tableField)
- * 1021:     function wrapRows($arr_input)
- * 1139:     function get_nice_piVar($obj_ts, $arr_ts, $conf_tableField)
+ *  534:     function filterCondition( $tableField, $arr_ts )
+ *  615:     function orderValues( $arr_values, $conf_tableField )
+ *  693:     function items_order_and_addFirst($arr_ts, $arr_values, $tableField)
+ *  871:     function andWhere_filter()
+ * 1038:     function andWhere_localTable($obj_ts, $arr_ts, $arr_piVar, $tableField)
+ * 1153:     function andWhere_foreignTable($obj_ts, $arr_ts, $arr_piVar, $tableField)
+ * 1244:     function getRows($tableField)
+ * 1636:     function wrapRows( $arr_input )
+ * 1813:     function get_nice_piVar($obj_ts, $arr_ts, $conf_tableField)
  *
  *              SECTION: Rendering TS objects
- * 1208:     function renderHtmlFilter($obj_ts, $arr_ts, $arr_values, $tableField)
+ * 1902:     private function renderHtmlFilter($obj_ts, $arr_ts, $arr_values, $tableField)
  *
  *              SECTION: Rendering items
- * 1500:     function wrap_values_and_add_first_value($arr_ts, $arr_values, $tableField)
- * 1672:     function wrap_objectTitle($arr_ts, $conf_tableField)
- * 1752:     function get_wrappedItemClass($arr_ts, $conf_item, $str_order)
- * 1784:     function get_wrappedItemStyle($arr_ts, $conf_item, $str_order)
- * 1806:     function get_wrappedItemUid($uid, $conf_item)
- * 1842:     function get_wrappedItemURL($tableField, $value, $conf_item)
- * 1934:     function get_wrappedItemSelected($uid, $arr_piVar, $conf_selected, $conf_item)
- * 1956:     function wrap_allItems($obj_ts, $arr_ts, $str_nice_piVar, $key_piVar, $number_of_items)
- * 2020:     function get_tableFields()
+ * 2332:     private function wrap_values_and_add_first_value($arr_ts, $arr_values, $tableField)
+ * 2478:     function wrap_objectTitle($arr_ts, $conf_tableField)
+ * 2569:     private function get_ordered( $arr_rows, $tableField )
+ * 2633:     private function get_treeOrdered( $arr_rows, $tableField )
+ * 2713:     private function set_treeOneDim( $tableField, $uid_parent )
+ * 2754:     private function get_treeRendered( $arr_ts )
+ * 2924:     function get_wrappedItemClass($arr_ts, $conf_item, $str_order)
+ * 2962:     function get_wrappedItemStyle($arr_ts, $conf_item, $str_order)
+ * 2986:     function get_wrappedItemKey($arr_ts, $uid, $conf_item)
+ * 3029:     function get_wrappedItemURL($arr_ts, $tableField, $value, $conf_item)
+ * 3131:     function get_wrappedItemSelected($uid, $value, $arr_piVar, $arr_ts, $conf_selected, $conf_item)
+ * 3199:     public function wrap_allItems($obj_ts, $arr_ts, $str_nice_piVar, $key_piVar, $number_of_items)
+ * 3263:     function get_tableFields()
  *
- * TOTAL FUNCTIONS: 20
+ *              SECTION: Hits
+ * 3405:     function hits_per_filter_item( $str_devider )
+ *
+ * TOTAL FUNCTIONS: 28
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -110,8 +120,8 @@ class tx_browser_pi1_filter {
   /**
  * Constructor. The method initiate the parent object
  *
- * @param object    The parent object
- * @return  void
+ * @param	object		The parent object
+ * @return	void
  */
   function __construct($pObj) {
     $this->pObj = $pObj;
@@ -136,8 +146,8 @@ class tx_browser_pi1_filter {
  *            It returns the template with rendered filters and category menus.
  *            A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
  *
- * @param string    $template: current template
- * @return  array   The array with the template at least
+ * @param	string		$template: current template
+ * @return	array		The array with the template at least
  * @version 3.6.0
  */
   function filter($template)
@@ -357,8 +367,8 @@ class tx_browser_pi1_filter {
  * Loop through all filters, which are configured in TypoScript.
  * Configuration can be: view.list.x.filter.x.
  *
- * @param string    $template: the current template
- * @return  array   The array with the template at least
+ * @param	string		$template: the current template
+ * @return	array		The array with the template at least
  * @version 3.5.0
  */
   function filterLoop($template)
@@ -416,18 +426,18 @@ class tx_browser_pi1_filter {
     return $arr_return;
   }
 
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
   /**
  * filter_fetch_rows():  Remove all rows, which aren't fetched by filter selection
  *
- * @return  void
+ * @return	void
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -512,15 +522,15 @@ class tx_browser_pi1_filter {
 
 
   /**
-   * filterCondition( ):  Render the filter condition.
-   *                      // #32117, 111127, dwildt+
-   *
-   * @param string      $tableField: table.field of the current filter
-   * @param array       $arr_ts: typoScript array of the current filter
-   * @return  boolean    True, if there isn't any condition or condition is meet. False, if it isn't.
-   * @version 3.9.3
-   * @since   3.9.3
-   */
+ * filterCondition( ):  Render the filter condition.
+ *                      // #32117, 111127, dwildt+
+ *
+ * @param	string		$tableField: table.field of the current filter
+ * @param	array		$arr_ts: typoScript array of the current filter
+ * @return	boolean		True, if there isn't any condition or condition is meet. False, if it isn't.
+ * @version 3.9.3
+ * @since   3.9.3
+ */
   function filterCondition( $tableField, $arr_ts )
   {
       /////////////////////////////////////////////////////////////////
@@ -530,7 +540,7 @@ class tx_browser_pi1_filter {
     $bool_condition = true;
       // Default values
 
-    
+
 
       /////////////////////////////////////////////////////////////////
       //
@@ -587,20 +597,20 @@ class tx_browser_pi1_filter {
       // RETURN condition result
   }
 
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
   /**
  * Order the values by uid or value and ASC or DESC
  *
- * @param array   $arr_values: Array with the values for ordering
- * @param string    $conf_tableField: table and field in table.field syntax
- * @return  array   Array with ordered values
+ * @param	array		$arr_values: Array with the values for ordering
+ * @param	string		$conf_tableField: table and field in table.field syntax
+ * @return	array		Array with ordered values
  */
   function orderValues( $arr_values, $conf_tableField )
   {
@@ -671,17 +681,17 @@ class tx_browser_pi1_filter {
   }
 
   /**
-   * Order the items, add the first item and wrap all items
-   * Is used by class template only. dwildt, 120121
-   *
-   * @param array   $arr_ts: The TypoScript configuration of the object
-   * @param array   $arr_values: The values for the object
-   * @param string    $tableField: The current table.field from the ts filter array
-   * @return  array   Return the processed items
-   * @version 3.6.0
-   */
+ * Order the items, add the first item and wrap all items
+ * Is used by class template only. dwildt, 120121
+ *
+ * @param	array		$arr_ts: The TypoScript configuration of the object
+ * @param	array		$arr_values: The values for the object
+ * @param	string		$tableField: The current table.field from the ts filter array
+ * @return	array		Return the processed items
+ * @version 3.6.0
+ */
   function items_order_and_addFirst($arr_ts, $arr_values, $tableField) {
-  
+
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
     $view = $this->pObj->view;
@@ -711,7 +721,7 @@ class tx_browser_pi1_filter {
 
     {
       $bool_handle = true;
-      
+
       // :todo: 101019, dwildt: Next section seems to have an unproper effect
       //      $bool_display_without_any_hit = $arr_ts['first_item.']['display_without_any_hit'];
       $int_hits = $this->arr_hits[$tableField]['sum'];
@@ -723,13 +733,13 @@ class tx_browser_pi1_filter {
       //        $int_hits  = 0;
       //      }
       //      // There is no hit
-      
+
       // Wrap the first item and prepaire it for adding
       //if($bool_handle || $bool_display_without_any_hit)
       if ($bool_handle) {
         // Wrap the item
         $value = $this->pObj->local_cObj->stdWrap($arr_ts['first_item.']['stdWrap.']['value'], $arr_ts['first_item.']['stdWrap.']);
-        
+
         // Wrap the hits and add it to the item
         $bool_display_hits = $arr_ts['first_item.']['display_hits'];
         if ($bool_display_hits) {
@@ -757,9 +767,9 @@ class tx_browser_pi1_filter {
           t3lib_div :: devLog('[HELP/FILTER] If you don\'t want a default item, please configure ' . $conf_view_path . $tableField . '.first_item.', $this->pObj->extKey, 1);
         }
           // Prepaire item for adding
-      }  
+      }
         // Wrap the first item and prepaire it for adding
-    }    
+    }
       // Handle the first_item
 //if (t3lib_div :: getIndpEnv('REMOTE_ADDR') == '84.184.226.247')
 //  var_dump('filter 1399', $arr_values, $arr_new_values);
@@ -790,29 +800,29 @@ class tx_browser_pi1_filter {
 
 
       /////////////////////////////////////////////////////////////////
-      // 
+      //
       // Add the first_item
       // #11407: Ordering filter items hasn't any effect
 
     if (is_array($arr_new_values))
-    {    
+    {
       if (count($arr_values) > 0)
-      {  
+      {
         foreach ($arr_values as $uid => $value)
         {
           $arr_new_values[$uid] = $value;
         }
-      }  
+      }
       unset ($arr_values);
       $arr_values = $arr_new_values;
       unset ($arr_new_values);
-    }    
+    }
       // Add the first_item
       // #11407: Ordering filter items hasn't any effect
 
 
       /////////////////////////////////////////////////////////////////
-      // 
+      //
       // stdWrap all items but the first item
 
     if (count($arr_values) > 0)
@@ -855,7 +865,7 @@ class tx_browser_pi1_filter {
   /**
  * andWhere_filter: Generate the andWhere statement, if it is needed.
  *
- * @return  array   arr_andWhereFilter: NULL if there isn' any filter
+ * @return	array		arr_andWhereFilter: NULL if there isn' any filter
  * @version 3.6.0
  */
   function andWhere_filter()
@@ -978,7 +988,7 @@ class tx_browser_pi1_filter {
         // Build the andWhere statement
 
         // Set arr_andWhereFilter
-      if ($bool_handleCurrPiVar) 
+      if ($bool_handleCurrPiVar)
       {
         if(!empty($str_andWhere))
         {
@@ -990,7 +1000,7 @@ class tx_browser_pi1_filter {
     // LOOP: filter tableFields
 
 
-    if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql) 
+    if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql)
     {
       if(is_array($arr_andWhereFilter))
       {
@@ -1015,14 +1025,14 @@ class tx_browser_pi1_filter {
  * andWhere_localTable: Generate the andWhere statement for a field from the localtable.
  *                      If there is an area, it will be handled
  *
- * @internal              #30912: Filter: count items with no relation to category:
  *                        Method is enhanced with a php array for allocate conditions
  *
- * @param string    $obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
- * @param array   $arr_ts: The TypoScript configuration of the SELECTBOX
- * @param array   $arr_piVar   Current piVars
- * @param string    $tableField   Current table.field
- * @return  array   arr_andWhereFilter: NULL if there isn' any filter
+ * @param	string		$obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
+ * @param	array		$arr_ts: The TypoScript configuration of the SELECTBOX
+ * @param	array		$arr_piVar   Current piVars
+ * @param	string		$tableField   Current table.field
+ * @return	array		arr_andWhereFilter: NULL if there isn' any filter
+ * @internal              #30912: Filter: count items with no relation to category:
  * @version 3.6.0
  */
   function andWhere_localTable($obj_ts, $arr_ts, $arr_piVar, $tableField)
@@ -1129,14 +1139,14 @@ class tx_browser_pi1_filter {
  * andWhere_foreignTable: Generate the andWhere statement for a field from a foreign table.
  *                        If there is an area, it will be handled
  *
- * @internal              #30912: Filter: count items with no relation to category:
  *                        Method is enhanced with a php array for allocate conditions
  *
- * @param string    $obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
- * @param array   $arr_ts: The TypoScript configuration of the SELECTBOX
- * @param array   $arr_piVar   Current piVars
- * @param string    $tableField   Current table.field
- * @return  array   arr_andWhereFilter: NULL if there isn' any filter
+ * @param	string		$obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
+ * @param	array		$arr_ts: The TypoScript configuration of the SELECTBOX
+ * @param	array		$arr_piVar   Current piVars
+ * @param	string		$tableField   Current table.field
+ * @return	array		arr_andWhereFilter: NULL if there isn' any filter
+ * @internal              #30912: Filter: count items with no relation to category:
  * @version 3.9.6
  * @since   3.6.0
  */
@@ -1226,12 +1236,12 @@ class tx_browser_pi1_filter {
   /**
  * getRows(): Building the SQL query. Execute the query. Return the result as rows.
  *
- * @param string    $tableField: table.field
- * @return  array   Data array with rows
+ * @param	string		$tableField: table.field
+ * @return	array		Data array with rows
  * @version 3.9.6
  * @ since 3.0.1
  */
-  function getRows($tableField) 
+  function getRows($tableField)
   {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -1252,15 +1262,15 @@ class tx_browser_pi1_filter {
 
       // SELECT
     $str_select = $conf_view['filter.'][$table . '.'][$field . '.']['sql.']['select'];
-    if ( ! empty ( $str_select ) ) 
+    if ( ! empty ( $str_select ) )
     {
       $str_select = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($str_select);
-      if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql) 
+      if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql)
       {
         t3lib_div :: devlog('[INFO/FILTER+SQL] Select Override is activated. ' . $str_select, $this->pObj->extKey, 0);
       }
     }
-    if (empty ( $str_select ) ) 
+    if (empty ( $str_select ) )
     {
       $str_select = $table . ".uid AS 'uid'," . PHP_EOL .
       "         " . $table . "." . $field . " AS 'value'," . PHP_EOL;
@@ -1338,11 +1348,11 @@ class tx_browser_pi1_filter {
 
       // FROM
     $str_from = $conf_view['filter.'][$table . '.'][$field . '.']['sql.']['from'];
-    if ( $str_from ) 
+    if ( $str_from )
     {
       $str_from = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($str_from);
     }
-    if (! $str_from ) 
+    if (! $str_from )
     {
       $str_from = $table;
     }
@@ -1350,7 +1360,7 @@ class tx_browser_pi1_filter {
 
       // ORDER BY
     $str_orderBy = $conf_view['filter.'][$table . '.'][$field . '.']['sql.']['orderBy'];
-    if ($str_orderBy) 
+    if ($str_orderBy)
     {
       $str_orderBy = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($str_orderBy);
       $str_orderBy = "  ORDER BY " . $str_orderBy . PHP_EOL;
@@ -1369,7 +1379,7 @@ class tx_browser_pi1_filter {
       // AND WHERE
     $str_andWhere = $conf_view['filter.'][$table . '.'][$field . '.']['sql.']['andWhere'];
     $str_andWhere = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($str_andWhere);
-    if ($str_andWhere) 
+    if ($str_andWhere)
     {
       $str_andWhere = "    AND " . $str_andWhere . PHP_EOL;
     }
@@ -1377,7 +1387,7 @@ class tx_browser_pi1_filter {
 
       // BUG #8533
       // AND WHERE PID LIST
-    if ($this->pObj->pidList) 
+    if ($this->pObj->pidList)
     {
       $str_andWhere = $str_andWhere . "    AND " . $table . ".pid IN (" . $this->pObj->pidList . ")\n";
     }
@@ -1406,13 +1416,13 @@ class tx_browser_pi1_filter {
         t3lib_div :: devlog('[INFO/FILTER] Table ' . $table . '.' . $field . ' is added to arr_realTables_arrFields temporarily. It is removed.', $this->pObj->extKey, 0);
       }
     }
-    if (is_array($this->pObj->arr_realTables_arrFields[$table])) 
+    if (is_array($this->pObj->arr_realTables_arrFields[$table]))
     {
-      if (!in_array($field, $this->pObj->arr_realTables_arrFields[$table])) 
+      if (!in_array($field, $this->pObj->arr_realTables_arrFields[$table]))
       {
         $this->pObj->arr_realTables_arrFields[$table][] = $field;
         $bool_field_is_added = true;
-        if ($this->pObj->b_drs_filter) 
+        if ($this->pObj->b_drs_filter)
         {
           t3lib_div :: devlog('[INFO/FILTER] Field ' . $table . '.' . $field . ' is added to arr_realTables_arrFields temporarily. It is removed.', $this->pObj->extKey, 0);
         }
@@ -1422,10 +1432,10 @@ class tx_browser_pi1_filter {
 
     $arr_local_select = $this->pObj->objLocalise->localisationFields_select($table);
       // BUGFIX - part II: Remove added table.fields
-    if ($bool_table_is_added) 
+    if ($bool_table_is_added)
     {
       unset ($this->pObj->arr_realTables_arrFields[$table]);
-      if ($this->pObj->b_drs_filter) 
+      if ($this->pObj->b_drs_filter)
       {
         t3lib_div :: devlog('[INFO/FILTER] Table ' . $table . ' is removed from arr_realTables_arrFields temporarily. It is removed.', $this->pObj->extKey, 0);
       }
@@ -1435,7 +1445,7 @@ class tx_browser_pi1_filter {
       $arr_flip = array_flip($this->pObj->arr_realTables_arrFields[$table]);
       $rm_key = $arr_flip[$field];
       unset ($this->pObj->arr_realTables_arrFields[$table][$rm_key]);
-      if ($this->pObj->b_drs_filter) 
+      if ($this->pObj->b_drs_filter)
       {
         t3lib_div :: devlog('[INFO/FILTER] Field ' . $table . '.' . $field . ' is removed from arr_realTables_arrFields temporarily. It is removed.', $this->pObj->extKey, 0);
       }
@@ -1443,14 +1453,14 @@ class tx_browser_pi1_filter {
       // BUGFIX - part II: Remove added table.fields
 
     $str_local_select = $arr_local_select['filter'];
-    if ($str_local_select) 
+    if ($str_local_select)
     {
       $str_local_select = ",\n" .
       "         " . $str_local_select . PHP_EOL;
     }
     $query = str_replace('###LOCALISATION_SELECT###', $str_local_select, $query);
     $str_local_where = $this->pObj->objLocalise->localisationFields_where($table);
-    if ($str_local_where) 
+    if ($str_local_where)
     {
       $str_local_where = " AND " . $str_local_where;
     }
@@ -1470,7 +1480,7 @@ class tx_browser_pi1_filter {
       // Replace PID_LIST
 
 
-    
+
       /////////////////////////////////////////////////////////////////
       //
       // Execute the Query
@@ -1478,16 +1488,16 @@ class tx_browser_pi1_filter {
     $res = $GLOBALS['TYPO3_DB']->sql_query($query);
     $error = $GLOBALS['TYPO3_DB']->sql_error();
 
-    if ($error != '') 
+    if ($error != '')
     {
-      if ($this->pObj->b_drs_filter) 
+      if ($this->pObj->b_drs_filter)
       {
         t3lib_div :: devlog('[ERROR/FILTER] ' . $query, $this->pObj->extKey, 3);
         t3lib_div :: devlog('[ERROR/FILTER] ' . $error, $this->pObj->extKey, 3);
         t3lib_div :: devlog('[ERROR/FILTER] ABORT.', $this->pObj->extKey, 3);
       }
       $str_header = '<h1 style="color:red">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
-      if ($this->pObj->b_drs_error) 
+      if ($this->pObj->b_drs_error)
       {
         $str_warn = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">' . $this->pObj->pi_getLL('drs_security') . '</p>';
         $str_prompt = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $error . '</p>';
@@ -1502,7 +1512,7 @@ class tx_browser_pi1_filter {
       $arr_return['error']['prompt'] = $str_prompt;
       return $arr_return;
     }
-    if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql) 
+    if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql)
     {
         // 100629, dwildt
         // $query_br = str_replace(PHP_EOL, '<br />', $query);
@@ -1519,11 +1529,11 @@ class tx_browser_pi1_filter {
       //
       // Building the rows
 
-    while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) 
+    while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
     {
       $rows[] = $row;
     }
-    if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql) 
+    if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql)
     {
       t3lib_div :: devlog('[INFO/FILTER+SQL] Result: #' . count($rows) . ' row(s).', $this->pObj->extKey, 0);
     }
@@ -1619,8 +1629,8 @@ class tx_browser_pi1_filter {
   /**
  * wrapRows(): Main function for filter processing. It returns the template with rendered filters.
  *
- * @param array   $arr_input: array rows, template
- * @return  array   The array with the template at least
+ * @param	array		$arr_input: array rows, template
+ * @return	array		The array with the template at least
  * @version 3.5.0
  */
   function wrapRows( $arr_input )
@@ -1795,20 +1805,20 @@ class tx_browser_pi1_filter {
   /**
  * Returns an array with key_piVar, arr_piVar and nice_piVar
  *
- * @param string    $obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
- * @param array   $arr_ts: The TypoScript configuration of the Object
- * @param string    $conf_tableField: The current table.field from the ts filter array
- * @return  array   Data array with the selectbox at least
+ * @param	string		$obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
+ * @param	array		$arr_ts: The TypoScript configuration of the Object
+ * @param	string		$conf_tableField: The current table.field from the ts filter array
+ * @return	array		Data array with the selectbox at least
  */
-  function get_nice_piVar($obj_ts, $arr_ts, $conf_tableField) 
+  function get_nice_piVar($obj_ts, $arr_ts, $conf_tableField)
   {
     $str_nice_piVar = $arr_ts['nice_piVar'];
-    if ($str_nice_piVar == '') 
+    if ($str_nice_piVar == '')
     {
       $str_nice_piVar = $conf_tableField;
     }
     // #8337, 101012, dwildt
-    switch ($obj_ts) 
+    switch ($obj_ts)
     {
       case ('CHECKBOX') :
         $conf_multiple = true;
@@ -1822,7 +1832,7 @@ class tx_browser_pi1_filter {
         break;
       default :
         $conf_multiple = false;
-        if ($this->pObj->b_drs_error) 
+        if ($this->pObj->b_drs_error)
         {
           t3lib_div :: devlog('[ERROR/FILTER] multiple - undefined value in switch: \'' . $obj_ts . '\'', $this->pObj->extKey, 3);
           t3lib_div :: devlog('[INFO/FILTER] multiple becomes false.', $this->pObj->extKey, 3);
@@ -1837,18 +1847,18 @@ class tx_browser_pi1_filter {
       $key_piVar                  = $this->pObj->prefixId . '[' . $str_nice_piVar . ']';
       $arr_piVar[0]               = $this->pObj->piVars[$str_nice_piVar];
     }
-    if ($conf_multiple) 
+    if ($conf_multiple)
     {
       $key_piVar = $this->pObj->prefixId . '[' . $str_nice_piVar . '][]';
       $arr_piVar = $this->pObj->piVars[$str_nice_piVar];
-      if (!is_array($arr_piVar)) 
+      if (!is_array($arr_piVar))
       {
           // There is no piVar array. But we need an array in every case!
         $arr_piVar = array ();
       }
     }
       // Unset $arr_piVar, if it's empty
-    if (is_array($arr_piVar)) 
+    if (is_array($arr_piVar))
     {
       foreach ($arr_piVar as $key => $value) {
         if (!$value) {
@@ -1881,11 +1891,11 @@ class tx_browser_pi1_filter {
   /**
  * renderHtmlFilter(): Returns the rendered HTML object
  *
- * @param string    $obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
- * @param array   $arr_ts: The TypoScript configuration of the SELECTBOX
- * @param array   $arr_values: The values for the selectbox
- * @param string    $tableField: The current table.field from the ts filter array
- * @return  array   Data array with the selectbox at least
+ * @param	string		$obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
+ * @param	array		$arr_ts: The TypoScript configuration of the SELECTBOX
+ * @param	array		$arr_values: The values for the selectbox
+ * @param	string		$tableField: The current table.field from the ts filter array
+ * @return	array		Data array with the selectbox at least
  * @version 3.9.3
  * @since   3.0.1
  */
@@ -1974,10 +1984,10 @@ class tx_browser_pi1_filter {
 
       // dwildt, 101211, #11401
       // Current table is the local table
-    if ($table == $this->pObj->localTable) 
+    if ($table == $this->pObj->localTable)
     {
         // Convert key, values and hits
-      foreach ($arr_values as $uid => $value) 
+      foreach ($arr_values as $uid => $value)
       {
           // Key of first item
         if ($uid == $arr_ts['first_item.']['option_value'])
@@ -1986,14 +1996,14 @@ class tx_browser_pi1_filter {
         }
           // Key of first item
           // Key of all other items
-        if ($uid != $arr_ts['first_item.']['option_value']) 
+        if ($uid != $arr_ts['first_item.']['option_value'])
         {
           $key = $value;
         }
           // Key of all other items
-        
+
         $arr_values_localTable[$key] = $value;
-        if (!isset ($arr_hits_localTable[$tableField][$key])) 
+        if (!isset ($arr_hits_localTable[$tableField][$key]))
         {
           $arr_hits_localTable[$tableField][$key] = 0;
         }
@@ -2048,14 +2058,14 @@ class tx_browser_pi1_filter {
       /////////////////////////////////////////////////////////////////
       //
       // Wrap values
-  
+
     $arr_result = $this->wrap_values_and_add_first_value($arr_ts, $arr_values, $tableField);
     $arr_values = $arr_result['data']['values'];
     unset ($arr_result);
     $conf_selected = ' ' . $arr_ts['wrap.']['item.']['selected'];
       // Wrap values
 
-    
+
 
       /////////////////////////////////////////////////////////////////
       //
@@ -2265,12 +2275,12 @@ class tx_browser_pi1_filter {
 
       // Wrap the items
 
-    
+
 
       /////////////////////////////////////////////////////////////////
       //
       // Wrap all items / the object
-  
+
     if($obj_ts != 'CATEGORY_MENU')
     {
       $arr_ts = $this->pObj->objJss->class_onchange($obj_ts, $arr_ts, $int_count_displayItem);
@@ -2312,10 +2322,10 @@ class tx_browser_pi1_filter {
   /**
  * wrap_values_and_add_first_value( ): Wrap values (value_stdWrap) and add the first value
  *
- * @param array   $arr_ts: The TypoScript configuration of the object
- * @param array   $arr_values: The values for the object
- * @param string    $tableField: The current table.field from the ts filter array
- * @return  array   Return the wrapped values
+ * @param	array		$arr_ts: The TypoScript configuration of the object
+ * @param	array		$arr_values: The values for the object
+ * @param	string		$tableField: The current table.field from the ts filter array
+ * @return	array		Return the wrapped values
  * @version 3.9.6
  * @since   3.0.1
  */
@@ -2460,9 +2470,9 @@ class tx_browser_pi1_filter {
   /**
  * Wraps the title of the object
  *
- * @param array   $arr_ts: The TypoScript configuration of the object
- * @param string    $conf_tableField: The current table.field from the ts filter array
- * @return  string    Returns the wrapped title
+ * @param	array		$arr_ts: The TypoScript configuration of the object
+ * @param	string		$conf_tableField: The current table.field from the ts filter array
+ * @return	string		Returns the wrapped title
  * @version 3.9.6
  */
   function wrap_objectTitle($arr_ts, $conf_tableField) {
@@ -2549,9 +2559,9 @@ class tx_browser_pi1_filter {
   /**
  * get_ordered( ): Get rows ordered by Value DESC or ASC supported by PHP multisort
  *
- * @param array     $arr_rows   : Result of the SQL query
- * @param string    $tableField : Current table.field
- * @return array    $arr_tableFields : Array with table.fields
+ * @param	array		$arr_rows   : Result of the SQL query
+ * @param	string		$tableField : Current table.field
+ * @return	array		$arr_tableFields : Array with table.fields
  * @internal        #32223, 120119, dwildt+
  * @version 3.9.6
  * @since   3.9.6
@@ -2613,9 +2623,9 @@ class tx_browser_pi1_filter {
   /**
  * get_treeOrdered: Get the elements ordered to the needs of a tree.
  *
- * @param   array     $arr_rows         : Result of the SQL query
- * @param   string    $tableField       : Current table.field
- * @return  array     $arr_tableFields  : Array with the values. Values are wrapped with ul- and li-tags.
+ * @param	array		$arr_rows         : Result of the SQL query
+ * @param	string		$tableField       : Current table.field
+ * @return	array		$arr_tableFields  : Array with the values. Values are wrapped with ul- and li-tags.
  * @internal        #32223, 120119, dwildt+
  * @version 3.9.6
  * @since   3.9.6
@@ -2691,14 +2701,14 @@ class tx_browser_pi1_filter {
  *                  * [obligate] uid   : uid of the record
  *                  * [obligate] value : value of the record
  *                  * [optional] array : if the record has children ...
- * @param string    $tableField : Current table.field.
- * @param integer   $uid_parent : Parent uid of the current record - for recursive calls.
  *                                It is 0 while starting.
- * @return  void    Result will be allocated to the global $tmpOneDim
+ *
+ * @param	string		$tableField : Current table.field.
+ * @param	integer		$uid_parent : Parent uid of the current record - for recursive calls.
+ * @return	void		Result will be allocated to the global $tmpOneDim
  * @internal        #32223, 120119, dwildt+
  * @version 3.9.6
  * @since   3.9.6
-
  */
   private function set_treeOneDim( $tableField, $uid_parent )
   {
@@ -2734,12 +2744,12 @@ class tx_browser_pi1_filter {
  * get_treeRendered:  Method converts a one dimensional array to a multidimensional array.
  *                    It wraps every element of the array with ul and or li tags.
  *                    Wrapping depends in position and level of the element in the tree.
- * @param   array     $arr_ts     : configuration of the current table.field.
- * @return  array     $arr_result : Array with the rendered elements
+ *
+ * @param	array		$arr_ts     : configuration of the current table.field.
+ * @return	array		$arr_result : Array with the rendered elements
  * @internal        #32223, 120119, dwildt+
  * @version 3.9.6
  * @since   3.9.6
-
  */
   private function get_treeRendered( $arr_ts )
   {
@@ -2814,7 +2824,7 @@ class tx_browser_pi1_filter {
         case( $curr_depth > $last_depth ):
             // Start of sublevel
           $delta_depth  = $curr_depth - $last_depth;
-          $startTag     = PHP_EOL . 
+          $startTag     = PHP_EOL .
                           str_repeat
                           (
                             $indent . '<ul id="' . $html_id . '_ul_' . $curr_uid . '">' . PHP_EOL .
@@ -2837,7 +2847,7 @@ class tx_browser_pi1_filter {
           break;
             // Stop of sublevel
         default:
-          $startTag = '</li>' . PHP_EOL . 
+          $startTag = '</li>' . PHP_EOL .
                       $indent . '<li id="' . $html_id . '_li_' . $curr_uid . '">';
           break;
       }
@@ -2905,10 +2915,10 @@ class tx_browser_pi1_filter {
   /**
  * Get the wrapped item class
  *
- * @param array   $arr_ts: The TypoScript configuration of the object
- * @param string    $conf_item: The current item wrap
- * @param string    $str_order: asc or desc
- * @return  string    Returns the wrapped item
+ * @param	array		$arr_ts: The TypoScript configuration of the object
+ * @param	string		$conf_item: The current item wrap
+ * @param	string		$str_order: asc or desc
+ * @return	string		Returns the wrapped item
  * @version 3.5.0
  */
   function get_wrappedItemClass($arr_ts, $conf_item, $str_order)
@@ -2944,10 +2954,10 @@ class tx_browser_pi1_filter {
   /**
  * Get the wrapped item style
  *
- * @param array   $arr_ts: The TypoScript configuration of the object
- * @param string    $conf_item: The current item wrap
- * @param string    $str_order: asc or desc
- * @return  string    Returns the wrapped item
+ * @param	array		$arr_ts: The TypoScript configuration of the object
+ * @param	string		$conf_item: The current item wrap
+ * @param	string		$str_order: asc or desc
+ * @return	string		Returns the wrapped item
  */
   function get_wrappedItemStyle($arr_ts, $conf_item, $str_order) {
     if (!$str_order) {
@@ -2967,19 +2977,19 @@ class tx_browser_pi1_filter {
   /**
  * get_wrappedItemKey: Wrap the key of the current value
  *
- * @param array   $arr_ts: The TypoScript configuration of the object
- * @param integer   $uid: The item uid
- * @param string    $conf_item: The current item wrap
- * @return  string    Returns the wrapped item
+ * @param	array		$arr_ts: The TypoScript configuration of the object
+ * @param	integer		$uid: The item uid
+ * @param	string		$conf_item: The current item wrap
+ * @return	string		Returns the wrapped item
  * @version 3.6.1
  */
-  function get_wrappedItemKey($arr_ts, $uid, $conf_item) 
+  function get_wrappedItemKey($arr_ts, $uid, $conf_item)
   {
     $str_uid = null;
-    
+
 
     // #11844, dwildt, 110102
-    if ($uid != $arr_ts['first_item.']['option_value']) 
+    if ($uid != $arr_ts['first_item.']['option_value'])
     {
       $str_uid = htmlspecialchars($uid, ENT_QUOTES);
     }
@@ -3008,12 +3018,11 @@ class tx_browser_pi1_filter {
   /**
  * get_wrappedItemURL(): Get the URL for the item
  *
- * @param array   $arr_ts: The TypoScript configuration of the object
- * @param string    $tableField: table.field of the current filter
- * @param string    $value: value of the current filter
- * @param string    $conf_item: The current item wrap
- * @return  string    Returns the wrapped item
- * 
+ * @param	array		$arr_ts: The TypoScript configuration of the object
+ * @param	string		$tableField: table.field of the current filter
+ * @param	string		$value: value of the current filter
+ * @param	string		$conf_item: The current item wrap
+ * @return	string		Returns the wrapped item
  * @version 3.6.4
  * @since 3.6.1
  */
@@ -3030,7 +3039,7 @@ class tx_browser_pi1_filter {
 
       // 13920, 110319, dwildt
       // Set value of the first item to null: it won't become an additional parameter below
-    if ($value == $arr_ts['first_item.']['option_value']) 
+    if ($value == $arr_ts['first_item.']['option_value'])
     {
       $value = null;
     }
@@ -3109,24 +3118,23 @@ class tx_browser_pi1_filter {
   /**
  * Get the item selected
  *
- * @param integer   $uid: The item uid
- * @param string   $value: The item value
- * @param array   $arr_piVar: The array with the piVar or piVars
- * @param array   $arr_ts: Current TypoScript configuration
- * @param string    $conf_slected: The selected configuration from TS
- * @param string    $conf_item: The current item wrap
- * @return  string    Returns the wrapped item selected or not selected
- * 
+ * @param	integer		$uid: The item uid
+ * @param	string		$value: The item value
+ * @param	array		$arr_piVar: The array with the piVar or piVars
+ * @param	array		$arr_ts: Current TypoScript configuration
+ * @param	string		$conf_slected: The selected configuration from TS
+ * @param	string		$conf_item: The current item wrap
+ * @return	string		Returns the wrapped item selected or not selected
  * @version 4.0.0
  * @since 3.6.0
  */
-  function get_wrappedItemSelected($uid, $value, $arr_piVar, $arr_ts, $conf_selected, $conf_item) 
+  function get_wrappedItemSelected($uid, $value, $arr_piVar, $arr_ts, $conf_selected, $conf_item)
   {
     //$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
     //if ( ! ( $pos === false ) )
     //{
     //  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->pObj->objCal->selected_period, $arr_ts['area.']['interval.']['options.']['fields.'][$uid . '.']['value_stdWrap.']['value'], $arr_piVar, $this->pObj->piVars);
-    //} 
+    //}
 
       // dwildt, 110102
       // Workaround: Because of new feature to filter a local table field
@@ -3179,12 +3187,12 @@ class tx_browser_pi1_filter {
   /**
  * Wrap all items (wrap the object)
  *
- * @param string    $obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
- * @param array   $arr_ts: The current TS configuration of the obkject
- * @param string    $str_nice_piVar: The nice name for the current piVar
- * @param string    $key_piVar: The real name of the piVar
- * @param integer   $number_of_items: The number of items
- * @return  string    Returns the wrapped items/object
+ * @param	string		$obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
+ * @param	array		$arr_ts: The current TS configuration of the obkject
+ * @param	string		$str_nice_piVar: The nice name for the current piVar
+ * @param	string		$key_piVar: The real name of the piVar
+ * @param	integer		$number_of_items: The number of items
+ * @return	string		Returns the wrapped items/object
  * @version 3.9.6
  * @sice    3.0.1
  */
@@ -3249,7 +3257,7 @@ class tx_browser_pi1_filter {
   /**
  * get_tableFields(): Set the global arr_conf_tableFields
  *
- * @return  boolean   FALSE: filters are set. TRUE: filters aren't set or there is a ts config error
+ * @return	boolean		FALSE: filters are set. TRUE: filters aren't set or there is a ts config error
  * @version 3.5.0
  */
   function get_tableFields() {
@@ -3389,9 +3397,8 @@ class tx_browser_pi1_filter {
  * hits_per_filter_item( ): Count the hits for each item of each filter.
  *                          Result is stored in the global $arr_hits
  *
- * @param   string          $str_devider: Devider between children (multiple items in one field)
- *
- * @return  void
+ * @param	string		$str_devider: Devider between children (multiple items in one field)
+ * @return	void
  * @version 3.9.6
  * @since 3.9.6
  */
@@ -3489,7 +3496,7 @@ class tx_browser_pi1_filter {
 
 
 
-  
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_filter.php']) {

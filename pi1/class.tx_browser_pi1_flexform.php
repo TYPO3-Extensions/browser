@@ -28,28 +28,30 @@
  *
  *
  *
- *   68: class tx_browser_pi1_flexform
- *  165:     function __construct($parentObj)
- *  199:     function main()
+ *   69: class tx_browser_pi1_flexform
+ *  195:     function __construct($parentObj)
+ *  217:     function main()
  *
  *              SECTION: piVars
- *  317:     function prepare_piVars()
- *  550:     function prepare_mode()
+ *  337:     function prepare_piVars()
+ *  521:     function prepare_mode()
  *
  *              SECTION: Fields with Priority
- *  629:     function sheet_sDEF_views()
+ *  573:     function sheet_sDEF_views()
  *
  *              SECTION: Sheets
- * 1038:     function sheet_advanced()
- * 1238:     function sheet_evaluate()
- * 1319:     function sheet_javascript()
- * 1480:     function sheet_sDEF()
- * 1730:     function sheet_socialmedia()
- * 1851:     function sheet_tca()
- * 1928:     function sheet_templating()
- * 2040:     function sheet_viewList()
+ *  903:     function sheet_advanced()
+ * 1058:     function sheet_evaluate( )
+ * 1117:     function sheet_extend( )
+ * 1198:     function sheet_javascript()
+ * 1500:     function sheet_sDEF( )
+ * 2141:     function sheet_socialmedia()
+ * 2205:     function sheet_tca()
+ * 2266:     function sheet_templating()
+ * 2531:     function sheet_viewList( )
+ * 3352:     function sheet_viewSingle()
  *
- * TOTAL FUNCTIONS: 13
+ * TOTAL FUNCTIONS: 15
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -185,11 +187,11 @@ class tx_browser_pi1_flexform {
   // Vars set by methods in the current class
 
   /**
-   * Constructor. The method initiate the parent object
-   *
-   * @param object    The parent object
-   * @return  void
-   */
+ * Constructor. The method initiate the parent object
+ *
+ * @param	object		The parent object
+ * @return	void
+ */
   function __construct($parentObj) {
     // Set the Parent Object
     $this->pObj = $parentObj;
@@ -205,13 +207,13 @@ class tx_browser_pi1_flexform {
 
 
   /**
-   * main():  Process the values from the pi_flexform field.
-   *          Process each sheet.
-   *          Allocates values to TypoScript.
-   *
-   * @return  void
-   * @version 3.7.0
-   */
+ * main():  Process the values from the pi_flexform field.
+ *          Process each sheet.
+ *          Allocates values to TypoScript.
+ *
+ * @return	void
+ * @version 3.7.0
+ */
   function main()
   {
 
@@ -326,12 +328,12 @@ class tx_browser_pi1_flexform {
 
 
   /**
-   * Changes the piVars array, if there is more than one plugin on the current page.
-   * If there is, the piVars[plugin] with the uid of the current plugin is added to the piVars.
-   * If the visitor of the page hasn't selected the current plugin, all piVars will be removed.
-   *
-   * @return  void
-   */
+ * Changes the piVars array, if there is more than one plugin on the current page.
+ * If there is, the piVars[plugin] with the uid of the current plugin is added to the piVars.
+ * If the visitor of the page hasn't selected the current plugin, all piVars will be removed.
+ *
+ * @return	void
+ */
   function prepare_piVars() {
 
     //////////////////////////////////////////////////////////////////////
@@ -511,11 +513,11 @@ class tx_browser_pi1_flexform {
   }
 
   /**
-   * Set the class var mode. It is the current mode/view.
-   * The code is corresponding with the mode snippet in tx_brwoser_pi1_zz::prepairePiVars() !!!
-   *
-   * @return  void
-   */
+ * Set the class var mode. It is the current mode/view.
+ * The code is corresponding with the mode snippet in tx_brwoser_pi1_zz::prepairePiVars() !!!
+ *
+ * @return	void
+ */
   function prepare_mode() {
 
     //////////////////////////////////////
@@ -563,11 +565,11 @@ class tx_browser_pi1_flexform {
    **********************************************/
 
   /**
-   * If the current plugin has views selected, only the selected views are available for the plugin.
-   * The method removes "unavailable" views from the TypoScript.
-   *
-   * @return  void
-   */
+ * If the current plugin has views selected, only the selected views are available for the plugin.
+ * The method removes "unavailable" views from the TypoScript.
+ *
+ * @return	void
+ */
   function sheet_sDEF_views() {
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
 
@@ -894,10 +896,10 @@ class tx_browser_pi1_flexform {
    **********************************************/
 
   /**
-   * The Sheet advanced has properties for the performance
-   *
-   * @return  void
-   */
+ * The Sheet advanced has properties for the performance
+ *
+ * @return	void
+ */
   function sheet_advanced() {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
@@ -1047,12 +1049,12 @@ class tx_browser_pi1_flexform {
 
 
   /**
-   * Sheet evaluate: Configuration for evaluation
-   *
-   * @return  void
-   * @version 4.0.0
-   * @since   4.0.0
-   */
+ * Sheet evaluate: Configuration for evaluation
+ *
+ * @return	void
+ * @version 4.0.0
+ * @since   4.0.0
+ */
   function sheet_evaluate( )
   {
     $sheet          = 'evaluate';
@@ -1104,14 +1106,14 @@ class tx_browser_pi1_flexform {
 
 
   /**
-   * Sheet extend:  Administration of extensions for the Browser.
-   *                New in version 4.0
-   *                Available extension only: Browser Calendar UI
-   *
-   * @return  void
-   * @version 4.0.0
-   * @since   4.0.0
-   */
+ * Sheet extend:  Administration of extensions for the Browser.
+ *                New in version 4.0
+ *                Available extension only: Browser Calendar UI
+ *
+ * @return	void
+ * @version 4.0.0
+ * @since   4.0.0
+ */
   function sheet_extend( )
   {
 
@@ -1186,13 +1188,13 @@ class tx_browser_pi1_flexform {
 
 
   /**
-   * sheet_javascript(): If the current plugin has views selected, only the selected views are available for the plugin.
-   * The method removes "unavailable" views from the TypoScript.
-   *
-   * @return  void
-   * @version 3.7.0
-   * @since 3.5.0
-   */
+ * sheet_javascript(): If the current plugin has views selected, only the selected views are available for the plugin.
+ * The method removes "unavailable" views from the TypoScript.
+ *
+ * @return	void
+ * @version 3.7.0
+ * @since 3.5.0
+ */
   function sheet_javascript() {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
@@ -1488,13 +1490,13 @@ class tx_browser_pi1_flexform {
   }
 
   /**
-  * If the current plugin has views selected, only the selected views are available for the plugin.
-  * The method removes "unavailable" views from the TypoScript.
-  *
-  * @return  void
-  * @since 2.x.x
-  * @version 3.4.4
-  */
+ * If the current plugin has views selected, only the selected views are available for the plugin.
+ * The method removes "unavailable" views from the TypoScript.
+ *
+ * @return	void
+ * @since 2.x.x
+ * @version 3.4.4
+ */
   function sheet_sDEF( )
   {
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
@@ -2132,10 +2134,10 @@ class tx_browser_pi1_flexform {
 
 
   /**
-   * The sheet socialmedia administrates bookmarks.
-   *
-   * @return  void
-   */
+ * The sheet socialmedia administrates bookmarks.
+ *
+ * @return	void
+ */
   function sheet_socialmedia() {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
@@ -2193,13 +2195,13 @@ class tx_browser_pi1_flexform {
   }
 
   /**
-   * If the current plugin has views selected, only the selected views are available for the plugin.
-   * The method removes "unavailable" views from the TypoScript.
-   *
-   * @return  void
-   * @since   3.0.1
-   * @version 3.4.4
-   */
+ * If the current plugin has views selected, only the selected views are available for the plugin.
+ * The method removes "unavailable" views from the TypoScript.
+ *
+ * @return	void
+ * @since   3.0.1
+ * @version 3.4.4
+ */
   function sheet_tca() {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
@@ -2255,12 +2257,12 @@ class tx_browser_pi1_flexform {
   }
 
   /**
-   * If the current plugin has views selected, only the selected views are available for the plugin.
-   * The method removes "unavailable" views from the TypoScript.
-   *
-   * @return  void
-   * @version 3.6.2
-   */
+ * If the current plugin has views selected, only the selected views are available for the plugin.
+ * The method removes "unavailable" views from the TypoScript.
+ *
+ * @return	void
+ * @version 3.6.2
+ */
   function sheet_templating()
   {
 
@@ -2520,12 +2522,12 @@ class tx_browser_pi1_flexform {
 
 
   /**
-   * If the current plugin has views selected, only the selected views are available for the plugin.
-   * The method removes "unavailable" views from the TypoScript.
-   *
-   * @return  void
-   * @version 4.0.0
-   */
+ * If the current plugin has views selected, only the selected views are available for the plugin.
+ * The method removes "unavailable" views from the TypoScript.
+ *
+ * @return	void
+ * @version 4.0.0
+ */
   function sheet_viewList( )
   {
 
@@ -3340,13 +3342,13 @@ class tx_browser_pi1_flexform {
   }
 
   /**
-  * If the current plugin has views selected, only the selected views are available for the plugin.
-  * The method removes "unavailable" views from the TypoScript.
-  *
-  * @return  void
-  * @since 3.7.0
-  * @version 3.7.3
-  */
+ * If the current plugin has views selected, only the selected views are available for the plugin.
+ * The method removes "unavailable" views from the TypoScript.
+ *
+ * @return	void
+ * @since 3.7.0
+ * @version 3.7.3
+ */
   function sheet_viewSingle()
   {
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];

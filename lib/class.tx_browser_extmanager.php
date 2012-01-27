@@ -38,11 +38,12 @@
  *
  *
  *
- *   49: class tx_browser_extmanager
- *   67:     function promptCheckUpdate()
- *  102:     function promptCurrIP()
+ *   50: class tx_browser_extmanager
+ *   68:     function promptCheckUpdate()
+ *  103:     function promptCurrIP()
+ *  138:     function promptExternalLinks()
  *
- * TOTAL FUNCTIONS: 2
+ * TOTAL FUNCTIONS: 3
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -130,7 +131,7 @@ class tx_browser_extmanager
   /**
  * promptExternalLinks(): Displays the quick start message.
  *
- * @return  string    message wrapped in HTML
+ * @return	string		message wrapped in HTML
  * @since 3.6.1
  * @version 3.6.1
  */

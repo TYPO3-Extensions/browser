@@ -37,14 +37,17 @@
  *
  *
  *
- *   51: class tx_browser_pi1_views
- *   70:     function __construct($parentObj)
+ *   54: class tx_browser_pi1_views
+ *   73:     function __construct($parentObj)
  *
  *              SECTION: Building the views
- *  102:     function listView($template)
- * 1261:     function singleView($template)
+ *  105:     function listView( $template )
+ * 1372:     function singleView($template)
  *
- * TOTAL FUNCTIONS: 3
+ *              SECTION: Helper
+ * 1976:     public function displayThePlugin( )
+ *
+ * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -64,8 +67,8 @@ class tx_browser_pi1_views
    /**
  * Constructor. The method initiate the parent object
  *
- * @param object    The parent object
- * @return  void
+ * @param	object		The parent object
+ * @return	void
  */
   function __construct($parentObj)
   {
@@ -94,8 +97,8 @@ class tx_browser_pi1_views
   /**
  * Display a search form, a-z-Browser, pageBrowser and a list of records
  *
- * @param string    $template: Template
- * @return  void
+ * @param	string		$template: Template
+ * @return	void
  * @version 3.9.6
  * @since 1.0.0
  */
@@ -745,7 +748,7 @@ class tx_browser_pi1_views
       // DRS - Performance
 
 
-    
+
       /////////////////////////////////////////////////////////////////
       //
       // Store amount of rows for the pagebrowser
@@ -1362,8 +1365,8 @@ class tx_browser_pi1_views
   /**
  * Display a single item from the database
  *
- * @param string    $template: HTML template with TYPO3 subparts and markers
- * @return  void
+ * @param	string		$template: HTML template with TYPO3 subparts and markers
+ * @return	void
  * @version 3.6.3
  */
   function singleView($template)
@@ -1942,34 +1945,34 @@ class tx_browser_pi1_views
 
 
   /**
-   * displayThePlugin( ): The Method checks, if the plugin should controlled by URL parameters.
-   *                      Parameters are defined in the flexform or TypoScript.
-   *                      Conditions
-   *                      * URL Parameter is in the list for hiding this plugin
-   *                        returns false
-   *                      * URL Parameter is in the list for displaying this plugin
-   *                        returns true, if it is in the list
-   *                        returns false, if it isn't in the list
-   *                      * If a paremeter is defined like tx_browser_pi1[showUid],
-   *                        the method doesn't check any value of the GP parameter
-   *                      * If a paremeter is defined like tx_browser_pi1[showUid]=123
-   *                        the method checks the value of the GP parameter.
-   *                        It returns true only, if value is met.
-   *                      * If a paremeter is defined like tx_browser_pi1[*],
-   *                        the methord returns true, if the GP parameter tx_browser_pi1 contains
-   *                        one element at least.
-   *                      It takes account of GP parameters from first to third level only.
-   *                      It takes account for any paramter, but not piVars only.
-   *
-   * @return	boolean     True,
-   *                      * if the plugin should not controlled by URL parameter or
-   *                      * if the plugin meets the conditions
-   *                      False
-   *                      * if the plugin doesn't meet the conditions
-   *
-   * @version 3.9.3
-   * @since 3.9.3
-   */
+ * displayThePlugin( ): The Method checks, if the plugin should controlled by URL parameters.
+ *                      Parameters are defined in the flexform or TypoScript.
+ *                      Conditions
+ *                      * URL Parameter is in the list for hiding this plugin
+ *                        returns false
+ *                      * URL Parameter is in the list for displaying this plugin
+ *                        returns true, if it is in the list
+ *                        returns false, if it isn't in the list
+ *                      * If a paremeter is defined like tx_browser_pi1[showUid],
+ *                        the method doesn't check any value of the GP parameter
+ *                      * If a paremeter is defined like tx_browser_pi1[showUid]=123
+ *                        the method checks the value of the GP parameter.
+ *                        It returns true only, if value is met.
+ *                      * If a paremeter is defined like tx_browser_pi1[*],
+ *                        the methord returns true, if the GP parameter tx_browser_pi1 contains
+ *                        one element at least.
+ *                      It takes account of GP parameters from first to third level only.
+ *                      It takes account for any paramter, but not piVars only.
+ *
+ *                      * if the plugin should not controlled by URL parameter or
+ *                      * if the plugin meets the conditions
+ *                      False
+ *                      * if the plugin doesn't meet the conditions
+ *
+ * @return	boolean		True,
+ * @version 3.9.3
+ * @since 3.9.3
+ */
   public function displayThePlugin( )
   {
     $sheet    = 'sDEF';
@@ -2103,7 +2106,7 @@ class tx_browser_pi1_views
         continue;
       }
         // CONTINUE $csvArray is empty
-        
+
         // Get key=value pair
       list( $paramKey, $paramValue) = explode( '=', $param );
       $paramKey   = trim( $paramKey );
@@ -2256,7 +2259,7 @@ class tx_browser_pi1_views
         // Key is part of the URL
     }
       // RETURN true or false: Parameter is in the list for displaying this plugin
-    
+
 
 
       //////////////////////////////////////////////////////////////////////

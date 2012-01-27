@@ -50,7 +50,7 @@
  *  239:     public function cacheOfListView( )
  *
  *              SECTION: Statistics
- *  400:     public function statisticsNewVisit( )
+ *  404:     public function statisticsNewVisit( $table, $field, $uid )
  *
  * TOTAL FUNCTIONS: 5
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -397,7 +397,6 @@ class tx_browser_pi1_session
  * @param	string		name of the current table
  * @param	string		name of the current field
  * @param	integer		id of the current uid
- *
  * @return	boolean		$bool_newVisit: true in case of a new visit, otherwise false
  * @version 3.9.3
  * @since 3.9.3

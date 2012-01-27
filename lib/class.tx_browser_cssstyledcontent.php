@@ -53,15 +53,22 @@ require_once(PATH_site . 'typo3/sysext/css_styled_content/pi1/class.tx_cssstyled
  *
  *
  *
- *   49: class tx_org_extmanager
- *   67:     function promptQuickstart()
+ *   72: class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
+ *  103:     public function render_uploads( $content, $conf )
+ *  383:     private function render_uploads_per_language( $content, $conf )
  *
- * TOTAL FUNCTIONS: 2
+ *              SECTION: Helper
+ *  642:     private function helper_browser_linkProc( $conf, $key, $fileName )
+ *  738:     private function helper_linkVarsWoL( )
+ *  793:     private function helper_init_drs( )
+ *
+ *              SECTION: SQL
+ *  835:     public function sql_marker( $select_fields, $from_table, $llUid )
+ *
+ * TOTAL FUNCTIONS: 6
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-
-
 class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 {
 
@@ -86,12 +93,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   *                   * userFunc.renderCurrentLanguageOnly has to be true
   *                   * the table sys_language has to contain one record at least
   *
-  * @param       string          Content input. Not used, ignore.
-  * @param       array           TypoScript configuration
-  * @return      string          HTML output.
+  * @param	string		Content input. Not used, ignore.
+  * @param	array		TypoScript configuration
+  * @return	string		HTML output.
+  * @access public
   * @version 3.9.3
   * @since 3.9.3
-  * @access public
   */
   public function render_uploads( $content, $conf )
   {
@@ -176,7 +183,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Set tt_content.uid
 
 
-      
+
       //////////////////////////////////////////////////////////////////////////
       //
       // RETURN the filelink for the current language only
@@ -244,7 +251,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Get the select
 
 
-    
+
       //////////////////////////////////////////////////////////////////////////
       //
       // Get the configuration
@@ -310,7 +317,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
         // Render the $conf
       $llOut = $this->render_uploads_per_language( $content, $coa_conf_userFunc_conf );
-      
+
         // Concatenate the localized output
       $out = $out . $llOut;
     }
@@ -366,12 +373,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   *                                                i.e. tx_org_repertoire.documents
   *                    }
   *
-  * @param       string          Content input. Not used, ignore.
-  * @param       array           TypoScript configuration
-  * @return      string          HTML output.
+  * @param	string		Content input. Not used, ignore.
+  * @param	array		TypoScript configuration
+  * @return	string		HTML output.
+  * @access public
   * @version 3.9.3
   * @since 3.6.4
-  * @access public
   */
   private function render_uploads_per_language( $content, $conf )
   {
@@ -389,7 +396,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // get tableField
     $tableField = $this->cObj->stdWrap($conf['tableField'], $conf['tableField.']);
     list($table, $field) = explode('.', $tableField);
-  
+
       // file path variable is set, this takes precedence
     $filePathConf = $this->cObj->stdWrap($conf['fields.']['from_path'], $conf['fields.']['from_path.']);
     if (!empty($filePathConf))
@@ -397,7 +404,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $fileList   = $this->cObj->filelist($filePathConf);
       list($path) = explode('|', $filePathConf);
     }
-    
+
       // file path variable isn't set
     if (empty($filePathConf))
     {
@@ -406,7 +413,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // Get the path
       if (is_array($GLOBALS['TCA'][$table]['columns'][$field]))
       {
-        if(!empty($GLOBALS['TCA'][$table]['columns'][$field]['config']['uploadfolder'])) 
+        if(!empty($GLOBALS['TCA'][$table]['columns'][$field]['config']['uploadfolder']))
         {
             // in TCA-array folders are saved without trailing slash
           $path = $GLOBALS['TCA'][$table]['columns'][$field]['config']['uploadfolder'] . '/';
@@ -436,11 +443,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $conf['linkProc.']['icon_image_ext_list'] = $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'];
       }
         // stdWrap for the label
-      if ($conf['labelStdWrap.']) 
+      if ($conf['labelStdWrap.'])
       {
         $conf['linkProc.']['labelStdWrap.'] = $conf['labelStdWrap.'];
       }
-      if ($conf['useSpacesInLinkText'] || $conf['stripFileExtensionFromLinkText']) 
+      if ($conf['useSpacesInLinkText'] || $conf['stripFileExtensionFromLinkText'])
       {
         $conf['linkProc.']['removePrependedNumbers'] = 0;
       }
@@ -457,7 +464,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $absPath = t3lib_div::getFileAbsFileName($path.$fileName);
 
           // file is a file
-        if (@is_file($absPath)) 
+        if (@is_file($absPath))
         {
           $path_info = pathinfo($fileName);
           $filesData[$key] = array();
@@ -586,7 +593,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // there are files to list ...
 
       // stdWrap for the whole result
-    if ($conf['stdWrap.']) 
+    if ($conf['stdWrap.'])
     {
       $out = $this->cObj->stdWrap($out, $conf['stdWrap.']);
     }
@@ -618,21 +625,20 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
   /**
-   * helper_browser_linkProc( ):  This method handles the linkProc configuration
-   *                              If linkProc has an element tx_browser_pi1, this element
-   *                              will rendered instead of the default linkProc configuration.
-   *                              It will be allocated the path to the current icon (preview or
-   *                              application icon) out of the linkProc result to the
-   *                              * register ICON_REL_PATH_FROM_LINCPROC
-   *                              The tx_browser_pi1 configuration wll have access to the register
-   *
-   *
-   * @param       array           $conf:      TypoScript configuration
-   * @param       array           $key:       Position of current document
-   * @param       array           $fileName:  Filename of current document
-   * @return      string          Replaced URL
-   * @access private
-   */
+ * helper_browser_linkProc( ):  This method handles the linkProc configuration
+ *                              If linkProc has an element tx_browser_pi1, this element
+ *                              will rendered instead of the default linkProc configuration.
+ *                              It will be allocated the path to the current icon (preview or
+ *                              application icon) out of the linkProc result to the
+ *                              * register ICON_REL_PATH_FROM_LINCPROC
+ *                              The tx_browser_pi1 configuration wll have access to the register
+ *
+ * @param	array		$conf:      TypoScript configuration
+ * @param	array		$key:       Position of current document
+ * @param	array		$fileName:  Filename of current document
+ * @return	string		Replaced URL
+ * @access private
+ */
   private function helper_browser_linkProc( $conf, $key, $fileName )
   {
       //////////////////////////////////////////////////////////////////////////
@@ -722,13 +728,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
 
-  
+
   /**
-   * helper_linkVarsWoL( ): Remove parameter 'L' from linkVars
-   *
-   * @return string         $str_linkVarsWoL: linkVars without 'L'
-   * @access private
-   */
+ * helper_linkVarsWoL( ): Remove parameter 'L' from linkVars
+ *
+ * @return	string		$str_linkVarsWoL: linkVars without 'L'
+ * @access private
+ */
   private function helper_linkVarsWoL( )
   {
       // Get linkVars
@@ -779,11 +785,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
   /**
-   * helper_init_drs( ): Init the DRS - Development Reportinmg System
-   *
-   * @return void
-   * @access private
-   */
+ * helper_init_drs( ): Init the DRS - Development Reportinmg System
+ *
+ * @return	void
+ * @access private
+ */
   private function helper_init_drs( )
   {
     $this->b_drs_error        = true;
@@ -818,18 +824,18 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   * sql_marker( ):  The method select the values of the given table and select and
   *                 returns the values as a marker array
   *
-  * @param  string       $select_fields:  fields for the SQL select
-  * @param  string       $from_table:     table for the SQL from
-  * @param  integer      $llUid:          uid of the localised record
-  * @return array        $marker:         Array with the elements '###FIELD###' => 'value'
+  * @param	string		$select_fields:  fields for the SQL select
+  * @param	string		$from_table:     table for the SQL from
+  * @param	integer		$llUid:          uid of the localised record
+  * @return	array		$marker:         Array with the elements '###FIELD###' => 'value'
+  * @access public
   * @version 3.9.3
   * @since 3.9.3
-  * @access public
   */
   public function sql_marker( $select_fields, $from_table, $llUid )
   {
     $marker = null;
-    
+
       ////////////////////////////////////////////////////////////////////////////////
       //
       // Set the query
@@ -948,7 +954,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
 
-  
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/lib/class.tx_browser_typoscript.php'])

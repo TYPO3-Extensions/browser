@@ -40,41 +40,41 @@
  *
  *
  *
- *   82: class tx_browser_pi1_sql_functions
- *   98:     function __construct($parentObj)
+ *   83: class tx_browser_pi1_sql_functions
+ *   99:     function __construct($parentObj)
  *
  *              SECTION: Synonyms
- *  136:     function query_with_synonyms($arr_data)
- *  337:     function rows_with_synonyms($rows)
+ *  137:     function query_with_synonyms($arr_data)
+ *  338:     function rows_with_synonyms($rows)
  *
  *              SECTION: Order rows
- *  526:     function orderBy_by_piVar()
- *  591:     function make_hierarchical($rows)
- *  616:     function init_hierarchical()
- *  674:     function order_and_addLevel_recurs($rows, $pid = NULL)
- *  750:     function wrap_and_rmLevel($rows)
+ *  527:     function orderBy_by_piVar()
+ *  592:     function make_hierarchical($rows)
+ *  617:     function init_hierarchical()
+ *  675:     function order_and_addLevel_recurs($rows, $pid = NULL)
+ *  751:     function wrap_and_rmLevel($rows)
  *
  *              SECTION: Clean up
- *  821:     function rows_with_cleaned_up_fields($rows)
- *  939:     function replace_statement($str_queryPart)
- *  978:     function clean_up_as_and_alias($arr_tablefields)
- * 1039:     function replace_tablealias($arr_aliastableField)
- * 1093:     function set_tablealias($tableField)
- * 1153:     function get_sql_alias_before($str_tablefield)
- * 1171:     function get_sql_alias_behind($str_tablefield)
- * 1190:     function get_sql_alias_behind_or_before($str_tablefield, $b_before_the_as)
- * 1253:     function get_propper_andWhere($str_andWhere)
- * 1455:     function get_orderBy_tableFields($csvOrderBy)
- * 1505:     function get_descOrAsc($strOrderByField)
- * 1577:     function get_sortTypeAndCase($table, $field)
- * 1740:     function human_readable($str_query)
+ *  822:     function rows_with_cleaned_up_fields($rows)
+ *  940:     function replace_statement($str_queryPart)
+ *  979:     function clean_up_as_and_alias($arr_tablefields)
+ * 1040:     function replace_tablealias($arr_aliastableField)
+ * 1094:     function set_tablealias($tableField)
+ * 1154:     function get_sql_alias_before($str_tablefield)
+ * 1172:     function get_sql_alias_behind($str_tablefield)
+ * 1191:     function get_sql_alias_behind_or_before($str_tablefield, $b_before_the_as)
+ * 1254:     function get_propper_andWhere($str_andWhere)
+ * 1462:     function get_orderBy_tableFields($csvOrderBy)
+ * 1512:     function get_descOrAsc($strOrderByField)
+ * 1584:     function get_sortTypeAndCase($table, $field)
+ * 1747:     function human_readable($str_query)
  *
  *              SECTION: Globals
- * 1792:     function global_all()
- * 1840:     function global_csvSelect()
- * 1962:     function global_csvSearch()
- * 2024:     function global_csvOrderBy()
- * 2178:     function global_stdWrap($str_tsProperty, $str_tsValue, $arr_tsArray)
+ * 1799:     function global_all()
+ * 1847:     function global_csvSelect()
+ * 1969:     function global_csvSearch()
+ * 2031:     function global_csvOrderBy()
+ * 2186:     function global_stdWrap($str_tsProperty, $str_tsValue, $arr_tsArray)
  *
  * TOTAL FUNCTIONS: 26
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -2181,7 +2181,6 @@ class tx_browser_pi1_sql_functions
  * @param	string		$str_tsValue:    the TypoScript value like: tt_news.title, tt_news.short
  * @param	array		$arr_tsArray:    the TypoScript array like select. or override.select.
  * @return	string		wrapped value, if there is a stdWrap configuration
- * 
  * @version 4.0.0
  */
   function global_stdWrap($str_tsProperty, $str_tsValue, $arr_tsArray)

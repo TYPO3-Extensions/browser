@@ -39,16 +39,18 @@
  *
  *
  *
- *   55: class tx_browser_pi1_multisort
- *   71:     function __construct($parentObj)
- *  101:     function multisort_rows()
- *  329:     function multisort_mm_children()
+ *   57: class tx_browser_pi1_multisort
+ *   73:     function __construct($parentObj)
+ *  103:     function multisort_rows()
+ *  330:     function multisort_mm_children_list($rows)
+ *  361:     function multisort_mm_children( $rows )
+ *  490:     function multisort_mm_children_single($rows)
  *
  *              SECTION: Helper
- *  597:     function multisort_upto_6_level($arr_multisort)
- *  690:     function multisort_rows_upto_6_level($arr_multisort, $rows)
+ *  856:     function multisort_upto_6_level($arr_multisort)
+ *  949:     function multisort_rows_upto_6_level($arr_multisort, $rows)
  *
- * TOTAL FUNCTIONS: 5
+ * TOTAL FUNCTIONS: 7
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -65,8 +67,8 @@ class tx_browser_pi1_multisort
     /**
  * Constructor. The method initiate the parent object
  *
- * @param object    The parent object
- * @return  void
+ * @param	object		The parent object
+ * @return	void
  */
   function __construct($parentObj)
   {
@@ -94,8 +96,8 @@ class tx_browser_pi1_multisort
     /**
  * Order the rows depending on csvOrderBy and piVars[sort]
  *
- * @param array   &$array: Reference to the array with the rows
- * @return  void
+ * @param	array		&$array: Reference to the array with the rows
+ * @return	void
  * @version 3.4.5
  */
   function multisort_rows()
@@ -319,9 +321,8 @@ class tx_browser_pi1_multisort
     /**
  * multisort_mm_children_list(): Order children elements depending on csvOrderBy.
  *
- * @param array		$rows : current rows
- *
- * @return  void
+ * @param	array		$rows : current rows
+ * @return	void
  * @internal  http://forge.typo3.org/issues/13803
  * @since     3.6.3
  * @version   3.6.3
@@ -352,13 +353,11 @@ class tx_browser_pi1_multisort
  *                          Result is one row with ordered children elements.
  *                          It will be handled the field sorting only to date.
  *
- * @param   array   $row  : Current row
- * @return  array   $row  : Row with ordered childrens
- * 
+ * @param	array		$row  : Current row
+ * @return	array		$row  : Row with ordered childrens
  * @since     3.6.3
  * @version   3.6.3
  */
-
   function multisort_mm_children( $rows )
   {
     $conf = $this->pObj->conf;
@@ -375,7 +374,7 @@ class tx_browser_pi1_multisort
       /////////////////////////////////////////////////////////////////
       //
       // RETURN orderBy hasn't any elements
-  
+
     if(empty($conf_orderChildren))
     {
       if ($this->pObj->b_drs_sql)
@@ -421,9 +420,9 @@ class tx_browser_pi1_multisort
 
           // EXIT: error!
         $error  = $GLOBALS['TYPO3_DB']->sql_error();
-        if (!empty($error)) 
+        if (!empty($error))
         {
-          if ($this->pObj->b_drs_error) 
+          if ($this->pObj->b_drs_error)
           {
             $str_warn     = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">' . $this->pObj->pi_getLL('drs_security') . '</p>';
             $str_prompt   = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $error . '</p>';
@@ -440,7 +439,7 @@ class tx_browser_pi1_multisort
 
           // Loop: children
         $arr_ordered = null;
-        while ($row_foreignTable = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) 
+        while ($row_foreignTable = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
         {
           foreach($row_foreignTable as $key => $value)
           {
@@ -466,7 +465,7 @@ class tx_browser_pi1_multisort
       // Loop: rows
 
 
-    
+
     return $rows;
   }
 
@@ -482,13 +481,12 @@ class tx_browser_pi1_multisort
  *                                 Result is one row with ordered children elements.
  *                                 It will be handled the field sorting only to date.
  *
- * @param   array       current rows
- * @return  void
+ * @param	array		current rows
+ * @return	void
  * @internal  http://forge.typo3.org/issues/9727
  * @since     3.4.3
  * @version   3.6.3
  */
-
   function multisort_mm_children_single($rows)
   {
     $csvOrderBy           = $this->pObj->objSqlAut->orderBy();
@@ -504,7 +502,7 @@ class tx_browser_pi1_multisort
       /////////////////////////////////////////////////////////////////
       //
       // RETURN rows contain more than one row
-  
+
     if(count($rows) > 1)
     {
       if ($this->pObj->b_drs_warn)
@@ -553,7 +551,7 @@ class tx_browser_pi1_multisort
     $arr_foreign_tables = array();
       // fsander, 101023    -- check if we have an array first
       // There is an relations_mm_simple_array
-    if (is_array($this->pObj->objSqlAut->arr_relations_mm_simple['MM'])) 
+    if (is_array($this->pObj->objSqlAut->arr_relations_mm_simple['MM']))
     {
       if(is_array($this->pObj->objSqlAut->arr_relations_mm_simple['MM']))
       {
@@ -850,8 +848,8 @@ class tx_browser_pi1_multisort
 /**
  * multisort_upto_6_level: multisort upto 6 arrays
  *
- * @param array   $arr_multisort  : array with elements (arrays) for multisort
- * @return  array   $arr_multisort  : ordered
+ * @param	array		$arr_multisort  : array with elements (arrays) for multisort
+ * @return	array		$arr_multisort  : ordered
  * @since   3.4.3
  * @version 3.4.3
  */
@@ -942,9 +940,9 @@ class tx_browser_pi1_multisort
  *
  *                                  : [rows]          ordered
  *
- * @param array   $arr_multisort  : array with elements (arrays) for multisort
- * @param array   $rows           : Result of a database query
- * @return  array   $arr_return     : [arr_multisort] ordered
+ * @param	array		$arr_multisort  : array with elements (arrays) for multisort
+ * @param	array		$rows           : Result of a database query
+ * @return	array		$arr_return     : [arr_multisort] ordered
  * @since   3.4.3
  * @version 3.4.3
  */

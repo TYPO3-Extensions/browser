@@ -46,8 +46,8 @@
  *  118:     public function set_typeNum( )
  *
  *              SECTION: CSV helper
- *  189:     public function csv_init_config( )
- *  225:     public function csv_value( $value )
+ *  183:     public function csv_init_config( )
+ *  220:     public function csv_value( $value )
  *
  * TOTAL FUNCTIONS: 4
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -77,8 +77,8 @@ class tx_browser_pi1_export
   /**
  * Constructor. The method initiate the parent object
  *
- * @param object    The parent object
- * @return  void
+ * @param	object		The parent object
+ * @return	void
  */
   function __construct($pObj)
   {
@@ -111,7 +111,7 @@ class tx_browser_pi1_export
  * set_typeNum(): Set the globals $int_typeNum and $str_typeNum.
  *                The globals are needed by other classes while runtime.
  *
- * @return  void
+ * @return	void
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -176,7 +176,7 @@ class tx_browser_pi1_export
   /**
  * csv_init_config( ): Init the globals $csv_devider, $csv_enclosure and $csv_striptag
  *
- * @return  void
+ * @return	void
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -212,8 +212,8 @@ class tx_browser_pi1_export
  * csv_value( ):  Change a value to a proper csv value: HTML tags will removed, value will enclosed,
  *                the csv devider will added.
  *
- * @param   string    $value: value for csv export
- * @return  string    $value: proper csv value
+ * @param	string		$value: value for csv export
+ * @return	string		$value: proper csv value
  * @version 4.0.0
  * @since 4.0.0
  */

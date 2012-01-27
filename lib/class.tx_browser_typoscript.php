@@ -22,8 +22,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
- 
- 
+
+
 require_once(PATH_tslib . 'class.tslib_pibase.php');
 
 
@@ -44,14 +44,13 @@ require_once(PATH_tslib . 'class.tslib_pibase.php');
  *
  *
  *
- *   49: class tx_org_extmanager
- *   67:     function promptQuickstart()
+ *   54: class tx_browser_typoscript extends tslib_pibase
+ *   79:     public function numberFormat($content = '', $conf = array())
  *
- * TOTAL FUNCTIONS: 2
+ * TOTAL FUNCTIONS: 1
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-
 class tx_browser_typoscript extends tslib_pibase
 {
 
@@ -71,19 +70,19 @@ class tx_browser_typoscript extends tslib_pibase
   /**
  * numberFormat(): format numbers with thousands seperator and decimal point
  *
- * @param   string    $content: current content of TypoScript workflow
- * @param   array     $conf: current TypoScript configuration array
+ * @param	string		$content: current content of TypoScript workflow
+ * @param	array		$conf: current TypoScript configuration array
+ * @return	string		formatted number
  * @since 3.6.2
  * @version 3.6.2
- * @return  string    formatted number
  */
-  public function numberFormat($content = '', $conf = array()) 
+  public function numberFormat($content = '', $conf = array())
   {
       // 13145, dwildt, 110217
     global $TSFE;
     $local_cObj = $TSFE->cObj;
 
-    if (!$content) 
+    if (!$content)
     {
       $conf     = $conf['userFunc.'];
       $content  = $local_cObj->cObjGetSingle($conf['number'], $conf['number.']);

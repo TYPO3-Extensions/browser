@@ -40,22 +40,22 @@
  *
  *
  *   64: class tx_browser_pi1_statistics
- *  118:     function __construct($pObj)
+ *  124:     function __construct($pObj)
  *
  *              SECTION: Initial
- *  152:     private function statisticsInitVars( )
- *  211:     private function statisticsIsEnabled( )
+ *  158:     private function statisticsInitVars( )
+ *  236:     public function statisticsIsEnabled( )
  *
  *              SECTION: Counter
- *  294:     public function countViewSingleRecord( )
- *  373:     private function countHit( )
- *  406:     private function countVisit( )
+ *  319:     public function countViewSingleRecord( )
+ *  398:     private function countHit( )
+ *  426:     private function countVisit( )
  *
  *              SECTION: SQL
- *  468:     private function sql_update_statistics( $table, $field, $uid )
+ *  490:     public function sql_update_statistics( $table, $field, $uid, $operator )
  *
  *              SECTION: Helper
- *  631:     private function helperFieldInTable( $field )
+ *  674:     private function helperFieldInTable( $table, $field )
  *
  * TOTAL FUNCTIONS: 8
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -64,7 +64,7 @@
 class tx_browser_pi1_statistics
 {
     // #31230, 31229: Statistics module
-  
+
     //////////////////////////////////////////////////////
     //
     // Variables set by the pObj (by class.tx_browser_pi1.php)
@@ -665,8 +665,8 @@ class tx_browser_pi1_statistics
  *                        The result will be stored in the class var
  *                        $this->arr_checkedTables[$table][$field]
  *
- * @param	string      $table: current table
- * @param	string      $field: current field
+ * @param	string		$table: current table
+ * @param	string		$field: current field
  * @return	boolean		$this->arr_checkedTables[$table][$field]
  * @version 3.9.3
  * @since 3.9.3
