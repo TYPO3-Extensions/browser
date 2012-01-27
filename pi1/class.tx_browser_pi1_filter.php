@@ -236,6 +236,16 @@ class tx_browser_pi1_filter {
 
 
 
+      // Fetch filtered rows before hit counting
+      // #30912, 120127, dwildt+
+    if( $this->pObj->objFlexform->sheet_viewList_total_hits == 'controlled' )
+    {
+      $this->filter_fetch_rows( );
+    }
+      // Fetch filtered rows before hit counting
+
+
+
       /////////////////////////////////////////////////////////////////
       //
       // Count the hits per filter item
@@ -320,8 +330,13 @@ class tx_browser_pi1_filter {
     $template     = $this->pObj->cObj->substituteSubpart($template, '###CATEGORY_MENU###', $str_subpart, true);
       // Replace category menus in the HTML template
 
-      // Filter rows
-    $this->filter_rows( );
+      // Fetch filtered rows after hit counting
+      // #30912, 120127, dwildt+
+    if( $this->pObj->objFlexform->sheet_viewList_total_hits == 'independent' )
+    {
+      $this->filter_fetch_rows( );
+    }
+      // Fetch filtered rows after hit counting
 
     $arr_return['data']['template'] = $template;
       // #30912, 120127, dwildt+
@@ -410,23 +425,23 @@ class tx_browser_pi1_filter {
   
   
   /**
- * filter_rows():  ...
+ * filter_fetch_rows():  Remove all rows, which aren't fetched by filter selection
  *
  * @return  void
  * @version 3.9.6
  * @since   3.9.6
  */
-  function filter_rows( )
+  private function filter_fetch_rows( )
   {
-$pos = strpos('91.23.187.149', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
-}
-if( $pos === false )
-{
-  return;
-}
+//$pos = strpos('91.23.187.149', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//if( ! ( $pos === false ) )
+//{
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
+//}
+//if( $pos === false )
+//{
+//  return;
+//}
       // LOOP rows
     foreach( $this->rows_wo_limit as $key => $row)
     {
@@ -438,7 +453,7 @@ if( $pos === false )
           case( 'equal_or_bigger' ):
             if ( ! ( $row[$tableField] >= $condition['equal_or_bigger'] ) )
             {
-              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
+//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
@@ -446,7 +461,7 @@ if( $pos === false )
           case( 'equal_or_smaller' ):
             if ( ! ( $row[$tableField] <= $condition['equal_or_smaller'] ) )
             {
-              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' <= ' . $condition['equal_or_smaller'] );
+//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' <= ' . $condition['equal_or_smaller'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
@@ -454,8 +469,8 @@ if( $pos === false )
           case( 'uid_in_list' ):
             if ( ! ( in_array( $row[$tableField], $condition['uid_in_list'] ) ) )
             {
-              $uid_list = implode( ',', $condition['uid_in_list'] );
-              var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $row[$tableField] . ', array( ' . $uid_list . ' ) ) ' );
+//              $uid_list = implode( ',', $condition['uid_in_list'] );
+//              var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $row[$tableField] . ', array( ' . $uid_list . ' ) ) ' );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
@@ -470,8 +485,8 @@ if( $pos === false )
     }
       // LOOP rows
 
-    var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
-    var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
+//    var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
+//    var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
   }
 
 

@@ -193,18 +193,15 @@ class tx_browser_pi1_views
       // Filter - part I/II: SQL andWhere statement
 
       // 3.5.0
-    $arr_andWhereFilter = $this->pObj->objFilter->andWhere_filter();
-$pos = strpos('91.23.187.149', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_andWhereFilter );
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->pObj->objFilter->arr_filter_condition );
-  $arr_andWhereFilter = null;
-}
-    if ( ! empty( $arr_andWhereFilter ) )
-    {
-      $this->pObj->arr_andWhereFilter = $arr_andWhereFilter;
-    }
+      // #30912, 120127, dwildt-
+//    $arr_andWhereFilter = $this->pObj->objFilter->andWhere_filter();
+//    if ( ! empty( $arr_andWhereFilter ) )
+//    {
+//      $this->pObj->arr_andWhereFilter = $arr_andWhereFilter;
+//    }
+      // #30912, 120127, dwildt-
+      // #30912, 120127, dwildt+
+    $this->pObj->objFilter->andWhere_filter();
       // Filter - part I/II: SQL andWhere statement
 
 

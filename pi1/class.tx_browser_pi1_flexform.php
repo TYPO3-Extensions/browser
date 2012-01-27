@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009-2011 - Dirk Wildt http://wildt.at.die-netzmacher.de
+*  (c) 2009-2012 - Dirk Wildt http://wildt.at.die-netzmacher.de
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -61,8 +61,8 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    browser
- * @version 4.0.0
- * @since  2.0.0
+ * @version 3.9.6
+ * @since   2.0.0
  */
 class tx_browser_pi1_flexform {
   /////////////////////////////////////////////////
