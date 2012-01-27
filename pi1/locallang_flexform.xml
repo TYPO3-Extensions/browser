@@ -317,8 +317,8 @@
       <label index="sheet_viewList.search.wildcards.manual">User have to add wildcards</label>
       <label index="sheet_viewList.search.wildcards.char">Search: char for a wildcard (i.e "*")</label>
       <label index="sheet_viewList.filter_hits">Total hits</label>
-      <label index="sheet_viewList.filter_hits.for_all_records">Display total hits independent on selected filters</label>
-      <label index="sheet_viewList.filter_hits.for_filtered_records">Display total hits controlled by selected filters</label>
+      <label index="sheet_viewList.filter_hits.for_all_records">Independent on selected filters (recommended)</label>
+      <label index="sheet_viewList.filter_hits.for_filtered_records">Controlled by selected filters</label>
       <label index="sheet_viewList.filter_hits.ts">Take the value from TypoScript!</label>
       <label index="sheet_viewList.csvexport">CSV export</label>
       <label index="sheet_viewList.csvexport.disabled">Disabled (default)</label>
@@ -667,9 +667,9 @@
       <label index="sheet_viewList.search.wildcards.default">Automatisch (empfohlen)</label>
       <label index="sheet_viewList.search.wildcards.manual">Besucher muss Platzhalter selbst hinzufuegen</label>
       <label index="sheet_viewList.search.wildcards.char">Suche: Zeichen fuer den Platzhalter (z.B.: "*")</label>
-      <label index="sheet_viewList.filter_hits">Anzahl Treffer (hits)</label>
-      <label index="sheet_viewList.filter_hits.for_all_records">Zeige m<![CDATA[&ouml;]]>gliche Treffer unabh<![CDATA[&auml;]]>ngig von gesetzten Filtern (empfohlen)</label>
-      <label index="sheet_viewList.filter_hits.for_filtered_records">Zeige m<![CDATA[&ouml;]]>gliche Treffer abh<![CDATA[&auml;]]>ngig von gesetzten Filtern</label>
+      <label index="sheet_viewList.filter_hits">Gesamtzahl Treffer</label>
+      <label index="sheet_viewList.filter_hits.for_all_records">Unabh<![CDATA[&auml;]]>ngig von gesetzten Filtern (empfohlen)</label>
+      <label index="sheet_viewList.filter_hits.for_filtered_records">Abh<![CDATA[&auml;]]>ngig von gesetzten Filtern</label>
       <label index="sheet_viewList.filter_hits.ts">Nimm den Wert aus TypoScript!</label>
       <label index="sheet_viewList.csvexport">CSV Export</label>
       <label index="sheet_viewList.csvexport.disabled">Deaktiviert (Standard)</label>
