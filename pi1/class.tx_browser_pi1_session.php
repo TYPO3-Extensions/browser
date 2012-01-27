@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2011-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -393,6 +393,10 @@ class tx_browser_pi1_session
  *                        * Is session management disabled? Return false
  *                        * Isn't previous visit older than current time minus timeout? Return false
  *                        #31230, 31229: Statistics module
+ *
+ * @param	string		name of the current table
+ * @param	string		name of the current field
+ * @param	integer		id of the current uid
  *
  * @return	boolean		$bool_newVisit: true in case of a new visit, otherwise false
  * @version 3.9.3

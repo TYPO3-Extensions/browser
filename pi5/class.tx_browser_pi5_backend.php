@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2010-2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2010-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -80,8 +80,8 @@ class tx_browser_pi5_backend
  * sDef_getArrViewsList: Get data query (and andWhere) for all list views of the current plugin.
  * Tab [General/sDEF]
  *
- * @param [type]    $arr_pluginConf: ...
- * @return  Array   with the names of the views list
+ * @param array    $arr_pluginConf: Configuration of the plugin
+ * @return  array   with the names of the views list
  */
   public function sDef_getArrViewsList($arr_pluginConf)
   {
@@ -835,8 +835,8 @@ class tx_browser_pi5_backend
   /**
  * socialmedia_getArrBookmarks: Get bookmarks for flexform. Tab [Socialmedia]
  *
- * @param [type]    $arr_pluginConf: ...
- * @return  Array   with the bookmarks
+ * @param array    $arr_pluginConf: Configuration of the plugin
+ * @return  array   with the bookmarks
  */
   public function socialmedia_getArrBookmarks($arr_pluginConf)
   {
@@ -894,8 +894,8 @@ class tx_browser_pi5_backend
  * templating_getArrDataQuery: Get data query (and andWhere) for all list views of the current plugin.
  * Tab [Templating]
  *
- * @param [type]    $arr_pluginConf: ...
- * @return  Array   with the bookmarks
+ * @param array    $arr_pluginConf: Configuration of the plugin
+ * @return  array   with the bookmarks
  */
   public function templating_getArrDataQuery($arr_pluginConf)
   {

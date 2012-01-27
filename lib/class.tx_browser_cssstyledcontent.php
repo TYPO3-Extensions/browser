@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2011-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,6 +21,19 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+
+
+
+  // RETURN css_styled_content isn't installed
+if(!file_exists(PATH_site . 'typo3/sysext/css_styled_content/pi1/class.tx_cssstyledcontent_pi1.php'))
+{
+  var_dump(__METHOD__ . '(' . __LINE__ .'): Browser - the TYPO3 frontend engine: [EN] You have to install CSS styled content! [DE] Bitte installiere CSS styled content!');
+  return;
+}
+
+
+
+require_once(PATH_site . 'typo3/sysext/css_styled_content/pi1/class.tx_cssstyledcontent_pi1.php');
 
 /**
 * Class extends tx_cssstyledcontent_pi1
@@ -48,16 +61,6 @@
  *
  */
 
-
-
-  // RETURN css_styled_content isn't installed
-if(!file_exists(PATH_site . 'typo3/sysext/css_styled_content/pi1/class.tx_cssstyledcontent_pi1.php'))
-{
-  var_dump(__METHOD__ . '(' . __LINE__ .'): Browser - the TYPO3 frontend engine: [EN] You have to install CSS styled content! [DE] Bitte installiere CSS styled content!');
-  return;
-}
-
-require_once(PATH_site . 'typo3/sysext/css_styled_content/pi1/class.tx_cssstyledcontent_pi1.php');
 
 class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 {

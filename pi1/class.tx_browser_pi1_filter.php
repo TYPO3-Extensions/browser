@@ -463,7 +463,7 @@ class tx_browser_pi1_filter {
    *
    * @param string      $tableField: table.field of the current filter
    * @param array       $arr_ts: typoScript array of the current filter
-   * @return  boolen    True, if there isn't any condition or condition is meet. False, if it isn't.
+   * @return  boolean    True, if there isn't any condition or condition is meet. False, if it isn't.
    * @version 3.9.3
    * @since   3.9.3
    */
@@ -2474,10 +2474,11 @@ class tx_browser_pi1_filter {
 
 
   /**
- * get_ordered: ...
+ * get_ordered( ): Get rows ordered by Value DESC or ASC supported by PHP multisort
  *
  * @param array     $arr_rows   : Result of the SQL query
  * @param string    $tableField : Current table.field
+ * @return array    $arr_tableFields : Array with table.fields
  * @internal        #32223, 120119, dwildt+
  * @version 3.9.6
  * @since   3.9.6
@@ -3038,6 +3039,7 @@ class tx_browser_pi1_filter {
  * @param integer   $uid: The item uid
  * @param string   $value: The item value
  * @param array   $arr_piVar: The array with the piVar or piVars
+ * @param array   $arr_ts: Current TypoScript configuration
  * @param string    $conf_slected: The selected configuration from TS
  * @param string    $conf_item: The current item wrap
  * @return  string    Returns the wrapped item selected or not selected

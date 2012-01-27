@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2011-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -645,9 +645,9 @@ class tx_browser_pi1_download
 
 
   /**
- * download_statistics():
-   *
-   * @param string    $operator: + or -
+ * download_statistics(): Inits the statistic module
+ *
+ * @param string    $operator: operator has to be + or -
  *
  * @return  void
  * @version 3.9.3
@@ -694,9 +694,9 @@ class tx_browser_pi1_download
 
 
   /**
- * statistics_download():
+ * statistics_download(): Count the hit
  *
- * @param	integer		$operator:  + or -
+ * @param string    $operator: operator has to be + or -
  *
  * @return  void
  * @version 3.9.3
@@ -718,9 +718,9 @@ class tx_browser_pi1_download
 
 
   /**
- * statistics_downloadByVisit():
+ * statistics_downloadByVisit(): Count the hit by visit
  *
- * @param	integer		$operator:  + or -
+ * @param string    $operator: operator has to be + or -
  *
  * @return  void
  * @version 3.9.3

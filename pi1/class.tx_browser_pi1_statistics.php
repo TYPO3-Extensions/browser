@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2011-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -404,11 +404,6 @@ class tx_browser_pi1_statistics
       // Count the hit
     $this->sql_update_statistics( $table, $field, $uid, '+' );
 
-//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if ( ! ( $pos === false ) )
-//    {
-//      var_dump(__METHOD__. ' (' . __LINE__ . '): Counting a hit' );
-//    }
   }
 
 
@@ -484,10 +479,10 @@ class tx_browser_pi1_statistics
  *                            If the user has enabled the SQL debug by the flexform / TypoScript,
  *                            the method echos it in the frontend.
  *
- * @param	string		$table:     table
- * @param	string		$field:     field
+ * @param	string		$table:     name of the current table
+ * @param	string		$field:     name of the current field
  * @param	integer		$uid:       uid of the current record
- * @param	integer		$operator:  + or -
+ * @param	integer		$operator:  operator like + or -
  * @return	void
  * @version 3.9.3
  * @since 3.9.3

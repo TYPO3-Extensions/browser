@@ -367,7 +367,7 @@ class tx_browser_pi1_javascript
     /**
  * wrap_ajax_div(): Wrap the template in a div AJAX tag, if segement[cObj] is set
  *
- * @param string    $template:
+ * @param string    $template: The current content of the template
  * @return  string    $template unchanged or wrapped in div ajax tag
  * @since 3.5.0
  * @version 3.5.0

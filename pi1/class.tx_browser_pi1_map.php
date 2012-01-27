@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2011-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -630,7 +630,7 @@ class tx_browser_pi1_map
 
 
   /**
- * css_setHeader( ):
+ * css_setHeader( ): Include CSS for openStreetMap
  *
  * @return  void
  * @version 3.9.6
@@ -672,7 +672,7 @@ class tx_browser_pi1_map
 
 
   /**
- * jss_setHeader( ):
+ * jss_setHeader( ): Include JSS for openStreetMap
  *
  * @return  void
  * @version 3.9.6

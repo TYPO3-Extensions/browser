@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008 - 2011 Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2008-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -3787,9 +3787,14 @@ class tx_browser_pi1_template
 
 
 
-    // #12723, mbless, 110310
-    //  $this->hook_template_elements();
-    //  hook to manipulate the elements of a row BEFORE the elements are linked or transformed by typoscript
+  /**
+ * hook_template_elements(): hook to manipulate the elements of a row BEFORE the elements are linked or transformed by typoscript
+ *
+ * @author 	Martin Bless
+ * @return  void
+ *
+ * @internal 	#12723, mbless, 110310 
+ */
   function hook_template_elements() {
       // debug($this->_elements,'$this->_elements',__LINE__,__FILE__);
     if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsHook'])) {
@@ -3800,8 +3805,15 @@ class tx_browser_pi1_template
     }
   }
 
-    //  $this->hook_template_elements_transformed();
-    //  hook to manipulate the elements of a row AFTER the elements are linked or transformed by typoscript
+
+  /**
+ * hook_template_elements_transformed( ): hook to manipulate the elements of a row AFTER the elements are linked or transformed by typoscript
+ *
+ * @author 	Martin Bless
+ * @return  void
+ *
+ * @internal 	#12723, mbless, 110310 
+ */
   function hook_template_elements_transformed() {
       // debug($this->_elementsTransformed,'$this->_elementsTransformed',__LINE__,__FILE__);
       // debug($this->_elementsBoolSubstitute,'$this->_elementsBoolSubstitute',__LINE__,__FILE__);
@@ -3812,7 +3824,6 @@ class tx_browser_pi1_template
       }
     }
   }
-    // #12723, mbless, 110310
 
 
 

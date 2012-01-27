@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010-2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2010-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -319,6 +319,8 @@ class tx_browser_pi1_multisort
     /**
  * multisort_mm_children_list(): Order children elements depending on csvOrderBy.
  *
+ * @param array		$rows : current rows
+ *
  * @return  void
  * @internal  http://forge.typo3.org/issues/13803
  * @since     3.6.3
@@ -326,17 +328,6 @@ class tx_browser_pi1_multisort
  */
   function multisort_mm_children_list($rows)
   {
-//      // 
-////var_dump(__METHOD__ . ': ' . __LINE__, $rows);
-//    foreach($rows as $key => $elements)
-//    {
-//      $rows_curr = array();
-//      $rows_curr[$key] = $elements;
-//var_dump(__METHOD__ . ': ' . __LINE__, $rows_curr);
-//      $rows_curr = $this->multisort_mm_children_single($rows_curr);
-//      $rows[$key] = $rows_curr[$key];
-//var_dump(__METHOD__ . ': ' . __LINE__, $rows_curr);
-//    }
     return $rows;
   }
 
@@ -367,9 +358,8 @@ class tx_browser_pi1_multisort
  * @since     3.6.3
  * @version   3.6.3
  */
-      // 13803, dwildt, 110312
-  //function multisort_mm_children()
-  function multisort_mm_children($rows)
+
+  function multisort_mm_children( $rows )
   {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -489,16 +479,16 @@ class tx_browser_pi1_multisort
 
     /**
  * multisort_mm_children_single(): Order children elements depending on csvOrderBy.
- *                          Result is one row with ordered children elements.
- *                          It will be handled the field sorting only to date.
+ *                                 Result is one row with ordered children elements.
+ *                                 It will be handled the field sorting only to date.
  *
+ * @param   array       current rows
  * @return  void
  * @internal  http://forge.typo3.org/issues/9727
  * @since     3.4.3
  * @version   3.6.3
  */
-      // 13803, dwildt, 110312
-  //function multisort_mm_children()
+
   function multisort_mm_children_single($rows)
   {
     $csvOrderBy           = $this->pObj->objSqlAut->orderBy();

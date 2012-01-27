@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 - 2011 Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2008-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -1576,6 +1576,8 @@ class tx_browser_pi1_localisation
  *                      The method returns a localised uid in case of $this->int_localisation_mode is
  *                      * PI1_SELECTED_LANGUAGE_ONLY or
  *                      * PI1_SELECTED_OR_DEFAULT_LANGUAGE
+ * @param string   $table : name of the cirrent table
+ * @param integer  $uid   : current uid
  *
  * @return	void
  * @version 3.9.3
@@ -1719,6 +1721,7 @@ class tx_browser_pi1_localisation
  *                        * $this->pObj->arr_realTables_localised
  *                        * $this->pObj->arr_realTables_notLocalised
  *
+ * @param string          name of the current table
  * @return	boolean       True, if tbale is localised, false if not.
  * @version 3.9.3
  * @since 3.9.3
@@ -2137,7 +2140,10 @@ class tx_browser_pi1_localisation
 
 
   /**
- * sql_localisedUid( ):
+ * sql_localisedUid( ): Get the uid of the localised record 
+ *
+ * @param string     name of the current table
+ * @param integer    uid of the cirrent row
  *
  * @return	void
  * @version 3.9.3

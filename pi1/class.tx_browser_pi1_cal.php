@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010-2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2010-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -710,9 +710,9 @@ class tx_browser_pi1_cal
 
 
   /**
- * cal_template():
+ * cal_template(): Returns the HTML template
  *
- * @return  array   $arr_return   rows, template, success
+ * @return  string   $template   The template
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -1529,17 +1529,10 @@ class tx_browser_pi1_cal
   /**
  * cal_frame(): Building the schedules data frame (the list of all proper time units)
  *
- * @param integer   $min_begin:     Begin of the list with timeunits in minutes. Value has to be between 0 and 24 hours.
- * @param integer   $min_end:       End   of the list with timeunits in minutes. Value has to be between 0 and 24 hours.
- * @param integer   $min_time_unit: Time unit for the list
- * @param string    $frmt_begin:    strftime format for begin
- * @param string    $frmt_end:      strftime format for end
- * @param string    $devider:       devider between begin and end
  * @return  array   $arr_period:    Period (list of time units)
  * @version 4.0.0
  * @since 4.0.0
  */
-//  private function cal_frame( $min_begin, $min_end, $min_time_unit, $frmt_begin, $frmt_end, $devider)
   private function cal_frame( )
   {
     $sheet          = 'day';
@@ -2310,7 +2303,7 @@ class tx_browser_pi1_cal
  *                                  #13920, 110319, dwildt
  *
  * @param string    $tableField: The current table.field
- * @param [type]    $str_urlPeriod: ...
+ * @param string    $str_urlPeriod: The url of the period
  * @return  string    $str_urlPeriod: I.e. 2011M%C3%A4r, 2011Apr, 2011Mai, ...
  * @version 3.6.4
  * @since 3.6.4
@@ -2776,7 +2769,7 @@ class tx_browser_pi1_cal
  * zz_strtotime(): Upgrade rows for a day's schedule
  *
  * @param boolean   $bool_strtotime   true: use strtotime; false: do noting
- * @param srring    $strtotime: Time string in english language
+ * @param string    $strtotime: Time string in english language
  * @return  array   $arr_return: result: in case of success timestamp else timestring; ISO_8601: timestamp in ISO 8601 format;
  * @version 4.0.0
  * @since 4.0.0
@@ -2851,10 +2844,10 @@ class tx_browser_pi1_cal
  *                          Value will get a link to the singleView (depending on some things, see code below).
  *                          Marker in the configuration will replaced recursive with values of the current row.
  *
- * @param srring    $tableField:      Name of the current table.field
+ * @param string    $tableField:      Name of the current table.field
  * @param string    $value:           Value of the current table-field
  * @param string    $elements:        Current row (from SQL, conslidated)
- * @param boolena   $linkToSingle:    Should value get a link to the single view
+ * @param boolean   $linkToSingle:    Should value get a link to the single view
  *
  * @return  string   $value: The wrapped value
  * @version 4.0.0
