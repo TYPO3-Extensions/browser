@@ -3349,47 +3349,45 @@ class tx_browser_pi1_filter {
       {
         $arr_uids = null;
 
-          // get the uid of each children
+          // get uid list (the uid of each children)
         if ( $str_devider )
         {
           $arr_uids = explode( $str_devider, $row_wo_limit[$table . '.uid'] );
         }
-          // get the uid of each children
+          // get uid list (the uid of each children)
 
-        if ( ! is_array( $arr_uids ) )
+        switch( true )
         {
-            // CONTINUE: there isn't any uid
-          continue;
+          case( is_array( $arr_uids ) ):
+              // Current value is a list of uids (children)
+              // LOOP uid list
+            foreach ( $arr_uids as $uid )
+            {
+              if( empty( $uid ) )
+              {
+                  // CONTINUE: uid is 0, null, false or empty
+                continue;
+              }
+                // Count the hit per table.field and uid (per row)
+              $this->arr_hits[$tableField][$uid]++;
+                // Count the hit per table.field
+              $this->arr_hits[$tableField]['sum']++;
+            }
+              // LOOP uid list
+            break;
+              // Current value is a list of uids (children)
+          default:
+              // Current value is a single uid
+            $uid = $row_wo_limit[$table . '.uid'];
+            if( ! empty( $uid ) )
+            {
+                // Count the hit per table.field and uid (per row)
+              $this->arr_hits[$tableField][$uid]++;
+                // Count the hit per table.field and uid (per row)
+              $this->arr_hits[$tableField]['sum']++;
+            }
+              // Current value is a single uid
         }
-
-          // LOOP uids
-        foreach ( $arr_uids as $uid )
-        {
-          if( empty( $uid ) )
-          {
-              // CONTINUE: uid is 0, null, false or empty
-            continue;
-          }
-            // Count the hit per table.field and uid (per row)
-          $this->arr_hits[$tableField][$uid]++;
-            // Count the hit per table.field
-          $this->arr_hits[$tableField]['sum']++;
-        }
-          // LOOP uids
-
-          // No hit
-        if ( $arr_uids == null )
-        {
-          $uid = $row_wo_limit[$table . '.uid'];
-          if( ! empty( $uid ) )
-          {
-              // Count the hit per table.field and uid (per row)
-            $this->arr_hits[$tableField][$uid]++;
-              // Count the hit per table.field and uid (per row)
-            $this->arr_hits[$tableField]['sum']++;
-          }
-        }
-          // No hit
       }
         // LOOP rows without limit
     }
