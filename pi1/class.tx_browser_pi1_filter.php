@@ -418,6 +418,13 @@ class tx_browser_pi1_filter {
  */
   function filter_rows( )
   {
+$pos = strpos('91.23.187.149', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
+  $arr_andWhereFilter = null;
+}
     $this->rows_wo_limit;
   }
 
