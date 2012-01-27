@@ -124,7 +124,7 @@ class tx_browser_pi1_filter {
 
   /***********************************************
   *
-  * Filter and
+  * Filter
   *
   **********************************************/
 
@@ -237,49 +237,54 @@ class tx_browser_pi1_filter {
       //
       // Hits per filter item
 
-    foreach ($this->arr_conf_tableFields as $tableField)
-    {
-      list ($table, $field) = explode('.', $tableField);
-      if (is_array($this->rows_wo_limit))
-      {
-        foreach ($this->rows_wo_limit as $row_wo_limit)
-        {
-          $arr_uids = null;
-          if ($str_devider)
-          {
-            $arr_uids = explode($str_devider, $row_wo_limit[$table . '.uid']);
-          }
-          if (is_array($arr_uids))
-          {
-            foreach ($arr_uids as $uid)
-            {
-              if(!empty($uid))
-              {
-                $this->arr_hits[$tableField][$uid]++;
-                $this->arr_hits[$tableField]['sum']++;
-              }
-            }
-          }
-          if ($arr_uids == null)
-          {
-            $uid = $row_wo_limit[$table . '.uid'];
-            if(!empty($uid))
-            {
-              $this->arr_hits[$tableField][$uid]++;
-              $this->arr_hits[$tableField]['sum']++;
-            }
-          }
-        }
-      }
-    }
-      // DRS - Development Reporting System
-    if ($this->pObj->b_drs_warn) {
-      if (empty ($this->arr_hits)) {
-        t3lib_div :: devlog('[WARN/FILTER] Any filter item hasn\'t any hit!', $this->pObj->extKey, 0);
-      }
-    }
-      // DRS - Development Reporting System
-      // Hits per filter item
+    $this->hits_per_filter_item( $str_devider );
+//    foreach ($this->arr_conf_tableFields as $tableField)
+//    {
+//      list ($table, $field) = explode('.', $tableField);
+//        // 120127, dwildt
+//      if ( ! is_array( $this->rows_wo_limit ) )
+//      {
+//        continue;
+//      }
+//      foreach ( $this->rows_wo_limit as $row_wo_limit )
+//      {
+//        $arr_uids = null;
+//        if ( $str_devider )
+//        {
+//          $arr_uids = explode( $str_devider, $row_wo_limit[$table . '.uid'] );
+//        }
+//        if ( is_array( $arr_uids ) )
+//        {
+//          foreach ( $arr_uids as $uid )
+//          {
+//            if( ! empty( $uid ) )
+//            {
+//              $this->arr_hits[$tableField][$uid]++;
+//              $this->arr_hits[$tableField]['sum']++;
+//            }
+//          }
+//        }
+//        if ( $arr_uids == null )
+//        {
+//          $uid = $row_wo_limit[$table . '.uid'];
+//          if( ! empty( $uid ) )
+//          {
+//            $this->arr_hits[$tableField][$uid]++;
+//            $this->arr_hits[$tableField]['sum']++;
+//          }
+//        }
+//      }
+//    }
+//      // DRS - Development Reporting System
+//    if ( $this->pObj->b_drs_warn )
+//    {
+//      if ( empty ( $this->arr_hits ) )
+//      {
+//        t3lib_div :: devlog('[WARN/FILTER] Any filter item hasn\'t any hit!', $this->pObj->extKey, 0);
+//      }
+//    }
+//      // DRS - Development Reporting System
+//      // Hits per filter item
 
 
 
@@ -3297,6 +3302,124 @@ class tx_browser_pi1_filter {
     return false;
 
   }
+
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * Hits
+  *
+  **********************************************/
+
+  /**
+ * hits_per_filter_item( ): Count the hits for each item of each filter.
+ *                          Result is stored in the global $arr_hits
+ *
+ * @param   string          $str_devider: Devider between children (multiple items in one field)
+ *
+ * @return  void
+ * @version 3.9.6
+ * @since 3.9.6
+ */
+  function hits_per_filter_item( $str_devider )
+  {
+      /////////////////////////////////////////////////////////////////
+      //
+      // LOOP each filter
+
+    foreach ($this->arr_conf_tableFields as $tableField)
+    {
+// Wieso im LOOP? Kann doch auch davor oder?
+      if ( ! is_array( $this->rows_wo_limit ) )
+      {
+        continue;
+      }
+// Wieso im LOOP? Kann doch auch davor oder?
+
+      list ($table, $field) = explode('.', $tableField);
+
+        // LOOP rows without limit
+      foreach ( $this->rows_wo_limit as $row_wo_limit )
+      {
+        $arr_uids = null;
+
+          // get the uid of each children
+        if ( $str_devider )
+        {
+          $arr_uids = explode( $str_devider, $row_wo_limit[$table . '.uid'] );
+        }
+          // get the uid of each children
+
+        if ( ! is_array( $arr_uids ) )
+        {
+            // CONTINUE: there isn't any uid
+          continue;
+        }
+
+          // LOOP uids
+        foreach ( $arr_uids as $uid )
+        {
+          if( empty( $uid ) )
+          {
+              // CONTINUE: uid is 0, null, false or empty
+            continue;
+          }
+            // Count the hit per table.field and uid (per row)
+          $this->arr_hits[$tableField][$uid]++;
+            // Count the hit per table.field
+          $this->arr_hits[$tableField]['sum']++;
+        }
+          // LOOP uids
+
+          // No hit
+        if ( $arr_uids == null )
+        {
+          $uid = $row_wo_limit[$table . '.uid'];
+          if( ! empty( $uid ) )
+          {
+              // Count the hit per table.field and uid (per row)
+            $this->arr_hits[$tableField][$uid]++;
+              // Count the hit per table.field and uid (per row)
+            $this->arr_hits[$tableField]['sum']++;
+          }
+        }
+          // No hit
+      }
+        // LOOP rows without limit
+    }
+      // LOOP each filter
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
+
+    if ( empty ( $this->arr_hits ) )
+    {
+      if ( $this->pObj->b_drs_warn )
+      {
+        $prompt = 'Any filter item hasn\'t any hit!';
+        t3lib_div :: devlog('[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+      }
+    }
+      // DRS - Development Reporting System
+  }
+
+
+
+
+
+
+
+
+  
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_filter.php']) {
