@@ -321,7 +321,7 @@ class tx_browser_pi1_filter {
       // Replace category menus in the HTML template
 
       // Filter rows
-    $filter_rows( );
+    $this->filter_rows( );
 
     $arr_return['data']['template'] = $template;
       // #30912, 120127, dwildt+
