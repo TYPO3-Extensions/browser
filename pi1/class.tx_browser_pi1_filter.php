@@ -3365,6 +3365,12 @@ class tx_browser_pi1_filter {
       }
     }
       // DRS - Development Reporting System
+
+$pos = strpos('91.23.187.149', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_hits );
+}
   }
 
 
