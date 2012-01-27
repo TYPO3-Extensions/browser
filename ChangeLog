@@ -22,6 +22,7 @@
                 is moved to ... item.wraps.value.stdWrap
   * #00000: DRS displays warnings and errors eclusive
   * #32654: Integration of Open Street Map
+  * #30912: Filter: count items with no relation to category
   Imrovement
   * #00000: Localised records can push into the shopping card without param L now
   Bugfixes:

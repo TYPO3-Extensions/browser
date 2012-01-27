@@ -82,6 +82,9 @@ class tx_browser_pi1_filter {
     //         Will be set from outside: @views
   var $rows_wo_limit = null;
 
+    // [array] Array with the filter conditions for PHP comparison
+  var $arr_filter_condition = null;
+
     // [array] Hits per tablefield (filter) and item
   var $arr_hits = null;
 
@@ -920,6 +923,9 @@ class tx_browser_pi1_filter {
  * andWhere_localTable: Generate the andWhere statement for a field from the localtable.
  *                      If there is an area, it will be handled
  *
+ * @internal              #30912: Filter: count items with no relation to category:
+ *                        Method is enhanced with a php array for allocate conditions
+ *
  * @param string    $obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
  * @param array   $arr_ts: The TypoScript configuration of the SELECTBOX
  * @param array   $arr_piVar   Current piVars
@@ -956,6 +962,8 @@ class tx_browser_pi1_filter {
         if(!empty($from))
         {
           $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
+            // #30912, 120127, dwildt+
+          $this->arr_filter_condition[$tableField]['value_is_equal_or_bigger'] = mysql_real_escape_string( $from );
         }
 
         $to         = $arr_currField['valueTo_stdWrap.']['value'];
@@ -965,6 +973,8 @@ class tx_browser_pi1_filter {
         if(!empty($to))
         {
           $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
+            // #30912, 120127, dwildt+
+          $this->arr_filter_condition[$tableField]['value_is_equal_or_bigger'] = mysql_real_escape_string( $to );
         }
 
         if(is_array($arr_item))
@@ -986,14 +996,16 @@ class tx_browser_pi1_filter {
       //
       // Handle without area filter
 
-    if(!is_array($this->pObj->objCal->arr_area[$tableField]))
+    if( ! is_array( $this->pObj->objCal->arr_area[$tableField] ) )
     {
       foreach ($arr_piVar as $str_value)
       {
-        $arr_orValues[] = $tableField . " LIKE '" . mysql_real_escape_string($str_value) . "'";
+        $arr_orValues[] = $tableField . " LIKE '" . mysql_real_escape_string( $str_value ) . "'";
+          // #30912, 120127, dwildt+
+        $this->arr_filter_condition[$tableField]['like'][] = mysql_real_escape_string( $str_value );
       }
-      $str_andWhere = implode(' OR ', $arr_orValues);
-      if(!empty($str_andWhere))
+      $str_andWhere = implode( ' OR ', $arr_orValues );
+      if( ! empty( $str_andWhere ) )
       {
         $str_andWhere = ' (' . $str_andWhere . ')';
       }
@@ -1025,12 +1037,16 @@ class tx_browser_pi1_filter {
  * andWhere_foreignTable: Generate the andWhere statement for a field from a foreign table.
  *                        If there is an area, it will be handled
  *
+ * @internal              #30912: Filter: count items with no relation to category:
+ *                        Method is enhanced with a php array for allocate conditions
+ *
  * @param string    $obj_ts: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
  * @param array   $arr_ts: The TypoScript configuration of the SELECTBOX
  * @param array   $arr_piVar   Current piVars
  * @param string    $tableField   Current table.field
  * @return  array   arr_andWhereFilter: NULL if there isn' any filter
- * @version 3.6.0
+ * @version 3.9.6
+ * @since   3.6.0
  */
   function andWhere_foreignTable($obj_ts, $arr_ts, $arr_piVar, $tableField)
   {
@@ -1062,6 +1078,8 @@ class tx_browser_pi1_filter {
         if(!empty($from))
         {
           $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
+            // #30912, 120127, dwildt+
+          $this->arr_filter_condition[$tableField]['value_is_equal_or_bigger'] = mysql_real_escape_string( $from );
         }
 
         $to         = $arr_currField['valueTo_stdWrap.']['value'];
@@ -1071,6 +1089,8 @@ class tx_browser_pi1_filter {
         if(!empty($to))
         {
           $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
+            // #30912, 120127, dwildt+
+          $this->arr_filter_condition[$tableField]['value_is_equal_or_smaller'] = mysql_real_escape_string( $to );
         }
 
         if(is_array($arr_item))
@@ -1092,10 +1112,12 @@ class tx_browser_pi1_filter {
       //
       // Handle without area filter
 
-    if(!is_array($this->pObj->objCal->arr_area[$tableField]))
+    if( ! is_array( $this->pObj->objCal->arr_area[$tableField] ) )
     {
       $str_uidList = implode(', ', $arr_piVar);
       $str_andWhere = $table . ".uid IN (" . $str_uidList . ")\n";
+        // #30912, 120127, dwildt+
+      $this->arr_filter_condition[$tableField]['uid_list'] = $arr_piVar;
     }
       // Handle without area filter
 

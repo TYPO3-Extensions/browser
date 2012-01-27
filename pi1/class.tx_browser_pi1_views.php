@@ -197,7 +197,7 @@ class tx_browser_pi1_views
 $pos = strpos('91.23.187.149', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 if( ! ( $pos === false ) )
 {
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_andWhereFilter );
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_andWhereFilter, $this->pObj->objFilter->arr_filter_condition );
 }
     if ( ! empty( $arr_andWhereFilter ) )
     {
