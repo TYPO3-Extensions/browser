@@ -436,24 +436,24 @@ if( $pos === false )
         switch( key( $condition ) )
         {
           case( 'equal_or_bigger' ):
-            if ( ! ( $row[$tableField] >= $condition ) )
+            if ( ! ( $row[$tableField] >= $condition['equal_or_bigger'] ) )
             {
-              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition );
+              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
             break;
           case( 'equal_or_smaller' ):
-            if ( ! ( $row[$tableField] <= $condition ) )
+            if ( ! ( $row[$tableField] <= $condition['equal_or_smaller'] ) )
             {
-              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' <= ' . $condition );
+              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' <= ' . $condition['equal_or_smaller'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
             break;
           case( 'uid_in_list' ):
-            var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $row[$tableField] . ', ' . $condition . ') ' );
-            if ( ! ( in_array( $row[$tableField], $condition ) ) )
+            var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $row[$tableField] . ', ' . $condition['uid_in_list'] . ') ' );
+            if ( ! ( in_array( $row[$tableField], $condition['uid_in_list'] ) ) )
             {
               unset( $this->rows_wo_limit[$key] );
               continue 2;
