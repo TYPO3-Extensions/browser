@@ -199,6 +199,7 @@ if( ! ( $pos === false ) )
 {
   var_dump(__METHOD__ . ' (' . __LINE__ . ')', $arr_andWhereFilter );
   var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->pObj->objFilter->arr_filter_condition );
+  $arr_andWhereFilter = null;
 }
     if ( ! empty( $arr_andWhereFilter ) )
     {
