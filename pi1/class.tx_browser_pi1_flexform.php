@@ -3202,12 +3202,18 @@ class tx_browser_pi1_flexform {
         }
         break;
 //      case ( 'independent' ) :
+//      default :
+//        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = 'independent';
+//        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
+//        {
+//          t3lib_div :: devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' is set to independent.', $this->pObj->extKey, 0);
+//        }
       case ( 'controlled' ) :
       default :
-        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = 'independent';
+        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = 'controlled';
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
         {
-          t3lib_div :: devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' is set to independent.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' is set to controlled.', $this->pObj->extKey, 0);
         }
     }
     $this->sheet_viewList_total_hits = $this->pObj->conf['flexform.'][$sheet . '.'][$field];
