@@ -303,6 +303,7 @@ class tx_browser_pi1_filter {
     $str_subpart  = $this->pObj->cObj->substituteMarkerArray($str_subpart, $markerArray);
 
       // Remove ###CATEGORY_MENU### from HTML template
+      // :TODO: 120127, dwildt: subpart ###CATEGORY_MENU### is removed from the default templates
     if(!$lDisplay['category_menu'])
     {
       $str_subpart = null;
@@ -319,9 +320,12 @@ class tx_browser_pi1_filter {
     $template     = $this->pObj->cObj->substituteSubpart($template, '###CATEGORY_MENU###', $str_subpart, true);
       // Replace category menus in the HTML template
 
-
+      // Filter rows
+    $filter_rows( );
 
     $arr_return['data']['template'] = $template;
+      // #30912, 120127, dwildt+
+    $arr_return['data']['rows']     = $this->rows_wo_limit;
     return $arr_return;
   }
 
@@ -395,6 +399,26 @@ class tx_browser_pi1_filter {
       // RETURN the result
     $arr_return['data']['marker'] = $marker;
     return $arr_return;
+  }
+
+  
+  
+  
+  
+  
+  
+  
+  
+  /**
+ * filter_rows():  ...
+ *
+ * @return  void
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  function filter_rows( )
+  {
+    $this->rows_wo_limit;
   }
 
 

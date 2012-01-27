@@ -725,6 +725,8 @@ if( ! ( $pos === false ) )
 
       // 13803, dwildt, 110312
     $rows = $this->pObj->objMultisort->multisort_mm_children($rows);
+      // 120127, dwildt+
+    $this->pObj->rows = $rows;
       // Ordering the children
 
 
@@ -746,6 +748,7 @@ if( ! ( $pos === false ) )
       // DRS - Performance
 
 
+    
       /////////////////////////////////////////////////////////////////
       //
       // Store amount of rows for the pagebrowser
@@ -772,6 +775,8 @@ if( ! ( $pos === false ) )
     if ($b_hierarchical)
     {
       $rows = $this->pObj->objSqlFun->make_hierarchical($rows);
+        // 120127, dwildt+
+      $this->pObj->rows = $rows;
       if ($this->pObj->b_drs_sql)
       {
         t3lib_div::devlog('[INFO/SQL] Result should ordered hierarchical.',  $this->pObj->extKey, 0);
@@ -823,6 +828,8 @@ if( ! ( $pos === false ) )
       //
       // Filter - part II/II - HTML code / template
 
+      // Count hits, filter rows, update template
+
     $this->pObj->objFilter->rows_wo_limit = $rows;
     $arr_result = $this->pObj->objFilter->filter($template);
     if ($arr_result['error']['status'])
@@ -831,6 +838,10 @@ if( ! ( $pos === false ) )
       return $this->pObj->pi_wrapInBaseClass($prompt);
     }
     $template = $arr_result['data']['template'];
+      // 120127, dwildt+
+    $rows             = $arr_result['data']['rows'];
+    $this->pObj->rows = $rows;
+      // 120127, dwildt+
     unset($arr_result);
       // Filter - part II/II - HTML code / template
 
