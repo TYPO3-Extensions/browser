@@ -452,9 +452,10 @@ if( $pos === false )
             }
             break;
           case( 'uid_in_list' ):
-            var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $row[$tableField] . ', ' . $condition['uid_in_list'] . ') ' );
             if ( ! ( in_array( $row[$tableField], $condition['uid_in_list'] ) ) )
             {
+              $uid_list = implode( ',', $condition['uid_in_list'] );
+              var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $row[$tableField] . ', array( ' . $uid_list . ' ) ) ' );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
