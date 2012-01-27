@@ -959,7 +959,7 @@ class tx_browser_pi1_filter {
         $from_conf  = $arr_currField['valueFrom_stdWrap.'];
         $from_conf  = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
         $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
-        if(!empty($from))
+        if( ! empty( $from ) )
         {
           $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
             // #30912, 120127, dwildt+
@@ -970,14 +970,14 @@ class tx_browser_pi1_filter {
         $to_conf    = $arr_currField['valueTo_stdWrap.'];
         $to_conf    = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
         $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
-        if(!empty($to))
+        if( ! empty( $to ) )
         {
           $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
             // #30912, 120127, dwildt+
-          $this->arr_filter_condition[$tableField]['value_is_equal_or_bigger'] = mysql_real_escape_string( $to );
+          $this->arr_filter_condition[$tableField]['value_is_equal_or_smaller'] = mysql_real_escape_string( $to );
         }
 
-        if(is_array($arr_item))
+        if( is_array( $arr_item ) )
         {
           $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
         }
@@ -1075,7 +1075,7 @@ class tx_browser_pi1_filter {
         $from_conf  = $arr_currField['valueFrom_stdWrap.'];
         $from_conf  = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
         $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
-        if(!empty($from))
+        if( ! empty( $from ) )
         {
           $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
             // #30912, 120127, dwildt+
@@ -1086,14 +1086,14 @@ class tx_browser_pi1_filter {
         $to_conf    = $arr_currField['valueTo_stdWrap.'];
         $to_conf    = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
         $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
-        if(!empty($to))
+        if( ! empty( $to ) )
         {
           $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
             // #30912, 120127, dwildt+
           $this->arr_filter_condition[$tableField]['value_is_equal_or_smaller'] = mysql_real_escape_string( $to );
         }
 
-        if(is_array($arr_item))
+        if( is_array( $arr_item ) )
         {
           $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
         }
