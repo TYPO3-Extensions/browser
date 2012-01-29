@@ -754,7 +754,7 @@ class tx_browser_pi1_tca
     $this->handleAsImagetitletext( );
     $this->handleAsText( );
     $this->handleAsTimestamp( );
-    $this->handleAsYYYYMMTT( );
+    $this->handleAsYYYYMMDD( );
 
     $arr_return['data']['drs_handleCase']   = $this->bool_drs_handleCase;
     $arr_return['data']['value']            = $this->value;
