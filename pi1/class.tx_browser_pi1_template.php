@@ -322,12 +322,6 @@ class tx_browser_pi1_template
       }
       $markerArray['###HIDDEN###']  = $str_hidden;
 
-// TEST, 120123, dwildt+
-//$pos = strpos('91.23.189.79', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if( ! ( $pos === false ) )
-//{
-//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $str_hidden );
-//}
 
     $subpart    = $this->pObj->cObj->getSubpart($template, '###SEARCHFORM###');
     // 3.5.0: We need the subpartmarker for the filter again
@@ -2798,10 +2792,6 @@ class tx_browser_pi1_template
 
 
         // 120129, dwildt+
-$pos = strpos('91.23.174.97', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if( ! ( $pos === false ) ) {
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $key );
-}
       $arr_result = $this->pObj->objTca->handleAs(
                       $key,
                       $value,
