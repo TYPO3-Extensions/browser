@@ -3411,21 +3411,29 @@ class tx_browser_pi1_template
     //
     // Wrap all elements
 
-    foreach((array) $elements as $tableField => $value)
+    foreach( ( array ) $elements as $tableField => $value )
     {
 
       $b_is_rendered  = false;
 
-      /////////////////////////////////////////
-      //
-      // Handle the TITLE
+        /////////////////////////////////////////
+        //
+        // Handle the TITLE
 
-      if ($displayTitle && $tableField == $handleAs['title'])
+      $bool_title = false;
+      $pos = strpos( $handleAs['title'], $tableField );
+      if( ! $pos === false )
       {
-        if ($this->pObj->b_drs_templating)
+        $bool_title = true;
+      }
+      if( $displayTitle && $bool_title )
+      {
+        if( $this->pObj->b_drs_templating )
         {
-          t3lib_div::devlog('[INFO/TEMPLATING] '.$handleAs['title'].' will be handled as the title.', $this->pObj->extKey, 0);
-          t3lib_div::devLog('[HELP/TEMPLATING] Please configure displaySingle.display.title = 0, if you don\'t want any title handling.', $this->pObj->extKey, 1);
+          $prompt = $handleAs['title'].' will be handled as the title.';
+          t3lib_div::devlog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+          $prompt = 'Please configure displaySingle.display.title = 0, if you don\'t want any title handling.';
+          t3lib_div::devLog('[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1);
         }
         $value                                             = $this->pObj->objWrapper->wrapAndLinkValue($tableField, $value, 0);
         $markerArray['###TITLE###']                        = $value;
@@ -3433,21 +3441,30 @@ class tx_browser_pi1_template
 
         $b_is_rendered = true;
       }
-      // Handle the TITLE
+        // Handle the TITLE
 
 
-      /////////////////////////////////////////
-      //
-      // Handle the IMAGE
 
-      if ($tableField == $handleAs['image'])
+        /////////////////////////////////////////
+        //
+        // Handle the IMAGE
+
+      $bool_image = false;
+      $pos = strpos( $handleAs['image'], $tableField );
+      if( ! $pos === false )
       {
-        if ($this->pObj->b_drs_templating)
+        $bool_title = true;
+      }
+      if( $bool_title )
+      {
+        if( $this->pObj->b_drs_templating )
         {
-          t3lib_div::devlog('[INFO/TEMPLATING] The field \''.$handleAs['image'].'\' will be wrapped as an IMAGE.', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[INFO/TEMPLATING] The system marker ###IMAGE### will be replaced.', $this->pObj->extKey, 0);
+          $prompt = 'The field \''.$handleAs['image'].'\' will be wrapped as an IMAGE.';
+          t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = 'The system marker ###IMAGE### will be replaced.';
+          t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
         }
-        $tsImage['image']           = $elements[$handleAs['image']];
+        $tsImage['image']           = $elements[$tableField];
         $tsImage['imagecaption']    = $elements[$handleAs['imageCaption']];
         $tsImage['imagealttext']    = $elements[$handleAs['imageAltText']];
         $tsImage['imagetitletext']  = $elements[$handleAs['imageTitleText']];
@@ -3457,28 +3474,28 @@ class tx_browser_pi1_template
 
         $b_is_rendered = true;
       }
-      // Handle the IMAGE
+        // Handle the IMAGE
 
 
-      /////////////////////////////////////////
-      //
-      // Handle the DOCUMENT
+        /////////////////////////////////////////
+        //
+        // Handle the DOCUMENT
 
       //:todo: Handle the document
 
 
-      /////////////////////////////////////////
-      //
-      // Process all the rest of the elements
+        /////////////////////////////////////////
+        //
+        // Process all the rest of the elements
 
-      if (!$b_is_rendered)
+      if( ! $b_is_rendered )
       {
         $value        = false;
         list($table, $field)  = explode('.', $tableField);
         // Store the id of the previous element.
-        $int_last_uid     = false;
+        $int_last_uid = false;
 
-        // Loop through all rows
+          // Loop through all rows
         foreach((array) $rows as $lRow => $lElements)
         {
           // Store the current id of the current element.
@@ -3501,9 +3518,9 @@ class tx_browser_pi1_template
           }
           $int_last_uid = $int_cur_uid;
         }
-        // Loop through all rows
+          // Loop through all rows
 
-        // Process the TS extensions.browser.wrapAll
+          // Process the TS extensions.browser.wrapAll
         if ($value)
         {
           $conf_wrapHeader  = $this->conf_view[$table.'.'][$field.'.']['extensions.']['browser.']['wrapAll.']['header.'];
@@ -3512,14 +3529,14 @@ class tx_browser_pi1_template
           $value            = $this->pObj->objWrapper->general_stdWrap($value, $conf_wrapAll);
           $value            = $lHeader.$value;
         }
-        // Process the TS extensions.browser.wrapAll
+          // Process the TS extensions.browser.wrapAll
 
         $lMarker               = '###'.strtoupper($tableField).'###';
         $markerArray[$lMarker] = $value;
       }
-      // Process all the rest of the elements
+        // Process all the rest of the elements
     }
-    // Wrap all elements
+      // Wrap all elements
 
 
     return $markerArray;
