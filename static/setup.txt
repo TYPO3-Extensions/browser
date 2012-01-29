@@ -3145,7 +3145,7 @@ plugin.tx_browser_pi1 {
             }
             tca {
                 // [String, CSV] Comma seperated values for any TCA eval value, which should order by php SORT_NUMERIC
-              csv_sortNumeric = date, datetime, datetime, double2, int, num, md5, time, timesec, year
+              csv_sortNumeric = date, datetime, datetimeend, double2, int, num, md5, time, timesec, year
             }
           }
         }
