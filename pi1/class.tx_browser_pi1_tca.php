@@ -668,12 +668,12 @@ class tx_browser_pi1_tca
       }
     }
     $this->pObj->boolFirstElement = false;
-$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if (!($pos === false))
-{
-  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $this->pObj->arrHandleAs[$TCAitem] );
-
-}
+//$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//if (!($pos === false))
+//{
+//  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $this->pObj->arrHandleAs[$TCAitem] );
+//
+//}
         return true;
   }
 
@@ -689,6 +689,39 @@ if (!($pos === false))
    * Handle the value
    *
    **********************************************/
+
+
+
+  /**
+ * handleAs( ): handle the given value as TEXT, if tableField is oart of
+ *                  the global $this->pObj->arrHandleAs['text'].
+ *                  value will wrapped with content_stdWrap
+ * @param   $tableField           : current tableField (sytax table.field)
+ * @param   $value                : value of the current table.field
+ * @param   $lDisplayView         : local or global display_view configuration
+ * @param   $bool_drs_handleCase  : flag for the DRS
+ * @param   $bool_dontColorSwords : flag for dyeing swords
+ *
+ * @return	array   $arr_return with elements drs_handleCase and value
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  function handleAs($tableField, $value, $lDisplayView, $bool_drs_handleCase, $bool_dontColorSwords )
+  {
+    $this->tableField           =  $tableField;
+    $this->value                = $value;
+    $this->lDisplayView         = $lDisplayView;
+    $this->bool_drs_handleCase  = $bool_drs_handleCase;
+    $this->bool_dontColorSwords = $bool_dontColorSwords;
+
+    $this->pObj->objTca->handleAsText( );
+    $this->pObj->objTca->handleAsTimestamp( );
+
+    $arr_return['data']['drs_handleCase']   = $this->bool_drs_handleCase;
+    $arr_return['data']['value']            = $this->value;
+    $arr_return['data']['dontColorSwords']  = $this->bool_dontColorSwords;
+    return $arr_return;
+  }
 
 
 

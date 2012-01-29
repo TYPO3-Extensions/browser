@@ -2811,9 +2811,8 @@ class tx_browser_pi1_template
         // Handle empty values?
 
 
-        // Handle as text
         // 120129, dwildt+
-      $arr_result = $this->pObj->objTca->handleAsText(
+      $arr_result = $this->pObj->objTca->handleAs(
                       $key,
                       $value,
                       $lDisplayView,
@@ -2824,56 +2823,6 @@ class tx_browser_pi1_template
       $bool_dontColorSwords = $arr_result['data']['dontColorSwords'];
       $value                = $arr_result['data']['value'];
         // 120129, dwildt+
-
-        // 120129, dwildt-
-//      if( $key == $handleAs['text'] )
-//      {
-//        if( $this->pObj->boolFirstRow && $this->pObj->b_drs_templating )
-//        {
-//          $bool_drs_handleCase = true;
-//          t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' is handle as TEXT.', $this->pObj->extKey, 0);
-//        }
-//        if( $value )
-//        {
-//          if (is_array($lDisplayView['content_stdWrap.']))
-//          {
-//            $value = $this->pObj->objWrapper->general_stdWrap($value, $lDisplayView['content_stdWrap.']);
-//          }
-//          else
-//          {
-//            if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-//            {
-//              t3lib_div::devLog('[INFO/TEMPLATING] '.$lDisplayType.'content_stdWrap isn\'t configured.', $this->pObj->extKey, 0);
-//              t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' will be wrapped with general_stdWrap.', $this->pObj->extKey, 0);
-//              t3lib_div::devLog('[HELP/TEMPLATING] If you want to change the wrapping, please configure '.$lDisplayType.'content_stdWrap.', $this->pObj->extKey, 1);
-//            }
-//          }
-//        }
-//        else
-//        {
-//          $value = '';
-//        }
-//      }
-        // 120129, dwildt-
-      // Handle as text
-
-        // DRS - Performance
-      if ($this->pObj->boolFirstRow && $i_count_element == 0)
-      {
-        if( $this->pObj->b_drs_perform )
-        {
-          if( $this->pObj->bool_typo3_43 )
-          {
-            $endTime = $this->pObj->TT->getDifferenceToStarttime( );
-          }
-          if( ! $this->pObj->bool_typo3_43 )
-          {
-            $endTime = $this->pObj->TT->mtime( );
-          }
-          t3lib_div::devLog( '[INFO/PERFORMANCE] After handle as text: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0 );
-        }
-      }
-        // DRS - Performance
 
         // Handle as image
       if ($key == $handleAs['image']) {
@@ -2941,23 +2890,6 @@ class tx_browser_pi1_template
       }
         // Handle as imageTitleText
 
-        // DRS - Performance
-      if ($this->pObj->boolFirstRow && $i_count_element == 0)
-      {
-        if ($this->pObj->b_drs_perform) {
-          if($this->pObj->bool_typo3_43)
-          {
-            $endTime = $this->pObj->TT->getDifferenceToStarttime();
-          }
-          if(!$this->pObj->bool_typo3_43)
-          {
-            $endTime = $this->pObj->TT->mtime();
-          }
-          t3lib_div::devLog('[INFO/PERFORMANCE] After handle as image, imagealttext, imagetitletext: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-        }
-      }
-        // DRS - Performance
-
         // Handle as document
       if (in_array($key, $arrKeyAsDocument))
       {
@@ -2970,111 +2902,6 @@ class tx_browser_pi1_template
         $value = $this->pObj->objWrapper->wrapDocument($value);
       }
         // Handle as document
-
-        // DRS - Performance
-      if ($this->pObj->boolFirstRow && $i_count_element == 0)
-      {
-        if ($this->pObj->b_drs_perform) {
-          if($this->pObj->bool_typo3_43)
-          {
-            $endTime = $this->pObj->TT->getDifferenceToStarttime();
-          }
-          if(!$this->pObj->bool_typo3_43)
-          {
-            $endTime = $this->pObj->TT->mtime();
-          }
-          t3lib_div::devLog('[INFO/PERFORMANCE] After handle as document: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-        }
-      }
-        // DRS - Performance
-
-        // Handle as timestamp
-        // 120129, dwildt+
-      $arr_result = $this->pObj->objTca->handleAsTimestamp(
-                      $key,
-                      $value,
-                      $lDisplayView,
-                      $bool_drs_handleCase,
-                      $bool_dontColorSwords
-                    );
-      $bool_drs_handleCase  = $arr_result['data']['drs_handleCase'];
-      $bool_dontColorSwords = $arr_result['data']['dontColorSwords'];
-      $value                = $arr_result['data']['value'];
-        // 120129, dwildt+
-
-        // 120129, dwildt-
-//      if ($key == $handleAs['timestamp'])
-//      {
-//        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-//        {
-//          $bool_drs_handleCase = true;
-//          t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' is handle as a timestamp.', $this->pObj->extKey, 0);
-//        }
-//        $bool_dontColorSwords = $arr_TCAitems['timestamp.']['dontColorSwords'];
-//
-//        // Bugfix #6782, dwildt, 100310
-//        // If there isn't a tca configuration, take the default strftime configuration
-//        list($table, $field) = explode('.', $key);
-//        if(!is_array($this->conf_view[$table.'.'][$field.'.']))
-//        {
-//          $value = strftime($this->pObj->tsStrftime, $value);
-//          // strftime isn't UTF-8 secure
-//          if (mb_detect_encoding($value) == 'UTF-8')
-//          {
-//            if ($this->pObj->conf['format.']['strftime.']['utf8_encode'])
-//            {
-//              $value_iso = utf8_encode($value);
-//              if ($this->pObj->b_drs_templating)
-//              {
-//                t3lib_div::devLog('[INFO/TEMPLATING] '.$value.' is in UTF-8 format. Change it to ISO.', $this->pObj->extKey, 0);
-//              }
-//              $value = $value_iso;
-//              if ($this->pObj->b_drs_templating)
-//              {
-//                t3lib_div::devLog('[INFO/TEMPLATING] Now it is: '.$value, $this->pObj->extKey, 0);
-//                t3lib_div::devlog('[HELP/TEMPLATING] If you have problems with UTF-8 chars in formated timestamps, please set format.strftime.utf8_encode to 0.', $this->pObj->extKey, 1);
-//              }
-//            }
-//            else
-//            {
-//              if ($this->pObj->b_drs_templating)
-//              {
-//                t3lib_div::devLog('[INFO/TEMPLATING] '.$value.' is in UTF-8 format.', $this->pObj->extKey, 0);
-//                t3lib_div::devlog('[HELP/TEMPLATING] If you have problems with UTF-8 chars in formated timestamps, please set format.strftime.utf8_encode to 1.', $this->pObj->extKey, 1);
-//              }
-//            }
-//          }
-//          // strftime isn't UTF-8 secure
-//        }
-//        if(is_array($this->conf_view[$table.'.'][$field.'.']))
-//        {
-//          if ($this->pObj->b_drs_templating)
-//          {
-//            t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' has a manual configured TypoScript array, '.
-//              'therefore format.strftime will be ignored.', $this->pObj->extKey, 0);
-//          }
-//        }
-//        // If there isn't a tca configuration, take the default strftime configuration
-//      }
-        // 120129, dwildt-
-        // Handle as timestamp
-
-      // DRS - Performance
-      if ($this->pObj->boolFirstRow && $i_count_element == 0)
-      {
-        if ($this->pObj->b_drs_perform) {
-          if($this->pObj->bool_typo3_43)
-          {
-            $endTime = $this->pObj->TT->getDifferenceToStarttime();
-          }
-          if(!$this->pObj->bool_typo3_43)
-          {
-            $endTime = $this->pObj->TT->mtime();
-          }
-          t3lib_div::devLog('[INFO/PERFORMANCE] After handle as timestamp: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-        }
-      }
-      // DRS - Performance
 
       // Handle as YYYY-MM-DD
       if ($key == $handleAs['YYYY-MM-DD'])
