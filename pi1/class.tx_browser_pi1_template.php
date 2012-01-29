@@ -2820,9 +2820,9 @@ class tx_browser_pi1_template
                       $bool_drs_handleCase,
                       $bool_dontColorSwords
                     );
-      $bool_drs_handleCase  = $arr_return['data']['drs_handleCase'];
-      $bool_dontColorSwords = $arr_return['data']['dontColorSwords'];
-      $value                = $arr_return['data']['value'];
+      $bool_drs_handleCase  = $arr_result['data']['drs_handleCase'];
+      $bool_dontColorSwords = $arr_result['data']['dontColorSwords'];
+      $value                = $arr_result['data']['value'];
         // 120129, dwildt+
 
         // 120129, dwildt-
@@ -2997,65 +2997,65 @@ class tx_browser_pi1_template
                       $bool_drs_handleCase,
                       $bool_dontColorSwords
                     );
-      $bool_drs_handleCase  = $arr_return['data']['drs_handleCase'];
-      $bool_dontColorSwords = $arr_return['data']['dontColorSwords'];
-      $value                = $arr_return['data']['value'];
+      $bool_drs_handleCase  = $arr_result['data']['drs_handleCase'];
+      $bool_dontColorSwords = $arr_result['data']['dontColorSwords'];
+      $value                = $arr_result['data']['value'];
         // 120129, dwildt+
 
         // 120129, dwildt-
-      if ($key == $handleAs['timestamp'])
-      {
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-        {
-          $bool_drs_handleCase = true;
-          t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' is handle as a timestamp.', $this->pObj->extKey, 0);
-        }
-        $bool_dontColorSwords = $arr_TCAitems['timestamp.']['dontColorSwords'];
-
-        // Bugfix #6782, dwildt, 100310
-        // If there isn't a tca configuration, take the default strftime configuration
-        list($table, $field) = explode('.', $key);
-        if(!is_array($this->conf_view[$table.'.'][$field.'.']))
-        {
-          $value = strftime($this->pObj->tsStrftime, $value);
-          // strftime isn't UTF-8 secure
-          if (mb_detect_encoding($value) == 'UTF-8')
-          {
-            if ($this->pObj->conf['format.']['strftime.']['utf8_encode'])
-            {
-              $value_iso = utf8_encode($value);
-              if ($this->pObj->b_drs_templating)
-              {
-                t3lib_div::devLog('[INFO/TEMPLATING] '.$value.' is in UTF-8 format. Change it to ISO.', $this->pObj->extKey, 0);
-              }
-              $value = $value_iso;
-              if ($this->pObj->b_drs_templating)
-              {
-                t3lib_div::devLog('[INFO/TEMPLATING] Now it is: '.$value, $this->pObj->extKey, 0);
-                t3lib_div::devlog('[HELP/TEMPLATING] If you have problems with UTF-8 chars in formated timestamps, please set format.strftime.utf8_encode to 0.', $this->pObj->extKey, 1);
-              }
-            }
-            else
-            {
-              if ($this->pObj->b_drs_templating)
-              {
-                t3lib_div::devLog('[INFO/TEMPLATING] '.$value.' is in UTF-8 format.', $this->pObj->extKey, 0);
-                t3lib_div::devlog('[HELP/TEMPLATING] If you have problems with UTF-8 chars in formated timestamps, please set format.strftime.utf8_encode to 1.', $this->pObj->extKey, 1);
-              }
-            }
-          }
-          // strftime isn't UTF-8 secure
-        }
-        if(is_array($this->conf_view[$table.'.'][$field.'.']))
-        {
-          if ($this->pObj->b_drs_templating)
-          {
-            t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' has a manual configured TypoScript array, '.
-              'therefore format.strftime will be ignored.', $this->pObj->extKey, 0);
-          }
-        }
-        // If there isn't a tca configuration, take the default strftime configuration
-      }
+//      if ($key == $handleAs['timestamp'])
+//      {
+//        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+//        {
+//          $bool_drs_handleCase = true;
+//          t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' is handle as a timestamp.', $this->pObj->extKey, 0);
+//        }
+//        $bool_dontColorSwords = $arr_TCAitems['timestamp.']['dontColorSwords'];
+//
+//        // Bugfix #6782, dwildt, 100310
+//        // If there isn't a tca configuration, take the default strftime configuration
+//        list($table, $field) = explode('.', $key);
+//        if(!is_array($this->conf_view[$table.'.'][$field.'.']))
+//        {
+//          $value = strftime($this->pObj->tsStrftime, $value);
+//          // strftime isn't UTF-8 secure
+//          if (mb_detect_encoding($value) == 'UTF-8')
+//          {
+//            if ($this->pObj->conf['format.']['strftime.']['utf8_encode'])
+//            {
+//              $value_iso = utf8_encode($value);
+//              if ($this->pObj->b_drs_templating)
+//              {
+//                t3lib_div::devLog('[INFO/TEMPLATING] '.$value.' is in UTF-8 format. Change it to ISO.', $this->pObj->extKey, 0);
+//              }
+//              $value = $value_iso;
+//              if ($this->pObj->b_drs_templating)
+//              {
+//                t3lib_div::devLog('[INFO/TEMPLATING] Now it is: '.$value, $this->pObj->extKey, 0);
+//                t3lib_div::devlog('[HELP/TEMPLATING] If you have problems with UTF-8 chars in formated timestamps, please set format.strftime.utf8_encode to 0.', $this->pObj->extKey, 1);
+//              }
+//            }
+//            else
+//            {
+//              if ($this->pObj->b_drs_templating)
+//              {
+//                t3lib_div::devLog('[INFO/TEMPLATING] '.$value.' is in UTF-8 format.', $this->pObj->extKey, 0);
+//                t3lib_div::devlog('[HELP/TEMPLATING] If you have problems with UTF-8 chars in formated timestamps, please set format.strftime.utf8_encode to 1.', $this->pObj->extKey, 1);
+//              }
+//            }
+//          }
+//          // strftime isn't UTF-8 secure
+//        }
+//        if(is_array($this->conf_view[$table.'.'][$field.'.']))
+//        {
+//          if ($this->pObj->b_drs_templating)
+//          {
+//            t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' has a manual configured TypoScript array, '.
+//              'therefore format.strftime will be ignored.', $this->pObj->extKey, 0);
+//          }
+//        }
+//        // If there isn't a tca configuration, take the default strftime configuration
+//      }
         // 120129, dwildt-
         // Handle as timestamp
 

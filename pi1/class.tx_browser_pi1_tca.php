@@ -810,7 +810,6 @@ if (!($pos === false))
       {
         $prompt = 'handleAs: ' . $tableField . ' has its own configuration';
         t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
-        $arr_return['data']['drs_handleCase'] = true;
       }
       // DRS - Development Reporting System
       return $arr_return;
