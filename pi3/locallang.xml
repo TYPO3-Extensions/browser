@@ -10,7 +10,7 @@
       <label index="title">TYPO3 Browser Manuals, Tutorials and Websites</label>
       <label index="manuals.section_header">Browser Manuals</label>
       <label index="manuals.browser.title">TYPO3 Manual (abstract)</label>
-      <label index="manuals.browser.description">The Browser TYPO3 manual: installing and quickstart. It is an abstract only.</label>
+      <label index="manuals.browser.description">The Browser TYPO3 manual: installing and quickstart. It is an abstract only. See "TYPO3 Manual in detail" for more information below.</label>
       <label index="manuals.browser_manual_en.title">TYPO3 Manual in detail</label>
       <label index="manuals.browser_manual_en.description">The Browser TYPO3 manual: installing, quickstart and reference. This is the manual in detail.</label>
       <label index="tutorials.section_header">Browser Tutorials</label>
@@ -73,14 +73,14 @@
       <label index="manuals.browser.title">TYPO3 Handbuch (Kurzform)</label>
       <label index="manuals.browser.description">Das Browser-TYPO3-Handbuch (Kurzform): Installation und Schnellstart. Beachte bitte das TYPO3 Handbuch in der Langfassung unten.</label>
       <label index="manuals.browser_manual_en.title">TYPO3 Handbuch (Langfassung)</label>
-      <label index="manuals.browser_manual_en.description">Das komplette Browser-TYPO3-Handbuch: Installation, Schnellstart, viele Beispiele und die Referenz. </label>
+      <label index="manuals.browser_manual_en.description">Das komplette Browser-TYPO3-Handbuch: Installation, Schnellstart, viele Beispiele und die Referenz.</label>
       <label index="tutorials.section_header">Browser Tutorials</label>
       <label index="tutorials.browser_tut_ajax_en.title">Browser Tutorial AJAX</label>
       <label index="tutorials.browser_tut_ajax_en.description">Ver<![CDATA[&ouml;]]>ffentliche Deine Daten und benutze dabei AJAX!</label>
       <label index="tutorials.browser_tut_basics_en.title">Browser Tutorial Basics - Grundlagen</label>
       <label index="tutorials.browser_tut_basics_en.description">Einf<![CDATA[&uuml;]]>hrung in die Grundlagen. Die wichtigste Unterlage nach dem Manual und vor jedem anderen Tutorial. U.a.: stdWrap, HTML-Templating, Optimierung f<![CDATA[&uuml;]]>r Suchmaschinen.</label>
       <label index="tutorials.browser_tut_cal_en.title">Browser Tutorial Kalender</label>
-      <label index="tutorials.browser_tut_cal_en.description">Ver<![CDATA[&öuml;]]>ffentliche Deine Daten in Form eines Kalenders. Achtung: In der aktuellen Version wird nur der Tageskalender unterst<![CDATA[&uuml;]]>tzt.</label>
+      <label index="tutorials.browser_tut_cal_en.description">Ver<![CDATA[&ouml;]]>ffentliche Deine Daten in Form eines Kalenders. Achtung: In der aktuellen Version wird nur der Tageskalender unterst<![CDATA[&uuml;]]>tzt.</label>
       <label index="tutorials.browser_tut_database_en.title">Browser Tutorial Datenbank</label>
       <label index="tutorials.browser_tut_database_en.description">Datenbank-Relationen und spezielle SQL-Funktionen f<![CDATA[&uuml;]]>r hierachische Ordnungen und Synonyme.</label>
       <label index="tutorials.browser_tut_dev_en.title">Browser Tutorial Development</label>
