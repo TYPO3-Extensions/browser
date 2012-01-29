@@ -16,7 +16,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'category' => 'plugin',
 	'shy' => 0,
 	'version' => '3.9.6',
-	'dependencies' => '',
+	'dependencies' => 'browser_manual_en', 'php', 'typo3',
 	'conflicts' => '',
 	'priority' => '',
 	'loadOrder' => '',
@@ -34,6 +34,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
+      'browser_manual_en' => '3.9.6-0.0.0',
 			'php' => '5.1.0-0.0.0',
 			'typo3' => '4.4.6-0.0.0',
 		),

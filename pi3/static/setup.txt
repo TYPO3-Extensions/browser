@@ -187,24 +187,24 @@ plugin.tx_browser_pi3 {
         }
       }
     }
-      // browser_tut_calendar_en
+      // browser_tut_cal_en
     1132 < plugin.tx_browser_pi3.template
     1132 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_calendar_en/current/
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_cal_en/current/
           }
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_calendar_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_cal_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_calendar_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_cal_en.description
         }
       }
     }
@@ -562,6 +562,27 @@ plugin.tx_browser_pi3 {
       20 {
         stdWrap {
           data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_tt_news_en.description
+        }
+      }
+    }
+      // browser_tut_userfunc_en
+    1250 < plugin.tx_browser_pi3.template
+    1250 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_userfunc_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_userfunc_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_userfunc_en.description
         }
       }
     }

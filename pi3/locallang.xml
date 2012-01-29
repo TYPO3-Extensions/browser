@@ -70,8 +70,10 @@
       <label index="tt_content.list_type_pi3">Browser - Tutorials und Websites</label>
       <label index="title">TYPO3 Browser Handb<![CDATA[&uuml;]]>cher, Tutorials and Websites</label>
       <label index="manuals.section_header">Browser Handb<![CDATA[&uuml;]]>cher</label>
-      <label index="manuals.browser.title">TYPO3 Handbuch</label>
-      <label index="manuals.browser.description">Das Browser-TYPO3-Handbuch: Installation, Schnellstart, TypoScript-Referenz-Tabellen</label>
+      <label index="manuals.browser.title">TYPO3 Handbuch (Kurzform)</label>
+      <label index="manuals.browser.description">Das Browser-TYPO3-Handbuch (Kurzform): Installation und Schnellstart. Beachte bitte das TYPO3 Handbuch in der Langfassung unten.</label>
+      <label index="manuals.browser_manual_en.title">TYPO3 Handbuch (Langfassung)</label>
+      <label index="manuals.browser_manual_en.description">Das komplette Browser-TYPO3-Handbuch: Installation, Schnellstart, viele Beispiele und die Referenz. </label>
       <label index="tutorials.section_header">Browser Tutorials</label>
       <label index="tutorials.browser_tut_ajax_en.title">Browser Tutorial AJAX</label>
       <label index="tutorials.browser_tut_ajax_en.description">Ver<![CDATA[&ouml;]]>ffentliche Deine Daten und benutze dabei AJAX!</label>
@@ -106,7 +108,7 @@
       <label index="tutorials.browser_tut_socialmedia_en.title">Browser Tutorial Social Media</label>
       <label index="tutorials.browser_tut_socialmedia_en.description">Verwende Social-Bookmarks. Ver<![CDATA[&ouml;]]>ffentliche Deine Daten auf facebook.com.</label>
       <label index="tutorials.browser_tut_statistics_en.title">Browser Tutorial Statistik</label>
-      <label index="tutorials.browser_tut_statistics_en.description">Erzeuge Deine Statistik mit dem Browser! Der Browser z<![CDATA[&auml;]]>hlt Aufrufe und Besuche f<![CDATA[&uuml;]]>r Datens<![CDATA[&auml;]]>tze und Downloads. Auf Basis dieser Daten kannst Du Top-10-Listen erstellen, die Deinen Besuchern die am h<![CDATA[&auml;]]>ufigsten aufgerufenen Datens<![CDATA[&auml;]]>tze und heruntergeladenen Datein zeigen.</label>
+      <label index="tutorials.browser_tut_statistics_en.description">Erzeuge Deine Statistik mit dem Browser! Der Browser z<![CDATA[&auml;]]>hlt Aufrufe und Besuche f<![CDATA[&uuml;]]>r Datens<![CDATA[&auml;]]>tze und Downloads. Auf Basis dieser Daten kannst Du Top-10-Listen erstellen, die Deinen Besuchern die am h<![CDATA[&auml;]]>ufigsten aufgerufenen Datens<![CDATA[&auml;]]>tze und heruntergeladenen Dateien zeigen.</label>
       <label index="tutorials.browser_tut_templating_en.title">Browser Tutorial Templating</label>
       <label index="tutorials.browser_tut_templating_en.description">Gestalte Deine eigenen Templates und Views.</label>
       <label index="tutorials.browser_tut_tca_en.title">Browser Tutorial TCA</label>
