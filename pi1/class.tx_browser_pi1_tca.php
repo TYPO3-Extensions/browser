@@ -721,7 +721,6 @@ class tx_browser_pi1_tca
     $this->maxColumns           = $maxColumns;
     $this->boolSubstitute       = $boolSubstitute;
     $this->arrHandleAs          = $this->pObj->arrHandleAs;
-
       // Set globals
 
       // Set default return array
@@ -753,7 +752,17 @@ class tx_browser_pi1_tca
     $this->handleAsImagealttext( );
     $this->handleAsImagetitletext( );
     $this->handleAsText( );
+$pos = strpos('91.23.174.97', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->value );
+}
     $this->handleAsTimestamp( );
+$pos = strpos('91.23.174.97', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->value );
+}
     $this->handleAsYYYYMMDD( );
 
     $arr_return['data']['drs_handleCase']   = $this->bool_drs_handleCase;
@@ -1186,7 +1195,7 @@ class tx_browser_pi1_tca
         // strftime shouldn't moved to ISO
       if( ! $this->pObj->conf['format.']['strftime.']['utf8_encode'] )
       {
-        if ($this->pObj->b_drs_templating)
+        if( $this->pObj->b_drs_templating )
         {
           $prompt = $this->value . ' is in UTF-8 format.';
           t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
