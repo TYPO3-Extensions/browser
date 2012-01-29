@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2010 - Dirk Wildt http://wildt.at.die-netzmacher.de
+*  (c) 2008-2012 - Dirk Wildt http://wildt.at.die-netzmacher.de
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,6 +28,7 @@
 * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
 * @package    TYPO3
 * @subpackage    tx_browser
+* @version    3.9.6
 */
 
   /**
@@ -107,7 +108,7 @@ class tx_browser_pi1_tca
 
     if(!$this->pObj->boolArrHandleAsProcessed)
     {
-      $this->pObj->boolArrHandleAsProcessed = TRUE;
+      $this->pObj->boolArrHandleAsProcessed = true;
     }
     else
     {
@@ -115,7 +116,7 @@ class tx_browser_pi1_tca
       {
         t3lib_div::devlog('[INFO/DISCOVER] The global array arrHandleAs is processed in a loop ago. Nothing todo.', $this->pObj->extKey, 0);
       }
-      return TRUE;
+      return true;
     }
 
 
@@ -130,9 +131,9 @@ class tx_browser_pi1_tca
     //
     // Process each field in the select query
 
-    $this->pObj->boolFirstElement = TRUE;
+    $this->pObj->boolFirstElement = true;
 
-    $b_error = FALSE;
+    $b_error = false;
     if ($this->pObj->csvSelect == '')
     {
       $this->pObj->csvSelect = $conf_view['select'];
@@ -147,7 +148,7 @@ class tx_browser_pi1_tca
           t3lib_div::devLog('[HELP/SQL] Did you configure '.$tsArray.'?', $this->pObj->extKey, 1);
           t3lib_div::devLog('[ERROR/SQL] ABORTED', $this->pObj->extKey, 3);
         }
-        $b_error = TRUE;
+        $b_error = true;
       }
     }
 
@@ -173,7 +174,7 @@ class tx_browser_pi1_tca
       {
         $this->autodiscTCA($columnValue); //:TODO:
       }
-      $this->pObj->boolFirstElement = FALSE;
+      $this->pObj->boolFirstElement = false;
     }
   }
 
@@ -201,12 +202,12 @@ class tx_browser_pi1_tca
     // Is this the first call?
 
     if($this->pObj->boolFirstTimeAutodiscover) {
-      $this->pObj->boolFirstTimeAutodiscover = FALSE;
+      $this->pObj->boolFirstTimeAutodiscover = false;
     } else {
       if ($this->pObj->b_drs_discover) {
         t3lib_div::devlog('[INFO/DISCOVER] This method autodiscConfig() was called ago. Nothing todo.', $this->pObj->extKey, 0);
       }
-      return TRUE;
+      return true;
     }
 
 
@@ -216,7 +217,7 @@ class tx_browser_pi1_tca
 
     $this->pObj->confAutodiscover = $this->pObj->conf['views.'][$viewWiDot][$mode.'.']['autoconfig.']['autoDiscover.'];
     switch(is_array($autoDiscover)) {
-      case(TRUE):
+      case(true):
         // We have a local configuration
         if ($this->pObj->b_drs_discover) {
           t3lib_div::devlog('[INFO/DISCOVER] views.'.$viewWiDot.$mode.' has a local autoDiscover array.', $this->pObj->extKey, 0);
@@ -246,8 +247,8 @@ class tx_browser_pi1_tca
       if ($this->pObj->b_drs_discover) {
         t3lib_div::devlog('[INFO/DISCOVER] There is no array autodiscover.items.', $this->pObj->extKey, 0);
       }
-      $this->pObj->arrDontDiscoverFields = FALSE;
-      return FALSE;
+      $this->pObj->arrDontDiscoverFields = false;
+      return false;
     }
 
 
@@ -277,7 +278,7 @@ class tx_browser_pi1_tca
  * Check, if comparison with all TCA properties of the field is successfull. If it is, add the table name and field name to the global array $arrHandleAs
  *
  * @param	string		table name and field name, devided by a dot. I.e.: tt_news.images
- * @return	boolean		TRUE || FALSE
+ * @return	boolean		true || false
  */
   function autodiscTCA($tableField) {
 
@@ -303,8 +304,8 @@ class tx_browser_pi1_tca
         t3lib_div::devlog('[HELP/DISCOVER] Please contact the developer:<br />'.$this->pObj->developer_contact, $this->pObj->extKey, 1);
         t3lib_div::devlog('[INFO/DISCOVER] TCA won\'t be investigated.', $this->pObj->extKey, 0);
       }
-      $this->pObj->boolFirstElement = FALSE;
-      return FALSE;
+      $this->pObj->boolFirstElement = false;
+      return false;
     }
     // RETURN if $tableField is empty
 
@@ -314,35 +315,35 @@ class tx_browser_pi1_tca
     //
     // Return if table.field isn't propper
 
-    if (!(strpos($tableField, ' ') === FALSE))
+    if (!(strpos($tableField, ' ') === false))
     {
       if ($this->pObj->b_drs_discover || $this->pObj->b_drs_error) {
         t3lib_div::devlog('[WARN/DISCOVER] $tableField contents spaces!<br />
           \''.$tableField.'\'', $this->pObj->extKey, 2);
         t3lib_div::devlog('[INFO/DISCOVER] TCA won\'t be investigated.', $this->pObj->extKey, 0);
       }
-      $this->pObj->boolFirstElement = FALSE;
-      return FALSE;
+      $this->pObj->boolFirstElement = false;
+      return false;
     }
-    if (!(strpos($tableField, '(') === FALSE))
+    if (!(strpos($tableField, '(') === false))
     {
       if ($this->pObj->b_drs_discover || $this->pObj->b_drs_error) {
         t3lib_div::devlog('[WARN/DISCOVER] $tableField contents \'(\'!<br />
           \''.$tableField.'\'', $this->pObj->extKey, 2);
         t3lib_div::devlog('[INFO/DISCOVER] TCA won\'t be investigated.', $this->pObj->extKey, 0);
       }
-      $this->pObj->boolFirstElement = FALSE;
-      return FALSE;
+      $this->pObj->boolFirstElement = false;
+      return false;
     }
-        if (!(strpos($tableField, ')') === FALSE))
+        if (!(strpos($tableField, ')') === false))
     {
       if ($this->pObj->b_drs_discover || $this->pObj->b_drs_error) {
         t3lib_div::devlog('[WARN/DISCOVER] $tableField contents \')\'!<br />
           \''.$tableField.'\'', $this->pObj->extKey, 2);
         t3lib_div::devlog('[INFO/DISCOVER] TCA won\'t be investigated.', $this->pObj->extKey, 0);
       }
-      $this->pObj->boolFirstElement = FALSE;
-      return FALSE;
+      $this->pObj->boolFirstElement = false;
+      return false;
     }
     // Return if table.field isn't propper
 
@@ -372,8 +373,8 @@ class tx_browser_pi1_tca
     }
 
     if(!is_array($lArrAutodiscTCAitems)) {
-      $this->pObj->boolFirstElement = FALSE;
-      return TRUE;
+      $this->pObj->boolFirstElement = false;
+      return true;
     }
 
 
@@ -386,8 +387,8 @@ class tx_browser_pi1_tca
         if($this->pObj->b_drs_discover) {
           t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.': field shouldn\'t wrapped automatically by autodiscover.', $this->pObj->extKey, 0);
         }
-        $this->pObj->boolFirstElement = FALSE;
-        return TRUE;
+        $this->pObj->boolFirstElement = false;
+        return true;
       }
     }
 
@@ -403,8 +404,8 @@ class tx_browser_pi1_tca
       if($this->pObj->b_drs_discover) {
         t3lib_div::devLog('[INFO/DISCOVER] There isn\'t any item for the comparison with TCA properties.', $this->pObj->extKey, 0);
       }
-      $this->pObj->boolFirstElement = FALSE;
-      return TRUE;
+      $this->pObj->boolFirstElement = false;
+      return true;
     }
 
 
@@ -426,10 +427,10 @@ class tx_browser_pi1_tca
     }
 
 
-    /////////////////////////////////////////
-    //
-    // Check for each item the defined configuration vars:
-    // TCAlabel, TCAconfig.type, TCAconfig.internal_type, TCAconfig.allowed
+      /////////////////////////////////////////
+      //
+      // Check for each item the defined configuration vars:
+      // TCAlabel, TCAconfig.type, TCAconfig.internal_type, TCAconfig.allowed
 
     foreach((array) $lArrTCAitems as $TCAitem) {
 
@@ -442,116 +443,136 @@ class tx_browser_pi1_tca
           t3lib_div::devlog('[HELP/DISCOVER] If you don\'t like it, clear the TS views.'.$viewWiDot.$mode.'.handleAs.'.$TCAitem.'.', $this->pObj->extKey, 1);
         }
       }
-      $boolEveryCondition = TRUE;
+      $boolEveryCondition = true;
 
-      /////////////////////////////////////////
-      //
-      // Load the TCA, if we don't have an table.columns array
+        // Load the TCA, if we don't have an table.columns array
+      $this->pObj->objZz->loadTCA($table);
 
-      if (!is_array($GLOBALS['TCA'][$table]['columns']))
+        // TCAlabel
+      if( $boolEveryCondition && $TSconfAdItems[$TCAitem.'.']['TCAlabel'] )
       {
-        t3lib_div::loadTCA($table);
-        if ($this->pObj->b_drs_tca)
-        {
-          t3lib_div::devlog('[INFO/DISCOVER] $GLOBALS[\'TCA\'][\''.$table.'\'] is loaded.', $this->pObj->extKey, 0);
-        }
-      }
-
-      // TCAlabel
-      if($boolEveryCondition && $TSconfAdItems[$TCAitem.'.']['TCAlabel']) {
-        // Autodiscover for this TCAitem is TRUE
+          // Autodiscover for this TCAitem is true
         $stringInTheTCA = $GLOBALS['TCA'][$table]['columns'][$field]['label'];
-        // $stringInTheTCA in case of tt_news.image i.e.: LLL:EXT:lang/locallang_general.php:LGL.images
-        if($stringInTheTCA) {
-          // The TCA property of the current table.field has a value
+          // $stringInTheTCA in case of tt_news.image i.e.: LLL:EXT:lang/locallang_general.php:LGL.images
+        if( $stringInTheTCA )
+        {
+            // The TCA property of the current table.field has a value
           $tmpArr = explode('.', $stringInTheTCA);
-          // Explode the string and get the value behind the last dot
-          $valueInTheTCAstring = $tmpArr[count($tmpArr) - 1];
-          $arrTSvalues = $this->pObj->objZz->getCSVasArray($TSconfAdItems[$TCAitem.'.']['TCAlabel.']['csvValue']);
-          // Get the values from the TS for comparison
-          if(in_array($valueInTheTCAstring, $arrTSvalues)) {
-            $localTableOnly = $this->pObj->objZz->getCSVasArray($TSconfAdItems[$TCAitem.'.']['localTableOnly']);
-            $boolEveryCondition = TRUE;
-            // TRUE: Check the next TCA item
-            if($localTableOnly && $TCAitem == 'title') {
-              // Should title wrapped by autodiscover only if table is the local table?
-              if($table != $this->pObj->localTable) {
-                // table isn't the local table?
-                $boolEveryCondition = FALSE;
-                // FALSE: Don't check the next TCA item
+            // Explode the string and get the value behind the last dot
+          $valueInTheTCAstring  = $tmpArr[count($tmpArr) - 1];
+          $arrTSvalues          = $this->pObj->objZz->getCSVasArray(
+                                    $TSconfAdItems[$TCAitem.'.']['TCAlabel.']['csvValue']
+                                  );
+            // Get the values from the TS for comparison
+          if( in_array( $valueInTheTCAstring, $arrTSvalues ) )
+          {
+            $localTableOnly     = $this->pObj->objZz->getCSVasArray( $TSconfAdItems[$TCAitem.'.']['localTableOnly'] );
+            $boolEveryCondition = true;
+              // true: Check the next TCA item
+            if( $localTableOnly && ( $TCAitem == 'title' ) )
+            {
+                // Should title wrapped by autodiscover only if table is the local table?
+              if( $table != $this->pObj->localTable )
+              {
+                  // table isn't the local table?
+                $boolEveryCondition = false;
+                  // false: Don't check the next TCA item
               }
             }
-            if($this->pObj->b_drs_discover) {
-              if($boolEveryCondition) {
-                t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.': Property TCA[\'label\'] matchs TS item \''.$TCAitem.'\'.', $this->pObj->extKey, -1);
-              } else {
-                t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.' isn\'t from local table \''.$this->pObj->localTable.'\'.', $this->pObj->extKey, 0);
+            if( $this->pObj->b_drs_discover )
+            {
+              if( $boolEveryCondition )
+              {
+                $prompt = $tableField . ': Property TCA[\'label\'] matchs TS item \'' . $TCAitem . '\'.';
+                t3lib_div::devLog('[INFO/DISCOVER] ' . $prompt , $this->pObj->extKey, -1);
+              }
+              else
+              {
+                $prompt = $tableField . ' isn\'t from local table \'' . $this->pObj->localTable . '\'.';
+                t3lib_div::devLog('[INFO/DISCOVER] ' . $prompt, $this->pObj->extKey, 0);
               }
             }
-          } else {
-            $boolEveryCondition = FALSE;
-            // FALSE: Don't check the next TCA item
-            if($this->pObj->b_drs_discover) {
+          }
+          else
+          {
+            $boolEveryCondition = false;
+              // false: Don't check the next TCA item
+            if( $this->pObj->b_drs_discover )
+            {
               t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.': Property TCA[\'label\'] doesn\'t match TS item \''.$TCAitem.'\'.', $this->pObj->extKey, 0);
             }
           }
-        } else {
-          $boolEveryCondition = FALSE;
-          // FALSE: Don't check the next TCA item
-          if($this->pObj->b_drs_discover) {
+        }
+        else
+        {
+          $boolEveryCondition = false;
+            // false: Don't check the next TCA item
+          if( $this->pObj->b_drs_discover )
+          {
             t3lib_div::devLog('[WARN/DISCOVER] '.$table.'.'.$field.' hasn\'t any label in the TCA. Is it OK? There won\'t be any further checks!', $this->pObj->extKey, 2);
             t3lib_div::devLog('[HELP/DISCOVER] If you like, configure the wrapping with the TS handleAs property.', $this->pObj->extKey, 1);
           }
         }
-      } else {
-        $boolEveryCondition = FALSE;
-        // FALSE: Don't check the next TCA item
-        if($this->pObj->b_drs_discover) {
-          t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.': There is no TS item \''.$TCAitem.'\' or it is FALSE.', $this->pObj->extKey, 0);
+      }
+      else
+      {
+        $boolEveryCondition = false;
+        // false: Don't check the next TCA item
+        if( $this->pObj->b_drs_discover )
+        {
+          t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.': There is no TS item \''.$TCAitem.'\' or it is false.', $this->pObj->extKey, 0);
         }
       }
 
-      //TCAconfig.type
-      if($boolEveryCondition && $TSconfAdItems[$TCAitem.'.']['TCAconfig.']['type']) {
-        // Autodiscover for this TCAitem is TRUE
+        //TCAconfig.type
+      if( $boolEveryCondition && $TSconfAdItems[$TCAitem.'.']['TCAconfig.']['type'] )
+      {
+          // Autodiscover for this TCAitem is true
         $valueInTheTCA = $GLOBALS['TCA'][$table]['columns'][$field]['config']['type'];
-        if($valueInTheTCA) {
-          // The TCA property of the current table.field has a value
+        if( $valueInTheTCA )
+        {
+            // The TCA property of the current table.field has a value
           $arrTSvalues = $this->pObj->objZz->getCSVasArray($TSconfAdItems[$TCAitem.'.']['TCAconfig.']['type.']['csvValue']);
-          // Get the values from the TS for comparison
+            // Get the values from the TS for comparison
           if(in_array($valueInTheTCA, $arrTSvalues)) {
-            $boolEveryCondition = TRUE;
-            // TRUE: Check the next TCA item
+            $boolEveryCondition = true;
+              // true: Check the next TCA item
             if($this->pObj->b_drs_discover) {
               t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.': Property TCA[\'config\'][\'type\'] matchs the TS item \''.$TCAitem.'\'.', $this->pObj->extKey, 0);
             }
-          } else {
-            $boolEveryCondition = FALSE;
-            // FALSE: Don't check the next TCA item
-            if($this->pObj->b_drs_discover) {
+          }
+          else
+          {
+            $boolEveryCondition = false;
+            // false: Don't check the next TCA item
+            if( $this->pObj->b_drs_discover )
+            {
               t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.': Property TCA[\'config\'][\'type\'] doesn\'t match the TS item \''.$TCAitem.'\'.', $this->pObj->extKey, 0);
             }
           }
         }
       }
 
-      //TCAconfig.internal_type
-      if($boolEveryCondition && $TSconfAdItems[$TCAitem.'.']['TCAconfig.']['internal_type']) {
-        // Autodiscover for this TCAitem is TRUE
+        //TCAconfig.internal_type
+      if( $boolEveryCondition && $TSconfAdItems[$TCAitem.'.']['TCAconfig.']['internal_type'] )
+      {
+          // Autodiscover for this TCAitem is true
         $valueInTheTCA = $GLOBALS['TCA'][$table]['columns'][$field]['config']['internal_type'];
         if($valueInTheTCA) {
           // The TCA property of the current table.field has a value
           $arrTSvalues = $this->pObj->objZz->getCSVasArray($TSconfAdItems[$TCAitem.'.']['TCAconfig.']['internal_type.']['csvValue']);
           // Get the values from the TS for comparison
           if(in_array($valueInTheTCA, $arrTSvalues)) {
-            $boolEveryCondition = TRUE;
-            // TRUE: Check the next TCA item
+            $boolEveryCondition = true;
+            // true: Check the next TCA item
             if($this->pObj->b_drs_discover) {
               t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.': Property TCA[\'config\'][\'internal_type\'] matchs the TS item \''.$TCAitem.'\'.', $this->pObj->extKey, 0);
             }
-          } else {
-            $boolEveryCondition = FALSE;
-            // FALSE: Don't check the next TCA item
+          }
+          else
+          {
+            $boolEveryCondition = false;
+            // false: Don't check the next TCA item
             if($this->pObj->b_drs_discover) {
               t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.': Property TCA[\'config\'][\'internal_type\'] doesn\'t match the TS item \''.$TCAitem.'\'.', $this->pObj->extKey, 0);
             }
@@ -561,7 +582,7 @@ class tx_browser_pi1_tca
 
       //TCAconfig.allowed
       if($boolEveryCondition && $TSconfAdItems[$TCAitem.'.']['TCAconfig.']['allowed']) {
-        // Autodiscover for this TCAitem is TRUE
+        // Autodiscover for this TCAitem is true
         $valueInTheTCA = $GLOBALS['TCA'][$table]['columns'][$field]['config']['allowed'];
         if($valueInTheTCA) {
           // The TCA property of the current table.field has a value
@@ -570,15 +591,15 @@ class tx_browser_pi1_tca
           $srcGFXAllowedValues = $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'];
           $dstGFXAllowedValues = $GLOBALS['TYPO3_CONF_VARS']['GFX'][$gfxAllowedValue];
           if($srcGFXAllowedValues == $dstGFXAllowedValues) {
-            $boolEveryCondition = TRUE;
-            // TRUE: Check the next TCA item
+            $boolEveryCondition = true;
+            // true: Check the next TCA item
             if($this->pObj->b_drs_discover)
             {
               t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.': Property TCA[\'config\'][\'allowed\'] matchs the TS item \''.$TCAitem.'\'.', $this->pObj->extKey, 0);
             }
           } else {
-            $boolEveryCondition = FALSE;
-            // FALSE: Don't check the next TCA item
+            $boolEveryCondition = false;
+            // false: Don't check the next TCA item
             if($this->pObj->b_drs_discover)
             {
               t3lib_div::devLog('[INFO/DISCOVER] '.$tableField.': Property TCA[\'config\'][\'allowed\'] doesn\'t match the TS item \''.$TCAitem.'\'.', $this->pObj->extKey, 0);
@@ -592,7 +613,7 @@ class tx_browser_pi1_tca
           $uploadfolder = $GLOBALS['TCA'][$table]['columns'][$field]['config']['uploadfolder'];
         }
         switch($TSconfAdItems[$TCAitem.'.']['oneValueOnly']) {
-          case(TRUE):
+          case(true):
             // Only one table.field is allowed
             if($this->pObj->arrHandleAs[$TCAitem]) {
               // We have one table.field already. That isn't allowed.
@@ -630,8 +651,8 @@ class tx_browser_pi1_tca
         }
       }
     }
-    $this->pObj->boolFirstElement = FALSE;
-    return TRUE;
+    $this->pObj->boolFirstElement = false;
+    return true;
   }
 
 

@@ -2202,12 +2202,13 @@ class tx_browser_pi1_flexform {
  * @since   3.0.1
  * @version 3.4.4
  */
-  function sheet_tca() {
+  function sheet_tca( )
+  {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
-    $str_lang = $this->pObj->lang->lang;
-    $modeWiDot = (int) $this->mode . '.';
-    $viewWiDot = $this->pObj->view . '.';
+    $str_lang       = $this->pObj->lang->lang;
+    $modeWiDot      = (int) $this->mode . '.';
+    $viewWiDot      = $this->pObj->view . '.';
 
     //////////////////////////////////////////////////////////////////////
     //

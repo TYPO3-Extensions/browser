@@ -3059,7 +3059,7 @@ plugin.tx_browser_pi1 {
           TCAlabel       = 1
           TCAlabel {
               // [CSV-STRING] Detect fields with this labels in the TCA for time stamps
-            csvValue = datetime, datetimeend, starttime, endtime,
+            csvValue = datetime, datetimeend, datetimestart, starttime, endtime,
           }
           TCAconfig {
               // [STRING] Respect the value of TCA eval for the auto-detection
@@ -3145,7 +3145,7 @@ plugin.tx_browser_pi1 {
             }
             tca {
                 // [String, CSV] Comma seperated values for any TCA eval value, which should order by php SORT_NUMERIC
-              csv_sortNumeric = date, datetime, datetimeend, double2, int, num, md5, time, timesec, year
+              csv_sortNumeric = date, datetime, datetimeend, datetimestart, double2, int, num, md5, time, timesec, year
             }
           }
         }
