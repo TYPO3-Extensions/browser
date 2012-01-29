@@ -752,17 +752,7 @@ class tx_browser_pi1_tca
     $this->handleAsImagealttext( );
     $this->handleAsImagetitletext( );
     $this->handleAsText( );
-$pos = strpos('91.23.174.97', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->value );
-}
     $this->handleAsTimestamp( );
-$pos = strpos('91.23.174.97', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->value );
-}
     $this->handleAsYYYYMMDD( );
 
     $arr_return['data']['drs_handleCase']   = $this->bool_drs_handleCase;
@@ -1144,6 +1134,11 @@ if( ! ( $pos === false ) )
  */
   private function handleAsTimestamp(  )
   {
+$pos = strpos('91.23.174.97', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if( ! ( $pos === false ) ) {
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->value );
+}
+
       // RETURN tableField isn't content of handleAs['timestamp']
     $pos = strpos( $this->arrHandleAs['timestamp'] , $this->tabelField );
     if( $pos === false )
@@ -1207,6 +1202,10 @@ if( ! ( $pos === false ) )
     }
       // $this->value is UTF8
 
+$pos = strpos('91.23.174.97', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if( ! ( $pos === false ) ) {
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->value );
+}
     return;
   }
 
