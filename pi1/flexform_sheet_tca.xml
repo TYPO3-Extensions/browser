@@ -115,7 +115,7 @@
             <type>input</type>
             <size>40</size>
             <eval>trim</eval>
-            <default>datetime, starttime, endtime</default>
+            <default>datetime, datetime, starttime, endtime</default>
           </config>
         </TCEforms>
       </timestamp_csvFields>
