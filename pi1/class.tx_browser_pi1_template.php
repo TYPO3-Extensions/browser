@@ -767,7 +767,7 @@ class tx_browser_pi1_template
         $template       = $this->pObj->cObj->substituteMarkerArray($template, $markerArray);
         if ($this->pObj->b_drs_warn)
         {
-          t3lib_div::devlog('[WARN/TEMPLATING] There isn\t any row.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[WARN/TEMPLATING] There isn\t any row.', $this->pObj->extKey, 2);
         }
         return $template;
       }
