@@ -1619,6 +1619,23 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
+      // class.tx_browser_pi1_tca.php
+
+      // [Array] The current TypoScript configuration array
+    $this->objTca->conf      = $this->conf;
+      // [Integer] The current mode (from modeselector)
+    $this->objTca->mode      = $this->piVar_mode;
+      // [String] 'list' or 'single': The current view
+    $this->objTca->view      = $this->view;
+      // [Array] The TypoScript configuration array of the current view
+    $this->objTca->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+      // [String] TypoScript path to the current view. I.e. views.single.1
+    $this->objTca->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // class.tx_browser_pi1_template.php
 
       // [Array] The current TypoScript configuration array

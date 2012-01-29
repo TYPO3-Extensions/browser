@@ -2210,13 +2210,14 @@ class tx_browser_pi1_flexform {
     $modeWiDot      = (int) $this->mode . '.';
     $viewWiDot      = $this->pObj->view . '.';
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // Field configuration
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field configuration
 
-    $str_configuration = $this->pObj->pi_getFFvalue($arr_piFlexform, 'configuration', 'tca', 'lDEF', 'vDEF');
+    $str_configuration = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'configuration', 'tca', 'lDEF', 'vDEF' );
 
-    switch ($str_configuration) {
+    switch ( $str_configuration )
+    {
       case ('adjusted') :
         $arr_csvValue = array (
           'title',
@@ -2227,13 +2228,16 @@ class tx_browser_pi1_flexform {
           'document',
           'timestamp'
         );
-        foreach ((array) $arr_csvValue as $str_csvValue) {
-          $str_csvFields = $this->pObj->pi_getFFvalue($arr_piFlexform, $str_csvValue . '_csvFields', 'tca', 'lDEF', 'vDEF');
-          // #9879
-          if (!empty ($this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.'])) {
+        foreach ( ( array ) $arr_csvValue as $str_csvValue )
+        {
+          $str_csvFields = $this->pObj->pi_getFFvalue( $arr_piFlexform, $str_csvValue . '_csvFields', 'tca', 'lDEF', 'vDEF' );
+            // #9879
+          if ( ! empty ( $this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.'] ) )
+          {
             $this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.']['autoDiscover.']['items.'][$str_csvValue . '.']['TCAlabel.']['csvValue'] = $str_csvFields;
           }
-          if (empty ($this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.'])) {
+          if ( empty ( $this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['autoconfig.'] ) )
+          {
             $this->pObj->conf['autoconfig.']['autoDiscover.']['items.'][$str_csvValue . '.']['TCAlabel.']['csvValue'] = $str_csvFields;
           }
           if ($this->pObj->b_drs_flexform) {

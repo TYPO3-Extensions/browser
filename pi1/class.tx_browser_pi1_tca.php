@@ -50,14 +50,30 @@
  */
 class tx_browser_pi1_tca
 {
-
-
   var $arr_select;
   // Array with the fields of the SQL result
   var $arr_orderBy;
   // Array with fields from orderBy from TS
   var $arr_rmFields;
   // Array with fields from functions.clean_up.csvTableFields from TS
+
+
+  
+    //////////////////////////////////////////////////////
+    //
+    // Variables set by the pObj (by class.tx_browser_pi1.php)
+
+    // [Array] The current TypoScript configuration array
+  var $conf       = false;
+    // [Integer] The current mode (from modeselector)
+  var $mode       = false;
+    // [String] 'list' or 'single': The current view
+  var $view       = false;
+    // [Array] The TypoScript configuration array of the current view
+  var $conf_view  = false;
+    // [String] TypoScript path to the current view. I.e. views.single.1
+  var $conf_path  = false;
+    // Variables set by the pObj (by class.tx_browser_pi1.php)
 
 
 
@@ -660,6 +676,214 @@ if (!($pos === false))
 }
         return true;
   }
+
+
+
+
+
+
+
+
+  /***********************************************
+   *
+   * Handle the value
+   *
+   **********************************************/
+
+
+
+  /**
+ * handleAsText( ): handle the given value as TEXT, if tableField is oart of
+ *                  the global $this->pObj->arrHandleAs['text'].
+ *                  value will wrapped with content_stdWrap
+ * @param   $tableField           : current tableField (sytax table.field)
+ * @param   $value                : value of the current table.field
+ * @param   $lDisplayView         : local or global display_view configuration
+ * @param   $bool_drs_handleCase  : flag for the DRS
+ * @param   $bool_dontColorSwords : flag for dyeing swords
+ *
+ * @return	array   $arr_return with elements drs_handleCase and value
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  function handleAsText( $tableField, $value, $lDisplayView, $bool_drs_handleCase, $bool_dontColorSwords )
+  {
+    $arr_return['data']['drs_handleCase']   = $bool_drs_handleCase;
+    $arr_return['data']['value']            = $value;
+    $arr_return['data']['dontColorSwords']  = $bool_dontColorSwords;
+
+      // RETURN tableField has its own configuration
+    list( $table, $field ) = explode( '.', $tableField );
+    if( is_array( $this->conf_view[$table.'.'][$field.'.'] ) )
+    {
+        // DRS - Development Reporting System
+      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+      {
+        $prompt = 'handleAs: ' . $tableField . ' has its own configuration';
+        t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+        $arr_return['data']['drs_handleCase'] = true;
+      }
+      // DRS - Development Reporting System
+      return $arr_return;
+    }
+      // RETURN tableField has its own configuration
+
+      // RETURN tableField isn't content of handleAs['text']
+    $pos = strpos( $this->pObj->arrHandleAs['text'] , $tableField );
+    if( $pos === false )
+    {
+      return $arr_return;
+    }
+      // RETURN tableField isn't content of handleAs['text']
+
+      // DRS - Development Reporting System
+    if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+    {
+      $prompt = $tableField . ' is content of handleAs[text]';
+      t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+      $arr_return['data']['drs_handleCase'] = true;
+    }
+      // DRS - Development Reporting System
+
+//      // RETURN value is null
+//    if( $value == null )
+//    {
+//      return $arr_return;
+//    }
+//      // RETURN value is null
+
+      // tableField has a content_stdWrap
+    if( is_array ( $lDisplayView['content_stdWrap.'] ) )
+    {
+      $value = $this->pObj->objWrapper->general_stdWrap( $value, $lDisplayView['content_stdWrap.'] );
+      $arr_return['data']['value'] = $value;
+    }
+      // tableField has a content_stdWrap
+
+      // DRS - Development Reporting System
+    if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+    {
+        // tableField hasn't a content_stdWrap
+      if( ! is_array ( $lDisplayView['content_stdWrap.'] ) )
+      {
+        $prompt = $lDisplayType . 'content_stdWrap isn\'t configured.';
+        t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = $tableField . ' will be wrapped with general_stdWrap.';
+        t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 'If you like to change the wrapping, please configure ' . $lDisplayType . 'content_stdWrap.';
+        t3lib_div::devLog('[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1);
+      }
+    }
+      // DRS - Development Reporting System
+
+    return $arr_return;
+  }
+
+
+
+  /**
+ * handleAsTimestamp( ):  handle the given value as TEXT, if tableField is oart of
+ *                        the global $this->pObj->arrHandleAs['text'].
+ *                        value will wrapped with content_stdWrap
+ * @param   $tableField           : current tableField (sytax table.field)
+ * @param   $value                : value of the current table.field
+ * @param   $lDisplayView         : local or global display_view configuration
+ * @param   $bool_drs_handleCase  : flag for the DRS
+ * @param   $bool_dontColorSwords : flag for dyeing swords
+ *
+ * @return	array   $arr_return with elements drs_handleCase and value
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  function handleAsTimestamp( $tableField, $value, $lDisplayView, $bool_drs_handleCase, $bool_dontColorSwords )
+  {
+    $arr_return['data']['drs_handleCase']   = $bool_drs_handleCase;
+    $arr_return['data']['value']            = $value;
+    $arr_return['data']['dontColorSwords']  = $bool_dontColorSwords;
+
+      // RETURN tableField has its own configuration
+    list( $table, $field ) = explode( '.', $tableField );
+    if( is_array( $this->conf_view[$table.'.'][$field.'.'] ) )
+    {
+        // DRS - Development Reporting System
+      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+      {
+        $prompt = 'handleAs: ' . $tableField . ' has its own configuration';
+        t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+        $arr_return['data']['drs_handleCase'] = true;
+      }
+      // DRS - Development Reporting System
+      return $arr_return;
+    }
+      // RETURN tableField has its own configuration
+
+      // RETURN tableField isn't content of handleAs['text']
+    $pos = strpos( $this->pObj->arrHandleAs['timestamp'] , $tableField );
+    if( $pos === false )
+    {
+      return $arr_return;
+    }
+      // RETURN tableField isn't content of handleAs['text']
+
+      // DRS - Development Reporting System
+    if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+    {
+      $prompt = $tableField . ' is content of handleAs[timestamp]';
+      t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+      $arr_return['data']['drs_handleCase'] = true;
+    }
+      // DRS - Development Reporting System
+
+      // Don't dyeing swords
+    $arr_TCAitems                           = $this->conf_view['autoconfig.']['autoDiscover.']['items.'];
+    $arr_return['data']['dontColorSwords']  = $arr_TCAitems['timestamp.']['dontColorSwords'];
+
+      // strftime $value
+    $value                        = strftime($this->pObj->tsStrftime, $value);
+    $arr_return['data']['value']  = $value;
+
+      // $value is UTF8
+    if( mb_detect_encoding( $value ) == 'UTF-8' )
+    {
+        // strftime should moved to ISO
+      if( $this->pObj->conf['format.']['strftime.']['utf8_encode'] )
+      {
+          // Encode it
+        $value_iso = utf8_encode( $value );
+          // DRS - Development Reporting System
+        if ($this->pObj->b_drs_templating)
+        {
+          $prompt = $value . ' is in UTF-8 format. Change it to ISO.';
+          t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+          $prompt = 'Now it is: '. $value_iso;
+          t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+          $prompt = 'If you have problems with UTF-8 chars in formated timestamps, please set format.strftime.utf8_encode to 0.';
+          t3lib_div::devlog('[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1);
+        }
+          // DRS - Development Reporting System
+          // Move it to ISO
+        $value = $value_iso;
+        $arr_return['data']['value'] = $value;
+      }
+        // strftime should moved to ISO
+        // strftime shouldn't moved to ISO
+      if( ! $this->pObj->conf['format.']['strftime.']['utf8_encode'] )
+      {
+        if ($this->pObj->b_drs_templating)
+        {
+          $prompt = $value . ' is in UTF-8 format.';
+          t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+          $prompt = 'If you have problems with UTF-8 chars in formated timestamps, please set format.strftime.utf8_encode to 1.';
+          t3lib_div::devlog('[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1);
+        }
+      }
+        // strftime shouldn't moved to ISO
+    }
+      // $value is UTF8
+
+    return $arr_return;
+  }
+
 
 
 
