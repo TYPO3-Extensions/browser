@@ -1,3 +1,11 @@
+
+
+  ////////////////////////////////////////////////
+  //
+  // template
+  // items
+
+  // template
 plugin.tx_browser_pi3 {
 
   // Template for TypoScript array manuals
@@ -38,7 +46,7 @@ plugin.tx_browser_pi3 {
       30 = TEXT
       30 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_basics_en.title
+          data = LLL:EXT:browser/pi3/locallang.xml:manuals.browser_tut_basics_en.title
         }
       }
       // Link IV/IV
@@ -52,35 +60,40 @@ plugin.tx_browser_pi3 {
     20 = TEXT
     20 {
       stdWrap {
-        data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_basics_en.description
+        data = LLL:EXT:browser/pi3/locallang.xml:manuals.browser_tut_basics_en.description
       }
       wrap = <dd>|</dd>
     }
   }
 }
+  // template
 
+  // items
 plugin.tx_browser_pi3 {
 
-  manuals {
-    // Browser section - header
-    1110 = TEXT
-    1110 {
+    // Title
+  title {
+    10 = TEXT
+    10 {
       stdWrap {
-        data = LLL:EXT:browser/pi3/locallang.xml:browser.title
+        data = LLL:EXT:browser/pi3/locallang.xml:title
       }
       wrap = <h1>|</h1>
     }
-    // Browser section - subheader
-    1111 = TEXT
-    1111 {
+  }
+    // Manuals
+  manuals {
+      // section header
+    10 = TEXT
+    10 {
       stdWrap {
-        data = LLL:EXT:browser/pi3/locallang.xml:browser.subtitle
+        data = LLL:EXT:browser/pi3/locallang.xml:manuals.section_header
       }
       wrap = <h2>|</h2>
     }
-    // browser
-    1120 < plugin.tx_browser_pi3.template
-    1120 {
+      // browser manual abstract
+    20 < plugin.tx_browser_pi3.template
+    20 {
       10 {
         11 {
           typolink {
@@ -89,38 +102,71 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser.title
+            data = LLL:EXT:browser/pi3/locallang.xml:manuals.browser.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser.description
+          data = LLL:EXT:browser/pi3/locallang.xml:manuals.browser.description
         }
       }
     }
-    // browser_tut_basics_en
+      // browser manual in detail
+    21 < plugin.tx_browser_pi3.template
+    21 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_manual_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:manuals.browser_manual_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:manuals.browser_manual_en.description
+        }
+      }
+    }
+  }
+
+    // Tutorials
+  tutorials {
+      // Tutorials - subheader
+    1000 = TEXT
+    1000 {
+      stdWrap {
+        data = LLL:EXT:browser/pi3/locallang.xml:tutorials.section_header
+      }
+      wrap = <h2>|</h2>
+    }
+      // browser_tut_basics_en
     1130 < plugin.tx_browser_pi3.template
     1130 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_basics_en/current/
+            parameter = http://typo3.org/extensions/repository/view/browser_tut_basics_en/current/
           }
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_basics_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_basics_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_basics_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_basics_en.description
         }
       }
     }
-    // browser_tut_ajax_en
+      // browser_tut_ajax_en
     1131 < plugin.tx_browser_pi3.template
     1131 {
       10 {
@@ -131,17 +177,38 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_ajax_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_ajax_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_ajax_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_ajax_en.description
         }
       }
     }
-    // browser_tut_database_en
+      // browser_tut_calendar_en
+    1132 < plugin.tx_browser_pi3.template
+    1132 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_calendar_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_calendar_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_calendar_en.description
+        }
+      }
+    }
+      // browser_tut_database_en
     1140 < plugin.tx_browser_pi3.template
     1140 {
       10 {
@@ -152,17 +219,17 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_database_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_database_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_database_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_database_en.description
         }
       }
     }
-    // browser_tut_dev_en
+      // browser_tut_dev_en
     1144 < plugin.tx_browser_pi3.template
     1144 {
       10 {
@@ -173,19 +240,40 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_dev_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_dev_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_dev_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_dev_en.description
         }
       }
     }
-    // browser_tut_rss_en
+      // browser_tut_downloads_en
     1145 < plugin.tx_browser_pi3.template
     1145 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_downloads_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_downloads_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_downloads_en.description
+        }
+      }
+    }
+      // browser_tut_rss_en
+    1146 < plugin.tx_browser_pi3.template
+    1146 {
       10 {
         11 {
           typolink {
@@ -194,19 +282,19 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_rss_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_rss_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_rss_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_rss_en.description
         }
       }
     }
-    // browser_tut_hooks_en
-    1146 < plugin.tx_browser_pi3.template
-    1146 {
+      // browser_tut_hooks_en
+    1147 < plugin.tx_browser_pi3.template
+    1147 {
       10 {
         11 {
           typolink {
@@ -215,17 +303,17 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_hooks_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_hooks_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_hooks_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_hooks_en.description
         }
       }
     }
-    // browser_tut_images_en
+      // browser_tut_images_en
     1150 < plugin.tx_browser_pi3.template
     1150 {
       10 {
@@ -236,17 +324,17 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_images_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_images_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_images_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_images_en.description
         }
       }
     }
-    // browser_tut_labeling_en
+      // browser_tut_labeling_en
     1160 < plugin.tx_browser_pi3.template
     1160 {
       10 {
@@ -257,17 +345,17 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_labeling_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_labeling_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_labeling_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_labeling_en.description
         }
       }
     }
-    // browser_tut_localisation_en
+      // browser_tut_localisation_en
     1170 < plugin.tx_browser_pi3.template
     1170 {
       10 {
@@ -278,17 +366,17 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_localisation_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_localisation_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_localisation_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_localisation_en.description
         }
       }
     }
-    // browser_tut_marker_en
+      // browser_tut_marker_en
     1180 < plugin.tx_browser_pi3.template
     1180 {
       10 {
@@ -299,17 +387,17 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_marker_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_marker_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_marker_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_marker_en.description
         }
       }
     }
-    // browser_tut_realurl_en
+      // browser_tut_realurl_en
     1190 < plugin.tx_browser_pi3.template
     1190 {
       10 {
@@ -320,17 +408,17 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_realurl_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_realurl_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_realurl_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_realurl_en.description
         }
       }
     }
-    // browser_tut_search_en
+      // browser_tut_search_en
     1200 < plugin.tx_browser_pi3.template
     1200 {
       10 {
@@ -341,17 +429,17 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_search_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_search_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_search_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_search_en.description
         }
       }
     }
-    // browser_tut_severalplugins_en
+      // browser_tut_severalplugins_en
     1210 < plugin.tx_browser_pi3.template
     1210 {
       10 {
@@ -362,17 +450,17 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_severalplugins_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_severalplugins_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_severalplugins_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_severalplugins_en.description
         }
       }
     }
-    // browser_tut_socialmedia_en
+      // browser_tut_socialmedia_en
     1220 < plugin.tx_browser_pi3.template
     1220 {
       10 {
@@ -383,40 +471,40 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_socialmedia_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_socialmedia_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_socialmedia_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_socialmedia_en.description
         }
       }
     }
-    // browser_tut_templating_en
-    1230 < plugin.tx_browser_pi3.template
-    1230 {
+      // browser_tut_statistics_en
+    1221 < plugin.tx_browser_pi3.template
+    1221 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_templating_en/current/
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_statistics_en/current/
           }
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_templating_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_statistics_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_templating_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_statistics_en.description
         }
       }
     }
-    // browser_tut_tca_en
-    1233 < plugin.tx_browser_pi3.template
-    1233 {
+      // browser_tut_tca_en
+    1230 < plugin.tx_browser_pi3.template
+    1230 {
       10 {
         11 {
           typolink {
@@ -425,17 +513,38 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_tca_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_tca_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_tca_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_tca_en.description
         }
       }
     }
-    // browser_tut_tt_news_en
+      // browser_tut_templating_en
+    1231 < plugin.tx_browser_pi3.template
+    1231 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_templating_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_templating_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_templating_en.description
+        }
+      }
+    }
+      // browser_tut_tt_news_en
     1240 < plugin.tx_browser_pi3.template
     1240 {
       10 {
@@ -446,25 +555,29 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_tt_news_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_tt_news_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:browser.browser_tut_tt_news_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_tt_news_en.description
         }
       }
     }
-    // Websites - subheader
+  }
+
+    // Websites
+  websites {
+      // Websites - subheader
     2000 = TEXT
     2000 {
       stdWrap {
-        data = LLL:EXT:browser/pi3/locallang.xml:websites.subtitle
+        data = LLL:EXT:browser/pi3/locallang.xml:websites.section_header
       }
       wrap = <h2>|</h2>
     }
-    // green_cars
+      // green_cars
     2110 < plugin.tx_browser_pi3.template
     2110 {
       10 {
@@ -478,17 +591,17 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:green_cars.green_cars.title
+            data = LLL:EXT:browser/pi3/locallang.xml:websites.green_cars.green_cars.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:green_cars.green_cars.description
+          data = LLL:EXT:browser/pi3/locallang.xml:websites.green_cars.green_cars.description
         }
       }
     }
-    // job_market
+      // job_market
     2120 < plugin.tx_browser_pi3.template
     2120 {
       10 {
@@ -502,17 +615,17 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:job_market.job_market.title
+            data = LLL:EXT:browser/pi3/locallang.xml:websites.job_market.job_market.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:job_market.job_market.description
+          data = LLL:EXT:browser/pi3/locallang.xml:websites.job_market.job_market.description
         }
       }
     }
-    // organiser
+      // organiser
     2130 < plugin.tx_browser_pi3.template
     2130 {
       10 {
@@ -526,17 +639,17 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:organiser.organiser.title
+            data = LLL:EXT:browser/pi3/locallang.xml:websites.organiser.organiser.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:organiser.organiser.description
+          data = LLL:EXT:browser/pi3/locallang.xml:websites.organiser.organiser.description
         }
       }
     }
-    // quick_shop
+      // quick_shop
     2140 < plugin.tx_browser_pi3.template
     2140 {
       10 {
@@ -550,16 +663,16 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:quick_shop.quick_shop.title
+            data = LLL:EXT:browser/pi3/locallang.xml:websites.quick_shop.quick_shop.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:quick_shop.quick_shop.description
+          data = LLL:EXT:browser/pi3/locallang.xml:websites.quick_shop.quick_shop.description
         }
       }
     }
   }
-
 }
+  // items

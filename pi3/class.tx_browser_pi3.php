@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2010-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -61,10 +61,12 @@ class tx_browser_pi3 extends tslib_pibase
  * @param	array		$conf: The PlugIn configuration
  * @return	string		The content that is displayed on the website
  */
-  function main($content, $conf)
+  function main( $content, $conf )
   {
-    $str_manuals = $this->cObj->COBJ_ARRAY($conf['manuals.'],$ext='');
-    return $str_manuals;
+    $content = $content . $this->cObj->COBJ_ARRAY( $conf['manuals.'], $ext='' );
+    $content = $content . $this->cObj->COBJ_ARRAY( $conf['tutorials.'], $ext='' );
+    $content = $content . $this->cObj->COBJ_ARRAY( $conf['websites.'], $ext='' );
+    return $content;
   }
 }
 
