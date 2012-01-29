@@ -4,11 +4,11 @@
     <langDisable>1</langDisable>
   </meta>
   <sheets>
+    <evaluate>EXT:browser/pi5/flexform_sheet_evaluate.xml</evaluate>
     <sDEF>EXT:browser/pi5/flexform_sheet_sDEF.xml</sDEF>
     <year>EXT:browser/pi5/flexform_sheet_year.xml</year>
     <month>EXT:browser/pi5/flexform_sheet_month.xml</month>
     <week>EXT:browser/pi5/flexform_sheet_week.xml</week>
     <day>EXT:browser/pi5/flexform_sheet_day.xml</day>
-    <evaluate>EXT:browser/pi5/flexform_sheet_evaluate.xml</evaluate>
   </sheets>
 </T3DataStructure>

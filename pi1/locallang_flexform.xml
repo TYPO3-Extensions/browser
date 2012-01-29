@@ -75,14 +75,14 @@
       <label index="sheet_extend.cal_view.error">Missing requirement: any view is selected.</label>
       <label index="sheet_extend.cal_view.info">Solve it? Please configure tab [General] field [Views: enabled list views]. Maybe you have to set the option views to [configurable].</label>
       <label index="sheet_extend.cal_view.select.firstItem">Please select a view</label>
-      <label index="sheet_extend.cal_view.select.info">Please select a view, which should connect with the Browser Calendar user interace.</label>
+      <label index="sheet_extend.cal_view.select.info">Please select a view, which should connect with the Browser Calendar user interface.</label>
       <label index="sheet_extend.cal_view.select.no_name">View without any label</label>
       <label index="sheet_extend.cal_view.select.prependItem">Browser Calendar View</label>
       <label index="sheet_extend.cal_view.success.info">2. step is succesfull. Please take step 3.</label>
       <label index="sheet_extend.cal_ui">Calendar 1. step: user interface</label>
       <label index="sheet_extend.cal_ui.info.info">You can extend the Browser with a Calendar user interface:<![CDATA[<br /><br />]]>1. You have to add the plugin "Browser Calendar" to this page.<![CDATA[<br />]]>2. Than select the added plugin here.<![CDATA[<br /><br />]]>The plugin Browser Calendar is a powerful user interface for setting up a calendar.<![CDATA[<br />]]>It is a need, to configure the TypoScript view too.<![CDATA[<br />]]>If you have any question, please refer to the online manual <![CDATA[<a href="http://typo3.org/extensions/repository/view/browser_tut_calendar_en/current/" target="_blank">Browser Calendar</a>]]>.</label>
       <label index="sheet_extend.cal_ui.select.firstItem">Don't extend the Browser with a Calendar user interface</label>
-      <label index="sheet_extend.cal_ui.select.info">Please select a calendar plugin, if you want to extend the Browser with the Browser Calendar user interace.</label>
+      <label index="sheet_extend.cal_ui.select.info">Please select a calendar plugin, if you want to extend the Browser with the Browser Calendar user interface.</label>
       <label index="sheet_extend.cal_ui.select.prependItem">Browser Calendar</label>
       <label index="sheet_extend.cal_ui.success.info">1. step is succesfull. Please take step 2.</label>
       <label index="sheet_javascript">jQuery <![CDATA[&]]> AJAX</label>
@@ -429,7 +429,7 @@
       <label index="sheet_extend.cal_view.error">Voraussetzung nicht erf<![CDATA[ü]]>llt: Es ist keine View ausgew<![CDATA[Ä]]>hlt.</label>
       <label index="sheet_extend.cal_view.info"><![CDATA[Ä]]>ndern? Bitte gebe im Reiter [Allgemein] im Feld [Views: aktivierte List Views]. Eventuell musst Du die Select Box 'Views' auf [konfiguriert] setzen.</label>
       <label index="sheet_extend.cal_view.select.firstItem">View ausw<![CDATA[Ä]]>hlen</label>
-      <label index="sheet_extend.cal_view.select.info">W<![CDATA[Ä]]>hle eine View aus, die mit Browser Calendar User Interace verbunden werden soll.</label>
+      <label index="sheet_extend.cal_view.select.info">W<![CDATA[Ä]]>hle eine View aus, die mit Browser Calendar User Interface verbunden werden soll.</label>
       <label index="sheet_extend.cal_view.select.no_name">View ohne Bezeichnung</label>
       <label index="sheet_extend.cal_view.select.prependItem">Browser Kalender View</label>
       <label index="sheet_extend.cal_view.success.info">2. Schritt erfolgreich abgeschlossen. Erledige Schritt 3.</label>
