@@ -652,7 +652,13 @@ class tx_browser_pi1_tca
       }
     }
     $this->pObj->boolFirstElement = false;
-    return true;
+$pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if (!($pos === false))
+{
+  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $this->pObj->arrHandleAs[$TCAitem] );
+
+}
+        return true;
   }
 
 
