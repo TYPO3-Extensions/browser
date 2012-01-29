@@ -722,10 +722,6 @@ class tx_browser_pi1_tca
     $this->boolSubstitute       = $boolSubstitute;
     $this->arrHandleAs          = $this->pObj->arrHandleAs;
       // Set globals
-$pos = strpos('91.23.174.97', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if( ! ( $pos === false ) ) {
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->tableField, $tableField );
-}
 
       // Set default return array
     $arr_return['data']['drs_handleCase']   = $this->bool_drs_handleCase;
