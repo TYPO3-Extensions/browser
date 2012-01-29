@@ -187,6 +187,8 @@ class tx_browser_pi1_filter {
       // Clean up the template and return
       $template = $this->pObj->cObj->substituteSubpart($template, '###CATEGORY_MENU###', '', true);
       $arr_return['data']['template'] = $template;
+        // #30912, 120127, dwildt+
+      $arr_return['data']['rows']     = $this->rows_wo_limit;
       return $arr_return;
         // Clean up the template and return
     }
@@ -207,6 +209,8 @@ class tx_browser_pi1_filter {
       // Clean up the template and return
       $template = $this->pObj->cObj->substituteSubpart($template, '###CATEGORY_MENU###', '', true);
       $arr_return['data']['template'] = $template;
+        // #30912, 120127, dwildt+
+      $arr_return['data']['rows']     = $this->rows_wo_limit;
       return $arr_return;
     }
       // RETURN we don't have any filter array
