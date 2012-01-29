@@ -724,7 +724,7 @@ class tx_browser_pi1_tca
       // Set globals
 $pos = strpos('91.23.174.97', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 if( ! ( $pos === false ) ) {
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->tabelField, $tabelField );
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->tableField, $tableField );
 }
 
       // Set default return array
@@ -736,13 +736,13 @@ if( ! ( $pos === false ) ) {
       // Set default return array
 
       // RETURN tableField has its own configuration
-    list( $table, $field ) = explode( '.', $this->tabelField );
+    list( $table, $field ) = explode( '.', $this->tableField );
     if( is_array( $this->conf_view[$table.'.'][$field.'.'] ) )
     {
         // DRS - Development Reporting System
       if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
       {
-        $prompt = 'handleAs: ' . $this->tabelField . ' has its own configuration';
+        $prompt = 'handleAs: ' . $this->tableField . ' has its own configuration';
         t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
       }
       // DRS - Development Reporting System
@@ -788,7 +788,7 @@ if( ! ( $pos === false ) ) {
   private function handleAsImage( )
   {
       // RETURN tableField isn't content of handleAs['image']
-    $pos = strpos( $this->arrHandleAs['image'] , $this->tabelField );
+    $pos = strpos( $this->arrHandleAs['image'] , $this->tableField );
     if( $pos === false )
     {
       return;
@@ -798,7 +798,7 @@ if( ! ( $pos === false ) ) {
       // DRS - Development Reporting System
     if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
     {
-      $prompt = $this->tabelField . ' is content of handleAs[image]';
+      $prompt = $this->tableField . ' is content of handleAs[image]';
       t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
       $this->bool_drs_handleCase = true;
     }
@@ -851,7 +851,7 @@ if( ! ( $pos === false ) ) {
     $imageTitleText     = $arrValues[ ( $this->imagesPerRow - 1 ) ];
 
       // Wrap image
-    $tsImage['image']           = $this->elements[$this->tabelField];
+    $tsImage['image']           = $this->elements[$this->tableField];
     $tsImage['imagecaption']    = $imageCaption;
     $tsImage['imagealttext']    = $imageAltText;
     $tsImage['imagetitletext']  = $imageTitleText;
@@ -880,7 +880,7 @@ if( ! ( $pos === false ) ) {
   private function handleAsImagecaption( )
   {
       // RETURN tableField isn't content of handleAs['imageCaption']
-    $pos = strpos( $this->arrHandleAs['imageCaption'] , $this->tabelField );
+    $pos = strpos( $this->arrHandleAs['imageCaption'] , $this->tableField );
     if( $pos === false )
     {
       return;
@@ -890,7 +890,7 @@ if( ! ( $pos === false ) ) {
       // DRS - Development Reporting System
     if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
     {
-      $prompt = $this->tabelField . ' is content of handleAs[imageCaption]';
+      $prompt = $this->tableField . ' is content of handleAs[imageCaption]';
       t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
       $this->bool_drs_handleCase = true;
     }
@@ -927,7 +927,7 @@ if( ! ( $pos === false ) ) {
   private function handleAsDocument( )
   {
       // RETURN tableField isn't content of handleAs['document']
-    $pos = strpos( $this->arrHandleAs['document'] , $this->tabelField );
+    $pos = strpos( $this->arrHandleAs['document'] , $this->tableField );
     if( $pos === false )
     {
       return;
@@ -937,7 +937,7 @@ if( ! ( $pos === false ) ) {
       // DRS - Development Reporting System
     if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
     {
-      $prompt = $this->tabelField . ' is content of handleAs[document]';
+      $prompt = $this->tableField . ' is content of handleAs[document]';
       t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
       $this->bool_drs_handleCase = true;
     }
@@ -973,7 +973,7 @@ if( ! ( $pos === false ) ) {
   private function handleAsImagealttext( )
   {
       // RETURN tableField isn't content of handleAs['ImageAltText']
-    $pos = strpos( $this->arrHandleAs['ImageAltText'] , $this->tabelField );
+    $pos = strpos( $this->arrHandleAs['ImageAltText'] , $this->tableField );
     if( $pos === false )
     {
       return;
@@ -983,7 +983,7 @@ if( ! ( $pos === false ) ) {
       // DRS - Development Reporting System
     if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
     {
-      $prompt = $this->tabelField . ' is content of handleAs[ImageAltText]';
+      $prompt = $this->tableField . ' is content of handleAs[ImageAltText]';
       t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
       $this->bool_drs_handleCase = true;
     }
@@ -1020,7 +1020,7 @@ if( ! ( $pos === false ) ) {
   private function handleAsImagetitletext( )
   {
       // RETURN tableField isn't content of handleAs['ImageTitleText']
-    $pos = strpos( $this->arrHandleAs['ImageTitleText'] , $this->tabelField );
+    $pos = strpos( $this->arrHandleAs['ImageTitleText'] , $this->tableField );
     if( $pos === false )
     {
       return;
@@ -1030,7 +1030,7 @@ if( ! ( $pos === false ) ) {
       // DRS - Development Reporting System
     if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
     {
-      $prompt = $this->tabelField . ' is content of handleAs[ImageTitleText]';
+      $prompt = $this->tableField . ' is content of handleAs[ImageTitleText]';
       t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
       $this->bool_drs_handleCase = true;
     }
@@ -1067,7 +1067,7 @@ if( ! ( $pos === false ) ) {
   private function handleAsText( )
   {
       // RETURN tableField isn't content of handleAs['text']
-    $pos = strpos( $this->arrHandleAs['text'] , $this->tabelField );
+    $pos = strpos( $this->arrHandleAs['text'] , $this->tableField );
     if( $pos === false )
     {
       return;
@@ -1077,7 +1077,7 @@ if( ! ( $pos === false ) ) {
       // DRS - Development Reporting System
     if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
     {
-      $prompt = $this->tabelField . ' is content of handleAs[text]';
+      $prompt = $this->tableField . ' is content of handleAs[text]';
       t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
       $this->bool_drs_handleCase = true;
     }
@@ -1108,7 +1108,7 @@ if( ! ( $pos === false ) ) {
       {
         $prompt = $lDisplayType . 'content_stdWrap isn\'t configured.';
         t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
-        $prompt = $this->tabelField . ' will be wrapped with general_stdWrap.';
+        $prompt = $this->tableField . ' will be wrapped with general_stdWrap.';
         t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
         $prompt = 'If you like to change the wrapping, please configure ' . $lDisplayType . 'content_stdWrap.';
         t3lib_div::devLog('[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1);
@@ -1140,11 +1140,11 @@ if( ! ( $pos === false ) ) {
   {
 $pos = strpos('91.23.174.97', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 if( ! ( $pos === false ) ) {
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->value, $this->arrHandleAs['timestamp'] , $this->tabelField );
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->value, $this->arrHandleAs['timestamp'] , $this->tableField );
 }
 
       // RETURN tableField isn't content of handleAs['timestamp']
-    $pos = strpos( $this->arrHandleAs['timestamp'] , $this->tabelField );
+    $pos = strpos( $this->arrHandleAs['timestamp'] , $this->tableField );
     if( $pos === false )
     {
       return;
@@ -1154,7 +1154,7 @@ if( ! ( $pos === false ) ) {
       // DRS - Development Reporting System
     if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
     {
-      $prompt = $this->tabelField . ' is content of handleAs[timestamp]';
+      $prompt = $this->tableField . ' is content of handleAs[timestamp]';
       t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
       $this->bool_drs_handleCase = true;
     }
@@ -1233,7 +1233,7 @@ if( ! ( $pos === false ) ) {
   private function handleAsYYYYMMDD( )
   {
       // RETURN tableField isn't content of handleAs['YYYY-MM-DD']
-    $pos = strpos( $this->arrHandleAs['YYYY-MM-DD'] , $this->tabelField );
+    $pos = strpos( $this->arrHandleAs['YYYY-MM-DD'] , $this->tableField );
     if( $pos === false )
     {
       return;
@@ -1243,7 +1243,7 @@ if( ! ( $pos === false ) ) {
       // DRS - Development Reporting System
     if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
     {
-      $prompt = $this->tabelField . ' is content of handleAs[YYYY-MM-DD]';
+      $prompt = $this->tableField . ' is content of handleAs[YYYY-MM-DD]';
       t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
       $this->bool_drs_handleCase = true;
     }
