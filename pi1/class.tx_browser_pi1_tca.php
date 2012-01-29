@@ -701,27 +701,354 @@ class tx_browser_pi1_tca
  * @param   $lDisplayView         : local or global display_view configuration
  * @param   $bool_drs_handleCase  : flag for the DRS
  * @param   $bool_dontColorSwords : flag for dyeing swords
+ * @param   $elements             : current row
+ * @param   $maxColumns           : total columns
+ * @param   $boolSubstitute       : flag for substitution
  *
  * @return	array   $arr_return with elements drs_handleCase and value
  * @version 3.9.6
  * @since   3.9.6
  */
-  function handleAs($tableField, $value, $lDisplayView, $bool_drs_handleCase, $bool_dontColorSwords )
+  function handleAs($tableField, $value, $lDisplayView, $bool_drs_handleCase, $bool_dontColorSwords, $elements, $maxColumns, $boolSubstitute )
   {
-    $this->tableField           =  $tableField;
+      // Set globals
+    $this->tableField           = $tableField;
     $this->value                = $value;
     $this->lDisplayView         = $lDisplayView;
     $this->bool_drs_handleCase  = $bool_drs_handleCase;
     $this->bool_dontColorSwords = $bool_dontColorSwords;
+    $this->elements             = $bool_dontColorSwords;
+    $this->maxColumns           = $maxColumns;
+    $this->boolSubstitute       = $boolSubstitute;
+    $this->arrHandleAs          = $this->pObj->arrHandleAs;
 
-    $this->pObj->objTca->handleAsText( );
-    $this->pObj->objTca->handleAsTimestamp( );
+      // Set globals
+
+      // Set default return array
+    $arr_return['data']['drs_handleCase']   = $this->bool_drs_handleCase;
+    $arr_return['data']['value']            = $this->value;
+    $arr_return['data']['dontColorSwords']  = $this->bool_dontColorSwords;
+    $arr_return['data']['maxColumns']       = $this->maxColumns;
+    $arr_return['data']['boolSubstitute']   = $this->boolSubstitute;
+      // Set default return array
+
+      // RETURN tableField has its own configuration
+    list( $table, $field ) = explode( '.', $this->tabelField );
+    if( is_array( $this->conf_view[$table.'.'][$field.'.'] ) )
+    {
+        // DRS - Development Reporting System
+      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+      {
+        $prompt = 'handleAs: ' . $this->tabelField . ' has its own configuration';
+        t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+      }
+      // DRS - Development Reporting System
+      return $arr_return;
+    }
+      // RETURN tableField has its own configuration
+
+    $this->handleAsDocument( );
+    $this->handleAsImage( );
+    $this->handleAsImagecaption( );
+    $this->handleAsImagealttext( );
+    $this->handleAsImagetitletext( );
+    $this->handleAsText( );
+    $this->handleAsTimestamp( );
+    $this->handleAsYYYYMMTT( );
 
     $arr_return['data']['drs_handleCase']   = $this->bool_drs_handleCase;
     $arr_return['data']['value']            = $this->value;
     $arr_return['data']['dontColorSwords']  = $this->bool_dontColorSwords;
+    $arr_return['data']['maxColumns']       = $this->maxColumns;
+    $arr_return['data']['boolSubstitute']   = $this->boolSubstitute;
+
     return $arr_return;
   }
+
+
+
+
+
+
+
+
+
+  /**
+ * handleAsImage( ): handle the given value as TEXT, if tableField is oart of
+ *                  the global $this->pObj->arrHandleAs['image'].
+ *                  value will wrapped with content_stdWrap
+ *
+ * @return	void
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function handleAsImage( )
+  {
+      // RETURN tableField isn't content of handleAs['image']
+    $pos = strpos( $this->arrHandleAs['image'] , $this->tabelField );
+    if( $pos === false )
+    {
+      return;
+    }
+      // RETURN tableField isn't content of handleAs['image']
+
+      // DRS - Development Reporting System
+    if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+    {
+      $prompt = $this->tabelField . ' is content of handleAs[image]';
+      t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+      $this->bool_drs_handleCase = true;
+    }
+      // DRS - Development Reporting System
+
+      // Dyeing swords?
+    $arr_TCAitems                = $this->conf_view['autoconfig.']['autoDiscover.']['items.'];
+    $this->bool_dontColorSwords  = $arr_TCAitems['image.']['dontColorSwords'];
+      // Dyeing swords?
+
+      // Count images per row
+    if ( $this->pObj->boolFirstRow )
+    {
+      $this->imagesPerRow = 1;
+    }
+    if ( ! $this->pObj->boolFirstRow )
+    {
+      $this->imagesPerRow++;
+    }
+      // Count images per row
+
+
+      // DRS - Development Reporting System
+    if( $this->imagesPerRow > 1 )
+    {
+      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+      {
+        $prompt = 'DANGEROUS: Current row has ' . $this->imagesPerRow . ' images. ' .
+                  'Images, captions, alt texts and title texts can\'t allocate exactly. ';
+        t3lib_div::devLog('[WARN/TEMPLATING] ' . $prompt, $this->pObj->extKey, 2);
+        $prompt = 'URGENT: Configure the TypoScript of images manually!';
+        t3lib_div::devLog('[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1);
+      }
+    }
+      // DRS - Development Reporting System
+
+      // Image caption
+    $csv_imageCaption = $this->arrHandleAs['imageCaption'];
+    $arr_imageCaption = $this->pObj->objZz->getCSVasArray( $csv_imageCaption );
+    $imageCaption     = $arrValues[ ( $this->imagesPerRow - 1 ) ];
+
+      // Image alt text
+    $csv_imageAltText = $this->arrHandleAs['imageAltText'];
+    $arr_imageAltText = $this->pObj->objZz->getCSVasArray( $csv_imageAltText );
+    $imageAltText     = $arrValues[ ( $this->imagesPerRow - 1 ) ];
+
+      // Image title text
+    $csv_imageTitleText = $this->arrHandleAs['imageTitleText'];
+    $arr_imageTitleText = $this->pObj->objZz->getCSVasArray( $csv_imageTitleText );
+    $imageTitleText     = $arrValues[ ( $this->imagesPerRow - 1 ) ];
+
+      // Wrap image
+    $tsImage['image']           = $this->elements[$this->tabelField];
+    $tsImage['imagecaption']    = $imageCaption;
+    $tsImage['imagealttext']    = $imageAltText;
+    $tsImage['imagetitletext']  = $imageTitleText;
+    $this->value                = $this->pObj->objWrapper->wrapImage( $tsImage );
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * handleAsImagecaption( ): handle the given value as TEXT, if tableField is oart of
+ *                  the global $this->pObj->arrHandleAs['image'].
+ *                  value will wrapped with content_stdWrap
+ *
+ * @return	void
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function handleAsImagecaption( )
+  {
+      // RETURN tableField isn't content of handleAs['imageCaption']
+    $pos = strpos( $this->arrHandleAs['imageCaption'] , $this->tabelField );
+    if( $pos === false )
+    {
+      return;
+    }
+      // RETURN tableField isn't content of handleAs['imageCaption']
+
+      // DRS - Development Reporting System
+    if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+    {
+      $prompt = $this->tabelField . ' is content of handleAs[imageCaption]';
+      t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+      $this->bool_drs_handleCase = true;
+    }
+      // DRS - Development Reporting System
+
+      // Dyeing swords?
+    $arr_TCAitems                = $this->conf_view['autoconfig.']['autoDiscover.']['items.'];
+    $this->bool_dontColorSwords  = $arr_TCAitems['image.']['dontColorSwords'];
+      // Dyeing swords?
+
+    $this->maxColumns--;
+    $this->boolSubstitute = false;
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * handleAsDocument( ): handle the given value as TEXT, if tableField is oart of
+ *                  the global $this->pObj->arrHandleAs['image'].
+ *                  value will wrapped with content_stdWrap
+ *
+ * @return	void
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function handleAsDocument( )
+  {
+      // RETURN tableField isn't content of handleAs['document']
+    $pos = strpos( $this->arrHandleAs['document'] , $this->tabelField );
+    if( $pos === false )
+    {
+      return;
+    }
+      // RETURN tableField isn't content of handleAs['document']
+
+      // DRS - Development Reporting System
+    if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+    {
+      $prompt = $this->tabelField . ' is content of handleAs[document]';
+      t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+      $this->bool_drs_handleCase = true;
+    }
+      // DRS - Development Reporting System
+
+      // Dyeing swords?
+    $arr_TCAitems                = $this->conf_view['autoconfig.']['autoDiscover.']['items.'];
+    $this->bool_dontColorSwords  = $arr_TCAitems['image.']['dontColorSwords'];
+      // Dyeing swords?
+
+    $this->value = $this->pObj->objWrapper->wrapDocument( $this->value );
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * handleAsImagealttext( ): handle the given value as TEXT, if tableField is oart of
+ *                  the global $this->pObj->arrHandleAs['image'].
+ *                  value will wrapped with content_stdWrap
+ *
+ * @return	void
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function handleAsImagealttext( )
+  {
+      // RETURN tableField isn't content of handleAs['ImageAltText']
+    $pos = strpos( $this->arrHandleAs['ImageAltText'] , $this->tabelField );
+    if( $pos === false )
+    {
+      return;
+    }
+      // RETURN tableField isn't content of handleAs['ImageAltText']
+
+      // DRS - Development Reporting System
+    if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+    {
+      $prompt = $this->tabelField . ' is content of handleAs[ImageAltText]';
+      t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+      $this->bool_drs_handleCase = true;
+    }
+      // DRS - Development Reporting System
+
+      // Dyeing swords?
+    $arr_TCAitems                = $this->conf_view['autoconfig.']['autoDiscover.']['items.'];
+    $this->bool_dontColorSwords  = $arr_TCAitems['image.']['dontColorSwords'];
+      // Dyeing swords?
+
+    $this->maxColumns--;
+    $this->boolSubstitute = false;
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * handleAsImagetitletext( ): handle the given value as TEXT, if tableField is oart of
+ *                  the global $this->pObj->arrHandleAs['image'].
+ *                  value will wrapped with content_stdWrap
+ *
+ * @return	void
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function handleAsImagetitletext( )
+  {
+      // RETURN tableField isn't content of handleAs['ImageTitleText']
+    $pos = strpos( $this->arrHandleAs['ImageTitleText'] , $this->tabelField );
+    if( $pos === false )
+    {
+      return;
+    }
+      // RETURN tableField isn't content of handleAs['ImageTitleText']
+
+      // DRS - Development Reporting System
+    if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+    {
+      $prompt = $this->tabelField . ' is content of handleAs[ImageTitleText]';
+      t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+      $this->bool_drs_handleCase = true;
+    }
+      // DRS - Development Reporting System
+
+      // Dyeing swords?
+    $arr_TCAitems                = $this->conf_view['autoconfig.']['autoDiscover.']['items.'];
+    $this->bool_dontColorSwords  = $arr_TCAitems['image.']['dontColorSwords'];
+      // Dyeing swords?
+
+    $this->maxColumns--;
+    $this->boolSubstitute = false;
+
+    return;
+  }
+
+
+
+
+
+
 
 
 
@@ -729,67 +1056,44 @@ class tx_browser_pi1_tca
  * handleAsText( ): handle the given value as TEXT, if tableField is oart of
  *                  the global $this->pObj->arrHandleAs['text'].
  *                  value will wrapped with content_stdWrap
- * @param   $tableField           : current tableField (sytax table.field)
- * @param   $value                : value of the current table.field
- * @param   $lDisplayView         : local or global display_view configuration
- * @param   $bool_drs_handleCase  : flag for the DRS
- * @param   $bool_dontColorSwords : flag for dyeing swords
  *
- * @return	array   $arr_return with elements drs_handleCase and value
+ * @return	void
  * @version 3.9.6
  * @since   3.9.6
  */
-  function handleAsText( $tableField, $value, $lDisplayView, $bool_drs_handleCase, $bool_dontColorSwords )
+  private function handleAsText( )
   {
-    $arr_return['data']['drs_handleCase']   = $bool_drs_handleCase;
-    $arr_return['data']['value']            = $value;
-    $arr_return['data']['dontColorSwords']  = $bool_dontColorSwords;
-
-      // RETURN tableField has its own configuration
-    list( $table, $field ) = explode( '.', $tableField );
-    if( is_array( $this->conf_view[$table.'.'][$field.'.'] ) )
-    {
-        // DRS - Development Reporting System
-      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-      {
-        $prompt = 'handleAs: ' . $tableField . ' has its own configuration';
-        t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
-        $arr_return['data']['drs_handleCase'] = true;
-      }
-      // DRS - Development Reporting System
-      return $arr_return;
-    }
-      // RETURN tableField has its own configuration
-
       // RETURN tableField isn't content of handleAs['text']
-    $pos = strpos( $this->pObj->arrHandleAs['text'] , $tableField );
+    $pos = strpos( $this->arrHandleAs['text'] , $this->tabelField );
     if( $pos === false )
     {
-      return $arr_return;
+      return;
     }
       // RETURN tableField isn't content of handleAs['text']
 
       // DRS - Development Reporting System
     if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
     {
-      $prompt = $tableField . ' is content of handleAs[text]';
+      $prompt = $this->tabelField . ' is content of handleAs[text]';
       t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
-      $arr_return['data']['drs_handleCase'] = true;
+      $this->bool_drs_handleCase = true;
     }
       // DRS - Development Reporting System
 
 //      // RETURN value is null
-//    if( $value == null )
+//    if( $this->value == null )
 //    {
 //      return $arr_return;
 //    }
 //      // RETURN value is null
 
       // tableField has a content_stdWrap
-    if( is_array ( $lDisplayView['content_stdWrap.'] ) )
+    if( is_array ( $this->lDisplayView['content_stdWrap.'] ) )
     {
-      $value = $this->pObj->objWrapper->general_stdWrap( $value, $lDisplayView['content_stdWrap.'] );
-      $arr_return['data']['value'] = $value;
+      $this->value =  $this->pObj->objWrapper->general_stdWrap(
+                        $this->value,
+                        $this->lDisplayView['content_stdWrap.']
+                      );
     }
       // tableField has a content_stdWrap
 
@@ -797,11 +1101,11 @@ class tx_browser_pi1_tca
     if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
     {
         // tableField hasn't a content_stdWrap
-      if( ! is_array ( $lDisplayView['content_stdWrap.'] ) )
+      if( ! is_array ( $this->lDisplayView['content_stdWrap.'] ) )
       {
         $prompt = $lDisplayType . 'content_stdWrap isn\'t configured.';
         t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
-        $prompt = $tableField . ' will be wrapped with general_stdWrap.';
+        $prompt = $this->tabelField . ' will be wrapped with general_stdWrap.';
         t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
         $prompt = 'If you like to change the wrapping, please configure ' . $lDisplayType . 'content_stdWrap.';
         t3lib_div::devLog('[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1);
@@ -809,8 +1113,14 @@ class tx_browser_pi1_tca
     }
       // DRS - Development Reporting System
 
-    return $arr_return;
+    return;
   }
+
+
+
+
+
+
 
 
 
@@ -818,84 +1128,59 @@ class tx_browser_pi1_tca
  * handleAsTimestamp( ):  handle the given value as TEXT, if tableField is oart of
  *                        the global $this->pObj->arrHandleAs['text'].
  *                        value will wrapped with content_stdWrap
- * @param   $tableField           : current tableField (sytax table.field)
- * @param   $value                : value of the current table.field
- * @param   $lDisplayView         : local or global display_view configuration
- * @param   $bool_drs_handleCase  : flag for the DRS
- * @param   $bool_dontColorSwords : flag for dyeing swords
  *
- * @return	array   $arr_return with elements drs_handleCase and value
+ * @return	void
  * @version 3.9.6
  * @since   3.9.6
  */
-  function handleAsTimestamp( $tableField, $value, $lDisplayView, $bool_drs_handleCase, $bool_dontColorSwords )
+  private function handleAsTimestamp(  )
   {
-    $arr_return['data']['drs_handleCase']   = $bool_drs_handleCase;
-    $arr_return['data']['value']            = $value;
-    $arr_return['data']['dontColorSwords']  = $bool_dontColorSwords;
-
-      // RETURN tableField has its own configuration
-    list( $table, $field ) = explode( '.', $tableField );
-    if( is_array( $this->conf_view[$table.'.'][$field.'.'] ) )
-    {
-        // DRS - Development Reporting System
-      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-      {
-        $prompt = 'handleAs: ' . $tableField . ' has its own configuration';
-        t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
-      }
-      // DRS - Development Reporting System
-      return $arr_return;
-    }
-      // RETURN tableField has its own configuration
-
-      // RETURN tableField isn't content of handleAs['text']
-    $pos = strpos( $this->pObj->arrHandleAs['timestamp'] , $tableField );
+      // RETURN tableField isn't content of handleAs['timestamp']
+    $pos = strpos( $this->arrHandleAs['timestamp'] , $this->tabelField );
     if( $pos === false )
     {
-      return $arr_return;
+      return;
     }
-      // RETURN tableField isn't content of handleAs['text']
+      // RETURN tableField isn't content of handleAs['timestamp']
 
       // DRS - Development Reporting System
     if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
     {
-      $prompt = $tableField . ' is content of handleAs[timestamp]';
+      $prompt = $this->tabelField . ' is content of handleAs[timestamp]';
       t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
-      $arr_return['data']['drs_handleCase'] = true;
+      $this->bool_drs_handleCase = true;
     }
       // DRS - Development Reporting System
 
-      // Don't dyeing swords
-    $arr_TCAitems                           = $this->conf_view['autoconfig.']['autoDiscover.']['items.'];
-    $arr_return['data']['dontColorSwords']  = $arr_TCAitems['timestamp.']['dontColorSwords'];
+      // Dyeing swords?
+    $arr_TCAitems                = $this->conf_view['autoconfig.']['autoDiscover.']['items.'];
+    $this->bool_dontColorSwords  = $arr_TCAitems['timestamp.']['dontColorSwords'];
+      // Dyeing swords?
 
-      // strftime $value
-    $value                        = strftime($this->pObj->tsStrftime, $value);
-    $arr_return['data']['value']  = $value;
+      // strftime $this->value
+    $this->value  = strftime($this->pObj->tsStrftime, $this->value);
 
-      // $value is UTF8
-    if( mb_detect_encoding( $value ) == 'UTF-8' )
+      // $this->value is UTF8
+    if( mb_detect_encoding( $this->value ) == 'UTF-8' )
     {
         // strftime should moved to ISO
       if( $this->pObj->conf['format.']['strftime.']['utf8_encode'] )
       {
           // Encode it
-        $value_iso = utf8_encode( $value );
+        $value_iso = utf8_encode( $this->value );
           // DRS - Development Reporting System
         if ($this->pObj->b_drs_templating)
         {
-          $prompt = $value . ' is in UTF-8 format. Change it to ISO.';
+          $prompt = $this->value . ' is in UTF-8 format. Change it to ISO.';
           t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
-          $prompt = 'Now it is: '. $value_iso;
+          $prompt = 'It is encoded to: '. $value_iso;
           t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
           $prompt = 'If you have problems with UTF-8 chars in formated timestamps, please set format.strftime.utf8_encode to 0.';
           t3lib_div::devlog('[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1);
         }
           // DRS - Development Reporting System
           // Move it to ISO
-        $value = $value_iso;
-        $arr_return['data']['value'] = $value;
+        $this->value = $value_iso;
       }
         // strftime should moved to ISO
         // strftime shouldn't moved to ISO
@@ -903,7 +1188,7 @@ class tx_browser_pi1_tca
       {
         if ($this->pObj->b_drs_templating)
         {
-          $prompt = $value . ' is in UTF-8 format.';
+          $prompt = $this->value . ' is in UTF-8 format.';
           t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
           $prompt = 'If you have problems with UTF-8 chars in formated timestamps, please set format.strftime.utf8_encode to 1.';
           t3lib_div::devlog('[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1);
@@ -911,9 +1196,55 @@ class tx_browser_pi1_tca
       }
         // strftime shouldn't moved to ISO
     }
-      // $value is UTF8
+      // $this->value is UTF8
 
-    return $arr_return;
+    return;
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * handleAsYYYYMMDD( ): handle the given value as TEXT, if tableField is oart of
+ *                  the global $this->pObj->arrHandleAs['image'].
+ *                  value will wrapped with content_stdWrap
+ *
+ * @return	void
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function handleAsYYYYMMDD( )
+  {
+      // RETURN tableField isn't content of handleAs['YYYY-MM-DD']
+    $pos = strpos( $this->arrHandleAs['YYYY-MM-DD'] , $this->tabelField );
+    if( $pos === false )
+    {
+      return;
+    }
+      // RETURN tableField isn't content of handleAs['YYYY-MM-DD']
+
+      // DRS - Development Reporting System
+    if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+    {
+      $prompt = $this->tabelField . ' is content of handleAs[YYYY-MM-DD]';
+      t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+      $this->bool_drs_handleCase = true;
+    }
+      // DRS - Development Reporting System
+
+      // Dyeing swords?
+    $arr_TCAitems                = $this->conf_view['autoconfig.']['autoDiscover.']['items.'];
+    $this->bool_dontColorSwords  = $arr_TCAitems['image.']['dontColorSwords'];
+      // Dyeing swords?
+
+    $this->value = $this->pObj->objWrapper->wrapYYYYMMDD( $this->value );
+
+    return;
   }
 
 

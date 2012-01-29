@@ -865,7 +865,7 @@ class tx_browser_pi1_template
       //
       // Keys for special handling
 
-    $handleAs       = $this->pObj->arrHandleAs;
+    $handleAs         = $this->pObj->arrHandleAs;
     $arrKeyAsDocument = $this->pObj->objZz->getCSVtablefieldsAsArray($handleAs['document']);
       // Keys for special handling
 
@@ -2621,20 +2621,6 @@ class tx_browser_pi1_template
 
 
 
-      //////////////////////////////////////////////////////////////////
-      //
-      // Prepair Documents
-
-    $arrAsDocument = explode(',', $handleAs['document']);
-    foreach((array) $arrAsDocument as $arrAsDocumentField)
-    {
-      list($table, $field) = explode('.', trim($arrAsDocumentField));
-      $arrKeyAsDocument[] = $table.'.'.$field;
-    }
-      // Prepair Documents
-
-
-
       // We need it for the class property 'last'
     $maxColumns = count($elements) - 1;
 
@@ -2817,106 +2803,15 @@ class tx_browser_pi1_template
                       $value,
                       $lDisplayView,
                       $bool_drs_handleCase,
-                      $bool_dontColorSwords
+                      $bool_dontColorSwords,
+                      $elements
                     );
       $bool_drs_handleCase  = $arr_result['data']['drs_handleCase'];
       $bool_dontColorSwords = $arr_result['data']['dontColorSwords'];
       $value                = $arr_result['data']['value'];
         // 120129, dwildt+
 
-        // Handle as image
-      if ($key == $handleAs['image']) {
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-        {
-          $bool_drs_handleCase = true;
-          t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' is handle as an IMAGE.', $this->pObj->extKey, 0);
-        }
-        $bool_dontColorSwords = $arr_TCAitems['image.']['dontColorSwords'];
-// dwildt, 101201, #11204
-//        if ($value)
-//        {
-          $tsImage['image']           = $elements[$handleAs['image']];
-          $tsImage['imagecaption']    = $elements[$handleAs['imageCaption']];
-          $tsImage['imagealttext']    = $elements[$handleAs['imageAltText']];
-          $tsImage['imagetitletext']  = $elements[$handleAs['imageTitleText']];
-          $value = $this->pObj->objWrapper->wrapImage($tsImage);
-//        }
-//        else
-//        {
-//          $value = '';
-//        }
-      }
-        // Handle as image
-
-        // Handle as imageCaption
-      if ($key == $handleAs['imageCaption'])
-      {
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-        {
-          $bool_drs_handleCase = true;
-          t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' is handle as the image caption.', $this->pObj->extKey, 0);
-        }
-        $bool_dontColorSwords = $arr_TCAitems['imageCaption.']['dontColorSwords'];
-        $maxColumns--;
-        $boolSubstitute = false;
-      }
-        // Handle as imageCaption
-
-        // Handle as imageAltText
-      if ($key == $handleAs['imageAltText'])
-      {
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-        {
-          $bool_drs_handleCase = true;
-          t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' is handle as the image alt property.', $this->pObj->extKey, 0);
-        }
-        $bool_dontColorSwords = $arr_TCAitems['imageAltText.']['dontColorSwords'];
-        $maxColumns--;
-        $boolSubstitute = false;
-      }
-        // Handle as imageAltText
-
-        // Handle as imageTitleText
-      if ($key == $handleAs['imageTitleText'])
-      {
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-        {
-          $bool_drs_handleCase = true;
-          t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' is handle as the image title property.', $this->pObj->extKey, 0);
-        }
-        $bool_dontColorSwords = $arr_TCAitems['imageTitleText.']['dontColorSwords'];
-        $maxColumns--;
-        $boolSubstitute = false;
-      }
-        // Handle as imageTitleText
-
-        // Handle as document
-      if (in_array($key, $arrKeyAsDocument))
-      {
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-        {
-          $bool_drs_handleCase = true;
-          t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' is handle as a document.', $this->pObj->extKey, 0);
-        }
-        $bool_dontColorSwords = $arr_TCAitems['document.']['dontColorSwords'];
-        $value = $this->pObj->objWrapper->wrapDocument($value);
-      }
-        // Handle as document
-
-      // Handle as YYYY-MM-DD
-      if ($key == $handleAs['YYYY-MM-DD'])
-      {
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-        {
-          $bool_drs_handleCase = true;
-          t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' is handle as a date with the method YYYYMMDD.', $this->pObj->extKey, 0);
-        }
-        // Special case for extension ships
-        $value = $this->pObj->objWrapper->wrapYYYYMMDD($value);
-      }
-      // Handle as YYYY-MM-DD
-
-      // First field is UID and we have a list view
+        // First field is UID and we have a list view
       if ($extraUidField && $i_count_element == 0 && $this->view == 'list')
       {
         if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
@@ -2928,83 +2823,87 @@ class tx_browser_pi1_template
         $maxColumns--;
         $boolSubstitute = false;
       }
-      // First field is UID and we have a list view
+        // First field is UID and we have a list view
 
-      // Remove fields, which shouldn't displayed
-      if (!is_array($this->arr_rmFields))
+        // Remove fields, which shouldn't displayed
+      if( in_array( $key, ( array ) $this->arr_rmFields ) )
       {
-        $this->arr_rmFields = array();
-      }
-      if (in_array($key, $this->arr_rmFields))
-      {
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+        if( $this->pObj->boolFirstRow && $this->pObj->b_drs_templating )
         {
           $bool_drs_handleCase = true;
-          t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' is in the list of fields, which shouldn\'t displayed..', $this->pObj->extKey, 0);
+          $prompt = $key . ' is in the list of fields, which shouldn\'t displayed.';
+          t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
         }
         $maxColumns--;
         $boolSubstitute = false;
       }
-      // Remove fields, which shouldn't displayed
+        // Remove fields, which shouldn't displayed
 
-      // DRS - Performance
-      if ($this->pObj->boolFirstRow && $i_count_element == 0)
+        // DRS - Performance
+      if( $this->pObj->boolFirstRow && ( $i_count_element == 0 ) )
       {
-        if ($this->pObj->b_drs_perform) {
-          if($this->pObj->bool_typo3_43)
+        if( $this->pObj->b_drs_perform )
+        {
+          if( $this->pObj->bool_typo3_43 )
           {
-            $endTime = $this->pObj->TT->getDifferenceToStarttime();
+            $endTime = $this->pObj->TT->getDifferenceToStarttime( );
           }
-          if(!$this->pObj->bool_typo3_43)
+          if( ! $this->pObj->bool_typo3_43 )
           {
-            $endTime = $this->pObj->TT->mtime();
+            $endTime = $this->pObj->TT->mtime( );
           }
-          t3lib_div::devLog('[INFO/PERFORMANCE] After removing fields 1: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+          $prompt = 'After removing fields 1: '. ($endTime - $this->pObj->startTime).' ms';
+          t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt, $this->pObj->extKey, 0);
         }
       }
-      // DRS - Performance
+        // DRS - Performance
 
-      // Remove fields, which where added because of missing uid and pid
+        // Remove fields, which where added because of missing uid and pid
       $addedTableFields = $this->pObj->arrConsolidate['addedTableFields'];
-      if ( in_array( $key, (array) $addedTableFields ) )
+      if ( in_array( $key, ( array ) $addedTableFields ) )
       {
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+        if( $this->pObj->boolFirstRow && $this->pObj->b_drs_templating )
         {
           $bool_drs_handleCase = true;
-          t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' is in the uid/pid list of the consolidation array. It shouldn\'t displayed.', $this->pObj->extKey, 0);
+          $prompt = $key.' is in the uid/pid list of the consolidation array. It shouldn\'t displayed.';
+          t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
         }
         $maxColumns--;
         $boolSubstitute = false;
       }
-      // Remove fields, which where added because of missing uid and pid
+        // Remove fields, which where added because of missing uid and pid
 
-      // DRS - Performance
-      if ($this->pObj->boolFirstRow && $i_count_element == 0)
+        // DRS - Performance
+      if( $this->pObj->boolFirstRow && ( $i_count_element == 0 ) )
       {
-        if ($this->pObj->b_drs_perform) {
-          if($this->pObj->bool_typo3_43)
+        if( $this->pObj->b_drs_perform )
+        {
+          if( $this->pObj->bool_typo3_43 )
           {
-            $endTime = $this->pObj->TT->getDifferenceToStarttime();
+            $endTime = $this->pObj->TT->getDifferenceToStarttime( );
           }
-          if(!$this->pObj->bool_typo3_43)
+          if( ! $this->pObj->bool_typo3_43 )
           {
-            $endTime = $this->pObj->TT->mtime();
+            $endTime = $this->pObj->TT->mtime( );
           }
-          t3lib_div::devLog('[INFO/PERFORMANCE] After removing fields 2: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+          $prompt = 'After removing fields 2: '. ($endTime - $this->pObj->startTime).' ms';
+          t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt, $this->pObj->extKey, 0);
         }
       }
-      // DRS - Performance
+        // DRS - Performance
 
-      // DRS- Developement Reporting System: Any Case didn't matched above
-      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+        // DRS- Developement Reporting System: Any Case didn't matched above
+      if( $this->pObj->boolFirstRow && $this->pObj->b_drs_templating )
       {
         if( ! $bool_drs_handleCase )
         {
-          t3lib_div::devLog('[INFO/TEMPLATING] There isn\'t any handle as case for '.$key.'.', $this->pObj->extKey, 0);
-          t3lib_div::devLog('[HELP/TEMPLATING] If you want a handle as case, please configure the handleAs array.', $this->pObj->extKey, 1);
+          $prompt = 'There isn\'t any handle as case for ' . $key . '.';
+          t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+          $prompt ='If you want a handle as case, please configure the handleAs array.';
+          t3lib_div::devLog('[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1);
         }
       }
-      // DRS- Developement Reporting System: Any Case didn't matched above
+        // DRS- Developement Reporting System: Any Case didn't matched above
 
       // Colors the sword words and phrases
       // 3.3.4
