@@ -3008,11 +3008,9 @@ if( $key == 'tx_org_headquarters.title' )
           // #28562: 110830, dwildt+
 
         $htmlSubpart = $this->pObj->cObj->getSubpart($template, $subpart);
-if( $key == 'tx_org_headquarters.title' ) {
-  $pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-  if (!($pos === false)) {
-    var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $value );
-  }
+$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if (!($pos === false)) {
+  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $value );
 }
         if($this->view == 'list' && $bool_design_default)
         {
