@@ -2792,15 +2792,7 @@ class tx_browser_pi1_template
 
 
         // 120129, dwildt+
-if( $key == 'tx_org_headquarters.title' ) 
-{
-  $pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-  if (!($pos === false))
-  {
-    var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $value, $boolSubstitute );
-  }
-}
-        $arr_result = $this->pObj->objTca->handleAs(
+      $arr_result = $this->pObj->objTca->handleAs(
                       $key,
                       $value,
                       $lDisplayView,
@@ -2816,14 +2808,6 @@ if( $key == 'tx_org_headquarters.title' )
       $maxColumns           = $arr_result['data']['maxColumns'];
       $boolSubstitute       = $arr_result['data']['boolSubstitute'];
         // 120129, dwildt+
-if( $key == 'tx_org_headquarters.title' )
-{
-  $pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-  if (!($pos === false))
-  {
-    var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $value, $boolSubstitute );
-  }
-}
 
         // First field is UID and we have a list view
       if ($extraUidField && $i_count_element == 0 && $this->view == 'list')
@@ -3042,10 +3026,6 @@ if( $key == 'tx_org_headquarters.title' )
           $htmlRow  = $this->pObj->cObj->substituteMarkerArray($htmlSubpart, $markerArray);
         }
         $i_count_cell++;
-$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if (!($pos === false)) {
-  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $key, $value, $markerArray['###'.strtoupper($key).'###'] );
-}
       }
         // Substitute the template marker
 
