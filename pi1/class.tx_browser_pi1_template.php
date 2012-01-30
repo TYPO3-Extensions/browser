@@ -1599,6 +1599,11 @@ class tx_browser_pi1_template
     //
     // Wrap all elements. If the fieldname is a marker in the HTML-Template, it will be replaced
 
+  $pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+  if (!($pos === false))
+  {
+    var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')', $markerArray );
+  }
     $markerArray = $this->render_handleAs($elements, $handleAs, $markerArray);
 //if( $key == 'tx_org_downloads.thumbnail' )
 //{
