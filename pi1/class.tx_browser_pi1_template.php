@@ -1368,12 +1368,12 @@ class tx_browser_pi1_template
  * @version 4.0.0
  * @since 1.0.0
  */
-  function tmplSingleview($template, $rows)
+  function tmplSingleview( $template, $rows )
   {
 
-    ///////////////////////////////////////////////////////////
-    //
-    // Get the local or the global displaySingle array
+      ///////////////////////////////////////////////////////////
+      //
+      // Get the local or the global displaySingle array
 
     $lDisplaySingle = $this->conf_view['displaySingle.'];
     if (!is_array($lDisplaySingle))
@@ -1381,23 +1381,23 @@ class tx_browser_pi1_template
       $lDisplaySingle = $this->pObj->conf['displaySingle.'];
     }
     $this->lDisplaySingle = $lDisplaySingle;
-    // Get the local or the global displaySingle array
+      // Get the local or the global displaySingle array
 
 
 
-    ///////////////////////////////////////////////////////////
-    //
-    // Set the globals elements and rows
+      ///////////////////////////////////////////////////////////
+      //
+      // Set the globals elements and rows
 
-    if (is_array($rows))
+    if( is_array ( $rows ) )
     {
-      reset($rows);
+      reset( $rows );
       $firstKey = key($rows);
       $elements = $rows[$firstKey];
       $this->pObj->elements = $elements;
       $this->pObj->rows     = $rows;
     }
-    // Set the globals elements and rows
+      // Set the globals elements and rows
 
 
 
@@ -1600,6 +1600,14 @@ class tx_browser_pi1_template
     // Wrap all elements. If the fieldname is a marker in the HTML-Template, it will be replaced
 
     $markerArray = $this->render_handleAs($elements, $handleAs, $markerArray);
+//if( $key == 'tx_org_downloads.thumbnail' )
+//{
+  $pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+  if (!($pos === false))
+  {
+    var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')', $markerArray );
+  }
+//}
     $markerArray = $this->pObj->objZz->extend_marker_wi_pivars($markerArray);
     // Wrap all elements. If the fieldname is a marker in the HTML-Template, it will be replaced
 
@@ -3112,11 +3120,11 @@ class tx_browser_pi1_template
 
 
     $this->pObj->boolFirstRow = false;
-$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if (!($pos === false))
-{
-  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $htmlRow );
-}
+//$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//if (!($pos === false))
+//{
+//  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $htmlRow );
+//}
     return $htmlRow;
   }
 
