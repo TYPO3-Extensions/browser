@@ -2821,7 +2821,7 @@ if( $key == 'tx_org_headquarters.title' )
   $pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
   if (!($pos === false))
   {
-    var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $value, $bool_drs_handleCase, $boolSubstitute );
+    var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $value, $boolSubstitute );
   }
 }
 

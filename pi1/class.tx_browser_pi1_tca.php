@@ -748,7 +748,6 @@ class tx_browser_pi1_tca
     $this->handleAsImagetitletext( );
     $this->handleAsText( );
     $this->handleAsTimestamp( );
-    $this->handleAsTitle( );
     $this->handleAsYYYYMMDD( );
 
     $arr_return['data']['value']            = $this->value;
@@ -1209,53 +1208,6 @@ class tx_browser_pi1_tca
 //  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $this->value );
 //
 //}
-
-    return;
-  }
-
-
-
-
-
-
-
-
-
-  /**
- * handleAsTitle( ): handle the given value as TEXT, if tableField is oart of
- *                  the global $this->pObj->arrHandleAs['image'].
- *                  value will wrapped with content_stdWrap
- *
- * @return	void
- * @version 3.9.6
- * @since   3.9.6
- */
-  private function handleAsTitle( )
-  {
-      // RETURN tableField isn't content of handleAs['title']
-    $pos = strpos( $this->arrHandleAs['title'] , $this->tableField );
-    if( $pos === false )
-    {
-      return;
-    }
-      // RETURN tableField isn't content of handleAs['title']
-
-      // DRS - Development Reporting System
-    if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-    {
-      $prompt = $this->tableField . ' is content of handleAs[title]';
-      t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
-      $this->bool_drs_handleCase = true;
-    }
-      // DRS - Development Reporting System
-
-      // Dyeing swords?
-    $arr_TCAitems                = $this->conf_view['autoconfig.']['autoDiscover.']['items.'];
-    $this->bool_dontColorSwords  = $arr_TCAitems['image.']['dontColorSwords'];
-      // Dyeing swords?
-
-    $this->maxColumns--;
-    $this->boolSubstitute = false;
 
     return;
   }
