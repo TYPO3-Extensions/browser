@@ -785,6 +785,7 @@ class tx_browser_pi1_tca
  */
   private function handleAsImage( )
   {
+return;
       // RETURN tableField isn't content of handleAs['image']
     $pos = strpos( $this->arrHandleAs['image'] , $this->tableField );
     if( $pos === false )
