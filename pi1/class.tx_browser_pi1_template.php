@@ -2909,18 +2909,18 @@ class tx_browser_pi1_template
       }
         // DRS- Developement Reporting System: Any Case didn't matched above
 
-      // Colors the sword words and phrases
-      // 3.3.4
+        // Colors the sword words and phrases
+        // 3.3.4
       //if(t3lib_div::_GP('dev')) var_dump('template 2196', $key, $bool_dontColorSwords);
-      if (!$bool_dontColorSwords)
+      if ( ! $bool_dontColorSwords)
       {
         $value = $this->pObj->objZz->color_swords($key, $value);
       }
-      // Colors the sword words and phrases
+        // Colors the sword words and phrases
 
       $this->pObj->boolFirstElement = false;
-      //if(t3lib_div::_GP('dev')) var_dump('template 2206', $elements);
-      // Bugfix, 3.3.7, 100617, dwildt
+        //if(t3lib_div::_GP('dev')) var_dump('template 2206', $elements);
+        // Bugfix, 3.3.7, 100617, dwildt
       $this->pObj->elements = $elements;
 
       $value = $this->pObj->objWrapper->wrapAndLinkValue($key, $value, $elements[$uidField]);
@@ -3064,9 +3064,9 @@ class tx_browser_pi1_template
 
 
 
-    //////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
+      //////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
 
     if ($this->pObj->boolFirstRow)
     {
@@ -3082,11 +3082,16 @@ class tx_browser_pi1_template
         t3lib_div::devLog('[INFO/PERFORMANCE] After elements loop (first row): '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
       }
     }
-    // DRS - Performance
+      // DRS - Performance
 
 
 
     $this->pObj->boolFirstRow = false;
+$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if (!($pos === false))
+{
+  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $htmlRow );
+}
     return $htmlRow;
   }
 

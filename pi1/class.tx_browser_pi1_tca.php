@@ -1134,7 +1134,6 @@ $pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 if (!($pos === false))
 {
   var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $this->arrHandleAs['timestamp'] , $this->tableField );
-
 }
       // RETURN tableField isn't content of handleAs['timestamp']
     $pos = strpos( $this->arrHandleAs['timestamp'] , $this->tableField );
