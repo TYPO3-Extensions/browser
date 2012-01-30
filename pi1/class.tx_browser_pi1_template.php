@@ -2807,12 +2807,12 @@ class tx_browser_pi1_template
       $bool_dontColorSwords = $arr_result['data']['dontColorSwords'];
       $maxColumns           = $arr_return['data']['maxColumns'];
       $boolSubstitute       = $arr_return['data']['boolSubstitute'];
-//$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false))
-//{
-//  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $key, $value, $bool_drs_handleCase );
-//
-//}
+$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if (!($pos === false))
+{
+  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $key, $boolSubstitute );
+
+}
         // 120129, dwildt+
 
         // First field is UID and we have a list view
@@ -2924,11 +2924,6 @@ class tx_browser_pi1_template
       $this->pObj->elements = $elements;
 
       $value = $this->pObj->objWrapper->wrapAndLinkValue($key, $value, $elements[$uidField]);
-$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if (!($pos === false))
-{
-  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $value );
-}
 
       // DRS - Performance
       if ($this->pObj->boolFirstRow && $i_count_element == 0)
