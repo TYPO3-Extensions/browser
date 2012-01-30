@@ -2792,7 +2792,15 @@ class tx_browser_pi1_template
 
 
         // 120129, dwildt+
-      $arr_result = $this->pObj->objTca->handleAs(
+if( $key == 'tx_org_headquarters.title' ) 
+{
+  $pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+  if (!($pos === false))
+  {
+    var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $value );
+  }
+}
+        $arr_result = $this->pObj->objTca->handleAs(
                       $key,
                       $value,
                       $lDisplayView,
@@ -2808,6 +2816,14 @@ class tx_browser_pi1_template
       $maxColumns           = $arr_result['data']['maxColumns'];
       $boolSubstitute       = $arr_result['data']['boolSubstitute'];
         // 120129, dwildt+
+if( $key == 'tx_org_headquarters.title' )
+{
+  $pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+  if (!($pos === false))
+  {
+    var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $value );
+  }
+}
 
         // First field is UID and we have a list view
       if ($extraUidField && $i_count_element == 0 && $this->view == 'list')
