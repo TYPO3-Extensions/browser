@@ -716,12 +716,6 @@ class tx_browser_pi1_tca
     $this->maxColumns           = $maxColumns;
     $this->boolSubstitute       = $boolSubstitute;
     $this->arrHandleAs          = $this->pObj->arrHandleAs;
-$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if (!($pos === false))
-{
-  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $this->arrHandleAs );
-
-}
       // Set globals
 
       // Set default return array
@@ -1136,12 +1130,12 @@ if (!($pos === false))
  */
   private function handleAsTimestamp(  )
   {
-//$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false))
-//{
-//  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $this->value );
-//
-//}
+$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if (!($pos === false))
+{
+  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $this->arrHandleAs['timestamp'] , $this->tableField );
+
+}
       // RETURN tableField isn't content of handleAs['timestamp']
     $pos = strpos( $this->arrHandleAs['timestamp'] , $this->tableField );
     if( $pos === false )
