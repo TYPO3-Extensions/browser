@@ -3008,10 +3008,6 @@ if( $key == 'tx_org_headquarters.title' )
           // #28562: 110830, dwildt+
 
         $htmlSubpart = $this->pObj->cObj->getSubpart($template, $subpart);
-$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if (!($pos === false)) {
-  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $value );
-}
         if($this->view == 'list' && $bool_design_default)
         {
           $class = $i_count_cell < $maxColumns ? 'cell-'.$i_count_cell : 'cell-'.$i_count_cell.' last';
@@ -3046,6 +3042,10 @@ if (!($pos === false)) {
           $htmlRow  = $this->pObj->cObj->substituteMarkerArray($htmlSubpart, $markerArray);
         }
         $i_count_cell++;
+$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if (!($pos === false)) {
+  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $key, $value, $markerArray['###'.strtoupper($key).'###'] );
+}
       }
         // Substitute the template marker
 
