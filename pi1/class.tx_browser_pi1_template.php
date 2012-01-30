@@ -2797,7 +2797,7 @@ if( $key == 'tx_org_headquarters.title' )
   $pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
   if (!($pos === false))
   {
-    var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $value );
+    var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $value, $boolSubstitute );
   }
 }
         $arr_result = $this->pObj->objTca->handleAs(
