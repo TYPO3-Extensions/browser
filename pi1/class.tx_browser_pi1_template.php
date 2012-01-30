@@ -2792,6 +2792,12 @@ class tx_browser_pi1_template
 
 
         // 120129, dwildt+
+$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if (!($pos === false))
+{
+  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $key, $boolSubstitute );
+
+}
       $arr_result = $this->pObj->objTca->handleAs(
                       $key,
                       $value,
