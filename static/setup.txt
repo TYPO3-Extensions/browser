@@ -1637,7 +1637,7 @@ plugin.tx_browser_pi1 {
                 use_php_strtotime = 1
                 stdWrap {
                     // Examples with strtotime: last Monday, -1 day, now, today 0:00, next Monday
-                  value = last Monday
+                  value = this week
                 }
               }
               selected_period {

@@ -15,7 +15,7 @@
           <form action="###ACTION###" method="post" >
             <fieldset>
               <div class="filter">
-                ###TX_ORG_NPZCH.DATETIME_START###
+                Your filter field
               </div>
             </fieldset>
           </form>
@@ -57,7 +57,9 @@
                     ###CAL_PERIOD###
                   </td>
                   <!-- ###CAL_DATE_GROUP### begin --><td class="date group_###CAL_GROUP### td_###TD_COUNTER### ###TD_EVEN_OR_ODD### ###TD_FIRST_LAST###">
-                    <!-- ###CAL_DATE### begin -->###TX_ORG_NPZCH.TYPE###<!-- ###CAL_DATE### end -->
+                    <!-- ###CAL_DATE### begin -->
+                      Your calendar item
+                    <!-- ###CAL_DATE### end -->
                   </td><!-- ###CAL_DATE_GROUP### end -->
                 </tr>
                 <!-- ###LISTBODYITEM### end -->
@@ -74,42 +76,6 @@
 
 
 
-
-<em>
-
-DEFAULT TEMPLATE FOR SINGLE VIEWS WITH TABLE
-============================================
-THIS SHOULD BE THE DEFAULT FOR A SINGLE VIEW!
-
-This template is used, if you have configured your typoscript like this:
-plugin.tx_browser_pi1.views.single.XX.template.default = 1
-
-  CONTROLLING MARKERS
-  ===================
-  You can control the display of subparts and markers with typoscript:
-
-    plugin.tx_browser_pi1.views.single.XX.display {
-      title         = 1     // Display [1] or hide [0] the title
-      table {
-        summary     = 1     // Display [1] or hide [0] the table summary
-        caption     = 1     // Display [1] or hide [0] the table caption
-      }
-      backbutton    = 1     // Display [1] or hide [0] the backbutton
-    }
-
-    MODESELECTOR
-    ============
-    The display of the modeselector depends on the number of your views.
-    If you have only one single view, there won't be any modeselector.
-    If you have more than one single view, there will be a modeselector.
-
-  SELF-DEFINED MARKERS
-  ====================
-  See the information in the section of the list view
-
-
-
-</em>
 
 <!-- ###TEMPLATE_SINGLE### begin -->
 <!-- ###AREA_FOR_AJAX_LIST_01### begin -->
