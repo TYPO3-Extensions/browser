@@ -712,7 +712,7 @@ class tx_browser_pi1_tca
     $this->lDisplayView         = $lDisplayView;
     $this->bool_drs_handleCase  = $bool_drs_handleCase;
     $this->bool_dontColorSwords = $bool_dontColorSwords;
-    $this->elements             = $bool_dontColorSwords;
+    $this->elements             = $elements;
     $this->maxColumns           = $maxColumns;
     $this->boolSubstitute       = $boolSubstitute;
     $this->arrHandleAs          = $this->pObj->arrHandleAs;
