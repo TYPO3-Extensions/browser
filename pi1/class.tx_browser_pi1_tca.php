@@ -704,8 +704,14 @@ class tx_browser_pi1_tca
  * @version 3.9.6
  * @since   3.9.6
  */
-  function handleAs($tableField, $value, $lDisplayView, $bool_drs_handleCase, $bool_dontColorSwords, $elements, $maxColumns, $boolSubstitute )
+  function handleAs( $tableField, $value, $lDisplayView, $bool_drs_handleCase, $bool_dontColorSwords, $elements, $maxColumns, $boolSubstitute )
   {
+$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if (!($pos === false))
+{
+  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $tableField, $boolSubstitute );
+
+}
       // Set globals
     $this->tableField           = $tableField;
     $this->value                = $value;
