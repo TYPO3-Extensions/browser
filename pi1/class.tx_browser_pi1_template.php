@@ -2924,6 +2924,11 @@ class tx_browser_pi1_template
       $this->pObj->elements = $elements;
 
       $value = $this->pObj->objWrapper->wrapAndLinkValue($key, $value, $elements[$uidField]);
+$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if (!($pos === false))
+{
+  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $value );
+}
 
       // DRS - Performance
       if ($this->pObj->boolFirstRow && $i_count_element == 0)
@@ -3034,7 +3039,6 @@ class tx_browser_pi1_template
         $i_count_cell++;
       }
         // Substitute the template marker
-      //var_dump('template 2286', $markerArray['###SOCIALMEDIA_BOOKMARKS###']);
 
         // DRS - Performance
       if ($this->pObj->boolFirstRow && $i_count_element == 0)
