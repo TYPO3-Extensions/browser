@@ -668,13 +668,8 @@ class tx_browser_pi1_tca
       }
     }
     $this->pObj->boolFirstElement = false;
-//$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false))
-//{
-//  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $this->pObj->arrHandleAs[$TCAitem] );
-//
-//}
-        return true;
+
+    return true;
   }
 
 

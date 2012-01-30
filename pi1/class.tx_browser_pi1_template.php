@@ -2792,6 +2792,12 @@ class tx_browser_pi1_template
 
 
         // 120129, dwildt+
+$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if (!($pos === false))
+{
+  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $this->pObj->arrHandleAs[$TCAitem] );
+
+}
       $arr_result = $this->pObj->objTca->handleAs(
                       $key,
                       $value,
@@ -2807,6 +2813,12 @@ class tx_browser_pi1_template
       $bool_dontColorSwords = $arr_result['data']['dontColorSwords'];
       $maxColumns           = $arr_return['data']['maxColumns'];
       $boolSubstitute       = $arr_return['data']['boolSubstitute'];
+$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if (!($pos === false))
+{
+  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $this->pObj->arrHandleAs[$TCAitem] );
+
+}
         // 120129, dwildt+
 
         // First field is UID and we have a list view
