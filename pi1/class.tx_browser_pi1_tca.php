@@ -724,8 +724,8 @@ class tx_browser_pi1_tca
       // Set globals
 
       // Set default return array
-    $arr_return['data']['drs_handleCase']   = $this->bool_drs_handleCase;
     $arr_return['data']['value']            = $this->value;
+    $arr_return['data']['drs_handleCase']   = $this->bool_drs_handleCase;
     $arr_return['data']['dontColorSwords']  = $this->bool_dontColorSwords;
     $arr_return['data']['maxColumns']       = $this->maxColumns;
     $arr_return['data']['boolSubstitute']   = $this->boolSubstitute;
@@ -733,7 +733,7 @@ class tx_browser_pi1_tca
 
       // RETURN tableField has its own configuration
     list( $table, $field ) = explode( '.', $this->tableField );
-    if( is_array( $this->conf_view[$table.'.'][$field.'.'] ) )
+    if( is_array( $this->conf_view[$table . '.'][$field . '.'] ) )
     {
         // DRS - Development Reporting System
       if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
@@ -756,8 +756,8 @@ class tx_browser_pi1_tca
     $this->handleAsTitle( );
     $this->handleAsYYYYMMDD( );
 
-    $arr_return['data']['drs_handleCase']   = $this->bool_drs_handleCase;
     $arr_return['data']['value']            = $this->value;
+    $arr_return['data']['drs_handleCase']   = $this->bool_drs_handleCase;
     $arr_return['data']['dontColorSwords']  = $this->bool_dontColorSwords;
     $arr_return['data']['maxColumns']       = $this->maxColumns;
     $arr_return['data']['boolSubstitute']   = $this->boolSubstitute;

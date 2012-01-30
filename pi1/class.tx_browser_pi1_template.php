@@ -909,7 +909,7 @@ class tx_browser_pi1_template
       //
       // With ###ITEM###
 
-    if($bool_table)
+    if( $bool_table )
     {
         // DRS - Development Reporting System
       if ($this->pObj->b_drs_templating)
@@ -2798,11 +2798,15 @@ class tx_browser_pi1_template
                       $lDisplayView,
                       $bool_drs_handleCase,
                       $bool_dontColorSwords,
-                      $elements
+                      $elements,
+                      $maxColumns,
+                      $boolSubstitute
                     );
+      $value                = $arr_result['data']['value'];
       $bool_drs_handleCase  = $arr_result['data']['drs_handleCase'];
       $bool_dontColorSwords = $arr_result['data']['dontColorSwords'];
-      $value                = $arr_result['data']['value'];
+      $maxColumns           = $arr_return['data']['maxColumns'];
+      $boolSubstitute       = $arr_return['data']['boolSubstitute'];
         // 120129, dwildt+
 
         // First field is UID and we have a list view
