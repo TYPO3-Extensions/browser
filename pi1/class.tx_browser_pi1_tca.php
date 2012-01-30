@@ -757,12 +757,12 @@ class tx_browser_pi1_tca
     $arr_return['data']['maxColumns']       = $this->maxColumns;
     $arr_return['data']['boolSubstitute']   = $this->boolSubstitute;
 
-$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if (!($pos === false))
-{
-  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $tableField, $this->boolSubstitute );
-
-}
+//$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//if (!($pos === false))
+//{
+//  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $tableField, $this->boolSubstitute );
+//
+//}
     return $arr_return;
   }
 

@@ -2805,8 +2805,8 @@ class tx_browser_pi1_template
       $value                = $arr_result['data']['value'];
       $bool_drs_handleCase  = $arr_result['data']['drs_handleCase'];
       $bool_dontColorSwords = $arr_result['data']['dontColorSwords'];
-      $maxColumns           = $arr_return['data']['maxColumns'];
-      $boolSubstitute       = $arr_return['data']['boolSubstitute'];
+      $maxColumns           = $arr_result['data']['maxColumns'];
+      $boolSubstitute       = $arr_result['data']['boolSubstitute'];
         // 120129, dwildt+
 
         // First field is UID and we have a list view
