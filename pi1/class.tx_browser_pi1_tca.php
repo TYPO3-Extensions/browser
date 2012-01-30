@@ -850,7 +850,7 @@ class tx_browser_pi1_tca
 $pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 if (!($pos === false))
 {
-  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $tsImage );
+  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $this->elements, $this->tableField, $tsImage );
 
 }
     $this->value                = $this->pObj->objWrapper->wrapImage( $tsImage );
