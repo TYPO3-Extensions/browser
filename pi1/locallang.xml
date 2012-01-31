@@ -91,6 +91,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="error_template_no"> Es gibt kein HTML-Template.<![CDATA[<br />]]>
                                         <![CDATA[<br />]]>
                                         Du kannst folgendes pr<![CDATA[&uuml;]]>fen:<![CDATA[<br />]]>
+                                        * Plugin / Flexform: Reiter <![CDATA[[]]>Plugin Check<![CDATA[]]]><![CDATA[<br />]]>
                                         * Plugin / Flexform: Reiter <![CDATA[[]]>Templating<![CDATA[]]]> Men<![CDATA[&uuml;]]> "HTML"<![CDATA[<br />]]>
                                         * Plugin / Flexform: Reiter <![CDATA[[]]>Allgemein<![CDATA[]]]> Men<![CDATA[&uuml;]]> "Views Filter"<![CDATA[<br />]]>
                                         * TypoScript: plugin.tx_browser_pi1.template.<![CDATA[<br />]]>
