@@ -32,7 +32,15 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
       <label index="error_template_array"><![CDATA[The returned template is an array. This is an error.<br /><br />Browser - the TYPO3-Frontend-Engine]]></label>
       <label index="error_template_map_no"><![CDATA[There isn't any HTML template for the open street map.<br /><br />Browser - the TYPO3-Frontend-Engine]]></label>
       <label index="error_template_map_no_subpart"><![CDATA[The subpart TEMPLATE_MAP is missing in the HTML template for the open street map.<br /><br />Browser - the TYPO3-Frontend-Engine]]></label>
-      <label index="error_template_no"><![CDATA[There isn't any HTML template.<br /><br />Browser - the TYPO3-Frontend-Engine]]></label>
+      <label index="error_template_no">There isn't any HTML template.<![CDATA[<br />]]>
+                                        <![CDATA[<br />]]>
+                                        Please check:<![CDATA[<br />]]>
+                                        * Plugin / flexform: tab <![CDATA[[]]>Plugin check<![CDATA[]]]><![CDATA[<br />]]>
+                                        * Plugin / flexform: tab  <![CDATA[[]]>Templating<![CDATA[]]]> Menu "HTML"<![CDATA[<br />]]>
+                                        * Plugin / flexform: tab  <![CDATA[[]]>General<![CDATA[]]]> Menu "Views filter"<![CDATA[<br />]]>
+                                        * TypoScript: plugin.tx_browser_pi1.template.<![CDATA[<br />]]>
+                                        <![CDATA[<br />]]>
+                                        Browser - the TYPO3 frontend engine</label>
       <label index="error_template_render">The template isn't rendered. It seems that the TypoScript isn't configured proper. Please take a look in the Developer Log.</label>
       <label index="error_ttc_h1">ERROR: TypoScript-Template-Container (TTC)</label>
       <label index="error_ttc_prompt_array">There is a TypoScript Object TT_CONTAINER, which isn't an array. See devlog for more information.</label>
