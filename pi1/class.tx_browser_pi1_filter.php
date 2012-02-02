@@ -450,8 +450,8 @@ class tx_browser_pi1_filter {
 //$pos = strpos('91.23.187.149', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 //if( ! ( $pos === false ) )
 //{
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
-//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
 //}
 //if( $pos === false )
 //{
@@ -469,14 +469,14 @@ class tx_browser_pi1_filter {
           case( 'to' ):
             if ( ! ( $row[$tableField] >= $condition['from'] ) )
             {
-              var_dump(__METHOD__ . ' (' . __LINE__ . '): ! ' . $row['tx_billing_amount.uid'] . ' ' . date( 'c', $row[$tableField] ) . ' >= ' . date( 'c', $condition['from'] ) );
+//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ! ' . $row['tx_billing_amount.uid'] . ' ' . date( 'c', $row[$tableField] ) . ' >= ' . date( 'c', $condition['from'] ) );
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['from'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
             if ( ! ( $row[$tableField] < $condition['to'] ) )
             {
-              var_dump(__METHOD__ . ' (' . __LINE__ . '): ! ' . $row['tx_billing_amount.uid'] . ' ' . date( 'c', $row[$tableField] ) . ' < ' . date( 'c', $condition['from'] ) );
+//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ! ' . $row['tx_billing_amount.uid'] . ' ' . date( 'c', $row[$tableField] ) . ' < ' . date( 'c', $condition['from'] ) );
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' < ' . $condition['to'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
@@ -486,11 +486,11 @@ class tx_browser_pi1_filter {
           case( 'uid_in_list' ):
             if ( ! ( in_array( $row[$tableField], $condition['uid_in_list'] ) ) )
             {
-              if( $row['tx_billing_amount.uid'] == 19 )
-              {
-                $uid_list = implode( ',', $condition['uid_in_list'] );
-                var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $row[$tableField] . ', array( ' . $uid_list . ' ) ) ' );
-              }
+//              if( $row['tx_billing_amount.uid'] == 19 )
+//              {
+//                $uid_list = implode( ',', $condition['uid_in_list'] );
+//                var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $row[$tableField] . ', array( ' . $uid_list . ' ) ) ' );
+//              }
 //              $uid_list = implode( ',', $condition['uid_in_list'] );
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $row[$tableField] . ', array( ' . $uid_list . ' ) ) ' );
               unset( $this->rows_wo_limit[$key] );
@@ -521,7 +521,7 @@ class tx_browser_pi1_filter {
       // LOOP rows
 
 //    var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
-//    var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
+    var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
   }
 
 
