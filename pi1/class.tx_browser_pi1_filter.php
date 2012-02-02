@@ -3498,6 +3498,7 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $this->arr_conf_tableFields, $this
         // LOOP rows without limit
     }
       // LOOP each filter
+var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $this->arr_hits );
 
 
 
