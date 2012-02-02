@@ -466,16 +466,16 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
         switch( key( $condition ) )
         {
           case( 'equal_or_bigger' ):
-          case( 'equal_or_smaller' ):
+          case( 'smaller' ):
             if ( ! ( $row[$tableField] >= $condition['equal_or_bigger'] ) )
             {
-              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
+//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
-            if ( ! ( $row[$tableField] < $condition['equal_or_smaller'] ) )
+            if ( ! ( $row[$tableField] < $condition['smaller'] ) )
             {
-              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' < ' . $condition['equal_or_smaller'] );
+//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' < ' . $condition['smaller'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
@@ -1089,7 +1089,7 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
         {
           $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
             // #30912, 120127, dwildt+
-          $this->arr_filter_condition[$tableField]['equal_or_smaller'] = mysql_real_escape_string( $to );
+          $this->arr_filter_condition[$tableField]['smaller'] = mysql_real_escape_string( $to );
         }
 
         if( is_array( $arr_item ) )
@@ -1207,7 +1207,7 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
         {
           $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
             // #30912, 120127, dwildt+
-          $this->arr_filter_condition[$tableField]['equal_or_smaller'] = mysql_real_escape_string( $to );
+          $this->arr_filter_condition[$tableField]['smaller'] = mysql_real_escape_string( $to );
         }
 
         if( is_array( $arr_item ) )
