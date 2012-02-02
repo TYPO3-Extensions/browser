@@ -2373,7 +2373,9 @@ class tx_browser_pi1_cal
   function area_set_hits($arr_ts, $arr_values, $tableField)
   {
 
-    list ($table, $field) = explode('.', $tableField);
+var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
+
+  list ($table, $field) = explode('.', $tableField);
     $str_case             = $this->arr_area[$tableField]['key'];
 
 
