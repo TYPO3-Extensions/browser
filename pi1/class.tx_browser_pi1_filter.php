@@ -451,7 +451,6 @@ class tx_browser_pi1_filter {
 //if( ! ( $pos === false ) )
 //{
 //  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
-var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
 //}
 //if( $pos === false )
 //{
@@ -460,6 +459,10 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
       // LOOP rows
     foreach( $this->rows_wo_limit as $key => $row)
     {
+      if( $row['uid'] == 19 )
+      {
+        var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
+      }
         // LOOP conditions
       foreach( $this->arr_filter_condition as $tableField => $condition )
       {
@@ -469,21 +472,34 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
           case( 'smaller' ):
             if ( ! ( $row[$tableField] >= $condition['equal_or_bigger'] ) )
             {
+              if( $row['uid'] == 19 )
+              {
+                var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
+              }
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
             if ( ! ( $row[$tableField] < $condition['smaller'] ) )
             {
+              if( $row['uid'] == 19 )
+              {
+                var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' < ' . $condition['smaller'] );
+              }
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' < ' . $condition['smaller'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
-            var_dump(__METHOD__ . ' (' . __LINE__ . '): false' );
+//            var_dump(__METHOD__ . ' (' . __LINE__ . '): false' );
             break;
           case( 'uid_in_list' ):
             if ( ! ( in_array( $row[$tableField], $condition['uid_in_list'] ) ) )
             {
+              if( $row['uid'] == 19 )
+              {
+                $uid_list = implode( ',', $condition['uid_in_list'] );
+                var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $row[$tableField] . ', array( ' . $uid_list . ' ) ) ' );
+              }
 //              $uid_list = implode( ',', $condition['uid_in_list'] );
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $row[$tableField] . ', array( ' . $uid_list . ' ) ) ' );
               unset( $this->rows_wo_limit[$key] );
@@ -496,6 +512,11 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
             {
 //              $value_list = implode( ',', $condition['like'] );
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $strtolower_value . ', array( ' . $value_list . ' ) ) ' );
+              if( $row['uid'] == 19 )
+              {
+                $value_list = implode( ',', $condition['like'] );
+                var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $strtolower_value . ', array( ' . $value_list . ' ) ) ' );
+              }
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
