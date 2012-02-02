@@ -2468,7 +2468,10 @@ class tx_browser_pi1_cal
             $arr_hits[$key] = 0;
           }
             // Default value: hits
-          if ($valueValue >= $currFrom && $valueValue <= $currTo)
+            // 120202, dwildt-
+//          if ($valueValue >= $currFrom && $valueValue <= $currTo)
+            // 120202, dwildt+
+          if ($valueValue >= $currFrom && $valueValue < $currTo)
           {
             $arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFilter->arr_hits[$tableField][$keyValue];
           }
