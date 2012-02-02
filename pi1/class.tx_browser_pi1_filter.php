@@ -451,6 +451,7 @@ class tx_browser_pi1_filter {
 //if( ! ( $pos === false ) )
 //{
 //  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
+var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
 //}
 //if( $pos === false )
 //{
