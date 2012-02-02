@@ -2471,9 +2471,9 @@ class tx_browser_pi1_cal
             // 120202, dwildt-
 //          if ($valueValue >= $currFrom && $valueValue <= $currTo)
             // 120202, dwildt+
-if( $tableField == 'tx_billing_amount.date' )
+if( $tableField == 'tx_billing_amount.date' || 1 )
 {
-  $prompt_01 = $valueValue . ' >= ' . $currFrom . ' && ' . $valueValue . ' < ' . $currTo;
+  $prompt_01 = $tableField . ' ' . $valueValue . ' >= ' . $currFrom . ' && ' . $valueValue . ' < ' . $currTo;
   $prompt_02 = date( 'c', $valueValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $valueValue ) . ' < ' . date( 'c', $currTo );
   var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01. $prompt_02 );
 }
