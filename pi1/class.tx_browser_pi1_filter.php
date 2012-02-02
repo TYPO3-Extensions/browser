@@ -3497,7 +3497,7 @@ class tx_browser_pi1_filter {
         // LOOP rows without limit
     }
       // LOOP each filter
-      var_dump(__METHOD__ . ' (' . __LINE__ . ') ' . $this->arr_hits[$tableField] );
+var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $this->arr_hits[$tableField] );
 
 
       /////////////////////////////////////////////////////////////////
