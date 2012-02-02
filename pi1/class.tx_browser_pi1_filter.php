@@ -469,19 +469,23 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
             var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
             if ( ! ( $row[$tableField] >= $condition['equal_or_bigger'] ) )
             {
+              var_dump(__METHOD__ . ' (' . __LINE__ . '): true' );
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
+            var_dump(__METHOD__ . ' (' . __LINE__ . '): false' );
             break;
           case( 'equal_or_smaller' ):
             var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' <= ' . $condition['equal_or_smaller'] );
             if ( ! ( $row[$tableField] <= $condition['equal_or_smaller'] ) )
             {
+              var_dump(__METHOD__ . ' (' . __LINE__ . '): true' );
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' <= ' . $condition['equal_or_smaller'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
+            var_dump(__METHOD__ . ' (' . __LINE__ . '): false' );
             break;
           case( 'uid_in_list' ):
             if ( ! ( in_array( $row[$tableField], $condition['uid_in_list'] ) ) )
