@@ -451,7 +451,7 @@ class tx_browser_pi1_filter {
 //if( ! ( $pos === false ) )
 //{
 //  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', array_keys( $this->rows_wo_limit ), $this->rows_wo_limit );
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', array_keys( $this->rows_wo_limit ), $this->rows_wo_limit );
 //}
 //if( $pos === false )
 //{
@@ -474,10 +474,10 @@ class tx_browser_pi1_filter {
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
-            if ( ! ( $row[$tableField] < $condition['to'] ) )
+            if ( ! ( $row[$tableField] <= $condition['to'] ) )
             {
-//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ! ' . $row['tx_billing_amount.uid'] . ' ' . date( 'c', $row[$tableField] ) . ' < ' . date( 'c', $condition['from'] ) );
-//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' < ' . $condition['to'] );
+//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ! ' . $row['tx_billing_amount.uid'] . ' ' . date( 'c', $row[$tableField] ) . ' <= ' . date( 'c', $condition['from'] ) );
+//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' <= ' . $condition['to'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
@@ -521,7 +521,7 @@ class tx_browser_pi1_filter {
       // LOOP rows
 
 //    var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
-    var_dump(__METHOD__ . ' (' . __LINE__ . ')', array_keys( $this->rows_wo_limit ), $this->rows_wo_limit );
+//    var_dump(__METHOD__ . ' (' . __LINE__ . ')', array_keys( $this->rows_wo_limit ), $this->rows_wo_limit );
   }
 
 
