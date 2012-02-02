@@ -450,19 +450,11 @@ class tx_browser_pi1_filter {
 //$pos = strpos('91.23.187.149', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 //if( ! ( $pos === false ) )
 //{
-//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
-//}
-//if( $pos === false )
-//{
-//  return;
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
 //}
       // LOOP rows
     foreach( $this->rows_wo_limit as $key => $row)
     {
-      if( $row['uid'] == 19 )
-      {
-        var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
-      }
         // LOOP conditions
       foreach( $this->arr_filter_condition as $tableField => $condition )
       {
