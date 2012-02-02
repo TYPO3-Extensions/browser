@@ -473,9 +473,9 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
-            if ( ! ( $row[$tableField] <= $condition['equal_or_smaller'] ) )
+            if ( ! ( $row[$tableField] < $condition['equal_or_smaller'] ) )
             {
-              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' <= ' . $condition['equal_or_smaller'] );
+              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' < ' . $condition['equal_or_smaller'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
