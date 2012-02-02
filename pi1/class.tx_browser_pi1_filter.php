@@ -2226,7 +2226,7 @@ class tx_browser_pi1_filter {
         if ( $bool_display_hits )
         {
           $conf_hits        = $arr_ts['wrap.']['item.']['display_hits.']['stdWrap.'];
-          $str_hits         = $this->pObj->objWrapper->general_stdWrap($int_hits, $conf_hits);
+          $str_hits         = $this->pObj->objWrapper->general_stdWrap( $int_hits, $conf_hits );
           $bool_behindItem  = $arr_ts['wrap.']['item.']['display_hits.']['behindItem'];
           switch( $bool_behindItem )
           {
@@ -3444,7 +3444,6 @@ class tx_browser_pi1_filter {
       //
       // LOOP each filter
 
-var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $this->arr_conf_tableFields, $this->rows_wo_limit );
     foreach( $this->arr_conf_tableFields as $tableField )
     {
 
@@ -3498,8 +3497,7 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $this->arr_conf_tableFields, $this
         // LOOP rows without limit
     }
       // LOOP each filter
-var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $this->arr_hits );
-
+      var_dump(__METHOD__ . ' (' . __LINE__ . ') ' . $this->arr_hits[$tableField] );
 
 
       /////////////////////////////////////////////////////////////////
