@@ -3444,7 +3444,7 @@ class tx_browser_pi1_filter {
       //
       // LOOP each filter
 
-var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $this->arr_conf_tableFields );
+var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $this->arr_conf_tableFields, $this->rows_wo_limit );
     foreach( $this->arr_conf_tableFields as $tableField )
     {
 
