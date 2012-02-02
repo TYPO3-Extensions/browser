@@ -466,6 +466,7 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
         switch( key( $condition ) )
         {
           case( 'equal_or_bigger' ):
+            var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
             if ( ! ( $row[$tableField] >= $condition['equal_or_bigger'] ) )
             {
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
@@ -474,6 +475,7 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
             }
             break;
           case( 'equal_or_smaller' ):
+            var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' <= ' . $condition['equal_or_smaller'] );
             if ( ! ( $row[$tableField] <= $condition['equal_or_smaller'] ) )
             {
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' <= ' . $condition['equal_or_smaller'] );
