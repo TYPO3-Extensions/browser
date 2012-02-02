@@ -2030,7 +2030,7 @@ class tx_browser_pi1_filter {
           // Key of all other items
 
         $arr_values_localTable[$key] = $value;
-        if (!isset ($arr_hits_localTable[$tableField][$key]))
+        if( ! isset ($arr_hits_localTable[$tableField][$key] ) )
         {
           $arr_hits_localTable[$tableField][$key] = 0;
         }
@@ -2167,6 +2167,7 @@ class tx_browser_pi1_filter {
         $bool_display_without_any_hit = $records_display_without_any_hit;
         $bool_display_hits            = $records_bool_display_hits;
         $int_hits                     = $this->arr_hits[$tableField][$uid];
+var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $tableField, $int_hits );
       }
         // Display configuration of all other items
         // dwildt, 101211, #11401
@@ -3497,7 +3498,7 @@ class tx_browser_pi1_filter {
         // LOOP rows without limit
     }
       // LOOP each filter
-var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $this->arr_hits );
+//var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $this->arr_hits );
 
 
       /////////////////////////////////////////////////////////////////
