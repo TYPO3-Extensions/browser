@@ -3499,10 +3499,10 @@ class tx_browser_pi1_filter {
         }
       }
         // LOOP rows without limit
-if( $tableField = 'tx_billing_amount.date' )
-{
-  var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $tableField, $uid , $int_hits );
-}
+//if( $tableField = 'tx_billing_amount.date' )
+//{
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $tableField, $uid , $int_hits );
+//}
     }
       // LOOP each filter
 //var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $this->arr_hits );
