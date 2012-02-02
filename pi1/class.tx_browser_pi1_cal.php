@@ -2373,7 +2373,7 @@ class tx_browser_pi1_cal
   private function area_set_hits($arr_ts, $arr_values, $tableField)
   {
 
-var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
+//var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
 
     list ($table, $field) = explode('.', $tableField);
     $str_case             = $this->arr_area[$tableField]['key'];
@@ -2392,7 +2392,7 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
     $arr_fields = $arr_ts['area.'][$str_case . '.']['options.']['fields.'];
     foreach( $arr_fields as $keyWiDot => $arr_string )
     {
-var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
+//var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
       $key        = rtrim($keyWiDot, '.');
 
         // Wrap item from
@@ -2418,7 +2418,7 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
         // Recalculate hits
       foreach ($arr_values as $keyValue => $valueValue)
       {
-var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
+//var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
           // Default value: from
         $currFrom = $from;
           // Default value: to
@@ -2441,7 +2441,16 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
             $arr_hits[$key] = 0;
           }
             // Default value: hits
-          if ($keyValue >= $currFrom && $keyValue <= $currTo)
+            // 120202, dwildt-
+//          if ($keyValue >= $currFrom && $keyValue <= $currTo)
+            // 120202, dwildt+
+//if( $tableField == 'tx_billing_amount.date' || 1 )
+//{
+  $prompt_01 = $tableField . ' ' . $keyValue . ' >= ' . $currFrom . ' && ' . $keyValue . ' < ' . $currTo;
+  $prompt_02 = date( 'c', $keyValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $keyValue ) . ' < ' . date( 'c', $currTo );
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01. $prompt_02 );
+//}
+          if ($keyValue >= $currFrom && $keyValue < $currTo)
           {
             $arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFilter->arr_hits[$tableField][$keyValue];
           }
