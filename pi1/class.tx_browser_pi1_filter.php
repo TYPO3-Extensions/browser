@@ -490,7 +490,15 @@ class tx_browser_pi1_filter {
             }
             break;
           case( 'like' ):
-//            break;
+            $strtolower_value = "'" . mb_strtolower( $row[$tableField] ) . "'";
+            $value_list = implode( ',', $condition['like'] );
+            var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $strtolower_value . ', array( ' . $value_list . ' ) ) ' );
+            if ( ! ( in_array( $strtolower_value, $condition[ 'like' ] ) ) )
+            {
+              unset( $this->rows_wo_limit[$key] );
+              continue 2;
+            }
+            break;
           default:
             die( __METHOD__ . ' (' . __LINE__ . '): key "' . key( $condition ) . '" is undefined.' );
         }
@@ -1108,7 +1116,9 @@ class tx_browser_pi1_filter {
       {
         $arr_orValues[] = $tableField . " LIKE '" . mysql_real_escape_string( $str_value ) . "'";
           // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$tableField]['like'][] = mysql_real_escape_string( $str_value );
+          // #30912, 120202, dwildt+
+        $strtolower_value = "'" . mb_strtolower( mysql_real_escape_string( $str_value ) ) . "'";
+        $this->arr_filter_condition[$tableField]['like'][] = $strtolower_value;
       }
       $str_andWhere = implode( ' OR ', $arr_orValues );
       if( ! empty( $str_andWhere ) )
