@@ -451,7 +451,7 @@ class tx_browser_pi1_filter {
 //if( ! ( $pos === false ) )
 //{
 //  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', array_keys( $this->rows_wo_limit ), $this->rows_wo_limit );
 //}
 //if( $pos === false )
 //{
@@ -521,7 +521,7 @@ class tx_browser_pi1_filter {
       // LOOP rows
 
 //    var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
-    var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
+    var_dump(__METHOD__ . ' (' . __LINE__ . ')', array_keys( $this->rows_wo_limit ), $this->rows_wo_limit );
   }
 
 
