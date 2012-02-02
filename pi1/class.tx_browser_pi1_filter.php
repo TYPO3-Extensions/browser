@@ -450,11 +450,19 @@ class tx_browser_pi1_filter {
 //$pos = strpos('91.23.187.149', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 //if( ! ( $pos === false ) )
 //{
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
+//}
+//if( $pos === false )
+//{
+//  return;
 //}
       // LOOP rows
     foreach( $this->rows_wo_limit as $key => $row)
     {
+      if( $row['tx_billing_amount.uid'] == 19 )
+      {
+        var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
+      }
         // LOOP conditions
       foreach( $this->arr_filter_condition as $tableField => $condition )
       {
@@ -464,7 +472,7 @@ class tx_browser_pi1_filter {
           case( 'smaller' ):
             if ( ! ( $row[$tableField] >= $condition['equal_or_bigger'] ) )
             {
-              if( $row['uid'] == 19 )
+              if( $row['tx_billing_amount.uid'] == 19 )
               {
                 var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
               }
@@ -474,7 +482,7 @@ class tx_browser_pi1_filter {
             }
             if ( ! ( $row[$tableField] < $condition['smaller'] ) )
             {
-              if( $row['uid'] == 19 )
+              if( $row['tx_billing_amount.uid'] == 19 )
               {
                 var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' < ' . $condition['smaller'] );
               }
@@ -487,7 +495,7 @@ class tx_browser_pi1_filter {
           case( 'uid_in_list' ):
             if ( ! ( in_array( $row[$tableField], $condition['uid_in_list'] ) ) )
             {
-              if( $row['uid'] == 19 )
+              if( $row['tx_billing_amount.uid'] == 19 )
               {
                 $uid_list = implode( ',', $condition['uid_in_list'] );
                 var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $row[$tableField] . ', array( ' . $uid_list . ' ) ) ' );
@@ -504,7 +512,7 @@ class tx_browser_pi1_filter {
             {
 //              $value_list = implode( ',', $condition['like'] );
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $strtolower_value . ', array( ' . $value_list . ' ) ) ' );
-              if( $row['uid'] == 19 )
+              if( $row['tx_billing_amount.uid'] == 19 )
               {
                 $value_list = implode( ',', $condition['like'] );
                 var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $strtolower_value . ', array( ' . $value_list . ' ) ) ' );
