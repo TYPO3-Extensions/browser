@@ -2440,16 +2440,17 @@ class tx_browser_pi1_cal
           {
             $arr_hits[$key] = 0;
           }
+//if( $tableField == 'tx_billing_amount.date' || 1 )
+//{
+//  $prompt_01 = $tableField . ' ' . $keyValue . ' >= ' . $currFrom . ' && ' . $keyValue . ' < ' . $currTo;
+//  $prompt_02 = date( 'c', $keyValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $keyValue ) . ' < ' . date( 'c', $currTo );
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01, $prompt_02 );
+//}
             // Default value: hits
             // 120202, dwildt-
 //          if ($keyValue >= $currFrom && $keyValue <= $currTo)
             // 120202, dwildt+
-//if( $tableField == 'tx_billing_amount.date' || 1 )
-//{
-  $prompt_01 = $tableField . ' ' . $keyValue . ' >= ' . $currFrom . ' && ' . $keyValue . ' < ' . $currTo;
-  $prompt_02 = date( 'c', $keyValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $keyValue ) . ' < ' . date( 'c', $currTo );
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01, $prompt_02 );
-//}
+            // Line has to correspondend with similar code some lines below and code in filter::filter_fetch_rows()
           if ($keyValue >= $currFrom && $keyValue < $currTo)
           {
             $arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFilter->arr_hits[$tableField][$keyValue];
@@ -2480,16 +2481,17 @@ class tx_browser_pi1_cal
           {
             $arr_hits[$key] = 0;
           }
+//if( $tableField == 'tx_billing_amount.date' || 1 )
+//{
+//  $prompt_01 = $tableField . ' ' . $valueValue . ' >= ' . $currFrom . ' && ' . $valueValue . ' < ' . $currTo;
+//  $prompt_02 = date( 'c', $valueValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $valueValue ) . ' < ' . date( 'c', $currTo );
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01, $prompt_02 );
+//}
             // Default value: hits
             // 120202, dwildt-
 //          if ($valueValue >= $currFrom && $valueValue <= $currTo)
             // 120202, dwildt+
-//if( $tableField == 'tx_billing_amount.date' || 1 )
-//{
-  $prompt_01 = $tableField . ' ' . $valueValue . ' >= ' . $currFrom . ' && ' . $valueValue . ' < ' . $currTo;
-  $prompt_02 = date( 'c', $valueValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $valueValue ) . ' < ' . date( 'c', $currTo );
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01, $prompt_02 );
-//}
+            // Line has to correspondend with similar code some lines above and code in filter::filter_fetch_rows()
           if( $valueValue >= $currFrom && $valueValue < $currTo )
           {
             $arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFilter->arr_hits[$tableField][$keyValue];
