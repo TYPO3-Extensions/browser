@@ -2167,10 +2167,10 @@ class tx_browser_pi1_filter {
         $bool_display_without_any_hit = $records_display_without_any_hit;
         $bool_display_hits            = $records_bool_display_hits;
         $int_hits                     = $this->arr_hits[$tableField][$uid];
-if( $tableField = 'tx_billing_amount.date' )
-{
-  var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $tableField, $uid , $int_hits );
-}
+//if( $tableField = 'tx_billing_amount.date' )
+//{
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $tableField, $uid , $int_hits );
+//}
       }
         // Display configuration of all other items
         // dwildt, 101211, #11401
@@ -3499,6 +3499,10 @@ if( $tableField = 'tx_billing_amount.date' )
         }
       }
         // LOOP rows without limit
+if( $tableField = 'tx_billing_amount.date' )
+{
+  var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $tableField, $uid , $int_hits );
+}
     }
       // LOOP each filter
 //var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $this->arr_hits );
