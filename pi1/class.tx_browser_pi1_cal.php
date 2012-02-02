@@ -2370,12 +2370,12 @@ class tx_browser_pi1_cal
  * @version 3.6.0
  * @since 3.6.0
  */
-  function area_set_hits($arr_ts, $arr_values, $tableField)
+  private function area_set_hits($arr_ts, $arr_values, $tableField)
   {
 
 var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
 
-  list ($table, $field) = explode('.', $tableField);
+    list ($table, $field) = explode('.', $tableField);
     $str_case             = $this->arr_area[$tableField]['key'];
 
 
@@ -2390,8 +2390,9 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
       // Wrap items, recalculate hits
 
     $arr_fields = $arr_ts['area.'][$str_case . '.']['options.']['fields.'];
-    foreach ($arr_fields as $keyWiDot => $arr_string)
+    foreach( $arr_fields as $keyWiDot => $arr_string )
     {
+var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
       $key        = rtrim($keyWiDot, '.');
 
         // Wrap item from
@@ -2417,6 +2418,7 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
         // Recalculate hits
       foreach ($arr_values as $keyValue => $valueValue)
       {
+var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
           // Default value: from
         $currFrom = $from;
           // Default value: to
@@ -2447,7 +2449,7 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
           // Current table is the local table
 
           // Current table is a foreign table
-        if ($table != $this->pObj->localTable)
+        if( $table != $this->pObj->localTable )
         {
           if (empty ($currFrom))
           {
@@ -2465,7 +2467,7 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
             }
           }
             // Default value: hits
-          if (!isset ($arr_hits[$key]))
+          if( ! isset( $arr_hits[$key] ) )
           {
             $arr_hits[$key] = 0;
           }
@@ -2473,12 +2475,12 @@ var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
             // 120202, dwildt-
 //          if ($valueValue >= $currFrom && $valueValue <= $currTo)
             // 120202, dwildt+
-if( $tableField == 'tx_billing_amount.date' || 1 )
-{
+//if( $tableField == 'tx_billing_amount.date' || 1 )
+//{
   $prompt_01 = $tableField . ' ' . $valueValue . ' >= ' . $currFrom . ' && ' . $valueValue . ' < ' . $currTo;
   $prompt_02 = date( 'c', $valueValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $valueValue ) . ' < ' . date( 'c', $currTo );
   var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01. $prompt_02 );
-}
+//}
           if( $valueValue >= $currFrom && $valueValue < $currTo )
           {
             $arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFilter->arr_hits[$tableField][$keyValue];
