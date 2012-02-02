@@ -474,10 +474,10 @@ class tx_browser_pi1_filter {
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
-            if ( ! ( $row[$tableField] <= $condition['to'] ) )
+            if ( ! ( $row[$tableField] < $condition['to'] ) )
             {
-//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ! ' . $row['tx_billing_amount.uid'] . ' ' . date( 'c', $row[$tableField] ) . ' <= ' . date( 'c', $condition['from'] ) );
-//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' <= ' . $condition['to'] );
+//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ! ' . $row['tx_billing_amount.uid'] . ' ' . date( 'c', $row[$tableField] ) . ' < ' . date( 'c', $condition['from'] ) );
+//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' < ' . $condition['to'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
@@ -3444,7 +3444,8 @@ class tx_browser_pi1_filter {
       //
       // LOOP each filter
 
-    foreach ($this->arr_conf_tableFields as $tableField)
+var_dump(__METHOD__ . ' (' . __LINE__ . ') ', $this->arr_conf_tableFields );
+    foreach( $this->arr_conf_tableFields as $tableField )
     {
 
       list ($table, $field) = explode('.', $tableField);
