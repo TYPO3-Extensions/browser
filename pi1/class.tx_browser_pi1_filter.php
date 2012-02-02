@@ -465,19 +465,19 @@ class tx_browser_pi1_filter {
       {
         switch( key( $condition ) )
         {
-          case( 'equal_or_bigger' ):
-          case( 'smaller' ):
-            if ( ! ( $row[$tableField] >= $condition['equal_or_bigger'] ) )
+          case( 'from' ):
+          case( 'to' ):
+            if ( ! ( $row[$tableField] >= $condition['from'] ) )
             {
-              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . date( 'c', $row[$tableField] ) . ' >= ' . date( 'c', $condition['equal_or_bigger'] ) );
-//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
+              var_dump(__METHOD__ . ' (' . __LINE__ . '): ! ' . $row['tx_billing_amount.uid'] . ' ' . date( 'c', $row[$tableField] ) . ' >= ' . date( 'c', $condition['from'] ) );
+//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['from'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
-            if ( ! ( $row[$tableField] < $condition['smaller'] ) )
+            if ( ! ( $row[$tableField] < $condition['to'] ) )
             {
-              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . date( 'c', $row[$tableField] ) . ' < ' . date( 'c', $condition['equal_or_bigger'] ) );
-//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' < ' . $condition['smaller'] );
+              var_dump(__METHOD__ . ' (' . __LINE__ . '): ! ' . $row['tx_billing_amount.uid'] . ' ' . date( 'c', $row[$tableField] ) . ' < ' . date( 'c', $condition['from'] ) );
+//              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' < ' . $condition['to'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
@@ -1090,7 +1090,7 @@ class tx_browser_pi1_filter {
         {
           $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
             // #30912, 120127, dwildt+
-          $this->arr_filter_condition[$tableField]['equal_or_bigger'] = mysql_real_escape_string( $from );
+          $this->arr_filter_condition[$tableField]['from'] = mysql_real_escape_string( $from );
         }
 
         $to         = $arr_currField['valueTo_stdWrap.']['value'];
@@ -1101,7 +1101,7 @@ class tx_browser_pi1_filter {
         {
           $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
             // #30912, 120127, dwildt+
-          $this->arr_filter_condition[$tableField]['smaller'] = mysql_real_escape_string( $to );
+          $this->arr_filter_condition[$tableField]['to'] = mysql_real_escape_string( $to );
         }
 
         if( is_array( $arr_item ) )
@@ -1208,7 +1208,7 @@ class tx_browser_pi1_filter {
         {
           $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
             // #30912, 120127, dwildt+
-          $this->arr_filter_condition[$tableField]['equal_or_bigger'] = mysql_real_escape_string( $from );
+          $this->arr_filter_condition[$tableField]['from'] = mysql_real_escape_string( $from );
         }
 
         $to         = $arr_currField['valueTo_stdWrap.']['value'];
@@ -1219,7 +1219,7 @@ class tx_browser_pi1_filter {
         {
           $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
             // #30912, 120127, dwildt+
-          $this->arr_filter_condition[$tableField]['smaller'] = mysql_real_escape_string( $to );
+          $this->arr_filter_condition[$tableField]['to'] = mysql_real_escape_string( $to );
         }
 
         if( is_array( $arr_item ) )
