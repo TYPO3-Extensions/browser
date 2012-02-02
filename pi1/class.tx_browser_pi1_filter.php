@@ -474,7 +474,7 @@ class tx_browser_pi1_filter {
             {
               if( $row['tx_billing_amount.uid'] == 19 )
               {
-                var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
+                var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . date( 'c', $row[$tableField] ) . ' >= ' . date( 'c', $condition['equal_or_bigger'] ) );
               }
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
               unset( $this->rows_wo_limit[$key] );
