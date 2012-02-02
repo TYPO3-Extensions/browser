@@ -2448,7 +2448,7 @@ class tx_browser_pi1_cal
 //{
   $prompt_01 = $tableField . ' ' . $keyValue . ' >= ' . $currFrom . ' && ' . $keyValue . ' < ' . $currTo;
   $prompt_02 = date( 'c', $keyValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $keyValue ) . ' < ' . date( 'c', $currTo );
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01. $prompt_02 );
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01, $prompt_02 );
 //}
           if ($keyValue >= $currFrom && $keyValue < $currTo)
           {
@@ -2488,7 +2488,7 @@ class tx_browser_pi1_cal
 //{
   $prompt_01 = $tableField . ' ' . $valueValue . ' >= ' . $currFrom . ' && ' . $valueValue . ' < ' . $currTo;
   $prompt_02 = date( 'c', $valueValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $valueValue ) . ' < ' . date( 'c', $currTo );
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01. $prompt_02 );
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01, $prompt_02 );
 //}
           if( $valueValue >= $currFrom && $valueValue < $currTo )
           {
