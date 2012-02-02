@@ -450,6 +450,7 @@ class tx_browser_pi1_filter {
 //$pos = strpos('91.23.187.149', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 //if( ! ( $pos === false ) )
 //{
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
 //  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->rows_wo_limit );
 //}
 //if( $pos === false )
@@ -459,10 +460,6 @@ class tx_browser_pi1_filter {
       // LOOP rows
     foreach( $this->rows_wo_limit as $key => $row)
     {
-      if( $row['tx_billing_amount.uid'] == 19 )
-      {
-        var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->arr_filter_condition );
-      }
         // LOOP conditions
       foreach( $this->arr_filter_condition as $tableField => $condition )
       {
@@ -472,20 +469,14 @@ class tx_browser_pi1_filter {
           case( 'smaller' ):
             if ( ! ( $row[$tableField] >= $condition['equal_or_bigger'] ) )
             {
-              if( $row['tx_billing_amount.uid'] == 19 )
-              {
-                var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . date( 'c', $row[$tableField] ) . ' >= ' . date( 'c', $condition['equal_or_bigger'] ) );
-              }
+              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . date( 'c', $row[$tableField] ) . ' >= ' . date( 'c', $condition['equal_or_bigger'] ) );
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' >= ' . $condition['equal_or_bigger'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
             if ( ! ( $row[$tableField] < $condition['smaller'] ) )
             {
-              if( $row['tx_billing_amount.uid'] == 19 )
-              {
-                var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' < ' . $condition['smaller'] );
-              }
+              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . date( 'c', $row[$tableField] ) . ' < ' . date( 'c', $condition['equal_or_bigger'] ) );
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): ' . $row[$tableField] . ' < ' . $condition['smaller'] );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
