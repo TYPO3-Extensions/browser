@@ -491,10 +491,10 @@ class tx_browser_pi1_filter {
             break;
           case( 'like' ):
             $strtolower_value = "'" . mb_strtolower( $row[$tableField] ) . "'";
-            $value_list = implode( ',', $condition['like'] );
-            var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $strtolower_value . ', array( ' . $value_list . ' ) ) ' );
             if ( ! ( in_array( $strtolower_value, $condition[ 'like' ] ) ) )
             {
+//              $value_list = implode( ',', $condition['like'] );
+//              var_dump(__METHOD__ . ' (' . __LINE__ . '): in_array( ' . $strtolower_value . ', array( ' . $value_list . ' ) ) ' );
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
