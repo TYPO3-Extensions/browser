@@ -457,6 +457,7 @@ class tx_browser_pi1_filter {
         {
           case( 'from' ):
           case( 'to' ):
+              // Line has to correspondend with similar code some lines above and code in cal::area_set_hits()
             if ( ! ( $row[$tableField] >= $condition['from'] ) )
             {
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): ! ' . $row['tx_billing_amount.uid'] . ' ' . date( 'c', $row[$tableField] ) . ' >= ' . date( 'c', $condition['from'] ) );
@@ -464,6 +465,7 @@ class tx_browser_pi1_filter {
               unset( $this->rows_wo_limit[$key] );
               continue 2;
             }
+              // Line has to correspondend with similar code some lines above and code in cal::area_set_hits()
             if ( ! ( $row[$tableField] < $condition['to'] ) )
             {
 //              var_dump(__METHOD__ . ' (' . __LINE__ . '): ! ' . $row['tx_billing_amount.uid'] . ' ' . date( 'c', $row[$tableField] ) . ' < ' . date( 'c', $condition['from'] ) );

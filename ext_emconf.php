@@ -17,7 +17,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'shy' => 0,
 	'version' => '3.9.7',
 	'dependencies' => 'browser_manual_en', 'php', 'typo3',
-	'conflicts' => '',
+	'conflicts' => 'be_tablefilter',
 	'priority' => '',
 	'loadOrder' => '',
 	'module' => '',
@@ -39,6 +39,7 @@ $EM_CONF[$_EXTKEY] = array(
 			'typo3' => '4.4.6-0.0.0',
 		),
 		'conflicts' => array(
+      'be_tablefilter',
 		),
 		'suggests' => array(
 		),

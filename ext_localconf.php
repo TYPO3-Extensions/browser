@@ -14,4 +14,14 @@ t3lib_extMgm::addPItoST43($_EXTKEY,'pi4/class.tx_browser_pi4.php','_pi4','list_t
   // Extending TypoScript from static template uid=43 to set up userdefined tag
 
 
+
+  ////////////////////////////////////////////////////
+  //
+  // SC_OPTIONS
+
+  // #33673, 120203, dwildt
+$GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/class.db_list_extra.inc']['getTable'][] = 'EXT:browser/lib/class.tx_browser_befilter_hooks.php:tx_betablefilter_hooks';
+$GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/class.db_list.inc']['makeQueryArray'][] = 'EXT:browser/lib/class.tx_browser_befilter_sql.php:tx_betablefilter_sql';
+  // SC_OPTIONS
+
 ?>
