@@ -56,7 +56,7 @@ require_once(PATH_t3lib.'class.t3lib_tceforms.php');
  */
 class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook {
 
-  var $extension = 'tx_betablefilter';
+  var $extension = 'tx_browser_befilter';
   var $session = array();
   var $tceforms;
   var $filterCriteria = array();
@@ -462,8 +462,8 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook {
     // 0.2.0, 110815, dwildt +
   /**
  * initLibrary(): Initiate the library
- *            * Initiate class tx_betablefilter_sql
- *            * Initiate class tx_betablefilter_ts
+ *            * Initiate class tx_browser_befilter_sql
+ *            * Initiate class tx_browser_befilter_ts
  *            * Allocates the page TS config
  *
  * @return  void
@@ -473,15 +473,15 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook {
  */
   private function initLibrary() {
 
-      // Init class tx_betablefilter_sql
-    require_once('class.tx_betablefilter_sql.php');
-    $this->objLibSql = new tx_betablefilter_sql($this);
-      // Init class tx_betablefilter_sql
+      // Init class tx_browser_befilter_sql
+    require_once('class.tx_browser_befilter_sql.php');
+    $this->objLibSql = new tx_browser_befilter_sql($this);
+      // Init class tx_browser_befilter_sql
 
-      // Init class tx_betablefilter_ts
-    require_once('class.tx_betablefilter_ts.php');
-    $this->objLibTs = new tx_betablefilter_ts($this);
-      // Init class tx_betablefilter_ts
+      // Init class tx_browser_befilter_ts
+    require_once('class.tx_browser_befilter_ts.php');
+    $this->objLibTs = new tx_browser_befilter_ts($this);
+      // Init class tx_browser_befilter_ts
 
       // Allocates the page TS config
     if(!$this->pageTSconfig) {
