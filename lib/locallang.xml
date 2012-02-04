@@ -6,6 +6,8 @@
   </meta>
   <data type="array">
     <languageKey index="default" type="array">
+      <label index="befilter_from">from</label>
+      <label index="befilter_to">to</label>
       <label index="promptCheckUpdateHeader">Update wizard</label>
       <label index="promptCheckUpdateBody"><![CDATA[
         You don't need the update wizard
@@ -116,6 +118,8 @@
       ]]></label>
     </languageKey>
     <languageKey index="de" type="array">
+      <label index="befilter_from">von</label>
+      <label index="befilter_to">bis</label>
       <label index="promptCheckUpdateHeader">Update-Assistent</label>
       <label index="promptCheckUpdateBody"><![CDATA[
         Du brauchst keinen Update-Test durchzuf&uuml;hren,

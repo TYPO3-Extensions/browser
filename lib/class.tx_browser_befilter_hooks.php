@@ -139,8 +139,7 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook {
       $element = array();
       $labelDef = $GLOBALS['TCA'][$table]['columns'][$item]['label'];
       $itemfrom = $item.'_from';
-        // dwildt: Next line isn't proper, because it deoends on a third party extenion!
-      $labelValuefrom = $this->tceforms->sL($labelDef).$this->tceforms->sL('LLL:EXT:cf_mmcontainer/locallang_db.xml:tx_betablefilter_download.from');
+      $labelValuefrom = $this->tceforms->sL($labelDef).$this->tceforms->sL('LLL:EXT:browser/lib/locallang.xml:befilter_from');
         // 0.2.0, 110815, dwildt +
       if(isset($conf['fromto_labels']['from']))
       {
@@ -158,8 +157,7 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook {
 
       // to
       $itemto = $item.'_to';
-        // dwildt: Next line isn't proper, because it deoends on a third party extenion!
-      $labelValueto = $this->tceforms->sL($labelDef).$this->tceforms->sL('LLL:EXT:cf_mmcontainer/locallang_db.xml:tx_betablefilter_download.to');
+      $labelValueto = $this->tceforms->sL($labelDef).$this->tceforms->sL('LLL:EXT:browser/lib/locallang.xml:befilter_to');
         // 0.2.0, 110815, dwildt +
       if(isset($conf['fromto_labels']['to']))
       {
