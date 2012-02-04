@@ -146,8 +146,8 @@ plugin.tx_browser_pi3 {
       wrap = <h2>|</h2>
     }
       // browser_tut_basics_en
-    1130 < plugin.tx_browser_pi3.template
-    1130 {
+    1001 < plugin.tx_browser_pi3.template
+    1001 {
       10 {
         11 {
           typolink {
@@ -167,8 +167,8 @@ plugin.tx_browser_pi3 {
       }
     }
       // browser_tut_ajax_en
-    1131 < plugin.tx_browser_pi3.template
-    1131 {
+    1010 < plugin.tx_browser_pi3.template
+    1010 {
       10 {
         11 {
           typolink {
@@ -184,6 +184,27 @@ plugin.tx_browser_pi3 {
       20 {
         stdWrap {
           data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_ajax_en.description
+        }
+      }
+    }
+      // browser_tut_befilter_en
+    1011 < plugin.tx_browser_pi3.template
+    1011 {
+      10 {
+        11 {
+          typolink {
+            parameter   = http://typo3.org/extensions/repository/view/browser_tut_befilter_en/current/
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_befilter_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_befilter_en.description
         }
       }
     }

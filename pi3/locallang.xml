@@ -18,6 +18,8 @@
       <label index="tutorials.browser_tut_ajax_en.description">Publish your data supported by AJAX.</label>
       <label index="tutorials.browser_tut_basics_en.title">Browser Tutorial Basics</label>
       <label index="tutorials.browser_tut_basics_en.description">Step-by-step introduction for the basics.</label>
+      <label index="tutorials.browser_tut_befilter_en.title">Browser Tutorial Backend Filter</label>
+      <label index="tutorials.browser_tut_befilter_en.description">Extend the TYPO3 backend list view with filters.</label>
       <label index="tutorials.browser_tut_cal_en.title">Browser Tutorial Calendar</label>
       <label index="tutorials.browser_tut_cal_en.description">Publish your data in form of a calendar. Be aware: Only day's schedule is supported in the current version.</label>
       <label index="tutorials.browser_tut_database_en.title">Browser Tutorial Database</label>
@@ -79,6 +81,8 @@
       <label index="tutorials.browser_tut_ajax_en.description">Ver<![CDATA[&ouml;]]>ffentliche Deine Daten und benutze dabei AJAX!</label>
       <label index="tutorials.browser_tut_basics_en.title">Browser Tutorial Basics - Grundlagen</label>
       <label index="tutorials.browser_tut_basics_en.description">Einf<![CDATA[&uuml;]]>hrung in die Grundlagen. Die wichtigste Unterlage nach dem Manual und vor jedem anderen Tutorial. U.a.: stdWrap, HTML-Templating, Optimierung f<![CDATA[&uuml;]]>r Suchmaschinen.</label>
+      <label index="tutorials.browser_tut_befilter_en.title">Browser Tutorial Backend Filter</label>
+      <label index="tutorials.browser_tut_befilter_en.description">Erweitere Deine TYPO3 Backend Listenansicht mit Filtern.</label>
       <label index="tutorials.browser_tut_cal_en.title">Browser Tutorial Kalender</label>
       <label index="tutorials.browser_tut_cal_en.description">Ver<![CDATA[&ouml;]]>ffentliche Deine Daten in Form eines Kalenders. Achtung: In der aktuellen Version wird nur der Tageskalender unterst<![CDATA[&uuml;]]>tzt.</label>
       <label index="tutorials.browser_tut_database_en.title">Browser Tutorial Datenbank</label>
