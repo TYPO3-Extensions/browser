@@ -1,3 +1,7 @@
+.tx-browser-pi1 .mapview-content {
+  padding:1em;
+}
+
 .oxMapArea {
   width:600px;
   height:400px;
