@@ -292,7 +292,7 @@ plugin.tx_browser_pi1 {
               // [STRING] field devider. Recommended (tab): \t
             value = \t
           }
-            field enclosure
+            // field enclosure
           enclosure = TEXT
           enclosure {
               // [STRING] field enclosure. Recommended null. Usually a quote (")
