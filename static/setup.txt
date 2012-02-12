@@ -280,10 +280,19 @@ plugin.tx_browser_pi1 {
         file = EXT:browser/res/html/map/default.tmpl
       }
       marker {
-        category = TEXT
         category {
-            // [STRING] marker for the category. Syntax: table.field
-          value =
+            // category icon
+          icon = IMAGE
+          icon {
+              // [STRING] path to the image file
+            file = EXT:browser/res/js/map/lib/OpenLayers/img/marker.png
+          }
+            // category label
+          label = TEXT
+          label {
+              // [STRING] label for the category. Syntax: table.field
+            value =
+          }
         }
         csv_file {
             // field devider
