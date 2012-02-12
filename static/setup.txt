@@ -2712,7 +2712,7 @@ plugin.tx_browser_pi1 {
           metaCharset           = iso-8859-15
           xhtml_cleaning        = 0
           admPanel              = 0
-          additionalHeaders     = Content-Type: text/csv
+          additionalHeaders     = Content-Type: text/plain
         }
       }
     }
