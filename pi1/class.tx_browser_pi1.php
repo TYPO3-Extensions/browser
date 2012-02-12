@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008 - 2011 Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2008-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -933,7 +933,13 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
-      // 110804, dwildt
+$pos = strpos('87.177.75.198', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->objMap->enabled );
+}
+
+    // 110804, dwildt
     $this->objJss->addCssFiles();
 
 
