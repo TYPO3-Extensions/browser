@@ -279,13 +279,68 @@ plugin.tx_browser_pi1 {
           // [STRING] Path to the map HTML template
         file = EXT:browser/res/html/map/default.tmpl
       }
-      database {
-          // [STRING] table and field of the category. Syntax: table.field
+      marker {
+          // [STRING] marker for the category. Syntax: table.field
         category =
-          // [STRING] table and field of the latitude value. Syntax: table.field
-        latitude =
-          // [STRING] table and field of the longitude value. Syntax: table.field
-        longitude =
+        csv_file {
+          devider {
+              // [STRING] field devider. Recommended (tab): \t
+            stdWrap = TEXT
+            stdWrap {
+              value = \t
+            }
+          }
+          enclosure {
+              // [STRING] field enclosure. Recommended null. Usually a quote (")
+            stdWrap = TEXT
+            stdWrap {
+              value =
+            }
+          }
+          strip_tag {
+              // [BOOLEAN] false (recommended) || true. Remove HTML tags
+            stdWrap = TEXT
+            stdWrap {
+              value = false
+            }
+          }
+          fields {
+              // [STRING] marker for the latitude value. Syntax: table.field
+            lat =
+              // [STRING] marker for the longitude value. Syntax: table.field
+            lon =
+              // Content object for the title value
+            title = COA
+            title {
+                // [STRING] marker for the title value. Syntax: table.field
+              value =
+            }
+              // Content object for the description value
+            description = COA
+            description {
+                // [STRING] marker for the description value. Syntax: table.field
+              value =
+            }
+              // Content object for the icon value
+            icon = COA
+            icon {
+                // [STRING] marker for the icon value. Syntax: table.field
+              value =
+            }
+              // Content object for the iconSize value
+            iconSize = COA
+            iconSize {
+                // [STRING] marker for the iconSize value. Syntax: table.field
+              value =
+            }
+              // Content object for the iconOffset value
+            iconOffset = COA
+            iconOffset {
+                // [STRING] marker for the iconOffset value. Syntax: table.field
+              value =
+            }
+          }
+        }
       }
       configuration {
         MapControls = TEXT
