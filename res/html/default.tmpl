@@ -132,6 +132,7 @@ This template is the default template for all list views.
             </div> <!-- /listview -->
             <!-- ###LISTVIEW### end -->
           </div> <!-- /ui-tabs -->
+          ###MAP###
           <!-- ###LISTTABS### end -->
         </div> <!-- /listarea -->
       </div> <!-- /ui-widget -->
@@ -178,8 +179,9 @@ plugin.tx_browser_pi1.views.single.XX.template.default = 1
 </em>
 
 <!-- ###TEMPLATE_SINGLE### begin -->
-<!-- ###AREA_FOR_AJAX_LIST_01### begin -->
+      <div class="###MODE### singleview-###MODE### ui-widget ui-corner-all">
         <!-- ###SINGLEVIEW### begin -->
+<!-- ###AREA_FOR_AJAX_LIST_01### begin -->
         <div id="c###TT_CONTENT.UID###-singleview-###MODE###" class="singleview singleview-###MODE###">
           ###RECORD_BROWSER###
           <div class="ui-widget ui-corner-all">
@@ -208,6 +210,7 @@ plugin.tx_browser_pi1.views.single.XX.template.default = 1
         </div>
 <!-- ###AREA_FOR_AJAX_LIST_02### end -->
         <!-- ###SINGLEVIEW### end -->
+      </div> <!-- /ui-widget -->
 <!-- ###TEMPLATE_SINGLE### end -->
 
 
