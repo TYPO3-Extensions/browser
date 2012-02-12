@@ -125,11 +125,6 @@ class tx_browser_pi1_map
  */
   public function get_map( $template )
   {
-$pos = strpos('87.177.75.198', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $template );
-}
       // init the map
     $this->init( );
 
@@ -335,7 +330,12 @@ if( ! ( $pos === false ) )
       //
       // RETURN: template contains the map marker
 
-    $pos = strpos( $str_mapMarker, $template );
+//$pos = strpos('87.177.75.198', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//if( ! ( $pos === false ) )
+//{
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $template );
+//}
+    $pos = strpos( $template, $str_mapMarker );
     if( ! ( $pos === false ) )
     {
       if( $this->pObj->b_drs_map )
