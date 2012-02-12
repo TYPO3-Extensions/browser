@@ -1,5 +1,6 @@
 #record-browser {
-  padding-left: 0;
+  margin-left: 0;
+  padding-bottom: 1em;
 }
 #record-browser li {
   cursor: pointer;
