@@ -949,11 +949,17 @@ class tx_browser_pi1 extends tslib_pibase {
             // CSV export isn't enabled
           case( false ) :
           default :
-            return  'Map marker export isn\'t enabled. Please enable it in your TYPO3-Browser. ' . PHP_EOL .
-                    PHP_EOL .
-                    'TypoScript: ' . PHP_EOL .
-                    'views.list.' . $this->piVar_mode . '.navigation.map < plugin.tx_browser_pi1.navigation.map '  . PHP_EOL .
-                    'views.list.' . $this->piVar_mode . '.navigation.map.enabled.value = 1 ';
+            $prompt = 'Map marker export isn\'t enabled. Please enable it in your TYPO3-Browser. ' . PHP_EOL .
+                      PHP_EOL .
+                      'TypoScript: ' . PHP_EOL .
+                      'views.list.' . $this->piVar_mode . '.navigation.map < plugin.tx_browser_pi1.navigation.map '  . PHP_EOL .
+                      'views.list.' . $this->piVar_mode . '.navigation.map.enabled.value = 1 ';
+              // DRS - Development Reporting System
+            if( $this->b_drs_map )
+            {
+              t3lib_div :: devLog( '[ERROR/MAP] ' . $prompt , $this->extKey, 3 );
+            }
+            return $prompt;
             break;
         }
         break;
