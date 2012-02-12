@@ -70,9 +70,13 @@ class tx_browser_pi1_map
 {
 
     // [BOOLEAN] Is map enabled? Will set by init( ) while runtime
-  var $enabled  = null;
+  var $enabled      = null;
     // [ARRAY] TypoScript configuration array. Will set by init( ) while runtime
-  var $confMap            = null;
+  var $confMap      = null;
+    // [Integer] Number of the current typeNum
+  var $int_typeNum  = null;
+    // [String] Name of the current typeNum
+  var $str_typeNum  = null;
 
 
 
@@ -265,6 +269,27 @@ class tx_browser_pi1_map
     $cObj_conf      = $this->confMap['enabled.'];
     $this->enabled  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
       // Set the global $enabled
+
+
+
+      // Get the typeNum from the current URL parameters
+    $typeNum = (int) t3lib_div::_GP( 'type' );
+      // Check the proper typeNum
+    $conf = $this->pObj->conf;
+    switch (true)
+    {
+      case( $typeNum == $conf['export.']['map.']['page.']['typeNum'] ) :
+          // Given typeNum is the internal typeNum for CSV export
+        $this->int_typeNum = $typeNum;
+        $this->str_typeNum = 'map';
+        break;
+      default :
+          // Given typeNum isn't the internal typeNum for CSV export
+        $this->str_typeNum = 'undefined';
+    }
+      // Check the proper typeNum
+
+    
 
 
 
