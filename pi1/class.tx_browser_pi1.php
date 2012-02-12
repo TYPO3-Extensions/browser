@@ -913,10 +913,7 @@ class tx_browser_pi1 extends tslib_pibase {
         {
             // CSV export is enabled
           case( true ) :
-            //header('Content-type: text/csv');
-            //header('Content-type: application/msexcel');
-            //header('Content-Disposition: attachment; filename="downloaded.csv"');
-            return trim($str_template_completed);
+            return trim( $str_template_completed );
             break;
             // CSV export isn't enabled
           case( false ) :
@@ -925,20 +922,51 @@ class tx_browser_pi1 extends tslib_pibase {
             break;
         }
         break;
-        // typeNum name isn't csv: Follow the workflow
+        // typeNum name is csv
       default:
-        // Do nothing here, follow the workflow
+        // typeNum name isn't csv: Follow the workflow
     }
       // csv export: Set CSV field devider and field wrapper
 
 
 
-$this->objMap->init( );
-$pos = strpos('87.177.75.198', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->objMap->str_typeNum, $this->objMap->enabled );
-}
+      //////////////////////////////////////////////////////////////////////
+      //
+      // map marker category: return the result (HTML string) without wrapInBaseClass
+
+      // #32654, 120212, dwildt+
+    $this->objMap->init( );
+    switch( $this->objMap->str_typeNum )
+    {
+        // typeNum name is map
+      case( 'map' ) :
+        switch ( $this->objMap->enabled )
+        {
+            // CSV export is enabled
+          case( true ) :
+            return trim( $str_template_completed );
+            break;
+            // CSV export isn't enabled
+          case( false ) :
+          default :
+            return  'Map marker export isn\'t enabled. Please enable it in your TYPO3-Browser. ' .
+                    'TypoScript: views.list.[id].navigation.map.enabled.value = 1';
+            break;
+        }
+        break;
+        // typeNum name is map
+      default:
+        // typeNum name isn't map: Follow the workflow
+    }
+      // #32654, 120212, dwildt+
+
+
+
+//$pos = strpos('87.177.75.198', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//if( ! ( $pos === false ) )
+//{
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->objMap->str_typeNum, $this->objMap->enabled );
+//}
 
     // 110804, dwildt
     $this->objJss->addCssFiles();
