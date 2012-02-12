@@ -280,6 +280,8 @@ plugin.tx_browser_pi1 {
         file = EXT:browser/res/html/map/default.tmpl
       }
       database {
+          // [STRING] table and field of the category. Syntax: table.field
+        category =
           // [STRING] table and field of the latitude value. Syntax: table.field
         latitude =
           // [STRING] table and field of the longitude value. Syntax: table.field
@@ -2699,6 +2701,12 @@ plugin.tx_browser_pi1 {
         }
       }
     }
+    map < .csv
+    map {
+      page {
+        typeNum = {$plugin.tx_browser_pi1.typeNum.mapPageObj}
+      }
+    }
   }
 
   download {
@@ -3293,3 +3301,9 @@ browser_csv < plugin.tx_browser_pi1.export.csv.page
 
   // TYPO3-Browser: Download page object
 browser_download < plugin.tx_browser_pi1.download.page
+
+[globalVar = GP:type = {$plugin.tx_browser_pi1.typeNum.mapPageObj}]
+    // Don't wrap the content of the page object for the map category markers by default
+  tt_content.stdWrap >
+[global]
+
