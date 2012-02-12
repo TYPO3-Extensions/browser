@@ -933,10 +933,11 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
+$this->objExport->init( );
 $pos = strpos('87.177.75.198', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 if( ! ( $pos === false ) )
 {
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->objMap->enabled );
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->objExport->str_typeNum, $this->objMap->enabled );
 }
 
     // 110804, dwildt

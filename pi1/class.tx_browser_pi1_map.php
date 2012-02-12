@@ -186,7 +186,7 @@ class tx_browser_pi1_map
  * @version 3.9.6
  * @since   3.9.6
  */
-  private function init(  )
+  public function init(  )
   {
       ///////////////////////////////////////////////////////////////////////////////
       //
