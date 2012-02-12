@@ -125,6 +125,11 @@ class tx_browser_pi1_map
  */
   public function get_map( $template )
   {
+$pos = strpos('87.177.75.198', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $template );
+}
       // init the map
     $this->init( );
 
