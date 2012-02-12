@@ -280,29 +280,23 @@ plugin.tx_browser_pi1 {
         file = EXT:browser/res/html/map/default.tmpl
       }
       marker {
-          // [STRING] marker for the category. Syntax: table.field
-        category =
+        category = TEXT
+        category {
+            // [STRING] marker for the category. Syntax: table.field
+          value =
+        }
         csv_file {
+            // field devider
+          devider = TEXT
           devider {
               // [STRING] field devider. Recommended (tab): \t
-            stdWrap = TEXT
-            stdWrap {
-              value = \t
-            }
+            value = \t
           }
+            field enclosure
+          enclosure = TEXT
           enclosure {
               // [STRING] field enclosure. Recommended null. Usually a quote (")
-            stdWrap = TEXT
-            stdWrap {
-              value =
-            }
-          }
-          strip_tag {
-              // [BOOLEAN] false (recommended) || true. Remove HTML tags
-            stdWrap = TEXT
-            stdWrap {
-              value = false
-            }
+            value =
           }
           fields {
               // [STRING] marker for the latitude value. Syntax: table.field
@@ -310,13 +304,13 @@ plugin.tx_browser_pi1 {
               // [STRING] marker for the longitude value. Syntax: table.field
             lon =
               // Content object for the title value
-            title = COA
+            title = TEXT
             title {
                 // [STRING] marker for the title value. Syntax: table.field
               value =
             }
               // Content object for the description value
-            description = COA
+            description = TEXT
             description {
                 // [STRING] marker for the description value. Syntax: table.field
               value =
@@ -328,13 +322,13 @@ plugin.tx_browser_pi1 {
               value =
             }
               // Content object for the iconSize value
-            iconSize = COA
+            iconSize = TEXT
             iconSize {
                 // [STRING] marker for the iconSize value. Syntax: table.field
               value =
             }
               // Content object for the iconOffset value
-            iconOffset = COA
+            iconOffset = TEXT
             iconOffset {
                 // [STRING] marker for the iconOffset value. Syntax: table.field
               value =
