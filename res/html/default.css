@@ -1,7 +1,10 @@
 #record-browser {
   padding-left: 0;
 }
-#record-browser li {
+#record-browser ul {
+  padding-left: 0;
+}
+#record-browser ul li {
   cursor: pointer;
   float: left;
   list-style: none;
