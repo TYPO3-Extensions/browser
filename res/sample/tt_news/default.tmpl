@@ -17,77 +17,85 @@ VERSION 3.6.1
 <pre>
 
 <!-- ###TEMPLATE_LIST### begin -->
+      <div class="###MODE### listview-###MODE### ui-widget ui-corner-all">
 <!-- ###LIST_TITLE### begin -->
         ###MY_TITLE###
 <!-- ###LIST_TITLE### end -->
 <!-- ###SEARCHFORM### begin -->
-        <div class="searchbox searchbox-###VIEW###-###MODE###">
-          <form action="###ACTION###" method="post" >
+        <div id="c###TT_CONTENT.UID###-list-searchbox-###MODE###" class="searchbox searchbox-list-###MODE###">
+          <form id="c###TT_CONTENT.UID###-list-searchbox-form-###MODE###" action="###ACTION###" method="post" >
             <fieldset>
               <legend>###MY_SEARCH_LEGEND###</legend>
+              ###HIDDEN###
               <input type="hidden" name="no_cache" value="1" />
               <input type="hidden" name="tx_browser_pi1[plugin]" value="###PLUGIN###" />
               <input class="sword" type="text" name="tx_browser_pi1[sword]" onfocus="if(this.value =='###SWORD_DEFAULT###') this.value=''" value="###SWORD###" />
-              <input class="button" type="submit" value="###MY_SEARCH###" />
-              <input class="button" type="button" onclick="location='###MY_URL###'" class="reset" value="###MY_RESET###" />
-              <!-- Add filters with the ###TABLE.FIELD### syntax and configure your filters with TypoScript --> 
+              <input class="button hidesubmit" type="submit" value="###MY_SEARCH###" />
+              <!-- ###BUTTON_CSV-EXPORT### begin -->
+                <input id="c###TT_CONTENT.UID###-list-submit-csv-export-###MODE###" class="button hidesubmit"  type="submit"  value="###MY_CSV_EXPORT###" />
+              <!-- ###BUTTON_CSV-EXPORT### end -->
+              <input class="button reset" type="button" onclick="location='###MY_URL###'" value="###MY_RESET###" />
+              <!-- Add filters with the ###TABLE.FIELD### syntax and configure your filters with TypoScript -->
             </fieldset>
           </form>
           ###RESULTPHRASE###
         </div><!-- ###SEARCHFORM### end -->
         <div class="listarea">
-<!-- ###CATEGORY_MENU### begin -->
-        <!-- Enable the subpart CATEGORY_MENU: Set plugin.tx_browser_pi1.displayList.display.category_menu = 1 -->
-        <div class="category_menu category_menu-###VIEW###-###MODE###">
-          <!-- Add a category_menu with the ###TABLE.FIELD### syntax and configure your category_menu like a filter with TypoScript -->
-        </div><!-- ###CATEGORY_MENU### end -->
-<!-- ###AZSELECTOR### begin -->
-          <div class="azSelector azSelector-###UL_VIEW###-###UL_MODE###">
-            <ul class="azSelector azSelector-###UL_VIEW###-###UL_MODE###"><!-- ###AZSELECTORTABS### begin -->
-              <li###LI_CLASS###>###TAB###</li><!-- ###AZSELECTORTABS### end -->
-            </ul>
-          </div><!-- ###AZSELECTOR### end -->
-<!-- ###PAGEBROWSER### begin -->
-          <div class="browsebox browsebox-###VIEW###-###MODE###">
-            ###RESULT_AND_ITEMS###
-          </div><!-- ###PAGEBROWSER### end -->
-<!-- ###MODESELECTOR### begin -->
-          <div class="modeSelector modeSelector-###VIEW###-###MODE###">
-            <ul class="modeSelector modeSelector-###VIEW###-###MODE###"><!-- ###MODESELECTORTABS### begin -->
-              <li###CLASS###>###TABS###</li><!-- ###MODESELECTORTABS### end -->
-            </ul>
-          </div><!-- ###MODESELECTOR### end -->
-<!-- ###LISTVIEW### begin -->
-          <div class="###VIEW###view ###VIEW###view-###MODE###">
-<!-- ###GROUPBY### begin -->
-<!-- ###GROUPBYHEAD### begin -->
-            ###GROUPBY_GROUPNAME###
-<!-- ###GROUPBYHEAD### end -->
-<!-- ###GROUPBYBODY### begin -->
-          <!-- ###LISTHEAD### begin --><!-- ###LISTHEADITEM### begin -->
-            ###ITEM###<!-- ###LISTHEADITEM### end --><!-- ###LISTHEAD### end --><!-- ###LISTBODY### begin --><!-- ###LISTBODYITEM### begin -->
-            <div>
-              <h3 style="margin:0;background:#CCC">
-                ###TT_NEWS_CAT.TITLE###
-              </h3>
-              <h2 style="margin:0">
-                ###TT_NEWS.TITLE###
-              </h2>
-              <div style="float:right;">
-                ###SOCIALMEDIA_BOOKMARKS###
-              </div>
-              <div style="float:left;padding-right:.4em">
-                ###TT_NEWS.IMAGE###
-              </div>
-              <p>
-                 ###TT_NEWS.DATETIME### - ###TT_NEWS.SHORT###
-              </p>
-              <div style="clear:both;padding: 0 0 1em 0;"></div>
-            </div><!-- ###LISTBODYITEM### end --><!-- ###LISTBODY### end -->
-<!-- ###GROUPBYBODY### end -->
-<!-- ###GROUPBY### end -->
-          </div><!-- ###LISTVIEW### end -->
+          <!-- ###LISTTABS### begin -->
+          <div id="c###TT_CONTENT.UID###-list-tabs-###MODE###" class="ui-tabs ui-tabs-list-###MODE### ui-widget ui-widget-content ui-corner-all">
+            <!-- ###AZSELECTOR### begin -->
+            <div id="c###TT_CONTENT.UID###-azSelector-###MODE###" class="azSelector azSelector-###UL_VIEW###-###UL_MODE###">
+              <ul class="azSelector azSelector-###UL_VIEW###-###UL_MODE###"><!-- ###AZSELECTORTABS### begin -->
+                <li###LI_CLASS###>###TAB###</li><!-- ###AZSELECTORTABS### end -->
+              </ul>
+            </div><!-- ###AZSELECTOR### end -->
+            <!-- ###PAGEBROWSER### begin -->
+            <div id="c###TT_CONTENT.UID###-browsebox-###MODE###" class="browsebox browsebox-list-###MODE###">
+              ###RESULT_AND_ITEMS###
+            </div><!-- ###PAGEBROWSER### end -->
+            <!-- ###MODESELECTOR### begin -->
+            <div id="c###TT_CONTENT.UID###-modeSelector-###MODE###" class="modeSelector modeSelector-list-###MODE###">
+              <ul class="ui-tabs-nav ui-tabs-nav-list-###MODE### ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+                <!-- ###MODESELECTORTABS### begin -->
+                <li id="c###TT_CONTENT.UID###-list-tab-###MODE###" class="ui-state-default ui-corner-top c###TT_CONTENT.UID###-list-tab###UI-STATE-ACTIVE######UI-TABS-SELECTED###">###TABS###</li>
+                <!-- ###MODESELECTORTABS### end -->
+              </ul>
+            </div><!-- ###MODESELECTOR### end -->
+            <!-- ###LISTVIEW### begin -->
+            <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="###VIEW###view ###VIEW###view-content ###VIEW###view-###MODE### ###VIEW###view-content-###MODE###">
+              <!-- ###GROUPBY### begin -->
+              <!-- ###GROUPBYHEAD### begin -->
+              ###GROUPBY_GROUPNAME###
+              <!-- ###GROUPBYHEAD### end -->
+              <!-- ###GROUPBYBODY### begin -->
+              <!-- ###LISTHEAD### begin --><!-- ###LISTHEADITEM### begin -->
+                ###ITEM###<!-- ###LISTHEADITEM### end --><!-- ###LISTHEAD### end --><!-- ###LISTBODY### begin --><!-- ###LISTBODYITEM### begin -->
+                <div>
+                  <h3 style="margin:0;background:#CCC">
+                    ###TT_NEWS_CAT.TITLE###
+                  </h3>
+                  <h2 style="margin:0">
+                    ###TT_NEWS.TITLE###
+                  </h2>
+                  <div style="float:right;">
+                    ###SOCIALMEDIA_BOOKMARKS###
+                  </div>
+                  <div style="float:left;padding-right:.4em">
+                    ###TT_NEWS.IMAGE###
+                  </div>
+                  <p>
+                     ###TT_NEWS.DATETIME### - ###TT_NEWS.SHORT###
+                  </p>
+                  <div style="clear:both;padding: 0 0 1em 0;"></div>
+                </div><!-- ###LISTBODYITEM### end --><!-- ###LISTBODY### end -->
+              <!-- ###GROUPBYBODY### end -->
+              <!-- ###GROUPBY### end -->
+            </div> <!-- /listview -->
+            <!-- ###LISTVIEW### end -->
+          </div> <!-- /ui-tabs -->
+          <!-- ###LISTTABS### end -->
         </div> <!-- /listarea -->
+      </div> <!-- /ui-widget -->
 <!-- ###TEMPLATE_LIST### end -->
 
 

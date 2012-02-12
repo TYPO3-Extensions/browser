@@ -2,6 +2,12 @@
   120203
   New Features
   * #33673: Backend filter
+  Bugfixes:
+  * #33829: HTML-template: <div>-tag has to change place
+            Effected files
+            * /res/html/default.tmpl
+            * /res/html/default_ul.tmpl
+            * /res/sample/tt_news/default.tmpl
 
 3.9.7
   120202
@@ -30,7 +36,7 @@
                 * ... radiobuttons.wrap.item.stdWrap
                 * ... selectbox.wrap.item.stdWrap
                 is moved to ... item.wraps.value.stdWrap
-  * #32654: Integration of Open Street Map
+  * #32654: Integration of Open Street Map - Step I
   * #30912: Filter: independent total items
   * #00000: DRS displays warnings and errors eclusive
   Imrovement

@@ -21,11 +21,12 @@ This template is the default template for all list views.
 </em>
 
 <!-- ###TEMPLATE_LIST### begin -->
+      <div class="###MODE### listview-###MODE### ui-widget ui-corner-all">
 <!-- ###LIST_TITLE### begin -->
         ###MY_TITLE###
 <!-- ###LIST_TITLE### end -->
 <!-- ###SEARCHFORM### begin -->
-        <div class="searchbox searchbox-list-###MODE###">
+        <div id="c###TT_CONTENT.UID###-list-searchbox-###MODE###" class="searchbox searchbox-list-###MODE###">
           <form id="c###TT_CONTENT.UID###-list-searchbox-form-###MODE###" action="###ACTION###" method="post" >
             <fieldset>
               <legend>###MY_SEARCH_LEGEND###</legend>
@@ -81,6 +82,7 @@ This template is the default template for all list views.
             </div><!-- /listview --><!-- ###LISTVIEW### end -->
           </div> <!-- /ui-tabs --><!-- ###LISTTABS### end -->
         </div> <!-- /listarea -->
+      </div> <!-- /ui-widget -->
 <!-- ###TEMPLATE_LIST### end -->
 
 
