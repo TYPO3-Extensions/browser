@@ -985,6 +985,8 @@
     switch($handle_marker)
     {
       case('remove_empty_markers'):
+      case(''):
+      case(null):
           // DRS - Development Reporting System
         if ($this->pObj->b_drs_templating)
         {
@@ -1002,8 +1004,6 @@
           // Replace the left over markers
         $str_content = preg_replace('|###.*?###|i', '', $str_content);
         break;
-      case(''):
-      case(null):
       case('none'):
           // Do nothing;
         break;
