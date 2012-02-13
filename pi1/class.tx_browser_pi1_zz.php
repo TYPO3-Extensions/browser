@@ -1181,7 +1181,7 @@
  */
   function substitute_t3globals_recurs( $arr_multi_dimensional )
   {
-    return substitute_t3globals_recurs_DEPRECATED( $arr_multi_dimensional );
+    return $this->substitute_t3globals_recurs_DEPRECATED( $arr_multi_dimensional );
 
     $conf       = $this->pObj->conf;
     $conf_view  = $this->pObj->conf['views.'][$this->pObj->view.'.'][$this->pObj->piVar_mode.'.'];
