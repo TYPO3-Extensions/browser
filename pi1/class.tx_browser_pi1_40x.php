@@ -1853,9 +1853,13 @@ class tx_browser_pi1_40x extends tslib_pibase {
 
 
   /**
- * Get the value for the var $template
+ * getTemplate( ):  Get (HTML) the content of the $template.
+ *                  Handles error.
  *
- * @return	array		template
+ * @return	array		With element template
+ * @version 3.9.8
+ * @since   1.0.0
+ *
  */
   private function getTemplate( )
   {
@@ -1874,17 +1878,17 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Catch the template
 
-    if (!empty($conf['views.'][$viewWiDot][$mode.'.']['template.']['file']))
+    if( ! empty( $conf['views.'][$viewWiDot][$mode.'.']['template.']['file'] ) )
     {
         // Local HTML Template
       $template_path = $conf['views.'][$viewWiDot][$mode.'.']['template.']['file'];
     }
-    if (empty($conf['views.'][$viewWiDot][$mode.'.']['template.']['file']))
+    if ( empty( $conf['views.'][$viewWiDot][$mode.'.']['template.']['file'] ) )
     {
         // Global HTML Template
       $template_path = $conf['template.']['file'];
     }
-    $template = $cObj->fileResource($template_path);
+    $template = $cObj->fileResource( $template_path );
       // Catch the template
 
 
@@ -1893,15 +1897,15 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // DRS - Development Reporting System
 
-    if (!$template)
+    if( ! $template )
     {
-      if ($this->b_drs_error)
+      if( $this->b_drs_error )
       {
-        t3lib_div::devLog('[ERROR/DRS] There is no template file. Path: '.$template_path, $this->extKey, 3);
-        t3lib_div::devLog('[ERROR/DRS] ABORTED', $this->extKey, 0);
+        t3lib_div::devLog( '[ERROR/TEMPLATING] There is no template file. Path: ' . $template_path, $this->extKey, 3 );
+        t3lib_div::devLog( '[ERROR/TEMPLATING] ABORTED', $this->extKey, 0 );
       }
-      $str_header  = '<h1 style="color:red;">'.$this->pi_getLL('error_readlog_h1').'</h1>';
-      $str_prompt  = '<p style="color:red;font-weight:bold;">'.$this->pi_getLL('error_template_no').'</p>';
+      $str_header  = '<h1 style="color:red;">' . $this->pi_getLL( 'error_readlog_h1' ) . '</h1>';
+      $str_prompt  = '<p style="color:red;font-weight:bold;">' . $this->pi_getLL( 'error_template_no' ) . '</p>';
       $arr_return['error']['status'] = true;
       $arr_return['error']['header'] = $str_header;
       $arr_return['error']['prompt'] = $str_prompt;
