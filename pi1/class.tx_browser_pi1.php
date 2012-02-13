@@ -336,7 +336,7 @@ if( '91.23.180.95' == t3lib_div :: getIndpEnv('REMOTE_ADDR') )
   var_dump(__METHOD__ . ' (' . __LINE__ . ')', $conf['advanced.']['upgrade.']['enable.']['3_9_8'] );
 //  if( $conf['advanced.']['upgrade.']['enable.']['3_9_8'] )
 //  {
-    require_once('class.tx_browser_pi1.3.7.x.php');
+    require_once('class.tx_browser_pi1_37x.php');
     $this->browser37x = new tx_browser_pi1_37x;
     return $this->browser37x->main( $content, $conf );
 //  }
