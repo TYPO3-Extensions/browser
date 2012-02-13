@@ -1181,6 +1181,10 @@
  */
   function substitute_t3globals_recurs( $arr_multi_dimensional )
   {
+if( $this->pObj->bool_accessByIP )
+{
+  var_dump( 1 );
+}
     if( ! $this->pObj->bool_accessByIP )
     {
       return $this->substitute_t3globals_recurs_DEPRECATED( $arr_multi_dimensional );
@@ -1199,6 +1203,10 @@
 
 
 
+if( $this->pObj->bool_accessByIP )
+{
+  var_dump( 2 );
+}
       ////////////////////////////////////////////////
       //
       // RETURN, if marker with $Global keys should not replaced
@@ -1220,6 +1228,10 @@
     }
       // RETURN, if marker with $Global keys should not replaced
 
+if( $this->pObj->bool_accessByIP )
+{
+  var_dump( 3 );
+}
 
 
       // Get all keys from $GLOBALS
