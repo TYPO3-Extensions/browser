@@ -570,7 +570,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
       // Replace TSFE markers
 
 //:TODO: Performance: Funktion ist rekursiv: Aendern!
-    $this->conf = $this->objZz->substitute_t3globals_recurs( $this->conf );
+    $this->conf = $this->objZz->substitute_t3globals( $this->conf );
       // Replace TSFE markers
 
 

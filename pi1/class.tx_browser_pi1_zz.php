@@ -1179,7 +1179,7 @@
  * @version 3.9.8
  * @since   3.0.0
  */
-  function substitute_t3globals_recurs( $arr_multi_dimensional )
+  function substitute_t3globals( $arr_multi_dimensional )
   {
 if( $this->pObj->bool_accessByIP )
 {
@@ -1267,7 +1267,7 @@ $this->conf_view[$table . '.'][$field . '.'] = unserialize($serialized_conf);
  * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
  * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
  */
-  function substitute_t3globals_recurs_DEPRECATED($arr_multi_dimensional)
+  function substitute_t3globals_recurs($arr_multi_dimensional)
   {
     $conf       = $this->pObj->conf;
     $conf_view  = $this->pObj->conf['views.'][$this->pObj->view.'.'][$this->pObj->piVar_mode.'.'];
