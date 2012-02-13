@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008 - 2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2008-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -25,11 +25,11 @@
  /**
  * The class tx_browser_pi1_zz bundles zz methods for the extension browser
  *
- * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
- * @package    TYPO3
- * @subpackage    tx_browser
- * @version 3.9.3
- * @since 1.0.0
+ * @author      Dirk Wildt http://wildt.at.die-netzmacher.de
+ * @package     TYPO3
+ * @subpackage  tx_browser
+ * @version     3.9.8
+ * @since       1.0.0
  */
 
  /**
