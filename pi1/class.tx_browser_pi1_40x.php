@@ -88,11 +88,11 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-class tx_browser_pi1_37x extends tslib_pibase {
+class tx_browser_pi1_40x extends tslib_pibase {
 
   var $prefixId = 'tx_browser_pi1';
   // Same as class name
-  var $scriptRelPath = 'pi1/class.tx_browser_pi1_37x.php';
+  var $scriptRelPath = 'pi1/class.tx_browser_pi1_40x.php';
   // Path to this script relative to the extension dir.
   var $extKey = 'browser';
   // The extension key.
@@ -1821,9 +1821,9 @@ class tx_browser_pi1_37x extends tslib_pibase {
 
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_37x.php'])
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_40x.php'])
 {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_37x.php']);
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_40x.php']);
 }
 
 ?>
