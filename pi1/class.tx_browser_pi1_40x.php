@@ -569,14 +569,11 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Replace TSFE markers
 
-//:TODO: Performance: Funktion ist rekursiv: Aendern!
-    $this->conf = $this->objZz->substitute_t3globals( $this->conf );
-      // Replace TSFE markers
-
-
-
+//:TODO: 120213. Performance: Methode evt. nicht mehr unterstuetzen. Stattdessen stdWrap.data.
+    $this->conf = $this->objZz->substitute_t3globals_recurs( $this->conf );
       // Prompt the expired time to devlog
     $this->log_timeTracking( 'after substitute_t3globals_recurs( )' );
+      // Replace TSFE markers
 
 
 
@@ -602,9 +599,8 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Get the HTML template
 
-    $arr_data['view'] = $this->view;
-    $arr_data['mode'] = $this->piVar_mode;
-    $arr_result = $this->getTemplate($this->cObj, $this->conf, $arr_data);
+//:TODO: 120213, 4.0: Ersten beiden Parameter entfernen.
+    $arr_result = $this->getTemplate( );
     unset($arr_data);
 
     if ($arr_result['error']['status'])
@@ -1859,21 +1855,17 @@ class tx_browser_pi1_40x extends tslib_pibase {
   /**
  * Get the value for the var $template
  *
- * @param	array		Global cObj
- * @param	array		TS configuration array
- * @param	array		Input array with the elements view and mode
- * @param	integer		The current view
  * @return	array		template
  */
-  private function getTemplate($cObj, $conf, $arr_data)
+  private function getTemplate( )
   {
+    $cObj = $this->cObj;
+    $conf = $this->conf;
 
-    $view = $arr_data['view'];
-    $mode = $arr_data['mode'];
+    $view       = $this->view;
+    $mode       = $this->piVar_mode;
+    $viewWiDot  = $view.'.';
 
-    $viewWiDot = $view.'.';
-
-    $arr_return = array();
     $arr_return['error']['status']  = false;
     $arr_return['data']['template'] = false;
 

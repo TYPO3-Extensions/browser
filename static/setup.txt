@@ -3206,7 +3206,7 @@ plugin.tx_browser_pi1 {
     }
     performance {
       GLOBALS {
-        // [Boolean] Don't look for markers with keys of the TYPO3 array $GLOBALS like TSFE:fe_user|...
+          // [Boolean] Will be overriden by the flexform while runtime! True: Don't look for markers with keys of the TYPO3 array $GLOBALS like TSFE:fe_user|... False: replace it
         dont_replace = 1
       }
     }
