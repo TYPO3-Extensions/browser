@@ -1795,9 +1795,9 @@ class tx_browser_pi1_40x extends tslib_pibase {
     t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt . ': ' . ( $endTime - $this->startTime ) . ' ms', $this->extKey, 0 );
 
 
-    if( ( $endTime - $this->previous_endTime ) >= 1000 )
+    if( ( $endTime - $this->tt_prevEndTime ) >= 100 )
     {
-      $prompt_02 = 'Previous process needs more than 1.000 ms';
+      $prompt_02 = 'Previous process needs more than 100 ms';
       t3lib_div::devLog('[WARN/PERFORMANCE] ' . $prompt_02, $this->extKey, 2 );
     }
     $this->tt_prevEndTime = $endTime;
