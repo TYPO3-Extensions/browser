@@ -60,8 +60,8 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * @package    TYPO3
  * @subpackage    tx_browser
  *
- * @version 3.9.8
- * @since 0.0.1
+ * @version 3.9.3
+ * @since 1.0.0
  */
 
 /**
@@ -88,125 +88,101 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-class tx_browser_pi1_40x extends tslib_pibase {
+class tx_browser_pi1 extends tslib_pibase {
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // TYPO3 extension
+  var $prefixId = 'tx_browser_pi1';
+  // Same as class name
+  var $scriptRelPath = 'pi1/class.tx_browser_pi1.php';
+  // Path to this script relative to the extension dir.
+  var $extKey = 'browser';
+  // The extension key.
+  var $pi_checkCHash = true;
 
-    // Same as class name
-  var $prefixId       = 'tx_browser_pi1';
-    // Path to this script relative to the extension dir.
-  var $scriptRelPath  = 'pi1/class.tx_browser_pi1_40x.php';
-    // The extension key.
-  var $extKey         = 'browser';
-  var $pi_checkCHash  = true;
-    // [Array] values out of the extConf file
-  var $arr_extConf    = null;
-    // TYPO3 extension
+  var $str_developer_name     = 'Dirk Wildt';
+  var $str_developer_mail     = 'wildt[at]die-netzmacher.de';
+  var $str_developer_phone    = '+49 361 21655226';
+  var $str_developer_company  = 'Die Netzmacher';
+  var $str_developer_web      = 'http://die-netzmacher.de';
+  var $str_developer_typo3ext = 'http://typo3.org/extensions/repository/view/browser/current/';
+  var $str_developer_lang     = 'german, english';
+  // [Boolean] Set by init_drs()
+  var $developer_contact      = false;
+  // [String, csv] Csv list of IP-addresses of the developer / integrator
+  //               Needed for reports in the frontend
+  var $str_developer_csvIp    = null;
 
+  var $arr_extConf            = array();
+  // Array out of the extConf file
 
-
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Template
-
-    // [String/HTML] Content of the current template
-  var $template;
-    // [String/HTML] Raw template - for comparing with current template
-  var $str_template_raw;
-    // [String] The wrap for the group title in listr views (i.e <h2>|</h2)
-  var $str_wrap_grouptitle;
-    // Template
+  var $arrModeItems           = array();
+  // Array for the mode selector
 
 
-
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Misc
-
-    // [Object] System language Object. $lang->lang cotain the current language.
-  var $lang;
-    // [Boolean] Is it the first call of the plugin?
-  var $boolFirstVisit;
-    // The human readable format for timestamps out of the TS
   var $tsStrftime;
-    // Misc
-
-
-
-    ////////////////////////////////////////////////////////////////////
-    //
-    // views
-
-    // [Array] Items for the mode selector
-  var $arrModeItems = array();
-   // [String] The current view type: list || single
+  // The human readable format for timestamps out of the TS
   var $view;
-    // [String/CSV] List with pids of the records of the local table
-  var $pidList;
-    // [Integer] Uid of the current singlePid. Is set in list view only.
-  var $singlePid;
-    // [Integer]  The current mode (view). We need $piVar_mode, if there is only one view.
-    //            We like a nice real url path, so we don't want the piVars[mode] in this case.
-  var $piVar_mode   = false;
-    // [String]   The current tab of the A-Z-Browser. We need $piVar_azTab, if the current tab is the default tab.
-    //            We like a nice real url path, so we don't want the piVars[azTab] in this case.
-  var $piVar_azTab  = false;
-    // [String] The current piVar Sword in secure mode
-  var $piVar_sword  = false;
-    // [String] Alias of the showUid
-  var $piVar_alias_showUid  = false;
-    // [Array] Array with fieldnames, which should wrapped as a link to a single view
-  var $arrLinkToSingle = array( );
-  var $lDisplayType;
-  // [String] Possible values: displaySingle || displayList.
-  var $lDisplay;
-  // [Array] Local array with the configuration of displaySingle.display or displayList.display
-   // views
-
-
-
-    ////////////////////////////////////////////////////////////////////
-    //
-    // AJAX (object I)
-
-    // #9659, 101010 fsander
-    // [Array] contains for each segment wether it should be shown or not (needed for AJAX object I)
+  // [String] The current view type: list || single
+  // #9659, 101010 fsander
   var $segment;
-    // AJAX (object I)
+  // [Array] contains for each segment wether it should be shown or not (needed for AJAX)
+  var $lang;
+  // [Object] System language Object. $lang->lang cotain the current language.
+  var $boolFirstVisit;
+  // [Boolean] Is it the first call of the plugin?
 
-
-
-    ////////////////////////////////////////////////////////////////////
-    //
-    // "SQL"
-    
-    // [String/CSV] List of fields for the SQL select query
+  var $pidList;
+  // [String/CSV] List with pids of the records of the local table
+  var $singlePid;
+  // [Integer] Uid of the current singlePid. Is set in list view only.
   var $csvSelect;
-    // [String/CSV] List of fields for the SQL select query, cleaned up from any function
+  // [String/CSV] List of fields for the SQL select query
   var $csvSelectWoFunc;
-    // [String/CSV] List of fields for the SQL query orderBy
-  var $csvOrderBy;  // 090628, depricated. See $conf_sql below
-    // [Array] Array with the SQL query parts from the TypoScript.
-    //         LF and CR are cleaned up.
-    //         tableFields and functions got an alias
-    //         Elements
-    //         - select:   select clause
-    //         - search:   list with fields from db, in which search is enabled
-    //         - groupBy:  group-by-clause NOT FOR SQL but for php multisort and consolidation
-    //         - orderBy:  order-by-clause NOT FOR SQL but for php multisort
-    //         - andWhere: and where clause
+  // [String/CSV] List of fields for the SQL select query, cleaned up from any function
+  var $csvOrderBy;  // 090628, depricated. See $conf_sql
+  // [String/CSV] List of fields for the SQL query orderBy
   var $conf_sql;
-    // [Array] Array with andWhere statements generated by the filter class
+  // [Array] Array with the SQL query parts from the TypoScript.
+  //         LF and CR are cleaned up.
+  //         tableFields and functions got an alias
+  //         Elements
+  //         - select:   select clause
+  //         - search:   list with fields from db, in which search is enabled
+  //         - groupBy:  group-by-clause NOT FOR SQL but for php multisort and consolidation
+  //         - orderBy:  order-by-clause NOT FOR SQL but for php multisort
+  //         - andWhere: and where clause
   var $arr_andWhereFilter;
-    // "SQL"
+  // [Array] Array with andWhere statements generated by the Filter class
+  var $arrLinkToSingle = array();
+  // [Array] Array with fieldnames, which should wrapped as a link to a single view
 
 
+  var $piVar_mode   = false;
+  // [Integer] The current mode (view). We need $piVar_mode, if there is only one view. Then we don't want the
+  // piVars[mode] because of a nice real url path
+  var $piVar_azTab  = false;
+  // [String] The current tab of the A-Z-Browser. We need $piVar_azTab, if the current tab is the default tab. Then we don't want the
+  // piVars[azTab] because of a nice real url path
+  var $piVar_sword  = false;
+  // [String] The current piVar Sword in secure mode
+  var $piVar_alias_showUid  = false;
+  // [String] Alias of the showUid
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Sword
+  var $template;
+  // [String] Current HTML Template
+  var $str_template_raw;
+  // [String] Raw HTML Template
+  var $str_wrap_grouptitle;
+  // [String] The wrap for the group title in listr views (i.e <h2>|</h2)
+
+  var $uploadFolder;
+  // [String] Path to an uplod folder
+
+  var $elements;
+  // [Array] The elements of the current SQL row
+  var $rows;
+  // [Array] The rows of the SQL result: $uids_of_all_rows[uid_of_the_plugin][rows]
+  var $uids_of_all_rows;
+  // [Array] Uids of all rows (after consolidation but before limitation)
 
   var $arr_swordPhrases;
   // [Array] Array with sword phrases. Example: My Word "My Phrase" will be [0] My, [1] Word, [2] My Phrase
@@ -221,145 +197,111 @@ class tx_browser_pi1_40x extends tslib_pibase {
   // ['tx_juridat_pi1.reg_num'][1]  = 'Berufsverband'
   // ['tx_juridat_pi1.issue'][0]    = 'Einkünfte'
   // ['tx_juridat_pi1.issue'][1]    = 'Berufsverband'
-    // Sword
 
 
-
-    ////////////////////////////////////////////////////////////////////
-    //
-    // rows
-
-    // [String] Path to the uplod folder of the current element
-  var $uploadFolder;
-    // [Array] The elements of the current row
-  var $elements;
-    // [Array] The rows of the SQL result: $uids_of_all_rows[uid_of_the_plugin][rows]
-  var $rows;
-    // [Array] Uids of all rows (after consolidation but before limitation)
-  var $uids_of_all_rows;
-    // [Boolean] true if current row is the first row, false if not; Don't change the value!
+  // processing views
   var $boolFirstRow = true;
-    // TRUE, if the current element is the first in the row
-  var $boolFirstElement = true;
-    // rows
+  // [Boolean] true if current row is the first row, false if not; Don't change the value!
+  var $lDisplayType;
+  // [String] Possible values: displaySingle || displayList.
+  var $lDisplay;
+  // [Array] Local array with the configuration of displaySingle.display or displayList.display
 
 
-
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Relation building
-
-    // The local or global record array from the TS
+  // Relation building
   var $recordTS;
-    // [Array] Array with the field names for the SQL select statement, but without uid and some other special cases
+  // The local or global record array from the TS
   var $arrSelectRow = array();
-    // [String] The local table out of TS record.uid
+  // [Array] Array with the field names for the SQL select statement, but without uid and some other special cases
   var $localTable = '';
-    // [Array] Array with the table.uid and table.pid of the localtable. Syntax: array[uid] = table.field, array[pid] = table.field
+  // [String] The local table out of TS record.uid
   var $arrLocalTable = '';
-    // [Array] Array with tables for an autmatic relation building, Syntax [table][] = field.
+  // [Array] Array with the table.uid and table.pid of the localtable. Syntax: array[uid] = table.field, array[pid] = table.field
   var $arr_realTables_arrFields;
-    // [Array] Array with consolidating information. Syntax [addedTableFields][] = table.field.
+  // [Array] Array with tables for an autmatic relation building, Syntax [table][] = field.
   var $arrConsolidate;
-    // [Array] Array with localised tables
+  // [Array] Array with consolidating information. Syntax [addedTableFields][] = table.field.
   var $arr_realTables_localised;
-    // [Array] Array with tables, which aren't localised
+  // [Array] Array with localised tables
   var $arr_realTables_notLocalised;
-    // [Array] Array with the tables.fields of children records, which have to devide while stdWrap
+  // [Array] Array with tables, which aren't localised
   var $arr_children_to_devide;
-    // SQL configuration
-    // FALSE: User defined a select statement only, Browser should build the full query automatically
-    // TRUE: User has defined a SELECT, FROM, WHERE and maybe JOINS. Browser should use a manual configured SQL query
-  var $b_sql_manual = false;
-    // Relation building
+  // [Array] Array with the tables.fields of children records, which have to devide while stdWrap
 
 
-
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Auto Discover
-
-    // TRUE, if method autodiscConfig is used the first time. Don't change the value TRUE!
-  var $boolFirstTimeAutodiscover = true;
-    // FALSE, if array arrHandleAs isn't processed completly. Don't change the value FALSE!
-  var $boolArrHandleAsProcessed = false;
-  // Array with the autodiscover configuration
-  var $confAutodiscover;
-    // Array with the names of that fields, which shouldn't wrapped automatically
-  var $arrDontDiscoverFields;
-    // Array with detected fields for arrHandleAs automatically
-  var $arrHandleAs;
-    // Array with fields in the array handleAs in the TS
-  var $TShandleAs;
-    // Auto Discover
-
-
-
-    ////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Development Reporting System
-
-  var $str_developer_name     = 'Dirk Wildt';
-  var $str_developer_company  = 'Die Netzmacher';
-  var $str_developer_web      = 'http://wildt.die-netzmacher.de';
-  var $str_developer_typo3ext = 'http://typo3.org/extensions/repository/view/browser/current/';
-  var $str_developer_lang     = 'german, english';
-    // [Boolean] Set by init_drs( )
-  var $developer_contact      = false;
-    // [String, csv] Csv list of IP-addresses of the developer / integrator
-    //               Needed for reports in the frontend
-  var $str_developer_csvIp    = null;
-    // Booleans for DRS - Development Reporting System
+  // Booleans for DRS - Development Reporting System
   var $b_drs_all          = false;
   var $b_drs_error        = false;
   var $b_drs_warn         = false;
   var $b_drs_info         = false;
   var $b_drs_browser      = false;
-  var $b_drs_cal          = false;
   var $b_drs_discover     = false;
-  var $b_drs_download     = false;
-  var $b_drs_export       = false;
   var $b_drs_filter       = false;
   var $b_drs_flexform     = false;
-  var $b_drs_hooks        = false;
   var $b_drs_javascript   = false;
-  var $b_drs_localisation = false;
-  var $b_drs_map          = false;
-  var $b_drs_marker       = false;
+  var $b_drs_localisation    = false;
   var $b_drs_perform      = false;
   var $b_drs_realurl      = false;
-  var $b_drs_search       = false;
   var $b_drs_seo          = false;
   var $b_drs_session      = false;
   var $b_drs_socialmedia  = false;
-  var $b_drs_statistics   = false;
   var $b_drs_sql          = false;
-  var $b_drs_tca          = false;
+  var $b_drs_statistics   = false;
   var $b_drs_templating   = false;
+  var $b_drs_tca          = false;
   var $b_drs_tsUpdate     = false;
-  var $b_drs_ttc          = false;
-    // Booleans for DRS - Development Reporting System
-    // Value will be overriden, if there is a value in $conf
+
+  // DRS properties
   var $i_drs_max_sql_result_len = 100;
-    // DRS - Development Reporting System
+  // Value will be overriden, if there is a value in $conf
 
-
-
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Development
-
-    // [Boolean] True: current IP is element of list with allowed IPs; false: it isn't
-  var $bool_accessByIP = null;
-    // Use cache: FALSE || TRUE; If you develope this extension, it can be helpfull to set this var on FALSE (no cache)
+  // Development
   var $boolCache = true;
-    // [Boolean] If true, the current version is TYPO3 4.3 at least
+  // Use cache: FALSE || TRUE; If you develope this extension, it can be helpfull to set this var on FALSE (no cache)
   var $bool_typo3_43 = false;
-    // [Boolean] If true, the current plugin won't be report any log to the DRS. It is configured by the plugin sheet [development]
+  // [Boolean] If true, the current version is TYPO3 4.3 at least
   var $bool_dontUseDRS = false;
-    // [Boolean] If true, Javascript is running in debugging mode. It is configured by the plugin sheet [development]
+  // [Boolean] If true, the current plugin won't be report any log to the DRS. It is configured by the plugin sheet [development]
   var $bool_debugJSS = false;
-    // Development
+  // [Boolean] If true, Javascript is running in debugging mode. It is configured by the plugin sheet [development]
+
+
+  // Auto Discover
+  var $boolFirstElement = true;
+  // TRUE, if the current element is the first in the row
+  var $boolFirstTimeAutodiscover = true;
+  // TRUE, if method autodiscConfig is used the first time. Don't change the value TRUE!
+  var $boolArrHandleAsProcessed = false;
+  // FALSE, if array arrHandleAs isn't processed completly. Don't change the value FALSE!
+  var $confAutodiscover;
+  // Array with the autodiscover configuration
+  var $arrDontDiscoverFields;
+  // Array with the names of that fields, which shouldn't wrapped automatically
+  var $arrHandleAs;
+  // Array with detected fields for arrHandleAs automatically
+  var $TShandleAs;
+  // Array with fields in the array handleAs in the TS
+
+
+  // SQL configuration
+  var $b_sql_manual = false;
+  // FALSE: User defined a select statement only, Browser should build the full query automatically
+  // TRUE: User has defined a SELECT, FROM, WHERE and maybe JOINS. Browser should use a manual configured SQL query
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -379,35 +321,91 @@ class tx_browser_pi1_40x extends tslib_pibase {
 
 
   /**
- * main( ): Main method of your PlugIn
+ * Main method of your PlugIn
  *
  * @param	string		$content: The content of the PlugIn
  * @param	array		$conf: The PlugIn Configuration
  * @return	string		The content that should be displayed on the website
- * @version 3.9.8
- * @since   0.0.1
+ * @version 3.6.2
  */
-  public function main( $content, $conf )
+  function main($content, $conf)
   {
-      // Globalise TypoScript configuration
     $this->conf = $conf;
-      // Set default values for piVars[]
-    $this->pi_setPiVarDefaults();
-      // Init localisation
-    $this->pi_loadLL();
-      // Set the global $bool_typo3_43
-    $this->get_typo3version( );
-      // Init timetracking, set the starttime
-    $this->init_timeTracking( );
-      // Get the values from the localconf.php file
-    $this->arr_extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]);
-      // Init DRS - Development Reporting System
-    $this->init_drs();
-      // Init current IP
-    $this->init_accessByIP( );
 
-      // Prompt the expired time to devlog
-    $this->log_timeTracking( 'START' );
+    $this->pi_setPiVarDefaults();
+    $this->pi_loadLL();
+
+
+
+      ////////////////////////////////////////////////////////////////////
+      //
+      // TYPO3 Version
+
+    $str_version = TYPO3_version;
+    if(!$str_version)
+    {
+      $str_version = '4.2.9';
+    }
+    $int_version = t3lib_div::int_from_ver($str_version);
+    if($int_version >= 4003000)
+    {
+      $this->bool_typo3_43 = true;
+    }
+    if($int_version < 4003000)
+    {
+      $this->bool_typo3_43 = false;
+    }
+      // TYPO3 Version
+
+
+
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Timetracking
+
+    require_once(PATH_t3lib.'class.t3lib_timetrack.php');
+    $this->TT = new t3lib_timeTrack;
+    $this->TT->start();
+    if($this->bool_typo3_43)
+    {
+      $this->startTime = $this->TT->getDifferenceToStarttime();
+    }
+    if(!$this->bool_typo3_43)
+    {
+      $this->startTime = $this->TT->mtime();
+    }
+      // Timetracking
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Get the values from the localconf.php file
+
+    $this->arr_extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]);
+      // Get the values from the localconf.php file
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Init DRS - Development Reporting System
+
+    $this->init_drs();
+    if ($this->b_drs_perform)
+    {
+      t3lib_div::devlog('[INFO/PERFORMANCE] START', $this->extKey, 0);
+    }
+      // Init DRS - Development Reporting System
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Init current IP
+
+    $this->str_developer_csvIp = $this->arr_extConf['updateWizardAllowedIPs'];
+      // Init current IP
 
 
 
@@ -415,20 +413,18 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Init Update Check
 
-      // Update check is enabled
-    if( $this->arr_extConf['updateWizardEnable'] )
+      // dwildt, 101216, #11523
+    if($this->arr_extConf['updateWizardEnable'])
     {
-        // Current IP has access
-      if( $bool_accessByIP )
+      $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+      if (!($pos === false))
       {
-        require_once(PATH_typo3conf . 'ext/' . $this->extKey . '/pi2/class.tx_browser_pi2.php' );
-          // Class with methods for Update Checking
-        $this->objPi2     = new tx_browser_pi2( $this );
-        $html_updateCheck = $this->objPi2->main( $content, $conf, $this );
+        require_once(PATH_typo3conf.'ext/'.$this->extKey.'/pi2/class.tx_browser_pi2.php');
+        // Class with methods for Update Checking
+        $this->objPi2 = new tx_browser_pi2($this);
+        $html_updateCheck = $this->objPi2->main($content, $conf, $this);
       }
-        // Current IP has access
     }
-      // Update check is enabled
       // Init Update Check
 
 
@@ -440,7 +436,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
       /* BACKGROUND : t3lib_div::loadTCA($table) loads for the frontend
        * only 'ctrl' and 'feInterface' parts.
        */
-    $GLOBALS['TSFE']->includeTCA( );
+    $GLOBALS['TSFE']->includeTCA();
       // Get the global TCA
 
 
@@ -449,7 +445,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Require and init helper classes
 
-    $this->require_classes( );
+    $this->require_classes();
       // Require and init helper classes
 
 
@@ -458,11 +454,11 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Get pid list
 
-    if ( strstr( $this->cObj->currentRecord, 'tt_content' ) )
+    if (strstr($this->cObj->currentRecord, 'tt_content'))
     {
       $this->conf['pidList']    = $this->cObj->data['pages'];
       $this->conf['recursive']  = $this->cObj->data['recursive'];
-      $this->pidList = $this->pi_getPidList( $this->conf['pidList'], $this->conf['recursive'] );
+      $this->pidList = $this->pi_getPidList($this->conf['pidList'], $this->conf['recursive']);
     }
       // Get pid list
 
@@ -471,19 +467,19 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Make cObj instance
 
-    $this->local_cObj = t3lib_div::makeInstance( 'tslib_cObj' );
+    $this->local_cObj = t3lib_div::makeInstance('tslib_cObj');
       // Make cObj instance
 
 
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Clean up views ( multiple plugins )
+      // Clean up views (multiple plugins)
 
       // #11981, 110106, dwildt
-    $conf       = $this->objZz->cleanup_views( $conf );
+    $conf       = $this->objZz->cleanup_views($conf);
     $this->conf = $conf;
-      // Clean up views ( multiple plugins )
+      // Clean up views (multiple plugins)
 
 
 
@@ -503,7 +499,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Get Configuration out of the Plugin (Flexform) but [Templating]
 
-    $this->objFlexform->main( );
+    $this->objFlexform->main();
     $conf = $this->conf;
       // Get Configuration out of the Plugin (Flexform) but [Templating]
 
@@ -514,7 +510,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
       // Prepaire piVars
 
       // Allocates values to $this->piVars, $this->pi_isOnlyFields and $this->views
-    $this->objZz->prepairePiVars( );
+    $this->objZz->prepairePiVars();
       // Prepaire piVars
 
 
@@ -523,7 +519,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Get Configuration out of the Plugin (Flexform) devider [Templating]
 
-    $this->objFlexform->sheet_templating( );
+    $this->objFlexform->sheet_templating();
       // Get Configuration out of the Plugin (Flexform) devider [Templating]
 
 
@@ -532,7 +528,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Set the class variables
 
-    $this->init_classVars( );
+    $this->init_classVars();
       // Set the class variables
 
 
@@ -544,6 +540,12 @@ class tx_browser_pi1_40x extends tslib_pibase {
       // #32654, 120212, dwildt+
     $this->objMap->set_typeNum( );
       // Get the typeNum II/II
+
+//$pos = strpos('87.177.75.198', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//if( ! ( $pos === false ) )
+//{
+//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->objMap->str_typeNum, $this->objMap->enabled );
+//}
 
 
 
@@ -564,16 +566,32 @@ class tx_browser_pi1_40x extends tslib_pibase {
       // Control the plugin by URL parameter
 
 
-
       //////////////////////////////////////////////////////////////////////
       //
       // Replace TSFE markers
 
-//:TODO: 120213. Performance: Methode evt. nicht mehr unterstuetzen. Stattdessen stdWrap.data.
-    $this->conf = $this->objZz->substitute_t3globals_recurs( $this->conf );
-      // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after substitute_t3globals_recurs( )' );
+    $this->conf = $this->objZz->substitute_t3globals_recurs($this->conf);
       // Replace TSFE markers
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
+
+    if ($this->b_drs_perform)
+    {
+      if($this->bool_typo3_43)
+      {
+        $endTime = $this->TT->getDifferenceToStarttime();
+      }
+      if(!$this->bool_typo3_43)
+      {
+        $endTime = $this->TT->mtime();
+      }
+      t3lib_div::devLog('[INFO/PERFORMANCE] substitute_t3globals_recurs: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
+    }
+      // DRS - Performance
 
 
 
@@ -600,25 +618,31 @@ class tx_browser_pi1_40x extends tslib_pibase {
       // Get the HTML template
 
     $arr_result = $this->getTemplate( );
+    unset($arr_data);
 
-      // RETURN error
-    if( $arr_result['error']['status'] )
+    if ($arr_result['error']['status'])
     {
-      if( $this->b_drs_error )
+      if ($this->b_drs_error)
       {
         t3lib_div::devLog('[ERROR/DRS] ABORTED', $this->extKey, 3);
-          // Prompt the expired time to devlog
-        $this->log_timeTracking( 'END' );
+        if($this->bool_typo3_43)
+        {
+          $endTime = $this->TT->getDifferenceToStarttime();
+        }
+        if(!$this->bool_typo3_43)
+        {
+          $endTime = $this->TT->mtime();
+        }
+        t3lib_div::devLog('[INFO/PERFORMANCE] END: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
       }
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
-      return $html_updateCheck . $this->objWrapper->wrapInBaseIdClass( $prompt );
+      // return $this->pi_wrapInBaseClass($prompt);
+      return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($prompt);
     }
-      // RETURN error
-
-      // Init global $str_template_raw
     $this->str_template_raw = $arr_result['data']['template'];
-    unset( $arr_result );
+    unset($arr_result);
       // Get the HTML template
+
 
 
 
@@ -626,14 +650,14 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Prepaire modeSelector
 
-    $arr_result = $this->objNavi->prepaireModeSelector( );
-    if( $arr_result['error']['status'] )
-    {
+    $arr_result = $this->objNavi->prepaireModeSelector();
+    if ($arr_result['error']['status']) {
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
-      return $this->objWrapper->wrapInBaseIdClass( $prompt );
+      return $this->objWrapper->wrapInBaseIdClass($prompt);
+      //return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($prompt);
     }
     $this->arrModeItems = $arr_result['data'];
-    unset( $arr_result );
+    unset($arr_result);
       // Prepaire modeSelector
 
 
@@ -642,7 +666,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Prepaire format for time values
 
-    $this->tsStrftime = $this->objZz->setTsStrftime( );
+    $this->tsStrftime = $this->objZz->setTsStrftime();
       // Prepaire format for time values
 
 
@@ -651,7 +675,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Get used tables from the SQL query parts out of the Typoscript
 
-    $this->arr_realTables_arrFields = $this->objTyposcript->fetch_realTables_arrFields( );
+    $this->arr_realTables_arrFields = $this->objTyposcript->fetch_realTables_arrFields();
       // Get used tables from the SQL query parts out of the Typoscript
 
 
@@ -660,18 +684,25 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Get the local table uid field name and pid field name
 
-    $this->arrLocalTable = $this->objTyposcript->fetch_localTable( );
-    if( ! is_array( $this->arrLocalTable ) )
+    $this->arrLocalTable = $this->objTyposcript->fetch_localTable();
+    if (!is_array($this->arrLocalTable))
     {
-      if( $this->b_drs_error )
+      if ($this->b_drs_error)
       {
         t3lib_div::devLog('[ERROR/DRS] ABORTED', $this->extKey, 3);
-          // Prompt the expired time to devlog
-        $this->log_timeTracking( 'END' );
+        if($this->bool_typo3_43)
+        {
+          $endTime = $this->TT->getDifferenceToStarttime();
+        }
+        if(!$this->bool_typo3_43)
+        {
+          $endTime = $this->TT->mtime();
+        }
+        t3lib_div::devLog('[INFO/PERFORMANCE] END: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
       }
-      $prompt = '<h1 style="color:red;">' . $this->pi_getLL( 'error_readlog_h1' ) . '</h1>' . PHP_EOL .
-                '<p style="color:red;font-weight:bold;">' . $this->pi_getLL( 'error_table_no' ) . '</p>';
-      return $html_updateCheck . $this->objWrapper->wrapInBaseIdClass( $prompt );
+      $prompt = '<h1 style="color:red;">'.$this->pi_getLL('error_readlog_h1').'</h1>
+           <p style="color:red;font-weight:bold;">'.$this->pi_getLL('error_table_no').'</p>';
+      return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($prompt);
     }
       // Get the local table uid field name and pid name
 
@@ -679,10 +710,10 @@ class tx_browser_pi1_40x extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Set the global $localTable
+      // Get the local table
 
-    list( $this->localTable, $field ) = explode( '.', $this->arrLocalTable['uid'] );
-      // Set the global $localTable
+    list($this->localTable, $field) = explode('.', $this->arrLocalTable['uid']);
+      // Get the local table
 
 
 
@@ -690,12 +721,10 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Add missing uids and pids
 
-    $arr_result = $this->objConsolidate->addUidAndPid( );
+    $arr_result = $this->objConsolidate->addUidAndPid();
     $this->arrConsolidate['addedTableFields'] = $arr_result['data']['consolidate']['addedTableFields'];
     $this->arr_realTables_arrFields           = $arr_result['data']['arrFetchedTables'];
-    unset( $arr_result );
-      // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after $this->objConsolidate->addUidAndPid( )' );
+    unset($arr_result);
       // Add missing uids
 
 
@@ -704,93 +733,123 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Set the manual SQL mode or the auto SQL mode
 
-      // Process of the query building in case of a manual configuration with SELECT, FROM and WHERE and maybe JOINS
-    $arr_result = $this->objSqlMan->check_typoscript_query_parts( );
-
+      // Process the query building in case of a manual configuration with SELECT, FROM and WHERE and maybe JOINS
+    $arr_result = $this->objSqlMan->check_typoscript_query_parts();
       // RETURN error
-    if( $arr_result['error']['status'] )
+    if ($arr_result['error']['status'])
     {
       $template = $arr_result['error']['header'].$arr_result['error']['prompt'];
-      return $html_updateCheck . $this->objWrapper->wrapInBaseIdClass( $template );
+      return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($template);
     }
       // RETURN error
 
+    // ##############################################################################################################################
+    //unset($arr_result); // :todo:
+    // ##############################################################################################################################
+
       // Auto SQL mode: The user configured only a select statement
-    if( empty( $arr_result ) )
+    if(!$arr_result)
     {
       $this->b_sql_manual = false;
-      if( $this->b_drs_sql )
+      if ($this->b_drs_sql)
       {
-        $prompt = 'User configured a SELECT statement only: SQL auto mode.';
-        t3lib_div::devLog('[INFO/DRS] ' . $prompt, $this->extKey, 0);
+        t3lib_div::devLog('[INFO/DRS] User configured in TypoScript a SELECT statement only:<br />
+          SQL auto mode.', $this->extKey, 0);
       }
     }
       // Auto SQL mode: The user configured only a select statement
 
       // Manual SQL mode: The user configured more than a select statement
-    if( $arr_result )
+    if($arr_result)
     {
         // The user configured a whole SQL query
       $this->b_sql_manual = true;
-      if( $this->b_drs_sql )
+      if ($this->b_drs_sql)
       {
-        $prompt = 'User configured a whole SQL query: SQL manual mode.';
-        t3lib_div::devLog('[INFO/DRS] ' . $prompt, $this->extKey, 0);
+        t3lib_div::devLog('[INFO/DRS] User configured in TypoScript a whole SQL query:<br />
+          SQL manual mode.', $this->extKey, 0);
       }
     }
       // Manual SQL mode: The user configured more than a select statement
-
-      // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after $this->objSqlMan->check_typoscript_query_parts( )' );
       // Set the manual SQL mode or the auto SQL mode
 
 
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Process the views
+      // DRS - Performance
 
-      // Prompt the expired time to devlog
-    $this->log_timeTracking( 'before processing the view' );
-      // SWITCH view
-    switch( $this->view )
-    {
-      case( 'list' ):
-        $str_template_completed = $this->objViews->listView( $this->str_template_raw );
-        break;
-      case( 'single' ):
-        $str_template_completed = $this->objViews->singleView( $this->str_template_raw );
-        break;
-    }
-      // SWITCH view
-      // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after processing the view' );
-      // Process the views
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // Error, if the completed template is an array and has the element error.status
-
-    if( is_array( $str_template_completed ) )
-    {
-        // Prompt the expired time to devlog
-      $this->log_timeTracking( 'END' );
-
-        // RETURN defined error
-      if( $str_template_completed['error']['status'] == true )
+    if ($this->b_drs_perform) {
+      if($this->bool_typo3_43)
       {
-        $prompt = $str_template_completed['error']['header'] . $str_template_completed['error']['prompt'];
-        return $html_updateCheck . $this->objWrapper->wrapInBaseIdClass($prompt);
+        $endTime = $this->TT->getDifferenceToStarttime();
       }
-        // RETURN defined error
+      if(!$this->bool_typo3_43)
+      {
+        $endTime = $this->TT->mtime();
+      }
+      t3lib_div::devLog('[INFO/PERFORMANCE] Before view processing: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
+    }
+      // DRS - Performance
 
-        // RETURN undefined error
-      $prompt = '<h1 style="color:red;">' . $this->pi_getLL('error_h1') . '</h1>' . PHP_EOL .
-                '<p style="color:red;font-weight:bold;">' . $this->pi_getLL( 'error_template_array' ) . '</p>';
-      return $html_updateCheck . $this->objWrapper->wrapInBaseIdClass( $prompt );
-        // RETURN undefined error
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Process the views
+
+    switch($this->view)
+    {
+      case('list'):
+        $str_template_completed = $this->objViews->listView($this->str_template_raw);
+        break;
+      case('single'):
+        $str_template_completed = $this->objViews->singleView($this->str_template_raw);
+        break;
+    }
+      // Process the views
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
+
+    if ($this->b_drs_perform)
+    {
+      if($this->bool_typo3_43)
+      {
+        $endTime = $this->TT->getDifferenceToStarttime();
+      }
+      if(!$this->bool_typo3_43)
+      {
+        $endTime = $this->TT->mtime();
+      }
+      t3lib_div::devLog('[INFO/PERFORMANCE] After view processing: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
+    }
+      // DRS - Performance
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Error, if the completed template is an array and has the element error.status
+
+    if(is_array($str_template_completed))
+    {
+      if($str_template_completed['error']['status'] == true)
+      {
+        $prompt = $str_template_completed['error']['header'].$str_template_completed['error']['prompt'];
+        // return $this->objWrapper->wrapInBaseIdClass($prompt);
+        return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($prompt);
+      }
+      else
+      {
+        $prompt = '<h1 style="color:red;">'.$this->pi_getLL('error_h1').'</h1>
+            <p style="color:red;font-weight:bold;">'.$this->pi_getLL('error_template_array').'</p>';
+        // return $this->objWrapper->wrapInBaseIdClass($prompt);
+        return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($prompt);
+      }
     }
       // Error, if the completed template is an array and has the element error.status
 
@@ -800,15 +859,45 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // Error, if the completed template is the raw template
 
-    if( $this->str_template_raw == $str_template_completed )
-    {
-        // Prompt the expired time to devlog
-      $this->log_timeTracking( 'END' );
-      $prompt = '<h1 style="color:red;">' . $this->pi_getLL('error_h1') . '</h1>' . PHP_EOL .
-                '<p style="color:red;font-weight:bold;">' . $this->pi_getLL( 'error_template_render' ) . '</p>';
-      return $html_updateCheck . $this->objWrapper->wrapInBaseIdClass( $prompt );
+    if($this->str_template_raw == $str_template_completed) {
+      if ($this->b_drs_error)
+      {
+        t3lib_div::devLog('[ERROR/DRS] ABORTED', $this->extKey, 3);
+        if($this->bool_typo3_43)
+        {
+          $endTime = $this->TT->getDifferenceToStarttime();
+        }
+        if(!$this->bool_typo3_43)
+        {
+          $endTime = $this->TT->mtime();
+        }
+        t3lib_div::devLog('[INFO/PERFORMANCE] END: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
+      }
+      $prompt = '<h1 style="color:red;">'.$this->pi_getLL('error_h1').'</h1>
+          <p style="color:red;font-weight:bold;">'.$this->pi_getLL('error_template_render').'</p>';
+      // return $this->objWrapper->wrapInBaseIdClass($prompt);
+      return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($prompt);
     }
       // Error, if the completed template is the raw template
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Performance
+
+    if ($this->b_drs_perform) {
+      if($this->bool_typo3_43)
+      {
+        $endTime = $this->TT->getDifferenceToStarttime();
+      }
+      if(!$this->bool_typo3_43)
+      {
+        $endTime = $this->TT->mtime();
+      }
+      t3lib_div::devLog('[INFO/PERFORMANCE] END: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
+    }
+      // DRS - Performance
 
 
 
@@ -817,11 +906,9 @@ class tx_browser_pi1_40x extends tslib_pibase {
       // XML/RSS: return the result (XML string) without wrapInBaseClass
 
       // #28855, 110809, dwildt
-    if( substr( $str_template_completed, 0, strlen( '<?xml' ) ) == '<?xml' )
+    if(substr($str_template_completed, 0, strlen('<?xml')) == '<?xml')
     {
-        // Prompt the expired time to devlog
-      $this->log_timeTracking( 'END (XML is returned)' );
-      return trim( $str_template_completed );
+      return trim($str_template_completed);
     }
       // XML/RSS: return the result (XML string) without wrapInBaseClass
 
@@ -840,15 +927,11 @@ class tx_browser_pi1_40x extends tslib_pibase {
         {
             // CSV export is enabled
           case( true ) :
-              // Prompt the expired time to devlog
-            $this->log_timeTracking( 'END (CSV file is returned)' );
             return trim( $str_template_completed );
             break;
             // CSV export isn't enabled
           case( false ) :
           default :
-              // Prompt the expired time to devlog
-            $this->log_timeTracking( 'END (no CSV file is returned)' );
             return 'CSV export isn\'t enabled. Please enable it in the plugin/flexform of your TYPO3-Browser.';
             break;
         }
@@ -874,8 +957,6 @@ class tx_browser_pi1_40x extends tslib_pibase {
         {
             // CSV export is enabled
           case( true ) :
-              // Prompt the expired time to devlog
-            $this->log_timeTracking( 'END (file with map markers is returned)' );
             return trim( $str_template_completed );
             break;
             // CSV export isn't enabled
@@ -891,8 +972,6 @@ class tx_browser_pi1_40x extends tslib_pibase {
             {
               t3lib_div :: devLog( '[ERROR/MAP] ' . $prompt , $this->extKey, 3 );
             }
-              // Prompt the expired time to devlog
-            $this->log_timeTracking( 'END (no file with map markers is returned)' );
             return $prompt;
             break;
         }
@@ -905,10 +984,8 @@ class tx_browser_pi1_40x extends tslib_pibase {
 
 
 
-      // 110804, dwildt
-    $this->objJss->addCssFiles( );
-      // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after $this->objJss->addCssFiles( )' );
+    // 110804, dwildt
+    $this->objJss->addCssFiles();
 
 
 
@@ -917,50 +994,49 @@ class tx_browser_pi1_40x extends tslib_pibase {
       // AJAX
 
       // #9659, 101010 fsander
-    if( ! $this->objFlexform->bool_ajax_enabled )
+    if (!$this->objFlexform->bool_ajax_enabled)
     {
-      if( $this->b_drs_javascript )
+      if ($this->b_drs_javascript)
       {
-        t3lib_div::devlog( '[INFO/JSS] AJAX is disabled.', $this->extKey, 0 );
-        t3lib_div::devlog( '[HELP/JSS] Change it: configure the browser flexform [AJAX].', $this->extKey, 1 );
+        t3lib_div::devlog('[INFO/JSS] AJAX is disabled.', $this->extKey, 0);
+        t3lib_div::devlog('[HELP/JSS] Change it: configure the browser flexform [AJAX].', $this->extKey, 1);
       }
     }
 
     $bool_load_jQuery = false;
-    if( $this->objFlexform->bool_ajax_enabled )
+    if ($this->objFlexform->bool_ajax_enabled)
     {
-      if( $this->b_drs_javascript )
+      if ($this->b_drs_javascript)
       {
-        t3lib_div::devlog( '[INFO/JSS] AJAX is enabled.', $this->extKey, 0 );
-        t3lib_div::devlog( '[INFO/JSS] jQuery will be loaded.', $this->extKey, 0 );
+        t3lib_div::devlog('[INFO/JSS] AJAX is enabled.', $this->extKey, 0);
+        t3lib_div::devlog('[INFO/JSS] jQuery will be loaded.', $this->extKey, 0);
       }
       $bool_load_jQuery = true;
     }
-    if( $this->objFlexform->bool_jquery_ui )
+    if ($this->objFlexform->bool_jquery_ui)
     {
-      if( $this->b_drs_javascript )
+      if ($this->b_drs_javascript)
       {
-        t3lib_div::devlog( '[INFO/JSS] jQuery UI should included.', $this->extKey, 0 );
-        t3lib_div::devlog( '[INFO/JSS] jQuery will be loaded.', $this->extKey, 0 );
+        t3lib_div::devlog('[INFO/JSS] jQuery UI should included.', $this->extKey, 0);
+        t3lib_div::devlog('[INFO/JSS] jQuery will be loaded.', $this->extKey, 0);
       }
       $bool_load_jQuery = true;
     }
 
-    if( $bool_load_jQuery )
+    if($bool_load_jQuery)
     {
         // Adding jQuery
-      $bool_success_jQuery = $this->objJss->load_jQuery( );
-      if( $bool_success_jQuery )
+      $bool_success_jQuery = $this->objJss->load_jQuery();
+      if($bool_success_jQuery)
       {
         // Wrap the template with a div with AJAX identifiers
-        $str_template_completed = $this->objJss->wrap_ajax_div( $str_template_completed );
+        $str_template_completed = $this->objJss->wrap_ajax_div($str_template_completed);
       }
-      if( ! $bool_success_jQuery )
+      if(!$bool_success_jQuery)
       {
-        if( $this->b_drs_warn )
+        if ($this->b_drs_warn)
         {
-          $prompt = 'AJAX JSS file is not included because of missing jQuery.';
-          t3lib_div::devlog( '[WARN/JSS] ' . $prompt, $this->extKey, 2 );
+          t3lib_div::devlog('[WARN/JSS] AJAX JSS file is not included because of missing jQuery.', $this->extKey, 2);
         }
       }
     }
@@ -970,9 +1046,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
 
 
       // 110804, dwildt
-    $this->objJss->addJssFiles( );
-      // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after $this->objJss->addJssFiles( )' );
+    $this->objJss->addJssFiles();
 
 
 
@@ -980,16 +1054,16 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // AJAX: Remove from single view the no AJAX content
 
-    if( $this->segment['wrap_piBase'] == false )
+    if($this->segment['wrap_piBase'] == false)
     {
         // Do we have an AJAX marker in the template
-      $pos = strpos( $str_template_completed, '###AREA_FOR_AJAX_LIST' );
-      if( ! ( $pos === false ) )
+      $pos = strpos($str_template_completed, '###AREA_FOR_AJAX_LIST');
+      if (!($pos === false))
       {
-        $str_template_part_01   = $this->cObj->getSubpart( $str_template_completed, '###AREA_FOR_AJAX_LIST_01###' );
-        $str_template_part_02   = $this->cObj->getSubpart( $str_template_completed, '###AREA_FOR_AJAX_LIST_02###' );
-        $str_template_part_03   = $this->cObj->getSubpart( $str_template_completed, '###AREA_FOR_AJAX_LIST_03###' );
-        $str_template_completed = $str_template_part_01 . $str_template_part_02 . $str_template_part_03;
+        $str_template_part_01   = $this->cObj->getSubpart($str_template_completed, '###AREA_FOR_AJAX_LIST_01###');
+        $str_template_part_02   = $this->cObj->getSubpart($str_template_completed, '###AREA_FOR_AJAX_LIST_02###');
+        $str_template_part_03   = $this->cObj->getSubpart($str_template_completed, '###AREA_FOR_AJAX_LIST_03###');
+        $str_template_completed = $str_template_part_01.$str_template_part_02.$str_template_part_03;
       }
     }
       // AJAX: Remove from single view the no AJAX content
@@ -1002,8 +1076,6 @@ class tx_browser_pi1_40x extends tslib_pibase {
 
       // #32654, 111219, dwildt
     $str_template_completed = $this->objMap->get_map( $str_template_completed );
-      // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after $this->objMap->get_map( )' );
       // Get the map
 
 
@@ -1014,8 +1086,6 @@ class tx_browser_pi1_40x extends tslib_pibase {
 
       // 110801, dwildt, #28657
     $str_template_completed = $this->objMarker->replace_left_over( $str_template_completed );
-      // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after $this->objMarker->replace_left_over( )' );
       // Replace left over markers
 
 
@@ -1024,29 +1094,23 @@ class tx_browser_pi1_40x extends tslib_pibase {
       //
       // AJAX: return the result (HTML string) without wrapInBaseClass
 
-    if( ! $this->segment['wrap_piBase'] )
+    if($this->segment['wrap_piBase'] == false)
     {
-        // Prompt the expired time to devlog
-      $this->log_timeTracking( 'END' );
-      return trim( $str_template_completed );
+      return trim($str_template_completed);
     }
       // AJAX: return the result (HTML string) without wrapInBaseClass
 
 
 
       // 12367, dwildt, 110310
-    switch( $this->objFlexform->bool_wrapInBaseClass )
+    switch($this->objFlexform->bool_wrapInBaseClass)
     {
-      case( false ):
-          // Prompt the expired time to devlog
-        $this->log_timeTracking( 'END' );
-        return $html_updateCheck . $str_template_completed;
+      case(false):
+        return $html_updateCheck.$str_template_completed;
         break;
-      case( true ):
+      case(true):
       default:
-          // Prompt the expired time to devlog
-        $this->log_timeTracking( 'END' );
-        return $html_updateCheck . $this->objWrapper->wrapInBaseIdClass( $str_template_completed );
+        return $html_updateCheck.$this->objWrapper->wrapInBaseIdClass($str_template_completed);
     }
   }
 
@@ -1071,7 +1135,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
  *
  * @return	void
  */
-  private function init_drs()
+  function init_drs()
   {
 
       //////////////////////////////////////////////////////////////////////
@@ -1081,7 +1145,9 @@ class tx_browser_pi1_40x extends tslib_pibase {
     $this->developer_contact =
         'company: '.  $this->str_developer_company.'<br />'.
         'name: '.     $this->str_developer_name   .'<br />'.
+        'mail: <a href="mailto:'.$this->str_developer_mail.'" title="Send a mail">'.$this->str_developer_mail.'</a><br />'.
         'web: <a href="'.$this->str_developer_web.'" title="Website" target="_blank">'.$this->str_developer_web.'</a><br />'.
+        'phone: '.    $this->str_developer_phone  .'<br />'.
         'languages: '.$this->str_developer_lang.'<br /><br />'.
         'TYPO3 Repository:<br /><a href="'.$this->str_developer_typo3ext.'" title="'.$this->extKey.' online" target="_blank">'.
     $this->str_developer_typo3ext.'</a>';
@@ -1091,6 +1157,42 @@ class tx_browser_pi1_40x extends tslib_pibase {
       $this->i_drs_max_sql_result_len = $i_len;
     }
       // Prepaire the developer contact prompt
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Initiate the DRS mode
+
+    $this->b_drs_all          = false;
+    $this->b_drs_error        = false;
+    $this->b_drs_warn         = false;
+    $this->b_drs_info         = false;
+    $this->b_drs_browser      = false;
+    $this->b_drs_cal          = false;
+    $this->b_drs_discover     = false;
+    $this->b_drs_download     = false;
+    $this->b_drs_export       = false;
+    $this->b_drs_filter       = false;
+    $this->b_drs_flexform     = false;
+    $this->b_drs_hooks        = false;
+    $this->b_drs_javascript   = false;
+    $this->b_drs_localisation = false;
+    $this->b_drs_map          = false;
+    $this->b_drs_marker       = false;
+    $this->b_drs_perform      = false;
+    $this->b_drs_realurl      = false;
+    $this->b_drs_search       = false;
+    $this->b_drs_seo          = false;
+    $this->b_drs_session      = false;
+    $this->b_drs_socialmedia  = false;
+    $this->b_drs_statistics   = false;
+    $this->b_drs_sql          = false;
+    $this->b_drs_tca          = false;
+    $this->b_drs_templating   = false;
+    $this->b_drs_tsUpdate     = false;
+    $this->b_drs_ttc          = false;
+      // Initiate the DRS mode
 
 
 
@@ -1351,7 +1453,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
  *
  * @return	void
  */
-  private function require_classes()
+  function require_classes()
   {
       //////////////////////////////////////////////////////////////////////
       //
@@ -1477,7 +1579,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
  *
  * @return	boolean		FALSE
  */
-  private function init_classVars()
+  function init_classVars()
   {
 
       //////////////////////////////////////////////////////////////////////
@@ -1628,196 +1730,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
 
 
 
-  /***********************************************
-   *
-   * Helper
-   *
-   **********************************************/
 
-
-
-  /**
- * get_typo3version( ): Get the current TYPO3 version, move it to an integer
- *                      and set the global $bool_typo3_43
- *
- * @return	void
- * @version 3.9.8
- * @since   2.0.0
- */
-  private function get_typo3version( )
-  {
-      // Get the current TYPO3 version
-    $str_version = TYPO3_version;
-
-      // Set default value
-    if( ! $str_version )
-    {
-      $str_version = '4.2.9';
-    }
-      // Set default value
-
-      // Move version to an integer
-    $int_version = t3lib_div::int_from_ver( $str_version );
-
-      // Set the global $bool_typo3_43 
-    if( $int_version >= 4003000 )
-    {
-      $this->bool_typo3_43 = true;
-    }
-    if( $int_version < 4003000 )
-    {
-      $this->bool_typo3_43 = false;
-    }
-      // Set the global $bool_typo3_43
-  }
-
-
-
-
-
-
-
-
-
-  /**
- * init_accessByIP( ):  Set the global $bool_accessByIP.
- *
- * @return	void
- * @version 3.9.8
- * @since   2.0.0
- */
-  private function init_accessByIP( )
-  {
-      // No access by default
-    $this->bool_accessByIP = false;
-
-      // Get list with allowed IPs (< version 4.0)
-    $this->str_developer_csvIp = $this->arr_extConf['updateWizardAllowedIPs'];
-      // Get list with allowed IPs (>= version 4.0)
-    $csvIP      = $this->arr_extConf['updateWizardAllowedIPs'];
-    $currentIP  = t3lib_div :: getIndpEnv( 'REMOTE_ADDR' );
-
-      // Current IP is an element in the list
-    $pos = strpos($csvIP, $currentIP );
-    if( ! ( $pos === false ) )
-    {
-      $this->bool_accessByIP = true;
-    }
-      // Current IP is an element in the list
-
-      // RETURN no DRS prompt
-    if( ! $this->b_drs_all )
-    {
-      return;
-    }
-      // RETURN no DRS prompt
-
-      // DRS prompt
-    $prompt = $currentIP . ' is an element of ' . $csvIP;
-    t3lib_div::devLog('[INFO/ALL] ' . $prompt, $this->extKey, 0 );
-      // DRS prompt
-  }
-
-
-
-
-
-
-
-
-
-  /**
- * init_timeTracking( ):  Init the timetracking object.
- *                        Set the global $startTime.
- *
- * @return	void
- * @version 3.9.8
- * @since   0.0.1
- */
-  private function init_timeTracking( )
-  {
-      // Init the timetracking object
-    require_once( PATH_t3lib . 'class.t3lib_timetrack.php' );
-    $this->TT = new t3lib_timeTrack;
-    $this->TT->start( );
-      // Init the timetracking object
-
-      // Set the global $startTime.
-    if( $this->bool_typo3_43 )
-    {
-      $this->startTime = $this->TT->getDifferenceToStarttime();
-    }
-    if( ! $this->bool_typo3_43 )
-    {
-      $this->startTime = $this->TT->mtime();
-    }
-      // Set the global $startTime.
-  }
-
-
-
-
-
-
-
-
-
-  /**
- * log_timeTracking( ): Prompts a message in devLog with current run time in miliseconds
- *
- *
- * @param   string  $prompt: The prompt for devlog.
- * @return	void
- * @version 3.9.8
- * @since   0.0.1
- */
-  private function log_timeTracking( $prompt )
-  {
-      // RETURN: DRS shouldn't report performance prompts
-    if( ! $this->b_drs_perform )
-    {
-      return;
-    }
-      // RETURN: DRS shouldn't report performance prompts
-    
-      // Get the current time
-    if( $this->bool_typo3_43 )
-    {
-      $endTime = $this->TT->getDifferenceToStarttime();
-    }
-    if( ! $this->bool_typo3_43 )
-    {
-      $endTime = $this->TT->mtime( );
-    }
-      // Get the current time
-
-      // Prompt the current time
-    t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt . ': ' . ( $endTime - $this->startTime ) . ' ms', $this->extKey, 0 );
-
-
-    switch( true )
-    {
-      case( ( $endTime - $this->tt_prevEndTime ) >= 10000 ):
-        $prompt_02 = 'Previous process needs more than 10 sec';
-        t3lib_div::devLog('[ERROR/PERFORMANCE] ' . $prompt_02, $this->extKey, 3 );
-        break;
-      case( ( $endTime - $this->tt_prevEndTime ) >= 1000 ):
-        $prompt_02 = 'Previous process needs more than 1 sec';
-        t3lib_div::devLog('[WARN/PERFORMANCE] ' . $prompt_02, $this->extKey, 2 );
-        break;
-      default:
-        // Do nothing
-    }
-    $this->tt_prevEndTime = $endTime;
-    $this->tt_prevPrompt  = $prompt;
-  }
-
-
-
-
-
-
-  
   /***********************************************
    *
    * Template
@@ -1906,9 +1819,9 @@ class tx_browser_pi1_40x extends tslib_pibase {
 
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_40x.php'])
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1.php'])
 {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_40x.php']);
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1.php']);
 }
 
 ?>
