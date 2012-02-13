@@ -95,7 +95,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
     // TYPO3 extension
 
     // Same as class name
-  var $prefixId       = 'tx_browser_pi1_40x';
+  var $prefixId       = 'tx_browser_pi1';
     // Path to this script relative to the extension dir.
   var $scriptRelPath  = 'pi1/class.tx_browser_pi1_40x.php';
     // The extension key.
@@ -577,24 +577,6 @@ class tx_browser_pi1_40x extends tslib_pibase {
 
       // Prompt the expired time to devlog
     $this->log_timeTracking( 'after substitute_t3globals_recurs( )' );
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->b_drs_perform)
-    {
-      if($this->bool_typo3_43)
-      {
-        $endTime = $this->TT->getDifferenceToStarttime();
-      }
-      if(!$this->bool_typo3_43)
-      {
-        $endTime = $this->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] substitute_t3globals_recurs: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
-    }
-      // DRS - Performance
 
 
 
