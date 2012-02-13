@@ -485,20 +485,13 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Get the typeNum
+      // Get the typeNum I/II
 
       // #31230, 111108, dwildt
     $this->objDownload->set_typeNum( );
       // #29370, 110831, dwildt
     $this->objExport->set_typeNum( );
-      // #32654, 120212, dwildt+
-    $this->objMap->set_typeNum( );
-      // Get the typeNum
-$pos = strpos('87.177.75.198', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-if( ! ( $pos === false ) )
-{
-  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->objMap->str_typeNum, $this->objMap->enabled );
-}
+      // Get the typeNum I/II
 
 
 
@@ -537,6 +530,21 @@ if( ! ( $pos === false ) )
 
     $this->init_classVars();
       // Set the class variables
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Get the typeNum II/II
+
+      // #32654, 120212, dwildt+
+    $this->objMap->set_typeNum( );
+      // Get the typeNum II/II
+$pos = strpos('87.177.75.198', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->objMap->str_typeNum, $this->objMap->enabled );
+}
 
 
 
