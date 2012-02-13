@@ -401,10 +401,10 @@ class tx_browser_pi1_40x extends tslib_pibase {
     $this->init_timeTracking( );
       // Get the values from the localconf.php file
     $this->arr_extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]);
-      // Init current IP
-    $this->init_accessByIP( );
       // Init DRS - Development Reporting System
     $this->init_drs();
+      // Init current IP
+    $this->init_accessByIP( );
 
       // Prompt the expired time to devlog
     $this->log_timeTracking( 'START' );

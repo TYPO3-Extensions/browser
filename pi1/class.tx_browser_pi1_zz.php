@@ -223,11 +223,6 @@
       }
     }
       // _GET - Allocate piVars from _GET, if they aren't set
-//$pos = strpos('91.23.189.79', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if( ! ( $pos === false ) )
-//{
-//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->pObj->piVars );
-//}
 
 
     $conf = $this->pObj->conf;
@@ -1179,17 +1174,87 @@
  *
  * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
  * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ *
+ * @internal #33892, 120213, dwildt+
+ * @version 3.9.8
+ * @since   3.0.0
  */
-  function substitute_t3globals_recurs($arr_multi_dimensional)
+  function substitute_t3globals_recurs( $arr_multi_dimensional )
+  {
+    return substitute_t3globals_recurs_DEPRECATED( $arr_multi_dimensional );
+
+    $conf       = $this->pObj->conf;
+    $conf_view  = $this->pObj->conf['views.'][$this->pObj->view.'.'][$this->pObj->piVar_mode.'.'];
+
+      // Get local or global configuration
+    $arr_conf_advanced = $conf['advanced.'];
+    if( ! empty( $conf_view['advanced.'] ) )
+    {
+      $arr_conf_advanced = $conf_view['advanced.'];
+    }
+      // Get local or global configuration
+
+
+
+      ////////////////////////////////////////////////
+      //
+      // RETURN, if marker with $Global keys should not replaced
+
+    $bool_dontReplace = $arr_conf_advanced['performance.']['GLOBALS.']['dont_replace'];
+    if( $bool_dontReplace )
+    {
+        // DRS - Development Reporting System
+      if( $this->pObj->b_drs_ttc || $this->pObj->b_drs_flexform )
+      {
+        $prompt = '[advanced.][performance.][GLOBALS.][dont_replace] is TRUE.';
+        t3lib_div::devlog( '[INFO/TTC/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you are using markers like ###TSFE:fe_user|...### you should set it to false. ' .
+                  'Be aware that the configuration in the plugin has priority.';
+        t3lib_div::devlog( '[HELP/TTC/FLEXFORM] ' . $prompt, $this->pObj->extKey, 1);
+      }
+        // DRS - Development Reporting System
+      return $arr_multi_dimensional;
+    }
+      // RETURN, if marker with $Global keys should not replaced
+
+
+
+      // Get all keys from $GLOBALS
+    $this->arr_t3global_keys = array_keys( $GLOBALS );
+
+// Workaround "npz.ch" because of bug: $this->conf_view[$table . '.'][$field . '.'] will be changed, but it should not!
+$serialized_conf = serialize($this->conf_view[$table . '.'][$field . '.']);
+// Substitute marker recursive
+$cObj_conf  = $this->pObj->cObj->substituteMarkerInObject( $cObj_conf, $markerArray );
+// Wrap the value
+$value      = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+// Workaround "npz.ch"
+$this->conf_view[$table . '.'][$field . '.'] = unserialize($serialized_conf);
+
+ }
+
+
+
+
+
+
+
+
+
+  /**
+ * Get access to the TYPO3 $GLOBALS array: Replace all markers in a multi-dimensional array like an TypoScript array
+ * with the values from the $GLOBALS array.
+ * Syntax for $GLOBALS markers is: ###$GLOBALS KEY:element_firstLevel|element_secondLevel|...###
+ * I.e:                            ###TSFE:fe_user|enablecolumns|deleted###
+ *
+ * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
+ * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ */
+  function substitute_t3globals_recurs_DEPRECATED($arr_multi_dimensional)
   {
     $conf       = $this->pObj->conf;
     $conf_view  = $this->pObj->conf['views.'][$this->pObj->view.'.'][$this->pObj->piVar_mode.'.'];
 
-//var_dump('zz 710', $GLOBALS['HTTP_ACCEPT_LANGUAGE']);
-// string(35) "de-de,de;q=0.8,en;q=0.5,en-us;q=0.3"
-//var_dump('zz 710', $GLOBALS['TSFE']);
-//exit;
-// string(35) "de-de,de;q=0.8,en;q=0.5,en-us;q=0.3"
 
     ////////////////////////////////////////////////
     //
