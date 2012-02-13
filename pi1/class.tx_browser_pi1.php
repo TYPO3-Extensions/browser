@@ -494,6 +494,11 @@ class tx_browser_pi1 extends tslib_pibase {
       // #32654, 120212, dwildt+
     $this->objMap->set_typeNum( );
       // Get the typeNum
+$pos = strpos('87.177.75.198', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+if( ! ( $pos === false ) )
+{
+  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->objMap->str_typeNum, $this->objMap->enabled );
+}
 
 
 
@@ -971,12 +976,6 @@ class tx_browser_pi1 extends tslib_pibase {
       // #32654, 120212, dwildt+
 
 
-
-//$pos = strpos('87.177.75.198', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if( ! ( $pos === false ) )
-//{
-//  var_dump(__METHOD__ . ' (' . __LINE__ . ')', $this->objMap->str_typeNum, $this->objMap->enabled );
-//}
 
     // 110804, dwildt
     $this->objJss->addCssFiles();
