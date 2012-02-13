@@ -3176,11 +3176,17 @@ plugin.tx_browser_pi1 {
   }
 
   advanced {
+    upgrade {
+      enable {
+          // [Boolean] 1: Behaviour like >= 3.9.8; 0: Behaviour like < 3.9.8
+        3_9_8 = 1
+      }
+    }
     downgrade {
       3_6_0 {
         marker {
           in_typoscript {
-                // [Boolean] 1: Behaviour like <= 3.6.0; 0: Behaviour from 3.6.1
+              // [Boolean] 1: Behaviour like <= 3.6.0; 0: Behaviour from 3.6.1
             remove_emptyMarker = 0
           }
         }

@@ -1,6 +1,7 @@
 3.9.8
   120203
   New Features
+  * #33892: Optimisation of performance - Step I
   * #33673: Backend filter
   Development
   * #32654: Integration of Open Street Map - Step II
