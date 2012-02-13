@@ -1181,7 +1181,10 @@
  */
   function substitute_t3globals_recurs( $arr_multi_dimensional )
   {
-    return $this->substitute_t3globals_recurs_DEPRECATED( $arr_multi_dimensional );
+    if( ! $this->pObj->bool_accessByIP )
+    {
+      return $this->substitute_t3globals_recurs_DEPRECATED( $arr_multi_dimensional );
+    }
 
     $conf       = $this->pObj->conf;
     $conf_view  = $this->pObj->conf['views.'][$this->pObj->view.'.'][$this->pObj->piVar_mode.'.'];
@@ -1221,6 +1224,8 @@
 
       // Get all keys from $GLOBALS
     $this->arr_t3global_keys = array_keys( $GLOBALS );
+var_dump( $this->arr_t3global_keys );
+exit;
 
 // Workaround "npz.ch" because of bug: $this->conf_view[$table . '.'][$field . '.'] will be changed, but it should not!
 $serialized_conf = serialize($this->conf_view[$table . '.'][$field . '.']);

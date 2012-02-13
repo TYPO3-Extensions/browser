@@ -1764,7 +1764,7 @@ class tx_browser_pi1_40x extends tslib_pibase {
       // RETURN no DRS prompt
 
       // DRS prompt
-    $prompt = $currrentIp . ' is an element of ' . $csvIP;
+    $prompt = $currentIP . ' is an element of ' . $csvIP;
     t3lib_div::devLog('[INFO/ALL] ' . $prompt, $this->extKey, 0 );
       // DRS prompt
   }
