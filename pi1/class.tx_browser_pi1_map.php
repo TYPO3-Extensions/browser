@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage    tx_browser
 *
-* @version 3.9.6
+* @version 3.9.8
 * @since 3.9.6
 */
 
@@ -169,6 +169,27 @@ class tx_browser_pi1_map
 
 
 
+  /**
+ * set_typeNum( ):
+ *
+ * @return	void
+ * @version 3.9.8
+ * @since   3.9.8
+ */
+  public function set_typeNum( )
+  {
+      // init the map
+    $this->init( );
+  }
+
+
+
+
+
+
+
+
+
   /***********************************************
   *
   * Init
@@ -190,7 +211,7 @@ class tx_browser_pi1_map
  * @version 3.9.6
  * @since   3.9.6
  */
-  public function init(  )
+  private function init(  )
   {
       ///////////////////////////////////////////////////////////////////////////////
       //

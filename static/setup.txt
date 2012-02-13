@@ -290,7 +290,7 @@ plugin.tx_browser_pi1 {
             // category label
           label = TEXT
           label {
-              // [STRING] label for the category. Syntax: table.field
+              // [STRING] label for the category. Syntax: table.field. Has to be part of the select of the current view!
             value =
           }
         }

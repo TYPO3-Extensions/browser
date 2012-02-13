@@ -2,7 +2,7 @@
  /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008 - 2011 Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2008-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +28,7 @@
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage    tx_browser
- * @version 3.9.3
+ * @version 3.9.8
  * @since 1.0
  */
 
@@ -99,7 +99,7 @@ class tx_browser_pi1_views
  *
  * @param	string		$template: Template
  * @return	void
- * @version 3.9.6
+ * @version 3.9.8
  * @since 1.0.0
  */
   function listView( $template )
@@ -1034,6 +1034,30 @@ class tx_browser_pi1_views
       // Remove the title in case of csv export
       // csv export
       // #29370, 110831, dwildt+
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // csv export
+
+      // #32654, 120212, dwildt+
+    $str_marker = $this->pObj->lDisplayList['templateMarker'];
+    switch( $this->pObj->objMap->str_typeNum )
+    {
+      case( 'map' ) :
+        if ( $this->pObj->b_drs_templating || $this->pObj->b_drs_map )
+        {
+          t3lib_div::devlog('[INFO/TEMPLATING+MAP] ' . $str_marker . ' is ignored. ###TEMPLATE_CSV### is used as template marker.',  $this->pObj->extKey, 0);
+        }
+        $str_marker     = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
+        $template_path  = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['template.']['file'];
+        $template       = $this->pObj->cObj->fileResource($template_path);
+        break;
+      default:
+        // Do nothing;
+    }
+      // csv export
 
 
 

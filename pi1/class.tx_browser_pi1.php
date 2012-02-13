@@ -491,6 +491,8 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objDownload->set_typeNum( );
       // #29370, 110831, dwildt
     $this->objExport->set_typeNum( );
+      // #32654, 120212, dwildt+
+    $this->objMap->set_typeNum( );
       // Get the typeNum
 
 
@@ -935,7 +937,6 @@ class tx_browser_pi1 extends tslib_pibase {
       // map marker category: return the result (HTML string) without wrapInBaseClass
 
       // #32654, 120212, dwildt+
-    $this->objMap->init( );
     switch( $this->objMap->str_typeNum )
     {
         // typeNum name is map
