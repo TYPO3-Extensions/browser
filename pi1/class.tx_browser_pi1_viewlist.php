@@ -120,6 +120,18 @@ class tx_browser_pi1_viewlist
     $mode       = $this->pObj->piVar_mode;
     $cObj       = $this->pObj->cObj;
 
+      // Default mode
+    $maxModes = count( $conf['views.'][$viewWiDot] );
+    switch( true )
+    {
+      case( $mode > $maxModes ):
+      case( empty ( $mode ) ):
+        $mode       = 1;
+        $this->mode = 1;
+        break;
+    }
+      // Default mode
+
     $view       = $this->pObj->view;
     $viewWiDot  = $view . '.';
     $conf_view  = $conf['views.'][$viewWiDot][$mode . '.'];
@@ -130,19 +142,6 @@ class tx_browser_pi1_viewlist
 
 
     
-      /////////////////////////////////////
-      //
-      // Default mode
-
-    $maxModes = count( $conf['views.'][$viewWiDot] );
-    if( $mode > $maxModes )
-    {
-      $mode       = 1;
-      $this->mode = 1;
-    }
-      // Default mode
-
-
       //////////////////////////////////////////////////////////////////
       //
       // RETURN there isn't any list configured
