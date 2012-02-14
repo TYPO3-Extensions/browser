@@ -738,7 +738,7 @@ class tx_browser_pi1_sql_auto
 
     if ($this->pObj->b_drs_sql)
     {
-      t3lib_div::devLog('[INFO/SQL] ORDER BY \''.$orderBy.'\' Be aware: this is for php ordering but not for the SQL order-by-clause.', $this->pObj->extKey, -1);
+      t3lib_div::devLog('[INFO/SQL] ORDER BY \''.$orderBy.'\' Be aware: this is for php ordering but not for the SQL order-by-clause.', $this->pObj->extKey, 0);
     }
     // DRS - Development Reporting System
 
@@ -1813,7 +1813,7 @@ class tx_browser_pi1_sql_auto
     $hr_whereClause = str_replace(',', ', ', $whereClause);
     if ($this->pObj->b_drs_sql)
     {
-      t3lib_div::devLog('[INFO/SQL] WHERE '.$hr_whereClause, $this->pObj->extKey, -1);
+      t3lib_div::devLog('[INFO/SQL] WHERE '.$hr_whereClause, $this->pObj->extKey, 0);
       t3lib_div::devlog('[HELP/SQL] Change it? Use views.'.$viewWiDot.$mode.'.override.where', $this->pObj->extKey, 1);
     }
     // DRS - Development Reporting System

@@ -61,6 +61,10 @@ class tx_browser_pi1_viewlist
   var $arr_orderBy;
     // Array with fields from functions.clean_up.csvTableFields from TS
   var $arr_rmFields;
+    // [Array] result of the current SQL query
+  var $res = null;
+    // [Boolean] True: Query is a union, false: query isn't a union
+  var $bool_union = null;
 
     // [Integer] Id of the current mode.
   var $mode       = null;
@@ -180,13 +184,15 @@ class tx_browser_pi1_viewlist
 
 
 
+      // SQL build the query and execute it
     $arr_result = $this->sql( );
     if( $arr_result['error']['status'] )
     {
       $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       return $template;
     }
-    $res = $arr_result['data']['res'];
+    $res = $this->res;
+      // SQL build the query and execute it
 
 
 
@@ -209,7 +215,7 @@ class tx_browser_pi1_viewlist
         // User selected a filter
       if( ! empty( $this->pObj->arr_andWhereFilter ) )
       {
-        if( ! $b_union && ! $this->pObj->b_sql_manual )
+        if( ( ! $this->bool_union ) && ( ! $this->pObj->b_sql_manual ) )
         {
           $arr_where = null;
           list( $table, $field ) = explode( '.', $this->pObj->arrLocalTable['uid'] );
@@ -285,7 +291,7 @@ class tx_browser_pi1_viewlist
           }
 
         }
-        if( $b_union )
+        if( $this->bool_union )
         {
           if( $this->pObj->b_drs_error )
           {
@@ -343,53 +349,11 @@ class tx_browser_pi1_viewlist
 
 
 
-      ////////////////////////////////////
-      //
       // Building $rows
-
-    $arr_table_realnames = $conf_view['aliases.']['tables.'];
-
-      // Do we have aliases?
-    if( is_array( $arr_table_realnames ) )
-    {
-        // Yes, we have aliases.
-      $i_row = 0;
-      while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
-      {
-        foreach( $row as $str_tablealias_field => $value )
-        {
-          $arr_tablealias_field = explode('.', $str_tablealias_field);   // table_1.sv_name
-          $str_tablealias       = $arr_tablealias_field[0];              // table_1
-          $str_field            = $arr_tablealias_field[1];              // sv_name
-          $str_table            = $arr_table_realnames[$str_tablealias]; // tx_civserv_service
-          $str_table_field      = $str_table . '.' . $str_field;         // tx_civserv_service.sv_name
-          if( $str_table_field == '.' )
-          {
-            $str_table_field = $str_tablealias_field;
-          }
-          $rows[$i_row][$str_table_field] = $row[$str_tablealias_field];
-        }
-        $i_row++;
-      }
-        // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after: We have aliases.' );
-        // Yes, we have aliases.
-    }
-    if( ! is_array( $arr_table_realnames ) )
-    {
-        // No, we don't have any alias.
-      while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
-      {
-        $rows[] = $row;
-      }
-        // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after: We haven\'t aliases.' );
-    }
-    $this->pObj->rows = $rows;
-      // Do we have aliases?
-
+    $this->rows( );
+    $rows = $this->pObj->rows;
       // SQL Free Result
-    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+    $GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after building rows.' );
       // Building $rows
@@ -434,6 +398,7 @@ class tx_browser_pi1_viewlist
       //
       // Consolidate rows
 
+      // SQL mode automatically
     if( ! $this->pObj->b_sql_manual )
     {
       $arr_result       = $this->pObj->objConsolidate->consolidate( $rows );
@@ -445,11 +410,15 @@ class tx_browser_pi1_viewlist
         // Prompt the expired time to devlog
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objConsolidate->consolidate( )' );
     }
+      // SQL mode automatically
+
+      // SQL mode manual
     if( $this->pObj->b_sql_manual && $this->pObj->b_drs_localisation )
     {
       $prompt = 'Manual SQL mode: Rows didn\'t get any general consolidation.';
       t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
     }
+      // SQL mode manual
       // Consolidate rows
 
 
@@ -608,7 +577,6 @@ class tx_browser_pi1_viewlist
       // Filter - part II/II - HTML code / template
 
       // Count hits, filter rows, update template
-
     $this->pObj->objFilter->rows_wo_limit = $rows;
     $arr_result = $this->pObj->objFilter->filter( $template );
     if( $arr_result['error']['status'] )
@@ -624,6 +592,7 @@ class tx_browser_pi1_viewlist
     unset( $arr_result );
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objFilter->filter( )' );
+      // Count hits, filter rows, update template
       // Filter - part II/II - HTML code / template
 
 
@@ -666,7 +635,7 @@ class tx_browser_pi1_viewlist
 
       //////////////////////////////////////////////////////////////////////////
       //
-      // Hook for override the SQL result for for the list view
+      // Hook for override the SQL result for the list view
 
       // This hook is used by one extension at least
     if( is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['browser_list'] ) )
@@ -699,68 +668,14 @@ class tx_browser_pi1_viewlist
     }
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after hook browser_list' );
-      // Hook for override the SQL result for for the list view
+      // Hook for override the SQL result for the list view
 
 
 
-      ////////////////////////////////////////////////////////////////////////
-      //
-      // Prepaire array with links to single view
-
-    $csvLinkToSingle = $conf_view['csvLinkToSingleView'];
-    if (!$csvLinkToSingle)
-    {
-      $csvLinkToSingle = $conf_view['select'];
-      $csvLinkToSingle = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($csvLinkToSingle);
-        // Is there a statement, which should replaced with an alias?
-      if (is_array($conf_view['select.']['deal_as_table.']))
-      {
-        foreach ($conf_view['select.']['deal_as_table.'] as $arr_dealastable)
-        {
-          $csvLinkToSingle = str_replace($arr_dealastable['statement'], $arr_dealastable['alias'], $csvLinkToSingle);
-          if ($this->pObj->b_drs_sql)
-          {
-            t3lib_div::devlog('[INFO/SQL] Used tables: Statement "'.$arr_dealastable['statement'].'" is replaced with "'.$arr_dealastable['alias'].'"', $this->pObj->extKey, 0);
-          }
-        }
-      }
-    }
-    if (!$csvLinkToSingle)
-    {
-      if ($this->pObj->b_drs_sql)
-      {
-        t3lib_div::devlog('[INFO/DRS] views.'.$viewWiDot.$mode.' hasn\'t any linkToSingleView.', $this->pObj->extKey, 0);
-        t3lib_div::devLog('[HELP/DRS] If you want a link to a single view, please configure views.'.$viewWiDot.$mode.'.csvLinkToSingleView.', $this->pObj->extKey, 1);
-      }
-    }
-    $arrLinkToSingleFields = explode(',', $csvLinkToSingle);
-    $this->pObj->arrLinkToSingle = array();
-    foreach((array) $arrLinkToSingleFields as $arrLinkToSingleField)
-    {
-      list($table, $field) = explode('.', trim($arrLinkToSingleField));
-      $this->pObj->arrLinkToSingle[] = $table.'.'.$field;
-    }
-
-      // Replace aliases in case of aliases
-    if (is_array($conf_view['aliases.']['tables.']))
-    {
-      foreach ($this->pObj->arrLinkToSingle as $i_key => $str_tablefield)
-      {
-        $this->pObj->arrLinkToSingle[$i_key] = $this->pObj->objSqlFun->get_sql_alias_before($str_tablefield);
-      }
-      $this->pObj->arrLinkToSingle = $this->pObj->objSqlFun->replace_tablealias($this->pObj->arrLinkToSingle);
-    }
-      // Replace aliases in case of aliases
-
-    $str_csvList = implode(', ', $this->pObj->arrLinkToSingle);
-    if ($this->pObj->b_drs_sql)
-    {
-      t3lib_div::devlog('[INFO/DRS] Fields which will get a link to a single view: '.$str_csvList.'.', $this->pObj->extKey, 0);
-      t3lib_div::devLog('[HELP/DRS] If you want to configure the field list, please use views.'.$viewWiDot.$mode.'.csvLinkToSingleView.', $this->pObj->extKey, 1);
-    }
+      // Set the global $arrLinkToSingle
+    $this->set_arrLinkToSingle( );
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after Prepaire array with links to single view' );
-      // Prepaire array with links to single view
 
 
 
@@ -794,7 +709,7 @@ class tx_browser_pi1_viewlist
         }
         $str_marker     = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
         $template_path  = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['template.']['file'];
-        $template       = $this->pObj->cObj->fileResource($template_path);
+        $template       = $this->pObj->cObj->fileResource( $template_path );
         break;
       default:
         // Do nothing;
@@ -807,7 +722,7 @@ class tx_browser_pi1_viewlist
 
       //////////////////////////////////////////////////////////////////////
       //
-      // csv export
+      // csv map marker
 
       // #32654, 120212, dwildt+
     $str_marker = $this->pObj->lDisplayList['templateMarker'];
@@ -820,24 +735,21 @@ class tx_browser_pi1_viewlist
         }
         $str_marker     = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
         $template_path  = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['template.']['file'];
-        $template       = $this->pObj->cObj->fileResource($template_path);
+        $template       = $this->pObj->cObj->fileResource( $template_path );
         break;
       default:
         // Do nothing;
     }
-      // csv export
+      // csv map marker
 
 
 
-      // #29370, 110831, dwildt+
       /////////////////////////////////////
       //
       // Building the template
 
-      // HTML template
-    $template   = $this->pObj->cObj->getSubpart( $template, $str_marker );
-      // HTML template
-      // #29370, 110831, dwildt+
+      // HTML template subpart
+    $template = $this->pObj->cObj->getSubpart( $template, $str_marker );
 
 
 
@@ -867,12 +779,6 @@ class tx_browser_pi1_viewlist
         die( $prompt );
       }
     }
-//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if ( ! ( $pos === false ) )
-//    {
-//      var_dump(__METHOD__. ' (' . __LINE__ . '): ', $template );
-//      die( );
-//    }
 
 
 
@@ -1047,7 +953,7 @@ class tx_browser_pi1_viewlist
       //
       // HTML records
 
-    $template = $this->pObj->objTemplate->tmplListview($template, $rows);
+    $template = $this->pObj->objTemplate->tmplListview( $template, $rows );
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objTemplate->tmplListview( )' );
       // HTML records
@@ -1191,6 +1097,9 @@ class tx_browser_pi1_viewlist
  */
   private function sql( )
   {
+    $conf_view = $this->conf_view;
+
+    
       // Set global SQL values
     $arr_result = $this->pObj->objSqlFun->global_all( );
       // Prompt the expired time to devlog
@@ -1200,6 +1109,7 @@ class tx_browser_pi1_viewlist
     {
       return $arr_result;
     }
+    unset( $arr_result );
       // RETURN error
       // Set global SQL values
 
@@ -1214,8 +1124,13 @@ class tx_browser_pi1_viewlist
     $select   = $arr_result['data']['select'];
     $from     = $arr_result['data']['from'];
     $where    = $arr_result['data']['where'];
+      // #33892, 120214, dwildt+
+    $groupBy  = null;
     $orderBy  = $arr_result['data']['orderBy'];
+      // #33892, 120214, dwildt+
+    $limit    = null;
     $union    = $arr_result['data']['union'];
+    unset( $arr_result );
       // SQL query array
 
 
@@ -1232,14 +1147,31 @@ class tx_browser_pi1_viewlist
 
 
 
+  // #33892, 120214, dwildt+
+if( $this->pObj->bool_accessByIP )
+{
+  $orderBy  = $arr_result['data']['orderBy'];
+  $limit    = $conf_view['limit'];
+    // DRS
+  if( $this->pObj->b_drs_sql )
+  {
+    $prompt = 'orderBy: ' . $orderBy . '; limit: ' . $limit;
+    t3lib_div::devlog( '[INFO/DEVELOPMENT] ' . $prompt, $this->pObj->extKey, 0 );
+  }
+    // DRS
+}
+  // #33892, 120214, dwildt+
+
+
+
       // SQL query
-    $b_union = false;
+    $this->bool_union = false;
       // Query: union case
     if( $union )
     {
         // We have a UNION. Maybe because there are synonyms.
       $query   = $union;
-      $b_union = true;
+      $this->bool_union = true;
     }
       // Query: union case
 
@@ -1251,9 +1183,9 @@ class tx_browser_pi1_viewlist
                                         $select,
                                         $from,
                                         $where,
-                                        $groupBy="",
+                                        $groupBy,
                                         $orderBy,
-                                        $limit="",
+                                        $limit,
                                         $uidIndexField=""
                                       );
     }
@@ -1306,8 +1238,8 @@ if( $this->pObj->bool_accessByIP )
   }
 }
 
-    $arr_return['data']['res'] = $res;
-    return $arr_return;
+    $this->res = $res;
+    return false;
 
   }
 
@@ -1352,6 +1284,165 @@ if( $this->pObj->bool_accessByIP )
 
 
 
+
+  /**
+ * rows( ):
+ *
+ * @return	array
+ * @version 3.9.8
+ * @since 1.0.0
+ */
+  private function rows( )
+  {
+    $conf_view = $this->conf_view;
+    $res       = $this->res;
+
+    
+      // Get aliases
+    $arr_table_realnames = $conf_view['aliases.']['tables.'];
+
+      // IF aliases
+    if( is_array( $arr_table_realnames ) )
+    {
+      $i_row = 0;
+      while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+      {
+        foreach( $row as $str_tablealias_field => $value )
+        {
+          $arr_tablealias_field = explode( '.', $str_tablealias_field ); // table_1.sv_name
+          $str_tablealias       = $arr_tablealias_field[0];              // table_1
+          $str_field            = $arr_tablealias_field[1];              // sv_name
+          $str_table            = $arr_table_realnames[$str_tablealias]; // tx_civserv_service
+          $str_table_field      = $str_table . '.' . $str_field;         // tx_civserv_service.sv_name
+          if( $str_table_field == '.' )
+          {
+            $str_table_field = $str_tablealias_field;
+          }
+          $rows[$i_row][$str_table_field] = $row[$str_tablealias_field];
+        }
+        $i_row++;
+      }
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after: We have aliases.' );
+    }
+      // IF aliases
+
+      // IF no aliases
+    if( ! is_array( $arr_table_realnames ) )
+    {
+      while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+      {
+        $rows[] = $row;
+      }
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after: We haven\'t aliases.' );
+    }
+      // IF no aliases
+
+    $this->pObj->rows = $rows;
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after building rows.' );
+      // Building $rows
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * set_arrLinkToSingle( ): Set the global $arrLinkToSingle
+ *
+ * @return	array
+ * @version 3.9.8
+ * @since 1.0.0
+ */
+  private function set_arrLinkToSingle( )
+  {
+    $conf_view = $this->conf_view;
+
+    
+      // Get linkToSingle CSV list
+    $csvLinkToSingle = $conf_view['csvLinkToSingleView'];
+
+      // IF no CSV list
+    if ( ! $csvLinkToSingle )
+    {
+        // Set CSV list: take values from the select
+      $csvLinkToSingle = $conf_view['select'];
+      $csvLinkToSingle = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $csvLinkToSingle );
+        // LOOP replace table.field with an alias
+      foreach( ( array ) $conf_view['select.']['deal_as_table.'] as $arr_dealastable )
+      {
+        $csvLinkToSingle = str_replace( $arr_dealastable['statement'], $arr_dealastable['alias'], $csvLinkToSingle );
+          // DRS
+        if ( $this->pObj->b_drs_sql )
+        {
+          $prompt = 'Used tables: Statement "' . $arr_dealastable['statement'] . '" ' .
+                    'is replaced with "' . $arr_dealastable['alias'] . '"';
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+          // DRS
+      }
+        // LOOP replace table.field with an alias
+        // DRS
+      if ( $this->pObj->b_drs_sql )
+      {
+        $prompt = 'views.' . $viewWiDot . $mode . ' hasn\'t any linkToSingleView.';
+        t3lib_div::devlog( '[INFO/DRS] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you want a link to a single view, please configure views.' .
+                  $viewWiDot . $mode . '.csvLinkToSingleView.';
+        t3lib_div::devLog( '[HELP/DRS] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+        // DRS
+    }
+      // IF no CSV list
+
+      // Set the global $arrLinkToSingle
+    $arrLinkToSingleFields = explode( ',', $csvLinkToSingle );
+    $this->pObj->arrLinkToSingle = array( );
+    foreach( ( array ) $arrLinkToSingleFields as $arrLinkToSingleField )
+    {
+      list( $table, $field ) = explode( '.', trim( $arrLinkToSingleField ) );
+      $this->pObj->arrLinkToSingle[] = $table.'.'.$field;
+    }
+      // Set the global $arrLinkToSingle
+
+      // Replace aliases in case of aliases
+    if( is_array( $conf_view['aliases.']['tables.'] ) )
+    {
+      foreach( $this->pObj->arrLinkToSingle as $i_key => $str_tablefield )
+      {
+        $this->pObj->arrLinkToSingle[$i_key] = $this->pObj->objSqlFun->get_sql_alias_before( $str_tablefield );
+      }
+      $this->pObj->arrLinkToSingle = $this->pObj->objSqlFun->replace_tablealias( $this->pObj->arrLinkToSingle );
+    }
+      // Replace aliases in case of aliases
+
+      // DRS
+    if( $this->pObj->b_drs_sql )
+    {
+      $str_csvList  = implode( ', ', $this->pObj->arrLinkToSingle );
+      $prompt       = 'Fields which will get a link to a single view: ' . $str_csvList . '.';
+      t3lib_div::devlog( '[INFO/DRS] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompt       = 'If you want to configure the field list, please use views.' .
+                      $viewWiDot . $mode . '.csvLinkToSingleView.';
+      t3lib_div::devLog( '[HELP/DRS] ' . $prompt, $this->pObj->extKey, 1 );
+    }
+      // DRS
+  }
+
+
+
+
+
+
+
+  
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_views.php']) {
