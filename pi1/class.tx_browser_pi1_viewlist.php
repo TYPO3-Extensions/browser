@@ -326,13 +326,15 @@ class tx_browser_pi1_viewlist
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( 'before $GLOBALS[TYPO3_DB]->sql_query( )' );
+    $tt_start = $this->tt_prevEndTime;
     $res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
     $error = $GLOBALS['TYPO3_DB']->sql_error( );
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( 'after $GLOBALS[TYPO3_DB]->sql_query( )' );
     $this->pObj->timeTracking_prompt( $query );
-if( $this->pObj->bool_accessByIP )
+    $tt_end = $this->tt_prevEndTime;
+if( ( $tt_end - $tt_start ) > 1000 )
 {
   die( $query );
 }
