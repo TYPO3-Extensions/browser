@@ -1897,14 +1897,10 @@ class tx_browser_pi1_navi
       // Set view to list
     $this->pObj->view = 'list';
       // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows']
-    if( $this->pObj->bool_accessByIP )
-    {
-      $dummy = $this->pObj->objListview->listView($this->pObj->str_template_raw);
-    }
-    if( ! $this->pObj->bool_accessByIP )
-    {
-      $dummy = $this->pObj->objViews->listView($this->pObj->str_template_raw);
-    }
+      // #33892, 120214, dwildt-
+    //$dummy = $this->pObj->objViews->listView($this->pObj->str_template_raw);
+      // #33892, 120214, dwildt+
+    $dummy = $this->pObj->objListview->main($this->pObj->str_template_raw);
       // Restore current values
     $this->pObj->rows = $curr_rows;
     $this->pObj->view = $curr_view;

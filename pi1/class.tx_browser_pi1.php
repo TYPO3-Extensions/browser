@@ -762,12 +762,10 @@ class tx_browser_pi1 extends tslib_pibase {
     switch( $this->view )
     {
       case( 'list' ):
-        if( $this->pObj->bool_accessByIP )
-        {
-          $str_template_completed = $this->objListview->listView( );
-          break;
-        }
-        $str_template_completed = $this->objViews->listView( );
+          // #33892, 120214, dwildt-
+        //$str_template_completed = $this->objViews->listView( );
+          // #33892, 120214, dwildt+
+        $str_template_completed = $this->objListview->main( );
         break;
       case( 'single' ):
         $str_template_completed = $this->objViews->singleView( );

@@ -101,7 +101,7 @@ class tx_browser_pi1_viewlist
  * @version 3.9.8
  * @since 1.0.0
  */
-  function listView( )
+  function main( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( 'begin listView( )' );
