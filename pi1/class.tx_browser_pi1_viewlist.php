@@ -1151,20 +1151,20 @@ class tx_browser_pi1_viewlist
 
 
 
-  // #33892, 120214, dwildt+
-if( $this->pObj->bool_accessByIP )
-{
-  $orderBy  = $arr_result['data']['orderBy'];
-  $limit    = $conf_view['limit'];
-    // DRS
-  if( $this->pObj->b_drs_sql )
-  {
-    $prompt = 'orderBy: ' . $orderBy . '; limit: ' . $limit;
-    t3lib_div::devlog( '[INFO/DEVELOPMENT] ' . $prompt, $this->pObj->extKey, 0 );
-  }
-    // DRS
-}
-  // #33892, 120214, dwildt+
+//  // #33892, 120214, dwildt+
+//if( $this->pObj->bool_accessByIP )
+//{
+//  $orderBy  = $arr_result['data']['orderBy'];
+//  $limit    = $conf_view['limit'];
+//    // DRS
+//  if( $this->pObj->b_drs_sql )
+//  {
+//    $prompt = 'orderBy: ' . $orderBy . '; limit: ' . $limit;
+//    t3lib_div::devlog( '[INFO/DEVELOPMENT] ' . $prompt, $this->pObj->extKey, 0 );
+//  }
+//    // DRS
+//}
+//  // #33892, 120214, dwildt+
 
 
 
