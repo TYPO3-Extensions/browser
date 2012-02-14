@@ -1083,7 +1083,7 @@ class tx_browser_pi1_flexform {
         {
           $endTime = $this->pObj->TT->mtime();
         }
-        t3lib_div :: devLog('[INFO/PERFORMANCE]: ' . ($endTime - $this->pObj->startTime) . ' ms', $this->pObj->extKey, 0);
+        t3lib_div :: devLog('[INFO/PERFORMANCE]: ' . ($endTime - $this->pObj->tt_startTime) . ' ms', $this->pObj->extKey, 0);
       }
     }
       // Field dontUseDRS

@@ -6623,7 +6623,7 @@ recordbrowser_get:  Rplace the marker ###RECORD_BROWSER### with the rendered rec
         $value = $this->pObj->conf['navigation.']['record_browser'];
         t3lib_div::devlog('[INFO/
 [...]
->pObj->startTime).' ms', $this->pObj->extKey, 0);
+>pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
     }
       // DRS - Performance
 
@@ -6666,7 +6666,7 @@ recordbrowser_callListView: Call the listView. It is needed for the record brows
       }
    
 [...]
-D__ . ': '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+D__ . ': '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
     }
     // DRS - Performance
   }
@@ -9273,7 +9273,7 @@ Building the table with the result in the list view
 
       /////////////////////////////////////////////////////////////
 [...]
-ime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+ime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
     }
     // DRS - Performance
 
@@ -10434,7 +10434,7 @@ Display a search form, a-z-Browser, pageBrowser and a list of records
       // #12471, 110123, dwildt
     if (is_array($c
 [...]
-->pObj->startTime).' ms', $this->pObj->extKey, 0);
+->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
     }
       // DRS - Performance
 

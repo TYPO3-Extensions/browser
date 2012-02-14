@@ -708,7 +708,7 @@ class tx_browser_pi1_template
       {
         $endTime = $this->pObj->TT->mtime();
       }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After \'First time?\': '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+      t3lib_div::devLog('[INFO/PERFORMANCE] After \'First time?\': '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
     }
         // DRS - Performance
 
@@ -1112,7 +1112,7 @@ class tx_browser_pi1_template
       {
         $endTime = $this->pObj->TT->mtime();
       }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After some initials: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+      t3lib_div::devLog('[INFO/PERFORMANCE] After some initials: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
     }
       // DRS - Performance
 
@@ -1296,7 +1296,7 @@ class tx_browser_pi1_template
         {
           $endTime = $this->pObj->TT->mtime();
         }
-        t3lib_div::devLog('[INFO/PERFORMANCE] After rows with individual design: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+        t3lib_div::devLog('[INFO/PERFORMANCE] After rows with individual design: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
       }
         // DRS - Performance
     }
@@ -1350,7 +1350,7 @@ class tx_browser_pi1_template
       {
         $endTime = $this->pObj->TT->mtime();
       }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After generatin template: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+      t3lib_div::devLog('[INFO/PERFORMANCE] After generatin template: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
     }
     // DRS - Performance
 
@@ -2729,7 +2729,7 @@ class tx_browser_pi1_template
         {
           $endTime = $this->pObj->TT->mtime();
         }
-        t3lib_div::devLog('[INFO/PERFORMANCE] Before elements loop (first row): '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+        t3lib_div::devLog('[INFO/PERFORMANCE] Before elements loop (first row): '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
       }
     }
       // DRS - Performance
@@ -2882,7 +2882,7 @@ class tx_browser_pi1_template
           {
             $endTime = $this->pObj->TT->mtime( );
           }
-          $prompt = 'After removing fields 1: '. ($endTime - $this->pObj->startTime).' ms';
+          $prompt = 'After removing fields 1: '. ($endTime - $this->pObj->tt_startTime).' ms';
           t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt, $this->pObj->extKey, 0);
         }
       }
@@ -2916,7 +2916,7 @@ class tx_browser_pi1_template
           {
             $endTime = $this->pObj->TT->mtime( );
           }
-          $prompt = 'After removing fields 2: '. ($endTime - $this->pObj->startTime).' ms';
+          $prompt = 'After removing fields 2: '. ($endTime - $this->pObj->tt_startTime).' ms';
           t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt, $this->pObj->extKey, 0);
         }
       }
@@ -2963,7 +2963,7 @@ class tx_browser_pi1_template
           {
             $endTime = $this->pObj->TT->mtime();
           }
-          t3lib_div::devLog('[INFO/PERFORMANCE] After wrap and link value: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+          t3lib_div::devLog('[INFO/PERFORMANCE] After wrap and link value: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
         }
       }
         // DRS - Performance
@@ -3073,7 +3073,7 @@ class tx_browser_pi1_template
           {
             $endTime = $this->pObj->TT->mtime();
           }
-          t3lib_div::devLog('[INFO/PERFORMANCE] After substitute marker: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+          t3lib_div::devLog('[INFO/PERFORMANCE] After substitute marker: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
         }
       }
         // DRS - Performance
@@ -3104,7 +3104,7 @@ class tx_browser_pi1_template
         {
           $endTime = $this->pObj->TT->mtime();
         }
-        t3lib_div::devLog('[INFO/PERFORMANCE] After elements loop (first row): '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+        t3lib_div::devLog('[INFO/PERFORMANCE] After elements loop (first row): '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
       }
     }
       // DRS - Performance

@@ -359,6 +359,12 @@ class tx_browser_pi1 extends tslib_pibase {
   var $bool_dontUseDRS = false;
     // [Boolean] If true, Javascript is running in debugging mode. It is configured by the plugin sheet [development]
   var $bool_debugJSS = false;
+    // [Integer] timetracking: start time
+  var $tt_startTime   = 0;
+    // [Integer] timetracking: previous end time
+  var $tt_prevEndTime = 0;
+    // [Integer] 0 (OK), 2 (WARN), 3 (ERROR): kind of last prompt
+  var $tt_prevPrompt  = null;
     // Development
 
 
@@ -398,7 +404,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // Set the global $bool_typo3_43
     $this->get_typo3version( );
       // Init timetracking, set the starttime
-    $this->init_timeTracking( );
+    $this->timeTracking_init( );
       // Get the values from the localconf.php file
     $this->arr_extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]);
       // Init DRS - Development Reporting System
@@ -407,7 +413,7 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->init_accessByIP( );
 
       // Prompt the expired time to devlog
-    $this->log_timeTracking( 'START' );
+    $this->timeTracking_log( 'START' );
 
 
 
@@ -572,7 +578,7 @@ class tx_browser_pi1 extends tslib_pibase {
 //:TODO: 120213. Performance: Methode evt. nicht mehr unterstuetzen. Stattdessen stdWrap.data.
     $this->conf = $this->objZz->substitute_t3globals_recurs( $this->conf );
       // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after substitute_t3globals_recurs( )' );
+    $this->timeTracking_log( 'after substitute_t3globals_recurs( )' );
       // Replace TSFE markers
 
 
@@ -608,7 +614,7 @@ class tx_browser_pi1 extends tslib_pibase {
       {
         t3lib_div::devLog('[ERROR/DRS] ABORTED', $this->extKey, 3);
           // Prompt the expired time to devlog
-        $this->log_timeTracking( 'END' );
+        $this->timeTracking_log( 'END' );
       }
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
       return $html_updateCheck . $this->objWrapper->wrapInBaseIdClass( $prompt );
@@ -667,7 +673,7 @@ class tx_browser_pi1 extends tslib_pibase {
       {
         t3lib_div::devLog('[ERROR/DRS] ABORTED', $this->extKey, 3);
           // Prompt the expired time to devlog
-        $this->log_timeTracking( 'END' );
+        $this->timeTracking_log( 'END' );
       }
       $prompt = '<h1 style="color:red;">' . $this->pi_getLL( 'error_readlog_h1' ) . '</h1>' . PHP_EOL .
                 '<p style="color:red;font-weight:bold;">' . $this->pi_getLL( 'error_table_no' ) . '</p>';
@@ -695,7 +701,7 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->arr_realTables_arrFields           = $arr_result['data']['arrFetchedTables'];
     unset( $arr_result );
       // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after $this->objConsolidate->addUidAndPid( )' );
+    $this->timeTracking_log( 'after $this->objConsolidate->addUidAndPid( )' );
       // Add missing uids
 
 
@@ -741,7 +747,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // Manual SQL mode: The user configured more than a select statement
 
       // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after $this->objSqlMan->check_typoscript_query_parts( )' );
+    $this->timeTracking_log( 'after $this->objSqlMan->check_typoscript_query_parts( )' );
       // Set the manual SQL mode or the auto SQL mode
 
 
@@ -751,7 +757,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // Process the views
 
       // Prompt the expired time to devlog
-    $this->log_timeTracking( 'before processing the view' );
+    $this->timeTracking_log( 'before processing the view' );
       // SWITCH view
     switch( $this->view )
     {
@@ -764,7 +770,7 @@ class tx_browser_pi1 extends tslib_pibase {
     }
       // SWITCH view
       // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after processing the view' );
+    $this->timeTracking_log( 'after processing the view' );
       // Process the views
 
 
@@ -776,7 +782,7 @@ class tx_browser_pi1 extends tslib_pibase {
     if( is_array( $str_template_completed ) )
     {
         // Prompt the expired time to devlog
-      $this->log_timeTracking( 'END' );
+      $this->timeTracking_log( 'END' );
 
         // RETURN defined error
       if( $str_template_completed['error']['status'] == true )
@@ -803,7 +809,7 @@ class tx_browser_pi1 extends tslib_pibase {
     if( $this->str_template_raw == $str_template_completed )
     {
         // Prompt the expired time to devlog
-      $this->log_timeTracking( 'END' );
+      $this->timeTracking_log( 'END' );
       $prompt = '<h1 style="color:red;">' . $this->pi_getLL('error_h1') . '</h1>' . PHP_EOL .
                 '<p style="color:red;font-weight:bold;">' . $this->pi_getLL( 'error_template_render' ) . '</p>';
       return $html_updateCheck . $this->objWrapper->wrapInBaseIdClass( $prompt );
@@ -820,7 +826,7 @@ class tx_browser_pi1 extends tslib_pibase {
     if( substr( $str_template_completed, 0, strlen( '<?xml' ) ) == '<?xml' )
     {
         // Prompt the expired time to devlog
-      $this->log_timeTracking( 'END (XML is returned)' );
+      $this->timeTracking_log( 'END (XML is returned)' );
       return trim( $str_template_completed );
     }
       // XML/RSS: return the result (XML string) without wrapInBaseClass
@@ -841,14 +847,14 @@ class tx_browser_pi1 extends tslib_pibase {
             // CSV export is enabled
           case( true ) :
               // Prompt the expired time to devlog
-            $this->log_timeTracking( 'END (CSV file is returned)' );
+            $this->timeTracking_log( 'END (CSV file is returned)' );
             return trim( $str_template_completed );
             break;
             // CSV export isn't enabled
           case( false ) :
           default :
               // Prompt the expired time to devlog
-            $this->log_timeTracking( 'END (no CSV file is returned)' );
+            $this->timeTracking_log( 'END (no CSV file is returned)' );
             return 'CSV export isn\'t enabled. Please enable it in the plugin/flexform of your TYPO3-Browser.';
             break;
         }
@@ -875,7 +881,7 @@ class tx_browser_pi1 extends tslib_pibase {
             // CSV export is enabled
           case( true ) :
               // Prompt the expired time to devlog
-            $this->log_timeTracking( 'END (file with map markers is returned)' );
+            $this->timeTracking_log( 'END (file with map markers is returned)' );
             return trim( $str_template_completed );
             break;
             // CSV export isn't enabled
@@ -892,7 +898,7 @@ class tx_browser_pi1 extends tslib_pibase {
               t3lib_div :: devLog( '[ERROR/MAP] ' . $prompt , $this->extKey, 3 );
             }
               // Prompt the expired time to devlog
-            $this->log_timeTracking( 'END (no file with map markers is returned)' );
+            $this->timeTracking_log( 'END (no file with map markers is returned)' );
             return $prompt;
             break;
         }
@@ -908,7 +914,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // 110804, dwildt
     $this->objJss->addCssFiles( );
       // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after $this->objJss->addCssFiles( )' );
+    $this->timeTracking_log( 'after $this->objJss->addCssFiles( )' );
 
 
 
@@ -972,7 +978,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // 110804, dwildt
     $this->objJss->addJssFiles( );
       // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after $this->objJss->addJssFiles( )' );
+    $this->timeTracking_log( 'after $this->objJss->addJssFiles( )' );
 
 
 
@@ -1003,7 +1009,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // #32654, 111219, dwildt
     $str_template_completed = $this->objMap->get_map( $str_template_completed );
       // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after $this->objMap->get_map( )' );
+    $this->timeTracking_log( 'after $this->objMap->get_map( )' );
       // Get the map
 
 
@@ -1015,7 +1021,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // 110801, dwildt, #28657
     $str_template_completed = $this->objMarker->replace_left_over( $str_template_completed );
       // Prompt the expired time to devlog
-    $this->log_timeTracking( 'after $this->objMarker->replace_left_over( )' );
+    $this->timeTracking_log( 'after $this->objMarker->replace_left_over( )' );
       // Replace left over markers
 
 
@@ -1027,7 +1033,7 @@ class tx_browser_pi1 extends tslib_pibase {
     if( ! $this->segment['wrap_piBase'] )
     {
         // Prompt the expired time to devlog
-      $this->log_timeTracking( 'END' );
+      $this->timeTracking_log( 'END' );
       return trim( $str_template_completed );
     }
       // AJAX: return the result (HTML string) without wrapInBaseClass
@@ -1039,13 +1045,13 @@ class tx_browser_pi1 extends tslib_pibase {
     {
       case( false ):
           // Prompt the expired time to devlog
-        $this->log_timeTracking( 'END' );
+        $this->timeTracking_log( 'END' );
         return $html_updateCheck . $str_template_completed;
         break;
       case( true ):
       default:
           // Prompt the expired time to devlog
-        $this->log_timeTracking( 'END' );
+        $this->timeTracking_log( 'END' );
         return $html_updateCheck . $this->objWrapper->wrapInBaseIdClass( $str_template_completed );
     }
   }
@@ -1726,15 +1732,29 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
+  /***********************************************
+   *
+   * Time tracking
+   *
+   **********************************************/
+
+
+
+
+
+
+
+
+
   /**
- * init_timeTracking( ):  Init the timetracking object.
+ * timeTracking_init( ):  Init the timetracking object.
  *                        Set the global $startTime.
  *
  * @return	void
  * @version 3.9.8
  * @since   0.0.1
  */
-  private function init_timeTracking( )
+  private function timeTracking_init( )
   {
       // Init the timetracking object
     require_once( PATH_t3lib . 'class.t3lib_timetrack.php' );
@@ -1745,11 +1765,11 @@ class tx_browser_pi1 extends tslib_pibase {
       // Set the global $startTime.
     if( $this->bool_typo3_43 )
     {
-      $this->startTime = $this->TT->getDifferenceToStarttime();
+      $this->tt_startTime = $this->TT->getDifferenceToStarttime();
     }
     if( ! $this->bool_typo3_43 )
     {
-      $this->startTime = $this->TT->mtime();
+      $this->tt_startTime = $this->TT->mtime();
     }
       // Set the global $startTime.
   }
@@ -1763,7 +1783,7 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
   /**
- * log_timeTracking( ): Prompts a message in devLog with current run time in miliseconds
+ * timeTracking_log( ): Prompts a message in devLog with current run time in miliseconds
  *
  *
  * @param   string  $prompt: The prompt for devlog.
@@ -1771,7 +1791,7 @@ class tx_browser_pi1 extends tslib_pibase {
  * @version 3.9.8
  * @since   0.0.1
  */
-  public function log_timeTracking( $prompt )
+  public function timeTracking_log( $prompt )
   {
       // RETURN: DRS shouldn't report performance prompts
     if( ! $this->b_drs_perform )
@@ -1779,7 +1799,7 @@ class tx_browser_pi1 extends tslib_pibase {
       return;
     }
       // RETURN: DRS shouldn't report performance prompts
-    
+
       // Get the current time
     if( $this->bool_typo3_43 )
     {
@@ -1792,25 +1812,65 @@ class tx_browser_pi1 extends tslib_pibase {
       // Get the current time
 
       // Prompt the current time
-    t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt . ': ' . ( $endTime - $this->startTime ) . ' ms', $this->extKey, 0 );
+    t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt . ': ' . ( $endTime - $this->tt_startTime ) . ' ms', $this->extKey, 0 );
 
 
     switch( true )
     {
       case( ( $endTime - $this->tt_prevEndTime ) >= 10000 ):
+        $this->tt_prevPrompt = 3;
         $prompt_02 = 'Previous process needs more than 10 sec';
         t3lib_div::devLog('[ERROR/PERFORMANCE] ' . $prompt_02, $this->extKey, 3 );
         break;
       case( ( $endTime - $this->tt_prevEndTime ) >= 1000 ):
+        $this->tt_prevPrompt = 2;
         $prompt_02 = 'Previous process needs more than 1 sec';
         t3lib_div::devLog('[WARN/PERFORMANCE] ' . $prompt_02, $this->extKey, 2 );
         break;
       default:
+        $this->tt_prevPrompt = 0;
         // Do nothing
     }
     $this->tt_prevEndTime = $endTime;
-    $this->tt_prevPrompt  = $prompt;
   }
+
+
+
+
+
+
+
+
+
+  /**
+ * timeTracking_prompt( ):  Method checks, wether previous prompt was a
+ *                          warning or an error. If yes the given prompt will loged by devLog
+ *
+ *
+ * @param   string  $prompt: The prompt for devlog.
+ * @return	void
+ * @version 3.9.8
+ * @since   3.9.8
+ */
+  public function timeTracking_prompt( $prompt )
+  {
+    switch( true )
+    {
+      case( $this->tt_prevPrompt == 3 ):
+        $prompt_02 = 'ERROR';
+        break;
+      case( $this->tt_prevPrompt == 2 ):
+        $prompt_02 = 'WARN';
+        break;
+      default:
+          // Do nothing
+        return;
+    }
+
+    t3lib_div::devLog('[' . $prompt_02. '/PERFORMANCE] ' . $prompt, $this->extKey, $this->tt_prevPrompt );
+  }
+
+
 
 
 

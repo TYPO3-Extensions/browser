@@ -903,7 +903,7 @@ class tx_browser_pi1_consolidate
       {
         $endTime = $this->pObj->TT->mtime();
       }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After fields_wi_relation(): '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+      t3lib_div::devLog('[INFO/PERFORMANCE] After fields_wi_relation(): '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
     }
     // DRS - Performance
 
@@ -946,7 +946,7 @@ class tx_browser_pi1_consolidate
       {
         $endTime = $this->pObj->TT->mtime();
       }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After fields_wi_marker(): '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+      t3lib_div::devLog('[INFO/PERFORMANCE] After fields_wi_marker(): '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
     }
     // DRS - Performance
 
@@ -976,7 +976,7 @@ class tx_browser_pi1_consolidate
       {
         $endTime = $this->pObj->TT->mtime();
       }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After manipulate_tsConf(): '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+      t3lib_div::devLog('[INFO/PERFORMANCE] After manipulate_tsConf(): '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
     }
     // DRS - Performance
 

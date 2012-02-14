@@ -554,7 +554,7 @@ class tx_browser_pi1_wrapper
         {
           $endTime = $this->pObj->TT->mtime();
         }
-        t3lib_div::devLog('[INFO/PERFORMANCE] After prepaire link process: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+        t3lib_div::devLog('[INFO/PERFORMANCE] After prepaire link process: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
       }
     }
       // DRS - Performance
@@ -678,7 +678,7 @@ class tx_browser_pi1_wrapper
         {
           $endTime = $this->pObj->TT->mtime();
         }
-        t3lib_div::devLog('[INFO/PERFORMANCE] After COA process: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+        t3lib_div::devLog('[INFO/PERFORMANCE] After COA process: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
       }
     }
       // DRS - Performance
@@ -851,7 +851,7 @@ class tx_browser_pi1_wrapper
         {
           $endTime = $this->pObj->TT->mtime();
         }
-        t3lib_div::devLog('[INFO/PERFORMANCE] After process management: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+        t3lib_div::devLog('[INFO/PERFORMANCE] After process management: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
       }
     }
       // DRS - Performance
@@ -898,7 +898,7 @@ class tx_browser_pi1_wrapper
         {
           $endTime = $this->pObj->TT->mtime();
         }
-        t3lib_div::devLog('[INFO/PERFORMANCE] After general stdWrap: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+        t3lib_div::devLog('[INFO/PERFORMANCE] After general stdWrap: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
       }
     }
       // DRS - Performance

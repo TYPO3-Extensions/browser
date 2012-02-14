@@ -368,11 +368,11 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->TT->start();
     if($this->bool_typo3_43)
     {
-      $this->startTime = $this->TT->getDifferenceToStarttime();
+      $this->tt_startTime = $this->TT->getDifferenceToStarttime();
     }
     if(!$this->bool_typo3_43)
     {
-      $this->startTime = $this->TT->mtime();
+      $this->tt_startTime = $this->TT->mtime();
     }
       // Timetracking
 
@@ -589,7 +589,7 @@ class tx_browser_pi1 extends tslib_pibase {
       {
         $endTime = $this->TT->mtime();
       }
-      t3lib_div::devLog('[INFO/PERFORMANCE] substitute_t3globals_recurs: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
+      t3lib_div::devLog('[INFO/PERFORMANCE] substitute_t3globals_recurs: '. ($endTime - $this->tt_startTime).' ms', $this->extKey, 0);
     }
       // DRS - Performance
 
@@ -633,7 +633,7 @@ class tx_browser_pi1 extends tslib_pibase {
         {
           $endTime = $this->TT->mtime();
         }
-        t3lib_div::devLog('[INFO/PERFORMANCE] END: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
+        t3lib_div::devLog('[INFO/PERFORMANCE] END: '. ($endTime - $this->tt_startTime).' ms', $this->extKey, 0);
       }
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
       // return $this->pi_wrapInBaseClass($prompt);
@@ -698,7 +698,7 @@ class tx_browser_pi1 extends tslib_pibase {
         {
           $endTime = $this->TT->mtime();
         }
-        t3lib_div::devLog('[INFO/PERFORMANCE] END: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
+        t3lib_div::devLog('[INFO/PERFORMANCE] END: '. ($endTime - $this->tt_startTime).' ms', $this->extKey, 0);
       }
       $prompt = '<h1 style="color:red;">'.$this->pi_getLL('error_readlog_h1').'</h1>
            <p style="color:red;font-weight:bold;">'.$this->pi_getLL('error_table_no').'</p>';
@@ -788,7 +788,7 @@ class tx_browser_pi1 extends tslib_pibase {
       {
         $endTime = $this->TT->mtime();
       }
-      t3lib_div::devLog('[INFO/PERFORMANCE] Before view processing: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
+      t3lib_div::devLog('[INFO/PERFORMANCE] Before view processing: '. ($endTime - $this->tt_startTime).' ms', $this->extKey, 0);
     }
       // DRS - Performance
 
@@ -825,7 +825,7 @@ class tx_browser_pi1 extends tslib_pibase {
       {
         $endTime = $this->TT->mtime();
       }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After view processing: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
+      t3lib_div::devLog('[INFO/PERFORMANCE] After view processing: '. ($endTime - $this->tt_startTime).' ms', $this->extKey, 0);
     }
       // DRS - Performance
 
@@ -871,7 +871,7 @@ class tx_browser_pi1 extends tslib_pibase {
         {
           $endTime = $this->TT->mtime();
         }
-        t3lib_div::devLog('[INFO/PERFORMANCE] END: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
+        t3lib_div::devLog('[INFO/PERFORMANCE] END: '. ($endTime - $this->tt_startTime).' ms', $this->extKey, 0);
       }
       $prompt = '<h1 style="color:red;">'.$this->pi_getLL('error_h1').'</h1>
           <p style="color:red;font-weight:bold;">'.$this->pi_getLL('error_template_render').'</p>';
@@ -895,7 +895,7 @@ class tx_browser_pi1 extends tslib_pibase {
       {
         $endTime = $this->TT->mtime();
       }
-      t3lib_div::devLog('[INFO/PERFORMANCE] END: '. ($endTime - $this->startTime).' ms', $this->extKey, 0);
+      t3lib_div::devLog('[INFO/PERFORMANCE] END: '. ($endTime - $this->tt_startTime).' ms', $this->extKey, 0);
     }
       // DRS - Performance
 

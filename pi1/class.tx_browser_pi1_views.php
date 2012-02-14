@@ -104,7 +104,7 @@ class tx_browser_pi1_views
   function listView( )
   {
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'begin listView( )' );
+    $this->pObj->timeTracking_log( 'begin listView( )' );
 
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -210,7 +210,7 @@ class tx_browser_pi1_views
       // #30912, 120127, dwildt+
     $this->pObj->objFilter->andWhere_filter( );
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after $this->pObj->objFilter->andWhere_filter( )' );
+    $this->pObj->timeTracking_log( 'after $this->pObj->objFilter->andWhere_filter( )' );
       // Filter - part I/II: SQL andWhere statement
 
 
@@ -226,7 +226,7 @@ class tx_browser_pi1_views
       return $template;
     }
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after $this->pObj->objSqlFun->global_all( )' );
+    $this->pObj->timeTracking_log( 'after $this->pObj->objSqlFun->global_all( )' );
       // Set global SQL values
 
 
@@ -239,7 +239,7 @@ class tx_browser_pi1_views
     {
       $arr_result = $this->pObj->objSqlMan->get_query_array( $this );
         // Prompt the expired time to devlog
-      $this->pObj->log_timeTracking( 'after $this->pObj->objSqlMan->get_query_array( )' );
+      $this->pObj->timeTracking_log( 'after $this->pObj->objSqlMan->get_query_array( )' );
     }
       // SQL with manual configuration
 
@@ -253,7 +253,7 @@ class tx_browser_pi1_views
     {
       $arr_result = $this->pObj->objSqlAut->get_query_array( );
         // Prompt the expired time to devlog
-      $this->pObj->log_timeTracking( 'after $this->pObj->objSqlAut->get_query_array( )' );
+      $this->pObj->timeTracking_log( 'after $this->pObj->objSqlAut->get_query_array( )' );
     }
       // SQL with autmatically configuration
 
@@ -328,7 +328,12 @@ class tx_browser_pi1_views
     $error = $GLOBALS['TYPO3_DB']->sql_error( );
 
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after $GLOBALS[TYPO3_DB]->sql_query( )' );
+    $this->pObj->timeTracking_log( 'after $GLOBALS[TYPO3_DB]->sql_query( )' );
+    $this->pObj->timeTracking_prompt( $query );
+if( $bool_accessByIP )
+{
+  die( $query );
+}
 
     if( $error )
     {
@@ -442,7 +447,7 @@ class tx_browser_pi1_views
               t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
             }
               // Prompt the expired time to devlog
-            $this->pObj->log_timeTracking( 'after $GLOBALS[TYPO3_DB]->sql_query( )' );
+            $this->pObj->timeTracking_log( 'after $GLOBALS[TYPO3_DB]->sql_query( )' );
               // DRS - Development Reporting System
           }
 
@@ -528,7 +533,7 @@ class tx_browser_pi1_views
         $i_row++;
       }
         // Prompt the expired time to devlog
-      $this->pObj->log_timeTracking( 'after: We have aliases.' );
+      $this->pObj->timeTracking_log( 'after: We have aliases.' );
         // Yes, we have aliases.
     }
     if( ! is_array( $arr_table_realnames ) )
@@ -539,7 +544,7 @@ class tx_browser_pi1_views
         $rows[] = $row;
       }
         // Prompt the expired time to devlog
-      $this->pObj->log_timeTracking( 'after: We haven\'t aliases.' );
+      $this->pObj->timeTracking_log( 'after: We haven\'t aliases.' );
     }
     $this->pObj->rows = $rows;
       // Do we have aliases?
@@ -547,7 +552,7 @@ class tx_browser_pi1_views
       // SQL Free Result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after building rows.' );
+    $this->pObj->timeTracking_log( 'after building rows.' );
       // Building $rows
 
 
@@ -561,7 +566,7 @@ class tx_browser_pi1_views
     unset( $arr_result );
     $this->pObj->rows = $rows;
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after $this->pObj->objSqlFun->rows_with_synonyms( )' );
+    $this->pObj->timeTracking_log( 'after $this->pObj->objSqlFun->rows_with_synonyms( )' );
       // Process synonyms if rows have synonyms
 
 
@@ -575,7 +580,7 @@ class tx_browser_pi1_views
       $rows = $this->pObj->objLocalise->consolidate_rows( $rows, $this->pObj->localTable );
       $this->pObj->rows = $rows;
         // Prompt the expired time to devlog
-      $this->pObj->log_timeTracking( 'after $this->pObj->objLocalise->consolidate_rows( )' );
+      $this->pObj->timeTracking_log( 'after $this->pObj->objLocalise->consolidate_rows( )' );
     }
     if( $this->pObj->b_sql_manual && $this->pObj->b_drs_localisation )
     {
@@ -599,7 +604,7 @@ class tx_browser_pi1_views
       unset($arr_result);
       $this->pObj->rows = $rows;
         // Prompt the expired time to devlog
-      $this->pObj->log_timeTracking( 'after $this->pObj->objConsolidate->consolidate( )' );
+      $this->pObj->timeTracking_log( 'after $this->pObj->objConsolidate->consolidate( )' );
     }
     if( $this->pObj->b_sql_manual && $this->pObj->b_drs_localisation )
     {
@@ -660,7 +665,7 @@ class tx_browser_pi1_views
       }
     }
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after hook rows_filter_values' );
+    $this->pObj->timeTracking_log( 'after hook rows_filter_values' );
       // DRS - Development Reporting System
       // Any foreign extension is using this hook
 
@@ -679,7 +684,7 @@ class tx_browser_pi1_views
       $this->pObj->objMultisort->multisort_rows( );
       $rows = $this->pObj->rows;
         // Prompt the expired time to devlog
-      $this->pObj->log_timeTracking( 'after $this->pObj->objMultisort->multisort_rows( )' );
+      $this->pObj->timeTracking_log( 'after $this->pObj->objMultisort->multisort_rows( )' );
     }
       // Ordering the rows
 
@@ -692,7 +697,7 @@ class tx_browser_pi1_views
       // 13803, dwildt, 110312
     $rows = $this->pObj->objMultisort->multisort_mm_children( $rows );
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after $this->pObj->objMultisort->multisort_mm_children( $rows )' );
+    $this->pObj->timeTracking_log( 'after $this->pObj->objMultisort->multisort_mm_children( $rows )' );
       // 120127, dwildt+
     $this->pObj->rows = $rows;
       // Ordering the children
@@ -732,7 +737,7 @@ class tx_browser_pi1_views
         t3lib_div::devlog( '[INFO/SQL] Result should ordered hierarchical.',  $this->pObj->extKey, 0 );
       }
         // Prompt the expired time to devlog
-      $this->pObj->log_timeTracking( 'after $this->pObj->objSqlFun->make_hierarchical( $rows )' );
+      $this->pObj->timeTracking_log( 'after $this->pObj->objSqlFun->make_hierarchical( $rows )' );
     }
       // Order and edit the rows hierarchical
 
@@ -779,7 +784,7 @@ class tx_browser_pi1_views
       // 120127, dwildt+
     unset( $arr_result );
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after $this->pObj->objFilter->filter( )' );
+    $this->pObj->timeTracking_log( 'after $this->pObj->objFilter->filter( )' );
       // Filter - part II/II - HTML code / template
 
 
@@ -794,7 +799,7 @@ class tx_browser_pi1_views
       // 110801, dwildt
     $this->pObj->rows = $rows;
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after $this->pObj->objSqlFun->rows_with_cleaned_up_fields( )' );
+    $this->pObj->timeTracking_log( 'after $this->pObj->objSqlFun->rows_with_cleaned_up_fields( )' );
       // Clean up: Delete rows, we don't want to display
 
 
@@ -854,7 +859,7 @@ class tx_browser_pi1_views
 //      }
     }
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after hook browser_list' );
+    $this->pObj->timeTracking_log( 'after hook browser_list' );
       // Hook for override the SQL result for for the list view
 
 
@@ -915,7 +920,7 @@ class tx_browser_pi1_views
       t3lib_div::devLog('[HELP/DRS] If you want to configure the field list, please use views.'.$viewWiDot.$mode.'.csvLinkToSingleView.', $this->pObj->extKey, 1);
     }
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after Prepaire array with links to single view' );
+    $this->pObj->timeTracking_log( 'after Prepaire array with links to single view' );
       // Prepaire array with links to single view
 
 
@@ -1038,7 +1043,7 @@ class tx_browser_pi1_views
     $bool_display = $this->pObj->objFlexform->bool_searchForm && $this->pObj->segment['searchform'];
     $template     = $this->pObj->objTemplate->tmplSearchBox( $template, $bool_display );
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after $this->pObj->objTemplate->tmplSearchBox( )' );
+    $this->pObj->timeTracking_log( 'after $this->pObj->objTemplate->tmplSearchBox( )' );
       // HTML search form
 
 
@@ -1066,7 +1071,7 @@ class tx_browser_pi1_views
     }
     $this->pObj->rows = $rows;
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after $this->pObj->objCal->cal( )' );
+    $this->pObj->timeTracking_log( 'after $this->pObj->objCal->cal( )' );
       // Extension pi5: +Browser Calendar
 
 
@@ -1094,7 +1099,7 @@ class tx_browser_pi1_views
     $this->pObj->rows = $rows;
     unset($arr_result);
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after $this->pObj->objNavi->azBrowser( )' );
+    $this->pObj->timeTracking_log( 'after $this->pObj->objNavi->azBrowser( )' );
       // HTML a-z-browser
 
 
@@ -1110,7 +1115,7 @@ class tx_browser_pi1_views
       return $this->pObj->pi_wrapInBaseClass( $prompt );
     }
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after $this->pObj->objNavi->recordbrowser_set_session_data( )' );
+    $this->pObj->timeTracking_log( 'after $this->pObj->objNavi->recordbrowser_set_session_data( )' );
       // record browser
 
 
@@ -1132,7 +1137,7 @@ class tx_browser_pi1_views
     $this->pObj->rows = $rows;
     unset($arr_result);
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after $this->pObj->objNavi->tmplPageBrowser( )' );
+    $this->pObj->timeTracking_log( 'after $this->pObj->objNavi->tmplPageBrowser( )' );
       // HTML page browser
 
       // HTML mode selector
@@ -1141,7 +1146,7 @@ class tx_browser_pi1_views
     $template = $this->pObj->objNavi->tmplModeSelector( $arr_data );
     unset($arr_data);
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after $this->pObj->objNavi->tmplModeSelector( )' );
+    $this->pObj->timeTracking_log( 'after $this->pObj->objNavi->tmplModeSelector( )' );
       // HTML mode selector
       // Building the template
 
@@ -1184,7 +1189,7 @@ class tx_browser_pi1_views
         }
       }
         // Prompt the expired time to devlog
-      $this->pObj->log_timeTracking( 'after: in case of a limit' );
+      $this->pObj->timeTracking_log( 'after: in case of a limit' );
         // DRS - Development Reporting System
     }
     if( ! isset( $conf_view['limit'] ) )
@@ -1205,7 +1210,7 @@ class tx_browser_pi1_views
 
     $template = $this->pObj->objTemplate->tmplListview($template, $rows);
       // Prompt the expired time to devlog
-    $this->pObj->log_timeTracking( 'after $this->pObj->objTemplate->tmplListview( )' );
+    $this->pObj->timeTracking_log( 'after $this->pObj->objTemplate->tmplListview( )' );
       // HTML records
 
 
@@ -1527,7 +1532,7 @@ class tx_browser_pi1_views
       {
         $endTime = $this->pObj->TT->mtime();
       }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After consolidate rows: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+      t3lib_div::devLog('[INFO/PERFORMANCE] After consolidate rows: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
     }
       // DRS - Performance
 
@@ -1559,7 +1564,7 @@ class tx_browser_pi1_views
       {
         $endTime = $this->pObj->TT->mtime();
       }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After multisort_mm_children(): '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+      t3lib_div::devLog('[INFO/PERFORMANCE] After multisort_mm_children(): '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
     }
       // DRS - Performance
 
@@ -1589,7 +1594,7 @@ class tx_browser_pi1_views
       {
         $endTime = $this->pObj->TT->mtime();
       }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After children_relation(): '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
+      t3lib_div::devLog('[INFO/PERFORMANCE] After children_relation(): '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
     }
       // DRS - Performance
 
