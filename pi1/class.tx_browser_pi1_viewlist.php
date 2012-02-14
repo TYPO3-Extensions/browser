@@ -145,6 +145,10 @@ class tx_browser_pi1_viewlist
 
     $view       = $this->view;
     $conf_view  = $this->conf_view;
+if( $this->pObj->bool_accessByIP )
+{
+  var_dump( __METHOD__ . '(' . __LINE__ . ')', '$conf[views.][' . $viewWiDot . '][' . $mode . '.]' );
+}
       // Short vars
 
 
@@ -1048,9 +1052,11 @@ class tx_browser_pi1_viewlist
     {
       case( empty( $mode ) ):
         $bool_noView = true;
+var_dump( 1 );
         break;
       case( ! is_array( $this->conf_view ) ):
         $bool_noView = true;
+var_dump( 2 );
         break;
     }
     if( $bool_noView )
