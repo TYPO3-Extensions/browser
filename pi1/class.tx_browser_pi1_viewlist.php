@@ -82,10 +82,6 @@ class tx_browser_pi1_viewlist
     // [Boolean] True: Query is a union, false: query isn't a union
   var $bool_union = null;
 
-    // [Integer] Id of the current mode.
-  var $mode       = null;
-    // [Array] TypoScript of the current view
-  var $conf_view  = null;
 
 
 
