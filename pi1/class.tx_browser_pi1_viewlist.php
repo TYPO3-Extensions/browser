@@ -115,7 +115,7 @@ class tx_browser_pi1_viewlist
     $cObj       = $this->pObj->cObj;
 
     $view       = $this->pObj->view;
-    $viewWiDot  = $view.'.';
+    $viewWiDot  = $view . '.';
     $conf_view  = $conf['views.'][$viewWiDot][$mode . '.'];
       // Short vars
 
@@ -128,12 +128,17 @@ class tx_browser_pi1_viewlist
       //
       // RETURN there isn't any list configured
 
-if( $this->pObj->bool_accessByIP )
-{
-  var_dump( 'views.' . $viewWiDot . $mode . '.', $conf['views.'][$viewWiDot][$mode . '.'] );
-  exit;
-}
-    if( ! is_array( $conf['views.'][$viewWiDot][$mode . '.'] ) )
+    $bool_noView = false;
+    switch( true )
+    {
+      case( empty( $mode ) ):
+        $bool_noView = true;
+        break;
+      case( ! is_array( $conf['views.'][$viewWiDot][$mode . '.'] ) ):
+        $bool_noView = true;
+        break;
+    }
+    if( $bool_noView )
     {
       if ( $this->pObj->b_drs_error )
       {
@@ -149,6 +154,11 @@ if( $this->pObj->bool_accessByIP )
       return $str_header . $str_prompt;
     }
       // RETURN there isn't any list configured
+if( $this->pObj->bool_accessByIP )
+{
+  var_dump( 'views.' . $viewWiDot . $mode . '.', $conf['views.'][$viewWiDot][$mode . '.'] );
+  exit;
+}
 
 
 
