@@ -756,10 +756,10 @@ class tx_browser_pi1 extends tslib_pibase {
     switch( $this->view )
     {
       case( 'list' ):
-        $str_template_completed = $this->objViews->listView( $this->str_template_raw );
+        $str_template_completed = $this->objViews->listView( );
         break;
       case( 'single' ):
-        $str_template_completed = $this->objViews->singleView( $this->str_template_raw );
+        $str_template_completed = $this->objViews->singleView( );
         break;
     }
       // SWITCH view

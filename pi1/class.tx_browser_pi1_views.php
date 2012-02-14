@@ -97,13 +97,14 @@ class tx_browser_pi1_views
   /**
  * Display a search form, a-z-Browser, pageBrowser and a list of records
  *
- * @param	string		$template: Template
  * @return	void
  * @version 3.9.8
  * @since 1.0.0
  */
-  function listView( $template )
+  function listView( )
   {
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'begin listView( )' );
 
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -113,6 +114,8 @@ class tx_browser_pi1_views
     $viewWiDot  = $view.'.';
     $conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
 
+    $template   = $this->pObj->str_template_raw;
+
 
 
       /////////////////////////////////////
@@ -120,7 +123,7 @@ class tx_browser_pi1_views
       // Overwrite global general_stdWrap
 
       // #12471, 110123, dwildt
-    if (is_array($conf_view['general_stdWrap.']))
+    if( is_array( $conf_view['general_stdWrap.'] ) )
     {
       $this->pObj->conf['general_stdWrap.'] = $conf_view['general_stdWrap.'];
     }
@@ -132,11 +135,11 @@ class tx_browser_pi1_views
       //
       // Get the local or global displayList
 
-    if (is_array($conf_view['displayList.']))
+    if( is_array( $conf_view['displayList.'] ) )
     {
       $this->pObj->lDisplayList = $conf_view['displayList.'];
     }
-    else
+    if( ! is_array( $conf_view['displayList.'] ) )
     {
       $this->pObj->lDisplayList = $conf['displayList.'];
     }
@@ -148,11 +151,11 @@ class tx_browser_pi1_views
       //
       // Get the local or global displayList.display
 
-    if (is_array($conf_view['displayList.']['display.']))
+    if( is_array( $conf_view['displayList.']['display.'] ) )
     {
       $this->pObj->lDisplay = $conf_view['displayList.']['display.'];
     }
-    else
+    if( ! is_array( $conf_view['displayList.']['display.'] ) )
     {
       $this->pObj->lDisplay = $conf['displayList.']['display.'];
     }
@@ -164,14 +167,15 @@ class tx_browser_pi1_views
       //
       // RETURN, there isn't any list
 
-    if (!is_array($conf['views.'][$viewWiDot]))
+    if( ! is_array( $conf['views.'][$viewWiDot] ) )
     {
-      if ($this->pObj->b_drs_error)
+      if ( $this->pObj->b_drs_error )
       {
-        t3lib_div::devlog('[ERROR/DRS] views.'.$view.' hasn\'t any item.', $this->pObj->extKey, 3);
-        t3lib_div::devLog('[HELP/DRS] Did you included the static template from this extensions?', $this->pObj->extKey, 1);
-        $tsArray = 'plugin.'.$this->pObj->prefixId.'.views.list';
-        t3lib_div::devLog('[HELP/DRS] Did you configure '.$tsArray.'?', $this->pObj->extKey, 1);
+        t3lib_div::devlog( '[ERROR/DRS] views.' . $view . ' hasn\'t any item.', $this->pObj->extKey, 3 );
+        $prompt = 'Did you included the static template from this extensions?';
+        t3lib_div::devLog( '[HELP/DRS] ' . $prompt, $this->pObj->extKey, 1 );
+        $tsArray = 'plugin.' . $this->pObj->prefixId . '.views.list';
+        t3lib_div::devLog( '[HELP/DRS] Did you configure ' . $tsArray . '?', $this->pObj->extKey, 1 );
       }
       return false;
     }
@@ -183,8 +187,8 @@ class tx_browser_pi1_views
       //
       // Do we have an existing mode?
 
-    $maxModes = count($conf['views.'][$viewWiDot]);
-    if ($mode > $maxModes)
+    $maxModes = count( $conf['views.'][$viewWiDot] );
+    if( $mode > $maxModes )
     {
       $mode = 1;
     }
@@ -204,28 +208,10 @@ class tx_browser_pi1_views
 //    }
       // #30912, 120127, dwildt-
       // #30912, 120127, dwildt+
-    $this->pObj->objFilter->andWhere_filter();
+    $this->pObj->objFilter->andWhere_filter( );
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after $this->pObj->objFilter->andWhere_filter( )' );
       // Filter - part I/II: SQL andWhere statement
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform)
-    {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After filter I/II: '.($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
 
 
 
@@ -233,12 +219,14 @@ class tx_browser_pi1_views
       //
       // Set global SQL values
 
-    $arr_result = $this->pObj->objSqlFun->global_all();
+    $arr_result = $this->pObj->objSqlFun->global_all( );
     if ($arr_result['error']['status'])
     {
       $template = $arr_result['error']['header'].$arr_result['error']['prompt'];
       return $template;
     }
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after $this->pObj->objSqlFun->global_all( )' );
       // Set global SQL values
 
 
@@ -247,9 +235,11 @@ class tx_browser_pi1_views
       //
       // SQL with manual configuration
 
-    if ($this->pObj->b_sql_manual)
+    if( $this->pObj->b_sql_manual )
     {
-      $arr_result = $this->pObj->objSqlMan->get_query_array($this);
+      $arr_result = $this->pObj->objSqlMan->get_query_array( $this );
+        // Prompt the expired time to devlog
+      $this->pObj->log_timeTracking( 'after $this->pObj->objSqlMan->get_query_array( )' );
     }
       // SQL with manual configuration
 
@@ -259,9 +249,11 @@ class tx_browser_pi1_views
       //
       // SQL with autmatically configuration
 
-    if (!$this->pObj->b_sql_manual)
+    if( ! $this->pObj->b_sql_manual )
     {
-      $arr_result = $this->pObj->objSqlAut->get_query_array();
+      $arr_result = $this->pObj->objSqlAut->get_query_array( );
+        // Prompt the expired time to devlog
+      $this->pObj->log_timeTracking( 'after $this->pObj->objSqlAut->get_query_array( )' );
     }
       // SQL with autmatically configuration
 
@@ -271,7 +263,7 @@ class tx_browser_pi1_views
       //
       // ERROR management
 
-    if ($arr_result['error']['status'])
+    if( $arr_result['error']['status'] )
     {
       $template = $arr_result['error']['header'].$arr_result['error']['prompt'];
       return $template;
@@ -299,9 +291,9 @@ class tx_browser_pi1_views
 
     $orderBy = false;
       // #9917: Selecting a random sample from a set of rows
-    if($conf_view['random'] == 1)
+    if( $conf_view['random'] == 1 )
     {
-      $orderBy = 'rand()';
+      $orderBy = 'rand( )';
     }
       // Set ORDER BY to false - we like to order by PHP
 
@@ -312,41 +304,52 @@ class tx_browser_pi1_views
       // Execute the SQL query
 
     $b_union = false;
-    if ($union)
+    if( $union )
     {
         // We have a UNION. Maybe because there are synonyms.
       $query   = $union;
       $b_union = true;
     }
-    if (!$union)
+    if( ! $union )
     {
-      $query   = $GLOBALS['TYPO3_DB']->SELECTquery($select, $from, $where, $groupBy="", $orderBy, $limit="", $uidIndexField="");
+      $query = $GLOBALS['TYPO3_DB']->SELECTquery
+                                      (
+                                        $select,
+                                        $from,
+                                        $where,
+                                        $groupBy="",
+                                        $orderBy,
+                                        $limit="",
+                                        $uidIndexField=""
+                                      );
     }
 
-    $res   = $GLOBALS['TYPO3_DB']->sql_query($query);
-    $error = $GLOBALS['TYPO3_DB']->sql_error();
+    $res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
 
-    if ($error != '')
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after $GLOBALS[TYPO3_DB]->sql_query( )' );
+
+    if( $error )
     {
-      if ($this->pObj->b_drs_error)
+      if( $this->pObj->b_drs_error )
       {
-        t3lib_div::devlog('[ERROR/SQL] '.$query,  $this->pObj->extKey, 3);
-        t3lib_div::devlog('[ERROR/SQL] '.$error,  $this->pObj->extKey, 3);
+        t3lib_div::devlog('[ERROR/SQL] ' . $query,  $this->pObj->extKey, 3);
+        t3lib_div::devlog('[ERROR/SQL] ' . $error,  $this->pObj->extKey, 3);
         t3lib_div::devlog('[ERROR/SQL] ABORT.',   $this->pObj->extKey, 3);
+        $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">' .
+                        $this->pObj->pi_getLL( 'drs_security' ) . '</p>';
+        $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $error . '</p>';
+        $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $query . '</p>';
       }
-      $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
-      if ($this->pObj->b_drs_error)
+      if( ! $this->pObj->b_drs_error )
       {
-        $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">'.$this->pObj->pi_getLL('drs_security').'</p>';
-        $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$error.'</p>';
-        $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$query.'</p>';
+        $str_prompt = '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">' .
+                        $this->pObj->pi_getLL( 'drs_sql_prompt' ) . '</p>';
       }
-      else
-      {
-        $str_prompt = '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">'.$this->pObj->pi_getLL('drs_sql_prompt').'</p>';
-      }
+      $str_header  = '<h1 style="color:red">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
       $arr_return['error']['status'] = true;
-      $arr_return['error']['header'] = $str_warn.$str_header;
+      $arr_return['error']['header'] = $str_warn . $str_header;
       $arr_return['error']['prompt'] = $str_prompt;
       return $arr_return;
     }
@@ -358,24 +361,13 @@ class tx_browser_pi1_views
       //
       // DRS - Development Reporting System
 
-    if ($this->pObj->b_drs_sql)
+    if( $this->pObj->b_drs_sql )
     {
-      t3lib_div::devlog('[INFO/SQL] '.$query,  $this->pObj->extKey, 0);
-      t3lib_div::devlog('[HELP/SQL] Be aware of the multi-byte notation, if you want to use the query in your SQL shell or in phpMyAdmin.', $this->pObj->extKey, 1);
+      t3lib_div::devlog( '[OK/SQL] ' . $query,  $this->pObj->extKey, -1 );
+      t3lib_div::devlog( '[HELP/SQL] Be aware of the multi-byte notation, if you want to use the query ' .
+                          'in your SQL shell or in phpMyAdmin.', $this->pObj->extKey, 1 );
     }
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After SQL exec: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-    // DRS - Development Reporting System
+      // DRS - Development Reporting System
 
 
 
@@ -393,15 +385,15 @@ class tx_browser_pi1_views
        */
 
       // User selected a non default language
-    if($this->pObj->objLocalise->int_localisation_mode >= 3)
+    if( $this->pObj->objLocalise->int_localisation_mode >= 3 )
     {
-      // User selected a filter
-      if(!empty($this->pObj->arr_andWhereFilter))
+        // User selected a filter
+      if( ! empty( $this->pObj->arr_andWhereFilter ) )
       {
-        if(!$b_union && !$this->pObj->b_sql_manual)
+        if( ! $b_union && ! $this->pObj->b_sql_manual )
         {
           $arr_where = null;
-          list($table, $field) = explode('.', $this->pObj->arrLocalTable['uid']);
+          list( $table, $field ) = explode( '.', $this->pObj->arrLocalTable['uid'] );
             // Get the field names for sys_language_content and for l10n_parent
           $arr_localise['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
           $arr_localise['pid_field']  = $GLOBALS['TCA'][$table]['ctrl'][' '];
@@ -409,57 +401,70 @@ class tx_browser_pi1_views
 
             // 13505, 110302, dwildt
           $where = null;
-          if ($arr_localise['id_field'] && $arr_localise['pid_field'])
+          if( $arr_localise['id_field'] && $arr_localise['pid_field'] )
           {
-            while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
+            while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
             {
-              $uid          = $row[$table.'.'.$field];
-              $arr_where[]  = '('.$table.'.'.$field.' = '.$uid.
-                              ' OR '.$table.'.' . $arr_localise['pid_field'] . ' = '.$uid.')';
+              $uid          = $row[$table . '.' . $field];
+              $arr_where[]  = '(' . $table . '.' . $field . ' = ' . $uid .
+                              ' OR ' . $table . '.' . $arr_localise['pid_field'] . ' = '. $uid . ')';
                                 // 13573, 110303, dwildt
             }
-            $where    = implode(' OR ', $arr_where);
-            $where    = '('.$where.')';
-            $andWhere = $this->pObj->objLocalise->localisationFields_where($table);
+            $where    = implode( ' OR ', $arr_where );
+            $where    = '(' . $where . ')';
+            $andWhere = $this->pObj->objLocalise->localisationFields_where( $table );
               // 13505, 110302, dwildt
-            if(!$andWhere)
+            if( ! $andWhere )
             {
               $andWhere = 1;
             }
-            $where = $where.' AND '.$andWhere;
-            $query = $GLOBALS['TYPO3_DB']->SELECTquery($select, $from, $where, $groupBy="", $orderBy, $limit="", $uidIndexField="");
-            $res   = $GLOBALS['TYPO3_DB']->sql_query($query);
-            $error = $GLOBALS['TYPO3_DB']->sql_error();
+            $where = $where . ' AND ' . $andWhere;
+            $query = $GLOBALS['TYPO3_DB']->SELECTquery
+                                            (
+                                              $select,
+                                              $from,
+                                              $where,
+                                              $groupBy="",
+                                              $orderBy,
+                                              $limit="",
+                                              $uidIndexField=""
+                                            );
+            $res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
+            $error = $GLOBALS['TYPO3_DB']->sql_error( );
 
               // DRS - Development Reporting System
-            if ($this->pObj->b_drs_sql)
+            if( $this->pObj->b_drs_sql )
             {
-              t3lib_div::devlog('[INFO/SQL] Bugfix #9024 - Next query for localisation consolidation',  $this->pObj->extKey, 0);
-              t3lib_div::devlog('[INFO/SQL] '.$query,  $this->pObj->extKey, 0);
-              t3lib_div::devlog('[HELP/SQL] Be aware of the multi-byte notation, if you want to use the query in your SQL shell or in phpMyAdmin.', $this->pObj->extKey, 1);
+              $prompt = 'Bugfix #9024 - Next query for localisation consolidation:';
+              t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+              t3lib_div::devlog( '[INFO/SQL] ' . $query,  $this->pObj->extKey, 0 );
+              $prompt = 'Be aware of the multi-byte notation, if you want to use the query in your SQL shell or in phpMyAdmin.';
+              t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
             }
+              // Prompt the expired time to devlog
+            $this->pObj->log_timeTracking( 'after $GLOBALS[TYPO3_DB]->sql_query( )' );
               // DRS - Development Reporting System
           }
 
         }
-        if($b_union)
+        if( $b_union )
         {
-          if ($this->pObj->b_drs_error)
+          if( $this->pObj->b_drs_error )
           {
-            t3lib_div::devlog('[ERROR/FILTER] User has selected a non default
-              language. User has selected a filter too. And we have a query
-              with UNIONs. It isn\'t possible to display localised records
-              proper! We are sorry!',  $this->pObj->extKey, 3);
+            $prompt = 'User has selected a non default language. User has selected a filter too. ' .
+                      'And we have a query with UNIONs. It isn\'t possible to display localised records ' .
+                      'proper! We are sorry!';
+            t3lib_div::devlog( '[ERROR/FILTER] ' . $prompt,  $this->pObj->extKey, 3 );
           }
         }
-        if($this->pObj->b_sql_manual)
+        if( $this->pObj->b_sql_manual )
         {
-          if ($this->pObj->b_drs_error)
+          if( $this->pObj->b_drs_error )
           {
-            t3lib_div::devlog('[ERROR/FILTER] User has selected a non default
-              language. User has selected a filter too. And we have a manual
-              generated query. It isn\'t possible to display localised records
-              proper!',  $this->pObj->extKey, 3);
+            $prompt = 'User has selected a non default language. User has selected a filter too. ' .
+                      'And we have a query with UNIONs. And we have a manual generated query. ' .
+                      'It isn\'t possible to display localised records proper!';
+            t3lib_div::devlog( '[ERROR/FILTER] ' . $prompt,  $this->pObj->extKey, 3 );
           }
         }
       }
@@ -467,27 +472,26 @@ class tx_browser_pi1_views
     }
       // User selected a non default language
 
-    if ($error != '')
+    if( $error )
     {
-      if ($this->pObj->b_drs_error)
+      if( $this->pObj->b_drs_error )
       {
-        t3lib_div::devlog('[ERROR/SQL] '.$query,  $this->pObj->extKey, 3);
-        t3lib_div::devlog('[ERROR/SQL] '.$error,  $this->pObj->extKey, 3);
-        t3lib_div::devlog('[ERROR/SQL] ABORT.',   $this->pObj->extKey, 3);
+        t3lib_div::devlog( '[ERROR/SQL] ' . $query,  $this->pObj->extKey, 3 );
+        t3lib_div::devlog( '[ERROR/SQL] ' . $error,  $this->pObj->extKey, 3 );
+        t3lib_div::devlog( '[ERROR/SQL] ABORT.',   $this->pObj->extKey, 3 );
+        $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">' .
+                        $this->pObj->pi_getLL( 'drs_security' ) . '</p>';
+        $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $error . '</p>';
+        $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $query . '</p>';
       }
-      $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
-      if ($this->pObj->b_drs_error)
+      if( ! $this->pObj->b_drs_error )
       {
-        $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">'.$this->pObj->pi_getLL('drs_security').'</p>';
-        $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$error.'</p>';
-        $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">'.$query.'</p>';
+        $str_prompt = '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">' .
+                      $this->pObj->pi_getLL( 'drs_sql_prompt' ) . '</p>';
       }
-      else
-      {
-        $str_prompt = '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">'.$this->pObj->pi_getLL('drs_sql_prompt').'</p>';
-      }
+      $str_header  = '<h1 style="color:red">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
       $arr_return['error']['status'] = true;
-      $arr_return['error']['header'] = $str_warn.$str_header;
+      $arr_return['error']['header'] = $str_warn . $str_header;
       $arr_return['error']['prompt'] = $str_prompt;
       return $arr_return;
     }
@@ -502,20 +506,20 @@ class tx_browser_pi1_views
     $arr_table_realnames = $conf_view['aliases.']['tables.'];
 
       // Do we have aliases?
-    if (is_array($arr_table_realnames))
+    if( is_array( $arr_table_realnames ) )
     {
         // Yes, we have aliases.
       $i_row = 0;
-      while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
+      while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
       {
-        foreach ($row as $str_tablealias_field => $value)
+        foreach( $row as $str_tablealias_field => $value )
         {
           $arr_tablealias_field = explode('.', $str_tablealias_field);   // table_1.sv_name
           $str_tablealias       = $arr_tablealias_field[0];              // table_1
           $str_field            = $arr_tablealias_field[1];              // sv_name
           $str_table            = $arr_table_realnames[$str_tablealias]; // tx_civserv_service
-          $str_table_field      = $str_table.'.'.$str_field;             // tx_civserv_service.sv_name
-          if ($str_table_field == '.')
+          $str_table_field      = $str_table . '.' . $str_field;         // tx_civserv_service.sv_name
+          if( $str_table_field == '.' )
           {
             $str_table_field = $str_tablealias_field;
           }
@@ -523,72 +527,42 @@ class tx_browser_pi1_views
         }
         $i_row++;
       }
+        // Prompt the expired time to devlog
+      $this->pObj->log_timeTracking( 'after: We have aliases.' );
         // Yes, we have aliases.
     }
-    if (!is_array($arr_table_realnames))
+    if( ! is_array( $arr_table_realnames ) )
     {
         // No, we don't have any alias.
-      while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
+      while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
       {
         $rows[] = $row;
       }
+        // Prompt the expired time to devlog
+      $this->pObj->log_timeTracking( 'after: We haven\'t aliases.' );
     }
     $this->pObj->rows = $rows;
       // Do we have aliases?
 
       // SQL Free Result
-    $GLOBALS['TYPO3_DB']->sql_free_result($res);
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after building rows.' );
       // Building $rows
 
 
 
-      //////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After building rows: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
-
-
-
       /////////////////////////////////////////////////////////////////
       //
       // Process synonyms if rows have synonyms
 
-    $arr_result = $this->pObj->objSqlFun->rows_with_synonyms($rows);
+    $arr_result = $this->pObj->objSqlFun->rows_with_synonyms( $rows );
     $rows       = $arr_result['data']['rows'];
-    unset($arr_result);
+    unset( $arr_result );
     $this->pObj->rows = $rows;
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after $this->pObj->objSqlFun->rows_with_synonyms( )' );
       // Process synonyms if rows have synonyms
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After synonyms: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
 
 
 
@@ -596,37 +570,18 @@ class tx_browser_pi1_views
       //
       // Consolidate Localisation
 
-    if (!$this->pObj->b_sql_manual)
+    if( ! $this->pObj->b_sql_manual )
     {
-      $rows = $this->pObj->objLocalise->consolidate_rows($rows, $this->pObj->localTable);
+      $rows = $this->pObj->objLocalise->consolidate_rows( $rows, $this->pObj->localTable );
       $this->pObj->rows = $rows;
+        // Prompt the expired time to devlog
+      $this->pObj->log_timeTracking( 'after $this->pObj->objLocalise->consolidate_rows( )' );
     }
-    if ($this->pObj->b_sql_manual)
-    {
-      if ($this->pObj->b_drs_localisation)
-      {
-        t3lib_div::devlog('[INFO/SQL] Manual SQL mode: Rows didn\'t get any localisation consolidation.',  $this->pObj->extKey, 0);
-      }
+    if( $this->pObj->b_sql_manual && $this->pObj->b_drs_localisation )
+      $prompt = 'Manual SQL mode: Rows didn\'t get any localisation consolidation.';
+      t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
     }
       // Consolidate Localisation
-
-
-      ////////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After consolidate localisation: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
 
 
 
@@ -634,21 +589,21 @@ class tx_browser_pi1_views
       //
       // Consolidate rows
 
-    if (!$this->pObj->b_sql_manual)
+    if( ! $this->pObj->b_sql_manual )
     {
-      $arr_result       = $this->pObj->objConsolidate->consolidate($rows);
+      $arr_result       = $this->pObj->objConsolidate->consolidate( $rows );
       $rows             = $arr_result['data']['rows'];
       $int_rows_wo_cons = $arr_result['data']['rows_wo_cons'];
       $int_rows_wi_cons = $arr_result['data']['rows_wi_cons'];
       unset($arr_result);
       $this->pObj->rows = $rows;
+        // Prompt the expired time to devlog
+      $this->pObj->log_timeTracking( 'after $this->pObj->objConsolidate->consolidate( )' );
     }
-    if ($this->pObj->b_sql_manual)
+    if( $this->pObj->b_sql_manual && $this->pObj->b_drs_localisation )
     {
-      if ($this->pObj->b_drs_localisation)
-      {
-        t3lib_div::devlog('[INFO/SQL] Manual SQL mode: Rows didn\'t get any general consolidation.',  $this->pObj->extKey, 0);
-      }
+      $prompt = 'Manual SQL mode: Rows didn\'t get any general consolidation.';
+      t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
     }
       // Consolidate rows
 
@@ -660,43 +615,51 @@ class tx_browser_pi1_views
 
       // #12813, dwildt, 110205
       // This hook is used by one foreign extension at least
-    if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values']))
+    if( is_array( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] ) )
     {
         // DRS - Development Reporting System
-      if ($this->pObj->b_drs_hooks)
+      if ( $this->pObj->b_drs_hooks )
       {
-        $i_extensions = count($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values']);
-        $arr_ext      = array_values($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values']);
-        $csv_ext      = implode(',', $arr_ext);
-        if ($i_extensions == 1)
+        $i_extensions = count( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] );
+        $arr_ext      = array_values( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] );
+        $csv_ext      = implode( ',', $arr_ext );
+        if( $i_extensions == 1 )
         {
-          t3lib_div::devlog('[INFO/HOOK] The third party extension '.$csv_ext.' uses the HOOK rows_filter_values.', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[HELP/HOOK] In case of errors or strange behaviour please check this extension!', $this->pObj->extKey, 1);
+          $prompt = 'The third party extension ' . $csv_ext . ' uses the HOOK rows_filter_values.';
+          t3lib_div::devlog( '[INFO/HOOK] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = 'In case of errors or strange behaviour please check this extension!';
+          t3lib_div::devlog( '[HELP/HOOK] ' . $prompt, $this->pObj->extKey, 1 );
         }
-        if ($i_extensions > 1)
+        if( $i_extensions > 1 )
         {
-          t3lib_div::devlog('[INFO/HOOK] The third party extensions '.$csv_ext.' use the HOOK rows_filter_values.', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[HELP/HOOK] In case of errors or strange behaviour please check this extenions!', $this->pObj->extKey, 1);
+          $prompt = 'The third party extensions ' . $csv_ext . ' use the HOOK rows_filter_values.';
+          t3lib_div::devlog( '[INFO/HOOK] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = 'In case of errors or strange behaviour please check this extenions!';
+          t3lib_div::devlog( '[HELP/HOOK] ' . $prompt, $this->pObj->extKey, 1 );
         }
       }
         // DRS - Development Reporting System
 
-      $_params = array('pObj' => &$this);
-      foreach((array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] as $_funcRef)
+      $_params = array( 'pObj' => &$this );
+      foreach( ( array ) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] as $_funcRef )
       {
-        t3lib_div::callUserFunction($_funcRef, $_params, $this);
+        t3lib_div::callUserFunction( $_funcRef, $_params, $this );
       }
     }
       // Any foreign extension is using this hook
       // DRS - Development Reporting System
-    if ($this->pObj->b_drs_hooks)
+    if( $this->pObj->b_drs_hooks )
     {
-      if (!is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values']))
+      if( ! is_array( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] ) )
       {
-        t3lib_div::devlog('[INFO/HOOK] Any third party extension doesn\'t use the HOOK rows_filter_values.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[HELP/HOOK] See Tutorial Hooks: http://typo3.org/extensions/repository/view/browser_tut_hooks_en/current/', $this->pObj->extKey, 1);
+        $prompt = 'Any third party extension doesn\'t use the HOOK rows_filter_values.';
+        t3lib_div::devlog( '[INFO/HOOK] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'See Tutorial Hooks: http://typo3.org/extensions/repository/view/browser_tut_hooks_en/current/';
+        t3lib_div::devlog( '[HELP/HOOK] ' . $prompt, $this->pObj->extKey, 1 );
       }
     }
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after hook rows_filter_values' );
       // DRS - Development Reporting System
       // Any foreign extension is using this hook
 
@@ -710,10 +673,12 @@ class tx_browser_pi1_views
       // Ordering the rows
 
     // #9917: Selecting a random sample from a set of rows
-    if(!($conf_view['random'] == 1))
+    if( ! ( $conf_view['random'] == 1 ) )
     {
-      $this->pObj->objMultisort->multisort_rows();
+      $this->pObj->objMultisort->multisort_rows( );
       $rows = $this->pObj->rows;
+        // Prompt the expired time to devlog
+      $this->pObj->log_timeTracking( 'after $this->pObj->objMultisort->multisort_rows( )' );
     }
       // Ordering the rows
 
@@ -724,44 +689,28 @@ class tx_browser_pi1_views
       // Ordering the children
 
       // 13803, dwildt, 110312
-    $rows = $this->pObj->objMultisort->multisort_mm_children($rows);
+    $rows = $this->pObj->objMultisort->multisort_mm_children( $rows );
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after $this->pObj->objMultisort->multisort_mm_children( $rows )' );
       // 120127, dwildt+
     $this->pObj->rows = $rows;
       // Ordering the children
 
-
-      ////////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After consolidate rows: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
-
-
+    
 
       /////////////////////////////////////////////////////////////////
       //
       // Store amount of rows for the pagebrowser
 
     // 100429, dwildt: rowsPb isn't set. Debug the code!
-    if(isset($rowsPb))
+    if( isset( $rowsPb ) )
     {
       $rowsPb = false;
     }
 
-    if($rowsPb == false)
+    if( $rowsPb == false )
     {
-      $rowsPb = count($rows);
+      $rowsPb = count( $rows );
     }
       // Store amount of rows for the pagebrowser
 
@@ -772,52 +721,37 @@ class tx_browser_pi1_views
       // Order and edit the rows hierarchical
 
     $b_hierarchical = $conf_view['functions.']['hierarchical'];
-    if ($b_hierarchical)
+    if( $b_hierarchical )
     {
-      $rows = $this->pObj->objSqlFun->make_hierarchical($rows);
+      $rows = $this->pObj->objSqlFun->make_hierarchical( $rows );
         // 120127, dwildt+
       $this->pObj->rows = $rows;
-      if ($this->pObj->b_drs_sql)
+      if( $this->pObj->b_drs_sql )
       {
-        t3lib_div::devlog('[INFO/SQL] Result should ordered hierarchical.',  $this->pObj->extKey, 0);
+        t3lib_div::devlog( '[INFO/SQL] Result should ordered hierarchical.',  $this->pObj->extKey, 0 );
       }
+        // Prompt the expired time to devlog
+      $this->pObj->log_timeTracking( 'after $this->pObj->objSqlFun->make_hierarchical( $rows )' );
     }
       // Order and edit the rows hierarchical
 
-
-      ////////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After ordered hierarchical: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
 
 
       /////////////////////////////////////////////////////////////////
       //
       // DRS - Show the first row
 
-    if ($this->pObj->b_drs_sql)
+    if( $this->pObj->b_drs_sql )
     {
-      $str_prompt = 'Result of the first row:<br /><br />';
-      if (is_array($rows) && count($rows) > 0)
+      $str_prompt = 'Result of the first row: ' . PHP_EOL;
+      if( is_array( $rows ) && count( $rows ) > 0 )
       {
-        reset($rows);
-        foreach (current($rows) as $key => $value)
+        reset( $rows );
+        foreach( $rows as $key => $value )
         {
-          $str_prompt .= '['.$key.']: '.htmlspecialchars($value).'<br />';
+          $str_prompt .= '[' . $key . ']: ' . htmlspecialchars( $value ) . ' ' . PHP_EOL;
         }
-        t3lib_div::devlog('[INFO/SQL] '.$str_prompt, $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/SQL] ' . $str_prompt, $this->pObj->extKey, 0);
       }
     }
       // DRS - Show the first row
@@ -831,18 +765,20 @@ class tx_browser_pi1_views
       // Count hits, filter rows, update template
 
     $this->pObj->objFilter->rows_wo_limit = $rows;
-    $arr_result = $this->pObj->objFilter->filter($template);
-    if ($arr_result['error']['status'])
+    $arr_result = $this->pObj->objFilter->filter( $template );
+    if( $arr_result['error']['status'] )
     {
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
-      return $this->pObj->pi_wrapInBaseClass($prompt);
+      return $this->pObj->pi_wrapInBaseClass( $prompt );
     }
     $template = $arr_result['data']['template'];
       // 120127, dwildt+
     $rows             = $arr_result['data']['rows'];
     $this->pObj->rows = $rows;
       // 120127, dwildt+
-    unset($arr_result);
+    unset( $arr_result );
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after $this->pObj->objFilter->filter( )' );
       // Filter - part II/II - HTML code / template
 
 
@@ -851,33 +787,35 @@ class tx_browser_pi1_views
       //
       // Clean up: Delete fields, we don't want to display
 
-    $arr_result = $this->pObj->objSqlFun->rows_with_cleaned_up_fields($rows);
+    $arr_result = $this->pObj->objSqlFun->rows_with_cleaned_up_fields( $rows );
     $rows       = $arr_result['data']['rows'];
     unset($arr_result);
       // 110801, dwildt
     $this->pObj->rows = $rows;
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after $this->pObj->objSqlFun->rows_with_cleaned_up_fields( )' );
       // Clean up: Delete rows, we don't want to display
 
 
 
       /////////////////////////////////////////////////////////////////
       //
-      // Development Log: Show the first row
+      // DRS - Show the first row
 
-    if ($this->pObj->b_drs_sql)
+    if( $this->pObj->b_drs_sql )
     {
-      $str_prompt = 'Result of the first row:<br /><br />';
-      if (is_array($rows) && count($rows) > 0)
+      $str_prompt = 'Result of the first row: ' . PHP_EOL;
+      if( is_array( $rows ) && count( $rows ) > 0 )
       {
-        reset($rows);
-        foreach (current($rows) as $key => $value)
+        reset( $rows );
+        foreach( $rows as $key => $value )
         {
-          $str_prompt .= '['.$key.']: '.htmlspecialchars($value).'<br />';
+          $str_prompt .= '[' . $key . ']: ' . htmlspecialchars( $value ) . ' ' . PHP_EOL;
         }
-        t3lib_div::devlog('[INFO/SQL] '.$str_prompt, $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/SQL] ' . $str_prompt, $this->pObj->extKey, 0);
       }
     }
-      // Development Log: Show the first row
+      // DRS - Show the first row
 
 
 
@@ -886,10 +824,10 @@ class tx_browser_pi1_views
       // Hook for override the SQL result for for the list view
 
       // This hook is used by one extension at least
-    if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['browser_list']))
+    if( is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['browser_list'] ) )
     {
         // DRS - Development Reporting System
-      if ($this->pObj->b_drs_sql || $this->pObj->b_drs_browser)
+      if ( $this->pObj->b_drs_sql || $this->pObj->b_drs_browser )
       {
         $i_extensions = count($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['browser_list']);
         $arr_ext      = array_values($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['browser_list']);
@@ -914,6 +852,8 @@ class tx_browser_pi1_views
 //        $this->pObj = $_procObj->browser_list($arr_data, $this);
 //      }
     }
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after hook browser_list' );
       // Hook for override the SQL result for for the list view
 
 
@@ -973,26 +913,9 @@ class tx_browser_pi1_views
       t3lib_div::devlog('[INFO/DRS] Fields which will get a link to a single view: '.$str_csvList.'.', $this->pObj->extKey, 0);
       t3lib_div::devLog('[HELP/DRS] If you want to configure the field list, please use views.'.$viewWiDot.$mode.'.csvLinkToSingleView.', $this->pObj->extKey, 1);
     }
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after Prepaire array with links to single view' );
       // Prepaire array with links to single view
-
-
-
-      ////////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After link to single view: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
 
 
 
@@ -1067,7 +990,7 @@ class tx_browser_pi1_views
       // Building the template
 
       // HTML template
-    $template   = $this->pObj->cObj->getSubpart($template, $str_marker);
+    $template   = $this->pObj->cObj->getSubpart( $template, $str_marker );
       // HTML template
       // #29370, 110831, dwildt+
 
@@ -1112,27 +1035,10 @@ class tx_browser_pi1_views
       // #9659, 101011, fsander
     //$bool_display = $this->pObj->objFlexform->bool_searchForm;
     $bool_display = $this->pObj->objFlexform->bool_searchForm && $this->pObj->segment['searchform'];
-    $template     = $this->pObj->objTemplate->tmplSearchBox($template, $bool_display);
+    $template     = $this->pObj->objTemplate->tmplSearchBox( $template, $bool_display );
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after $this->pObj->objTemplate->tmplSearchBox( )' );
       // HTML search form
-
-
-
-      ////////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] Before Extension +Browser Calendar: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
 
 
 
@@ -1158,6 +1064,8 @@ class tx_browser_pi1_views
       }
     }
     $this->pObj->rows = $rows;
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after $this->pObj->objCal->cal( )' );
       // Extension pi5: +Browser Calendar
 
 
@@ -1170,7 +1078,7 @@ class tx_browser_pi1_views
       // 110801, dwildt
     //$arr_data['rows']           = $rows;
     $arr_data['rows']           = $this->pObj->rows;
-    $arr_result = $this->pObj->objNavi->azBrowser($arr_data);
+    $arr_result = $this->pObj->objNavi->azBrowser( $arr_data );
     if ($arr_result['error']['status'])
     {
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
@@ -1184,22 +1092,9 @@ class tx_browser_pi1_views
       // 110801, dwildt +
     $this->pObj->rows = $rows;
     unset($arr_result);
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after $this->pObj->objNavi->azBrowser( )' );
       // HTML a-z-browser
-
-      // DRS - Performance
-    if ($this->pObj->b_drs_perform)
-    {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After a-z browser: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
 
 
 
@@ -1207,30 +1102,15 @@ class tx_browser_pi1_views
       //
       // record browser
 
-    $arr_result = $this->pObj->objNavi->recordbrowser_set_session_data($rows);
+    $arr_result = $this->pObj->objNavi->recordbrowser_set_session_data( $rows );
     if ($arr_result['error']['status'])
     {
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
-      return $this->pObj->pi_wrapInBaseClass($prompt);
+      return $this->pObj->pi_wrapInBaseClass( $prompt );
     }
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after $this->pObj->objNavi->recordbrowser_set_session_data( )' );
       // record browser
-
-
-
-      // DRS - Performance
-    if ($this->pObj->b_drs_perform)
-    {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After record browser: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
 
 
 
@@ -1243,41 +1123,26 @@ class tx_browser_pi1_views
     $arr_data['template']   = $template;
     $arr_data['rows']       = $rows;
 
-    $arr_result = $this->pObj->objNavi->tmplPageBrowser($arr_data);
+    $arr_result = $this->pObj->objNavi->tmplPageBrowser( $arr_data );
     unset($arr_data);
     $template         = $arr_result['data']['template'];
     $rows             = $arr_result['data']['rows'];
       // 110801, dwildt +
     $this->pObj->rows = $rows;
     unset($arr_result);
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after $this->pObj->objNavi->tmplPageBrowser( )' );
       // HTML page browser
 
       // HTML mode selector
     $arr_data['template']     = $template;
     $arr_data['arrModeItems'] = $this->pObj->arrModeItems;
-    $template = $this->pObj->objNavi->tmplModeSelector($arr_data);
+    $template = $this->pObj->objNavi->tmplModeSelector( $arr_data );
     unset($arr_data);
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after $this->pObj->objNavi->tmplModeSelector( )' );
       // HTML mode selector
       // Building the template
-
-
-
-      ////////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After pagebrowser and mode selector: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
 
 
 
@@ -1317,6 +1182,8 @@ class tx_browser_pi1_views
             ' #'.$removed_rows.' rows were removed.',  $this->pObj->extKey, 0);
         }
       }
+        // Prompt the expired time to devlog
+      $this->pObj->log_timeTracking( 'after: in case of a limit' );
         // DRS - Development Reporting System
     }
     if( ! isset( $conf_view['limit'] ) )
@@ -1333,49 +1200,16 @@ class tx_browser_pi1_views
 
       ////////////////////////////////////////////////////////////////////////
       //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] Before generating template: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
-
-
-
       // HTML records
+
     $template = $this->pObj->objTemplate->tmplListview($template, $rows);
-
-
-
-      ////////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After generating template: '. ($endTime - $this->pObj->startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
+      // Prompt the expired time to devlog
+    $this->pObj->log_timeTracking( 'after $this->pObj->objTemplate->tmplListview( )' );
+      // HTML records
 
 
 
     return $template;
-
   }
 
 
@@ -1393,7 +1227,7 @@ class tx_browser_pi1_views
  * @return	void
  * @version 3.6.3
  */
-  function singleView($template)
+  function singleView( )
   {
 
     $conf = $this->pObj->conf;
@@ -1403,6 +1237,8 @@ class tx_browser_pi1_views
     $view       = $this->pObj->view;
     $viewWiDot  = $view.'.';
     $conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
+
+    $template   = $this->pObj->str_template_raw;
 
 
       /////////////////////////////////////
