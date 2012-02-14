@@ -118,7 +118,7 @@ class tx_browser_pi1_viewlist
   /**
  * main( ): Display a search form, a-z-Browser, pageBrowser and a list of records
  *
- * @return	void
+ * @return	string  $template : The processed HTML template
  * @version 3.9.8
  * @since 1.0.0
  */

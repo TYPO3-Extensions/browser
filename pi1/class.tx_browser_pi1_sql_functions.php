@@ -2314,7 +2314,7 @@ class tx_browser_pi1_sql_functions
  * prompt_error( ): Prompts a SQL error.
  *                  It is with the query in case of an enabled DRS.
  *
- * @return	aray		$arr_return with elements for prompting
+ * @return	array		$arr_return with elements for prompting
  * @version 3.9.8
  * @since   3.9.8
  */
@@ -2342,7 +2342,7 @@ class tx_browser_pi1_sql_functions
     $arr_return['error']['status'] = true;
     $arr_return['error']['header'] = $str_warn . $str_header;
     $arr_return['error']['prompt'] = $str_prompt;
-    return $arr_return;
+    return $arr_return['error']['header'] . $arr_return['error']['prompt'];
   }
 
 
