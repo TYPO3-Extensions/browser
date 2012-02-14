@@ -53,7 +53,23 @@
  */
 class tx_browser_pi1_viewlist
 {
+    //////////////////////////////////////////////////////
+    //
+    // Variables set by the pObj (by class.tx_browser_pi1.php)
 
+    // [Array] The current TypoScript configuration array
+  var $conf       = false;
+    // [Integer] The current mode (from modeselector)
+  var $mode       = false;
+    // [String] 'list' or 'single': The current view
+  var $view       = false;
+    // [Array] The TypoScript configuration array of the current view
+  var $conf_view  = false;
+    // [String] TypoScript path to the current view. I.e. views.single.1
+  var $conf_path  = false;
+    // Variables set by the pObj (by class.tx_browser_pi1.php)
+
+  
 
     // Array with the fields of the SQL result
   var $arr_select;
@@ -116,9 +132,8 @@ class tx_browser_pi1_viewlist
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin listView( )' );
 
       // Short vars
-    $conf       = $this->pObj->conf;
-    $mode       = $this->pObj->piVar_mode;
-    $cObj       = $this->pObj->cObj;
+    $conf       = $this->conf;
+    $mode       = $this->piVar_mode;
 
       // Default mode
     $maxModes = count( $conf['views.'][$viewWiDot] );
@@ -706,8 +721,8 @@ class tx_browser_pi1_viewlist
         {
           t3lib_div::devlog('[INFO/TEMPLATING+EXPORT] ' . $str_marker . ' is ignored. ###TEMPLATE_CSV### is used as template marker.',  $this->pObj->extKey, 0);
         }
-        $str_marker     = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
-        $template_path  = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['template.']['file'];
+        $str_marker     = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
+        $template_path  = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['file'];
         $template       = $this->pObj->cObj->fileResource( $template_path );
         break;
       default:
@@ -732,8 +747,8 @@ class tx_browser_pi1_viewlist
         {
           t3lib_div::devlog('[INFO/TEMPLATING+MAP] ' . $str_marker . ' is ignored. ###TEMPLATE_CSV### is used as template marker.',  $this->pObj->extKey, 0);
         }
-        $str_marker     = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
-        $template_path  = $this->pObj->conf['flexform.']['viewList.']['csvexport.']['template.']['file'];
+        $str_marker     = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
+        $template_path  = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['file'];
         $template       = $this->pObj->cObj->fileResource( $template_path );
         break;
       default:
@@ -984,6 +999,7 @@ class tx_browser_pi1_viewlist
     if( is_array( $this->conf_view['general_stdWrap.'] ) )
     {
       $this->pObj->conf['general_stdWrap.'] = $this->conf_view['general_stdWrap.'];
+      $this->conf['general_stdWrap.']       = $this->pObj->conf['general_stdWrap.'];
     }
       // Overwrite global general_stdWrap
 

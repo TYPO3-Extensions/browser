@@ -765,7 +765,7 @@ class tx_browser_pi1 extends tslib_pibase {
           // #33892, 120214, dwildt-
         //$str_template_completed = $this->objViews->listView( );
           // #33892, 120214, dwildt+
-        $str_template_completed = $this->objListview->main( );
+        $str_template_completed = $this->objViewlist->main( );
         break;
       case( 'single' ):
         $str_template_completed = $this->objViews->singleView( );
@@ -1465,7 +1465,7 @@ class tx_browser_pi1 extends tslib_pibase {
 
       // Class with methods for the list view
     require_once( 'class.tx_browser_pi1_viewlist.php' );
-    $this->objListview = new tx_browser_pi1_viewlist( $this );
+    $this->objViewlist = new tx_browser_pi1_viewlist( $this );
 
       // Class with wrapper methods for wrapping fields and link values
     require_once('class.tx_browser_pi1_wrapper.php');
@@ -1627,6 +1627,23 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objTyposcript->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
       // [String] TypoScript path to the current view. I.e. views.single.1
     $this->objTyposcript->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_viewlist.php
+
+      // [Array] The current TypoScript configuration array
+    $this->objViewlist->conf      = $this->conf;
+      // [Integer] The current mode (from modeselector)
+    $this->objViewlist->mode      = $this->piVar_mode;
+      // [String] 'list' or 'single': The current view
+    $this->objViewlist->view      = $this->view;
+      // [Array] The TypoScript configuration array of the current view
+    $this->objViewlist->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+      // [String] TypoScript path to the current view. I.e. views.single.1
+    $this->objViewlist->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
 
 
 
