@@ -1235,6 +1235,14 @@ if( $this->pObj->bool_accessByIP )
 {
   if( ( $tt_end - $tt_start ) > 1000 )
   {
+    if( $this->pObj->b_drs_sql )
+    {
+      t3lib_div::devlog( '[ERROR/SQL] Abort by development script!!!!!!!!',  $this->pObj->extKey, 3 );
+      t3lib_div::devlog( '[ERROR/SQL] Abort by development script!!!!!!!!',  $this->pObj->extKey, 3 );
+      t3lib_div::devlog( '[ERROR/SQL] Abort by development script!!!!!!!!',  $this->pObj->extKey, 3 );
+      t3lib_div::devlog( '[ERROR/SQL] Abort by development script!!!!!!!!',  $this->pObj->extKey, 3 );
+      t3lib_div::devlog( '[ERROR/SQL] Abort by development script!!!!!!!!',  $this->pObj->extKey, 3 );
+    }
     $prompt = '<h1>Mehr als eine Sekunde</h1>' .
               '<p>' . __METHOD__ . ' (' . __LINE__ . '): </p>' .
               '<p>' . $query . '</p>';
