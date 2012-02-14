@@ -130,25 +130,8 @@ class tx_browser_pi1_viewlist
       // Short vars
     $conf       = $this->conf;
     $mode       = $this->piVar_mode;
-
-//      // Default mode
-//    $maxModes = count( $conf['views.'][$viewWiDot] );
-//    switch( true )
-//    {
-//      case( $mode > $maxModes ):
-//      case( empty ( $mode ) ):
-//        $mode       = 1;
-//        $this->mode = 1;
-//        break;
-//    }
-//      // Default mode
-
     $view       = $this->view;
     $conf_view  = $this->conf_view;
-if( $this->pObj->bool_accessByIP )
-{
-  var_dump( __METHOD__ . '(' . __LINE__ . ')', '$conf[views.][' . $viewWiDot . '][' . $mode . '.]' );
-}
       // Short vars
 
 
@@ -1052,11 +1035,9 @@ if( $this->pObj->bool_accessByIP )
     {
       case( empty( $mode ) ):
         $bool_noView = true;
-var_dump( 1 );
         break;
       case( ! is_array( $this->conf_view ) ):
         $bool_noView = true;
-var_dump( 2 );
         break;
     }
     if( $bool_noView )

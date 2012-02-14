@@ -756,10 +756,6 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // Process the views
 
- if( $this->bool_accessByIP )
-{
-  var_dump( __METHOD__ . '(' . __LINE__ . ')', $this->piVar_mode );
-}
       // Prompt the expired time to devlog
     $this->timeTracking_log( __METHOD__, __LINE__,  'before processing the view' );
       // SWITCH view

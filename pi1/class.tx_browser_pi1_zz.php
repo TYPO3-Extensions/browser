@@ -503,10 +503,6 @@
       $this->pObj->piVar_mode = $this->pObj->piVars['mode'];
     }
       // Set the global piVar_mode
-if( $this->pObj->bool_accessByIP )
-{
-  var_dump( __METHOD__ . '(' . __LINE__ . ')', $this->pObj->piVar_mode );
-}
 
       // Unset mode, if we have only one view
     if ( count( $conf['views.'][$viewWiDot] ) < 2 )
