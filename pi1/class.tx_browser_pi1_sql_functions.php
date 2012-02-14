@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2009 - 2010 Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2009-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -82,6 +82,10 @@
  */
 class tx_browser_pi1_sql_functions
 {
+    // [String] SQL error message
+  var $error = null;
+    // [String] SQL query
+  var $query = null;
 
 
 
@@ -2284,6 +2288,62 @@ class tx_browser_pi1_sql_functions
     return $str_tsValue;
   }
 
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * Helpers
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+  /**
+ * prompt_error( ): Prompts a SQL error.
+ *                  It is with the query in case of an enabled DRS.
+ *
+ * @return	aray		$arr_return with elements for prompting
+ * @version 3.9.8
+ * @since   3.9.8
+ */
+  public function prompt_error( )
+  {
+    $query = $this->query;
+    $error = $this->error;
+    
+    if( $this->pObj->b_drs_error )
+    {
+      t3lib_div::devlog( '[ERROR/SQL] ' . $query,  $this->pObj->extKey, 3 );
+      t3lib_div::devlog( '[ERROR/SQL] ' . $error,  $this->pObj->extKey, 3 );
+      t3lib_div::devlog( '[ERROR/SQL] ABORT.',   $this->pObj->extKey, 3 );
+      $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">' .
+                      $this->pObj->pi_getLL( 'drs_security' ) . '</p>';
+      $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $error . '</p>';
+      $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $query . '</p>';
+    }
+    if( ! $this->pObj->b_drs_error )
+    {
+      $str_prompt = '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">' .
+                      $this->pObj->pi_getLL( 'drs_sql_prompt' ) . '</p>';
+    }
+    $str_header  = '<h1 style="color:red">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
+    $arr_return['error']['status'] = true;
+    $arr_return['error']['header'] = $str_warn . $str_header;
+    $arr_return['error']['prompt'] = $str_prompt;
+    return $arr_return;
+  }
 
 
 

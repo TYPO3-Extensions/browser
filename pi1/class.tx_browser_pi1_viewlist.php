@@ -62,8 +62,10 @@ class tx_browser_pi1_viewlist
     // Array with fields from functions.clean_up.csvTableFields from TS
   var $arr_rmFields;
 
+    // [Integer] Id of the current mode.
+  var $mode       = null;
     // [Array] TypoScript of the current view
-  var $conf_view = null;
+  var $conf_view  = null;
 
 
 
@@ -124,6 +126,19 @@ class tx_browser_pi1_viewlist
 
 
     
+      /////////////////////////////////////
+      //
+      // Default mode
+
+    $maxModes = count( $conf['views.'][$viewWiDot] );
+    if( $mode > $maxModes )
+    {
+      $mode       = 1;
+      $this->mode = 1;
+    }
+      // Default mode
+
+
       //////////////////////////////////////////////////////////////////
       //
       // RETURN there isn't any list configured
@@ -142,23 +157,7 @@ class tx_browser_pi1_viewlist
 
       //Overwrite general_stdWrap, set globals $lDisplayList and $lDisplay
     $this->init( );
-    
 
-
-
-
-
-
-      /////////////////////////////////////
-      //
-      // Do we have an existing mode?
-
-    $maxModes = count( $conf['views.'][$viewWiDot] );
-    if( $mode > $maxModes )
-    {
-      $mode = 1;
-    }
-      // Do we have an existing mode?
 
 
       //////////////////////////////////////////////////////////////////////
@@ -186,9 +185,9 @@ class tx_browser_pi1_viewlist
       // Set global SQL values
 
     $arr_result = $this->pObj->objSqlFun->global_all( );
-    if ($arr_result['error']['status'])
+    if( $arr_result['error']['status'] )
     {
-      $template = $arr_result['error']['header'].$arr_result['error']['prompt'];
+      $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       return $template;
     }
       // Prompt the expired time to devlog
@@ -199,55 +198,20 @@ class tx_browser_pi1_viewlist
 
       /////////////////////////////////////
       //
-      // SQL with manual configuration
+      // SQL query array
 
-    if( $this->pObj->b_sql_manual )
-    {
-      $arr_result = $this->pObj->objSqlMan->get_query_array( $this );
-        // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlMan->get_query_array( )' );
-    }
-      // SQL with manual configuration
-
-
-
-      /////////////////////////////////////
-      //
-      // SQL with autmatically configuration
-
-    if( ! $this->pObj->b_sql_manual )
-    {
-      $arr_result = $this->pObj->objSqlAut->get_query_array( );
-        // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlAut->get_query_array( )' );
-    }
-      // SQL with autmatically configuration
-
-
-
-      /////////////////////////////////////
-      //
-      // ERROR management
-
+    $arr_result = $this->sql_getQueryArray( );
     if( $arr_result['error']['status'] )
     {
-      $template = $arr_result['error']['header'].$arr_result['error']['prompt'];
+      $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       return $template;
     }
-      // ERROR management
-
-
-
-      ///////////////////////////////////////////////////////////////////////
-      //
-      // Store values, maybe we need it later.
-
     $select   = $arr_result['data']['select'];
     $from     = $arr_result['data']['from'];
     $where    = $arr_result['data']['where'];
     $orderBy  = $arr_result['data']['orderBy'];
     $union    = $arr_result['data']['union'];
-      // Store values, maybe we need it later.
+      // SQL query array
 
 
 
@@ -255,6 +219,7 @@ class tx_browser_pi1_viewlist
       //
       // Set ORDER BY to false - we like to order by PHP
 
+//:TODO: 120214, performance: order by aktivieren
     $orderBy = false;
       // #9917: Selecting a random sample from a set of rows
     if( $conf_view['random'] == 1 )
@@ -300,6 +265,15 @@ class tx_browser_pi1_viewlist
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $GLOBALS[TYPO3_DB]->sql_query( )' );
     $this->pObj->timeTracking_prompt( $query );
     $tt_end = $this->pObj->tt_prevEndTime;
+
+    if( $error )
+    {
+      $this->pObj->objSqlFun->query = $query;
+      $this->pObj->objSqlFun->error = $error;
+      return $this->pObj->objSqlFun->prompt_error( );
+    }
+      // Execute the SQL query
+
 if( $this->pObj->bool_accessByIP )
 {
   if( ( $tt_end - $tt_start ) > 1000 )
@@ -310,32 +284,6 @@ if( $this->pObj->bool_accessByIP )
     die( $prompt );
   }
 }
-
-    if( $error )
-    {
-      if( $this->pObj->b_drs_error )
-      {
-        t3lib_div::devlog('[ERROR/SQL] ' . $query,  $this->pObj->extKey, 3);
-        t3lib_div::devlog('[ERROR/SQL] ' . $error,  $this->pObj->extKey, 3);
-        t3lib_div::devlog('[ERROR/SQL] ABORT.',   $this->pObj->extKey, 3);
-        $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">' .
-                        $this->pObj->pi_getLL( 'drs_security' ) . '</p>';
-        $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $error . '</p>';
-        $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $query . '</p>';
-      }
-      if( ! $this->pObj->b_drs_error )
-      {
-        $str_prompt = '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">' .
-                        $this->pObj->pi_getLL( 'drs_sql_prompt' ) . '</p>';
-      }
-      $str_header  = '<h1 style="color:red">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
-      $arr_return['error']['status'] = true;
-      $arr_return['error']['header'] = $str_warn . $str_header;
-      $arr_return['error']['prompt'] = $str_prompt;
-      return $arr_return;
-    }
-      // Execute the SQL query
-
 
 
       //////////////////////////////////////////////////////////////////////
@@ -1261,7 +1209,7 @@ if( $this->pObj->bool_accessByIP )
  */
   function check_view( )
   {
-    $mode = $this->pObj->piVar_mode;
+    $mode = $this->mode;
 
       //////////////////////////////////////////////////////////////////
       //
@@ -1295,6 +1243,55 @@ if( $this->pObj->bool_accessByIP )
       // RETURN there isn't any list configured
 
     return false;
+  }
+
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * SQL
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+  /**
+ * sql_getQueryArray( ):
+ *
+ * @return	array
+ * @version 3.9.8
+ * @since 1.0.0
+ */
+  function sql_getQueryArray( )
+  {
+      // RETURN case is SQL manual
+    if( $this->pObj->b_sql_manual )
+    {
+      $arr_result = $this->pObj->objSqlMan->get_query_array( $this );
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlMan->get_query_array( )' );
+      return $arr_result;
+    }
+      // RETURN case is SQL manual
+
+      // RETURN case is SQL automatically
+    $arr_result = $this->pObj->objSqlAut->get_query_array( );
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlAut->get_query_array( )' );
+    return $arr_result;
+      // RETURN case is SQL automatically
   }
 
 
