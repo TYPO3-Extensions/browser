@@ -52,6 +52,11 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
       <label index="error_ttcv_prompt_value">A TypoScript Object TT_CONTAINER_VALUE hasn't any value in value. See devlog for more information.</label>
       <label index="error_typoscript_h1">Typoscript Error</label>
       <label index="error_typoscript_joins">If you define a SQL query manually, you have to define the TypoScript values select, from, andWhere and the array joins. There are further information in the DRS and the manual.</label>
+      <label index="error_typoscript_no_listview">Sorry, there isn't any view list configured.<![CDATA[<br />]]>
+        Please configure: plugin.tx_browser_pi1.views.list<![CDATA[<br />]]>
+        <![CDATA[<br />]]>
+        Browser - the TYPO3 frontend engine.
+      </label>
       <label index="error_views_noview">Sorry, there isn't any view configured.</label>
       <label index="error_views_single_noview">Sorry, there isn't any single view configured.</label>
       <label index="warn_sql_h1">SQL Warning</label>
@@ -116,6 +121,10 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="error_ttcv_prompt_value">Ein TypoScript Object TT_CONTAINER_VALUE hat keinen Wert in value. Weitere Hinweise siehe devlog.</label>
       <label index="error_typoscript_h1">Typoscript Fehler</label>
       <label index="error_typoscript_joins"><![CDATA[Wenn Du eine SQL-Abfrage manuell definierst, musst Du die TypoScript-Werte für select, from und andWhere sowie für das Array joins angeben. Weitere Informationen findest Du im DRS und in der Dokumentation.]]></label>
+      <label index="error_typoscript_no_listview">Sorry, es ist keine Listenansicht konfiguriert.<![CDATA[<br />]]>
+        Bitte konfiguriere: plugin.tx_browser_pi1.views.list<![CDATA[<br />]]>
+        <![CDATA[<br />]]>
+        Browser - die TYPO3-Frontend-Engine.
       <label index="error_views_noview"><![CDATA[Pardon, es ist keine Ansicht (view) konfiguriert.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
       <label index="error_views_single_noview">Pardon, es ist keine Detailansicht konfiguriert.</label>
       <label index="warn_sql_h1">SQL Warnung</label>

@@ -55,12 +55,15 @@ class tx_browser_pi1_viewlist
 {
 
 
+    // Array with the fields of the SQL result
   var $arr_select;
-  // Array with the fields of the SQL result
+    // Array with fields from orderBy from TS
   var $arr_orderBy;
-  // Array with fields from orderBy from TS
+    // Array with fields from functions.clean_up.csvTableFields from TS
   var $arr_rmFields;
-  // Array with fields from functions.clean_up.csvTableFields from TS
+
+    // [Array] TypoScript of the current view
+  var $conf_view = null;
 
 
 
@@ -95,7 +98,7 @@ class tx_browser_pi1_viewlist
 
 
   /**
- * Display a search form, a-z-Browser, pageBrowser and a list of records
+ * main( ): Display a search form, a-z-Browser, pageBrowser and a list of records
  *
  * @return	void
  * @version 3.9.8
@@ -106,66 +109,24 @@ class tx_browser_pi1_viewlist
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin listView( )' );
 
-    $conf = $this->pObj->conf;
-    $mode = $this->pObj->piVar_mode;
-    $cObj = $this->pObj->cObj;
+      // Short vars
+    $conf       = $this->pObj->conf;
+    $mode       = $this->pObj->piVar_mode;
+    $cObj       = $this->pObj->cObj;
 
     $view       = $this->pObj->view;
     $viewWiDot  = $view.'.';
     $conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
+      // Short vars
 
-    $template   = $this->pObj->str_template_raw;
+      // Global vars
+    $this->conf_view  = $conf_view;
 
 
-
-      /////////////////////////////////////
+    
+      //////////////////////////////////////////////////////////////////
       //
-      // Overwrite global general_stdWrap
-
-      // #12471, 110123, dwildt
-    if( is_array( $conf_view['general_stdWrap.'] ) )
-    {
-      $this->pObj->conf['general_stdWrap.'] = $conf_view['general_stdWrap.'];
-    }
-      // Overwrite global general_stdWrap
-
-
-
-      /////////////////////////////////////
-      //
-      // Get the local or global displayList
-
-    if( is_array( $conf_view['displayList.'] ) )
-    {
-      $this->pObj->lDisplayList = $conf_view['displayList.'];
-    }
-    if( ! is_array( $conf_view['displayList.'] ) )
-    {
-      $this->pObj->lDisplayList = $conf['displayList.'];
-    }
-      // Get the local or global displayList
-
-
-
-      /////////////////////////////////////
-      //
-      // Get the local or global displayList.display
-
-    if( is_array( $conf_view['displayList.']['display.'] ) )
-    {
-      $this->pObj->lDisplay = $conf_view['displayList.']['display.'];
-    }
-    if( ! is_array( $conf_view['displayList.']['display.'] ) )
-    {
-      $this->pObj->lDisplay = $conf['displayList.']['display.'];
-    }
-      // Get the local or global displayList.display
-
-
-
-      /////////////////////////////////
-      //
-      // RETURN, there isn't any list
+      // RETURN there isn't any list configured
 
     if( ! is_array( $conf['views.'][$viewWiDot] ) )
     {
@@ -177,9 +138,24 @@ class tx_browser_pi1_viewlist
         $tsArray = 'plugin.' . $this->pObj->prefixId . '.views.list';
         t3lib_div::devLog( '[HELP/DRS] Did you configure ' . $tsArray . '?', $this->pObj->extKey, 1 );
       }
-      return false;
+      $str_header = '<h1 style="color:red">' . $this->pObj->pi_getLL( 'error_typoscript_h1' ) . '</h1>';
+      $str_prompt = '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">' .
+                        $this->pObj->pi_getLL( 'error_typoscript_no_listview' ) . '</p>';
+      return $str_header . $str_prompt;
     }
-      // RETURN, there isn't any list
+      // RETURN there isn't any list configured
+
+
+
+      // HTML content of the current template
+    $template = $this->pObj->str_template_raw;
+
+      //Overwrite general_stdWrap, set globals $lDisplayList and $lDisplay
+    $this->init( );
+    
+
+
+
 
 
 
@@ -1236,7 +1212,47 @@ if( $this->pObj->bool_accessByIP )
 
 
 
+  /**
+ * init( ): Overwrite general_stdWrap, set globals $lDisplayList and $lDisplay
+ *
+ * @return	void
+ * @version 3.9.8
+ * @since 1.0.0
+ */
+  function init( )
+  {
+      // Overwrite global general_stdWrap
+      // #12471, 110123, dwildt+
+    if( is_array( $this->conf_view['general_stdWrap.'] ) )
+    {
+      $this->pObj->conf['general_stdWrap.'] = $this->conf_view['general_stdWrap.'];
+    }
+      // Overwrite global general_stdWrap
 
+      // Get the local or global displayList
+    if( is_array( $this->conf_view['displayList.'] ) )
+    {
+      $this->pObj->lDisplayList = $this->conf_view['displayList.'];
+    }
+    if( ! is_array( $this->conf_view['displayList.'] ) )
+    {
+      $this->pObj->lDisplayList = $conf['displayList.'];
+    }
+      // Get the local or global displayList
+
+
+
+      // Get the local or global displayList.display
+    if( is_array( $this->conf_view['displayList.']['display.'] ) )
+    {
+      $this->pObj->lDisplay = $this->conf_view['displayList.']['display.'];
+    }
+    if( ! is_array( $this->conf_view['displayList.']['display.'] ) )
+    {
+      $this->pObj->lDisplay = $conf['displayList.']['display.'];
+    }
+      // Get the local or global displayList.display
+  }
 
 
 

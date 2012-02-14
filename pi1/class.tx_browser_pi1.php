@@ -1821,7 +1821,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // Get the current time
 
       // Prompt the current time
-    $prompt = '[' . ( $endTime - $this->tt_startTime ) . ' ms]' . $method . '(' . $line . '): ' . $prompt;
+    $prompt = '[' . ( $endTime - $this->tt_startTime ) . ' ms] ' . $method . '(' . $line . '): ' . $prompt;
     t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt, $this->extKey, 0 );
 
 
@@ -1829,13 +1829,13 @@ class tx_browser_pi1 extends tslib_pibase {
     {
       case( ( $endTime - $this->tt_prevEndTime ) >= 10000 ):
         $this->tt_prevPrompt = 3;
-        $prompt_02 = 'Previous process needs more than 10 sec';
-        t3lib_div::devLog('[ERROR/PERFORMANCE] ' . $prompt_02, $this->extKey, 3 );
+        $prompt = 'Previous process needs more than 10 sec';
+        t3lib_div::devLog('[ERROR/PERFORMANCE] ' . $prompt, $this->extKey, 3 );
         break;
       case( ( $endTime - $this->tt_prevEndTime ) >= 1000 ):
         $this->tt_prevPrompt = 2;
-        $prompt_02 = 'Previous process needs more than 1 sec';
-        t3lib_div::devLog('[WARN/PERFORMANCE] ' . $prompt_02, $this->extKey, 2 );
+        $prompt = 'Previous process needs more than 1 sec';
+        t3lib_div::devLog('[WARN/PERFORMANCE] ' . $prompt, $this->extKey, 2 );
         break;
       default:
         $this->tt_prevPrompt = 0;
