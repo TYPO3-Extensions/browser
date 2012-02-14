@@ -180,123 +180,13 @@ class tx_browser_pi1_viewlist
 
 
 
-      /////////////////////////////////////
-      //
-      // Set global SQL values
-
-    $arr_result = $this->pObj->objSqlFun->global_all( );
+    $arr_result = $this->sql( );
     if( $arr_result['error']['status'] )
     {
       $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       return $template;
     }
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun->global_all( )' );
-      // Set global SQL values
-
-
-
-      /////////////////////////////////////
-      //
-      // SQL query array
-
-    $arr_result = $this->sql_getQueryArray( );
-    if( $arr_result['error']['status'] )
-    {
-      $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
-      return $template;
-    }
-    $select   = $arr_result['data']['select'];
-    $from     = $arr_result['data']['from'];
-    $where    = $arr_result['data']['where'];
-    $orderBy  = $arr_result['data']['orderBy'];
-    $union    = $arr_result['data']['union'];
-      // SQL query array
-
-
-
-      ///////////////////////////////////////////////////////////////////////
-      //
-      // Set ORDER BY to false - we like to order by PHP
-
-//:TODO: 120214, performance: order by aktivieren
-    $orderBy = false;
-      // #9917: Selecting a random sample from a set of rows
-    if( $conf_view['random'] == 1 )
-    {
-      $orderBy = 'rand( )';
-    }
-      // Set ORDER BY to false - we like to order by PHP
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // Execute the SQL query
-
-    $b_union = false;
-    if( $union )
-    {
-        // We have a UNION. Maybe because there are synonyms.
-      $query   = $union;
-      $b_union = true;
-    }
-    if( ! $union )
-    {
-      $query = $GLOBALS['TYPO3_DB']->SELECTquery
-                                      (
-                                        $select,
-                                        $from,
-                                        $where,
-                                        $groupBy="",
-                                        $orderBy,
-                                        $limit="",
-                                        $uidIndexField=""
-                                      );
-    }
-
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'before $GLOBALS[TYPO3_DB]->sql_query( )' );
-    $tt_start = $this->pObj->tt_prevEndTime;
-    $res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $GLOBALS[TYPO3_DB]->sql_query( )' );
-    $this->pObj->timeTracking_prompt( $query );
-    $tt_end = $this->pObj->tt_prevEndTime;
-
-    if( $error )
-    {
-      $this->pObj->objSqlFun->query = $query;
-      $this->pObj->objSqlFun->error = $error;
-      return $this->pObj->objSqlFun->prompt_error( );
-    }
-      // Execute the SQL query
-
-if( $this->pObj->bool_accessByIP )
-{
-  if( ( $tt_end - $tt_start ) > 1000 )
-  {
-    $prompt = '<h1>Mehr als eine Sekunde</h1>' .
-              '<p>' . __METHOD__ . ' (' . __LINE__ . '): </p>' .
-              '<p>' . $query . '</p>';
-    die( $prompt );
-  }
-}
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Development Reporting System
-
-    if( $this->pObj->b_drs_sql )
-    {
-      t3lib_div::devlog( '[OK/SQL] ' . $query,  $this->pObj->extKey, -1 );
-      t3lib_div::devlog( '[HELP/SQL] Be aware of the multi-byte notation, if you want to use the query ' .
-                          'in your SQL shell or in phpMyAdmin.', $this->pObj->extKey, 1 );
-    }
-      // DRS - Development Reporting System
+    $res = $arr_result['data']['res'];
 
 
 
@@ -358,20 +248,39 @@ if( $this->pObj->bool_accessByIP )
                                               $limit="",
                                               $uidIndexField=""
                                             );
+              // Prompt the expired time to devlog
+            $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'before $GLOBALS[TYPO3_DB]->sql_query( )' );
+            $tt_start = $this->pObj->tt_prevEndTime;
+              // Prompt the expired time to devlog
+
+              // Execute
             $res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
             $error = $GLOBALS['TYPO3_DB']->sql_error( );
+              // Execute
 
+              // Prompt the expired time to devlog
+            $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $GLOBALS[TYPO3_DB]->sql_query( )' );
+            $this->pObj->timeTracking_prompt( $query );
+            $tt_end = $this->pObj->tt_prevEndTime;
+              // Prompt the expired time to devlog
+
+              // Error management
+            if( $error ) {
+              $this->pObj->objSqlFun->query = $query;
+              $this->pObj->objSqlFun->error = $error;
+              return $this->pObj->objSqlFun->prompt_error( );
+            }
+              // Error management
+            
               // DRS - Development Reporting System
             if( $this->pObj->b_drs_sql )
             {
               $prompt = 'Bugfix #9024 - Next query for localisation consolidation:';
               t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-              t3lib_div::devlog( '[INFO/SQL] ' . $query,  $this->pObj->extKey, 0 );
+              t3lib_div::devlog( '[OK/SQL] ' . $query,  $this->pObj->extKey, -1 );
               $prompt = 'Be aware of the multi-byte notation, if you want to use the query in your SQL shell or in phpMyAdmin.';
               t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
             }
-              // Prompt the expired time to devlog
-            $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $GLOBALS[TYPO3_DB]->sql_query( )' );
               // DRS - Development Reporting System
           }
 
@@ -1163,7 +1072,7 @@ if( $this->pObj->bool_accessByIP )
  * @version 3.9.8
  * @since 1.0.0
  */
-  function init( )
+  private function init( )
   {
       // Overwrite global general_stdWrap
       // #12471, 110123, dwildt+
@@ -1213,7 +1122,7 @@ if( $this->pObj->bool_accessByIP )
  * @version 3.9.8
  * @since 1.0.0
  */
-  function check_view( )
+  private function check_view( )
   {
     $mode = $this->mode;
 
@@ -1274,13 +1183,149 @@ if( $this->pObj->bool_accessByIP )
 
 
   /**
+ * sql( ):
+ *
+ * @return	array
+ * @version 3.9.8
+ * @since 1.0.0
+ */
+  private function sql( )
+  {
+      // Set global SQL values
+    $arr_result = $this->pObj->objSqlFun->global_all( );
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun->global_all( )' );
+      // RETURN error
+    if( $arr_result['error']['status'] )
+    {
+      return $arr_result;
+    }
+      // RETURN error
+      // Set global SQL values
+
+
+
+      // SQL query array
+    $arr_result = $this->sql_getQueryArray( );
+    if( $arr_result['error']['status'] )
+    {
+      return $arr_result;
+    }
+    $select   = $arr_result['data']['select'];
+    $from     = $arr_result['data']['from'];
+    $where    = $arr_result['data']['where'];
+    $orderBy  = $arr_result['data']['orderBy'];
+    $union    = $arr_result['data']['union'];
+      // SQL query array
+
+
+
+      // Set ORDER BY to false - we like to order by PHP
+//:TODO: 120214, performance: order by aktivieren
+    $orderBy = false;
+      // #9917: Selecting a random sample from a set of rows
+    if( $conf_view['random'] == 1 )
+    {
+      $orderBy = 'rand( )';
+    }
+      // Set ORDER BY to false - we like to order by PHP
+
+
+
+      // SQL query
+    $b_union = false;
+      // Query: union case
+    if( $union )
+    {
+        // We have a UNION. Maybe because there are synonyms.
+      $query   = $union;
+      $b_union = true;
+    }
+      // Query: union case
+
+      // Query: default case
+    if( ! $union )
+    {
+      $query = $GLOBALS['TYPO3_DB']->SELECTquery
+                                      (
+                                        $select,
+                                        $from,
+                                        $where,
+                                        $groupBy="",
+                                        $orderBy,
+                                        $limit="",
+                                        $uidIndexField=""
+                                      );
+    }
+      // Query: default case
+      // SQL query
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'before $GLOBALS[TYPO3_DB]->sql_query( )' );
+    $tt_start = $this->pObj->tt_prevEndTime;
+      // Prompt the expired time to devlog
+
+      // Execute
+    $res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+      // Execute
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $GLOBALS[TYPO3_DB]->sql_query( )' );
+    $this->pObj->timeTracking_prompt( $query );
+    $tt_end = $this->pObj->tt_prevEndTime;
+      // Prompt the expired time to devlog
+
+      // Error management
+    if( $error )
+    {
+      $this->pObj->objSqlFun->query = $query;
+      $this->pObj->objSqlFun->error = $error;
+      return $this->pObj->objSqlFun->prompt_error( );
+    }
+      // Error management
+
+      // DRS - Development Reporting System
+    if( $this->pObj->b_drs_sql )
+    {
+      t3lib_div::devlog( '[OK/SQL] ' . $query,  $this->pObj->extKey, -1 );
+      t3lib_div::devlog( '[HELP/SQL] Be aware of the multi-byte notation, if you want to use the query ' .
+                          'in your SQL shell or in phpMyAdmin.', $this->pObj->extKey, 1 );
+    }
+      // DRS - Development Reporting System
+      // Execute the SQL query
+
+if( $this->pObj->bool_accessByIP )
+{
+  if( ( $tt_end - $tt_start ) > 1000 )
+  {
+    $prompt = '<h1>Mehr als eine Sekunde</h1>' .
+              '<p>' . __METHOD__ . ' (' . __LINE__ . '): </p>' .
+              '<p>' . $query . '</p>';
+    die( $prompt );
+  }
+}
+
+    $arr_return['data']['res'] = $res;
+    return $arr_return;
+
+  }
+
+
+
+
+
+
+
+
+  /**
  * sql_getQueryArray( ):
  *
  * @return	array
  * @version 3.9.8
  * @since 1.0.0
  */
-  function sql_getQueryArray( )
+  private function sql_getQueryArray( )
   {
       // RETURN case is SQL manual
     if( $this->pObj->b_sql_manual )
