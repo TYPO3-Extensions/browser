@@ -126,7 +126,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="error_typoscript_no_listview">Sorry, es ist keine Listenansicht konfiguriert.<![CDATA[<br />]]>
         * Hast Du vergessen, das static template des TYPO3 Browsers einzubinden?<![CDATA[<br />]]>
         * Oder hast du vergessen, plugin.tx_browser_pi1.views.list zu konfigurieren?<![CDATA[<br />]]>
-        * Hast Du ein Template im Plugin/in der Flexform ausgew<![CDATA[&auml;]]>hlt?<![CDATA[<br />]]>
+        * Hast Du ein g<![CDATA[&uuml;]]>ltiges Template im Plugin/in der Flexform ausgew<![CDATA[&auml;]]>hlt?<![CDATA[<br />]]>
         <![CDATA[<br />]]>
         Browser - die TYPO3-Frontend-Engine.
       </label>

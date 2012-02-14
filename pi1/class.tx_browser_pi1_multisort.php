@@ -420,21 +420,29 @@ class tx_browser_pi1_multisort
 
           // EXIT: error!
         $error  = $GLOBALS['TYPO3_DB']->sql_error();
-        if (!empty($error))
+        if( $error )
         {
-          if ($this->pObj->b_drs_error)
-          {
-            $str_warn     = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">' . $this->pObj->pi_getLL('drs_security') . '</p>';
-            $str_prompt   = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $error . '</p>';
-            $str_prompt  .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $query . '</p>';
-            echo $str_warn . $str_prompt;
-          }
-          else
-          {
-            echo '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">' . $this->pObj->pi_getLL('drs_sql_prompt') . '</p>';
-          }
-          exit;
+          $this->pObj->objSqlFun->query = $query;
+          $this->pObj->objSqlFun->error = $error;
+          $arr_result = $this->pObj->objSqlFun->prompt_error( );
+          $prompt     = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+          die( $prompt );
         }
+//        if (!empty($error))
+//        {
+//          if ($this->pObj->b_drs_error)
+//          {
+//            $str_warn     = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">' . $this->pObj->pi_getLL('drs_security') . '</p>';
+//            $str_prompt   = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $error . '</p>';
+//            $str_prompt  .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $query . '</p>';
+//            echo $str_warn . $str_prompt;
+//          }
+//          else
+//          {
+//            echo '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">' . $this->pObj->pi_getLL('drs_sql_prompt') . '</p>';
+//          }
+//          exit;
+//        }
           // EXIT: error!
 
           // Loop: children
