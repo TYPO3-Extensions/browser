@@ -1771,7 +1771,7 @@ class tx_browser_pi1 extends tslib_pibase {
  * @version 3.9.8
  * @since   0.0.1
  */
-  private function log_timeTracking( $prompt )
+  public function log_timeTracking( $prompt )
   {
       // RETURN: DRS shouldn't report performance prompts
     if( ! $this->b_drs_perform )
