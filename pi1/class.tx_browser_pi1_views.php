@@ -330,7 +330,7 @@ class tx_browser_pi1_views
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( 'after $GLOBALS[TYPO3_DB]->sql_query( )' );
     $this->pObj->timeTracking_prompt( $query );
-if( $bool_accessByIP )
+if( $this->pObj->bool_accessByIP )
 {
   die( $query );
 }

@@ -1867,7 +1867,8 @@ class tx_browser_pi1 extends tslib_pibase {
         return;
     }
 
-    t3lib_div::devLog('[' . $prompt_02. '/PERFORMANCE] ' . $prompt, $this->extKey, $this->tt_prevPrompt );
+//    t3lib_div::devLog('[' . $prompt_02. '/PERFORMANCE] ' . $prompt, $this->extKey, $this->tt_prevPrompt );
+    t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt, $this->extKey, $this->tt_prevPrompt );
   }
 
 
