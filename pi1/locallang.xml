@@ -53,7 +53,8 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
       <label index="error_typoscript_h1">Typoscript Error</label>
       <label index="error_typoscript_joins">If you define a SQL query manually, you have to define the TypoScript values select, from, andWhere and the array joins. There are further information in the DRS and the manual.</label>
       <label index="error_typoscript_no_listview">Sorry, there isn't any view list configured.<![CDATA[<br />]]>
-        Please configure: plugin.tx_browser_pi1.views.list<![CDATA[<br />]]>
+        * Did you forget to include the static templateof the TYPO3 Browser?<![CDATA[<br />]]>
+        * Or did you forget, to configure plugin.tx_browser_pi1.views.list<![CDATA[<br />]]>
         <![CDATA[<br />]]>
         Browser - the TYPO3 frontend engine.
       </label>
@@ -122,7 +123,8 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="error_typoscript_h1">Typoscript Fehler</label>
       <label index="error_typoscript_joins"><![CDATA[Wenn Du eine SQL-Abfrage manuell definierst, musst Du die TypoScript-Werte für select, from und andWhere sowie für das Array joins angeben. Weitere Informationen findest Du im DRS und in der Dokumentation.]]></label>
       <label index="error_typoscript_no_listview">Sorry, es ist keine Listenansicht konfiguriert.<![CDATA[<br />]]>
-        Bitte konfiguriere: plugin.tx_browser_pi1.views.list<![CDATA[<br />]]>
+        * Hast Du vergessen, das static template des TYPO3 Browsers einzubinden?<![CDATA[<br />]]>
+        * Oder hast du vergessen, plugin.tx_browser_pi1.views.list zu konfigurieren?<![CDATA[<br />]]>
         <![CDATA[<br />]]>
         Browser - die TYPO3-Frontend-Engine.
       </label>

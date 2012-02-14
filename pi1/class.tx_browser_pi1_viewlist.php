@@ -128,37 +128,12 @@ class tx_browser_pi1_viewlist
       //
       // RETURN there isn't any list configured
 
-    $bool_noView = false;
-    switch( true )
+    $prompt = $this->check_view( );
+    if( $prompt )
     {
-      case( empty( $mode ) ):
-        $bool_noView = true;
-        break;
-      case( ! is_array( $conf['views.'][$viewWiDot][$mode . '.'] ) ):
-        $bool_noView = true;
-        break;
-    }
-    if( $bool_noView )
-    {
-      if ( $this->pObj->b_drs_error )
-      {
-        t3lib_div::devlog( '[ERROR/DRS] views.' . $view . ' hasn\'t any item.', $this->pObj->extKey, 3 );
-        $prompt = 'Did you included the static template from this extensions?';
-        t3lib_div::devLog( '[HELP/DRS] ' . $prompt, $this->pObj->extKey, 1 );
-        $tsArray = 'plugin.' . $this->pObj->prefixId . '.views.list';
-        t3lib_div::devLog( '[HELP/DRS] Did you configure ' . $tsArray . '?', $this->pObj->extKey, 1 );
-      }
-      $str_header = '<h1 style="color:red">' . $this->pObj->pi_getLL( 'error_typoscript_h1' ) . '</h1>';
-      $str_prompt = '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">' .
-                        $this->pObj->pi_getLL( 'error_typoscript_no_listview' ) . '</p>';
-      return $str_header . $str_prompt;
+      return $prompt;
     }
       // RETURN there isn't any list configured
-if( $this->pObj->bool_accessByIP )
-{
-  var_dump( 'views.' . $viewWiDot . $mode . '.', $conf['views.'][$viewWiDot][$mode . '.'] );
-  exit;
-}
 
 
 
@@ -1268,6 +1243,62 @@ if( $this->pObj->bool_accessByIP )
     }
       // Get the local or global displayList.display
   }
+
+
+
+
+
+
+
+
+
+  /**
+ * check_view( ):
+ *
+ * @return	void
+ * @version 3.9.8
+ * @since 1.0.0
+ */
+  function check_view( )
+  {
+    $mode = $this->pObj->piVar_mode;
+
+      //////////////////////////////////////////////////////////////////
+      //
+      // RETURN there isn't any list configured
+
+    $bool_noView = false;
+    switch( true )
+    {
+      case( empty( $mode ) ):
+        $bool_noView = true;
+        break;
+      case( ! is_array( $this->conf_view ) ):
+        $bool_noView = true;
+        break;
+    }
+    if( $bool_noView )
+    {
+      if ( $this->pObj->b_drs_error )
+      {
+        t3lib_div::devlog( '[ERROR/DRS] views.list.' . $mode . ' hasn\'t any item.', $this->pObj->extKey, 3 );
+        $prompt = 'Did you included the static template from this extensions?';
+        t3lib_div::devLog( '[HELP/DRS] ' . $prompt, $this->pObj->extKey, 1 );
+        $tsArray = 'plugin.' . $this->pObj->prefixId . '.views.list.' . $mode;
+        t3lib_div::devLog( '[HELP/DRS] Did you configure ' . $tsArray . '?', $this->pObj->extKey, 1 );
+      }
+      $str_header = '<h1 style="color:red">' . $this->pObj->pi_getLL( 'error_typoscript_h1' ) . '</h1>';
+      $str_prompt = '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">' .
+                        $this->pObj->pi_getLL( 'error_typoscript_no_listview' ) . '</p>';
+      return $str_header . $str_prompt;
+    }
+      // RETURN there isn't any list configured
+
+    return false;
+  }
+
+
+
 
 
 
