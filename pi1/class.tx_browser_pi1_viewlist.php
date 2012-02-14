@@ -116,7 +116,7 @@ class tx_browser_pi1_viewlist
 
     $view       = $this->pObj->view;
     $viewWiDot  = $view.'.';
-    $conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
+    $conf_view  = $conf['views.'][$viewWiDot][$mode . '.'];
       // Short vars
 
       // Global vars
@@ -130,10 +130,10 @@ class tx_browser_pi1_viewlist
 
 if( $this->pObj->bool_accessByIP )
 {
-  var_dump( 'views.' . $viewWiDot, $conf['views.'][$viewWiDot] );
+  var_dump( 'views.' . $viewWiDot . $mode . '.', $conf['views.'][$viewWiDot][$mode . '.'] );
   exit;
 }
-    if( ! is_array( $conf['views.'][$viewWiDot] ) )
+    if( ! is_array( $conf['views.'][$viewWiDot][$mode . '.'] ) )
     {
       if ( $this->pObj->b_drs_error )
       {
