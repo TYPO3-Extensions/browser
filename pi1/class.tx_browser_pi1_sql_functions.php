@@ -2342,7 +2342,7 @@ class tx_browser_pi1_sql_functions
     $arr_return['error']['status'] = true;
     $arr_return['error']['header'] = $str_warn . $str_header;
     $arr_return['error']['prompt'] = $str_prompt;
-    return $arr_return['error']['header'] . $arr_return['error']['prompt'];
+    return $arr_return;
   }
 
 

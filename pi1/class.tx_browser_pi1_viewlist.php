@@ -267,7 +267,12 @@ class tx_browser_pi1_viewlist
             if( $error ) {
               $this->pObj->objSqlFun->query = $query;
               $this->pObj->objSqlFun->error = $error;
-              return $this->pObj->objSqlFun->prompt_error( );
+              $arr_result = $this->pObj->objSqlFun->prompt_error( );
+              if( $arr_result['error']['status'] )
+              {
+                $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+                return $template;
+              }
             }
               // Error management
             
@@ -313,7 +318,12 @@ class tx_browser_pi1_viewlist
     {
       $this->pObj->objSqlFun->query = $query;
       $this->pObj->objSqlFun->error = $error;
-      return $this->pObj->objSqlFun->prompt_error( );
+      $arr_result = $this->pObj->objSqlFun->prompt_error( );
+      if( $arr_result['error']['status'] )
+      {
+        $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+        return $template;
+      }
     }
 //    if( $error )
 //    {
@@ -1018,7 +1028,7 @@ class tx_browser_pi1_viewlist
   /**
  * check_view( ):
  *
- * @return	void
+ * @return	string    Error prompt in case of an error
  * @version 3.9.8
  * @since 1.0.0
  */
