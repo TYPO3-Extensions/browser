@@ -128,6 +128,11 @@ class tx_browser_pi1_viewlist
       //
       // RETURN there isn't any list configured
 
+if( $this->pObj->bool_accessByIP )
+{
+  var_dump( 'views.' . $viewWiDot, $conf['views.'][$viewWiDot] );
+  exit;
+}
     if( ! is_array( $conf['views.'][$viewWiDot] ) )
     {
       if ( $this->pObj->b_drs_error )
