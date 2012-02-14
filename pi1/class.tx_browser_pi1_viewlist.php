@@ -334,9 +334,15 @@ class tx_browser_pi1_viewlist
     $this->pObj->timeTracking_log( 'after $GLOBALS[TYPO3_DB]->sql_query( )' );
     $this->pObj->timeTracking_prompt( $query );
     $tt_end = $this->pObj->tt_prevEndTime;
-if( ( $tt_end - $tt_start ) > 1000 )
+if( $this->pObj->bool_accessByIP )
 {
-  die( __METHOD__ . ' (' . __LINE__ . '): ' . $query );
+  if( ( $tt_end - $tt_start ) > 1000 )
+  {
+    $prompt = '<h1>Mehr als eine Sekunde</h1>' .
+              '<p>' . __METHOD__ . ' (' . __LINE__ . '): </p>' .
+              '<p>' . $query . '</p>';
+    die( $prompt );
+  }
 }
 
     if( $error )
