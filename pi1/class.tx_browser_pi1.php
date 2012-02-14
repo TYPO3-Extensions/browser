@@ -762,6 +762,11 @@ class tx_browser_pi1 extends tslib_pibase {
     switch( $this->view )
     {
       case( 'list' ):
+        if( $this->pObj->bool_accessByIP )
+        {
+          $str_template_completed = $this->objListview->listView( );
+          break;
+        }
         $str_template_completed = $this->objViews->listView( );
         break;
       case( 'single' ):
@@ -1460,6 +1465,10 @@ class tx_browser_pi1 extends tslib_pibase {
     require_once('class.tx_browser_pi1_views.php');
     $this->objViews = new tx_browser_pi1_views($this);
 
+      // Class with methods for the list view
+    require_once( 'class.tx_browser_pi1_viewlist.php' );
+    $this->objListview = new tx_browser_pi1_viewlist( $this );
+
       // Class with wrapper methods for wrapping fields and link values
     require_once('class.tx_browser_pi1_wrapper.php');
     $this->objWrapper = new tx_browser_pi1_wrapper($this);
@@ -1868,7 +1877,7 @@ class tx_browser_pi1 extends tslib_pibase {
     }
 
 //    t3lib_div::devLog('[' . $prompt_02. '/PERFORMANCE] ' . $prompt, $this->extKey, $this->tt_prevPrompt );
-    t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt, $this->extKey, $this->tt_prevPrompt );
+    t3lib_div::devLog('[INFO/PERFORMANCE] Details about previous process: ' . $prompt, $this->extKey, $this->tt_prevPrompt );
   }
 
 
