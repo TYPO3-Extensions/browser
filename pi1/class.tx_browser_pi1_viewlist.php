@@ -104,7 +104,7 @@ class tx_browser_pi1_viewlist
   function main( )
   {
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'begin listView( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin listView( )' );
 
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -210,7 +210,7 @@ class tx_browser_pi1_viewlist
       // #30912, 120127, dwildt+
     $this->pObj->objFilter->andWhere_filter( );
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after $this->pObj->objFilter->andWhere_filter( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objFilter->andWhere_filter( )' );
       // Filter - part I/II: SQL andWhere statement
 
 
@@ -226,7 +226,7 @@ class tx_browser_pi1_viewlist
       return $template;
     }
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after $this->pObj->objSqlFun->global_all( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun->global_all( )' );
       // Set global SQL values
 
 
@@ -239,7 +239,7 @@ class tx_browser_pi1_viewlist
     {
       $arr_result = $this->pObj->objSqlMan->get_query_array( $this );
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( 'after $this->pObj->objSqlMan->get_query_array( )' );
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlMan->get_query_array( )' );
     }
       // SQL with manual configuration
 
@@ -253,7 +253,7 @@ class tx_browser_pi1_viewlist
     {
       $arr_result = $this->pObj->objSqlAut->get_query_array( );
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( 'after $this->pObj->objSqlAut->get_query_array( )' );
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlAut->get_query_array( )' );
     }
       // SQL with autmatically configuration
 
@@ -325,13 +325,13 @@ class tx_browser_pi1_viewlist
     }
 
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'before $GLOBALS[TYPO3_DB]->sql_query( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'before $GLOBALS[TYPO3_DB]->sql_query( )' );
     $tt_start = $this->pObj->tt_prevEndTime;
     $res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
     $error = $GLOBALS['TYPO3_DB']->sql_error( );
 
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after $GLOBALS[TYPO3_DB]->sql_query( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $GLOBALS[TYPO3_DB]->sql_query( )' );
     $this->pObj->timeTracking_prompt( $query );
     $tt_end = $this->pObj->tt_prevEndTime;
 if( $this->pObj->bool_accessByIP )
@@ -457,7 +457,7 @@ if( $this->pObj->bool_accessByIP )
               t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
             }
               // Prompt the expired time to devlog
-            $this->pObj->timeTracking_log( 'after $GLOBALS[TYPO3_DB]->sql_query( )' );
+            $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $GLOBALS[TYPO3_DB]->sql_query( )' );
               // DRS - Development Reporting System
           }
 
@@ -543,7 +543,7 @@ if( $this->pObj->bool_accessByIP )
         $i_row++;
       }
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( 'after: We have aliases.' );
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after: We have aliases.' );
         // Yes, we have aliases.
     }
     if( ! is_array( $arr_table_realnames ) )
@@ -554,7 +554,7 @@ if( $this->pObj->bool_accessByIP )
         $rows[] = $row;
       }
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( 'after: We haven\'t aliases.' );
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after: We haven\'t aliases.' );
     }
     $this->pObj->rows = $rows;
       // Do we have aliases?
@@ -562,7 +562,7 @@ if( $this->pObj->bool_accessByIP )
       // SQL Free Result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after building rows.' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after building rows.' );
       // Building $rows
 
 
@@ -576,7 +576,7 @@ if( $this->pObj->bool_accessByIP )
     unset( $arr_result );
     $this->pObj->rows = $rows;
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after $this->pObj->objSqlFun->rows_with_synonyms( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun->rows_with_synonyms( )' );
       // Process synonyms if rows have synonyms
 
 
@@ -590,7 +590,7 @@ if( $this->pObj->bool_accessByIP )
       $rows = $this->pObj->objLocalise->consolidate_rows( $rows, $this->pObj->localTable );
       $this->pObj->rows = $rows;
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( 'after $this->pObj->objLocalise->consolidate_rows( )' );
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objLocalise->consolidate_rows( )' );
     }
     if( $this->pObj->b_sql_manual && $this->pObj->b_drs_localisation )
     {
@@ -614,7 +614,7 @@ if( $this->pObj->bool_accessByIP )
       unset($arr_result);
       $this->pObj->rows = $rows;
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( 'after $this->pObj->objConsolidate->consolidate( )' );
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objConsolidate->consolidate( )' );
     }
     if( $this->pObj->b_sql_manual && $this->pObj->b_drs_localisation )
     {
@@ -675,7 +675,7 @@ if( $this->pObj->bool_accessByIP )
       }
     }
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after hook rows_filter_values' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after hook rows_filter_values' );
       // DRS - Development Reporting System
       // Any foreign extension is using this hook
 
@@ -694,7 +694,7 @@ if( $this->pObj->bool_accessByIP )
       $this->pObj->objMultisort->multisort_rows( );
       $rows = $this->pObj->rows;
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( 'after $this->pObj->objMultisort->multisort_rows( )' );
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objMultisort->multisort_rows( )' );
     }
       // Ordering the rows
 
@@ -707,7 +707,7 @@ if( $this->pObj->bool_accessByIP )
       // 13803, dwildt, 110312
     $rows = $this->pObj->objMultisort->multisort_mm_children( $rows );
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after $this->pObj->objMultisort->multisort_mm_children( $rows )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objMultisort->multisort_mm_children( $rows )' );
       // 120127, dwildt+
     $this->pObj->rows = $rows;
       // Ordering the children
@@ -747,7 +747,7 @@ if( $this->pObj->bool_accessByIP )
         t3lib_div::devlog( '[INFO/SQL] Result should ordered hierarchical.',  $this->pObj->extKey, 0 );
       }
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( 'after $this->pObj->objSqlFun->make_hierarchical( $rows )' );
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun->make_hierarchical( $rows )' );
     }
       // Order and edit the rows hierarchical
 
@@ -794,7 +794,7 @@ if( $this->pObj->bool_accessByIP )
       // 120127, dwildt+
     unset( $arr_result );
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after $this->pObj->objFilter->filter( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objFilter->filter( )' );
       // Filter - part II/II - HTML code / template
 
 
@@ -809,7 +809,7 @@ if( $this->pObj->bool_accessByIP )
       // 110801, dwildt
     $this->pObj->rows = $rows;
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after $this->pObj->objSqlFun->rows_with_cleaned_up_fields( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun->rows_with_cleaned_up_fields( )' );
       // Clean up: Delete rows, we don't want to display
 
 
@@ -869,7 +869,7 @@ if( $this->pObj->bool_accessByIP )
 //      }
     }
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after hook browser_list' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after hook browser_list' );
       // Hook for override the SQL result for for the list view
 
 
@@ -930,7 +930,7 @@ if( $this->pObj->bool_accessByIP )
       t3lib_div::devLog('[HELP/DRS] If you want to configure the field list, please use views.'.$viewWiDot.$mode.'.csvLinkToSingleView.', $this->pObj->extKey, 1);
     }
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after Prepaire array with links to single view' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after Prepaire array with links to single view' );
       // Prepaire array with links to single view
 
 
@@ -1053,7 +1053,7 @@ if( $this->pObj->bool_accessByIP )
     $bool_display = $this->pObj->objFlexform->bool_searchForm && $this->pObj->segment['searchform'];
     $template     = $this->pObj->objTemplate->tmplSearchBox( $template, $bool_display );
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after $this->pObj->objTemplate->tmplSearchBox( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objTemplate->tmplSearchBox( )' );
       // HTML search form
 
 
@@ -1081,7 +1081,7 @@ if( $this->pObj->bool_accessByIP )
     }
     $this->pObj->rows = $rows;
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after $this->pObj->objCal->cal( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objCal->cal( )' );
       // Extension pi5: +Browser Calendar
 
 
@@ -1109,7 +1109,7 @@ if( $this->pObj->bool_accessByIP )
     $this->pObj->rows = $rows;
     unset($arr_result);
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after $this->pObj->objNavi->azBrowser( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objNavi->azBrowser( )' );
       // HTML a-z-browser
 
 
@@ -1125,7 +1125,7 @@ if( $this->pObj->bool_accessByIP )
       return $this->pObj->pi_wrapInBaseClass( $prompt );
     }
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after $this->pObj->objNavi->recordbrowser_set_session_data( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objNavi->recordbrowser_set_session_data( )' );
       // record browser
 
 
@@ -1147,7 +1147,7 @@ if( $this->pObj->bool_accessByIP )
     $this->pObj->rows = $rows;
     unset($arr_result);
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after $this->pObj->objNavi->tmplPageBrowser( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objNavi->tmplPageBrowser( )' );
       // HTML page browser
 
       // HTML mode selector
@@ -1156,7 +1156,7 @@ if( $this->pObj->bool_accessByIP )
     $template = $this->pObj->objNavi->tmplModeSelector( $arr_data );
     unset($arr_data);
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after $this->pObj->objNavi->tmplModeSelector( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objNavi->tmplModeSelector( )' );
       // HTML mode selector
       // Building the template
 
@@ -1199,7 +1199,7 @@ if( $this->pObj->bool_accessByIP )
         }
       }
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( 'after: in case of a limit' );
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after: in case of a limit' );
         // DRS - Development Reporting System
     }
     if( ! isset( $conf_view['limit'] ) )
@@ -1220,7 +1220,7 @@ if( $this->pObj->bool_accessByIP )
 
     $template = $this->pObj->objTemplate->tmplListview($template, $rows);
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 'after $this->pObj->objTemplate->tmplListview( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objTemplate->tmplListview( )' );
       // HTML records
 
 
