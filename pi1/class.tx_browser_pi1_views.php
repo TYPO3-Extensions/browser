@@ -578,6 +578,7 @@ class tx_browser_pi1_views
       $this->pObj->log_timeTracking( 'after $this->pObj->objLocalise->consolidate_rows( )' );
     }
     if( $this->pObj->b_sql_manual && $this->pObj->b_drs_localisation )
+    {
       $prompt = 'Manual SQL mode: Rows didn\'t get any localisation consolidation.';
       t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
     }
