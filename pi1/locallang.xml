@@ -125,6 +125,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
         Bitte konfiguriere: plugin.tx_browser_pi1.views.list<![CDATA[<br />]]>
         <![CDATA[<br />]]>
         Browser - die TYPO3-Frontend-Engine.
+      </label>
       <label index="error_views_noview"><![CDATA[Pardon, es ist keine Ansicht (view) konfiguriert.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
       <label index="error_views_single_noview">Pardon, es ist keine Detailansicht konfiguriert.</label>
       <label index="warn_sql_h1">SQL Warnung</label>
