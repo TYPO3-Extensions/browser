@@ -655,6 +655,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           // DRS
 
           // dwildt, 111106, +
+        $outputEntries[] = $str_outputEntry;
       }
         // LOOP: filesData
         // render the list
