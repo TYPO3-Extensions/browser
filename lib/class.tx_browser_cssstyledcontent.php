@@ -128,13 +128,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     }
       // Enable the DRS by TypoScript
 
-      // DRS
-    if ( $this->b_drs_renderuploads )
-    {
-      $prompt = 'render_uploads( ) start';
-      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
-    }
-      // DRS
+//      // DRS
+//    if ( $this->b_drs_renderuploads )
+//    {
+//      $prompt = 'render_uploads( ) start';
+//      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+//    }
+//      // DRS
 
 
       //////////////////////////////////////////////////////////////////////////
@@ -168,13 +168,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
                                                         )
                                                       );
     }
-      // DRS
-    if ( $this->b_drs_renderuploads )
-    {
-      $prompt = '$bool_currLangOnly: \'' . $bool_currLangOnly . '\'';
-      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
-    }
-      // DRS
+//      // DRS
+//    if ( $this->b_drs_renderuploads )
+//    {
+//      $prompt = '$bool_currLangOnly: \'' . $bool_currLangOnly . '\'';
+//      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+//    }
+//      // DRS
       // Link the file for the current language only (default)?
 
 
@@ -645,7 +645,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
                       See userFunc.drs.
                       Maybe the TypoScript property itemRendering is overriden by another extension.
                      </div>';
-          $str_outputEntry = $ptompt;
+          $str_outputEntry = $prompt;
             // DRS
         }
           // 120215, dwildt+
