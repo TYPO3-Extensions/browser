@@ -605,35 +605,56 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
         $coa_name         = $splitConf[$key]['itemRendering'];
 
-          // DRS
-// COA; array ( 'wrap' => '<div class="csc-uploads-thumbnail csc-uploads-thumbnail-last">|</div>', 10 => 'TEXT', '10.' => array ( 'data' => 'register:linkedIcon', ), )
-        if ( $this->b_drs_renderuploads )
-        {
-          $prompt = $coa_name . '; ' . var_export( $coa_conf_itemRendering, true );
-          t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
-        }
-          // DRS
-
         $str_outputEntry  = $this->cObj->cObjGetSingle
                             (
                               $coa_name,
                               $coa_conf_itemRendering
                             );
-        if ( $this->b_drs_renderuploads )
+
+          // Error management
+          // 120215, dwildt+
+        if( empty( $str_outputEntry ) )
         {
-          $prompt = $str_outputEntry;
-          t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+            // DRS
+          if ( $this->b_drs_renderuploads )
+          {
+            $prompt = 'Result is empty.';
+            t3lib_div::devlog( '[ERROR] ' . $prompt, $this->extKey, 3 );
+            switch( true )
+            {
+              case( empty ( $coa_name ) ):
+                $prompt = 'Unproper TypoScript property: itemRendering =';
+                t3lib_div::devlog( '[ERROR] ' . $prompt, $this->extKey, 3 );
+                $prompt = 'A proper TypoScript property would be: itemRendering = COA';
+                t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+                $prompt = 'Please check the property itemRendering. Maybe it is overwritten by another extension.';
+                t3lib_div::devlog( '[HELP] ' . $prompt, $this->extKey, 1 );
+                break;
+              case( ! ( $coa_name == 'COA' ) ):
+                $prompt = 'Maybe this TypoScript property is unproper: itemRendering = ' . $coa_name;
+                t3lib_div::devlog( '[ERROR] ' . $prompt, $this->extKey, 2 );
+                $prompt = 'A proper TypoScript property would be: itemRendering = COA';
+                t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+                $prompt = 'Please check the property itemRendering. Maybe it is overwritten by another extension.';
+                t3lib_div::devlog( '[HELP] ' . $prompt, $this->extKey, 1 );
+                break;
+            }
+          }
+          $prompt = '<div style="background:red;color:white;padding:.2em;font-weight:bold;">
+                      Item rendering failed. Please enable the DRS by TypoScript and investigate the logs!
+                      Maybe the TypoScript property itemRendering is overriden by another extension.
+                     </div>';
+          $str_outputEntry = $ptompt;
+            // DRS
         }
-        $outputEntries[]  = $str_outputEntry;
-// dwildt, 111106, +
+          // 120215, dwildt+
+          // Error management
+          // DRS
+// COA; array ( 'wrap' => '<div class="csc-uploads-thumbnail csc-uploads-thumbnail-last">|</div>', 10 => 'TEXT', '10.' => array ( 'data' => 'register:linkedIcon', ), )
+          // DRS
+
+          // dwildt, 111106, +
       }
-        // DRS
-      if ( $this->b_drs_renderuploads )
-      {
-        $prompt = implode( '; ', $outputEntries);
-        t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
-      }
-        // DRS
         // LOOP: filesData
         // render the list
 
@@ -662,16 +683,22 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $out = $this->cObj->stdWrap($out, $conf['stdWrap.']);
     }
 
-        // Return the result
-      // DRS
-    if ( $this->b_drs_renderuploads )
+      // Error management
+      // 120215, dwildt+
+    if( empty( $out ) )
     {
-      $prompt = 'out: ' . $out;
-      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
-      $prompt = 'render_uploads_per_language( ) end';
-      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+        // DRS
+      if ( $this->b_drs_renderuploads )
+      {
+        $prompt = 'Result is empty. This is an error probably.';
+        t3lib_div::devlog( '[ERROR] ' . $prompt, $this->extKey, 3 );
+      }
+        // DRS
     }
-      // DRS
+      // 120215, dwildt+
+      // Error management
+
+      // Return the result
     return $out;
   }
 
