@@ -43,7 +43,7 @@ require_once(PATH_site . 'typo3/sysext/css_styled_content/pi1/class.tx_cssstyled
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
 * @subpackage    browser
-* @version 3.9.3
+* @version 3.9.8
 * @since 3.6.4
 */
 
@@ -97,7 +97,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   * @param	array		TypoScript configuration
   * @return	string		HTML output.
   * @access public
-  * @version 3.9.3
+  * @version 3.9.8
   * @since 3.9.3
   */
   public function render_uploads( $content, $conf )
@@ -128,6 +128,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     }
       // Enable the DRS by TypoScript
 
+      // DRS
+    if ( $this->b_drs_renderuploads )
+    {
+      $prompt = 'render_uploads( ) start';
+      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
 
 
       //////////////////////////////////////////////////////////////////////////
@@ -161,6 +168,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
                                                         )
                                                       );
     }
+      // DRS
+    if ( $this->b_drs_renderuploads )
+    {
+      $prompt = '$bool_currLangOnly: \'' . $bool_currLangOnly . '\'';
+      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
       // Link the file for the current language only (default)?
 
 
@@ -382,6 +396,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   */
   private function render_uploads_per_language( $content, $conf )
   {
+      // DRS
+    if ( $this->b_drs_renderuploads )
+    {
+      $prompt = 'render_uploads_per_language( ) start';
+      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
 
       // the result
     $out = '';
@@ -422,7 +443,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     }
 
       // explode into an array
-    $fileArray = t3lib_div::trimExplode(',',$fileList,1);
+    $fileArray = t3lib_div::trimExplode( ',', $fileList, 1 );
 
       // there are files to list ...
     if (count($fileArray))
@@ -463,9 +484,30 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       {
         $absPath = t3lib_div::getFileAbsFileName($path.$fileName);
 
+          // DRS
+        if ( $this->b_drs_renderuploads )
+        {
+          $prompt = $absPath;
+          t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+          if ( ! @is_file($absPath))
+          {
+            $prompt = 'Is no file';
+            t3lib_div::devlog( '[ERROR] ' . $prompt, $this->extKey, 3 );
+          }
+        }
+          // DRS
+
           // file is a file
         if (@is_file($absPath))
         {
+            // DRS
+          if ( $this->b_drs_renderuploads )
+          {
+            $prompt = 'File does exist.';
+            t3lib_div::devlog( '[OK] ' . $prompt, $this->extKey, -1 );
+          }
+            // DRS
+
           $path_info = pathinfo($fileName);
           $filesData[$key] = array();
 
@@ -562,6 +604,15 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           // Replace the marker in the TypoScript recursively
 
         $coa_name         = $splitConf[$key]['itemRendering'];
+
+          // DRS
+        if ( $this->b_drs_renderuploads )
+        {
+          $prompt = $coa_name . '; ' . var_export( $coa_conf_itemRendering, true );
+          t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+        }
+          // DRS
+
         $str_outputEntry  = $this->cObj->cObjGetSingle
                             (
                               $coa_name,
@@ -570,6 +621,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $outputEntries[]  = $str_outputEntry;
 // dwildt, 111106, +
       }
+        // DRS
+      if ( $this->b_drs_renderuploads )
+      {
+        $prompt = implode( '; ', $outputEntries);
+        t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+      }
+        // DRS
         // LOOP: filesData
         // render the list
 
@@ -599,6 +657,15 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     }
 
         // Return the result
+      // DRS
+    if ( $this->b_drs_renderuploads )
+    {
+      $prompt = 'out: ' . $out;
+      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+      $prompt = 'render_uploads_per_language( ) end';
+      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
     return $out;
   }
 
@@ -792,13 +859,14 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
  */
   private function helper_init_drs( )
   {
-    $this->b_drs_error        = true;
-    $this->b_drs_warn         = true;
-    $this->b_drs_info         = true;
-    $this->b_drs_download     = true;
-    $this->b_drs_localisation = true;
-    $this->b_drs_sql          = true;
-    $this->b_drs_statistics   = true;
+    $this->b_drs_error          = true;
+    $this->b_drs_warn           = true;
+    $this->b_drs_info           = true;
+    $this->b_drs_download       = true;
+    $this->b_drs_localisation   = true;
+    $this->b_drs_renderuploads  = true;
+    $this->b_drs_sql            = true;
+    $this->b_drs_statistics     = true;
     $prompt_01 = 'The DRS - Development Reporting System is enabled by TypoScript.';
     $prompt_02 = 'Change it: Please look for userFunc = tx_browser_cssstyledcontent->render_uploads and for userFunc.drs.';
     t3lib_div::devlog('[INFO/DRS] ' . $prompt_01, $this->extKey, 0);
