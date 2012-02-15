@@ -396,12 +396,12 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   */
   private function render_uploads_per_language( $content, $conf )
   {
-      // DRS
-    if ( $this->b_drs_renderuploads )
-    {
-      $prompt = 'render_uploads_per_language( ) start';
-      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
-    }
+//      // DRS
+//    if ( $this->b_drs_renderuploads )
+//    {
+//      $prompt = 'render_uploads_per_language( ) start';
+//      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+//    }
       // DRS
 
       // the result
@@ -606,6 +606,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $coa_name         = $splitConf[$key]['itemRendering'];
 
           // DRS
+// COA; array ( 'wrap' => '<div class="csc-uploads-thumbnail csc-uploads-thumbnail-last">|</div>', 10 => 'TEXT', '10.' => array ( 'data' => 'register:linkedIcon', ), )
         if ( $this->b_drs_renderuploads )
         {
           $prompt = $coa_name . '; ' . var_export( $coa_conf_itemRendering, true );
@@ -618,6 +619,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
                               $coa_name,
                               $coa_conf_itemRendering
                             );
+        if ( $this->b_drs_renderuploads )
+        {
+          $prompt = $str_outputEntry;
+          t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+        }
         $outputEntries[]  = $str_outputEntry;
 // dwildt, 111106, +
       }
