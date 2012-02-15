@@ -640,7 +640,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
                 break;
             }
           }
-          $prompt = '<div style="background:red;color:white;padding:.2em;font-weight:bold;font-size:8px;">
+          $prompt = '<div style="background:red;color:white;padding:.2em;font-weight:bold;font-size:8pt;">
                       Item rendering failed. Please enable the DRS by TypoScript and investigate the logs!
                       See userFunc.drs.
                       Maybe the TypoScript property itemRendering is overriden by another extension.<br />
