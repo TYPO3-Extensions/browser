@@ -642,6 +642,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           }
           $prompt = '<div style="background:red;color:white;padding:.2em;font-weight:bold;">
                       Item rendering failed. Please enable the DRS by TypoScript and investigate the logs!
+                      See userFunc.drs.
                       Maybe the TypoScript property itemRendering is overriden by another extension.
                      </div>';
           $str_outputEntry = $ptompt;
