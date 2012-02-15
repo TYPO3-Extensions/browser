@@ -640,10 +640,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
                 break;
             }
           }
-          $prompt = '<div style="background:red;color:white;padding:.2em;font-weight:bold;">
+          $prompt = '<div style="background:red;color:white;padding:.2em;font-weight:bold;font-size:8px;">
                       Item rendering failed. Please enable the DRS by TypoScript and investigate the logs!
                       See userFunc.drs.
-                      Maybe the TypoScript property itemRendering is overriden by another extension.
+                      Maybe the TypoScript property itemRendering is overriden by another extension.<br />
+                      Browser - the TYPO3 frontend engine
                      </div>';
           $str_outputEntry = $prompt;
             // DRS
