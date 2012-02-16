@@ -597,10 +597,6 @@ class tx_browser_pi1_viewlist
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objFilter->filter( )' );
       // Count hits, filter rows, update template
       // Filter - part II/II - HTML code / template
-if( $this->pObj->bool_accessByIP )
-{
-  var_dump( __METHOD__ . ' (' . __LINE__ . ')', $template );
-}
 
 
 
@@ -1011,7 +1007,7 @@ if( $this->pObj->bool_accessByIP )
     }
     if( ! is_array( $this->conf_view['displayList.'] ) )
     {
-      $this->pObj->lDisplayList = $conf['displayList.'];
+      $this->pObj->lDisplayList = $this->conf['displayList.'];
     }
       // Get the local or global displayList
 
@@ -1024,7 +1020,7 @@ if( $this->pObj->bool_accessByIP )
     }
     if( ! is_array( $this->conf_view['displayList.']['display.'] ) )
     {
-      $this->pObj->lDisplay = $conf['displayList.']['display.'];
+      $this->pObj->lDisplay = $this->conf['displayList.']['display.'];
     }
       // Get the local or global displayList.display
   }
