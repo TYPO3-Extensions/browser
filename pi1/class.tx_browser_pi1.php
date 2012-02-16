@@ -911,7 +911,7 @@ class tx_browser_pi1 extends tslib_pibase {
         // typeNum name isn't map: Follow the workflow
     }
       // #32654, 120212, dwildt+
-if( $this->pObj->bool_accessByIP )
+if( $this->bool_accessByIP )
 {
   var_dump( __METHOD__ . ' (' . __LINE__ . ')', $str_template_completed );
 }
