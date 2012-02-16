@@ -644,7 +644,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
                       Item rendering failed. Please enable the DRS by TypoScript and investigate the logs!
                       See userFunc.drs.
                       Maybe the TypoScript property itemRendering is overriden by another extension.<br />
-                      Browser - the TYPO3 frontend engine
+                      Browser - the TYPO3 frontend engine<br />
+                      ' . __METHOD__ . ' (' . __LINE__ . ')
                      </div>';
           $str_outputEntry = $prompt;
             // DRS

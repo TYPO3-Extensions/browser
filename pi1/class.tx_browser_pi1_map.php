@@ -295,10 +295,7 @@ class tx_browser_pi1_map
 
       // Get the typeNum from the current URL parameters
     $typeNum = (int) t3lib_div::_GP( 'type' );
-if( $this->pObj->bool_accessByIP )
-{
-  var_dump( __METHOD__ . ' (' . __LINE__ . ')', $typeNum, $conf['export.']['map.']['page.']['typeNum'] );
-}
+
       // Check the proper typeNum
     $conf = $this->pObj->conf;
     switch (true)

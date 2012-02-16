@@ -752,43 +752,61 @@ class tx_browser_pi1_viewlist
       // Building the template
 
       // HTML template subpart
-if( $this->pObj->bool_accessByIP )
-{
-  var_dump( __METHOD__ . ' (' . __LINE__ . ')', $template );
-}
     $template = $this->pObj->cObj->getSubpart( $template, $str_marker );
-if( $this->pObj->bool_accessByIP )
-{
-  var_dump( __METHOD__ . ' (' . __LINE__ . ')', $template );
-}
 
 
 
-    if( $str_marker == '###TEMPLATE_CSV###' )
+    if( empty( $str_marker ) )
     {
-      if( empty( $template ) )
-      {
-        $prompt = '<div style="border:2em solid red;color:red;padding:2em;text-align:center;">
-            <h1>
-              TYPO3 Browser Error
-            </h1>
-            <h2>
-              EN: Subpart is missing
-            </h2>
-            <p>
-              English: Current HTML template doesn\'t contain the subpart ###TEMPLATE_CSV###.<br />
-              Please take care of a proper template.<br />
-            </p>
-            <h2>
-              DE: Subpart fehlt
-            </h2>
-            <p>
-              Deutsch: Dem aktuellen HTML-Template fehlt der Subpart ###TEMPLATE_CSV###.<br />
-              Bitte k&uuml;mmere Dich um ein korrektes Template.<br />
-            </p>
-          </div>';
-        die( $prompt );
-      }
+      $prompt = '<div style="border:2em solid red;color:red;padding:2em;text-align:center;">
+          <h1>
+            TYPO3 Browser Error
+          </h1>
+          <h2>
+            EN: Subpart marker is empty
+          </h2>
+          <p>
+            English: subpart marker is empty.<br />
+            Please take care of a proper TypoScript.<br />
+          </p>
+          <h2>
+            DE: Subpartmarker fehlt
+          </h2>
+          <p>
+            Deutsch: der Subpartmarker ist leer.<br />
+            Bitte k&uuml;mmere Dich um ein korrektes TypoScript.<br />
+          </p>
+          <p>
+            ' . __METHOD__ . ' (' . __LINE__ . ')
+          </p>
+        </div>';
+      die( $prompt );
+    }
+    if( empty( $template ) )
+    {
+      $prompt = '<div style="border:2em solid red;color:red;padding:2em;text-align:center;">
+          <h1>
+            TYPO3 Browser Error
+          </h1>
+          <h2>
+            EN: Subpart is missing
+          </h2>
+          <p>
+            English: Current HTML template doesn\'t contain the subpart \'' . $str_marker . '\' .<br />
+            Please take care of a proper template.<br />
+          </p>
+          <h2>
+            DE: Subpart fehlt
+          </h2>
+          <p>
+            Deutsch: Dem aktuellen HTML-Template fehlt der Subpart \'' . $str_marker . '\'.<br />
+            Bitte k&uuml;mmere Dich um ein korrektes Template.<br />
+          </p>
+          <p>
+            ' . __METHOD__ . ' (' . __LINE__ . ')
+          </p>
+        </div>';
+      die( $prompt );
     }
 
 
