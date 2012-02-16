@@ -962,6 +962,10 @@ class tx_browser_pi1_viewlist
       // HTML records
 
 
+if( $this->pObj->bool_accessByIP )
+{
+  var_dump( __METHOD__ . ' (' . __LINE__ . ')', $template );
+}
 
     return $template;
   }
