@@ -601,6 +601,10 @@ if( $this->pObj->bool_accessByIP )
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objFilter->filter( )' );
       // Count hits, filter rows, update template
       // Filter - part II/II - HTML code / template
+if( $this->pObj->bool_accessByIP )
+{
+  var_dump( __METHOD__ . ' (' . __LINE__ . ')', $template );
+}
 
 
 
@@ -757,6 +761,10 @@ if( $this->pObj->bool_accessByIP )
 
       // HTML template subpart
     $template = $this->pObj->cObj->getSubpart( $template, $str_marker );
+if( $this->pObj->bool_accessByIP )
+{
+  var_dump( __METHOD__ . ' (' . __LINE__ . ')', $template );
+}
 
 
 
@@ -853,6 +861,10 @@ if( $this->pObj->bool_accessByIP )
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objNavi->azBrowser( )' );
       // HTML a-z-browser
+if( $this->pObj->bool_accessByIP )
+{
+  var_dump( __METHOD__ . ' (' . __LINE__ . ')', $template );
+}
 
 
 
