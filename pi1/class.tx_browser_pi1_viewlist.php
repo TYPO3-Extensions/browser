@@ -151,10 +151,6 @@ class tx_browser_pi1_viewlist
 
       // HTML content of the current template
     $template = $this->pObj->str_template_raw;
-if( $this->pObj->bool_accessByIP )
-{
-  var_dump( __METHOD__ . ' (' . __LINE__ . ')', $template );
-}
 
       //Overwrite general_stdWrap, set globals $lDisplayList and $lDisplay
     $this->init( );
@@ -760,6 +756,10 @@ if( $this->pObj->bool_accessByIP )
       // Building the template
 
       // HTML template subpart
+if( $this->pObj->bool_accessByIP )
+{
+  var_dump( __METHOD__ . ' (' . __LINE__ . ')', $template );
+}
     $template = $this->pObj->cObj->getSubpart( $template, $str_marker );
 if( $this->pObj->bool_accessByIP )
 {
@@ -861,10 +861,6 @@ if( $this->pObj->bool_accessByIP )
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objNavi->azBrowser( )' );
       // HTML a-z-browser
-if( $this->pObj->bool_accessByIP )
-{
-  var_dump( __METHOD__ . ' (' . __LINE__ . ')', $template );
-}
 
 
 
@@ -978,10 +974,6 @@ if( $this->pObj->bool_accessByIP )
       // HTML records
 
 
-if( $this->pObj->bool_accessByIP )
-{
-  var_dump( __METHOD__ . ' (' . __LINE__ . ')', $template );
-}
 
     return $template;
   }
