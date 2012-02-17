@@ -455,6 +455,8 @@ class tx_browser_pi1 extends tslib_pibase {
           {
             $prompt = 'SQL engine 4.x is enabled. But current IP doesn\'t match list of allowed IPs!';
             t3lib_div::devLog('[WARN/SQL] ' . $prompt, $this->extKey, 2);
+            $prompt = 'SQL engine 3.x is used';
+            t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
           }
           break;
         }
