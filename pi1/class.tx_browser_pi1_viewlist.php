@@ -128,7 +128,7 @@ class tx_browser_pi1_viewlist
     switch( $this->pObj->dev_sqlEngine )
     {
       case( 4 ):
-        return $his->main4x( );
+        return $this->main_4x( );
         break;
       case( 3 ):
       default:
@@ -1033,13 +1033,13 @@ class tx_browser_pi1_viewlist
 
 
   /**
- * main4x( ): Display a search form, a-z-Browser, pageBrowser and a list of records
+ * main_4x( ): Display a search form, a-z-Browser, pageBrowser and a list of records
  *
  * @return	string  $template : The processed HTML template
  * @version 3.9.8
  * @since 3.9.8
  */
-  function main4x( )
+  function main_4x( )
   {
     $arr_result = $this->pObj->objSqlQry->res_listview_rows( );
     if( $arr_result['error']['status'] )
