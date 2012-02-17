@@ -32,7 +32,7 @@
 * @since  2.0.0
 *
 * @package    TYPO3
-* @subpackage    tx_browser
+* @subpackage  browser
 */
 
 /**

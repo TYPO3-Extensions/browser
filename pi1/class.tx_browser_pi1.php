@@ -58,7 +58,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  *
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
- * @subpackage    tx_browser
+ * @subpackage  browser
  *
  * @version 3.9.8
  * @since 0.0.1
@@ -349,6 +349,8 @@ class tx_browser_pi1 extends tslib_pibase {
     //
     // Development
 
+    // [Integer] Version of the SQL engine: 3 or 4
+  var $dev_sqlEngine  = null;
     // [Boolean] True: current IP is element of list with allowed IPs; false: it isn't
   var $bool_accessByIP = null;
     // Use cache: FALSE || TRUE; If you develope this extension, it can be helpfull to set this var on FALSE (no cache)
@@ -436,6 +438,28 @@ class tx_browser_pi1 extends tslib_pibase {
     }
       // Update check is enabled
       // Init Update Check
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Init SQL engine
+
+    switch( $this->arr_extConf['sqlEngine'] )
+    {
+      case( 'SQL engine 4.x (development only!)' ):
+        $this->dev_sqlEngine = 4;
+        if ($this->b_drs_sql)
+        {
+          $prompt = 'SQL engine 4.x is enabled. This if for development only!';
+          t3lib_div::devLog('[WARN/SQL] ' . $prompt, $this->extKey, 2);
+        }
+        break;
+      case( 'SQL engine 3.x (recommended)' ):
+      default:
+        $this->dev_sqlEngine = 3;
+    }
+      // Init SQL engine
 
 
 
@@ -1439,6 +1463,10 @@ class tx_browser_pi1 extends tslib_pibase {
     require_once('class.tx_browser_pi1_sql_manual.php');
     $this->objSqlMan = new tx_browser_pi1_sql_manual($this);
 
+      // Class with sql methods for SQL querying
+    require_once('class.tx_browser_pi1_sql_query.php');
+    $this->objSqlQry = new tx_browser_pi1_sql_query($this);
+
       // Class with methods for statistics requirement
     require_once('class.tx_browser_pi1_statistics.php');
     $this->objStat = new tx_browser_pi1_statistics($this);
@@ -1542,6 +1570,23 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objSession->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
       // [String] TypoScript path to the current view. I.e. views.single.1
     $this->objSession->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_sql_query.php
+
+      // [Array] The current TypoScript configuration array
+    $this->objSqlQry->conf      = $this->conf;
+      // [Integer] The current mode (from modeselector)
+    $this->objSqlQry->mode      = $this->piVar_mode;
+      // [String] 'list' or 'single': The current view
+    $this->objSqlQry->view      = $this->view;
+      // [Array] The TypoScript configuration array of the current view
+    $this->objSqlQry->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+      // [String] TypoScript path to the current view. I.e. views.single.1
+    $this->objSqlQry->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
 
 
 

@@ -31,7 +31,7 @@
 * @version  3.6.1
 *
 * @package    TYPO3
-* @subpackage    tx_browser
+* @subpackage  browser
 */
 
 /**

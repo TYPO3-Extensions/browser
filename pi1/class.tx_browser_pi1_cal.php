@@ -28,7 +28,7 @@
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
-* @subpackage    tx_browser
+* @subpackage  browser
 *
 * @version 3.9.3
 * @since 3.6.0

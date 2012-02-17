@@ -42,7 +42,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  *
  * @author    Dirk Wildt <wildt@die-netzmacher.de>
  * @package    TYPO3
- * @subpackage    tx_browser
+ * @subpackage  browser
  */
 class tx_browser_pi3 extends tslib_pibase
 {

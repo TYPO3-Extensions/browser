@@ -27,7 +27,7 @@
  *
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
- * @subpackage    tx_browser
+ * @subpackage  browser
  * @version 3.9.8
  * @since 1.0
  */
@@ -161,7 +161,6 @@ class tx_browser_pi1_viewlist
       //
       // Filter - part I/II: SQL andWhere statement
 
-      // 3.5.0
       // #30912, 120127, dwildt-
 //    $arr_andWhereFilter = $this->pObj->objFilter->andWhere_filter();
 //    if ( ! empty( $arr_andWhereFilter ) )
@@ -177,15 +176,34 @@ class tx_browser_pi1_viewlist
 
 
 
-      // SQL build the query and execute it
-    $arr_result = $this->sql( );
-    if( $arr_result['error']['status'] )
+      // DEVELOPMENT: SQL engine 4.x
+    switch( $this->pObj->dev_sqlEngine )
     {
-      $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
-      return $template;
+      case( 4 ):
+        $arr_result = $this->pObj->objSqlQry->res_listview_rows( );
+        if( $arr_result['error']['status'] )
+        {
+          $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+          return $template;
+        }
+        $res = $this->res;
+        break;
+      case( 3 ):
+      default:
+          // SQL build the query and execute it
+        $arr_result = $this->sql( );
+        if( $arr_result['error']['status'] )
+        {
+          $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+          return $template;
+        }
+        $res = $this->res;
+          // SQL build the query and execute it
+        break;
     }
-    $res = $this->res;
-      // SQL build the query and execute it
+      // DEVELOPMENT: SQL engine 4.x
+
+
 
 
 
@@ -1119,7 +1137,7 @@ class tx_browser_pi1_viewlist
 
 
   /**
- * sql( ):
+ * sql( ): Building the SQL query
  *
  * @return	array
  * @version 3.9.8
@@ -1130,7 +1148,7 @@ class tx_browser_pi1_viewlist
     $conf_view = $this->conf_view;
 
     
-      // Set global SQL values
+      // Set the globals csvSelect, csvOrderBy and arrLocalTable
     $arr_result = $this->pObj->objSqlFun->global_all( );
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun->global_all( )' );

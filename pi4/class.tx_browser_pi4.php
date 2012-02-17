@@ -73,7 +73,7 @@ if(!file_exists(PATH_typo3conf.$path_to_browser))
  *
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
- * @subpackage    tx_browser
+ * @subpackage  browser
  */
 
 /**
