@@ -427,7 +427,7 @@ class tx_browser_pi1 extends tslib_pibase {
     if( $this->arr_extConf['updateWizardEnable'] )
     {
         // Current IP has access
-      if( $bool_accessByIP )
+      if( $this->bool_accessByIP )
       {
         require_once(PATH_typo3conf . 'ext/' . $this->extKey . '/pi2/class.tx_browser_pi2.php' );
           // Class with methods for Update Checking
@@ -448,11 +448,21 @@ class tx_browser_pi1 extends tslib_pibase {
     switch( $this->arr_extConf['sqlEngine'] )
     {
       case( 'SQL engine 4.x (development only!)' ):
+        if( ! $this->bool_accessByIP )
+        {
+          $this->dev_sqlEngine = 3;
+          if ($this->b_drs_sql)
+          {
+            $prompt = 'SQL engine 4.x is enabled. But current IP doesn\'t match list of allowed IPs!';
+            t3lib_div::devLog('[WARN/SQL] ' . $prompt, $this->extKey, 2);
+          }
+          break;
+        }
         $this->dev_sqlEngine = 4;
         if ($this->b_drs_sql)
         {
           $prompt = 'SQL engine 4.x is enabled. This if for development only!';
-          t3lib_div::devLog('[WARN/SQL] ' . $prompt, $this->extKey, 2);
+          t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
         }
         break;
       case( 'SQL engine 3.x (recommended)' ):
