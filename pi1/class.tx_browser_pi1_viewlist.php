@@ -124,6 +124,50 @@ class tx_browser_pi1_viewlist
  */
   function main( )
   {
+      // DEVELOPMENT: SQL engine 4.x
+    switch( $this->pObj->dev_sqlEngine )
+    {
+      case( 4 ):
+        return $his->main_4x( );
+        break;
+      case( 3 ):
+      default:
+          // Follow the workflow
+        break;
+    }
+      // DEVELOPMENT: SQL engine 4.x
+
+
+
+      // DEVELOPMENT: SQL engine 4.x
+    switch( $this->pObj->dev_sqlEngine )
+    {
+      case( 4 ):
+        $arr_result = $this->pObj->objSqlQry->res_listview_rows( );
+        if( $arr_result['error']['status'] )
+        {
+          $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+          return $template;
+        }
+        $res = $this->res;
+        break;
+      case( 3 ):
+      default:
+          // SQL build the query and execute it
+        $arr_result = $this->sql( );
+        if( $arr_result['error']['status'] )
+        {
+          $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+          return $template;
+        }
+        $res = $this->res;
+          // SQL build the query and execute it
+        break;
+    }
+      // DEVELOPMENT: SQL engine 4.x
+
+
+
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin listView( )' );
 
@@ -173,37 +217,6 @@ class tx_browser_pi1_viewlist
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objFilter->andWhere_filter( )' );
       // Filter - part I/II: SQL andWhere statement
-
-
-
-      // DEVELOPMENT: SQL engine 4.x
-    switch( $this->pObj->dev_sqlEngine )
-    {
-      case( 4 ):
-        $arr_result = $this->pObj->objSqlQry->res_listview_rows( );
-        if( $arr_result['error']['status'] )
-        {
-          $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
-          return $template;
-        }
-        $res = $this->res;
-        break;
-      case( 3 ):
-      default:
-          // SQL build the query and execute it
-        $arr_result = $this->sql( );
-        if( $arr_result['error']['status'] )
-        {
-          $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
-          return $template;
-        }
-        $res = $this->res;
-          // SQL build the query and execute it
-        break;
-    }
-      // DEVELOPMENT: SQL engine 4.x
-
-
 
 
 
@@ -1009,6 +1022,35 @@ class tx_browser_pi1_viewlist
 
     return $template;
   }
+
+
+
+
+
+
+
+
+
+
+  /**
+ * main_4x( ): Display a search form, a-z-Browser, pageBrowser and a list of records
+ *
+ * @return	string  $template : The processed HTML template
+ * @version 3.9.8
+ * @since 3.9.8
+ */
+  function main_4x( )
+  {
+    $arr_result = $this->pObj->objSqlQry->res_listview_rows( );
+    if( $arr_result['error']['status'] )
+    {
+      $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+      return $template;
+    }
+    $res = $this->res;
+  }
+
+
 
 
 
