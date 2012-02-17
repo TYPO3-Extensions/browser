@@ -465,11 +465,18 @@ class tx_browser_pi1 extends tslib_pibase {
         {
           $prompt = 'SQL engine 4.x is enabled. This if for development only!';
           t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
+          $prompt = 'SQL engine 4.x is used';
+          t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
         }
         break;
       case( 'SQL engine 3.x (recommended)' ):
       default:
         $this->dev_sqlEngine = 3;
+        if ($this->b_drs_sql)
+        {
+          $prompt = 'SQL engine 3.x is used';
+          t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
+        }
     }
       // Init SQL engine
 
