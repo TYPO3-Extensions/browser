@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2008-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +30,8 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 3.6.3
+ * @version 3.9.9
+ * @since   2.0.0
  */
 
 /**
@@ -2164,6 +2165,9 @@ class tx_browser_pi1_sql_auto
  * Generating the $this->arr_relations_mm_simple, an array with the arrays MM and/or simple
  *
  * @return	string		TRUE or $arr_return
+   *
+   * @version 3.9.9
+   * @since   2.0.0
  */
   function get_arr_relations_mm_simple()
   {
@@ -2371,9 +2375,13 @@ class tx_browser_pi1_sql_auto
           {
             // Config.internal_type is 'db', user wants to process config.type 'select', the config.type is 'select'
             $foreignTable = $config['foreign_table'];
-            if ($this->pObj->b_drs_sql)
+            if( $foreignTable )
             {
-              t3lib_div::devlog('[INFO/SQL] TCA \''.$tableKey.'.'.$columnsKey.'.config.foreign_table: \''.$foreignTable.'\'', $this->pObj->extKey, 0);
+              if( $this->pObj->b_drs_sql )
+              {
+                $prompt = 'TCA \'' . $tableKey . '.' . $columnsKey . '.config.foreign_table: \'' . $foreignTable . '\'';
+                t3lib_div::devlog('[INFO/SQL] ', $this->pObj->extKey, 0);
+              }
             }
           }
           if ($boolDB && in_array('group',  $arrTCAtypes) && $config['type'] == 'group')
