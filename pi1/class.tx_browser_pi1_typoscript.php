@@ -654,63 +654,67 @@ class tx_browser_pi1_typoscript
       // Does ORDER BY contains further tables and fields?
 
     $arr_addToSelect      = false;
-    $csvOrderByWoAscDesc  = $this->pObj->objSqlFun->get_orderBy_tableFields( $conf_sql['orderBy'] );
-    $arrOrderByWoAscDesc  = $this->pObj->objZz->getCSVasArray( $csvOrderByWoAscDesc );
-    $arrSelect            = $this->pObj->objZz->getCSVasArray( $conf_sql['select'] );
-
-      // #110110, cweiske, '11870
-    foreach ( $arrSelect as $key => $field )
+    $bool_orderByIsSelect = false; // 100429, dwildt - Bugfix: $bool_orderByIsSelect isn't set
+    if(!$bool_orderByIsSelect)
     {
-      $arrSelect[$key] = $this->pObj->objSqlFun->get_sql_alias_behind( $field );
-    }
-      // #110110, cweiske, '11870
+      $csvOrderByWoAscDesc  = $this->pObj->objSqlFun->get_orderBy_tableFields( $conf_sql['orderBy'] );
+      $arrOrderByWoAscDesc  = $this->pObj->objZz->getCSVasArray( $csvOrderByWoAscDesc );
+      $arrSelect            = $this->pObj->objZz->getCSVasArray( $conf_sql['select'] );
 
-      // Is there any difference?
-    $arr_addToSelect = array_diff( $arrOrderByWoAscDesc, $arrSelect );
-      // Does ORDER BY contains further tables and fields?
-
-
-    
-      ////////////////////////////////////////////////////////////////////
-      //
-      // IF order by has new tableFields
-
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $addedToSelect );
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arrConsolidate['addedTableFields'] );
-    if( count( ( array ) $arr_addToSelect ) > 1 )
-    {
-        // SELECT has aliases
-      if( ! ( strpos( $conf_sql['select'], " AS " ) === false ) )
+        // #110110, cweiske, '11870
+      foreach ( $arrSelect as $key => $field )
       {
-        foreach( ( array ) $arr_addToSelect as $tableField )
+        $arrSelect[$key] = $this->pObj->objSqlFun->get_sql_alias_behind( $field );
+      }
+        // #110110, cweiske, '11870
+
+        // Is there any difference?
+      $arr_addToSelect = array_diff( $arrOrderByWoAscDesc, $arrSelect );
+        // Does ORDER BY contains further tables and fields?
+
+
+
+        ////////////////////////////////////////////////////////////////////
+        //
+        // IF order by has new tableFields
+
+  $this->pObj->dev_var_dump( __METHOD__, __LINE__, count( ( array ) $arr_addToSelect ) );
+  $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arrConsolidate['addedTableFields'] );
+      if( count( ( array ) $arr_addToSelect ) > 1 )
+      {
+          // SELECT has aliases
+        if( ! ( strpos( $conf_sql['select'], " AS " ) === false ) )
         {
-          $conf_sql['select'] = $conf_sql['select'] . ', ' . $tableField . ' AS \'' . $tableField . '\'';
+          foreach( ( array ) $arr_addToSelect as $tableField )
+          {
+            $conf_sql['select'] = $conf_sql['select'] . ', ' . $tableField . ' AS \'' . $tableField . '\'';
+          }
         }
-      }
-        // SELECT has aliases
-        // SELECT hasn't aliases
-      if( strpos($conf_sql['select'], " AS " ) === false )
-      {
-        $csvAddToSelect     = implode( ', ', $arr_addToSelect );
-        $conf_sql['select'] = $conf_sql['select'] . ', ' . $csvAddToSelect;
-      }
-        // SELECT hasn't aliases
+          // SELECT has aliases
+          // SELECT hasn't aliases
+        if( strpos($conf_sql['select'], " AS " ) === false )
+        {
+          $csvAddToSelect     = implode( ', ', $arr_addToSelect );
+          $conf_sql['select'] = $conf_sql['select'] . ', ' . $csvAddToSelect;
+        }
+          // SELECT hasn't aliases
 
-        // Add the new table.fields to the consolidation array
-//      if( ! is_array( $this->pObj->arrConsolidate['addedTableFields'] ) )
-//      {
-//        $this->pObj->arrConsolidate['addedTableFields'] = array( );
-//      }
-      $this->pObj->arrConsolidate['addedTableFields'] =
-        array_merge
-        (
-          ( array ) $this->pObj->arrConsolidate['addedTableFields'],
-          $arr_addToSelect
-        );
-        // Add the new table.fields to the consolidation array
+          // Add the new table.fields to the consolidation array
+  //      if( ! is_array( $this->pObj->arrConsolidate['addedTableFields'] ) )
+  //      {
+  //        $this->pObj->arrConsolidate['addedTableFields'] = array( );
+  //      }
+        $this->pObj->arrConsolidate['addedTableFields'] =
+          array_merge
+          (
+            ( array ) $this->pObj->arrConsolidate['addedTableFields'],
+            $arr_addToSelect
+          );
+          // Add the new table.fields to the consolidation array
+      }
+  $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arrConsolidate['addedTableFields'] );
     }
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arrConsolidate['addedTableFields'] );
-      // IF order by has new tableFields
+  // IF order by has new tableFields
 
 
 
