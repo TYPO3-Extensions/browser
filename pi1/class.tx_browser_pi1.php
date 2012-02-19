@@ -1390,6 +1390,37 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
+  /**
+ * dev_var_dump( ): var_dump the given ontent in the frontend
+ *                  condition: current IP must be an element in the list of allowed IPs
+ *
+ * @param mixed  $prompt : String or array for prompting in the frontend
+ *
+ * @return	void
+   *
+   * @version 3.9.9
+   * @since   3.9.9
+ */
+  public function dev_var_dump( $method, $line, $prompt )
+  {
+
+    $pos = strpos( $this->str_developer_csvIp, t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
+    if ( $pos === false ) 
+    {
+      return;
+    }
+    $prompt = var_export( $prompt, true );
+    $prompt = '<em>' . PHP_EOL . $prompt . PHP_EOL . '</em>';
+    var_dump( $method . ' (' . $line . ')', $prompt );
+  }
+
+
+
+
+
+
+
+
   /***********************************************
    *
    * Classes

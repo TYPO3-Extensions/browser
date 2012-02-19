@@ -115,6 +115,13 @@ class tx_browser_pi1_sql
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
+    $arr_andWhereFilter = $this->pObj->objFilter->andWhere_filter( );
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_andWhereFilter );
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objFilter->andWhere_filter( )' );
+
+
       // Short vars
     $conf       = $this->conf;
     $mode       = $this->piVar_mode;
