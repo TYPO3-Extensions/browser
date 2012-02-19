@@ -1103,24 +1103,9 @@ class tx_browser_pi1_viewlist
       $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       return $template;
     }
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->objSql->sql_query_statements );
+      // Set SQL query parts in general
 
-      // SQL query array
-    $arr_result = $this->pObj->objSql->get_queryArray( );
-    if( $arr_result['error']['status'] )
-    {
-      return $arr_result;
-    }
-    $select   = $arr_result['data']['select'];
-    $from     = $arr_result['data']['from'];
-    $where    = $arr_result['data']['where'];
-      // #33892, 120214, dwildt+
-    $groupBy  = null;
-    $orderBy  = $arr_result['data']['orderBy'];
-      // #33892, 120214, dwildt+
-    $limit    = null;
-    $union    = $arr_result['data']['union'];
-    unset( $arr_result );
-      // SQL query array
 
 
 
@@ -1143,6 +1128,15 @@ class tx_browser_pi1_viewlist
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+
+$str_header  = '<h1 style="color:red;">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
+$str_prompt  = '<p style="color:red;font-weight:bold;">' . $this->pObj->pi_getLL('error_sql_select') . '</p>';
+$str_prompt  = '<p style="color:red;font-weight:bold;">' . 'SQLengine 4.x' . '</p>';
+$arr_return['error']['status'] = true;
+$arr_return['error']['header'] = $str_header;
+$arr_return['error']['prompt'] = $str_prompt;
+return $str_header . $str_prompt;
+return $arr_return;
 
       // RETURN content
     return $template;
