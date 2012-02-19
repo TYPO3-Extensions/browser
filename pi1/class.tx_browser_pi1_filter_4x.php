@@ -111,7 +111,7 @@ class tx_browser_pi1_filter_4x {
 
     foreach( $this->conf_view['filter.'] as $table => $fields )
     {
-      var_dump( $table, $fields );
+      var_dump( $table, key( $fields ) );
     }
 
       // LOOP each filter
