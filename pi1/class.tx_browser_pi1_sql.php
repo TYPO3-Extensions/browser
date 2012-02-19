@@ -138,14 +138,32 @@ class tx_browser_pi1_sql
       return $arr_result;
     }
       // Development prompting
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->csvSelect );
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->csvSearch );
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->csvOrderBy );
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->arrLocalTable );
+//    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->csvSelect );
+//    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->csvSearch );
+//    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->csvOrderBy );
+//    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->arrLocalTable );
       // Development prompting
     unset( $arr_result );
       // Set the globals csvSelect, csvSelect, csvOrderBy
 
+      // SQL query array
+    $arr_result = $this->sql_getQueryArray( );
+    if( $arr_result['error']['status'] )
+    {
+      return $arr_result;
+    }
+    $select   = $arr_result['data']['select'];
+    $from     = $arr_result['data']['from'];
+    $where    = $arr_result['data']['where'];
+      // #33892, 120214, dwildt+
+    $groupBy  = null;
+    $orderBy  = $arr_result['data']['orderBy'];
+      // #33892, 120214, dwildt+
+    $limit    = null;
+    $union    = $arr_result['data']['union'];
+    unset( $arr_result );
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_result );
+      // SQL query array
 
       // Short vars
     $conf       = $this->conf;
