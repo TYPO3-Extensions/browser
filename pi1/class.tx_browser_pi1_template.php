@@ -1195,6 +1195,7 @@ class tx_browser_pi1_template
         $this->pObj->elements    = $elements;
         $this->pObj->rows[$row]  = $rows[$row];
         $tmpl_row                = $this->tmplRows($elements, '###LISTBODYITEM###', $template); //:todo: Performance
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $tmpl_row );
 
           // Remove last devider in case of csv export
           // #29370, 110831, dwildt+
@@ -1237,7 +1238,6 @@ class tx_browser_pi1_template
       }
         // Rows
       unset($markerArray);
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $tmpl_rows );
 
         // GROUP BY true
       if( $this->bool_groupby )
