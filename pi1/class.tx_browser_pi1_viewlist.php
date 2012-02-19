@@ -139,35 +139,6 @@ class tx_browser_pi1_viewlist
 
 
 
-      // DEVELOPMENT: SQL engine 4.x
-    switch( $this->pObj->dev_sqlEngine )
-    {
-      case( 4 ):
-        $arr_result = $this->pObj->objSqlQry->res_listview_rows( );
-        if( $arr_result['error']['status'] )
-        {
-          $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
-          return $template;
-        }
-        $res = $this->res;
-        break;
-      case( 3 ):
-      default:
-          // SQL build the query and execute it
-        $arr_result = $this->sql( );
-        if( $arr_result['error']['status'] )
-        {
-          $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
-          return $template;
-        }
-        $res = $this->res;
-          // SQL build the query and execute it
-        break;
-    }
-      // DEVELOPMENT: SQL engine 4.x
-
-
-
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin listView( )' );
 
@@ -726,13 +697,12 @@ class tx_browser_pi1_viewlist
 
 
 
-      // #29370, 110831, dwildt+
       //////////////////////////////////////////////////////////////////////
       //
       // csv export
 
       // #29370, 110831, dwildt+
-      // Remove the title in case of csv export
+      // Get template for csv
     $str_marker = $this->pObj->lDisplayList['templateMarker'];
     switch( $this->pObj->objExport->str_typeNum )
     {
@@ -748,7 +718,7 @@ class tx_browser_pi1_viewlist
       default:
         // Do nothing;
     }
-      // Remove the title in case of csv export
+      // Get template for csv
       // csv export
       // #29370, 110831, dwildt+
 
@@ -759,6 +729,7 @@ class tx_browser_pi1_viewlist
       // csv map marker
 
       // #32654, 120212, dwildt+
+      // Get template for csv
     $str_marker = $this->pObj->lDisplayList['templateMarker'];
     switch( $this->pObj->objMap->str_typeNum )
     {
@@ -774,6 +745,7 @@ class tx_browser_pi1_viewlist
       default:
         // Do nothing;
     }
+      // Get template for csv
       // csv map marker
 
 
@@ -1041,13 +1013,104 @@ class tx_browser_pi1_viewlist
  */
   function main_4x( )
   {
-    $arr_result = $this->pObj->objSqlQry->res_listview_rows( );
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
+
+
+      //////////////////////////////////////////////////////////////////
+      //
+      // Short vars
+
+    $conf       = $this->conf;
+    $mode       = $this->piVar_mode;
+    $view       = $this->view;
+    $conf_view  = $this->conf_view;
+      // Short vars
+
+
+
+      //////////////////////////////////////////////////////////////////
+      //
+      // RETURN there isn't any list configured
+
+    $prompt = $this->check_view( );
+    if( $prompt )
+    {
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      return $prompt;
+    }
+      // RETURN there isn't any list configured
+
+
+
+      //Overwrite general_stdWrap, set globals $lDisplayList and $lDisplay
+    $this->init( );
+
+      // HTML content of the current template
+    $template = $this->pObj->str_template_raw;
+
+
+    
+      //////////////////////////////////////////////////////////////////////
+      //
+      // csv export
+
+      // #29370, 110831, dwildt+
+      // Get template for csv
+    $str_marker = $this->pObj->lDisplayList['templateMarker'];
+    switch( $this->pObj->objExport->str_typeNum )
+    {
+      case( 'csv' ) :
+        if ( $this->pObj->b_drs_templating || $this->pObj->b_drs_export )
+        {
+          t3lib_div::devlog('[INFO/TEMPLATING+EXPORT] ' . $str_marker . ' is ignored. ###TEMPLATE_CSV### is used as template marker.',  $this->pObj->extKey, 0);
+        }
+        $str_marker     = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
+        $template_path  = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['file'];
+        $template       = $this->pObj->cObj->fileResource( $template_path );
+        break;
+      default:
+        // Do nothing;
+    }
+      // Get template for csv
+      // csv export
+      // #29370, 110831, dwildt+
+
+
+
+      // Set SQL query parts in general
+    $arr_result = $this->pObj->objSql->init( );
     if( $arr_result['error']['status'] )
     {
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
       $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       return $template;
     }
-    $res = $this->res;
+
+      // Get filter
+      // Set filter
+
+      // Get A-Z-browser
+      // Set A-Z-browser
+
+      // Get page browser
+      // Set page browser
+
+      // Get rows
+      // Set rows
+    
+
+
+    
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+
+      // RETURN content
+    return $template;
   }
 
 

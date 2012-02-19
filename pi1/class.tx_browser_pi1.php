@@ -60,7 +60,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 3.9.8
+ * @version 3.9.9
  * @since 0.0.1
  */
 
@@ -1483,8 +1483,8 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objSqlMan = new tx_browser_pi1_sql_manual($this);
 
       // Class with sql methods for SQL querying
-    require_once('class.tx_browser_pi1_sql_query.php');
-    $this->objSqlQry = new tx_browser_pi1_sql_query($this);
+    require_once('class.tx_browser_pi1_sql.php');
+    $this->objSql = new tx_browser_pi1_sql($this);
 
       // Class with methods for statistics requirement
     require_once('class.tx_browser_pi1_statistics.php');
@@ -1594,18 +1594,18 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
-      // class.tx_browser_pi1_sql_query.php
+      // class.tx_browser_pi1_sql.php
 
       // [Array] The current TypoScript configuration array
-    $this->objSqlQry->conf      = $this->conf;
+    $this->objSql->conf      = $this->conf;
       // [Integer] The current mode (from modeselector)
-    $this->objSqlQry->mode      = $this->piVar_mode;
+    $this->objSql->mode      = $this->piVar_mode;
       // [String] 'list' or 'single': The current view
-    $this->objSqlQry->view      = $this->view;
+    $this->objSql->view      = $this->view;
       // [Array] The TypoScript configuration array of the current view
-    $this->objSqlQry->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+    $this->objSql->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
       // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objSqlQry->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+    $this->objSql->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
 
 
 

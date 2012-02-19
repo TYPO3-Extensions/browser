@@ -23,15 +23,15 @@
 ***************************************************************/
 
 /**
- * The class tx_browser_pi1_sql_query bundles methods with a workflow for sql queries and rows.
+ * The class tx_browser_pi1_sql bundles methods with a workflow for sql queries and rows.
  * statement with a FROM and a WHERE clause and maybe with the array JOINS.
  * It is the new SQL modul from Browser version 4.0 and it replaces the former SQL modul.
  *
  *
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *
- * @version   3.9.8
- * @since     3.9.8
+ * @version   3.9.9
+ * @since     3.9.9
  *
  * @package     TYPO3
  * @subpackage  browser
@@ -44,7 +44,7 @@
  *
  *
  */
-class tx_browser_pi1_sql_query
+class tx_browser_pi1_sql
 {
     //////////////////////////////////////////////////////
     //
@@ -144,8 +144,8 @@ class tx_browser_pi1_sql_query
 
   }
 
-  if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_query.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_query.php']);
+  if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql.php']) {
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql.php']);
   }
 
 ?>

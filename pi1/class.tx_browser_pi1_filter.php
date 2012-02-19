@@ -881,6 +881,7 @@ class tx_browser_pi1_filter {
 
   /**
  * andWhere_filter: Generate the andWhere statement, if it is needed.
+ *                  Init area.
  *
  * @return	array		arr_andWhereFilter: NULL if there isn' any filter
  * @version 3.6.0
