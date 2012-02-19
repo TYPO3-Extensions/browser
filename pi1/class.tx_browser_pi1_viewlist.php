@@ -202,7 +202,7 @@ class tx_browser_pi1_viewlist
 //    }
     $this->sql( );
     $res = $this->res;
-    //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_result );
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $res );
     
       //////////////////////////////////////////////////////////////////////
       //
@@ -370,6 +370,7 @@ class tx_browser_pi1_viewlist
       // Building $rows
     $this->rows( );
     $rows = $this->pObj->rows;
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
       // SQL Free Result
     $GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
       // Prompt the expired time to devlog
