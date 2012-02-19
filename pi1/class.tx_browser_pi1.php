@@ -1391,17 +1391,17 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
   /**
- * dev_var_dump( ): var_dump the given ontent in the frontend
+ * dev_var_dump( ): var_dump the given content in the frontend
  *                  condition: current IP must be an element in the list of allowed IPs
  *
- * @param mixed  $prompt : String or array for prompting in the frontend
+ * @param mixed  $content : String or array for prompting in the frontend
  *
  * @return	void
    *
    * @version 3.9.9
    * @since   3.9.9
  */
-  public function dev_var_dump( $method, $line, $prompt )
+  public function dev_var_dump( $method, $line, $content )
   {
 
     $pos = strpos( $this->str_developer_csvIp, t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
@@ -1409,8 +1409,15 @@ class tx_browser_pi1 extends tslib_pibase {
     {
       return;
     }
-    $prompt = var_export( $prompt, true );
-    $prompt = '<pre>' . PHP_EOL . $method . ' (line ' . $line . '):' . PHP_EOL . $prompt . PHP_EOL . '</pre>';
+
+    $type     = gettype( $content );
+    $content  = var_export( $content, true );
+    $prompt   = '<pre>' . $method . ' (line ' . $line . '):' . PHP_EOL .
+                  PHP_EOL .
+                  'type: ' . $type . PHP_EOL .
+                  PHP_EOL .
+                  $content . PHP_EOL .
+                '</pre>';
     echo $prompt;
 //    var_dump( $method . ' (' . $line . ')', $prompt );
   }
