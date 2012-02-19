@@ -1156,6 +1156,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, count ( $rows ) );
         $arr_wrap_grouptitle = array(false, false);
       }
         // Rows
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, count ( $rows ) );
       foreach((array) $rows as $row => $elements)
       {
         if( $this->ignore_empty_rows_rule )
