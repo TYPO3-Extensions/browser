@@ -524,7 +524,7 @@ class tx_browser_pi1_typoscript
       $coa_name = $this->conf_view['override.'][$str_query_part];
       $coa_conf = $this->conf_view['override.'][$str_query_part . '.'];
 
-      // Override 3.3.7
+        // IF override
       if( $coa_name )
       {
           // DRS
@@ -534,11 +534,16 @@ class tx_browser_pi1_typoscript
           t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
         }
           // DRS
-        $conf_sql[$str_query_part] = $this->pObj->objSqlFun->global_stdWrap('override.'.$str_query_part, $coa_name, $coa_conf);
+        $conf_sql[$str_query_part]  = $this->pObj->objSqlFun->global_stdWrap
+                                      (
+                                        'override.' . $str_query_part,
+                                        $coa_name,
+                                        $coa_conf
+                                      );
       }
-      // Override 3.3.7
+        // IF override
 
-      // No override
+        // IF no override
       if( ! $coa_name )
       {
           // DRS
@@ -553,60 +558,16 @@ class tx_browser_pi1_typoscript
         $coa_name = $this->conf_view[$str_query_part];
         $coa_conf = $this->conf_view[$str_query_part.'.'];
         // 3.3.7
-        $conf_sql[$str_query_part] = $this->pObj->objSqlFun->global_stdWrap($str_query_part, $coa_name, $coa_conf);
+        $conf_sql[$str_query_part]  = $this->pObj->objSqlFun->global_stdWrap
+                                      (
+                                        $str_query_part,
+                                        $coa_name,
+                                        $coa_conf
+                                      );
       }
-      // No override
+        // IF no override
 
-// todo 3.3.7
     }
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_sql );
-
-    foreach( $arr_query_parts as $str_query_part )
-    {
-        // Get override configuration
-      $coa_name = $this->conf_view['override.'][$str_query_part];
-      $coa_conf = $this->conf_view['override.'][$str_query_part . '.'];
-        // Get override configuration
-
-        // SWITCH configuration
-      switch( true )
-      {
-        case( $coa_name ):
-            // DRS
-          if( $this->pObj->b_drs_sql )
-          {
-            $prompt = $str_query_part . ' has an override.';
-            t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
-          }
-            // DRS
-          $conf_sql[$str_query_part]  = $this->pObj->objSqlFun->global_stdWrap
-                                        (
-                                          'override.' . $str_query_part,
-                                          $coa_name,
-                                          $coa_conf
-                                        );
-          break;
-        default:
-          if ($this->pObj->b_drs_sql)
-          {
-            $prompt = $str_query_part .' hasn\'t any override.';
-            t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
-            $prompt = 'If you want to override, please configure \'override.' . $str_query_part . '\'.';
-            t3lib_div::devlog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
-          }
-          $coa_name          = $this->conf_view[$str_query_part];
-          $coa_conf          = $this->conf_view[$str_query_part . '.'];
-          $conf_sql[$str_query_part]  = $this->pObj->objSqlFun->global_stdWrap
-                                        (
-                                          $str_query_part,
-                                          $cao_vaule,
-                                          $coa_conf
-                                        );
-          break;
-      }
-        // SWITCH configuration
-    }
-      // LOOP select, ..., andWhere
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_sql );
 
 
