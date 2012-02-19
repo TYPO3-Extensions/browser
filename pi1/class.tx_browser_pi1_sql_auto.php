@@ -2169,7 +2169,7 @@ class tx_browser_pi1_sql_auto
    * @version 3.9.9
    * @since   2.0.0
  */
-  function get_arr_relations_mm_simple()
+  private function get_arr_relations_mm_simple( )
   {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -2353,7 +2353,7 @@ class tx_browser_pi1_sql_auto
           //
           // Look for a destination table
 
-          if ($this->pObj->b_drs_tca)
+          if ( $this->pObj->b_drs_tca )
           {
             t3lib_div::devlog('[INFO/TCA] \''.$tableKey.'.'.$columnsKey.'.config.type: \''.$config['type'].'\'', $this->pObj->extKey, 0);
           }
