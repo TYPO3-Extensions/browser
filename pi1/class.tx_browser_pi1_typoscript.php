@@ -676,7 +676,7 @@ class tx_browser_pi1_typoscript
       // IF order by has new tableFields
 
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $addedToSelect );
-    if( count( ( array ) $arr_addToSelect ) > 0 )
+    if( count( ( array ) $arr_addToSelect ) > 1 )
     {
         // SELECT has aliases
       if( ! ( strpos( $conf_sql['select'], " AS " ) === false ) )
