@@ -249,7 +249,7 @@ class tx_browser_pi1_sql
       // Get the SELECT statement
 
       // Localise it, add uids
-    $arr_return['data']['select'] = $this->pObj->objSqlAuto->select( );
+    $arr_return['data']['select'] = $this->pObj->objSqlAut->select( );
     if( ! $arr_return['data']['select'] )
     {
       $str_header  =  '<h1 style="color:red">' . $this->pObj->pi_getLL( 'error_sql_h1' ) . '</h1>';
@@ -269,7 +269,7 @@ class tx_browser_pi1_sql
       //
       // Set the global groupBy
 
-    $this->pObj->objSqlAuto->groupBy( );
+    $this->pObj->objSqlAut->groupBy( );
       // Set the global groupBy
 
 
@@ -278,7 +278,7 @@ class tx_browser_pi1_sql
       //
       // Get the ORDER BY statement
 
-    $arr_return['data']['orderBy'] = $this->pObj->objSqlAuto->orderBy( );
+    $arr_return['data']['orderBy'] = $this->pObj->objSqlAut->orderBy( );
     if( ! $arr_return['data']['orderBy'] )
     {
       $str_header   = '<h1 style="color:red">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
@@ -298,8 +298,8 @@ class tx_browser_pi1_sql
       //
       // Get Relations
 
-    $this->arr_ts_autoconf_relation = $this->pObj->objSqlAuto->get_ts_autoconfig_relation( );
-    $this->arr_relations_mm_simple  = $this->pObj->objSqlAuto->get_arr_relations_mm_simple( );
+    $this->arr_ts_autoconf_relation = $this->pObj->objSqlAut->get_ts_autoconfig_relation( );
+    $this->arr_relations_mm_simple  = $this->pObj->objSqlAut->get_arr_relations_mm_simple( );
       // Get Relations
 
 
@@ -308,8 +308,8 @@ class tx_browser_pi1_sql
       //
       // Get WHERE and FROM
 
-    $arr_return['data']['where']  = $this->pObj->objSqlAuto->whereClause( );
-    $arr_return['data']['from']   = $this->pObj->objSqlAuto->sql_from( );
+    $arr_return['data']['where']  = $this->pObj->objSqlAut->whereClause( );
+    $arr_return['data']['from']   = $this->pObj->objSqlAut->sql_from( );
     // From has to be the last, because whereClause can have new tables.
     // Get WHERE and FROM
 
