@@ -2375,12 +2375,12 @@ class tx_browser_pi1_sql_auto
           {
             // Config.internal_type is 'db', user wants to process config.type 'select', the config.type is 'select'
             $foreignTable = $config['foreign_table'];
-            if( $foreignTable )
+            if( ! empty( $foreignTable ) )
             {
               if( $this->pObj->b_drs_sql )
               {
                 $prompt = 'TCA \'' . $tableKey . '.' . $columnsKey . '.config.foreign_table: \'' . $foreignTable . '\'';
-                t3lib_div::devlog('[INFO/SQL] ', $this->pObj->extKey, 0);
+                t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
               }
             }
           }
