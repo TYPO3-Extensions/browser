@@ -519,6 +519,41 @@ class tx_browser_pi1_typoscript
       // LOOP select, ..., andWhere
 
     $arr_query_parts = array( 'select', 'from', 'search', 'orderBy', 'groupBy', 'where', 'andWhere' );
+    foreach ($arr_query_parts as $str_query_part)
+    {
+      $str_tmpConfValue = $this->conf_view['override.'][$str_query_part];
+      $arr_tmpConfValue = $this->conf_view['override.'][$str_query_part.'.'];
+
+      // Override 3.3.7
+      if($str_tmpConfValue)
+      {
+        if ($this->pObj->b_drs_sql)
+        {
+          t3lib_div::devlog('[INFO/SQL] '.$str_query_part.' has an override.', $this->pObj->extKey, 0);
+        }
+        $conf_sql[$str_query_part] = $this->pObj->objSqlFun->global_stdWrap('override.'.$str_query_part, $str_tmpConfValue, $arr_tmpConfValue);
+      }
+      // Override 3.3.7
+
+      // No override
+      if(!$str_tmpConfValue)
+      {
+        if ($this->pObj->b_drs_sql)
+        {
+          t3lib_div::devlog('[INFO/SQL] '.$str_query_part.' hasn\'t any override.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/SQL] If you want to override, please configure \'override.'.$str_query_part.'\'.', $this->pObj->extKey, 0);
+        }
+        $str_tmpConfValue          = $this->conf_view[$str_query_part];
+        $arr_tmpConfValue          = $this->conf_view[$str_query_part.'.'];
+        // 3.3.7
+        $conf_sql[$str_query_part] = $this->pObj->objSqlFun->global_stdWrap($str_query_part, $str_tmpConfValue, $arr_tmpConfValue);
+      }
+      // No override
+
+// todo 3.3.7
+    }
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_sql );
+
     foreach( $arr_query_parts as $str_query_part )
     {
         // Get override configuration
