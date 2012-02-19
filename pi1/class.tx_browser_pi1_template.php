@@ -2575,6 +2575,7 @@ class tx_browser_pi1_template
     }
       // Handle empty values?
 
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, null );
 
 
       //////////////////////////////////////////////////////////////////
@@ -2982,10 +2983,11 @@ class tx_browser_pi1_template
     $addedTableFields = $this->pObj->arrConsolidate['addedTableFields'];
       // #28562: 110830, dwildt+
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->_elementsTransformed );
-
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $addedTableFields );
     foreach ($this->_elementsTransformed as $key => $value)
     {
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $key );
+
       $boolSubstitute = $this->_elementsBoolSubstitute[$key];
         // #12723, mbless, 110310
 
@@ -2999,6 +3001,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->_elementsTransformed );
         continue;
       }
         // #28562: 110830, dwildt+
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $key );
 
         // csv export: move value to a proper csv value
         // #29370, 110831, dwildt+
@@ -3122,6 +3125,9 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $value );
 //{
 //  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $htmlRow );
 //}
+
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, null );
+
     return $htmlRow;
   }
 
