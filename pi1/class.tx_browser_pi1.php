@@ -1488,6 +1488,10 @@ class tx_browser_pi1 extends tslib_pibase {
     require_once('class.tx_browser_pi1_filter.php');
     $this->objFilter = new tx_browser_pi1_filter($this);
 
+      // Class with realurl methods
+    require_once('class.tx_browser_pi1_filter_4x.php');
+    $this->objFltr4x = new tx_browser_pi1_filter_4x($this);
+
       // #9659, 101016, dwildt
       // Class with methods for ordering rows
     require_once('class.tx_browser_pi1_javascript.php');
@@ -1587,13 +1591,44 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
-  /**
- * Set variables in the helper classes
+/**
+ * init_classVars( ): Set variables in the helper classes.
+ *                    Start a script on some helper classes.
  *
- * @return	boolean		FALSE
+ * @return	void
+ *
+ * @version 3.9.9
+ * @since   1.0.0
+ *
  */
-  private function init_classVars()
+  private function init_classVars( )
   {
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Short vars
+
+    $conf_view = $this->conf['views.'][$this->view . '.'][$this->piVar_mode . '.'];
+    $conf_path = 'views.' . $this->view . '.' . $this->piVar_mode . '.';
+      // Short vars
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_filter_4x.php
+
+      // [Array] The current TypoScript configuration array
+    $this->objFltr4x->conf      = $this->conf;
+      // [Integer] The current mode (from modeselector)
+    $this->objFltr4x->mode      = $this->piVar_mode;
+      // [String] 'list' or 'single': The current view
+    $this->objFltr4x->view      = $this->view;
+      // [Array] The TypoScript configuration array of the current view
+    $this->objFltr4x->conf_view = $conf_view;
+      // [String] TypoScript path to the current view. I.e. views.single.1
+    $this->objFltr4x->conf_path = $conf_path;
+
+
 
       //////////////////////////////////////////////////////////////////////
       //
@@ -1606,9 +1641,9 @@ class tx_browser_pi1 extends tslib_pibase {
       // [String] 'list' or 'single': The current view
     $this->objLocalise->view      = $this->view;
       // [Array] The TypoScript configuration array of the current view
-    $this->objLocalise->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+    $this->objLocalise->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objLocalise->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+    $this->objLocalise->conf_path = $conf_path;
     $this->objLocalise->init_typoscript();
 
 
@@ -1624,9 +1659,9 @@ class tx_browser_pi1 extends tslib_pibase {
       // [String] 'list' or 'single': The current view
     $this->objNavi->view      = $this->view;
       // [Array] The TypoScript configuration array of the current view
-    $this->objNavi->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+    $this->objNavi->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objNavi->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+    $this->objNavi->conf_path = $conf_path;
 
 
 
@@ -1641,9 +1676,9 @@ class tx_browser_pi1 extends tslib_pibase {
       // [String] 'list' or 'single': The current view
     $this->objSession->view      = $this->view;
       // [Array] The TypoScript configuration array of the current view
-    $this->objSession->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+    $this->objSession->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objSession->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+    $this->objSession->conf_path = $conf_path;
 
 
 
@@ -1658,9 +1693,9 @@ class tx_browser_pi1 extends tslib_pibase {
       // [String] 'list' or 'single': The current view
     $this->objSql->view      = $this->view;
       // [Array] The TypoScript configuration array of the current view
-    $this->objSql->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+    $this->objSql->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objSql->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+    $this->objSql->conf_path = $conf_path;
 
 
 
@@ -1675,9 +1710,9 @@ class tx_browser_pi1 extends tslib_pibase {
       // [String] 'list' or 'single': The current view
     $this->objSocialmedia->view      = $this->view;
       // [Array] The TypoScript configuration array of the current view
-    $this->objSocialmedia->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+    $this->objSocialmedia->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objSocialmedia->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+    $this->objSocialmedia->conf_path = $conf_path;
 
 
 
@@ -1692,9 +1727,9 @@ class tx_browser_pi1 extends tslib_pibase {
       // [String] 'list' or 'single': The current view
     $this->objStat->view      = $this->view;
       // [Array] The TypoScript configuration array of the current view
-    $this->objStat->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+    $this->objStat->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objStat->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+    $this->objStat->conf_path = $conf_path;
 
 
 
@@ -1709,9 +1744,9 @@ class tx_browser_pi1 extends tslib_pibase {
       // [String] 'list' or 'single': The current view
     $this->objTca->view      = $this->view;
       // [Array] The TypoScript configuration array of the current view
-    $this->objTca->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+    $this->objTca->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objTca->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+    $this->objTca->conf_path = $conf_path;
 
 
 
@@ -1726,9 +1761,9 @@ class tx_browser_pi1 extends tslib_pibase {
       // [String] 'list' or 'single': The current view
     $this->objTemplate->view      = $this->view;
       // [Array] The TypoScript configuration array of the current view
-    $this->objTemplate->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+    $this->objTemplate->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objTemplate->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+    $this->objTemplate->conf_path = $conf_path;
 
 
 
@@ -1743,9 +1778,9 @@ class tx_browser_pi1 extends tslib_pibase {
       // [String] 'list' or 'single': The current view
     $this->objTyposcript->view      = $this->view;
       // [Array] The TypoScript configuration array of the current view
-    $this->objTyposcript->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+    $this->objTyposcript->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objTyposcript->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
+    $this->objTyposcript->conf_path = $conf_path;
 
 
 
@@ -1760,13 +1795,10 @@ class tx_browser_pi1 extends tslib_pibase {
       // [String] 'list' or 'single': The current view
     $this->objViewlist->view      = $this->view;
       // [Array] The TypoScript configuration array of the current view
-    $this->objViewlist->conf_view = $this->conf['views.'][$this->view.'.'][$this->piVar_mode.'.'];
+    $this->objViewlist->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objViewlist->conf_path = 'views.'.$this->view.'.'.$this->piVar_mode.'.';
-
-
-
-    return false;
+    $this->objViewlist->conf_path = $conf_path;
+      // class.tx_browser_pi1_viewlist.php
   }
 
 

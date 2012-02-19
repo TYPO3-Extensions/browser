@@ -1107,11 +1107,15 @@ class tx_browser_pi1_viewlist
       // Set SQL query parts in general and statements for rows
 
 
-
-
-
       // Get filter
-      // Set filter
+    $arr_result = $this->pObj->objFltr4x->get_htmlFilter( );
+    if( $arr_result['error']['status'] )
+    {
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+      return $template;
+    }
 
       // Get A-Z-browser
       // Set A-Z-browser
