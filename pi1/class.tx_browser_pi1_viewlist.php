@@ -588,7 +588,6 @@ class tx_browser_pi1_viewlist
       }
       t3lib_div::devlog('[INFO/SQL] ' . $str_prompt, $this->pObj->extKey, 0);
     }
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
       // DRS - Show the first row
 
 
@@ -641,15 +640,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
     if( $this->pObj->b_drs_sql )
     {
       $str_prompt = 'Result of the first row: ' . PHP_EOL;
-      if( is_array( $rows ) && count( $rows ) > 0 )
+      if( count ( ( array ) $rows ) > 0 )
       {
         reset( $rows );
-        foreach( $rows as $key => $value )
-        {
-          $str_prompt .= '[' . $key . ']: ' . htmlspecialchars( $value ) . ' ' . PHP_EOL;
-        }
-        t3lib_div::devlog('[INFO/SQL] ' . $str_prompt, $this->pObj->extKey, 0);
+        $firstKey = key( $rows );
+        $str_prompt .= var_export( $rows[$firstKey], true );
       }
+      t3lib_div::devlog('[INFO/SQL] ' . $str_prompt, $this->pObj->extKey, 0);
     }
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
       // DRS - Show the first row
