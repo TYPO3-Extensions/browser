@@ -370,7 +370,6 @@ class tx_browser_pi1_viewlist
       // Building $rows
     $this->rows( );
     $rows = $this->pObj->rows;
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
       // SQL Free Result
     $GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
       // Prompt the expired time to devlog
@@ -385,7 +384,6 @@ class tx_browser_pi1_viewlist
 
     $arr_result = $this->pObj->objSqlFun->rows_with_synonyms( $rows );
     $rows       = $arr_result['data']['rows'];
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
     unset( $arr_result );
     $this->pObj->rows = $rows;
       // Prompt the expired time to devlog
@@ -411,7 +409,6 @@ class tx_browser_pi1_viewlist
       t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
     }
       // Consolidate Localisation
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
 
 
 
@@ -441,7 +438,6 @@ class tx_browser_pi1_viewlist
     }
       // SQL mode manual
       // Consolidate rows
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
 
 
 
@@ -501,7 +497,6 @@ class tx_browser_pi1_viewlist
 
     $rows = $this->pObj->rows;
       // Hook for handle the consolidated rows
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
 
 
 
@@ -532,7 +527,6 @@ class tx_browser_pi1_viewlist
       // 120127, dwildt+
     $this->pObj->rows = $rows;
       // Ordering the children
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
 
     
 
@@ -572,7 +566,6 @@ class tx_browser_pi1_viewlist
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun->make_hierarchical( $rows )' );
     }
       // Order and edit the rows hierarchical
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
 
 
 
@@ -655,6 +648,7 @@ class tx_browser_pi1_viewlist
         t3lib_div::devlog('[INFO/SQL] ' . $str_prompt, $this->pObj->extKey, 0);
       }
     }
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
       // DRS - Show the first row
 
 
