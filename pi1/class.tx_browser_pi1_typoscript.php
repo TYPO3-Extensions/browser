@@ -676,6 +676,7 @@ class tx_browser_pi1_typoscript
       // IF order by has new tableFields
 
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $addedToSelect );
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arrConsolidate['addedTableFields'] );
     if( count( ( array ) $arr_addToSelect ) > 1 )
     {
         // SELECT has aliases
@@ -708,6 +709,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $addedToSelect );
         );
         // Add the new table.fields to the consolidation array
     }
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arrConsolidate['addedTableFields'] );
       // IF order by has new tableFields
 
 
