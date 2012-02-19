@@ -148,6 +148,7 @@ class tx_browser_pi1_sql
 
       // SQL query array
     $arr_result = $this->get_queryArray( );
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_result );
     if( $arr_result['error']['status'] )
     {
       return $arr_result;
@@ -162,7 +163,6 @@ class tx_browser_pi1_sql
     $limit    = null;
     $union    = $arr_result['data']['union'];
     unset( $arr_result );
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_result );
       // SQL query array
 
       // Short vars
