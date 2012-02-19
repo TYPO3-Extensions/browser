@@ -147,7 +147,7 @@ class tx_browser_pi1_sql
       // Set the globals csvSelect, csvSelect, csvOrderBy
 
       // SQL query array
-    $arr_result = $this->sql_getQueryArray( );
+    $arr_result = $this->get_queryArray( );
     if( $arr_result['error']['status'] )
     {
       return $arr_result;
