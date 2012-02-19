@@ -568,7 +568,6 @@ class tx_browser_pi1_typoscript
         // IF no override
 
     }
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_sql );
 
 
 
@@ -663,7 +662,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_sql );
       //
       // Does ORDER BY contains further tables and fields?
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_sql );
     $arr_addToSelect      = false;
     $csvOrderByWoAscDesc  = $this->pObj->objSqlFun->get_orderBy_tableFields( $conf_sql['orderBy'] );
     $arrOrderByWoAscDesc  = $this->pObj->objZz->getCSVasArray( $csvOrderByWoAscDesc );
@@ -677,8 +675,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_sql );
       // #110110, cweiske, '11870
 
       // Is there any difference?
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arrOrderByWoAscDesc );
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arrSelect );
     $arr_addToSelect = array_diff( $arrOrderByWoAscDesc, $arrSelect );
       // Does ORDER BY contains further tables and fields?
 
@@ -688,8 +684,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arrSelect );
       //
       // IF order by has new tableFields
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, count( ( array ) $arr_addToSelect ) );
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arrConsolidate['addedTableFields'] );
     if( count( ( array ) $arr_addToSelect ) > 1 )
     {
         // SELECT has aliases
@@ -722,7 +716,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arrConsolidate['ad
         );
         // Add the new table.fields to the consolidation array
     }
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arrConsolidate['addedTableFields'] );
       // IF order by has new tableFields
 
 
