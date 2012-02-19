@@ -26,12 +26,12 @@
  * The class tx_browser_pi1_sql_auto bundles SQL methods for this case: The user has defined a SELECT
  * statement only. Browser should generate a full sql query automatically
  *
- * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
- * @package    TYPO3
+ * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ * @package     TYPO3
  * @subpackage  browser
  *
- * @version 3.9.9
- * @since   2.0.0
+ * @version     3.9.9
+ * @since       2.0.0
  */
 
 /**
@@ -128,8 +128,8 @@ class tx_browser_pi1_sql_auto
     //
     // Get SELECT
 
-    $arr_return['data']['select'] = $this->select();
-    if (!$arr_return['data']['select'])
+    $arr_return['data']['select'] = $this->select( );
+    if ( ! $arr_return['data']['select'] )
     {
       $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
       $str_prompt  = '<p style="color:red; font-weight:bold;">'.$this->pObj->pi_getLL('error_sql_select').'</p>';
@@ -258,21 +258,25 @@ class tx_browser_pi1_sql_auto
 
 
 
-/***********************************************
+  /***********************************************
    *
    * SQL relation building with user defined SELECT only
    *
    **********************************************/
 
 
-  /**
- * It returns the select part for SQL query. It fills up $csvSelect for the HTML table head.
- * If tables hasn't any uid in the SELECT, table.uid will be added.
- *  If orderBy contains further tableFields, they will added to the select query.
+/**
+ * select( ): It returns the select statement for a SQL query.
+ *            If tables hasn't any uid in the SELECT, table.uid will be added.
+ *            If required localisation fields will added too.
+ *            Added fields will added to the consolidation array.
  *
  * @return	string		SQL select or FALSE, if there is an error
+ *
+ * @version 3.9.9
+ * @since   2.0.0
  */
-  function select()
+  public function select( )
   {
 
     $conf = $this->pObj->conf;
@@ -283,50 +287,31 @@ class tx_browser_pi1_sql_auto
 
     $select = false;
 
-// 3.3.7
-//    ////////////////////////////////////////////////////////////////////
-//    //
-//    // RETURN in case of override.select
-//
-//    $select = $conf['views.'][$viewWiDot][$mode.'.']['override.']['select'];
-//    if ($select)
-//    {
-//      if ($this->pObj->b_drs_sql)
-//      {
-//        t3lib_div::devlog('[WARN/SQL] views.'.$viewWiDot.$mode.'.override.select is: '.$select, $this->pObj->extKey, 2);
-//        t3lib_div::devLog('[INFO/SQL] If there is views.'.$viewWiDot.$mode.'.select, it will be ignored!', $this->pObj->extKey, 0);
-//        t3lib_div::devLog('[INFO/SQL] SELECT '.$select, $this->pObj->extKey, 0);
-//      }
-//      return $select;
-//    }
-//    // RETURN in case of override.select
 
+    
+      ////////////////////////////////////////////////////////////////////
+      //
+      // RETURN in case of override.select
 
-
-    ////////////////////////////////////////////////////////////////////
-    //
-    // RETURN in case of override.select
-
-    if($conf['views.'][$viewWiDot][$mode.'.']['override.']['select'])
+    if( $conf['views.'][$viewWiDot][$mode.'.']['override.']['select'] )
     {
       $select = $this->pObj->conf_sql['select'];
-      if ($this->pObj->b_drs_sql)
+      if( $this->pObj->b_drs_sql )
       {
         t3lib_div::devLog('[INFO/SQL] override.select is true. views.'.$viewWiDot.$mode.'.select will be ignored!', $this->pObj->extKey, 0);
         t3lib_div::devLog('[INFO/SQL] SELECT '.$select, $this->pObj->extKey, 0);
       }
       return $select;
     }
-    // RETURN in case of override.select
-// 3.3.7
+      // RETURN in case of override.select
 
 
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // RETURN, if the global array conf_sql['select'] isn't set
+      ////////////////////////////////////////////////////////////////////
+      //
+      // RETURN, if the global array conf_sql['select'] isn't set
 
-    if (!$this->pObj->conf_sql['select'])
+    if( ! $this->pObj->conf_sql['select'] )
     {
       if ($this->pObj->b_drs_error)
       {
@@ -334,115 +319,115 @@ class tx_browser_pi1_sql_auto
       }
       return false;
     }
-    // RETURN, if the global array conf_sql['select'] isn't set
+      // RETURN, if the global array conf_sql['select'] isn't set
 
 
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Get the SELECT statement from the global conf_sql['select']
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Get the SELECT statement from the global conf_sql['select']
 
-    // Values from the TypoScript setup
+      // Values from the TypoScript setup
     $select = $this->pObj->conf_sql['select'];
-    // Get the SELECT statement from the global conf_sql['select']
+      // Get the SELECT statement from the global conf_sql['select']
 
 
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // stdWrap
-
-    // stdWrap
-
-
-
-    ////////////////////////////////////////////////////////////////////
-    //
-    // If a used table hasn't any uid field, add it to the consolidation array
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Add uid field of each table without uid
 
     $str_addTableUids = false;
     $arr_addTableUids = false;
-    if(is_array($this->pObj->arrConsolidate['addedTableFields']))
+    if( is_array( $this->pObj->arrConsolidate['addedTableFields'] ) )
     {
-      foreach((array) $this->pObj->arrConsolidate['addedTableFields'] as $tableField)
+      foreach( ( array ) $this->pObj->arrConsolidate['addedTableFields'] as $tableField )
       {
-        list($table, $field) = explode('.', $tableField);
-        if ($field == 'uid')
+        list( $table, $field ) = explode( '.', $tableField );
+        if( $field == 'uid' )
         {
-          $arr_addTableUids[] = $tableField.' AS \''.$tableField.'\'';
+          $arr_addTableUids[] = $tableField .' AS \'' . $tableField .'\'';
         }
       }
     }
-    if (is_array($arr_addTableUids))
+    if( is_array( $arr_addTableUids ) )
     {
-      $str_addTableUids = $str_addTableUids.implode(', ', $arr_addTableUids);
-      $str_addTableUids = ', '.$str_addTableUids;
+      $str_addTableUids = $str_addTableUids . implode( ', ', $arr_addTableUids );
+      $str_addTableUids = ', ' . $str_addTableUids;
     }
-    $select = $select.$str_addTableUids;
-    // If a used table hasn't any uid field, add it to the consolidation array
+    $select = $select . $str_addTableUids;
+      // Add uid field of each table without uid
 
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Add localisation fields
+    
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Add localisation fields
 
-    $arr_addedTableFields = array();
-    // Loop through all used tables
-    foreach ($this->pObj->arr_realTables_arrFields as $table => $arrFields)
+    //$arr_addedTableFields = array( );
+      // Loop through all used tables
+    foreach( $this->pObj->arr_realTables_arrFields as $table => $arrFields )
     {
-      $arr_result = $this->pObj->objLocalise->localisationFields_select($table);
-      // Get the and SELECT statement with aliases
-      if ($arr_result['wiAlias'])
+      $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
+        // Get the and SELECT statement with aliases
+      if( $arr_result['wiAlias'] )
       {
         $arr_localSelect[] = $arr_result['wiAlias'];
       }
-      // Get all added table.fields
-      if (is_array($arr_result['addedFields']))
+        // Get all added table.fields
+      if( is_array( $arr_result['addedFields'] ) )
       {
-        $arr_addedTableFields = array_merge($arr_addedTableFields, $arr_result['addedFields']);
+        $arr_addedTableFields = array_merge
+                                (
+                                  ( array ) $arr_addedTableFields,
+                                  $arr_result['addedFields']
+                                );
       }
     }
-    unset($arr_result);
-    // Loop through all used tables
+    unset( $arr_result );
+      // Loop through all used tables
 
-    if (is_array($arr_localSelect))
-    {
       // Build the SELECT statement
-      $str_localSelect = implode(', ', $arr_localSelect);
-      if($str_localSelect) {
-        $select = $select.', '.$str_localSelect;
-      }
-      // Build the SELECT statement
-    }
-
-    if (is_array($arr_addedTableFields))
+    if( is_array( $arr_localSelect ) )
     {
-      // Loop through all new table.fields
-      foreach ($arr_addedTableFields as $tableField)
+      $str_localSelect = implode( ', ', $arr_localSelect );
+      if( $str_localSelect )
       {
-        list($table, $field) = explode('.', $tableField);
-        if (!in_array($field, $this->pObj->arr_realTables_arrFields[$table]))
-        {
+        $select = $select . ', ' . $str_localSelect;
+      }
+    }
+      // Build the SELECT statement
+      // Add localisation fields
+
+
+
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Add tables to the consolidation array
+      
+      // LOOP through all new table.fields
+    foreach( ( array ) $arr_addedTableFields as $tableField )
+    {
+      list( $table, $field ) = explode( '.', $tableField );
+      if( ! in_array( $field, $this->pObj->arr_realTables_arrFields[$table] ) )
+      {
           // Add every new table.field to the global array arr_realTables_arrFields
-          $this->pObj->arr_realTables_arrFields[$table][] = $field;
+        $this->pObj->arr_realTables_arrFields[$table][] = $field;
           // Add every new table.field to the global array consolidate
-          $this->pObj->arrConsolidate['addedTableFields'][] = $tableField;
-        }
+        $this->pObj->arrConsolidate['addedTableFields'][] = $tableField;
       }
-      // Loop through all new table.fields
     }
-    // Add localisation fields
+      // LOOP through all new table.fields
+      // Add tables to the consolidation array
 
+ 
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Development Reporting System
-
+      // DRS
     if ( $this->pObj->b_drs_sql )
     {
       t3lib_div::devLog( '[INFO/SQL] SELECT ' . $select, $this->pObj->extKey, 0 );
     }
-    // DRS - Development Reporting System
+    // DRS
 
 
     return $select;

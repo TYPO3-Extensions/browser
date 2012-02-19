@@ -235,7 +235,7 @@ class tx_browser_pi1_sql
  *
  * @return	array		array with the elements error and data. Data has the elements select, from, where, orderBy, groupBy.
  */
-  private function get_queryArrayAuto( )
+  public function get_queryArrayAuto( )
   {
 
     $arr_return['error']['status'] = false;
@@ -246,117 +246,116 @@ class tx_browser_pi1_sql
     
       /////////////////////////////////////////////////////////////////
       //
-      // Get SELECT
+      // Get the SELECT statement
 
-    $arr_return['data']['select'] = $this->select();
-    if (!$arr_return['data']['select'])
+      // Localise it, add uids
+    $arr_return['data']['select'] = $this->pObj->objSqlAuto->select( );
+    if( ! $arr_return['data']['select'] )
     {
-      $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
-      $str_prompt  = '<p style="color:red; font-weight:bold;">'.$this->pObj->pi_getLL('error_sql_select').'</p>';
+      $str_header  =  '<h1 style="color:red">' . $this->pObj->pi_getLL( 'error_sql_h1' ) . '</h1>';
+      $str_prompt  =  '<p style="color:red; font-weight:bold;">' .
+                        $this->pObj->pi_getLL('error_sql_select') .
+                      '</p>';
       $arr_return['error']['status'] = true;
       $arr_return['error']['header'] = $str_header;
       $arr_return['error']['prompt'] = $str_prompt;
       return $arr_return;
     }
-    // Get SELECT
-
-// :todo: 100429: remove methods orderBy() and groupBy() in this class
-
-//    /////////////////////////////////////////////////////////////////
-//    //
-//    // Set the global groupBy
-//
-//    $this->groupBy();
-//    // Set the global groupBy
+      // Get the SELECT statement
 
 
-// 100429, dwildt: auskommentiert, war vermutlich für SQL query. Sortiert wird aber mit PHP
-//    /////////////////////////////////////////////////////////////////
-//    //
-//    // Get ORDER BY
-//
-//    $arr_return['data']['orderBy'] = $this->orderBy();
-//    if (!$arr_return['data']['orderBy'])
-//    {
-//      $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
-//      $str_prompt  = '<p style="color:red; font-weight:bold;">'.$this->pObj->pi_getLL('error_sql_orderby').'</p>';
-//      $arr_return['error']['status'] = true;
-//      $arr_return['error']['header'] = $str_header;
-//      $arr_return['error']['prompt'] = $str_prompt;
-//      return $arr_return;
-//    }
-// 100429, dwildt: auskommentiert, da kein $arr_result vorhanden
-//    if (isset($arr_result['data']['addToSelect']))
-//    {
-//      $arr_return['data']['select'] = $arr_return['data']['select'].', '.$arr_result['data']['addToSelect'];
-//      if ($this->pObj->b_drs_sql)
-//      {
-//        t3lib_div::devLog('[INFO/SQL] OrderBy: Select is now:<br />'.
-//          '\''.$arr_return['data']['select'].'\'', $this->pObj->extKey, 0);
-//      }
-//    }
-//    unset($arr_result);
-    // Get ORDER BY
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Set the global groupBy
+
+    $this->pObj->objSqlAuto->groupBy( );
+      // Set the global groupBy
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Get Relations
 
-    $this->arr_ts_autoconf_relation = $this->get_ts_autoconfig_relation();
-    $this->arr_relations_mm_simple  = $this->get_arr_relations_mm_simple();
-    // Get Relations
+      /////////////////////////////////////////////////////////////////
+      //
+      // Get the ORDER BY statement
+
+    $arr_return['data']['orderBy'] = $this->pObj->objSqlAuto->orderBy( );
+    if( ! $arr_return['data']['orderBy'] )
+    {
+      $str_header   = '<h1 style="color:red">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
+      $str_prompt   = '<p style="color:red; font-weight:bold;">' .
+                        $this->pObj->pi_getLL('error_sql_orderby') .
+                      '</p>';
+      $arr_return['error']['status'] = true;
+      $arr_return['error']['header'] = $str_header;
+      $arr_return['error']['prompt'] = $str_prompt;
+      return $arr_return;
+    }
+      // Get the ORDER BY statement
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Get WHERE and FROM
 
-    $arr_return['data']['where']  = $this->whereClause();
-    $arr_return['data']['from']   = $this->sql_from();
+      /////////////////////////////////////////////////////////////////
+      //
+      // Get Relations
+
+    $this->arr_ts_autoconf_relation = $this->pObj->objSqlAuto->get_ts_autoconfig_relation( );
+    $this->arr_relations_mm_simple  = $this->pObj->objSqlAuto->get_arr_relations_mm_simple( );
+      // Get Relations
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Get WHERE and FROM
+
+    $arr_return['data']['where']  = $this->pObj->objSqlAuto->whereClause( );
+    $arr_return['data']['from']   = $this->pObj->objSqlAuto->sql_from( );
     // From has to be the last, because whereClause can have new tables.
     // Get WHERE and FROM
 
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Enable the ordering by table_mm.sorting
 
-    // 091128: ADDED in context with table_mm.sorting (see below)
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Enable the ordering by table_mm.sorting
+
+      // 091128: ADDED in context with table_mm.sorting (see below)
     $str_mmSorting = false;
     $arr_mmSorting = false;
-    if(is_array($this->pObj->arrConsolidate['select']['mmSortingTableFields']))
+    if( is_array( $this->pObj->arrConsolidate['select']['mmSortingTableFields'] ) )
     {
-      foreach((array) $this->pObj->arrConsolidate['select']['mmSortingTableFields'] as $tableField)
+      foreach( ( array ) $this->pObj->arrConsolidate['select']['mmSortingTableFields'] as $tableField )
       {
-        list($table, $field) = explode('.', $tableField);
-        $arr_mmSorting[] = $tableField.' AS \''.$tableField.'\'';
+        list( $table, $field ) = explode( '.', $tableField );
+        $arr_mmSorting[] = $tableField . ' AS \'' . $tableField . '\'';
       }
     }
-    if (is_array($arr_mmSorting))
+    if( is_array( $arr_mmSorting ) )
     {
-      $str_mmSorting = $str_mmSorting.implode(', ', $arr_mmSorting);
-      $str_mmSorting = ', '.$str_mmSorting;
+      $str_mmSorting = $str_mmSorting . implode( ', ', $arr_mmSorting );
+      $str_mmSorting = ', ' . $str_mmSorting;
     }
-    $arr_return['data']['select'] = $arr_return['data']['select'].$str_mmSorting;
-    // 091128: ADDED in context with table_mm.sorting (see below)
-    // Enable the ordering by table_mm.sorting
+    $arr_return['data']['select'] = $arr_return['data']['select'] . $str_mmSorting;
+      // 091128: ADDED in context with table_mm.sorting (see below)
+      // Enable the ordering by table_mm.sorting
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Replace Markers for pidlist and uid
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Replace Markers for pidlist and uid
 
     $str_pid_list = $this->pObj->pidList;
-    $str_pid_list = str_replace(',', ', ', $str_pid_list);
-    // For human readable
+      // For human readable
+    $str_pid_list = str_replace( ',', ', ', $str_pid_list );
 
-    foreach((array) $arr_return['data'] as $str_query_part => $str_statement)
+    foreach( ( array ) $arr_return['data'] as $str_query_part => $str_statement )
     {
-      $str_statement                        = str_replace('###PID_LIST###', $str_pid_list,                  $str_statement);
-      $str_statement                        = str_replace('###UID###',      $this->pObj->piVars['showUid'], $str_statement);
+      $str_statement = str_replace('###PID_LIST###', $str_pid_list,                  $str_statement);
+      $str_statement = str_replace('###UID###',      $this->pObj->piVars['showUid'], $str_statement);
       $arr_return['data'][$str_query_part]  = $str_statement;
     }
+      // Replace Markers for pidlist and uid
 
     return $arr_return;
   }
