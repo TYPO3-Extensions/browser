@@ -3024,6 +3024,8 @@ class tx_browser_pi1_template
           // #28562: 110830, dwildt+
 
         $htmlSubpart = $this->pObj->cObj->getSubpart($template, $subpart);
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->view );
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $bool_design_default );
         if($this->view == 'list' && $bool_design_default)
         {
           $class = $i_count_cell < $maxColumns ? 'cell-'.$i_count_cell : 'cell-'.$i_count_cell.' last';
