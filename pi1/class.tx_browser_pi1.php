@@ -1410,7 +1410,7 @@ class tx_browser_pi1 extends tslib_pibase {
       return;
     }
     $prompt = var_export( $prompt, true );
-    $prompt = '<em>' . PHP_EOL . $method . ' (line ' . $line . '):' . PHP_EOL . $prompt . PHP_EOL . '</em>';
+    $prompt = '<pre>' . PHP_EOL . $method . ' (line ' . $line . '):' . PHP_EOL . $prompt . PHP_EOL . '</pre>';
     echo $prompt;
 //    var_dump( $method . ' (' . $line . ')', $prompt );
   }
