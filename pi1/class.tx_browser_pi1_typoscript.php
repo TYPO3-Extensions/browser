@@ -555,8 +555,14 @@ class tx_browser_pi1_typoscript
         // SWITCH configuration
         // #33892, 120219, dwildt-
       //$conf_sql[$str_query_part] = $this->pObj->objSqlFun->global_stdWrap($str_query_part, $str_tmpConfValue, $coa_conf);
+      $conf_sql[$str_query_part] =  $this->pObj->objSqlFun->global_stdWrap
+                                    (
+                                      $str_query_part,
+                                      $cao_vaule,
+                                      $coa_conf
+                                    );
         // #33892, 120219, dwildt+
-      $conf_sql[$str_query_part] = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+      //$conf_sql[$str_query_part] = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
     }
       // LOOP select, ..., andWhere
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_sql );
