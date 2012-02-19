@@ -675,6 +675,7 @@ class tx_browser_pi1_typoscript
       //
       // IF order by has new tableFields
 
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $addedToSelect );
     if( count( ( array ) $arr_addToSelect ) > 0 )
     {
         // SELECT has aliases
@@ -699,12 +700,12 @@ class tx_browser_pi1_typoscript
 //      {
 //        $this->pObj->arrConsolidate['addedTableFields'] = array( );
 //      }
-//      $this->pObj->arrConsolidate['addedTableFields'] =
-//        array_merge
-//        (
-//          ( array ) $this->pObj->arrConsolidate['addedTableFields'],
-//          $arr_addToSelect
-//        );
+      $this->pObj->arrConsolidate['addedTableFields'] =
+        array_merge
+        (
+          ( array ) $this->pObj->arrConsolidate['addedTableFields'],
+          $arr_addToSelect
+        );
         // Add the new table.fields to the consolidation array
     }
       // IF order by has new tableFields
