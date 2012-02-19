@@ -1282,7 +1282,7 @@ class tx_browser_pi1_filter {
 
       // SELECT
     $str_select = $conf_view['filter.'][$table . '.'][$field . '.']['sql.']['select'];
-    if ( ! empty ( $str_select ) )
+    if( ! empty ( $str_select ) )
     {
       $str_select = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($str_select);
       if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql)
@@ -1290,7 +1290,7 @@ class tx_browser_pi1_filter {
         t3lib_div :: devlog('[INFO/FILTER+SQL] Select Override is activated. ' . $str_select, $this->pObj->extKey, 0);
       }
     }
-    if (empty ( $str_select ) )
+    if( empty ( $str_select ) )
     {
       $str_select = $table . ".uid AS 'uid'," . PHP_EOL .
       "         " . $table . "." . $field . " AS 'value'," . PHP_EOL;
@@ -1540,10 +1540,7 @@ class tx_browser_pi1_filter {
 //    }
     if ($this->pObj->b_drs_filter || $this->pObj->b_drs_sql)
     {
-        // 100629, dwildt
-        // $query_br = str_replace(PHP_EOL, '<br />', $query);
-        //t3lib_div::devlog('[INFO/FILTER+SQL] Query:<br /><br />'.$query_br, $this->pObj->extKey, 0);
-      t3lib_div :: devlog('[INFO/FILTER+SQL] Query:<br /><br />' . $query, $this->pObj->extKey, 0);
+      t3lib_div :: devlog('[OK/FILTER+SQL] Query: ' . $query, $this->pObj->extKey, -1);
     }
 // dwildt, 110309
 //var_dump(__METHOD__ . ': ' . __LINE__ , $query);
