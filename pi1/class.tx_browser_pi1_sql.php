@@ -110,10 +110,10 @@ class tx_browser_pi1_sql
  * @version 3.9.8
  * @since 1.0.0
  */
-  function res_listview_rows( )
+  function init( )
   {
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin listView( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
       // Short vars
     $conf       = $this->conf;
@@ -130,6 +130,9 @@ class tx_browser_pi1_sql
         $arr_return['error']['prompt'] = $str_prompt;
         return $arr_return;
     $arr_return   = $arr_data;
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
 
     return $arr_return;
   }
