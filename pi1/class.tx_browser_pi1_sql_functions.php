@@ -1796,7 +1796,7 @@ class tx_browser_pi1_sql_functions
 
 
     /**
- * global_all( ): Set the globals csvSelect, csvOrderBy and arrLocalTable
+ * global_all( ): Set the globals csvSelect, csvSearch, csvOrderBy, arrLocalTable
  *
  * @return	array		$arr_return : Array in case of an error with the error message
  */
@@ -1804,6 +1804,7 @@ class tx_browser_pi1_sql_functions
     {
       $arr_return['error']['status'] = false;
 
+        // Set the globals csvSelect and arrLocalTable
       $b_ok = $this->global_csvSelect( );
       if( ! $b_ok )
       {
@@ -1814,7 +1815,9 @@ class tx_browser_pi1_sql_functions
         $arr_return['error']['prompt'] = $str_prompt;
         return $arr_return;
       }
+        // Set the globals csvSelect and arrLocalTable
 
+        // Set the global csvSearch
       $b_ok = $this->global_csvSearch( );
       if( ! $b_ok )
       {
@@ -1825,7 +1828,9 @@ class tx_browser_pi1_sql_functions
         $arr_return['error']['prompt'] = $str_prompt;
         return $arr_return;
       }
+        // Set the global csvSearch
 
+        // Set the global csvOrderBy
       $b_ok = $this->global_csvOrderBy( );
       if( ! $b_ok )
       {
@@ -1836,11 +1841,13 @@ class tx_browser_pi1_sql_functions
         $arr_return['error']['prompt'] = $str_prompt;
         return $arr_return;
       }
+        // Set the global csvOrderBy
 
         // #33892, 120219, dwildt+
-      $arr_return['data']['csvSelect']  = $this->pObj->csvSelect;
-      $arr_return['data']['csvSearch']  = $this->pObj->csvSearch;
-      $arr_return['data']['csvOrderBy'] = $this->pObj->csvOrderBy;
+      $arr_return['data']['csvSelect']      = $this->pObj->csvSelect;
+      $arr_return['data']['csvSearch']      = $this->pObj->csvSearch;
+      $arr_return['data']['csvOrderBy']     = $this->pObj->csvOrderBy;
+      $arr_return['data']['arrLocalTable']  = $this->pObj->arrLocalTable;
         // #33892, 120219, dwildt+
 
       return $arr_return;

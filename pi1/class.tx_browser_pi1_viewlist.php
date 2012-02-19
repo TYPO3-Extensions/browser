@@ -200,7 +200,7 @@ class tx_browser_pi1_viewlist
       $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       return $template;
     }
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_result );
+    //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_result );
     
       //////////////////////////////////////////////////////////////////////
       //

@@ -69,8 +69,16 @@ class tx_browser_pi1_sql
     // [String] SQL query
   var $query = null;
 
+    
+  var $arrLocalTable = null;
+    // Proper select statement for current rows.
+   //   I.e: tx_org_cal.title,  tx_org_cal.subtitle,  tx_org_cal.teaser_short, ...'
   var $csvSelect  = null;
+   // Proper select statement for current rows for the search query.
+   //   I.e: 'tx_org_cal.title AS \'tx_org_cal.title\', tx_org_cal.subtitle AS ...'
   var $csvSearch  = null;
+   // Proper order by statement (without ORDER BY).
+   //   I.e: 'tx_org_cal.datetime DESC'
   var $csvOrderBy = null;
 
 
@@ -118,22 +126,23 @@ class tx_browser_pi1_sql
   function init( )
   {
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__, 'begin' );
 
-      // Set the globals csvSelect, csvOrderBy and arrLocalTable
+      // Set the globals csvSelect, csvSelect, csvOrderBy, arrLocalTable
     $arr_result       = $this->pObj->objSqlFun->global_all( );
     if( $arr_result['error']['status'] )
     {
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__, 'end' );
       return $arr_result;
     }
-    $this->csvSelect  = $arr_result['data']['csvSelect'];
-    $this->csvSearch  = $arr_result['data']['csvSearch'];
-    $this->csvOrderBy = $arr_result['data']['csvOrderBy'];
+    $this->csvSelect      = $arr_result['data']['csvSelect'];
+    $this->csvSearch      = $arr_result['data']['csvSearch'];
+    $this->csvOrderBy     = $arr_result['data']['csvOrderBy'];
+    $this->arrLocalTable  = $arr_result['data']['arrLocalTable'];
     $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_result );
     unset( $arr_result );
-      // Set the globals csvSelect, csvOrderBy and arrLocalTable
+      // Set the globals csvSelect, csvSelect, csvOrderBy
 
 
       // Short vars
