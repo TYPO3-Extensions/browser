@@ -1430,7 +1430,7 @@ class tx_browser_pi1 extends tslib_pibase {
                   'type: ' . $type . PHP_EOL .
                   PHP_EOL .
                   $content . PHP_EOL .
-                '</pre>';
+                '</pre>' . PHP_EOL;
       // Concatenate method, line, type and content. Wrap it with <pre>
       // Generate the prompt
 
