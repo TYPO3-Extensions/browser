@@ -653,6 +653,7 @@ class tx_browser_pi1_typoscript
       //
       // Does ORDER BY contains further tables and fields?
 
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_sql );
     $arr_addToSelect      = false;
     $csvOrderByWoAscDesc  = $this->pObj->objSqlFun->get_orderBy_tableFields( $conf_sql['orderBy'] );
     $arrOrderByWoAscDesc  = $this->pObj->objZz->getCSVasArray( $csvOrderByWoAscDesc );
@@ -666,7 +667,8 @@ class tx_browser_pi1_typoscript
       // #110110, cweiske, '11870
 
       // Is there any difference?
-var_dump( __METHOD__, __LINE__, $arrOrderByWoAscDesc, $arrSelect );
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arrOrderByWoAscDesc );
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arrSelect );
     $arr_addToSelect = array_diff( $arrOrderByWoAscDesc, $arrSelect );
       // Does ORDER BY contains further tables and fields?
 
