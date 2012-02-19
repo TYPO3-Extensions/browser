@@ -537,8 +537,12 @@ class tx_browser_pi1_typoscript
             t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
           }
             // DRS
-            // #33892, 120219, dwildt-
-          //$conf_sql[$str_query_part] = $this->pObj->objSqlFun->global_stdWrap('override.'.$str_query_part, $coa_name, $coa_conf);
+          $conf_sql[$str_query_part]  = $this->pObj->objSqlFun->global_stdWrap
+                                        (
+                                          'override.' . $str_query_part,
+                                          $coa_name,
+                                          $coa_conf
+                                        );
           break;
         default:
           if ($this->pObj->b_drs_sql)
@@ -549,20 +553,16 @@ class tx_browser_pi1_typoscript
             t3lib_div::devlog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
           }
           $coa_name          = $this->conf_view[$str_query_part];
-          $coa_conf          = $this->conf_view[$str_query_part.'.'];
+          $coa_conf          = $this->conf_view[$str_query_part . '.'];
+          $conf_sql[$str_query_part]  = $this->pObj->objSqlFun->global_stdWrap
+                                        (
+                                          $str_query_part,
+                                          $cao_vaule,
+                                          $coa_conf
+                                        );
           break;
       }
         // SWITCH configuration
-        // #33892, 120219, dwildt-
-      //$conf_sql[$str_query_part] = $this->pObj->objSqlFun->global_stdWrap($str_query_part, $str_tmpConfValue, $coa_conf);
-      $conf_sql[$str_query_part] =  $this->pObj->objSqlFun->global_stdWrap
-                                    (
-                                      $str_query_part,
-                                      $cao_vaule,
-                                      $coa_conf
-                                    );
-        // #33892, 120219, dwildt+
-      //$conf_sql[$str_query_part] = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
     }
       // LOOP select, ..., andWhere
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_sql );
