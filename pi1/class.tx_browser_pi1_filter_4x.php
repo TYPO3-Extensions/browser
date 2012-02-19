@@ -113,6 +113,10 @@ class tx_browser_pi1_filter_4x {
     {
       foreach( ( array ) $fields as $field => $confField )
       {
+        if( rtrim($field, '.') )
+        {
+          continue;
+        }
         var_dump( $tableWiDot . $field );
       }
     }
