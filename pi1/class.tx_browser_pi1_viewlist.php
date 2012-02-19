@@ -598,6 +598,7 @@ class tx_browser_pi1_viewlist
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
       return $this->pObj->pi_wrapInBaseClass( $prompt );
     }
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_result );
     $template = $arr_result['data']['template'];
       // 120127, dwildt+
     $rows             = $arr_result['data']['rows'];
