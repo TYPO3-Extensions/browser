@@ -109,6 +109,19 @@ class tx_browser_pi1_filter_4x {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
+    foreach( $this->conf_view['filter.'] as $table => $fields )
+    {
+      var_dump( $table, $fields );
+    }
+
+      // LOOP each filter
+        // Get SQL result
+          // Get SELECT statement
+          // Get GROUP BY
+          // Build SELECT statement
+          // Exec SELECT
+        // Set HTML object
+
     $str_header  = '<h1 style="color:red;">' . __METHOD__ . '</h1>';
     $str_prompt  = '<p style="color:red;font-weight:bold;">Development</p>';
     $arr_return['error']['status'] = true;
