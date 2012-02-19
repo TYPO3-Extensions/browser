@@ -191,6 +191,14 @@ class tx_browser_pi1_viewlist
 
 
 
+    
+    $arr_result = $this->sql( );
+    if( $arr_result['error']['status'] )
+    {
+      $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+      return $template;
+    }
+    
       //////////////////////////////////////////////////////////////////////
       //
       // Workaround filter and localisation - Bugfix #9024
