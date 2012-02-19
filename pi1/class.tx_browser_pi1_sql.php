@@ -240,7 +240,7 @@ class tx_browser_pi1_sql
 
     $arr_return['error']['status'] = false;
 
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->conf_sql );
+    //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->conf_sql );
 
 
     
