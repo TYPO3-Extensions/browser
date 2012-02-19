@@ -580,12 +580,11 @@ class tx_browser_pi1_viewlist
     if( $this->pObj->b_drs_sql )
     {
       $str_prompt = 'Result of the first row: ' . PHP_EOL;
-      foreach( ( array ) $rows as $row )
+      if( count ( ( array ) $rows ) > 0 )
       {
-        foreach( $row as $key => $value )
-        {
-          $str_prompt .= '[' . $key . ']: ' . htmlspecialchars( $value ) . ' ' . PHP_EOL;
-        }
+        reset( $rows );
+        $firstKey = key( $rows );
+        $str_prompt .= var_export( $rows[$firstKey], true );
       }
       t3lib_div::devlog('[INFO/SQL] ' . $str_prompt, $this->pObj->extKey, 0);
     }
