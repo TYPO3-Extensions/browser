@@ -1237,6 +1237,7 @@ class tx_browser_pi1_template
       }
         // Rows
       unset($markerArray);
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $tmpl_rows );
 
         // GROUP BY true
       if( $this->bool_groupby )
@@ -1313,7 +1314,6 @@ class tx_browser_pi1_template
     $markerArray['###SUMMARY###'] = $this->pObj->objWrapper->tableSummary('list');
     $markerArray['###CAPTION###'] = $this->pObj->objWrapper->tableCaption('list');
     $subpart        = $this->pObj->cObj->getSubpart($template, '###LISTVIEW###');
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $markerArray );
     $listview       = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
     $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $listview, true);
     unset($markerArray);
