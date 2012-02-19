@@ -971,7 +971,6 @@ class tx_browser_pi1_template
       $this->max_elements = $max_elements;
         // #28562: 110830, dwildt+
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, count ( $rows ) );
         // elements
       foreach( ( array ) $rows as $elements )
       {
@@ -1156,7 +1155,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, count ( $rows ) );
         $arr_wrap_grouptitle = array(false, false);
       }
         // Rows
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
       foreach((array) $rows as $row => $elements)
       {
         if( $this->ignore_empty_rows_rule )
@@ -1315,6 +1313,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
     $markerArray['###SUMMARY###'] = $this->pObj->objWrapper->tableSummary('list');
     $markerArray['###CAPTION###'] = $this->pObj->objWrapper->tableCaption('list');
     $subpart        = $this->pObj->cObj->getSubpart($template, '###LISTVIEW###');
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $markerArray );
     $listview       = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
     $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $listview, true);
     unset($markerArray);
