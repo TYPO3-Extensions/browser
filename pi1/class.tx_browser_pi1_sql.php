@@ -69,16 +69,17 @@ class tx_browser_pi1_sql
     // [String] SQL query
   var $query = null;
 
-    
+    // [Array]  Array tableFields for uid and pid of the localTable
+    //          I.e: array( 'uid' => 'tx_org_cal.uid', 'pid' => 'tx_org_cal.pid' )
   var $arrLocalTable = null;
-    // Proper select statement for current rows.
-   //   I.e: tx_org_cal.title,  tx_org_cal.subtitle,  tx_org_cal.teaser_short, ...'
+    // [String/CSV] Proper select statement for current rows.
+    //              I.e: 'tx_org_cal.title,  tx_org_cal.subtitle,  tx_org_cal.teaser_short, ...'
   var $csvSelect  = null;
-   // Proper select statement for current rows for the search query.
-   //   I.e: 'tx_org_cal.title AS \'tx_org_cal.title\', tx_org_cal.subtitle AS ...'
+    // [String/CSV]  Proper select statement for current rows for the search query.
+    //               I.e: 'tx_org_cal.title AS \'tx_org_cal.title\', tx_org_cal.subtitle AS ...'
   var $csvSearch  = null;
-   // Proper order by statement (without ORDER BY).
-   //   I.e: 'tx_org_cal.datetime DESC'
+    // [String/CSV]  Proper order by statement (without ORDER BY).
+    //               I.e: 'tx_org_cal.datetime DESC'
   var $csvOrderBy = null;
 
 
@@ -136,11 +137,12 @@ class tx_browser_pi1_sql
       $this->pObj->timeTracking_log( __METHOD__, __LINE__, 'end' );
       return $arr_result;
     }
-    $this->csvSelect      = $arr_result['data']['csvSelect'];
-    $this->csvSearch      = $arr_result['data']['csvSearch'];
-    $this->csvOrderBy     = $arr_result['data']['csvOrderBy'];
-    $this->arrLocalTable  = $arr_result['data']['arrLocalTable'];
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_result );
+      // Development prompting
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->csvSelect );
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->csvSearch );
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->csvOrderBy );
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->arrLocalTable );
+      // Development prompting
     unset( $arr_result );
       // Set the globals csvSelect, csvSelect, csvOrderBy
 
@@ -165,6 +167,41 @@ class tx_browser_pi1_sql
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
 
     return $arr_return;
+  }
+
+  
+  
+  
+  
+  
+  
+  
+  
+  /**
+ * get_queryArray( ):
+ *
+ * @return	array
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_queryArray( )
+  {
+      // RETURN case is SQL manual
+    if( $this->pObj->b_sql_manual )
+    {
+      $arr_result = $this->pObj->objSqlMan->get_query_array( $this );
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlMan->get_query_array( )' );
+      return $arr_result;
+    }
+      // RETURN case is SQL manual
+
+      // RETURN case is SQL automatically
+    $arr_result = $this->pObj->objSqlAut->get_query_array( );
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlAut->get_query_array( )' );
+    return $arr_result;
+      // RETURN case is SQL automatically
   }
 
 

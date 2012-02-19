@@ -28,7 +28,7 @@
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *
-* @version   4.0.0
+* @version   3.9.9
 * @since  2.0.0
 *
 * @package    TYPO3
@@ -1799,6 +1799,9 @@ class tx_browser_pi1_sql_functions
  * global_all( ): Set the globals csvSelect, csvSearch, csvOrderBy, arrLocalTable
  *
  * @return	array		$arr_return : Array in case of an error with the error message
+     *
+     * @version 3.9.9
+     * @since   2.0.0
  */
     function global_all( )
     {
@@ -1844,10 +1847,10 @@ class tx_browser_pi1_sql_functions
         // Set the global csvOrderBy
 
         // #33892, 120219, dwildt+
-      $arr_return['data']['csvSelect']      = $this->pObj->csvSelect;
-      $arr_return['data']['csvSearch']      = $this->pObj->csvSearch;
-      $arr_return['data']['csvOrderBy']     = $this->pObj->csvOrderBy;
-      $arr_return['data']['arrLocalTable']  = $this->pObj->arrLocalTable;
+      $this->pObj->objSql->csvSelect      = $this->pObj->csvSelect;
+      $this->pObj->objSql->csvSearch      = $this->pObj->csvSearch;
+      $this->pObj->objSql->csvOrderBy     = $this->pObj->csvOrderBy;
+      $this->pObj->objSql->arrLocalTable  = $this->pObj->arrLocalTable;
         // #33892, 120219, dwildt+
 
       return $arr_return;

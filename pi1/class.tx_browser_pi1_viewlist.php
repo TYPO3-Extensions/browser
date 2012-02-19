@@ -1102,6 +1102,27 @@ class tx_browser_pi1_viewlist
       return $template;
     }
 
+      // SQL query array
+    $arr_result = $this->pObj->objSql->get_queryArray( );
+    if( $arr_result['error']['status'] )
+    {
+      return $arr_result;
+    }
+    $select   = $arr_result['data']['select'];
+    $from     = $arr_result['data']['from'];
+    $where    = $arr_result['data']['where'];
+      // #33892, 120214, dwildt+
+    $groupBy  = null;
+    $orderBy  = $arr_result['data']['orderBy'];
+      // #33892, 120214, dwildt+
+    $limit    = null;
+    $union    = $arr_result['data']['union'];
+    unset( $arr_result );
+      // SQL query array
+
+
+
+
       // Get filter
       // Set filter
 
