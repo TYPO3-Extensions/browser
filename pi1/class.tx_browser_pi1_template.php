@@ -971,6 +971,7 @@ class tx_browser_pi1_template
       $this->max_elements = $max_elements;
         // #28562: 110830, dwildt+
 
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, count ( $rows ) );
         // elements
       foreach( ( array ) $rows as $elements )
       {

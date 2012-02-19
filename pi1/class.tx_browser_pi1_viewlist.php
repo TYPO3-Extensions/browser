@@ -943,7 +943,6 @@ class tx_browser_pi1_viewlist
 
 
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, count ( $rows ) );
       ///////////////////////////////////////////////
       //
       // In case of limit, limit the rows
@@ -1000,7 +999,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, count ( $rows ) );
       //
       // HTML records
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, count ( $rows ) );
     $template = $this->pObj->objTemplate->tmplListview( $template, $rows );
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objTemplate->tmplListview( )' );
