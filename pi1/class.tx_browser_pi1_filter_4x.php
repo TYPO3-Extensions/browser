@@ -109,9 +109,12 @@ class tx_browser_pi1_filter_4x {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
-    foreach( $this->conf_view['filter.'] as $table => $fields )
+    foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
     {
-      var_dump( $table, key( $fields ) );
+      foreach( ( array ) $fields as $field => $confField )
+      {
+        var_dump( $tableWiDot . $field );
+      }
     }
 
       // LOOP each filter
