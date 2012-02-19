@@ -1195,7 +1195,6 @@ class tx_browser_pi1_template
         $this->pObj->elements    = $elements;
         $this->pObj->rows[$row]  = $rows[$row];
         $tmpl_row                = $this->tmplRows($elements, '###LISTBODYITEM###', $template); //:todo: Performance
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $tmpl_row );
 
           // Remove last devider in case of csv export
           // #29370, 110831, dwildt+
@@ -3037,6 +3036,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $tmpl_row );
         }
         if($this->view == 'list' && !$bool_design_default)
         {
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $value );
           $markerArray['###'.strtoupper($key).'###']  = $value;
           $bool_defaultTemplate = false;
           $markerArray['###SOCIALMEDIA_BOOKMARKS###'] = $this->pObj->objSocialmedia->get_htmlBookmarks($elements, $key, $bool_defaultTemplate);
