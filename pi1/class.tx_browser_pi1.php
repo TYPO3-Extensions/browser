@@ -1403,23 +1403,39 @@ class tx_browser_pi1 extends tslib_pibase {
  */
   public function dev_var_dump( $method, $line, $content )
   {
+      // Log a security warning
+    if ($this->b_drs_warn )
+    {
+      $prompt = 'Security risk: please disable -> dev_var_dump( ) in ' . $method . ' at line ' . $line . '.';
+      t3lib_div::devlog('[WARN/DRS] ' . $prompt, $this->extKey, 2 );
+    }
+      // Log a security warning
 
+      // RETURN current IP isn't any element of the list of the allowed IPs
     $pos = strpos( $this->str_developer_csvIp, t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
     if ( $pos === false ) 
     {
       return;
     }
+      // RETURN current IP isn't any element of the list of the allowed IPs
 
+      // Generate the prompt
+      // Get the type of the content
     $type     = gettype( $content );
+      // Move content to a string
     $content  = var_export( $content, true );
+      // Concatenate method, line, type and content. Wrap it with <pre>
     $prompt   = '<pre>' . $method . ' (line ' . $line . '):' . PHP_EOL .
                   PHP_EOL .
                   'type: ' . $type . PHP_EOL .
                   PHP_EOL .
                   $content . PHP_EOL .
                 '</pre>';
+      // Concatenate method, line, type and content. Wrap it with <pre>
+      // Generate the prompt
+
+      // Prompt the content
     echo $prompt;
-//    var_dump( $method . ' (' . $line . ')', $prompt );
   }
 
 

@@ -184,8 +184,9 @@ class tx_browser_pi1_viewlist
 //    }
       // #30912, 120127, dwildt-
       // #30912, 120127, dwildt+
-    $arr_andWhereFilter = $this->pObj->objFilter->andWhere_filter( );
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_andWhereFilter );
+    $this->pObj->objFilter->andWhere_filter( );
+//    $arr_andWhereFilter = $this->pObj->objFilter->andWhere_filter( );
+//    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_andWhereFilter );
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objFilter->andWhere_filter( )' );
       // Filter - part I/II: SQL andWhere statement
@@ -199,6 +200,7 @@ class tx_browser_pi1_viewlist
       $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       return $template;
     }
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_result );
     
       //////////////////////////////////////////////////////////////////////
       //
@@ -598,7 +600,7 @@ class tx_browser_pi1_viewlist
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
       return $this->pObj->pi_wrapInBaseClass( $prompt );
     }
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_result );
+//    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_result );
     $template = $arr_result['data']['template'];
       // 120127, dwildt+
     $rows             = $arr_result['data']['rows'];

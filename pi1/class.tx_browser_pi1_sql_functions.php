@@ -1796,15 +1796,16 @@ class tx_browser_pi1_sql_functions
 
 
     /**
- * Set the globals csvSelect, csvOrderBy and arrLocalTable
+ * global_all( ): Set the globals csvSelect, csvOrderBy and arrLocalTable
  *
- * @return	array		TRUE, if there is a orderBy value. FALSE, if there isn't any orderBy value
+ * @return	array		$arr_return : Array in case of an error with the error message
  */
-    function global_all()
+    function global_all( )
     {
       $arr_return['error']['status'] = false;
-      $b_ok = $this->global_csvSelect();
-      if (!$b_ok)
+
+      $b_ok = $this->global_csvSelect( );
+      if( ! $b_ok )
       {
         $str_header  = '<h1 style="color:red;">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
         $str_prompt  = '<p style="color:red;font-weight:bold;">'.$this->pObj->pi_getLL('error_sql_select').'</p>';
@@ -1813,8 +1814,9 @@ class tx_browser_pi1_sql_functions
         $arr_return['error']['prompt'] = $str_prompt;
         return $arr_return;
       }
-      $b_ok = $this->global_csvSearch();
-      if (!$b_ok)
+
+      $b_ok = $this->global_csvSearch( );
+      if( ! $b_ok )
       {
         $str_header  = '<h1 style="color:red;">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
         $str_prompt  = '<p style="color:red;font-weight:bold;">'.$this->pObj->pi_getLL('error_sql_search').'</p>';
@@ -1823,8 +1825,9 @@ class tx_browser_pi1_sql_functions
         $arr_return['error']['prompt'] = $str_prompt;
         return $arr_return;
       }
-      $b_ok = $this->global_csvOrderBy();
-      if (!$b_ok)
+
+      $b_ok = $this->global_csvOrderBy( );
+      if( ! $b_ok )
       {
         $str_header  = '<h1 style="color:red;">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
         $str_prompt  = '<p style="color:red;font-weight:bold;">'.$this->pObj->pi_getLL('error_sql_orderby').'</p>';
@@ -1833,6 +1836,12 @@ class tx_browser_pi1_sql_functions
         $arr_return['error']['prompt'] = $str_prompt;
         return $arr_return;
       }
+
+        // #33892, 120219, dwildt+
+      $arr_return['data']['csvSelect']  = $this->pObj->csvSelect;
+      $arr_return['data']['csvSearch']  = $this->pObj->csvSearch;
+      $arr_return['data']['csvOrderBy'] = $this->pObj->csvOrderBy;
+        // #33892, 120219, dwildt+
 
       return $arr_return;
     }
