@@ -559,6 +559,7 @@ class tx_browser_pi1_typoscript
       $conf_sql[$str_query_part] = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
     }
       // LOOP select, ..., andWhere
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_sql );
 
 
 
