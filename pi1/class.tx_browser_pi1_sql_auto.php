@@ -2085,7 +2085,7 @@ class tx_browser_pi1_sql_auto
  *
  * @return	array		FALSE || $arr_ts_autoconf_relation
  */
-  function get_ts_autoconfig_relation()
+  public function get_ts_autoconfig_relation()
   {
 
     $conf = $this->pObj->conf;
@@ -2154,7 +2154,7 @@ class tx_browser_pi1_sql_auto
    * @version 3.9.9
    * @since   2.0.0
  */
-  private function get_arr_relations_mm_simple( )
+  public function get_arr_relations_mm_simple( )
   {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
