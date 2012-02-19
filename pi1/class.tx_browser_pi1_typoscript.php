@@ -521,32 +521,39 @@ class tx_browser_pi1_typoscript
     $arr_query_parts = array( 'select', 'from', 'search', 'orderBy', 'groupBy', 'where', 'andWhere' );
     foreach ($arr_query_parts as $str_query_part)
     {
-      $str_tmpConfValue = $this->conf_view['override.'][$str_query_part];
-      $arr_tmpConfValue = $this->conf_view['override.'][$str_query_part.'.'];
+      $coa_name = $this->conf_view['override.'][$str_query_part];
+      $coa_conf = $this->conf_view['override.'][$str_query_part . '.'];
 
       // Override 3.3.7
-      if($str_tmpConfValue)
+      if( $coa_name )
       {
-        if ($this->pObj->b_drs_sql)
+          // DRS
+        if( $this->pObj->b_drs_sql )
         {
-          t3lib_div::devlog('[INFO/SQL] '.$str_query_part.' has an override.', $this->pObj->extKey, 0);
+          $prompt = $str_query_part . ' has an override.';
+          t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
         }
-        $conf_sql[$str_query_part] = $this->pObj->objSqlFun->global_stdWrap('override.'.$str_query_part, $str_tmpConfValue, $arr_tmpConfValue);
+          // DRS
+        $conf_sql[$str_query_part] = $this->pObj->objSqlFun->global_stdWrap('override.'.$str_query_part, $coa_name, $coa_conf);
       }
       // Override 3.3.7
 
       // No override
-      if(!$str_tmpConfValue)
+      if( ! $coa_name )
       {
+          // DRS
         if ($this->pObj->b_drs_sql)
         {
-          t3lib_div::devlog('[INFO/SQL] '.$str_query_part.' hasn\'t any override.', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[HELP/SQL] If you want to override, please configure \'override.'.$str_query_part.'\'.', $this->pObj->extKey, 0);
+          $prompt = $str_query_part .' hasn\'t any override.';
+          t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+          $prompt = 'If you want to override, please configure \'override.' . $str_query_part . '\'.';
+          t3lib_div::devlog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
         }
-        $str_tmpConfValue          = $this->conf_view[$str_query_part];
-        $arr_tmpConfValue          = $this->conf_view[$str_query_part.'.'];
+          // DRS
+        $coa_name = $this->conf_view[$str_query_part];
+        $coa_conf = $this->conf_view[$str_query_part.'.'];
         // 3.3.7
-        $conf_sql[$str_query_part] = $this->pObj->objSqlFun->global_stdWrap($str_query_part, $str_tmpConfValue, $arr_tmpConfValue);
+        $conf_sql[$str_query_part] = $this->pObj->objSqlFun->global_stdWrap($str_query_part, $coa_name, $coa_conf);
       }
       // No override
 
