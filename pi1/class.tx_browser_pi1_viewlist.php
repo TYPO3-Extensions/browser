@@ -200,9 +200,13 @@ class tx_browser_pi1_viewlist
 //      $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
 //      return $template;
 //    }
+
+
+    
     $this->sql( );
     $res = $this->res;
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $res );
+
+
     
       //////////////////////////////////////////////////////////////////////
       //
@@ -576,16 +580,16 @@ class tx_browser_pi1_viewlist
     if( $this->pObj->b_drs_sql )
     {
       $str_prompt = 'Result of the first row: ' . PHP_EOL;
-      if( is_array( $rows ) && count( $rows ) > 0 )
+      foreach( ( array ) $rows as $row )
       {
-        reset( $rows );
-        foreach( $rows as $key => $value )
+        foreach( $row as $key => $value )
         {
           $str_prompt .= '[' . $key . ']: ' . htmlspecialchars( $value ) . ' ' . PHP_EOL;
         }
-        t3lib_div::devlog('[INFO/SQL] ' . $str_prompt, $this->pObj->extKey, 0);
       }
+      t3lib_div::devlog('[INFO/SQL] ' . $str_prompt, $this->pObj->extKey, 0);
     }
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
       // DRS - Show the first row
 
 
