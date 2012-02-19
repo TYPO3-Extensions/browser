@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2011 - Dirk Wildt http://wildt.at.die-netzmacher.de
+*  (c) 2008-2012 - Dirk Wildt http://wildt.at.die-netzmacher.de
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,13 +22,14 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-  /**
+/**
 * The class tx_browser_pi1_typoscript bundles typoscript methods for the extension browser
 *
-* @author    Dirk Wildt http://wildt.at.die-netzmacher.de
-* @package    TYPO3
-* @subpackage  browser
-* @version 3.6.1
+* @author       Dirk Wildt http://wildt.at.die-netzmacher.de
+* @package      TYPO3
+* @subpackage   browser
+* @version      3.9.9
+   *
 */
 
   /**
@@ -216,132 +217,135 @@ class tx_browser_pi1_typoscript
   **********************************************/
 
 
-  /**
- * Returns an array with used tables and fields out of the TypoScript SQL query parts.
- * The tables will have real names
+/**
+ * fetch_realTables_arrFields( ): Returns an array with used tables and fields
+ *                                out of the TypoScript SQL query parts.
+ *                                The tables will have real names
  *
  * @return	array		Array with the syntax array[table][] = field
+ *
+ * @version 3.9.9.
+ * @since   2.0.0
  */
-  function fetch_realTables_arrFields()
+  function fetch_realTables_arrFields( )
   {
 
 
-    //////////////////////////////////////////////////////
-    //
-    // DRS - Development Reporting System
+      //////////////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
 
-    if ($this->pObj->b_drs_sql)
+    if( $this->pObj->b_drs_sql )
     {
       t3lib_div::devlog('[INFO/SQL] We try to fetch used tables.', $this->pObj->extKey, 0);
     }
-    // DRS - Development Reporting System
+      // DRS - Development Reporting System
 
 
-    //////////////////////////////////////////////////////
-    //
-    // Get the typoscript configuration for the SQL query
+      //////////////////////////////////////////////////////
+      //
+      // Get the typoscript configuration for the SQL query
 
     $lConfSql = $this->set_confSql();
-    // Set the typoscript configuration for the SQL query
+      // Set the typoscript configuration for the SQL query
 
 
-    /////////////////////////////////////////////////////
-    //
-    // Fetch used tables from the SELECT statement
+      /////////////////////////////////////////////////////
+      //
+      // Fetch used tables from the SELECT statement
 
-    // Is there a SQL function, which should replaced with an alias?
-    if (is_array($this->conf_view['select.']['deal_as_table.']))
-    {
+      // Is there a SQL function, which should replaced with an alias?
       // Replace each SQL function which its alias
-      foreach ($this->conf_view['select.']['deal_as_table.'] as $arr_dealastable)
-      {
-        $str_statement  = $arr_dealastable['statement'];
-        $str_aliasTable = $arr_dealastable['alias'];
-        $arr_dealAlias[$str_aliasTable] = $str_statement;
-        // I.e.: $conf_sql['select'] = CONCAT(tx_bzdstaffdirectory_persons.title, ' ', tx_bzdstaffdirectory_persons.first_name, ' ', tx_bzdstaffdirectory_persons.last_name), tx_bzdstaffdirectory_groups.group_name
-        $lConfSql['select'] = str_replace($str_statement, $str_aliasTable, $lConfSql['select']);
-        // I.e.: $conf_sql['select'] = tx_bzdstaffdirectory_persons.last_name, tx_bzdstaffdirectory_groups.group_name
-      }
+    foreach( ( array ) $this->conf_view['select.']['deal_as_table.'] as $arr_dealastable )
+    {
+      $str_statement  = $arr_dealastable['statement'];
+      $str_aliasTable = $arr_dealastable['alias'];
+      $arr_dealAlias[$str_aliasTable] = $str_statement;
+      // I.e.: $conf_sql['select'] = CONCAT(tx_bzdstaffdirectory_persons.title, ' ', tx_bzdstaffdirectory_persons.first_name, ' ', tx_bzdstaffdirectory_persons.last_name), tx_bzdstaffdirectory_groups.group_name
+      $lConfSql['select'] = str_replace( $str_statement, $str_aliasTable, $lConfSql['select'] );
+      // I.e.: $conf_sql['select'] = tx_bzdstaffdirectory_persons.last_name, tx_bzdstaffdirectory_groups.group_name
     }
-    // Set the global csvSelectWoFunc with table.fields only and without any function
+    
+      // Set the global csvSelectWoFunc with table.fields only and without any function
     $csvSelectWoFunc = $lConfSql['select'];
     $arrSelectWoFunc = explode(',', $csvSelectWoFunc);
     $arrSelectWoFunc = $this->pObj->objSqlFun->clean_up_as_and_alias($arrSelectWoFunc);
     $csvSelectWoFunc = implode(', ', $arrSelectWoFunc);
     $this->pObj->csvSelectWoFunc = $csvSelectWoFunc;
-    // Set the global csvSelectWoFunc with table.fields only and without any function
+      // Set the global csvSelectWoFunc with table.fields only and without any function
 
-    $this->fetch_realTableWiField($lConfSql['select']);
-    // Fetch used tables from the SELECT statement
+    $this->fetch_realTableWiField( $lConfSql['select'] );
+      // Fetch used tables from the SELECT statement
 
 
-    /////////////////////////////////////////////////////
-    //
-    // Fetch used tables from the SEARCH, ORDER BY and AND WHERE statement
+      /////////////////////////////////////////////////////
+      //
+      // Fetch used tables from the SEARCH, ORDER BY and AND WHERE statement
 
-    // Fetch used tables from the search fields, if there is a sword
-    if ($this->pObj->piVar_sword)
+      // Fetch used tables from the search fields, if there is a sword
+    if( $this->pObj->piVar_sword )
     {
-      $this->fetch_realTableWiField($lConfSql['search']);
+      $this->fetch_realTableWiField( $lConfSql['search'] );
     }
 
-    // Try to fetch used tables from the ORDER BY statement
+      // Try to fetch used tables from the ORDER BY statement
     $csvOrderBy = $lConfSql['orderBy'];
-    // Bugfix #6468, #6518,  010220, dwildt
-    $csvOrderBy = str_ireplace(' desc', '', $csvOrderBy);
-    $csvOrderBy = str_ireplace(' asc',  '', $csvOrderBy);
-    $this->fetch_realTableWiField($csvOrderBy);
+      // Bugfix #6468, #6518,  010220, dwildt
+    $csvOrderBy = str_ireplace( ' desc', '', $csvOrderBy );
+    $csvOrderBy = str_ireplace( ' asc',  '', $csvOrderBy );
+    $this->fetch_realTableWiField( $csvOrderBy );
 
-    // Try to fetch used tables from the AND WHERE statement
-    if($lConfSql['andWhere'])
+      // Try to fetch used tables from the AND WHERE statement
+    if( $lConfSql['andWhere'] )
     {
-      $arr_result        = $this->pObj->objSqlFun->get_propper_andWhere($lConfSql['andWhere']);
-      $strCsvTableFields = implode(',', $arr_result['data']['arr_used_tableFields']);
-      unset($arr_result);
-      $this->fetch_realTableWiField($strCsvTableFields);
+      $arr_result        = $this->pObj->objSqlFun->get_propper_andWhere( $lConfSql['andWhere'] );
+      $strCsvTableFields = implode( ',', $arr_result['data']['arr_used_tableFields'] );
+      unset( $arr_result );
+      $this->fetch_realTableWiField( $strCsvTableFields );
     }
-    // Fetch used tables from the SEARCH, ORDER BY and AND WHERE statement
+      // Fetch used tables from the SEARCH, ORDER BY and AND WHERE statement
 
 
-    /////////////////////////////////////////////////////
-    //
-    // Get table fields out of the filter, if filter is set
+      /////////////////////////////////////////////////////
+      //
+      // Get table fields out of the filter, if filter is set
 
     $arr_tableField = false;
-    if (is_array($this->conf_view['filter.']))
+    if( is_array( $this->conf_view['filter.'] ) )
     {
-      $arr_prompt = array();
-      foreach((array) $this->conf_view['filter.'] as $tableWiDot => $arrFields)
+      $arr_prompt = array( );
+      foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $arrFields )
       {
         // Get piVar name
-        $tableField           = $tableWiDot.key($arrFields);
-        list($table, $field)  = explode('.', $tableField);
+        $tableField           = $tableWiDot.key( $arrFields );
+        list($table, $field)  = explode( '.', $tableField );
         $str_nice_piVar       = $arrFields[$field.'.']['nice_piVar'];
-        if (!$str_nice_piVar)
+        if( ! $str_nice_piVar )
         {
           $str_nice_piVar = $tableField;
         }
         // Do we have a piVar
-        if ($this->pObj->piVars[$str_nice_piVar])
+        if( $this->pObj->piVars[$str_nice_piVar] )
         {
           $arr_tableField[]  = $tableField;
         }
       }
     }
-    if (is_array($arr_tableField))
+    if( is_array( $arr_tableField ) )
     {
-      $arrCsvFilter = implode (',', $arr_tableField);
-      $this->fetch_realTableWiField($arrCsvFilter);
+      $arrCsvFilter = implode( ',', $arr_tableField );
+      $this->fetch_realTableWiField( $arrCsvFilter );
     }
-    // Get table fields out of the filter, if filter is set
+      // Get table fields out of the filter, if filter is set
 
 
-    /////////////////////////////////////////////////////
-    //
-    // Set the class var conf_sql
+
+      /////////////////////////////////////////////////////
+      //
+      // Set the class var conf_sql
 
     $this->conf_sql = $lConfSql;
-    // Set the class var conf_sql
+      // Set the class var conf_sql
 
     return $this->arr_realTables_arrFields;
   }
@@ -488,251 +492,258 @@ class tx_browser_pi1_typoscript
 
 
  /**
-  * Sets the class var conf_sql with the SQL query statements from the TypoScript.
-  * If there is a 'deal_as_table', SQL function will replaced.
-  * All tables become an alias, functions too.
+  * set_confSql( ): Sets the class var conf_sql with the SQL query statements from the TypoScript.
+  *                 If there is a 'deal_as_table', SQL function will replaced.
+  *                 All tables become an alias, functions too.
   *
   * @return	array		$conf_sql:
+  *
+  * @version  3.9.9
+  * @since    3.0.0
   */
-  function set_confSql()
+  function set_confSql( )
   {
 
-    if ($this->pObj->b_drs_sql)
+      // DRS
+    if ( $this->pObj->b_drs_sql )
     {
-      t3lib_div::devlog('[INFO/SQL] Try to process aliases in SQL query parts.', $this->pObj->extKey, 0);
+      $prompt = 'Try to process aliases in SQL query parts.';
+      t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
     }
+      // DRS
 
 
 
-    //////////////////////////////////////////////////////
-    //
-    // Array with the TypoScript element names, which should processed
+      //////////////////////////////////////////////////////
+      //
+      // LOOP select, ..., andWhere
 
-    $arr_query_parts = array('select', 'from', 'search', 'orderBy', 'groupBy', 'where', 'andWhere');
-    // Array with the TypoScript element names, which should processed
-
-
-
-    //////////////////////////////////////////////////////
-    //
-    // Allocates an array with the TypoScript SQL query parts
-
-    foreach ($arr_query_parts as $str_query_part)
+    $arr_query_parts = array( 'select', 'from', 'search', 'orderBy', 'groupBy', 'where', 'andWhere' );
+    foreach( $arr_query_parts as $str_query_part )
     {
-      $str_tmpConfValue = $this->conf_view['override.'][$str_query_part];
-      $arr_tmpConfValue = $this->conf_view['override.'][$str_query_part.'.'];
+        // Get override configuration
+      $coa_name = $this->conf_view['override.'][$str_query_part];
+      $coa_conf = $this->conf_view['override.'][$str_query_part . '.'];
+        // Get override configuration
 
-      // Override 3.3.7
-      if($str_tmpConfValue)
+        // SWITCH configuration
+      switch( true )
       {
-        if ($this->pObj->b_drs_sql)
-        {
-          t3lib_div::devlog('[INFO/SQL] '.$str_query_part.' has an override.', $this->pObj->extKey, 0);
-        }
-        $conf_sql[$str_query_part] = $this->pObj->objSqlFun->global_stdWrap('override.'.$str_query_part, $str_tmpConfValue, $arr_tmpConfValue);
+        case( $coa_name ):
+            // DRS
+          if( $this->pObj->b_drs_sql )
+          {
+            $prompt = $str_query_part . ' has an override.';
+            t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+          }
+            // DRS
+            // #33892, 120219, dwildt-
+          //$conf_sql[$str_query_part] = $this->pObj->objSqlFun->global_stdWrap('override.'.$str_query_part, $coa_name, $coa_conf);
+          break;
+        default:
+          if ($this->pObj->b_drs_sql)
+          {
+            $prompt = $str_query_part .' hasn\'t any override.';
+            t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+            $prompt = 'If you want to override, please configure \'override.' . $str_query_part . '\'.';
+            t3lib_div::devlog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
+          }
+          $coa_name          = $this->conf_view[$str_query_part];
+          $coa_conf          = $this->conf_view[$str_query_part.'.'];
+          break;
       }
-      // Override 3.3.7
-
-      // No override
-      if(!$str_tmpConfValue)
-      {
-        if ($this->pObj->b_drs_sql)
-        {
-          t3lib_div::devlog('[INFO/SQL] '.$str_query_part.' hasn\'t any override.', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[HELP/SQL] If you want to override, please configure \'override.'.$str_query_part.'\'.', $this->pObj->extKey, 0);
-        }
-        $str_tmpConfValue          = $this->conf_view[$str_query_part];
-        $arr_tmpConfValue          = $this->conf_view[$str_query_part.'.'];
-        // 3.3.7
-        $conf_sql[$str_query_part] = $this->pObj->objSqlFun->global_stdWrap($str_query_part, $str_tmpConfValue, $arr_tmpConfValue);
-      }
-      // No override
-
-// todo 3.3.7
+        // SWITCH configuration
+        // #33892, 120219, dwildt-
+      //$conf_sql[$str_query_part] = $this->pObj->objSqlFun->global_stdWrap($str_query_part, $str_tmpConfValue, $coa_conf);
+        // #33892, 120219, dwildt+
+      $conf_sql[$str_query_part] = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
     }
+      // LOOP select, ..., andWhere
 
-    $conf_sql['groupBy'] = $this->set_confSql_groupBy();
 
-    if(!$conf_sql['orderBy'] || $conf_sql['orderBy'] == '')
+
+      //////////////////////////////////////////////////////
+      //
+      // group by, order by, where, and where
+      
+      // Set group by
+    $conf_sql['groupBy'] = $this->set_confSql_groupBy( );
+
+      // Set default order by
+    if( empty ( $conf_sql['orderBy'] ) )
     {
       $conf_sql['orderBy'] = $this->conf_view['select'];
     }
-    if($conf_sql['groupBy'])
-    {
-      $conf_sql['orderBy'] = $conf_sql['groupBy'].', '.$conf_sql['orderBy'];
-    }
+      // Set default order by
 
-    // 3.3.7
-    if(!$conf_sql['where'] || $conf_sql['where'] == '')
+      // Concatennate groupb by and order by
+    if( ! empty ( $conf_sql['groupBy'] ) )
+    {
+      $conf_sql['orderBy'] = $conf_sql['groupBy'] . ', ' . $conf_sql['orderBy'];
+    }
+      // Concatennate groupb by and order by
+
+      // Set where
+    if( ! empty ( $conf_sql['where']) )
     {
       $conf_sql['where'] = $this->conf['where'];
     }
-    // 3.3.7
+      // Set where
 
-    if(!$conf_sql['andWhere'] || $conf_sql['andWhere'] == '')
+      // Set and where
+    if( ! empty ( $conf_sql['andWhere']) )
     {
       $conf_sql['andWhere'] = $this->conf['andWhere'];
     }
+      // Set and where
+      // group by, order by, where, and where
 
-    // 3.4.1
-    // plugin [template] int_templating_dataQuery has a value
-//var_dump('typoscript 487', $this->pObj->objFlexform->int_templating_dataQuery);
-    if($this->pObj->objFlexform->int_templating_dataQuery)
+
+
+      //////////////////////////////////////////////////////
+      //
+      // and where data query
+
+      // plugin [template] int_templating_dataQuery has a value
+    if( $this->pObj->objFlexform->int_templating_dataQuery )
     {
-      // Get andWhere from TypoScript
-      $str_key   = $this->pObj->objFlexform->int_templating_dataQuery.'.';
-//var_dump('typoscript 494', $str_key);
+        // Get andWhere from TypoScript
+      $str_key   = $this->pObj->objFlexform->int_templating_dataQuery . '.';
       $arr_items = $this->conf['flexform.']['templating.']['arrDataQuery.']['items.'];
-//var_dump('typoscript 495', $arr_items);
       $arr_item  = $arr_items[$str_key]['arrQuery.']['andWhere'];
-      $conf_sql['andWhere'] = $conf_sql['andWhere'].$arr_item;
+      $conf_sql['andWhere'] = $conf_sql['andWhere'] . $arr_item;
     }
-    // plugin [template] int_templating_dataQuery has a value
-    // 3.4.1
-
-    // Allocates an array with the TypoScript SQL query parts
+      // plugin [template] int_templating_dataQuery has a value
+      // and where data query
 
 
-    //////////////////////////////////////////////////////
-    //
-    // Clean up LF and CR (Line Feed and Carriage Return)
+
+      //////////////////////////////////////////////////////
+      //
+      // Clean up LF and CR (Line Feed and Carriage Return)
 
     foreach ($arr_query_parts as $str_query_part)
     {
-      $conf_sql[$str_query_part] = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($conf_sql[$str_query_part]);
+      $conf_sql[$str_query_part] = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $conf_sql[$str_query_part] );
     }
-    // Clean up LF and CR (Line Feed and Carriage Return)
+      // Clean up LF and CR (Line Feed and Carriage Return)
 
 
-    //////////////////////////////////////////////////////
-    //
-    // Is there a SQL function, which should replaced with an alias?
+    
+      //////////////////////////////////////////////////////
+      //
+      // Replace SQL function with an alias
 
-    if (is_array($this->conf_view['select.']['deal_as_table.']))
+      // LOOP replace each SQL function which its alias
+    foreach( ( array ) $this->conf_view['select.']['deal_as_table.'] as $arr_dealastable )
     {
-      // Replace each SQL function which its alias
-      foreach ($this->conf_view['select.']['deal_as_table.'] as $arr_dealastable)
-      {
-        $str_statement  = $arr_dealastable['statement'];
-        $str_aliasTable = $arr_dealastable['alias'];
-        $arr_dealAlias[$str_aliasTable] = $str_statement;
-        // I.e.: $conf_sql['select'] = CONCAT(tx_bzdstaffdirectory_persons.title, ' ', tx_bzdstaffdirectory_persons.first_name, ' ', tx_bzdstaffdirectory_persons.last_name), tx_bzdstaffdirectory_groups.group_name
-        $conf_sql['select'] = str_replace($str_statement, $str_aliasTable, $conf_sql['select']);
-        // I.e.: $conf_sql['select'] = tx_bzdstaffdirectory_persons.last_name, tx_bzdstaffdirectory_groups.group_name
-      }
+      $str_statement  = $arr_dealastable['statement'];
+      $str_aliasTable = $arr_dealastable['alias'];
+      $arr_dealAlias[$str_aliasTable] = $str_statement;
+      // I.e.: $conf_sql['select'] = CONCAT(tx_bzdstaffdirectory_persons.title, ' ', tx_bzdstaffdirectory_persons.first_name, ' ', tx_bzdstaffdirectory_persons.last_name), tx_bzdstaffdirectory_groups.group_name
+      $conf_sql['select'] = str_replace( $str_statement, $str_aliasTable, $conf_sql['select'] );
+      // I.e.: $conf_sql['select'] = tx_bzdstaffdirectory_persons.last_name, tx_bzdstaffdirectory_groups.group_name
     }
-    // Is there a SQL function, which should replaced with an alias?
+      // LOOP replace each SQL function which its alias
+      // Replace SQL function with an alias
 
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Contains ORDER BY further tables and fields?
+
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Does ORDER BY contains further tables and fields?
 
     $arr_addToSelect      = false;
-    $bool_orderByIsSelect = false; // 100429, dwildt - Bugfix: $bool_orderByIsSelect isn't set
-    if(!$bool_orderByIsSelect)
+    $csvOrderByWoAscDesc  = $this->pObj->objSqlFun->get_orderBy_tableFields( $conf_sql['orderBy'] );
+    $arrOrderByWoAscDesc  = $this->pObj->objZz->getCSVasArray( $csvOrderByWoAscDesc );
+    $arrSelect            = $this->pObj->objZz->getCSVasArray( $conf_sql['select'] );
+
+      // #110110, cweiske, '11870
+    foreach ( $arrSelect as $key => $field )
     {
-      $csvOrderByWoAscDesc  = $this->pObj->objSqlFun->get_orderBy_tableFields($conf_sql['orderBy']);
-      $arrOrderByWoAscDesc  = $this->pObj->objZz->getCSVasArray($csvOrderByWoAscDesc);
-      $arrSelect            = $this->pObj->objZz->getCSVasArray($conf_sql['select']);
-
-        // #110110, cweiske, '11870
-      foreach ($arrSelect as $key => $field) {
-        $arrSelect[$key] = $this->pObj->objSqlFun->get_sql_alias_behind($field);
-      }
-        // #110110, cweiske, '11870
-
-      $arr_addToSelect      = array_diff($arrOrderByWoAscDesc, $arrSelect);
-
-      // If array diff is empty
-      if(is_array($arr_addToSelect))
-      {
-        if(count($arr_addToSelect) == 0)
-        {
-          unset($arr_addToSelect);
-        }
-      }
-      // If array diff is empty
-
-      // ORDER BY has new tableFields
-      if(is_array($arr_addToSelect))
-      {
-        // SELECT has aliases
-        if (!(strpos($conf_sql['select'], " AS ") === false))
-        {
-          foreach((array) $arr_addToSelect as $tableField)
-          {
-            $conf_sql['select'] = $conf_sql['select'].', '.$tableField.' AS \''.$tableField.'\'';
-          }
-        }
-        // SELECT has aliases
-        // SELECT hasn't aliases
-        if (strpos($conf_sql['select'], " AS ") === false)
-        {
-          $csvAddToSelect     = implode(', ', $arr_addToSelect);
-          $conf_sql['select'] = $conf_sql['select'].', '.$csvAddToSelect;
-        }
-        // SELECT hasn't aliases
-
-        // Add the new table.fields to the consolidation array
-        if(!is_array($this->pObj->arrConsolidate['addedTableFields']))
-        {
-          $this->pObj->arrConsolidate['addedTableFields'] = array();
-        }
-        $this->pObj->arrConsolidate['addedTableFields'] = array_merge($this->pObj->arrConsolidate['addedTableFields'], $arr_addToSelect);
-        // Add the new table.fields to the consolidation array
-      }
-      // ORDER BY has new tableFields
+      $arrSelect[$key] = $this->pObj->objSqlFun->get_sql_alias_behind( $field );
     }
-    // Contains ORDER BY further tables and fields?
+      // #110110, cweiske, '11870
+
+      // Is there any difference?
+    $arr_addToSelect = array_diff( $arrOrderByWoAscDesc, $arrSelect );
+      // Does ORDER BY contains further tables and fields?
 
 
-    //////////////////////////////////////////////////////
-    //
-    // Add aliases to the SELECT statement
+    
+      ////////////////////////////////////////////////////////////////////
+      //
+      // IF order by has new tableFields
 
-    // There is a 'bug' in exec_SELECTgetRows:
-    // It cleares all tables in the selection statement. So it isn't possible to select fields
-    // from different tables, if it has the same name.
-    // SOLUTION: Aliasing all select values with AS
-    // EXAMPLE: tx_ships_main.g2_name AS 'tx_ships_main.g2_name' ...
+    if( count( ( array ) $arr_addToSelect ) > 0 )
+    {
+        // SELECT has aliases
+      if( ! ( strpos( $conf_sql['select'], " AS " ) === false ) )
+      {
+        foreach( ( array ) $arr_addToSelect as $tableField )
+        {
+          $conf_sql['select'] = $conf_sql['select'] . ', ' . $tableField . ' AS \'' . $tableField . '\'';
+        }
+      }
+        // SELECT has aliases
+        // SELECT hasn't aliases
+      if( strpos($conf_sql['select'], " AS " ) === false )
+      {
+        $csvAddToSelect     = implode( ', ', $arr_addToSelect );
+        $conf_sql['select'] = $conf_sql['select'] . ', ' . $csvAddToSelect;
+      }
+        // SELECT hasn't aliases
 
-    $bool_auto          = true;
-    $arr_aliasedSelect  = false;
-    $str_aliasedSelect  = false;
-    $arr_tableFields = explode(',', $conf_sql['select']);
-    foreach ($arr_tableFields as $tableField)
+        // Add the new table.fields to the consolidation array
+//      if( ! is_array( $this->pObj->arrConsolidate['addedTableFields'] ) )
+//      {
+//        $this->pObj->arrConsolidate['addedTableFields'] = array( );
+//      }
+      $this->pObj->arrConsolidate['addedTableFields'] =
+        array_merge
+        (
+          ( array ) $this->pObj->arrConsolidate['addedTableFields'],
+          $arr_addToSelect
+        );
+        // Add the new table.fields to the consolidation array
+    }
+      // IF order by has new tableFields
+
+
+
+      //////////////////////////////////////////////////////
+      //
+      // Add aliases to the SELECT statement
+
+      // There is a 'bug' in exec_SELECTgetRows:
+      // It cleares all tables in the selection statement. So it isn't possible to select fields
+      // from different tables, if it has the same name.
+      // SOLUTION: Aliasing all select values with AS
+      // EXAMPLE: tx_ships_main.g2_name AS 'tx_ships_main.g2_name' ...
+
+    $arr_aliasedSelect = null;
+
+      // LOOP all tableFields from select
+    $arr_tableFields    = explode( ',', $conf_sql['select'] );
+    foreach( $arr_tableFields as $tableField )
     {
         // 110110, cweiske, #11870
-      if (strpos($tableField, ' AS ') !== false)
+      if( strpos( $tableField, ' AS ' ) !== false )
       {
         $arr_aliasedSelect[] = $tableField;
         continue;
       }
         // 110110, cweiske, #11870
 
-      list($table, $field) = explode('.', $tableField);
-      $table      = trim($table);
-      $field      = trim($field);
+      list( $table, $field ) = explode( '.', $tableField );
+      $table  = trim( $table );
+      $field  = trim( $field );
 
-        // 110110, cweiske, #11870
-//      if (!(strpos($field, " AS ") === false))
-//      {
-//        if ($this->pObj->b_drs_sql)
-//        {
-//          t3lib_div::devlog('[INFO/SQL] SELECT has an alias (something with AS).<br />
-//            SELECT won\'t be changed. '.$conf_sql['select'], $this->pObj->extKey, 0);
-//        }
-//        $bool_auto = false;
-//        break;
-//      }
-        // 110110, cweiske, #11870
+      $tableField = $table . '.' . $field;
+      $alias      = $tableField;
 
-      $tableField = $table.'.'.$field;
-      $alias      = $table.'.'.$field;
-
-      // Do we have a function instead of table.field?
-      if ($arr_dealAlias[$tableField])
+        // Do we have a function instead of table.field?
+      if( $arr_dealAlias[$tableField] )
       {
         $tableField = $arr_dealAlias[$tableField];
         // We want the sytax: function AS 'table.field'
@@ -740,23 +751,22 @@ class tx_browser_pi1_typoscript
       }
       // Do we have a function instead of table.field?
 
-      $arr_aliasedSelect[] = $tableField.' AS \''.$alias.'\'';
+      $arr_aliasedSelect[] = $tableField.' AS \'' . $alias . '\'';
     }
+      // LOOP all tableFields from select
 
-    if($bool_auto)
-    {
-      $str_aliasedSelect    = implode(', ', $arr_aliasedSelect);
-      $conf_sql['select'] = $str_aliasedSelect;
-    }
+    $str_aliasedSelect  = implode( ', ', $arr_aliasedSelect );
+    $conf_sql['select'] = $str_aliasedSelect;
+      // Add aliases to the SELECT statement
 
 
-    //////////////////////////////////////////////////////
-    //
-    // Set the global array conf_sql
+
+      //////////////////////////////////////////////////////
+      //
+      // Set the global array conf_sql
 
     $this->pObj->conf_sql = $conf_sql;
-//var_dump('typoscript 649', $this->pObj->conf_sql);
-    // Set the global array conf_sql
+      // Set the global array conf_sql
 
     return $conf_sql;
 

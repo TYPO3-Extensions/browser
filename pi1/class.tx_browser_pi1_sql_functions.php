@@ -1985,11 +1985,14 @@ class tx_browser_pi1_sql_functions
 
 
 /**
- * Set the global csvSearch. Values are from the TypoScript. If search is empty, search will get the values out of the select statement.
+ * global_csvSearch( ): Set the global csvSearch. Values are from the TypoScript. If search is empty, search will get the values out of the select statement.
  *
  * @return	boolean		TRUE
+ *
+ * @version 3.9.9
+ * @since   2.0.0
  */
-    function global_csvSearch()
+    function global_csvSearch( )
     {
       $conf = $this->pObj->conf;
       $mode = $this->pObj->piVar_mode;
@@ -2006,34 +2009,33 @@ class tx_browser_pi1_sql_functions
       // 3.3.7
       //$csvSearch  = $conf_view['search'];
       $csvSearch = $this->pObj->conf_sql['search'];
-      $csvSearch = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($csvSearch);
+      $csvSearch = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $csvSearch );
 //if(t3lib_div::_GP('dev')) var_dump('sqlFun 2716', $csvSearch);
 
-      if (!$csvSearch)
+      if ( ! $csvSearch )
       {
         // 3.3.7
         //$csvSearch = $conf_view['select'];
         $csvSearch = $this->pObj->conf_sql['select'];
-        $csvSearch  = $this->pObj->objZz->cleanUp_lfCr_doubleSpace($csvSearch);
+        $csvSearch  = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $csvSearch );
         if ($this->pObj->b_drs_sql)
         {
-          t3lib_div::devlog('[INFO/SQL] views.'.$viewWiDot.$mode.' hasn\'t any extra search field. It is OK.', $this->pObj->extKey, 0);
+          $prompt = 'views.' . $viewWiDot . $mode . ' hasn\'t any extra search field. It is OK.';
+          t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
         }
       }
 
-      // Is there a statement, which should replaced with an alias?
-      if (is_array($conf_view['select.']['deal_as_table.']))
+        // Is there a statement, which should replaced with an alias?
+      foreach( ( array ) $conf_view['select.']['deal_as_table.'] as $arr_dealastable )
       {
-        foreach ($conf_view['select.']['deal_as_table.'] as $arr_dealastable)
+        $csvSearch = str_replace( $arr_dealastable['statement'], $arr_dealastable['alias'], $csvSearch );
+        if( $this->pObj->b_drs_sql )
         {
-          $csvSearch = str_replace($arr_dealastable['statement'], $arr_dealastable['alias'], $csvSearch);
-          if ($this->pObj->b_drs_sql)
-          {
-            t3lib_div::devlog('[INFO/SQL] Used tables: Statement "'.$arr_dealastable['statement'].'" is replaced with "'.$arr_dealastable['alias'].'"', $this->pObj->extKey, 0);
-          }
+          $prompt = 'Used tables: Statement "' . $arr_dealastable['statement'] . '" is replaced with "' . $arr_dealastable['alias'] . '"';
+          t3lib_div::devlog( '[INFO/SQL] ', $this->pObj->extKey, 0 );
         }
       }
-      // Is there a statement, which should replaced with an alias?
+        // Is there a statement, which should replaced with an alias?
 
       $this->pObj->csvSearch = $csvSearch;
       // Get the SEARCH values

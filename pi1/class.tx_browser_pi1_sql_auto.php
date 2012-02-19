@@ -438,9 +438,9 @@ class tx_browser_pi1_sql_auto
     //
     // DRS - Development Reporting System
 
-    if ($this->pObj->b_drs_sql)
+    if ( $this->pObj->b_drs_sql )
     {
-      t3lib_div::devLog('[INFO/SQL] SELECT '.$select, $this->pObj->extKey, -1);
+      t3lib_div::devLog( '[INFO/SQL] SELECT ' . $select, $this->pObj->extKey, 0 );
     }
     // DRS - Development Reporting System
 

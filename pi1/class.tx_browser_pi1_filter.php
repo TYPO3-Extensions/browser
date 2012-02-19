@@ -3284,13 +3284,23 @@ class tx_browser_pi1_filter {
     return $conf_object;
   }
 
-  /**
+
+
+
+
+
+
+
+
+/**
  * get_tableFields(): Set the global arr_conf_tableFields
  *
  * @return	boolean		FALSE: filters are set. TRUE: filters aren't set or there is a ts config error
- * @version 3.5.0
+ * @version 3.9.9
+ * @since   3.0.0
  */
-  function get_tableFields() {
+  function get_tableFields( )
+  {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
     $view = $this->pObj->view;
@@ -3298,108 +3308,139 @@ class tx_browser_pi1_filter {
     $viewWiDot = $view . '.';
     $conf_view = $conf['views.'][$viewWiDot][$mode . '.'];
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Return TRUE, if we don't have any filter array
+      /////////////////////////////////////////////////////////////////
+      //
+      // Return TRUE, if we don't have any filter array
 
-    if (!is_array($conf_view['filter.'])) {
-      if ($this->pObj->b_drs_filter) {
-        t3lib_div :: devlog('[INFO/FILTER] ' . $viewWiDot . $mode . '.filters isn\'t an array. There isn\'t any filter for processing.', $this->pObj->extKey, 0);
+    if( ! is_array( $conf_view['filter.'] ) )
+    {
+      if ($this->pObj->b_drs_filter)
+      {
+        $prompt = $viewWiDot . $mode . ' . filters isn\'t an array. There isn\'t any filter for processing.';
+        t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
       }
       return true;
     }
     // Return TRUE, if we don't have any filter array
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Loop through the filter array and get all table.field
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Loop through the filter array and get all table.field
 
     $arr_tableFields = false;
-    foreach ($conf_view['filter.'] as $tables => $str_field) {
-      while ($value = current($str_field)) {
-        // If $str_field hasn't any dot, it is a field and it isn't an array
-        if (substr(key($str_field), -1) != '.') {
-          $this->arr_conf_tableFields[] = trim($tables) . key($str_field);
+    foreach( $conf_view['filter.'] as $tables => $str_field )
+    {
+      while( $value = current( $str_field ) )
+      {
+          // If $str_field hasn't any dot, it is a field and it isn't an array
+        if( substr( key( $str_field ), -1 ) != '.' )
+        {
+          $this->arr_conf_tableFields[] = trim($tables) . key( $str_field );
         }
-        next($str_field);
+        next( $str_field );
       }
     }
-    // Loop through the filter array and get all table.field
+      // Loop through the filter array and get all table.field
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Return TRUE, if there is a ts config error
 
-    if (!is_array($this->arr_conf_tableFields)) {
-      if ($this->pObj->b_drs_error) {
-        t3lib_div :: devlog('[ERROR/FILTER] ' . $viewWiDot . $mode . '.filters hasn\'t any table.field syntax.' .
-        ' This is an error.', $this->pObj->extKey, 3);
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Return TRUE, if there is a ts config error
+
+    if( ! is_array( $this->arr_conf_tableFields ) )
+    {
+      if( $this->pObj->b_drs_error )
+      {
+        $prompt = $viewWiDot . $mode . '.filters hasn\'t any table.field syntax.';
+        t3lib_div :: devlog( '[ERROR/FILTER] ' . $prompt, $this->pObj->extKey, 3 );
       }
       return true;
     }
-    // Return TRUE, if we there is a ts config error
+      // Return TRUE, if we there is a ts config error
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Add table.fields to the select statement
 
-    // Loop each filter (table.field)
-    foreach ($this->arr_conf_tableFields as $tableField) {
-      list ($table, $field) = explode('.', $tableField);
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Add table.fields to the select statement
+
+      // Loop each filter (table.field)
+    foreach( $this->arr_conf_tableFields as $tableField )
+    {
+      list( $table, $field ) = explode( '.', $tableField );
       $field = 'uid';
       $tableField = $table . '.' . $field;
 
-      // addedTableFields
+        // addedTableFields
       $bool_was_registered = true;
-      if (!is_array($this->pObj->arrConsolidate['addedTableFields'])) {
+      if( ! is_array( $this->pObj->arrConsolidate['addedTableFields'] ) )
+      {
         $this->pObj->arrConsolidate['addedTableFields'][] = $tableField;
         $bool_was_registered = false;
-        if ($this->pObj->b_drs_filter) {
-          t3lib_div :: devlog('[INFO/FILTER] Table ' . $table . '.' . $field . ' is added to arrConsolidate[addedTableFields].', $this->pObj->extKey, 0);
+        if( $this->pObj->b_drs_filter )
+        {
+          $prompt = 'Table ' . $table . '.' . $field . ' is added to arrConsolidate[addedTableFields].';
+          t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
         }
       }
-      if (is_array($this->pObj->arrConsolidate['addedTableFields'])) {
-        if ($tableField) {
-          if (!in_array($tableField, $this->pObj->arrConsolidate['addedTableFields'])) {
+      if( is_array($this->pObj->arrConsolidate['addedTableFields'] ) )
+      {
+        if( $tableField )
+        {
+          if( ! in_array( $tableField, $this->pObj->arrConsolidate['addedTableFields'] ) )
+          {
             $this->pObj->arrConsolidate['addedTableFields'][] = $tableField;
             $bool_was_registered = false;
-            if ($this->pObj->b_drs_filter) {
+            if( $this->pObj->b_drs_filter )
+            {
               t3lib_div :: devlog('[INFO/FILTER] Table ' . $table . '.' . $field . ' is added to arrConsolidate[addedTableFields].', $this->pObj->extKey, 0);
             }
           }
         }
       }
-      // addedTableFields
+        // addedTableFields
 
-      // arr_realTables_arrFields
-      if (!is_array($this->pObj->arr_realTables_arrFields[$table])) {
+        // arr_realTables_arrFields
+      if( ! is_array( $this->pObj->arr_realTables_arrFields[$table] ) )
+      {
         $this->pObj->arr_realTables_arrFields[$table][] = $field;
-        if ($this->pObj->b_drs_filter) {
-          t3lib_div :: devlog('[INFO/FILTER] Table ' . $table . '.' . $field . ' is added to arr_realTables_arrFields.', $this->pObj->extKey, 0);
+        if( $this->pObj->b_drs_filter )
+        {
+          $prompt = 'Table ' . $table . '.' . $field . ' is added to arr_realTables_arrFields.';
+          t3lib_div :: devlog( '[INFO/FILTER] '. $prompt, $this->pObj->extKey, 0 );
         }
       }
-      if (is_array($this->pObj->arr_realTables_arrFields[$table])) {
-        if (!in_array($field, $this->pObj->arr_realTables_arrFields[$table])) {
+      if( is_array( $this->pObj->arr_realTables_arrFields[$table] ) )
+      {
+        if( ! in_array( $field, $this->pObj->arr_realTables_arrFields[$table] ) )
+        {
           $this->pObj->arr_realTables_arrFields[$table][] = $field;
-          if ($this->pObj->b_drs_filter) {
-            t3lib_div :: devlog('[INFO/FILTER] Field ' . $table . '.' . $field . ' is added to arr_realTables_arrFields.', $this->pObj->extKey, 0);
+          if( $this->pObj->b_drs_filter )
+          {
+            $prompt = 'Field ' . $table . '.' . $field . ' is added to arr_realTables_arrFields.';
+            t3lib_div :: devlog( '[INFO/FILTER] ', $this->pObj->extKey, 0 );
           }
         }
       }
-      // arr_realTables_arrFields
+        // arr_realTables_arrFields
 
-      // add to the select query
-      //      if(!$bool_was_registered)
-      //      {
-      if (strpos($this->pObj->conf_sql['select'], $tableField) === false) {
+        // add to the select query
+        //      if(!$bool_was_registered)
+        //      {
+      if( strpos( $this->pObj->conf_sql['select'], $tableField ) === false )
+      {
         $this->pObj->conf_sql['select'] = $this->pObj->conf_sql['select'] . ', ' .
         $tableField . ' AS \'' . $tableField . '\'';
-        if ($this->pObj->b_drs_filter) {
-          t3lib_div :: devlog('[INFO/FILTER] ' . $table . '.' . $field . ' is added to $this->pObj->conf_sql[select].', $this->pObj->extKey, 0);
+        if( $this->pObj->b_drs_filter )
+        {
+          $prompt = $table . '.' . $field . ' is added to $this->pObj->conf_sql[select].';
+          t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
         }
       }
-      //      }
-      // add to the select query
+        // add to the select query
       $this->pObj->csvSelectWoFunc = $this->pObj->csvSelectWoFunc . ', ' . $tableField;
     }
     // Loop each filter (table.field)
