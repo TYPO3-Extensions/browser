@@ -695,14 +695,14 @@ class tx_browser_pi1_typoscript
         // SELECT hasn't aliases
 
         // Add the new table.fields to the consolidation array
-//      if( ! is_array( $this->pObj->arrConsolidate['addedTableFields'] ) )
-//      {
-//        $this->pObj->arrConsolidate['addedTableFields'] = array( );
-//      }
+      if( ! is_array( $this->pObj->arrConsolidate['addedTableFields'] ) )
+      {
+        $this->pObj->arrConsolidate['addedTableFields'] = array( );
+      }
       $this->pObj->arrConsolidate['addedTableFields'] =
         array_merge
         (
-          ( array ) $this->pObj->arrConsolidate['addedTableFields'],
+          $this->pObj->arrConsolidate['addedTableFields'],
           $arr_addToSelect
         );
         // Add the new table.fields to the consolidation array

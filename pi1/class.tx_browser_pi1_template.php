@@ -2575,7 +2575,6 @@ class tx_browser_pi1_template
     }
       // Handle empty values?
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, null );
 
 
       //////////////////////////////////////////////////////////////////
@@ -2986,7 +2985,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, null );
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $addedTableFields );
     foreach ($this->_elementsTransformed as $key => $value)
     {
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $key );
 
       $boolSubstitute = $this->_elementsBoolSubstitute[$key];
         // #12723, mbless, 110310
@@ -3001,7 +2999,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $key );
         continue;
       }
         // #28562: 110830, dwildt+
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $key );
 
         // csv export: move value to a proper csv value
         // #29370, 110831, dwildt+
@@ -3029,8 +3026,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $key );
           // #28562: 110830, dwildt+
 
         $htmlSubpart = $this->pObj->cObj->getSubpart($template, $subpart);
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->view );
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $bool_design_default );
         if($this->view == 'list' && $bool_design_default)
         {
           $class = $i_count_cell < $maxColumns ? 'cell-'.$i_count_cell : 'cell-'.$i_count_cell.' last';
@@ -3043,7 +3038,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $bool_design_default );
         }
         if($this->view == 'list' && !$bool_design_default)
         {
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $value );
           $markerArray['###'.strtoupper($key).'###']  = $value;
           $bool_defaultTemplate = false;
           $markerArray['###SOCIALMEDIA_BOOKMARKS###'] = $this->pObj->objSocialmedia->get_htmlBookmarks($elements, $key, $bool_defaultTemplate);
@@ -3126,7 +3120,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $value );
 //  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $htmlRow );
 //}
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, null );
 
     return $htmlRow;
   }
