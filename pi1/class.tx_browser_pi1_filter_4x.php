@@ -96,7 +96,7 @@ class tx_browser_pi1_filter_4x {
   **********************************************/
 
 /**
- * get_htmlFilter():  It renders filters and category menus in HTML.
+ * get_htmlFilters( ):  It renders filters and category menus in HTML.
  *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
  *
  * @return	array
@@ -104,11 +104,12 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  public function get_htmlFilter(  )
+  public function get_htmlFilters( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
+      // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
     {
       foreach( ( array ) $fields as $field => $confField )
@@ -117,20 +118,91 @@ class tx_browser_pi1_filter_4x {
         {
           continue;
         }
-        var_dump( $tableWiDot . $field );
+        $tableField = $tableWiDot . $field;
+        $arr_return = $this->get_htmlFilter( $tableField );
+        if( $arr_return['error']['status'] )
+        {
+          $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+          return $arr_return;
+        }
       }
     }
-
       // LOOP each filter
+
+//    $str_header  = '<h1 style="color:red;">' . __METHOD__ . '</h1>';
+//    $str_prompt  = '<p style="color:red;font-weight:bold;">Development</p>';
+//    $arr_return['error']['status'] = true;
+//    $arr_return['error']['header'] = $str_header;
+//    $arr_return['error']['prompt'] = $str_prompt;
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * get_htmlFilter( ):  It renders filters and category menus in HTML.
+ *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ *
+ * @return	array
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  public function get_htmlFilter( $tableField )
+  {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
+    $arr_return = $this->sql_rowsFilter( $tableField );
+
+    // Set HTML object
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_rowsFilter( ):  It renders filters and category menus in HTML.
+ *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ *
+ * @return	array
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  public function sql_rowsFilter( $tableField )
+  {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
+    var_dump( $tableField );
+
         // Get SQL result
           // Get SELECT statement
           // Get GROUP BY
           // Build SELECT statement
           // Exec SELECT
-        // Set HTML object
 
     $str_header  = '<h1 style="color:red;">' . __METHOD__ . '</h1>';
-    $str_prompt  = '<p style="color:red;font-weight:bold;">Development</p>';
+    $str_prompt  = '<p style="color:red;font-weight:bold;">Development ' . $tableField . '</p>';
     $arr_return['error']['status'] = true;
     $arr_return['error']['header'] = $str_header;
     $arr_return['error']['prompt'] = $str_prompt;
@@ -139,6 +211,15 @@ class tx_browser_pi1_filter_4x {
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
     return $arr_return;
   }
+
+
+
+
+
+
+
+
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_filter_4x.php']) {
