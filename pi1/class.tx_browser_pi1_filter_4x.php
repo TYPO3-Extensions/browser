@@ -157,12 +157,19 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  public function get_htmlFilter( $tableField )
+  private function get_htmlFilter( $tableField )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
-    $arr_return = $this->sql_rowsFilter( $tableField );
+    $arr_return = $this->sql( $tableField );
+    if( $arr_return['error']['status'] )
+    {
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      return $arr_return;
+    }
+    $rows = $arr_return['data']['rows'];
+    unset( $arr_return );
 
     // Set HTML object
 
@@ -180,7 +187,7 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_rowsFilter( ):  It renders filters and category menus in HTML.
+ * sql( ):  It renders filters and category menus in HTML.
  *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
  *
  * @return	array
@@ -188,18 +195,69 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  public function sql_rowsFilter( $tableField )
+  public function sql( $tableField )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
-    var_dump( $tableField );
+    $arr_return = $this->sql_select( $tableField );
+    if( $arr_return['error']['status'] )
+    {
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      return $arr_return;
+    }
+    $select = $arr_return['data']['select'];
+    unset( $arr_return );
+    // Get SQL result
+      // Get SELECT statement
+      // Get GROUP BY
+      // Build SELECT statement
+      // Exec SELECT
 
-        // Get SQL result
-          // Get SELECT statement
-          // Get GROUP BY
-          // Build SELECT statement
-          // Exec SELECT
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_select( ):  It renders filters and category menus in HTML.
+ *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ *
+ * @return	array
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  public function sql_select( $tableField )
+  {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
+//    $arr_return = $this->sql_select( $tableField );
+//    if( $arr_return['error']['status'] )
+//    {
+//      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+//      return $arr_return;
+//    }
+//    $select = $arr_return['data']['select'];
+//    unset( $arr_return );
+    // Get SQL result
+      // Get SELECT statement
+      // Get GROUP BY
+      // Build SELECT statement
+      // Exec SELECT
+
+    var_dump( __METHOD__, $tableField );
+
 
     $str_header  = '<h1 style="color:red;">' . __METHOD__ . '</h1>';
     $str_prompt  = '<p style="color:red;font-weight:bold;">Development ' . $tableField . '</p>';
