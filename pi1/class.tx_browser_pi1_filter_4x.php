@@ -129,12 +129,6 @@ class tx_browser_pi1_filter_4x {
     }
       // LOOP each filter
 
-//    $str_header  = '<h1 style="color:red;">' . __METHOD__ . '</h1>';
-//    $str_prompt  = '<p style="color:red;font-weight:bold;">Development</p>';
-//    $arr_return['error']['status'] = true;
-//    $arr_return['error']['header'] = $str_header;
-//    $arr_return['error']['prompt'] = $str_prompt;
-
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
     return $arr_return;
@@ -171,7 +165,7 @@ class tx_browser_pi1_filter_4x {
     $rows = $arr_return['data']['rows'];
     unset( $arr_return );
 
-    // Set HTML object
+  // Set HTML object
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -239,24 +233,50 @@ class tx_browser_pi1_filter_4x {
  */
   public function sql_select( $tableField )
   {
+    $conf_view = $this->conf_view;
+
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
-//    $arr_return = $this->sql_select( $tableField );
-//    if( $arr_return['error']['status'] )
-//    {
-//      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-//      return $arr_return;
-//    }
-//    $select = $arr_return['data']['select'];
-//    unset( $arr_return );
-    // Get SQL result
-      // Get SELECT statement
-      // Get GROUP BY
-      // Build SELECT statement
-      // Exec SELECT
 
-    var_dump( __METHOD__, $tableField );
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Build the SQL query.
+
+    list ($table, $field) = explode('.', $tableField);
+
+      // SELECT
+    $select = $conf_view['filter.'][$table . '.'][$field . '.']['sql.']['select'];
+    if( ! empty ( $select ) )
+    {
+      $select = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $select );
+      if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+      {
+        $prompt = 'filter.' . $tableField . '.sql.select: ' . $select;
+        t3lib_div :: devlog( '[INFO/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+    }
+    if( empty ( $select ) )
+    {
+      $select = $table . ".uid AS 'uid'," . PHP_EOL .
+      "         " . $table . "." . $field . " AS 'value'," . PHP_EOL;
+      if ( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+      {
+        $prompt = 'filter.' . $tableField . '.sql.select isn\'t set. It\'s ok. Generated SELECT is: ' . $select;
+        t3lib_div :: devlog( '[INFO/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+    }
+      // SELECT
+
+      // SELECT + treeparentField
+    $select = $this->sql_select_treeview( $tableField, $select );
+
+      // SELECT + localisation
+    $select = $this->sql_select_ll( $tableField, $select );
+
+    var_dump( __METHOD__, $tableField, $select );
 
 
     $str_header  = '<h1 style="color:red;">' . __METHOD__ . '</h1>';
@@ -268,6 +288,133 @@ class tx_browser_pi1_filter_4x {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
     return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_select_ll( ):  It renders filters and category menus in HTML.
+ *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ *
+ * @return	array
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  public function sql_select_ll( $tableField, $select )
+  {
+    $conf_view = $this->conf_view;
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
+
+    list ($table, $field) = explode('.', $tableField);
+
+
+    $arr_local_select = $this->pObj->objLocalise->localisationFields_select( $table );
+
+    var_dump( __METHOD__, $arr_local_select );
+
+
+    return $select;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_select_treeview( ):  It renders filters and category menus in HTML.
+ *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ *
+ * @return	array
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  public function sql_select_treeview( $tableField, $select )
+  {
+    $conf_view = $this->conf_view;
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
+
+    list ($table, $field) = explode('.', $tableField);
+
+
+
+      ///////////////////////////////////////////////////////////////
+      //
+      // Set the global $treeviewEnabled
+
+      // #32223, 120120, dwildt+
+    $cObj_name        = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['enabled'];
+    $cObj_conf        = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['enabled.'];
+    $treeviewEnabled  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+
+    if( ! $treeviewEnabled )
+    {
+      if( $this->pObj->b_drs_filter )
+      {
+        $prompt = 'treeview is disabled. Has an effect only in case of cps_tcatree and a proper TCA configuration.';
+        t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      return $select;
+    }
+
+    if( $this->pObj->b_drs_filter )
+    {
+      $prompt = 'treeview is enabled. Has an effect only in case of cps_tcatree and a proper TCA configuration.';
+      t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+
+      // #32223, 120119, dwildt+
+
+      // Load the TCA for the current table
+    $this->pObj->objZz->loadTCA( $table );
+      // Table has a treeParentField
+    if( ! isset( $GLOBALS['TCA'][$table]['ctrl']['treeParentField'] ) )
+    {
+      if( $this->pObj->b_drs_filter )
+      {
+        $prompt = 'TCA.' . $table . 'ctrl.treeParentField isn\'t set.';
+        t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      return $select;
+    }
+
+      // Add treeParentField to the SELECT statement
+    $treeParentField = $GLOBALS['TCA'][$table]['ctrl']['treeParentField'];
+    $select = $select . "         " . $table . "." . $treeParentField . " AS 'treeParentField'," . PHP_EOL;
+      // Add treeParentField to the SELECT statement
+    $this->pObj->objFilter->arr_tablesWiTreeparentfield[] = $table;
+
+    if( $this->pObj->b_drs_filter )
+    {
+      $prompt = 'TCA.' . $table . 'ctrl.treeParentField is set. ' . $table . ' is configured for a tree view.';
+      t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // Table has a treeParentField
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    return $select;
   }
 
 
