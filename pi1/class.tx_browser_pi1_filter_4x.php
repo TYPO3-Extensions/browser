@@ -174,6 +174,12 @@ class tx_browser_pi1_filter_4x {
           continue;
         }
         $this->curr_tableField = $tableWiDot . $field;
+
+          // Get table
+        list( $table ) = explode( '.', $this->curr_tableField );
+          // Load TCA
+        $this->pObj->objZz->loadTCA( $table );
+
         $arr_return = $this->get_htmlFilter( );
         if( $arr_return['error']['status'] )
         {
@@ -625,9 +631,6 @@ class tx_browser_pi1_filter_4x {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-      // Load TCA
-    $this->pObj->objZz->loadTCA( $table );
-
       // RETURN no languageField
     if( ! isset( $GLOBALS['TCA'][$table]['ctrl']['languageField'] ) )
     {
@@ -863,7 +866,56 @@ class tx_browser_pi1_filter_4x {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arr_realTables_arrFields );
-      
+
+    if( ! isset( $GLOBALS['TCA'][$table]['ctrl']['languageField'] ) )
+
+    $where = null;
+    $where = $where . $this->sql_whereAllItems_pidList( );
+    $where = $where . $this->sql_whereAllItems_enableFields( );
+      // Get WHERE statement
+    if( empty ( $where ) )
+    {
+      $where = "1";
+    }
+    $where = "WHERE " . $where;
+
+      // RETURN WHERE statement
+    return $where;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_whereAllItems_pidList( ): Get the WHERE statement ...
+ *
+ * @return	string  $where : WHERE statement
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_whereAllItems_pidList( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+    if( empty ( $this->pObj->pidList ) )
+    {
+      return;
+    }
+
+    var_dump( $this->pObj->arr_realTables_arrFields[$table] );
+    var_dump( in_array('pid', $this->pObj->arr_realTables_arrFields[$table] ) );
+    exit;
+    
+    $where = null;
+    $where = $where . $this->sql_whereAllItems_pidList( );
+    $where = $where . $this->sql_whereAllItems_enableFields( );
       // Get WHERE statement
     $where = "WHERE " . $table . ".pid IN (" . $this->pObj->pidList . ")";
 
