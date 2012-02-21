@@ -261,35 +261,14 @@ class tx_browser_pi1_filter_4x {
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
       // Query for filter items with a hit at least
-    $select   = $this->sql_select( );
-    $from     = $this->sql_from( );
-    $where    = $this->sql_where( );
-    $groupBy  = $this->sql_groupBy( );
-    $orderBy  = $this->sql_orderBy( );
-    $limit    = $this->sql_limit( );
-      // Exec query
-
-    $query  = $select   . PHP_EOL .
-              $from     . PHP_EOL .
-              $where    . PHP_EOL .
-              $groupBy  . PHP_EOL .
-              $orderBy  . PHP_EOL .
-              $limit;
+    $query = $this->sql_queryWiHitsOnly( );
     var_dump( __METHOD__, __LINE__, $query );
       // Query for filter items with a hit at least
 
 // Exec query
 
       // Query for all filter items
-    $select   = $this->sql_select( );
-    $from     = "FROM " . $this->curr_tableField;
-    $orderBy  = $this->sql_orderBy( );
-    $limit    = $this->sql_limit( );
-
-    $query  = $select   . PHP_EOL .
-              $from     . PHP_EOL .
-              $orderBy  . PHP_EOL .
-              $limit;
+    $query = $this->sql_queryAllItems( );
     var_dump( __METHOD__, __LINE__, $query );
       // Query for all filter items
 
@@ -317,17 +296,114 @@ class tx_browser_pi1_filter_4x {
 
 
 
+
+
+
+
+
+
+
+
+
+/**
+ * sql_queryWiHitsOnly( ):  It renders filters and category menus in HTML.
+ *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ *
+ * @return	array
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_queryWiHitsOnly( )
+  {
+      // Query for filter items with a hit at least
+    $bool_count = true;
+    $select   = $this->sql_select( $bool_count );
+    $from     = $this->sql_from( );
+    $where    = $this->sql_where( );
+    $groupBy  = $this->sql_groupBy( );
+    $orderBy  = $this->sql_orderBy( );
+    $limit    = $this->sql_limit( );
+
+    $query  = $select   . PHP_EOL .
+              $from     . PHP_EOL .
+              $where    . PHP_EOL .
+              $groupBy  . PHP_EOL .
+              $orderBy  . PHP_EOL .
+              $limit;
+
+    return $query;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * sql_queryAllItems( ):  It renders filters and category menus in HTML.
+ *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ *
+ * @return	array
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_queryAllItems( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Query for all filter items
+    $bool_count = false;
+    $select   = $this->sql_select( $bool_count );
+    $from     = "FROM " . $able;
+    $groupBy  = "GROUP BY " . $this->curr_tableField;
+    $orderBy  = $this->sql_orderBy( );
+    $limit    = $this->sql_limit( );
+
+    $query  = $select   . PHP_EOL .
+              $from     . PHP_EOL .
+              $groupBy  . PHP_EOL .
+              $orderBy  . PHP_EOL .
+              $limit;
+
+    return $query;
+  }
+
+
+
+
+
+
+
+
+
 /**
  * sql_select( ): Get the SELECT statement for the current filter (the current tableField).
  *                Statement will contain fields for localisation and treeview, if there is
  *                any need.
  *
- * @return	string  $select : SELECT statement
+ * @param   boolean $bool_count : true: hits are counted, false: any hit isn't counted
+ *
+ * @return	string  $select     : SELECT statement
  *
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function sql_select( )
+  private function sql_select( $bool_count )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -354,7 +430,17 @@ class tx_browser_pi1_filter_4x {
       // EXIT wrong TS configuration
 
       // select
-    $select = "SELECT count(*) AS 'count', " .
+    switch( $bool_count )
+    {
+      case( true ):
+        $count = "count(*)";
+        break;
+      case( false ):
+      default:
+        $count = "0";
+        break;
+    }
+    $select = "SELECT " . $count . " AS 'count', " .
               $table . ".uid AS '" . $table . ".uid', " .
               $this->curr_tableField . " AS '" . $this->curr_tableField . "'";
       // select
