@@ -647,7 +647,7 @@ class tx_browser_pi1_localisation
  * @version 3.9.3
  * @since 2.0.0
  */
-  private function localisationConfig()
+  public function localisationConfig()
   {
       ////////////////////////////////////////////////////////////////////////////////
       //
