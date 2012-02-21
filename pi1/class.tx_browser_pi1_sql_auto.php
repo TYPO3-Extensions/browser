@@ -1925,7 +1925,7 @@ class tx_browser_pi1_sql_auto
         // Replace real name of the table with its alias, if there is an alias
 
         // Push the pid statement to the return array
-        $arr_andWherePid[] = $tableField." IN (".$this->pObj->pidList.")";
+        $arr_andWherePid[] = $tableField . " IN (" . $this->pObj->pidList . ")";
       }
       // Has the table a pid?
     }

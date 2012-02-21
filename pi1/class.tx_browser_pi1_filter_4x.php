@@ -859,9 +859,13 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_whereAllItems( )
   {
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arr_realTables_arrFields );
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+    //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arr_realTables_arrFields );
+      
       // Get WHERE statement
-    $where = "WHERE " . $this->pObj->objSql->sql_query_statements['rows']['where'];
+    $where = "WHERE " . $table . ".pid IN (" . $this->pObj->pidList . ")";
 
       // RETURN WHERE statement
     return $where;
