@@ -1450,7 +1450,7 @@ class tx_browser_pi1_filter {
     }
       // BUGFIX - part I
 
-    $arr_local_select = $this->pObj->objLocalise->localisationFields_select($table);
+    $arr_local_select = $this->pObj->objLocalise->localisationFields_select( $table );
       // BUGFIX - part II: Remove added table.fields
     if ($bool_table_is_added)
     {
