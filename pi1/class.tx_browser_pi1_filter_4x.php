@@ -257,6 +257,14 @@ class tx_browser_pi1_filter_4x {
       // Build SELECT statement
       // Exec SELECT
 
+    var_dump( __METHOD__, $tableField, $select );
+
+
+    $str_header  = '<h1 style="color:red;">' . __METHOD__ . '</h1>';
+    $str_prompt  = '<p style="color:red;font-weight:bold;">Development ' . $tableField . '</p>';
+    $arr_return['error']['status'] = true;
+    $arr_return['error']['header'] = $str_header;
+    $arr_return['error']['prompt'] = $str_prompt;
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -325,14 +333,6 @@ class tx_browser_pi1_filter_4x {
       // SELECT + localisation
     $select = $this->sql_select_ll( $tableField, $select );
 
-    var_dump( __METHOD__, $tableField, $select );
-
-
-    $str_header  = '<h1 style="color:red;">' . __METHOD__ . '</h1>';
-    $str_prompt  = '<p style="color:red;font-weight:bold;">Development ' . $tableField . '</p>';
-    $arr_return['error']['status'] = true;
-    $arr_return['error']['header'] = $str_header;
-    $arr_return['error']['prompt'] = $str_prompt;
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -577,7 +577,7 @@ class tx_browser_pi1_filter_4x {
     {
       if( $this->pObj->b_drs_filter )
       {
-        $prompt = 'TCA.' . $table . 'ctrl.treeParentField isn\'t set.';
+        $prompt = 'TCA.' . $table . '.ctrl.treeParentField isn\'t set.';
         t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
       }
         // Prompt the expired time to devlog
@@ -593,7 +593,7 @@ class tx_browser_pi1_filter_4x {
 
     if( $this->pObj->b_drs_filter )
     {
-      $prompt = 'TCA.' . $table . 'ctrl.treeParentField is set. ' . $table . ' is configured for a tree view.';
+      $prompt = 'TCA.' . $table . '.ctrl.treeParentField is set. ' . $table . ' is configured for a tree view.';
       t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // Table has a treeParentField
