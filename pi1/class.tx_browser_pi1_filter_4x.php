@@ -108,7 +108,7 @@ class tx_browser_pi1_filter_4x {
 
     if( ! isset( $this->int_localisation_mode ) )
     {
-      $this->int_localisation_mode = $this->pObj->objLocal->localisationConfig( );
+      $this->int_localisation_mode = $this->pObj->objLocalise->localisationConfig( );
     }
 
     switch( $this->int_localisation_mode )
@@ -482,7 +482,7 @@ class tx_browser_pi1_filter_4x {
 
     $this->pObj->objZz->loadTCA( $table );
 
-    $lang_ol        = $this->pObj->objLocal->conf_localisation['TCA.']['field.']['appendix'];
+    $lang_ol        = $this->pObj->objLocalise->conf_localisation['TCA.']['field.']['appendix'];
     $field_lang_ol  = $field . $lang_ol;
 
       // RETURN no languageField
