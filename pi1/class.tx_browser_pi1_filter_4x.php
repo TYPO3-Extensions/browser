@@ -316,8 +316,7 @@ class tx_browser_pi1_filter_4x {
     }
     if( empty ( $select ) )
     {
-      $select = $table . ".uid AS 'uid'," . PHP_EOL .
-      "         " . $table . "." . $field . " AS 'value'," . PHP_EOL;
+      $select = $table . ".uid AS 'uid', " . $table . "." . $field . " AS 'value'";
       if ( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
       {
         $prompt = 'filter.' . $tableField . '.sql.select isn\'t set. It\'s ok. Generated SELECT is: ' . $select;
@@ -435,7 +434,7 @@ class tx_browser_pi1_filter_4x {
     $languageField          = $table . '.' . $languageField;
     $transOrigPointerField  = $table . '.' . $transOrigPointerField;
 
-    $select = $select . ' ' .
+    $select = $select . ', ' .
               $languageField . ' AS \'sys_language_uid\' ' .
               $transOrigPointerField . ' AS \'l10n_parent\'';
 
@@ -493,9 +492,8 @@ class tx_browser_pi1_filter_4x {
     }
       // RETURN no languageField
 
-    $tableField = $table . '.' . $field_lang_ol;
-    $select = $select . ' ' .
-              $tableField . ' AS \'lang_ol\'';
+    $tableField_ol  = $table . '.' . $field_lang_ol;
+    $select         = $select . ', ' . $tableField_ol . ' AS \'lang_ol\'';
 
     if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
     {
