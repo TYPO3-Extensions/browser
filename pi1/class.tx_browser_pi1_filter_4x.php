@@ -250,6 +250,7 @@ class tx_browser_pi1_filter_4x {
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
     $select = $this->sql_select( $tableField );
+    $select = 'SELECT ' . $select;
     // Get SQL result
       // Get SELECT statement
       // Get GROUP BY
@@ -435,7 +436,7 @@ class tx_browser_pi1_filter_4x {
     $transOrigPointerField  = $table . '.' . $transOrigPointerField;
 
     $select = $select . ', ' .
-              $languageField . ' AS \'sys_language_uid\' ' .
+              $languageField . ' AS \'sys_language_uid\', ' .
               $transOrigPointerField . ' AS \'l10n_parent\'';
 
     if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
