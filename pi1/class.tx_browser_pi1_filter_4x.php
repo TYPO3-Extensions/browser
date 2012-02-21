@@ -369,7 +369,7 @@ class tx_browser_pi1_filter_4x {
       // Query for all filter items
     $bool_count = false;
     $select   = $this->sql_select( $bool_count );
-    $from     = "FROM " . $able;
+    $from     = "FROM " . $table;
     $groupBy  = "GROUP BY " . $this->curr_tableField;
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
