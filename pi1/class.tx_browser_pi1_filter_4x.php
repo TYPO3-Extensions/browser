@@ -187,6 +187,8 @@ class tx_browser_pi1_filter_4x {
     //:TODO:
     // AREA?
 
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->sql_filterFields );
+
     $str_header  = '<h1 style="color:red;">' . __METHOD__ . '</h1>';
     $str_prompt  = '<p style="color:red;font-weight:bold;">Development ' . $this->curr_tableField . '</p>';
     $arr_return['error']['status'] = true;
@@ -266,8 +268,8 @@ class tx_browser_pi1_filter_4x {
       // Build SELECT statement
       // Exec SELECT
 
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $select );
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->sql_filterFields );
+    var_dump( __METHOD__, __LINE__, $select );
+//    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $select );
 
 
 //    $str_header  = '<h1 style="color:red;">' . __METHOD__ . '</h1>';
