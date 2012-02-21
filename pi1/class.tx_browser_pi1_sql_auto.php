@@ -860,7 +860,7 @@ class tx_browser_pi1_sql_auto
  *
  * @return	string		TRUE || FALSE or the SQL-where-clause
  */
-  function get_joins()
+  function get_joins( )
   {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -2218,7 +2218,7 @@ class tx_browser_pi1_sql_auto
     //
     // Initiate the global boolean for LEFT JOIN
 
-    if ($this->arr_ts_autoconf_relation['left_join'] == 1 || strtoupper($this->arr_ts_autoconf_relation['left_join'] == 'true'))
+    if ($this->arr_ts_autoconf_relation['left_join'] == 1 || strtolower($this->arr_ts_autoconf_relation['left_join'] == 'true'))
     {
       $this->b_left_join = true;
     }

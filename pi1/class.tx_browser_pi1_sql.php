@@ -269,8 +269,8 @@ class tx_browser_pi1_sql
       //
       // Get Relations
 
-    $this->arr_ts_autoconf_relation = $this->pObj->objSqlAut->get_ts_autoconfig_relation( );
-    $this->arr_relations_mm_simple  = $this->pObj->objSqlAut->get_arr_relations_mm_simple( );
+    $this->pObj->objSqlAut->arr_ts_autoconf_relation = $this->pObj->objSqlAut->get_ts_autoconfig_relation( );
+    $this->pObj->objSqlAut->arr_relations_mm_simple  = $this->pObj->objSqlAut->get_arr_relations_mm_simple( );
       // Get Relations
 
 
