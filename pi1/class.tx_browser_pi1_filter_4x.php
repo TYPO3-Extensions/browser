@@ -108,7 +108,7 @@ class tx_browser_pi1_filter_4x {
 
     if( ! isset( $this->int_localisation_mode ) )
     {
-      $this->int_localisation_mode = $this->localisationConfig( );
+      $this->int_localisation_mode = $this->pObj->objLocal->localisationConfig( );
     }
 
     switch( $this->int_localisation_mode )
