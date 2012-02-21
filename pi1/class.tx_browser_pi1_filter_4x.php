@@ -243,14 +243,7 @@ class tx_browser_pi1_filter_4x {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
-    $arr_return = $this->sql_select( $tableField );
-    if( $arr_return['error']['status'] )
-    {
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-      return $arr_return;
-    }
-    $select = $arr_return['data']['select'];
-    unset( $arr_return );
+    $select = $this->sql_select( $tableField );
     // Get SQL result
       // Get SELECT statement
       // Get GROUP BY
@@ -336,7 +329,7 @@ class tx_browser_pi1_filter_4x {
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-    return $arr_return;
+    return $select;
   }
 
 
