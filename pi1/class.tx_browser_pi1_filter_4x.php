@@ -339,7 +339,7 @@ class tx_browser_pi1_filter_4x {
       // EXIT wrong TS configuration
 
       // select
-    $select = "SELECT count(*) AS 'count' " .
+    $select = "SELECT count(*) AS 'count', " .
               $table . ".uid AS '" . $table . ".uid', " .
               $this->curr_tableField . " AS '" . $this->curr_tableField . "'";
       // select
@@ -558,7 +558,7 @@ class tx_browser_pi1_filter_4x {
       // addSelect
     $addSelect  = ", " .
                   $languageField . " AS '" . $languageField . "', " .
-                  $transOrigPointerField . " AS '" . $transOrigPointerField . "', ";
+                  $transOrigPointerField . " AS '" . $transOrigPointerField . "'";
       // addSelect
 
       // Add $languageField and $transOrigPointerField to the class var sql_filterFields
