@@ -260,8 +260,12 @@ class tx_browser_pi1_filter_4x {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
-    $select = $this->sql_select( );
-    $from   = $this->sql_from( );
+    $select   = $this->sql_select( );
+    $from     = $this->sql_from( );
+    $where    = $this->sql_where( );
+    $groupBy  = $this->sql_groupBy( );
+    $orderBy  = $this->sql_orderBy( );
+    $limit    = $this->sql_limit( );
     // Get SQL result
       // Get SELECT statement
       // Get FROM
@@ -269,7 +273,13 @@ class tx_browser_pi1_filter_4x {
       // Build SELECT statement
       // Exec SELECT
 
-    var_dump( __METHOD__, __LINE__, $select );
+    $query  = $select   . PHP_EOL .
+              $from     . PHP_EOL .
+              $where    . PHP_EOL .
+              $groupBy  . PHP_EOL .
+              $orderBy  . PHP_EOL .
+              $limit;
+    var_dump( __METHOD__, __LINE__, $query );
 //    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $select );
 
 
@@ -368,50 +378,86 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_from( )
   {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
+      // Get FROM statement
+    $from = "FROM " . $this->pObj->objSql->sql_query_statements['from'];
 
-      // EXIT wrong TS configuration
-    $conf_view = $this->conf_view;
-    if( ! empty ( $conf_view['filter.'][$table . '.'][$field . '.']['sql.']['select'] ) )
-    {
-      $prompt  = '
-                  <h1 style="color:red;">
-                    ERROR: filter
-                  </h1>
-                  <p style="color:red;font-weight:bold;">
-                    Sorry: filter.' . $this->curr_tableField . '.sql.select isn\'t supported from TYPO3-Browser version 4.x<br />
-                    <br />
-                    Please remove the TypoScript code filter.' . $this->curr_tableField . '.sql.select.<br />
-                    <br />
-                    Method: ' . __METHOD__ . '<br />
-                    Line: ' . __LINE__ . '
-                  </p>';
-      echo $prompt;
-      exit;
-    }
-      // EXIT wrong TS configuration
+      // RETURN FROM statement
+    return $from;
+  }
 
-      // select
-    $select = "SELECT count(*) AS 'count' " .
-              $table . ".uid AS '" . $table . ".uid', " .
-              $this->curr_tableField . " AS '" . $this->curr_tableField . "'";
-      // select
 
-      // Set class var sql_filterFields
-    $this->sql_filterFields[$table]['count']  = 'count';
-    $this->sql_filterFields[$table]['uid']    = $table . '.uid';
-    $this->sql_filterFields[$table]['value']  = $this->curr_tableField;
-      // Set class var sql_filterFields
 
-      // Add treeview field to select
-    $select = $select . $this->sql_select_addTreeview( );
 
-      // Add localisation fields to select
-    $select = $select . $this->sql_select_addLL( );
 
-      // RETURN select
-    return $select;
+
+
+
+
+/**
+ * sql_groupBy( ): Get the GROUP BY statement ...
+ *
+ * @return	string  $from : GROUP BY statement
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_groupBy( )
+  {
+      // Get WHERE statement
+    $groupBy = "GROUP BY " . $this->curr_tableField;
+
+      // RETURN WHERE statement
+    return $groupBy;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_limit( ): Get the LIMIT statement ...
+ *
+ * @return	string  $limit : LIMIT statement
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_limit( )
+  {
+      // Get LIMIT statement
+    $limit = "LIMIT ...";
+
+      // RETURN LIMIT statement
+    return $limit;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_orderBy( ): Get the ORDER BY statement ...
+ *
+ * @return	string  $orderBy : ORDER BY statement
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_orderBy( )
+  {
+      // Get WHERE statement
+    $orderBy = "ORDER BY " . $this->curr_tableField;
+
+      // RETURN WHERE statement
+    return $orderBy;
   }
 
 
@@ -689,6 +735,31 @@ class tx_browser_pi1_filter_4x {
       // DRS
 
     return $addSelect;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_where( ): Get the WHERE statement ...
+ *
+ * @return	string  $where : WHERE statement
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_where( )
+  {
+      // Get WHERE statement
+    $where = "WHERE " . $this->pObj->objSql->sql_query_statements['where'];
+
+      // RETURN WHERE statement
+    return $where;
   }
 
 
