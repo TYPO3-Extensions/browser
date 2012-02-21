@@ -334,22 +334,25 @@ class tx_browser_pi1_typoscript
         {
           if( ! $this->pObj->piVars[$str_nice_piVar] )
           {
-              // DRS
-            if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+            if( ! isset( $arr_tableField[$tableField] ) )
             {
-              $prompt = '+++ SQL engine 4x +++ SQL engine 4x +++ SQL engine 4x +++ SQL engine 4x +++';
-              t3lib_div::devlog( $prompt, $this->pObj->extKey, 2 );
-              $prompt = 'SQL engine 4x: filter ' . $tableField . ' is added to the array ' .
-                        'realTabels_arrFields, but filter isn\'t used.';
-              t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-              $prompt = 'SQL engine 4x: Please check, weather it is a performance problem.';
-              t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-              $prompt = '+++ SQL engine 4x +++ SQL engine 4x +++ SQL engine 4x +++ SQL engine 4x +++';
-              t3lib_div::devlog( $prompt, $this->pObj->extKey, 2 );
+                // DRS
+              if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+              {
+                $prompt = '+++ SQL engine 4x +++ SQL engine 4x +++ SQL engine 4x +++ SQL engine 4x +++';
+                t3lib_div::devlog( $prompt, $this->pObj->extKey, 2 );
+                $prompt = 'SQL engine 4x: filter ' . $tableField . ' is added to the array ' .
+                          'realTabels_arrFields, but filter isn\'t used.';
+                t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
+                $prompt = 'SQL engine 4x: Please check, weather it is a performance problem.';
+                t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
+                $prompt = '+++ SQL engine 4x +++ SQL engine 4x +++ SQL engine 4x +++ SQL engine 4x +++';
+                t3lib_div::devlog( $prompt, $this->pObj->extKey, 2 );
+              }
+                // DRS
+                // Add tableField of the current filter, but filter isn't used
+              $arr_tableField[]  = $tableField;
             }
-              // DRS
-              // Add tableField of the current filter, but filter isn't used
-            $arr_tableField[]  = $tableField;
           }
         }
             // DEVELOPMENT: SQL engine 4.x
