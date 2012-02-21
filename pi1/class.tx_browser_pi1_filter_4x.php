@@ -379,7 +379,7 @@ class tx_browser_pi1_filter_4x {
   private function sql_from( )
   {
       // Get FROM statement
-    $from = "FROM " . $this->pObj->objSql->sql_query_statements['from'];
+    $from = "FROM " . $this->pObj->objSql->sql_query_statements['rows']['from'];
 
       // RETURN FROM statement
     return $from;
@@ -756,7 +756,7 @@ class tx_browser_pi1_filter_4x {
   private function sql_where( )
   {
       // Get WHERE statement
-    $where = "WHERE " . $this->pObj->objSql->sql_query_statements['where'];
+    $where = "WHERE " . $this->pObj->objSql->sql_query_statements['rows']['where'];
 
       // RETURN WHERE statement
     return $where;
