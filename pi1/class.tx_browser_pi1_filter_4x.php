@@ -267,6 +267,7 @@ class tx_browser_pi1_filter_4x {
 
 // Exec query
 
+// If display all items
       // Query for all filter items
     $query = $this->sql_queryAllItems( );
     var_dump( __METHOD__, __LINE__, $query );
@@ -320,7 +321,7 @@ class tx_browser_pi1_filter_4x {
     $bool_count = true;
     $select   = $this->sql_select( $bool_count );
     $from     = $this->sql_from( );
-    $where    = $this->sql_where( );
+    $where    = $this->sql_whereWiHitsOnly( );
     $groupBy  = $this->sql_groupBy( );
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
@@ -370,12 +371,14 @@ class tx_browser_pi1_filter_4x {
     $bool_count = false;
     $select   = $this->sql_select( $bool_count );
     $from     = "FROM " . $table;
+    $where    = $this->sql_whereAllItems( );
     $groupBy  = "GROUP BY " . $this->curr_tableField;
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
 
     $query  = $select   . PHP_EOL .
               $from     . PHP_EOL .
+              $where    . PHP_EOL .
               $groupBy  . PHP_EOL .
               $orderBy  . PHP_EOL .
               $limit;
@@ -847,14 +850,40 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_where( ): Get the WHERE statement ...
+ * sql_whereAllItems( ): Get the WHERE statement ...
  *
  * @return	string  $where : WHERE statement
  *
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function sql_where( )
+  private function sql_whereAllItems( )
+  {
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arr_realTables_arrFields );
+      // Get WHERE statement
+    $where = "WHERE " . $this->pObj->objSql->sql_query_statements['rows']['where'];
+
+      // RETURN WHERE statement
+    return $where;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_whereWiHitsOnly( ): Get the WHERE statement ...
+ *
+ * @return	string  $where : WHERE statement
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_whereWiHitsOnly( )
   {
       // Get WHERE statement
     $where = "WHERE " . $this->pObj->objSql->sql_query_statements['rows']['where'];
