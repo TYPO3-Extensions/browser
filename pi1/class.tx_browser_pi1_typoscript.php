@@ -341,12 +341,12 @@ class tx_browser_pi1_typoscript
                 // DRS
               if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
               {
-                $prompt = '+++ SQL engine 4x ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++';
+                $prompt = '+++ SQL engine 4.x ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++';
                 t3lib_div::devlog( $prompt, $this->pObj->extKey, 2 );
-                $prompt = 'SQL engine 4x: filter ' . $tableField . ' is added to the array ' .
+                $prompt = 'SQL engine 4.x: filter ' . $tableField . ' is added to the array ' .
                           'realTabels_arrFields, but filter isn\'t used.';
                 t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-                $prompt = 'SQL engine 4x: Please check, weather it is a performance problem.';
+                $prompt = 'SQL engine 4.x: Please check, weather it is a performance problem.';
                 t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
               }
                 // DRS
