@@ -332,28 +332,30 @@ class tx_browser_pi1_typoscript
           // DEVELOPMENT: SQL engine 4.x
         if( $this->pObj->dev_sqlEngine )
         {
+            // IF no pivar (filter isn't set)
           if( ! $this->pObj->piVars[$str_nice_piVar] )
           {
+              // IF current filter isn't set in $arr_tableField
             if( ! isset( $arr_tableField[$tableField] ) )
             {
                 // DRS
               if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
               {
-                $prompt = '+++ SQL engine 4x +++ SQL engine 4x +++ SQL engine 4x +++ SQL engine 4x +++';
+                $prompt = '+++ SQL engine 4x ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++';
                 t3lib_div::devlog( $prompt, $this->pObj->extKey, 2 );
                 $prompt = 'SQL engine 4x: filter ' . $tableField . ' is added to the array ' .
                           'realTabels_arrFields, but filter isn\'t used.';
                 t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
                 $prompt = 'SQL engine 4x: Please check, weather it is a performance problem.';
                 t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-                $prompt = '+++ SQL engine 4x +++ SQL engine 4x +++ SQL engine 4x +++ SQL engine 4x +++';
-                t3lib_div::devlog( $prompt, $this->pObj->extKey, 2 );
               }
                 // DRS
-                // Add tableField of the current filter, but filter isn't used
+                // Add the current filter (tableField), but filter isn't used
               $arr_tableField[]  = $tableField;
             }
+              // IF current filter isn't set in $arr_tableField
           }
+            // IF no pivar (filter isn't set)
         }
             // DEVELOPMENT: SQL engine 4.x
       }
