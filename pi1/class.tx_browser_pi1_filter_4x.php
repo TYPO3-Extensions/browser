@@ -62,6 +62,11 @@ class tx_browser_pi1_filter_4x {
     // Variables set by the pObj (by class.tx_browser_pi1.php)
 
 
+  var $bool_dontLocalise      = null;
+  var $int_localisation_mode  = null;
+
+
+
 
 
 
@@ -89,7 +94,48 @@ class tx_browser_pi1_filter_4x {
 
 
 
-  /***********************************************
+/**
+ * init( ):  It renders filters and category menus in HTML.
+ *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ *
+ * @return	array
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function init( )
+  {
+
+    if( ! isset( $this->int_localisation_mode ) )
+    {
+      $this->int_localisation_mode = $this->localisationConfig( );
+    }
+
+    switch( $this->int_localisation_mode )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+        $this->bool_dontLocalise = true;
+        $prompt = 'Localisation mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localise!';
+        break;
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+        $this->bool_dontLocalise = true;
+        $prompt = 'Localisation mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localise!';
+        break;
+      default:
+        $this->bool_dontLocalise = false;
+        $prompt = 'Localisation mode is enabled';
+        break;
+    }
+    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
+    {
+      t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+    // Do we need translated/localised records?
+  }
+
+
+    
+ /***********************************************
   *
   * HTML
   *
@@ -108,6 +154,9 @@ class tx_browser_pi1_filter_4x {
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
+      // Init localisation
+    $this->init( );
 
       // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
@@ -189,7 +238,7 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  public function sql( $tableField )
+  private function sql( $tableField )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
@@ -231,7 +280,7 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  public function sql_select( $tableField )
+  private function sql_select( $tableField )
   {
     $conf_view = $this->conf_view;
 
@@ -307,21 +356,158 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  public function sql_select_ll( $tableField, $select )
+  private function sql_select_ll( $tableField, $select )
+  {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
+      // RETURN no localisation
+    if( $this->bool_dontLocalise )
+    {
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      return $select;
+    }
+      // RETURN no localisation
+
+
+    list ($table, $field) = explode('.', $tableField);
+
+    $select = $this->sql_select_ll_localTable( $tableField, $select );
+    $select = $this->sql_select_ll_foreignTable( $tableField, $select );
+
+    $this->pObj->objZz->loadTCA( $table );
+
+    var_dump( __METHOD__, $arr_local_select );
+
+
+    return $select;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_select_ll_localTable( ):  It renders filters and category menus in HTML.
+ *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ *
+ * @return	array
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_select_ll_localTable( $tableField, $select )
+  {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
+    list ($table, $field) = explode('.', $tableField);
+
+    $this->pObj->objZz->loadTCA( $table );
+
+      // RETURN no languageField
+    if( ! isset( $GLOBALS['TCA'][$table]['ctrl']['languageField'] ) )
+    {
+      if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
+      {
+        $prompt = $table . ' isn\'t a localised localTable: TCA.' . $table . 'ctrl.languageField is missing.';
+        t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      return $select;
+    }
+      // RETURN no languageField
+
+      // RETURN no transOrigPointerField
+    if( ! isset( $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'] ) )
+    {
+      if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
+      {
+        $prompt = $table . ' isn\'t a localised localTable: TCA.' . $table . 'ctrl.transOrigPointerField is missing.';
+        t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      return $select;
+    }
+      // RETURN no transOrigPointerField
+
+    $languageField          = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+    $transOrigPointerField  = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+
+    $languageField          = $table . '.' . $languageField;
+    $transOrigPointerField  = $table . '.' . $transOrigPointerField;
+
+    $select = $select . ' ' .
+              $languageField . ' AS \'sys_language_uid\' ' .
+              $transOrigPointerField . ' AS \'l10n_parent\'';
+
+    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
+    {
+      $prompt = $table . ' is a localised localTable. SELECT is localised.';
+      t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+
+    return $select;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_select_ll_foreignTable( ):  It renders filters and category menus in HTML.
+ *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ *
+ * @return	array
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_select_ll_foreignTable( $tableField, $select )
   {
     $conf_view = $this->conf_view;
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
-
     list ($table, $field) = explode('.', $tableField);
 
+    $this->pObj->objZz->loadTCA( $table );
 
-    $arr_local_select = $this->pObj->objLocalise->localisationFields_select( $table );
+    $lang_ol        = $this->pObj->objLocal->conf_localisation['TCA.']['field.']['appendix'];
+    $field_lang_ol  = $field . $lang_ol;
 
-    var_dump( __METHOD__, $arr_local_select );
+      // RETURN no languageField
+    if( ! isset ($GLOBALS['TCA'][$table]['columns'][$field_lang_ol] ) )
+    {
+      if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
+      {
+        $prompt = $table . ' isn\'t a localised foreignTable: ' .
+                  'TCA.' . $table . 'columns.' . $field_lang_ol . ' is missing.';
+        t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      return $select;
+    }
+      // RETURN no languageField
 
+    $tableField = $table . '.' . $field_lang_ol;
+    $select = $select . ' ' .
+              $tableField . ' AS \'lang_ol\'';
+
+    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
+    {
+      $prompt = $table . ' is a localised foreignTable. SELECT is localised.';
+      t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+    }
 
     return $select;
   }
@@ -343,7 +529,7 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  public function sql_select_treeview( $tableField, $select )
+  private function sql_select_treeview( $tableField, $select )
   {
     $conf_view = $this->conf_view;
 
