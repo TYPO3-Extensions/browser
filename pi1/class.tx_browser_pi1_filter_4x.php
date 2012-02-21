@@ -260,18 +260,14 @@ class tx_browser_pi1_filter_4x {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
+      // Query for filter items with a hit at least
     $select   = $this->sql_select( );
     $from     = $this->sql_from( );
     $where    = $this->sql_where( );
     $groupBy  = $this->sql_groupBy( );
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
-    // Get SQL result
-      // Get SELECT statement
-      // Get FROM
-      // Get GROUP BY
-      // Build SELECT statement
-      // Exec SELECT
+      // Exec query
 
     $query  = $select   . PHP_EOL .
               $from     . PHP_EOL .
@@ -280,6 +276,25 @@ class tx_browser_pi1_filter_4x {
               $orderBy  . PHP_EOL .
               $limit;
     var_dump( __METHOD__, __LINE__, $query );
+      // Query for filter items with a hit at least
+
+// Exec query
+
+      // Query for all filter items
+    $select   = $this->sql_select( );
+    $from     = "FROM " . $this->curr_tableField;
+    $orderBy  = $this->sql_orderBy( );
+    $limit    = $this->sql_limit( );
+
+    $query  = $select   . PHP_EOL .
+              $from     . PHP_EOL .
+              $orderBy  . PHP_EOL .
+              $limit;
+    var_dump( __METHOD__, __LINE__, $query );
+      // Query for all filter items
+
+// Exec query
+
 //    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $select );
 
 
