@@ -66,6 +66,8 @@ class tx_browser_pi1_filter_4x {
   var $bool_dontLocalise      = null;
     // [INTEGER] number of the localisation mode
   var $int_localisation_mode  = null;
+    // [STRING] Current table
+  var $curr_tableField        = null;
     // [ARRAY] tables with the fields, which are used in the SQL query
   var $sql_filterFields       = null;
 
@@ -264,7 +266,8 @@ class tx_browser_pi1_filter_4x {
       // Build SELECT statement
       // Exec SELECT
 
-    var_dump( __METHOD__, __LINE__, $this->curr_tableField, $select );
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $select );
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->sql_filterFields );
 
 
 //    $str_header  = '<h1 style="color:red;">' . __METHOD__ . '</h1>';
