@@ -330,7 +330,7 @@ class tx_browser_pi1_typoscript
           $arr_tableField[]  = $tableField;
         }
           // DEVELOPMENT: SQL engine 4.x
-        if( $this->pObj->dev_sqlEngine )
+        if( $this->pObj->dev_sqlEngine == 4 )
         {
             // IF no pivar (filter isn't set)
           if( ! $this->pObj->piVars[$str_nice_piVar] )
