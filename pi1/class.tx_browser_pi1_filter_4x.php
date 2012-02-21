@@ -261,6 +261,7 @@ class tx_browser_pi1_filter_4x {
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
     $select = $this->sql_select( );
+    $from   = $this->sql_from( );
     // Get SQL result
       // Get SELECT statement
       // Get FROM
@@ -292,15 +293,80 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_select( ):  It renders filters and category menus in HTML.
- *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ * sql_select( ): Get the SELECT statement for the current filter (the current tableField).
+ *                Statement will contain fields for localisation and treeview, if there is
+ *                any need.
  *
- * @return	array
+ * @return	string  $select : SELECT statement
  *
  * @version 3.9.9
  * @since   3.9.9
  */
   private function sql_select( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // EXIT wrong TS configuration
+    $conf_view = $this->conf_view;
+    if( ! empty ( $conf_view['filter.'][$table . '.'][$field . '.']['sql.']['select'] ) )
+    {
+      $prompt  = '
+                  <h1 style="color:red;">
+                    ERROR: filter
+                  </h1>
+                  <p style="color:red;font-weight:bold;">
+                    Sorry: filter.' . $this->curr_tableField . '.sql.select isn\'t supported from TYPO3-Browser version 4.x<br />
+                    <br />
+                    Please remove the TypoScript code filter.' . $this->curr_tableField . '.sql.select.<br />
+                    <br />
+                    Method: ' . __METHOD__ . '<br />
+                    Line: ' . __LINE__ . '
+                  </p>';
+      echo $prompt;
+      exit;
+    }
+      // EXIT wrong TS configuration
+
+      // select
+    $select = "SELECT count(*) AS 'count' " .
+              $table . ".uid AS '" . $table . ".uid', " .
+              $this->curr_tableField . " AS '" . $this->curr_tableField . "'";
+      // select
+
+      // Set class var sql_filterFields
+    $this->sql_filterFields[$table]['count']  = 'count';
+    $this->sql_filterFields[$table]['uid']    = $table . '.uid';
+    $this->sql_filterFields[$table]['value']  = $this->curr_tableField;
+      // Set class var sql_filterFields
+
+      // Add treeview field to select
+    $select = $select . $this->sql_select_addTreeview( );
+
+      // Add localisation fields to select
+    $select = $select . $this->sql_select_addLL( );
+
+      // RETURN select
+    return $select;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_from( ): Get the FROM statement ...
+ *
+ * @return	string  $from : FROM statement
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_from( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );

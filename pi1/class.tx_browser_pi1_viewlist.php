@@ -1069,7 +1069,7 @@ class tx_browser_pi1_viewlist
     
       //////////////////////////////////////////////////////////////////////
       //
-      // csv export
+      // csv export: move current template to CSV template
 
       // #29370, 110831, dwildt+
       // Get template for csv
@@ -1089,7 +1089,7 @@ class tx_browser_pi1_viewlist
         // Do nothing;
     }
       // Get template for csv
-      // csv export
+      // csv export: move current template to CSV template
       // #29370, 110831, dwildt+
 
 
@@ -1103,7 +1103,7 @@ class tx_browser_pi1_viewlist
       $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       return $template;
     }
-//    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->objSql->sql_query_statements );
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->objSql->sql_query_statements );
       // Set SQL query parts in general and statements for rows
 
 
