@@ -858,8 +858,6 @@ class tx_browser_pi1_filter_4x {
 
     //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arr_realTables_arrFields );
 
-    if( ! isset( $GLOBALS['TCA'][$table]['ctrl']['languageField'] ) )
-
     $where = "WHERE 1";
     $where = $where . $this->sql_andWhere_pidList( );
     $where = $where . $this->sql_andWhere_enableFields( );
