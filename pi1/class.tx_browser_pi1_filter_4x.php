@@ -889,6 +889,7 @@ class tx_browser_pi1_filter_4x {
     $where = "WHERE 1";
     $where = $where . $this->sql_andWhere_pidList( );
     $where = $where . $this->sql_andWhere_enableFields( );
+    $where = $where . $this->sql_andWhere_sysLanguage( );
       // Get WHERE statement
 
       // RETURN WHERE statement
@@ -917,6 +918,59 @@ class tx_browser_pi1_filter_4x {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     $andWhere = $this->pObj->cObj->enableFields( $table );
+
+      // RETURN WHERE statement
+    return $andWhere;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_andWhere_sysLanguage( ): Get the WHERE statement ...
+ *
+ * @return	string  $where : WHERE statement
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_andWhere_sysLanguage( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+    if( ! isset( $this->sql_filterFields[$table]['languageField'] ) )
+    {
+      return;
+    }
+
+    $languageField  = $this->sql_filterFields[$table]['languageField'];
+    $languageId     = $GLOBALS['TSFE']->sys_language_content;
+
+    switch( $this->int_localisation_mode )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+        $andWhere = " AND " . $languageField . " <= 0 ";
+        break;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+//:TODO: Nicht alle beiden Sprachen gleichzeitig sondern in zwei Abfragen hintereinander.
+        $andWhere = " AND ( " .
+                      $languageField . " <= 0 OR " .
+                      $languageField . " = " . intval( $languageId ) .
+                    " ) ";
+        break;
+      case( PI1_SELECTED_LANGUAGE_ONLY ):
+        $andWhere = " AND " . $languageField . " = " . intval( $languageId ) . " ";
+        break;
+      default:
+        $andWhere = null;
+        break;
+    }
 
       // RETURN WHERE statement
     return $andWhere;
