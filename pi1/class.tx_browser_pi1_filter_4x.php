@@ -281,15 +281,6 @@ class tx_browser_pi1_filter_4x {
 
 // Exec query
 
-//    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $select );
-
-
-//    $str_header  = '<h1 style="color:red;">' . __METHOD__ . '</h1>';
-//    $str_prompt  = '<p style="color:red;font-weight:bold;">Development ' . $this->curr_tableField . '</p>';
-//    $arr_return['error']['status'] = true;
-//    $arr_return['error']['header'] = $str_header;
-//    $arr_return['error']['prompt'] = $str_prompt;
-
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
     return $arr_return;
@@ -869,15 +860,10 @@ class tx_browser_pi1_filter_4x {
 
     if( ! isset( $GLOBALS['TCA'][$table]['ctrl']['languageField'] ) )
 
-    $where = null;
-    $where = $where . $this->sql_whereAllItems_pidList( );
-    $where = $where . $this->sql_whereAllItems_enableFields( );
+    $where = "WHERE 1";
+    $where = $where . $this->sql_andWhere_pidList( );
+    $where = $where . $this->sql_andWhere_enableFields( );
       // Get WHERE statement
-    if( empty ( $where ) )
-    {
-      $where = "1";
-    }
-    $where = "WHERE " . $where;
 
       // RETURN WHERE statement
     return $where;
@@ -892,35 +878,74 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_whereAllItems_pidList( ): Get the WHERE statement ...
+ * sql_andWhere_enableFields( ): Get the WHERE statement ...
  *
  * @return	string  $where : WHERE statement
  *
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function sql_whereAllItems_pidList( )
+  private function sql_andWhere_enableFields( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+    $andWhere = $this->pObj->cObj->enableFields( $realTable );
+
+      // RETURN WHERE statement
+    return $andWhere;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_andWhere_pidList( ): Get the WHERE statement ...
+ *
+ * @return	string  $where : WHERE statement
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_andWhere_pidList( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     if( empty ( $this->pObj->pidList ) )
     {
+        // DRS
+      if( $this->pObj->b_drs_warn )
+      {
+        $prompt = 'There isn\'t any pid list for the records of ' . $table . '. Maybe this is an error.';
+        t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+        // DRS
       return;
     }
 
-    var_dump( $this->pObj->arr_realTables_arrFields[$table] );
-    var_dump( in_array('pid', $this->pObj->arr_realTables_arrFields[$table] ) );
-    exit;
-    
-    $where = null;
-    $where = $where . $this->sql_whereAllItems_pidList( );
-    $where = $where . $this->sql_whereAllItems_enableFields( );
-      // Get WHERE statement
-    $where = "WHERE " . $table . ".pid IN (" . $this->pObj->pidList . ")";
+    $fieldsOfTable = $this->pObj->arr_realTables_arrFields[$table];
+    if( ! in_array( 'pid', $fieldsOfTable ) )
+    {
+        // DRS
+      if( $this->pObj->b_drs_warn )
+      {
+        $prompt = $table . ' shouldn\'t have any pid field. Maybe this is an error.';
+        t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+        // DRS
+      return;
+    }
+
+    $andWhere = " AND " . $table . ".pid IN (" . $this->pObj->pidList . ")";
 
       // RETURN WHERE statement
-    return $where;
+    return $andWhere;
   }
 
 
