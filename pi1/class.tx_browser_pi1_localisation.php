@@ -486,7 +486,7 @@ class tx_browser_pi1_localisation
           $prompt = 'SQL engine 4.x: andWhere for localised fields is modified. ' .
                     'Only records of the default language will selected.';
           t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-          $prompt = 'SQL engine 4.x: If you are using this with the SQL engine 3.x, you wqill get trouble.';
+          $prompt = 'SQL engine 4.x: If you are using this with the SQL engine 3.x, you will get trouble.';
           t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
         }
           // DRS
