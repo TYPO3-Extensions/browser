@@ -1103,7 +1103,7 @@ class tx_browser_pi1_viewlist
       $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       return $template;
     }
-//    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->objSql->sql_query_statements );
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->objSql->sql_query_statements );
       // Set SQL query parts in general and statements for rows
 
 
