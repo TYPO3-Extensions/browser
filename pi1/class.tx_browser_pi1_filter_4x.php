@@ -275,8 +275,19 @@ class tx_browser_pi1_filter_4x {
 
 // If display all items
       // Query for all filter items
-    $query = $this->sql_queryAllItems( );
-    var_dump( __METHOD__, __LINE__, $query );
+    switch( $this->pObj->localTable )
+    {
+      case( ! $table ):
+          // foreign table
+        $query = $this->sql_queryAllItems( );
+        var_dump( __METHOD__, __LINE__, $query );
+        break;
+      case( $table ):
+      default:
+          // local table
+        // Do noting
+        break;
+    }
       // Query for all filter items
 
 // Exec query
