@@ -888,7 +888,7 @@ class tx_browser_pi1_filter_4x {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-    $andWhere = $this->pObj->cObj->enableFields( $realTable );
+    $andWhere = $this->pObj->cObj->enableFields( $table );
 
       // RETURN WHERE statement
     return $andWhere;
