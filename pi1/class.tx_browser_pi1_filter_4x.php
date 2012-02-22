@@ -266,6 +266,9 @@ class tx_browser_pi1_filter_4x {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
       // Query for filter items with a hit at least
     $query = $this->sql_queryWiHitsOnly( );
     var_dump( __METHOD__, __LINE__, $query );
