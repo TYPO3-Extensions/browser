@@ -497,13 +497,13 @@ class tx_browser_pi1_filter_4x {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-    switch( $this->pObj->localTable )
+    switch( true )
     {
-      case( ! $table ):
+      case( $this->pObj->localTable != $table ):
           // foreign table
         $from = "FROM " . $this->pObj->objSql->sql_query_statements['rows']['from'];
         break;
-      case( $table ):
+      case( $this->pObj->localTable == $table ):
       default:
           // local table
         $from = "FROM " . $table;
