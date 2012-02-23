@@ -2,6 +2,9 @@
   120219
   New Features
   * #33892: Optimisation of performance - Step II
+  Bugfixes
+  * #34212: TypoScript limit hasn't any effect
+
 
 3.9.8
   120203

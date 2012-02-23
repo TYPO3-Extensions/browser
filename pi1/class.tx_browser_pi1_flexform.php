@@ -2851,7 +2851,10 @@ class tx_browser_pi1_flexform {
       // Get the limit for the list view
 
       // View has a local limit
-    $conf_limit = false;
+      // #34212: 120223, dwildt+
+    $conf_limit = $str_limit;
+      // #34212: 120223, dwildt-
+    //$conf_limit = false;
     $str_path   = false;
     if (isset ($this->pObj->conf['views.']['list.'][$this->mode . '.']['limit'])) {
       $conf_limit = $this->pObj->conf['views.']['list.'][$this->mode . '.']['limit'];
@@ -2871,7 +2874,8 @@ class tx_browser_pi1_flexform {
         }
       }
     }
-    $conf_limit = $str_limit;
+      // #34212: 120223, dwildt-
+    //$conf_limit = $str_limit;
     $this->pObj->conf['views.']['list.'][$this->mode . '.']['limit'] = $conf_limit;
       // View has a local limit
       // Field limit
