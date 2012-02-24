@@ -390,6 +390,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
                                       $limit
                                     );
       // Get query
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $query );
       // Execute query
     $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
                                     (
@@ -470,6 +471,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
                                       $limit
                                     );
       // Get query
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $query );
       // Execute query
     $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
                                     (
