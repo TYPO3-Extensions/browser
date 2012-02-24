@@ -986,7 +986,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows_wiHitsOnly );
 
     //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arr_realTables_arrFields );
 
-    $where  = $this->sql_andWhere_pidList( ) .
+    $where  = '1 ' .
+              $this->sql_andWhere_pidList( ) .
               $this->sql_andWhere_enableFields( ) .
               $this->sql_andWhere_sysLanguage( );
       // Get WHERE statement
