@@ -297,6 +297,7 @@ class tx_browser_pi1_filter_4x {
       $rows = $rows_wiHitsOnly;
     }
       // Display items with one hit at least only
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows_wiHitsOnly );
 
       // Display all items
     if( $display_without_any_hit )
