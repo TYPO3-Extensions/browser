@@ -364,6 +364,9 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_resWiHitsOnly( )
   {
+      // Count hits
+    $bool_count = true;
+
       // Get query parts
     $select   = $this->sql_select( $bool_count );
     $from     = $this->sql_from( );
@@ -441,8 +444,10 @@ class tx_browser_pi1_filter_4x {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-      // Query for all filter items
+      // Don't count hits
     $bool_count = false;
+
+      // Query for all filter items
     $select   = $this->sql_select( $bool_count );
     $from     = $table;
     $where    = $this->sql_whereAllItems( );
