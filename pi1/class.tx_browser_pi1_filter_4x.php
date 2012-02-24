@@ -333,6 +333,8 @@ class tx_browser_pi1_filter_4x {
     }
       // Query for all filter items
 
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
+
 
     $arr_return['data']['rows'] = $rows;
 
@@ -1182,11 +1184,9 @@ class tx_browser_pi1_filter_4x {
     
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
-      $rows[ $row[ $uidField ] ] = $row;
+      $rows[ ( string ) $row[ $uidField ] ] = $row;
     }
     $GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
-
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
 
     return $rows;
   }
@@ -1213,21 +1213,33 @@ class tx_browser_pi1_filter_4x {
  */
   private function rows_union( $res, $rows_wiHitsOnly )
   {
-    $rows_allItems = $this->row( $res );
+    $rows_wiAllItems = $this->row( $res );
 
-    if( empty ( $rows_allItems ) )
+    if( empty ( $rows_wiAllItems ) )
     {
       return $rows_wiHitsOnly;
     }
 
     if( empty ( $rows_wiHitsOnly ) )
     {
-      return $rows_allItems;
+      return $rows_wiAllItems;
     }
 
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
+    $countField = $this->sql_filterFields[$table]['count'];
 
-    return $rows;
+    foreach( $rows_wiAllItems as $uid => $row )
+    {
+      if( isset ( $rows_wiHitsOnly[ $uid ] ) )
+      {
+        $count = $rows_wiHitsOnly[ $uid ][ $countField ];
+        $rows_wiAllItems[ $uid ][ $countField ] = $count;
+      }
+    }
+
+    return $rows_wiAllItems;
   }
 
 
