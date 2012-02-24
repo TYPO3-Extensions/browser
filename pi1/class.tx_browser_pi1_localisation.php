@@ -463,10 +463,17 @@ class tx_browser_pi1_localisation
     // Return, if we don't have localisation fields
 
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //
-    // Building AND WHERE
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Building AND WHERE
 
+      // DRS
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = '$this->int_localisation_mode == PI1_SELECTED_OR_DEFAULT_LANGUAGE';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 2 );
+    }
+      // DRS
     if ($this->int_localisation_mode == PI1_DEFAULT_LANGUAGE)
     {
       $str_andWhere = $arr_localise['id_field']." <= 0 ";
@@ -497,7 +504,7 @@ class tx_browser_pi1_localisation
     {
       $str_andWhere = $arr_localise['id_field']." = ".intval($this->lang_id)." ";
     }
-    // Building AND WHERE
+      // Building AND WHERE
 
 
     return $str_andWhere;

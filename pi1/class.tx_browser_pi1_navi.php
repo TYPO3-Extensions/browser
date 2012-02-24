@@ -1906,7 +1906,7 @@ class tx_browser_pi1_navi
       // #33892, 120214, dwildt-
     //$dummy = $this->pObj->objViews->listView($this->pObj->str_template_raw);
       // #33892, 120214, dwildt+
-    $dummy = $this->pObj->objListview->main($this->pObj->str_template_raw);
+    $dummy = $this->pObj->objViewlist->main($this->pObj->str_template_raw);
       // Restore current values
     $this->pObj->rows = $curr_rows;
     $this->pObj->view = $curr_view;

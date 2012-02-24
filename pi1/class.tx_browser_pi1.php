@@ -316,6 +316,7 @@ class tx_browser_pi1 extends tslib_pibase {
   var $b_drs_info         = false;
   var $b_drs_browser      = false;
   var $b_drs_cal          = false;
+  var $b_drs_devTodo      = false;
   var $b_drs_discover     = false;
   var $b_drs_download     = false;
   var $b_drs_export       = false;
@@ -1158,6 +1159,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_info         = true;
       $this->b_drs_browser      = true;
       $this->b_drs_cal          = true;
+      $this->b_drs_devTodo      = true;
       $this->b_drs_discover     = true;
       $this->b_drs_download     = true;
       $this->b_drs_export       = true;
@@ -1370,6 +1372,14 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_warn       = true;
       $this->b_drs_info       = true;
       $this->b_drs_tsUpdate   = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
+    if ($this->arr_extConf['drs_mode'] == ':TODO: for Development')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_devTodo    = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
     if ($this->arr_extConf['drs_mode'] == 'Warnings and errors')
