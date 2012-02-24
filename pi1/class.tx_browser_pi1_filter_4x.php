@@ -285,7 +285,7 @@ class tx_browser_pi1_filter_4x {
     unset( $arr_return );
       // Query for filter items with a hit at least
 
-    $rows = $this->rows( $res, ( array ) $rows );
+    $rows_wiHitsOnly = $this->rows( $res );
 // Exec query
 
       // DRS :TODO:
@@ -296,11 +296,15 @@ class tx_browser_pi1_filter_4x {
     }
       // DRS :TODO:
 
-    $currFilterWrap           = $this->conf_view['filter.'][$table . '.'][$field . '.']['wrap.'];
-    $display_without_any_hit  = $currFilterWrap['item.']['display_without_any_hit'];
-//views.list.401.filter.tx_org_news.datetime.wrap.item.display_without_any_hit
+    $display_without_any_hit  = $this->ts_displayWithoutAnyHit( );
+
+    if( ! $display_without_any_hit )
+    {
+      $rows = $rows_wiHitsOnly;
+    }
+
       // Query for all filter items
-    if( $this->ts_displayWithoutAnyHit( ) )
+    if( $display_without_any_hit )
     {
       switch( true )
       {
@@ -316,7 +320,7 @@ class tx_browser_pi1_filter_4x {
           $res = $arr_return['data']['res'];
           unset( $arr_return );
             // Query for filter items with a hit at least
-          $rows = $this->rows( $res, ( array ) $rows );
+          $rows = $this->rows_union( $res, $rows_wiHitsOnly );
           break;
             // foreign table
         case( $table == $this->pObj->localTable ):
@@ -328,6 +332,7 @@ class tx_browser_pi1_filter_4x {
       }
     }
       // Query for all filter items
+
 
     $arr_return['data']['rows'] = $rows;
 
@@ -1168,19 +1173,61 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function rows( $res, $rows_in )
+  private function rows( $res )
   {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+    $uidField = $this->sql_filterFields[$table]['uid'];
+    
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
-      $rows_out[] = $row;
+      $rows[ $row[ $uidField ] ] = $row;
     }
     $GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
 
-    // if $rows_in
-    
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows_out );
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
 
-    $arr_return['data']['rows'] = $rows_out;
+    return $rows;
+  }
+
+
+
+
+
+
+
+
+/**
+ * rows( ): Get the rows of a filter. If $rows contains some row,
+ *          rows will joined with the rows of the ressource res.
+ *          rows will be consolidated
+ *
+ * @param ressource $res      : current SQL ressource
+ * @param array     $rows_in  : rows
+ *
+ * @return	array  $rows_out : value from TS configuration
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function rows_union( $res, $rows_wiHitsOnly )
+  {
+    $rows_allItems = $this->row( $res );
+
+    if( empty ( $rows_allItems ) )
+    {
+      return $rows_wiHitsOnly;
+    }
+
+    if( empty ( $rows_wiHitsOnly ) )
+    {
+      return $rows_allItems;
+    }
+
+
+
+    return $rows;
   }
 
 
