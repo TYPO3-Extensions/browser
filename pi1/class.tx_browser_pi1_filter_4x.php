@@ -1220,20 +1220,23 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows_wiHitsOnly );
 
     if( empty ( $rows_wiAllItems ) )
     {
+      $this->pObj->dev_var_dump( __METHOD__, __LINE__, 'empty' );
       return $rows_wiHitsOnly;
     }
 
     if( empty ( $rows_wiHitsOnly ) )
     {
+      $this->pObj->dev_var_dump( __METHOD__, __LINE__, 'empty' );
       return $rows_wiAllItems;
     }
 
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows_wiAllItems );
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     $countField = $this->sql_filterFields[$table]['count'];
 
-    foreach( $rows_wiAllItems as $uid => $row )
+    foreach( ( array ) $rows_wiAllItems as $uid => $row )
     {
       if( isset ( $rows_wiHitsOnly[ $uid ] ) )
       {
@@ -1242,6 +1245,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows_wiHitsOnly );
       }
     }
 
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows_wiAllItems );
     return $rows_wiAllItems;
   }
 
