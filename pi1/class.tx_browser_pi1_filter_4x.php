@@ -289,7 +289,7 @@ class tx_browser_pi1_filter_4x {
     }
       // DRS :TODO:
 
-    var_dump( __METHOD__, __LINE__, $conf_view['filter.'][$table . '.'][$field . '.']['wrap.item.']['display_without_any_hit'] );
+    var_dump( __METHOD__, __LINE__, $this->conf_view['filter.'][$table . '.'][$field . '.']['wrap.']['item.']['display_without_any_hit'] );
 //views.list.401.filter.tx_org_news.datetime.wrap.item.display_without_any_hit
       // Query for all filter items
     var_dump( __METHOD__, __LINE__, $this->pObj->localTable, $table );
