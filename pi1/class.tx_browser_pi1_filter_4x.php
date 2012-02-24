@@ -242,6 +242,7 @@ class tx_browser_pi1_filter_4x {
     $rows = $arr_return['data']['rows'];
     unset( $arr_return );
 
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
   // Set HTML object
 
       // Prompt the expired time to devlog
@@ -294,44 +295,42 @@ class tx_browser_pi1_filter_4x {
       // Display items with one hit at least only
     if( ! $display_without_any_hit )
     {
-      $rows = $rows_wiHitsOnly;
+      $arr_return['data']['rows'] = $rows_wiHitsOnly;
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      return $arr_return;
     }
       // Display items with one hit at least only
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows_wiHitsOnly );
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
 
       // Display all items
-    if( $display_without_any_hit )
+      // SWITCH localTable versus foreignTable
+    switch( true )
     {
-      switch( true )
-      {
-        case( $table != $this->pObj->localTable ):
-            // foreign table
-            // Get SQL ressource for all filter items
-          $arr_return = $this->sql_resAllItems( );
-          if( $arr_return['error']['status'] )
-          {
-            $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-            return $arr_return;
-          }
-          $res = $arr_return['data']['res'];
-          unset( $arr_return );
-            // Get SQL ressource for all filter items
-            // Get rows
-          $rows = $this->rows_union( $res, $rows_wiHitsOnly );
-          break;
-            // foreign table
-        case( $table == $this->pObj->localTable ):
-        default:
-            // local table
-          $rows = $rows_wiHitsOnly;
-          break;
-            // local table
-      }
+      case( $table != $this->pObj->localTable ):
+          // foreign table
+          // Get SQL ressource for all filter items
+        $arr_return = $this->sql_resAllItems( );
+        if( $arr_return['error']['status'] )
+        {
+          $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+          return $arr_return;
+        }
+        $res = $arr_return['data']['res'];
+        unset( $arr_return );
+          // Get SQL ressource for all filter items
+          // Get rows
+        $rows = $this->rows_union( $res, $rows_wiHitsOnly );
+        break;
+          // foreign table
+      case( $table == $this->pObj->localTable ):
+      default:
+          // local table
+        $rows = $rows_wiHitsOnly;
+        break;
+          // local table
     }
+      // SWITCH localTable versus foreignTable
       // Display all items
-
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
 
 
     $arr_return['data']['rows'] = $rows;
@@ -1218,36 +1217,43 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
  */
   private function rows_union( $res, $rows_wiHitsOnly )
   {
+      // Get all rows - get all filter items
     $rows_wiAllItems = $this->rows( $res );
 
+      // RETURN all rows are empty
     if( empty ( $rows_wiAllItems ) )
     {
-      $this->pObj->dev_var_dump( __METHOD__, __LINE__, 'empty' );
-      return $rows_wiHitsOnly;
+      return null;
     }
+      // RETURN all rows are empty
 
+      // RETURN all rows, there isn't any row with a hit
     if( empty ( $rows_wiHitsOnly ) )
     {
-      $this->pObj->dev_var_dump( __METHOD__, __LINE__, 'empty' );
       return $rows_wiAllItems;
     }
+      // RETURN all rows, there isn't any row with a hit
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows_wiAllItems );
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
+      // Get label of the count field
     $countField = $this->sql_filterFields[$table]['count'];
 
+      // LOOP all items
     foreach( ( array ) $rows_wiAllItems as $uid => $row )
     {
+        // If there is an hit, take it over
       if( isset ( $rows_wiHitsOnly[ $uid ] ) )
       {
         $count = $rows_wiHitsOnly[ $uid ][ $countField ];
         $rows_wiAllItems[ $uid ][ $countField ] = $count;
       }
+        // If there is an hit, take it over
     }
+      // LOOP all items
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows_wiAllItems );
+      // RETURN rows
     return $rows_wiAllItems;
   }
 
