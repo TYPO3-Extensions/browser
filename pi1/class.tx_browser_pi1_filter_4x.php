@@ -275,8 +275,14 @@ class tx_browser_pi1_filter_4x {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Query for filter items with a hit at least
-    $query = $this->sql_queryWiHitsOnly( );
-    var_dump( __METHOD__, __LINE__, $query );
+    $arr_return = $this->sql_resWiHitsOnly( );
+    if( $arr_return['error']['status'] )
+    {
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      return $arr_return;
+    }
+    $res = $arr_return['data']['res'];
+    unset( $arr_return );
       // Query for filter items with a hit at least
 
 // Exec query
@@ -289,25 +295,31 @@ class tx_browser_pi1_filter_4x {
     }
       // DRS :TODO:
 
-    var_dump( __METHOD__, __LINE__, $this->conf_view['filter.'][$table . '.'][$field . '.']['wrap.']['item.']['display_without_any_hit'] );
+    $currFilterWrap           = $this->conf_view['filter.'][$table . '.'][$field . '.']['wrap.'];
+    $display_without_any_hit  = $currFilterWrap['item.']['display_without_any_hit'];
 //views.list.401.filter.tx_org_news.datetime.wrap.item.display_without_any_hit
       // Query for all filter items
-    var_dump( __METHOD__, __LINE__, $this->pObj->localTable, $table );
-    switch( true )
+    if( $this->ts_displayWithoutAnyHit( ) )
     {
-      case( $table != $this->pObj->localTable ):
-          // foreign table
-        $query = $this->sql_queryAllItems( );
-        var_dump( __METHOD__, __LINE__, $query );
-        break;
-      case( $table == $this->pObj->localTable ):
-      default:
-          // local table
-        // Do noting
-        break;
+      switch( true )
+      {
+        case( $table != $this->pObj->localTable ):
+            // foreign table
+          $query = $this->sql_queryAllItems( );
+          var_dump( __METHOD__, __LINE__, $query );
+          break;
+        case( $table == $this->pObj->localTable ):
+        default:
+            // local table
+          // Do noting
+          break;
+      }
     }
       // Query for all filter items
 
+    if( $display_without_any_hit )
+    {
+    }
 // Exec query
 
       // Prompt the expired time to devlog
@@ -333,7 +345,7 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_queryWiHitsOnly( ):  It renders filters and category menus in HTML.
+ * sql_resWiHitsOnly( ):  It renders filters and category menus in HTML.
  *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
  *
  * @return	array
@@ -341,10 +353,9 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function sql_queryWiHitsOnly( )
+  private function sql_resWiHitsOnly( )
   {
-      // Query for filter items with a hit at least
-    $bool_count = true;
+      // Get query parts
     $select   = $this->sql_select( $bool_count );
     $from     = $this->sql_from( );
     $where    = $this->sql_whereWiHitsOnly( );
@@ -352,14 +363,41 @@ class tx_browser_pi1_filter_4x {
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
 
-    $query  = $select   . PHP_EOL .
-              $from     . PHP_EOL .
-              $where    . PHP_EOL .
-              $groupBy  . PHP_EOL .
-              $orderBy  . PHP_EOL .
-              $limit;
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Get query
+      // Execute query
+    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Execute query
 
-    return $query;
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+      $this->pObj->objSqlFun->query = $query;
+      $this->pObj->objSqlFun->error = $error;
+      $arr_result = $this->pObj->objSqlFun->prompt_error( );
+      return $arr_result;
+    }
+      // Error management
+
+    return $arr_result['data']['res'];
   }
 
 
@@ -1066,6 +1104,58 @@ class tx_browser_pi1_filter_4x {
 
       // RETURN WHERE statement
     return $where;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * ts_displayWithoutAnyHit( ):  Get the TS configuration for displaying items without hits.
+ *                              If current filter is a tree view, return value is true.
+ *
+ * @return	string  $display_without_any_hit : value from TS configuration
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function ts_displayWithoutAnyHit( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Short var
+    $currFilterWrap           = $this->conf_view['filter.'][$table . '.'][$field . '.']['wrap.'];
+
+      // Get TS value
+    $display_without_any_hit  = $currFilterWrap['item.']['display_without_any_hit'];
+
+      // RETURN ts value directly: filter isn't a tree view filter
+    if ( ! in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
+    {
+      return $display_without_any_hit;
+    }
+      // RETURN ts value directly: filter isn't a tree view filter
+
+      // RETURN true: filter is a tree view filter
+      // DRS - Development Reporting System
+    if( $this->pObj->b_drs_filter )
+    {
+      if( $display_without_any_hit == false )
+      {
+        $prompt = 'wrap.item.display_without_any_hit is false. But ' . $this->curr_tableField . ' is displayed in a tree view: display_without_any_hit is set to true!';
+        t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+      }
+    }
+      // DRS - Development Reporting System
+
+      // RETURN
+    return true;
+      // RETURN true: filter is a tree view filter
   }
 
 

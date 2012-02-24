@@ -467,13 +467,13 @@ class tx_browser_pi1_localisation
       //
       // Building AND WHERE
 
-      // DRS
+      // DRS :TODO:
     if( $this->pObj->b_drs_devTodo )
     {
       $prompt = '$this->int_localisation_mode == PI1_SELECTED_OR_DEFAULT_LANGUAGE';
       t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 2 );
     }
-      // DRS
+      // DRS :TODO:
     if ($this->int_localisation_mode == PI1_DEFAULT_LANGUAGE)
     {
       $str_andWhere = $arr_localise['id_field']." <= 0 ";
