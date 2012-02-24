@@ -390,7 +390,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
                                       $limit
                                     );
       // Get query
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $query );
       // Execute query
     $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
                                     (
@@ -413,6 +412,14 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $query );
       return $arr_result;
     }
       // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
 
     $arr_result['data']['res'] = $res;
     return $arr_result;
@@ -471,7 +478,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $query );
                                       $limit
                                     );
       // Get query
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $query );
       // Execute query
     $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
                                     (
@@ -494,6 +500,14 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $query );
       return $arr_result;
     }
       // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
 
     $arr_result['data']['res'] = $res;
     return $arr_result;
@@ -690,7 +704,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $query );
 
       // Short var
     $arr_order  = $this->conf_view['filter.'][$table . '.'][$field . '.']['order.'];
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_order );
 
       // Order field
     switch( true )
@@ -1088,13 +1101,20 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_order );
     $languageField  = $this->sql_filterFields[$table]['languageField'];
     $languageId     = $GLOBALS['TSFE']->sys_language_content;
 
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = '$this->int_localisation_mode PI1_SELECTED_OR_DEFAULT_LANGUAGE: for each language a query!';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 2 );
+    }
+      // DRS :TODO:
+
     switch( $this->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
         $andWhere = " AND " . $languageField . " <= 0 ";
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
-//:TODO: Nicht alle beiden Sprachen gleichzeitig sondern in zwei Abfragen hintereinander.
         $andWhere = " AND ( " .
                       $languageField . " <= 0 OR " .
                       $languageField . " = " . intval( $languageId ) .
