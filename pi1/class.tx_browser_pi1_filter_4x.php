@@ -285,6 +285,7 @@ class tx_browser_pi1_filter_4x {
     unset( $arr_return );
       // Query for filter items with a hit at least
 
+    $rows = $this->rows( $res, ( array ) $rows );
 // Exec query
 
       // DRS :TODO:
@@ -305,22 +306,30 @@ class tx_browser_pi1_filter_4x {
       {
         case( $table != $this->pObj->localTable ):
             // foreign table
-          $query = $this->sql_queryAllItems( );
-          var_dump( __METHOD__, __LINE__, $query );
+            // Query for filter items with a hit at least
+          $arr_return = $this->sql_resWiHitsOnly( );
+          if( $arr_return['error']['status'] )
+          {
+            $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+            return $arr_return;
+          }
+          $res = $arr_return['data']['res'];
+          unset( $arr_return );
+            // Query for filter items with a hit at least
+          $rows = $this->rows( $res, ( array ) $rows );
           break;
+            // foreign table
         case( $table == $this->pObj->localTable ):
         default:
             // local table
-          // Do noting
+            // Do noting
           break;
+            // local table
       }
     }
       // Query for all filter items
 
-    if( $display_without_any_hit )
-    {
-    }
-// Exec query
+    $arr_return['data']['rows'] = $rows;
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -397,7 +406,8 @@ class tx_browser_pi1_filter_4x {
     }
       // Error management
 
-    return $arr_result['data']['res'];
+    $arr_result['data']['res'] = $res;
+    return $arr_result;
   }
 
 
@@ -440,14 +450,42 @@ class tx_browser_pi1_filter_4x {
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
 
-    $query  = $select   . PHP_EOL .
-              $from     . PHP_EOL .
-              $where    . PHP_EOL .
-              $groupBy  . PHP_EOL .
-              $orderBy  . PHP_EOL .
-              $limit;
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Get query
+      // Execute query
+    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Execute query
 
-    return $query;
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+      $this->pObj->objSqlFun->query = $query;
+      $this->pObj->objSqlFun->error = $error;
+      $arr_result = $this->pObj->objSqlFun->prompt_error( );
+      return $arr_result;
+    }
+      // Error management
+
+    $arr_result['data']['res'] = $res;
+    return $arr_result;
   }
 
 
@@ -1103,6 +1141,41 @@ class tx_browser_pi1_filter_4x {
 
       // RETURN WHERE statement
     return $where;
+  }
+
+
+
+
+
+
+
+
+/**
+ * rows( ): Get the rows of a filter. If $rows contains some row,
+ *          rows will joined with the rows of the ressource res.
+ *          rows will be consolidated
+ *
+ * @param ressource $res      : current SQL ressource
+ * @param array     $rows_in  : rows
+ *
+ * @return	array  $rows_out : value from TS configuration
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function rows( $res, $rows_in )
+  {
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+      $rows_out[] = $row;
+    }
+    $GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
+
+    // if $rows_in
+    
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows_out );
+
+    $arr_return['data']['rows'] = $rows_out;
   }
 
 
