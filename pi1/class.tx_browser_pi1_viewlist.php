@@ -1116,6 +1116,7 @@ class tx_browser_pi1_viewlist
       $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       return $template;
     }
+    $arr_filters = $arr_result['data']['filters'];
 
       // Get A-Z-browser
       // Set A-Z-browser
