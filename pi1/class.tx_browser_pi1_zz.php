@@ -261,9 +261,9 @@
         {
           if(empty($this->pObj->piVars['showUid']))
           {
-            t3lib_div::devlog('[WARN/FLEXFORM] showUid is empty. If you have expect a value for the current plugin,
+            t3lib_div::devlog('[INFO/FLEXFORM] showUid is empty. If you have expect a value for the current plugin,
               please configure in the current plugin: [General] handle piVars from foreign plugins!',
-              $this->pObj->extKey, 2);
+              $this->pObj->extKey, 0);
           }
         }
       }
