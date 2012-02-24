@@ -434,9 +434,9 @@ class tx_browser_pi1_filter_4x {
       // Query for all filter items
     $bool_count = false;
     $select   = $this->sql_select( $bool_count );
-    $from     = "FROM " . $table;
+    $from     = $table;
     $where    = $this->sql_whereAllItems( );
-    $groupBy  = "GROUP BY " . $this->curr_tableField;
+    $groupBy  = $this->curr_tableField;
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
 
@@ -507,7 +507,7 @@ class tx_browser_pi1_filter_4x {
         $count = "0";
         break;
     }
-    $select = "SELECT " . $count . " AS 'count', " .
+    $select = $count . " AS 'count', " .
               $table . ".uid AS '" . $table . ".uid', " .
               $this->curr_tableField . " AS '" . $this->curr_tableField . "'";
       // select
@@ -553,12 +553,12 @@ class tx_browser_pi1_filter_4x {
     {
       case( $this->pObj->localTable != $table ):
           // foreign table
-        $from = "FROM " . $this->pObj->objSql->sql_query_statements['rows']['from'];
+        $from = $this->pObj->objSql->sql_query_statements['rows']['from'];
         break;
       case( $this->pObj->localTable == $table ):
       default:
           // local table
-        $from = "FROM " . $table;
+        $from = $table;
         break;
     }
       // Get FROM statement
@@ -586,7 +586,7 @@ class tx_browser_pi1_filter_4x {
   private function sql_groupBy( )
   {
       // Get WHERE statement
-    $groupBy = "GROUP BY " . $this->curr_tableField;
+    $groupBy = $this->curr_tableField;
 
       // RETURN WHERE statement
     return $groupBy;
@@ -611,7 +611,7 @@ class tx_browser_pi1_filter_4x {
   private function sql_limit( )
   {
       // Get LIMIT statement
-    $limit = "LIMIT ...";
+    $limit = "...";
 
       // RETURN LIMIT statement
     return $limit;
@@ -636,7 +636,7 @@ class tx_browser_pi1_filter_4x {
   private function sql_orderBy( )
   {
       // Get WHERE statement
-    $orderBy = "ORDER BY " . $this->curr_tableField;
+    $orderBy = $this->curr_tableField;
 
       // RETURN WHERE statement
     return $orderBy;
@@ -939,10 +939,9 @@ class tx_browser_pi1_filter_4x {
 
     //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arr_realTables_arrFields );
 
-    $where = "WHERE 1";
-    $where = $where . $this->sql_andWhere_pidList( );
-    $where = $where . $this->sql_andWhere_enableFields( );
-    $where = $where . $this->sql_andWhere_sysLanguage( );
+    $where  = $this->sql_andWhere_pidList( ) .
+              $this->sql_andWhere_enableFields( ) .
+              $this->sql_andWhere_sysLanguage( );
       // Get WHERE statement
 
       // RETURN WHERE statement
@@ -1100,7 +1099,7 @@ class tx_browser_pi1_filter_4x {
   private function sql_whereWiHitsOnly( )
   {
       // Get WHERE statement
-    $where = "WHERE " . $this->pObj->objSql->sql_query_statements['rows']['where'];
+    $where = $this->pObj->objSql->sql_query_statements['rows']['where'];
 
       // RETURN WHERE statement
     return $where;
