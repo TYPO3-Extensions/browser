@@ -274,7 +274,7 @@ class tx_browser_pi1_filter_4x {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-      // Query for filter items with a hit at least
+      // Get SQL ressource for filter items with one hit at least
     $arr_return = $this->sql_resWiHitsOnly( );
     if( $arr_return['error']['status'] )
     {
@@ -283,35 +283,30 @@ class tx_browser_pi1_filter_4x {
     }
     $res = $arr_return['data']['res'];
     unset( $arr_return );
-      // Query for filter items with a hit at least
+      // Get SQL ressource for filter items with one hit at least
 
+      // Get rows
     $rows_wiHitsOnly = $this->rows( $res );
-// Exec query
 
-      // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Display all items? If yes execute next query.';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 2 );
-    }
-      // DRS :TODO:
-
+      // Display all items?
     $display_without_any_hit  = $this->ts_displayWithoutAnyHit( );
 
+      // Display items with one hit at least only
     if( ! $display_without_any_hit )
     {
       $rows = $rows_wiHitsOnly;
     }
+      // Display items with one hit at least only
 
-      // Query for all filter items
+      // Display all items
     if( $display_without_any_hit )
     {
       switch( true )
       {
         case( $table != $this->pObj->localTable ):
             // foreign table
-            // Query for filter items with a hit at least
-          $arr_return = $this->sql_resWiHitsOnly( );
+            // Get SQL ressource for all filter items
+          $arr_return = $this->sql_resAllItems( );
           if( $arr_return['error']['status'] )
           {
             $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -319,7 +314,8 @@ class tx_browser_pi1_filter_4x {
           }
           $res = $arr_return['data']['res'];
           unset( $arr_return );
-            // Query for filter items with a hit at least
+            // Get SQL ressource for all filter items
+            // Get rows
           $rows = $this->rows_union( $res, $rows_wiHitsOnly );
           break;
             // foreign table
@@ -331,7 +327,7 @@ class tx_browser_pi1_filter_4x {
             // local table
       }
     }
-      // Query for all filter items
+      // Display all items
 
     $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
 
@@ -438,7 +434,7 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_queryAllItems( ):  It renders filters and category menus in HTML.
+ * sql_resAllItems( ):  It renders filters and category menus in HTML.
  *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
  *
  * @return	array
@@ -446,7 +442,7 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function sql_queryAllItems( )
+  private function sql_resAllItems( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -1180,14 +1176,20 @@ class tx_browser_pi1_filter_4x {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
+      // Get the field label of the uid
     $uidField = $this->sql_filterFields[$table]['uid'];
     
+      // LOOP build the rows
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
       $rows[ ( string ) $row[ $uidField ] ] = $row;
     }
+      // LOOP build the rows
+
+      // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
 
+      // RETURN rows
     return $rows;
   }
 
@@ -1265,10 +1267,10 @@ class tx_browser_pi1_filter_4x {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Short var
-    $currFilterWrap           = $this->conf_view['filter.'][$table . '.'][$field . '.']['wrap.'];
+    $currFilterWrap = $this->conf_view['filter.'][$table . '.'][$field . '.']['wrap.'];
 
       // Get TS value
-    $display_without_any_hit  = $currFilterWrap['item.']['display_without_any_hit'];
+    $display_without_any_hit = $currFilterWrap['item.']['display_without_any_hit'];
 
       // RETURN ts value directly: filter isn't a tree view filter
     if ( ! in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
