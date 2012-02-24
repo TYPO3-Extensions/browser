@@ -324,7 +324,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
         case( $table == $this->pObj->localTable ):
         default:
             // local table
-            // Do noting
+          $rows = $rows_wiHitsOnly;
           break;
             // local table
       }
