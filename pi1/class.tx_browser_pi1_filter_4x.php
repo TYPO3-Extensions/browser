@@ -1043,6 +1043,14 @@ if( $this->pObj->b_drs_devTodo )
 
     //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arr_realTables_arrFields );
 
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Add andWhere from TS.';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS :TODO:
+
     $where  = '1 ' .
               $this->sql_andWhere_pidList( ) .
               $this->sql_andWhere_enableFields( ) .
@@ -1210,6 +1218,14 @@ if( $this->pObj->b_drs_devTodo )
  */
   private function sql_whereWiHitsOnly( )
   {
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Add andWhere from TS.';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS :TODO:
+
       // Get WHERE statement
     $where = $this->pObj->objSql->sql_query_statements['rows']['where'];
 
