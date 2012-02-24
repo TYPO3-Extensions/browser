@@ -673,19 +673,52 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
 
 
 /**
- * sql_orderBy( ): Get the ORDER BY statement ...
+ * sql_orderBy( ):  Get the ORDER BY statement. It depends on the TS configuration
+ *                  filter.table.field.order
  *
- * @return	string  $orderBy : ORDER BY statement
+ * @return	string  $orderBy : ORDER BY statement without ORDER BY
  *
  * @version 3.9.9
  * @since   3.9.9
  */
   private function sql_orderBy( )
   {
-      // Get WHERE statement
-    $orderBy = $this->curr_tableField;
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-      // RETURN WHERE statement
+      // Short var
+    $arr_order  = $this->conf_view['filter.'][$table . '.'][$field . '.']['order.'];
+
+      // Order field
+    switch( true )
+    {
+      case( $arr_order['field'] = 'uid' ):
+        $orderField = $this->sql_filterFields[$table]['uid'];
+        break;
+      case( $arr_order['field'] = 'value' ):
+      default:
+        $orderField = $this->sql_filterFields[$table]['value'];
+        break;
+    }
+      // Order field
+
+      // Order flag
+    switch( true )
+    {
+      case( $arr_order['orderFlag'] = 'DESC' ):
+        $orderFlag = 'DESC';
+        break;
+      case( $arr_order['orderFlag'] = 'ASC' ):
+      default:
+        $orderFlag = 'ASC';
+        break;
+    }
+      // Order flag
+
+      // Get ORDER BY statement
+    $orderBy = $orderField . ' ' . $orderFlag;
+
+      // RETURN ORDER BY statement
     return $orderBy;
   }
 
