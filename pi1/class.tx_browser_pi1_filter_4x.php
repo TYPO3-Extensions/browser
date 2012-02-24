@@ -690,14 +690,15 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $query );
 
       // Short var
     $arr_order  = $this->conf_view['filter.'][$table . '.'][$field . '.']['order.'];
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_order );
 
       // Order field
     switch( true )
     {
-      case( $arr_order['field'] = 'uid' ):
+      case( $arr_order['field'] == 'uid' ):
         $orderField = $this->sql_filterFields[$table]['uid'];
         break;
-      case( $arr_order['field'] = 'value' ):
+      case( $arr_order['field'] == 'value' ):
       default:
         $orderField = $this->sql_filterFields[$table]['value'];
         break;
@@ -707,10 +708,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $query );
       // Order flag
     switch( true )
     {
-      case( $arr_order['orderFlag'] = 'DESC' ):
+      case( $arr_order['orderFlag'] == 'DESC' ):
         $orderFlag = 'DESC';
         break;
-      case( $arr_order['orderFlag'] = 'ASC' ):
+      case( $arr_order['orderFlag'] == 'ASC' ):
       default:
         $orderFlag = 'ASC';
         break;
