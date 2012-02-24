@@ -611,7 +611,7 @@ class tx_browser_pi1_filter_4x {
   private function sql_limit( )
   {
       // Get LIMIT statement
-    $limit = "...";
+    $limit = null;
 
       // RETURN LIMIT statement
     return $limit;
