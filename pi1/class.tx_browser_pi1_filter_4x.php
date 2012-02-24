@@ -556,13 +556,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $query );
         $count = "0";
         break;
     }
-    $select = $count . " AS 'count', " .
+    $select = $count . " AS 'hits', " .
               $table . ".uid AS '" . $table . ".uid', " .
               $this->curr_tableField . " AS '" . $this->curr_tableField . "'";
       // select
 
       // Set class var sql_filterFields
-    $this->sql_filterFields[$table]['count']  = 'count';
+    $this->sql_filterFields[$table]['hits']   = 'hits';
     $this->sql_filterFields[$table]['uid']    = $table . '.uid';
     $this->sql_filterFields[$table]['value']  = $this->curr_tableField;
       // Set class var sql_filterFields
@@ -1273,8 +1273,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_order );
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-      // Get label of the count field
-    $countField = $this->sql_filterFields[$table]['count'];
+      // Get label of the hits field
+    $hitsField = $this->sql_filterFields[$table]['hits'];
 
       // LOOP all items
     foreach( ( array ) $rows_wiAllItems as $uid => $row )
@@ -1282,8 +1282,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_order );
         // If there is an hit, take it over
       if( isset ( $rows_wiHitsOnly[ $uid ] ) )
       {
-        $count = $rows_wiHitsOnly[ $uid ][ $countField ];
-        $rows_wiAllItems[ $uid ][ $countField ] = $count;
+        $hits = $rows_wiHitsOnly[ $uid ][ $hitsField ];
+        $rows_wiAllItems[ $uid ][ $hitsField ] = $hits;
       }
         // If there is an hit, take it over
     }
