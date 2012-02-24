@@ -194,7 +194,7 @@ class tx_browser_pi1_filter_4x {
     if( $this->pObj->b_drs_devTodo )
     {
       $prompt = 'Area?';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 2 );
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS :TODO:
 
@@ -243,6 +243,14 @@ class tx_browser_pi1_filter_4x {
     unset( $arr_return );
 
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
+  // DRS :TODO:
+if( $this->pObj->b_drs_devTodo )
+{
+  $prompt = 'Render rows as HTML object';
+  t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+}
+  // DRS :TODO:
+
   // Set HTML object
 
       // Prompt the expired time to devlog
@@ -1105,7 +1113,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
     if( $this->pObj->b_drs_devTodo )
     {
       $prompt = '$this->int_localisation_mode PI1_SELECTED_OR_DEFAULT_LANGUAGE: for each language a query!';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 2 );
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS :TODO:
 
