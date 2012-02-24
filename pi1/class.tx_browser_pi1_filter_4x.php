@@ -1213,7 +1213,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function rows_union( $res, $rows_wiHitsOnly )
   {
-    $rows_wiAllItems = $this->row( $res );
+    $rows_wiAllItems = $this->rows( $res );
 
     if( empty ( $rows_wiAllItems ) )
     {
