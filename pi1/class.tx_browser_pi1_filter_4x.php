@@ -190,8 +190,13 @@ class tx_browser_pi1_filter_4x {
     }
       // LOOP each filter
 
-    //:TODO:
-    // AREA?
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Area?';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 2 );
+    }
+      // DRS :TODO:
 
 //    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->sql_filterFields );
 
@@ -276,7 +281,16 @@ class tx_browser_pi1_filter_4x {
 
 // Exec query
 
-// If display all items
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Display all items? If yes execute next query.';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 2 );
+    }
+      // DRS :TODO:
+
+    var_dump( __METHOD__, __LINE__, $conf_view['filter.'][$table . '.'][$field . '.']['wrap.item.']['display_without_any_hit'] );
+//views.list.401.filter.tx_org_news.datetime.wrap.item.display_without_any_hit
       // Query for all filter items
     var_dump( __METHOD__, __LINE__, $this->pObj->localTable, $table );
     switch( true )
