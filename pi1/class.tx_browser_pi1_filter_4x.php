@@ -355,8 +355,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
 
       // Render the filter rows
     $this->rows = $rows;
-    $content = $this->get_html( );
-    $arr_return['data']['marker'][$markerLabel] = $content;
+    $arr_return = $this->get_html( );
+    $arr_return['data']['marker'][$markerLabel] = $arr_return['data']['html'];
       // Render the filter rows
 
       // Prompt the expired time to devlog
@@ -402,7 +402,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $arr_return['data']['html'] = null;
 
       // RETURN rows are empty
-    if( empty ( $rows) )
+    if( empty ( $this->rows) )
     {
         // DRS
       if( $this->pObj->b_drs_warn )
