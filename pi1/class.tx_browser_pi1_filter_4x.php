@@ -426,7 +426,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     // Wrap values
       // Wrap the item
 
-    $content = $this->get_htmlItem( );
+    $content = $this->get_htmlItems( );
 
       // Wrap the object
 
@@ -446,19 +446,20 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
 
 
 /**
- * get_htmlItem( ): Render the given rows. Returns a HTML filter.
+ * get_htmlItems( ): Render the given rows. Returns a HTML filter.
  *
  * @return	array
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function get_htmlItem( )
+  private function get_htmlItems( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
       // Default return value
-    $arr_return['data']['html'] = null;
+    $htmlItem                   = null;
+    $arr_return['data']['html'] = $htmlItem;
 
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -469,20 +470,306 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     // Area
     // Wrap values
       // Wrap the item
+      // Class
+
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    
 
     foreach( ( array ) $this->rows as $uid => $row )
     {
+      $row_number = 0;
       foreach( $row as $tableField => $value )
       {
-        var_dump( $row );
+          // stdWrap the current value
+        $stdWrap   = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
+        $htmlItem  = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
+          // stdWrap the current value
+
+          // Item class
+        if($conf_name == 'CATEGORY_MENU')
+        {
+          $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
+        }
+        $htmlItem = $this->replace_itemClass( $conf_array, $htmlItem );
+          // Item class
+          // Item style
+        $htmlItem = $this->replace_itemStyle( $conf_array, $htmlItem, false );
+          // Item uid
+        $htmlItem = $this->replace_itemUid( $conf_array, $uid, $htmlItem );
+          // Item URL
+        $htmlItem = $this->replace_itemUrl( $conf_array, $uid, $htmlItem );
+
+        $htmlItems = $htmlItems . $htmlItems . PHP_EOL ;
+        $row_number++;
       }
     }
 
-
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    $arr_return['data']['html'] = $htmlItem;
     return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * HTML - replace marker
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * replace_itemClass( ): Replaces the marker ###CLASS### with the value from TS
+ *
+ * @param	array     $conf_array : The TS configuration of the current filter
+ * @param	string		$htmlItem   : The current item
+ * @return	string	$htmlItem   :	Returns the wrapped item
+ *
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  private function replace_itemClass( $conf_array, $htmlItem )
+  {
+      // Default value
+    $class = null;
+
+      // Get class from TS
+//    if( is_array( $conf_array['wrap.'] ) )
+//    {
+//      if( is_array( $conf_array['wrap.']['item.'] ) )
+//      {
+//        $class = $conf_array['wrap.']['item.']['class'];
+//      }
+//    }
+    if( isset( $conf_array['wrap.']['item.']['class'] ) )
+    {
+      $class = ' class="' . $conf_array['wrap.']['item.']['class'] . '"';
+    }
+      // Get class from TS
+
+      // Replace the marker
+    $htmlItem = str_replace( '###CLASS###', $class, $htmlItem );
+
+    return $htmlItem;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * replace_itemStyle( ): Replaces the marker ###STYLE### with the value from TS
+ *
+ * @param	array     $conf_array : The TS configuration of the current filter
+ * @param	string		$htmlItem   : The current item
+ * @return	string	$htmlItem   :	Returns the wrapped item
+ *
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  private function replace_itemStyle( $conf_array, $htmlItem )
+  {
+      // Default value
+    $style = null;
+
+      // Get style from TS
+    if( isset( $conf_array['wrap.']['item.']['style'] ) )
+    {
+      $style = ' style="' . $conf_array['wrap.']['item.']['style'] . '"';
+    }
+      // Get style from TS
+
+      // Replace the marker
+    $htmlItem = str_replace( '###STYLE###', $style, $htmlItem );
+
+    return $htmlItem;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * replace_itemUid( ): Replaces the marker ###UID### with the given uid
+ *
+ * @param	array     $conf_array : The TS configuration of the current filter
+ * @param	string		$uid        : The uid of the current item
+ * @param	string		$htmlItem   : The current item
+ * @return	string	$htmlItem   :	Returns the wrapped item
+ *
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  private function replace_itemUid( $conf_array, $uid, $htmlItem )
+  {
+    $htmlItem = str_replace( '###UID###', $str_uid, $htmlItem );
+    return $htmlItem;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * replace_itemUrl( ): Replaces the marker ###URL###
+ *
+ * @param	array     $conf_array : The TS configuration of the current filter
+ * @param	string		$uid        : The uid of the current item
+ * @param	string		$htmlItem   : The current item
+ * @return	string	$htmlItem   :	Returns the wrapped item
+ *
+ * @version 3.9.9
+ * @since   3.6.1
+ */
+  private function replace_itemUrl( $conf_array, $uid, $htmlItem )
+  {
+      // Short vars
+    $conf_view      = $this->conf_view;
+    $arr_currPiVars = $this->pObj->piVars;
+    $tableField     = $this->curr_tableField;
+
+      // Set value of the first item to null: it won't become an additional parameter below
+    if( $uid == $conf_array['first_item.']['option_value'] )
+    {
+      $uid = null;
+    }
+      // Set value of the first item to null: it won't become an additional parameter below
+
+      // Move value (10, 20, 30, ...) to url_stdWrap (i.e: 2011_Jan, 2011_Feb, 2011_Mar, ...)
+    $uid = $this->pObj->objCal->area_get_urlPeriod( $conf_array, $tableField, $uid );
+
+
+
+      /////////////////////////////////////////////////////////
+      //
+      // Remove piVars temporarily
+    
+      // Remove sort and pointer
+    $arr_removePiVars = array( 'sort', 'pointer' );
+
+      // Remove 'plugin', if current plugin is the default plugin
+    if( ! $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin )
+    {
+      $arr_removePiVars[] = 'plugin';
+    }
+      // Remove 'plugin', if current plugin is the default plugin
+      // LOOP piVars for removing
+    foreach( ( array ) $arr_removePiVars as $piVar )
+    {
+      if( isset( $this->pObj->piVars[$piVar] ) )
+      {
+        unset( $this->pObj->piVars[$piVar] );
+      }
+    }
+      // LOOP piVars for removing
+      // Remove piVars temporarily
+
+
+
+      /////////////////////////////////////////////////////////
+      //
+      // Change $GLOBALS['TSFE']->id temporarily
+      
+    $int_tsfeId = $GLOBALS['TSFE']->id;
+    if( ! empty( $this->pObj->objFlexform->int_viewsListPid ) )
+    {
+      $GLOBALS['TSFE']->id = $this->pObj->objFlexform->int_viewsListPid;
+    }
+      // Change $GLOBALS['TSFE']->id temporarily
+
+
+
+      /////////////////////////////////////////////////////////
+      //
+      // Remove the filter fields temporarily
+      
+      // #9495, fsander
+    $this->pObj->piVars = $this->pObj->objZz->removeFiltersFromPiVars
+                                              (
+                                                $this->pObj->piVars,
+                                                $conf_view['filter.']
+                                              );
+      // Remove the filter fields temporarily
+
+
+
+      /////////////////////////////////////////////////////////
+      //
+      // Calculate additional params for the typolink
+
+    $additionalParams = null;
+    foreach( ( array ) $this->pObj->piVars as $paramKey => $paramValue )
+    {
+      if( ! empty( $paramValue ) )
+      {
+        $additionalParams = $additionalParams . '&' . 
+                            $this->pObj->prefixId . '[' . $paramKey . ']=' . $paramValue;
+      }
+    }
+    $additionalParams = $additionalParams . '&' .
+                        $this->pObj->prefixId . '[' . $tableField . ']=' . $uid;
+      // Calculate additional params for the typolink
+
+
+
+      /////////////////////////////////////////////////////////
+      //
+      // Build and render the typolink
+
+    $arr_typolink['parameter']        = $GLOBALS['TSFE']->id;
+    $arr_typolink['additionalParams'] = $additionalParams;
+    $arr_typolink['useCacheHash']     = 1;
+    $arr_typolink['returnLast']       = 'URL';
+
+    $typolink  = $this->pObj->local_cObj->typoLink_URL($arr_typolink);
+      // Build and render the typolink
+
+
+
+      /////////////////////////////////////////////////////////
+      //
+      // Cleanup piVars and id
+
+      // Reset $this->pObj->piVars
+    $this->pObj->piVars   = $arr_currPiVars;
+      // Reset $GLOBALS['TSFE']->id
+    $GLOBALS['TSFE']->id  = $int_tsfeId;
+      // Cleanup piVars and id
+
+      // Replace the marker
+    $htmlItem  = str_replace('###URL###', $typolink, $htmlItem);
+
+      // Return the item
+    return $htmlItem;
   }
 
 
@@ -536,6 +823,18 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $arr_return = $this->get_rowsAllItems( $rows );
       // 2. step: all filter items, hits will be taken from $rows
 
+    // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo ) {
+      $prompt = 'Order rows, if it is a tree view.';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+    // DRS :TODO:
+//    if ( ! in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
+//    {
+//      return $display_without_any_hit;
+//    }
+
+
     return $arr_return;
   }
 
@@ -572,7 +871,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $arr_return['data']['rows'] = $this->sql_resToRows( $res );
 
       // RETURN rows
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['rows'] );
     return $arr_return;
   }
 
@@ -639,7 +937,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // SWITCH localTable versus foreignTable
 
       // RETURN rows
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
     $arr_return['data']['rows'] = $rows;
     return $arr_return;
   }
@@ -855,7 +1152,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
 
       // RETURN rows
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
     return $rows;
   }
 
@@ -916,7 +1212,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // LOOP all items
 
       // RETURN rows
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows_wiAllItems );
     return $rows_wiAllItems;
   }
 
@@ -1733,11 +2028,11 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $tableField = $this->curr_tableField;
 
       // Get TS configuration array
-    $coa_name = $this->conf_view['filter.'][$table . '.'][$field . '.']['condition'];
-    $coa_conf = $this->conf_view['filter.'][$table . '.'][$field . '.']['condition.'];
+    $conf_name = $this->conf_view['filter.'][$table . '.'][$field . '.']['condition'];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.']['condition.'];
 
       // RETURN true: any condition isn't defined
-    if( empty ( $coa_name ) )
+    if( empty ( $conf_name ) )
     {
       if ( $this->pObj->b_drs_filter )
       {
@@ -1749,7 +2044,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // RETURN true: any condition isn't defined
 
       // Get condition result
-    $value = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+    $value = $this->pObj->cObj->cObjGetSingle($conf_name, $conf_array);
     switch( $value )
     {
       case( false ):
