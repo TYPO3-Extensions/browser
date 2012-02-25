@@ -100,52 +100,19 @@ class tx_browser_pi1_filter_4x {
 
 
 
-/**
- * init( ):  It renders filters and category menus in HTML.
- *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
- *
- * @return	array
- *
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function init( )
-  {
-
-    if( ! isset( $this->int_localisation_mode ) )
-    {
-      $this->int_localisation_mode = $this->pObj->objLocalise->localisationConfig( );
-    }
-
-    switch( $this->int_localisation_mode )
-    {
-      case( PI1_DEFAULT_LANGUAGE ):
-        $this->bool_dontLocalise = true;
-        $prompt = 'Localisation mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localise!';
-        break;
-      case( PI1_DEFAULT_LANGUAGE_ONLY ):
-        $this->bool_dontLocalise = true;
-        $prompt = 'Localisation mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localise!';
-        break;
-      default:
-        $this->bool_dontLocalise = false;
-        $prompt = 'Localisation mode is enabled';
-        break;
-    }
-    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
-    {
-      t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-    // Do we need translated/localised records?
-  }
-
-
-    
  /***********************************************
   *
-  * HTML
+  * Main
   *
   **********************************************/
+
+
+
+
+
+
+
+
 
 /**
  * get_htmlFilters( ):  It renders filters and category menus in HTML.
@@ -233,7 +200,15 @@ class tx_browser_pi1_filter_4x {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
-    $arr_return = $this->sql( );
+  // DRS :TODO:
+if( $this->pObj->b_drs_devTodo )
+{
+  $prompt = 'Filter condition';
+  t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+}
+  // DRS :TODO:
+
+    $arr_return = $this->sql_res( );
     if( $arr_return['error']['status'] )
     {
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -266,16 +241,89 @@ if( $this->pObj->b_drs_devTodo )
 
 
 
+ /***********************************************
+  *
+  * Main
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
 /**
- * sql( ):  It renders filters and category menus in HTML.
- *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ * init( ):  Inits the localisation mode. Set the class var $this->int_localisation_mode.
  *
- * @return	array
+ * @return	void
  *
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function sql( )
+  private function init( )
+  {
+
+    if( ! isset( $this->int_localisation_mode ) )
+    {
+      $this->int_localisation_mode = $this->pObj->objLocalise->localisationConfig( );
+    }
+
+    switch( $this->int_localisation_mode )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+        $this->bool_dontLocalise = true;
+        $prompt = 'Localisation mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localise!';
+        break;
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+        $this->bool_dontLocalise = true;
+        $prompt = 'Localisation mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localise!';
+        break;
+      default:
+        $this->bool_dontLocalise = false;
+        $prompt = 'Localisation mode is enabled';
+        break;
+    }
+    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
+    {
+      t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+    // Do we need translated/localised records?
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * SQL ressources - base for rwos
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * sql_res( ):  Get the SQL ressource for a filter
+ *
+ * @return	array $arr_return : Array with the SQL ressource or an error message
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_res( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
@@ -355,106 +403,11 @@ if( $this->pObj->b_drs_devTodo )
 
 
 
-
-
-
-
-
-
-
-
-
-
 /**
- * sql_resWiHitsOnly( ):  It renders filters and category menus in HTML.
- *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ * sql_resAllItems( ):  Get the SQL ressource for a filter with all items.
+ *                      Hits won't counted.
  *
- * @return	array
- *
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function sql_resWiHitsOnly( )
-  {
-      // Count hits
-    $bool_count = true;
-
-      // Get query parts
-    $select   = $this->sql_select( $bool_count );
-    $from     = $this->sql_from( );
-    $where    = $this->sql_whereWiHitsOnly( );
-    $groupBy  = $this->sql_groupBy( );
-    $orderBy  = $this->sql_orderBy( );
-    $limit    = $this->sql_limit( );
-
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
-      // Get query
-      // Execute query
-    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
-      // Execute query
-
-      // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
-    {
-      $this->pObj->objSqlFun->query = $query;
-      $this->pObj->objSqlFun->error = $error;
-      $arr_result = $this->pObj->objSqlFun->prompt_error( );
-      return $arr_result;
-    }
-      // Error management
-
-      // DRS
-    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-    $arr_result['data']['res'] = $res;
-    return $arr_result;
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * sql_resAllItems( ):  It renders filters and category menus in HTML.
- *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
- *
- * @return	array
+ * @return	array $arr_return : Array with the SQL ressource or an error message
  *
  * @version 3.9.9
  * @since   3.9.9
@@ -504,8 +457,8 @@ if( $this->pObj->b_drs_devTodo )
     {
       $this->pObj->objSqlFun->query = $query;
       $this->pObj->objSqlFun->error = $error;
-      $arr_result = $this->pObj->objSqlFun->prompt_error( );
-      return $arr_result;
+      $arr_return = $this->pObj->objSqlFun->prompt_error( );
+      return $arr_return;
     }
       // Error management
 
@@ -517,8 +470,83 @@ if( $this->pObj->b_drs_devTodo )
     }
       // DRS
 
-    $arr_result['data']['res'] = $res;
-    return $arr_result;
+    $arr_return['data']['res'] = $res;
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+/**
+ * sql_resWiHitsOnly( ):  Get the SQL ressource for a filter with items with hits only.
+ *                        Hits will counted.
+ *
+ * @return	array $arr_return : Array with the SQL ressource or an error message
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_resWiHitsOnly( )
+  {
+      // Count hits
+    $bool_count = true;
+
+      // Get query parts
+    $select   = $this->sql_select( $bool_count );
+    $from     = $this->sql_from( );
+    $where    = $this->sql_whereWiHitsOnly( );
+    $groupBy  = $this->sql_groupBy( );
+    $orderBy  = $this->sql_orderBy( );
+    $limit    = $this->sql_limit( );
+
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Get query
+      // Execute query
+    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Execute query
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+      $this->pObj->objSqlFun->query = $query;
+      $this->pObj->objSqlFun->error = $error;
+      $arr_return = $this->pObj->objSqlFun->prompt_error( );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+    $arr_return['data']['res'] = $res;
+    return $arr_return;
   }
 
 
@@ -607,144 +635,11 @@ if( $this->pObj->b_drs_devTodo )
 
 
 
-/**
- * sql_from( ): Get the FROM statement ...
- *
- * @return	string  $from : FROM statement
- *
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function sql_from( )
-  {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-    switch( true )
-    {
-      case( $this->pObj->localTable != $table ):
-          // foreign table
-        $from = $this->pObj->objSql->sql_query_statements['rows']['from'];
-        break;
-      case( $this->pObj->localTable == $table ):
-      default:
-          // local table
-        $from = $table;
-        break;
-    }
-      // Get FROM statement
-
-      // RETURN FROM statement
-    return $from;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * sql_groupBy( ): Get the GROUP BY statement ...
- *
- * @return	string  $from : GROUP BY statement
- *
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function sql_groupBy( )
-  {
-      // Get WHERE statement
-    $groupBy = $this->curr_tableField;
-
-      // RETURN WHERE statement
-    return $groupBy;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * sql_limit( ): Get the LIMIT statement ...
- *
- * @return	string  $limit : LIMIT statement
- *
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function sql_limit( )
-  {
-      // Get LIMIT statement
-    $limit = null;
-
-      // RETURN LIMIT statement
-    return $limit;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * sql_orderBy( ):  Get the ORDER BY statement. It depends on the TS configuration
- *                  filter.table.field.order
- *
- * @return	string  $orderBy : ORDER BY statement without ORDER BY
- *
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function sql_orderBy( )
-  {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-      // Short var
-    $arr_order  = $this->conf_view['filter.'][$table . '.'][$field . '.']['order.'];
-
-      // Order field
-    switch( true )
-    {
-      case( $arr_order['field'] == 'uid' ):
-        $orderField = $this->sql_filterFields[$table]['uid'];
-        break;
-      case( $arr_order['field'] == 'value' ):
-      default:
-        $orderField = $this->sql_filterFields[$table]['value'];
-        break;
-    }
-      // Order field
-
-      // Order flag
-    switch( true )
-    {
-      case( $arr_order['orderFlag'] == 'DESC' ):
-        $orderFlag = 'DESC';
-        break;
-      case( $arr_order['orderFlag'] == 'ASC' ):
-      default:
-        $orderFlag = 'ASC';
-        break;
-    }
-      // Order flag
-
-      // Get ORDER BY statement
-    $orderBy = $orderField . ' ' . $orderFlag;
-
-      // RETURN ORDER BY statement
-    return $orderBy;
-  }
+ /***********************************************
+  *
+  * SQL select
+  *
+  **********************************************/
 
 
 
@@ -1028,10 +923,186 @@ if( $this->pObj->b_drs_devTodo )
 
 
 
+ /***********************************************
+  *
+  * SQL from, groupBy, orderBy, limit
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
 /**
- * sql_whereAllItems( ): Get the WHERE statement ...
+ * sql_from( ): Get the FROM statement ...
  *
- * @return	string  $where : WHERE statement
+ * @return	string  $from : FROM statement
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_from( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+    switch( true )
+    {
+      case( $this->pObj->localTable != $table ):
+          // foreign table
+        $from = $this->pObj->objSql->sql_query_statements['rows']['from'];
+        break;
+      case( $this->pObj->localTable == $table ):
+      default:
+          // local table
+        $from = $table;
+        break;
+    }
+      // Get FROM statement
+
+      // RETURN FROM statement
+    return $from;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_groupBy( ): Get the GROUP BY statement ...
+ *
+ * @return	string  $from : GROUP BY statement
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_groupBy( )
+  {
+      // Get WHERE statement
+    $groupBy = $this->curr_tableField;
+
+      // RETURN WHERE statement
+    return $groupBy;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_orderBy( ):  Get the ORDER BY statement. It depends on the TS configuration
+ *                  filter.table.field.order
+ *
+ * @return	string  $orderBy : ORDER BY statement without ORDER BY
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_orderBy( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Short var
+    $arr_order  = $this->conf_view['filter.'][$table . '.'][$field . '.']['order.'];
+
+      // Order field
+    switch( true )
+    {
+      case( $arr_order['field'] == 'uid' ):
+        $orderField = $this->sql_filterFields[$table]['uid'];
+        break;
+      case( $arr_order['field'] == 'value' ):
+      default:
+        $orderField = $this->sql_filterFields[$table]['value'];
+        break;
+    }
+      // Order field
+
+      // Order flag
+    switch( true )
+    {
+      case( $arr_order['orderFlag'] == 'DESC' ):
+        $orderFlag = 'DESC';
+        break;
+      case( $arr_order['orderFlag'] == 'ASC' ):
+      default:
+        $orderFlag = 'ASC';
+        break;
+    }
+      // Order flag
+
+      // Get ORDER BY statement
+    $orderBy = $orderField . ' ' . $orderFlag;
+
+      // RETURN ORDER BY statement
+    return $orderBy;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_limit( ): Get the LIMIT statement ...
+ *
+ * @return	string  $limit : LIMIT statement
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_limit( )
+  {
+      // Get LIMIT statement
+    $limit = null;
+
+      // RETURN LIMIT statement
+    return $limit;
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * SQL where
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * sql_whereAllItems( ):  Get the WHERE statement for all items.
+ *                        All items means: idenependent of any hit.
+ *
+ * @return	string  $where : WHERE statement without WHERE
  *
  * @version 3.9.9
  * @since   3.9.9
@@ -1070,9 +1141,43 @@ if( $this->pObj->b_drs_devTodo )
 
 
 /**
- * sql_andWhere_enableFields( ): Get the WHERE statement ...
+ * sql_whereWiHitsOnly( ):  Get the WHERE statement for a filter, which should diplay
+ *                          flter items with a hit only.
  *
- * @return	string  $where : WHERE statement
+ * @return	string  $where : WHERE statement without WHERE
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_whereWiHitsOnly( )
+  {
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Add andWhere from TS.';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS :TODO:
+
+      // Get WHERE statement
+    $where = $this->pObj->objSql->sql_query_statements['rows']['where'];
+
+      // RETURN WHERE statement
+    return $where;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_andWhere_enableFields( ): Get the AND WHERE statement with the enabled fields.
+ *
+ * @return	string  $andWhere : AND WHERE statement with an AND
  *
  * @version 3.9.9
  * @since   3.9.9
@@ -1097,9 +1202,91 @@ if( $this->pObj->b_drs_devTodo )
 
 
 /**
- * sql_andWhere_sysLanguage( ): Get the WHERE statement ...
+ * sql_andWhere_fromTS( ):  Get the AND WHERE statement from the TS configuration.
+ *                          See sql.andWhere.
  *
- * @return	string  $where : WHERE statement
+ * @return	string  $andWhere : AND WHERE statement with an AND
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_andWhere_fromTS( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+    $andWhere = $this->pObj->cObj->enableFields( $table );
+
+      // RETURN WHERE statement
+    return $andWhere;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_andWhere_pidList( ): Get the AND WHERE statement with the pid list.
+ *
+ * @return	string  $andWhere : AND WHERE statement with an AND
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_andWhere_pidList( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+    if( empty ( $this->pObj->pidList ) )
+    {
+        // DRS
+      if( $this->pObj->b_drs_warn )
+      {
+        $prompt = 'There isn\'t any pid list for the records of ' . $table . '. Maybe this is an error.';
+        t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+        // DRS
+      return;
+    }
+
+    $fieldsOfTable = $this->pObj->arr_realTables_arrFields[$table];
+    if( ! in_array( 'pid', $fieldsOfTable ) )
+    {
+        // DRS
+      if( $this->pObj->b_drs_warn )
+      {
+        $prompt = $table . ' shouldn\'t have any pid field. Maybe this is an error.';
+        t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+        // DRS
+      return;
+    }
+
+    $andWhere = " AND " . $table . ".pid IN (" . $this->pObj->pidList . ")";
+
+      // RETURN WHERE statement
+    return $andWhere;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sql_andWhere_sysLanguage( ): Get the AND WHERE statement with gthe sys_language_uid.
+ *                              It is an AND WHERE for tables which have a record for each
+ *                              language.
+ *
+ * @return	string  $andWhere : AND WHERE statement with an AND
  *
  * @version 3.9.9
  * @since   3.9.9
@@ -1156,82 +1343,11 @@ if( $this->pObj->b_drs_devTodo )
 
 
 
-/**
- * sql_andWhere_pidList( ): Get the WHERE statement ...
- *
- * @return	string  $where : WHERE statement
- *
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function sql_andWhere_pidList( )
-  {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-    if( empty ( $this->pObj->pidList ) )
-    {
-        // DRS
-      if( $this->pObj->b_drs_warn )
-      {
-        $prompt = 'There isn\'t any pid list for the records of ' . $table . '. Maybe this is an error.';
-        t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-      }
-        // DRS
-      return;
-    }
-
-    $fieldsOfTable = $this->pObj->arr_realTables_arrFields[$table];
-    if( ! in_array( 'pid', $fieldsOfTable ) )
-    {
-        // DRS
-      if( $this->pObj->b_drs_warn )
-      {
-        $prompt = $table . ' shouldn\'t have any pid field. Maybe this is an error.';
-        t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-      }
-        // DRS
-      return;
-    }
-
-    $andWhere = " AND " . $table . ".pid IN (" . $this->pObj->pidList . ")";
-
-      // RETURN WHERE statement
-    return $andWhere;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * sql_whereWiHitsOnly( ): Get the WHERE statement ...
- *
- * @return	string  $where : WHERE statement
- *
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function sql_whereWiHitsOnly( )
-  {
-      // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Add andWhere from TS.';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS :TODO:
-
-      // Get WHERE statement
-    $where = $this->pObj->objSql->sql_query_statements['rows']['where'];
-
-      // RETURN WHERE statement
-    return $where;
-  }
+ /***********************************************
+  *
+  * Rows
+  *
+  **********************************************/
 
 
 
@@ -1336,6 +1452,20 @@ if( $this->pObj->b_drs_devTodo )
       // RETURN rows
     return $rows_wiAllItems;
   }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * TypoScript
+  *
+  **********************************************/
 
 
 
