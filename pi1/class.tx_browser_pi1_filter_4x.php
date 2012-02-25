@@ -2374,7 +2374,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
       // RETURN maxItemsPerHtmlRow is false
     if ( $this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false )
     {
-      return $htmlItems;
+      return $htmlItem;
     }
       // RETURN maxItemsPerHtmlRow is false
 
@@ -2389,6 +2389,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
       $htmlItem       = str_replace( '###EVEN_ODD###', $str_evenOdd, $htmlItem );
     }
     $this->itemsPerHtmlRow['currItemNumber']++;
+    return $htmlItem;
   }
 
 
@@ -2408,12 +2409,12 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function maxItemsPerHtmlRowIncreaseItemNumber( $htmlItems )
+  private function maxItemsPerHtmlRowIncreaseItemNumber( )
   {
       // RETURN maxItemsPerHtmlRow is false
     if ( $this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false )
     {
-      return $htmlItems;
+      return;
     }
       // RETURN maxItemsPerHtmlRow is false
 
