@@ -513,7 +513,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
         // Item selected
       $htmlItem = $this->replace_itemSelected( $conf_array, $uid, $value, $htmlItem );
 
-      $htmlItems = $htmlItems . $htmlSpaceLeft . ' ' . $htmlItem . PHP_EOL ;
+      $htmlItems = $htmlItems . $this->htmlSpaceLeft . ' ' . $htmlItem . PHP_EOL ;
       $row_number++;
     }
       // LOOP rows
