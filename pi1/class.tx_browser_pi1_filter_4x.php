@@ -129,7 +129,8 @@ class tx_browser_pi1_filter_4x {
 
     // [String] Space of the left HTML margin
   var $htmlSpaceLeft = null;
-
+    // [Array] Array with elements maxItemsPerHtmlRow, rowBegin, rowEnd, noItemValue
+  var $itemsPerHtmlRow = null;
 
 
 
@@ -428,9 +429,11 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // Set nice_piVar
     $this->set_nicePiVar( );
     
+      // Set class var $htmlSpaceLeft
     $this->set_htmlSpaceLeft( );
-    $int_space_left = $arr_ts['wrap.']['item.']['nice_html_spaceLeft'];
-    $str_space_left = str_repeat(' ', $int_space_left);
+
+      // Set class var $maxItemsPerHtmlRow
+    $this->set_maxItemsPerHtmlRow( );
 
     // Process nice_html
     // Prepaire row and item counting
@@ -476,18 +479,17 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
+      // Get TS configuration of the current filter / tableField
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
     // Prepaire row and item counting
     // Area
     // Wrap values
       // Wrap the item
       // Class
 
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-    
-
       // LOOP rows
-    $row_number = 0;
     foreach( ( array ) $this->rows as $uid => $row )
     {
       $key    = $this->sql_filterFields[$table]['value'];
@@ -496,6 +498,24 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       $stdWrap   = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
       $htmlItem  = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
         // stdWrap the current value
+
+      $htmlItem = $this->maxitemsPerHtmlRowBegin( $htmlItem );
+      if( $this->curr_htmlItem_number === 0 )
+      {
+        $htmlItem = $htmlItem . PHP_EOL . $str_space_left . $arr_row_wrap[0];
+        $htmlItem = str_replace('###EVEN_ODD###', 'even', $htmlItem);
+      }
+      if ( ! ( $maxItemsPerRow === false ) )
+      {
+        if ( $this->curr_htmlItem_number >= $maxItemsPerRow )
+        {
+          $htmlItem       = $htmlItem . $arr_row_wrap[1] . PHP_EOL . $str_space_left . $arr_row_wrap[0];
+          $int_count_row  = $int_count_row +1;
+          $str_evenOdd    = $int_count_row % 2 ? 'odd' : 'even';
+          $htmlItem       = str_replace( '###EVEN_ODD###', $str_evenOdd, $htmlItem );
+          $this->curr_htmlItem_number = 0;
+        }
+      }
 
         // Item class
       if($conf_name == 'CATEGORY_MENU')
@@ -513,10 +533,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
         // Item selected
       $htmlItem = $this->replace_itemSelected( $conf_array, $uid, $value, $htmlItem );
 
+      $this->maxItemsPerHtmlRowIncreaseItemNumber( );
+
       $htmlItems = $htmlItems . $this->htmlSpaceLeft . ' ' . $htmlItem . PHP_EOL ;
-      $row_number++;
     }
       // LOOP rows
+
+    $htmlItems = $this->maxItemsPerHtmlRowWrap( $htmlItems );
 
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
 
@@ -2248,6 +2271,190 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
       // RETURN
     return true;
       // RETURN true: filter is a tree view filter
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * HTML - max items per row
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * set_maxItemsPerHtmlRow( ): Set class var $itemsPerHtmlRow.
+ *
+ * @return	void
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function set_maxItemsPerHtmlRow( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // Set default values
+    $maxItemsPerHtmlRow = false;
+    $rowBegin       = null;
+    $rowEnd         = null;
+    $noItemValue    = null;
+      // Set default values
+
+      // SWITCH $conf_name
+      // Set values
+    switch( $conf_name )
+    {
+      case( 'CHECKBOX' ) :
+      case( 'RADIOBUTTONS' ) :
+        $maxItemsPerHtmlRow = $conf_array['wrap.']['itemsPerRow'];
+        if( $maxItemsPerHtmlRow > 0 )
+        {
+          $str_row_wrap               = $conf_array['wrap.']['itemsPerRow.']['wrap'];
+          list( $rowBegin, $rowEnd )  = explode( '|', $str_row_wrap );
+          $noItemValue                = $conf_array['wrap.']['itemsPerRow.']['noItemValue'];
+        }
+        break;
+      case( 'CATEGORY_MENU' ) :
+      case( 'SELECTBOX' ) :
+      default :
+        // Do nothing
+        break;
+    }
+      // SWITCH $conf_name
+
+      // Set class var $htmlSpaceLeft
+    $this->itemsPerHtmlRow['maxItemsPerHtmlRow']  = $maxItemsPerHtmlRow;
+    $this->itemsPerHtmlRow['rowBegin']            = $rowBegin;
+    $this->itemsPerHtmlRow['rowEnd']              = $rowEnd;
+    $this->itemsPerHtmlRow['noItemValue']         = $noItemValue;
+    $this->itemsPerHtmlRow['currRowNumber']       = 0;
+    $this->itemsPerHtmlRow['currItemNumber']      = 0;
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
+
+/**
+ * maxitemsPerHtmlRowBegin( ): ...
+ *
+ * @return	void
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function maxitemsPerHtmlRowBegin( $htmlItem )
+  {
+      // RETURN maxItemsPerHtmlRow is false
+    if ( $this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false )
+    {
+      return $htmlItems;
+    }
+      // RETURN maxItemsPerHtmlRow is false
+
+    $maxItemsPerHtmlRow = $this->itemsPerHtmlRow['maxItemsPerHtmlRow'];
+    $currItemNumber     = $this->itemsPerHtmlRow['currItemNumber'];
+    if ( $currItemNumber >= ( $maxItemsPerHtmlRow - 1 ) )
+    {
+      $htmlItem       = $htmlItem . $this->itemsPerHtmlRow['rowEnd'] . PHP_EOL .
+                        $this->htmlSpaceLeft . $this->itemsPerHtmlRow['rowBegin'];
+      $this->itemsPerHtmlRow['currRowNumber']++;
+      $str_evenOdd    = $this->itemsPerHtmlRow['currRowNumber'] % 2 ? 'odd' : 'even';
+      $htmlItem       = str_replace( '###EVEN_ODD###', $str_evenOdd, $htmlItem );
+    }
+    $this->itemsPerHtmlRow['currItemNumber']++;
+  }
+
+
+
+
+
+
+
+
+
+
+/**
+ * maxItemsPerHtmlRowIncreaseItemNumber( ): ...
+ *
+ * @return	void
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function maxItemsPerHtmlRowIncreaseItemNumber( $htmlItems )
+  {
+      // RETURN maxItemsPerHtmlRow is false
+    if ( $this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false )
+    {
+      return $htmlItems;
+    }
+      // RETURN maxItemsPerHtmlRow is false
+
+      // Increase item number
+    $this->itemsPerHtmlRow['currItemNumber']++;
+  }
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+/**
+ * maxItemsPerHtmlRowWrap( ): ...
+ *
+ * @return	void
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function maxItemsPerHtmlRowWrap( $htmlItems )
+  {
+      // RETURN maxItemsPerHtmlRow is false
+    if ( $this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false )
+    {
+      return $htmlItems;
+    }
+      // RETURN maxItemsPerHtmlRow is false
+
+      // Wrap $htmlItems
+    $htmlItems  = $this->itemsPerHtmlRow['rowBegin'] . PHP_EOL .
+                  $htmlItems .
+                  $this->itemsPerHtmlRow['rowEnd'] . PHP_EOL;
+      // Wrap $htmlItems
+
+      // RETURN content
+    return $htmlItems;
   }
 
 
