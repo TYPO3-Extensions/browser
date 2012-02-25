@@ -446,13 +446,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
 
 
 /**
- * get_html( ): Render the given rows. Returns a HTML filter.
+ * get_htmlItem( ): Render the given rows. Returns a HTML filter.
  *
  * @return	array
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function get_html( )
+  private function get_htmlItem( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
