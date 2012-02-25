@@ -481,7 +481,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     foreach( ( array ) $this->rows as $uid => $row )
     {
       $key    = $this->sql_filterFields[$table]['value'];
-      $value  = $rows[$key];
+      $value  = $row[$key];
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $row );
         // stdWrap the current value
       $stdWrap   = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
