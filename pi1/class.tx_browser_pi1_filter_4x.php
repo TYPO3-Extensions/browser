@@ -50,7 +50,7 @@
  *              SECTION: Main
  *  308:     private function init( )
  *
- *              SECTION: SQL ressources - base for rwos
+ *              SECTION: SQL ressources - base for rows
  *  367:     private function sql_res( )
  *  455:     private function sql_resAllItems( )
  *  532:     private function sql_resWiHitsOnly( )
@@ -206,6 +206,8 @@ class tx_browser_pi1_filter_4x {
     {
       $prompt = 'Area?';
       t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompt = 'Check the effect of TypoScript sql.andWhere!';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS :TODO:
 
@@ -230,63 +232,9 @@ class tx_browser_pi1_filter_4x {
 
 
 
-/**
- * get_htmlFilter( ):  It renders filters and category menus in HTML.
- *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
- *
- * @return	array
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function get_htmlFilter( )
-  {
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
-
-  // DRS :TODO:
-if( $this->pObj->b_drs_devTodo )
-{
-  $prompt = 'Filter condition';
-  t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-}
-  // DRS :TODO:
-
-    $arr_return = $this->sql_res( );
-    if( $arr_return['error']['status'] )
-    {
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-      return $arr_return;
-    }
-    $rows = $arr_return['data']['rows'];
-    unset( $arr_return );
-
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
-  // DRS :TODO:
-if( $this->pObj->b_drs_devTodo )
-{
-  $prompt = 'Render rows as HTML object';
-  t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-}
-  // DRS :TODO:
-
-  // Set HTML object
-
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-    return $arr_return;
-  }
-
-
-
-
-
-
-
-
-
  /***********************************************
   *
-  * Main
+  * Init
   *
   **********************************************/
 
@@ -345,7 +293,89 @@ if( $this->pObj->b_drs_devTodo )
 
  /***********************************************
   *
-  * SQL ressources - base for rwos
+  * HTML
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * get_htmlFilter( ):  It renders filters and category menus in HTML.
+ *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ *
+ * @return	array
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_htmlFilter( )
+  {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
+
+
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Check filter condition!';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS :TODO:
+    if( ! ts_condition( ) )
+    {
+      $arr_return = '';
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      return $arr_return;
+    }
+
+
+
+    $arr_return = $this->sql_res( );
+    if( $arr_return['error']['status'] )
+    {
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      return $arr_return;
+    }
+    $rows = $arr_return['data']['rows'];
+    unset( $arr_return );
+
+
+
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Render rows as HTML object';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS :TODO:
+
+
+
+  // Set HTML object
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * SQL ressources - base for rows
   *
   **********************************************/
 
@@ -1019,7 +1049,7 @@ if( $this->pObj->b_drs_devTodo )
       // Get WHERE statement
     $groupBy = $this->curr_tableField;
 
-      // RETURN WHERE statement
+      // RETURN GROUP BY statement without GROUP BY
     return $groupBy;
   }
 
@@ -1152,10 +1182,11 @@ if( $this->pObj->b_drs_devTodo )
     $where  = '1 ' .
               $this->sql_andWhere_pidList( ) .
               $this->sql_andWhere_enableFields( ) .
+              $this->sql_andWhere_fromTS( ) .
               $this->sql_andWhere_sysLanguage( );
       // Get WHERE statement
 
-      // RETURN WHERE statement
+      // RETURN WHERE statement without a WHERE
     return $where;
   }
 
@@ -1186,9 +1217,10 @@ if( $this->pObj->b_drs_devTodo )
       // DRS :TODO:
 
       // Get WHERE statement
-    $where = $this->pObj->objSql->sql_query_statements['rows']['where'];
+    $where = $this->pObj->objSql->sql_query_statements['rows']['where'] .
+             $this->sql_andWhere_fromTS( );
 
-      // RETURN WHERE statement
+      // RETURN WHERE statement without a WHERE
     return $where;
   }
 
@@ -1214,7 +1246,7 @@ if( $this->pObj->b_drs_devTodo )
 
     $andWhere = $this->pObj->cObj->enableFields( $table );
 
-      // RETURN WHERE statement
+      // RETURN AND WHERE statement
     return $andWhere;
   }
 
@@ -1234,14 +1266,22 @@ if( $this->pObj->b_drs_devTodo )
  * @version 3.9.9
  * @since   3.9.9
  */
+
+
   private function sql_andWhere_fromTS( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-    $andWhere = $this->pObj->cObj->enableFields( $table );
+      // Get TS value
+    $andWhere = $this->conf_view['filter.'][$table . '.'][$field . '.']['sql.andWhere.']['andWhere'];
 
-      // RETURN WHERE statement
+    if( ! empty ( $andWhere ) )
+    {
+      $andWhere = " AND " . $andWhere;
+    }
+
+      // RETURN AND WHERE statement
     return $andWhere;
   }
 
@@ -1292,7 +1332,7 @@ if( $this->pObj->b_drs_devTodo )
 
     $andWhere = " AND " . $table . ".pid IN (" . $this->pObj->pidList . ")";
 
-      // RETURN WHERE statement
+      // RETURN AND WHERE statement
     return $andWhere;
   }
 
@@ -1353,7 +1393,7 @@ if( $this->pObj->b_drs_devTodo )
         break;
     }
 
-      // RETURN WHERE statement
+      // RETURN AND WHERE statement
     return $andWhere;
   }
 
@@ -1484,6 +1524,70 @@ if( $this->pObj->b_drs_devTodo )
   * TypoScript
   *
   **********************************************/
+
+
+
+
+
+
+
+
+
+  /**
+ * ts_condition( ):  Render the filter condition
+ *
+ * @return	boolean		True in case of a condition, false if there isn't any condition
+ * @version 3.9.3
+ * @since   3.9.3
+ */
+  function ts_condition( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+    $tableField = $this->curr_tableField;
+
+      // Get TS configuration array
+    $coa_name = $this->conf_view['filter.'][$table . '.'][$field . '.']['condition'];
+    $coa_conf = $this->conf_view['filter.'][$table . '.'][$field . '.']['condition.'];
+
+      // RETURN false: any condition isn't defined
+    if( empty ( $coa_name ) )
+    {
+      if ( $this->pObj->b_drs_filter )
+      {
+        $prompt = $tableField . ' hasn\'t any condition.';
+        t3lib_div :: devLog('[INFO/FILTER] ' . $prompt , $this->pObj->extKey, 0);
+      }
+      return false;
+    }
+      // RETURN false: any condition isn't defined
+
+      // Get condition result
+    $value = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+    switch( $value )
+    {
+      case( false ):
+        $bool_condition = false;
+        if ( $this->pObj->b_drs_filter )
+        {
+          $prompt = 'Condition of ' . $tableField . ' is false.';
+          t3lib_div :: devLog('[INFO/FILTER] ' . $prompt , $this->pObj->extKey, 0);
+        }
+        break;
+      default;
+        $bool_condition = true;
+        if ( $this->pObj->b_drs_filter )
+        {
+          $prompt = 'Condition of ' . $tableField . ' is true.';
+          t3lib_div :: devLog('[INFO/FILTER] ' . $prompt , $this->pObj->extKey, 0);
+        }
+        break;
+    }
+      // Get condition result
+
+      // RETURN condition result
+    return $bool_condition;
+  }
 
 
 
