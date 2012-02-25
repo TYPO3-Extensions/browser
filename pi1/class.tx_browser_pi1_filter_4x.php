@@ -550,29 +550,21 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
   private function replace_itemClass( $conf_array, $htmlItem )
   {
 
-      // Get class from TS
-//    if( is_array( $conf_array['wrap.'] ) )
-//    {
-//      if( is_array( $conf_array['wrap.']['item.'] ) )
-//      {
-//        $class = $conf_array['wrap.']['item.']['class'];
-//      }
-//    }
-    if( empty( $conf_array['wrap.']['item.']['class.']['narr'] ) )
-    {
-      var_dump( ' class.narr ');
-    }
-
+      // Get TS value
     if( empty( $conf_array['wrap.']['item.']['class'] ) )
     {
-      return $htmlItem;
+      $class = null;
     }
-      // Get class from TS
+    else
+    {
+      $class = ' class="' . $conf_array['wrap.']['item.']['class'] . '"';
+    }
+      // Get TS value
 
-    // Replace the marker
-    $class = ' class="' . $conf_array['wrap.']['item.']['class'] . '"';
+      // Replace the marker
     $htmlItem = str_replace( '###CLASS###', $class, $htmlItem );
 
+      // RETURN content
     return $htmlItem;
   }
 
@@ -596,19 +588,21 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
  */
   private function replace_itemStyle( $conf_array, $htmlItem )
   {
-      // Default value
-    $style = null;
-
-      // Get style from TS
-    if( isset( $conf_array['wrap.']['item.']['style'] ) )
+      // Get TS value
+    if( empty( $conf_array['wrap.']['item.']['class'] ) )
+    {
+      $style = null;
+    }
+    else
     {
       $style = ' style="' . $conf_array['wrap.']['item.']['style'] . '"';
     }
-      // Get style from TS
+      // Get TS value
 
       // Replace the marker
     $htmlItem = str_replace( '###STYLE###', $style, $htmlItem );
 
+      // RETURN content
     return $htmlItem;
   }
 
@@ -633,7 +627,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
  */
   private function replace_itemUid( $conf_array, $uid, $htmlItem )
   {
+      // Replace the marker
     $htmlItem = str_replace( '###UID###', $str_uid, $htmlItem );
+
+      // RETURN content
     return $htmlItem;
   }
 
