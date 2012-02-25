@@ -539,7 +539,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     {
       return $arr_return;
     }
-    $rows = $arr_return['data']['rows'];
     unset( $arr_return );
       // 2. step: all filter items, hits will be taken from $rows
 
@@ -579,6 +578,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $arr_return['data']['rows'] = $this->sql_resToRows( $res );
 
       // RETURN rows
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
     return $arr_return;
   }
 
@@ -645,6 +645,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // SWITCH localTable versus foreignTable
 
       // RETURN rows
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
     $arr_return['data']['rows'] = $rows;
     return $arr_return;
   }
@@ -860,6 +861,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
 
       // RETURN rows
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
     return $rows;
   }
 
@@ -920,6 +922,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // LOOP all items
 
       // RETURN rows
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows_wiAllItems );
     return $rows_wiAllItems;
   }
 
