@@ -496,7 +496,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $row );
       $htmlItem = $this->replace_itemClass( $conf_array, $htmlItem );
         // Item class
         // Item style
-      $htmlItem = $this->replace_itemStyle( $conf_array, $htmlItem, false );
+      $htmlItem = $this->replace_itemStyle( $conf_array, $htmlItem );
         // Item uid
       $htmlItem = $this->replace_itemUid( $conf_array, $uid, $htmlItem );
         // Item URL
@@ -558,16 +558,16 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
 //        $class = $conf_array['wrap.']['item.']['class'];
 //      }
 //    }
-    if( empty( $conf_array['wrap.']['item.']['class'] ) )
-    {
-      return null;
-    }
-      // Get class from TS
-
     if( empty( $conf_array['wrap.']['item.']['class.']['narr'] ) )
     {
       var_dump( ' class.narr ');
     }
+
+    if( empty( $conf_array['wrap.']['item.']['class'] ) )
+    {
+      return $htmlItem;
+    }
+      // Get class from TS
 
     // Replace the marker
     $class = ' class="' . $conf_array['wrap.']['item.']['class'] . '"';
