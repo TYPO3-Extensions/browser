@@ -628,7 +628,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
   private function replace_itemUid( $conf_array, $uid, $htmlItem )
   {
       // Replace the marker
-    $htmlItem = str_replace( '###UID###', "'" . $uid . "'", $htmlItem );
+    $htmlItem = str_replace( '###UID###', $uid, $htmlItem );
 
       // RETURN content
     return $htmlItem;
