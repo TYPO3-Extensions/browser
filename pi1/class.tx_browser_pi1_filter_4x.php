@@ -127,6 +127,9 @@ class tx_browser_pi1_filter_4x {
     // [Array] nice piVar array for the current filter / tableField
   var $nicePiVar = null;
 
+    // [String] Space of the left HTML margin
+  var $htmlSpaceLeft = null;
+
 
 
 
@@ -422,9 +425,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-      // Process nice_piVar
+      // Set nice_piVar
     $this->set_nicePiVar( );
     
+    $this->set_htmlSpaceLeft( );
+    $int_space_left = $arr_ts['wrap.']['item.']['nice_html_spaceLeft'];
+    $str_space_left = str_repeat(' ', $int_space_left);
+
     // Process nice_html
     // Prepaire row and item counting
     // Area
@@ -485,7 +492,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     {
       $key    = $this->sql_filterFields[$table]['value'];
       $value  = $row[$key];
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $row );
         // stdWrap the current value
       $stdWrap   = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
       $htmlItem  = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
@@ -507,7 +513,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $row );
         // Item selected
       $htmlItem = $this->replace_itemSelected( $conf_array, $uid, $value, $htmlItem );
 
-      $htmlItems = $htmlItems . $htmlItem . PHP_EOL ;
+      $htmlItems = $htmlItems . $htmlSpaceLeft . ' ' . $htmlItem . PHP_EOL ;
       $row_number++;
     }
       // LOOP rows
@@ -593,7 +599,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
  * @version 3.9.9
  * @since   3.0.0
  */
-  function replace_itemSelected( $conf_array, $uid, $value, $htmlItem )
+  private function replace_itemSelected( $conf_array, $uid, $value, $htmlItem )
   {
       //////////////////////////////////////////////////////////
       //
@@ -2267,6 +2273,40 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
 
 
 /**
+ * set_htmlSpaceLeft( ): Set the left margin for HTML code. Class var $htmlSpaceLeft.
+ *
+ * @return	void
+ *
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  private function set_htmlSpaceLeft( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // Get TS value
+    $int_space_left = $conf_array['wrap.']['item.']['nice_html_spaceLeft'];
+
+      // Set class var $htmlSpaceLeft
+    $this->htmlSpaceLeft = str_repeat(' ', $int_space_left);
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
+/**
  * set_nicePiVar( ): Set class var nicePiVar. Result depends on HTML multiple property.
  *
  * @return	void
@@ -2331,7 +2371,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
         break;
     }
       // SWITCH multiple flag
-      
+
       // Remove empty piVars in $arr_piVar
     foreach( ( array ) $arr_piVar as $key => $value )
     {
