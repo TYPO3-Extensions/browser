@@ -530,16 +530,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       return $arr_return;
     }
     $rows = $arr_return['data']['rows'];
-    unset( $arr_return );
       // 1. step: filter items with one hit at least
 
       // 2. step: all filter items, hits will be taken from $rows
     $arr_return = $this->get_rowsAllItems( $rows );
-    if( $arr_return['error']['status'] )
-    {
-      return $arr_return;
-    }
-    unset( $arr_return );
       // 2. step: all filter items, hits will be taken from $rows
 
     return $arr_return;
