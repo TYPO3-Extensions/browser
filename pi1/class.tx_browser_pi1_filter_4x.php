@@ -578,7 +578,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $arr_return['data']['rows'] = $this->sql_resToRows( $res );
 
       // RETURN rows
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
+    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['rows'] );
     return $arr_return;
   }
 
