@@ -476,34 +476,35 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
     
 
+      // LOOP rows
+    $row_number = 0;
     foreach( ( array ) $this->rows as $uid => $row )
     {
-      $row_number = 0;
-      foreach( $row as $tableField => $value )
+      $value = $this->sql_filterFields[$table]['value'];
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $row );
+        // stdWrap the current value
+      $stdWrap   = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
+      $htmlItem  = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
+        // stdWrap the current value
+
+        // Item class
+      if($conf_name == 'CATEGORY_MENU')
       {
-          // stdWrap the current value
-        $stdWrap   = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
-        $htmlItem  = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
-          // stdWrap the current value
-
-          // Item class
-        if($conf_name == 'CATEGORY_MENU')
-        {
-          $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
-        }
-        $htmlItem = $this->replace_itemClass( $conf_array, $htmlItem );
-          // Item class
-          // Item style
-        $htmlItem = $this->replace_itemStyle( $conf_array, $htmlItem, false );
-          // Item uid
-        $htmlItem = $this->replace_itemUid( $conf_array, $uid, $htmlItem );
-          // Item URL
-        $htmlItem = $this->replace_itemUrl( $conf_array, $uid, $htmlItem );
-
-        $htmlItems = $htmlItems . $htmlItem . PHP_EOL ;
-        $row_number++;
+        $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
       }
+      $htmlItem = $this->replace_itemClass( $conf_array, $htmlItem );
+        // Item class
+        // Item style
+      $htmlItem = $this->replace_itemStyle( $conf_array, $htmlItem, false );
+        // Item uid
+      $htmlItem = $this->replace_itemUid( $conf_array, $uid, $htmlItem );
+        // Item URL
+      $htmlItem = $this->replace_itemUrl( $conf_array, $uid, $htmlItem );
+
+      $htmlItems = $htmlItems . $htmlItem . PHP_EOL ;
+      $row_number++;
     }
+      // LOOP rows
 
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
 
