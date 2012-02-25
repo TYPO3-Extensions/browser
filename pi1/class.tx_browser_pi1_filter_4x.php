@@ -124,6 +124,9 @@ class tx_browser_pi1_filter_4x {
     // [Array] Rows of the current filter
   var $rows = null;
 
+    // [Array] nice piVar array for the current filter / tableField
+  var $nicePiVar = null;
+
 
 
 
@@ -419,7 +422,9 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-    // Process nice_piVar
+      // Process nice_piVar
+    $this->set_nicePiVar( );
+    
     // Process nice_html
     // Prepaire row and item counting
     // Area
@@ -464,8 +469,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-    // Process nice_piVar
-    // Process nice_html
     // Prepaire row and item counting
     // Area
     // Wrap values
@@ -501,6 +504,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $row );
       $htmlItem = $this->replace_itemUid( $conf_array, $uid, $htmlItem );
         // Item URL
       $htmlItem = $this->replace_itemUrl( $conf_array, $uid, $htmlItem );
+        // Item selected
+      $htmlItem = $this->replace_itemSelected( $conf_array, $uid, $value, $htmlItem );
 
       $htmlItems = $htmlItems . $htmlItem . PHP_EOL ;
       $row_number++;
@@ -563,6 +568,92 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
 
       // Replace the marker
     $htmlItem = str_replace( '###CLASS###', $class, $htmlItem );
+
+      // RETURN content
+    return $htmlItem;
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * replace_itemSelected( ): Replaces the marker ###ITEM_SELECTED### with the value from TS
+ *
+ * @param	array     $conf_array : The TS configuration of the current filter
+ * @param	integer		$uid        : The uid of the current item
+ * @param	string		$value      : The value of the current item
+ * @param	string		$htmlItem   : The current item
+ * @return	string	$htmlItem   :	Returns the wrapped item
+ *
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  function replace_itemSelected( $conf_array, $uid, $value, $htmlItem )
+  {
+      //////////////////////////////////////////////////////////
+      //
+      // Set bool_piVar
+
+      // dwildt, 110102
+      // Workaround: Because of new feature to filter a local table field
+    $bool_piVar = false;
+    if( $uid )
+    {
+      if( in_array( $uid, $this->nicePiVar['arr_piVar'] ) )
+      {
+        $bool_piVar = true;
+      }
+    }
+
+    if( $value )
+    {
+      if( in_array( $value, $this->nicePiVar['arr_piVar'] ) )
+      {
+        $bool_piVar = true;
+      }
+    }
+      // #29444: 110902, dwildt+
+    $value_from_ts_area = $conf_array['area.']['interval.']['options.']['fields.'][$uid . '.']['value_stdWrap.']['value'];
+    if( $value_from_ts_area )
+    {
+      if( in_array( $value_from_ts_area, $this->nicePiVar['arr_piVar'] ) )
+      {
+        $bool_piVar = true;
+      }
+    }
+    if( empty ( $this->nicePiVar['arr_piVar'] ) )
+    {
+      if( $this->pObj->objCal->selected_period )
+      {
+        if( $this->pObj->objCal->selected_period == $value_from_ts_area )
+        {
+          $bool_piVar = true;
+        }
+      }
+    }
+      // Set bool_piVar
+      // #29444: 110902, dwildt+
+
+      // SWITCH bool_piVar
+    switch( $bool_piVar )
+    {
+      case( false ):
+        $conf_selected = null;
+        break;
+      case( true ):
+      default:
+        $conf_selected = ' ' . $conf_array['wrap.']['item.']['selected'];
+        break;
+    }
+      // SWITCH bool_piVar
+
+      // Replave marker
+    $htmlItem = str_replace( '###ITEM_SELECTED###', $conf_selected, $htmlItem );
 
       // RETURN content
     return $htmlItem;
@@ -2151,6 +2242,113 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
       // RETURN
     return true;
       // RETURN true: filter is a tree view filter
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * Helper
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * set_nicePiVar( ): Set class var nicePiVar. Result depends on HTML multiple property.
+ *
+ * @return	void
+ *
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  private function set_nicePiVar( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+
+      // Get nice_piVar from TS
+    $str_nicePiVar = $conf_array['nice_piVar'];
+    if( empty ( $str_nicePiVar ) )
+    {
+      $str_nicePiVar = $this->curr_tableField;
+    }
+      // Get nice_piVar from TS
+
+      // Set multiple flag
+    switch ($conf_name)
+    {
+      case ('CHECKBOX') :
+        $bool_multiple = true;
+        break;
+      case ('CATEGORY_MENU') :
+      case ('RADIOBUTTONS') :
+        $bool_multiple = false;
+        break;
+      case ('SELECTBOX') :
+        $bool_multiple = $conf_array['multiple'];
+        break;
+      default :
+        $bool_multiple = false;
+        if ($this->pObj->b_drs_error)
+        {
+          $prompt = 'multiple - undefined value in switch: \'' . $conf_name . '\'';
+          t3lib_div :: devlog('[ERROR/FILTER] ' . $prompt, $this->pObj->extKey, 3);
+          $prompt = 'multiple becomes false.';
+          t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+        }
+    }
+      // Set multiple flag
+
+      // SWITCH multiple flag
+    switch( $bool_multiple )
+    {
+      case( false ):
+        $key_piVar    = $this->pObj->prefixId . '[' . $str_nicePiVar . ']';
+        $arr_piVar[0] = $this->pObj->piVars[$str_nicePiVar];
+        break;
+      case( true ):
+      default:
+        $key_piVar = $this->pObj->prefixId . '[' . $str_nicePiVar . '][]';
+        $arr_piVar = ( array ) $this->pObj->piVars[$str_nicePiVar];
+        break;
+    }
+      // SWITCH multiple flag
+      
+      // Remove empty piVars in $arr_piVar
+    foreach( ( array ) $arr_piVar as $key => $value )
+    {
+      if( ! $value )
+      {
+        unset( $arr_piVar[$key] );
+      }
+    }
+      // Remove empty piVars in $arr_piVar
+
+      // Set class var nicePiVar
+    $this->nicePiVar['key_piVar']  = $key_piVar;
+    $this->nicePiVar['arr_piVar']  = $arr_piVar;
+    $this->nicePiVar['nice_piVar'] = $str_nicePiVar;
+      // Set class var nicePiVar
+
+    return;
   }
 
 
