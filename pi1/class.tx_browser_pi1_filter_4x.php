@@ -53,11 +53,11 @@
  *  321:     private function get_marker( )
  *
  *              SECTION: Rows
- *  399:     private function rows( )
+ *  399:     private function get_rows( )
  *
  *              SECTION: SQL ressources
  *  501:     private function sql_resAllItems( )
- *  578:     private function sql_resWiHitsOnly( )
+ *  578:     private function sql_resWiHits( )
  *
  *              SECTION: SQL ressources to rows
  *  666:     private function sql_resToRows( $res )
@@ -78,7 +78,7 @@
  *
  *              SECTION: SQL where
  * 1294:     private function sql_whereAllItems( )
- * 1336:     private function sql_whereWiHitsOnly( )
+ * 1336:     private function sql_whereWiHits( )
  * 1369:     private function sql_andWhere_enableFields( )
  * 1396:     private function sql_andWhere_fromTS( )
  * 1428:     private function sql_andWhere_pidList( )
@@ -112,14 +112,17 @@ class tx_browser_pi1_filter_4x {
     // Variables set by the pObj (by class.tx_browser_pi1.php)
 
 
-    // [BOOLEAN] true: don't localise the current SQL query, false: localise it
+    // [Boolena] true: don't localise the current SQL query, false: localise it
   var $bool_dontLocalise      = null;
-    // [INTEGER] number of the localisation mode
+    // [Integer] number of the localisation mode
   var $int_localisation_mode  = null;
-    // [STRING] Current table
+    // [String] Current table
   var $curr_tableField        = null;
-    // [ARRAY] tables with the fields, which are used in the SQL query
+    // [Array] tables with the fields, which are used in the SQL query
   var $sql_filterFields       = null;
+
+    // [Array] Rows of the current filter
+  var $rows = null;
 
 
 
@@ -205,6 +208,8 @@ class tx_browser_pi1_filter_4x {
       }
     }
       // LOOP each filter
+
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] );
 
       // DRS :TODO:
     if( $this->pObj->b_drs_devTodo )
@@ -325,19 +330,20 @@ class tx_browser_pi1_filter_4x {
 
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
+      // Set marker label
+    $markerLabel = '###' . strtoupper( $this->curr_tableField ) . '###';
 
       // RETURN condition isn't met
     if( ! $this->ts_condition( ) )
     {
-      $marker = '###' . strtoupper( $this->curr_tableField ) . '###';
-      $arr_return['data']['marker'][$marker] = null;
+      $arr_return['data']['marker'][$markerLabel] = null;
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
       return $arr_return;
     }
       // RETURN condition isn't met
 
       // Get filter rows
-    $arr_return = $this->rows( );
+    $arr_return = $this->get_rows( );
     if( $arr_return['error']['status'] )
     {
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -347,20 +353,132 @@ class tx_browser_pi1_filter_4x {
     unset( $arr_return );
       // Get filter rows
 
+      // Render the filter rows
+    $this->rows = $rows;
+    $content = $this->get_html( );
+    $arr_return['data']['marker'][$markerLabel] = $content;
+      // Render the filter rows
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    return $arr_return;
+  }
 
 
-    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $rows );
-      // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo )
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * HTML
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * get_html( ): Render the given rows. Returns a HTML filter.
+ *
+ * @return	array
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_html( )
+  {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
+      // Default return value
+    $arr_return['data']['html'] = null;
+
+      // RETURN rows are empty
+    if( empty ( $rows) )
     {
-      $prompt = 'Render rows as HTML object';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+        // DRS
+      if( $this->pObj->b_drs_warn )
+      {
+        $prompt = 'Rows are empty. Filter: ' . $this->curr_tableField . '.';
+        t3lib_div::devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+        // DRS
+      return $arr_return;
     }
-      // DRS :TODO:
+      // RETURN rows are empty
+
+
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+    // Process nice_piVar
+    // Process nice_html
+    // Prepaire row and item counting
+    // Area
+    // Wrap values
+      // Wrap the item
+
+    $content = $this->get_htmlItem( );
+
+      // Wrap the object
 
 
 
-  // Set HTML object
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * get_html( ): Render the given rows. Returns a HTML filter.
+ *
+ * @return	array
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_html( )
+  {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
+      // Default return value
+    $arr_return['data']['html'] = null;
+
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+    // Process nice_piVar
+    // Process nice_html
+    // Prepaire row and item counting
+    // Area
+    // Wrap values
+      // Wrap the item
+
+    foreach( $rows as $uid => $row )
+    {
+      foreach( $row as $tableField => $value )
+      {
+        var_dump( $row );
+      }
+    }
+
+
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -390,13 +508,14 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * rows( ):  Get the SQL ressource for a filter
+ * get_rows( ):  Get the rows of the current filter
  *
- * @return	array		$arr_return : Array with the SQL ressource or an error message
+ * @return	array		$arr_return : Array with the rows or an error message
+ *
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function rows( )
+  private function get_rows( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
@@ -404,8 +523,49 @@ class tx_browser_pi1_filter_4x {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
+      // 1. step: filter items with one hit at least
+    $arr_return = get_rowsWiHits( );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    $rows = $arr_return['data']['rows'];
+    unset( $arr_return );
+      // 1. step: filter items with one hit at least
+
+      // 2. step: all filter items, hits will be taken from $rows
+    $arr_return = get_rowsAllItems( $rows );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    $rows = $arr_return['data']['rows'];
+    unset( $arr_return );
+      // 2. step: all filter items, hits will be taken from $rows
+
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * get_rowsWiHits( ): Get the rows with the items with a hit at least of the current filter
+ *
+ * @return	array		$arr_return : Array with the rows or an error message
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_rowsWiHits( )
+  {
       // Get SQL ressource for filter items with one hit at least
-    $arr_return = $this->sql_resWiHitsOnly( );
+    $arr_return = $this->sql_resWiHits( );
     if( $arr_return['error']['status'] )
     {
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -415,23 +575,47 @@ class tx_browser_pi1_filter_4x {
     unset( $arr_return );
       // Get SQL ressource for filter items with one hit at least
 
-      // Get rows
-    $rows_wiHitsOnly = $this->sql_resToRows( $res );
+      // Get rows from SQL ressource
+    $arr_return['data']['rows'] = $this->sql_resToRows( $res );
 
-      // Display all items?
-    $display_without_any_hit  = $this->ts_displayWithoutAnyHit( );
+      // RETURN rows
+    return $arr_return;
+  }
 
-      // Display items with one hit at least only
-    if( ! $display_without_any_hit )
+
+
+
+
+
+
+
+
+/**
+ * get_rowsAllItems( ): Get the rows with all items of the current filter.
+ *                            If param $rows_wiHits contains rows, the counted
+ *                            hits will taken over in rows with all items.
+ *
+ * @param   array   $rows_wiHits  : Rows with items of the current filter, which have one hit at least
+ * @return	array		$arr_return   : Array with the rows or an error message
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_rowsAllItems( $rows_wiHits )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // RETURN display items only, if they have one hit at least
+    if( ! $this->ts_displayWithoutAnyHit( ) )
     {
-      $arr_return['data']['rows'] = $rows_wiHitsOnly;
+      $arr_return['data']['rows'] = $rows_wiHits;
         // Prompt the expired time to devlog
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
       return $arr_return;
     }
-      // Display items with one hit at least only
+      // RETURN display items only, if they have one hit at least
 
-      // Display all items
       // SWITCH localTable versus foreignTable
     switch( true )
     {
@@ -448,28 +632,22 @@ class tx_browser_pi1_filter_4x {
         unset( $arr_return );
           // Get SQL ressource for all filter items
           // Get rows
-        $rows = $this->sql_resToRows_allItemsWiHits( $res, $rows_wiHitsOnly );
+        $rows = $this->sql_resToRows_allItemsWiHits( $res, $rows_wiHits );
         break;
           // foreign table
       case( $table == $this->pObj->localTable ):
       default:
           // local table
-        $rows = $rows_wiHitsOnly;
+        $rows = $rows_wiHits;
         break;
           // local table
     }
       // SWITCH localTable versus foreignTable
-      // Display all items
 
-
+      // RETURN rows
     $arr_return['data']['rows'] = $rows;
-
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
     return $arr_return;
   }
-
-
 
 
 
@@ -568,14 +746,14 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_resWiHitsOnly( ):  Get the SQL ressource for a filter with items with hits only.
+ * sql_resWiHits( ):  Get the SQL ressource for a filter with items with hits only.
  *                        Hits will counted.
  *
  * @return	array		$arr_return : Array with the SQL ressource or an error message
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function sql_resWiHitsOnly( )
+  private function sql_resWiHits( )
   {
       // Count hits
     $bool_count = true;
@@ -583,7 +761,7 @@ class tx_browser_pi1_filter_4x {
       // Get query parts
     $select   = $this->sql_select( $bool_count );
     $from     = $this->sql_from( );
-    $where    = $this->sql_whereWiHitsOnly( );
+    $where    = $this->sql_whereWiHits( );
     $groupBy  = $this->sql_groupBy( );
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
@@ -693,13 +871,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_resToRows_allItemsWiHits( ): Handle the SQL result, free it. If param $rows_wiHitsOnly contains
+ * sql_resToRows_allItemsWiHits( ): Handle the SQL result, free it. If param $rows_wiHits contains
  *                                  rows, the hit of each row will override the hit in the current row.
  *                                  Hit in the current row is 0 by default.
  *
  * @param	ressource		$res              : current SQL ressource
- * @param	array		$rows_wiHitsOnly  : rows with hits
- * @return	array		$rows_wiAllItems  : rows with all filter items
+ * @param	array       $rows_wiHits      : rows with hits
+ * @return	array     $rows_wiAllItems  : rows with all filter items
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1326,14 +1504,14 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_whereWiHitsOnly( ):  Get the WHERE statement for a filter, which should diplay
+ * sql_whereWiHits( ):  Get the WHERE statement for a filter, which should diplay
  *                          flter items with a hit only.
  *
  * @return	string		$where : WHERE statement without WHERE
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function sql_whereWiHitsOnly( )
+  private function sql_whereWiHits( )
   {
       // DRS :TODO:
     if( $this->pObj->b_drs_devTodo )
@@ -1599,6 +1777,34 @@ class tx_browser_pi1_filter_4x {
 
       // RETURN condition result
     return $bool_condition;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * ts_displayHits( ):  Get the TS configuration for displaying items without hits.
+ *                              If current filter is a tree view, return value is true.
+ *
+ * @return	string		$display_without_any_hit : value from TS configuration
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function ts_displayHits( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Short var
+    $currFilterWrap = $this->conf_view['filter.'][$table . '.'][$field . '.']['wrap.'];
+
+      // RETURN TS value
+    return $currFilterWrap['item.']['display_hits'];
   }
 
 
