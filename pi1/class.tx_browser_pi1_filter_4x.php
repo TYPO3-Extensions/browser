@@ -549,8 +549,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
  */
   private function replace_itemClass( $conf_array, $htmlItem )
   {
-      // Default value
-    $class = null;
 
       // Get class from TS
 //    if( is_array( $conf_array['wrap.'] ) )
@@ -560,13 +558,19 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
 //        $class = $conf_array['wrap.']['item.']['class'];
 //      }
 //    }
-    if( isset( $conf_array['wrap.']['item.']['class'] ) )
+    if( empty( $conf_array['wrap.']['item.']['class'] ) )
     {
-      $class = ' class="' . $conf_array['wrap.']['item.']['class'] . '"';
+      return null;
     }
       // Get class from TS
 
-      // Replace the marker
+    if( empty( $conf_array['wrap.']['item.']['class.']['narr'] ) )
+    {
+      var_dump( ' class.narr ');
+    }
+
+    // Replace the marker
+    $class = ' class="' . $conf_array['wrap.']['item.']['class'] . '"';
     $htmlItem = str_replace( '###CLASS###', $class, $htmlItem );
 
     return $htmlItem;
