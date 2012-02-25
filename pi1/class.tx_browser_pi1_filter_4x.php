@@ -40,50 +40,55 @@
  *
  *
  *
- *   90: class tx_browser_pi1_filter_4x
- *  136:     function __construct($pObj)
+ *   95: class tx_browser_pi1_filter_4x
+ *  141:     function __construct($pObj)
  *
  *              SECTION: Main
- *  170:     public function get_htmlFilters( )
- *  241:     private function get_marker( )
+ *  175:     public function get_htmlFilters( )
  *
- *              SECTION: Main
- *  308:     private function init( )
+ *              SECTION: Init
+ *  261:     private function init( )
  *
- *              SECTION: SQL ressources - base for rows
- *  367:     private function rows( )
- *  455:     private function sql_resAllItems( )
- *  532:     private function sql_resWiHitsOnly( )
- *  609:     private function sql_select( $bool_count )
- *
- *              SECTION: SQL select
- *  700:     private function sql_select_addLL( )
- *  735:     private function sql_select_addLL_sysLanguage( )
- *  810:     private function sql_select_addLL_lang_ol(  )
- *  876:     private function sql_select_addTreeview( )
- *
- *              SECTION: SQL from, groupBy, orderBy, limit
- *  979:     private function sql_from( )
- * 1017:     private function sql_groupBy( )
- * 1042:     private function sql_orderBy( )
- * 1098:     private function sql_limit( )
- *
- *              SECTION: SQL where
- * 1137:     private function sql_whereAllItems( )
- * 1178:     private function sql_whereWiHitsOnly( )
- * 1210:     private function sql_andWhere_enableFields( )
- * 1237:     private function sql_andWhere_fromTS( )
- * 1263:     private function sql_andWhere_pidList( )
- * 1316:     private function sql_andWhere_sysLanguage( )
+ *              SECTION: Marker
+ *  321:     private function get_marker( )
  *
  *              SECTION: Rows
- * 1392:     private function sql_resToRows( $res )
- * 1432:     private function sql_resToRows_allItemsWiHits( $res, $rows_wiHitsOnly )
+ *  399:     private function rows( )
+ *
+ *              SECTION: SQL ressources
+ *  501:     private function sql_resAllItems( )
+ *  578:     private function sql_resWiHitsOnly( )
+ *
+ *              SECTION: SQL ressources to rows
+ *  666:     private function sql_resToRows( $res )
+ *  706:     private function sql_resToRows_allItemsWiHits( $res, $rows_wiHits )
+ *
+ *              SECTION: SQL select
+ *  780:     private function sql_select( $bool_count )
+ *  857:     private function sql_select_addLL( )
+ *  892:     private function sql_select_addLL_sysLanguage( )
+ *  967:     private function sql_select_addLL_lang_ol(  )
+ * 1033:     private function sql_select_addTreeview( )
+ *
+ *              SECTION: SQL from, groupBy, orderBy, limit
+ * 1136:     private function sql_from( )
+ * 1174:     private function sql_groupBy( )
+ * 1199:     private function sql_orderBy( )
+ * 1255:     private function sql_limit( )
+ *
+ *              SECTION: SQL where
+ * 1294:     private function sql_whereAllItems( )
+ * 1336:     private function sql_whereWiHitsOnly( )
+ * 1369:     private function sql_andWhere_enableFields( )
+ * 1396:     private function sql_andWhere_fromTS( )
+ * 1428:     private function sql_andWhere_pidList( )
+ * 1481:     private function sql_andWhere_sysLanguage( )
  *
  *              SECTION: TypoScript
- * 1504:     private function ts_displayWithoutAnyHit( )
+ * 1554:     private function ts_condition( )
+ * 1620:     private function ts_displayWithoutAnyHit( )
  *
- * TOTAL FUNCTIONS: 25
+ * TOTAL FUNCTIONS: 26
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -654,7 +659,7 @@ class tx_browser_pi1_filter_4x {
  * sql_resToRows( ):  Handle the SQL result, free it. Return rows.
  *
  * @param	ressource		$res  : current SQL ressource
- * @return	array     $rows : rows
+ * @return	array		$rows : rows
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -693,8 +698,8 @@ class tx_browser_pi1_filter_4x {
  *                                  Hit in the current row is 0 by default.
  *
  * @param	ressource		$res              : current SQL ressource
- * @param	array       $rows_wiHitsOnly  : rows with hits
- * @return	array     $rows_wiAllItems  : rows with all filter items
+ * @param	array		$rows_wiHitsOnly  : rows with hits
+ * @return	array		$rows_wiAllItems  : rows with all filter items
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1388,8 +1393,6 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-
-
   private function sql_andWhere_fromTS( )
   {
       // Get table and field
