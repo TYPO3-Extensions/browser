@@ -327,7 +327,7 @@ class tx_browser_pi1_filter_4x {
       t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS :TODO:
-    if( ! ts_condition( ) )
+    if( ! $this->ts_condition( ) )
     {
       $arr_return = '';
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
