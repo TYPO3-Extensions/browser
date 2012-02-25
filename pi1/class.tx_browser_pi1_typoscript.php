@@ -325,7 +325,9 @@ class tx_browser_pi1_typoscript
           $str_nice_piVar = $tableField;
         }
           // Do we have a piVar
+//var_dump( __METHOD__, __LINE__, $this->pObj->arr_realTables_arrFields );
         if( $this->pObj->piVars[$str_nice_piVar] )
+//        if( $this->pObj->piVars[$str_nice_piVar] || 1 )
         {
           $arr_tableField[]  = $tableField;
         }

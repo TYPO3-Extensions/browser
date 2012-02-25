@@ -40,11 +40,56 @@
  *
  *
  *
+ *   90: class tx_browser_pi1_filter_4x
+ *  136:     function __construct($pObj)
+ *
+ *              SECTION: Main
+ *  170:     public function get_htmlFilters( )
+ *  241:     private function get_htmlFilter( )
+ *
+ *              SECTION: Main
+ *  308:     private function init( )
+ *
+ *              SECTION: SQL ressources - base for rwos
+ *  367:     private function sql_res( )
+ *  455:     private function sql_resAllItems( )
+ *  532:     private function sql_resWiHitsOnly( )
+ *  609:     private function sql_select( $bool_count )
+ *
+ *              SECTION: SQL select
+ *  700:     private function sql_select_addLL( )
+ *  735:     private function sql_select_addLL_sysLanguage( )
+ *  810:     private function sql_select_addLL_lang_ol(  )
+ *  876:     private function sql_select_addTreeview( )
+ *
+ *              SECTION: SQL from, groupBy, orderBy, limit
+ *  979:     private function sql_from( )
+ * 1017:     private function sql_groupBy( )
+ * 1042:     private function sql_orderBy( )
+ * 1098:     private function sql_limit( )
+ *
+ *              SECTION: SQL where
+ * 1137:     private function sql_whereAllItems( )
+ * 1178:     private function sql_whereWiHitsOnly( )
+ * 1210:     private function sql_andWhere_enableFields( )
+ * 1237:     private function sql_andWhere_fromTS( )
+ * 1263:     private function sql_andWhere_pidList( )
+ * 1316:     private function sql_andWhere_sysLanguage( )
+ *
+ *              SECTION: Rows
+ * 1392:     private function rows( $res )
+ * 1432:     private function rows_union( $res, $rows_wiHitsOnly )
+ *
+ *              SECTION: TypoScript
+ * 1504:     private function ts_displayWithoutAnyHit( )
+ *
+ * TOTAL FUNCTIONS: 25
+ * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
 class tx_browser_pi1_filter_4x {
 
-  
+
     //////////////////////////////////////////////////////
     //
     // Variables set by the pObj (by class.tx_browser_pi1.php)
@@ -119,7 +164,6 @@ class tx_browser_pi1_filter_4x {
  *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
  *
  * @return	array
- * 
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -191,7 +235,6 @@ class tx_browser_pi1_filter_4x {
  *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
  *
  * @return	array
- *
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -259,7 +302,6 @@ if( $this->pObj->b_drs_devTodo )
  * init( ):  Inits the localisation mode. Set the class var $this->int_localisation_mode.
  *
  * @return	void
- *
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -318,8 +360,7 @@ if( $this->pObj->b_drs_devTodo )
 /**
  * sql_res( ):  Get the SQL ressource for a filter
  *
- * @return	array $arr_return : Array with the SQL ressource or an error message
- *
+ * @return	array		$arr_return : Array with the SQL ressource or an error message
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -407,8 +448,7 @@ if( $this->pObj->b_drs_devTodo )
  * sql_resAllItems( ):  Get the SQL ressource for a filter with all items.
  *                      Hits won't counted.
  *
- * @return	array $arr_return : Array with the SQL ressource or an error message
- *
+ * @return	array		$arr_return : Array with the SQL ressource or an error message
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -485,8 +525,7 @@ if( $this->pObj->b_drs_devTodo )
  * sql_resWiHitsOnly( ):  Get the SQL ressource for a filter with items with hits only.
  *                        Hits will counted.
  *
- * @return	array $arr_return : Array with the SQL ressource or an error message
- *
+ * @return	array		$arr_return : Array with the SQL ressource or an error message
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -562,10 +601,8 @@ if( $this->pObj->b_drs_devTodo )
  *                Statement will contain fields for localisation and treeview, if there is
  *                any need.
  *
- * @param   boolean $bool_count : true: hits are counted, false: any hit isn't counted
- *
- * @return	string  $select     : SELECT statement
- *
+ * @param	boolean		$bool_count : true: hits are counted, false: any hit isn't counted
+ * @return	string		$select     : SELECT statement
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -656,8 +693,7 @@ if( $this->pObj->b_drs_devTodo )
  *                      * local table   (sys_language record)
  *                      * foreign table (language overlay)
  *
- * @return	string  $addSelect  : the addSelect with the localisation fields
- *
+ * @return	string		$addSelect  : the addSelect with the localisation fields
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -692,8 +728,7 @@ if( $this->pObj->b_drs_devTodo )
  *                                  if there are localisation needs.
  *                                  Method handles the local table (sys_language record) only.
  *
- * @return	string  $addSelect  : the addSelect with the localisation fields
- *
+ * @return	string		$addSelect  : the addSelect with the localisation fields
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -768,8 +803,7 @@ if( $this->pObj->b_drs_devTodo )
  *                              if there are localisation needs.
  *                              Method handles the foreign table (language overlay) only.
  *
- * @return	string  $addSelect  : the addSelect with the localisation fields
- *
+ * @return	string		$addSelect  : the addSelect with the localisation fields
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -834,10 +868,8 @@ if( $this->pObj->b_drs_devTodo )
  * sql_select_addTreeview( ): Returns an addSelect with the treeParentField,
  *                            if there is a treeParentField
  *
+ * @return	string		$addSelect  : the addSelect with the treeParentField
  * @internal #32223, 120119
- *
- * @return	string  $addSelect  : the addSelect with the treeParentField
- *
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -940,8 +972,7 @@ if( $this->pObj->b_drs_devTodo )
 /**
  * sql_from( ): Get the FROM statement ...
  *
- * @return	string  $from : FROM statement
- *
+ * @return	string		$from : FROM statement
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -979,8 +1010,7 @@ if( $this->pObj->b_drs_devTodo )
 /**
  * sql_groupBy( ): Get the GROUP BY statement ...
  *
- * @return	string  $from : GROUP BY statement
- *
+ * @return	string		$from : GROUP BY statement
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1005,8 +1035,7 @@ if( $this->pObj->b_drs_devTodo )
  * sql_orderBy( ):  Get the ORDER BY statement. It depends on the TS configuration
  *                  filter.table.field.order
  *
- * @return	string  $orderBy : ORDER BY statement without ORDER BY
- *
+ * @return	string		$orderBy : ORDER BY statement without ORDER BY
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1062,8 +1091,7 @@ if( $this->pObj->b_drs_devTodo )
 /**
  * sql_limit( ): Get the LIMIT statement ...
  *
- * @return	string  $limit : LIMIT statement
- *
+ * @return	string		$limit : LIMIT statement
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1102,8 +1130,7 @@ if( $this->pObj->b_drs_devTodo )
  * sql_whereAllItems( ):  Get the WHERE statement for all items.
  *                        All items means: idenependent of any hit.
  *
- * @return	string  $where : WHERE statement without WHERE
- *
+ * @return	string		$where : WHERE statement without WHERE
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1144,8 +1171,7 @@ if( $this->pObj->b_drs_devTodo )
  * sql_whereWiHitsOnly( ):  Get the WHERE statement for a filter, which should diplay
  *                          flter items with a hit only.
  *
- * @return	string  $where : WHERE statement without WHERE
- *
+ * @return	string		$where : WHERE statement without WHERE
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1177,8 +1203,7 @@ if( $this->pObj->b_drs_devTodo )
 /**
  * sql_andWhere_enableFields( ): Get the AND WHERE statement with the enabled fields.
  *
- * @return	string  $andWhere : AND WHERE statement with an AND
- *
+ * @return	string		$andWhere : AND WHERE statement with an AND
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1205,8 +1230,7 @@ if( $this->pObj->b_drs_devTodo )
  * sql_andWhere_fromTS( ):  Get the AND WHERE statement from the TS configuration.
  *                          See sql.andWhere.
  *
- * @return	string  $andWhere : AND WHERE statement with an AND
- *
+ * @return	string		$andWhere : AND WHERE statement with an AND
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1232,8 +1256,7 @@ if( $this->pObj->b_drs_devTodo )
 /**
  * sql_andWhere_pidList( ): Get the AND WHERE statement with the pid list.
  *
- * @return	string  $andWhere : AND WHERE statement with an AND
- *
+ * @return	string		$andWhere : AND WHERE statement with an AND
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1286,8 +1309,7 @@ if( $this->pObj->b_drs_devTodo )
  *                              It is an AND WHERE for tables which have a record for each
  *                              language.
  *
- * @return	string  $andWhere : AND WHERE statement with an AND
- *
+ * @return	string		$andWhere : AND WHERE statement with an AND
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1361,11 +1383,9 @@ if( $this->pObj->b_drs_devTodo )
  *          rows will joined with the rows of the ressource res.
  *          rows will be consolidated
  *
- * @param ressource $res      : current SQL ressource
- * @param array     $rows_in  : rows
- *
- * @return	array  $rows_out : value from TS configuration
- *
+ * @param	ressource		$res      : current SQL ressource
+ * @param	array		$rows_in  : rows
+ * @return	array		$rows_out : value from TS configuration
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1376,7 +1396,7 @@ if( $this->pObj->b_drs_devTodo )
 
       // Get the field label of the uid
     $uidField = $this->sql_filterFields[$table]['uid'];
-    
+
       // LOOP build the rows
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
@@ -1403,11 +1423,9 @@ if( $this->pObj->b_drs_devTodo )
  *          rows will joined with the rows of the ressource res.
  *          rows will be consolidated
  *
- * @param ressource $res      : current SQL ressource
- * @param array     $rows_in  : rows
- *
- * @return	array  $rows_out : value from TS configuration
- *
+ * @param	ressource		$res      : current SQL ressource
+ * @param	array		$rows_in  : rows
+ * @return	array		$rows_out : value from TS configuration
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1479,8 +1497,7 @@ if( $this->pObj->b_drs_devTodo )
  * ts_displayWithoutAnyHit( ):  Get the TS configuration for displaying items without hits.
  *                              If current filter is a tree view, return value is true.
  *
- * @return	string  $display_without_any_hit : value from TS configuration
- *
+ * @return	string		$display_without_any_hit : value from TS configuration
  * @version 3.9.9
  * @since   3.9.9
  */
