@@ -500,7 +500,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
           // Item URL
         $htmlItem = $this->replace_itemUrl( $conf_array, $uid, $htmlItem );
 
-        $htmlItems = $htmlItems . $htmlItems . PHP_EOL ;
+        $htmlItems = $htmlItems . $htmlItem . PHP_EOL ;
         $row_number++;
       }
     }
