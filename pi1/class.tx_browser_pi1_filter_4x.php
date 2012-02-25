@@ -470,7 +470,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     // Wrap values
       // Wrap the item
 
-    foreach( $rows as $uid => $row )
+    foreach( ( array ) $this->rows as $uid => $row )
     {
       foreach( $row as $tableField => $value )
       {
