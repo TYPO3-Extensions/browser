@@ -524,7 +524,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // 1. step: filter items with one hit at least
-    $arr_return = get_rowsWiHits( );
+    $arr_return = $this->get_rowsWiHits( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -534,7 +534,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // 1. step: filter items with one hit at least
 
       // 2. step: all filter items, hits will be taken from $rows
-    $arr_return = get_rowsAllItems( $rows );
+    $arr_return = $this->get_rowsAllItems( $rows );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
