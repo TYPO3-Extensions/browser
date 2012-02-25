@@ -329,6 +329,11 @@ class tx_browser_pi1_filter_4x {
       // DRS :TODO:
     if( ! $this->ts_condition( ) )
     {
+      if( $this->pObj->b_drs_filter )
+      {
+        $prompt = 'Ccondition for filter ' . $this->curr_tableField . ' is false. Filter won\'t displayed.';
+        t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+      }
       $arr_return = '';
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
       return $arr_return;
@@ -1536,7 +1541,7 @@ class tx_browser_pi1_filter_4x {
   /**
  * ts_condition( ):  Render the filter condition
  *
- * @return	boolean		True in case of a condition, false if there isn't any condition
+ * @return	boolean		True, if filter should displayed, false if filter shouldn't diplayed
  * @version 3.9.3
  * @since   3.9.3
  */
@@ -1550,7 +1555,7 @@ class tx_browser_pi1_filter_4x {
     $coa_name = $this->conf_view['filter.'][$table . '.'][$field . '.']['condition'];
     $coa_conf = $this->conf_view['filter.'][$table . '.'][$field . '.']['condition.'];
 
-      // RETURN false: any condition isn't defined
+      // RETURN true: any condition isn't defined
     if( empty ( $coa_name ) )
     {
       if ( $this->pObj->b_drs_filter )
@@ -1558,9 +1563,9 @@ class tx_browser_pi1_filter_4x {
         $prompt = $tableField . ' hasn\'t any condition.';
         t3lib_div :: devLog('[INFO/FILTER] ' . $prompt , $this->pObj->extKey, 0);
       }
-      return false;
+      return true;
     }
-      // RETURN false: any condition isn't defined
+      // RETURN true: any condition isn't defined
 
       // Get condition result
     $value = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
@@ -1574,6 +1579,7 @@ class tx_browser_pi1_filter_4x {
           t3lib_div :: devLog('[INFO/FILTER] ' . $prompt , $this->pObj->extKey, 0);
         }
         break;
+      case( true ):
       default;
         $bool_condition = true;
         if ( $this->pObj->b_drs_filter )
