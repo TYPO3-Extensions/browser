@@ -45,13 +45,13 @@
  *
  *              SECTION: Main
  *  170:     public function get_htmlFilters( )
- *  241:     private function get_htmlFilter( )
+ *  241:     private function get_marker( )
  *
  *              SECTION: Main
  *  308:     private function init( )
  *
  *              SECTION: SQL ressources - base for rows
- *  367:     private function sql_res( )
+ *  367:     private function rows( )
  *  455:     private function sql_resAllItems( )
  *  532:     private function sql_resWiHitsOnly( )
  *  609:     private function sql_select( $bool_count )
@@ -77,8 +77,8 @@
  * 1316:     private function sql_andWhere_sysLanguage( )
  *
  *              SECTION: Rows
- * 1392:     private function rows( $res )
- * 1432:     private function rows_union( $res, $rows_wiHitsOnly )
+ * 1392:     private function sql_resToRows( $res )
+ * 1432:     private function sql_resToRows_allItemsWiHits( $res, $rows_wiHitsOnly )
  *
  *              SECTION: TypoScript
  * 1504:     private function ts_displayWithoutAnyHit( )
@@ -191,7 +191,7 @@ class tx_browser_pi1_filter_4x {
           // Load TCA
         $this->pObj->objZz->loadTCA( $table );
 
-        $arr_return = $this->get_htmlFilter( );
+        $arr_return = $this->get_marker( );
         if( $arr_return['error']['status'] )
         {
           $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -293,7 +293,7 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
-  * HTML
+  * Marker
   *
   **********************************************/
 
@@ -306,42 +306,33 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_htmlFilter( ):  It renders filters and category menus in HTML.
+ * get_marker( ):  It renders filters and category menus in HTML.
  *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
  *
  * @return	array
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function get_htmlFilter( )
+  private function get_marker( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-
-      // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Check filter condition!';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS :TODO:
+      // RETURN condition isn't met
     if( ! $this->ts_condition( ) )
     {
-      if( $this->pObj->b_drs_filter )
-      {
-        $prompt = 'Ccondition for filter ' . $this->curr_tableField . ' is false. Filter won\'t displayed.';
-        t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-      $arr_return = '';
+      $marker = '###' . strtoupper( $this->curr_tableField ) . '###';
+      $arr_return['data']['marker'][$marker] = null;
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
       return $arr_return;
     }
+      // RETURN condition isn't met
 
-
-
-    $arr_return = $this->sql_res( );
+      // Get filter rows
+    $arr_return = $this->rows( );
     if( $arr_return['error']['status'] )
     {
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -349,6 +340,7 @@ class tx_browser_pi1_filter_4x {
     }
     $rows = $arr_return['data']['rows'];
     unset( $arr_return );
+      // Get filter rows
 
 
 
@@ -380,7 +372,7 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
-  * SQL ressources - base for rows
+  * Rows
   *
   **********************************************/
 
@@ -393,13 +385,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_res( ):  Get the SQL ressource for a filter
+ * rows( ):  Get the SQL ressource for a filter
  *
  * @return	array		$arr_return : Array with the SQL ressource or an error message
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function sql_res( )
+  private function rows( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
@@ -419,7 +411,7 @@ class tx_browser_pi1_filter_4x {
       // Get SQL ressource for filter items with one hit at least
 
       // Get rows
-    $rows_wiHitsOnly = $this->rows( $res );
+    $rows_wiHitsOnly = $this->sql_resToRows( $res );
 
       // Display all items?
     $display_without_any_hit  = $this->ts_displayWithoutAnyHit( );
@@ -451,7 +443,7 @@ class tx_browser_pi1_filter_4x {
         unset( $arr_return );
           // Get SQL ressource for all filter items
           // Get rows
-        $rows = $this->rows_union( $res, $rows_wiHitsOnly );
+        $rows = $this->sql_resToRows_allItemsWiHits( $res, $rows_wiHitsOnly );
         break;
           // foreign table
       case( $table == $this->pObj->localTable ):
@@ -471,6 +463,20 @@ class tx_browser_pi1_filter_4x {
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
     return $arr_return;
   }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * SQL ressources
+  *
+  **********************************************/
 
 
 
@@ -631,6 +637,131 @@ class tx_browser_pi1_filter_4x {
 
 
 
+ /***********************************************
+  *
+  * SQL ressources to rows
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+/**
+ * sql_resToRows( ):  Handle the SQL result, free it. Return rows.
+ *
+ * @param	ressource		$res  : current SQL ressource
+ * @return	array     $rows : rows
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_resToRows( $res )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get the field label of the uid
+    $uidField = $this->sql_filterFields[$table]['uid'];
+
+      // LOOP build the rows
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+      $rows[ ( string ) $row[ $uidField ] ] = $row;
+    }
+      // LOOP build the rows
+
+      // Free SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
+
+      // RETURN rows
+    return $rows;
+  }
+
+
+
+
+
+
+
+
+/**
+ * sql_resToRows_allItemsWiHits( ): Handle the SQL result, free it. If param $rows_wiHitsOnly contains
+ *                                  rows, the hit of each row will override the hit in the current row.
+ *                                  Hit in the current row is 0 by default.
+ *
+ * @param	ressource		$res              : current SQL ressource
+ * @param	array       $rows_wiHitsOnly  : rows with hits
+ * @return	array     $rows_wiAllItems  : rows with all filter items
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_resToRows_allItemsWiHits( $res, $rows_wiHits )
+  {
+      // Get all rows - get all filter items
+    $rows_wiAllItems = $this->sql_resToRows( $res );
+
+      // RETURN all rows are empty
+    if( empty ( $rows_wiAllItems ) )
+    {
+      return null;
+    }
+      // RETURN all rows are empty
+
+      // RETURN all rows, there isn't any row with a hit
+    if( empty ( $rows_wiHits ) )
+    {
+      return $rows_wiAllItems;
+    }
+      // RETURN all rows, there isn't any row with a hit
+
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get label of the hits field
+    $hitsField = $this->sql_filterFields[$table]['hits'];
+
+      // LOOP all items
+    foreach( ( array ) $rows_wiAllItems as $uid => $row )
+    {
+        // If there is an hit, take it over
+      if( isset ( $rows_wiHits[ $uid ] ) )
+      {
+        $hits = $rows_wiHits[ $uid ][ $hitsField ];
+        $rows_wiAllItems[ $uid ][ $hitsField ] = $hits;
+      }
+        // If there is an hit, take it over
+    }
+      // LOOP all items
+
+      // RETURN rows
+    return $rows_wiAllItems;
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * SQL select
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
 /**
  * sql_select( ): Get the SELECT statement for the current filter (the current tableField).
  *                Statement will contain fields for localisation and treeview, if there is
@@ -698,20 +829,6 @@ class tx_browser_pi1_filter_4x {
       // RETURN select
     return $select;
   }
-
-
-
-
-
-
-
-
-
- /***********************************************
-  *
-  * SQL select
-  *
-  **********************************************/
 
 
 
@@ -1412,120 +1529,6 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
-  * Rows
-  *
-  **********************************************/
-
-
-
-
-
-
-
-
-/**
- * rows( ): Get the rows of a filter. If $rows contains some row,
- *          rows will joined with the rows of the ressource res.
- *          rows will be consolidated
- *
- * @param	ressource		$res      : current SQL ressource
- * @param	array		$rows_in  : rows
- * @return	array		$rows_out : value from TS configuration
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function rows( $res )
-  {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-      // Get the field label of the uid
-    $uidField = $this->sql_filterFields[$table]['uid'];
-
-      // LOOP build the rows
-    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
-    {
-      $rows[ ( string ) $row[ $uidField ] ] = $row;
-    }
-      // LOOP build the rows
-
-      // Free SQL result
-    $GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
-
-      // RETURN rows
-    return $rows;
-  }
-
-
-
-
-
-
-
-
-/**
- * rows( ): Get the rows of a filter. If $rows contains some row,
- *          rows will joined with the rows of the ressource res.
- *          rows will be consolidated
- *
- * @param	ressource		$res      : current SQL ressource
- * @param	array		$rows_in  : rows
- * @return	array		$rows_out : value from TS configuration
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function rows_union( $res, $rows_wiHitsOnly )
-  {
-      // Get all rows - get all filter items
-    $rows_wiAllItems = $this->rows( $res );
-
-      // RETURN all rows are empty
-    if( empty ( $rows_wiAllItems ) )
-    {
-      return null;
-    }
-      // RETURN all rows are empty
-
-      // RETURN all rows, there isn't any row with a hit
-    if( empty ( $rows_wiHitsOnly ) )
-    {
-      return $rows_wiAllItems;
-    }
-      // RETURN all rows, there isn't any row with a hit
-
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-      // Get label of the hits field
-    $hitsField = $this->sql_filterFields[$table]['hits'];
-
-      // LOOP all items
-    foreach( ( array ) $rows_wiAllItems as $uid => $row )
-    {
-        // If there is an hit, take it over
-      if( isset ( $rows_wiHitsOnly[ $uid ] ) )
-      {
-        $hits = $rows_wiHitsOnly[ $uid ][ $hitsField ];
-        $rows_wiAllItems[ $uid ][ $hitsField ] = $hits;
-      }
-        // If there is an hit, take it over
-    }
-      // LOOP all items
-
-      // RETURN rows
-    return $rows_wiAllItems;
-  }
-
-
-
-
-
-
-
-
-
- /***********************************************
-  *
   * TypoScript
   *
   **********************************************/
@@ -1545,7 +1548,7 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.3
  * @since   3.9.3
  */
-  function ts_condition( )
+  private function ts_condition( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -1560,7 +1563,7 @@ class tx_browser_pi1_filter_4x {
     {
       if ( $this->pObj->b_drs_filter )
       {
-        $prompt = $tableField . ' hasn\'t any condition.';
+        $prompt = $tableField . ' hasn\'t any condition. Filter will displayed.';
         t3lib_div :: devLog('[INFO/FILTER] ' . $prompt , $this->pObj->extKey, 0);
       }
       return true;
@@ -1575,7 +1578,7 @@ class tx_browser_pi1_filter_4x {
         $bool_condition = false;
         if ( $this->pObj->b_drs_filter )
         {
-          $prompt = 'Condition of ' . $tableField . ' is false.';
+          $prompt = 'Condition of ' . $tableField . ' is false. Filter won\'t displayed.';
           t3lib_div :: devLog('[INFO/FILTER] ' . $prompt , $this->pObj->extKey, 0);
         }
         break;
@@ -1584,7 +1587,7 @@ class tx_browser_pi1_filter_4x {
         $bool_condition = true;
         if ( $this->pObj->b_drs_filter )
         {
-          $prompt = 'Condition of ' . $tableField . ' is true.';
+          $prompt = 'Condition of ' . $tableField . ' is true. Filter will displayed.';
           t3lib_div :: devLog('[INFO/FILTER] ' . $prompt , $this->pObj->extKey, 0);
         }
         break;
