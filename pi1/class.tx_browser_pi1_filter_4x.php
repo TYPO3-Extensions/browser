@@ -497,15 +497,22 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       $value  = $row[$key];
 
         // stdWrap the current value
-      $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['value.']['stdWrap.'];
-      $item     = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
+        // SWITCH first item
+      switch( true )
+      {
+        case( $uid == $conf_array['first_item.']['option_value'] ):
+          $stdWrap  = $conf_array['first_item.']['value_stdWrap.'];
+          break;
+        default:
+          $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['value.']['stdWrap.'];
+          break;
+      }
+        // SWITCH first item
+      $item = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
         // stdWrap the current value
 
         // Prepend or append hits
-      $item = $this->set_hits( $item, $row );
-
-        // Prepend or append hits
-      $item = $this->set_hits( $value, $row );
+      $item = $this->set_hits( $uid, $item, $row );
 
         // stdWrap the current item
       $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
@@ -2593,6 +2600,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
  *              Hits will handled by stdWrap.
  *              If hits shouldn't displayed, method returns the given value.
  *
+ * @param integer   $uid    : uid of the current filter item
  * @param string    $value  : value of the current filter item
  * @param array     $row    : current row
  * @return	string  $value  : Value with hits or without hits
@@ -2600,7 +2608,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
  * @version 3.9.9
  * @since   3.0.0
  */
-  private function set_hits( $value, $row )
+  private function set_hits( $uid, $value, $row )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -2609,8 +2617,22 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
+      // Set display hits flag
+      // SWITCH first item
+    switch( true )
+    {
+      case( $uid == $conf_array['first_item.']['option_value'] ):
+        $bool_displayHits = $conf_array['first_item.']['display_hits'];
+        break;
+      default:
+        $bool_displayHits = $conf_array['wrap.']['item.']['display_hits'];
+        break;
+    }
+      // SWITCH first item
+      // Set display hits flag
+
       // RETURN hit shouldn't displayed
-    if( ! $conf_array['wrap.']['item.']['display_hits'] )
+    if( ! $bool_displayHits )
     {
       return $value;
     }
@@ -2622,12 +2644,33 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     $hits = $row[$hitsField];
 
       // stdWrap the hit
-    $stdWrap  = $conf_array['wrap.']['item.']['display_hits.']['stdWrap.'];
-    $hits     = $this->pObj->objWrapper->general_stdWrap( $hits, $stdWrap );
+      // SWITCH first item
+    switch( true )
+    {
+      case( $uid == $conf_array['first_item.']['option_value'] ):
+        $stdWrap  = $conf_array['first_item.']['display_hits.']['stdWrap.'];
+        break;
+      default:
+        $stdWrap  = $conf_array['wrap.']['item.']['display_hits.']['stdWrap.'];
+        break;
+    }
+      // SWITCH first item
+    $hits = $this->pObj->objWrapper->general_stdWrap( $hits, $stdWrap );
       // stdWrap the hit
 
       // Get behind flag
-    $bool_behindItem  = $conf_array['wrap.']['item.']['display_hits.']['behindItem'];
+      // SWITCH first item
+    switch( true )
+    {
+      case( $uid == $conf_array['first_item.']['option_value'] ):
+        $bool_behindItem = $conf_array['first_item.']['display_hits.']['behindItem'];
+        break;
+      default:
+        $bool_behindItem = $conf_array['wrap.']['item.']['display_hits.']['behindItem'];
+        break;
+    }
+      // SWITCH first item
+      // Get behind flag
 
       // SWITCH behind flag
     switch( $bool_behindItem )
