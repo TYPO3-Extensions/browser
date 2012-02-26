@@ -2621,8 +2621,10 @@ var_dump( __LINE__, $row[ $hitsField ] );
     }
       // LOOP all rows
 
+
     $this->hits_sum[$this->curr_tableField] = $sum_hits;
 
+    var_dump( __LINE__, $this->curr_tableField, $sum_hits, $this->hits_sum );
     return;
   }
 
