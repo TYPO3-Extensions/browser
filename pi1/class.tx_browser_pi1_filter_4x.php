@@ -2610,12 +2610,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
       // Get the label for the hit field
     $hitsField = $this->sql_filterFields[$table]['hits'];
-
+var_dump( __LINE__, $hitsField );
     $sum_hits = 0;
 
       // LOOP all rows
     foreach( ( array ) $rows as $uid => $row )
     {
+var_dump( __LINE__, $row[ $hitsField ] );
       $sum_hits = $sum_hits + $row[ $hitsField ];
     }
       // LOOP all rows
