@@ -2491,7 +2491,8 @@ var_dump( __LINE__, $iterator );
       // Loop values
 
       // Initial depth
-    $last_depth = -1;
+    //$last_depth = -1;
+    $last_depth = 0;
 
       // LOOP
     foreach( $iterator as $key => $value )
