@@ -970,6 +970,14 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     $arr_currPiVars = $this->pObj->piVars;
     $tableField     = $this->curr_tableField;
 
+      // RETURN no marker
+    $pos = strpos( $item, '###URL###' );
+    if( ! ( $pos === false ) )
+    {
+      return $item;
+    }
+      // RETURN no marker
+
       // Set value of the first item to null: it won't become an additional parameter below
     if( $uid == $conf_array['first_item.']['option_value'] )
     {
