@@ -706,6 +706,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
  */
   private function replace_itemClass( $conf_array, $item )
   {
+    static $firstLoop = false;
 
       // Get TS value
     if( empty( $conf_array['wrap.']['item.']['class'] ) )
@@ -720,6 +721,19 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
       // Replace the marker
     $item = str_replace( '###CLASS###', $class, $item );
+
+      // Workaround: remove ###ONCHANGE###
+    $item = str_replace( 'class=" ###ONCHANGE###"', null, $item );
+    if( $firstLoop )
+    {
+      if( $this->pObj->b_drs_devTodo )
+      {
+        $prompt = 'class=" ###ONCHANGE###" is removed. Check the code!';
+        t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+    }
+    $firstLoop = true;
+      // Workaround: remove ###ONCHANGE###
 
       // RETURN content
     return $item;
