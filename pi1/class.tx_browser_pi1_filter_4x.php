@@ -587,7 +587,7 @@ var_dump( __LINE__, $arr_return );
 //      $this->maxItemsPerHtmlRowIncreaseItemNumber( );
 
       $item   = $this->get_htmlItem( $conf_array, $uid, $value );
-      $items = $items . $this->htmlSpaceLeft . ' ' . $item . PHP_EOL ;
+      $items  = $items . $this->htmlSpaceLeft . ' ' . $item . PHP_EOL ;
     }
       // LOOP rows
 
@@ -2640,8 +2640,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
         // Render the value
 //      $value      = '###HITS_BEFORE###' . $value . '###HITS_BEHIND###';
 //      $value      = str_replace('###VALUE###', $value, $conf_item );
-      $item = $this->get_htmlItem( $conf_array, $uid, $value );
-var_dump( __LINE__, $value, $item );
+      $item = $this->get_htmlItem( $conf_array, $curr_uid, $value );
         // Render the value
 
         // Vars
