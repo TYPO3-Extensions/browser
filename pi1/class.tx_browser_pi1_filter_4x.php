@@ -443,10 +443,9 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     // Wrap values
       // Wrap the item
 
-    $content = $this->get_htmlItems( );
-
-      // Wrap the object
-
+    $arr_return = $this->get_htmlItems( );
+    $content = $arr_return['data']['items'];
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $content );
 
 
       // Prompt the expired time to devlog
@@ -481,16 +480,21 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     {
       case( true ):
         $arr_return = $this->get_htmlItemsTree( );
-var_dump( __LINE__, implode( null, $arr_return ) );
+        $items      = $arr_return['data']['items'];
         break;
       case( false ):
       default:
         $arr_return = $this->get_htmlItemsList( );
+        $items      = $arr_return['data']['items'];
+        $arr_return = $this->get_htmlItemsWrapped( $items );
+        // :TODO:
+        //$this->wrap_objectTitle( );
         break;
     }
       // SWITCH current filter is a tree view
 
       // RETURN html items
+    $arr_return['data']['items'] = $items;
     return $arr_return;
   }
 
@@ -535,56 +539,6 @@ var_dump( __LINE__, implode( null, $arr_return ) );
     {
       $key    = $this->sql_filterFields[$this->curr_tableField]['value'];
       $value  = $row[$key];
-//
-//        // stdWrap the current value
-//        // SWITCH first item
-//      switch( true )
-//      {
-//        case( $uid == $conf_array['first_item.']['option_value'] ):
-//          $stdWrap  = $conf_array['first_item.']['value_stdWrap.'];
-//          break;
-//        default:
-//          $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['value.']['stdWrap.'];
-//          break;
-//      }
-//        // SWITCH first item
-//      $item = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
-//        // stdWrap the current value
-//
-//        // Prepend or append hits
-//      $item = $this->set_hits( $uid, $item, $row );
-//
-//        // stdWrap the current item
-//      $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
-//      $item     = $this->pObj->local_cObj->stdWrap( $item, $stdWrap );
-//        // stdWrap the current item
-//
-//        // DRS :TODO:
-//      if( $this->pObj->b_drs_devTodo )
-//      {
-//        $prompt = 'Check maxItemsPerRow!';
-//        t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-//      }
-//        // DRS :TODO:
-//      $item = $this->maxitemsPerHtmlRowBegin( $item );
-//
-//        // Item class
-//      if($conf_name == 'CATEGORY_MENU')
-//      {
-//        $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
-//      }
-//      $item = $this->replace_itemClass( $conf_array, $item );
-//        // Item class
-//        // Item style
-//      $item = $this->replace_itemStyle( $conf_array, $item );
-//        // Item uid
-//      $item = $this->replace_itemUid( $conf_array, $uid, $item );
-//        // Item URL
-//      $item = $this->replace_itemUrl( $conf_array, $uid, $item );
-//        // Item selected
-//      $item = $this->replace_itemSelected( $conf_array, $uid, $value, $item );
-//
-//      $this->maxItemsPerHtmlRowIncreaseItemNumber( );
 
       $item   = $this->get_htmlItem( $conf_array, $uid, $value );
       $items  = $items . $this->htmlSpaceLeft . ' ' . $item . PHP_EOL ;
@@ -593,11 +547,10 @@ var_dump( __LINE__, implode( null, $arr_return ) );
 
     $items = $this->maxItemsPerHtmlRowWrap( $items );
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
-
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-    $arr_return['data']['item'] = $item;
+
+    $arr_return['data']['items'] = $items;
     return $arr_return;
   }
 
@@ -644,7 +597,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       // stdWrap the current item
 
       // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo )
+    if( $firstLoop && $this->pObj->b_drs_devTodo )
     {
       $prompt = 'Check maxItemsPerRow!';
       t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
@@ -657,6 +610,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     {
       $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
     }
+      // DRS :TODO:
+    if( $firstLoop && $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Check AJAX ###ONCHANGE###';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS :TODO:
     $item = $this->replace_itemClass( $conf_array, $item );
       // Item class
       // Item style
@@ -672,19 +632,16 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
       // Workaround: remove ###ONCHANGE###
     $item = str_replace( ' class=" ###ONCHANGE###"', null, $item );
-    if( $firstLoop )
+    if( $firstLoop && $this->pObj->b_drs_devTodo )
     {
-      if( $this->pObj->b_drs_devTodo )
-      {
-        $prompt = 'class=" ###ONCHANGE###" is removed. Check the code!';
-        t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
-      }
+      $prompt = 'class=" ###ONCHANGE###" is removed. Check the code!';
+      t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
     }
-    $firstLoop = false;
       // Workaround: remove ###ONCHANGE###
 
     $this->maxItemsPerHtmlRowIncreaseItemNumber( );
 
+    $firstLoop = false;
     return $item;
   }
 
@@ -736,6 +693,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
       // Replace the marker
     $item = str_replace( '###CLASS###', $class, $item );
+
+      // Workaround: Remove space
+    $item = str_replace('class=" ', 'class="', $item);
+
 
       // RETURN content
     return $item;
@@ -2510,6 +2471,9 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
  */
   private function get_htmlItemsTree( )
   {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
@@ -2565,8 +2529,118 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     unset( $this->tmpOneDim );
 
 
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+
       // RETURN the ordered and rendered rows of the current tablefield
-    return $arr_tableFields;
+    $arr_return['data']['items'] = implode( null, $arr_tableFields );
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * get_htmlItemsWrapped( ) Wrap all items (wrap the object)
+ *
+ * @param	string		$conf_name: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
+ * @param	array		$conf_array: The current TS configuration of the obkject
+ * @param	string		$str_nice_piVar: The nice name for the current piVar
+ * @param	string		$key_piVar: The real name of the piVar
+ * @param	integer		$number_of_items: The number of items
+ * @return	string		Returns the wrapped items/object
+ * @version 3.9.6
+ * @since    3.0.1
+ */
+  private function get_htmlItemsWrapped( $items )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+    
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // #8337, 101011, dwildt
+      // SWITCH COA
+    switch( $conf_name )
+    {
+      case ( 'CHECKBOX' ) :
+        $size      = null;
+        $multiple  = true;
+        break;
+      case ( 'CATEGORY_MENU' ) :
+      case ( 'RADIOBUTTONS' ) :
+        $size      = null;
+        $multiple  = false;
+        break;
+      case ( 'SELECTBOX' ) :
+        $size = $conf_array['size'];
+        #3.4.904
+        if( $size < 2 )
+        {
+          $multiple = 0;
+        }
+        if( $size >= 2 )
+        {
+          if( $conf_array['multiple'] == 1 )
+          {
+            $multiple = ' ' . $conf_array['multiple.']['selected'];
+          }
+        }
+        break;
+      default :
+        $size      = null;
+        $multiple  = false;
+        if( $this->pObj->b_drs_error )
+        {
+          $prompt = 'multiple - undefined value in switch: \'' . $conf_name . '\'';
+          t3lib_div :: devlog( '[ERROR/FILTER] ' . $prompt, $this->pObj->extKey, 3 );
+          $prompt = 'multiple becomes false.';
+          t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 3);
+        }
+    }
+      // SWITCH COA
+
+    $itemsWrap = $conf_array['wrap.']['object'];
+      // Remove empty class
+    $itemsWrap = str_replace( ' class=""', null, $itemsWrap );
+
+    $int_space_left = $conf_array['wrap.']['object.']['nice_html_spaceLeft'];
+    $str_space_left = str_repeat( ' ', $int_space_left );
+    $itemsWrap      = $str_space_left . $itemsWrap;
+
+    $key_piVar      = $this->nicePiVar['key_piVar'];
+    $arr_piVar      = $this->nicePiVar['arr_piVar'];
+    $str_nicePiVar  = $this->nicePiVar['nice_piVar'];
+
+    $str_uid        = $this->pObj->prefixId . '_' . $str_nice_piVar;
+    $str_uid        = str_replace('.', '_', $str_uid);
+    
+    $itemsWrap    = str_replace('###TABLE.FIELD###',  $key_piVar, $itemsWrap );
+    $itemsWrap    = str_replace('###ID###',           $str_uid,   $itemsWrap );
+    $itemsWrap    = str_replace('###SIZE###',         $size,      $itemsWrap );
+    $itemsWrap    = str_replace('###MULTIPLE###',     $multiple,  $itemsWrap );
+
+      // DRS - Development Reporting System
+    if( empty( $itemsWrap ) )
+    {
+      if( $this->pObj->b_drs_warn )
+      {
+        $prompt = 'wrap_allItems returns an empty value for ' . $conf_name;
+        t3lib_div :: devlog('[WARN/TEMPLATING] ' . $prompt, $this->pObj->extKey, 2);
+      }
+    }
+      // DRS - Development Reporting System
+
+    $items      = PHP_EOL . $items . PHP_EOL . $this->htmlSpaceLeft;
+    $itemsWrap  = str_replace('|', $items, $itemsWrap);
+    return $itemsWrap;
   }
 
 
@@ -2780,10 +2854,11 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
                                 $curr_depth
                               ) .
                               PHP_EOL .
-                              $this->htmlSpaceLeft . $indent . '</ul>' . PHP_EOL;
+                              $this->htmlSpaceLeft . $indent . '</ul>';
     $str_result =             $str_result . $endTag . PHP_EOL .
                               $this->htmlSpaceLeft . '</div>';
-    $arr_result[$curr_uid] =  $arr_result[$curr_uid] . $endTag . '</div>';
+    $arr_result[$curr_uid] =  $arr_result[$curr_uid] . $endTag  . PHP_EOL .
+                              $this->htmlSpaceLeft . '</div>';
       // Render the end tag of the last item
 
     $arr_result[$first_item_uid] = $this->htmlSpaceLeft . '<div id="' . $html_id . '">' . $arr_result[$first_item_uid];
