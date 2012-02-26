@@ -3126,10 +3126,12 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     switch( true )
     {
       case( $uid == $conf_array['first_item.']['option_value'] ):
-        $bool_displayHits = $conf_array['first_item.']['display_hits'];
+        $bool_displayHits   = $conf_array['first_item.']['display_hits'];
+        $bool_displayWoHit  = $conf_array['first_item.']['display_without_any_hit'];
         break;
       default:
-        $bool_displayHits = $conf_array['wrap.']['item.']['display_hits'];
+        $bool_displayHits   = $conf_array['wrap.']['item.']['display_hits'];
+        $bool_displayWoHit  = $conf_array['wrap.']['item.']['display_without_any_hit'];
         break;
     }
       // SWITCH first item
@@ -3146,6 +3148,15 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
       // Get the hit
     $hits = $row[$hitsField];
+
+
+    if( $hits < 1 )
+    {
+      if( ! $bool_displayWoHit )
+      {
+        return $value;
+      }
+    }
 
       // stdWrap the hit
       // SWITCH first item
