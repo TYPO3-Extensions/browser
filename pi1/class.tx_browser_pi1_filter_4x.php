@@ -2489,14 +2489,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
 
 /**
- * set_firstItem( ):
+ * set_firstItem( ):  Adds the first item to the rows of the current filter.
+ *                    If firstItem shouldn't displayed, nothing will happen.
  *
- * @param string    $value  : value of the current filter item
- * @param array     $row    : current row
- * @return	string  $value  : Value with hits or without hits
+ * @return	void
  *
  * @version 3.9.9
- * @since   3.0.0
+ * @since   3.9.9
  */
   private function set_firstItem( )
   {
@@ -2514,17 +2513,17 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     }
       // RETURN first item shouldn't displayed
 
-      // Get the uid of the first item
+      // Get the labels for the fields uid and hits
     $uidField   = $this->sql_filterFields[$this->curr_tableField]['uid'];
     $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
-    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
 
+      // Get the uid of the first item
     $uid = $conf_array['first_item.']['option_value'];
-      // Get the value of the first item
-    $value = 'dummy';
 
+      // LOOP all fields of current filter / tableField
     foreach( $this->sql_filterFields[$this->curr_tableField] as $field )
     {
+        // SWITCH field
       switch( true )
       {
         case( $field == $uidField ):
@@ -2537,9 +2536,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
           $firstItem[$uid][$field] = null;
           break;
       }
+        // SWITCH field
     }
+      // LOOP all fields of current filter / tableField
+
+      // Add first item to the rows of the current filter
     $this->rows = $firstItem + $this->rows;
-var_dump( __LINE__, $this->rows );
+
     return;
   }
 
