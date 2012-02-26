@@ -480,6 +480,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
     {
       case( true ):
         $arr_return = $this->get_htmlItemsTree( );
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
         //$items      = $arr_return['data']['items'];
         break;
       case( false ):
@@ -487,6 +488,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
         $arr_return = $this->get_htmlItemsList( );
         $items      = $arr_return['data']['items'];
         $arr_return = $this->get_htmlItemsWrapped( $items );
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
         // :TODO:
         //$this->wrap_objectTitle( );
         break;
