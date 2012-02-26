@@ -1056,8 +1056,11 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
                             $this->pObj->prefixId . '[' . $paramKey . ']=' . $paramValue;
       }
     }
-    $additionalParams = $additionalParams . '&' .
-                        $this->pObj->prefixId . '[' . $tableField . ']=' . $uid;
+    if( $uid )
+    {
+      $additionalParams = $additionalParams . '&' .
+                          $this->pObj->prefixId . '[' . $tableField . ']=' . $uid;
+    }
       // Calculate additional params for the typolink
 
 
