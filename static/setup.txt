@@ -1236,7 +1236,7 @@ plugin.tx_browser_pi1 {
             wraps {
               item {
                 stdWrap {
-                  wrap = <a href="###URL###" ###CLASS### ###STYLE### title="">|</a>
+                  wrap = <a href="###URL###"###CLASS######STYLE######TITLE###>|</a>
                 }
               }
               tree {

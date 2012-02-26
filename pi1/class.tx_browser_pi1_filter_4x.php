@@ -661,6 +661,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       // Item class
       // Item style
     $item = $this->replace_itemStyle( $conf_array, $item );
+      // Item title
+    $item = $this->replace_itemTitle( $conf_array, $item );
       // Item uid
     $item = $this->replace_itemUid( $conf_array, $uid, $item );
       // Item URL
@@ -858,6 +860,57 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
       // Replace the marker
     $item = str_replace( '###STYLE###', $style, $item );
+
+      // RETURN content
+    return $item;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * replace_itemTitle( ): Replaces the marker ###TITLE### with the value from TS
+ *
+ * @param	array     $conf_array : The TS configuration of the current filter
+ * @param	string		$item   : The current item
+ * @return	string	$item   :	Returns the wrapped item
+ *
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  private function replace_itemTitle( $conf_array, $item )
+  {
+    static $firstLoop = true;
+
+      // Get TS value
+    $title = null;
+//    if( empty( $conf_array['wrap.']['item.']['style'] ) )
+//    {
+//      $style = null;
+//    }
+//    else
+//    {
+//      $style = ' style="' . $conf_array['wrap.']['item.']['style'] . '"';
+//    }
+      // Get TS value
+
+      // Replace the marker
+    $item = str_replace( '###TITLE###', $title, $item );
+
+    if( $firstLoop )
+    {
+      if( $this->pObj->b_drs_devTodo )
+      {
+        $prompt = '###TITLE### is removed. Check the code!';
+        t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+    }
+    $firstLoop = false;
 
       // RETURN content
     return $item;
