@@ -2639,6 +2639,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
         // Render the value
       $value      = '###HITS_BEFORE###' . $value . '###HITS_BEHIND###';
       $value      = str_replace('###VALUE###', $value, $conf_item );
+      $item   = $this->get_htmlItem( $conf_array, $uid, $value );
         // Render the value
 
         // Vars
@@ -2656,7 +2657,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
                           str_repeat
                           (
                             $indent . '<ul id="' . $html_id . '_ul_' . $curr_uid . '">' . PHP_EOL .
-                            $indent . '  <li id="' . $html_id . '_li_' . $curr_uid . '">', $delta_depth
+                            $indent . '  <li id="' . $html_id . '_li_' . $curr_uid . '">',
+                            $delta_depth
                           );
           $last_depth   = $curr_depth;
           break;

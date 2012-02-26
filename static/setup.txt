@@ -1199,7 +1199,7 @@ plugin.tx_browser_pi1 {
             nice_html_spaceLeft = 14
           }
             // [String] Wrap one item
-          item  = <a href="###URL###" ###CLASS### ###STYLE### title="">###VALUE###</a>
+          item  = ###VALUE###
           item {
               // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
             display_without_any_hit = 0
@@ -1235,6 +1235,11 @@ plugin.tx_browser_pi1 {
             }
             wraps {
               item {
+                stdWrap {
+                  wrap = <a href="###URL###" ###CLASS### ###STYLE### title="">###VALUE###</a>
+                }
+              }
+              tree {
                 stdWrap {
                   wrap = <li id="tree_li_###UID###">|</li>
                 }
