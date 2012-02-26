@@ -2496,7 +2496,7 @@ var_dump( __LINE__, $iterator );
     foreach( $iterator as $key => $value )
     {
         // CONTINUE $key is the uid. Save the uid.
-      if( $key == $this->uidField )
+      if( $key == 'uid' )
       {
         $curr_uid = $value;
         continue;
@@ -2504,7 +2504,7 @@ var_dump( __LINE__, $iterator );
         // CONTINUE $key is the uid. Save the uid.
 
         // ERROR/CONTINUE $key isn't value
-      if( $key != $this->valueField )
+      if( $key != 'value' )
       {
         echo 'ERROR: key != value.' . PHP_EOL . __METHOD__ . ' (Line: ' . __LINE__ . ')' . PHP_EOL;
         continue;
