@@ -500,22 +500,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
         // stdWrap the current value
 
       $htmlItem = $this->maxitemsPerHtmlRowBegin( $htmlItem );
-      if( $this->curr_htmlItem_number === 0 )
-      {
-        $htmlItem = $htmlItem . PHP_EOL . $str_space_left . $arr_row_wrap[0];
-        $htmlItem = str_replace('###EVEN_ODD###', 'even', $htmlItem);
-      }
-      if ( ! ( $maxItemsPerRow === false ) )
-      {
-        if ( $this->curr_htmlItem_number >= $maxItemsPerRow )
-        {
-          $htmlItem       = $htmlItem . $arr_row_wrap[1] . PHP_EOL . $str_space_left . $arr_row_wrap[0];
-          $int_count_row  = $int_count_row +1;
-          $str_evenOdd    = $int_count_row % 2 ? 'odd' : 'even';
-          $htmlItem       = str_replace( '###EVEN_ODD###', $str_evenOdd, $htmlItem );
-          $this->curr_htmlItem_number = 0;
-        }
-      }
 
         // Item class
       if($conf_name == 'CATEGORY_MENU')
