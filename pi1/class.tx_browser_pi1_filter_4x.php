@@ -2657,8 +2657,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
           $startTag     = PHP_EOL .
                           str_repeat
                           (
-                            $indent . '<ul id="' . $html_id . '_ul_' . $curr_uid . '">' . PHP_EOL .
-                            $indent . '  <li id="' . $html_id . '_li_' . $curr_uid . '">',
+                            $this->htmlSpaceLeft . $indent . '<ul id="' . $html_id . '_ul_' . $curr_uid . '">' . PHP_EOL .
+                            $this->htmlSpaceLeft . $indent . '  <li id="' . $html_id . '_li_' . $curr_uid . '">',
                             $delta_depth
                           );
           $last_depth   = $curr_depth;
@@ -2670,8 +2670,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
           $startTag     = '</li>' . PHP_EOL .
                           str_repeat
                           (
-                            $indent .' </ul>' . PHP_EOL .
-                            $indent . '</li>', $delta_depth
+                            $this->htmlSpaceLeft . $indent .' </ul>' . PHP_EOL .
+                            $this->htmlSpaceLeft . $indent . '</li>', $delta_depth
                           ) .
                           '<li id="' . $html_id . '_li_' . $curr_uid . '">';
           $last_depth   = $curr_depth;
@@ -2679,7 +2679,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
             // Stop of sublevel
         default:
           $startTag = '</li>' . PHP_EOL .
-                      $indent . '<li id="' . $html_id . '_li_' . $curr_uid . '">';
+                      $this->htmlSpaceLeft . $indent . '<li id="' . $html_id . '_li_' . $curr_uid . '">';
           break;
       }
         // Render the start tag
@@ -2697,17 +2697,18 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     $endTag =                 '</li>' .
                               str_repeat
                               (
-                                '</ul>' . PHP_EOL . $indent . '</li>',
+                                '</ul>' . PHP_EOL .
+                                $this->htmlSpaceLeft . $indent . '</li>',
                                 $curr_depth
                               ) .
                               PHP_EOL .
-                              $indent . '</ul>' . PHP_EOL;
+                              $this->htmlSpaceLeft . $indent . '</ul>' . PHP_EOL;
     $str_result =             $str_result . $endTag . PHP_EOL .
-                              '</div>';
+                              $this->htmlSpaceLeft . '</div>';
     $arr_result[$curr_uid] =  $arr_result[$curr_uid] . $endTag . '</div>';
       // Render the end tag of the last item
 
-    $arr_result[$first_item_uid] =  '<div id="' . $html_id . '">' . $arr_result[$first_item_uid];
+    $arr_result[$first_item_uid] = $this->htmlSpaceLeft . '<div id="' . $html_id . '">' . $arr_result[$first_item_uid];
 
       // RETURN the result
     return $arr_result;
