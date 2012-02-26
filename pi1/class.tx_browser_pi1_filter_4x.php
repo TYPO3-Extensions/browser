@@ -2298,6 +2298,316 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
  /***********************************************
   *
+  * Tree view
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * get_treeOrdered( ): Get the elements ordered to the needs of a tree.
+ *
+ * @param	array     $arr_rows         : Result of the SQL query
+ * @param	string		$tableField       : Current table.field
+ * @return	array		$arr_tableFields  : Array with the values. Values are wrapped with ul- and li-tags.
+ * @internal        #32223, 120119, dwildt+
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_treeOrdered( $arr_rows, $tableField )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+    $conf_array     = $conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // Parent uid of the root records: 0 of course
+    $uid_parent = 0;
+      // Current level of the treeview: 0 of course
+    $level      = 0;
+      // Needed for set_treeOneDim( )
+    $this->arr_rowsTablefield = $arr_rows[$tableField];
+
+
+
+      //////////////////////////////////////////////////////
+      //
+      // Order the values
+
+      // Get the values for ordering
+    foreach ( $this->arr_rowsTablefield as $key => $row )
+    {
+      $arr_value[$key] = $row['value'];
+    }
+      // Get the values for ordering
+
+      // Set DESC or ASC
+    if ( strtolower( $conf_array['order.']['orderFlag'] ) == 'desc' )
+    {
+      $order = SORT_DESC;
+    }
+    if ( strtolower( $arr_ts['order.']['orderFlag'] ) != 'desc' )
+    {
+      $order = SORT_ASC;
+    }
+      // Set DESC or ASC
+
+      // Order the rows
+    array_multisort($arr_value, $order, $this->arr_rowsTablefield);
+      // Order the values
+
+
+    unset( $this->tmpOneDim );
+      // Set rows of the current tablefield to a one dimensional array
+    $this->set_treeOneDim( $tableField, $uid_parent );
+      // Get the renderd tree. Each element of the returned array contains HTML tags.
+    $arr_tableFields = $this->get_treeRendered( $conf_array );
+    unset( $this->tmpOneDim );
+
+
+      // RETURN the ordered and rendered rows of the current tablefield
+    return $arr_tableFields;
+  }
+
+
+
+
+
+
+  /**
+ * set_treeOneDim:  Recursive method. It generates a one dimensional array.
+ *                  Each array has upto three elements:
+ *                  * [obligate] uid   : uid of the record
+ *                  * [obligate] value : value of the record
+ *                  * [optional] array : if the record has children ...
+ *                                It is 0 while starting.
+ *
+ * @param	string		$tableField : Current table.field.
+ * @param	integer		$uid_parent : Parent uid of the current record - for recursive calls.
+ * @return	void		Result will be allocated to the global $tmpOneDim
+ * @internal        #32223, 120119, dwildt+
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function set_treeOneDim( $tableField, $uid_parent )
+  {
+    static $tsPath = null;
+
+      // LOOP rows
+    foreach( $this->arr_rowsTablefield as $key => $row )
+    {
+        // CONTINUE current row isn't row with current $uid_parent
+      if( $row['treeParentField'] != $uid_parent )
+      {
+        continue;
+      }
+        // CONTINUE current row isn't row with current $uid_parent
+
+      $lastPath = $tsPath;
+      $tsPath   = $tsPath . $key . '.' ;
+      $this->tmpOneDim[$tsPath . 'uid']    = $row['uid'];
+      $this->tmpOneDim[$tsPath . 'value']  = $row['value'];
+
+      $this->set_treeOneDim( $tableField, $row['uid'] );
+      $tsPath   = $lastPath;
+    }
+      // LOOP rows
+  }
+
+
+
+
+
+
+  /**
+ * get_treeRendered:  Method converts a one dimensional array to a multidimensional array.
+ *                    It wraps every element of the array with ul and or li tags.
+ *                    Wrapping depends in position and level of the element in the tree.
+ *
+ * @param	array		$arr_ts     : configuration of the current table.field.
+ * @return	array		$arr_result : Array with the rendered elements
+ * @internal        #32223, 120119, dwildt+
+ * @version 3.9.6
+ * @since   3.9.6
+ */
+  private function get_treeRendered( $arr_ts )
+  {
+      // Render uid and value of the first item
+    $first_item_uid   = $arr_ts['first_item.']['option_value'];
+    $tsValue          = $arr_ts['first_item.']['value_stdWrap.']['value'];
+    $tsConf           = $arr_ts['first_item.']['value_stdWrap.'];
+    $first_item_value = $this->pObj->local_cObj->stdWrap( $tsValue, $tsConf );
+      // Render uid and value of the first item
+
+      // Add first item
+    $tmpOneDim    = array( 'uid'   => $first_item_uid   ) +
+                    array( 'value' => $first_item_value ) +
+                    $this->tmpOneDim;
+      // Add first item
+
+      // Move one dimensional array to an iterator
+    $tmpArray     = $this->pObj->objTyposcript->oneDim_to_tree( $tmpOneDim );
+    $rcrsArrIter  = new RecursiveArrayIterator( $tmpArray );
+    $iterator     = new RecursiveIteratorIterator( $rcrsArrIter );
+      // Move one dimensional array to an iterator
+
+      // Code for an item (an a-tag usually)
+    $conf_item    = $arr_ts['wrap.']['item'];
+
+      // HTML id
+    $cObj_name  = $arr_ts['treeview.']['html_id'];
+    $cObj_conf  = $arr_ts['treeview.']['html_id.'];
+    $html_id    = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+
+
+
+      //////////////////////////////////////////////////////
+      //
+      // Loop values
+
+      // Initial depth
+    $last_depth = -1;
+
+      // LOOP
+    foreach ($iterator as $key => $value)
+    {
+        // CONTINUE $key is the uid. Save the uid.
+      if( $key == 'uid' )
+      {
+        $curr_uid = $value;
+        continue;
+      }
+        // CONTINUE $key is the uid. Save the uid.
+
+        // ERROR/CONTINUE $key isn't value
+      if( $key != 'value' )
+      {
+        echo 'ERROR: key != value.' . PHP_EOL . __METHOD__ . ' (Line: ' . __LINE__ . ')' . PHP_EOL;
+        continue;
+      }
+        // ERROR/CONTINUE $key isn't value
+
+        // Render the value
+      $value      = '###HITS_BEFORE###' . $value . '###HITS_BEHIND###';
+      $value      = str_replace('###VALUE###', $value, $conf_item );
+        // Render the value
+
+        // Vars
+      $curr_depth = $iterator->getDepth( );
+      $indent     = str_repeat( '  ', ( $iterator->getDepth( ) + 1 ) );
+        // Vars
+
+        // Render the start tag
+      switch( true )
+      {
+        case( $curr_depth > $last_depth ):
+            // Start of sublevel
+          $delta_depth  = $curr_depth - $last_depth;
+          $startTag     = PHP_EOL .
+                          str_repeat
+                          (
+                            $indent . '<ul id="' . $html_id . '_ul_' . $curr_uid . '">' . PHP_EOL .
+                            $indent . '  <li id="' . $html_id . '_li_' . $curr_uid . '">', $delta_depth
+                          );
+          $last_depth   = $curr_depth;
+          break;
+            // Start of sublevel
+        case( $curr_depth < $last_depth ):
+            // Stop of sublevel
+          $delta_depth  = $last_depth - $curr_depth;
+          $startTag     = '</li>' . PHP_EOL .
+                          str_repeat
+                          (
+                            $indent .' </ul>' . PHP_EOL .
+                            $indent . '</li>', $delta_depth
+                          ) .
+                          '<li id="' . $html_id . '_li_' . $curr_uid . '">';
+          $last_depth   = $curr_depth;
+          break;
+            // Stop of sublevel
+        default:
+          $startTag = '</li>' . PHP_EOL .
+                      $indent . '<li id="' . $html_id . '_li_' . $curr_uid . '">';
+          break;
+      }
+        // Render the start tag
+
+        // String result for printing
+      $str_result =  $str_result . $startTag . $curr_uid . ': ' . $value;
+
+        // Result array
+      $arr_result[$curr_uid] = $startTag . $value;
+    }
+      // LOOP
+      // Loop values
+
+      // Render the end tag of the last item
+    $endTag =                 '</li>' .
+                              str_repeat
+                              (
+                                '</ul>' . PHP_EOL . $indent . '</li>',
+                                $curr_depth
+                              ) .
+                              PHP_EOL .
+                              $indent . '</ul>' . PHP_EOL;
+    $str_result =             $str_result . $endTag . PHP_EOL .
+                              '</div>';
+    $arr_result[$curr_uid] =  $arr_result[$curr_uid] . $endTag . '</div>';
+      // Render the end tag of the last item
+
+    $arr_result[$first_item_uid] =  '<div id="' . $html_id . '">' . $arr_result[$first_item_uid];
+      // Development
+//    $pos = strpos('79.204.110.26', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__ . ' (' . __LINE__ . ')', $str_result );
+//    }
+      // Development
+
+      // Development
+//    $pos = strpos('79.204.110.26', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
+//    if( ! ( $pos === false ) )
+//    {
+//      var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
+//      echo "<pre>";
+//      foreach ($iterator as $key => $value)
+//      {
+//        $indent = str_repeat( '  ', ( $iterator->getDepth( ) + 1 ) );
+//        if( $key == 'uid')
+//        {
+//          $curr_uid = $value;
+//          continue;
+//        }
+//        echo $iterator->getDepth() . $indent . $curr_uid . ': ' . $value . "\n";
+//      }
+//      echo "</pre>";
+//    }
+      // Development
+
+      // RETURN the result
+    return $arr_result;
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
   * HTML - max items per row
   *
   **********************************************/
@@ -2617,7 +2927,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
-var_dump( __LINE__, $this->curr_tableField, $uid, $conf_array['first_item.']['option_value'], $conf_array['first_item.']['display_hits'] );
       // Set display hits flag
       // SWITCH first item
     switch( true )

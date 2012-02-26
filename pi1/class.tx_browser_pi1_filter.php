@@ -2659,6 +2659,8 @@ class tx_browser_pi1_filter {
  */
   private function get_treeOrdered( $arr_rows, $tableField )
   {
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_rows );
+
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
     $view = $this->pObj->view;
@@ -2714,6 +2716,7 @@ class tx_browser_pi1_filter {
 
 
       // RETURN the ordered and rendered rows of the current tablefield
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_tableFields );
     return $arr_tableFields;
   }
 
