@@ -2716,7 +2716,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_rows );
 
 
       // RETURN the ordered and rendered rows of the current tablefield
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_tableFields );
     return $arr_tableFields;
   }
 

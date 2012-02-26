@@ -481,7 +481,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     {
       case( true ):
         $arr_return = $this->get_htmlItemsTree( );
-var_dump( __LINE__, $arr_return );
+var_dump( __LINE__, implode( null, $arr_return ) );
         break;
       case( false ):
       default:
