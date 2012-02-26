@@ -832,7 +832,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
   private function replace_itemStyle( $conf_array, $item )
   {
       // Get TS value
-    if( empty( $conf_array['wrap.']['item.']['class'] ) )
+    if( empty( $conf_array['wrap.']['item.']['style'] ) )
     {
       $style = null;
     }
@@ -2590,7 +2590,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       // Move one dimensional array to an iterator
 
       // Code for an item (an a-tag usually)
-    $conf_item    = $conf_array['wrap.']['item'];
+//    $conf_item    = $conf_array['wrap.']['item'];
 
       // HTML id
     $cObj_name  = $conf_array['treeview.']['html_id'];
@@ -2640,7 +2640,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
         // Render the value
 //      $value      = '###HITS_BEFORE###' . $value . '###HITS_BEHIND###';
 //      $value      = str_replace('###VALUE###', $value, $conf_item );
-      $item   = $this->get_htmlItem( $conf_array, $uid, $value );
+      $item = $this->get_htmlItem( $conf_array, $uid, $value );
+var_dump( __LINE__, $value, $item );
         // Render the value
 
         // Vars
