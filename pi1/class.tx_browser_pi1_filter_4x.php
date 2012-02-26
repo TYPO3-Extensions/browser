@@ -494,11 +494,22 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     {
       $key    = $this->sql_filterFields[$table]['value'];
       $value  = $row[$key];
+
+        // Prepend or append hits
+      $htmlItem  = $this->set_hit( $value, $row );
+
         // stdWrap the current value
       $stdWrap   = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
-      $htmlItem  = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
+      $htmlItem  = $this->pObj->local_cObj->stdWrap( $htmlItem, $stdWrap );
         // stdWrap the current value
 
+        // DRS :TODO:
+      if( $this->pObj->b_drs_devTodo )
+      {
+        $prompt = 'Check maxItemsPerRow!';
+        t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // DRS :TODO:
       $htmlItem = $this->maxitemsPerHtmlRowBegin( $htmlItem );
 
         // Item class
@@ -2488,6 +2499,66 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
     $this->htmlSpaceLeft = str_repeat(' ', $int_space_left);
 
     return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * set_hit( ): Set class var nicePiVar. Result depends on HTML multiple property.
+ *
+ * @return	void
+ *
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  private function set_hit( $value, $row )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // RETURN hit shouldn't displayed
+    if( ! $conf_array['wrap.']['item.']['display_hits'] )
+    {
+      return $value;
+    }
+      // RETURN hit shouldn't displayed
+
+      // Get the label for the hit field
+    $hitField = $this->sql_filterFields[$table]['count'];
+      // Get the hit
+    $hit      = $row[$hitField];
+
+      // stdWrap the hit
+    $stdWrap  = $conf_array['wrap.']['item.']['display_hits.']['stdWrap.'];
+    $hit      = $this->pObj->objWrapper->general_stdWrap( $hit, $stdWrap );
+      // stdWrap the hit
+
+      // Get behind flag
+    $bool_behindItem  = $arr_ts['wrap.']['item.']['display_hits.']['behindItem'];
+
+      // SWITCH behind flag
+    switch( $bool_behindItem )
+    {
+      case( true ):
+        $value = $value . $hit;
+        break;
+      default:
+        $value = $hit . $value;
+        break;
+    }
+      // SWITCH behind flag
+
+    return $value;
   }
 
 
