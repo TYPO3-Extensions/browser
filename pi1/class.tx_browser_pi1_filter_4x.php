@@ -2422,7 +2422,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       $tsPath   = $tsPath . $key . '.' ;
       $this->tmpOneDim[$tsPath . $this->uidField]   = $row[$this->uidField];
       $this->tmpOneDim[$tsPath . $this->valueField] = $row[$this->valueField];
-
+var_dump( __LINE__, $this->tmpOneDim );
       $this->set_treeOneDim( $row[$this->uidField] );
       $tsPath   = $lastPath;
     }
@@ -2491,7 +2491,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     $last_depth = -1;
 
       // LOOP
-    foreach ($iterator as $key => $value)
+    foreach( $iterator as $key => $value )
     {
         // CONTINUE $key is the uid. Save the uid.
       if( $key == $this->uidField )
