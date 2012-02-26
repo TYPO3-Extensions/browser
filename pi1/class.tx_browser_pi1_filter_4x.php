@@ -2617,6 +2617,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
+var_dump( __LINE__, $this->curr_tableField, $uid, $conf_array['first_item.']['option_value'], $conf_array['first_item.']['display_hits'] );
       // Set display hits flag
       // SWITCH first item
     switch( true )
