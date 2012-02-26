@@ -487,6 +487,12 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
 
     // :TODO: Area?
 
+    if( in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
+    {
+        // #32223, 120119, dwildt+
+      var_dump( __LINE__, $this->get_treeOrdered( ) );
+    }
+
       // Add the first item to the rows
     $this->set_firstItem( );
 
@@ -2313,14 +2319,12 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 /**
  * get_treeOrdered( ): Get the elements ordered to the needs of a tree.
  *
- * @param	array     $arr_rows         : Result of the SQL query
- * @param	string		$tableField       : Current table.field
  * @return	array		$arr_tableFields  : Array with the values. Values are wrapped with ul- and li-tags.
  * @internal        #32223, 120119, dwildt+
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function get_treeOrdered( $arr_rows, $tableField )
+  private function get_treeOrdered( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -2329,16 +2333,18 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
-    $conf_array     = $conf_view['filter.'][$table . '.'][$field . '.'];
-
       // Parent uid of the root records: 0 of course
     $uid_parent = 0;
       // Current level of the treeview: 0 of course
     $level      = 0;
       // Needed for set_treeOneDim( )
-    $this->arr_rowsTablefield = $arr_rows[$tableField];
+    $this->arr_rowsTablefield = $this->rows;
 
 
+      // Get the labels for the fields uid, value and treeParentField
+    $this->uidField         = $this->sql_filterFields[$this->curr_tableField]['uid'];
+    $this->valueField       = $this->sql_filterFields[$this->curr_tableField]['value'];
+    $this->treeParentField  = $this->sql_filterFields[$this->curr_tableField]['treeParentField'];
 
       //////////////////////////////////////////////////////
       //
@@ -2347,7 +2353,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       // Get the values for ordering
     foreach ( $this->arr_rowsTablefield as $key => $row )
     {
-      $arr_value[$key] = $row['value'];
+      $arr_value[$key] = $row[$this->valueField];
     }
       // Get the values for ordering
 
@@ -2356,7 +2362,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     {
       $order = SORT_DESC;
     }
-    if ( strtolower( $arr_ts['order.']['orderFlag'] ) != 'desc' )
+    if ( strtolower( $conf_array['order.']['orderFlag'] ) != 'desc' )
     {
       $order = SORT_ASC;
     }
@@ -2369,9 +2375,9 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
     unset( $this->tmpOneDim );
       // Set rows of the current tablefield to a one dimensional array
-    $this->set_treeOneDim( $tableField, $uid_parent );
+    $this->set_treeOneDim( $uid_parent );
       // Get the renderd tree. Each element of the returned array contains HTML tags.
-    $arr_tableFields = $this->get_treeRendered( $conf_array );
+    $arr_tableFields = $this->get_treeRendered( );
     unset( $this->tmpOneDim );
 
 
@@ -2392,14 +2398,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
  *                  * [optional] array : if the record has children ...
  *                                It is 0 while starting.
  *
- * @param	string		$tableField : Current table.field.
  * @param	integer		$uid_parent : Parent uid of the current record - for recursive calls.
  * @return	void		Result will be allocated to the global $tmpOneDim
  * @internal        #32223, 120119, dwildt+
  * @version 3.9.6
  * @since   3.9.6
  */
-  private function set_treeOneDim( $tableField, $uid_parent )
+  private function set_treeOneDim( $uid_parent )
   {
     static $tsPath = null;
 
@@ -2407,7 +2412,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     foreach( $this->arr_rowsTablefield as $key => $row )
     {
         // CONTINUE current row isn't row with current $uid_parent
-      if( $row['treeParentField'] != $uid_parent )
+      if( $row[$this->treeParentField] != $uid_parent )
       {
         continue;
       }
@@ -2415,10 +2420,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
       $lastPath = $tsPath;
       $tsPath   = $tsPath . $key . '.' ;
-      $this->tmpOneDim[$tsPath . 'uid']    = $row['uid'];
-      $this->tmpOneDim[$tsPath . 'value']  = $row['value'];
+      $this->tmpOneDim[$tsPath . $this->uidField]   = $row[$this->uidField];
+      $this->tmpOneDim[$tsPath . $this->valueField] = $row[$this->valueField];
 
-      $this->set_treeOneDim( $tableField, $row['uid'] );
+      $this->set_treeOneDim( $row[$this->uidField] );
       $tsPath   = $lastPath;
     }
       // LOOP rows
@@ -2434,24 +2439,31 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
  *                    It wraps every element of the array with ul and or li tags.
  *                    Wrapping depends in position and level of the element in the tree.
  *
- * @param	array		$arr_ts     : configuration of the current table.field.
  * @return	array		$arr_result : Array with the rendered elements
  * @internal        #32223, 120119, dwildt+
  * @version 3.9.6
  * @since   3.9.6
  */
-  private function get_treeRendered( $arr_ts )
+  private function get_treeRendered( )
   {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+
       // Render uid and value of the first item
-    $first_item_uid   = $arr_ts['first_item.']['option_value'];
-    $tsValue          = $arr_ts['first_item.']['value_stdWrap.']['value'];
-    $tsConf           = $arr_ts['first_item.']['value_stdWrap.'];
+    $first_item_uid   = $conf_array['first_item.']['option_value'];
+    $tsValue          = $conf_array['first_item.']['value_stdWrap.']['value'];
+    $tsConf           = $conf_array['first_item.']['value_stdWrap.'];
     $first_item_value = $this->pObj->local_cObj->stdWrap( $tsValue, $tsConf );
       // Render uid and value of the first item
 
       // Add first item
-    $tmpOneDim    = array( 'uid'   => $first_item_uid   ) +
-                    array( 'value' => $first_item_value ) +
+    $tmpOneDim    = array( $this->uidField   => $first_item_uid   ) +
+                    array( $this->valueField => $first_item_value ) +
                     $this->tmpOneDim;
       // Add first item
 
@@ -2462,11 +2474,11 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       // Move one dimensional array to an iterator
 
       // Code for an item (an a-tag usually)
-    $conf_item    = $arr_ts['wrap.']['item'];
+    $conf_item    = $conf_array['wrap.']['item'];
 
       // HTML id
-    $cObj_name  = $arr_ts['treeview.']['html_id'];
-    $cObj_conf  = $arr_ts['treeview.']['html_id.'];
+    $cObj_name  = $conf_array['treeview.']['html_id'];
+    $cObj_conf  = $conf_array['treeview.']['html_id.'];
     $html_id    = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
 
@@ -2482,7 +2494,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     foreach ($iterator as $key => $value)
     {
         // CONTINUE $key is the uid. Save the uid.
-      if( $key == 'uid' )
+      if( $key == $this->uidField )
       {
         $curr_uid = $value;
         continue;
@@ -2490,7 +2502,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
         // CONTINUE $key is the uid. Save the uid.
 
         // ERROR/CONTINUE $key isn't value
-      if( $key != 'value' )
+      if( $key != $this->valueField )
       {
         echo 'ERROR: key != value.' . PHP_EOL . __METHOD__ . ' (Line: ' . __LINE__ . ')' . PHP_EOL;
         continue;
