@@ -481,6 +481,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     {
       case( true ):
         $arr_return = $this->get_htmlItemsTree( );
+var_dump( __LINE__, $arr_return );
         break;
       case( false ):
       default:
@@ -2637,8 +2638,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
         // ERROR/CONTINUE $key isn't value
 
         // Render the value
-      $value      = '###HITS_BEFORE###' . $value . '###HITS_BEHIND###';
-      $value      = str_replace('###VALUE###', $value, $conf_item );
+//      $value      = '###HITS_BEFORE###' . $value . '###HITS_BEHIND###';
+//      $value      = str_replace('###VALUE###', $value, $conf_item );
       $item   = $this->get_htmlItem( $conf_array, $uid, $value );
         // Render the value
 
@@ -2684,10 +2685,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
         // Render the start tag
 
         // String result for printing
-      $str_result =  $str_result . $startTag . $curr_uid . ': ' . $value;
+      $str_result =  $str_result . $startTag . $curr_uid . ': ' . $item;
 
         // Result array
-      $arr_result[$curr_uid] = $startTag . $value;
+      $arr_result[$curr_uid] = $startTag . $item;
     }
       // LOOP
       // Loop values
