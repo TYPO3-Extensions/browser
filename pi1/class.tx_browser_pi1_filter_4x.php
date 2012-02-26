@@ -480,7 +480,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $content );
     {
       case( true ):
         $arr_return = $this->get_htmlItemsTree( );
-        $items      = $arr_return['data']['items'];
+        //$items      = $arr_return['data']['items'];
         break;
       case( false ):
       default:
@@ -494,7 +494,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $content );
       // SWITCH current filter is a tree view
 
       // RETURN html items
-    $arr_return['data']['items'] = $items;
+    //$arr_return['data']['items'] = $items;
     return $arr_return;
   }
 
@@ -2638,9 +2638,11 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $content );
     }
       // DRS - Development Reporting System
 
-    $items      = PHP_EOL . $items . PHP_EOL . $this->htmlSpaceLeft;
-    $itemsWrap  = str_replace('|', $items, $itemsWrap);
-    return $itemsWrap;
+    $items = PHP_EOL . $items . PHP_EOL . $this->htmlSpaceLeft;
+    $items = str_replace('|', $items, $itemsWrap);
+
+    $arr_return['data']['items'] = $items;
+    return $arr_return['data']['items'];
   }
 
 
