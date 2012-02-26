@@ -996,6 +996,9 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       // Get rows from SQL ressource
     $arr_return['data']['rows'] = $this->sql_resToRows( $res );
 
+      // Count all hits
+    $this->sum_hits( $arr_return['data']['rows'] );
+
       // RETURN rows
     return $arr_return;
   }
@@ -2518,9 +2521,14 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
 
 /**
- * set_hits( ): Set class var nicePiVar. Result depends on HTML multiple property.
+ * set_hits( ): Prepend or append the hits to the curren item.
+ *              Hits will handled by stdWrap.
+ *              If hits shouldn't displayed, method returns the given value.
  *
- * @return	void
+ * @param string    $value  : value of the current filter item
+ * @param array     $rows   : current row
+ *
+ * @return	string  $value  : Value with hits or without hits
  *
  * @version 3.9.9
  * @since   3.0.0
@@ -2528,6 +2536,74 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
   private function set_hits( $value, $row )
   {
       // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // RETURN hit shouldn't displayed
+    if( ! $conf_array['wrap.']['item.']['display_hits'] )
+    {
+      return $value;
+    }
+      // RETURN hit shouldn't displayed
+
+      // Get the label for the hit field
+    $hitsField = $this->sql_filterFields[$table]['hits'];
+      // Get the hit
+    $hits = $row[$hitsField];
+
+      // stdWrap the hit
+    $stdWrap  = $conf_array['wrap.']['item.']['display_hits.']['stdWrap.'];
+    $hits     = $this->pObj->objWrapper->general_stdWrap( $hits, $stdWrap );
+      // stdWrap the hit
+
+      // Get behind flag
+    $bool_behindItem  = $conf_array['wrap.']['item.']['display_hits.']['behindItem'];
+
+      // SWITCH behind flag
+    switch( $bool_behindItem )
+    {
+      case( true ):
+        $value = $value . $hits;
+        break;
+      default:
+        $value = $hits . $value;
+        break;
+    }
+      // SWITCH behind flag
+
+    return $value;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * sum_hits( ): Prepend or append the hits to the curren item.
+ *              Hits will handled by stdWrap.
+ *              If hits shouldn't displayed, method returns the given value.
+ *
+ * @param string    $value  : value of the current filter item
+ * @param array     $rows   : current row
+ *
+ * @return	string  $value  : Value with hits or without hits
+ *
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  private function sum_hits( $rows )
+  {
+    var_dump( __LINE__, $rows );
+    return;
+
+    // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get TS filter configuration
