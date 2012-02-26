@@ -2530,9 +2530,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
         case( $field == $uidField ):
           $firstItem[$uid][$uidField] = $uid;
           break;
-        case( $field == $valueField ):
-          $firstItem[$uid][$valueField] = $value;
-          break;
         case( $field == $hitsField ):
           $firstItem[$uid][$hitsField] = $this->hits_sum[$this->curr_tableField];
           break;
@@ -2540,7 +2537,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
           $firstItem[$uid][$field] = null;
           break;
       }
-
     }
     $this->rows = $firstItem + $this->rows;
 var_dump( __LINE__, $this->rows );
