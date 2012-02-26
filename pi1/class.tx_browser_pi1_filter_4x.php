@@ -496,7 +496,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       $value  = $row[$key];
 
         // Prepend or append hits
-      $htmlItem  = $this->set_hit( $value, $row );
+      $htmlItem  = $this->set_hits( $value, $row );
 
         // stdWrap the current value
       $stdWrap   = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
@@ -2510,14 +2510,14 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
 
 
 /**
- * set_hit( ): Set class var nicePiVar. Result depends on HTML multiple property.
+ * set_hits( ): Set class var nicePiVar. Result depends on HTML multiple property.
  *
  * @return	void
  *
  * @version 3.9.9
  * @since   3.0.0
  */
-  private function set_hit( $value, $row )
+  private function set_hits( $value, $row )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -2534,26 +2534,26 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
       // RETURN hit shouldn't displayed
 
       // Get the label for the hit field
-    $hitField = $this->sql_filterFields[$table]['count'];
+    $hitsField = $this->sql_filterFields[$table]['hits'];
       // Get the hit
-    $hit      = $row[$hitField];
+    $hits = $row[$hitsField];
 
       // stdWrap the hit
     $stdWrap  = $conf_array['wrap.']['item.']['display_hits.']['stdWrap.'];
-    $hit      = $this->pObj->objWrapper->general_stdWrap( $hit, $stdWrap );
+    $hits     = $this->pObj->objWrapper->general_stdWrap( $hits, $stdWrap );
       // stdWrap the hit
 
       // Get behind flag
-    $bool_behindItem  = $arr_ts['wrap.']['item.']['display_hits.']['behindItem'];
+    $bool_behindItem  = $conf_array['wrap.']['item.']['display_hits.']['behindItem'];
 
       // SWITCH behind flag
     switch( $bool_behindItem )
     {
       case( true ):
-        $value = $value . $hit;
+        $value = $value . $hits;
         break;
       default:
-        $value = $hit . $value;
+        $value = $hits . $value;
         break;
     }
       // SWITCH behind flag
