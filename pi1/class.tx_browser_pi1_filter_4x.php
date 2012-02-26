@@ -490,7 +490,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     if( in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
     {
         // #32223, 120119, dwildt+
-      var_dump( __LINE__, $this->get_treeOrdered( ) );
+      var_dump( __LINE__, $this->tree_getOrdered( ) );
     }
 
       // Add the first item to the rows
@@ -2317,14 +2317,14 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
 
 /**
- * get_treeOrdered( ): Get the elements ordered to the needs of a tree.
+ * tree_getOrdered( ): Get the elements ordered to the needs of a tree.
  *
  * @return	array		$arr_tableFields  : Array with the values. Values are wrapped with ul- and li-tags.
  * @internal        #32223, 120119, dwildt+
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function get_treeOrdered( )
+  private function tree_getOrdered( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -2337,7 +2337,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     $uid_parent = 0;
       // Current level of the treeview: 0 of course
     $level      = 0;
-      // Needed for set_treeOneDim( )
+      // Needed for tree_setOneDim( )
     $this->arr_rowsTablefield = $this->rows;
 
 
@@ -2375,9 +2375,9 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
     unset( $this->tmpOneDim );
       // Set rows of the current tablefield to a one dimensional array
-    $this->set_treeOneDim( $uid_parent );
+    $this->tree_setOneDim( $uid_parent );
       // Get the renderd tree. Each element of the returned array contains HTML tags.
-    $arr_tableFields = $this->get_treeRendered( );
+    $arr_tableFields = $this->tree_getRendered( );
     unset( $this->tmpOneDim );
 
 
@@ -2401,10 +2401,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
  * @param	integer		$uid_parent : Parent uid of the current record - for recursive calls.
  * @return	void		Result will be allocated to the global $tmpOneDim
  * @internal        #32223, 120119, dwildt+
- * @version 3.9.6
- * @since   3.9.6
+ * @version 3.9.9
+ * @since   3.9.9
  */
-  private function set_treeOneDim( $uid_parent )
+  private function tree_setOneDim( $uid_parent )
   {
     static $tsPath = null;
 
@@ -2422,7 +2422,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       $tsPath   = $tsPath . $key . '.' ;
       $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
       $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
-      $this->set_treeOneDim( $row[$this->uidField] );
+      $this->tree_setOneDim( $row[$this->uidField] );
       $tsPath   = $lastPath;
     }
       // LOOP rows
@@ -2440,10 +2440,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
  *
  * @return	array		$arr_result : Array with the rendered elements
  * @internal        #32223, 120119, dwildt+
- * @version 3.9.6
- * @since   3.9.6
+ * @version 3.9.9
+ * @since   3.9.9
  */
-  private function get_treeRendered( )
+  private function tree_getRendered( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -2461,9 +2461,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       // Render uid and value of the first item
 
       // Add first item
-    $tmpOneDim    = array( 'uid'   => $first_item_uid   ) +
-                    array( 'value' => $first_item_value ) +
-                    $this->tmpOneDim;
+//    $tmpOneDim    = array( 'uid'   => $first_item_uid   ) +
+//                    array( 'value' => $first_item_value ) +
+//                    $this->tmpOneDim;
+    $tmpOneDim    = $this->tmpOneDim;
       // Add first item
 var_dump( __LINE__, $tmpOneDim );
 
