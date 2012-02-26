@@ -2422,7 +2422,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       $tsPath   = $tsPath . $key . '.' ;
       $this->tmpOneDim[$tsPath . $this->uidField]   = $row[$this->uidField];
       $this->tmpOneDim[$tsPath . $this->valueField] = $row[$this->valueField];
-var_dump( __LINE__, $this->tmpOneDim );
       $this->set_treeOneDim( $row[$this->uidField] );
       $tsPath   = $lastPath;
     }
@@ -2466,11 +2465,14 @@ var_dump( __LINE__, $this->tmpOneDim );
                     array( $this->valueField => $first_item_value ) +
                     $this->tmpOneDim;
       // Add first item
+var_dump( __LINE__, $tmpOneDim );
 
       // Move one dimensional array to an iterator
     $tmpArray     = $this->pObj->objTyposcript->oneDim_to_tree( $tmpOneDim );
+var_dump( __LINE__, $tmpArray );
     $rcrsArrIter  = new RecursiveArrayIterator( $tmpArray );
     $iterator     = new RecursiveIteratorIterator( $rcrsArrIter );
+var_dump( __LINE__, $iterator );
       // Move one dimensional array to an iterator
 
       // Code for an item (an a-tag usually)
