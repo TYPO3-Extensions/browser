@@ -112,7 +112,7 @@ class tx_browser_pi1_filter_4x {
     // Variables set by the pObj (by class.tx_browser_pi1.php)
 
 
-    // [Boolena] true: don't localise the current SQL query, false: localise it
+    // [Boolean] true: don't localise the current SQL query, false: localise it
   var $bool_dontLocalise      = null;
     // [Integer] number of the localisation mode
   var $int_localisation_mode  = null;
@@ -123,6 +123,8 @@ class tx_browser_pi1_filter_4x {
 
     // [Array] Rows of the current filter
   var $rows = null;
+    // [Array] Sum of hits per tableField. tableField is the element
+  var $hits_sum = 0;
 
     // [Array] nice piVar array for the current filter / tableField
   var $nicePiVar = null;
@@ -949,12 +951,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     $arr_return = $this->get_rowsAllItems( $rows );
       // 2. step: all filter items, hits will be taken from $rows
 
-    // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo ) {
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
       $prompt = 'Order rows, if it is a tree view.';
       t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
-    // DRS :TODO:
+      // DRS :TODO:
 //    if ( ! in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
 //    {
 //      return $display_without_any_hit;
@@ -998,6 +1001,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
       // Count all hits
     $this->sum_hits( $arr_return['data']['rows'] );
+    var_dump( __LINE__, $arr_return['data']['rows'], $this->hits_sum );
 
       // RETURN rows
     return $arr_return;
@@ -2600,49 +2604,25 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
  */
   private function sum_hits( $rows )
   {
-    var_dump( __LINE__, $rows );
-    return;
 
     // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-      // Get TS filter configuration
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-
-      // RETURN hit shouldn't displayed
-    if( ! $conf_array['wrap.']['item.']['display_hits'] )
-    {
-      return $value;
-    }
-      // RETURN hit shouldn't displayed
-
       // Get the label for the hit field
     $hitsField = $this->sql_filterFields[$table]['hits'];
-      // Get the hit
-    $hits = $row[$hitsField];
 
-      // stdWrap the hit
-    $stdWrap  = $conf_array['wrap.']['item.']['display_hits.']['stdWrap.'];
-    $hits     = $this->pObj->objWrapper->general_stdWrap( $hits, $stdWrap );
-      // stdWrap the hit
+    $sum_hits = 0;
 
-      // Get behind flag
-    $bool_behindItem  = $conf_array['wrap.']['item.']['display_hits.']['behindItem'];
-
-      // SWITCH behind flag
-    switch( $bool_behindItem )
+      // LOOP all rows
+    foreach( ( array ) $rows as $uid => $row )
     {
-      case( true ):
-        $value = $value . $hits;
-        break;
-      default:
-        $value = $hits . $value;
-        break;
+      $sum_hits = $sum_hits + $row[ $hitsField ];
     }
-      // SWITCH behind flag
+      // LOOP all rows
 
-    return $value;
+    $this->hits_sum[$this->curr_tableField] = $sum_hits;
+
+    return;
   }
 
 
