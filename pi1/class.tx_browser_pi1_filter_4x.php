@@ -365,7 +365,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // Render the filter rows
     $this->rows = $rows;
     $arr_return = $this->get_html( );
-    $arr_return['data']['marker'][$markerLabel] = $arr_return['data']['item'];
+    $arr_return['data']['marker'][$markerLabel] = $arr_return['data']['items'];
       // Render the filter rows
 
       // Prompt the expired time to devlog
