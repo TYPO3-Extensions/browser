@@ -124,7 +124,7 @@ class tx_browser_pi1_filter_4x {
     // [Array] Rows of the current filter
   var $rows = null;
     // [Array] Sum of hits per tableField. tableField is the element
-  var $hits_sum = 0;
+  var $hits_sum = array( );
 
     // [Array] nice piVar array for the current filter / tableField
   var $nicePiVar = null;
