@@ -2515,6 +2515,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       // RETURN first item shouldn't displayed
 
       // Get the uid of the first item
+    $uidField   = $this->sql_filterFields[$this->curr_tableField]['uid'];
+    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
+
     $uid = $conf_array['first_item.']['option_value'];
       // Get the value of the first item
     $value = 'dummy';
@@ -2523,14 +2527,14 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     {
       switch( true )
       {
-        case( $field = 'uid' ):
-          $firstItem[$uid]['uid'] = $uid;
+        case( $field = $uidField ):
+          $firstItem[$uid][$uidField] = $uid;
           break;
-        case( $field = 'value' ):
-          $firstItem[$uid]['value'] = $value;
+        case( $field = $valueField ):
+          $firstItem[$uid][$valueField] = $value;
           break;
-        case( $field = 'hits' ):
-          $firstItem[$uid]['hits'] = $this->hits_sum[$this->curr_tableField];
+        case( $field = $hitsField ):
+          $firstItem[$uid][$hitsField] = $this->hits_sum[$this->curr_tableField];
           break;
         default:
           $firstItem[$uid][$field] = null;
