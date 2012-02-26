@@ -2527,13 +2527,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     {
       switch( true )
       {
-        case( $field = $uidField ):
+        case( $field == $uidField ):
           $firstItem[$uid][$uidField] = $uid;
           break;
-        case( $field = $valueField ):
+        case( $field == $valueField ):
           $firstItem[$uid][$valueField] = $value;
           break;
-        case( $field = $hitsField ):
+        case( $field == $hitsField ):
           $firstItem[$uid][$hitsField] = $this->hits_sum[$this->curr_tableField];
           break;
         default:
