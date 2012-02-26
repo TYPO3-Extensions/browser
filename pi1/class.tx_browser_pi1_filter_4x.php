@@ -485,16 +485,15 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
-    // Prepaire row and item counting
-    // Area
-    // Wrap values
-      // Wrap the item
-      // Class
+    // :TODO: Area?
+
+      // Add the first item to the rows
+    $this->set_firstItem( );
 
       // LOOP rows
     foreach( ( array ) $this->rows as $uid => $row )
     {
-      $key    = $this->sql_filterFields[$table]['value'];
+      $key    = $this->sql_filterFields[$this->curr_tableField]['value'];
       $value  = $row[$key];
 
         // stdWrap the current value
@@ -1001,7 +1000,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
       // Count all hits
     $this->sum_hits( $arr_return['data']['rows'] );
-    var_dump( __LINE__, $arr_return['data']['rows'], $this->hits_sum );
 
       // RETURN rows
     return $arr_return;
@@ -1272,7 +1270,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get the field label of the uid
-    $uidField = $this->sql_filterFields[$table]['uid'];
+    $uidField = $this->sql_filterFields[$this->curr_tableField]['uid'];
 
       // LOOP build the rows
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
@@ -1329,7 +1327,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get label of the hits field
-    $hitsField = $this->sql_filterFields[$table]['hits'];
+    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
 
       // LOOP all items
     foreach( ( array ) $rows_wiAllItems as $uid => $row )
@@ -1423,9 +1421,9 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       // select
 
       // Set class var sql_filterFields
-    $this->sql_filterFields[$table]['hits']   = 'hits';
-    $this->sql_filterFields[$table]['uid']    = $table . '.uid';
-    $this->sql_filterFields[$table]['value']  = $this->curr_tableField;
+    $this->sql_filterFields[$this->curr_tableField]['hits']   = 'hits';
+    $this->sql_filterFields[$this->curr_tableField]['uid']    = $table . '.uid';
+    $this->sql_filterFields[$this->curr_tableField]['value']  = $this->curr_tableField;
       // Set class var sql_filterFields
 
       // Add treeview field to select
@@ -1535,8 +1533,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       // addSelect
 
       // Add $languageField and $transOrigPointerField to the class var sql_filterFields
-    $this->sql_filterFields[$table]['languageField']          = $languageField;
-    $this->sql_filterFields[$table]['transOrigPointerField']  = $transOrigPointerField;
+    $this->sql_filterFields[$this->curr_tableField]['languageField']          = $languageField;
+    $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField']  = $transOrigPointerField;
 
       // DRS
     if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
@@ -1602,7 +1600,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       // addSelect
 
       // Add field to the class var sql_filterFields
-    $this->sql_filterFields[$table]['lang_ol'] = $tableField_ol;
+    $this->sql_filterFields[$this->curr_tableField]['lang_ol'] = $tableField_ol;
 
       // DRS
     if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
@@ -1691,7 +1689,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     $addSelect = ", " . $tableTreeParentField . " AS '" . $tableTreeParentField . "'";
 
       // Add $tableTreeParentField to the class var array
-    $this->sql_filterFields[$table]['treeParentField']  = $tableTreeParentField;
+    $this->sql_filterFields[$this->curr_tableField]['treeParentField']  = $tableTreeParentField;
 
       // Add table to arr_tablesWiTreeparentfield
     $this->pObj->objFilter->arr_tablesWiTreeparentfield[] = $table;
@@ -1811,11 +1809,11 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     switch( true )
     {
       case( $arr_order['field'] == 'uid' ):
-        $orderField = $this->sql_filterFields[$table]['uid'];
+        $orderField = $this->sql_filterFields[$this->curr_tableField]['uid'];
         break;
       case( $arr_order['field'] == 'value' ):
       default:
-        $orderField = $this->sql_filterFields[$table]['value'];
+        $orderField = $this->sql_filterFields[$this->curr_tableField]['value'];
         break;
     }
       // Order field
@@ -2086,12 +2084,12 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-    if( ! isset( $this->sql_filterFields[$table]['languageField'] ) )
+    if( ! isset( $this->sql_filterFields[$this->curr_tableField]['languageField'] ) )
     {
       return;
     }
 
-    $languageField  = $this->sql_filterFields[$table]['languageField'];
+    $languageField  = $this->sql_filterFields[$this->curr_tableField]['languageField'];
     $languageId     = $GLOBALS['TSFE']->sys_language_content;
 
       // DRS :TODO:
@@ -2491,6 +2489,69 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
 
 /**
+ * set_firstItem( ):
+ *
+ * @param string    $value  : value of the current filter item
+ * @param array     $row    : current row
+ * @return	string  $value  : Value with hits or without hits
+ *
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  private function set_firstItem( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // RETURN first item shouldn't displayed
+    if( ! $conf_array['first_item'] )
+    {
+      return $value;
+    }
+      // RETURN first item shouldn't displayed
+
+      // Get the uid of the first item
+    $uid = $conf_array['first_item.']['option_value'];
+      // Get the value of the first item
+    $value = 'dummy';
+
+    foreach( $this->sql_filterFields[$this->curr_tableField] as $field )
+    {
+      switch( true )
+      {
+        case( $field = 'uid' ):
+          $firstItem[$uid]['uid'] = $uid;
+          break;
+        case( $field = 'value' ):
+          $firstItem[$uid]['value'] = $value;
+          break;
+        case( $field = 'hits' ):
+          $firstItem[$uid]['hits'] = $this->hits_sum[$this->curr_tableField];
+          break;
+        default:
+          $firstItem[$uid][$field] = null;
+          break;
+      }
+
+    }
+    $this->rows = $firstItem + $this->rows;
+var_dump( __LINE__, $this->rows );
+    return;
+  }
+
+
+
+
+
+
+
+
+
+/**
  * set_htmlSpaceLeft( ): Set the left margin for HTML code. Class var $htmlSpaceLeft.
  *
  * @return	void
@@ -2530,8 +2591,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
  *              If hits shouldn't displayed, method returns the given value.
  *
  * @param string    $value  : value of the current filter item
- * @param array     $rows   : current row
- *
+ * @param array     $row    : current row
  * @return	string  $value  : Value with hits or without hits
  *
  * @version 3.9.9
@@ -2554,7 +2614,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       // RETURN hit shouldn't displayed
 
       // Get the label for the hit field
-    $hitsField = $this->sql_filterFields[$table]['hits'];
+    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
       // Get the hit
     $hits = $row[$hitsField];
 
@@ -2590,41 +2650,38 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
 
 /**
- * sum_hits( ): Prepend or append the hits to the curren item.
- *              Hits will handled by stdWrap.
- *              If hits shouldn't displayed, method returns the given value.
+ * sum_hits( ): Count the hits of the current tableField.
+ *              Store it in the class var $this->hits_sum[tableField]
  *
- * @param string    $value  : value of the current filter item
- * @param array     $rows   : current row
+ * @param string    $rows   : current rows
  *
- * @return	string  $value  : Value with hits or without hits
+ * @return	void
  *
  * @version 3.9.9
  * @since   3.0.0
  */
   private function sum_hits( $rows )
   {
-
-    // Get table and field
+      // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get the label for the hit field
-    $hitsField = $this->sql_filterFields[$table]['hits'];
-var_dump( __LINE__, $hitsField );
+    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
+
+      // Init sum hits
     $sum_hits = 0;
 
       // LOOP all rows
     foreach( ( array ) $rows as $uid => $row )
     {
-var_dump( __LINE__, $row[ $hitsField ] );
+        // Add hits
       $sum_hits = $sum_hits + $row[ $hitsField ];
     }
       // LOOP all rows
 
-
+      // Set class var $this->hits_sum
     $this->hits_sum[$this->curr_tableField] = $sum_hits;
 
-    var_dump( __LINE__, $this->curr_tableField, $sum_hits, $this->hits_sum );
     return;
   }
 
