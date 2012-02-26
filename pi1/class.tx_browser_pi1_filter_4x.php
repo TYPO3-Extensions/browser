@@ -474,6 +474,47 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+    // :TODO: Area?
+
+      // RETURN html items
+      // SWITCH current filter is a tree view
+    switch( in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
+    {
+      case( true ):
+        return $this->get_htmlItemsTree( );
+        break;
+      case( false ):
+      default:
+        return $this->get_htmlItemsList( );
+        break;
+    }
+      // SWITCH current filter is a tree view
+      // RETURN html items
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * get_htmlItemsList( ): Render the given rows. Returns a HTML filter.
+ *
+ * @return	array
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_htmlItemsList( )
+  {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
       // Default return value
     $item                       = null;
     $arr_return['data']['item'] = $item;
@@ -487,11 +528,114 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
 
     // :TODO: Area?
 
-    if( in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
+      // Add the first item to the rows
+    $this->set_firstItem( );
+
+      // LOOP rows
+    foreach( ( array ) $this->rows as $uid => $row )
     {
-        // #32223, 120119, dwildt+
-      var_dump( __LINE__, $this->tree_getOrdered( ) );
+      $key    = $this->sql_filterFields[$this->curr_tableField]['value'];
+      $value  = $row[$key];
+
+        // stdWrap the current value
+        // SWITCH first item
+      switch( true )
+      {
+        case( $uid == $conf_array['first_item.']['option_value'] ):
+          $stdWrap  = $conf_array['first_item.']['value_stdWrap.'];
+          break;
+        default:
+          $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['value.']['stdWrap.'];
+          break;
+      }
+        // SWITCH first item
+      $item = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
+        // stdWrap the current value
+
+        // Prepend or append hits
+      $item = $this->set_hits( $uid, $item, $row );
+
+        // stdWrap the current item
+      $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
+      $item     = $this->pObj->local_cObj->stdWrap( $item, $stdWrap );
+        // stdWrap the current item
+
+        // DRS :TODO:
+      if( $this->pObj->b_drs_devTodo )
+      {
+        $prompt = 'Check maxItemsPerRow!';
+        t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // DRS :TODO:
+      $item = $this->maxitemsPerHtmlRowBegin( $item );
+
+        // Item class
+      if($conf_name == 'CATEGORY_MENU')
+      {
+        $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
+      }
+      $item = $this->replace_itemClass( $conf_array, $item );
+        // Item class
+        // Item style
+      $item = $this->replace_itemStyle( $conf_array, $item );
+        // Item uid
+      $item = $this->replace_itemUid( $conf_array, $uid, $item );
+        // Item URL
+      $item = $this->replace_itemUrl( $conf_array, $uid, $item );
+        // Item selected
+      $item = $this->replace_itemSelected( $conf_array, $uid, $value, $item );
+
+      $this->maxItemsPerHtmlRowIncreaseItemNumber( );
+
+      $items = $items . $this->htmlSpaceLeft . ' ' . $item . PHP_EOL ;
     }
+      // LOOP rows
+
+    $items = $this->maxItemsPerHtmlRowWrap( $items );
+
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    $arr_return['data']['item'] = $item;
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * get_htmlItemsTree( ): Render the given rows. Returns a HTML filter.
+ *
+ * @return	array
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_htmlItemsTree( )
+  {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
+      // Default return value
+    $item                       = null;
+    $arr_return['data']['item'] = $item;
+
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS configuration of the current filter / tableField
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+    // :TODO: Area?
+
+    var_dump( __LINE__, $this->tree_getOrdered( ) );
+    return;
 
       // Add the first item to the rows
     $this->set_firstItem( );
@@ -2461,19 +2605,26 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       // Render uid and value of the first item
 
       // Add first item
-//    $tmpOneDim    = array( 'uid'   => $first_item_uid   ) +
-//                    array( 'value' => $first_item_value ) +
-//                    $this->tmpOneDim;
-    $tmpOneDim    = $this->tmpOneDim;
+      // SWITCH display first item
+    switch( $conf_array['first_item'] )
+    {
+      case( true ):
+        $tmpOneDim  = array( 'uid'   => $first_item_uid   ) +
+                      array( 'value' => $first_item_value ) +
+                      $this->tmpOneDim;
+        break;
+      case( false ):
+      default:
+        $tmpOneDim  = $this->tmpOneDim;
+        break;
+    }
+      // SWITCH display first item
       // Add first item
-var_dump( __LINE__, $tmpOneDim );
 
       // Move one dimensional array to an iterator
     $tmpArray     = $this->pObj->objTyposcript->oneDim_to_tree( $tmpOneDim );
-var_dump( __LINE__, $tmpArray );
     $rcrsArrIter  = new RecursiveArrayIterator( $tmpArray );
     $iterator     = new RecursiveIteratorIterator( $rcrsArrIter );
-var_dump( __LINE__, $iterator );
       // Move one dimensional array to an iterator
 
       // Code for an item (an a-tag usually)
@@ -2491,8 +2642,19 @@ var_dump( __LINE__, $iterator );
       // Loop values
 
       // Initial depth
-    //$last_depth = -1;
-    $last_depth = 0;
+      // SWITCH display first item
+    switch( $conf_array['first_item'] )
+    {
+      case( true ):
+        $last_depth = -1;
+        break;
+      case( false ):
+      default:
+        $last_depth = 0;
+        break;
+    }
+      // SWITCH display first item
+      // Initial depth
 
       // LOOP
     foreach( $iterator as $key => $value )
@@ -2582,33 +2744,6 @@ var_dump( __LINE__, $iterator );
       // Render the end tag of the last item
 
     $arr_result[$first_item_uid] =  '<div id="' . $html_id . '">' . $arr_result[$first_item_uid];
-      // Development
-//    $pos = strpos('79.204.110.26', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if( ! ( $pos === false ) )
-//    {
-//      var_dump(__METHOD__ . ' (' . __LINE__ . ')', $str_result );
-//    }
-      // Development
-
-      // Development
-//    $pos = strpos('79.204.110.26', t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if( ! ( $pos === false ) )
-//    {
-//      var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
-//      echo "<pre>";
-//      foreach ($iterator as $key => $value)
-//      {
-//        $indent = str_repeat( '  ', ( $iterator->getDepth( ) + 1 ) );
-//        if( $key == 'uid')
-//        {
-//          $curr_uid = $value;
-//          continue;
-//        }
-//        echo $iterator->getDepth() . $indent . $curr_uid . ': ' . $value . "\n";
-//      }
-//      echo "</pre>";
-//    }
-      // Development
 
       // RETURN the result
     return $arr_result;
