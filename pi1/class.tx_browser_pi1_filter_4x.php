@@ -532,8 +532,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // LOOP rows
     foreach( ( array ) $this->rows as $uid => $row )
     {
-//      $key    = $this->sql_filterFields[$this->curr_tableField]['value'];
-//      $value  = $row[$key];
+      $key    = $this->sql_filterFields[$this->curr_tableField]['value'];
+      $value  = $row[$key];
 //
 //        // stdWrap the current value
 //        // SWITCH first item
