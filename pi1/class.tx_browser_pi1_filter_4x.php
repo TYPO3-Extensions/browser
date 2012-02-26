@@ -972,7 +972,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
       // RETURN no marker
     $pos = strpos( $item, '###URL###' );
-    if( ! ( $pos === false ) )
+    if( $pos === false )
     {
       return $item;
     }
