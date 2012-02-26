@@ -723,7 +723,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
     $item = str_replace( '###CLASS###', $class, $item );
 
       // Workaround: remove ###ONCHANGE###
-    $item = str_replace( 'class=" ###ONCHANGE###"', null, $item );
+    $item = str_replace( ' class=" ###ONCHANGE###"', null, $item );
     if( $firstLoop )
     {
       if( $this->pObj->b_drs_devTodo )
