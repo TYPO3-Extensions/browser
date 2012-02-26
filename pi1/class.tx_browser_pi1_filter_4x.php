@@ -363,7 +363,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // Render the filter rows
     $this->rows = $rows;
     $arr_return = $this->get_html( );
-    $arr_return['data']['marker'][$markerLabel] = $arr_return['data']['html'];
+    $arr_return['data']['marker'][$markerLabel] = $arr_return['data']['item'];
       // Render the filter rows
 
       // Prompt the expired time to devlog
@@ -406,7 +406,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
       // Default return value
-    $arr_return['data']['html'] = null;
+    $arr_return['data']['item'] = null;
 
       // RETURN rows are empty
     if( empty ( $this->rows) )
@@ -473,8 +473,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
       // Default return value
-    $htmlItem                   = null;
-    $arr_return['data']['html'] = $htmlItem;
+    $item                       = null;
+    $arr_return['data']['item'] = $item;
 
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -495,13 +495,21 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       $key    = $this->sql_filterFields[$table]['value'];
       $value  = $row[$key];
 
-        // Prepend or append hits
-      $htmlItem  = $this->set_hits( $value, $row );
+        // stdWrap the current value
+      $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['value.']['stdWrap.'];
+      $item     = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
+        // stdWrap the current value
 
-        // stdWrap the current value
-      $stdWrap   = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
-      $htmlItem  = $this->pObj->local_cObj->stdWrap( $htmlItem, $stdWrap );
-        // stdWrap the current value
+        // Prepend or append hits
+      $item = $this->set_hits( $item, $row );
+
+        // Prepend or append hits
+      $item = $this->set_hits( $value, $row );
+
+        // stdWrap the current item
+      $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
+      $item     = $this->pObj->local_cObj->stdWrap( $item, $stdWrap );
+        // stdWrap the current item
 
         // DRS :TODO:
       if( $this->pObj->b_drs_devTodo )
@@ -510,37 +518,37 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
         t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
       }
         // DRS :TODO:
-      $htmlItem = $this->maxitemsPerHtmlRowBegin( $htmlItem );
+      $item = $this->maxitemsPerHtmlRowBegin( $item );
 
         // Item class
       if($conf_name == 'CATEGORY_MENU')
       {
         $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
       }
-      $htmlItem = $this->replace_itemClass( $conf_array, $htmlItem );
+      $item = $this->replace_itemClass( $conf_array, $item );
         // Item class
         // Item style
-      $htmlItem = $this->replace_itemStyle( $conf_array, $htmlItem );
+      $item = $this->replace_itemStyle( $conf_array, $item );
         // Item uid
-      $htmlItem = $this->replace_itemUid( $conf_array, $uid, $htmlItem );
+      $item = $this->replace_itemUid( $conf_array, $uid, $item );
         // Item URL
-      $htmlItem = $this->replace_itemUrl( $conf_array, $uid, $htmlItem );
+      $item = $this->replace_itemUrl( $conf_array, $uid, $item );
         // Item selected
-      $htmlItem = $this->replace_itemSelected( $conf_array, $uid, $value, $htmlItem );
+      $item = $this->replace_itemSelected( $conf_array, $uid, $value, $item );
 
       $this->maxItemsPerHtmlRowIncreaseItemNumber( );
 
-      $htmlItems = $htmlItems . $this->htmlSpaceLeft . ' ' . $htmlItem . PHP_EOL ;
+      $items = $items . $this->htmlSpaceLeft . ' ' . $item . PHP_EOL ;
     }
       // LOOP rows
 
-    $htmlItems = $this->maxItemsPerHtmlRowWrap( $htmlItems );
+    $items = $this->maxItemsPerHtmlRowWrap( $items );
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-    $arr_return['data']['html'] = $htmlItem;
+    $arr_return['data']['item'] = $item;
     return $arr_return;
   }
 
@@ -570,13 +578,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
  * replace_itemClass( ): Replaces the marker ###CLASS### with the value from TS
  *
  * @param	array     $conf_array : The TS configuration of the current filter
- * @param	string		$htmlItem   : The current item
- * @return	string	$htmlItem   :	Returns the wrapped item
+ * @param	string		$item   : The current item
+ * @return	string	$item   :	Returns the wrapped item
  *
  * @version 3.9.9
  * @since   3.0.0
  */
-  private function replace_itemClass( $conf_array, $htmlItem )
+  private function replace_itemClass( $conf_array, $item )
   {
 
       // Get TS value
@@ -591,10 +599,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
       // Get TS value
 
       // Replace the marker
-    $htmlItem = str_replace( '###CLASS###', $class, $htmlItem );
+    $item = str_replace( '###CLASS###', $class, $item );
 
       // RETURN content
-    return $htmlItem;
+    return $item;
   }
 
 
@@ -611,13 +619,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
  * @param	array     $conf_array : The TS configuration of the current filter
  * @param	integer		$uid        : The uid of the current item
  * @param	string		$value      : The value of the current item
- * @param	string		$htmlItem   : The current item
- * @return	string	$htmlItem   :	Returns the wrapped item
+ * @param	string		$item   : The current item
+ * @return	string	$item   :	Returns the wrapped item
  *
  * @version 3.9.9
  * @since   3.0.0
  */
-  private function replace_itemSelected( $conf_array, $uid, $value, $htmlItem )
+  private function replace_itemSelected( $conf_array, $uid, $value, $item )
   {
       //////////////////////////////////////////////////////////
       //
@@ -677,10 +685,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
       // SWITCH bool_piVar
 
       // Replave marker
-    $htmlItem = str_replace( '###ITEM_SELECTED###', $conf_selected, $htmlItem );
+    $item = str_replace( '###ITEM_SELECTED###', $conf_selected, $item );
 
       // RETURN content
-    return $htmlItem;
+    return $item;
   }
 
 
@@ -695,13 +703,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
  * replace_itemStyle( ): Replaces the marker ###STYLE### with the value from TS
  *
  * @param	array     $conf_array : The TS configuration of the current filter
- * @param	string		$htmlItem   : The current item
- * @return	string	$htmlItem   :	Returns the wrapped item
+ * @param	string		$item   : The current item
+ * @return	string	$item   :	Returns the wrapped item
  *
  * @version 3.9.9
  * @since   3.0.0
  */
-  private function replace_itemStyle( $conf_array, $htmlItem )
+  private function replace_itemStyle( $conf_array, $item )
   {
       // Get TS value
     if( empty( $conf_array['wrap.']['item.']['class'] ) )
@@ -715,10 +723,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
       // Get TS value
 
       // Replace the marker
-    $htmlItem = str_replace( '###STYLE###', $style, $htmlItem );
+    $item = str_replace( '###STYLE###', $style, $item );
 
       // RETURN content
-    return $htmlItem;
+    return $item;
   }
 
 
@@ -734,19 +742,19 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
  *
  * @param	array     $conf_array : The TS configuration of the current filter
  * @param	string		$uid        : The uid of the current item
- * @param	string		$htmlItem   : The current item
- * @return	string	$htmlItem   :	Returns the wrapped item
+ * @param	string		$item   : The current item
+ * @return	string	$item   :	Returns the wrapped item
  *
  * @version 3.9.9
  * @since   3.0.0
  */
-  private function replace_itemUid( $conf_array, $uid, $htmlItem )
+  private function replace_itemUid( $conf_array, $uid, $item )
   {
       // Replace the marker
-    $htmlItem = str_replace( '###UID###', $uid, $htmlItem );
+    $item = str_replace( '###UID###', $uid, $item );
 
       // RETURN content
-    return $htmlItem;
+    return $item;
   }
 
 
@@ -762,13 +770,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
  *
  * @param	array     $conf_array : The TS configuration of the current filter
  * @param	string		$uid        : The uid of the current item
- * @param	string		$htmlItem   : The current item
- * @return	string	$htmlItem   :	Returns the wrapped item
+ * @param	string		$item   : The current item
+ * @return	string	$item   :	Returns the wrapped item
  *
  * @version 3.9.9
  * @since   3.6.1
  */
-  private function replace_itemUrl( $conf_array, $uid, $htmlItem )
+  private function replace_itemUrl( $conf_array, $uid, $item )
   {
       // Short vars
     $conf_view      = $this->conf_view;
@@ -884,10 +892,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
       // Cleanup piVars and id
 
       // Replace the marker
-    $htmlItem  = str_replace('###URL###', $typolink, $htmlItem);
+    $item  = str_replace('###URL###', $typolink, $item);
 
       // Return the item
-    return $htmlItem;
+    return $item;
   }
 
 
@@ -2364,12 +2372,12 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function maxitemsPerHtmlRowBegin( $htmlItem )
+  private function maxitemsPerHtmlRowBegin( $item )
   {
       // RETURN maxItemsPerHtmlRow is false
     if ( $this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false )
     {
-      return $htmlItem;
+      return $item;
     }
       // RETURN maxItemsPerHtmlRow is false
 
@@ -2377,14 +2385,14 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
     $currItemNumber     = $this->itemsPerHtmlRow['currItemNumber'];
     if ( $currItemNumber >= ( $maxItemsPerHtmlRow - 1 ) )
     {
-      $htmlItem       = $htmlItem . $this->itemsPerHtmlRow['rowEnd'] . PHP_EOL .
+      $item       = $item . $this->itemsPerHtmlRow['rowEnd'] . PHP_EOL .
                         $this->htmlSpaceLeft . $this->itemsPerHtmlRow['rowBegin'];
       $this->itemsPerHtmlRow['currRowNumber']++;
       $str_evenOdd    = $this->itemsPerHtmlRow['currRowNumber'] % 2 ? 'odd' : 'even';
-      $htmlItem       = str_replace( '###EVEN_ODD###', $str_evenOdd, $htmlItem );
+      $item       = str_replace( '###EVEN_ODD###', $str_evenOdd, $item );
     }
     $this->itemsPerHtmlRow['currItemNumber']++;
-    return $htmlItem;
+    return $item;
   }
 
 
@@ -2434,23 +2442,23 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $htmlItems );
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function maxItemsPerHtmlRowWrap( $htmlItems )
+  private function maxItemsPerHtmlRowWrap( $items )
   {
       // RETURN maxItemsPerHtmlRow is false
     if ( $this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false )
     {
-      return $htmlItems;
+      return $items;
     }
       // RETURN maxItemsPerHtmlRow is false
 
-      // Wrap $htmlItems
-    $htmlItems  = $this->itemsPerHtmlRow['rowBegin'] . PHP_EOL .
-                  $htmlItems .
+      // Wrap $items
+    $items  = $this->itemsPerHtmlRow['rowBegin'] . PHP_EOL .
+                  $items .
                   $this->itemsPerHtmlRow['rowEnd'] . PHP_EOL;
-      // Wrap $htmlItems
+      // Wrap $items
 
       // RETURN content
-    return $htmlItems;
+    return $items;
   }
 
 
