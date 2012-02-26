@@ -444,8 +444,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // Wrap the item
 
     $arr_return = $this->get_htmlItems( );
-    $content = $arr_return['data']['items'];
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $content );
+    //$content    = $arr_return['data']['items'];
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
 
 
       // Prompt the expired time to devlog
