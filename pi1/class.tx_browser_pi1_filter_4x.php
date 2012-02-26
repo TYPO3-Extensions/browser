@@ -471,28 +471,26 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
  */
   private function get_htmlItems( )
   {
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
-
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
     // :TODO: Area?
 
-      // RETURN html items
       // SWITCH current filter is a tree view
     switch( in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
-        return $this->get_htmlItemsTree( );
+        $arr_return = $this->get_htmlItemsTree( );
         break;
       case( false ):
       default:
-        return $this->get_htmlItemsList( );
+        $arr_return = $this->get_htmlItemsList( );
         break;
     }
       // SWITCH current filter is a tree view
+
       // RETURN html items
+    return $arr_return;
   }
 
 
@@ -534,59 +532,60 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // LOOP rows
     foreach( ( array ) $this->rows as $uid => $row )
     {
-      $key    = $this->sql_filterFields[$this->curr_tableField]['value'];
-      $value  = $row[$key];
+//      $key    = $this->sql_filterFields[$this->curr_tableField]['value'];
+//      $value  = $row[$key];
+//
+//        // stdWrap the current value
+//        // SWITCH first item
+//      switch( true )
+//      {
+//        case( $uid == $conf_array['first_item.']['option_value'] ):
+//          $stdWrap  = $conf_array['first_item.']['value_stdWrap.'];
+//          break;
+//        default:
+//          $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['value.']['stdWrap.'];
+//          break;
+//      }
+//        // SWITCH first item
+//      $item = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
+//        // stdWrap the current value
+//
+//        // Prepend or append hits
+//      $item = $this->set_hits( $uid, $item, $row );
+//
+//        // stdWrap the current item
+//      $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
+//      $item     = $this->pObj->local_cObj->stdWrap( $item, $stdWrap );
+//        // stdWrap the current item
+//
+//        // DRS :TODO:
+//      if( $this->pObj->b_drs_devTodo )
+//      {
+//        $prompt = 'Check maxItemsPerRow!';
+//        t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+//      }
+//        // DRS :TODO:
+//      $item = $this->maxitemsPerHtmlRowBegin( $item );
+//
+//        // Item class
+//      if($conf_name == 'CATEGORY_MENU')
+//      {
+//        $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
+//      }
+//      $item = $this->replace_itemClass( $conf_array, $item );
+//        // Item class
+//        // Item style
+//      $item = $this->replace_itemStyle( $conf_array, $item );
+//        // Item uid
+//      $item = $this->replace_itemUid( $conf_array, $uid, $item );
+//        // Item URL
+//      $item = $this->replace_itemUrl( $conf_array, $uid, $item );
+//        // Item selected
+//      $item = $this->replace_itemSelected( $conf_array, $uid, $value, $item );
+//
+//      $this->maxItemsPerHtmlRowIncreaseItemNumber( );
 
-        // stdWrap the current value
-        // SWITCH first item
-      switch( true )
-      {
-        case( $uid == $conf_array['first_item.']['option_value'] ):
-          $stdWrap  = $conf_array['first_item.']['value_stdWrap.'];
-          break;
-        default:
-          $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['value.']['stdWrap.'];
-          break;
-      }
-        // SWITCH first item
-      $item = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
-        // stdWrap the current value
-
-        // Prepend or append hits
-      $item = $this->set_hits( $uid, $item, $row );
-
-        // stdWrap the current item
-      $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
-      $item     = $this->pObj->local_cObj->stdWrap( $item, $stdWrap );
-        // stdWrap the current item
-
-        // DRS :TODO:
-      if( $this->pObj->b_drs_devTodo )
-      {
-        $prompt = 'Check maxItemsPerRow!';
-        t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-        // DRS :TODO:
-      $item = $this->maxitemsPerHtmlRowBegin( $item );
-
-        // Item class
-      if($conf_name == 'CATEGORY_MENU')
-      {
-        $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
-      }
-      $item = $this->replace_itemClass( $conf_array, $item );
-        // Item class
-        // Item style
-      $item = $this->replace_itemStyle( $conf_array, $item );
-        // Item uid
-      $item = $this->replace_itemUid( $conf_array, $uid, $item );
-        // Item URL
-      $item = $this->replace_itemUrl( $conf_array, $uid, $item );
-        // Item selected
-      $item = $this->replace_itemSelected( $conf_array, $uid, $value, $item );
-
-      $this->maxItemsPerHtmlRowIncreaseItemNumber( );
-
+      $item   = $this->get_htmlItem( $conf_array, $uid, $value );
       $items = $items . $this->htmlSpaceLeft . ' ' . $item . PHP_EOL ;
     }
       // LOOP rows
@@ -610,104 +609,66 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
 
 /**
- * get_htmlItemsTree( ): Render the given rows. Returns a HTML filter.
+ * get_htmlItem( ): Render the given rows. Returns a HTML filter.
  *
  * @return	array
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function get_htmlItemsTree( )
+  private function get_htmlItem( $conf_array, $uid, $value )
   {
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
-      // Default return value
-    $item                       = null;
-    $arr_return['data']['item'] = $item;
-
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-      // Get TS configuration of the current filter / tableField
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-
-    // :TODO: Area?
-
-    var_dump( __LINE__, $this->tree_getOrdered( ) );
-    return;
-
-      // Add the first item to the rows
-    $this->set_firstItem( );
-
-      // LOOP rows
-    foreach( ( array ) $this->rows as $uid => $row )
+      // stdWrap the current value
+      // SWITCH first item
+    switch( true )
     {
-      $key    = $this->sql_filterFields[$this->curr_tableField]['value'];
-      $value  = $row[$key];
-
-        // stdWrap the current value
-        // SWITCH first item
-      switch( true )
-      {
-        case( $uid == $conf_array['first_item.']['option_value'] ):
-          $stdWrap  = $conf_array['first_item.']['value_stdWrap.'];
-          break;
-        default:
-          $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['value.']['stdWrap.'];
-          break;
-      }
-        // SWITCH first item
-      $item = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
-        // stdWrap the current value
-
-        // Prepend or append hits
-      $item = $this->set_hits( $uid, $item, $row );
-
-        // stdWrap the current item
-      $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
-      $item     = $this->pObj->local_cObj->stdWrap( $item, $stdWrap );
-        // stdWrap the current item
-
-        // DRS :TODO:
-      if( $this->pObj->b_drs_devTodo )
-      {
-        $prompt = 'Check maxItemsPerRow!';
-        t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-        // DRS :TODO:
-      $item = $this->maxitemsPerHtmlRowBegin( $item );
-
-        // Item class
-      if($conf_name == 'CATEGORY_MENU')
-      {
-        $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
-      }
-      $item = $this->replace_itemClass( $conf_array, $item );
-        // Item class
-        // Item style
-      $item = $this->replace_itemStyle( $conf_array, $item );
-        // Item uid
-      $item = $this->replace_itemUid( $conf_array, $uid, $item );
-        // Item URL
-      $item = $this->replace_itemUrl( $conf_array, $uid, $item );
-        // Item selected
-      $item = $this->replace_itemSelected( $conf_array, $uid, $value, $item );
-
-      $this->maxItemsPerHtmlRowIncreaseItemNumber( );
-
-      $items = $items . $this->htmlSpaceLeft . ' ' . $item . PHP_EOL ;
+      case( $uid == $conf_array['first_item.']['option_value'] ):
+        $stdWrap  = $conf_array['first_item.']['value_stdWrap.'];
+        break;
+      default:
+        $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['value.']['stdWrap.'];
+        break;
     }
-      // LOOP rows
+      // SWITCH first item
+    $item = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
+      // stdWrap the current value
 
-    $items = $this->maxItemsPerHtmlRowWrap( $items );
+      // Prepend or append hits
+    $item = $this->set_hits( $uid, $item, $this->rows[$uid] );
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
+      // stdWrap the current item
+    $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
+    $item     = $this->pObj->local_cObj->stdWrap( $item, $stdWrap );
+      // stdWrap the current item
 
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-    $arr_return['data']['item'] = $item;
-    return $arr_return;
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Check maxItemsPerRow!';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS :TODO:
+    $item = $this->maxitemsPerHtmlRowBegin( $item );
+
+      // Item class
+    if($conf_name == 'CATEGORY_MENU')
+    {
+      $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
+    }
+    $item = $this->replace_itemClass( $conf_array, $item );
+      // Item class
+      // Item style
+    $item = $this->replace_itemStyle( $conf_array, $item );
+      // Item uid
+    $item = $this->replace_itemUid( $conf_array, $uid, $item );
+      // Item URL
+    $item = $this->replace_itemUrl( $conf_array, $uid, $item );
+      // Item selected
+    $item = $this->replace_itemSelected( $conf_array, $uid, $value, $item );
+
+    $this->maxItemsPerHtmlRowIncreaseItemNumber( );
+
+    return $item;
   }
 
 
@@ -2461,14 +2422,14 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
 
 /**
- * tree_getOrdered( ): Get the elements ordered to the needs of a tree.
+ * get_htmlItemsTree( ): Get the elements ordered to the needs of a tree.
  *
  * @return	array		$arr_tableFields  : Array with the values. Values are wrapped with ul- and li-tags.
  * @internal        #32223, 120119, dwildt+
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function tree_getOrdered( )
+  private function get_htmlItemsTree( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
