@@ -365,7 +365,9 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // Render the filter rows
     $this->rows = $rows;
     $arr_return = $this->get_html( );
-    $arr_return['data']['marker'][$markerLabel] = $arr_return['data']['items'];
+    $items = $arr_return['data']['items'];
+    unset( $arr_return );
+    $arr_return['data']['marker'][$markerLabel] = $items;
       // Render the filter rows
 
       // Prompt the expired time to devlog
@@ -408,7 +410,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
       // Default return value
-    $arr_return['data']['item'] = null;
+    $arr_return['data']['items'] = null;
 
       // RETURN rows are empty
     if( empty ( $this->rows) )
