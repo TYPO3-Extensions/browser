@@ -2420,8 +2420,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
 
       $lastPath = $tsPath;
       $tsPath   = $tsPath . $key . '.' ;
-      $this->tmpOneDim[$tsPath . $this->uidField]   = $row[$this->uidField];
-      $this->tmpOneDim[$tsPath . $this->valueField] = $row[$this->valueField];
+      $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
+      $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
       $this->set_treeOneDim( $row[$this->uidField] );
       $tsPath   = $lastPath;
     }
@@ -2461,8 +2461,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $items );
       // Render uid and value of the first item
 
       // Add first item
-    $tmpOneDim    = array( $this->uidField   => $first_item_uid   ) +
-                    array( $this->valueField => $first_item_value ) +
+    $tmpOneDim    = array( 'uid'   => $first_item_uid   ) +
+                    array( 'value' => $first_item_value ) +
                     $this->tmpOneDim;
       // Add first item
 var_dump( __LINE__, $tmpOneDim );
