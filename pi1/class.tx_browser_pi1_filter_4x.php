@@ -88,10 +88,10 @@
  *              SECTION: SQL statements - where
  * 1988:     private function sql_whereAllItems( )
  * 2022:     private function sql_whereWiHits( )
- * 2047:     private function sql_andWhere_enableFields( )
- * 2074:     private function sql_andWhere_fromTS( )
- * 2106:     private function sql_andWhere_pidList( )
- * 2159:     private function sql_andWhere_sysLanguage( )
+ * 2047:     private function sql_whereAnd_enableFields( )
+ * 2074:     private function sql_whereAnd_fromTS( )
+ * 2106:     private function sql_whereAnd_pidList( )
+ * 2159:     private function sql_whereAnd_sysLanguage( )
  *
  *              SECTION: TypoScript values
  * 2232:     private function ts_condition( )
@@ -112,9 +112,9 @@
  *
  *              SECTION: Helper
  * 3043:     private function set_maxItemsPerHtmlRow( )
- * 3109:     private function maxitemsPerHtmlRowBegin( $item )
- * 3148:     private function maxItemsPerHtmlRowIncreaseItemNumber( )
- * 3178:     private function maxItemsPerHtmlRowWrap( $items )
+ * 3109:     private function get_maxItemsTagEndBegin( $item )
+ * 3148:     private function set_ItemCurrentNumber( )
+ * 3178:     private function get_maxItemsWrapBeginEnd( $items )
  * 3213:     private function set_firstItem( )
  * 3277:     private function set_htmlSpaceLeft( )
  * 3315:     private function set_hits( $uid, $value, $row )
@@ -210,9 +210,9 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_filters( ):  Get filters. Returns a marker array or an error message
+ * get_filters( ):  Get filters. Returns a marker array or an error message.
  *
- * @return	array		$arr_return :
+ * @return	array		$arr_return : $arr_return['data']['marker']['###TABLE.FIELD###']
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -359,10 +359,9 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_filter( ):  It renders filters and category menus in HTML.
- *                 A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ * get_filter( ):  Get the filter of the current tableField.
  *
- * @return	array		$arr_return :
+ * @return	array		$arr_return : $arr_return['data']['marker']['###TABLE.FIELD###']
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -418,9 +417,10 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_filterItems( ): Render the given rows. Returns a HTML filter.
+ * get_filterItems( ):  Render the given rows of the current tableField.
+ *                      It returns the rendered filter as a string.
  *
- * @return	array
+ * @return	array       $arr_return : $arr_return['data']['items']
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -495,9 +495,11 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_filterItemsDefault( ): Render the given rows. Returns a HTML filter.
+ * get_filterItemsDefault( ): Render the items, if the filter view is the default view.
+ *                            Default means: it isn't a tree view.
+ *                            Items will returned as a string.
  *
- * @return	array
+ * @return	array             $arr_return : $arr_return['data']['items']
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -535,7 +537,7 @@ class tx_browser_pi1_filter_4x {
     }
       // LOOP rows
 
-    $items = $this->maxItemsPerHtmlRowWrap( $items );
+    $items = $this->get_maxItemsWrapBeginEnd( $items );
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -553,12 +555,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_filterItemsTree( ): Get the elements ordered to the needs of a tree.
+ * get_filterItemsTree( ):  Render the items, if the filter view is a tree view.
+ *                          Items will returned as a string.
  *
- * @return	array		$arr_tableFields  : Array with the values. Values are wrapped with ul- and li-tags.
- * @internal        #32223, 120119, dwildt+
- * @version 3.9.9
- * @since   3.9.9
+ * @return    array         $arr_return : $arr_return['data']['items']
+ * @internal                #32223, 120119, dwildt+
+ * @version   3.9.9
+ * @since     3.9.9
  */
   private function get_filterItemsTree( )
   {
@@ -640,16 +643,12 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_filterItemsWrap( ) Wrap all items (wrap the object)
+ * get_filterItemsWrap( ):  Wrap all items (wrap the object)
  *
- * @param	string		$conf_name: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
- * @param	array		$conf_array: The current TS configuration of the obkject
- * @param	string		$str_nice_piVar: The nice name for the current piVar
- * @param	string		$key_piVar: The real name of the piVar
- * @param	integer		$number_of_items: The number of items
- * @return	string		Returns the wrapped items/object
+ * @param   string          $items      : The items of the current tableField
+ * @return	array           $arr_return : $arr_return['data']['items']
  * @version 3.9.9
- * @since    3.9.9
+ * @since   3.9.9
  */
   private function get_filterItemsWrap( $items )
   {
@@ -755,12 +754,12 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_filterItem( ): Render the given rows. Returns a HTML filter.
+ * get_filterItem( ): Render the current filter item.
  *
- * @param	[type]		$$conf_array: ...
- * @param	[type]		$uid: ...
- * @param	[type]		$value: ...
- * @return	array
+ * @param   array     $conf_array : TS configuration array of the current filter / tableField
+ * @param   integer   $uid        : uid of the current item / row
+ * @param   string    $value      : value of the curretn item / row
+ * @return	string    $item       : The rendered item
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -798,7 +797,7 @@ class tx_browser_pi1_filter_4x {
       t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS :TODO:
-    $item = $this->maxitemsPerHtmlRowBegin( $item );
+    $item = $this->get_maxItemsTagEndBegin( $item );
 
       // Item class
     if($conf_name == 'CATEGORY_MENU')
@@ -834,7 +833,7 @@ class tx_browser_pi1_filter_4x {
     }
       // Workaround: remove ###ONCHANGE###
 
-    $this->maxItemsPerHtmlRowIncreaseItemNumber( );
+    $this->set_ItemCurrentNumber( );
 
     $firstLoop = false;
     return $item;
@@ -849,9 +848,9 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_filterTitle( ): Get the wrapped title for the current filter.
+ * get_filterTitle( ):  Get the wrapped title for the current filter.
  *
- * @return	string		$title_stdWrap  : The wrapped title
+ * @return	string      $title  : The wrapped title
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -972,7 +971,7 @@ class tx_browser_pi1_filter_4x {
 /**
  * get_filterWrap( ): Wraps the items with table.field.wrap
  *
- * @param	string		$items  : items of the current tableField / filter
+ * @param   string		$items  : items of the current tableField / filter
  * @return	string		$items  : items wrapped
  * @version 3.9.9
  * @since   3.9.9
@@ -1031,7 +1030,7 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_rows( ):  Get the rows of the current filter
+ * get_rows( ):     Get the rows of the current filter
  *
  * @return	array		$arr_return : Array with the rows or an error message
  * @version 3.9.9
@@ -1070,9 +1069,9 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_rowsWiHits( ): Get the rows with the items with a hit at least of the current filter
+ * get_rowsWiHits( ): Get the rows with the items with a hit at least of the current filter.
  *
- * @return	array		$arr_return : Array with the rows or an error message
+ * @return	array     $arr_return : Array with the rows or an error message
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1109,11 +1108,12 @@ class tx_browser_pi1_filter_4x {
 
 /**
  * get_rowsAllItems( ): Get the rows with all items of the current filter.
- *                            If param $rows_wiHits contains rows, the counted
- *                            hits will taken over in rows with all items.
+ *                      If param $rows_wiHits contains rows, the counted
+ *                      hits will taken over in rows with all items.
  *
- * @param	array		$rows_wiHits  : Rows with items of the current filter, which have one hit at least
- * @return	array		$arr_return   : Array with the rows or an error message
+ * @param   array       $rows_wiHits  : Rows with items of the current filter,
+ *                                      which have one hit at least
+ * @return	array       $arr_return   : Array with the rows or an error message
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1188,7 +1188,7 @@ class tx_browser_pi1_filter_4x {
  * sql_resAllItems( ):  Get the SQL ressource for a filter with all items.
  *                      Hits won't counted.
  *
- * @return	array		$arr_return : Array with the SQL ressource or an error message
+ * @return	array       $arr_return : Array with the SQL ressource or an error message
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1263,9 +1263,9 @@ class tx_browser_pi1_filter_4x {
 
 /**
  * sql_resWiHits( ):  Get the SQL ressource for a filter with items with hits only.
- *                        Hits will counted.
+ *                    Hits will counted.
  *
- * @return	array		$arr_return : Array with the SQL ressource or an error message
+ * @return	array     $arr_return : Array with the SQL ressource or an error message
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1353,7 +1353,7 @@ class tx_browser_pi1_filter_4x {
  * sql_resToRows( ):  Handle the SQL result, free it. Return rows.
  *
  * @param	ressource		$res  : current SQL ressource
- * @return	array		$rows : rows
+ * @return	array     $rows : rows
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1391,9 +1391,9 @@ class tx_browser_pi1_filter_4x {
  *                                  rows, the hit of each row will override the hit in the current row.
  *                                  Hit in the current row is 0 by default.
  *
- * @param	ressource		$res              : current SQL ressource
- * @param	array		$rows_wiHits      : rows with hits
- * @return	array		$rows_wiAllItems  : rows with all filter items
+ * @param   ressource               $res              : current SQL ressource
+ * @param   array                   $rows_wiHits      : rows with hits
+ * @return	array                   $rows_wiAllItems  : rows with all filter items
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1462,12 +1462,12 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_select( ): Get the SELECT statement for the current filter (the current tableField).
- *                Statement will contain fields for localisation and treeview, if there is
- *                any need.
+ * sql_select( ):   Get the SELECT statement for the current filter (the current tableField).
+ *                  Statement will contain fields for localisation and treeview, if there is
+ *                  any need.
  *
- * @param	boolean		$bool_count : true: hits are counted, false: any hit isn't counted
- * @return	string		$select     : SELECT statement
+ * @param   boolean	$bool_count : true: hits are counted, false: any hit isn't counted
+ * @return	string	$select     : SELECT statement
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1821,9 +1821,10 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_from( ): Get the FROM statement ...
+ * sql_from( ): Get the FROM statement. Statement depends on current table is
+ *              a local table or a foreign table.
  *
- * @return	string		$from : FROM statement
+ * @return	string		$from : FROM statement without a FROM
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1832,6 +1833,8 @@ class tx_browser_pi1_filter_4x {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
+      // SWITCH localTable
+      // Get FROM statement
     switch( true )
     {
       case( $this->pObj->localTable != $table ):
@@ -1845,6 +1848,7 @@ class tx_browser_pi1_filter_4x {
         break;
     }
       // Get FROM statement
+      // SWITCH localTable
 
       // RETURN FROM statement
     return $from;
@@ -1859,9 +1863,9 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_groupBy( ): Get the GROUP BY statement ...
+ * sql_groupBy( ): Get the GROUP BY statement. It returns the current tableField by default.
  *
- * @return	string		$from : GROUP BY statement
+ * @return	string		$groupBy : GROUP BY statement without a GROUP BY
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1940,9 +1944,9 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_limit( ): Get the LIMIT statement ...
+ * sql_limit( ): Get the LIMIT statement. It is null by default.
  *
- * @return	string		$limit : LIMIT statement
+ * @return	string		$limit : LIMIT statement without a LIMIT
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1979,7 +1983,7 @@ class tx_browser_pi1_filter_4x {
 
 /**
  * sql_whereAllItems( ):  Get the WHERE statement for all items.
- *                        All items means: idenependent of any hit.
+ *                        All items means: idependent of any hit.
  *
  * @return	string		$where : WHERE statement without WHERE
  * @version 3.9.9
@@ -1993,10 +1997,10 @@ class tx_browser_pi1_filter_4x {
     //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arr_realTables_arrFields );
 
     $where  = '1 ' .
-              $this->sql_andWhere_pidList( ) .
-              $this->sql_andWhere_enableFields( ) .
-              $this->sql_andWhere_fromTS( ) .
-              $this->sql_andWhere_sysLanguage( );
+              $this->sql_whereAnd_pidList( ) .
+              $this->sql_whereAnd_enableFields( ) .
+              $this->sql_whereAnd_fromTS( ) .
+              $this->sql_whereAnd_sysLanguage( );
       // Get WHERE statement
 
       // RETURN WHERE statement without a WHERE
@@ -2013,7 +2017,7 @@ class tx_browser_pi1_filter_4x {
 
 /**
  * sql_whereWiHits( ):  Get the WHERE statement for a filter, which should diplay
- *                          flter items with a hit only.
+ *                      filter items with a hit only.
  *
  * @return	string		$where : WHERE statement without WHERE
  * @version 3.9.9
@@ -2023,7 +2027,7 @@ class tx_browser_pi1_filter_4x {
   {
       // Get WHERE statement
     $where = $this->pObj->objSql->sql_query_statements['rows']['where'] .
-             $this->sql_andWhere_fromTS( );
+             $this->sql_whereAnd_fromTS( );
 
       // RETURN WHERE statement without a WHERE
     return $where;
@@ -2038,13 +2042,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_andWhere_enableFields( ): Get the AND WHERE statement with the enabled fields.
+ * sql_whereAnd_enableFields( ): Get the AND WHERE statement with the enabled fields.
  *
  * @return	string		$andWhere : AND WHERE statement with an AND
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function sql_andWhere_enableFields( )
+  private function sql_whereAnd_enableFields( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -2064,14 +2068,14 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_andWhere_fromTS( ):  Get the AND WHERE statement from the TS configuration.
+ * sql_whereAnd_fromTS( ):  Get the AND WHERE statement from the TS configuration.
  *                          See sql.andWhere.
  *
  * @return	string		$andWhere : AND WHERE statement with an AND
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function sql_andWhere_fromTS( )
+  private function sql_whereAnd_fromTS( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -2097,13 +2101,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_andWhere_pidList( ): Get the AND WHERE statement with the pid list.
+ * sql_whereAnd_pidList( ): Get the AND WHERE statement with the pid list.
  *
  * @return	string		$andWhere : AND WHERE statement with an AND
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function sql_andWhere_pidList( )
+  private function sql_whereAnd_pidList( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -2148,7 +2152,7 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_andWhere_sysLanguage( ): Get the AND WHERE statement with gthe sys_language_uid.
+ * sql_whereAnd_sysLanguage( ): Get the AND WHERE statement with the sys_language_uid.
  *                              It is an AND WHERE for tables which have a record for each
  *                              language.
  *
@@ -2156,7 +2160,7 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function sql_andWhere_sysLanguage( )
+  private function sql_whereAnd_sysLanguage( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -2223,7 +2227,7 @@ class tx_browser_pi1_filter_4x {
 
 
   /**
- * ts_condition( ):  Render the filter condition
+ * ts_condition( ):  Render the filter condition.
  *
  * @return	boolean		True, if filter should displayed, false if filter shouldn't diplayed
  * @version 3.9.3
@@ -2288,10 +2292,9 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * ts_displayHits( ):  Get the TS configuration for displaying items without hits.
- *                              If current filter is a tree view, return value is true.
+ * ts_displayHits( ):  Get the TS configuration for displaying hits.
  *
- * @return	string		$display_without_any_hit : value from TS configuration
+ * @return	string		$display_hits : value from TS configuration
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -2303,8 +2306,11 @@ class tx_browser_pi1_filter_4x {
       // Short var
     $currFilterWrap = $this->conf_view['filter.'][$table . '.'][$field . '.']['wrap.'];
 
+      // Get TS value
+    $display_hits = $currFilterWrap['item.']['display_hits'];
+
       // RETURN TS value
-    return $currFilterWrap['item.']['display_hits'];
+    return $display_hits;
   }
 
 
@@ -2378,15 +2384,15 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * set_treeOneDim:  Recursive method. It generates a one dimensional array.
- *                  Each array has upto three elements:
- *                  * [obligate] uid   : uid of the record
- *                  * [obligate] value : value of the record
- *                  * [optional] array : if the record has children ...
- *                                It is 0 while starting.
+ * set_treeOneDim( ): Recursive method. It generates a one dimensional array.
+ *                    Each array has upto three elements:
+ *                    * [obligate] uid    : uid of the record
+ *                    * [obligate] value  : value of the record
+ *                    * [optional] array  : if the record has children ...
+ *                                          It is 0 while starting.
  *
  * @param	integer		$uid_parent : Parent uid of the current record - for recursive calls.
- * @return	void		Result will be allocated to the global $tmpOneDim
+ * @return	void		Result will be allocated to the class var $tmpOneDim
  * @internal        #32223, 120119, dwildt+
  * @version 3.9.9
  * @since   3.9.9
@@ -2420,15 +2426,15 @@ class tx_browser_pi1_filter_4x {
 
 
 
-  /**
- * get_treeRendered:  Method converts a one dimensional array to a multidimensional array.
- *                    It wraps every element of the array with ul and or li tags.
- *                    Wrapping depends in position and level of the element in the tree.
+/**
+ * get_treeRendered( ): Method converts a one dimensional array to a multidimensional array.
+ *                      It wraps every element of the array with ul and or li tags.
+ *                      Wrapping depends in position and level of the element in the tree.
  *
- * @return	array		$arr_result : Array with the rendered elements
- * @internal        #32223, 120119, dwildt+
- * @version 3.9.9
- * @since   3.9.9
+ * @return    array     $arr_result : Array with the rendered elements
+ * @internal            #32223, 120119, dwildt+
+ * @version   3.9.9
+ * @since     3.9.9
  */
   private function tree_getRendered( )
   {
@@ -2793,7 +2799,8 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * replace_itemTitle( ): Replaces the marker ###TITLE### with the value from TS
+ * replace_itemTitle( ):  Replaces the marker ###TITLE### with the value from TS.
+ *                        Be aware: This method return null in every case!
  *
  * @param	array		$conf_array : The TS configuration of the current filter
  * @param	string		$item   : The current item
@@ -2807,14 +2814,6 @@ class tx_browser_pi1_filter_4x {
 
       // Get TS value
     $title = null;
-//    if( empty( $conf_array['wrap.']['item.']['style'] ) )
-//    {
-//      $style = null;
-//    }
-//    else
-//    {
-//      $style = ' style="' . $conf_array['wrap.']['item.']['style'] . '"';
-//    }
       // Get TS value
 
       // Replace the marker
@@ -3099,53 +3098,14 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * maxitemsPerHtmlRowBegin( ): ...
- *
- * @param	[type]		$$item: ...
- * @return	void
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function maxitemsPerHtmlRowBegin( $item )
-  {
-      // RETURN maxItemsPerHtmlRow is false
-    if ( $this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false )
-    {
-      return $item;
-    }
-      // RETURN maxItemsPerHtmlRow is false
-
-    $maxItemsPerHtmlRow = $this->itemsPerHtmlRow['maxItemsPerHtmlRow'];
-    $currItemNumber     = $this->itemsPerHtmlRow['currItemNumber'];
-    if ( $currItemNumber >= ( $maxItemsPerHtmlRow - 1 ) )
-    {
-      $item       = $item . $this->itemsPerHtmlRow['rowEnd'] . PHP_EOL .
-                        $this->htmlSpaceLeft . $this->itemsPerHtmlRow['rowBegin'];
-      $this->itemsPerHtmlRow['currRowNumber']++;
-      $str_evenOdd    = $this->itemsPerHtmlRow['currRowNumber'] % 2 ? 'odd' : 'even';
-      $item       = str_replace( '###EVEN_ODD###', $str_evenOdd, $item );
-    }
-    $this->itemsPerHtmlRow['currItemNumber']++;
-    return $item;
-  }
-
-
-
-
-
-
-
-
-
-
-/**
- * maxItemsPerHtmlRowIncreaseItemNumber( ): ...
+ * set_ItemCurrentNumber( ):  Method increases the nummber of handled items.
+ *                            Result is stored in the class var $itemsPerHtmlRow.
  *
  * @return	void
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function maxItemsPerHtmlRowIncreaseItemNumber( )
+  private function set_ItemCurrentNumber( )
   {
       // RETURN maxItemsPerHtmlRow is false
     if ( $this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false )
@@ -3168,14 +3128,55 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * maxItemsPerHtmlRowWrap( ): ...
+ * get_maxItemsTagEndBegin( ):  Get the tag for end the current row  and begin
+ *                              a new row.
  *
- * @param	[type]		$$items: ...
- * @return	void
+ * @param   string              $item : current item
+ * @return	string              $item : current item plus tag
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function maxItemsPerHtmlRowWrap( $items )
+  private function get_maxItemsTagEndBegin( $item )
+  {
+      // RETURN maxItemsPerHtmlRow is false
+    if ( $this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false )
+    {
+      return $item;
+    }
+      // RETURN maxItemsPerHtmlRow is false
+
+    $maxItemsPerHtmlRow = $this->itemsPerHtmlRow['maxItemsPerHtmlRow'];
+    $currItemNumber     = $this->itemsPerHtmlRow['currItemNumber'];
+    if ( $currItemNumber >= ( $maxItemsPerHtmlRow - 1 ) )
+    {
+      $item         = $item . $this->itemsPerHtmlRow['rowEnd'] . PHP_EOL .
+                      $this->htmlSpaceLeft . $this->itemsPerHtmlRow['rowBegin'];
+      $this->itemsPerHtmlRow['currRowNumber']++;
+      $str_evenOdd  = $this->itemsPerHtmlRow['currRowNumber'] % 2 ? 'odd' : 'even';
+      $item         = str_replace( '###EVEN_ODD###', $str_evenOdd, $item );
+    }
+    $this->itemsPerHtmlRow['currItemNumber']++;
+    return $item;
+  }
+
+
+
+
+
+
+
+
+
+
+/**
+ * get_maxItemsWrapBeginEnd( ): Wrap all items with the begin tag and the end tag.
+ *
+ * @param   string              $items : current items
+ * @return	string              $items : current items wrapped
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_maxItemsWrapBeginEnd( $items )
   {
       // RETURN maxItemsPerHtmlRow is false
     if ( $this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false )
@@ -3204,6 +3205,7 @@ class tx_browser_pi1_filter_4x {
 
 /**
  * set_firstItem( ):  Adds the first item to the rows of the current filter.
+ *                    Class var $rows.
  *                    If firstItem shouldn't displayed, nothing will happen.
  *
  * @return	void
@@ -3301,7 +3303,7 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * set_hits( ): Prepend or append the hits to the curren item.
+ * set_hits( ): Prepend or append the hits to the current item.
  *              Hits will handled by stdWrap.
  *              If hits shouldn't displayed, method returns the given value.
  *
@@ -3412,7 +3414,7 @@ class tx_browser_pi1_filter_4x {
 
 /**
  * sum_hits( ): Count the hits of the current tableField.
- *              Store it in the class var $this->hits_sum[tableField]
+ *              Store it in the class var $hits_sum[tableField]
  *
  * @param	string		$rows   : current rows
  * @return	void
@@ -3478,26 +3480,26 @@ class tx_browser_pi1_filter_4x {
       // Get nice_piVar from TS
 
       // Set multiple flag
-    switch ($conf_name)
+    switch( $conf_name )
     {
-      case ('CHECKBOX') :
+      case( 'CHECKBOX' ) :
         $bool_multiple = true;
         break;
-      case ('CATEGORY_MENU') :
-      case ('RADIOBUTTONS') :
+      case( 'CATEGORY_MENU' ) :
+      case( 'RADIOBUTTONS' ) :
         $bool_multiple = false;
         break;
-      case ('SELECTBOX') :
+      case( 'SELECTBOX' ) :
         $bool_multiple = $conf_array['multiple'];
         break;
       default :
         $bool_multiple = false;
-        if ($this->pObj->b_drs_error)
+        if( $this->pObj->b_drs_error )
         {
           $prompt = 'multiple - undefined value in switch: \'' . $conf_name . '\'';
-          t3lib_div :: devlog('[ERROR/FILTER] ' . $prompt, $this->pObj->extKey, 3);
+          t3lib_div :: devlog( '[ERROR/FILTER] ' . $prompt, $this->pObj->extKey, 3 );
           $prompt = 'multiple becomes false.';
-          t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
         }
     }
       // Set multiple flag
