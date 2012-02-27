@@ -2844,18 +2844,18 @@ class tx_browser_pi1_filter_4x {
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
 
-      // Render uid and value of the first item
-    $first_item_uid   = $conf_array['first_item.']['option_value'];
-    $tsValue          = $conf_array['first_item.']['value_stdWrap.']['value'];
-    $tsConf           = $conf_array['first_item.']['value_stdWrap.'];
-    $first_item_value = $this->pObj->local_cObj->stdWrap( $tsValue, $tsConf );
-      // Render uid and value of the first item
 
       // Add first item
       // SWITCH display first item
     switch( $conf_array['first_item'] )
     {
       case( true ):
+          // Render uid and value of the first item
+        $first_item_uid   = $conf_array['first_item.']['option_value'];
+        $tsValue          = $conf_array['first_item.']['value_stdWrap.']['value'];
+        $tsConf           = $conf_array['first_item.']['value_stdWrap.'];
+        $first_item_value = $this->pObj->local_cObj->stdWrap( $tsValue, $tsConf );
+          // Render uid and value of the first item
         $tmpOneDim  = array( 'uid'   => $first_item_uid   ) +
                       array( 'value' => $first_item_value ) +
                       $this->tmpOneDim;
@@ -2863,6 +2863,8 @@ class tx_browser_pi1_filter_4x {
       case( false ):
       default:
         $tmpOneDim  = $this->tmpOneDim;
+        reset( $tmpOneDim );
+        $first_item_uid = key( $tmpOneDim );
         break;
     }
       // SWITCH display first item
