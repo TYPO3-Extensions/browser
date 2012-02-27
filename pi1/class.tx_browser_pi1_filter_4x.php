@@ -304,7 +304,8 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * init( ):  Inits the localisation mode. Set the class var $this->int_localisation_mode.
+ * init( ): Inits the localisation mode and the calendar area.
+ *          Set the class var $this->int_localisation_mode.
  *
  * @return	void
  * @version 3.9.9
@@ -337,7 +338,12 @@ class tx_browser_pi1_filter_4x {
     {
       t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
     }
-    // Do we need translated/localised records?
+      // Do we need translated/localised records?
+
+      // Init area
+    $this->pObj->objCal->area_init( array( ) );
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->objCal->arr_area );
+    return;
   }
 
 

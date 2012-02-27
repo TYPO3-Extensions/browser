@@ -2058,7 +2058,7 @@ class tx_browser_pi1_cal
 
 
   /**
- * area_init: Check configuration and init global arr_area
+ * area_init: Check configuration and init class var arr_area
  *
  * @return	void
  * @version 3.6.0
