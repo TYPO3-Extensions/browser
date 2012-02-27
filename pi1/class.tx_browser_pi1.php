@@ -1412,7 +1412,8 @@ class tx_browser_pi1 extends tslib_pibase {
    * @version 3.9.9
    * @since   3.9.9
  */
-  public function dev_var_dump( $method, $line, $content )
+//  public function dev_var_dump( $method, $line, $content )
+  public function dev_var_dump( )
   {
       // Log a security warning
     if ($this->b_drs_warn )
@@ -1430,23 +1431,37 @@ class tx_browser_pi1 extends tslib_pibase {
     }
       // RETURN current IP isn't any element of the list of the allowed IPs
 
-      // Generate the prompt
-      // Get the type of the content
-    $type     = gettype( $content );
-      // Move content to a string
-    $content  = var_export( $content, true );
-      // Concatenate method, line, type and content. Wrap it with <pre>
-    $prompt   = '<pre>' . $method . ' (line ' . $line . '):' . PHP_EOL .
-                  PHP_EOL .
-                  'type: ' . $type . PHP_EOL .
-                  PHP_EOL .
-                  $content . PHP_EOL .
-                '</pre>' . PHP_EOL;
-      // Concatenate method, line, type and content. Wrap it with <pre>
-      // Generate the prompt
-
-      // Prompt the content
+      // Number of arguments;
+    $numargs  = func_num_args( );
+      // List of arguments;
+    $arg_list = func_get_args( );
+    
+    $method = $arg_list[0]; 
+    $line   = $arg_list[1];
+    
+    $prompt = '<pre>' . $method . ' (line ' . $line . '):' . PHP_EOL .
+              '</pre>' . PHP_EOL;
     echo $prompt;
+   
+    for( $i = 2; $i < $numargs; $i++ )
+    {
+        // Generate the prompt
+        // Get the type of the content
+      $type         = gettype( $arg_list[$i] );
+        // Move content to a string
+      $arg_list[$i] = var_export( $arg_list[$i], true );
+        // Concatenate method, line, type and content. Wrap it with <pre>
+      $prompt       = '<pre>type: ' . $type . PHP_EOL .
+                      PHP_EOL .
+                      $arg_list[$i] . PHP_EOL .
+                      '</pre>' . PHP_EOL;
+        // Concatenate method, line, type and content. Wrap it with <pre>
+        // Generate the prompt
+
+        // Prompt the content
+      echo $prompt;
+    }
+
   }
 
 
