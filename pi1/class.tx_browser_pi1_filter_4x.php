@@ -374,15 +374,15 @@ class tx_browser_pi1_filter_4x {
     $this->conf       = $this->pObj->conf;
     $this->conf_view  = $this->conf['views.'][$this->view . '.'][$this->mode . '.'];
 
-    foreach( $this->pObj->objCal->arr_area as $tableField => $area_type )
-    {
-      list( $table, $field ) = explode( '.', $tableField );
-      $key = $area_type['key'];
-//var_dump( $table, $field, $area_type['key'], $this->conf_view['filter.'] );
-      $conf_filter  = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-      $conf_items   = $conf_filter['area.'][$key . '.']['options.']['fields.'];
-      $this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_items );
-    }
+//    foreach( $this->pObj->objCal->arr_area as $tableField => $area_type )
+//    {
+//      list( $table, $field ) = explode( '.', $tableField );
+//      $key = $area_type['key'];
+////var_dump( $table, $field, $area_type['key'], $this->conf_view['filter.'] );
+//      $conf_filter  = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+//      $conf_items   = $conf_filter['area.'][$key . '.']['options.']['fields.'];
+//      $this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_items );
+//    }
 
     return;
   }
@@ -506,7 +506,7 @@ class tx_browser_pi1_filter_4x {
       // Render the filter rows
     $this->rows = $rows;
     $arr_return = $this->get_filterItems( );
-    $items = $arr_return['data']['items'];
+    $items      = $arr_return['data']['items'];
     unset( $arr_return );
     $arr_return['data']['marker'][$markerLabel] = $items;
       // Render the filter rows
@@ -533,6 +533,105 @@ class tx_browser_pi1_filter_4x {
  * @since   3.9.9
  */
   private function get_filterItems( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // SWITCH in calender area array
+    switch( true )
+    {
+      case( array_keys( $this->pObj->objCal->arr_area, $this->curr_tableField ) ):
+        $arr_return = $this->get_filterItemsFromArea( );
+        break;
+      default:
+        $arr_return = $this->get_filterItemsFromRows( );
+        break;
+    }
+      // SWITCH in calender area array
+
+      // RETURN items
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * get_filterItemsFromArea( ):  Render the given rows of the current tableField.
+ *                      It returns the rendered filter as a string.
+ *
+ * @return	array		$arr_return : $arr_return['data']['items']
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_filterItemsFromArea( )
+  {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
+      // Default return value
+    $arr_return['data']['items'] = null;
+
+      // SWITCH area key
+    switch ( $this->pObj->objCal->arr_area[$tableField]['key'] )
+    {
+      case ('strings') :
+        $arr_result = $this->pObj->objCal->area_strings($arr_ts, $arr_values, $tableField);
+        $arr_values = $arr_result['data']['values'];
+        unset ($arr_result);
+        break;
+      case ('interval') :
+        $arr_result = $this->pObj->objCal->area_interval($arr_ts, $arr_values, $tableField);
+        $arr_values = $arr_result['data']['values'];
+        unset ($arr_result);
+        break;
+//        case ('from_to_fields') :
+//          break;
+      default:
+        echo 'tx_browser_pi1_filter::rednerHtmlFilter: undefined value in switch '.$this->pObj->objCal->arr_area[$tableField]['key'];
+        exit;
+    }
+      // SWITCH area key
+
+      // DRS - Development Reporting System
+    if( $this->pObj->b_drs_cal || $this->pObj->b_drs_filter )
+    {
+      $arr_prompt = null;
+      foreach((array) $arr_values as $key => $value)
+      {
+        $arr_prompt[] = '[' . $key . '] = ' . $value;
+      }
+      $str_prompt = implode(', ', (array) $arr_prompt);
+      t3lib_div :: devLog('[INFO/FILTER+CAL] values are: ' . $str_prompt, $this->pObj->extKey, 0);
+    }
+      // DRS - Development Reporting System
+
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values );
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * get_filterItemsFromRows( ):  Render the given rows of the current tableField.
+ *                      It returns the rendered filter as a string.
+ *
+ * @return	array		$arr_return : $arr_return['data']['items']
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_filterItemsFromRows( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
