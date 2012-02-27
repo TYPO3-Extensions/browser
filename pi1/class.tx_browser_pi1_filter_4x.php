@@ -540,6 +540,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $this->set_firstItem( );
 
       // LOOP rows
+    $this->row_number = 0;
     foreach( ( array ) $this->rows as $uid => $row )
     {
       $key    = $this->sql_filterFields[$this->curr_tableField]['value'];
@@ -547,6 +548,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
 
       $item   = $this->get_htmlItem( $conf_array, $uid, $value );
       $items  = $items . $this->htmlSpaceLeft . ' ' . $item . PHP_EOL ;
+      $this->row_number++;
     }
       // LOOP rows
 
@@ -613,7 +615,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // Item class
     if($conf_name == 'CATEGORY_MENU')
     {
-      $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
+      $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
     }
       // DRS :TODO:
     if( $firstLoop && $this->pObj->b_drs_devTodo )
@@ -2571,6 +2573,11 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
+    if($conf_name != 'CATEGORY_MENU')
+    {
+      $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
+    }
+
       // DRS :TODO:
     if( $this->pObj->b_drs_devTodo )
     {
@@ -2624,9 +2631,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // Remove empty class
     $itemsWrap = str_replace( ' class=""', null, $itemsWrap );
 
-    $int_space_left = $conf_array['wrap.']['object.']['nice_html_spaceLeft'];
-    $str_space_left = str_repeat( ' ', $int_space_left );
-    $itemsWrap      = $str_space_left . $itemsWrap;
+    $itemsWrap      = $this->htmlSpaceLeft . $itemsWrap;
 
     $key_piVar      = $this->nicePiVar['key_piVar'];
     $arr_piVar      = $this->nicePiVar['arr_piVar'];
@@ -2651,8 +2656,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     }
       // DRS - Development Reporting System
 
-    $items = PHP_EOL . $items . PHP_EOL . $this->htmlSpaceLeft;
+    $items = PHP_EOL . $items . $this->htmlSpaceLeft;
     $items = str_replace('|', $items, $itemsWrap);
+
+    $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
 
     $arr_return['data']['items'] = $items;
     return $arr_return;
