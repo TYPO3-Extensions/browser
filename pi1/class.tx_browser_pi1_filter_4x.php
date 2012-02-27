@@ -593,7 +593,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // Nice Html
     $arr_itemsWrap = explode( '|', $itemsWrap );
     $itemsWrap  = $this->htmlSpaceLeft . $arr_itemsWrap[0] . PHP_EOL .
-                  $this->htmlSpaceLeft . '  |' .
+                  $this->htmlSpaceLeft . '  |' . PHP_EOL .
                   $this->htmlSpaceLeft . $arr_itemsWrap[1] . PHP_EOL;
 
       // Wrap the items
