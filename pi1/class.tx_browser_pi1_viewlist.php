@@ -1108,7 +1108,7 @@ class tx_browser_pi1_viewlist
 
 
       // Get filter
-    $arr_result = $this->pObj->objFltr4x->get_htmlFilters( );
+    $arr_result = $this->pObj->objFltr4x->get_filters( );
     if( $arr_result['error']['status'] )
     {
         // Prompt the expired time to devlog

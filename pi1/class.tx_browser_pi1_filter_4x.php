@@ -44,13 +44,13 @@
  *  141:     function __construct($pObj)
  *
  *              SECTION: Main
- *  175:     public function get_htmlFilters( )
+ *  175:     public function get_filters( )
  *
  *              SECTION: Init
  *  261:     private function init( )
  *
  *              SECTION: Marker
- *  321:     private function get_marker( )
+ *  321:     private function get_filter( )
  *
  *              SECTION: Rows
  *  399:     private function get_rows( )
@@ -177,14 +177,14 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_htmlFilters( ):  It renders filters and category menus in HTML.
- *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ * get_filters( ):  Get filters. Returns a marker array or an error message
+ *                  
  *
- * @return	array
+ * @return	array   $arr_return : 
  * @version 3.9.9
  * @since   3.9.9
  */
-  public function get_htmlFilters( )
+  public function get_filters( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
@@ -210,7 +210,7 @@ class tx_browser_pi1_filter_4x {
           // Load TCA
         $this->pObj->objZz->loadTCA( $table );
 
-        $arr_result = $this->get_marker( );
+        $arr_result = $this->get_filter( );
         if( $arr_result['error']['status'] )
         {
           $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -314,7 +314,7 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
-  * Marker
+  * Filter rendering
   *
   **********************************************/
 
@@ -327,14 +327,14 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_marker( ):  It renders filters and category menus in HTML.
- *                    A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+ * get_filter( ):  It renders filters and category menus in HTML.
+ *                 A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
  *
- * @return	array
+ * @return	array   $arr_return : 
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function get_marker( )
+  private function get_filter( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
@@ -366,7 +366,7 @@ class tx_browser_pi1_filter_4x {
 
       // Render the filter rows
     $this->rows = $rows;
-    $arr_return = $this->get_html( );
+    $arr_return = $this->get_filterItems( );
     $items = $arr_return['data']['items'];
     unset( $arr_return );
     $arr_return['data']['marker'][$markerLabel] = $items;
@@ -385,28 +385,14 @@ class tx_browser_pi1_filter_4x {
 
 
 
- /***********************************************
-  *
-  * HTML
-  *
-  **********************************************/
-
-
-
-
-
-
-
-
-
 /**
- * get_html( ): Render the given rows. Returns a HTML filter.
+ * get_filterItems( ): Render the given rows. Returns a HTML filter.
  *
  * @return	array
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function get_html( )
+  private function get_filterItems( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
@@ -434,7 +420,7 @@ class tx_browser_pi1_filter_4x {
 
       // Set nice_piVar
     $this->set_nicePiVar( );
-    
+
       // Set class var $htmlSpaceLeft
     $this->set_htmlSpaceLeft( );
 
@@ -447,9 +433,21 @@ class tx_browser_pi1_filter_4x {
     // Wrap values
       // Wrap the item
 
-    $arr_return = $this->get_htmlItems( );
-    //$content    = $arr_return['data']['items'];
-
+      // SWITCH current filter is a tree view
+    switch( in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
+    {
+      case( true ):
+        $arr_return = $this->get_filterItemsTree( );
+        //$items      = $arr_return['data']['items'];
+        break;
+      case( false ):
+      default:
+        $arr_return = $this->get_filterItemsDefault( );
+        $items      = $arr_return['data']['items'];
+        $arr_return = $this->get_filterItemsWrap( $items );
+        break;
+    }
+      // SWITCH current filter is a tree view
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -465,56 +463,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_htmlItems( ): Render the given rows. Returns a HTML filter.
+ * get_filterItemsDefault( ): Render the given rows. Returns a HTML filter.
  *
  * @return	array
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function get_htmlItems( )
-  {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-    // :TODO: Area?
-
-      // SWITCH current filter is a tree view
-    switch( in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
-    {
-      case( true ):
-        $arr_return = $this->get_htmlItemsTree( );
-        //$items      = $arr_return['data']['items'];
-        break;
-      case( false ):
-      default:
-        $arr_return = $this->get_htmlItemsList( );
-        $items      = $arr_return['data']['items'];
-        $arr_return = $this->get_htmlItemsWrapped( $items );
-        break;
-    }
-      // SWITCH current filter is a tree view
-
-      // RETURN html items
-    //$arr_return['data']['items'] = $items;
-    return $arr_return;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * get_htmlItemsList( ): Render the given rows. Returns a HTML filter.
- *
- * @return	array
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function get_htmlItemsList( )
+  private function get_filterItemsDefault( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
@@ -542,7 +497,7 @@ class tx_browser_pi1_filter_4x {
       $key    = $this->sql_filterFields[$this->curr_tableField]['value'];
       $value  = $row[$key];
 
-      $item   = $this->get_htmlItem( $conf_array, $uid, $value );
+      $item   = $this->get_filterItem( $conf_array, $uid, $value );
       $items  = $items . $this->htmlSpaceLeft . ' ' . $item . PHP_EOL ;
       $this->row_number++;
     }
@@ -566,14 +521,18 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_htmlFilterWrap( ):
+ * get_filterItemsTree( ): Get the elements ordered to the needs of a tree.
  *
- * @return	array
+ * @return	array		$arr_tableFields  : Array with the values. Values are wrapped with ul- and li-tags.
+ * @internal        #32223, 120119, dwildt+
  * @version 3.9.9
  * @since   3.9.9
  */
-  function get_htmlFilterWrap( $items )
+  private function get_filterItemsTree( )
   {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
@@ -581,26 +540,63 @@ class tx_browser_pi1_filter_4x {
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
-      // Get the items title
-    $itemsTitle = $this->get_htmlFilterTitle( );
+      // Parent uid of the root records: 0 of course
+    $uid_parent = 0;
+      // Current level of the treeview: 0 of course
+    $level      = 0;
+      // Needed for tree_setOneDim( )
+    $this->arr_rowsTablefield = $this->rows;
 
-      // Get the items wrap
-    $itemsWrap  = $conf_array['wrap'];
-    $itemsWrap  = str_replace( '###TITLE###', $itemsTitle, $itemsWrap );
 
-      // Nice Html
-    $arr_itemsWrap = explode( '|', $itemsWrap );
-    $itemsWrap  = $this->htmlSpaceLeft . $arr_itemsWrap[0] . PHP_EOL .
-                  $this->htmlSpaceLeft . '  |' . PHP_EOL .
-                  $this->htmlSpaceLeft . $arr_itemsWrap[1] . PHP_EOL;
+      // Get the labels for the fields uid, value and treeParentField
+    $this->uidField         = $this->sql_filterFields[$this->curr_tableField]['uid'];
+    $this->valueField       = $this->sql_filterFields[$this->curr_tableField]['value'];
+    $this->treeParentField  = $this->sql_filterFields[$this->curr_tableField]['treeParentField'];
 
-      // Wrap the items
-    if( $itemsWrap )
+      //////////////////////////////////////////////////////
+      //
+      // Order the values
+
+      // Get the values for ordering
+    foreach ( $this->arr_rowsTablefield as $key => $row )
     {
-      $items = str_replace('|', $items , $itemsWrap);
+      $arr_value[$key] = $row[$this->valueField];
     }
+      // Get the values for ordering
 
-    return $items;
+      // Set DESC or ASC
+    if ( strtolower( $conf_array['order.']['orderFlag'] ) == 'desc' )
+    {
+      $order = SORT_DESC;
+    }
+    if ( strtolower( $conf_array['order.']['orderFlag'] ) != 'desc' )
+    {
+      $order = SORT_ASC;
+    }
+      // Set DESC or ASC
+
+      // Order the rows
+    array_multisort($arr_value, $order, $this->arr_rowsTablefield);
+      // Order the values
+
+
+    unset( $this->tmpOneDim );
+      // Set rows of the current tablefield to a one dimensional array
+    $this->tree_setOneDim( $uid_parent );
+      // Get the renderd tree. Each element of the returned array contains HTML tags.
+    $arr_tableFields  = $this->tree_getRendered( );
+    $items            = implode( null, $arr_tableFields );
+    unset( $this->tmpOneDim );
+
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+
+    $items = $this->get_filterWrap( $items );
+
+      // RETURN
+    $arr_return['data']['items'] = $items;
+    return $arr_return;
   }
 
 
@@ -612,13 +608,18 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_htmlFilterTitle( ): Get the wrapped title.
+ * get_filterItemsWrap( ) Wrap all items (wrap the object)
  *
- * @return	string    $title_stdWrap  : The wrapped title
+ * @param	string		$conf_name: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
+ * @param	array		$conf_array: The current TS configuration of the obkject
+ * @param	string		$str_nice_piVar: The nice name for the current piVar
+ * @param	string		$key_piVar: The real name of the piVar
+ * @param	integer		$number_of_items: The number of items
+ * @return	string		Returns the wrapped items/object
  * @version 3.9.9
- * @since   3.9.9
+ * @since    3.9.9
  */
-  function get_htmlFilterTitle( )
+  private function get_filterItemsWrap( $items )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -627,82 +628,90 @@ class tx_browser_pi1_filter_4x {
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
-      // RETURN no title_stdWrap
-    if ( ! is_array( $conf_array['wrap.']['title_stdWrap.'] ) )
+    if($conf_name != 'CATEGORY_MENU')
     {
-      if ( $this->pObj->b_drs_filter )
-      {
-        $prompt = 'There is no title_stdWrap. The object won\'t get a title.';
-        t3lib_div :: devLog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
-        $prompt = 'If you want a title, please configure ' .
-                  $this->conf_path . $this->curr_tableField . '.wrap.title_stdWrap.';
-        t3lib_div :: devLog('[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1);
-      }
-      return null;
+      $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
     }
-      // RETURN no title_stdWrap
 
-    $title_stdWrap = $conf_array['wrap.']['title_stdWrap.'];
-
-      // Get the local or global autoconfig array
-      // Get the local autoconfig array
-    $lAutoconf      = $this->conf_view['autoconfig.'];
-    $lAutoconfPath  = $this->conf_path;
-    if ( ! is_array( $lAutoconf ) )
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
     {
-      if ( $this->pObj->b_drs_sql )
-      {
-        t3lib_div :: devlog('[INFO/SQL] ' . $this->conf_path . ' hasn\'t any autoconf array.<br />
-                    We take the global one.', $this->pObj->extKey, 0);
-      }
-        // Get the global autoconfig array
-      $lAutoconf      = $this->conf['autoconfig.'];
-      $lAutoconfPath  = null;
+      $prompt = 'Check multiple!';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
-      // Get the local or global autoconfig array
+      // DRS :TODO:
 
-      // Don't replace markers recursive
-    if ( ! $lAutoconf['marker.']['typoScript.']['replacement'] )
+      // #8337, 101011, dwildt
+      // SWITCH COA
+    switch( $conf_name )
     {
-        // DRS
-      if ( $this->pObj->b_drs_filter )
-      {
-        $prompt = 'Replacement for markers in TypoScript is deactivated.';
-        t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
-        $prompt = 'If you want a replacement, please configure ' .
-                  $lAutoconfPath . 'autoconfig.marker.typoScript.replacement.';
-        t3lib_div :: devLog( '[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1 );
-      }
-        // DRS
+      case ( 'SELECTBOX' ) :
+        $size = $conf_array['size'];
+        $multiple = null;
+        if( $size >= 2 )
+        {
+          if( $conf_array['multiple'] == 1 )
+          {
+            $multiple = ' ' . $conf_array['multiple.']['selected'];
+          }
+        }
+        break;
+      case ( 'CHECKBOX' ) :
+      case ( 'CATEGORY_MENU' ) :
+      case ( 'RADIOBUTTONS' ) :
+      default :
+        $size      = null;
+        $multiple  = null;
+        break;
     }
-      // Don't replace markers recursive
+      // SWITCH COA
 
-      // Replace ###TABLE.FIELD### recursive
-    $value_marker = $this->pObj->objZz->getTableFieldLL($this->curr_tableField);
-    if ( $lAutoconf['marker.']['typoScript.']['replacement'] )
+    $itemsWrap = $conf_array['wrap.']['object'];
+      // Remove empty class
+    $itemsWrap = str_replace( ' class=""', null, $itemsWrap );
+
+    $itemsWrap      = $this->htmlSpaceLeft . $itemsWrap;
+
+    $key_piVar      = $this->nicePiVar['key_piVar'];
+    $arr_piVar      = $this->nicePiVar['arr_piVar'];
+    $str_nicePiVar  = $this->nicePiVar['nice_piVar'];
+
+    $str_uid        = $this->pObj->prefixId . '_' . $str_nicePiVar;
+    $str_uid        = str_replace('.', '_', $str_uid);
+
+    $itemsWrap    = str_replace('###TABLE.FIELD###',  $key_piVar, $itemsWrap );
+    $itemsWrap    = str_replace('###ID###',           $str_uid,   $itemsWrap );
+    $itemsWrap    = str_replace('###SIZE###',         $size,      $itemsWrap );
+    $itemsWrap    = str_replace('###MULTIPLE###',     $multiple,  $itemsWrap );
+
+      // DRS - Development Reporting System
+    if( empty( $itemsWrap ) )
     {
-      $key_marker               = '###TABLE.FIELD###';
-      $markerArray[$key_marker] = $value_marker;
-      $key_marker               = '###' . strtoupper($this->curr_tableField) . '###';
-      $markerArray[$key_marker] = $value_marker;
-      $title_stdWrap = $this->pObj->objMarker->substitute_marker_recurs( $title_stdWrap, $markerArray );
-        // DRS
-      if ($this->pObj->b_drs_filter)
+      if( $this->pObj->b_drs_warn )
       {
-        $prompt = $key_marker . ' will replaced with the localised value of ' .
-                  '\'' . $this->curr_tableField . '\': \'' . $value_marker . '\'.';
-        t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
-        $prompt = 'If you want another replacement, please configure ' .
-                  $this->conf_view_path . $this->curr_tableField . '.wrap.title_stdWrap';
-        t3lib_div :: devLog( '[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1 );
+        $prompt = 'wrap_allItems returns an empty value for ' . $conf_name;
+        t3lib_div :: devlog('[WARN/TEMPLATING] ' . $prompt, $this->pObj->extKey, 2);
       }
-        // DRS
     }
-      // Replace ###TABLE.FIELD### recursive
+      // DRS - Development Reporting System
 
-    $title_stdWrap  = $this->pObj->local_cObj->stdWrap( $value_marker, $title_stdWrap );
+    $items = PHP_EOL . $items . $this->htmlSpaceLeft;
+    $items = str_replace('|', $items, $itemsWrap);
 
-    return $title_stdWrap;
+    $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
+
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = '$this->get_filterWrap( )';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS :TODO:
+
+    $items = $this->get_filterWrap( $items );
+
+    $arr_return['data']['items'] = $items;
+    return $arr_return;
   }
 
 
@@ -714,13 +723,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_htmlItem( ): Render the given rows. Returns a HTML filter.
+ * get_filterItem( ): Render the given rows. Returns a HTML filter.
  *
  * @return	array
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function get_htmlItem( $conf_array, $uid, $value )
+  private function get_filterItem( $conf_array, $uid, $value )
   {
     static $firstLoop = true;
 
@@ -804,9 +813,177 @@ class tx_browser_pi1_filter_4x {
 
 
 
+/**
+ * get_filterTitle( ): Get the wrapped title for the current filter.
+ *
+ * @return	string    $title_stdWrap  : The wrapped title
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_filterTitle( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+
+
+      /////////////////////////////////////////////////////
+      //
+      // RETURN no title_stdWrap
+
+    if ( ! is_array( $conf_array['wrap.']['title_stdWrap.'] ) )
+    {
+      if ( $this->pObj->b_drs_filter )
+      {
+        $prompt = 'There is no title_stdWrap. The object won\'t get a title.';
+        t3lib_div :: devLog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 'If you want a title, please configure ' .
+                  $this->conf_path . $this->curr_tableField . '.wrap.title_stdWrap.';
+        t3lib_div :: devLog('[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1);
+      }
+      return null;
+    }
+      // RETURN no title_stdWrap
+
+
+
+      /////////////////////////////////////////////////////
+      //
+      // Get the local or global autoconfig array
+
+      // Get the local autoconfig array
+    $lAutoconf      = $this->conf_view['autoconfig.'];
+    $lAutoconfPath  = $this->conf_path;
+    if ( ! is_array( $lAutoconf ) )
+    {
+      if ( $this->pObj->b_drs_sql )
+      {
+        t3lib_div :: devlog('[INFO/SQL] ' . $this->conf_path . ' hasn\'t any autoconf array.<br />
+                    We take the global one.', $this->pObj->extKey, 0);
+      }
+        // Get the global autoconfig array
+      $lAutoconf      = $this->conf['autoconfig.'];
+      $lAutoconfPath  = null;
+    }
+      // Get the local or global autoconfig array
+
+      // Don't replace markers recursive
+    if ( ! $lAutoconf['marker.']['typoScript.']['replacement'] )
+    {
+        // DRS
+      if ( $this->pObj->b_drs_filter )
+      {
+        $prompt = 'Replacement for markers in TypoScript is deactivated.';
+        t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you want a replacement, please configure ' .
+                  $lAutoconfPath . 'autoconfig.marker.typoScript.replacement.';
+        t3lib_div :: devLog( '[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+        // DRS
+    }
+      // Don't replace markers recursive
+
+
+
+      /////////////////////////////////////////////////////
+      //
+      // Wrap the title
+
+      // Get the title
+    $title_stdWrap = $conf_array['wrap.']['title_stdWrap.'];
+
+      // Replace ###TABLE.FIELD### recursive
+    $value_marker = $this->pObj->objZz->getTableFieldLL($this->curr_tableField);
+    if ( $lAutoconf['marker.']['typoScript.']['replacement'] )
+    {
+      $key_marker               = '###TABLE.FIELD###';
+      $markerArray[$key_marker] = $value_marker;
+      $key_marker               = '###' . strtoupper($this->curr_tableField) . '###';
+      $markerArray[$key_marker] = $value_marker;
+      $title_stdWrap = $this->pObj->objMarker->substitute_marker_recurs( $title_stdWrap, $markerArray );
+        // DRS
+      if ($this->pObj->b_drs_filter)
+      {
+        $prompt = $key_marker . ' will replaced with the localised value of ' .
+                  '\'' . $this->curr_tableField . '\': \'' . $value_marker . '\'.';
+        t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you want another replacement, please configure ' .
+                  $this->conf_view_path . $this->curr_tableField . '.wrap.title_stdWrap';
+        t3lib_div :: devLog( '[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+        // DRS
+    }
+      // Replace ###TABLE.FIELD### recursive
+
+      // stdWrap the title
+    $title = $this->pObj->local_cObj->stdWrap( $value_marker, $title_stdWrap );
+
+      // RETURN the title
+    return $title;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * get_filterWrap( ): Wraps the items with table.field.wrap
+ *
+ * @param   string  $items  : items of the current tableField / filter
+ * @return	string  $items  : items wrapped
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_filterWrap( $items )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // Get the items title
+    $itemsTitle = $this->get_filterTitle( );
+
+      // Get the items wrap
+    $itemsWrap  = $conf_array['wrap'];
+    $itemsWrap  = str_replace( '###TITLE###', $itemsTitle, $itemsWrap );
+
+      // Nice Html
+    $arr_itemsWrap = explode( '|', $itemsWrap );
+    $itemsWrap  = $this->htmlSpaceLeft . $arr_itemsWrap[0] . PHP_EOL .
+                  $this->htmlSpaceLeft . '  |' . PHP_EOL .
+                  $this->htmlSpaceLeft . $arr_itemsWrap[1] . PHP_EOL;
+
+      // Wrap the items
+    if( $itemsWrap )
+    {
+      $items = str_replace('|', $items , $itemsWrap);
+    }
+
+    return $items;
+  }
+
+
+
+
+
+
+
+
+
  /***********************************************
   *
-  * HTML - replace marker
+  * Replace marker
   *
   **********************************************/
 
@@ -1217,7 +1394,7 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
-  * Rows
+  * Handle rows
   *
   **********************************************/
 
@@ -1651,7 +1828,7 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
-  * SQL select
+  * SQL statements - select
   *
   **********************************************/
 
@@ -2010,7 +2187,7 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
-  * SQL from, groupBy, orderBy, limit
+  * SQL statements - from, groupBy, orderBy, limit
   *
   **********************************************/
 
@@ -2412,7 +2589,7 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
-  * TypoScript
+  * TypoScript values
   *
   **********************************************/
 
@@ -2570,7 +2747,7 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
-  * Tree view
+  * Tree view helper
   *
   **********************************************/
 
@@ -2579,209 +2756,7 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
 /**
- * get_htmlItemsTree( ): Get the elements ordered to the needs of a tree.
- *
- * @return	array		$arr_tableFields  : Array with the values. Values are wrapped with ul- and li-tags.
- * @internal        #32223, 120119, dwildt+
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function get_htmlItemsTree( )
-  {
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
-
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-      // Get TS filter configuration
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-
-      // Parent uid of the root records: 0 of course
-    $uid_parent = 0;
-      // Current level of the treeview: 0 of course
-    $level      = 0;
-      // Needed for tree_setOneDim( )
-    $this->arr_rowsTablefield = $this->rows;
-
-
-      // Get the labels for the fields uid, value and treeParentField
-    $this->uidField         = $this->sql_filterFields[$this->curr_tableField]['uid'];
-    $this->valueField       = $this->sql_filterFields[$this->curr_tableField]['value'];
-    $this->treeParentField  = $this->sql_filterFields[$this->curr_tableField]['treeParentField'];
-
-      //////////////////////////////////////////////////////
-      //
-      // Order the values
-
-      // Get the values for ordering
-    foreach ( $this->arr_rowsTablefield as $key => $row )
-    {
-      $arr_value[$key] = $row[$this->valueField];
-    }
-      // Get the values for ordering
-
-      // Set DESC or ASC
-    if ( strtolower( $conf_array['order.']['orderFlag'] ) == 'desc' )
-    {
-      $order = SORT_DESC;
-    }
-    if ( strtolower( $conf_array['order.']['orderFlag'] ) != 'desc' )
-    {
-      $order = SORT_ASC;
-    }
-      // Set DESC or ASC
-
-      // Order the rows
-    array_multisort($arr_value, $order, $this->arr_rowsTablefield);
-      // Order the values
-
-
-    unset( $this->tmpOneDim );
-      // Set rows of the current tablefield to a one dimensional array
-    $this->tree_setOneDim( $uid_parent );
-      // Get the renderd tree. Each element of the returned array contains HTML tags.
-    $arr_tableFields  = $this->tree_getRendered( );
-    $items            = implode( null, $arr_tableFields );
-    unset( $this->tmpOneDim );
-
-
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-
-    $items = $this->get_htmlFilterWrap( $items );
-
-      // RETURN
-    $arr_return['data']['items'] = $items;
-    return $arr_return;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * get_htmlItemsWrapped( ) Wrap all items (wrap the object)
- *
- * @param	string		$conf_name: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
- * @param	array		$conf_array: The current TS configuration of the obkject
- * @param	string		$str_nice_piVar: The nice name for the current piVar
- * @param	string		$key_piVar: The real name of the piVar
- * @param	integer		$number_of_items: The number of items
- * @return	string		Returns the wrapped items/object
- * @version 3.9.9
- * @since    3.9.9
- */
-  private function get_htmlItemsWrapped( $items )
-  {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-    
-      // Get TS filter configuration
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-
-    if($conf_name != 'CATEGORY_MENU')
-    {
-      $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
-    }
-
-      // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Check multiple!';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS :TODO:
-
-      // #8337, 101011, dwildt
-      // SWITCH COA
-    switch( $conf_name )
-    {
-      case ( 'SELECTBOX' ) :
-        $size = $conf_array['size'];
-        $multiple = null;
-        if( $size >= 2 )
-        {
-          if( $conf_array['multiple'] == 1 )
-          {
-            $multiple = ' ' . $conf_array['multiple.']['selected'];
-          }
-        }
-        break;
-      case ( 'CHECKBOX' ) :
-      case ( 'CATEGORY_MENU' ) :
-      case ( 'RADIOBUTTONS' ) :
-      default :
-        $size      = null;
-        $multiple  = null;
-        break;
-    }
-      // SWITCH COA
-
-    $itemsWrap = $conf_array['wrap.']['object'];
-      // Remove empty class
-    $itemsWrap = str_replace( ' class=""', null, $itemsWrap );
-
-    $itemsWrap      = $this->htmlSpaceLeft . $itemsWrap;
-
-    $key_piVar      = $this->nicePiVar['key_piVar'];
-    $arr_piVar      = $this->nicePiVar['arr_piVar'];
-    $str_nicePiVar  = $this->nicePiVar['nice_piVar'];
-
-    $str_uid        = $this->pObj->prefixId . '_' . $str_nicePiVar;
-    $str_uid        = str_replace('.', '_', $str_uid);
-    
-    $itemsWrap    = str_replace('###TABLE.FIELD###',  $key_piVar, $itemsWrap );
-    $itemsWrap    = str_replace('###ID###',           $str_uid,   $itemsWrap );
-    $itemsWrap    = str_replace('###SIZE###',         $size,      $itemsWrap );
-    $itemsWrap    = str_replace('###MULTIPLE###',     $multiple,  $itemsWrap );
-
-      // DRS - Development Reporting System
-    if( empty( $itemsWrap ) )
-    {
-      if( $this->pObj->b_drs_warn )
-      {
-        $prompt = 'wrap_allItems returns an empty value for ' . $conf_name;
-        t3lib_div :: devlog('[WARN/TEMPLATING] ' . $prompt, $this->pObj->extKey, 2);
-      }
-    }
-      // DRS - Development Reporting System
-
-    $items = PHP_EOL . $items . $this->htmlSpaceLeft;
-    $items = str_replace('|', $items, $itemsWrap);
-
-    $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
-
-      // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo )
-    {
-      $prompt = '$this->get_htmlFilterWrap( )';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS :TODO:
-
-    $items = $this->get_htmlFilterWrap( $items );
-
-    $arr_return['data']['items'] = $items;
-    return $arr_return;
-  }
-
-
-
-
-
-
-  /**
  * set_treeOneDim:  Recursive method. It generates a one dimensional array.
  *                  Each array has upto three elements:
  *                  * [obligate] uid   : uid of the record
@@ -2932,7 +2907,7 @@ class tx_browser_pi1_filter_4x {
         // Render the value
 //      $value      = '###HITS_BEFORE###' . $value . '###HITS_BEHIND###';
 //      $value      = str_replace('###VALUE###', $value, $conf_item );
-      $item = $this->get_htmlItem( $conf_array, $curr_uid, $value );
+      $item = $this->get_filterItem( $conf_array, $curr_uid, $value );
         // Render the value
 
         // Vars
@@ -3020,7 +2995,7 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
-  * HTML - max items per row
+  * Helper
   *
   **********************************************/
 
@@ -3194,20 +3169,6 @@ class tx_browser_pi1_filter_4x {
       // RETURN content
     return $items;
   }
-
-
-
-
-
-
-
-
-
- /***********************************************
-  *
-  * Helper
-  *
-  **********************************************/
 
 
 
