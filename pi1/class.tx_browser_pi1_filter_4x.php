@@ -2847,7 +2847,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
                             $this->htmlSpaceLeft . $indent .' </ul>' . PHP_EOL .
                             $this->htmlSpaceLeft . $indent . '</li>', $delta_depth
                           ) .
-                          '<li id="' . $html_id . '_li_' . $curr_uid . '">';
+                          PHP_EOL .
+                          $this->htmlSpaceLeft . $indent . '<li id="' . $html_id . '_li_' . $curr_uid . '">';
           $last_depth   = $curr_depth;
           break;
             // Stop of sublevel
