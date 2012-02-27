@@ -1116,7 +1116,7 @@ class tx_browser_pi1_viewlist
       $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       return $template;
     }
-    $arr_filters = $arr_result['data']['filters'];
+    $arr_filter = $arr_result['data']['filter'];
 
       // Get A-Z-browser
       // Set A-Z-browser
@@ -1137,6 +1137,12 @@ class tx_browser_pi1_viewlist
 $str_header  = '<h1 style="color:red;">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
 $str_prompt  = '<p style="color:red;font-weight:bold;">' . $this->pObj->pi_getLL('error_sql_select') . '</p>';
 $str_prompt  = '<p style="color:red;font-weight:bold;">' . 'SQLengine 4.x' . '</p>';
+
+foreach( ( array ) $arr_filter as $marker => $content )
+{
+  $str_prompt = $str_prompt . $content;
+}
+
 $arr_return['error']['status'] = true;
 $arr_return['error']['header'] = $str_header;
 $arr_return['error']['prompt'] = $str_prompt;

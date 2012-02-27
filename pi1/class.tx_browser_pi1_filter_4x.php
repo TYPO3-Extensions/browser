@@ -216,13 +216,13 @@ class tx_browser_pi1_filter_4x {
           $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
           return $arr_result;
         }
-        $arr_return['data']['marker'] = $arr_return['data']['marker'] + $arr_result['data']['marker'];
+        $arr_return['data']['filter'] = $arr_return['data']['filter'] + $arr_result['data']['marker'];
         unset( $arr_result );
       }
     }
       // LOOP each filter
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] );
+//$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] );
 
       // DRS :TODO:
     if( $this->pObj->b_drs_devTodo )
@@ -234,13 +234,11 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     }
       // DRS :TODO:
 
-//    $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->sql_filterFields );
-
-    $str_header  = '<h1 style="color:red;">' . __METHOD__ . '</h1>';
-    $str_prompt  = '<p style="color:red;font-weight:bold;">Development ' . $this->curr_tableField . '</p>';
-    $arr_return['error']['status'] = true;
-    $arr_return['error']['header'] = $str_header;
-    $arr_return['error']['prompt'] = $str_prompt;
+//    $str_header  = '<h1 style="color:red;">' . __METHOD__ . '</h1>';
+//    $str_prompt  = '<p style="color:red;font-weight:bold;">Development ' . $this->curr_tableField . '</p>';
+//    $arr_return['error']['status'] = true;
+//    $arr_return['error']['header'] = $str_header;
+//    $arr_return['error']['prompt'] = $str_prompt;
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
