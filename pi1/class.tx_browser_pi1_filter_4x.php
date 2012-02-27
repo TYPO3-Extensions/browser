@@ -540,7 +540,7 @@ class tx_browser_pi1_filter_4x {
       // SWITCH in calender area array
     switch( true )
     {
-      case( array_keys( $this->pObj->objCal->arr_area, $this->curr_tableField ) ):
+      case( in_array( $this->curr_tableField, array_keys( $this->pObj->objCal->arr_area ) ) ):
         $arr_return = $this->get_filterItemsFromArea( );
         break;
       default:
