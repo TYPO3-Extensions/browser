@@ -3020,7 +3020,7 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
-  * Helper
+  * Maximum items per HTML row
   *
   **********************************************/
 
@@ -3204,105 +3204,6 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * set_firstItem( ):  Adds the first item to the rows of the current filter.
- *                    Class var $rows.
- *                    If firstItem shouldn't displayed, nothing will happen.
- *
- * @return	void
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function set_firstItem( )
-  {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-      // Get TS filter configuration
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-
-      // RETURN first item shouldn't displayed
-    if( ! $conf_array['first_item'] )
-    {
-      return $value;
-    }
-      // RETURN first item shouldn't displayed
-
-      // Get the labels for the fields uid and hits
-    $uidField   = $this->sql_filterFields[$this->curr_tableField]['uid'];
-    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
-
-      // Get the uid of the first item
-    $uid = $conf_array['first_item.']['option_value'];
-
-      // LOOP all fields of current filter / tableField
-    foreach( $this->sql_filterFields[$this->curr_tableField] as $field )
-    {
-        // SWITCH field
-      switch( true )
-      {
-        case( $field == $uidField ):
-          $firstItem[$uid][$uidField] = $uid;
-          break;
-        case( $field == $hitsField ):
-          $firstItem[$uid][$hitsField] = $this->hits_sum[$this->curr_tableField];
-          break;
-        default:
-          $firstItem[$uid][$field] = null;
-          break;
-      }
-        // SWITCH field
-    }
-      // LOOP all fields of current filter / tableField
-
-      // Add first item to the rows of the current filter
-    $this->rows = $firstItem + $this->rows;
-
-    return;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * set_htmlSpaceLeft( ): Set the left margin for HTML code. Class var $htmlSpaceLeft.
- *
- * @return	void
- * @version 3.9.9
- * @since   3.0.0
- */
-  private function set_htmlSpaceLeft( )
-  {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-      // Get TS filter configuration
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-
-      // Get TS value
-    $int_space_left = $conf_array['wrap.']['item.']['nice_html_spaceLeft'];
-
-      // Set class var $htmlSpaceLeft
-    $this->htmlSpaceLeft = str_repeat(' ', $int_space_left);
-
-    return;
-  }
-
-
-
-
-
-
-
-
-
-/**
  * set_hits( ): Prepend or append the hits to the current item.
  *              Hits will handled by stdWrap.
  *              If hits shouldn't displayed, method returns the given value.
@@ -3412,6 +3313,20 @@ class tx_browser_pi1_filter_4x {
 
 
 
+ /***********************************************
+  *
+  * Hits helper
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
 /**
  * sum_hits( ): Count the hits of the current tableField.
  *              Store it in the class var $hits_sum[tableField]
@@ -3442,6 +3357,119 @@ class tx_browser_pi1_filter_4x {
 
       // Set class var $this->hits_sum
     $this->hits_sum[$this->curr_tableField] = $sum_hits;
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * Helper
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * set_firstItem( ):  Adds the first item to the rows of the current filter.
+ *                    Class var $rows.
+ *                    If firstItem shouldn't displayed, nothing will happen.
+ *
+ * @return	void
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function set_firstItem( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // RETURN first item shouldn't displayed
+    if( ! $conf_array['first_item'] )
+    {
+      return $value;
+    }
+      // RETURN first item shouldn't displayed
+
+      // Get the labels for the fields uid and hits
+    $uidField   = $this->sql_filterFields[$this->curr_tableField]['uid'];
+    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+
+      // Get the uid of the first item
+    $uid = $conf_array['first_item.']['option_value'];
+
+      // LOOP all fields of current filter / tableField
+    foreach( $this->sql_filterFields[$this->curr_tableField] as $field )
+    {
+        // SWITCH field
+      switch( true )
+      {
+        case( $field == $uidField ):
+          $firstItem[$uid][$uidField] = $uid;
+          break;
+        case( $field == $hitsField ):
+          $firstItem[$uid][$hitsField] = $this->hits_sum[$this->curr_tableField];
+          break;
+        default:
+          $firstItem[$uid][$field] = null;
+          break;
+      }
+        // SWITCH field
+    }
+      // LOOP all fields of current filter / tableField
+
+      // Add first item to the rows of the current filter
+    $this->rows = $firstItem + $this->rows;
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * set_htmlSpaceLeft( ): Set the left margin for HTML code. Class var $htmlSpaceLeft.
+ *
+ * @return	void
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  private function set_htmlSpaceLeft( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // Get TS value
+    $int_space_left = $conf_array['wrap.']['item.']['nice_html_spaceLeft'];
+
+      // Set class var $htmlSpaceLeft
+    $this->htmlSpaceLeft = str_repeat(' ', $int_space_left);
 
     return;
   }
