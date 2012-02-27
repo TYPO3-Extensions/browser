@@ -2646,7 +2646,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
     $items = str_replace('|', $items, $itemsWrap);
 
     $arr_return['data']['items'] = $items;
-    return $arr_return['data']['items'];
+    return $arr_return;
   }
 
 
