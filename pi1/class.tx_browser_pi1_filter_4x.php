@@ -2576,20 +2576,20 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     switch( $conf_name )
     {
       case ( 'CHECKBOX' ) :
-        $size      = null;
-        $multiple  = true;
+        $size     = null;
+        $multiple = ' ' . $conf_array['multiple.']['selected'];
         break;
       case ( 'CATEGORY_MENU' ) :
       case ( 'RADIOBUTTONS' ) :
         $size      = null;
-        $multiple  = false;
+        $multiple  = null;
         break;
       case ( 'SELECTBOX' ) :
         $size = $conf_array['size'];
         #3.4.904
         if( $size < 2 )
         {
-          $multiple = 0;
+          $multiple = null;
         }
         if( $size >= 2 )
         {
@@ -2601,7 +2601,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
         break;
       default :
         $size      = null;
-        $multiple  = false;
+        $multiple  = null;
         if( $this->pObj->b_drs_error )
         {
           $prompt = 'multiple - undefined value in switch: \'' . $conf_name . '\'';
