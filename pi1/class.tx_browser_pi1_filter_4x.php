@@ -571,29 +571,34 @@ class tx_browser_pi1_filter_4x {
  */
   private function get_filterItemsFromArea( )
   {
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS configuration of the current filter / tableField
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
       // Default return value
     $arr_return['data']['items'] = null;
 
       // SWITCH area key
-    switch ( $this->pObj->objCal->arr_area[$tableField]['key'] )
+    switch ( $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] )
     {
       case ('strings') :
-        $arr_result = $this->pObj->objCal->area_strings($arr_ts, $arr_values, $tableField);
+        $arr_result = $this->pObj->objCal->area_strings($conf_array, $arr_values, $this->curr_tableField);
         $arr_values = $arr_result['data']['values'];
         unset ($arr_result);
         break;
       case ('interval') :
-        $arr_result = $this->pObj->objCal->area_interval($arr_ts, $arr_values, $tableField);
+        $arr_result = $this->pObj->objCal->area_interval($conf_array, $arr_values, $this->curr_tableField);
         $arr_values = $arr_result['data']['values'];
         unset ($arr_result);
         break;
 //        case ('from_to_fields') :
 //          break;
       default:
-        echo 'tx_browser_pi1_filter::rednerHtmlFilter: undefined value in switch '.$this->pObj->objCal->arr_area[$tableField]['key'];
+        echo  __METHOD__ . ' (' . __LINE__ . '): undefined value in switch ' .
+              $this->pObj->objCal->arr_area[$this->curr_tableField]['key'];
         exit;
     }
       // SWITCH area key
@@ -633,9 +638,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values );
  */
   private function get_filterItemsFromRows( )
   {
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
-
       // Default return value
     $arr_return['data']['items'] = null;
 
@@ -688,8 +690,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values );
     }
       // SWITCH current filter is a tree view
 
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
     return $arr_return;
   }
 
