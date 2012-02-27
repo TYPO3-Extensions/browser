@@ -340,8 +340,10 @@ class tx_browser_pi1_filter_4x {
     }
       // Do we need translated/localised records?
 
+      // Set class var $arr_conf_tableFields
+    $this->pObj->objFilter->get_tableFields( );
       // Init area
-    $this->pObj->objCal->area_init( array( ) );
+    $this->pObj->objCal->area_init( );
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->objCal->arr_area );
     return;
   }
