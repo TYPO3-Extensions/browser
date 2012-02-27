@@ -616,7 +616,8 @@ class tx_browser_pi1_filter_4x {
     }
       // DRS - Development Reporting System
 
-    $rows = $this->rows_fromArea( $arr_values );
+    $rows = $this->get_rowsFromArea( $arr_values );
+    $rows = $this->count_hitsForArea( $rows );
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $rows );
     return $arr_return;
   }
@@ -630,13 +631,49 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $rows
 
 
 /**
- * rows_fromArea( ):  
+ * count_hitsForArea( ):
  *
  * @return	array		$arr_return : $arr_return['data']['items']
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function rows_fromArea( $arr_values )
+  private function count_hitsForArea( $rows )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS configuration of the current filter / tableField
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+
+    $area_key       = $this->pObj->objCal->arr_area[$this->curr_tableField]['key'];
+    $arr_currField  = $conf_array['area.'][$area_key . '.']['options.']['fields.'][$str_piVar . '.'];
+
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_array['area.'][$area_key . '.'] );
+
+    foreach( $rows as $uid => $rows )
+    {
+    }
+    return $rows;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * get_rowsFromArea( ):
+ *
+ * @return	array		$arr_return : $arr_return['data']['items']
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_rowsFromArea( $arr_values )
   {
 
       // Get the labels for the fields uid and hits
