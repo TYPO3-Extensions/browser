@@ -216,7 +216,7 @@ class tx_browser_pi1_filter_4x {
           $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
           return $arr_result;
         }
-        $arr_return['data']['filter'] = $arr_return['data']['filter'] + $arr_result['data']['marker'];
+        $arr_return['data']['filter'] = ( array) $arr_return['data']['filter'] + $arr_result['data']['marker'];
         unset( $arr_result );
       }
     }
