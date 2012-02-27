@@ -40,86 +40,90 @@
  *
  *
  *
- *  128: class tx_browser_pi1_filter_4x
- *  186:     function __construct($pObj)
+ *  132: class tx_browser_pi1_filter_4x
+ *  190:     function __construct($pObj)
  *
  *              SECTION: Main
- *  219:     public function get_filters( )
+ *  223:     public function get_filters( )
  *
  *              SECTION: Init
- *  309:     private function init( )
+ *  313:     private function init( )
  *
  *              SECTION: Filter rendering
- *  369:     private function get_filter( )
- *  427:     private function get_filterItems( )
- *  504:     private function get_filterItemsDefault( )
- *  563:     private function get_filterItemsTree( )
- *  654:     private function get_filterItemsWrap( $items )
- *  767:     private function get_filterItem( $conf_array, $uid, $value )
- *  858:     private function get_filterTitle( )
- *  980:     private function get_filterWrap( $items )
+ *  372:     private function get_filter( )
+ *  431:     private function get_filterItems( )
+ *  510:     private function get_filterItemsDefault( )
+ *  570:     private function get_filterItemsTree( )
+ *  657:     private function get_filterItemsWrap( $items )
+ *  770:     private function get_filterItem( $conf_array, $uid, $value )
+ *  861:     private function get_filterTitle( )
+ *  983:     private function get_filterWrap( $items )
  *
  *              SECTION: Handle rows
- * 1040:     private function get_rows( )
- * 1079:     private function get_rowsWiHits( )
- * 1120:     private function get_rowsAllItems( $rows_wiHits )
+ * 1043:     private function get_rows( )
+ * 1082:     private function get_rowsWiHits( )
+ * 1125:     private function get_rowsAllItems( $rows_wiHits )
  *
  *              SECTION: SQL ressources
- * 1195:     private function sql_resAllItems( )
- * 1272:     private function sql_resWiHits( )
+ * 1200:     private function sql_resAllItems( )
+ * 1277:     private function sql_resWiHits( )
  *
  *              SECTION: SQL ressources to rows
- * 1360:     private function sql_resToRows( $res )
- * 1400:     private function sql_resToRows_allItemsWiHits( $res, $rows_wiHits )
+ * 1365:     private function sql_resToRows( $res )
+ * 1405:     private function sql_resToRows_allItemsWiHits( $res, $rows_wiHits )
  *
  *              SECTION: SQL statements - select
- * 1474:     private function sql_select( $bool_count )
- * 1551:     private function sql_select_addLL( )
- * 1586:     private function sql_select_addLL_sysLanguage( )
- * 1661:     private function sql_select_addLL_lang_ol(  )
- * 1727:     private function sql_select_addTreeview( )
+ * 1479:     private function sql_select( $bool_count )
+ * 1556:     private function sql_select_addLL( )
+ * 1591:     private function sql_select_addLL_sysLanguage( )
+ * 1666:     private function sql_select_addLL_lang_ol(  )
+ * 1732:     private function sql_select_addTreeview( )
  *
  *              SECTION: SQL statements - from, groupBy, orderBy, limit
- * 1830:     private function sql_from( )
- * 1868:     private function sql_groupBy( )
- * 1893:     private function sql_orderBy( )
- * 1949:     private function sql_limit( )
+ * 1836:     private function sql_from( )
+ * 1877:     private function sql_groupBy( )
+ * 1902:     private function sql_orderBy( )
+ * 1958:     private function sql_limit( )
  *
  *              SECTION: SQL statements - where
- * 1988:     private function sql_whereAllItems( )
- * 2022:     private function sql_whereWiHits( )
- * 2047:     private function sql_whereAnd_enableFields( )
- * 2074:     private function sql_whereAnd_fromTS( )
- * 2106:     private function sql_whereAnd_pidList( )
- * 2159:     private function sql_whereAnd_sysLanguage( )
+ * 1997:     private function sql_whereAllItems( )
+ * 2031:     private function sql_whereWiHits( )
+ * 2056:     private function sql_whereAnd_enableFields( )
+ * 2083:     private function sql_whereAnd_fromTS( )
+ * 2115:     private function sql_whereAnd_pidList( )
+ * 2168:     private function sql_whereAnd_sysLanguage( )
  *
  *              SECTION: TypoScript values
- * 2232:     private function ts_condition( )
- * 2298:     private function ts_displayHits( )
- * 2326:     private function ts_displayWithoutAnyHit( )
+ * 2241:     private function ts_condition( )
+ * 2306:     private function ts_displayHits( )
+ * 2337:     private function ts_displayWithoutAnyHit( )
  *
  *              SECTION: Tree view helper
- * 2394:     private function tree_setOneDim( $uid_parent )
- * 2433:     private function tree_getRendered( )
+ * 2405:     private function tree_setOneDim( $uid_parent )
+ * 2444:     private function tree_getRendered( )
  *
  *              SECTION: Replace marker
- * 2640:     private function replace_itemClass( $conf_array, $item )
- * 2684:     private function replace_itemSelected( $conf_array, $uid, $value, $item )
- * 2767:     private function replace_itemStyle( $conf_array, $item )
- * 2804:     private function replace_itemTitle( $conf_array, $item )
- * 2855:     private function replace_itemUid( $conf_array, $uid, $item )
- * 2882:     private function replace_itemUrl( $conf_array, $uid, $item )
+ * 2651:     private function replace_itemClass( $conf_array, $item )
+ * 2695:     private function replace_itemSelected( $conf_array, $uid, $value, $item )
+ * 2778:     private function replace_itemStyle( $conf_array, $item )
+ * 2816:     private function replace_itemTitle( $conf_array, $item )
+ * 2859:     private function replace_itemUid( $conf_array, $uid, $item )
+ * 2886:     private function replace_itemUrl( $conf_array, $uid, $item )
  *
- *              SECTION: Helper
- * 3043:     private function set_maxItemsPerHtmlRow( )
- * 3109:     private function get_maxItemsTagEndBegin( $item )
- * 3148:     private function set_ItemCurrentNumber( )
- * 3178:     private function get_maxItemsWrapBeginEnd( $items )
- * 3213:     private function set_firstItem( )
- * 3277:     private function set_htmlSpaceLeft( )
- * 3315:     private function set_hits( $uid, $value, $row )
- * 3422:     private function sum_hits( $rows )
- * 3462:     private function set_nicePiVar( )
+ *              SECTION: Maximum items per HTML row
+ * 3047:     private function set_maxItemsPerHtmlRow( )
+ * 3113:     private function set_ItemCurrentNumber( )
+ * 3144:     private function get_maxItemsTagEndBegin( $item )
+ * 3184:     private function get_maxItemsWrapBeginEnd( $items )
+ *
+ *              SECTION: Hits helper
+ * 3237:     private function set_hits( $uid, $value, $row )
+ * 3344:     private function sum_hits( $rows )
+ *
+ *              SECTION: Other helper
+ * 3400:     private function set_firstItem( )
+ * 3464:     private function set_htmlSpaceLeft( )
+ * 3497:     private function set_nicePiVar( )
  *
  * TOTAL FUNCTIONS: 53
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -420,7 +424,7 @@ class tx_browser_pi1_filter_4x {
  * get_filterItems( ):  Render the given rows of the current tableField.
  *                      It returns the rendered filter as a string.
  *
- * @return	array       $arr_return : $arr_return['data']['items']
+ * @return	array		$arr_return : $arr_return['data']['items']
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -499,7 +503,7 @@ class tx_browser_pi1_filter_4x {
  *                            Default means: it isn't a tree view.
  *                            Items will returned as a string.
  *
- * @return	array             $arr_return : $arr_return['data']['items']
+ * @return	array		$arr_return : $arr_return['data']['items']
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -558,7 +562,7 @@ class tx_browser_pi1_filter_4x {
  * get_filterItemsTree( ):  Render the items, if the filter view is a tree view.
  *                          Items will returned as a string.
  *
- * @return    array         $arr_return : $arr_return['data']['items']
+ * @return	array		$arr_return : $arr_return['data']['items']
  * @internal                #32223, 120119, dwildt+
  * @version   3.9.9
  * @since     3.9.9
@@ -645,8 +649,8 @@ class tx_browser_pi1_filter_4x {
 /**
  * get_filterItemsWrap( ):  Wrap all items (wrap the object)
  *
- * @param   string          $items      : The items of the current tableField
- * @return	array           $arr_return : $arr_return['data']['items']
+ * @param	string		$items      : The items of the current tableField
+ * @return	array		$arr_return : $arr_return['data']['items']
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -756,10 +760,10 @@ class tx_browser_pi1_filter_4x {
 /**
  * get_filterItem( ): Render the current filter item.
  *
- * @param   array     $conf_array : TS configuration array of the current filter / tableField
- * @param   integer   $uid        : uid of the current item / row
- * @param   string    $value      : value of the curretn item / row
- * @return	string    $item       : The rendered item
+ * @param	array		$conf_array : TS configuration array of the current filter / tableField
+ * @param	integer		$uid        : uid of the current item / row
+ * @param	string		$value      : value of the curretn item / row
+ * @return	string		$item       : The rendered item
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -850,7 +854,7 @@ class tx_browser_pi1_filter_4x {
 /**
  * get_filterTitle( ):  Get the wrapped title for the current filter.
  *
- * @return	string      $title  : The wrapped title
+ * @return	string		$title  : The wrapped title
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -971,7 +975,7 @@ class tx_browser_pi1_filter_4x {
 /**
  * get_filterWrap( ): Wraps the items with table.field.wrap
  *
- * @param   string		$items  : items of the current tableField / filter
+ * @param	string		$items  : items of the current tableField / filter
  * @return	string		$items  : items wrapped
  * @version 3.9.9
  * @since   3.9.9
@@ -1071,7 +1075,7 @@ class tx_browser_pi1_filter_4x {
 /**
  * get_rowsWiHits( ): Get the rows with the items with a hit at least of the current filter.
  *
- * @return	array     $arr_return : Array with the rows or an error message
+ * @return	array		$arr_return : Array with the rows or an error message
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1111,9 +1115,10 @@ class tx_browser_pi1_filter_4x {
  *                      If param $rows_wiHits contains rows, the counted
  *                      hits will taken over in rows with all items.
  *
- * @param   array       $rows_wiHits  : Rows with items of the current filter,
  *                                      which have one hit at least
- * @return	array       $arr_return   : Array with the rows or an error message
+ *
+ * @param	array		$rows_wiHits  : Rows with items of the current filter,
+ * @return	array		$arr_return   : Array with the rows or an error message
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1188,7 +1193,7 @@ class tx_browser_pi1_filter_4x {
  * sql_resAllItems( ):  Get the SQL ressource for a filter with all items.
  *                      Hits won't counted.
  *
- * @return	array       $arr_return : Array with the SQL ressource or an error message
+ * @return	array		$arr_return : Array with the SQL ressource or an error message
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1265,7 +1270,7 @@ class tx_browser_pi1_filter_4x {
  * sql_resWiHits( ):  Get the SQL ressource for a filter with items with hits only.
  *                    Hits will counted.
  *
- * @return	array     $arr_return : Array with the SQL ressource or an error message
+ * @return	array		$arr_return : Array with the SQL ressource or an error message
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1353,7 +1358,7 @@ class tx_browser_pi1_filter_4x {
  * sql_resToRows( ):  Handle the SQL result, free it. Return rows.
  *
  * @param	object		$res  : current SQL ressource
- * @return	array     $rows : rows
+ * @return	array		$rows : rows
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1391,9 +1396,9 @@ class tx_browser_pi1_filter_4x {
  *                                  rows, the hit of each row will override the hit in the current row.
  *                                  Hit in the current row is 0 by default.
  *
- * @param   object               $res              : current SQL ressource
- * @param   array                   $rows_wiHits      : rows with hits
- * @return	array                   $rows_wiAllItems  : rows with all filter items
+ * @param	object		$res              : current SQL ressource
+ * @param	array		$rows_wiHits      : rows with hits
+ * @return	array		$rows_wiAllItems  : rows with all filter items
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1466,8 +1471,8 @@ class tx_browser_pi1_filter_4x {
  *                  Statement will contain fields for localisation and treeview, if there is
  *                  any need.
  *
- * @param   boolean	$bool_count : true: hits are counted, false: any hit isn't counted
- * @return	string	$select     : SELECT statement
+ * @param	boolean		$bool_count : true: hits are counted, false: any hit isn't counted
+ * @return	string		$select     : SELECT statement
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -2431,7 +2436,7 @@ class tx_browser_pi1_filter_4x {
  *                      It wraps every element of the array with ul and or li tags.
  *                      Wrapping depends in position and level of the element in the tree.
  *
- * @return    array     $arr_result : Array with the rendered elements
+ * @return	array		$arr_result : Array with the rendered elements
  * @internal            #32223, 120119, dwildt+
  * @version   3.9.9
  * @since     3.9.9
@@ -3131,8 +3136,8 @@ class tx_browser_pi1_filter_4x {
  * get_maxItemsTagEndBegin( ):  Get the tag for end the current row  and begin
  *                              a new row.
  *
- * @param   string              $item : current item
- * @return	string              $item : current item plus tag
+ * @param	string		$item : current item
+ * @return	string		$item : current item plus tag
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -3171,8 +3176,8 @@ class tx_browser_pi1_filter_4x {
 /**
  * get_maxItemsWrapBeginEnd( ): Wrap all items with the begin tag and the end tag.
  *
- * @param   string              $items : current items
- * @return	string              $items : current items wrapped
+ * @param	string		$items : current items
+ * @return	string		$items : current items wrapped
  * @version 3.9.9
  * @since   3.9.9
  */
