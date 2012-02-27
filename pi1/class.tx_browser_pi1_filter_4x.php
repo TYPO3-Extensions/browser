@@ -616,7 +616,7 @@ class tx_browser_pi1_filter_4x {
     }
       // DRS - Development Reporting System
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values );
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows );
     return $arr_return;
   }
 

@@ -1412,8 +1412,8 @@ class tx_browser_pi1 extends tslib_pibase {
    * @version 3.9.9
    * @since   3.9.9
  */
-//  public function dev_var_dump( $method, $line, $content )
-  public function dev_var_dump( )
+  public function dev_var_dump( $method, $line, $content )
+  //public function dev_var_dump( )
   {
       // Log a security warning
     if ($this->b_drs_warn )
