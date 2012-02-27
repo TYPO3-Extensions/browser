@@ -2571,6 +2571,14 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Check multiple!';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS :TODO:
+
       // #8337, 101011, dwildt
       // SWITCH COA
     switch( $conf_name )
@@ -2623,6 +2631,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $key_piVar      = $this->nicePiVar['key_piVar'];
     $arr_piVar      = $this->nicePiVar['arr_piVar'];
     $str_nicePiVar  = $this->nicePiVar['nice_piVar'];
+var_dump( __LINE__, $this->nicePiVar );
 
     $str_uid        = $this->pObj->prefixId . '_' . $str_nice_piVar;
     $str_uid        = str_replace('.', '_', $str_uid);
@@ -3416,6 +3425,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $this->nicePiVar['key_piVar']  = $key_piVar;
     $this->nicePiVar['arr_piVar']  = $arr_piVar;
     $this->nicePiVar['nice_piVar'] = $str_nicePiVar;
+var_dump( __LINE__, $this->nicePiVar );
       // Set class var nicePiVar
 
     return;
