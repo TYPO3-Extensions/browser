@@ -2590,22 +2590,9 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // SWITCH COA
     switch( $conf_name )
     {
-      case ( 'CHECKBOX' ) :
-        $size     = null;
-        $multiple = ' ' . $conf_array['multiple.']['selected'];
-        break;
-      case ( 'CATEGORY_MENU' ) :
-      case ( 'RADIOBUTTONS' ) :
-        $size      = null;
-        $multiple  = null;
-        break;
       case ( 'SELECTBOX' ) :
         $size = $conf_array['size'];
-        #3.4.904
-        if( $size < 2 )
-        {
-          $multiple = null;
-        }
+        $multiple = null;
         if( $size >= 2 )
         {
           if( $conf_array['multiple'] == 1 )
@@ -2614,16 +2601,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
           }
         }
         break;
+      case ( 'CHECKBOX' ) :
+      case ( 'CATEGORY_MENU' ) :
+      case ( 'RADIOBUTTONS' ) :
       default :
         $size      = null;
         $multiple  = null;
-        if( $this->pObj->b_drs_error )
-        {
-          $prompt = 'multiple - undefined value in switch: \'' . $conf_name . '\'';
-          t3lib_div :: devlog( '[ERROR/FILTER] ' . $prompt, $this->pObj->extKey, 3 );
-          $prompt = 'multiple becomes false.';
-          t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 3);
-        }
+        break;
     }
       // SWITCH COA
 
