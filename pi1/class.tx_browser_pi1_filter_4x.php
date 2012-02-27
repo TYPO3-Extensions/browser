@@ -2631,9 +2631,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $key_piVar      = $this->nicePiVar['key_piVar'];
     $arr_piVar      = $this->nicePiVar['arr_piVar'];
     $str_nicePiVar  = $this->nicePiVar['nice_piVar'];
-var_dump( __LINE__, $this->nicePiVar );
 
-    $str_uid        = $this->pObj->prefixId . '_' . $str_nice_piVar;
+    $str_uid        = $this->pObj->prefixId . '_' . $str_nicePiVar;
     $str_uid        = str_replace('.', '_', $str_uid);
     
     $itemsWrap    = str_replace('###TABLE.FIELD###',  $key_piVar, $itemsWrap );
@@ -3425,7 +3424,6 @@ var_dump( __LINE__, $this->nicePiVar );
     $this->nicePiVar['key_piVar']  = $key_piVar;
     $this->nicePiVar['arr_piVar']  = $arr_piVar;
     $this->nicePiVar['nice_piVar'] = $str_nicePiVar;
-var_dump( __LINE__, $this->nicePiVar );
       // Set class var nicePiVar
 
     return;
