@@ -1115,19 +1115,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $arr_return = $this->get_rowsAllItems( $rows );
       // 2. step: all filter items, hits will be taken from $rows
 
-      // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Order rows, if it is a tree view.';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS :TODO:
-//    if ( ! in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
-//    {
-//      return $display_without_any_hit;
-//    }
-
-
     return $arr_return;
   }
 
@@ -2064,14 +2051,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
 
     //$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->arr_realTables_arrFields );
 
-      // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Add andWhere from TS.';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS :TODO:
-
     $where  = '1 ' .
               $this->sql_andWhere_pidList( ) .
               $this->sql_andWhere_enableFields( ) .
@@ -2101,14 +2080,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
  */
   private function sql_whereWiHits( )
   {
-      // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Add andWhere from TS.';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS :TODO:
-
       // Get WHERE statement
     $where = $this->pObj->objSql->sql_query_statements['rows']['where'] .
              $this->sql_andWhere_fromTS( );
