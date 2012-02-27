@@ -657,7 +657,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $rows
 
     foreach( $areas as $areas_uid => $areas_row )
     {
-      $curr_area  = $conf_array['area.'][$area_key . '.']['options.']['fields.'][$uid . '.'];
+      $curr_area  = $conf_array['area.'][$area_key . '.']['options.']['fields.'][$areas_uid . '.'];
 
       $from       = $curr_area['valueFrom_stdWrap.']['value'];
       $from_conf  = $curr_area['valueFrom_stdWrap.'];
@@ -666,13 +666,14 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $rows
       $to         = $curr_area['valueTo_stdWrap.']['value'];
       $to_conf    = $curr_area['valueTo_stdWrap.'];
       $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $curr_area );
 
       foreach( $this->rows as $rows_uid => $rows_row )
       {
         $value  = $rows_row[$valueField];
         if( $value >= $from && $value <= $to )
         {
-          $areas[$areas_uid][$hitsField] = $this->rows[$rows_uid][$hitsField];
+          $areas[$areas_uid][$hitsField] = $areas[$areas_uid][$hitsField] + $this->rows[$rows_uid][$hitsField];
         }
 
       }
@@ -702,6 +703,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $rows
       // Get the labels for the fields uid and hits
     $uidField   = $this->sql_filterFields[$this->curr_tableField]['uid'];
     $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
+    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
 
     foreach( $arr_values as $uid => $value )
     {
@@ -716,6 +718,9 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $rows
             break;
           case( $field == $valueField ):
             $rows[$uid][$valueField] = $value;
+            break;
+          case( $field == $hitsField ):
+            $rows[$uid][$hitsField] = 0;
             break;
           default:
             $rows[$uid][$field] = null;
