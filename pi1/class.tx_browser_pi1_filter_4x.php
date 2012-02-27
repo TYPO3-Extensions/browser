@@ -3203,6 +3203,20 @@ class tx_browser_pi1_filter_4x {
 
 
 
+ /***********************************************
+  *
+  * Hits helper
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
 /**
  * set_hits( ): Prepend or append the hits to the current item.
  *              Hits will handled by stdWrap.
@@ -3313,20 +3327,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
- /***********************************************
-  *
-  * Hits helper
-  *
-  **********************************************/
-
-
-
-
-
-
-
-
-
 /**
  * sum_hits( ): Count the hits of the current tableField.
  *              Store it in the class var $hits_sum[tableField]
@@ -3371,7 +3371,7 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
-  * Helper
+  * Other helper
   *
   **********************************************/
 
