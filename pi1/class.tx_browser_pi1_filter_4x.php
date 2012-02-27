@@ -192,6 +192,8 @@ class tx_browser_pi1_filter_4x {
       // Init localisation
     $this->init( );
 
+    $arr_return['data']['marker'] = array( );
+
       // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
     {
@@ -208,12 +210,14 @@ class tx_browser_pi1_filter_4x {
           // Load TCA
         $this->pObj->objZz->loadTCA( $table );
 
-        $arr_return = $this->get_marker( );
-        if( $arr_return['error']['status'] )
+        $arr_result = $this->get_marker( );
+        if( $arr_result['error']['status'] )
         {
           $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-          return $arr_return;
+          return $arr_result;
         }
+        $arr_return['data']['marker'] = $arr_return['data']['marker'] + $arr_result['data']['marker'];
+        unset( $arr_result );
       }
     }
       // LOOP each filter
@@ -447,7 +451,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
 
     $arr_return = $this->get_htmlItems( );
     //$content    = $arr_return['data']['items'];
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
 
 
       // Prompt the expired time to devlog
@@ -482,7 +485,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
     {
       case( true ):
         $arr_return = $this->get_htmlItemsTree( );
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
         //$items      = $arr_return['data']['items'];
         break;
       case( false ):
@@ -490,7 +492,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
         $arr_return = $this->get_htmlItemsList( );
         $items      = $arr_return['data']['items'];
         $arr_return = $this->get_htmlItemsWrapped( $items );
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
         // :TODO:
         //$this->wrap_objectTitle( );
         break;
