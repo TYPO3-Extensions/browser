@@ -585,12 +585,12 @@ class tx_browser_pi1_filter_4x {
     switch ( $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] )
     {
       case ('strings') :
-        $arr_result = $this->pObj->objCal->area_strings($conf_array, $arr_values, $this->curr_tableField);
+        $arr_result = $this->pObj->objCal->area_strings($conf_array, null, $this->curr_tableField);
         $arr_values = $arr_result['data']['values'];
         unset ($arr_result);
         break;
       case ('interval') :
-        $arr_result = $this->pObj->objCal->area_interval($conf_array, $arr_values, $this->curr_tableField);
+        $arr_result = $this->pObj->objCal->area_interval($conf_array, null, $this->curr_tableField);
         $arr_values = $arr_result['data']['values'];
         unset ($arr_result);
         break;
@@ -616,8 +616,57 @@ class tx_browser_pi1_filter_4x {
     }
       // DRS - Development Reporting System
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows );
+    $rows = $this->rows_fromArea( $arr_values );
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $rows );
     return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * rows_fromArea( ):  
+ *
+ * @return	array		$arr_return : $arr_return['data']['items']
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function rows_fromArea( $arr_values )
+  {
+
+      // Get the labels for the fields uid and hits
+    $uidField   = $this->sql_filterFields[$this->curr_tableField]['uid'];
+    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
+
+    foreach( $arr_values as $uid => $value )
+    {
+        // LOOP all fields of current filter / tableField
+      foreach( $this->sql_filterFields[$this->curr_tableField] as $field )
+      {
+          // SWITCH field
+        switch( true )
+        {
+          case( $field == $uidField ):
+            $rows[$uid][$uidField] = $uid;
+            break;
+          case( $field == $valueField ):
+            $rows[$uid][$valueField] = $value;
+            break;
+          default:
+            $rows[$uid][$field] = null;
+            break;
+        }
+          // SWITCH field
+      }
+        // LOOP all fields of current filter / tableField
+    }
+
+    return $rows;
   }
 
 
