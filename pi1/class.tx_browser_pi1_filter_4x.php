@@ -1352,7 +1352,7 @@ class tx_browser_pi1_filter_4x {
 /**
  * sql_resToRows( ):  Handle the SQL result, free it. Return rows.
  *
- * @param	ressource		$res  : current SQL ressource
+ * @param	object		$res  : current SQL ressource
  * @return	array     $rows : rows
  * @version 3.9.9
  * @since   3.9.9
@@ -1391,7 +1391,7 @@ class tx_browser_pi1_filter_4x {
  *                                  rows, the hit of each row will override the hit in the current row.
  *                                  Hit in the current row is 0 by default.
  *
- * @param   ressource               $res              : current SQL ressource
+ * @param   object               $res              : current SQL ressource
  * @param   array                   $rows_wiHits      : rows with hits
  * @return	array                   $rows_wiAllItems  : rows with all filter items
  * @version 3.9.9
