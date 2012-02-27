@@ -492,8 +492,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
         $arr_return = $this->get_htmlItemsList( );
         $items      = $arr_return['data']['items'];
         $arr_return = $this->get_htmlItemsWrapped( $items );
-        // :TODO:
-        //$this->wrap_objectTitle( );
         break;
     }
       // SWITCH current filter is a tree view
@@ -559,6 +557,154 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
 
     $arr_return['data']['items'] = $items;
     return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * get_htmlFilterWrap( ):
+ *
+ * @return	array
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  function get_htmlFilterWrap( $items )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // Get the items title
+    $itemsTitle = $this->get_htmlFilterTitle( );
+
+      // Get the items wrap
+    $itemsWrap  = $conf_array['wrap'];
+    $itemsWrap  = str_replace( '###TITLE###', $itemsTitle, $itemsWrap );
+
+      // Nice Html
+    $arr_itemsWrap = explode( '|', $itemsWrap );
+    $itemsWrap  = $this->htmlSpaceLeft . $arr_itemsWrap[0] . PHP_EOL .
+                  $this->htmlSpaceLeft . '  |' .
+                  $this->htmlSpaceLeft . $arr_itemsWrap[1] . PHP_EOL;
+
+      // Wrap the items
+    if( $itemsWrap )
+    {
+      $items = str_replace('|', $items , $itemsWrap);
+    }
+
+    return $items;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * get_htmlFilterTitle( ): Get the wrapped title.
+ *
+ * @return	string    $title_stdWrap  : The wrapped title
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  function get_htmlFilterTitle( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // RETURN no title_stdWrap
+    if ( ! is_array( $conf_array['wrap.']['title_stdWrap.'] ) )
+    {
+      if ( $this->pObj->b_drs_filter )
+      {
+        $prompt = 'There is no title_stdWrap. The object won\'t get a title.';
+        t3lib_div :: devLog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 'If you want a title, please configure ' .
+                  $this->conf_path . $this->curr_tableField . '.wrap.title_stdWrap.';
+        t3lib_div :: devLog('[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1);
+      }
+      return null;
+    }
+      // RETURN no title_stdWrap
+
+    $title_stdWrap = $conf_array['wrap.']['title_stdWrap.'];
+
+      // Get the local or global autoconfig array
+      // Get the local autoconfig array
+    $lAutoconf      = $this->conf_view['autoconfig.'];
+    $lAutoconfPath  = $this->conf_path;
+    if ( ! is_array( $lAutoconf ) )
+    {
+      if ( $this->pObj->b_drs_sql )
+      {
+        t3lib_div :: devlog('[INFO/SQL] ' . $this->conf_path . ' hasn\'t any autoconf array.<br />
+                    We take the global one.', $this->pObj->extKey, 0);
+      }
+        // Get the global autoconfig array
+      $lAutoconf      = $this->conf['autoconfig.'];
+      $lAutoconfPath  = null;
+    }
+      // Get the local or global autoconfig array
+
+      // Don't replace markers recursive
+    if ( ! $lAutoconf['marker.']['typoScript.']['replacement'] )
+    {
+        // DRS
+      if ( $this->pObj->b_drs_filter )
+      {
+        $prompt = 'Replacement for markers in TypoScript is deactivated.';
+        t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you want a replacement, please configure ' .
+                  $lAutoconfPath . 'autoconfig.marker.typoScript.replacement.';
+        t3lib_div :: devLog( '[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+        // DRS
+    }
+      // Don't replace markers recursive
+
+      // Replace ###TABLE.FIELD### recursive
+    $value_marker = $this->pObj->objZz->getTableFieldLL($this->curr_tableField);
+    if ( $lAutoconf['marker.']['typoScript.']['replacement'] )
+    {
+      $key_marker               = '###TABLE.FIELD###';
+      $markerArray[$key_marker] = $value_marker;
+      $key_marker               = '###' . strtoupper($this->curr_tableField) . '###';
+      $markerArray[$key_marker] = $value_marker;
+      $title_stdWrap = $this->pObj->objMarker->substitute_marker_recurs( $title_stdWrap, $markerArray );
+        // DRS
+      if ($this->pObj->b_drs_filter)
+      {
+        $prompt = $key_marker . ' will replaced with the localised value of ' .
+                  '\'' . $this->curr_tableField . '\': \'' . $value_marker . '\'.';
+        t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you want another replacement, please configure ' .
+                  $this->conf_view_path . $this->curr_tableField . '.wrap.title_stdWrap';
+        t3lib_div :: devLog( '[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+        // DRS
+    }
+      // Replace ###TABLE.FIELD### recursive
+
+    $title_stdWrap  = $this->pObj->local_cObj->stdWrap( $value_marker, $title_stdWrap );
+
+    return $title_stdWrap;
   }
 
 
@@ -875,7 +1021,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       if( $this->pObj->b_drs_devTodo )
       {
         $prompt = '###TITLE### is removed. Check the code!';
-        t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
+        t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
       }
     }
     $firstLoop = false;
@@ -933,10 +1079,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
  */
   private function replace_itemUrl( $conf_array, $uid, $item )
   {
-      // Short vars
-    $conf_view      = $this->conf_view;
-    $arr_currPiVars = $this->pObj->piVars;
-    $tableField     = $this->curr_tableField;
 
       // RETURN no marker
     $pos = strpos( $item, '###URL###' );
@@ -954,7 +1096,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // Set value of the first item to null: it won't become an additional parameter below
 
       // Move value (10, 20, 30, ...) to url_stdWrap (i.e: 2011_Jan, 2011_Feb, 2011_Mar, ...)
-    $uid = $this->pObj->objCal->area_get_urlPeriod( $conf_array, $tableField, $uid );
+    $uid = $this->pObj->objCal->area_get_urlPeriod( $conf_array, $this->curr_tableField, $uid );
 
 
 
@@ -962,6 +1104,9 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       //
       // Remove piVars temporarily
     
+      // Store status
+    $arr_currPiVars = $this->pObj->piVars;
+
       // Remove sort and pointer
     $arr_removePiVars = array( 'sort', 'pointer' );
 
@@ -1005,7 +1150,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $this->pObj->piVars = $this->pObj->objZz->removeFiltersFromPiVars
                                               (
                                                 $this->pObj->piVars,
-                                                $conf_view['filter.']
+                                                $this->conf_view['filter.']
                                               );
       // Remove the filter fields temporarily
 
@@ -1027,7 +1172,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     if( $uid )
     {
       $additionalParams = $additionalParams . '&' .
-                          $this->pObj->prefixId . '[' . $tableField . ']=' . $uid;
+                          $this->pObj->prefixId . '[' . $this->curr_tableField . ']=' . $uid;
     }
       // Calculate additional params for the typolink
 
@@ -2503,15 +2648,18 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
       // Set rows of the current tablefield to a one dimensional array
     $this->tree_setOneDim( $uid_parent );
       // Get the renderd tree. Each element of the returned array contains HTML tags.
-    $arr_tableFields = $this->tree_getRendered( );
+    $arr_tableFields  = $this->tree_getRendered( );
+    $items            = implode( null, $arr_tableFields );
     unset( $this->tmpOneDim );
 
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
 
-      // RETURN the ordered and rendered rows of the current tablefield
-    $arr_return['data']['items'] = implode( null, $arr_tableFields );
+    $items = $this->get_htmlFilterWrap( $items );
+
+      // RETURN
+    $arr_return['data']['items'] = $items;
     return $arr_return;
   }
 
@@ -2532,8 +2680,8 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
  * @param	string		$key_piVar: The real name of the piVar
  * @param	integer		$number_of_items: The number of items
  * @return	string		Returns the wrapped items/object
- * @version 3.9.6
- * @since    3.0.1
+ * @version 3.9.9
+ * @since    3.9.9
  */
   private function get_htmlItemsWrapped( $items )
   {
@@ -2615,6 +2763,16 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return['data']['marker'] )
     $items = str_replace('|', $items, $itemsWrap);
 
     $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
+
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = '$this->get_htmlFilterWrap( )';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS :TODO:
+
+    $items = $this->get_htmlFilterWrap( $items );
 
     $arr_return['data']['items'] = $items;
     return $arr_return;
