@@ -617,7 +617,7 @@ class tx_browser_pi1_filter_4x {
       // DRS - Development Reporting System
 
     $rows = $this->get_rowsFromArea( $arr_values );
-    $rows = $this->count_hitsForArea( $rows );
+    $rows = $this->count_hitsForAreas( $rows );
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $rows );
     return $arr_return;
   }
@@ -631,13 +631,13 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $rows
 
 
 /**
- * count_hitsForArea( ):
+ * count_hitsForAreas( ):
  *
  * @return	array		$arr_return : $arr_return['data']['items']
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function count_hitsForArea( $rows )
+  private function count_hitsForAreas( $areas )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -646,16 +646,39 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $rows
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
+    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
 
-    $area_key       = $this->pObj->objCal->arr_area[$this->curr_tableField]['key'];
-    $arr_currField  = $conf_array['area.'][$area_key . '.']['options.']['fields.'][$str_piVar . '.'];
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_array['area.'][$area_key . '.'] );
+      // Key of the area: 'strings' or 'interval'
+    $area_key = $this->pObj->objCal->arr_area[$this->curr_tableField]['key'];
 
-    foreach( $rows as $uid => $rows )
+//$this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_array['area.'][$area_key . '.'] );
+
+    foreach( $areas as $areas_uid => $areas_row )
     {
+      $curr_area  = $conf_array['area.'][$area_key . '.']['options.']['fields.'][$uid . '.'];
+
+      $from       = $curr_area['valueFrom_stdWrap.']['value'];
+      $from_conf  = $curr_area['valueFrom_stdWrap.'];
+      $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
+      
+      $to         = $curr_area['valueTo_stdWrap.']['value'];
+      $to_conf    = $curr_area['valueTo_stdWrap.'];
+      $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+
+      foreach( $this->rows as $rows_uid => $rows_row )
+      {
+        $value  = $rows_row[$valueField];
+        if( $value >= $from && $value <= $to )
+        {
+          $areas[$areas_uid][$hitsField] = $this->rows[$rows_uid][$hitsField];
+        }
+
+      }
     }
-    return $rows;
+
+    return $areas;
   }
 
 
