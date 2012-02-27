@@ -983,417 +983,6 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
-  * Replace marker
-  *
-  **********************************************/
-
-
-
-
-
-
-
-
-
-/**
- * replace_itemClass( ): Replaces the marker ###CLASS### with the value from TS
- *
- * @param	array     $conf_array : The TS configuration of the current filter
- * @param	string		$item   : The current item
- * @return	string	$item   :	Returns the wrapped item
- *
- * @version 3.9.9
- * @since   3.0.0
- */
-  private function replace_itemClass( $conf_array, $item )
-  {
-
-      // Get TS value
-    if( empty( $conf_array['wrap.']['item.']['class'] ) )
-    {
-      $class = null;
-    }
-    else
-    {
-      $class = ' class="' . $conf_array['wrap.']['item.']['class'] . '"';
-    }
-      // Get TS value
-
-      // Replace the marker
-    $item = str_replace( '###CLASS###', $class, $item );
-
-      // Workaround: Remove space
-    $item = str_replace('class=" ', 'class="', $item);
-
-
-      // RETURN content
-    return $item;
-  }
-
-
-
-
-
-
-
-
-
-  /**
- * replace_itemSelected( ): Replaces the marker ###ITEM_SELECTED### with the value from TS
- *
- * @param	array     $conf_array : The TS configuration of the current filter
- * @param	integer		$uid        : The uid of the current item
- * @param	string		$value      : The value of the current item
- * @param	string		$item   : The current item
- * @return	string	$item   :	Returns the wrapped item
- *
- * @version 3.9.9
- * @since   3.0.0
- */
-  private function replace_itemSelected( $conf_array, $uid, $value, $item )
-  {
-      //////////////////////////////////////////////////////////
-      //
-      // Set bool_piVar
-
-      // dwildt, 110102
-      // Workaround: Because of new feature to filter a local table field
-    $bool_piVar = false;
-    if( $uid )
-    {
-      if( in_array( $uid, $this->nicePiVar['arr_piVar'] ) )
-      {
-        $bool_piVar = true;
-      }
-    }
-
-    if( $value )
-    {
-      if( in_array( $value, $this->nicePiVar['arr_piVar'] ) )
-      {
-        $bool_piVar = true;
-      }
-    }
-      // #29444: 110902, dwildt+
-    $value_from_ts_area = $conf_array['area.']['interval.']['options.']['fields.'][$uid . '.']['value_stdWrap.']['value'];
-    if( $value_from_ts_area )
-    {
-      if( in_array( $value_from_ts_area, $this->nicePiVar['arr_piVar'] ) )
-      {
-        $bool_piVar = true;
-      }
-    }
-    if( empty ( $this->nicePiVar['arr_piVar'] ) )
-    {
-      if( $this->pObj->objCal->selected_period )
-      {
-        if( $this->pObj->objCal->selected_period == $value_from_ts_area )
-        {
-          $bool_piVar = true;
-        }
-      }
-    }
-      // Set bool_piVar
-      // #29444: 110902, dwildt+
-
-      // SWITCH bool_piVar
-    switch( $bool_piVar )
-    {
-      case( false ):
-        $conf_selected = null;
-        break;
-      case( true ):
-      default:
-        $conf_selected = ' ' . $conf_array['wrap.']['item.']['selected'];
-        break;
-    }
-      // SWITCH bool_piVar
-
-      // Replave marker
-    $item = str_replace( '###ITEM_SELECTED###', $conf_selected, $item );
-
-      // RETURN content
-    return $item;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * replace_itemStyle( ): Replaces the marker ###STYLE### with the value from TS
- *
- * @param	array     $conf_array : The TS configuration of the current filter
- * @param	string		$item   : The current item
- * @return	string	$item   :	Returns the wrapped item
- *
- * @version 3.9.9
- * @since   3.0.0
- */
-  private function replace_itemStyle( $conf_array, $item )
-  {
-      // Get TS value
-    if( empty( $conf_array['wrap.']['item.']['style'] ) )
-    {
-      $style = null;
-    }
-    else
-    {
-      $style = ' style="' . $conf_array['wrap.']['item.']['style'] . '"';
-    }
-      // Get TS value
-
-      // Replace the marker
-    $item = str_replace( '###STYLE###', $style, $item );
-
-      // RETURN content
-    return $item;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * replace_itemTitle( ): Replaces the marker ###TITLE### with the value from TS
- *
- * @param	array     $conf_array : The TS configuration of the current filter
- * @param	string		$item   : The current item
- * @return	string	$item   :	Returns the wrapped item
- *
- * @version 3.9.9
- * @since   3.0.0
- */
-  private function replace_itemTitle( $conf_array, $item )
-  {
-    static $firstLoop = true;
-
-      // Get TS value
-    $title = null;
-//    if( empty( $conf_array['wrap.']['item.']['style'] ) )
-//    {
-//      $style = null;
-//    }
-//    else
-//    {
-//      $style = ' style="' . $conf_array['wrap.']['item.']['style'] . '"';
-//    }
-      // Get TS value
-
-      // Replace the marker
-    $item = str_replace( '###TITLE###', $title, $item );
-
-    if( $firstLoop )
-    {
-      if( $this->pObj->b_drs_devTodo )
-      {
-        $prompt = '###TITLE### is removed. Check the code!';
-        t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-    }
-    $firstLoop = false;
-
-      // RETURN content
-    return $item;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * replace_itemUid( ): Replaces the marker ###UID### with the given uid
- *
- * @param	array     $conf_array : The TS configuration of the current filter
- * @param	string		$uid        : The uid of the current item
- * @param	string		$item   : The current item
- * @return	string	$item   :	Returns the wrapped item
- *
- * @version 3.9.9
- * @since   3.0.0
- */
-  private function replace_itemUid( $conf_array, $uid, $item )
-  {
-      // Replace the marker
-    $item = str_replace( '###UID###', $uid, $item );
-
-      // RETURN content
-    return $item;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * replace_itemUrl( ): Replaces the marker ###URL###
- *
- * @param	array     $conf_array : The TS configuration of the current filter
- * @param	string		$uid        : The uid of the current item
- * @param	string		$item   : The current item
- * @return	string	$item   :	Returns the wrapped item
- *
- * @version 3.9.9
- * @since   3.6.1
- */
-  private function replace_itemUrl( $conf_array, $uid, $item )
-  {
-
-      // RETURN no marker
-    $pos = strpos( $item, '###URL###' );
-    if( $pos === false )
-    {
-      return $item;
-    }
-      // RETURN no marker
-
-      // Set value of the first item to null: it won't become an additional parameter below
-    if( $uid == $conf_array['first_item.']['option_value'] )
-    {
-      $uid = null;
-    }
-      // Set value of the first item to null: it won't become an additional parameter below
-
-      // Move value (10, 20, 30, ...) to url_stdWrap (i.e: 2011_Jan, 2011_Feb, 2011_Mar, ...)
-    $uid = $this->pObj->objCal->area_get_urlPeriod( $conf_array, $this->curr_tableField, $uid );
-
-
-
-      /////////////////////////////////////////////////////////
-      //
-      // Remove piVars temporarily
-    
-      // Store status
-    $arr_currPiVars = $this->pObj->piVars;
-
-      // Remove sort and pointer
-    $arr_removePiVars = array( 'sort', 'pointer' );
-
-      // Remove 'plugin', if current plugin is the default plugin
-    if( ! $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin )
-    {
-      $arr_removePiVars[] = 'plugin';
-    }
-      // Remove 'plugin', if current plugin is the default plugin
-      // LOOP piVars for removing
-    foreach( ( array ) $arr_removePiVars as $piVar )
-    {
-      if( isset( $this->pObj->piVars[$piVar] ) )
-      {
-        unset( $this->pObj->piVars[$piVar] );
-      }
-    }
-      // LOOP piVars for removing
-      // Remove piVars temporarily
-
-
-
-      /////////////////////////////////////////////////////////
-      //
-      // Change $GLOBALS['TSFE']->id temporarily
-      
-    $int_tsfeId = $GLOBALS['TSFE']->id;
-    if( ! empty( $this->pObj->objFlexform->int_viewsListPid ) )
-    {
-      $GLOBALS['TSFE']->id = $this->pObj->objFlexform->int_viewsListPid;
-    }
-      // Change $GLOBALS['TSFE']->id temporarily
-
-
-
-      /////////////////////////////////////////////////////////
-      //
-      // Remove the filter fields temporarily
-      
-      // #9495, fsander
-    $this->pObj->piVars = $this->pObj->objZz->removeFiltersFromPiVars
-                                              (
-                                                $this->pObj->piVars,
-                                                $this->conf_view['filter.']
-                                              );
-      // Remove the filter fields temporarily
-
-
-
-      /////////////////////////////////////////////////////////
-      //
-      // Calculate additional params for the typolink
-
-    $additionalParams = null;
-    foreach( ( array ) $this->pObj->piVars as $paramKey => $paramValue )
-    {
-      if( ! empty( $paramValue ) )
-      {
-        $additionalParams = $additionalParams . '&' . 
-                            $this->pObj->prefixId . '[' . $paramKey . ']=' . $paramValue;
-      }
-    }
-    if( $uid )
-    {
-      $additionalParams = $additionalParams . '&' .
-                          $this->pObj->prefixId . '[' . $this->curr_tableField . ']=' . $uid;
-    }
-      // Calculate additional params for the typolink
-
-
-
-      /////////////////////////////////////////////////////////
-      //
-      // Build and render the typolink
-
-    $arr_typolink['parameter']        = $GLOBALS['TSFE']->id;
-    $arr_typolink['additionalParams'] = $additionalParams;
-    $arr_typolink['useCacheHash']     = 1;
-    $arr_typolink['returnLast']       = 'URL';
-
-    $typolink  = $this->pObj->local_cObj->typoLink_URL($arr_typolink);
-      // Build and render the typolink
-
-
-
-      /////////////////////////////////////////////////////////
-      //
-      // Cleanup piVars and id
-
-      // Reset $this->pObj->piVars
-    $this->pObj->piVars   = $arr_currPiVars;
-      // Reset $GLOBALS['TSFE']->id
-    $GLOBALS['TSFE']->id  = $int_tsfeId;
-      // Cleanup piVars and id
-
-      // Replace the marker
-    $item  = str_replace('###URL###', $typolink, $item);
-
-      // Return the item
-    return $item;
-  }
-
-
-
-
-
-
-
-
-
- /***********************************************
-  *
   * Handle rows
   *
   **********************************************/
@@ -2344,7 +1933,7 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
-  * SQL where
+  * SQL statements - where
   *
   **********************************************/
 
@@ -2983,6 +2572,417 @@ class tx_browser_pi1_filter_4x {
 
       // RETURN the result
     return $arr_result;
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * Replace marker
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * replace_itemClass( ): Replaces the marker ###CLASS### with the value from TS
+ *
+ * @param	array     $conf_array : The TS configuration of the current filter
+ * @param	string		$item   : The current item
+ * @return	string	$item   :	Returns the wrapped item
+ *
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  private function replace_itemClass( $conf_array, $item )
+  {
+
+      // Get TS value
+    if( empty( $conf_array['wrap.']['item.']['class'] ) )
+    {
+      $class = null;
+    }
+    else
+    {
+      $class = ' class="' . $conf_array['wrap.']['item.']['class'] . '"';
+    }
+      // Get TS value
+
+      // Replace the marker
+    $item = str_replace( '###CLASS###', $class, $item );
+
+      // Workaround: Remove space
+    $item = str_replace('class=" ', 'class="', $item);
+
+
+      // RETURN content
+    return $item;
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * replace_itemSelected( ): Replaces the marker ###ITEM_SELECTED### with the value from TS
+ *
+ * @param	array     $conf_array : The TS configuration of the current filter
+ * @param	integer		$uid        : The uid of the current item
+ * @param	string		$value      : The value of the current item
+ * @param	string		$item   : The current item
+ * @return	string	$item   :	Returns the wrapped item
+ *
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  private function replace_itemSelected( $conf_array, $uid, $value, $item )
+  {
+      //////////////////////////////////////////////////////////
+      //
+      // Set bool_piVar
+
+      // dwildt, 110102
+      // Workaround: Because of new feature to filter a local table field
+    $bool_piVar = false;
+    if( $uid )
+    {
+      if( in_array( $uid, $this->nicePiVar['arr_piVar'] ) )
+      {
+        $bool_piVar = true;
+      }
+    }
+
+    if( $value )
+    {
+      if( in_array( $value, $this->nicePiVar['arr_piVar'] ) )
+      {
+        $bool_piVar = true;
+      }
+    }
+      // #29444: 110902, dwildt+
+    $value_from_ts_area = $conf_array['area.']['interval.']['options.']['fields.'][$uid . '.']['value_stdWrap.']['value'];
+    if( $value_from_ts_area )
+    {
+      if( in_array( $value_from_ts_area, $this->nicePiVar['arr_piVar'] ) )
+      {
+        $bool_piVar = true;
+      }
+    }
+    if( empty ( $this->nicePiVar['arr_piVar'] ) )
+    {
+      if( $this->pObj->objCal->selected_period )
+      {
+        if( $this->pObj->objCal->selected_period == $value_from_ts_area )
+        {
+          $bool_piVar = true;
+        }
+      }
+    }
+      // Set bool_piVar
+      // #29444: 110902, dwildt+
+
+      // SWITCH bool_piVar
+    switch( $bool_piVar )
+    {
+      case( false ):
+        $conf_selected = null;
+        break;
+      case( true ):
+      default:
+        $conf_selected = ' ' . $conf_array['wrap.']['item.']['selected'];
+        break;
+    }
+      // SWITCH bool_piVar
+
+      // Replave marker
+    $item = str_replace( '###ITEM_SELECTED###', $conf_selected, $item );
+
+      // RETURN content
+    return $item;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * replace_itemStyle( ): Replaces the marker ###STYLE### with the value from TS
+ *
+ * @param	array     $conf_array : The TS configuration of the current filter
+ * @param	string		$item   : The current item
+ * @return	string	$item   :	Returns the wrapped item
+ *
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  private function replace_itemStyle( $conf_array, $item )
+  {
+      // Get TS value
+    if( empty( $conf_array['wrap.']['item.']['style'] ) )
+    {
+      $style = null;
+    }
+    else
+    {
+      $style = ' style="' . $conf_array['wrap.']['item.']['style'] . '"';
+    }
+      // Get TS value
+
+      // Replace the marker
+    $item = str_replace( '###STYLE###', $style, $item );
+
+      // RETURN content
+    return $item;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * replace_itemTitle( ): Replaces the marker ###TITLE### with the value from TS
+ *
+ * @param	array     $conf_array : The TS configuration of the current filter
+ * @param	string		$item   : The current item
+ * @return	string	$item   :	Returns the wrapped item
+ *
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  private function replace_itemTitle( $conf_array, $item )
+  {
+    static $firstLoop = true;
+
+      // Get TS value
+    $title = null;
+//    if( empty( $conf_array['wrap.']['item.']['style'] ) )
+//    {
+//      $style = null;
+//    }
+//    else
+//    {
+//      $style = ' style="' . $conf_array['wrap.']['item.']['style'] . '"';
+//    }
+      // Get TS value
+
+      // Replace the marker
+    $item = str_replace( '###TITLE###', $title, $item );
+
+    if( $firstLoop )
+    {
+      if( $this->pObj->b_drs_devTodo )
+      {
+        $prompt = '###TITLE### is removed. Check the code!';
+        t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+    }
+    $firstLoop = false;
+
+      // RETURN content
+    return $item;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * replace_itemUid( ): Replaces the marker ###UID### with the given uid
+ *
+ * @param	array     $conf_array : The TS configuration of the current filter
+ * @param	string		$uid        : The uid of the current item
+ * @param	string		$item   : The current item
+ * @return	string	$item   :	Returns the wrapped item
+ *
+ * @version 3.9.9
+ * @since   3.0.0
+ */
+  private function replace_itemUid( $conf_array, $uid, $item )
+  {
+      // Replace the marker
+    $item = str_replace( '###UID###', $uid, $item );
+
+      // RETURN content
+    return $item;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * replace_itemUrl( ): Replaces the marker ###URL###
+ *
+ * @param	array     $conf_array : The TS configuration of the current filter
+ * @param	string		$uid        : The uid of the current item
+ * @param	string		$item   : The current item
+ * @return	string	$item   :	Returns the wrapped item
+ *
+ * @version 3.9.9
+ * @since   3.6.1
+ */
+  private function replace_itemUrl( $conf_array, $uid, $item )
+  {
+
+      // RETURN no marker
+    $pos = strpos( $item, '###URL###' );
+    if( $pos === false )
+    {
+      return $item;
+    }
+      // RETURN no marker
+
+      // Set value of the first item to null: it won't become an additional parameter below
+    if( $uid == $conf_array['first_item.']['option_value'] )
+    {
+      $uid = null;
+    }
+      // Set value of the first item to null: it won't become an additional parameter below
+
+      // Move value (10, 20, 30, ...) to url_stdWrap (i.e: 2011_Jan, 2011_Feb, 2011_Mar, ...)
+    $uid = $this->pObj->objCal->area_get_urlPeriod( $conf_array, $this->curr_tableField, $uid );
+
+
+
+      /////////////////////////////////////////////////////////
+      //
+      // Remove piVars temporarily
+
+      // Store status
+    $arr_currPiVars = $this->pObj->piVars;
+
+      // Remove sort and pointer
+    $arr_removePiVars = array( 'sort', 'pointer' );
+
+      // Remove 'plugin', if current plugin is the default plugin
+    if( ! $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin )
+    {
+      $arr_removePiVars[] = 'plugin';
+    }
+      // Remove 'plugin', if current plugin is the default plugin
+      // LOOP piVars for removing
+    foreach( ( array ) $arr_removePiVars as $piVar )
+    {
+      if( isset( $this->pObj->piVars[$piVar] ) )
+      {
+        unset( $this->pObj->piVars[$piVar] );
+      }
+    }
+      // LOOP piVars for removing
+      // Remove piVars temporarily
+
+
+
+      /////////////////////////////////////////////////////////
+      //
+      // Change $GLOBALS['TSFE']->id temporarily
+
+    $int_tsfeId = $GLOBALS['TSFE']->id;
+    if( ! empty( $this->pObj->objFlexform->int_viewsListPid ) )
+    {
+      $GLOBALS['TSFE']->id = $this->pObj->objFlexform->int_viewsListPid;
+    }
+      // Change $GLOBALS['TSFE']->id temporarily
+
+
+
+      /////////////////////////////////////////////////////////
+      //
+      // Remove the filter fields temporarily
+
+      // #9495, fsander
+    $this->pObj->piVars = $this->pObj->objZz->removeFiltersFromPiVars
+                                              (
+                                                $this->pObj->piVars,
+                                                $this->conf_view['filter.']
+                                              );
+      // Remove the filter fields temporarily
+
+
+
+      /////////////////////////////////////////////////////////
+      //
+      // Calculate additional params for the typolink
+
+    $additionalParams = null;
+    foreach( ( array ) $this->pObj->piVars as $paramKey => $paramValue )
+    {
+      if( ! empty( $paramValue ) )
+      {
+        $additionalParams = $additionalParams . '&' .
+                            $this->pObj->prefixId . '[' . $paramKey . ']=' . $paramValue;
+      }
+    }
+    if( $uid )
+    {
+      $additionalParams = $additionalParams . '&' .
+                          $this->pObj->prefixId . '[' . $this->curr_tableField . ']=' . $uid;
+    }
+      // Calculate additional params for the typolink
+
+
+
+      /////////////////////////////////////////////////////////
+      //
+      // Build and render the typolink
+
+    $arr_typolink['parameter']        = $GLOBALS['TSFE']->id;
+    $arr_typolink['additionalParams'] = $additionalParams;
+    $arr_typolink['useCacheHash']     = 1;
+    $arr_typolink['returnLast']       = 'URL';
+
+    $typolink  = $this->pObj->local_cObj->typoLink_URL($arr_typolink);
+      // Build and render the typolink
+
+
+
+      /////////////////////////////////////////////////////////
+      //
+      // Cleanup piVars and id
+
+      // Reset $this->pObj->piVars
+    $this->pObj->piVars   = $arr_currPiVars;
+      // Reset $GLOBALS['TSFE']->id
+    $GLOBALS['TSFE']->id  = $int_tsfeId;
+      // Cleanup piVars and id
+
+      // Replace the marker
+    $item  = str_replace('###URL###', $typolink, $item);
+
+      // Return the item
+    return $item;
   }
 
 
