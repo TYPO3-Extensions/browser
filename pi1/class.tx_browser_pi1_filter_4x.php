@@ -369,13 +369,14 @@ class tx_browser_pi1_filter_4x {
     // Init area
     $this->pObj->objCal->area_init( );
 
-    $this->conf       = $this->pObj->conf['views.'][$viewWiDot][$mode . '.'];
-    $this->conf_view  = $this->conf;
+    $this->conf       = $this->pObj->conf;
+    $this->conf_view  = $this->conf['views.'][$this->view . '.'][$this->mode . '.'];
     foreach( $this->pObj->objCal->arr_area as $tableField => $arr_area_type )
     {
       list( $table, $field ) = explode( '.', $tableField );
-      $type = key( $arr_area_type );
-      $arr_fields = $this->conf_view['filter.'][$table . '.'][$field . '.']['area.'][$type]['options.']['fields.'];
+      $type = $arr_area_type['key'];
+var_dump( $table, $field, $arr_area_type['key'], $this->conf_view['filter.'] );
+      $arr_fields = $this->conf_view['filter.'][$table . '.'][$field . '.']['area.'][$type . '.']['options.']['fields.'];
       $this->pObj->dev_var_dump( __METHOD__, __LINE__, $type );
       $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_fields );
     }
