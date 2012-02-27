@@ -328,12 +328,94 @@ class tx_browser_pi1_filter_4x {
  */
   private function init( )
   {
+      // Set class var $arr_conf_tableFields
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Integrate $this->pObj->objFilter->arr_conf_tableFields!';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS :TODO:
+    $this->pObj->objFilter->get_tableFields( );
+      // Set class var $arr_conf_tableFields
 
+      // Init localisation
+    $this->init_localisationMode( );
+
+      // Init calendar area
+    $this->init_calendarArea( );
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * init_calendarArea( ):  If a filter has a area, this method inits the array with
+ *                        the area items in the TS configuration of each filter.
+ *
+ * @return	void
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function init_calendarArea( )
+  {
+
+      // Init area
+    $this->pObj->objCal->area_init( );
+
+      // Reinit class vars $conf and $conf_view
+    $this->conf       = $this->pObj->conf;
+    $this->conf_view  = $this->conf['views.'][$this->view . '.'][$this->mode . '.'];
+
+    foreach( $this->pObj->objCal->arr_area as $tableField => $area_type )
+    {
+      list( $table, $field ) = explode( '.', $tableField );
+      $key = $area_type['key'];
+//var_dump( $table, $field, $area_type['key'], $this->conf_view['filter.'] );
+      $conf_filter  = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+      $conf_items   = $conf_filter['area.'][$key . '.']['options.']['fields.'];
+      $this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_items );
+    }
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
+  /**
+   * init_localisationMode( ):  Inits the localisation mode.
+   *                            Sets the class vars
+   *                            * $int_localisation_mode
+   *                            * bool_dontLocalise
+   *
+   * @return	void
+   * @version 3.9.9
+   * @since   3.9.9
+   */
+  private function init_localisationMode( )
+  {
+
+      // Set class var $int_localisation_mode
     if( ! isset( $this->int_localisation_mode ) )
     {
       $this->int_localisation_mode = $this->pObj->objLocalise->localisationConfig( );
     }
 
+      // Set class var $bool_dontLocalise
+      // SWTCH $int_localisation_mode
     switch( $this->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
@@ -349,38 +431,16 @@ class tx_browser_pi1_filter_4x {
         $prompt = 'Localisation mode is enabled';
         break;
     }
+      // SWTCH $int_localisation_mode
+      // Set class var $bool_dontLocalise
+
+      // DRS
     if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
     {
       t3lib_div::devlog( '[INFO/FILTER+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
     }
-      // Do we need translated/localised records?
+      // DRS
 
-      // Set class var $arr_conf_tableFields
-      // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Integrate $this->pObj->objFilter->arr_conf_tableFields!';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS :TODO:
-    $this->pObj->objFilter->get_tableFields( );
-      // Set class var $arr_conf_tableFields
-
-    // Init area
-    $this->pObj->objCal->area_init( );
-
-    $this->conf       = $this->pObj->conf;
-    $this->conf_view  = $this->conf['views.'][$this->view . '.'][$this->mode . '.'];
-    foreach( $this->pObj->objCal->arr_area as $tableField => $arr_area_type )
-    {
-      list( $table, $field ) = explode( '.', $tableField );
-      $type = $arr_area_type['key'];
-var_dump( $table, $field, $arr_area_type['key'], $this->conf_view['filter.'] );
-      $arr_fields = $this->conf_view['filter.'][$table . '.'][$field . '.']['area.'][$type . '.']['options.']['fields.'];
-      $this->pObj->dev_var_dump( __METHOD__, __LINE__, $type );
-      $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_fields );
-    }
-    
     return;
   }
 
