@@ -616,9 +616,15 @@ class tx_browser_pi1_filter_4x {
     }
       // DRS - Development Reporting System
 
+      // Convert area items to rows
     $rows = $this->get_rowsFromArea( $arr_values );
+      // Count the hits for each area.
     $rows = $this->count_hitsForAreas( $rows );
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $rows );
+//$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $rows );
+
+    $this->rows = $rows;
+
+    $arr_return = $this->get_filterItemsFromRows( );
     return $arr_return;
   }
 
@@ -631,9 +637,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $rows
 
 
 /**
- * count_hitsForAreas( ):
+ * count_hitsForAreas( ): Count the hits for each area.
  *
- * @return	array		$arr_return : $arr_return['data']['items']
+ * @package array   $areas : rows of the current area
+ * @return	array		$areas : $areas with counted hits
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -646,39 +653,44 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $rows
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
+      // Get labels for the fields hits and value
     $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
     $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
 
-
-      // Key of the area: 'strings' or 'interval'
+      // Get the key of the area of the current filter: 'strings' or 'interval'
     $area_key = $this->pObj->objCal->arr_area[$this->curr_tableField]['key'];
 
-//$this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_array['area.'][$area_key . '.'] );
-
+      // LOOP each area
     foreach( $areas as $areas_uid => $areas_row )
     {
-      $curr_area  = $conf_array['area.'][$area_key . '.']['options.']['fields.'][$areas_uid . '.'];
+        // Short var
+      $conf_area  = $conf_array['area.'][$area_key . '.']['options.']['fields.'][$areas_uid . '.'];
 
-      $from       = $curr_area['valueFrom_stdWrap.']['value'];
-      $from_conf  = $curr_area['valueFrom_stdWrap.'];
+        // Get from
+      $from       = $conf_area['valueFrom_stdWrap.']['value'];
+      $from_conf  = $conf_area['valueFrom_stdWrap.'];
       $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
       
-      $to         = $curr_area['valueTo_stdWrap.']['value'];
-      $to_conf    = $curr_area['valueTo_stdWrap.'];
+        // Get to
+      $to         = $conf_area['valueTo_stdWrap.']['value'];
+      $to_conf    = $conf_area['valueTo_stdWrap.'];
       $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $curr_area );
 
+        // LOOP rows
       foreach( $this->rows as $rows_uid => $rows_row )
       {
-        $value  = $rows_row[$valueField];
+        $value = $rows_row[$valueField];
+          // Count the hits, if row value match from to condition
         if( $value >= $from && $value <= $to )
         {
           $areas[$areas_uid][$hitsField] = $areas[$areas_uid][$hitsField] + $this->rows[$rows_uid][$hitsField];
         }
-
       }
+        // LOOP rows
     }
+      // LOOP each area
 
+      // RETURN areas with hits
     return $areas;
   }
 
