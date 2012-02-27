@@ -2898,13 +2898,13 @@ class tx_browser_pi1_filter_4x {
       case( false ):
       default:
         $last_depth = 0;
-        $first_item_uid = key( $iterator );
         break;
     }
       // SWITCH display first item
       // Initial depth
 
       // LOOP
+    $bool_firstLoop = true;
     foreach( $iterator as $key => $value )
     {
         // CONTINUE $key is the uid. Save the uid.
@@ -2914,6 +2914,12 @@ class tx_browser_pi1_filter_4x {
         continue;
       }
         // CONTINUE $key is the uid. Save the uid.
+
+      if( $bool_firstLoop )
+      {
+        $first_item_uid = $curr_uid;
+      }
+
 
         // ERROR/CONTINUE $key isn't value
       if( $key != 'value' )
@@ -2976,6 +2982,8 @@ class tx_browser_pi1_filter_4x {
 
         // Result array
       $arr_result[$curr_uid] = $startTag . $item;
+
+      $bool_firstLoop = false;
     }
       // LOOP
       // Loop values
