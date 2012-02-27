@@ -2863,8 +2863,6 @@ class tx_browser_pi1_filter_4x {
       case( false ):
       default:
         $tmpOneDim  = $this->tmpOneDim;
-        reset( $tmpOneDim );
-        $first_item_uid = key( $tmpOneDim );
         break;
     }
       // SWITCH display first item
@@ -2900,6 +2898,7 @@ class tx_browser_pi1_filter_4x {
       case( false ):
       default:
         $last_depth = 0;
+        $first_item_uid = key( $iterator );
         break;
     }
       // SWITCH display first item
