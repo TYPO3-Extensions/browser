@@ -225,10 +225,25 @@ class tx_browser_pi1_filter_4x {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
+      // Default return value
+    $arr_return['data']['marker'] = array( );
+
+      // RETURN there isn't any filter
+    if( ! is_array ( $this->conf_view['filter.'] ) )
+    {
+        // DRS
+      if ($this->pObj->b_drs_filter)
+      {
+        $prompt = $this->conf_path . 'filters isn\'t an array. There isn\'t any filter for processing.';
+        t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+      }
+        // DRS
+      return $arr_return;
+    }
+      // RETURN there isn't any filter
+
       // Init localisation
     $this->init( );
-
-    $arr_return['data']['marker'] = array( );
 
       // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
@@ -341,10 +356,30 @@ class tx_browser_pi1_filter_4x {
       // Do we need translated/localised records?
 
       // Set class var $arr_conf_tableFields
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Integrate $this->pObj->objFilter->arr_conf_tableFields!';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS :TODO:
     $this->pObj->objFilter->get_tableFields( );
-      // Init area
+      // Set class var $arr_conf_tableFields
+
+    // Init area
     $this->pObj->objCal->area_init( );
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->objCal->arr_area );
+
+    $this->conf       = $this->pObj->conf['views.'][$viewWiDot][$mode . '.'];
+    $this->conf_view  = $this->conf;
+    foreach( $this->pObj->objCal->arr_area as $tableField => $arr_area_type )
+    {
+      list( $table, $field ) = explode( '.', $tableField );
+      $type = key( $arr_area_type );
+      $arr_fields = $this->conf_view['filter.'][$table . '.'][$field . '.']['area.'][$type]['options.']['fields.'];
+      $this->pObj->dev_var_dump( __METHOD__, __LINE__, $type );
+      $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_fields );
+    }
+    
     return;
   }
 
