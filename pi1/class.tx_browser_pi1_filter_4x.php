@@ -2474,7 +2474,7 @@ class tx_browser_pi1_filter_4x {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get TS value
-    $andWhere = $this->conf_view['filter.'][$table . '.'][$field . '.']['sql.andWhere.']['andWhere'];
+    $andWhere = $this->conf_view['filter.'][$table . '.'][$field . '.']['sql.']['andWhere'];
 
     if( ! empty ( $andWhere ) )
     {
