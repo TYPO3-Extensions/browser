@@ -2678,7 +2678,9 @@ class tx_browser_pi1_filter_4x {
  */
   private function localise_langOl( $uid, $value )
   {
-    $boolOlPrefix = $this->conf_localisation['TCA.']['value.']['langPrefix'];
+var_dump( __LINE__, $this->pObj->objLocalise->conf_localisation );
+
+    $boolOlPrefix = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['langPrefix'];
 
     switch( $boolOlPrefix )
     {
@@ -2712,12 +2714,13 @@ class tx_browser_pi1_filter_4x {
  */
   private function localise_langOlWiPrefix( $uid, $value )
   {
+var_dump( __LINE__ );
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
 
     $langOlField    = $this->sql_filterFields[$this->curr_tableField]['lang_ol'];
-    $devider  = $this->conf_localisation['TCA.']['value.']['devider'];
+    $devider  = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['devider'];
 
       // Get the language overlay value
     $langOlValue  = $this->rows[$uid][$langOlField];
@@ -2770,12 +2773,13 @@ class tx_browser_pi1_filter_4x {
  */
   private function localise_langOlWoPrefix( $uid, $value )
   {
+var_dump( __LINE__ );
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
 
     $langOlField    = $this->sql_filterFields[$this->curr_tableField]['lang_ol'];
-    $langOlDevider  = $this->conf_localisation['TCA.']['value.']['devider'];
+    $langOlDevider  = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['devider'];
 
       // Get the language overlay value
     $langOlValue = $this->rows[$uid][$langOlField];
