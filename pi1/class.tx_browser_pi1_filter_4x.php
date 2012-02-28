@@ -534,7 +534,7 @@ class tx_browser_pi1_filter_4x {
     $arr_return['data']['items'] = null;
 
       // Set rows, if current filter is with areas
-    $this->areas_setToRows( );
+    $this->areas_toRows( );
 
       // RETURN rows are empty
     if( empty ( $this->rows) )
@@ -1195,14 +1195,14 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * areas_setToRows( ):  If current filter is with areas, generate the rows.
- *                      Class var $rows will overriden.
+ * areas_toRows( ): If current filter is with areas, generate the rows.
+ *                  Class var $rows will overriden.
  *
  * @return	void
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function areas_setToRows( )
+  private function areas_toRows( )
   {
       // RETURN filter hasn't areas
     if( ! $this->bool_currFilterIsArea )
@@ -1214,7 +1214,7 @@ class tx_browser_pi1_filter_4x {
       // Get areas from TS
     $areas  = $this->ts_getAreas( );
       // Convert areas to rows
-    $rows   = $this->areas_setToRowsConverter( $areas );
+    $rows   = $this->areas_rowsConverter( $areas );
     $this->rowsFromAreaWoHits = $rows;
 
       // Count the hits for each area row
@@ -1237,14 +1237,14 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * areas_setToRowsConverter( ):  Converts areas array to rows array. Returns the rows.
+ * areas_rowsConverter( ):  Converts areas array to rows array. Returns the rows.
  *
  * @param   array           $areas  : areas from TS
  * @return	array           $rows   : rows
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function areas_setToRowsConverter( $areas )
+  private function areas_toRowsConverter( $areas )
   {
 
       // Get the labels for the fields uid and hits
