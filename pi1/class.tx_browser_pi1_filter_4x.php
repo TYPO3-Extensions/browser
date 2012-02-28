@@ -2678,8 +2678,6 @@ class tx_browser_pi1_filter_4x {
  */
   private function localise_langOl( $uid, $value )
   {
-var_dump( __LINE__, $this->pObj->objLocalise->conf_localisation );
-
     $boolOlPrefix = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['langPrefix'];
 
     switch( $boolOlPrefix )
@@ -2714,45 +2712,56 @@ var_dump( __LINE__, $this->pObj->objLocalise->conf_localisation );
  */
   private function localise_langOlWiPrefix( $uid, $value )
   {
-var_dump( __LINE__ );
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-
-    $langOlField    = $this->sql_filterFields[$this->curr_tableField]['lang_ol'];
-    $devider  = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['devider'];
-
+      // Get the label for the lang_ol field
+    $langOlField  = $this->sql_filterFields[$this->curr_tableField]['lang_ol'];
+      // Get the language devider
+    $devider      = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['devider'];
       // Get the language overlay value
     $langOlValue  = $this->rows[$uid][$langOlField];
       // Get the language prefix
     $prefix       = $GLOBALS['TSFE']->lang . ':' ; // Value i.e.: 'de:'
-      // Build the pattern
-    $pattern      = '~(\A' . $prefix . '|\\' .  $devider . $prefix. ')(.*)\\' .  $devider . '~U';
 
+      // Build the pattern
+      // i.e:
+      //    preg_match( ~(\Aen:|\|en:)(.*)\|~U, en:Policy|fr:Politique|it:Politica, $matches )
+      //    * (\Aen:|\|en:):
+      //      Search for 'en:' at beginning or '|en:' everywhere
+      //    * (.*)
+      //      Get the whole string ...
+      //    * \|~U
+      //      ... until the first pipe
+    $pattern      = '~(\A' . $prefix . '|\\' .  $devider . $prefix. ')(.*)\\' .  $devider . '~U';
+      // Build the pattern
+
+      // Get language overlay value for the current language
     if( preg_match( $pattern, $langOlValue, $matches ) )
     {
       $value = $matches[2];
-        // DRS
-      if( $this->pObj->b_drs_filter )
-      {
-        $prompt = 'preg_match( ' . $pattern . ', ' . $langOlValue . ', $matches )';
-        t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
-        $prompt = 'result of $matches[2] : ' . $matches[2];
-        t3lib_div :: devLog( '[OK/FILTER] ' . $prompt, $this->pObj->extKey, -1 );
-      }
-        // DRS
     }
-    else
-    {
-        // DRS
-      if( $this->pObj->b_drs_filter )
-      {
-        $prompt = 'preg_match( ' . $pattern . ', ' . $langOlValue . ', $matches ) hasn\'t any result!';
-        t3lib_div :: devLog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
-      }
-        // DRS
-    }
+      // Get language overlay value for the current language
 
+//      // DRS
+//    if( $this->pObj->b_drs_filter )
+//    {
+//      if( isset ( $matches[2] ) )
+//      {
+//        $prompt = 'preg_match( ' . $pattern . ', ' . $langOlValue . ', $matches )';
+//        t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+//        $prompt = 'result of $matches[2] : ' . $matches[2];
+//        t3lib_div :: devLog( '[OK/FILTER] ' . $prompt, $this->pObj->extKey, -1 );
+//      }
+//      if( ! isset ( $matches[2] ) )
+//      {
+//        $prompt = 'preg_match( ' . $pattern . ', ' . $langOlValue . ', $matches ) hasn\'t any result!';
+//        t3lib_div :: devLog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
+//      }
+//    }
+//      // DRS
+
+      // Return value
     return $value;
   }
 
@@ -2773,20 +2782,30 @@ var_dump( __LINE__ );
  */
   private function localise_langOlWoPrefix( $uid, $value )
   {
-var_dump( __LINE__ );
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-
-    $langOlField    = $this->sql_filterFields[$this->curr_tableField]['lang_ol'];
-    $langOlDevider  = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['devider'];
-
+      // Get the label for the lang_ol field
+    $langOlField  = $this->sql_filterFields[$this->curr_tableField]['lang_ol'];
+      // Get the language devider
+    $devider      = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['devider'];
       // Get the language overlay value
-    $langOlValue = $this->rows[$uid][$langOlField];
+    $langOlValue  = $this->rows[$uid][$langOlField];
 
-    return $langOlValue;
+    $lang_pos     = $this->lang_id - 1;
+
+    $langOlValues = explode( $devider, $langOlValue );
+
+    $langValue    = $langOlValues[$lang_pos];
+
+    if( ! empty( $langValue ) )
+    {
+      $value = $langValue;
+    }
+
+
+      // Return value
     return $value;
-
   }
 
 
