@@ -2791,8 +2791,7 @@ class tx_browser_pi1_filter_4x {
     $devider      = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['devider'];
       // Get the language overlay value
     $langOlValue  = $this->rows[$uid][$langOlField];
-
-    $lang_pos     = $this->lang_id - 1;
+    $lang_pos     = $GLOBALS['TSFE']->sys_language_content - 1;
 
     $langOlValues = explode( $devider, $langOlValue );
 
