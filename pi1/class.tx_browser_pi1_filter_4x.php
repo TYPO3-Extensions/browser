@@ -537,19 +537,61 @@ class tx_browser_pi1_filter_4x {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-      // SWITCH in calender area array
-    switch( true )
+      // Default return value
+    $arr_return['data']['items'] = null;
+
+    $this->get_filterItemsFromArea( );
+
+      // RETURN rows are empty
+    if( empty ( $this->rows) )
     {
-      case( in_array( $this->curr_tableField, array_keys( $this->pObj->objCal->arr_area ) ) ):
-        $arr_return = $this->get_filterItemsFromArea( );
+        // DRS
+      if( $this->pObj->b_drs_warn )
+      {
+        $prompt = 'Rows are empty. Filter: ' . $this->curr_tableField . '.';
+        t3lib_div::devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+        // DRS
+      return $arr_return;
+    }
+      // RETURN rows are empty
+
+
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Set nice_piVar
+    $this->set_nicePiVar( );
+
+      // Set class var $htmlSpaceLeft
+    $this->set_htmlSpaceLeft( );
+
+      // Set class var $maxItemsPerHtmlRow
+    $this->set_maxItemsPerHtmlRow( );
+
+    // Process nice_html
+    // Prepaire row and item counting
+    // Area
+    // Wrap values
+      // Wrap the item
+
+      // SWITCH current filter is a tree view
+    switch( in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
+    {
+      case( true ):
+        $arr_return = $this->get_filterItemsTree( );
+        //$items      = $arr_return['data']['items'];
         break;
+      case( false ):
       default:
-        $arr_return = $this->get_filterItemsFromRows( );
+        $arr_return = $this->get_filterItemsDefault( );
+        $items      = $arr_return['data']['items'];
+        $arr_return = $this->get_filterItemsWrap( $items );
         break;
     }
-      // SWITCH in calender area array
+      // SWITCH current filter is a tree view
 
-      // RETURN items
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $arr_return );
     return $arr_return;
   }
 
@@ -571,6 +613,11 @@ class tx_browser_pi1_filter_4x {
  */
   private function get_filterItemsFromArea( )
   {
+    if( ! in_array( $this->curr_tableField, array_keys( $this->pObj->objCal->arr_area ) ) )
+    {
+      return;
+    }
+
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
