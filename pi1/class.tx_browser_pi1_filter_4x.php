@@ -162,6 +162,8 @@ class tx_browser_pi1_filter_4x {
   var $rows = null;
     // [Array] Sum of hits per tableField. tableField is the element
   var $hits_sum = array( );
+    // [Boolean] true: current filter has areas, false: current filter hasn't areas
+  var $bool_currFilterIsArea = null;
 
     // [Array] nice piVar array for the current filter / tableField
   var $nicePiVar = null;
@@ -492,6 +494,12 @@ class tx_browser_pi1_filter_4x {
     }
       // RETURN condition isn't met
 
+    $this->set_currFilterIsArea( );
+    if( ! in_array( $this->curr_tableField, array_keys( $this->pObj->objCal->arr_area ) ) )
+    {
+      return;
+    }
+
       // Get filter rows
     $arr_return = $this->get_rows( );
     if( $arr_return['error']['status'] )
@@ -594,94 +602,6 @@ class tx_browser_pi1_filter_4x {
 
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
     return $arr_return;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * set_rowsForArea( ):  If current filter is with areas, generate the rows.
- *                      Result is stored in class var $rows.
- *
- * @return	void
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function set_rowsForArea( )
-  {
-      // RETURN filter hasn't areas
-    if( ! in_array( $this->curr_tableField, array_keys( $this->pObj->objCal->arr_area ) ) )
-    {
-      return;
-    }
-      // RETURN filter hasn't areas
-
-      // Default return value
-    $arr_return['data']['items'] = null;
-
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-      // Get TS configuration of the current filter / tableField
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-
-      // SWITCH area key
-    switch ( $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] )
-    {
-      case ('strings') :
-        $arr_result = $this->pObj->objCal->area_strings($conf_array, null, $this->curr_tableField);
-        $arr_values = $arr_result['data']['values'];
-        unset ($arr_result);
-        break;
-      case ('interval') :
-        $arr_result = $this->pObj->objCal->area_interval($conf_array, null, $this->curr_tableField);
-        $arr_values = $arr_result['data']['values'];
-        unset ($arr_result);
-        break;
-//        case ('from_to_fields') :
-//          break;
-      default:
-          // DRS - Development Reporting System
-        if( $this->pObj->b_drs_error )
-        {
-          $prompt = 'undefined value in switch: ' .
-                    '\'' . $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] . '\'.';
-          t3lib_div :: devLog( '[ERROR/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 3 );
-          $prompt = 'Areas won\'t handled!';
-          t3lib_div :: devLog( '[WARN/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 2 );
-        }
-          // DRS - Development Reporting System
-        return;
-    }
-      // SWITCH area key
-
-      // DRS - Development Reporting System
-    if( $this->pObj->b_drs_cal || $this->pObj->b_drs_filter )
-    {
-      $arr_prompt = null;
-      foreach( ( array ) $arr_values as $key => $value )
-      {
-        $arr_prompt[] = '[' . $key . '] = ' . $value;
-      }
-      $prompt = 'values are: ' . implode( ', ', ( array ) $arr_prompt );
-      t3lib_div :: devLog( '[INFO/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS - Development Reporting System
-
-      // Convert area items to rows
-    $rows = $this->get_rowsFromArea( $arr_values );
-      // Count the hits for each area.
-    $rows = $this->count_hitsForAreas( $rows );
-
-    $this->rows = $rows;
-
-    return;
   }
 
 
@@ -1561,6 +1481,96 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
 
 
 
+
+
+/**
+ * set_rowsForArea( ):  If current filter is with areas, generate the rows.
+ *                      Result is stored in class var $rows.
+ *
+ * @return	void
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function set_rowsForArea( )
+  {
+      // RETURN filter hasn't areas
+    if( ! $this->bool_currFilterIsArea )
+    {
+      return;
+    }
+      // RETURN filter hasn't areas
+
+      // Default return value
+    $arr_return['data']['items'] = null;
+
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS configuration of the current filter / tableField
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // SWITCH area key
+    switch ( $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] )
+    {
+      case ('strings') :
+        $arr_result = $this->pObj->objCal->area_strings($conf_array, null, $this->curr_tableField);
+        $arr_values = $arr_result['data']['values'];
+        unset ($arr_result);
+        break;
+      case ('interval') :
+        $arr_result = $this->pObj->objCal->area_interval($conf_array, null, $this->curr_tableField);
+        $arr_values = $arr_result['data']['values'];
+        unset ($arr_result);
+        break;
+//        case ('from_to_fields') :
+//          break;
+      default:
+          // DRS - Development Reporting System
+        if( $this->pObj->b_drs_error )
+        {
+          $prompt = 'undefined value in switch: ' .
+                    '\'' . $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] . '\'.';
+          t3lib_div :: devLog( '[ERROR/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 3 );
+          $prompt = 'Areas won\'t handled!';
+          t3lib_div :: devLog( '[WARN/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 2 );
+        }
+          // DRS - Development Reporting System
+        return;
+    }
+      // SWITCH area key
+
+      // DRS - Development Reporting System
+    if( $this->pObj->b_drs_cal || $this->pObj->b_drs_filter )
+    {
+      $arr_prompt = null;
+      foreach( ( array ) $arr_values as $key => $value )
+      {
+        $arr_prompt[] = '[' . $key . '] = ' . $value;
+      }
+      $prompt = 'values are: ' . implode( ', ', ( array ) $arr_prompt );
+      t3lib_div :: devLog( '[INFO/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS - Development Reporting System
+
+      // Convert area items to rows
+    $rows = $this->get_rowsFromArea( $arr_values );
+      // Count the hits for each area.
+    $rows = $this->count_hitsForAreas( $rows );
+
+    $this->rows = $rows;
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
  /***********************************************
   *
   * SQL ressources
@@ -1574,6 +1584,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
 
 
 
+  
 /**
  * sql_resAllItems( ):  Get the SQL ressource for a filter with all items.
  *                      Hits won't counted.
@@ -3764,6 +3775,41 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
   * Other helper
   *
   **********************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * set_currFilterIsArea( ): Set the class var $bool_currFilterIsArea
+ *
+ * @return	void
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function set_currFilterIsArea( )
+  {
+      // SWITCH current tableField is a filter with areas
+      // Set class var $bool_currFilterIsArea
+    switch( in_array( $this->curr_tableField, array_keys( $this->pObj->objCal->arr_area ) ) )
+    {
+      case( true ):
+        $this->bool_currFilterIsArea = true;
+        break;
+      case( false ):
+      default:
+        $this->bool_currFilterIsArea = false;
+        break;
+    }
+      // Set class var $bool_currFilterIsArea
+      // SWITCH current tableField is a filter with areas
+
+    return;
+  }
 
 
 
