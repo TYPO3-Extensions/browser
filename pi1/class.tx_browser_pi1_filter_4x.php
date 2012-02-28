@@ -112,7 +112,7 @@
  *
  *              SECTION: Maximum items per HTML row
  * 3047:     private function set_maxItemsPerHtmlRow( )
- * 3113:     private function set_ItemCurrentNumber( )
+ * 3113:     private function set_itemCurrentNumber( )
  * 3144:     private function get_maxItemsTagEndBegin( $item )
  * 3184:     private function get_maxItemsWrapBeginEnd( $items )
  *
@@ -591,117 +591,6 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * count_hitsForAreas( ): Count the hits for each area.
- *
- * @package array   $areas : rows of the current area
- * @return	array		$areas : $areas with counted hits
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function count_hitsForAreas( $areas )
-  {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-      // Get TS configuration of the current filter / tableField
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-
-      // Get labels for the fields hits and value
-    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
-    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
-
-      // Get the key of the area of the current filter: 'strings' or 'interval'
-    $area_key = $this->pObj->objCal->arr_area[$this->curr_tableField]['key'];
-
-      // LOOP each area
-    foreach( $areas as $areas_uid => $areas_row )
-    {
-        // Short var
-      $conf_area  = $conf_array['area.'][$area_key . '.']['options.']['fields.'][$areas_uid . '.'];
-
-        // Get from
-      $from       = $conf_area['valueFrom_stdWrap.']['value'];
-      $from_conf  = $conf_area['valueFrom_stdWrap.'];
-      $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
-
-        // Get to
-      $to         = $conf_area['valueTo_stdWrap.']['value'];
-      $to_conf    = $conf_area['valueTo_stdWrap.'];
-      $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
-
-        // LOOP rows
-      foreach( $this->rows as $rows_uid => $rows_row )
-      {
-        $value = $rows_row[$valueField];
-          // Count the hits, if row value match from to condition
-        if( $value >= $from && $value <= $to )
-        {
-          $areas[$areas_uid][$hitsField] = $areas[$areas_uid][$hitsField] + $this->rows[$rows_uid][$hitsField];
-        }
-      }
-        // LOOP rows
-    }
-      // LOOP each area
-
-      // RETURN areas with hits
-    return $areas;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * set_areasWiHitsOnly( ):  The method removes areas without any hit,
- *                          if should displayed items only, which have one hit at least.
- *
- * @package array   $areas : rows of the current area
- * @return	array		$areas : all rows or rows with one hit at least only
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function set_areasWiHitsOnly( $areas )
-  {
-      // RETURN all areas
-    if( $this->ts_displayWithoutAnyHit( ) )
-    {
-      return $areas;
-    }
-      // RETURN all areas
-
-      // Get label for the field hits
-    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
-
-      // LOOP each area
-      // Remove areas without any hit
-    foreach( $areas as $areas_uid => $areas_row )
-    {
-      if( $areas[$areas_uid][$hitsField] < 1 )
-      {
-        unset( $areas[$areas_uid] );
-      }
-    }
-      // Remove areas without any hit
-      // LOOP each area
-
-      // RETURN areas with hits only
-    return $areas;
-  }
-
-
-
-
-
-
-
-
-
-/**
  * get_rowsFromArea( ):
  *
  * @return	array		$arr_return : $arr_return['data']['items']
@@ -1161,7 +1050,7 @@ class tx_browser_pi1_filter_4x {
     }
       // Workaround: remove ###ONCHANGE###
 
-    $this->set_ItemCurrentNumber( );
+    $this->set_itemCurrentNumber( );
 
     $firstLoop = false;
     return $item;
@@ -3520,14 +3409,14 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * set_ItemCurrentNumber( ):  Method increases the nummber of handled items.
+ * set_itemCurrentNumber( ):  Method increases the nummber of handled items.
  *                            Result is stored in the class var $itemsPerHtmlRow.
  *
  * @return	void
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function set_ItemCurrentNumber( )
+  private function set_itemCurrentNumber( )
   {
       // RETURN maxItemsPerHtmlRow is false
     if ( $this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false )
@@ -3630,6 +3519,117 @@ class tx_browser_pi1_filter_4x {
   * Hits helper
   *
   **********************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * count_hitsForAreas( ): Count the hits for each area.
+ *
+ * @package array   $areas : rows of the current area
+ * @return	array		$areas : $areas with counted hits
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function count_hitsForAreas( $areas )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS configuration of the current filter / tableField
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // Get labels for the fields hits and value
+    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
+
+      // Get the key of the area of the current filter: 'strings' or 'interval'
+    $area_key = $this->pObj->objCal->arr_area[$this->curr_tableField]['key'];
+
+      // LOOP each area
+    foreach( $areas as $areas_uid => $areas_row )
+    {
+        // Short var
+      $conf_area  = $conf_array['area.'][$area_key . '.']['options.']['fields.'][$areas_uid . '.'];
+
+        // Get from
+      $from       = $conf_area['valueFrom_stdWrap.']['value'];
+      $from_conf  = $conf_area['valueFrom_stdWrap.'];
+      $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
+
+        // Get to
+      $to         = $conf_area['valueTo_stdWrap.']['value'];
+      $to_conf    = $conf_area['valueTo_stdWrap.'];
+      $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+
+        // LOOP rows
+      foreach( $this->rows as $rows_uid => $rows_row )
+      {
+        $value = $rows_row[$valueField];
+          // Count the hits, if row value match from to condition
+        if( $value >= $from && $value <= $to )
+        {
+          $areas[$areas_uid][$hitsField] = $areas[$areas_uid][$hitsField] + $this->rows[$rows_uid][$hitsField];
+        }
+      }
+        // LOOP rows
+    }
+      // LOOP each area
+
+      // RETURN areas with hits
+    return $areas;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * set_areasWiHitsOnly( ):  The method removes areas without any hit,
+ *                          if should displayed items only, which have one hit at least.
+ *
+ * @package array   $areas : rows of the current area
+ * @return	array		$areas : all rows or rows with one hit at least only
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function set_areasWiHitsOnly( $areas )
+  {
+      // RETURN all areas
+    if( $this->ts_displayWithoutAnyHit( ) )
+    {
+      return $areas;
+    }
+      // RETURN all areas
+
+      // Get label for the field hits
+    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
+
+      // LOOP each area
+      // Remove areas without any hit
+    foreach( $areas as $areas_uid => $areas_row )
+    {
+      if( $areas[$areas_uid][$hitsField] < 1 )
+      {
+        unset( $areas[$areas_uid] );
+      }
+    }
+      // Remove areas without any hit
+      // LOOP each area
+
+      // RETURN areas with hits only
+    return $areas;
+  }
 
 
 
