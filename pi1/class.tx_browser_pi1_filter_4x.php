@@ -2721,6 +2721,7 @@ class tx_browser_pi1_filter_4x {
     // Get the language prefix
     $prefix       = $GLOBALS['TSFE']->lang . ':' ; // Value i.e.: 'de:'
 
+      // LOOP rows
     foreach( $this->rows as $uid => $row )
     {
         // Get the language overlay value
@@ -2768,6 +2769,7 @@ class tx_browser_pi1_filter_4x {
       }
         // DRS
     }
+      // LOOP rows
   }
 
 
@@ -2785,35 +2787,37 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function localise_langOlWoPrefix( $uid, $value )
+  private function localise_langOlWoPrefix( )
   {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-      // Get the label for the lang_ol field
+      // Get the labels for the value field and the lang_ol field
+    $valueField   = $this->sql_filterFields[$this->curr_tableField]['value'];
     $langOlField  = $this->sql_filterFields[$this->curr_tableField]['lang_ol'];
+
       // Get the language devider
     $devider      = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['devider'];
-      // Get the language overlay value
-    $langOlValue  = $this->rows[$uid][$langOlField];
       // Get position (language id)
     $lang_pos     = $GLOBALS['TSFE']->sys_language_content - 1;
-      // Devide language overlays to an array
-    $langOlValues = explode( $devider, $langOlValue );
-      // Get element with the language position
-    $langValue    = $langOlValues[$lang_pos];
 
-      // IF there is a language value
-      // Override current value
-    if( ! empty( $langValue ) )
+      // LOOP rows
+    foreach( $this->rows as $uid => $row )
     {
-      $value = $langValue;
-    }
-      // Override current value
-      // IF there is a language value
+        // Get the language overlay value
+      $langOlValue  = $row[$langOlField];
+        // Devide language overlays to an array
+      $langOlValues = explode( $devider, $langOlValue );
+        // Get element with the language position
+      $langValue    = $langOlValues[$lang_pos];
 
-      // Return value
-    return $value;
+        // IF there is a language value
+        // Override current value
+      if( ! empty( $langValue ) )
+      {
+        $this->rows[$uid][$valueField] = $langValue;
+      }
+        // Override current value
+        // IF there is a language value
+    }
+      // LOOP rows
   }
 
 
