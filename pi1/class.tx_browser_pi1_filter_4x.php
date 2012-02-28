@@ -641,7 +641,7 @@ class tx_browser_pi1_filter_4x {
       $from       = $conf_area['valueFrom_stdWrap.']['value'];
       $from_conf  = $conf_area['valueFrom_stdWrap.'];
       $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
-      
+
         // Get to
       $to         = $conf_area['valueTo_stdWrap.']['value'];
       $to_conf    = $conf_area['valueTo_stdWrap.'];
@@ -661,21 +661,49 @@ class tx_browser_pi1_filter_4x {
     }
       // LOOP each area
 
-      // LOOP each area
-    if( ! $this->ts_displayWithoutAnyHit( ) )
+      // RETURN areas with hits
+    return $areas;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * set_areasWiHitsOnly( ):  The method removes areas without any hit,
+ *                          if should displayed items only, which have one hit at least.
+ *
+ * @package array   $areas : rows of the current area
+ * @return	array		$areas : all rows or rows with one hit at least only
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function set_areasWiHitsOnly( $areas )
+  {
+      // RETURN all areas
+    if( $this->ts_displayWithoutAnyHit( ) )
     {
-      foreach( $areas as $areas_uid => $areas_row )
+      return $areas;
+    }
+      // RETURN all areas
+
+      // LOOP each area
+      // Remove areas without any hit
+    foreach( $areas as $areas_uid => $areas_row )
+    {
+      if( $areas[$areas_uid][$hitsField] < 1 )
       {
-        if( $areas[$areas_uid][$hitsField] < 1 )
-        {
-          unset( $areas[$areas_uid] );
-        }
+        unset( $areas[$areas_uid] );
       }
     }
+      // Remove areas without any hit
       // LOOP each area
-var_dump( __LINE__, $areas );
 
-      // RETURN areas with hits
+      // RETURN areas with hits only
     return $areas;
   }
 
@@ -1444,13 +1472,6 @@ var_dump( __LINE__, $areas );
       // RETURN display items only, if they have one hit at least
     if( ! $this->ts_displayWithoutAnyHit( ) )
     {
-        // RETURN filter hasn't areas
-var_dump( __LINE__, $this->rowsFromAreaWiHitsOnly );
-      if( $this->bool_currFilterIsArea && 0 )
-      {
-        $rows_wiHits = $this->rowsFromAreaWiHitsOnly;
-      }
-        // RETURN filter hasn't areas
       $arr_return['data']['rows'] = $rows_wiHits;
         // Prompt the expired time to devlog
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -1458,13 +1479,13 @@ var_dump( __LINE__, $this->rowsFromAreaWiHitsOnly );
     }
       // RETURN display items only, if they have one hit at least
 
-      // RETURN filter hasn't areas
-    if( $this->bool_currFilterIsArea )
-    {
-      $arr_return['data']['rows'] = $this->rowsFromAreaWiHitsOnly;
-var_dump( __LINE__, $arr_return );
-      return $arr_return;
-    }
+//      // RETURN filter hasn't areas
+//    if( $this->bool_currFilterIsArea )
+//    {
+//      $arr_return['data']['rows'] = $this->rowsFromAreaWiHitsOnly;
+//var_dump( __LINE__, $arr_return );
+//      return $arr_return;
+//    }
       // RETURN filter hasn't areas
 
       // SWITCH localTable versus foreignTable
@@ -1579,12 +1600,16 @@ var_dump( __LINE__, $arr_return );
       // DRS - Development Reporting System
 
       // Convert area items to rows
-    $rows = $this->get_rowsFromArea( $arr_values );
-    $this->rowsFromAreaWoHits = $rows;
-      // Count the hits for each area.
-    $rows = $this->count_hitsForAreas( $rows );
+    $areas = $this->get_rowsFromArea( $arr_values );
+    $this->rowsFromAreaWoHits = $areas;
 
-    $this->rows = $rows;
+      // Count the hits for each area.
+    $areas = $this->count_hitsForAreas( $areas );
+      // Remove areas without hits, if it's needed
+    $areas = $this->set_areasWiHitsOnly( $areas );
+
+      // Set class var rows
+    $this->rows = $areas;
 
     return;
   }
