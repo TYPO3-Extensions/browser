@@ -655,6 +655,7 @@ class tx_browser_pi1_filter_4x {
         if( $value >= $from && $value <= $to )
         {
           $areas[$areas_uid][$hitsField] = $areas[$areas_uid][$hitsField] + $this->rows[$rows_uid][$hitsField];
+          $this->rowsFromAreaWiHitsOnly[$areas_uid] = $areas[$areas_uid];
         }
       }
         // LOOP rows
@@ -1433,8 +1434,7 @@ class tx_browser_pi1_filter_4x {
         // RETURN filter hasn't areas
       if( $this->bool_currFilterIsArea )
       {
-        $arr_return['data']['rows'] = $this->rowsFromAreaWoHits;
-        return $arr_return;
+        $rows_wiHits = $this->rowsFromAreaWiHitsOnly;
       }
         // RETURN filter hasn't areas
       $arr_return['data']['rows'] = $rows_wiHits;
