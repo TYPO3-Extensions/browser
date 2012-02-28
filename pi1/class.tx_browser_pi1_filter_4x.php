@@ -667,11 +667,11 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $arr_return );
     $rows = $this->get_rowsFromArea( $arr_values );
       // Count the hits for each area.
     $rows = $this->count_hitsForAreas( $rows );
-//$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $rows );
 
     $this->rows = $rows;
 
     $arr_return = $this->get_filterItemsFromRows( );
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $arr_return );
     return $arr_return;
   }
 
