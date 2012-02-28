@@ -338,6 +338,8 @@ class tx_browser_pi1_filter_4x {
     {
       $prompt = 'Integrate $this->pObj->objFilter->arr_conf_tableFields!';
       t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompt = 'Integrate $this->pObj->objFilter->arr_tablesWiTreeparentfield!';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS :TODO:
     $this->pObj->objFilter->get_tableFields( );
@@ -378,14 +380,6 @@ class tx_browser_pi1_filter_4x {
     $this->conf       = $this->pObj->conf;
     $this->conf_view  = $this->conf['views.'][$this->view . '.'][$this->mode . '.'];
       // Reinit class vars $conf and $conf_view
-
-      // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Area: first click doesn\'t regard the cookie!';
-      t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
-    }
-      // DRS :TODO:
 
     return;
   }
@@ -647,7 +641,6 @@ class tx_browser_pi1_filter_4x {
     {
       case( true ):
         $arr_return = $this->get_filterItemsTree( );
-        //$items      = $arr_return['data']['items'];
         break;
       case( false ):
       default:
@@ -821,8 +814,8 @@ class tx_browser_pi1_filter_4x {
 /**
  * get_filterItemsWrap( ):  Wrap all items (wrap the object)
  *
- * @param	string		$items      : The items of the current tableField
- * @return	array		$arr_return : $arr_return['data']['items']
+ * @param	string            $items      : The items of the current tableField
+ * @return	array           $arr_return : $arr_return['data']['items']
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -835,10 +828,12 @@ class tx_browser_pi1_filter_4x {
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
+      // IF NOT CATEGORY_MENU ajax class onchange
     if($conf_name != 'CATEGORY_MENU')
     {
       $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
     }
+      // IF NOT CATEGORY_MENU ajax class onchange
 
       // DRS :TODO:
     if( $this->pObj->b_drs_devTodo )
@@ -848,8 +843,8 @@ class tx_browser_pi1_filter_4x {
     }
       // DRS :TODO:
 
-      // #8337, 101011, dwildt
-      // SWITCH COA
+      // Set multiple property
+      // SWITCH type of filter
     switch( $conf_name )
     {
       case ( 'SELECTBOX' ) :
@@ -871,52 +866,46 @@ class tx_browser_pi1_filter_4x {
         $multiple  = null;
         break;
     }
-      // SWITCH COA
+      // SWITCH type of filter
+      // Set multiple property
 
-    $itemsWrap = $conf_array['wrap.']['object'];
+      // Get the all items wrap
+    $itemsWrap = $this->htmlSpaceLeft . $conf_array['wrap.']['object'];
       // Remove empty class
     $itemsWrap = str_replace( ' class=""', null, $itemsWrap );
 
-    $itemsWrap      = $this->htmlSpaceLeft . $itemsWrap;
-
+      // Get nice piVar
     $key_piVar      = $this->nicePiVar['key_piVar'];
     $arr_piVar      = $this->nicePiVar['arr_piVar'];
     $str_nicePiVar  = $this->nicePiVar['nice_piVar'];
 
-    $str_uid        = $this->pObj->prefixId . '_' . $str_nicePiVar;
-    $str_uid        = str_replace('.', '_', $str_uid);
+      // Get ID
+    $id = $this->pObj->prefixId . '_' . $str_nicePiVar;
+    $id = str_replace('.', '_', $id);
 
-    $itemsWrap    = str_replace('###TABLE.FIELD###',  $key_piVar, $itemsWrap );
-    $itemsWrap    = str_replace('###ID###',           $str_uid,   $itemsWrap );
-    $itemsWrap    = str_replace('###SIZE###',         $size,      $itemsWrap );
-    $itemsWrap    = str_replace('###MULTIPLE###',     $multiple,  $itemsWrap );
+      // Replace marker
+    $itemsWrap = str_replace('###TABLE.FIELD###',  $key_piVar,  $itemsWrap );
+    $itemsWrap = str_replace('###ID###',           $id,         $itemsWrap );
+    $itemsWrap = str_replace('###SIZE###',         $size,       $itemsWrap );
+    $itemsWrap = str_replace('###MULTIPLE###',     $multiple,   $itemsWrap );
+      // Replace marker
 
-      // DRS - Development Reporting System
-    if( empty( $itemsWrap ) )
-    {
-      if( $this->pObj->b_drs_warn )
-      {
-        $prompt = 'wrap_allItems returns an empty value for ' . $conf_name;
-        t3lib_div :: devlog('[WARN/TEMPLATING] ' . $prompt, $this->pObj->extKey, 2);
-      }
-    }
-      // DRS - Development Reporting System
-
+      // Wrap all items
     $items = PHP_EOL . $items . $this->htmlSpaceLeft;
     $items = str_replace('|', $items, $itemsWrap);
+      // Wrap all items
 
-    $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $row_number);
-
-      // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo )
+      // IF CATEGORY_MENU ajax class onchange
+    if($conf_name == 'CATEGORY_MENU')
     {
-      $prompt = '$this->get_filterWrap( )';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+      $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
     }
-      // DRS :TODO:
+      // IF CATEGORY_MENU ajax class onchange
 
+      // Wrap the filter
     $items = $this->get_filterWrap( $items );
 
+      // RETURN content
     $arr_return['data']['items'] = $items;
     return $arr_return;
   }
@@ -3289,13 +3278,14 @@ class tx_browser_pi1_filter_4x {
       // Get TS value
 
       // Replace the marker
-    $item = str_replace( '###TITLE###', $title, $item );
+    $item = str_replace( ' ###TITLE###',  $title, $item );
+    $item = str_replace( '###TITLE###',   $title, $item );
 
     if( $firstLoop )
     {
       if( $this->pObj->b_drs_devTodo )
       {
-        $prompt = '###TITLE### is removed. Check the code!';
+        $prompt = '###TITLE### is removed. It is the marker for a href title. Develope the code!';
         t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
       }
     }
