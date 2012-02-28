@@ -691,6 +691,9 @@ class tx_browser_pi1_filter_4x {
     }
       // RETURN all areas
 
+      // Get label for the field hits
+    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+
       // LOOP each area
       // Remove areas without any hit
     foreach( $areas as $areas_uid => $areas_row )
