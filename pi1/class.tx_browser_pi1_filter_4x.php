@@ -3699,11 +3699,11 @@ class tx_browser_pi1_filter_4x {
     {
       case( $uid == $conf_array['first_item.']['option_value'] ):
         $bool_displayHits   = $conf_array['first_item.']['display_hits'];
-        $bool_displayWoHit  = $conf_array['first_item.']['display_without_any_hit'];
+        $bool_displayEmptyHits  = $conf_array['first_item.']['display_hits.']['display_empty_hits'];
         break;
       default:
         $bool_displayHits   = $conf_array['wrap.']['item.']['display_hits'];
-        $bool_displayWoHit  = $conf_array['wrap.']['item.']['display_without_any_hit'];
+        $bool_displayEmptyHits  = $conf_array['wrap.']['item.']['display_hits.']['display_empty_hits'];
         break;
     }
       // SWITCH first item
@@ -3721,20 +3721,14 @@ class tx_browser_pi1_filter_4x {
       // Get the hit
     $hits = $row[$hitsField];
 
-
+      // IF there is no hit and empty hits shouldn't displayed
       // RETURN item without any hit stdWrap
-      // IF there is no hit
-    if( $hits < 1 )
+    if( $hits < 1 && ( ! $bool_displayEmptyHits ) )
     {
-        // IF item shouldn't displayed without any hit
-      if( ! $bool_displayWoHit )
-      {
-        return $value;
-      }
-        // IF item shouldn't displayed without any hit
+      return $value;
     }
-      // IF there is no hit
       // RETURN item without any hit stdWrap
+      // IF there is no hit and empty hits shouldn't displayed
 
       // stdWrap the hit
       // SWITCH first item
