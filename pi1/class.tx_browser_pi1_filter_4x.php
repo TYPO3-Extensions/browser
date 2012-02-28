@@ -1430,6 +1430,13 @@ class tx_browser_pi1_filter_4x {
       // RETURN display items only, if they have one hit at least
     if( ! $this->ts_displayWithoutAnyHit( ) )
     {
+        // RETURN filter hasn't areas
+      if( $this->bool_currFilterIsArea )
+      {
+        $arr_return['data']['rows'] = $this->rowsFromAreaWoHits;
+        return $arr_return;
+      }
+        // RETURN filter hasn't areas
       $arr_return['data']['rows'] = $rows_wiHits;
         // Prompt the expired time to devlog
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
