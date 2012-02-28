@@ -269,7 +269,6 @@ class tx_browser_pi1_filter_4x {
           $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
           return $arr_result;
         }
-var_dump( __LINE__, $this->rows, $arr_result, $arr_return );
         $arr_return['data']['filter'] = ( array ) $arr_return['data']['filter'] + $arr_result['data']['marker'];
         unset( $arr_result );
       }
@@ -597,7 +596,6 @@ var_dump( __LINE__, $this->rows, $arr_result, $arr_return );
     }
       // SWITCH current filter is a tree view
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
     return $arr_return;
   }
 
