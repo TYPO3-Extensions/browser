@@ -924,7 +924,10 @@ class tx_browser_pi1_filter_4x {
   {
     static $firstLoop = true;
 
-      // stdWrap the current value
+      // Localise the current value
+    $value = $this->localise( $uid, $value );
+    
+      // Get the stdWrap for the item
       // SWITCH first item
     switch( true )
     {
@@ -937,8 +940,10 @@ class tx_browser_pi1_filter_4x {
         break;
     }
       // SWITCH first item
-    $item = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
+      // Get the stdWrap for the item
+
       // stdWrap the current value
+    $item = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
 
       // Prepend or append hits
     $item = $this->set_hits( $uid, $item, $this->rows[$uid] );
@@ -2589,6 +2594,108 @@ class tx_browser_pi1_filter_4x {
     return $andWhere;
   }
 
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * Localisation
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * localise( ):  Get the localised value
+ *
+ * @return	array		$value: value
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function localise( $uid, $value )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+
+    switch( true )
+    {
+      case( $this->sql_filterFields[$this->curr_tableField]['lang_ol'] ):
+        $value = $this->localise_lang_ol( $uid, $value );
+        break;
+      case( $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'] ):
+        $value = $this->localise_sysLanguage( $uid, $value );
+        break;
+      default:
+    }
+
+    return $value;
+
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * localise_lang_ol( ):  Get the localised value
+ *
+ * @return	array		$value: value
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function localise_lang_ol( $uid, $value )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+
+    $langOlField = $this->sql_filterFields[$this->curr_tableField]['lang_ol'];
+
+    return $langOlField;
+
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * localise_sysLanguage( ):  Get the localised value
+ *
+ * @return	array		$value: value
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function localise_sysLanguage( $uid, $value )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+    $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
+
+    return $value;
+
+  }
 
 
 
