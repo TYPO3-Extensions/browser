@@ -49,7 +49,7 @@
  *              SECTION: Init
  *  333:     private function init( )
  *  371:     private function init_calendarArea( )
- *  411:     private function init_localisationMode( )
+ *  411:     private function init_localisation( )
  *
  *              SECTION: Filter rendering
  *  479:     private function get_filter( )
@@ -338,7 +338,7 @@ class tx_browser_pi1_filter_4x {
       // Set class var $arr_conf_tableFields
 
       // Init localisation
-    $this->init_localisationMode( );
+    $this->init_localisation( );
 
       // Init calendar area
     $this->init_calendarArea( );
@@ -385,7 +385,7 @@ class tx_browser_pi1_filter_4x {
 
 
   /**
- * init_localisationMode( ):  Inits the localisation mode.
+ * init_localisation( ):  Inits the localisation mode and localisation TS
  *                            Sets the class vars
  *                            * $int_localisation_mode
  *                            * bool_dontLocalise
@@ -394,13 +394,14 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function init_localisationMode( )
+  private function init_localisation( )
   {
 
-      // Set class var $int_localisation_mode
+      // Set class var $int_localisation_mode; init TS of pObj->objLocalise;
     if( ! isset( $this->int_localisation_mode ) )
     {
       $this->int_localisation_mode = $this->pObj->objLocalise->localisationConfig( );
+      $this->pObj->objLocalise->init_typoscript( );
     }
 
       // Set class var $bool_dontLocalise
@@ -2665,9 +2666,14 @@ class tx_browser_pi1_filter_4x {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
 
-    $langOlField = $this->sql_filterFields[$this->curr_tableField]['lang_ol'];
+    $langOlField    = $this->sql_filterFields[$this->curr_tableField]['lang_ol'];
+    $langOlDevider  = $this->conf_localisation['TCA.']['value.']['devider'];
+    $boolOlPrefix   = $this->conf_localisation['TCA.']['value.']['langPrefix'];
 
-    return $langOlField;
+      // Get the language overlay value
+    $langOlValue = $this->rows[$uid][$langOlField];
+
+    return $value;
 
   }
 
