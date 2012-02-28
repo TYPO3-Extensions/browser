@@ -367,6 +367,14 @@ class tx_browser_pi1_filter_4x {
     $this->conf_view  = $this->conf['views.'][$this->view . '.'][$this->mode . '.'];
       // Reinit class vars $conf and $conf_view
 
+      // DRS :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Area: first click doesn\'t regard the cookie!';
+      t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
+    }
+      // DRS :TODO:
+
     return;
   }
 
