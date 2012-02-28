@@ -1437,6 +1437,14 @@ class tx_browser_pi1_filter_4x {
     }
       // RETURN display items only, if they have one hit at least
 
+      // RETURN filter hasn't areas
+    if( $this->bool_currFilterIsArea )
+    {
+      $arr_return['data']['rows'] = $this->rowsFromAreaWoHits;
+      return $arr_return;
+    }
+      // RETURN filter hasn't areas
+
       // SWITCH localTable versus foreignTable
     switch( true )
     {
@@ -1550,6 +1558,7 @@ class tx_browser_pi1_filter_4x {
 
       // Convert area items to rows
     $rows = $this->get_rowsFromArea( $arr_values );
+    $this->rowsFromAreaWoHits = $rows;
       // Count the hits for each area.
     $rows = $this->count_hitsForAreas( $rows );
 
