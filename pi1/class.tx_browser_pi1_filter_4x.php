@@ -280,6 +280,8 @@ class tx_browser_pi1_filter_4x {
       // DRS :TODO:
     if( $this->pObj->b_drs_devTodo )
     {
+      $prompt = 'Area?';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
       $prompt = 'Check the effect of TypoScript sql.andWhere!';
       t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
@@ -366,8 +368,25 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_calendarArea( )
   {
+
       // Init area
     $this->pObj->objCal->area_init( );
+
+      // Reinit class vars $conf and $conf_view
+    $this->conf       = $this->pObj->conf;
+    $this->conf_view  = $this->conf['views.'][$this->view . '.'][$this->mode . '.'];
+
+//    foreach( $this->pObj->objCal->arr_area as $tableField => $area_type )
+//    {
+//      list( $table, $field ) = explode( '.', $tableField );
+//      $key = $area_type['key'];
+////var_dump( $table, $field, $area_type['key'], $this->conf_view['filter.'] );
+//      $conf_filter  = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+//      $conf_items   = $conf_filter['area.'][$key . '.']['options.']['fields.'];
+//      $this->pObj->dev_var_dump( __METHOD__, __LINE__, $conf_items );
+//    }
+
+    return;
   }
 
 
@@ -554,6 +573,12 @@ class tx_browser_pi1_filter_4x {
 
       // Set class var $maxItemsPerHtmlRow
     $this->set_maxItemsPerHtmlRow( );
+
+    // Process nice_html
+    // Prepaire row and item counting
+    // Area
+    // Wrap values
+      // Wrap the item
 
       // SWITCH current filter is a tree view
     switch( in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
@@ -785,6 +810,12 @@ class tx_browser_pi1_filter_4x {
       // Set class var $maxItemsPerHtmlRow
     $this->set_maxItemsPerHtmlRow( );
 
+    // Process nice_html
+    // Prepaire row and item counting
+    // Area
+    // Wrap values
+      // Wrap the item
+
       // SWITCH current filter is a tree view
     switch( in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
     {
@@ -836,6 +867,8 @@ class tx_browser_pi1_filter_4x {
       // Get TS configuration of the current filter / tableField
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+    // :TODO: Area?
 
       // Add the first item to the rows
     $this->set_firstItem( );
