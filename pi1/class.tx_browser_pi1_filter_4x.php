@@ -1226,7 +1226,7 @@ class tx_browser_pi1_filter_4x {
       // Get areas from TS
     $areas  = $this->ts_getAreas( );
       // Convert areas to rows
-    $rows   = $this->areas_rowsConverter( $areas );
+    $rows   = $this->areas_toRowsConverter( $areas );
     $this->rowsFromAreaWoHits = $rows;
 
       // Count the hits for each area row
@@ -1249,7 +1249,7 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * areas_rowsConverter( ):  Converts areas array to rows array. Returns the rows.
+ * areas_toRowsConverter( ):  Converts areas array to rows array. Returns the rows.
  *
  * @param	array		$areas  : areas from TS
  * @return	array		$rows   : rows
