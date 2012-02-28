@@ -2750,23 +2750,23 @@ class tx_browser_pi1_filter_4x {
         // IF: Override default language with language overlay value
         // Get language overlay value for the current language
 
-//        // DRS
-//      if( $this->pObj->b_drs_filter )
-//      {
-//        if( isset ( $matches[2] ) )
-//        {
-//          $prompt = 'preg_match( ' . $pattern . ', ' . $langOlValue . ', $matches )';
-//          t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
-//          $prompt = 'result of $matches[2] : ' . $matches[2];
-//          t3lib_div :: devLog( '[OK/FILTER] ' . $prompt, $this->pObj->extKey, -1 );
-//        }
-//        if( ! isset ( $matches[2] ) )
-//        {
-//          $prompt = 'preg_match( ' . $pattern . ', ' . $langOlValue . ', $matches ) hasn\'t any result!';
-//          t3lib_div :: devLog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
-//        }
-//      }
-//        // DRS
+        // DRS
+      if( $this->pObj->b_drs_filter )
+      {
+        if( isset ( $matches[2] ) )
+        {
+          $prompt = 'preg_match( ' . $pattern . ', ' . $langOlValue . ', $matches )';
+          t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = 'result of $matches[2] : ' . $matches[2];
+          t3lib_div :: devLog( '[OK/FILTER] ' . $prompt, $this->pObj->extKey, -1 );
+        }
+        if( ! isset ( $matches[2] ) )
+        {
+          $prompt = 'preg_match( ' . $pattern . ', ' . $langOlValue . ', $matches ) hasn\'t any result!';
+          t3lib_div :: devLog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
+        }
+      }
+        // DRS
     }
   }
 
