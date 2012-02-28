@@ -662,13 +662,19 @@ class tx_browser_pi1_filter_4x {
       // LOOP each area
 
       // LOOP each area
-    foreach( $areas as $areas_uid => $areas_row )
+    if( ! $this->ts_displayWithoutAnyHit( ) )
     {
-      if( $areas[$areas_uid][$hitsField] > 0 )
+      foreach( $areas as $areas_uid => $areas_row )
       {
-        $this->rowsFromAreaWiHitsOnly[$areas_uid] = $areas[$areas_uid];
+        if( $areas[$areas_uid][$hitsField] < 1 )
+        {
+          unset( $areas[$areas_uid] );
+        }
       }
     }
+      // LOOP each area
+var_dump( __LINE__, $areas );
+
       // RETURN areas with hits
     return $areas;
   }
@@ -1439,7 +1445,8 @@ class tx_browser_pi1_filter_4x {
     if( ! $this->ts_displayWithoutAnyHit( ) )
     {
         // RETURN filter hasn't areas
-      if( $this->bool_currFilterIsArea )
+var_dump( __LINE__, $this->rowsFromAreaWiHitsOnly );
+      if( $this->bool_currFilterIsArea && 0 )
       {
         $rows_wiHits = $this->rowsFromAreaWiHitsOnly;
       }
@@ -1454,7 +1461,8 @@ class tx_browser_pi1_filter_4x {
       // RETURN filter hasn't areas
     if( $this->bool_currFilterIsArea )
     {
-      $arr_return['data']['rows'] = $this->rowsFromAreaWoHits;
+      $arr_return['data']['rows'] = $this->rowsFromAreaWiHitsOnly;
+var_dump( __LINE__, $arr_return );
       return $arr_return;
     }
       // RETURN filter hasn't areas
