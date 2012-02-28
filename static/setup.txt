@@ -1173,6 +1173,8 @@ plugin.tx_browser_pi1 {
             stdWrap {
               noTrimWrap = | (|)|
             }
+              // [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
+            display_empty_hits = 0
           }
           value_stdWrap {
             data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
@@ -1211,6 +1213,8 @@ plugin.tx_browser_pi1 {
               stdWrap {
                 noTrimWrap = | (|)|
               }
+                // [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
+              display_empty_hits = 0
             }
               // [Integer] Space characters from left margin in the HTML code
             nice_html_spaceLeft = 16
@@ -1311,6 +1315,8 @@ plugin.tx_browser_pi1 {
               stdWrap {
                 noTrimWrap = | (|)|
               }
+                // [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
+              display_empty_hits = 0
             }
               // [Integer] Space characters from left margin in the HTML code
             nice_html_spaceLeft = 16
@@ -1400,6 +1406,8 @@ plugin.tx_browser_pi1 {
               stdWrap {
                 noTrimWrap = | (|)|
               }
+                // [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
+              display_empty_hits = 0
             }
               // [Integer] Space characters from left margin in the HTML code
             nice_html_spaceLeft = 16
@@ -1468,6 +1476,8 @@ plugin.tx_browser_pi1 {
             stdWrap {
               noTrimWrap = | (|)|
             }
+              // [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
+            display_empty_hits = 0
           }
           value_stdWrap {
             data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
@@ -1514,6 +1524,8 @@ plugin.tx_browser_pi1 {
               stdWrap {
                 noTrimWrap = | (|)|
               }
+                // [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
+              display_empty_hits = 0
             }
               // [Integer] Space characters from left margin in the HTML code
             nice_html_spaceLeft = 16

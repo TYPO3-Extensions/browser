@@ -692,7 +692,7 @@ class tx_browser_pi1_filter_4x {
       // RETURN all areas
 
       // Get label for the field hits
-    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
 
       // LOOP each area
       // Remove areas without any hit
@@ -3722,13 +3722,19 @@ class tx_browser_pi1_filter_4x {
     $hits = $row[$hitsField];
 
 
+      // RETURN item without any hit stdWrap
+      // IF there is no hit
     if( $hits < 1 )
     {
+        // IF item shouldn't displayed without any hit
       if( ! $bool_displayWoHit )
       {
         return $value;
       }
+        // IF item shouldn't displayed without any hit
     }
+      // IF there is no hit
+      // RETURN item without any hit stdWrap
 
       // stdWrap the hit
       // SWITCH first item
