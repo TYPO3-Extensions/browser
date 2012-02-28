@@ -929,9 +929,6 @@ class tx_browser_pi1_filter_4x {
       // Current level of the treeview: 0 of course
     $level      = 0;
 
-      // Add the first item to the rows
-    $this->set_firstItem( );
-
       // Needed for tree_setOneDim( )
     $this->arr_rowsTablefield = $this->rows;
 
@@ -1127,6 +1124,7 @@ class tx_browser_pi1_filter_4x {
     switch( true )
     {
       case( $uid == $conf_array['first_item.']['option_value'] ):
+        $this->set_firstItemTreeView( );
         $stdWrap  = $conf_array['first_item.']['value_stdWrap.'];
         break;
       default:
@@ -3880,6 +3878,78 @@ class tx_browser_pi1_filter_4x {
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // RETURN first item shouldn't displayed
+    if( ! $conf_array['first_item'] )
+    {
+      return;
+    }
+      // RETURN first item shouldn't displayed
+
+      // Get the labels for the fields uid and hits
+    $uidField   = $this->sql_filterFields[$this->curr_tableField]['uid'];
+    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+
+      // Get the uid of the first item
+    $uid = $conf_array['first_item.']['option_value'];
+
+      // LOOP all fields of current filter / tableField
+    foreach( $this->sql_filterFields[$this->curr_tableField] as $field )
+    {
+        // SWITCH field
+      switch( true )
+      {
+        case( $field == $uidField ):
+          $firstItem[$uid][$uidField] = $uid;
+          break;
+        case( $field == $hitsField ):
+          $firstItem[$uid][$hitsField] = $this->hits_sum[$this->curr_tableField];
+          break;
+        default:
+          $firstItem[$uid][$field] = null;
+          break;
+      }
+        // SWITCH field
+    }
+      // LOOP all fields of current filter / tableField
+
+      // Add first item to the rows of the current filter
+    $this->rows = $firstItem + $this->rows;
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * set_firstItemTreeView( ):  Adds the first item to the rows of the current filter.
+ *                            Class var $rows.
+ *                            If firstItem shouldn't displayed, nothing will happen.
+ *
+ * @return	void
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function set_firstItemTreeView( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+    if( ! in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
+    {
+      return;
+    }
+
 
       // Get TS filter configuration
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
