@@ -655,13 +655,20 @@ class tx_browser_pi1_filter_4x {
         if( $value >= $from && $value <= $to )
         {
           $areas[$areas_uid][$hitsField] = $areas[$areas_uid][$hitsField] + $this->rows[$rows_uid][$hitsField];
-          $this->rowsFromAreaWiHitsOnly[$areas_uid] = $areas[$areas_uid];
         }
       }
         // LOOP rows
     }
       // LOOP each area
 
+      // LOOP each area
+    foreach( $areas as $areas_uid => $areas_row )
+    {
+      if( $areas[$areas_uid][$hitsField] > 0 )
+      {
+        $this->rowsFromAreaWiHitsOnly[$areas_uid] = $areas[$areas_uid];
+      }
+    }
       // RETURN areas with hits
     return $areas;
   }
