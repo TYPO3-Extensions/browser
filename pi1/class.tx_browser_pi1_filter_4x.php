@@ -269,7 +269,8 @@ class tx_browser_pi1_filter_4x {
           $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
           return $arr_result;
         }
-        $arr_return['data']['filter'] = ( array) $arr_return['data']['filter'] + $arr_result['data']['marker'];
+var_dump( __LINE__, $this->rows, $arr_result, $arr_return );
+        $arr_return['data']['filter'] = ( array ) $arr_return['data']['filter'] + $arr_result['data']['marker'];
         unset( $arr_result );
       }
     }
@@ -495,10 +496,6 @@ class tx_browser_pi1_filter_4x {
       // RETURN condition isn't met
 
     $this->set_currFilterIsArea( );
-    if( ! in_array( $this->curr_tableField, array_keys( $this->pObj->objCal->arr_area ) ) )
-    {
-      return;
-    }
 
       // Get filter rows
     $arr_return = $this->get_rows( );
