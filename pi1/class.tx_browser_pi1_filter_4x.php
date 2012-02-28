@@ -540,7 +540,8 @@ class tx_browser_pi1_filter_4x {
       // Default return value
     $arr_return['data']['items'] = null;
 
-    $this->get_filterItemsFromArea( );
+      // Set rows, if current filter is with areas
+    $this->set_rowsForArea( );
 
       // RETURN rows are empty
     if( empty ( $this->rows) )
@@ -591,7 +592,7 @@ class tx_browser_pi1_filter_4x {
     }
       // SWITCH current filter is a tree view
 
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $arr_return );
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_return );
     return $arr_return;
   }
 
@@ -604,19 +605,24 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $arr_return );
 
 
 /**
- * get_filterItemsFromArea( ):  Render the given rows of the current tableField.
- *                      It returns the rendered filter as a string.
+ * set_rowsForArea( ):  If current filter is with areas, generate the rows.
+ *                      Result is stored in class var $rows.
  *
- * @return	array		$arr_return : $arr_return['data']['items']
+ * @return	void
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function get_filterItemsFromArea( )
+  private function set_rowsForArea( )
   {
+      // RETURN filter hasn't areas
     if( ! in_array( $this->curr_tableField, array_keys( $this->pObj->objCal->arr_area ) ) )
     {
       return;
     }
+      // RETURN filter hasn't areas
+
+      // Default return value
+    $arr_return['data']['items'] = null;
 
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -624,9 +630,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $arr_return );
       // Get TS configuration of the current filter / tableField
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-
-      // Default return value
-    $arr_return['data']['items'] = null;
 
       // SWITCH area key
     switch ( $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] )
@@ -644,9 +647,17 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $arr_return );
 //        case ('from_to_fields') :
 //          break;
       default:
-        echo  __METHOD__ . ' (' . __LINE__ . '): undefined value in switch ' .
-              $this->pObj->objCal->arr_area[$this->curr_tableField]['key'];
-        exit;
+          // DRS - Development Reporting System
+        if( $this->pObj->b_drs_error )
+        {
+          $prompt = 'undefined value in switch: ' .
+                    '\'' . $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] . '\'.';
+          t3lib_div :: devLog( '[ERROR/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 3 );
+          $prompt = 'Areas won\'t handled!';
+          t3lib_div :: devLog( '[WARN/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 2 );
+        }
+          // DRS - Development Reporting System
+        return;
     }
       // SWITCH area key
 
@@ -654,12 +665,12 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $arr_return );
     if( $this->pObj->b_drs_cal || $this->pObj->b_drs_filter )
     {
       $arr_prompt = null;
-      foreach((array) $arr_values as $key => $value)
+      foreach( ( array ) $arr_values as $key => $value )
       {
         $arr_prompt[] = '[' . $key . '] = ' . $value;
       }
-      $str_prompt = implode(', ', (array) $arr_prompt);
-      t3lib_div :: devLog('[INFO/FILTER+CAL] values are: ' . $str_prompt, $this->pObj->extKey, 0);
+      $prompt = 'values are: ' . implode( ', ', ( array ) $arr_prompt );
+      t3lib_div :: devLog( '[INFO/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS - Development Reporting System
 
@@ -670,9 +681,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $arr_return );
 
     $this->rows = $rows;
 
-    $arr_return = $this->get_filterItemsFromRows( );
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_values, $this->rows, $arr_return );
-    return $arr_return;
+    return;
   }
 
 
