@@ -2739,7 +2739,7 @@ class tx_browser_pi1_filter_4x {
         //      Get the whole string ...
         //    * \|~U
         //      ... until the first pipe
-      $pattern      = '~(\A' . $prefix . '|\\' .  $devider . $prefix. ')(.*)\\' .  $devider . '~U';
+      $pattern      = '~(\A' . $prefix . '|\\' .  $devider . $prefix. ')(.*)(\\' .  $devider . '|\\z)~U';
         // Build the pattern
 
         // IF: Override default language with language overlay value
@@ -2755,14 +2755,14 @@ class tx_browser_pi1_filter_4x {
       {
         if( isset ( $matches[2] ) )
         {
-          $prompt = 'preg_match( ' . $pattern . ', ' . $langOlValue . ', $matches )';
+          $prompt = 'preg_match( ' . $pattern . ', \'' . $langOlValue . '\', $matches )';
           t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
           $prompt = 'result of $matches[2] : ' . $matches[2];
           t3lib_div :: devLog( '[OK/FILTER] ' . $prompt, $this->pObj->extKey, -1 );
         }
         if( ! isset ( $matches[2] ) )
         {
-          $prompt = 'preg_match( ' . $pattern . ', ' . $langOlValue . ', $matches ) hasn\'t any result!';
+          $prompt = 'preg_match( ' . $pattern . ', \'' . $langOlValue . '\', $matches ) hasn\'t any result!';
           t3lib_div :: devLog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
         }
       }
