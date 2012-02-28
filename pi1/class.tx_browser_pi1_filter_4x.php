@@ -2626,10 +2626,25 @@ class tx_browser_pi1_filter_4x {
  */
   private function localise( $uid, $value )
   {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
+      // SWTCH localisation mode
+      // RETURN value
+    switch( $this->int_localisation_mode )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+        return $value;
+        break;
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+        return $value;
+        break;
+      default:
+        // Localisation mode is enabled
+        // Follow the workflow
+        break;
+    }
+      // RETURN value
+      // SWTCH localisation mode
 
-
+      // SWITCH language overlay or sys language
     switch( true )
     {
       case( $this->sql_filterFields[$this->curr_tableField]['lang_ol'] ):
@@ -2639,10 +2654,12 @@ class tx_browser_pi1_filter_4x {
         $value = $this->localise_sysLanguage( $uid, $value );
         break;
       default:
+var_dump( __LINE__, 'Ooops!');
     }
+      // SWITCH language overlay or sys language
 
+      // RETURN localised value
     return $value;
-
   }
 
 
