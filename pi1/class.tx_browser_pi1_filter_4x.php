@@ -928,6 +928,10 @@ class tx_browser_pi1_filter_4x {
     $uid_parent = 0;
       // Current level of the treeview: 0 of course
     $level      = 0;
+
+      // Add the first item to the rows
+    $this->set_firstItem( );
+
       // Needed for tree_setOneDim( )
     $this->arr_rowsTablefield = $this->rows;
 
@@ -936,6 +940,8 @@ class tx_browser_pi1_filter_4x {
     $this->uidField         = $this->sql_filterFields[$this->curr_tableField]['uid'];
     $this->valueField       = $this->sql_filterFields[$this->curr_tableField]['value'];
     $this->treeParentField  = $this->sql_filterFields[$this->curr_tableField]['treeParentField'];
+
+
 
       //////////////////////////////////////////////////////
       //
@@ -1481,15 +1487,6 @@ class tx_browser_pi1_filter_4x {
       return $arr_return;
     }
       // RETURN display items only, if they have one hit at least
-
-//      // RETURN filter hasn't areas
-//    if( $this->bool_currFilterIsArea )
-//    {
-//      $arr_return['data']['rows'] = $this->rowsFromAreaWiHitsOnly;
-//var_dump( __LINE__, $arr_return );
-//      return $arr_return;
-//    }
-      // RETURN filter hasn't areas
 
       // SWITCH localTable versus foreignTable
     switch( true )
@@ -2987,10 +2984,7 @@ class tx_browser_pi1_filter_4x {
         // ERROR/CONTINUE $key isn't value
 
         // Render the value
-//      $value      = '###HITS_BEFORE###' . $value . '###HITS_BEHIND###';
-//      $value      = str_replace('###VALUE###', $value, $conf_item );
       $item = $this->get_filterItem( $conf_array, $curr_uid, $value );
-        // Render the value
 
         // Vars
       $curr_depth = $iterator->getDepth( );
@@ -3034,8 +3028,8 @@ class tx_browser_pi1_filter_4x {
       }
         // Render the start tag
 
-        // String result for printing
-      $str_result =  $str_result . $startTag . $curr_uid . ': ' . $item;
+//        // String result for printing
+//      $str_result =  $str_result . $startTag . $curr_uid . ': ' . $item;
 
         // Result array
       $arr_result[$curr_uid] = $startTag . $item;
@@ -3055,8 +3049,8 @@ class tx_browser_pi1_filter_4x {
                               ) .
                               PHP_EOL .
                               $this->htmlSpaceLeft . $indent . '</ul>';
-    $str_result =             $str_result . $endTag . PHP_EOL .
-                              $this->htmlSpaceLeft . '</div>';
+//    $str_result =             $str_result . $endTag . PHP_EOL .
+//                              $this->htmlSpaceLeft . '</div>';
     $arr_result[$curr_uid] =  $arr_result[$curr_uid] . $endTag  . PHP_EOL .
                               $this->htmlSpaceLeft . '</div>';
       // Render the end tag of the last item
@@ -3698,11 +3692,11 @@ class tx_browser_pi1_filter_4x {
     switch( true )
     {
       case( $uid == $conf_array['first_item.']['option_value'] ):
-        $bool_displayHits   = $conf_array['first_item.']['display_hits'];
+        $bool_displayHits       = $conf_array['first_item.']['display_hits'];
         $bool_displayEmptyHits  = $conf_array['first_item.']['display_hits.']['display_empty_hits'];
         break;
       default:
-        $bool_displayHits   = $conf_array['wrap.']['item.']['display_hits'];
+        $bool_displayHits       = $conf_array['wrap.']['item.']['display_hits'];
         $bool_displayEmptyHits  = $conf_array['wrap.']['item.']['display_hits.']['display_empty_hits'];
         break;
     }
