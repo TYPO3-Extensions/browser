@@ -94,9 +94,9 @@
  * 2168:     private function sql_whereAnd_sysLanguage( )
  *
  *              SECTION: TypoScript values
- * 2241:     private function ts_condition( )
- * 2306:     private function ts_displayHits( )
- * 2337:     private function ts_displayWithoutAnyHit( )
+ * 2241:     private function ts_getCondition( )
+ * 2306:     private function ts_getDisplayHits( )
+ * 2337:     private function ts_getDisplayWithoutAnyHit( )
  *
  *              SECTION: Tree view helper
  * 2405:     private function tree_setOneDim( $uid_parent )
@@ -475,7 +475,7 @@ class tx_browser_pi1_filter_4x {
     $markerLabel = '###' . strtoupper( $this->curr_tableField ) . '###';
 
       // RETURN condition isn't met
-    if( ! $this->ts_condition( ) )
+    if( ! $this->ts_getCondition( ) )
     {
       $arr_return['data']['marker'][$markerLabel] = null;
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -534,7 +534,7 @@ class tx_browser_pi1_filter_4x {
     $arr_return['data']['items'] = null;
 
       // Set rows, if current filter is with areas
-    $this->set_rowsForArea( );
+    $this->areas_setToRows( );
 
       // RETURN rows are empty
     if( empty ( $this->rows) )
@@ -580,58 +580,6 @@ class tx_browser_pi1_filter_4x {
       // SWITCH current filter is a tree view
 
     return $arr_return;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * get_rowsFromArea( ):
- *
- * @return	array		$arr_return : $arr_return['data']['items']
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function get_rowsFromArea( $arr_values )
-  {
-
-      // Get the labels for the fields uid and hits
-    $uidField   = $this->sql_filterFields[$this->curr_tableField]['uid'];
-    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
-    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
-
-    foreach( $arr_values as $uid => $value )
-    {
-        // LOOP all fields of current filter / tableField
-      foreach( $this->sql_filterFields[$this->curr_tableField] as $field )
-      {
-          // SWITCH field
-        switch( true )
-        {
-          case( $field == $uidField ):
-            $rows[$uid][$uidField] = $uid;
-            break;
-          case( $field == $valueField ):
-            $rows[$uid][$valueField] = $value;
-            break;
-          case( $field == $hitsField ):
-            $rows[$uid][$hitsField] = 0;
-            break;
-          default:
-            $rows[$uid][$field] = null;
-            break;
-        }
-          // SWITCH field
-      }
-        // LOOP all fields of current filter / tableField
-    }
-
-    return $rows;
   }
 
 
@@ -1341,7 +1289,7 @@ class tx_browser_pi1_filter_4x {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // RETURN display items only, if they have one hit at least
-    if( ! $this->ts_displayWithoutAnyHit( ) )
+    if( ! $this->ts_getDisplayWithoutAnyHit( ) )
     {
       $arr_return['data']['rows'] = $rows_wiHits;
         // Prompt the expired time to devlog
@@ -1392,14 +1340,68 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * set_rowsForArea( ):  If current filter is with areas, generate the rows.
- *                      Result is stored in class var $rows.
+ * areas_setToRowsConverter( ):  Converts areas array to rows array. Returns the rows.
+ *
+ * @param   array           $areas  : areas from TS
+ * @return	array           $rows   : rows
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function areas_setToRowsConverter( $areas )
+  {
+
+      // Get the labels for the fields uid and hits
+    $uidField   = $this->sql_filterFields[$this->curr_tableField]['uid'];
+    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
+    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+
+    foreach( $areas as $uid => $value )
+    {
+        // LOOP all fields of current filter / tableField
+      foreach( $this->sql_filterFields[$this->curr_tableField] as $field )
+      {
+          // SWITCH field
+        switch( true )
+        {
+          case( $field == $uidField ):
+            $rows[$uid][$uidField] = $uid;
+            break;
+          case( $field == $valueField ):
+            $rows[$uid][$valueField] = $value;
+            break;
+          case( $field == $hitsField ):
+            $rows[$uid][$hitsField] = 0;
+            break;
+          default:
+            $rows[$uid][$field] = null;
+            break;
+        }
+          // SWITCH field
+      }
+        // LOOP all fields of current filter / tableField
+    }
+
+      // RETURN rows
+    return $rows;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * areas_setToRows( ):  If current filter is with areas, generate the rows.
+ *                      Class var $rows will overriden.
  *
  * @return	void
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function set_rowsForArea( )
+  private function areas_setToRows( )
   {
       // RETURN filter hasn't areas
     if( ! $this->bool_currFilterIsArea )
@@ -1408,9 +1410,40 @@ class tx_browser_pi1_filter_4x {
     }
       // RETURN filter hasn't areas
 
-      // Default return value
-    $arr_return['data']['items'] = null;
+      // Get areas from TS
+    $areas  = $this->ts_getAreas( );
+      // Convert areas to rows
+    $rows   = $this->areas_setToRowsConverter( $areas );
+    $this->rowsFromAreaWoHits = $rows;
 
+      // Count the hits for each area row
+    $rows = $this->areas_countHits( $rows );
+      // Remove area rows without hits, if it's needed
+    $rows = $this->areas_wiHitsOnly( $rows );
+
+      // Override class var rows
+    $this->rows = $rows;
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * ts_getAreas( ):  Get areas for the current filter from TS configuration
+ *
+ * @return	array   $areas: areas
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function ts_getAreas( )
+  {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
@@ -1418,18 +1451,15 @@ class tx_browser_pi1_filter_4x {
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
+      // Get areas from TS
       // SWITCH area key
     switch ( $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] )
     {
       case ('strings') :
         $arr_result = $this->pObj->objCal->area_strings($conf_array, null, $this->curr_tableField);
-        $arr_values = $arr_result['data']['values'];
-        unset ($arr_result);
         break;
       case ('interval') :
         $arr_result = $this->pObj->objCal->area_interval($conf_array, null, $this->curr_tableField);
-        $arr_values = $arr_result['data']['values'];
-        unset ($arr_result);
         break;
 //        case ('from_to_fields') :
 //          break;
@@ -1447,33 +1477,25 @@ class tx_browser_pi1_filter_4x {
         return;
     }
       // SWITCH area key
+    $areas = $arr_result['data']['values'];
+    unset ($arr_result);
+      // Get areas from TS
 
-      // DRS - Development Reporting System
+      // DRS
     if( $this->pObj->b_drs_cal || $this->pObj->b_drs_filter )
     {
       $arr_prompt = null;
-      foreach( ( array ) $arr_values as $key => $value )
+      foreach( ( array ) $areas as $key => $value )
       {
         $arr_prompt[] = '[' . $key . '] = ' . $value;
       }
       $prompt = 'values are: ' . implode( ', ', ( array ) $arr_prompt );
       t3lib_div :: devLog( '[INFO/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 0 );
     }
-      // DRS - Development Reporting System
+      // DRS
 
-      // Convert area items to rows
-    $areas = $this->get_rowsFromArea( $arr_values );
-    $this->rowsFromAreaWoHits = $areas;
-
-      // Count the hits for each area.
-    $areas = $this->count_hitsForAreas( $areas );
-      // Remove areas without hits, if it's needed
-    $areas = $this->set_areasWiHitsOnly( $areas );
-
-      // Set class var rows
-    $this->rows = $areas;
-
-    return;
+      // RETURN areas
+    return $areas;
   }
 
 
@@ -2541,13 +2563,13 @@ class tx_browser_pi1_filter_4x {
 
 
   /**
- * ts_condition( ):  Render the filter condition.
+ * ts_getCondition( ):  Render the filter condition.
  *
  * @return	boolean		True, if filter should displayed, false if filter shouldn't diplayed
  * @version 3.9.3
  * @since   3.9.3
  */
-  private function ts_condition( )
+  private function ts_getCondition( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -2606,13 +2628,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * ts_displayHits( ):  Get the TS configuration for displaying hits.
+ * ts_getDisplayHits( ):  Get the TS configuration for displaying hits.
  *
  * @return	string		$display_hits : value from TS configuration
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function ts_displayHits( )
+  private function ts_getDisplayHits( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -2636,14 +2658,14 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * ts_displayWithoutAnyHit( ):  Get the TS configuration for displaying items without hits.
+ * ts_getDisplayWithoutAnyHit( ):  Get the TS configuration for displaying items without hits.
  *                              If current filter is a tree view, return value is true.
  *
  * @return	string		$display_without_any_hit : value from TS configuration
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function ts_displayWithoutAnyHit( )
+  private function ts_getDisplayWithoutAnyHit( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -3529,14 +3551,14 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * count_hitsForAreas( ): Count the hits for each area.
+ * areas_countHits( ): Count the hits for each area.
  *
  * @package array   $areas : rows of the current area
  * @return	array		$areas : $areas with counted hits
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function count_hitsForAreas( $areas )
+  private function areas_countHits( $areas )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -3595,7 +3617,7 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * set_areasWiHitsOnly( ):  The method removes areas without any hit,
+ * areas_wiHitsOnly( ):  The method removes areas without any hit,
  *                          if should displayed items only, which have one hit at least.
  *
  * @package array   $areas : rows of the current area
@@ -3603,10 +3625,10 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function set_areasWiHitsOnly( $areas )
+  private function areas_wiHitsOnly( $areas )
   {
       // RETURN all areas
-    if( $this->ts_displayWithoutAnyHit( ) )
+    if( $this->ts_getDisplayWithoutAnyHit( ) )
     {
       return $areas;
     }
