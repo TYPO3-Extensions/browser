@@ -1182,6 +1182,227 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
+  * Areas
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+/**
+ * areas_setToRows( ):  If current filter is with areas, generate the rows.
+ *                      Class var $rows will overriden.
+ *
+ * @return	void
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function areas_setToRows( )
+  {
+      // RETURN filter hasn't areas
+    if( ! $this->bool_currFilterIsArea )
+    {
+      return;
+    }
+      // RETURN filter hasn't areas
+
+      // Get areas from TS
+    $areas  = $this->ts_getAreas( );
+      // Convert areas to rows
+    $rows   = $this->areas_setToRowsConverter( $areas );
+    $this->rowsFromAreaWoHits = $rows;
+
+      // Count the hits for each area row
+    $rows = $this->areas_countHits( $rows );
+      // Remove area rows without hits, if it's needed
+    $rows = $this->areas_wiHitsOnly( $rows );
+
+      // Override class var rows
+    $this->rows = $rows;
+
+    return;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * areas_setToRowsConverter( ):  Converts areas array to rows array. Returns the rows.
+ *
+ * @param   array           $areas  : areas from TS
+ * @return	array           $rows   : rows
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function areas_setToRowsConverter( $areas )
+  {
+
+      // Get the labels for the fields uid and hits
+    $uidField   = $this->sql_filterFields[$this->curr_tableField]['uid'];
+    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
+    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+
+    foreach( $areas as $uid => $value )
+    {
+        // LOOP all fields of current filter / tableField
+      foreach( $this->sql_filterFields[$this->curr_tableField] as $field )
+      {
+          // SWITCH field
+        switch( true )
+        {
+          case( $field == $uidField ):
+            $rows[$uid][$uidField] = $uid;
+            break;
+          case( $field == $valueField ):
+            $rows[$uid][$valueField] = $value;
+            break;
+          case( $field == $hitsField ):
+            $rows[$uid][$hitsField] = 0;
+            break;
+          default:
+            $rows[$uid][$field] = null;
+            break;
+        }
+          // SWITCH field
+      }
+        // LOOP all fields of current filter / tableField
+    }
+
+      // RETURN rows
+    return $rows;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * areas_countHits( ): Count the hits for each area.
+ *
+ * @package array   $areas : rows of the current area
+ * @return	array		$areas : $areas with counted hits
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function areas_countHits( $areas )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS configuration of the current filter / tableField
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // Get labels for the fields hits and value
+    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
+
+      // Get the key of the area of the current filter: 'strings' or 'interval'
+    $area_key = $this->pObj->objCal->arr_area[$this->curr_tableField]['key'];
+
+      // LOOP each area
+    foreach( $areas as $areas_uid => $areas_row )
+    {
+        // Short var
+      $conf_area  = $conf_array['area.'][$area_key . '.']['options.']['fields.'][$areas_uid . '.'];
+
+        // Get from
+      $from       = $conf_area['valueFrom_stdWrap.']['value'];
+      $from_conf  = $conf_area['valueFrom_stdWrap.'];
+      $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
+
+        // Get to
+      $to         = $conf_area['valueTo_stdWrap.']['value'];
+      $to_conf    = $conf_area['valueTo_stdWrap.'];
+      $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+
+        // LOOP rows
+      foreach( $this->rows as $rows_uid => $rows_row )
+      {
+        $value = $rows_row[$valueField];
+          // Count the hits, if row value match from to condition
+        if( $value >= $from && $value <= $to )
+        {
+          $areas[$areas_uid][$hitsField] = $areas[$areas_uid][$hitsField] + $this->rows[$rows_uid][$hitsField];
+        }
+      }
+        // LOOP rows
+    }
+      // LOOP each area
+
+      // RETURN areas with hits
+    return $areas;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * areas_wiHitsOnly( ):  The method removes areas without any hit,
+ *                          if should displayed items only, which have one hit at least.
+ *
+ * @package array   $areas : rows of the current area
+ * @return	array		$areas : all rows or rows with one hit at least only
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function areas_wiHitsOnly( $areas )
+  {
+      // RETURN all areas
+    if( $this->ts_getDisplayWithoutAnyHit( ) )
+    {
+      return $areas;
+    }
+      // RETURN all areas
+
+      // Get label for the field hits
+    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
+
+      // LOOP each area
+      // Remove areas without any hit
+    foreach( $areas as $areas_uid => $areas_row )
+    {
+      if( $areas[$areas_uid][$hitsField] < 1 )
+      {
+        unset( $areas[$areas_uid] );
+      }
+    }
+      // Remove areas without any hit
+      // LOOP each area
+
+      // RETURN areas with hits only
+    return $areas;
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
   * Handle rows
   *
   **********************************************/
@@ -1329,173 +1550,6 @@ class tx_browser_pi1_filter_4x {
       // RETURN rows
     $arr_return['data']['rows'] = $rows;
     return $arr_return;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * areas_setToRowsConverter( ):  Converts areas array to rows array. Returns the rows.
- *
- * @param   array           $areas  : areas from TS
- * @return	array           $rows   : rows
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function areas_setToRowsConverter( $areas )
-  {
-
-      // Get the labels for the fields uid and hits
-    $uidField   = $this->sql_filterFields[$this->curr_tableField]['uid'];
-    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
-    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
-
-    foreach( $areas as $uid => $value )
-    {
-        // LOOP all fields of current filter / tableField
-      foreach( $this->sql_filterFields[$this->curr_tableField] as $field )
-      {
-          // SWITCH field
-        switch( true )
-        {
-          case( $field == $uidField ):
-            $rows[$uid][$uidField] = $uid;
-            break;
-          case( $field == $valueField ):
-            $rows[$uid][$valueField] = $value;
-            break;
-          case( $field == $hitsField ):
-            $rows[$uid][$hitsField] = 0;
-            break;
-          default:
-            $rows[$uid][$field] = null;
-            break;
-        }
-          // SWITCH field
-      }
-        // LOOP all fields of current filter / tableField
-    }
-
-      // RETURN rows
-    return $rows;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * areas_setToRows( ):  If current filter is with areas, generate the rows.
- *                      Class var $rows will overriden.
- *
- * @return	void
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function areas_setToRows( )
-  {
-      // RETURN filter hasn't areas
-    if( ! $this->bool_currFilterIsArea )
-    {
-      return;
-    }
-      // RETURN filter hasn't areas
-
-      // Get areas from TS
-    $areas  = $this->ts_getAreas( );
-      // Convert areas to rows
-    $rows   = $this->areas_setToRowsConverter( $areas );
-    $this->rowsFromAreaWoHits = $rows;
-
-      // Count the hits for each area row
-    $rows = $this->areas_countHits( $rows );
-      // Remove area rows without hits, if it's needed
-    $rows = $this->areas_wiHitsOnly( $rows );
-
-      // Override class var rows
-    $this->rows = $rows;
-
-    return;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * ts_getAreas( ):  Get areas for the current filter from TS configuration
- *
- * @return	array   $areas: areas
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function ts_getAreas( )
-  {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-      // Get TS configuration of the current filter / tableField
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-
-      // Get areas from TS
-      // SWITCH area key
-    switch ( $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] )
-    {
-      case ('strings') :
-        $arr_result = $this->pObj->objCal->area_strings($conf_array, null, $this->curr_tableField);
-        break;
-      case ('interval') :
-        $arr_result = $this->pObj->objCal->area_interval($conf_array, null, $this->curr_tableField);
-        break;
-//        case ('from_to_fields') :
-//          break;
-      default:
-          // DRS - Development Reporting System
-        if( $this->pObj->b_drs_error )
-        {
-          $prompt = 'undefined value in switch: ' .
-                    '\'' . $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] . '\'.';
-          t3lib_div :: devLog( '[ERROR/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 3 );
-          $prompt = 'Areas won\'t handled!';
-          t3lib_div :: devLog( '[WARN/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 2 );
-        }
-          // DRS - Development Reporting System
-        return;
-    }
-      // SWITCH area key
-    $areas = $arr_result['data']['values'];
-    unset ($arr_result);
-      // Get areas from TS
-
-      // DRS
-    if( $this->pObj->b_drs_cal || $this->pObj->b_drs_filter )
-    {
-      $arr_prompt = null;
-      foreach( ( array ) $areas as $key => $value )
-      {
-        $arr_prompt[] = '[' . $key . '] = ' . $value;
-      }
-      $prompt = 'values are: ' . implode( ', ', ( array ) $arr_prompt );
-      t3lib_div :: devLog( '[INFO/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS
-
-      // RETURN areas
-    return $areas;
   }
 
 
@@ -2562,6 +2616,77 @@ class tx_browser_pi1_filter_4x {
 
 
 
+/**
+ * ts_getAreas( ):  Get areas for the current filter from TS configuration
+ *
+ * @return	array   $areas: areas
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function ts_getAreas( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS configuration of the current filter / tableField
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // Get areas from TS
+      // SWITCH area key
+    switch ( $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] )
+    {
+      case ('strings') :
+        $arr_result = $this->pObj->objCal->area_strings($conf_array, null, $this->curr_tableField);
+        break;
+      case ('interval') :
+        $arr_result = $this->pObj->objCal->area_interval($conf_array, null, $this->curr_tableField);
+        break;
+//        case ('from_to_fields') :
+//          break;
+      default:
+          // DRS - Development Reporting System
+        if( $this->pObj->b_drs_error )
+        {
+          $prompt = 'undefined value in switch: ' .
+                    '\'' . $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] . '\'.';
+          t3lib_div :: devLog( '[ERROR/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 3 );
+          $prompt = 'Areas won\'t handled!';
+          t3lib_div :: devLog( '[WARN/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 2 );
+        }
+          // DRS - Development Reporting System
+        return;
+    }
+      // SWITCH area key
+    $areas = $arr_result['data']['values'];
+    unset ($arr_result);
+      // Get areas from TS
+
+      // DRS
+    if( $this->pObj->b_drs_cal || $this->pObj->b_drs_filter )
+    {
+      $arr_prompt = null;
+      foreach( ( array ) $areas as $key => $value )
+      {
+        $arr_prompt[] = '[' . $key . '] = ' . $value;
+      }
+      $prompt = 'values are: ' . implode( ', ', ( array ) $arr_prompt );
+      t3lib_div :: devLog( '[INFO/FILTER+CAL] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+
+      // RETURN areas
+    return $areas;
+  }
+
+
+
+
+
+
+
+
+
   /**
  * ts_getCondition( ):  Render the filter condition.
  *
@@ -3541,117 +3666,6 @@ class tx_browser_pi1_filter_4x {
   * Hits helper
   *
   **********************************************/
-
-
-
-
-
-
-
-
-
-/**
- * areas_countHits( ): Count the hits for each area.
- *
- * @package array   $areas : rows of the current area
- * @return	array		$areas : $areas with counted hits
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function areas_countHits( $areas )
-  {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-      // Get TS configuration of the current filter / tableField
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-
-      // Get labels for the fields hits and value
-    $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
-    $valueField = $this->sql_filterFields[$this->curr_tableField]['value'];
-
-      // Get the key of the area of the current filter: 'strings' or 'interval'
-    $area_key = $this->pObj->objCal->arr_area[$this->curr_tableField]['key'];
-
-      // LOOP each area
-    foreach( $areas as $areas_uid => $areas_row )
-    {
-        // Short var
-      $conf_area  = $conf_array['area.'][$area_key . '.']['options.']['fields.'][$areas_uid . '.'];
-
-        // Get from
-      $from       = $conf_area['valueFrom_stdWrap.']['value'];
-      $from_conf  = $conf_area['valueFrom_stdWrap.'];
-      $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
-
-        // Get to
-      $to         = $conf_area['valueTo_stdWrap.']['value'];
-      $to_conf    = $conf_area['valueTo_stdWrap.'];
-      $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
-
-        // LOOP rows
-      foreach( $this->rows as $rows_uid => $rows_row )
-      {
-        $value = $rows_row[$valueField];
-          // Count the hits, if row value match from to condition
-        if( $value >= $from && $value <= $to )
-        {
-          $areas[$areas_uid][$hitsField] = $areas[$areas_uid][$hitsField] + $this->rows[$rows_uid][$hitsField];
-        }
-      }
-        // LOOP rows
-    }
-      // LOOP each area
-
-      // RETURN areas with hits
-    return $areas;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * areas_wiHitsOnly( ):  The method removes areas without any hit,
- *                          if should displayed items only, which have one hit at least.
- *
- * @package array   $areas : rows of the current area
- * @return	array		$areas : all rows or rows with one hit at least only
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function areas_wiHitsOnly( $areas )
-  {
-      // RETURN all areas
-    if( $this->ts_getDisplayWithoutAnyHit( ) )
-    {
-      return $areas;
-    }
-      // RETURN all areas
-
-      // Get label for the field hits
-    $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
-
-      // LOOP each area
-      // Remove areas without any hit
-    foreach( $areas as $areas_uid => $areas_row )
-    {
-      if( $areas[$areas_uid][$hitsField] < 1 )
-      {
-        unset( $areas[$areas_uid] );
-      }
-    }
-      // Remove areas without any hit
-      // LOOP each area
-
-      // RETURN areas with hits only
-    return $areas;
-  }
 
 
 
