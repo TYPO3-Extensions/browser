@@ -1654,6 +1654,86 @@ class tx_browser_pi1_filter_4x {
 
 
 
+
+/**
+ * sql_resL10nRows: Get the SQL ressource for localised rows
+ *
+ * @return	array		$arr_return : Array with the SQL ressource or an error message
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function sql_resSysLanguageRows( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get ids
+    $uids_arr = array_keys( $this->rows );
+    $uids_csv = implode( ',', $uids_arr );
+
+      // transOrigPointerField
+    $transOrigPointerField = $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
+
+      // Query for all filter items
+    $select   = 'uid, ' . $this->curr_tableField;
+    $from     = $table;
+    $where    = $table . "." . $transOrigPointerField . " IN (" . $uids_csv . ")";
+    $groupBy  = null;
+    $orderBy  = null;
+    $limit    = null;
+
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Get query
+      // Execute query
+    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Execute query
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+      $this->pObj->objSqlFun->query = $query;
+      $this->pObj->objSqlFun->error = $error;
+      $arr_return = $this->pObj->objSqlFun->prompt_error( );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+    $arr_return['data']['res'] = $res;
+    return $arr_return;
+  }
+
+
+
+
+
+
+
 /**
  * sql_resWiHits( ):  Get the SQL ressource for a filter with items with hits only.
  *                    Hits will counted.
@@ -2835,15 +2915,61 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function localise_sysLanguage( $uid, $value )
+  private function localise_sysLanguage( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-    $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
+      // Get localisation configuration
+    $l10n_mode        = $GLOBALS['TCA'][$table]['columns'][$field]['l10n_mode'];
+    $l10n_displayCsv  = $GLOBALS['TCA'][$table]['columns'][$field]['l10n_display'];
+    $l10n_displayArr  = $this->pObj->objZz->getCSVasArray( $l10n_displayCsv );
+      // Get localisation configuration
 
-    return $value;
+      // RETURN current field isn't localised
+    switch( true )
+    {
+      case( in_array( 'defaultAsReadonly', $l10n_displayArr ) ):
+        return;
+        break;
+      case( $l10n_mode == 'exclude' ):
+        return;
+        break;
+    }
+      // RETURN current field isn't localised
 
+      // Get SQL ressource for localised records
+    $arr_return = $this->sql_resSysLanguageRows( );
+    $res        = $arr_return['data']['res'];
+    
+    if( $arr_return['error']['status'] )
+    {
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      die( $arr_result['error']['header'] . $arr_result['error']['prompt'] );
+    }
+    $res = $arr_return['data']['res'];
+    unset( $arr_return );
+      // Get SQL ressource for all filter items
+
+      // Get rows
+    $rows_sysLanguage = $this->sql_resToRows( $res );
+
+      // Override class var $rows
+    foreach( $rows_sysLanguage as $uid => $row_sysLanguage )
+    {
+      if( ! empty( $row_sysLanguage[$this->curr_tableField] ) )
+      {
+        $this->rows[$uid][$this->curr_tableField] = $row_sysLanguage[$this->curr_tableField];
+      }
+    }
+      // Override class var $rows
+
+    //:TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'sys_language: order rows!';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
   }
 
 
