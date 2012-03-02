@@ -2331,7 +2331,7 @@ class tx_browser_pi1_sql_functions
 
 
 
-  /**
+/**
  * prompt_error( ): Prompts a SQL error.
  *                  It is with the query in case of an enabled DRS.
  *

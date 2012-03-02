@@ -1120,11 +1120,18 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 /**
- * drs_debugTrail( )
+ * drs_debugTrail( ): Returns class, method and line of the call of this method.
+ *                    The calling method is a debug method - if it is called by another
+ *                    method, please set the level in the calling method to 2.
  *
- * @return	void
+ * $param   integer   $level      : integer
+ *
+ * @return	array     $arr_return : with elements class, method, line and prompt
+ *
+ * @version 3.9.9
+ * @since   3.9.9
  */
-  public function drs_debugTrail( $level )
+  public function drs_debugTrail( $level = 1 )
   {
       // Get the debug trail
     $debugTrail_str = t3lib_utility_Debug::debugTrail( );
@@ -1443,7 +1450,7 @@ class tx_browser_pi1 extends tslib_pibase {
    * @version 3.9.9
    * @since   3.9.9
  */
-  public function dev_var_dump( $method, $line, $content )
+  public function dev_var_dump( $content )
   //public function dev_var_dump( )
   {
       // Log a security warning
@@ -1467,14 +1474,14 @@ class tx_browser_pi1 extends tslib_pibase {
       // List of arguments;
     $arg_list = func_get_args( );
     
-    $method = $arg_list[0]; 
-    $line   = $arg_list[1];
+    $level      = 1;
+    $debugTrail = $this->pObj->drs_debugTrail( $level );
     
-    $prompt = '<pre>' . $method . ' (line ' . $line . '):' . PHP_EOL .
+    $prompt = '<pre>' . $debugTrail['prompt'] . PHP_EOL .
               '</pre>' . PHP_EOL;
     echo $prompt;
    
-    for( $i = 2; $i < $numargs; $i++ )
+    for( $i = 0; $i < $numargs; $i++ )
     {
         // Generate the prompt
         // Get the type of the content

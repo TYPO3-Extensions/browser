@@ -765,7 +765,7 @@ class tx_browser_pi1_typoscript
 
       // LOOP all tableFields from select
     $arr_tableFields    = explode( ',', $conf_sql['select'] );
-//$this->pObj->dev_var_dump( __METHOD__, __LINE__, $arr_tableFields );
+//$this->pObj->dev_var_dump( $arr_tableFields );
 //exit;
     foreach( $arr_tableFields as $tableField )
     {
