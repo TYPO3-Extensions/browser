@@ -1675,7 +1675,9 @@ class tx_browser_pi1_filter_4x {
     $transOrigPointerField  = $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
 
       // Query for all filter items
-    $select   = 'uid, ' . $this->curr_tableField . ', ' . $transOrigPointerField;
+    $select   = 'uid, ' .
+                $table . '.' . $this->curr_tableField . ', ' .
+                $table . '.' . $transOrigPointerField;
     $from     = $table;
     $where    = $transOrigPointerField . " IN (" . $uids_csv . ")";
     $groupBy  = null;
@@ -2954,7 +2956,8 @@ class tx_browser_pi1_filter_4x {
       // Get rows
     $rows_sysLanguage = $this->sql_resToRows( $res );
 
-    $transOrigPointerField = $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
+    $transOrigPointerField  = $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
+    $tableFieldPidLl        = $table . '.' . $transOrigPointerField;
 
 $this->pObj->dev_var_dump( $this->rows, $rows_sysLanguage );
       // Override class var $rows
@@ -2962,7 +2965,8 @@ $this->pObj->dev_var_dump( $this->rows, $rows_sysLanguage );
     {
       if( ! empty( $row_sysLanguage[$this->curr_tableField] ) )
       {
-        $this->rows[$transOrigPointerField][$this->curr_tableField] == $row_sysLanguage[$this->curr_tableField];
+        $pidLl = $row_sysLanguage[$tableFieldPidLl];
+        $this->rows[$pidLl][$this->curr_tableField] = $row_sysLanguage[$this->curr_tableField];
       }
     }
       // Override class var $rows
