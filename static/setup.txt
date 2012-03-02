@@ -1499,16 +1499,16 @@ plugin.tx_browser_pi1 {
             20 = TEXT
             20 {
               data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
-            }
-              // Append hits
-            append = TEXT
-            append {
-              if {
-                  // Display hits only in case of one hit at least
-                isTrue = ###HITS###
+                // Append hits
+              append = TEXT
+              append {
+                if {
+                    // Display hits only in case of one hit at least
+                  isTrue = ###HITS###
+                }
+                value       = ###HITS###
+                noTrimWrap  = | (|)|
               }
-              value       = ###HITS###
-              noTrimWrap  = | (|)|
             }
             wrap = <option###CLASS######STYLE### value="###UID###">|</option>
           }
@@ -1610,9 +1610,9 @@ plugin.tx_browser_pi1 {
                 }
                 data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_noValue
               }
-                // Append hits
-              append = TEXT
-              append {
+                // Hits
+              30 = TEXT
+              30 {
                 if {
                     // Display hits only in case of one hit at least
                   isTrue = ###HITS###
