@@ -2957,7 +2957,6 @@ class tx_browser_pi1_filter_4x {
     $rows_sysLanguage = $this->sql_resToRows( $res );
 
     $transOrigPointerField  = $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
-    $tableFieldPidLl        = $table . '.' . $transOrigPointerField;
 
 $this->pObj->dev_var_dump( $this->rows, $rows_sysLanguage );
       // Override class var $rows
@@ -2965,7 +2964,7 @@ $this->pObj->dev_var_dump( $this->rows, $rows_sysLanguage );
     {
       if( ! empty( $row_sysLanguage[$this->curr_tableField] ) )
       {
-        $pidLl = $row_sysLanguage[$tableFieldPidLl];
+        $pidLl = $row_sysLanguage[$transOrigPointerField];
         $this->rows[$pidLl][$this->curr_tableField] = $row_sysLanguage[$this->curr_tableField];
       }
     }
