@@ -1015,15 +1015,15 @@ $this->pObj->dev_var_dump( $this->rows, $this->markerArray );
     }
 
     $uidField                   = $this->sql_filterFields[$this->curr_tableField]['uid'];
-    $marker                     = '###' . strtoupper( $uidField ) . '###';
+    $marker                     = '###UID###';
     $this->markerArray[$marker] = $this->rows[$uidField];
 
     $valueField                 = $this->sql_filterFields[$this->curr_tableField]['value'];
-    $marker                     = '###' . strtoupper( $valueField ) . '###';
+    $marker                     = '###VALUE###';
     $this->markerArray[$marker] = $this->rows[$valueField];
 
     $hitsField                  = $this->sql_filterFields[$this->curr_tableField]['hits'];
-    $marker                     = '###' . strtoupper( $hitsField ) . '###';
+    $marker                     = '###HITS###';
     $this->markerArray[$marker] = $this->rows[$hitsField];
   }
 
