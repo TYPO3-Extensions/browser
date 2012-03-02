@@ -936,8 +936,21 @@ class tx_browser_pi1_filter_4x {
     }
       // IF first_item, set the first item tree view
 
-      // stdWrap the current value
-    $item = $this->get_filterItemValueStdWrap( $conf_name, $conf_array, $uid, $value );
+      // DEVELOPMENT: SQL engine 4.x
+    switch( $this->pObj->dev_sqlEngine )
+    {
+      case( 4 ):
+          // Wrap the current valie by the cObject
+        $item = $this->get_filterItemCObj( $conf_name, $conf_array, $uid, $value );
+        break;
+      case( 3 ):
+      default:
+          // stdWrap the current value
+        $item = $this->get_filterItemValueStdWrap( $conf_name, $conf_array, $uid, $value );
+        break;
+    }
+      // DEVELOPMENT: SQL engine 4.x
+
 
     $this->set_itemCurrentNumber( );
 
@@ -965,42 +978,6 @@ class tx_browser_pi1_filter_4x {
  * @since   3.9.9
  */
   private function get_filterItemValueStdWrap( $conf_name, $conf_array, $uid, $value )
-  {
-    switch( true )
-    {
-      case( empty( $conf_name ) ):
-      case( $conf_name === 1 ):
-      case( $conf_name === '1' ):
-        $value = $this->get_filterItemValueStdWrap_3x( $conf_name, $conf_array, $uid, $value );
-        break;
-      default:
-        $value = $this->get_filterItemValueCoa( $conf_name, $conf_array, $uid, $value );
-        break;
-    }
-
-    return $value;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * get_filterItemValueStdWrap_3x( ): Render the current filter item.
- *
- * @param	array     $conf_name      : TS configuration object type of the current filter / tableField
- * @param	array     $conf_array     : TS configuration array of the current filter / tableField
- * @param	integer		$uid            : uid of the current item / row
- * @param	string		$value          : value of the current item / row
- * @return	string	$value_stdWrap  : The value stdWrapped
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function get_filterItemValueStdWrap_3x( $conf_name, $conf_array, $uid, $value )
   {
       // Get the stdWrap for the value
       // SWITCH first item
@@ -1082,7 +1059,7 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_filterItemValueCoa( ): Render the current filter item.
+ * get_filterItemCObj( ): Render the current filter item.
  *
  * @param	array     $conf_name      : TS configuration object type of the current filter / tableField
  * @param	array     $conf_array     : TS configuration array of the current filter / tableField
@@ -1092,7 +1069,7 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function get_filterItemValueCoa( $conf_name, $conf_array, $uid, $value )
+  private function get_filterItemCObj( $conf_name, $conf_array, $uid, $value )
   {
       // Get the COA configuration for the value
       // SWITCH first item
