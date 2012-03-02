@@ -2359,6 +2359,12 @@ class tx_browser_pi1_sql_functions
       $str_prompt = '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">' .
                       $this->pObj->pi_getLL( 'drs_sql_prompt' ) . '</p>';
     }
+$debugTrail_str = t3lib_utility_Debug::debugTrail( );
+$debugTrail_arr = explode( '//', $debugTrail_str );
+$classMethodLine = $debugTrail_arr[ count( $debugTrail_arr) - 2];
+list( $classMethod, $line ) = explode ( '#', $classMethodLine );
+list($class, $method ) = explode( '->', $classMethod );
+var_dump( $class . '::' . $method . ' (' . $line . ')' );
     $str_header  = '<h1 style="color:red">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
     $arr_return['error']['status'] = true;
     $arr_return['error']['header'] = $str_warn . $str_header;
