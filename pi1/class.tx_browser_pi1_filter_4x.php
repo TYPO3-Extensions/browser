@@ -2945,7 +2945,7 @@ class tx_browser_pi1_filter_4x {
     if( $arr_return['error']['status'] )
     {
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-      die( $arr_result['error']['header'] . $arr_result['error']['prompt'] );
+      die( $arr_return['error']['header'] . $arr_return['error']['prompt'] );
     }
     $res = $arr_return['data']['res'];
     unset( $arr_return );

@@ -1119,6 +1119,37 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
+/**
+ * drs_debugTrail( )
+ *
+ * @return	void
+ */
+  public function drs_debugTrail( )
+  {
+      // Get the debug trail
+    $debugTrail_str = t3lib_utility_Debug::debugTrail( );
+
+      // Get debug trail elements
+    $debugTrail_arr = explode( '//', $debugTrail_str );
+
+      // Get the element next to last
+    $classMethodLine = $debugTrail_arr[ count( $debugTrail_arr) - 2];
+
+      // Get class, method and line
+    list( $classMethod, $line ) = explode ( '#', $classMethodLine );
+    list($class, $method ) = explode( '->', $classMethod );
+
+      // RETURN content
+    $arr_return['class']  = $class;
+    $arr_return['method'] = $method;
+    $arr_return['line']   = $line;
+    $arr_return['prompt'] = $class . '::' . $method . ' (' . $line . ')';
+
+    return $arr_return;
+      // RETURN content
+  }
+
+
   /**
  * Set the booleans for Warnings, Errors and DRS - Development Reporting System
  *
