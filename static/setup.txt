@@ -1543,21 +1543,23 @@ plugin.tx_browser_pi1 {
             class =
               // [String] Default HTML style
             style =
+              // DEPRECATED - please use the cObject!
+            wraps =
             wraps {
+                // DEPRECATED - please use the cObject!
+              item =
               item {
                 stdWrap {
                   wrap = <option###CLASS######STYLE### value="###UID###"###ITEM_SELECTED###>|</option>
                 }
               }
+                // DEPRECATED - please use the cObject!
+              value =
               value {
                 stdWrap {
                   htmlSpecialChars = 1
                   crop             = 60 | ... | 1
                 }
-              }
-              empty_value = TEXT
-              empty_value {
-                data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_noValue
               }
             }
               // Wrap the filter item
