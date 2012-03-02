@@ -1675,9 +1675,9 @@ class tx_browser_pi1_filter_4x {
     $transOrigPointerField  = $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
 
       // Query for all filter items
-    $select   = $table . '.uid, ' .
-                $table . '.' . $this->curr_tableField . ', ' .
-                $table . '.' . $transOrigPointerField;
+    $select   = $table . ".uid AS '" . $table . ".uid', " .
+                $this->curr_tableField . " AS '" . $this->curr_tableField . "', " .
+                $transOrigPointerField . " AS '" . $transOrigPointerField . "'";
     $from     = $table;
     $where    = $transOrigPointerField . " IN (" . $uids_csv . ")";
     $groupBy  = null;
