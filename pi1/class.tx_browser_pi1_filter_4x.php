@@ -25,7 +25,7 @@
 
 /**
  * The class tx_browser_pi1_filter_4x bundles methods for rendering and processing filters and category menues.
- * 4x means: with SQL engine 4.x
+ * 4x means: with Browser engine 4.x
  *
  * @author       Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package      TYPO3
@@ -941,8 +941,8 @@ class tx_browser_pi1_filter_4x {
     }
       // IF first_item, set the first item tree view
 
-      // DEVELOPMENT: SQL engine 4.x
-    switch( $this->pObj->dev_sqlEngine )
+      // DEVELOPMENT: Browser engine 4.x
+    switch( $this->pObj->dev_browserEngine )
     {
       case( 4 ):
           // Wrap the current valie by the cObject
@@ -954,7 +954,7 @@ class tx_browser_pi1_filter_4x {
         $item = $this->get_filterItemValueStdWrap( $conf_name, $conf_array, $uid, $value );
         break;
     }
-      // DEVELOPMENT: SQL engine 4.x
+      // DEVELOPMENT: Browser engine 4.x
 
 
     $this->set_itemCurrentNumber( );

@@ -1,4 +1,7 @@
-  # cat=basic/enable/10;             type=options[English,German]; label= Localise special backend labels: Language for special backend labels like TypoScript static templates and flexforms.
+  # cat=basic/enable/10;                type=options[Engine 4.x (recommended),Engine 3.x]; label= Browser engine: 4.x includes the SQL engine 4.x. If you like to use 4.x, your IP address has match allowed IP addresses from list below.
+browserEngine = Engine 4.x (recommended)
+
+  # cat=basic/enable/20;             type=options[English,German]; label= Localise special backend labels: Language for special backend labels like TypoScript static templates and flexforms.
 LLstatic = English
 
   # cat=basic/enable/100;              type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptCheckUpdate]; label=Update Wizard
@@ -16,8 +19,6 @@ updateWizardAllowedIPs = 127.0.0.1, 127.0.0.2
 
   # cat=basic/dev/930;                type=options[Don't log anything,---------------------------------------,Auto Discover development,Calendar,Download,Export,Filter and Category Menu,Flexform,Hooks,Javascript,Localisation,Map,PageBrowser and A-Z-Browser,Performance,Realurl,Search,SEO (Search Engine Optimization),Session Management,Social media,SQL development,Statistics,Templating,Typoscript Template Container,Typoscript Update Checker,:TODO: for Development,---------------------------------------,Warnings and errors,All]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
 drs_mode = Don't log anything
-  # cat=basic/dev/931;                type=options[SQL engine 3.x (recommended),SQL engine 4.x (development only!)]; label= SQL engine: for development only. IP address has match allowed IP addresses from above.
-sqlEngine = SQL engine 3.x (recommended)
 
   # cat=basic/others/999;             type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
 external_links=0

@@ -331,8 +331,8 @@ class tx_browser_pi1_typoscript
         {
           $arr_tableField[]  = $tableField;
         }
-          // DEVELOPMENT: SQL engine 4.x
-        if( $this->pObj->dev_sqlEngine == 4 )
+          // DEVELOPMENT: Browser engine 4.x
+        if( $this->pObj->dev_browserEngine == 4 )
         {
             // IF no pivar (filter isn't set)
           if( ! $this->pObj->piVars[$str_nice_piVar] )
@@ -343,12 +343,12 @@ class tx_browser_pi1_typoscript
                 // DRS
               if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
               {
-                $prompt = '+++ SQL engine 4.x ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++';
+                $prompt = '+++ Browser engine 4.x ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++';
                 t3lib_div::devlog( $prompt, $this->pObj->extKey, 2 );
-                $prompt = 'SQL engine 4.x: filter ' . $tableField . ' is added to the array ' .
+                $prompt = 'Browser engine 4.x: filter ' . $tableField . ' is added to the array ' .
                           'realTabels_arrFields, but filter isn\'t used.';
                 t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-                $prompt = 'SQL engine 4.x: Please check, weather it is a performance problem.';
+                $prompt = 'Browser engine 4.x: Please check, weather it is a performance problem.';
                 t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
               }
                 // DRS
@@ -359,7 +359,7 @@ class tx_browser_pi1_typoscript
           }
             // IF no pivar (filter isn't set)
         }
-            // DEVELOPMENT: SQL engine 4.x
+            // DEVELOPMENT: Browser engine 4.x
       }
     }
     if( is_array( $arr_tableField ) )

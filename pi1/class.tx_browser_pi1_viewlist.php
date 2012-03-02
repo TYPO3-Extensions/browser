@@ -124,8 +124,8 @@ class tx_browser_pi1_viewlist
  */
   function main( )
   {
-      // DEVELOPMENT: SQL engine 4.x
-    switch( $this->pObj->dev_sqlEngine )
+      // DEVELOPMENT: Browser engine 4.x
+    switch( $this->pObj->dev_browserEngine )
     {
       case( 4 ):
         return $this->main_4x( );
@@ -135,7 +135,7 @@ class tx_browser_pi1_viewlist
           // Follow the workflow
         break;
     }
-      // DEVELOPMENT: SQL engine 4.x
+      // DEVELOPMENT: Browser engine 4.x
 
 
 
@@ -1136,7 +1136,7 @@ class tx_browser_pi1_viewlist
 
 $str_header  = '<h1 style="color:red;">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
 $str_prompt  = '<p style="color:red;font-weight:bold;">' . $this->pObj->pi_getLL('error_sql_select') . '</p>';
-$str_prompt  = '<p style="color:red;font-weight:bold;">' . 'SQLengine 4.x' . '</p>';
+$str_prompt  = '<p style="color:red;font-weight:bold;">' . 'Browser engine 4.x' . '</p>';
 
 foreach( ( array ) $arr_filter as $marker => $content )
 {

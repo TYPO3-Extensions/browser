@@ -350,8 +350,8 @@ class tx_browser_pi1 extends tslib_pibase {
     //
     // Development
 
-    // [Integer] Version of the SQL engine: 3 or 4
-  var $dev_sqlEngine  = null;
+    // [Integer] Version of the Browser engine: 3 or 4
+  var $dev_browserEngine  = null;
     // [Boolean] True: current IP is element of list with allowed IPs; false: it isn't
   var $bool_accessByIP = null;
     // Use cache: FALSE || TRUE; If you develope this extension, it can be helpfull to set this var on FALSE (no cache)
@@ -444,42 +444,42 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Init SQL engine
+      // Init browser engine
 
-    switch( $this->arr_extConf['sqlEngine'] )
+    switch( $this->arr_extConf['browserEngine'] )
     {
-      case( 'SQL engine 4.x (development only!)' ):
+      case( 'Engine 4.x (recommended)' ):
         if( ! $this->bool_accessByIP )
         {
-          $this->dev_sqlEngine = 3;
+          $this->dev_browserEngine = 3;
           if ($this->b_drs_sql)
           {
-            $prompt = 'SQL engine 4.x is enabled. But current IP doesn\'t match list of allowed IPs!';
+            $prompt = 'Browser engine 4.x is enabled. But current IP doesn\'t match list of allowed IPs!';
             t3lib_div::devLog('[WARN/SQL] ' . $prompt, $this->extKey, 2);
-            $prompt = 'SQL engine 3.x is used';
+            $prompt = 'Browser engine 3.x is used';
             t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
           }
           break;
         }
-        $this->dev_sqlEngine = 4;
+        $this->dev_browserEngine = 4;
         if ($this->b_drs_sql)
         {
-          $prompt = 'SQL engine 4.x is enabled. This if for development only!';
+          $prompt = 'Browser engine 4.x is enabled. This is for development only!';
           t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
-          $prompt = 'SQL engine 4.x is used';
+          $prompt = 'Browser engine 4.x is used';
           t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
         }
         break;
-      case( 'SQL engine 3.x (recommended)' ):
+      case( 'Browser engine 3.x (recommended)' ):
       default:
-        $this->dev_sqlEngine = 3;
+        $this->dev_browserEngine = 3;
         if ($this->b_drs_sql)
         {
-          $prompt = 'SQL engine 3.x is used';
+          $prompt = 'Browser engine 3.x is used';
           t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
         }
     }
-      // Init SQL engine
+      // Init Browser engine
 
 
 
