@@ -1474,21 +1474,43 @@ plugin.tx_browser_pi1 {
           // [Boolean] Should be added a default item?
         first_item = 1
         first_item {
-            // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+            // DEPRECATED - please use cObject below! [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
           display_without_any_hit = 1
-            // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+            // DEPRECATED - please use cObject below! [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
           display_hits = 0
           display_hits {
-              // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
+              // DEPRECATED - please use cObject below! [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
             behindItem = 1
             stdWrap {
               noTrimWrap = | (|)|
             }
-              // [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
+              // DEPRECATED - please use cObject below! [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
             display_empty_hits = 0
           }
+            // DEPRECATED - please use cObject below!
+          value_stdWrap 
           value_stdWrap {
             data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
+          }
+            // Wrap the filter item
+          cObject = COA
+          cObject {
+              // Value from locallang.xml
+            20 = TEXT
+            20 {
+              data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
+            }
+              // Append hits
+            append = TEXT
+            append {
+              if {
+                  // Display hits only in case of one hit at least
+                isTrue = ###HITS###
+              }
+              value       = ###HITS###
+              noTrimWrap  = | (|)|
+            }
+            wrap = <option###CLASS######STYLE### value="###UID###">|</option>
           }
             // [STRING, unique] Value attribute in the option tag (#11401)
           option_value = 0
@@ -1588,9 +1610,9 @@ plugin.tx_browser_pi1 {
                 }
                 data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_noValue
               }
-                // Hits behind
-              30 = TEXT
-              30 {
+                // Append hits
+              append = TEXT
+              append {
                 if {
                     // Display hits only in case of one hit at least
                   isTrue = ###HITS###
