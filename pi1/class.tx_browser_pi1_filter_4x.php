@@ -1672,12 +1672,12 @@ class tx_browser_pi1_filter_4x {
     $uids_csv = implode( ',', $uids_arr );
 
       // transOrigPointerField
-    $transOrigPointerField = $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
+    $tableFieldLlPid = $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
 
       // Query for all filter items
     $select   = 'uid, ' . $this->curr_tableField;
     $from     = $table;
-    $where    = $table . "." . $transOrigPointerField . " IN (" . $uids_csv . ")";
+    $where    = $tableFieldLlPid . " IN (" . $uids_csv . ")";
     $groupBy  = null;
     $orderBy  = null;
     $limit    = null;
