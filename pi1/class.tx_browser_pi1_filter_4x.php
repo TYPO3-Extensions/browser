@@ -1016,15 +1016,15 @@ $this->pObj->dev_var_dump( $this->rows, $this->markerArray );
 
     $uidField                   = $this->sql_filterFields[$this->curr_tableField]['uid'];
     $marker                     = '###UID###';
-    $this->markerArray[$marker] = $this->rows[$uidField];
+    $this->markerArray[$marker] = $this->rows[$uid][$uidField];
 
     $valueField                 = $this->sql_filterFields[$this->curr_tableField]['value'];
     $marker                     = '###VALUE###';
-    $this->markerArray[$marker] = $this->rows[$valueField];
+    $this->markerArray[$marker] = $this->rows[$uid][$valueField];
 
     $hitsField                  = $this->sql_filterFields[$this->curr_tableField]['hits'];
     $marker                     = '###HITS###';
-    $this->markerArray[$marker] = $this->rows[$hitsField];
+    $this->markerArray[$marker] = $this->rows[$uid][$hitsField];
   }
 
 
