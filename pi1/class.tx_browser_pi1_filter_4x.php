@@ -933,7 +933,6 @@ class tx_browser_pi1_filter_4x {
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
     $this->set_markerArrayUpdateRow( $uid );
-$this->pObj->dev_var_dump( $this->rows, $this->markerArray );
 
       // IF first_item, set the first item tree view
     if( $uid == $conf_array['first_item.']['option_value'] )
@@ -1156,7 +1155,7 @@ $this->pObj->dev_var_dump( $this->rows, $this->markerArray );
       // SWITCH first item
       // Get the COA configuration for the value
 
-    $this->replace_marker( $coa_conf );
+    $coa_conf = $this->replace_marker( $coa_conf );
       // List of IPs, which should ignored
     $value  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
