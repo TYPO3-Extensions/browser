@@ -939,54 +939,6 @@ class tx_browser_pi1_filter_4x {
       // stdWrap the current value
     $item = $this->get_filterItemValueStdWrap( $conf_name, $conf_array, $uid, $value );
 
-      // stdWrap the current item
-    $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
-    $item     = $this->pObj->local_cObj->stdWrap( $item, $stdWrap );
-      // stdWrap the current item
-
-      // DRS :TODO:
-    if( $firstLoop && $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Check maxItemsPerRow!';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS :TODO:
-    $item = $this->get_maxItemsTagEndBegin( $item );
-
-      // Item class
-    if($conf_name == 'CATEGORY_MENU')
-    {
-      $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
-    }
-      // DRS :TODO:
-    if( $firstLoop && $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Check AJAX ###ONCHANGE###';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS :TODO:
-    $item = $this->replace_itemClass( $conf_array, $item );
-      // Item class
-      // Item style
-    $item = $this->replace_itemStyle( $conf_array, $item );
-      // Item title
-    $item = $this->replace_itemTitle( $conf_array, $item );
-      // Item uid
-    $item = $this->replace_itemUid( $conf_array, $uid, $item );
-      // Item URL
-    $item = $this->replace_itemUrl( $conf_array, $uid, $item );
-      // Item selected
-    $item = $this->replace_itemSelected( $conf_array, $uid, $value, $item );
-
-      // Workaround: remove ###ONCHANGE###
-    $item = str_replace( ' class=" ###ONCHANGE###"', null, $item );
-    if( $firstLoop && $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'class=" ###ONCHANGE###" is removed. Check the code!';
-      t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
-    }
-      // Workaround: remove ###ONCHANGE###
-
     $this->set_itemCurrentNumber( );
 
     $firstLoop = false;
@@ -1065,12 +1017,60 @@ class tx_browser_pi1_filter_4x {
       // Get the stdWrap for the value
 
       // stdWrap the current value
-    $value_stdWrap = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
+    $item = $this->pObj->local_cObj->stdWrap( $value, $stdWrap );
 
       // Prepend or append hits
     $item = $this->set_hits( $uid, $item, $this->rows[$uid] );
 
-    return $value_stdWrap;
+      // stdWrap the current item
+    $stdWrap  = $conf_array['wrap.']['item.']['wraps.']['item.']['stdWrap.'];
+    $item     = $this->pObj->local_cObj->stdWrap( $item, $stdWrap );
+      // stdWrap the current item
+
+      // DRS :TODO:
+    if( $firstLoop && $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Check maxItemsPerRow!';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS :TODO:
+    $item = $this->get_maxItemsTagEndBegin( $item );
+
+      // Item class
+    if($conf_name == 'CATEGORY_MENU')
+    {
+      $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
+    }
+      // DRS :TODO:
+    if( $firstLoop && $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Check AJAX ###ONCHANGE###';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS :TODO:
+    $item = $this->replace_itemClass( $conf_array, $item );
+      // Item class
+      // Item style
+    $item = $this->replace_itemStyle( $conf_array, $item );
+      // Item title
+    $item = $this->replace_itemTitle( $conf_array, $item );
+      // Item uid
+    $item = $this->replace_itemUid( $conf_array, $uid, $item );
+      // Item URL
+    $item = $this->replace_itemUrl( $conf_array, $uid, $item );
+      // Item selected
+    $item = $this->replace_itemSelected( $conf_array, $uid, $value, $item );
+
+      // Workaround: remove ###ONCHANGE###
+    $item = str_replace( ' class=" ###ONCHANGE###"', null, $item );
+    if( $firstLoop && $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'class=" ###ONCHANGE###" is removed. Check the code!';
+      t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
+    }
+      // Workaround: remove ###ONCHANGE###
+
+    return $item;
   }
 
 
