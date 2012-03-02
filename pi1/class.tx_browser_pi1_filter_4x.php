@@ -945,6 +945,7 @@ class tx_browser_pi1_filter_4x {
       case( 4 ):
           // Wrap the current valie by the cObject
         $item = $this->get_filterItemCObj( $conf_name, $conf_array, $uid, $value );
+//var_dump( __METHOD__, __LINE__, $this->curr_tableField, $conf_name, $conf_array, $uid, $value, $item );
         break;
       case( 3 ):
       default:
@@ -1239,7 +1240,7 @@ class tx_browser_pi1_filter_4x {
     $serialized_conf = serialize( $coa_conf );
 
       // Substitute marker recursive
-    $return_conf  = $this->pObj->cObj->substituteMarkerInObject( $return_conf, $this->markerArray );
+    $return_conf  = $this->pObj->cObj->substituteMarkerInObject( $coa_conf, $this->markerArray );
 
       // Reinit $return_conf 
     $coa_conf = unserialize($serialized_conf);
@@ -3619,7 +3620,6 @@ class tx_browser_pi1_filter_4x {
 
         // Render the value
       $item = $this->get_filterItem( $curr_uid, $value );
-
         // Vars
       $curr_depth = $iterator->getDepth( );
       $indent     = str_repeat( '  ', ( $iterator->getDepth( ) + 1 ) );
