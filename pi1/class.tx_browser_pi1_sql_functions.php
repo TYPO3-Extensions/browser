@@ -2354,7 +2354,7 @@ class tx_browser_pi1_sql_functions
                       $this->pObj->pi_getLL( 'drs_security' ) . '</p>';
       $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $error . '</p>';
       $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $query . '</p>';
-      $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $arr_debugTrail[$prompt] . '</p>';
+      $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $arr_debugTrail['prompt'] . '</p>';
     }
     if( ! $this->pObj->b_drs_error )
     {
