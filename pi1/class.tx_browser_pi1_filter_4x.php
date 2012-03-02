@@ -1144,8 +1144,8 @@ class tx_browser_pi1_filter_4x {
     switch( true )
     {
       case( $uid == $conf_array['first_item.']['option_value'] ):
-        $coa_name = $conf_array['first_item.']['value_stdWrap'];
-        $coa_conf = $conf_array['first_item.']['value_stdWrap.'];
+        $coa_name = $conf_array['first_item.']['cObject'];
+        $coa_conf = $conf_array['first_item.']['cObject.'];
         break;
       default:
         $coa_name = $conf_array['wrap.']['item.']['cObject'];
