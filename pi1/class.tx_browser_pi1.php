@@ -1140,9 +1140,9 @@ class tx_browser_pi1 extends tslib_pibase {
     list($class, $method ) = explode( '->', $classMethod );
 
       // RETURN content
-    $arr_return['class']  = $class;
-    $arr_return['method'] = $method;
-    $arr_return['line']   = $line;
+    $arr_return['class']  = trim( $class );
+    $arr_return['method'] = trim( $method );
+    $arr_return['line']   = trim( $line );
     $arr_return['prompt'] = $class . '::' . $method . ' (' . $line . ')';
 
     return $arr_return;
