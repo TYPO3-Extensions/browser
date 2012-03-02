@@ -1022,7 +1022,7 @@ class tx_browser_pi1_filter_4x {
         $value = $this->get_filterItemValueStdWrap_3x( $conf_name, $conf_array, $uid, $value );
         break;
       default:
-        $value = $this->get_filterItemValueStdWrap_4x( $conf_name, $conf_array, $uid, $value );
+        $value = $this->get_filterItemValueCoa( $conf_name, $conf_array, $uid, $value );
         break;
     }
 
