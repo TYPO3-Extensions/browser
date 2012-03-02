@@ -1549,6 +1549,8 @@ plugin.tx_browser_pi1 {
                 // DEPRECATED - please use the cObject!
               item =
               item {
+                  // DEPRECATED - please use the cObject!
+                stdWrap =
                 stdWrap {
                   wrap = <option###CLASS######STYLE### value="###UID###"###ITEM_SELECTED###>|</option>
                 }
@@ -1556,6 +1558,8 @@ plugin.tx_browser_pi1 {
                 // DEPRECATED - please use the cObject!
               value =
               value {
+                  // DEPRECATED - please use the cObject!
+                stdWrap =
                 stdWrap {
                   htmlSpecialChars = 1
                   crop             = 60 | ... | 1
