@@ -1124,7 +1124,7 @@ class tx_browser_pi1 extends tslib_pibase {
  *
  * @return	void
  */
-  public function drs_debugTrail( )
+  public function drs_debugTrail( $level )
   {
       // Get the debug trail
     $debugTrail_str = t3lib_utility_Debug::debugTrail( );
@@ -1133,7 +1133,7 @@ class tx_browser_pi1 extends tslib_pibase {
     $debugTrail_arr = explode( '//', $debugTrail_str );
 
       // Get the element next to last
-    $classMethodLine = $debugTrail_arr[ count( $debugTrail_arr) - 3];
+    $classMethodLine = $debugTrail_arr[ count( $debugTrail_arr) - ( $level + 2 )];
 
       // Get class, method and line
     list( $classMethod, $line ) = explode ( '#', $classMethodLine );

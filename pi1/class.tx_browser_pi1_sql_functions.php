@@ -2346,7 +2346,8 @@ class tx_browser_pi1_sql_functions
     
     if( $this->pObj->b_drs_error )
     {
-      $arr_debugTrail = $this->pObj->drs_debugTrail( );
+      $level          = 1;
+      $arr_debugTrail = $this->pObj->drs_debugTrail( $level );
       t3lib_div::devlog( '[ERROR/SQL] ' . $query,  $this->pObj->extKey, 3 );
       t3lib_div::devlog( '[ERROR/SQL] ' . $error,  $this->pObj->extKey, 3 );
       t3lib_div::devlog( '[ERROR/SQL] ABORT at ' . $arr_debugTrail[$prompt], $this->pObj->extKey, 3 );
