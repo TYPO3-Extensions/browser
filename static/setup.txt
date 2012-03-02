@@ -1337,6 +1337,10 @@ plugin.tx_browser_pi1 {
                   crop = 60 | ... | 1
                 }
               }
+              empty_value = TEXT
+              empty_value {
+                data = LLL:EXT:browser/pi1/locallang.xml:label_checkbox_noValue
+              }
             }
           }
             // [Integer] Maximum items per row. 0: unlimited
@@ -1427,6 +1431,10 @@ plugin.tx_browser_pi1 {
                 stdWrap {
                   crop = 60 | ... | 1
                 }
+              }
+              empty_value = TEXT
+              empty_value {
+                data = LLL:EXT:browser/pi1/locallang.xml:label_radiobuttons_noValue
               }
             }
           }
@@ -1547,6 +1555,48 @@ plugin.tx_browser_pi1 {
                   crop             = 60 | ... | 1
                 }
               }
+              empty_value = TEXT
+              empty_value {
+                data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_noValue
+              }
+            }
+              // Wrap the filter item
+            cObject = COA
+            cObject {
+                // Value in case of a value
+              10 = TEXT
+              10 {
+                if {
+                  isTrue = ###VALUE###
+                }
+                value             = ###VALUE###
+                htmlSpecialChars  = 1
+                crop              = 60 | ... | 1
+              }
+                // Value in case of no value
+              20 = TEXT
+              20 {
+                if {
+                  isTrue  = ###VALUE###
+                  negate  = 1
+                }
+                data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_noValue
+              }
+                // Hits
+              30 = TEXT
+              30 {
+                if {
+                    // Display hits only in case of one hit at least
+                  isTrue = ###HITS###
+                }
+                value       = ###HITS###
+                noTrimWrap  = | (|)|
+              }
+              if {
+                  // Display with hits only
+                isTrue = ###HITS###
+              }
+              wrap = <option###CLASS######STYLE### value="###UID###"###ITEM_SELECTED###>|</option>
             }
           }
         }
