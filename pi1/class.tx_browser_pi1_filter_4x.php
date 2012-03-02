@@ -1675,7 +1675,7 @@ class tx_browser_pi1_filter_4x {
     $tableFieldLlPid = $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
 
       // Query for all filter items
-    $select   = 'uid, ' . $this->curr_tableField;
+    $select   = 'uid, ' . $this->curr_tableField . ', ' . $tableFieldLlPid;
     $from     = $table;
     $where    = $tableFieldLlPid . " IN (" . $uids_csv . ")";
     $groupBy  = null;
@@ -2954,12 +2954,14 @@ class tx_browser_pi1_filter_4x {
       // Get rows
     $rows_sysLanguage = $this->sql_resToRows( $res );
 
+    $tableFieldLlPid = $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
+
       // Override class var $rows
     foreach( $rows_sysLanguage as $uid => $row_sysLanguage )
     {
       if( ! empty( $row_sysLanguage[$this->curr_tableField] ) )
       {
-        $this->rows[$uid][$this->curr_tableField] = $row_sysLanguage[$this->curr_tableField];
+        $this->rows[$tableFieldLlPid][$this->curr_tableField] = $row_sysLanguage[$this->curr_tableField];
       }
     }
       // Override class var $rows
