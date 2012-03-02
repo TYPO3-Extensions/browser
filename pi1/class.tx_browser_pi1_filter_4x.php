@@ -2958,7 +2958,6 @@ class tx_browser_pi1_filter_4x {
 
     $transOrigPointerField  = $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
 
-$this->pObj->dev_var_dump( $this->rows, $rows_sysLanguage );
       // Override class var $rows
     foreach( $rows_sysLanguage as $uid => $row_sysLanguage )
     {
