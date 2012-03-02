@@ -1133,7 +1133,7 @@ class tx_browser_pi1 extends tslib_pibase {
     $debugTrail_arr = explode( '//', $debugTrail_str );
 
       // Get the element next to last
-    $classMethodLine = $debugTrail_arr[ count( $debugTrail_arr) - 2];
+    $classMethodLine = $debugTrail_arr[ count( $debugTrail_arr) - 3];
 
       // Get class, method and line
     list( $classMethod, $line ) = explode ( '#', $classMethodLine );
@@ -1143,7 +1143,7 @@ class tx_browser_pi1 extends tslib_pibase {
     $arr_return['class']  = trim( $class );
     $arr_return['method'] = trim( $method );
     $arr_return['line']   = trim( $line );
-    $arr_return['prompt'] = $class . '::' . $method . ' (' . $line . ')';
+    $arr_return['prompt'] = $arr_return['class'] . '::' . $arr_return['method'] . ' (' . $arr_return['line'] . ')';
 
     return $arr_return;
       // RETURN content
