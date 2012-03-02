@@ -1677,7 +1677,7 @@ class tx_browser_pi1_filter_4x {
       // Query for all filter items
     $select   = 'uid, ' . $this->curr_tableField . ', ' . $transOrigPointerField;
     $from     = $table;
-    $where    = $tableFieldLlPid . " IN (" . $uids_csv . ")";
+    $where    = $transOrigPointerField . " IN (" . $uids_csv . ")";
     $groupBy  = null;
     $orderBy  = null;
     $limit    = null;
