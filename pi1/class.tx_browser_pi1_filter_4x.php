@@ -343,6 +343,9 @@ class tx_browser_pi1_filter_4x {
       // Init calendar area
     $this->init_calendarArea( );
 
+      // Set class var markerArray
+    $this->set_markerArray( );
+
     return;
   }
 
@@ -929,6 +932,9 @@ class tx_browser_pi1_filter_4x {
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
+    $this->set_markerArrayUpdateRow( $uid );
+$this->pObj->dev_var_dump( $this->markerArray );
+
       // IF first_item, set the first item tree view
     if( $uid == $conf_array['first_item.']['option_value'] )
     {
@@ -956,6 +962,57 @@ class tx_browser_pi1_filter_4x {
 
     $firstLoop = false;
     return $item;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * set_markerArray( ): Render the current filter item.
+ *
+ * @param	integer		$uid        : uid of the current item / row
+ * @param	string		$value      : value of the current item / row
+ * @return	string		$item       : The rendered item
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function set_markerArray( )
+  {
+    $this->markerArray['###MODE###']  = $this->pObj->piVar_mode;
+    $this->markerArray['###VIEW###']  = $this->pObj->view;
+    $this->markerArray = $this->pObj->objMarker->extend_marker_wi_cObjData( $this->markerArray );
+    $this->markerArray = $this->pObj->objMarker->extend_marker_wi_pivars( $this->markerArray );
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * set_markerArrayUpdateRow( ): Render the current filter item.
+ *
+ * @param	integer		$uid        : uid of the current item / row
+ * @param	string		$value      : value of the current item / row
+ * @return	string		$item       : The rendered item
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function set_markerArrayUpdateRow( $uid )
+  {
+    foreach( $this->rows[$uid] as $key => $value )
+    {
+      $marker                     = '###' . strtoupper( $key ) . '###';
+      $this->markerArray[$marker] = $value;
+    }
   }
 
 
@@ -1080,17 +1137,51 @@ class tx_browser_pi1_filter_4x {
         $coa_conf = $conf_array['first_item.']['value_stdWrap.'];
         break;
       default:
-        $coa_name = $conf_array['wrap.']['item.']['wraps.']['value'];
-        $coa_conf = $conf_array['wrap.']['item.']['wraps.']['value.'];
+        $coa_name = $conf_array['wrap.']['item.']['cObject'];
+        $coa_conf = $conf_array['wrap.']['item.']['cObject.'];
         break;
     }
       // SWITCH first item
       // Get the COA configuration for the value
 
+    $this->replace_marker( $coa_conf );
       // List of IPs, which should ignored
     $value  = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
     return $value;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * replace_marker( ): Render the current filter item.
+ *
+ * @param	array     $conf_name      : TS configuration object type of the current filter / tableField
+ * @param	array     $conf_array     : TS configuration array of the current filter / tableField
+ * @param	integer		$uid            : uid of the current item / row
+ * @param	string		$value          : value of the current item / row
+ * @return	string	$value_stdWrap  : The value stdWrapped
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function replace_marker( $coa_conf )
+  {
+      // Keep $coa_conf!
+    $serialized_conf = serialize( $coa_conf );
+
+      // Substitute marker recursive
+    $return_conf  = $this->pObj->cObj->substituteMarkerInObject( $return_conf, $this->markerArray );
+
+      // Reinit $return_conf 
+    $coa_conf = unserialize($serialized_conf);
+
+    return $return_conf;
   }
 
 

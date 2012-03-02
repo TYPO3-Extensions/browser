@@ -1570,8 +1570,8 @@ plugin.tx_browser_pi1 {
             cObject = COA
             cObject {
                 // Value in case of a value
-              10 = TEXT
-              10 {
+              20 = TEXT
+              20 {
                 if {
                   isTrue = ###VALUE###
                 }
@@ -1580,15 +1580,15 @@ plugin.tx_browser_pi1 {
                 crop              = 60 | ... | 1
               }
                 // Value in case of no value
-              20 = TEXT
-              20 {
+              21 = TEXT
+              21 {
                 if {
                   isTrue  = ###VALUE###
                   negate  = 1
                 }
                 data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_noValue
               }
-                // Hits
+                // Hits behind
               30 = TEXT
               30 {
                 if {
