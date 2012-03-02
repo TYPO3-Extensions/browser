@@ -2346,16 +2346,16 @@ class tx_browser_pi1_sql_functions
     
     if( $this->pObj->b_drs_error )
     {
-      $level          = 1;
-      $arr_debugTrail = $this->pObj->drs_debugTrail( $level );
+      $level      = 1; // 1 level up
+      $debugTrail = $this->pObj->drs_debugTrail( $level );
       t3lib_div::devlog( '[ERROR/SQL] ' . $query,  $this->pObj->extKey, 3 );
       t3lib_div::devlog( '[ERROR/SQL] ' . $error,  $this->pObj->extKey, 3 );
-      t3lib_div::devlog( '[ERROR/SQL] ABORT at ' . $arr_debugTrail[$prompt], $this->pObj->extKey, 3 );
+      t3lib_div::devlog( '[ERROR/SQL] ABORT at ' . $debugTrail['prompt'], $this->pObj->extKey, 3 );
       $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">' .
                       $this->pObj->pi_getLL( 'drs_security' ) . '</p>';
       $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $error . '</p>';
       $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $query . '</p>';
-      $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $arr_debugTrail['prompt'] . '</p>';
+      $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $debugTrail['prompt'] . '</p>';
     }
     if( ! $this->pObj->b_drs_error )
     {

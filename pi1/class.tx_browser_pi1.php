@@ -1474,7 +1474,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // List of arguments;
     $arg_list = func_get_args( );
     
-    $level      = 1;
+    $level      = 1; // 1 level up
     $debugTrail = $this->pObj->drs_debugTrail( $level );
     
     $prompt = '<pre>' . $debugTrail['prompt'] . PHP_EOL .
