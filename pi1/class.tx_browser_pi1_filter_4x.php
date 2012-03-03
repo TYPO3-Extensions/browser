@@ -3759,6 +3759,8 @@ class tx_browser_pi1_filter_4x {
  */
   private function tree_getRendered( )
   {
+    static $firstCall = true;
+
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
@@ -3782,7 +3784,6 @@ class tx_browser_pi1_filter_4x {
         $tmpOneDim  = array( 'uid'   => $first_item_uid   ) +
                       array( 'value' => $first_item_value ) +
                       $this->tmpOneDim;
-//$this->pObj->dev_var_dump( $first_item_value );
         break;
       case( false ):
       default:
@@ -3798,13 +3799,11 @@ class tx_browser_pi1_filter_4x {
     $iterator     = new RecursiveIteratorIterator( $rcrsArrIter );
       // Move one dimensional array to an iterator
 
-      // Code for an item (an a-tag usually)
-//    $conf_item    = $conf_array['wrap.']['item'];
-
       // HTML id
     $cObj_name  = $conf_array['treeview.']['html_id'];
     $cObj_conf  = $conf_array['treeview.']['html_id.'];
     $html_id    = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+      // HTML id
 
 
 
@@ -3856,13 +3855,23 @@ class tx_browser_pi1_filter_4x {
         // Render the value
       $item = $this->get_filterItem( $curr_uid, $value );
 
+        // CONTINUE: item is empty
       if( empty( $item ) )
       {
+          // DRS
+        if( $firstCall && $this->pObj->b_drs_filter )
+        {
+          $prompt = 'No value: [' . $key . '] won\'t displayed!';
+          t3lib_div :: devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
+          $prompt = 'Maybe TS configuration for the value is: display it only with a hit at least.';
+          t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = 'There is a workaround: please take a look in the manual for ' . $this->pObj->prefixId . '.treeview.';
+          t3lib_div :: devlog( '[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1 );
+        }
+          // DRS
         continue;
       }
-
-//$this->pObj->dev_var_dump( $curr_uid, $value, $item );
-//$this->pObj->dev_var_dump( $item );
+        // CONTINUE: item is empty
 
         // Vars
       $curr_depth = $iterator->getDepth( );
@@ -3934,6 +3943,8 @@ class tx_browser_pi1_filter_4x {
       // Render the end tag of the last item
 
     $arr_result[$first_item_uid] = $this->htmlSpaceLeft . '<div id="' . $html_id . '">' . $arr_result[$first_item_uid];
+
+    $firstCall = false;
 
       // RETURN the result
     return $arr_result;
