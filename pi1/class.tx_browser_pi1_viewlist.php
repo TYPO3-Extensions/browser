@@ -82,6 +82,9 @@ class tx_browser_pi1_viewlist
     // [Boolean] True: Query is a union, false: query isn't a union
   var $bool_union = null;
 
+    // [String] Current content
+  var $content = null;
+
 
 
 
@@ -1059,17 +1062,33 @@ class tx_browser_pi1_viewlist
 
 
 
-      //Overwrite general_stdWrap, set globals $lDisplayList and $lDisplay
+      // Overwrite general_stdWrap, set globals $lDisplayList and $lDisplay
     $this->init( );
 
       // HTML content of the current template
-    $template = $this->pObj->str_template_raw;
+    $this->content = $this->pObj->str_template_raw;
+
+    
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Set SQL query parts in general and statements for rows
+
+    $arr_result = $this->pObj->objSql->init( );
+    if( $arr_result['error']['status'] )
+    {
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $content = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+      return $content;
+    }
+      // Set SQL query parts in general and statements for rows
 
 
     
       //////////////////////////////////////////////////////////////////////
       //
-      // csv export: move current template to CSV template
+      // csv export versus list view
 
       // #29370, 110831, dwildt+
       // Get template for csv
@@ -1077,59 +1096,53 @@ class tx_browser_pi1_viewlist
     switch( $this->pObj->objExport->str_typeNum )
     {
       case( 'csv' ) :
+          // CASE csv
+          // DRS
         if ( $this->pObj->b_drs_templating || $this->pObj->b_drs_export )
         {
           t3lib_div::devlog('[INFO/TEMPLATING+EXPORT] ' . $str_marker . ' is ignored. ###TEMPLATE_CSV### is used as template marker.',  $this->pObj->extKey, 0);
         }
+          // DRS
+          // Replace content with the csv template
         $str_marker     = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
         $template_path  = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['file'];
-        $template       = $this->pObj->cObj->fileResource( $template_path );
+        $this->content        = $this->pObj->cObj->fileResource( $template_path );
+          // Replace content with the csv template
         break;
+          // CASE csv
       default:
-        // Do nothing;
+          // CASE no csv
+          // Get filter
+        $arr_result = $this->pObj->objFltr4x->get( );
+        if( $arr_result['error']['status'] )
+        {
+            // Prompt the expired time to devlog
+          $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+          $content = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+          return $content;
+        }
+          // Get filter
+
+          // Set filter
+        //$arr_result = $this->subpart_setFilter( $arr_result['data']['filter'] );
+
+          // Get A-Z-browser
+          // Set A-Z-browser
+          // Get page browser
+          // Set page browser
+        break;
+          // CASE no csv
     }
       // Get template for csv
-      // csv export: move current template to CSV template
+      // csv export versus list view
       // #29370, 110831, dwildt+
 
 
-
-      // Set SQL query parts in general and statements for rows
-    $arr_result = $this->pObj->objSql->init( );
-    if( $arr_result['error']['status'] )
-    {
-        // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-      $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
-      return $template;
-    }
-//    $this->pObj->dev_var_dump( $this->pObj->objSql->sql_query_statements );
-      // Set SQL query parts in general and statements for rows
-
-
-      // Get filter
-    $arr_result = $this->pObj->objFltr4x->get_filters( );
-    if( $arr_result['error']['status'] )
-    {
-        // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-      $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
-      return $template;
-    }
-    $arr_filter = $arr_result['data']['filter'];
-
-      // Get A-Z-browser
-      // Set A-Z-browser
-
-      // Get page browser
-      // Set page browser
 
       // Get rows
       // Set rows
     
 
-
-    
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -1150,7 +1163,7 @@ return $str_header . $str_prompt;
 return $arr_return;
 
       // RETURN content
-    return $template;
+    return $this->content;
   }
 
 

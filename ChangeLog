@@ -1,7 +1,7 @@
 3.9.9
   120219
   New Features
-  * #33826: Supporting of the $cObj
+  * #33826: Supporting of the $cObj for filter
   * #33892: Optimisation of performance - Step II
   Bugfixes
   * #34212: TypoScript limit hasn't any effect

@@ -1214,7 +1214,7 @@ plugin.tx_browser_pi1 {
             // [Integer] Space characters from left margin in the HTML code
           nice_html_spaceLeft = 12
           title_stdWrap {
-              // [String] Title of the object. If it shouldn't display, please delete the title_stdWrap array
+              // [String] Title of the object. If it shouldn't displayed, please delete the title_stdWrap array
             value = ###TABLE.FIELD###
             wrap  = <div class="category_menu_title">|</div>
           }
@@ -1373,7 +1373,7 @@ plugin.tx_browser_pi1 {
             // [Integer] Space characters from left margin in the HTML code
           nice_html_spaceLeft = 12
           title_stdWrap {
-              // [String] Title of the object. If it shouldn't display, please delete the title array
+              // [String] Title of the object. If it shouldn't displayed, please delete the title array
             value = ###TABLE.FIELD###
             wrap  = |
           }
@@ -1513,7 +1513,7 @@ plugin.tx_browser_pi1 {
             // [Integer] Space characters from left margin in the HTML code
           nice_html_spaceLeft = 12
           title_stdWrap {
-              // [String] Title of the object. If it shouldn't display, please delete the title array
+              // [String] Title of the object. If it shouldn't displayed, please delete the title array
             value = ###TABLE.FIELD###
             wrap  = |
           }
@@ -1691,7 +1691,7 @@ plugin.tx_browser_pi1 {
             // [Integer] Space characters from left margin in the HTML code
           nice_html_spaceLeft = 12
           title_stdWrap {
-              // [String] Title of the object. If it shouldn't display, please delete the title array
+              // [String] Title of the object. If it shouldn't displayed, please delete the title array
             value = ###TABLE.FIELD###
             wrap  = <div class="selectbox_title">|</div>
           }

@@ -471,13 +471,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_filter( ):  Get the filter of the current tableField.
+ * get( ):  Get the filter of the current tableField.
  *
  * @return	array		$arr_return : $arr_return['data']['marker']['###TABLE.FIELD###']
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function get_filter( )
+  private function get( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
@@ -2977,9 +2977,11 @@ class tx_browser_pi1_filter_4x {
  *                    * removes all data
  *                    * add basic data like mode and view
  *
- * @return	void
- * @version 3.9.9
- * @since   3.9.9
+ * @return    void
+ *
+ * @internal  #33826, 120303, dwildt
+ * @version   3.9.9
+ * @since     3.9.9
  */
   private function cObjData_init( )
   {
