@@ -3007,11 +3007,7 @@ class tx_browser_pi1_filter_4x {
       // DRS
     if( $this->pObj->b_drs_cObjData )
     {
-      foreach( ( array ) $this->pObj->cObj->data as $key => $value )
-      {
-        $arr_prompt[ ] = '\'' . $key . '\' => \'' . $value . '\'';
-      }
-      $prompt = 'Init cObj->data. Elements are now: ' . implode( '; ', ( array ) $arr_prompt );
+      $prompt = 'Init - cObj->data has now this elements: ' . implode( ', ', $this->pObj->cObj->data );
       t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS
