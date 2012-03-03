@@ -3861,9 +3861,9 @@ class tx_browser_pi1_filter_4x {
           // DRS
         if( $firstCallDrsTreeview && ( $this->pObj->b_drs_filter || $this->pObj->b_drs_cObjData ) )
         {
-          $prompt = 'No value: [' . $key . '] won\'t displayed!';
+          $prompt = 'No value: [' . $key . '] won\'t displayed! Be aware: this log won\'t displayed never again.';
           t3lib_div :: devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
-          $prompt = 'Maybe TS configuration for the value is: display it only with a hit at least.';
+          $prompt = 'Maybe TS configuration for [' . $key . '] is: display it only with a hit at least.';
           t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
           $prompt = 'There is a workaround: please take a look in the manual for ' . $this->pObj->prefixId . '.treeview.';
           t3lib_div :: devlog( '[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1 );

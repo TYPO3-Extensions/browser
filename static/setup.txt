@@ -1315,9 +1315,8 @@ plugin.tx_browser_pi1 {
                 noTrimWrap  = | (|)|
               }
               if {
-                  // Display with hits only or in case of a tree view
-                //isTrue = ###HITS######TREEVIEW###
                 isTrue {
+                    // Display with hits only or in case of a tree view
                   cObject = COA
                   cObject {
                     10 = TEXT
@@ -1425,9 +1424,11 @@ plugin.tx_browser_pi1 {
               20 = TEXT
               20 {
                 if {
-                  isTrue = ###VALUE###
+                  isTrue {
+                    field = value
+                  }
                 }
-                value             = ###VALUE###
+                field = value
                 htmlSpecialChars  = 1
                 crop              = 60 | ... | 1
               }
@@ -1435,7 +1436,9 @@ plugin.tx_browser_pi1 {
               21 = TEXT
               21 {
                 if {
-                  isTrue  = ###VALUE###
+                  isTrue {
+                    field = value
+                  }
                   negate  = 1
                 }
                 data = LLL:EXT:browser/pi1/locallang.xml:label_checkbox_noValue
@@ -1445,14 +1448,18 @@ plugin.tx_browser_pi1 {
               30 {
                 if {
                     // Display hits only in case of one hit at least
-                  isTrue = ###HITS###
+                  isTrue {
+                    field = hits
+                  }
                 }
-                value       = ###HITS###
+                field = hits
                 noTrimWrap  = | (|)|
               }
               if {
-                  // Display with hits only
-                isTrue = ###HITS###
+                isTrue {
+                    // Display with hits only
+                  field = hits
+                }
               }
               noTrimWrap = |<input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>  ||
             }
@@ -1643,7 +1650,7 @@ plugin.tx_browser_pi1 {
           value_stdWrap {
             data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
           }
-            // Wrap the first filter item
+            // Wrap the first items
           cObject = COA
           cObject {
               // Value from locallang.xml
@@ -1654,10 +1661,12 @@ plugin.tx_browser_pi1 {
               append = TEXT
               append {
                 if {
-                    // Display hits only in case of one hit at least
-                  isTrue = ###HITS###
+                  isTrue {
+                      // Display hits only in case of one hit at least
+                    field = hits
+                  }
                 }
-                value       = ###HITS###
+                field = hits
                 noTrimWrap  = | (|)|
               }
             }
@@ -1738,9 +1747,11 @@ plugin.tx_browser_pi1 {
               20 = TEXT
               20 {
                 if {
-                  isTrue = ###VALUE###
+                  isTrue {
+                    field = value
+                  }
                 }
-                value             = ###VALUE###
+                field             = value
                 htmlSpecialChars  = 1
                 crop              = 60 | ... | 1
               }
@@ -1748,7 +1759,9 @@ plugin.tx_browser_pi1 {
               21 = TEXT
               21 {
                 if {
-                  isTrue  = ###VALUE###
+                  isTrue {
+                    field = value
+                  }
                   negate  = 1
                 }
                 data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_noValue
@@ -1757,15 +1770,19 @@ plugin.tx_browser_pi1 {
               30 = TEXT
               30 {
                 if {
-                    // Display hits only in case of one hit at least
-                  isTrue = ###HITS###
+                  isTrue {
+                      // Display hits only in case of one hit at least
+                    field = hits
+                  }
                 }
-                value       = ###HITS###
+                field = hits
                 noTrimWrap  = | (|)|
               }
               if {
-                  // Display with hits only
-                isTrue = ###HITS###
+                isTrue {
+                    // Display with hits only
+                  field = hits
+                }
               }
               wrap = <option###CLASS######STYLE### value="###UID###"###ITEM_SELECTED###>|</option>
             }
