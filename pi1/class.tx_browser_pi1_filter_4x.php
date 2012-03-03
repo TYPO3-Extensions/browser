@@ -945,7 +945,6 @@ class tx_browser_pi1_filter_4x {
       case( 4 ):
           // Wrap the current valie by the cObject
         $item = $this->get_filterItemCObj( $conf_name, $conf_array, $uid, $value );
-//var_dump( __METHOD__, __LINE__, $this->curr_tableField, $conf_name, $conf_array, $uid, $value, $item );
         break;
       case( 3 ):
       default:
@@ -1148,6 +1147,7 @@ class tx_browser_pi1_filter_4x {
     {
       $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
     }
+//var_dump( __METHOD__, __LINE__, $value, $conf_array );
       // DRS :TODO:
     if( $firstLoop && $this->pObj->b_drs_devTodo )
     {
@@ -1196,7 +1196,11 @@ class tx_browser_pi1_filter_4x {
       // SWITCH first item
       // Get the COA configuration for the value
 
-    $item  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+    $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+if( empty( $item ) )
+{
+  var_dump( __METHOD__, __LINE__, $value, $cObj_name, $cObj_conf );
+}
 
       // maxItemsTagEndBegin
       // DRS :TODO:
@@ -3548,6 +3552,7 @@ class tx_browser_pi1_filter_4x {
         $tmpOneDim  = array( 'uid'   => $first_item_uid   ) +
                       array( 'value' => $first_item_value ) +
                       $this->tmpOneDim;
+//$this->pObj->dev_var_dump( $first_item_value );
         break;
       case( false ):
       default:
@@ -3610,16 +3615,20 @@ class tx_browser_pi1_filter_4x {
       }
 
 
-        // ERROR/CONTINUE $key isn't value
+        // CONTINUE ERROR $key isn't value
       if( $key != 'value' )
       {
         echo 'ERROR: key != value.' . PHP_EOL . __METHOD__ . ' (Line: ' . __LINE__ . ')' . PHP_EOL;
         continue;
       }
-        // ERROR/CONTINUE $key isn't value
+        // CONTINUE ERROR $key isn't value
 
         // Render the value
       $item = $this->get_filterItem( $curr_uid, $value );
+
+//$this->pObj->dev_var_dump( $curr_uid, $value, $item );
+//$this->pObj->dev_var_dump( $item );
+
         // Vars
       $curr_depth = $iterator->getDepth( );
       $indent     = str_repeat( '  ', ( $iterator->getDepth( ) + 1 ) );
