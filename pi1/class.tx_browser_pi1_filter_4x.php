@@ -309,21 +309,19 @@ class tx_browser_pi1_filter_4x {
 
  /***********************************************
   *
-  * Init
+  * Init and reset
   *
   **********************************************/
 
 
 
-
-
-
-
-
-
 /**
- * init( ): Inits the localisation mode and the calendar area.
- *          Set the class var $this->int_localisation_mode.
+ * init( ): Inits class vars like
+ *          * localisation mode
+ *          * calendar area
+ *          * marker Array
+ *          and other vars like
+ *          * cObj->data
  *
  * @return	void
  * @version 3.9.9
@@ -355,16 +353,9 @@ class tx_browser_pi1_filter_4x {
 
       // Init the data of the cObj
     $this->cObjData_init( );
-    $this->cObjData_reset( );
 
     return;
   }
-
-
-
-
-
-
 
 
 
@@ -389,12 +380,6 @@ class tx_browser_pi1_filter_4x {
 
     return;
   }
-
-
-
-
-
-
 
 
 
@@ -450,15 +435,8 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
- * reset( ):  Inits the localisation mode and the calendar area.
- *            Set the class var $this->int_localisation_mode.
+ * reset( ):  Reset some vars
  *
  * @return	void
  * @version 3.9.9
@@ -466,6 +444,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function reset( )
   {
+      // Reset cObj->data
     $this->cObjData_reset( );
   }
 
@@ -606,12 +585,7 @@ class tx_browser_pi1_filter_4x {
     switch( in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
-        $this->cObjData_setTreeview( );
-        $this->markerArray['###TREEVIEW###'] = 1;
         $arr_return = $this->get_filterItemsTree( );
-        $this->cObjData_unsetTreeview( );
-        unset( $this->markerArray['###TREEVIEW###'] );
-        //$items      = $arr_return['data']['items'];
         break;
       case( false ):
       default:
@@ -764,6 +738,11 @@ class tx_browser_pi1_filter_4x {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
+      // Set cObj->data treeview
+    $this->cObjData_setTreeview( );
+      // Set marker treeview
+    $this->markerArray['###TREEVIEW###'] = 1;
+
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
@@ -828,6 +807,11 @@ class tx_browser_pi1_filter_4x {
 
     $items = $this->get_filterWrap( $items );
 
+      // Unset cObj->data treeview
+    $this->cObjData_unsetTreeview( );
+      // Unset marker treeview
+    unset( $this->markerArray['###TREEVIEW###'] );
+      
       // RETURN
     $arr_return['data']['items'] = $items;
     return $arr_return;
@@ -968,6 +952,9 @@ class tx_browser_pi1_filter_4x {
 
     $markerArray_bak = $this->markerArray;
 
+      // Make a backup
+    $cObjDataBak = $this->pObj->cObj->data;
+      // Add elements of current row to cObj->data
     $this->cObjData_updateRow( $uid );
 
     $this->set_markerArrayUpdateRow( $uid );
@@ -997,6 +984,9 @@ class tx_browser_pi1_filter_4x {
 
     $this->set_itemCurrentNumber( );
 
+      // Reset cObj->data
+    $this->pObj->cObj->data = $cObjDataBak;
+
     return $item;
   }
 
@@ -1019,189 +1009,13 @@ class tx_browser_pi1_filter_4x {
  */
   private function set_markerArray( )
   {
+      // Add mode and view
     $this->markerArray['###MODE###']  = $this->pObj->piVar_mode;
     $this->markerArray['###VIEW###']  = $this->pObj->view;
+
+      // Add cObj->data and piVars
     $this->markerArray = $this->pObj->objMarker->extend_marker_wi_cObjData( $this->markerArray );
     $this->markerArray = $this->pObj->objMarker->extend_marker_wi_pivars( $this->markerArray );
-  }
-
-
-
-
-
-
-
-
-
-/**
- * cObjData_setTreeview( ): Render the current filter item.
- *
- * @param	integer		$uid        : uid of the current item / row
- * @param	string		$value      : value of the current item / row
- * @return	string		$item       : The rendered item
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function cObjData_setTreeview( )
-  {
-    $key    = $this->pObj->extKey . '.treeview';
-    $value  = 1;
-
-    $this->pObj->cObj->data[ $key ] = $value;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * cObjData_unsetTreeview( ): Render the current filter item.
- *
- * @param	integer		$uid        : uid of the current item / row
- * @param	string		$value      : value of the current item / row
- * @return	string		$item       : The rendered item
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function cObjData_unsetTreeview( )
-  {
-    $key = $this->pObj->extKey . '.treeview';
-    unset( $this->pObj->cObj->data[ $key ] );
-
-      // DRS
-    if( $this->pObj->b_drs_cObjData )
-    {
-      $prompt = 'cObject data are reset';
-      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS
-  }
-
-
-
-
-
-
-
-
-
-/**
- * cObjData_updateRow( ): Render the current filter item.
- *
- * @param	integer		$uid        : uid of the current item / row
- * @param	string		$value      : value of the current item / row
- * @return	string		$item       : The rendered item
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function cObjData_updateRow( $uid )
-  {
-    static $firstVisit = true;
-
-    if( empty( $this->rows[$uid] ) )
-    {
-      return;
-    }
-      // Set cObject data to current row
-//var_dump( __METHOD__, __LINE__, $this->pObj->cObj->data );
-    foreach( ( array ) $this->rows[$uid] as $key => $value )
-    {
-      $this->pObj->cObj->data[ $key ] = $value;
-    }
-
-    $key    = $this->sql_filterFields[$this->curr_tableField]['uid'];
-    $value  = $this->rows[$uid][$key];
-    $this->pObj->cObj->data['uid'] = $value;
-
-    $key    = $this->sql_filterFields[$this->curr_tableField]['value'];
-    $value  = $this->rows[$uid][$key];
-    $this->pObj->cObj->data['value'] = $value;
-
-    $key    = $this->sql_filterFields[$this->curr_tableField]['hits'];
-    $value  = $this->rows[$uid][$key];
-    $this->pObj->cObj->data['hits'] = $value;
-
-      // DRS
-    if( $firstVisit && $this->pObj->b_drs_cObjData )
-//    if( $this->pObj->b_drs_cObjData )
-    {
-      foreach( ( array ) $this->pObj->cObj->data as $key => $value )
-      {
-        $arr_prompt[ ] = '\'' . $key . '\' => \'' . $value . '\'';
-      }
-      $prompt = 'cObj->data: ' . implode( '; ', ( array ) $arr_prompt );
-      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS
-
-    $firstVisit = false;
-  }
-
-
-
-
-
-
-
-
-
-/**
- * cObjData_init( ): Render the current filter item.
- *
- * @param	integer		$uid        : uid of the current item / row
- * @param	string		$value      : value of the current item / row
- * @return	string		$item       : The rendered item
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function cObjData_init( )
-  {
-    $this->cObjDataBak = $this->pObj->cObj->data;
-
-    $this->pObj->cObj->data = null;
-
-    $this->pObj->cObj->data[ $this->pObj->extKey . '.mode' ] = $this->pObj->piVar_mode;
-    $this->pObj->cObj->data[ $this->pObj->extKey . '.view' ] = $this->pObj->view;
-
-      // DRS
-    if( $this->pObj->b_drs_cObjData )
-    {
-      $prompt = 'cObject data are init';
-      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
-      foreach( ( array ) $this->pObj->cObj->data as $key => $value )
-      {
-        $arr_prompt[ ] = '\'' . $key . '\' => \'' . $value . '\'';
-      }
-      $prompt = 'cObj->data: ' . implode( '; ', ( array ) $arr_prompt );
-      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS
-  }
-
-
-
-
-
-
-
-
-
-/**
- * cObjData_reset( ): Render the current filter item.
- *
- * @param	integer		$uid        : uid of the current item / row
- * @param	string		$value      : value of the current item / row
- * @return	string		$item       : The rendered item
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function cObjData_reset( )
-  {
-//    $this->pObj->cObj->data = $this->cObjDataBak;
   }
 
 
@@ -3139,6 +2953,201 @@ class tx_browser_pi1_filter_4x {
 
       // RETURN AND WHERE statement
     return $andWhere;
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * cObject
+  *
+  **********************************************/
+
+
+
+/**
+ * cObjData_init( ):  Init the cObj->data. Method
+ *                    * saves the current data in the class var cObjDataBak.
+ *                    * removes all data
+ *                    * add basic data like mode and view
+ *
+ * @return	void
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function cObjData_init( )
+  {
+      // Make a backup
+    $this->cObjDataBak = $this->pObj->cObj->data;
+
+      // DRS
+    if( $this->pObj->b_drs_cObjData )
+    {
+      $prompt = implode( ',', array_keys( $this->pObj->cObj->data ) );
+      $prompt = 'cObj-data had this elements: ' . $prompt;
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+
+      // Remove all data
+    $this->pObj->cObj->data = null;
+
+      // Add mode and view
+    $this->pObj->cObj->data[ $this->pObj->prefixId . '.mode' ] = $this->pObj->piVar_mode;
+    $this->pObj->cObj->data[ $this->pObj->prefixId . '.view' ] = $this->pObj->view;
+
+      // DRS
+    if( $this->pObj->b_drs_cObjData )
+    {
+      $prompt = 'cObject data are init';
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
+      foreach( ( array ) $this->pObj->cObj->data as $key => $value )
+      {
+        $arr_prompt[ ] = '\'' . $key . '\' => \'' . $value . '\'';
+      }
+      $prompt = 'cObj->data: ' . implode( '; ', ( array ) $arr_prompt );
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+  }
+
+
+
+/**
+ * cObjData_reset( ): Reset the cObj->data array.
+ *                    cObj->data becomes the values from before init.
+ *
+ * @return	viod
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function cObjData_reset( )
+  {
+    $this->pObj->cObj->data = $this->cObjDataBak;
+
+      // DRS
+    if( $this->pObj->b_drs_cObjData )
+    {
+      $prompt = implode( ',', array_keys( $this->pObj->cObj->data ) );
+      $prompt = 'Reset - cObj-data became this elements: ' . $prompt;
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+  }
+
+
+
+/**
+ * cObjData_setTreeview( ): Add the treeview value to cObj->data.
+ *
+ * @return	void
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function cObjData_setTreeview( )
+  {
+      // Set key and value for treeview field
+    $key    = $this->pObj->prefixId . '.treeview';
+    $value  = 1;
+
+      // Set treeview field
+    $this->pObj->cObj->data[ $key ] = $value;
+  }
+
+
+
+/**
+ * cObjData_unsetTreeview( ): Unset the treeview field in cObj->data
+ *
+ * @return	string		$item       : The rendered item
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function cObjData_unsetTreeview( )
+  {
+      // UNset the treeview field
+    $key = $this->pObj->prefixId . '.treeview';
+    unset( $this->pObj->cObj->data[ $key ] );
+
+      // DRS
+    if( $this->pObj->b_drs_cObjData )
+    {
+      $prompt = 'cObject data are reset';
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+  }
+
+
+
+/**
+ * cObjData_updateRow( ): Add the current row to cObj->data.
+ *                        Method adds some values with this default keys:
+ *                        * uid                 : current uid
+ *                        * value               : value of the current filter item
+ *                        * hits                : hits of the current filter item
+ *                        * prefixed rowNumber  : number of current row
+ *
+ * @param   integer       $uid  : uid of the current item / row
+ * @return	void
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function cObjData_updateRow( $uid )
+  {
+    static $firstVisit = true;
+
+      // RETURN: empty row
+    if( empty( $this->rows[$uid] ) )
+    {
+      return;
+    }
+      // RETURN: empty row
+
+      // Add each element of the row to cObj->data
+    foreach( ( array ) $this->rows[$uid] as $key => $value )
+    {
+      $this->pObj->cObj->data[ $key ] = $value;
+    }
+
+      // Add the field uid with the uid of the current row
+    $key    = $this->sql_filterFields[$this->curr_tableField]['uid'];
+    $value  = $this->rows[$uid][$key];
+    $this->pObj->cObj->data['uid'] = $value;
+
+      // Add the field value with the value of the current row
+    $key    = $this->sql_filterFields[$this->curr_tableField]['value'];
+    $value  = $this->rows[$uid][$key];
+    $this->pObj->cObj->data['value'] = $value;
+
+      // Add the field hits with the hits of the filter item
+    $key    = $this->sql_filterFields[$this->curr_tableField]['hits'];
+    $value  = $this->rows[$uid][$key];
+    $this->pObj->cObj->data['hits'] = $value;
+
+      // Add the field rowNumber with the number of the current row
+    $key    = $this->pObj->prefixId . '.rowNumber';
+    $value  = $this->itemsPerHtmlRow['currItemNumber'];
+
+      // DRS
+    if( $firstVisit && $this->pObj->b_drs_cObjData )
+    {
+      foreach( ( array ) $this->pObj->cObj->data as $key => $value )
+      {
+        $arr_prompt[ ] = '\'' . $key . '\' => \'' . $value . '\'';
+      }
+      $prompt = 'cObj->data: ' . implode( '; ', ( array ) $arr_prompt );
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+
+    $firstVisit = false;
   }
 
 
