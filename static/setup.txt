@@ -1308,12 +1308,12 @@ plugin.tx_browser_pi1 {
                     // Display hits only in case of one hit at least
                   isTrue = ###HITS###
                 }
-                value       = ###HITS######TREEVIEW###
+                value       = ###HITS###
                 noTrimWrap  = | (|)|
               }
               if {
-                  // Display with hits only
-                isTrue = ###HITS###
+                  // Display with hits only or in case of a tree view
+                isTrue = ###HITS######TREEVIEW###
               }
               wrap = <a href="###URL###"###CLASS######STYLE######TITLE###>|</a>
             }
