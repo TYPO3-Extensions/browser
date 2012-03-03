@@ -3005,13 +3005,11 @@ class tx_browser_pi1_filter_4x {
       // DRS
     if( $this->pObj->b_drs_cObjData )
     {
-      $prompt = 'cObject data are init';
-      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
       foreach( ( array ) $this->pObj->cObj->data as $key => $value )
       {
         $arr_prompt[ ] = '\'' . $key . '\' => \'' . $value . '\'';
       }
-      $prompt = 'cObj->data: ' . implode( '; ', ( array ) $arr_prompt );
+      $prompt = 'Init cObj->data. Elements are now: ' . implode( '; ', ( array ) $arr_prompt );
       t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS
@@ -3058,6 +3056,14 @@ class tx_browser_pi1_filter_4x {
 
       // Set treeview field
     $this->pObj->cObj->data[ $key ] = $value;
+
+      // DRS
+    if( $this->pObj->b_drs_cObjData )
+    {
+      $prompt = 'cObj->data[ ' . $key . '] = ' . $value;
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
   }
 
 
@@ -3078,7 +3084,7 @@ class tx_browser_pi1_filter_4x {
       // DRS
     if( $this->pObj->b_drs_cObjData )
     {
-      $prompt = 'cObject data are reset';
+      $prompt = 'cObj->data[ ' . $key . '] is unset.';
       t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS
@@ -3142,8 +3148,8 @@ class tx_browser_pi1_filter_4x {
       {
         $arr_prompt[ ] = '\'' . $key . '\' => \'' . $value . '\'';
       }
-      $prompt = 'cObj->data: ' . implode( '; ', ( array ) $arr_prompt );
-      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompt = 'cObj->data of the first row: ' . implode( '; ', ( array ) $arr_prompt );
+      t3lib_div::devlog( '[OK/COBJ] ' . $prompt, $this->pObj->extKey, -1 );
     }
       // DRS
 
