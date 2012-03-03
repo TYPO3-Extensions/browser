@@ -3856,6 +3856,11 @@ class tx_browser_pi1_filter_4x {
         // Render the value
       $item = $this->get_filterItem( $curr_uid, $value );
 
+      if( empty( $item ) )
+      {
+        continue;
+      }
+
 //$this->pObj->dev_var_dump( $curr_uid, $value, $item );
 //$this->pObj->dev_var_dump( $item );
 
