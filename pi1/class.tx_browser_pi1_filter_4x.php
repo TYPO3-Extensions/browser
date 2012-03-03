@@ -574,7 +574,9 @@ class tx_browser_pi1_filter_4x {
     switch( in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
+        $this->markerArray['###TREEVIEW###'] = 1;
         $arr_return = $this->get_filterItemsTree( );
+        $this->markerArray['###TREEVIEW###'] = null;
         //$items      = $arr_return['data']['items'];
         break;
       case( false ):
@@ -930,6 +932,8 @@ class tx_browser_pi1_filter_4x {
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
+    $markerArray_bak = $this->markerArray;
+
     $this->set_markerArrayUpdateRow( $uid );
 
       // IF first_item, set the first item tree view
@@ -956,6 +960,8 @@ class tx_browser_pi1_filter_4x {
 
 
     $this->set_itemCurrentNumber( );
+
+    $this->markerArray = $markerArray_bak;
 
     return $item;
   }
@@ -1197,10 +1203,6 @@ class tx_browser_pi1_filter_4x {
       // Get the COA configuration for the value
 
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
-if( empty( $item ) )
-{
-  var_dump( __METHOD__, __LINE__, $value, $cObj_name, $cObj_conf );
-}
 
       // maxItemsTagEndBegin
       // DRS :TODO:
@@ -2716,7 +2718,7 @@ if( empty( $item ) )
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-    //$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields );
+//    $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields );
 
     $where  = '1 ' .
               $this->sql_whereAnd_pidList( ) .

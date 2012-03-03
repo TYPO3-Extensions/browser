@@ -1308,7 +1308,7 @@ plugin.tx_browser_pi1 {
                     // Display hits only in case of one hit at least
                   isTrue = ###HITS###
                 }
-                value       = ###HITS###
+                value       = ###HITS######TREEVIEW###
                 noTrimWrap  = | (|)|
               }
               if {
