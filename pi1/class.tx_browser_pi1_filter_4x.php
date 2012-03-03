@@ -1103,7 +1103,10 @@ class tx_browser_pi1_filter_4x {
     static $firstVisit = true;
 
       // Set cObject data to current row
-    $this->pObj->cObj->data = $this->pObj->cObj->data + $this->rows[$uid];
+    foreach( $this->rows[$uid] as $key => $value )
+    {
+      $this->pObj->cObj->data[ $key ] = $value;
+    }
 
     $key    = $this->sql_filterFields[$this->curr_tableField]['uid'];
     $value  = $this->rows[$uid][$key];
