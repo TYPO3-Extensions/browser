@@ -2989,7 +2989,7 @@ class tx_browser_pi1_filter_4x {
       // DRS
     if( $this->pObj->b_drs_cObjData )
     {
-      $prompt = implode( ',', array_keys( $this->pObj->cObj->data ) );
+      $prompt = implode( ', ', array_keys( $this->pObj->cObj->data ) );
       $prompt = 'cObj-data had this elements: ' . $prompt;
       t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
     }
@@ -3034,7 +3034,7 @@ class tx_browser_pi1_filter_4x {
       // DRS
     if( $this->pObj->b_drs_cObjData )
     {
-      $prompt = implode( ',', array_keys( $this->pObj->cObj->data ) );
+      $prompt = implode( ', ', array_keys( $this->pObj->cObj->data ) );
       $prompt = 'Reset - cObj-data became this elements: ' . $prompt;
       t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
     }
