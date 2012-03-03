@@ -1102,8 +1102,13 @@ class tx_browser_pi1_filter_4x {
   {
     static $firstVisit = true;
 
+    if( empty( $this->rows[$uid] ) )
+    {
+      return;
+    }
       // Set cObject data to current row
-    foreach( $this->rows[$uid] as $key => $value )
+//var_dump( __METHOD__, __LINE__, $this->pObj->cObj->data );
+    foreach( ( array ) $this->rows[$uid] as $key => $value )
     {
       $this->pObj->cObj->data[ $key ] = $value;
     }
@@ -1122,6 +1127,7 @@ class tx_browser_pi1_filter_4x {
 
       // DRS
     if( $firstVisit && $this->pObj->b_drs_cObjData )
+//    if( $this->pObj->b_drs_cObjData )
     {
       foreach( ( array ) $this->pObj->cObj->data as $key => $value )
       {
@@ -1195,7 +1201,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function cObjData_reset( )
   {
-    $this->pObj->cObj->data = $this->cObjDataBak;
+//    $this->pObj->cObj->data = $this->cObjDataBak;
   }
 
 
