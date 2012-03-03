@@ -3759,7 +3759,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function tree_getRendered( )
   {
-    static $firstCall = true;
+    static $firstCallDrsTreeview = true;
 
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -3867,6 +3867,7 @@ class tx_browser_pi1_filter_4x {
           t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
           $prompt = 'There is a workaround: please take a look in the manual for ' . $this->pObj->prefixId . '.treeview.';
           t3lib_div :: devlog( '[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1 );
+          $firstCallDrsTreeview = false;
         }
           // DRS
         continue;
@@ -3943,8 +3944,6 @@ class tx_browser_pi1_filter_4x {
       // Render the end tag of the last item
 
     $arr_result[$first_item_uid] = $this->htmlSpaceLeft . '<div id="' . $html_id . '">' . $arr_result[$first_item_uid];
-
-    $firstCall = false;
 
       // RETURN the result
     return $arr_result;
