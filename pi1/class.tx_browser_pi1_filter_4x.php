@@ -1149,7 +1149,8 @@ class tx_browser_pi1_filter_4x {
     static $firstLoop = true;
 
 $cObj_bak = $this->pObj->cObj->data;
-    if( $firstLoop && $this->pObj->b_drs_devTodo )
+//    if( $firstLoop && $this->pObj->b_drs_devTodo )
+    if( $this->pObj->b_drs_devTodo )
     {
 $this->pObj->cObj->data = $this->rows[$uid];
 var_dump( __METHOD__, __LINE__, $this->pObj->cObj->data );
