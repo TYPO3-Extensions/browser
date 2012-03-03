@@ -3859,7 +3859,7 @@ class tx_browser_pi1_filter_4x {
       if( empty( $item ) )
       {
           // DRS
-        if( $firstCall && $this->pObj->b_drs_filter )
+        if( $firstCallDrsTreeview && $this->pObj->b_drs_filter )
         {
           $prompt = 'No value: [' . $key . '] won\'t displayed!';
           t3lib_div :: devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
