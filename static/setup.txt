@@ -1163,9 +1163,9 @@ plugin.tx_browser_pi1 {
           // [Boolean] Should be added a default item?
         first_item = 1
         first_item {
-            // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+            // DEPRECATED - please use cObject below! [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
           display_without_any_hit = 1
-            // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+            // DEPRECATED - please use cObject below! [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
           display_hits = 0
           display_hits {
               // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
@@ -1176,8 +1176,30 @@ plugin.tx_browser_pi1 {
               // [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
             display_empty_hits = 0
           }
+            // DEPRECATED - please use cObject below!
+          value_stdWrap =
           value_stdWrap {
             data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
+          }
+            // Wrap the first filter item
+          cObject = COA
+          cObject {
+              // Value from locallang.xml
+            20 = TEXT
+            20 {
+              data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
+                // Append hits
+              append = TEXT
+              append {
+                if {
+                    // Display hits only in case of one hit at least
+                  isTrue = ###HITS###
+                }
+                value       = ###HITS###
+                noTrimWrap  = | (|)|
+              }
+            }
+            wrap = <a href="###URL###"###CLASS######STYLE######TITLE###>|</a>
           }
             // [STRING, unique] Value attribute in the option tag (#11401)
           option_value = 0
@@ -1237,23 +1259,63 @@ plugin.tx_browser_pi1 {
                 }
               }
             }
+              // DEPRECATED - please use the cObject!
+            wraps =
             wraps {
               item {
                 stdWrap {
                   wrap = <a href="###URL###"###CLASS######STYLE######TITLE###>|</a>
                 }
               }
-              tree {
-                stdWrap {
-                  wrap = <li id="tree_li_###UID###">|</li>
-                }
-              }
+              //tree {
+              //  stdWrap {
+              //    wrap = <li id="tree_li_###UID###">|</li>
+              //  }
+              //}
               value {
                 stdWrap {
                   htmlSpecialChars  = 1
                   crop              = 60 | ... | 1
                 }
               }
+            }
+              // Wrap the filter item
+            cObject = COA
+            cObject {
+                // Value in case of a value
+              20 = TEXT
+              20 {
+                if {
+                  isTrue = ###VALUE###
+                }
+                value             = ###VALUE###
+                htmlSpecialChars  = 1
+                crop              = 60 | ... | 1
+              }
+                // Value in case of no value
+              21 = TEXT
+              21 {
+                if {
+                  isTrue  = ###VALUE###
+                  negate  = 1
+                }
+                data = LLL:EXT:browser/pi1/locallang.xml:label_categorymenu_noValue
+              }
+                // Hits
+              30 = TEXT
+              30 {
+                if {
+                    // Display hits only in case of one hit at least
+                  isTrue = ###HITS###
+                }
+                value       = ###HITS###
+                noTrimWrap  = | (|)|
+              }
+              if {
+                  // Display with hits only
+                isTrue = ###HITS###
+              }
+              wrap = <a href="###URL###"###CLASS######STYLE######TITLE###>|</a>
             }
           }
         }
@@ -1305,9 +1367,9 @@ plugin.tx_browser_pi1 {
             // [String] Wrap one item
           item = ###VALUE###
           item {
-              // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+              // DEPRECATED - please use the cObject! [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
             display_without_any_hit = 0
-              // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+              // DEPRECATED - please use the cObject! [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
             display_hits = 1
             display_hits {
                 // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
@@ -1326,6 +1388,8 @@ plugin.tx_browser_pi1 {
             class =
               // [String] Default HTML style
             style =
+              // DEPRECATED - please use the cObject!
+            wraps =
             wraps {
               item {
                 stdWrap {
@@ -1337,11 +1401,46 @@ plugin.tx_browser_pi1 {
                   crop = 60 | ... | 1
                 }
               }
-              empty_value = TEXT
-              empty_value {
+            }
+              // Wrap the filter item
+            cObject = COA
+            cObject {
+                // Value in case of a value
+              20 = TEXT
+              20 {
+                if {
+                  isTrue = ###VALUE###
+                }
+                value             = ###VALUE###
+                htmlSpecialChars  = 1
+                crop              = 60 | ... | 1
+              }
+                // Value in case of no value
+              21 = TEXT
+              21 {
+                if {
+                  isTrue  = ###VALUE###
+                  negate  = 1
+                }
                 data = LLL:EXT:browser/pi1/locallang.xml:label_checkbox_noValue
               }
+                // Hits
+              30 = TEXT
+              30 {
+                if {
+                    // Display hits only in case of one hit at least
+                  isTrue = ###HITS###
+                }
+                value       = ###HITS###
+                noTrimWrap  = | (|)|
+              }
+              if {
+                  // Display with hits only
+                isTrue = ###HITS###
+              }
+              noTrimWrap = |<input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>  ||
             }
+
           }
             // [Integer] Maximum items per row. 0: unlimited
           itemsPerRow = 3
@@ -1400,9 +1499,9 @@ plugin.tx_browser_pi1 {
             // [String] Wrap one item
           item = ###VALUE###
           item {
-              // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+              // DEPRECATED - please use the cObject! [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
             display_without_any_hit = 0
-              // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+              // DEPRECATED - please use the cObject! [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
             display_hits = 1
             display_hits {
                 // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
@@ -1421,6 +1520,8 @@ plugin.tx_browser_pi1 {
             class =
               // [String] Default HTML style
             style =
+              // DEPRECATED - please use the cObject!
+            wraps =
             wraps {
               item {
                 stdWrap {
@@ -1432,10 +1533,44 @@ plugin.tx_browser_pi1 {
                   crop = 60 | ... | 1
                 }
               }
-              empty_value = TEXT
-              empty_value {
-                data = LLL:EXT:browser/pi1/locallang.xml:label_radiobuttons_noValue
+            }
+              // Wrap the filter item
+            cObject = COA
+            cObject {
+                // Value in case of a value
+              20 = TEXT
+              20 {
+                if {
+                  isTrue = ###VALUE###
+                }
+                value             = ###VALUE###
+                htmlSpecialChars  = 1
+                crop              = 60 | ... | 1
               }
+                // Value in case of no value
+              21 = TEXT
+              21 {
+                if {
+                  isTrue  = ###VALUE###
+                  negate  = 1
+                }
+                data = LLL:EXT:browser/pi1/locallang.xml:label_selectbox_noValue
+              }
+                // Hits
+              30 = TEXT
+              30 {
+                if {
+                    // Display hits only in case of one hit at least
+                  isTrue = ###HITS###
+                }
+                value       = ###HITS###
+                noTrimWrap  = | (|)|
+              }
+              if {
+                  // Display with hits only
+                isTrue = ###HITS###
+              }
+              noTrimWrap = |<input###CLASS######STYLE### type="radio" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###> ||
             }
           }
             // [Integer] Maximum items per row. 0: unlimited
@@ -1479,20 +1614,20 @@ plugin.tx_browser_pi1 {
             // DEPRECATED - please use cObject below! [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
           display_hits = 0
           display_hits {
-              // DEPRECATED - please use cObject below! [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
+              // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
             behindItem = 1
             stdWrap {
               noTrimWrap = | (|)|
             }
-              // DEPRECATED - please use cObject below! [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
+              // [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
             display_empty_hits = 0
           }
             // DEPRECATED - please use cObject below!
-          value_stdWrap 
+          value_stdWrap =
           value_stdWrap {
             data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
           }
-            // Wrap the filter item
+            // Wrap the first filter item
           cObject = COA
           cObject {
               // Value from locallang.xml
@@ -1544,9 +1679,9 @@ plugin.tx_browser_pi1 {
             // [String] Wrap one item
           item = ###VALUE###
           item {
-              // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
+              // DEPRECATED - please use the cObject! [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
             display_without_any_hit = 0
-              // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
+              // DEPRECATED - please use the cObject! [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
             display_hits = 1
             display_hits {
                 // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
@@ -1568,20 +1703,12 @@ plugin.tx_browser_pi1 {
               // DEPRECATED - please use the cObject!
             wraps =
             wraps {
-                // DEPRECATED - please use the cObject!
-              item =
               item {
-                  // DEPRECATED - please use the cObject!
-                stdWrap =
                 stdWrap {
                   wrap = <option###CLASS######STYLE### value="###UID###"###ITEM_SELECTED###>|</option>
                 }
               }
-                // DEPRECATED - please use the cObject!
-              value =
               value {
-                  // DEPRECATED - please use the cObject!
-                stdWrap =
                 stdWrap {
                   htmlSpecialChars = 1
                   crop             = 60 | ... | 1
