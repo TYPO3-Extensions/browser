@@ -1193,9 +1193,11 @@ plugin.tx_browser_pi1 {
               append {
                 if {
                     // Display hits only in case of one hit at least
-                  isTrue = ###HITS###
+                  isTrue {
+                    field = hits
+                  }
                 }
-                value       = ###HITS###
+                field = hits
                 noTrimWrap  = | (|)|
               }
             }
@@ -1223,7 +1225,7 @@ plugin.tx_browser_pi1 {
             nice_html_spaceLeft = 14
           }
             // [String] Wrap one item
-          item  = ###VALUE###
+          item = ###VALUE###
           item {
               // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
             display_without_any_hit = 0
@@ -1267,11 +1269,6 @@ plugin.tx_browser_pi1 {
                   wrap = <a href="###URL###"###CLASS######STYLE######TITLE###>|</a>
                 }
               }
-              //tree {
-              //  stdWrap {
-              //    wrap = <li id="tree_li_###UID###">|</li>
-              //  }
-              //}
               value {
                 stdWrap {
                   htmlSpecialChars  = 1
@@ -1286,9 +1283,11 @@ plugin.tx_browser_pi1 {
               20 = TEXT
               20 {
                 if {
-                  isTrue = ###VALUE###
+                  isTrue {
+                    field = value
+                  }
                 }
-                value             = ###VALUE###
+                field = value
                 htmlSpecialChars  = 1
                 crop              = 60 | ... | 1
               }
@@ -1296,7 +1295,9 @@ plugin.tx_browser_pi1 {
               21 = TEXT
               21 {
                 if {
-                  isTrue  = ###VALUE###
+                  isTrue {
+                    field = value
+                  }
                   negate  = 1
                 }
                 data = LLL:EXT:browser/pi1/locallang.xml:label_categorymenu_noValue
@@ -1306,14 +1307,29 @@ plugin.tx_browser_pi1 {
               30 {
                 if {
                     // Display hits only in case of one hit at least
-                  isTrue = ###HITS###
+                  isTrue {
+                    field = hits
+                  }
                 }
-                value       = ###HITS###
+                field = hits
                 noTrimWrap  = | (|)|
               }
               if {
                   // Display with hits only or in case of a tree view
-                isTrue = ###HITS######TREEVIEW###
+                //isTrue = ###HITS######TREEVIEW###
+                isTrue {
+                  cObject = COA
+                  cObject {
+                    10 = TEXT
+                    10 {
+                      field = hits
+                    }
+                    20 = TEXT
+                    20 {
+                      field = tx_browser_pi1.treeview
+                    }
+                  }
+                }
               }
               wrap = <a href="###URL###"###CLASS######STYLE######TITLE###>|</a>
             }
