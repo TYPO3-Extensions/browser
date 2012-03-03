@@ -1151,7 +1151,7 @@ $str_header  = '<h1 style="color:red;">' . $this->pObj->pi_getLL('error_sql_h1')
 $str_prompt  = '<p style="color:red;font-weight:bold;">' . $this->pObj->pi_getLL('error_sql_select') . '</p>';
 $str_prompt  = '<p style="color:red;font-weight:bold;">' . 'Browser engine 4.x' . '</p>';
 
-foreach( ( array ) $arr_filter as $marker => $content )
+foreach( ( array ) $arr_result['data']['filter'] as $marker => $content )
 {
   $str_prompt = $str_prompt . $content;
 }
