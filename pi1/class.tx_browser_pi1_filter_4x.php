@@ -1103,16 +1103,19 @@ class tx_browser_pi1_filter_4x {
     static $firstVisit = true;
 
       // Set cObject data to current row
-    $this->pObj->cObj->data = $this->rows[$uid];
+    $this->pObj->cObj->data = $this->pObj->cObj->data + $this->rows[$uid];
 
-    $uidField                         = $this->sql_filterFields[$this->curr_tableField]['uid'];
-    $this->pObj->cObj->data[$marker]  = $this->rows[$uid][$uidField];
+    $key    = $this->sql_filterFields[$this->curr_tableField]['uid'];
+    $value  = $this->rows[$uid][$key];
+    $this->pObj->cObj->data['uid'] = $value;
 
-    $valueField                       = $this->sql_filterFields[$this->curr_tableField]['value'];
-    $this->pObj->cObj->data[$marker]  = $this->rows[$uid][$valueField];
+    $key    = $this->sql_filterFields[$this->curr_tableField]['value'];
+    $value  = $this->rows[$uid][$key];
+    $this->pObj->cObj->data['value'] = $value;
 
-    $hitsField                        = $this->sql_filterFields[$this->curr_tableField]['hits'];
-    $this->pObj->cObj->data[$marker]  = $this->rows[$uid][$hitsField];
+    $key    = $this->sql_filterFields[$this->curr_tableField]['hits'];
+    $value  = $this->rows[$uid][$key];
+    $this->pObj->cObj->data['hits'] = $value;
 
       // DRS
     if( $firstVisit && $this->pObj->b_drs_cObjData )
@@ -1153,7 +1156,7 @@ class tx_browser_pi1_filter_4x {
     $this->pObj->cObj->data = null;
 
     $this->pObj->cObj->data[ $this->pObj->extKey . '.mode' ] = $this->pObj->piVar_mode;
-    $this->pObj->cObj->data[ $this->pObj->extKey . '.view' ] = $this->pObj->piVar_view;
+    $this->pObj->cObj->data[ $this->pObj->extKey . '.view' ] = $this->pObj->view;
 
       // DRS
     if( $this->pObj->b_drs_cObjData )
