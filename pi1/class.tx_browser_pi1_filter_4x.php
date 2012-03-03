@@ -232,13 +232,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get_filters( ):  Get filters. Returns a marker array or an error message.
+ * get( ):  Get filters. Returns a marker array or an error message.
  *
  * @return	array		$arr_return : $arr_return['data']['marker']['###TABLE.FIELD###']
  * @version 3.9.9
  * @since   3.9.9
  */
-  public function get_filters( )
+  public function get( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
@@ -471,13 +471,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * get( ):  Get the filter of the current tableField.
+ * get_filter( ):  Get the filter of the current tableField.
  *
  * @return	array		$arr_return : $arr_return['data']['marker']['###TABLE.FIELD###']
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function get( )
+  private function get_filter( )
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
