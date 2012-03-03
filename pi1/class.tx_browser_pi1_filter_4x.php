@@ -606,10 +606,10 @@ class tx_browser_pi1_filter_4x {
     switch( in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
-        $this->cObjData_treeviewSet( );
+        $this->cObjData_setTreeview( );
         $this->markerArray['###TREEVIEW###'] = 1;
         $arr_return = $this->get_filterItemsTree( );
-        $this->cObjData_treeviewUnset( );
+        $this->cObjData_unsetTreeview( );
         unset( $this->markerArray['###TREEVIEW###'] );
         //$items      = $arr_return['data']['items'];
         break;
@@ -1034,7 +1034,7 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * cObjData_treeviewSet( ): Render the current filter item.
+ * cObjData_setTreeview( ): Render the current filter item.
  *
  * @param	integer		$uid        : uid of the current item / row
  * @param	string		$value      : value of the current item / row
@@ -1042,7 +1042,7 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function cObjData_treeviewSet( )
+  private function cObjData_setTreeview( )
   {
     $key    = $this->pObj->extKey . '.treeview';
     $value  = 1;
@@ -1059,7 +1059,7 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * cObjData_treeviewReset( ): Render the current filter item.
+ * cObjData_unsetTreeview( ): Render the current filter item.
  *
  * @param	integer		$uid        : uid of the current item / row
  * @param	string		$value      : value of the current item / row
@@ -1067,7 +1067,7 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function cObjData_treeviewReset( )
+  private function cObjData_unsetTreeview( )
   {
     $key = $this->pObj->extKey . '.treeview';
     unset( $this->pObj->cObj->data[ $key ] );
