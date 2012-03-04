@@ -1257,39 +1257,6 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * replace_marker( ): Render the current filter item.
- *
- * @param	array     $conf_name      : TS configuration object type of the current filter / tableField
- * @param	array     $conf_array     : TS configuration array of the current filter / tableField
- * @param	integer		$uid            : uid of the current item / row
- * @param	string		$value          : value of the current item / row
- * @return	string	$value_stdWrap  : The value stdWrapped
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function replace_marker( $coa_conf )
-  {
-      // Keep $coa_conf!
-    $serialized_conf = serialize( $coa_conf );
-
-      // Substitute marker recursive
-    $return_conf  = $this->pObj->cObj->substituteMarkerInObject( $coa_conf, $this->markerArray );
-
-      // Reinit $return_conf 
-    $coa_conf = unserialize($serialized_conf);
-
-    return $return_conf;
-  }
-
-
-
-
-
-
-
-
-
-/**
  * get_filterTitle( ):  Get the wrapped title for the current filter.
  *
  * @return	string		$title  : The wrapped title
@@ -4344,6 +4311,39 @@ class tx_browser_pi1_filter_4x {
 
       // Return the item
     return $item;
+  }
+
+
+
+
+
+
+
+
+
+/**
+ * replace_marker( ): Render the current filter item.
+ *
+ * @param	array     $conf_name      : TS configuration object type of the current filter / tableField
+ * @param	array     $conf_array     : TS configuration array of the current filter / tableField
+ * @param	integer		$uid            : uid of the current item / row
+ * @param	string		$value          : value of the current item / row
+ * @return	string	$value_stdWrap  : The value stdWrapped
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function replace_marker( $coa_conf )
+  {
+      // Keep $coa_conf!
+    $serialized_conf = serialize( $coa_conf );
+
+      // Substitute marker recursive
+    $return_conf  = $this->pObj->cObj->substituteMarkerInObject( $coa_conf, $this->markerArray );
+
+      // Reinit $return_conf
+    $coa_conf = unserialize($serialized_conf);
+
+    return $return_conf;
   }
 
 

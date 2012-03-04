@@ -1124,7 +1124,7 @@ class tx_browser_pi1_viewlist
           // Get filter
 
           // Set filter
-        //$arr_result = $this->subpart_setFilter( $arr_result['data']['filter'] );
+        $arr_result = $this->subpart_setFilter( $arr_result['data']['filter'] );
 
           // Get A-Z-browser
           // Set A-Z-browser
