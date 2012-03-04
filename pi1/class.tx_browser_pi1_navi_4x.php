@@ -148,7 +148,12 @@ class tx_browser_pi1_navi_4x
     }
       // RETURN: requirements aren't met
 
-
+    $arr_return = $this->indexBrowser_rows( );
+    if( $arr_result['error']['status'] )
+    {
+      return $arr_result;
+    }
+    $rows = $arr_return['data']['rows'];
 
 
       // :TODO:
@@ -191,15 +196,41 @@ class tx_browser_pi1_navi_4x
     if( ! is_array( $arr_conf_tabs ) )
     {
       // The index browser isn't configured
-      if ($this->pObj->b_drs_navi) {
-        t3lib_div::devlog('[INFO/NAVIGATION] navigation.indexBrowser.tabs hasn\'t any element.', $this->pObj->extKey, 2);
-        t3lib_div::devlog('[INFO/NAVIGATION] navigation.indexBrowser won\'t be processed.', $this->pObj->extKey, 1);
+      if ( $this->pObj->b_drs_navi )
+      {
+        $prompt = 'navigation.indexBrowser.tabs hasn\'t any element.';
+        t3lib_div::devlog( '[WARN/NAVIGATION] ' . $prompt, $this->pObj->extKey, 2 );
+        $prompt = 'navigation.indexBrowser won\'t be processed.';
+        t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return false;
     }
       // RETURN: index browser hasn't any configured tab
 
     return true;
+  }
+
+
+
+/**
+ * indexBrowser_rows( ): Checks
+ *                                    * configuration of the flexform
+ *                                    * configuration of TS tabs
+ *                                    and returns false, if a requirement isn't met
+ *
+ * @return	boolean   true / false
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function indexBrowser_rows( )
+  {
+    $arr_return['data']['rows'] = null;
+
+    $arr_return['error']['status'] = true;
+    $arr_return['error']['header'] = '<h1 style="color:red">Error index browser</h1>';
+    $arr_return['error']['prompt'] = '<p style="color:red">No rows.</p>';
+
+    return $arr_return;
   }
 
 
