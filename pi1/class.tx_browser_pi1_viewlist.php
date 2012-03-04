@@ -1108,27 +1108,16 @@ class tx_browser_pi1_viewlist
     {
       case( 'csv' ) :
           // CASE csv
+          // Take the CSV template
         $this->content_setCSV( );
         break;
           // CASE csv
       default:
           // CASE no csv
+          // Take the default template (the list view)
         $this->content_setDefault( );
-          // Get filter
-        $arr_result = $this->pObj->objFltr4x->get( );
-        if( $arr_result['error']['status'] )
-        {
-            // Prompt the expired time to devlog
-          $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-          $content = $arr_result['error']['header'] . $arr_result['error']['prompt'];
-          return $content;
-        }
-        $filter = $arr_result['data']['filter'];
-        unset( $arr_result );
-          // Get filter
-
           // Set search box and filter
-        $arr_result = $this->subpart_setSearchbox( $filter );
+        $arr_result = $this->subpart_setSearchbox( );
         if( $arr_result['error']['status'] )
         {
             // Prompt the expired time to devlog
@@ -1136,6 +1125,9 @@ class tx_browser_pi1_viewlist
           $content = $arr_result['error']['header'] . $arr_result['error']['prompt'];
           return $content;
         }
+$this->pObj->dev_var_dump( $this->content );
+die( );
+
         unset( $arr_result );
 
           // Get A-Z-browser
@@ -1685,14 +1677,14 @@ if( $this->pObj->bool_accessByIP )
 
 
 /**
- * subpart_setSearchbox( ):
+ * subpart_setSearchbox( ): Get the searchform. Part of content is generated
+ *                          by the template class. Replace filter marker.
  *
- * @param	[type]		$$filter: ...
- * @return	array
+ * @return	array           $arr_return : Error message in case of an error
  * @version 3.9.8
  * @since 1.0.0
  */
-  private function subpart_setSearchbox( $filter )
+  private function subpart_setSearchbox( )
   {
     $this->content  = $this->pObj->objTemplate->tmplSearchBox( $this->content );
     $arr_return     = $this->subpart_setSearchboxFilter( $filter );
@@ -1703,39 +1695,37 @@ if( $this->pObj->bool_accessByIP )
 
 
 /**
- * subpart_setSearchboxFilter( ):
+ * subpart_setSearchboxFilter( ): Get filter values and then replace filter marker with filter content.
  *
- * @param	[type]		$$filter: ...
- * @return	array
+ * @return	array                 $arr_return: Error message in case of an error
  * @version 3.9.8
  * @since 1.0.0
  */
-  private function subpart_setSearchboxFilter( $filter )
+  private function subpart_setSearchboxFilter( )
   {
+      // Default return value
+    $arr_return = array( );
+
+      // Get filter
+    $arr_result = $this->pObj->objFltr4x->get( );
+    if( $arr_result['error']['status'] )
+    {
+      return $arr_result;
+    }
+    $filter = $arr_result['data']['filter'];
+    unset( $arr_result );
+      // Get filter
+
+      // Get the searchform content
     $searchform     = $this->pObj->cObj->getSubpart( $this->content, '###SEARCHFORM###' );
+      // Replace filter marker with filter content
     $searchform     = $this->pObj->cObj->substituteMarkerArray( $searchform, $filter );
       // Add the subparts marker, because another method ( the search template ) need this subpart marker
     $searchform     = '<!-- ###SEARCHFORM### begin -->' . PHP_EOL .
                   $searchform . '<!-- ###SEARCHFORM### end -->' . PHP_EOL;
+      // Update the searchform in the whole content
     $this->content  = $this->pObj->cObj->substituteSubpart( $this->content, '###SEARCHFORM###', $searchform, true );
 
-$this->pObj->dev_var_dump( $this->content );
-die( );
-
-      // Replace filters in the HTML template
-
-    $str_header  = '<h1 style="color:red;">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
-    $str_prompt  = '<p style="color:red;font-weight:bold;">' . $this->pObj->pi_getLL('error_sql_select') . '</p>';
-    $str_prompt  = '<p style="color:red;font-weight:bold;">' . 'Browser engine 4.x' . '</p>';
-
-    foreach( ( array ) $filter as $marker => $content )
-    {
-      $str_prompt = $str_prompt . $content;
-    }
-
-    $arr_return['error']['status'] = true;
-    $arr_return['error']['header'] = $str_header;
-    $arr_return['error']['prompt'] = $str_prompt;
     return $arr_return;
   }
 
