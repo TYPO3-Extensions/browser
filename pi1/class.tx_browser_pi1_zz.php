@@ -305,7 +305,7 @@
         // We have a string. It happens, if we have a non propper url.
         if ($this->pObj->b_drs_navi)
         {
-          t3lib_div::devlog('[WARN/BROWSER] piVars[showUid] isn\'t a propper id:<br />'.
+          t3lib_div::devlog('[WARN/NAVIGATION] piVars[showUid] isn\'t a propper id:<br />'.
             $str_showUid.'<br /><br />
             It is unset!', $this->pObj->extKey, 2);
         }
@@ -449,7 +449,7 @@
       // DRS- Development Reporting System
     if(!$this->pObj->b_drs_all && $this->pObj->b_drs_navi)
     {
-      t3lib_div::devlog('[INFO/BROWSER] tx_browser_pi1[pointer] = '.$this->pObj->piVars['pointer'], $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/NAVIGATION] tx_browser_pi1[pointer] = '.$this->pObj->piVars['pointer'], $this->pObj->extKey, 0);
     }
       // DRS- Development Reporting System
 
@@ -459,7 +459,7 @@
       unset($this->pObj->piVars['pointer']);
       if($this->pObj->b_drs_navi)
       {
-        t3lib_div::devlog('[INFO/BROWSER] tx_browser_pi1[pointer] is deleted, because its value is 0.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/NAVIGATION] tx_browser_pi1[pointer] is deleted, because its value is 0.', $this->pObj->extKey, 0);
       }
     }
     if($this->pObj->piVars['pointer'] == '')
@@ -511,7 +511,7 @@
       unset( $this->pObj->piVars['mode'] );
       if( $this->pObj->b_drs_navi )
       {
-        t3lib_div::devlog('[INFO/BROWSER] tx_browser_pi1[mode] is deleted, because there is one view only.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/NAVIGATION] tx_browser_pi1[mode] is deleted, because there is one view only.', $this->pObj->extKey, 0);
       }
     }
       // Unset mode, if we have only one view
@@ -532,7 +532,7 @@
       unset($this->pObj->piVars['sword']);
       if($this->pObj->b_drs_navi)
       {
-        t3lib_div::devlog('[INFO/BROWSER] tx_browser_pi1[sword] is the default value: \''.$str_sword_default.'\'. Sword is  deleted.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/NAVIGATION] tx_browser_pi1[sword] is the default value: \''.$str_sword_default.'\'. Sword is  deleted.', $this->pObj->extKey, 0);
       }
     }
       // Unset sword, if sword is the default value
@@ -545,7 +545,7 @@
         unset($this->pObj->piVars['sword']);
         if($this->pObj->b_drs_navi)
         {
-          t3lib_div::devlog('[INFO/BROWSER] tx_browser_pi1[sword] is empty. Sword is  deleted.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/NAVIGATION] tx_browser_pi1[sword] is empty. Sword is  deleted.', $this->pObj->extKey, 0);
         }
       }
     }
@@ -578,7 +578,7 @@
       {
         if($this->pObj->b_drs_navi)
         {
-          t3lib_div::devlog('[INFO/BROWSER] len of tx_browser_pi1[sword] is less than 3: \''.$this->pObj->piVars['sword'].'\'. Sword is  deleted.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/NAVIGATION] len of tx_browser_pi1[sword] is less than 3: \''.$this->pObj->piVars['sword'].'\'. Sword is  deleted.', $this->pObj->extKey, 0);
         }
         unset($this->pObj->piVars['sword']);
       }
@@ -704,8 +704,8 @@
         unset($this->pObj->piVars['azTab']);
         if($this->pObj->b_drs_navi)
         {
-          t3lib_div::devlog('[INFO/BROWSER] tx_browser_pi1[azTab] is deleted, because it has the default value \''.$defaultAzTab.'\'', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[HELP/BROWSER] If you need the value in the real URL path, please configure a-z_Browser.defaultTab.realURL = 1.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/NAVIGATION] tx_browser_pi1[azTab] is deleted, because it has the default value \''.$defaultAzTab.'\'', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/NAVIGATION] If you need the value in the real URL path, please configure a-z_Browser.defaultTab.realURL = 1.', $this->pObj->extKey, 0);
         }
       }
     }
@@ -780,7 +780,7 @@
       }
       if ($str_prompt)
       {
-        t3lib_div::devlog('[INFO/BROWSER] piVars:<br />'.$str_prompt, $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/NAVIGATION] piVars:<br />'.$str_prompt, $this->pObj->extKey, 0);
       }
     }
     // DRS - Development Reporting System
