@@ -64,82 +64,82 @@
  * 1059:     private function set_markerArrayUpdateRow( $uid )
  * 1099:     private function get_filterItemValueStdWrap( $conf_name, $conf_array, $uid, $value )
  * 1195:     private function get_filterItemCObj( $conf_name, $conf_array, $uid, $value )
- * 1291:     private function replace_marker( $coa_conf )
- * 1320:     private function get_filterTitle( )
- * 1442:     private function get_filterWrap( $items )
+ * 1287:     private function get_filterTitle( )
+ * 1409:     private function get_filterWrap( $items )
  *
  *              SECTION: Areas
- * 1503:     private function areas_toRows( )
- * 1545:     private function areas_toRowsConverter( $areas )
- * 1600:     private function areas_countHits( $areas )
- * 1668:     private function areas_wiHitsOnly( $areas )
+ * 1470:     private function areas_toRows( )
+ * 1512:     private function areas_toRowsConverter( $areas )
+ * 1567:     private function areas_countHits( $areas )
+ * 1635:     private function areas_wiHitsOnly( $areas )
  *
  *              SECTION: Rows
- * 1725:     private function get_rows( )
- * 1764:     private function get_rowsWiHits( )
- * 1807:     private function get_rowsAllItems( $rows_wiHits )
+ * 1692:     private function get_rows( )
+ * 1731:     private function get_rowsWiHits( )
+ * 1774:     private function get_rowsAllItems( $rows_wiHits )
  *
  *              SECTION: SQL ressources
- * 1885:     private function sql_resAllItems( )
- * 1962:     private function sql_resSysLanguageRows( )
- * 2044:     private function sql_resWiHits( )
+ * 1852:     private function sql_resAllItems( )
+ * 1929:     private function sql_resSysLanguageRows( )
+ * 2011:     private function sql_resWiHits( )
  *
  *              SECTION: SQL ressources to rows
- * 2132:     private function sql_resToRows( $res )
- * 2172:     private function sql_resToRows_allItemsWiHits( $res, $rows_wiHits )
+ * 2099:     private function sql_resToRows( $res )
+ * 2139:     private function sql_resToRows_allItemsWiHits( $res, $rows_wiHits )
  *
  *              SECTION: SQL statements - select
- * 2246:     private function sql_select( $bool_count )
- * 2323:     private function sql_select_addLL( )
- * 2358:     private function sql_select_addLL_sysLanguage( )
- * 2433:     private function sql_select_addLL_langOl(  )
- * 2499:     private function sql_select_addTreeview( )
+ * 2213:     private function sql_select( $bool_count )
+ * 2290:     private function sql_select_addLL( )
+ * 2325:     private function sql_select_addLL_sysLanguage( )
+ * 2400:     private function sql_select_addLL_langOl(  )
+ * 2466:     private function sql_select_addTreeview( )
  *
  *              SECTION: SQL statements - from, groupBy, orderBy, limit
- * 2603:     private function sql_from( )
- * 2644:     private function sql_groupBy( )
- * 2669:     private function sql_orderBy( )
- * 2725:     private function sql_limit( )
+ * 2570:     private function sql_from( )
+ * 2611:     private function sql_groupBy( )
+ * 2636:     private function sql_orderBy( )
+ * 2692:     private function sql_limit( )
  *
  *              SECTION: SQL statements - where
- * 2764:     private function sql_whereAllItems( )
- * 2798:     private function sql_whereWiHits( )
- * 2823:     private function sql_whereAnd_enableFields( )
- * 2850:     private function sql_whereAnd_fromTS( )
- * 2882:     private function sql_whereAnd_pidList( )
- * 2935:     private function sql_whereAnd_sysLanguage( )
+ * 2731:     private function sql_whereAllItems( )
+ * 2765:     private function sql_whereWiHits( )
+ * 2790:     private function sql_whereAnd_enableFields( )
+ * 2817:     private function sql_whereAnd_fromTS( )
+ * 2849:     private function sql_whereAnd_pidList( )
+ * 2902:     private function sql_whereAnd_sysLanguage( )
  *
  *              SECTION: cObject
- * 3006:     private function cObjData_init( )
- * 3046:     private function cObjData_reset( )
- * 3069:     private function cObjData_setTreeview( )
- * 3096:     private function cObjData_unsetTreeview( )
- * 3126:     private function cObjData_updateRow( $uid )
+ * 2973:     private function cObjData_init( )
+ * 3013:     private function cObjData_reset( )
+ * 3036:     private function cObjData_setTreeview( )
+ * 3063:     private function cObjData_unsetTreeview( )
+ * 3093:     private function cObjData_updateRow( $uid )
  *
  *              SECTION: Localisation
- * 3206:     private function localise( )
- * 3258:     private function localise_langOl( )
- * 3289:     private function localise_langOlWiPrefix( )
- * 3367:     private function localise_langOlWoPrefix( )
- * 3415:     private function localise_sysLanguage( )
+ * 3173:     private function localise( )
+ * 3225:     private function localise_langOl( )
+ * 3256:     private function localise_langOlWiPrefix( )
+ * 3334:     private function localise_langOlWoPrefix( )
+ * 3382:     private function localise_sysLanguage( )
  *
  *              SECTION: TypoScript values
- * 3504:     private function ts_getAreas( )
- * 3575:     private function ts_getCondition( )
- * 3640:     private function ts_getDisplayHits( )
- * 3671:     private function ts_getDisplayWithoutAnyHit( )
+ * 3471:     private function ts_getAreas( )
+ * 3542:     private function ts_getCondition( )
+ * 3607:     private function ts_getDisplayHits( )
+ * 3638:     private function ts_getDisplayWithoutAnyHit( )
  *
  *              SECTION: Tree view helper
- * 3739:     private function tree_setOneDim( $uid_parent )
- * 3778:     private function tree_getRendered( )
+ * 3706:     private function tree_setOneDim( $uid_parent )
+ * 3745:     private function tree_getRendered( )
  *
  *              SECTION: Replace marker
- * 4002:     private function replace_itemClass( $conf_array, $item )
- * 4046:     private function replace_itemSelected( $conf_array, $uid, $value, $item )
- * 4129:     private function replace_itemStyle( $conf_array, $item )
- * 4167:     private function replace_itemTitle( $conf_array, $item )
- * 4211:     private function replace_itemUid( $conf_array, $uid, $item )
- * 4238:     private function replace_itemUrl( $conf_array, $uid, $item )
+ * 3969:     private function replace_itemClass( $conf_array, $item )
+ * 4013:     private function replace_itemSelected( $conf_array, $uid, $value, $item )
+ * 4096:     private function replace_itemStyle( $conf_array, $item )
+ * 4134:     private function replace_itemTitle( $conf_array, $item )
+ * 4178:     private function replace_itemUid( $conf_array, $uid, $item )
+ * 4205:     private function replace_itemUrl( $conf_array, $uid, $item )
+ * 4356:     private function replace_marker( $coa_conf )
  *
  *              SECTION: Maximum items per HTML row
  * 4399:     private function set_maxItemsPerHtmlRow( )
@@ -4345,11 +4345,11 @@ class tx_browser_pi1_filter_4x {
 /**
  * replace_marker( ): Render the current filter item.
  *
- * @param	array     $conf_name      : TS configuration object type of the current filter / tableField
- * @param	array     $conf_array     : TS configuration array of the current filter / tableField
+ * @param	array		$conf_name      : TS configuration object type of the current filter / tableField
+ * @param	array		$conf_array     : TS configuration array of the current filter / tableField
  * @param	integer		$uid            : uid of the current item / row
  * @param	string		$value          : value of the current item / row
- * @return	string	$value_stdWrap  : The value stdWrapped
+ * @return	string		$value_stdWrap  : The value stdWrapped
  * @version 3.9.9
  * @since   3.9.9
  */
