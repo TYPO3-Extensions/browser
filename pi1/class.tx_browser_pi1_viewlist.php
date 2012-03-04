@@ -1596,7 +1596,7 @@ if( $this->pObj->bool_accessByIP )
     $arr_return['error']['status'] = true;
     $arr_return['error']['header'] = $str_header;
     $arr_return['error']['prompt'] = $str_prompt;
-    return $arrreturn;
+    return $arr_return;
   }
 
 
