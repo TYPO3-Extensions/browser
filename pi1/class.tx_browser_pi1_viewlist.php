@@ -1131,6 +1131,14 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
           // Get index browser
         $arr_result = $this->subpart_setIndexBrowser( );
+        if( $arr_result['error']['status'] )
+        {
+            // Prompt the expired time to devlog
+          $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+          $content = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+          return $content;
+        }
+        unset( $arr_result );
           // Set index browser
           // Get page browser
           // Set page browser
