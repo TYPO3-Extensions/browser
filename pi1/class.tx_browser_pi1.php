@@ -1196,7 +1196,6 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_error        = true;
       $this->b_drs_warn         = true;
       $this->b_drs_info         = true;
-      $this->b_drs_browser      = true;
       $this->b_drs_cal          = true;
       $this->b_drs_cObjData     = true;
       $this->b_drs_devTodo      = true;
@@ -1210,6 +1209,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_localisation = true;
       $this->b_drs_map          = true;
       $this->b_drs_marker       = true;
+      $this->b_drs_navi         = true;
       $this->b_drs_perform      = true;
       $this->b_drs_realurl      = true;
       $this->b_drs_search       = true;
@@ -1323,12 +1323,12 @@ class tx_browser_pi1 extends tslib_pibase {
 //      $this->b_drs_perform    = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
-    if ($this->arr_extConf['drs_mode'] == 'PageBrowser and A-Z-Browser')
+    if ($this->arr_extConf['drs_mode'] == 'Navigation')
     {
       $this->b_drs_error      = true;
       $this->b_drs_warn       = true;
       $this->b_drs_info       = true;
-      $this->b_drs_browser    = true;
+      $this->b_drs_navi       = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
     if ($this->arr_extConf['drs_mode'] == 'Performance')
@@ -1562,7 +1562,7 @@ class tx_browser_pi1 extends tslib_pibase {
     require_once('class.tx_browser_pi1_filter.php');
     $this->objFilter = new tx_browser_pi1_filter($this);
 
-      // Class with realurl methods
+      // Class with filter methods
     require_once('class.tx_browser_pi1_filter_4x.php');
     $this->objFltr4x = new tx_browser_pi1_filter_4x($this);
 
@@ -1586,6 +1586,10 @@ class tx_browser_pi1 extends tslib_pibase {
       // Class with methods for the modeSelector, the pageBrowser and the a-z-browser
     require_once('class.tx_browser_pi1_navi.php');
     $this->objNavi = new tx_browser_pi1_navi($this);
+
+      // Class with methods for the modeSelector, the pageBrowser and the a-z-browser
+    require_once('class.tx_browser_pi1_navi_4x.php');
+    $this->objNavi4x = new tx_browser_pi1_navi_4x($this);
 
       // Class with localisation methods
     require_once('class.tx_browser_pi1_localisation.php');
@@ -1736,6 +1740,23 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objNavi->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
     $this->objNavi->conf_path = $conf_path;
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_navi_4x.php
+
+      // [Array] The current TypoScript configuration array
+    $this->objNavi4x->conf      = $this->conf;
+      // [Integer] The current mode (from modeselector)
+    $this->objNavi4x->mode      = $this->piVar_mode;
+      // [String] 'list' or 'single': The current view
+    $this->objNavi4x->view      = $this->view;
+      // [Array] The TypoScript configuration array of the current view
+    $this->objNavi4x->conf_view = $conf_view;
+      // [String] TypoScript path to the current view. I.e. views.single.1
+    $this->objNavi4x->conf_path = $conf_path;
 
 
 

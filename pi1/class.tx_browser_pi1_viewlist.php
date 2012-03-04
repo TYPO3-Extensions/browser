@@ -676,7 +676,7 @@ class tx_browser_pi1_viewlist
     if( is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['browser_list'] ) )
     {
         // DRS - Development Reporting System
-      if ( $this->pObj->b_drs_sql || $this->pObj->b_drs_browser )
+      if ( $this->pObj->b_drs_sql || $this->pObj->b_drs_navi )
       {
         $i_extensions = count($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['browser_list']);
         $arr_ext      = array_values($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['browser_list']);

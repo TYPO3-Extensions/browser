@@ -303,7 +303,7 @@
       if (!is_numeric($str_showUid))
       {
         // We have a string. It happens, if we have a non propper url.
-        if ($this->pObj->b_drs_browser)
+        if ($this->pObj->b_drs_navi)
         {
           t3lib_div::devlog('[WARN/BROWSER] piVars[showUid] isn\'t a propper id:<br />'.
             $str_showUid.'<br /><br />
@@ -447,7 +447,7 @@
       // Default Process
 
       // DRS- Development Reporting System
-    if(!$this->pObj->b_drs_all && $this->pObj->b_drs_browser)
+    if(!$this->pObj->b_drs_all && $this->pObj->b_drs_navi)
     {
       t3lib_div::devlog('[INFO/BROWSER] tx_browser_pi1[pointer] = '.$this->pObj->piVars['pointer'], $this->pObj->extKey, 0);
     }
@@ -457,7 +457,7 @@
     if($this->pObj->piVars['pointer'] == 0)
     {
       unset($this->pObj->piVars['pointer']);
-      if($this->pObj->b_drs_browser)
+      if($this->pObj->b_drs_navi)
       {
         t3lib_div::devlog('[INFO/BROWSER] tx_browser_pi1[pointer] is deleted, because its value is 0.', $this->pObj->extKey, 0);
       }
@@ -509,7 +509,7 @@
     {
         // We have one view only. We don't need any piVar_mode
       unset( $this->pObj->piVars['mode'] );
-      if( $this->pObj->b_drs_browser )
+      if( $this->pObj->b_drs_navi )
       {
         t3lib_div::devlog('[INFO/BROWSER] tx_browser_pi1[mode] is deleted, because there is one view only.', $this->pObj->extKey, 0);
       }
@@ -530,7 +530,7 @@
     if ($this->pObj->piVars['sword'] == $str_sword_default)
     {
       unset($this->pObj->piVars['sword']);
-      if($this->pObj->b_drs_browser)
+      if($this->pObj->b_drs_navi)
       {
         t3lib_div::devlog('[INFO/BROWSER] tx_browser_pi1[sword] is the default value: \''.$str_sword_default.'\'. Sword is  deleted.', $this->pObj->extKey, 0);
       }
@@ -543,7 +543,7 @@
       if ($this->pObj->piVars['sword'] == '')
       {
         unset($this->pObj->piVars['sword']);
-        if($this->pObj->b_drs_browser)
+        if($this->pObj->b_drs_navi)
         {
           t3lib_div::devlog('[INFO/BROWSER] tx_browser_pi1[sword] is empty. Sword is  deleted.', $this->pObj->extKey, 0);
         }
@@ -576,7 +576,7 @@
 
       if (strlen(trim($this->pObj->piVars['sword'])) < $int_minLenSword)
       {
-        if($this->pObj->b_drs_browser)
+        if($this->pObj->b_drs_navi)
         {
           t3lib_div::devlog('[INFO/BROWSER] len of tx_browser_pi1[sword] is less than 3: \''.$this->pObj->piVars['sword'].'\'. Sword is  deleted.', $this->pObj->extKey, 0);
         }
@@ -702,7 +702,7 @@
       {
         // It shouldn't be displayed in the real URL path. Delete piVars[azTab]
         unset($this->pObj->piVars['azTab']);
-        if($this->pObj->b_drs_browser)
+        if($this->pObj->b_drs_navi)
         {
           t3lib_div::devlog('[INFO/BROWSER] tx_browser_pi1[azTab] is deleted, because it has the default value \''.$defaultAzTab.'\'', $this->pObj->extKey, 0);
           t3lib_div::devlog('[HELP/BROWSER] If you need the value in the real URL path, please configure a-z_Browser.defaultTab.realURL = 1.', $this->pObj->extKey, 0);
@@ -763,7 +763,7 @@
     //
     // DRS - Development Reporting System
 
-    if ($this->pObj->b_drs_browser)
+    if ($this->pObj->b_drs_navi)
     {
       $str_prompt = false;
       foreach((array) $this->pObj->piVars as $keyPiVar => $valuePiVar)
@@ -2747,7 +2747,7 @@
     $conf = $this->pObj->conf;
     $str_charset = $conf['navigation.']['a-z_Browser.']['charset'];
 
-    if ($this->pObj->b_drs_browser || $this->pObj->b_drs_sql)
+    if ($this->pObj->b_drs_navi || $this->pObj->b_drs_sql)
     {
       t3lib_div::devlog('[INFO/BROWSER+SQL] a-z_Browser.charset is \''.$str_charset.'\'', $this->pObj->extKey, 0);
     }
@@ -2757,14 +2757,14 @@
         // Process the statemants below the switch
         break;
       case('iso'):
-        if ($this->pObj->b_drs_browser || $this->pObj->b_drs_sql)
+        if ($this->pObj->b_drs_navi || $this->pObj->b_drs_sql)
         {
           t3lib_div::devlog('[INFO/BROWSER+SQL] If you are use \'auto\', a-z_Browser tries to find the charset automatically.', $this->pObj->extKey, 0);
         }
         return false;
         break;
       case('utf'):
-        if ($this->pObj->b_drs_browser || $this->pObj->b_drs_sql)
+        if ($this->pObj->b_drs_navi || $this->pObj->b_drs_sql)
         {
           t3lib_div::devlog('[INFO/BROWSER+SQL] If you are use \'auto\', a-z_Browser tries to find the charset automatically.', $this->pObj->extKey, 0);
         }
@@ -2772,7 +2772,7 @@
         break;
       default:
         // Process the statemants below the switch
-        if ($this->pObj->b_drs_browser || $this->pObj->b_drs_sql)
+        if ($this->pObj->b_drs_navi || $this->pObj->b_drs_sql)
         {
           t3lib_div::devlog('[ERROR/BROWSER+SQL] The current value of a-z_Browser.charset isn\'t defined: \''.$str_charset.'\'', $this->pObj->extKey, 3);
           t3lib_div::devlog('[HELP/BROWSER+SQL] Please use auto, iso or utf.', $this->pObj->extKey, 1);
@@ -2780,7 +2780,7 @@
         }
     }
 
-    if ($this->pObj->b_drs_browser || $this->pObj->b_drs_sql)
+    if ($this->pObj->b_drs_navi || $this->pObj->b_drs_sql)
     {
       t3lib_div::devlog('[INFO/BROWSER+SQL] $TYPO3_CONF_VARS[BE][forceCharset] is \''.$TYPO3_CONF_VARS['BE']['forceCharset'].'\'', $this->pObj->extKey, 0);
     }
@@ -2789,14 +2789,14 @@
       return true;
     }
 
-    if ($this->pObj->b_drs_browser || $this->pObj->b_drs_sql) {
+    if ($this->pObj->b_drs_navi || $this->pObj->b_drs_sql) {
       t3lib_div::devlog('[INFO/BROWSER+SQL] $GLOBALS[TSFE]->metaCharset is \''.$GLOBALS['TSFE']->metaCharset.'\'', $this->pObj->extKey, 0);
     }
     if (strtolower($GLOBALS['TSFE']->metaCharset) == 'utf-8')
     {
       return true;
     }
-    if ($this->pObj->b_drs_browser || $this->pObj->b_drs_sql) {
+    if ($this->pObj->b_drs_navi || $this->pObj->b_drs_sql) {
       t3lib_div::devlog('[INFO/BROWSER+SQL] $GLOBALS[TSFE]->renderCharset is \''.$GLOBALS['TSFE']->renderCharset.'\'', $this->pObj->extKey, 0);
     }
     if (strtolower($GLOBALS['TSFE']->renderCharset) == 'utf-8')

@@ -190,14 +190,14 @@ class tx_browser_pi1_navi
     if ($this->pObj->objFlexform->bool_azBrowser)
     {
         // The A-Z-Browser should be displayed
-      if ($this->pObj->b_drs_browser) {
+      if ($this->pObj->b_drs_navi) {
         t3lib_div::devlog('[INFO/BROWSER] display.a-z_Browser is true.', $this->pObj->extKey, 0);
       }
     }
     if (!$this->pObj->objFlexform->bool_azBrowser)
     {
         // The A-Z-Browser isn't activated, we don't need any process, return
-      if ($this->pObj->b_drs_browser) {
+      if ($this->pObj->b_drs_navi) {
         t3lib_div::devlog('[INFO/BROWSER] display.a-z_Browser is false.', $this->pObj->extKey, 0);
       }
       $template = $this->pObj->cObj->substituteSubpart($template, '###AZSELECTOR###', '', true);
@@ -216,7 +216,7 @@ class tx_browser_pi1_navi
     if (!is_array($arr_conf_tabs))
     {
       // The A-Z-Browser isn't configured
-      if ($this->pObj->b_drs_browser) {
+      if ($this->pObj->b_drs_navi) {
         t3lib_div::devlog('[INFO/BROWSER] a-z_Browser.tabs hasn\'t any element.', $this->pObj->extKey, 2);
         t3lib_div::devlog('[INFO/BROWSER] a-z_Browser won\'t be processed.', $this->pObj->extKey, 1);
       }
@@ -492,7 +492,7 @@ class tx_browser_pi1_navi
         {
           // The a-tag
           $title = htmlspecialchars($this->pObj->pi_getLL('browserItem', 'Item', true));
-          if(($this->pObj->b_drs_localisation || $this->pObj->b_drs_browser) && !$boolPrompt_1)
+          if(($this->pObj->b_drs_localisation || $this->pObj->b_drs_navi) && !$boolPrompt_1)
           {
             t3lib_div::devlog('[INFO/LOCALLANG+BROWSER] Label for one item is: '.$title, $this->pObj->extKey, 0);
             $prompt = 'If you want another label, please configure _LOCAL_LANG.'.$langKey.'.browserItem';
@@ -543,7 +543,7 @@ class tx_browser_pi1_navi
         if($tsDisplayTitleTag)
         {
           $title = htmlspecialchars($this->pObj->pi_getLL('browserItems', 'Items', true));
-          if(($this->pObj->b_drs_localisation || $this->pObj->b_drs_browser) && !$boolPrompt_2)
+          if(($this->pObj->b_drs_localisation || $this->pObj->b_drs_navi) && !$boolPrompt_2)
           {
             t3lib_div::devlog('[INFO/LOCALLANG+BROWSER] Label for items is: '.$title, $this->pObj->extKey, 0);
             $prompt = 'If you want another label, please configure _LOCAL_LANG.'.$langKey.'.browserItems';
@@ -1112,7 +1112,7 @@ class tx_browser_pi1_navi
     if (isset($this->conf_view['navigation.']['a-z_Browser.']['field']))
     {
       $str_initialField = $this->conf_view['navigation.']['a-z_Browser.']['field'];
-      if ($this->pObj->b_drs_browser) {
+      if ($this->pObj->b_drs_navi) {
         t3lib_div::devlog('[INFO/BROWSER] '.$this->conf_path.'a-z_Browser.field is '.$str_initialField, $this->pObj->extKey, 0);
       }
     }
@@ -1122,7 +1122,7 @@ class tx_browser_pi1_navi
       if ($str_initialField)
       {
         // The user has defined a table.field element
-        if ($this->pObj->b_drs_browser) {
+        if ($this->pObj->b_drs_navi) {
           t3lib_div::devlog('[INFO/BROWSER] a-z_Browser.field is '.$str_initialField, $this->pObj->extKey, 0);
         }
       }
@@ -1137,7 +1137,7 @@ class tx_browser_pi1_navi
       $field             = $this->pObj->arr_realTables_arrFields[$table][0];
       $tableField        = $table.'.'.$field;
       $str_initialField  = $tableField;
-      if ($this->pObj->b_drs_browser)
+      if ($this->pObj->b_drs_navi)
       {
         $prompt = 'Default: a-z_Browser.field is the first table.field from '.$this->conf_path.'select: '.$str_initialField;
         t3lib_div::devlog('[INFO/BROWSER] '.$prompt, $this->pObj->extKey, 0);
@@ -1162,7 +1162,7 @@ class tx_browser_pi1_navi
         Please configure:<br />
         '.$this->conf_path.'a-z_Browser.field = '.$this->pObj->localTable.'... or<br />
         a-z_Browser.field = '.$this->pObj->localTable.'...';
-      if ($this->pObj->b_drs_browser)
+      if ($this->pObj->b_drs_navi)
       {
         t3lib_div::devlog($str_prompt, $this->pObj->extKey, 3);
         t3lib_div::devlog('[INFO/BROWSER] A-Z-Browser won\'t be processed.', $this->pObj->extKey, 0);
@@ -1681,7 +1681,7 @@ class tx_browser_pi1_navi
     if (count($arr_items) <= 1) {
         // We don't have a mode selector
       $template = $this->pObj->cObj->substituteSubpart($template, '###MODESELECTOR###', '', true);
-      if ($this->pObj->b_drs_browser) {
+      if ($this->pObj->b_drs_navi) {
         t3lib_div::devlog('[INFO/BROWSER] RETURN. There isn\'t any item for the mode selector.', $this->pObj->extKey, 0);
       }
       return $template;
