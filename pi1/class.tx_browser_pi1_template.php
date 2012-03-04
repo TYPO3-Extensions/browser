@@ -156,12 +156,11 @@ class tx_browser_pi1_template
  * Building the searchbox as a form.
  *
  * @param	string		$template: The current template part
- * @param	string		$display : display the searchbox or not
  * @return	string		$template: The HTML template part
- * @version 4.0.0
+ * @version 3.9.9
  * @since 1.0.0
  */
-  function tmplSearchBox($template, $display)
+  function tmplSearchBox( $template )
   {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -171,6 +170,7 @@ class tx_browser_pi1_template
     $viewWiDot  = $view.'.';
     $conf_view  = $conf['views.'][$viewWiDot][$mode.'.'];
 
+    $display = $this->pObj->objFlexform->bool_searchForm && $this->pObj->segment['searchform'];
 
 
       //////////////////////////////////////////////////////////

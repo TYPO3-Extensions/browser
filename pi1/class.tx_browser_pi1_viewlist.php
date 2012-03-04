@@ -834,8 +834,7 @@ class tx_browser_pi1_viewlist
       // HTML search form
       // #9659, 101011, fsander
     //$bool_display = $this->pObj->objFlexform->bool_searchForm;
-    $bool_display = $this->pObj->objFlexform->bool_searchForm && $this->pObj->segment['searchform'];
-    $template     = $this->pObj->objTemplate->tmplSearchBox( $template, $bool_display );
+    $template     = $this->pObj->objTemplate->tmplSearchBox( $template );
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objTemplate->tmplSearchBox( )' );
       // HTML search form
@@ -1092,26 +1091,16 @@ class tx_browser_pi1_viewlist
 
       // #29370, 110831, dwildt+
       // Get template for csv
-    $str_marker = $this->pObj->lDisplayList['templateMarker'];
     switch( $this->pObj->objExport->str_typeNum )
     {
       case( 'csv' ) :
           // CASE csv
-          // DRS
-        if ( $this->pObj->b_drs_templating || $this->pObj->b_drs_export )
-        {
-          t3lib_div::devlog('[INFO/TEMPLATING+EXPORT] ' . $str_marker . ' is ignored. ###TEMPLATE_CSV### is used as template marker.',  $this->pObj->extKey, 0);
-        }
-          // DRS
-          // Replace content with the csv template
-        $str_marker     = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
-        $template_path  = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['file'];
-        $this->content        = $this->pObj->cObj->fileResource( $template_path );
-          // Replace content with the csv template
+        $this->content_setCSV( );
         break;
           // CASE csv
       default:
           // CASE no csv
+        $this->content_setDefault( );
           // Get filter
         $arr_result = $this->pObj->objFltr4x->get( );
         if( $arr_result['error']['status'] )
@@ -1121,10 +1110,12 @@ class tx_browser_pi1_viewlist
           $content = $arr_result['error']['header'] . $arr_result['error']['prompt'];
           return $content;
         }
+        $filter = $arr_result['data']['filter'];
+        unset( $arr_result );
           // Get filter
 
           // Set filter
-        $arr_result = $this->subpart_setFilter( $arr_result['data']['filter'] );
+        $arr_result = $this->subpart_setFilter( $filter );
         if( $arr_result['error']['status'] )
         {
             // Prompt the expired time to devlog
@@ -1132,7 +1123,7 @@ class tx_browser_pi1_viewlist
           $content = $arr_result['error']['header'] . $arr_result['error']['prompt'];
           return $content;
         }
-        $this->content = $arr_result['data']['content'];
+        unset( $arr_result );
 
           // Get A-Z-browser
           // Set A-Z-browser
@@ -1563,6 +1554,117 @@ if( $this->pObj->bool_accessByIP )
 
  /***********************************************
   *
+  * Content / Template
+  *
+  **********************************************/
+
+
+
+/**
+ * content_setCSV( ):
+ *
+ * @return	void
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function content_setCSV( )
+  {
+      // DRS
+    if ( $this->pObj->b_drs_templating || $this->pObj->b_drs_export )
+    {
+      t3lib_div::devlog('[INFO/TEMPLATING+EXPORT] ###TEMPLATE_CSV### is used as template marker.',  $this->pObj->extKey, 0);
+    }
+      // DRS
+
+      // Get the label of the subpart marker for the csv content
+    $str_marker     = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
+      // Get the csv content file
+    $template_path  = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['file'];
+      // Set the csv content
+    $this->content  = $this->pObj->cObj->fileResource( $template_path );
+
+    if( empty( $this->content ) )
+    {
+      $prompt = '<div style="border:2em solid red;color:red;padding:2em;text-align:center;">
+          <h1>
+            TYPO3 Browser Error
+          </h1>
+          <h2>
+            EN: Subpart marker is empty
+          </h2>
+          <p>
+            English: subpart marker is empty.<br />
+            Please take care of a proper TypoScript.<br />
+          </p>
+          <h2>
+            DE: Subpartmarker fehlt
+          </h2>
+          <p>
+            Deutsch: der Subpartmarker ist leer.<br />
+            Bitte k&uuml;mmere Dich um ein korrektes TypoScript.<br />
+          </p>
+          <p>
+            ' . __METHOD__ . ' (' . __LINE__ . ')
+          </p>
+        </div>';
+      die( $prompt );
+    }
+  }
+
+
+
+/**
+ * content_setDefault( ):
+ *
+ * @return	void
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function content_setDefault( )
+  {
+      // HTML template subpart for the list view
+    $str_marker     = $this->pObj->lDisplayList['templateMarker'];
+      // Set the list view content
+    $this->content  = $this->pObj->cObj->getSubpart( $template, $str_marker );
+
+    if( empty( $this->content ) )
+    {
+      $prompt = '<div style="border:2em solid red;color:red;padding:2em;text-align:center;">
+          <h1>
+            TYPO3 Browser Error
+          </h1>
+          <h2>
+            EN: Subpart is missing
+          </h2>
+          <p>
+            English: Current HTML template doesn\'t contain the subpart \'' . $str_marker . '\' .<br />
+            Please take care of a proper template.<br />
+          </p>
+          <h2>
+            DE: Subpart fehlt
+          </h2>
+          <p>
+            Deutsch: Dem aktuellen HTML-Template fehlt der Subpart \'' . $str_marker . '\'.<br />
+            Bitte k&uuml;mmere Dich um ein korrektes Template.<br />
+          </p>
+          <p>
+            ' . __METHOD__ . ' (' . __LINE__ . ')
+          </p>
+        </div>';
+      die( $prompt );
+    }
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
   * Subparts
   *
   **********************************************/
@@ -1584,6 +1686,9 @@ if( $this->pObj->bool_accessByIP )
  */
   private function subpart_setFilter( $filter )
   {
+    $template     = $this->pObj->objTemplate->tmplSearchBox( $this->content );
+$this->pObj->dev_var_dump( $template );
+die( );
     $str_header  = '<h1 style="color:red;">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
     $str_prompt  = '<p style="color:red;font-weight:bold;">' . $this->pObj->pi_getLL('error_sql_select') . '</p>';
     $str_prompt  = '<p style="color:red;font-weight:bold;">' . 'Browser engine 4.x' . '</p>';
