@@ -1625,7 +1625,7 @@ if( $this->pObj->bool_accessByIP )
       // HTML template subpart for the list view
     $str_marker     = $this->pObj->lDisplayList['templateMarker'];
       // Set the list view content
-    $this->content  = $this->pObj->cObj->getSubpart( $template, $str_marker );
+    $this->content  = $this->pObj->cObj->getSubpart( $this->content, $str_marker );
 
     if( empty( $this->content ) )
     {
