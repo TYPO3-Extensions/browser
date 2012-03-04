@@ -22,7 +22,7 @@
       <label index="sheet_advanced.realUrlTutorial">Tutorial</label>
       <label index="sheet_advanced.realUrlTutorial.0">RealURL: http://typo3.org/extensions/repository/view/browser_tut_realurl_en/current/</label>
       <label index="sheet_advanced.realUrl">RealURL: The following values will be contained in the URL to single views</label>
-      <label index="sheet_advanced.realUrl.piVar_azTab">The current value of the A-Z-index</label>
+      <label index="sheet_advanced.realUrl.piVar_indexBrowserTab">The value of the current index browser tab</label>
       <label index="sheet_advanced.realUrl.piVar_mode">The current view</label>
       <label index="sheet_advanced.realUrl.piVar_pointer">The current page of the page browser</label>
       <label index="sheet_advanced.realUrl.piVar_plugin">The uid of the current browser plugin (recommended)</label>
@@ -292,7 +292,7 @@
       <label index="sheet_viewList.limitOffset">Limit: start/offset (from 1st record = 0)</label>
       <label index="sheet_viewList.limit">Limit: records per page (from 1 to 1000)</label>
       <label index="sheet_viewList.navigation">Display: Navigation</label>
-      <label index="sheet_viewList.navigation.azBrowser">A-Z- Browser</label>
+      <label index="sheet_viewList.navigation.indexBrowser">Index Browser</label>
       <label index="sheet_viewList.navigation.pageBrowser">Page Browser</label>
       <label index="sheet_viewList.records">Display: Records</label>
       <label index="sheet_viewList.records.emptyAtStart">Empty List at Start</label>
@@ -376,7 +376,7 @@
       <label index="sheet_advanced.realUrlTutorial">RealURL: Tutorials</label>
       <label index="sheet_advanced.realUrlTutorial.0">RealURL: http://typo3.org/extensions/repository/view/browser_tut_realurl_en/current/</label>
       <label index="sheet_advanced.realUrl">RealURL: Folgende Werte werden in den URL zu Detail-Ansichten aufgenommen</label>
-      <label index="sheet_advanced.realUrl.piVar_azTab">Der aktuelle Wert im A-Z-Index</label>
+      <label index="sheet_advanced.realUrl.piVar_indexBrowserTab">Der Wert des aktuellen Tabs des Index-Browsers</label>
       <label index="sheet_advanced.realUrl.piVar_mode">Die aktuelle Ansicht</label>
       <label index="sheet_advanced.realUrl.piVar_pointer">Die aktuelle Seite des Datensatz- bzw. Page-Browsers</label>
       <label index="sheet_advanced.realUrl.piVar_plugin">Die ID des aktuellen Browser-Plugins (empfohlen)</label>
@@ -643,7 +643,7 @@
       <label index="sheet_viewList.limitOffset">Limit: Startpunkt/Offset (ab 1. Datensatz = 0)</label>
       <label index="sheet_viewList.limit">Limit: Datensaetze pro Seite (1 bis 1000)</label>
       <label index="sheet_viewList.navigation">Ansicht: Navigation</label>
-      <label index="sheet_viewList.navigation.azBrowser">A-Z-Browser</label>
+      <label index="sheet_viewList.navigation.indexBrowser">Index-Browser</label>
       <label index="sheet_viewList.navigation.pageBrowser">Page Browser</label>
       <label index="sheet_viewList.records">Ansicht: Datensaetze</label>
       <label index="sheet_viewList.records.emptyAtStart">Leere Liste beim Start</label>

@@ -5,7 +5,13 @@
   * #33892: Optimisation of performance - Step II
   Bugfixes
   * #34212: TypoScript limit hasn't any effect
-
+  Imrovements
+  * #00000: a-z-browser is renamed as index browser
+            Effects
+            * CSS             : azSelector              -> indexBrowser
+            * HTML templates  : AZSELECTOR              -> INDEXBROWSER
+            * piVar           : azTab                   -> indexBrowserTab
+            * TypoScript      : navigation.a-z_Browser  -> navigation.indexBrowser
 
 3.9.8
   120203
@@ -531,7 +537,7 @@
 3.0.5
   09-10-28
   Improvement
-  * piVar azTab is removed, if there isn't used any a-z-browser
+  * piVar indexBrowserTab is removed, if there isn't used any a-z-browser
   Bugfix
   * Localisation
     * Orthography and syntax mistakes with exclude and mergeIfNotBlank

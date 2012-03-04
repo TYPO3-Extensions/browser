@@ -356,7 +356,7 @@ class tx_browser_pi1_cal
     }
       // DRS
 
-      // We need one row at least for a-z-browser, pageBrowser, record-browser
+      // We need one row at least for indexBrowser, pageBrowser, record-browser
     $firstKey               = key( $this->rows );
     $arr_return['rows']     = $this->rows[$firstKey];
     $arr_return['template'] = $template;

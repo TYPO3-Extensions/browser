@@ -150,9 +150,9 @@ class tx_browser_pi1 extends tslib_pibase {
     // [Integer]  The current mode (view). We need $piVar_mode, if there is only one view.
     //            We like a nice real url path, so we don't want the piVars[mode] in this case.
   var $piVar_mode   = false;
-    // [String]   The current tab of the A-Z-Browser. We need $piVar_azTab, if the current tab is the default tab.
-    //            We like a nice real url path, so we don't want the piVars[azTab] in this case.
-  var $piVar_azTab  = false;
+    // [String]   The current tab of the Index-Browser. We need $piVar_indexBrowserTab, if the current tab is the default tab.
+    //            We like a nice real url path, so we don't want the piVars[indexBrowserTab] in this case.
+  var $piVar_indexBrowserTab  = false;
     // [String] The current piVar Sword in secure mode
   var $piVar_sword  = false;
     // [String] Alias of the showUid
@@ -1583,11 +1583,11 @@ class tx_browser_pi1 extends tslib_pibase {
     require_once('class.tx_browser_pi1_multisort.php');
     $this->objMultisort = new tx_browser_pi1_multisort($this);
 
-      // Class with methods for the modeSelector, the pageBrowser and the a-z-browser
+      // Class with methods for the modeSelector, the pageBrowser and the index browser
     require_once('class.tx_browser_pi1_navi.php');
     $this->objNavi = new tx_browser_pi1_navi($this);
 
-      // Class with methods for the modeSelector, the pageBrowser and the a-z-browser
+      // Class with methods for the modeSelector, the pageBrowser and the index browser
     require_once('class.tx_browser_pi1_navi_4x.php');
     $this->objNavi4x = new tx_browser_pi1_navi_4x($this);
 

@@ -112,7 +112,7 @@
             <cols>2</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl.piVar_azTab</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl.piVar_indexBrowserTab</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
               <numIndex index="1" type="array">

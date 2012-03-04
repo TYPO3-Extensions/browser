@@ -65,8 +65,8 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
       <label index="pi_list_searchBox_search">Search!</label>
       <label index="browserItem">item</label>
       <label index="browserItems">items</label>
-      <label index="label_azbrowser_all">All</label>
-      <label index="label_azbrowser_others">Others</label>
+      <label index="label_indexBrowser_all">All</label>
+      <label index="label_indexBrowser_others">Others</label>
       <label index="label_categorymenu_noValue">No value</label>
       <label index="label_checkbox_noValue">No value</label>
       <label index="label_filter_firstitem_default">All Items</label>
@@ -140,8 +140,8 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="pi_list_searchBox_search">Suche</label>
       <label index="browserItem">Eintrag</label>
       <label index="browserItems"><![CDATA[Einträge]]></label>
-      <label index="label_azbrowser_all">Alle</label>
-      <label index="label_azbrowser_others">Andere</label>
+      <label index="label_indexBrowser_all">Alle</label>
+      <label index="label_indexBrowser_others">Andere</label>
       <label index="label_categorymenu_noValue">Ohne Angabe</label>
       <label index="label_checkbox_noValue">Ohne Angabe</label>
       <label index="label_filter_firstitem_default"><![CDATA[Alle Einträge]]></label>

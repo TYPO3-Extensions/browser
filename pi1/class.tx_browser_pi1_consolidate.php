@@ -561,7 +561,7 @@ class tx_browser_pi1_consolidate
     // dwildt, 100428: ADDED in context with table_mm.sorting
     $arrMMSorting    = $this->pObj->arrConsolidate['select']['mmSortingTableFields'];
     $int_count = 0;
-    // Store uids. We need it for link to single view and for the the A-Z-Browser.
+    // Store uids. We need it for link to single view and for the the Index-Browser.
     $arr_uids = false;
     foreach ($rows_cons as $row_cons)
     {

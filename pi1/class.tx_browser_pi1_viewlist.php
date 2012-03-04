@@ -132,7 +132,7 @@ class tx_browser_pi1_viewlist
 
 
   /**
- * main( ): Display a search form, a-z-Browser, pageBrowser and a list of records
+ * main( ): Display a search form, indexBrowser, pageBrowser and a list of records
  *
  * @return	string		$template : The processed HTML template
  * @version 3.9.8
@@ -884,21 +884,21 @@ class tx_browser_pi1_viewlist
 
       /////////////////////////////////////
       //
-      // HTML a-z-browser
+      // HTML index browser
 
     $arr_data['template']       = $template;
       // 110801, dwildt
     //$arr_data['rows']           = $rows;
     $arr_data['rows']           = $this->pObj->rows;
 $this->pObj->dev_var_dump( $this->pObj->rows );
-    $arr_result = $this->pObj->objNavi->azBrowser( $arr_data );
+    $arr_result = $this->pObj->objNavi->indexBrowser( $arr_data );
     if ($arr_result['error']['status'])
     {
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
       return $this->pObj->pi_wrapInBaseClass($prompt);
     }
 
-    $lArrTabs         = $arr_result['data']['azTabArray'];
+    $lArrTabs         = $arr_result['data']['indexBrowserTabArray'];
     $arr_tsId         = $arr_result['data']['tabIds'];
     $template         = $arr_result['data']['template'];
     $rows             = $arr_result['data']['rows'];
@@ -906,8 +906,8 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
     $this->pObj->rows = $rows;
     unset($arr_result);
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objNavi->azBrowser( )' );
-      // HTML a-z-browser
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objNavi->indexBrowser( )' );
+      // HTML index browser
 
 
 
@@ -931,7 +931,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       //
       // HTML page browser
 
-    $arr_data['azTabArray'] = $lArrTabs;
+    $arr_data['indexBrowserTabArray'] = $lArrTabs;
     $arr_data['tabIds']     = $arr_tsId;
     $arr_data['template']   = $template;
     $arr_data['rows']       = $rows;
@@ -1035,7 +1035,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
 
   /**
- * main_4x( ): Display a search form, a-z-Browser, pageBrowser and a list of records
+ * main_4x( ): Display a search form, indexBrowser, pageBrowser and a list of records
  *
  * @return	string		$template : The processed HTML template
  * @version 3.9.8
@@ -1129,8 +1129,9 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
         unset( $arr_result );
           // Set search box and filter
 
-          // Get A-Z-browser
-          // Set A-Z-browser
+          // Get index browser
+        $arr_result = $this->subpart_setIndexBrowser( );
+          // Set index browser
           // Get page browser
           // Set page browser
         break;
@@ -1730,12 +1731,34 @@ if( $this->pObj->bool_accessByIP )
 
 
 
+/**
+ * subpart_setIndexBrowser( ): 
+ *
+ * @return	array               $arr_return : Error message in case of an error
+ * @version 3.9.8
+ * @since 1.0.0
+ */
+  private function subpart_setIndexBrowser( )
+  {
+    $arr_return = $this->pObj->objNavi4x->setIndexBrowser( $this->content );
+    if( $arr_result['error']['status'] )
+    {
+      return $arr_result;
+    }
+    $this->content = $arr_result['data']['content'];
+
+    return $arr_return;
+  }
 
 
 
 
 
-  /**
+
+
+
+
+/**
  * set_arrLinkToSingle( ): Set the global $arrLinkToSingle
  *
  * @return	array

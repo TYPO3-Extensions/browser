@@ -299,7 +299,7 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_REMOVE_PLEASE;
     $arr_release[$int_v][$int_t]['function']                        = 'moved_from_ts_to_plugin';
     $arr_release[$int_v][$int_t]['version']                         = '3.3.5';
-    $arr_release[$int_v][$int_t]['srce']['typoscript']['code']      = 'advanced.realUrl.linkToSingle.dont_display_piVars.azTab';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['code']      = 'advanced.realUrl.linkToSingle.dont_display_piVars.indexBrowserTab';
 
     $int_t++;
     $arr_release[$int_v][$int_t]['header']['default']               = 'Mode: don\'t display mode in links to single view';
@@ -605,6 +605,18 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['version']                         = '3.9.6';
     $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'displayList.master_templates.selectbox.wrap.item.stdWrap';
     $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'displayList.master_templates.selectbox.wrap.item.wraps.value.stdWrap';
+
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array navigation.a-z_Browser is moved';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'The TypoScript array is moved to another position since version %version%. Please move it to the new position.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Array navigation.a-z_Browser ist verschoben';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Das TypoScript Array hat seit Version %version% einen anderen Ort. Bitte verschiebe das Array an die neue Position.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
+    $arr_release[$int_v][$int_t]['version']                         = '3.9.9';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'navigation.a-z_Browser';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'navigation.indexBrowser';
 
     // Set the Ticket array
 

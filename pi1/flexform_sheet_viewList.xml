@@ -82,7 +82,7 @@
             <cols>3</cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.navigation.azBrowser</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.navigation.indexBrowser</numIndex>
                 <numIndex index="1"></numIndex>
               </numIndex>
               <numIndex index="1" type="array">

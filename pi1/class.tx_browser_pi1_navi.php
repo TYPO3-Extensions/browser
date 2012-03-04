@@ -23,7 +23,7 @@
  ***************************************************************/
 
   /**
- * The class tx_browser_pi1_navi bundles methods for navigation like the A-Z-Browser
+ * The class tx_browser_pi1_navi bundles methods for navigation like the Index-Browser
  * or the page broser. It is part of the extension browser
  *
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
@@ -41,11 +41,11 @@
  *   67: class tx_browser_pi1_navi
  *  116:     public function __construct($parentObj)
  *
- *              SECTION: A-Z browser
- *  155:     public function azBrowser($arr_data)
- *  383:     public function azTemplate($arr_data)
- *  649:     public function azTabArray($arr_data)
- * 1089:     public function azRowsInitial($arr_data)
+ *              SECTION: Index browser
+ *  155:     public function indexBrowser($arr_data)
+ *  383:     public function indexBrowserTemplate($arr_data)
+ *  649:     public function indexBrowserTabArray($arr_data)
+ * 1089:     public function indexBrowserRowsInitial($arr_data)
  *
  *              SECTION: pagebrowser
  * 1357:     public function tmplPageBrowser($arr_data)
@@ -93,7 +93,7 @@ class tx_browser_pi1_navi
   var $bool_utf8        = true;
     // [Boolean] true, if current charset is utf-8. Is set by zz::b_TYPO3_utf8() while runtime
   var $sql_initialField = false;
-    // The initial field name in the SQL result (azRows)
+    // The initial field name in the SQL result (indexBrowserRows)
 
 
 
@@ -131,7 +131,7 @@ class tx_browser_pi1_navi
 
     /***********************************************
     *
-    * A-Z browser
+    * Index browser
     *
     **********************************************/
 
@@ -152,7 +152,7 @@ class tx_browser_pi1_navi
  * @version 3.7.3
  * @since 2.0.0
  */
-  public function azBrowser($arr_data)
+  public function indexBrowser($arr_data)
   {
     $template       = $arr_data['template'];
     $rows           = $arr_data['rows'];
@@ -185,26 +185,26 @@ class tx_browser_pi1_navi
 
       ///////////////////////////////////////////////////
       //
-      // RETURN, if the A-Z-Browser isn't activated
+      // RETURN, if the Index-Browser isn't activated
 
-    if ($this->pObj->objFlexform->bool_azBrowser)
+    if ($this->pObj->objFlexform->bool_indexBrowser)
     {
-        // The A-Z-Browser should be displayed
+        // The Index-Browser should be displayed
       if ($this->pObj->b_drs_navi) {
-        t3lib_div::devlog('[INFO/NAVIGATION] display.a-z_Browser is true.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/NAVIGATION] display.indexBrowser is true.', $this->pObj->extKey, 0);
       }
     }
-    if (!$this->pObj->objFlexform->bool_azBrowser)
+    if (!$this->pObj->objFlexform->bool_indexBrowser)
     {
-        // The A-Z-Browser isn't activated, we don't need any process, return
+        // The Index-Browser isn't activated, we don't need any process, return
       if ($this->pObj->b_drs_navi) {
-        t3lib_div::devlog('[INFO/NAVIGATION] display.a-z_Browser is false.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/NAVIGATION] display.indexBrowser is false.', $this->pObj->extKey, 0);
       }
-      $template = $this->pObj->cObj->substituteSubpart($template, '###AZSELECTOR###', '', true);
+      $template = $this->pObj->cObj->substituteSubpart($template, '###INDEXBROWSER###', '', true);
       $arr_return['data']['template'] = $template;
       return $arr_return;
     }
-      // RETURN, if the A-Z-Browser isn't activated
+      // RETURN, if the Index-Browser isn't activated
 
 
 
@@ -212,15 +212,15 @@ class tx_browser_pi1_navi
       //
       // RETURN, if we don't have configured tabs
 
-    $arr_conf_tabs = $this->conf['navigation.']['a-z_Browser.']['tabs.'];
+    $arr_conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
     if (!is_array($arr_conf_tabs))
     {
-      // The A-Z-Browser isn't configured
+      // The Index-Browser isn't configured
       if ($this->pObj->b_drs_navi) {
-        t3lib_div::devlog('[INFO/NAVIGATION] a-z_Browser.tabs hasn\'t any element.', $this->pObj->extKey, 2);
-        t3lib_div::devlog('[INFO/NAVIGATION] a-z_Browser won\'t be processed.', $this->pObj->extKey, 1);
+        t3lib_div::devlog('[INFO/NAVIGATION] indexBrowser.tabs hasn\'t any element.', $this->pObj->extKey, 2);
+        t3lib_div::devlog('[INFO/NAVIGATION] indexBrowser won\'t be processed.', $this->pObj->extKey, 1);
       }
-      $template = $this->pObj->cObj->substituteSubpart($template, '###AZSELECTOR###', '', true);
+      $template = $this->pObj->cObj->substituteSubpart($template, '###INDEXBROWSER###', '', true);
       $arr_return['data']['template'] = $template;
       return $arr_return;
     }
@@ -244,17 +244,17 @@ class tx_browser_pi1_navi
 
       ///////////////////////////////////////////////////
       //
-      // Get the A-Z-Browser rows (uid, initialField)
+      // Get the Index-Browser rows (uid, initialField)
 
-    $arr_result = $this->azRowsInitial($arr_data);
+    $arr_result = $this->indexBrowserRowsInitial($arr_data);
     if ($arr_result['error']['status'])
     {
       $GLOBALS['TSFE']->id = $int_tsfeId; // #9458
       return $arr_result;
     }
-    $azRows = $arr_result['data']['azRows'];
+    $indexBrowserRows = $arr_result['data']['indexBrowserRows'];
     unset($arr_result);
-      // Get the A-Z-Browser rows (uid, initialField)
+      // Get the Index-Browser rows (uid, initialField)
 
 
 
@@ -282,11 +282,11 @@ class tx_browser_pi1_navi
       //
       // Count the hits per tab, prepaire the tabArray
 
-    $arr_data['azRows']         = $azRows;
+    $arr_data['indexBrowserRows']         = $indexBrowserRows;
     $arr_data['rows']           = $rows;
-    $arr_result = $this->azTabArray($arr_data);
+    $arr_result = $this->indexBrowserTabArray($arr_data);
     unset($arr_data);
-    $lArrTabs = $arr_result['data']['azTabArray'];
+    $lArrTabs = $arr_result['data']['indexBrowserTabArray'];
     $arr_tsId = $arr_result['data']['tabIds'];
     $rows     = $arr_result['data']['rows'];
     unset($arr_result);
@@ -316,16 +316,16 @@ class tx_browser_pi1_navi
 
       ///////////////////////////////////////////////////
       //
-      // Build the A-Z-Browser template
+      // Build the Index-Browser template
 
-    $arr_data['azTabArray'] = $lArrTabs;
+    $arr_data['indexBrowserTabArray'] = $lArrTabs;
     $arr_data['tabIds']     = $arr_tsId;
     $arr_data['template']   = $template;
-    $arr_result = $this->azTemplate($arr_data);
+    $arr_result = $this->indexBrowserTemplate($arr_data);
     unset($arr_data);
     $template = $arr_result['data']['template'];
     unset($arr_result);
-      // Build the A-Z-Browser template
+      // Build the Index-Browser template
 
 
 
@@ -347,7 +347,7 @@ class tx_browser_pi1_navi
       // DRS - Performance
 
 
-    $arr_return['data']['azTabArray'] = $lArrTabs;
+    $arr_return['data']['indexBrowserTabArray'] = $lArrTabs;
     $arr_return['data']['tabIds']     = $arr_tsId;
     $arr_return['data']['rows']       = $rows;
     $arr_return['data']['template']   = $template;
@@ -375,14 +375,14 @@ class tx_browser_pi1_navi
 
 
  /**
-  * Building the HTML template with the A-Z-Browser
+  * Building the HTML template with the Index-Browser
   *
-  * @param	array		Array with elements azTabArray, tabIds, template
+  * @param	array		Array with elements indexBrowserTabArray, tabIds, template
   * @return	array		Array data with the element template
   */
-  public function azTemplate($arr_data)
+  public function indexBrowserTemplate($arr_data)
   {
-    $lArrTabs = $arr_data['azTabArray'];
+    $lArrTabs = $arr_data['indexBrowserTabArray'];
     $arr_tsId = $arr_data['tabIds'];
     $template = $arr_data['template'];
 
@@ -390,12 +390,12 @@ class tx_browser_pi1_navi
 
     $langKey  = $GLOBALS['TSFE']->lang;
 
-    $int_key_defaultTab   = $this->pObj->conf['navigation.']['a-z_Browser.']['defaultTab'];
-    $arr_defaultTab       = $this->pObj->conf['navigation.']['a-z_Browser.']['tabs.'][$int_key_defaultTab.'.']['stdWrap.'];
-    $str_defaultTabLabel  = $this->pObj->conf['navigation.']['a-z_Browser.']['tabs.'][$int_key_defaultTab];
+    $int_key_defaultTab   = $this->pObj->conf['navigation.']['indexBrowser.']['defaultTab'];
+    $arr_defaultTab       = $this->pObj->conf['navigation.']['indexBrowser.']['tabs.'][$int_key_defaultTab.'.']['stdWrap.'];
+    $str_defaultTabLabel  = $this->pObj->conf['navigation.']['indexBrowser.']['tabs.'][$int_key_defaultTab];
     $defaultAzTab         = $this->pObj->objWrapper->general_stdWrap($str_defaultTabLabel, $arr_defaultTab);
     $bool_dontLinkDefaultTab = false;
-    if ($this->pObj->conf['navigation.']['a-z_Browser.']['defaultTab.']['display_in_url'] == 0)
+    if ($this->pObj->conf['navigation.']['indexBrowser.']['defaultTab.']['display_in_url'] == 0)
     {
       $bool_dontLinkDefaultTab = true;
       // #7582, Bugfix, 100501
@@ -405,9 +405,9 @@ class tx_browser_pi1_navi
         // DRS - Development Reporting System
         if ($this->pObj->b_drs_templating)
         {
-          t3lib_div::devlog('[WARN/TEMPLATING] Empty list by start is true and the default A-Z-tab shouldn\'t linked with a piVar. '.
+          t3lib_div::devlog('[WARN/TEMPLATING] Empty list by start is true and the default tab of the index browser shouldn\'t linked with a piVar. '.
             'This is not proper.',  $this->pObj->extKey, 2);
-          t3lib_div::devlog('[INFO/TEMPLATING] The default A-Z-tab will be linked with a piVar by the system!',  $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/TEMPLATING] The default tab of the index browser will be linked with a piVar by the system!',  $this->pObj->extKey, 0);
         }
       }
       // #7582, Bugfix, 100501
@@ -442,7 +442,7 @@ class tx_browser_pi1_navi
       // Get the key of last displayed tab
 
 
-    $tsDisplayTitleTag = $this->conf['navigation.']['a-z_Browser.']['display.']['tabHrefTitle'];
+    $tsDisplayTitleTag = $this->conf['navigation.']['indexBrowser.']['display.']['tabHrefTitle'];
 
 
     foreach((array) $lArrTabs as $key_tab => $arr_tab)
@@ -507,16 +507,16 @@ class tx_browser_pi1_navi
         {
           $typolink['parameter'] = $GLOBALS['TSFE']->id;
         }
-        $arr_addPiVars = array('azTab' => $str_piVar);
+        $arr_addPiVars = array('indexBrowserTab' => $str_piVar);
         if($bool_dontLinkDefaultTab)
         {
-          $tmp_azTab = false;
+          $tmp_indexBrowserTab = false;
           if($str_piVar == $defaultAzTab)
           {
-            if(isset($this->pObj->piVars['azTab']))
+            if(isset($this->pObj->piVars['indexBrowserTab']))
             {
-              $tmp_azTab = $this->pObj->piVars['azTab'];
-              unset($this->pObj->piVars['azTab']);
+              $tmp_indexBrowserTab = $this->pObj->piVars['indexBrowserTab'];
+              unset($this->pObj->piVars['indexBrowserTab']);
             }
             unset($arr_addPiVars);
             $arr_addPiVars = array(); // 100429, dwildt - Bugfix #7526: tab [All] didn't have any piVar
@@ -530,9 +530,9 @@ class tx_browser_pi1_navi
                                       $str_label, $typolink, $arr_addPiVars, $this->pObj->boolCache);
         if($bool_dontLinkDefaultTab)
         {
-          if($tmp_azTab)
+          if($tmp_indexBrowserTab)
           {
-            $this->pObj->piVars['azTab'] = $tmp_azTab;
+            $this->pObj->piVars['indexBrowserTab'] = $tmp_indexBrowserTab;
           }
         }
       }
@@ -558,16 +558,16 @@ class tx_browser_pi1_navi
         {
           $typolink['parameter'] = $GLOBALS['TSFE']->id;
         }
-        $arr_addPiVars = array('azTab' => $str_piVar);
+        $arr_addPiVars = array('indexBrowserTab' => $str_piVar);
         if($bool_dontLinkDefaultTab)
         {
-          $tmp_azTab = false;
+          $tmp_indexBrowserTab = false;
           if($str_piVar == $defaultAzTab)
           {
-            if(isset($this->pObj->piVars['azTab']))
+            if(isset($this->pObj->piVars['indexBrowserTab']))
             {
-              $tmp_azTab = $this->pObj->piVars['azTab'];
-              unset($this->pObj->piVars['azTab']);
+              $tmp_indexBrowserTab = $this->pObj->piVars['indexBrowserTab'];
+              unset($this->pObj->piVars['indexBrowserTab']);
             }
             unset($arr_addPiVars);
             $arr_addPiVars = array(); // 100429, dwildt - Bugfix #7526: tab [All] didn't have any piVar
@@ -580,9 +580,9 @@ class tx_browser_pi1_navi
                                       $str_label, $typolink, $arr_addPiVars, $this->pObj->boolCache);
         if($bool_dontLinkDefaultTab)
         {
-          if($tmp_azTab)
+          if($tmp_indexBrowserTab)
           {
-            $this->pObj->piVars['azTab'] = $tmp_azTab;
+            $this->pObj->piVars['indexBrowserTab'] = $tmp_indexBrowserTab;
           }
         }
       }
@@ -594,8 +594,8 @@ class tx_browser_pi1_navi
       }
 
       $markerArray['###LI_CLASS###'] = $liClass;
-      $tmplAzTabs = $this->pObj->cObj->getSubpart($template, '###AZSELECTORTABS###');
-      $tabs .= $this->pObj->cObj->substituteMarkerArray($tmplAzTabs, $markerArray);
+      $tmplIndexBrowserTabs = $this->pObj->cObj->getSubpart($template, '###INDEXBROWSERTABS###');
+      $tabs .= $this->pObj->cObj->substituteMarkerArray($tmplIndexBrowserTabs, $markerArray);
     }
 
 
@@ -607,10 +607,10 @@ class tx_browser_pi1_navi
     $markerArray                  = $this->pObj->objWrapper->constant_markers();
     $markerArray['###UL_MODE###'] = $this->mode;
     $markerArray['###UL_VIEW###'] = $this->view;
-    $tmplAzBrowser  = $this->pObj->cObj->getSubpart($template, '###AZSELECTOR###');
-    $tmplAzBrowser  = $this->pObj->cObj->substituteMarkerArray($tmplAzBrowser, $markerArray);
-    $tmplAzBrowser  = $this->pObj->cObj->substituteSubpart($tmplAzBrowser, '###AZSELECTORTABS###', $tabs, true);
-    $template       = $this->pObj->cObj->substituteSubpart($template, '###AZSELECTOR###', $tmplAzBrowser, true);
+    $tmplIndexBrowser  = $this->pObj->cObj->getSubpart($template, '###INDEXBROWSER###');
+    $tmplIndexBrowser  = $this->pObj->cObj->substituteMarkerArray($tmplIndexBrowser, $markerArray);
+    $tmplIndexBrowser  = $this->pObj->cObj->substituteSubpart($tmplIndexBrowser, '###INDEXBROWSERTABS###', $tabs, true);
+    $template       = $this->pObj->cObj->substituteSubpart($template, '###INDEXBROWSER###', $tmplIndexBrowser, true);
     // Process the markers, subpart and template
 
 
@@ -642,15 +642,15 @@ class tx_browser_pi1_navi
  /**
   * Generates an array with informations for every tab
   *
-  * @param	array		Array with elements azRows and rows
-  * @return	array		Array data with elements azTabArray, tabIds and rows
+  * @param	array		Array with elements indexBrowserRows and rows
+  * @return	array		Array data with elements indexBrowserTabArray, tabIds and rows
   * @version        3.4.3
   */
-  public function azTabArray($arr_data)
+  public function indexBrowserTabArray($arr_data)
   {
-    $azRows                           = $arr_data['azRows'];
+    $indexBrowserRows                           = $arr_data['indexBrowserRows'];
     $rows                             = $arr_data['rows'];
-    $arr_return['data']['azTabArray'] = false;
+    $arr_return['data']['indexBrowserTabArray'] = false;
     $arr_return['data']['tabIds']     = false;
     $arr_return['data']['rows']       = $rows;
 
@@ -659,12 +659,12 @@ class tx_browser_pi1_navi
     //
     // Initial Values
 
-    $int_azRows_all     = 0;
-    $int_azRows_others  = 0;
-    $int_azRows_user    = 0;
-    if(is_array($azRows)) {
-      $int_azRows_all     = count($azRows);
-      $int_azRows_others  = count($azRows);
+    $int_indexBrowserRows_all     = 0;
+    $int_indexBrowserRows_others  = 0;
+    $int_indexBrowserRows_user    = 0;
+    if(is_array($indexBrowserRows)) {
+      $int_indexBrowserRows_all     = count($indexBrowserRows);
+      $int_indexBrowserRows_others  = count($indexBrowserRows);
     }
     $arr_tsId['all']      = -1;
     $arr_tsId['others']   = -1;
@@ -691,7 +691,7 @@ class tx_browser_pi1_navi
     //
     // Build the $lArrTabs - Step 1 (special, label)
 
-    $conf_tabs = $this->conf['navigation.']['a-z_Browser.']['tabs.'];
+    $conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
     foreach ($conf_tabs as $key_confTab => $str_confTab)
     {
       if (substr($key_confTab, -1) != '.')
@@ -752,7 +752,7 @@ class tx_browser_pi1_navi
     // Build the $lArrTabs - Step 2 (stdWrap, active, displayWoItems)
 
     // Get the key of the default tab
-    $int_key_defaultTab   = $this->conf['navigation.']['a-z_Browser.']['defaultTab'];
+    $int_key_defaultTab   = $this->conf['navigation.']['indexBrowser.']['defaultTab'];
     $arr_tsId['default']  = $int_key_defaultTab;
     // Get the key of the default tab
 
@@ -778,7 +778,7 @@ class tx_browser_pi1_navi
       $str_wrap = $conf_tabs[$key_lArrTab.'.']['wrap'];
       if ($str_wrap == '')
       {
-        $str_wrap = $this->conf['navigation.']['a-z_Browser.']['defaultTabWrap'];
+        $str_wrap = $this->conf['navigation.']['indexBrowser.']['defaultTabWrap'];
       }
       $lArrTabs[$key_lArrTab]['wrap'] = $str_wrap;
       // wrap
@@ -796,13 +796,13 @@ class tx_browser_pi1_navi
       $str_label_cleaned = strtolower(preg_replace('[^a-zA-Z0-9-_]','',$str_label_cleaned));
 
       $lArrTabs[$key_lArrTab]['active'] = false;
-      if($str_label_cleaned == $this->pObj->piVar_azTab)
+      if($str_label_cleaned == $this->pObj->piVar_indexBrowserTab)
       {
         $lArrTabs[$key_lArrTab]['active'] = true;
         $arr_tsId['active']               = $key_lArrTab;
       }
         // #10054
-      if((strtolower($this->pObj->piVar_azTab) == $str_label_cleaned) && ($int_key_defaultTab == $key_lArrTab))
+      if((strtolower($this->pObj->piVar_indexBrowserTab) == $str_label_cleaned) && ($int_key_defaultTab == $key_lArrTab))
       {
         $lArrTabs[$key_lArrTab]['active'] = true;
         $arr_tsId['active']               = $key_lArrTab;
@@ -814,7 +814,7 @@ class tx_browser_pi1_navi
       $str_displayWithoutItems = $conf_tab['displayWithoutItems'];
       if ($str_displayWithoutItems == '')
       {
-        $lArrTabs[$key_lArrTab]['displayWithoutItems'] = $this->conf['navigation.']['a-z_Browser.']['display.']['tabWithoutItems'];
+        $lArrTabs[$key_lArrTab]['displayWithoutItems'] = $this->conf['navigation.']['indexBrowser.']['display.']['tabWithoutItems'];
       }
       if ($str_displayWithoutItems != '')
       {
@@ -858,9 +858,9 @@ class tx_browser_pi1_navi
     //
     // Build the $lArrTabs - Step 3: Count the rows
 
-    $rows_others        = $azRows;
+    $rows_others        = $indexBrowserRows;
     $int_initialsUser   = 0;
-    $bool_caseSensitive = $this->conf['navigation.']['a-z_Browser.']['caseSensitive'];
+    $bool_caseSensitive = $this->conf['navigation.']['indexBrowser.']['caseSensitive'];
 
     foreach ($lArrTabs as $key_lArrTab => $arr_lArrTab)
     {
@@ -876,9 +876,9 @@ class tx_browser_pi1_navi
         }
         foreach ($arrTabInitials as $strTabInitial)
         {
-          if (is_array($azRows))
+          if (is_array($indexBrowserRows))
           {
-            foreach ($azRows as $row => $elements)
+            foreach ($indexBrowserRows as $row => $elements)
             {
               $str_sqlInitial = $elements[$this->sql_initialField];
               $str_sqlInitial = substr($str_sqlInitial, 0, strlen($strTabInitial));
@@ -943,10 +943,10 @@ class tx_browser_pi1_navi
     //
     // Count the rows for ALL and OTHERS
 
-    if(is_array($azRows)) {
-      $int_initialsAll = count($azRows);
+    if(is_array($indexBrowserRows)) {
+      $int_initialsAll = count($indexBrowserRows);
     }
-    if(!is_array($azRows)) {
+    if(!is_array($indexBrowserRows)) {
       $int_initialsAll = 0;
     }
     $lArrTabs[$arr_tsId['all']]['amount']    = $int_initialsAll;
@@ -963,9 +963,9 @@ class tx_browser_pi1_navi
     {
       $table          = $this->pObj->localTable;
       $arr_displayRow = $lArrTabs[$arr_tsId['active']]['keyRow'];
-      if (is_array($azRows) && is_array($arr_displayRow))
+      if (is_array($indexBrowserRows) && is_array($arr_displayRow))
       {
-        foreach ($azRows as $row => $elements)
+        foreach ($indexBrowserRows as $row => $elements)
         {
           if (in_array($row, $arr_displayRow))
           {
@@ -1028,7 +1028,7 @@ class tx_browser_pi1_navi
       $removed_rows = $drs_rows_before - $drs_rows_after;
       if ($this->pObj->b_drs_templating)
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] The A-Z-Browser has #'.$removed_rows.' rows removed.',  $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/TEMPLATING] The Index-Browser has #'.$removed_rows.' rows removed.',  $this->pObj->extKey, 0);
       }
     }
     // DRS - Development Reporting System
@@ -1056,7 +1056,7 @@ class tx_browser_pi1_navi
     //
     // RETURN the result
 
-    $arr_return['data']['azTabArray'] = $lArrTabs;
+    $arr_return['data']['indexBrowserTabArray'] = $lArrTabs;
     $arr_return['data']['tabIds']     = $arr_tsId;
     $arr_return['data']['rows']       = $rows;
 
@@ -1081,15 +1081,15 @@ class tx_browser_pi1_navi
 
 
  /**
-  * Building the SQL query for the A-Z-Browser. Exxecute the query. Return the rows.
+  * Building the SQL query for the Index-Browser. Exxecute the query. Return the rows.
   *
   * @param	array		Array with the current rows
-  * @return	array		Array data with the element azRows
+  * @return	array		Array data with the element indexBrowserRows
   */
-  public function azRowsInitial($arr_data)
+  public function indexBrowserRowsInitial($arr_data)
   {
     $arr_return['error']['status']  = false;
-    $arr_return['data']['azRows']   = false;
+    $arr_return['data']['indexBrowserRows']   = false;
     $rows                           = $arr_data['rows'];
 
 
@@ -1099,7 +1099,7 @@ class tx_browser_pi1_navi
 
     if (!is_array($rows) || (is_array($rows) && count($rows) < 1))
     {
-      $arr_return['data']['azRows'] = false;
+      $arr_return['data']['indexBrowserRows'] = false;
       return $arr_return;
     }
     // RETURN if we got an empty result
@@ -1107,23 +1107,23 @@ class tx_browser_pi1_navi
 
     ///////////////////////////////////////////////
     //
-    // Get the table.field for the a-z_Browser initials
+    // Get the table.field for the indexBrowser initials
 
-    if (isset($this->conf_view['navigation.']['a-z_Browser.']['field']))
+    if (isset($this->conf_view['navigation.']['indexBrowser.']['field']))
     {
-      $str_initialField = $this->conf_view['navigation.']['a-z_Browser.']['field'];
+      $str_initialField = $this->conf_view['navigation.']['indexBrowser.']['field'];
       if ($this->pObj->b_drs_navi) {
-        t3lib_div::devlog('[INFO/NAVIGATION] '.$this->conf_path.'a-z_Browser.field is '.$str_initialField, $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/NAVIGATION] '.$this->conf_path.'indexBrowser.field is '.$str_initialField, $this->pObj->extKey, 0);
       }
     }
     if (!$str_initialField)
     {
-      $str_initialField = $this->conf['navigation.']['a-z_Browser.']['field'];
+      $str_initialField = $this->conf['navigation.']['indexBrowser.']['field'];
       if ($str_initialField)
       {
         // The user has defined a table.field element
         if ($this->pObj->b_drs_navi) {
-          t3lib_div::devlog('[INFO/NAVIGATION] a-z_Browser.field is '.$str_initialField, $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/NAVIGATION] indexBrowser.field is '.$str_initialField, $this->pObj->extKey, 0);
         }
       }
     }
@@ -1139,13 +1139,13 @@ class tx_browser_pi1_navi
       $str_initialField  = $tableField;
       if ($this->pObj->b_drs_navi)
       {
-        $prompt = 'Default: a-z_Browser.field is the first table.field from '.$this->conf_path.'select: '.$str_initialField;
+        $prompt = 'Default: indexBrowser.field is the first table.field from '.$this->conf_path.'select: '.$str_initialField;
         t3lib_div::devlog('[INFO/NAVIGATION] '.$prompt, $this->pObj->extKey, 0);
-        t3lib_div::devlog('[HELP/NAVIGATION] If you need another table.field use '.$this->conf_path.'a-z_Browser.field please.', $this->pObj->extKey, 1);
+        t3lib_div::devlog('[HELP/NAVIGATION] If you need another table.field use '.$this->conf_path.'indexBrowser.field please.', $this->pObj->extKey, 1);
       }
     }
     $this->sql_initialField = $str_initialField;
-    // Get the table.field for the a-z_Browser initials
+    // Get the table.field for the indexBrowser initials
 
 
     ///////////////////////////////////////////////
@@ -1155,21 +1155,21 @@ class tx_browser_pi1_navi
     list($table, $field) = explode('.', $str_initialField);
     if ($table != $this->pObj->localTable)
     {
-      $str_prompt = '[ERROR/NAVIGATION] a-z_Browser field isn\'t a field from the local table:<br />
+      $str_prompt = '[ERROR/NAVIGATION] indexBrowser field isn\'t a field from the local table:<br />
         table.field: '.$str_initialField.'<br />
         localtable: '.$this->pObj->localTable.'<br />
         <br />
         Please configure:<br />
-        '.$this->conf_path.'a-z_Browser.field = '.$this->pObj->localTable.'... or<br />
-        a-z_Browser.field = '.$this->pObj->localTable.'...';
+        '.$this->conf_path.'indexBrowser.field = '.$this->pObj->localTable.'... or<br />
+        indexBrowser.field = '.$this->pObj->localTable.'...';
       if ($this->pObj->b_drs_navi)
       {
         t3lib_div::devlog($str_prompt, $this->pObj->extKey, 3);
-        t3lib_div::devlog('[INFO/NAVIGATION] A-Z-Browser won\'t be processed.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/NAVIGATION] Index-Browser won\'t be processed.', $this->pObj->extKey, 0);
       }
 
       $arr_return['error']['status'] = true;
-      $arr_return['error']['header'] = '<h1 style="color:red">Error A-Z-Browser</h1>';
+      $arr_return['error']['header'] = '<h1 style="color:red">Error Index-Browser</h1>';
       $arr_return['error']['prompt'] = '<p style="color:red">'.$str_prompt.'</p>';
       return $arr_return;
     }
@@ -1188,26 +1188,26 @@ class tx_browser_pi1_navi
         $real_table       = $this->conf_view['aliases.']['tables.'][$syn_table];                // tx_civserv_service
         $real_tableField  = $real_table.'.'.$syn_field;                                         // tx_civserv_service.sv_name
         $tableFieldUid    = $real_table.'.uid';
-        $tableFieldAz     = $real_tableField;
+        $tableFieldIndexBrowser     = $real_tableField;
         if ($this->pObj->b_drs_templating)
         {
-          t3lib_div::devlog('[INFO/TEMPLATING] Synonyms: A-Z-Browser takes the current rows.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/TEMPLATING] Synonyms: Index-Browser takes the current rows.', $this->pObj->extKey, 0);
         }
       }
       if (!$this->bool_synonyms)
       {
         $tableFieldUid  = $table.'.uid';
-        $tableFieldAz   = $str_initialField;
+        $tableFieldIndexBrowser   = $str_initialField;
       }
       foreach ($rows as $int_row => $elements)
       {
-        $azRows[$int_row][$tableFieldUid] = $elements[$tableFieldUid];
-        $azRows[$int_row][$tableFieldAz]  = $elements[$tableFieldAz];
+        $indexBrowserRows[$int_row][$tableFieldUid] = $elements[$tableFieldUid];
+        $indexBrowserRows[$int_row][$tableFieldIndexBrowser]  = $elements[$tableFieldIndexBrowser];
       }
-      $arr_return['data']['azRows'] = $azRows;
+      $arr_return['data']['indexBrowserRows'] = $indexBrowserRows;
       if ($this->pObj->b_drs_templating)
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] Synonyms: A-Z-Browser process the current rows.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/TEMPLATING] Synonyms: Index-Browser process the current rows.', $this->pObj->extKey, 0);
       }
       return $arr_return;
     }
@@ -1238,7 +1238,7 @@ class tx_browser_pi1_navi
 
     if ($this->pObj->b_drs_templating)
     {
-      t3lib_div::devlog('[INFO/TEMPLATING] A-Z-Browser query<br />
+      t3lib_div::devlog('[INFO/TEMPLATING] Index-Browser query<br />
         '.$query,  $this->pObj->extKey, 0);
     }
     // DRS - Development Reporting System
@@ -1292,15 +1292,15 @@ class tx_browser_pi1_navi
 
     ///////////////////////////////////////////////
     //
-    // Building the a-z_Browser rows
+    // Building the indexBrowser rows
 
     $i_counter    = 0;
     $tmp_initial  = array();
     while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res))
     {
-      $azRows[] = $row;
+      $indexBrowserRows[] = $row;
     }
-    // Building the a-z_Browser rows
+    // Building the indexBrowser rows
 
 
     ///////////////////////////////////////////////
@@ -1309,8 +1309,8 @@ class tx_browser_pi1_navi
 
     if ($this->pObj->b_drs_templating)
     {
-      $int_rows = count($azRows);
-      t3lib_div::devlog('[INFO/TEMPLATING] A-Z-Browser has #'.$int_rows.' rows.',  $this->pObj->extKey, 0);
+      $int_rows = count($indexBrowserRows);
+      t3lib_div::devlog('[INFO/TEMPLATING] Index-Browser has #'.$int_rows.' rows.',  $this->pObj->extKey, 0);
     }
     // DRS - Development Reporting System
 
@@ -1325,11 +1325,11 @@ class tx_browser_pi1_navi
 
     ///////////////////////////////////////////////
     //
-    // RETURN the A-Z-Browser rows
+    // RETURN the Index-Browser rows
 
-    $arr_return['data']['azRows'] = $azRows;
+    $arr_return['data']['indexBrowserRows'] = $indexBrowserRows;
     return $arr_return;
-    // RETURN the A-Z-Browser rows
+    // RETURN the Index-Browser rows
   }
 
 
@@ -1364,7 +1364,7 @@ class tx_browser_pi1_navi
   {
 
     $int_currTab    = $arr_data['tabIds']['active'];
-    $arr_currRowIds = $arr_data['azTabArray'][$int_currTab]['keyRow'];
+    $arr_currRowIds = $arr_data['indexBrowserTabArray'][$int_currTab]['keyRow'];
 
     $template       = $arr_data['template'];
     $rows           = $arr_data['rows'];

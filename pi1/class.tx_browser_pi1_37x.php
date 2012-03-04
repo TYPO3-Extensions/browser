@@ -159,9 +159,9 @@ class tx_browser_pi1 extends tslib_pibase {
   var $piVar_mode   = false;
   // [Integer] The current mode (view). We need $piVar_mode, if there is only one view. Then we don't want the
   // piVars[mode] because of a nice real url path
-  var $piVar_azTab  = false;
-  // [String] The current tab of the A-Z-Browser. We need $piVar_azTab, if the current tab is the default tab. Then we don't want the
-  // piVars[azTab] because of a nice real url path
+  var $piVar_indexBrowserTab  = false;
+  // [String] The current tab of the Index-Browser. We need $piVar_indexBrowserTab, if the current tab is the default tab. Then we don't want the
+  // piVars[indexBrowserTab] because of a nice real url path
   var $piVar_sword  = false;
   // [String] The current piVar Sword in secure mode
   var $piVar_alias_showUid  = false;
@@ -1321,7 +1321,7 @@ class tx_browser_pi1 extends tslib_pibase {
 //      $this->b_drs_perform    = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
-    if ($this->arr_extConf['drs_mode'] == 'PageBrowser and A-Z-Browser')
+    if ($this->arr_extConf['drs_mode'] == 'PageBrowser and Index-Browser')
     {
       $this->b_drs_error      = true;
       $this->b_drs_warn       = true;
@@ -1500,7 +1500,7 @@ class tx_browser_pi1 extends tslib_pibase {
     require_once('class.tx_browser_pi1_multisort.php');
     $this->objMultisort = new tx_browser_pi1_multisort($this);
 
-      // Class with methods for the modeSelector, the pageBrowser and the a-z-browser
+      // Class with methods for the modeSelector, the pageBrowser and the indexBrowser
     require_once('class.tx_browser_pi1_navi.php');
     $this->objNavi = new tx_browser_pi1_navi($this);
 

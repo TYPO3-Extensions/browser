@@ -698,7 +698,7 @@ class tx_browser_pi1_javascript
                             (
                               'header'        => true,
                               'searchform'    => true,
-                              'azBrowser'     => true,
+                              'indexBrowser'     => true,
                               'list'          => true,
                               'pageBrowser'   => true,
                               'single'        => true,
@@ -726,7 +726,7 @@ class tx_browser_pi1_javascript
       case('innerList'):
         $this->pObj->segment['header']      = false;
         $this->pObj->segment['searchform']  = false;
-        $this->pObj->segment['azBrowser']   = false;
+        $this->pObj->segment['indexBrowser']   = false;
         $this->pObj->segment['pageBrowser'] = false;
         $this->pObj->segment['cObj']        = false;
         $this->pObj->segment['wrap_piBase'] = false;

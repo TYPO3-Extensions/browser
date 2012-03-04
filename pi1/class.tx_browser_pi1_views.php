@@ -95,7 +95,7 @@ class tx_browser_pi1_views
 
 
 //  /**
-// * Display a search form, a-z-Browser, pageBrowser and a list of records
+// * Display a search form, indexBrowser, pageBrowser and a list of records
 // *
 // * @return	void
 // * @version 3.9.8
@@ -1080,20 +1080,20 @@ class tx_browser_pi1_views
 //
 //      /////////////////////////////////////
 //      //
-//      // HTML a-z-browser
+//      // HTML index browser
 //
 //    $arr_data['template']       = $template;
 //      // 110801, dwildt
 //    //$arr_data['rows']           = $rows;
 //    $arr_data['rows']           = $this->pObj->rows;
-//    $arr_result = $this->pObj->objNavi->azBrowser( $arr_data );
+//    $arr_result = $this->pObj->objNavi->indexBrowser( $arr_data );
 //    if ($arr_result['error']['status'])
 //    {
 //      $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
 //      return $this->pObj->pi_wrapInBaseClass($prompt);
 //    }
 //
-//    $lArrTabs         = $arr_result['data']['azTabArray'];
+//    $lArrTabs         = $arr_result['data']['indexBrowserTabArray'];
 //    $arr_tsId         = $arr_result['data']['tabIds'];
 //    $template         = $arr_result['data']['template'];
 //    $rows             = $arr_result['data']['rows'];
@@ -1101,8 +1101,8 @@ class tx_browser_pi1_views
 //    $this->pObj->rows = $rows;
 //    unset($arr_result);
 //      // Prompt the expired time to devlog
-//    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objNavi->azBrowser( )' );
-//      // HTML a-z-browser
+//    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objNavi->indexBrowser( )' );
+//      // HTML index browser
 //
 //
 //
@@ -1126,7 +1126,7 @@ class tx_browser_pi1_views
 //      //
 //      // HTML page browser
 //
-//    $arr_data['azTabArray'] = $lArrTabs;
+//    $arr_data['indexBrowserTabArray'] = $lArrTabs;
 //    $arr_data['tabIds']     = $arr_tsId;
 //    $arr_data['template']   = $template;
 //    $arr_data['rows']       = $rows;

@@ -82,8 +82,8 @@ class tx_browser_pi1_flexform {
   var $int_singlePid = null;
   // [integer] pid of a single record, #12006
 
-  var $bool_azBrowser = true;
-  // [boolean] Display the A-Z-Browser
+  var $bool_indexBrowser = true;
+  // [boolean] Display the Index-Browser
   var $bool_pageBrowser = true;
   // [boolean] Display the PageBrowser
   var $bool_emptyAtStart = false;
@@ -103,8 +103,8 @@ class tx_browser_pi1_flexform {
   var $str_searchWildcardCharManual = '*';
   // [string] Display the Searchbox
 
-  var $bool_linkToSingle_wi_piVar_azTab = false;
-  // [boolean] Should the URL to a single view contain the parameter azTab?
+  var $bool_linkToSingle_wi_piVar_indexBrowserTab = false;
+  // [boolean] Should the URL to a single view contain the parameter indexBrowserTab?
   var $bool_linkToSingle_wi_piVar_mode = false;
   // [boolean] Should the URL to a single view contain the parameter mode?
   var $bool_linkToSingle_wi_piVar_pointer = false;
@@ -1025,7 +1025,7 @@ class tx_browser_pi1_flexform {
     if ($str_realUrl_select == 'configured') {
       $int_realUrl = $this->pObj->pi_getFFvalue($arr_piFlexform, 'realUrl', 'advanced', 'lDEF', 'vDEF');
 
-      $this->bool_linkToSingle_wi_piVar_azTab = (($int_realUrl & 1) == 1);
+      $this->bool_linkToSingle_wi_piVar_indexBrowserTab = (($int_realUrl & 1) == 1);
       $this->bool_linkToSingle_wi_piVar_mode = (($int_realUrl & 2) == 2);
       $this->bool_linkToSingle_wi_piVar_pointer = (($int_realUrl & 4) == 4);
       $this->bool_linkToSingle_wi_piVar_plugin = (($int_realUrl & 8) == 8);
@@ -1034,7 +1034,7 @@ class tx_browser_pi1_flexform {
       if ($this->pObj->b_drs_flexform) {
         t3lib_div :: devlog('[INFO/FLEXFORM] advanced/realUrl<br />
                   int_realUrl: \'' . $int_realUrl . '\'<br />
-                  linkToSingle_wi_piVar_azTab: \'' . $this->bool_linkToSingle_wi_piVar_azTab . '\'<br />
+                  linkToSingle_wi_piVar_indexBrowserTab: \'' . $this->bool_linkToSingle_wi_piVar_indexBrowserTab . '\'<br />
                   linkToSingle_wi_piVar_mode: \'' . $this->bool_linkToSingle_wi_piVar_mode . '\'<br />
                   linkToSingle_wi_piVar_pointer: \'' . $this->bool_linkToSingle_wi_piVar_pointer . '\'<br />
                   linkToSingle_wi_piVar_plugin: \'' . $this->bool_linkToSingle_wi_piVar_plugin . '\'<br />
@@ -2924,19 +2924,19 @@ class tx_browser_pi1_flexform {
 
     switch ($int_navigation) {
       case (0) :
-        $this->bool_azBrowser = 0;
+        $this->bool_indexBrowser = 0;
         $this->bool_pageBrowser = 0;
         break;
       case (1) :
-        $this->bool_azBrowser = 1;
+        $this->bool_indexBrowser = 1;
         $this->bool_pageBrowser = 0;
         break;
       case (2) :
-        $this->bool_azBrowser = 0;
+        $this->bool_indexBrowser = 0;
         $this->bool_pageBrowser = 1;
         break;
       case (3) :
-        $this->bool_azBrowser = 1;
+        $this->bool_indexBrowser = 1;
         $this->bool_pageBrowser = 1;
         break;
       default :
@@ -2954,7 +2954,7 @@ class tx_browser_pi1_flexform {
     }
     if ($this->pObj->b_drs_flexform) {
       t3lib_div :: devlog('[INFO/FLEXFORM] viewList/navigation<br />
-              azBrowser: \'' . $this->bool_azBrowser . '\'<br />
+              indexBrowser: \'' . $this->bool_indexBrowser . '\'<br />
               pageBrowser: \'' . $this->bool_pageBrowser . '\'', $this->pObj->extKey, 0);
     }
     // Field navigation
@@ -2966,21 +2966,21 @@ class tx_browser_pi1_flexform {
       // csv export
 
       // #29370, 110831, dwildt+
-      // Remove the a-z-browser and the page browser in case of csv export
+      // Remove the index browser and the page browser in case of csv export
     switch( $this->pObj->objExport->str_typeNum )
     {
       case( 'csv' ) :
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_export )
         {
-          t3lib_div::devlog('[INFO/EXPORT] azBrowser and pageBrowser won\'t be handled. Both are set to 0.',  $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/EXPORT] indexBrowser and pageBrowser won\'t be handled. Both are set to 0.',  $this->pObj->extKey, 0);
         }
-        $this->bool_azBrowser   = 0;
+        $this->bool_indexBrowser   = 0;
         $this->bool_pageBrowser = 0;
         break;
       default:
         // Do nothing;
     }
-      // Remove the a-z-browser and the page browser in case of csv export
+      // Remove the index browser and the page browser in case of csv export
       // csv export
 
 

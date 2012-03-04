@@ -2,14 +2,14 @@
 
   ///////////////////////////////////////////////
   //
-  // Example for a A-Z-browser with this groups:
+  // Example for a index browser with this groups:
   //
   //   All | 0-9 | A-E | F-J | K-P | R-Z
   //
 
 plugin.tx_browser_pi1 {
   navigation {
-    a-z_Browser {
+    indexBrowser {
       tabs >
       tabs {
         0 = All

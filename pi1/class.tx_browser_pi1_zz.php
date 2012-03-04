@@ -674,71 +674,71 @@
 
     //////////////////////////////////////
     //
-    // Default A-Z-Browser tab
+    // Default Index-Browser tab
 
     // Security
-    if (isset($this->pObj->piVars['azTab']))
+    if (isset($this->pObj->piVars['indexBrowserTab']))
     {
-      $this->pObj->piVars['azTab'] = $this->secure_piVar($this->pObj->piVars['azTab'], 'string');
+      $this->pObj->piVars['indexBrowserTab'] = $this->secure_piVar($this->pObj->piVars['indexBrowserTab'], 'string');
     }
     // Security
 
-    // Delete piVar[azTab], if it is empty.
-    if($this->pObj->piVars['azTab'] == '')
+    // Delete piVar[indexBrowserTab], if it is empty.
+    if($this->pObj->piVars['indexBrowserTab'] == '')
     {
-      unset($this->pObj->piVars['azTab']);
+      unset($this->pObj->piVars['indexBrowserTab']);
     }
-    // Delete piVar[azTab], if it is empty.
+    // Delete piVar[indexBrowserTab], if it is empty.
 
     // Set the default tab, if there isn't any current tab
-    $int_key_defaultTab   = $this->pObj->conf['navigation.']['a-z_Browser.']['defaultTab'];
-    $arr_defaultTab       = $this->pObj->conf['navigation.']['a-z_Browser.']['tabs.'][$int_key_defaultTab.'.']['stdWrap.'];
-    $str_defaultTabLabel  = $this->pObj->conf['navigation.']['a-z_Browser.']['tabs.'][$int_key_defaultTab];
+    $int_key_defaultTab   = $this->pObj->conf['navigation.']['indexBrowser.']['defaultTab'];
+    $arr_defaultTab       = $this->pObj->conf['navigation.']['indexBrowser.']['tabs.'][$int_key_defaultTab.'.']['stdWrap.'];
+    $str_defaultTabLabel  = $this->pObj->conf['navigation.']['indexBrowser.']['tabs.'][$int_key_defaultTab];
     $defaultAzTab         = $this->pObj->objWrapper->general_stdWrap($str_defaultTabLabel, $arr_defaultTab);
-    if ($this->pObj->piVars['azTab'] == $defaultAzTab)
+    if ($this->pObj->piVars['indexBrowserTab'] == $defaultAzTab)
     {
       // Current tab is the default tab
-      if ($this->pObj->conf['navigation.']['a-z_Browser.']['defaultTab.']['display_in_url'] == 0)
+      if ($this->pObj->conf['navigation.']['indexBrowser.']['defaultTab.']['display_in_url'] == 0)
       {
-        // It shouldn't be displayed in the real URL path. Delete piVars[azTab]
-        unset($this->pObj->piVars['azTab']);
+        // It shouldn't be displayed in the real URL path. Delete piVars[indexBrowserTab]
+        unset($this->pObj->piVars['indexBrowserTab']);
         if($this->pObj->b_drs_navi)
         {
-          t3lib_div::devlog('[INFO/NAVIGATION] tx_browser_pi1[azTab] is deleted, because it has the default value \''.$defaultAzTab.'\'', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[HELP/NAVIGATION] If you need the value in the real URL path, please configure a-z_Browser.defaultTab.realURL = 1.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/NAVIGATION] tx_browser_pi1[indexBrowserTab] is deleted, because it has the default value \''.$defaultAzTab.'\'', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/NAVIGATION] If you need the value in the real URL path, please configure indexBrowser.defaultTab.realURL = 1.', $this->pObj->extKey, 0);
         }
       }
     }
     // Set the default tab, if there isn't any current tab
 
-    // Set piVars[azTab] to default value, if it is empty and a-z_Browser.defaultTab.realURL is true
-    if (!isset($this->pObj->piVars['azTab']))
+    // Set piVars[indexBrowserTab] to default value, if it is empty and indexBrowser.defaultTab.realURL is true
+    if (!isset($this->pObj->piVars['indexBrowserTab']))
     {
-      if ($this->pObj->conf['navigation.']['a-z_Browser.']['defaultTab.']['display_in_url'] == 1)
+      if ($this->pObj->conf['navigation.']['indexBrowser.']['defaultTab.']['display_in_url'] == 1)
       {
-        $this->pObj->piVars['azTab'] = $defaultAzTab;
+        $this->pObj->piVars['indexBrowserTab'] = $defaultAzTab;
       }
     }
-    // Set piVars[azTab] to default value, if it is empty and a-z_Browser.defaultTab.realURL is true
+    // Set piVars[indexBrowserTab] to default value, if it is empty and indexBrowser.defaultTab.realURL is true
 
-    // Delete piVar[azTab], if we don't have any a-z-browser.
-    if($this->pObj->objFlexform->bool_azBrowser == 0)
+    // Delete piVar[indexBrowserTab], if we don't have any index browser.
+    if($this->pObj->objFlexform->bool_indexBrowser == 0)
     {
-      unset($this->pObj->piVars['azTab']);
+      unset($this->pObj->piVars['indexBrowserTab']);
     }
-    // Delete piVar[azTab], if we don't have any a-z-browser.
+    // Delete piVar[indexBrowserTab], if we don't have any index browser.
 
-    // Set the global $piVar_azTab
-    if (isset($this->pObj->piVars['azTab']))
+    // Set the global $piVar_indexBrowserTab
+    if (isset($this->pObj->piVars['indexBrowserTab']))
     {
-      $this->pObj->piVar_azTab = $this->pObj->piVars['azTab'];
+      $this->pObj->piVar_indexBrowserTab = $this->pObj->piVars['indexBrowserTab'];
     }
-    if (!isset($this->pObj->piVars['azTab']))
+    if (!isset($this->pObj->piVars['indexBrowserTab']))
     {
-      $this->pObj->piVar_azTab = $defaultAzTab;
+      $this->pObj->piVar_indexBrowserTab = $defaultAzTab;
     }
-    // Set the global $piVar_azTab
-    // Default A-Z-Browser tab
+    // Set the global $piVar_indexBrowserTab
+    // Default Index-Browser tab
 
 
     //////////////////////////////////////
@@ -751,12 +751,12 @@
     $this->pObj->pi_isOnlyFields  = implode(',', $arrPiOnlyFields);
 
 
-    // Delete piVar[azTab], if it is empty.
-    if($this->pObj->piVars['azTab'] == '')
+    // Delete piVar[indexBrowserTab], if it is empty.
+    if($this->pObj->piVars['indexBrowserTab'] == '')
     {
-      unset($this->pObj->piVars['azTab']);
+      unset($this->pObj->piVars['indexBrowserTab']);
     }
-    // Delete piVar[azTab], if it is empty.
+    // Delete piVar[indexBrowserTab], if it is empty.
 
 
     //////////////////////////////////////
@@ -887,7 +887,7 @@
     // Should we process dont_display_piVars?
 
     $arr_rmPiVars = false;
-    $arr_noPiVars['azTab']   = !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_azTab;
+    $arr_noPiVars['indexBrowserTab']   = !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_indexBrowserTab;
     $arr_noPiVars['mode']    = !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_mode;
     $arr_noPiVars['pointer'] = !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_pointer;
     $arr_noPiVars['plugin']  = !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin;
@@ -2736,7 +2736,7 @@
  * Checks the TYPO3 utf-8 configuration.
  *
  *                      $GLOBALS[TSFE]->metaCharset, $GLOBALS[TSFE]->renderCharset
- *                      Result can be overriden by $conf['navigation.']['a-z_Browser.']['charset']
+ *                      Result can be overriden by $conf['navigation.']['indexBrowser.']['charset']
  *
  * @return	boolean		TRUE, if one of the following variables has the value utf-8: $TYPO3_CONF_VARS[BE][forceCharset]
  */
@@ -2745,11 +2745,11 @@
     global $TYPO3_CONF_VARS;
 
     $conf = $this->pObj->conf;
-    $str_charset = $conf['navigation.']['a-z_Browser.']['charset'];
+    $str_charset = $conf['navigation.']['indexBrowser.']['charset'];
 
     if ($this->pObj->b_drs_navi || $this->pObj->b_drs_sql)
     {
-      t3lib_div::devlog('[INFO/BROWSER+SQL] a-z_Browser.charset is \''.$str_charset.'\'', $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/BROWSER+SQL] indexBrowser.charset is \''.$str_charset.'\'', $this->pObj->extKey, 0);
     }
 
     switch($str_charset) {
@@ -2759,14 +2759,14 @@
       case('iso'):
         if ($this->pObj->b_drs_navi || $this->pObj->b_drs_sql)
         {
-          t3lib_div::devlog('[INFO/BROWSER+SQL] If you are use \'auto\', a-z_Browser tries to find the charset automatically.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/BROWSER+SQL] If you are use \'auto\', indexBrowser tries to find the charset automatically.', $this->pObj->extKey, 0);
         }
         return false;
         break;
       case('utf'):
         if ($this->pObj->b_drs_navi || $this->pObj->b_drs_sql)
         {
-          t3lib_div::devlog('[INFO/BROWSER+SQL] If you are use \'auto\', a-z_Browser tries to find the charset automatically.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/BROWSER+SQL] If you are use \'auto\', indexBrowser tries to find the charset automatically.', $this->pObj->extKey, 0);
         }
         return true;
         break;
@@ -2774,7 +2774,7 @@
         // Process the statemants below the switch
         if ($this->pObj->b_drs_navi || $this->pObj->b_drs_sql)
         {
-          t3lib_div::devlog('[ERROR/BROWSER+SQL] The current value of a-z_Browser.charset isn\'t defined: \''.$str_charset.'\'', $this->pObj->extKey, 3);
+          t3lib_div::devlog('[ERROR/BROWSER+SQL] The current value of indexBrowser.charset isn\'t defined: \''.$str_charset.'\'', $this->pObj->extKey, 3);
           t3lib_div::devlog('[HELP/BROWSER+SQL] Please use auto, iso or utf.', $this->pObj->extKey, 1);
           t3lib_div::devlog('[INFO/BROWSER+SQL] Process is now \'auto\'.', $this->pObj->extKey, 0);
         }
