@@ -37,17 +37,30 @@
  *
  *
  *
- *   54: class tx_browser_pi1_viewlist
- *   73:     function __construct($parentObj)
+ *   67: class tx_browser_pi1_viewlist
+ *  110:     function __construct( $parentObj )
  *
  *              SECTION: Building the views
- *  105:     function listView( $template )
- * 1372:     function singleView($template)
+ *  141:     function main( )
+ * 1043:     function main_4x( )
+ * 1183:     private function init( )
+ * 1234:     private function check_view( )
  *
- *              SECTION: Helper
- * 1976:     public function displayThePlugin( )
+ *              SECTION: SQL
+ * 1301:     private function sql( )
+ * 1471:     private function sql_getQueryArray( )
+ * 1506:     private function rows( )
  *
- * TOTAL FUNCTIONS: 4
+ *              SECTION: Content / Template
+ * 1583:     private function content_setCSV( )
+ * 1636:     private function content_setDefault( )
+ *
+ *              SECTION: Subparts
+ * 1695:     private function subpart_setSearchbox( $filter )
+ * 1713:     private function subpart_setSearchboxFilter( $filter )
+ * 1756:     private function set_arrLinkToSingle( )
+ *
+ * TOTAL FUNCTIONS: 13
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -69,7 +82,7 @@ class tx_browser_pi1_viewlist
   var $conf_path  = false;
     // Variables set by the pObj (by class.tx_browser_pi1.php)
 
-  
+
 
     // Array with the fields of the SQL result
   var $arr_select;
@@ -121,7 +134,7 @@ class tx_browser_pi1_viewlist
   /**
  * main( ): Display a search form, a-z-Browser, pageBrowser and a list of records
  *
- * @return	string  $template : The processed HTML template
+ * @return	string		$template : The processed HTML template
  * @version 3.9.8
  * @since 1.0.0
  */
@@ -153,7 +166,7 @@ class tx_browser_pi1_viewlist
       // Short vars
 
 
-    
+
       //////////////////////////////////////////////////////////////////
       //
       // RETURN there isn't any list configured
@@ -196,7 +209,7 @@ class tx_browser_pi1_viewlist
 
 
 
-    
+
 //    $arr_result = $this->sql( );
 //    if( $arr_result['error']['status'] )
 //    {
@@ -205,12 +218,12 @@ class tx_browser_pi1_viewlist
 //    }
 
 
-    
+
     $this->sql( );
     $res = $this->res;
 
 
-    
+
       //////////////////////////////////////////////////////////////////////
       //
       // Workaround filter and localisation - Bugfix #9024
@@ -297,7 +310,7 @@ class tx_browser_pi1_viewlist
               }
             }
               // Error management
-            
+
               // DRS - Development Reporting System
             if( $this->pObj->b_drs_sql )
             {
@@ -535,7 +548,7 @@ class tx_browser_pi1_viewlist
     $this->pObj->rows = $rows;
       // Ordering the children
 
-    
+
 
       /////////////////////////////////////////////////////////////////
       //
@@ -1023,7 +1036,7 @@ class tx_browser_pi1_viewlist
   /**
  * main_4x( ): Display a search form, a-z-Browser, pageBrowser and a list of records
  *
- * @return	string  $template : The processed HTML template
+ * @return	string		$template : The processed HTML template
  * @version 3.9.8
  * @since 3.9.8
  */
@@ -1067,7 +1080,7 @@ class tx_browser_pi1_viewlist
       // HTML content of the current template
     $this->content = $this->pObj->str_template_raw;
 
-    
+
 
       //////////////////////////////////////////////////////////////////////
       //
@@ -1084,7 +1097,7 @@ class tx_browser_pi1_viewlist
       // Set SQL query parts in general and statements for rows
 
 
-    
+
       //////////////////////////////////////////////////////////////////////
       //
       // csv export versus list view
@@ -1140,7 +1153,7 @@ class tx_browser_pi1_viewlist
 
       // Get rows
       // Set rows
-    
+
 
 
       // Prompt the expired time to devlog
@@ -1214,7 +1227,7 @@ class tx_browser_pi1_viewlist
   /**
  * check_view( ):
  *
- * @return	string    Error prompt in case of an error
+ * @return	string		Error prompt in case of an error
  * @version 3.9.8
  * @since 1.0.0
  */
@@ -1289,7 +1302,7 @@ class tx_browser_pi1_viewlist
   {
     $conf_view = $this->conf_view;
 
-    
+
       // Set the globals csvSelect, csvOrderBy and arrLocalTable
     $arr_result = $this->pObj->objSqlFun->global_all( );
       // Prompt the expired time to devlog
@@ -1495,7 +1508,7 @@ if( $this->pObj->bool_accessByIP )
     $conf_view = $this->conf_view;
     $res       = $this->res;
 
-    
+
       // Get aliases
     $arr_table_realnames = $conf_view['aliases.']['tables.'];
 
@@ -1674,6 +1687,7 @@ if( $this->pObj->bool_accessByIP )
 /**
  * subpart_setSearchbox( ):
  *
+ * @param	[type]		$$filter: ...
  * @return	array
  * @version 3.9.8
  * @since 1.0.0
@@ -1691,6 +1705,7 @@ if( $this->pObj->bool_accessByIP )
 /**
  * subpart_setSearchboxFilter( ):
  *
+ * @param	[type]		$$filter: ...
  * @return	array
  * @version 3.9.8
  * @since 1.0.0
@@ -1742,7 +1757,7 @@ die( );
   {
     $conf_view = $this->conf_view;
 
-    
+
       // Get linkToSingle CSV list
     $csvLinkToSingle = $conf_view['csvLinkToSingleView'];
 
@@ -1819,7 +1834,7 @@ die( );
 
 
 
-  
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_views.php']) {
