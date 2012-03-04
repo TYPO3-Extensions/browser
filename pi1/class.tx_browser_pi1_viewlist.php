@@ -1125,6 +1125,14 @@ class tx_browser_pi1_viewlist
 
           // Set filter
         $arr_result = $this->subpart_setFilter( $arr_result['data']['filter'] );
+        if( $arr_result['error']['status'] )
+        {
+            // Prompt the expired time to devlog
+          $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+          $content = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+          return $content;
+        }
+        $this->content = $arr_result['data']['content'];
 
           // Get A-Z-browser
           // Set A-Z-browser
@@ -1146,21 +1154,6 @@ class tx_browser_pi1_viewlist
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-
-$str_header  = '<h1 style="color:red;">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
-$str_prompt  = '<p style="color:red;font-weight:bold;">' . $this->pObj->pi_getLL('error_sql_select') . '</p>';
-$str_prompt  = '<p style="color:red;font-weight:bold;">' . 'Browser engine 4.x' . '</p>';
-
-foreach( ( array ) $arr_result['data']['filter'] as $marker => $content )
-{
-  $str_prompt = $str_prompt . $content;
-}
-
-$arr_return['error']['status'] = true;
-$arr_return['error']['header'] = $str_header;
-$arr_return['error']['prompt'] = $str_prompt;
-return $str_header . $str_prompt;
-return $arr_return;
 
       // RETURN content
     return $this->content;
@@ -1560,6 +1553,51 @@ if( $this->pObj->bool_accessByIP )
       // Building $rows
   }
 
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * Subparts
+  *
+  **********************************************/
+
+
+
+
+
+
+
+
+
+  /**
+ * subpart_setFilter( ):
+ *
+ * @return	array
+ * @version 3.9.8
+ * @since 1.0.0
+ */
+  private function subpart_setFilter( $filter )
+  {
+    $str_header  = '<h1 style="color:red;">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
+    $str_prompt  = '<p style="color:red;font-weight:bold;">' . $this->pObj->pi_getLL('error_sql_select') . '</p>';
+    $str_prompt  = '<p style="color:red;font-weight:bold;">' . 'Browser engine 4.x' . '</p>';
+
+    foreach( ( array ) $filter as $marker => $content )
+    {
+      $str_prompt = $str_prompt . $content;
+    }
+
+    $arr_return['error']['status'] = true;
+    $arr_return['error']['header'] = $str_header;
+    $arr_return['error']['prompt'] = $str_prompt;
+    return $arrreturn;
+  }
 
 
 
