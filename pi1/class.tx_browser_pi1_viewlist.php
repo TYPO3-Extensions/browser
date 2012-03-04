@@ -890,6 +890,7 @@ class tx_browser_pi1_viewlist
       // 110801, dwildt
     //$arr_data['rows']           = $rows;
     $arr_data['rows']           = $this->pObj->rows;
+$this->pObj->dev_var_dump( $this->pObj->rows );
     $arr_result = $this->pObj->objNavi->azBrowser( $arr_data );
     if ($arr_result['error']['status'])
     {
@@ -1125,10 +1126,8 @@ class tx_browser_pi1_viewlist
           $content = $arr_result['error']['header'] . $arr_result['error']['prompt'];
           return $content;
         }
-//$this->pObj->dev_var_dump( $this->content );
-//die( );
-
         unset( $arr_result );
+          // Set search box and filter
 
           // Get A-Z-browser
           // Set A-Z-browser
