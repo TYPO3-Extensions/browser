@@ -149,9 +149,9 @@ class tx_browser_pi1_navi_4x
       // RETURN: requirements aren't met
 
     $arr_return = $this->indexBrowser_rows( );
-    if( $arr_result['error']['status'] )
+    if( $arr_return['error']['status'] )
     {
-      return $arr_result;
+      return $arr_return;
     }
     $rows = $arr_return['data']['rows'];
 
