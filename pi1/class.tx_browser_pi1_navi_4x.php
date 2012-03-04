@@ -23,7 +23,7 @@
  ***************************************************************/
 
 /**
- * The class tx_browser_pi1_navi_4x bundles methods for navigation like the Index-Browser
+ * The class tx_browser_pi1_navi_4x bundles methods for navigation like the index browser
  * or the page broser. It is part of the extension browser
  *
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
@@ -125,33 +125,56 @@ class tx_browser_pi1_navi_4x
 
 
 
-
-
-
-
-
-
 /**
- * setIndexBrowser( ):
+ * indexBrowser_set( ):
  *                          No support for synonyms!
  *
  * @return	array
  * @version 3.9.9
  * @since   3.9.9
  */
-  public function setIndexBrowser( $content )
+  public function indexBrowser_set( $content )
   {
     $arr_return['data']['content'] = $content;
     
     $lDisplay = $this->pObj->lDisplayList['display.'];
 
+      // RETURN: requirements aren't met
+    if( ! $this->indexBrowser_checkRequirements( ) )
+    {
+      $content = $this->pObj->cObj->substituteSubpart( $content, '###INDEXBROWSER###', null, true );
+      $arr_return['data']['content'] = $content;
+      return $arr_return;
+    }
+      // RETURN: requirements aren't met
 
 
 
-      ///////////////////////////////////////////////////
-      //
-      // RETURN: Index-Browser is disabled
 
+      // :TODO:
+      // Move $GLOBALS['TSFE']->id temporarily
+      // Get the index browser rows (uid, initialField)
+      // Count the hits per tab, prepaire the tabArray
+      // Build the index browser template
+
+    return $arr_return;
+  }
+
+
+
+/**
+ * indexBrowser_checkRequirements( ): Checks
+ *                                    * configuration of the flexform
+ *                                    * configuration of TS tabs
+ *                                    and returns false, if a requirement isn't met
+ *
+ * @return	boolean   true / false
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function indexBrowser_checkRequirements( )
+  {
+      // RETURN: index browser is disabled
     if( ! $this->pObj->objFlexform->bool_indexBrowser )
     {
       if( $this->pObj->b_drs_navi )
@@ -159,160 +182,24 @@ class tx_browser_pi1_navi_4x
         $prompt = 'display.indexBrowser is false.';
         t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
       }
-      $content = $this->pObj->cObj->substituteSubpart( $content, '###INDEXBROWSER###', null, true );
-      return $arr_return;
+      return false;
     }
-      // RETURN: Index-Browser is disabled
+      // RETURN: index browser is disabled
 
-
-
-      ///////////////////////////////////////////////////
-      //
-      // RETURN: Index-Browser hasn't any configured tab
-
+      // RETURN: index browser hasn't any configured tab
     $arr_conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
     if( ! is_array( $arr_conf_tabs ) )
     {
-      // The Index-Browser isn't configured
+      // The index browser isn't configured
       if ($this->pObj->b_drs_navi) {
-        t3lib_div::devlog('[INFO/NAVIGATION] indexBrowser.tabs hasn\'t any element.', $this->pObj->extKey, 2);
-        t3lib_div::devlog('[INFO/NAVIGATION] indexBrowser won\'t be processed.', $this->pObj->extKey, 1);
+        t3lib_div::devlog('[INFO/NAVIGATION] navigation.indexBrowser.tabs hasn\'t any element.', $this->pObj->extKey, 2);
+        t3lib_div::devlog('[INFO/NAVIGATION] navigation.indexBrowser won\'t be processed.', $this->pObj->extKey, 1);
       }
-      $template = $this->pObj->cObj->substituteSubpart($template, '###INDEXBROWSER###', '', true);
-      $arr_return['data']['template'] = $template;
-      return $arr_return;
+      return false;
     }
-      // RETURN: Index-Browser hasn't any configured tab
+      // RETURN: index browser hasn't any configured tab
 
-
-
-      ///////////////////////////////////////////////////
-      //
-      // Move $GLOBALS['TSFE']->id temporarily
-      // #9458
-
-    $int_tsfeId = $GLOBALS['TSFE']->id;
-    if (!empty($this->pObj->objFlexform->int_viewsListPid))
-    {
-      $GLOBALS['TSFE']->id = $this->pObj->objFlexform->int_viewsListPid;
-    }
-      // Move $GLOBALS['TSFE']->id temporarily
-
-
-
-      ///////////////////////////////////////////////////
-      //
-      // Get the Index-Browser rows (uid, initialField)
-
-    $arr_result = $this->indexBrowserRowsInitial($arr_data);
-    if ($arr_result['error']['status'])
-    {
-      $GLOBALS['TSFE']->id = $int_tsfeId; // #9458
-      return $arr_result;
-    }
-    $indexBrowserRows = $arr_result['data']['indexBrowserRows'];
-    unset($arr_result);
-      // Get the Index-Browser rows (uid, initialField)
-
-
-
-      ////////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform)
-    {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After rows initial: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
-
-
-
-      ///////////////////////////////////////////////////
-      //
-      // Count the hits per tab, prepaire the tabArray
-
-    $arr_data['indexBrowserRows']         = $indexBrowserRows;
-    $arr_data['rows']           = $rows;
-    $arr_result = $this->indexBrowserTabArray($arr_data);
-    unset($arr_data);
-    $lArrTabs = $arr_result['data']['indexBrowserTabArray'];
-    $arr_tsId = $arr_result['data']['tabIds'];
-    $rows     = $arr_result['data']['rows'];
-    unset($arr_result);
-      // Count the hits per tab, prepaire the tabArray
-
-
-
-      ////////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform)
-    {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After prepairing tab array: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
-
-
-
-      ///////////////////////////////////////////////////
-      //
-      // Build the Index-Browser template
-
-    $arr_data['indexBrowserTabArray'] = $lArrTabs;
-    $arr_data['tabIds']     = $arr_tsId;
-    $arr_data['template']   = $template;
-    $arr_result = $this->indexBrowserTemplate($arr_data);
-    unset($arr_data);
-    $template = $arr_result['data']['template'];
-    unset($arr_result);
-      // Build the Index-Browser template
-
-
-
-      ////////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After building the template: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
-
-
-    $arr_return['data']['indexBrowserTabArray'] = $lArrTabs;
-    $arr_return['data']['tabIds']     = $arr_tsId;
-    $arr_return['data']['rows']       = $rows;
-    $arr_return['data']['template']   = $template;
-
-    $GLOBALS['TSFE']->id = $int_tsfeId; // #9458
-    return $arr_return;
-
+    return true;
   }
 
 
@@ -331,9 +218,8 @@ class tx_browser_pi1_navi_4x
 
 
 
-
  /**
-  * Building the HTML template with the Index-Browser
+  * Building the HTML template with the index browser
   *
   * @param	array		Array with elements indexBrowserTabArray, tabIds, template
   * @return	array		Array data with the element template
@@ -986,7 +872,7 @@ class tx_browser_pi1_navi_4x
       $removed_rows = $drs_rows_before - $drs_rows_after;
       if ($this->pObj->b_drs_templating)
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] The Index-Browser has #'.$removed_rows.' rows removed.',  $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/TEMPLATING] The index browser has #'.$removed_rows.' rows removed.',  $this->pObj->extKey, 0);
       }
     }
     // DRS - Development Reporting System
@@ -1039,7 +925,7 @@ class tx_browser_pi1_navi_4x
 
 
  /**
-  * Building the SQL query for the Index-Browser. Exxecute the query. Return the rows.
+  * Building the SQL query for the index browser. Exxecute the query. Return the rows.
   *
   * @param	array		Array with the current rows
   * @return	array		Array data with the element indexBrowserRows
@@ -1123,11 +1009,11 @@ class tx_browser_pi1_navi_4x
       if ($this->pObj->b_drs_navi)
       {
         t3lib_div::devlog($str_prompt, $this->pObj->extKey, 3);
-        t3lib_div::devlog('[INFO/NAVIGATION] Index-Browser won\'t be processed.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/NAVIGATION] index browser won\'t be processed.', $this->pObj->extKey, 0);
       }
 
       $arr_return['error']['status'] = true;
-      $arr_return['error']['header'] = '<h1 style="color:red">Error Index-Browser</h1>';
+      $arr_return['error']['header'] = '<h1 style="color:red">Error index browser</h1>';
       $arr_return['error']['prompt'] = '<p style="color:red">'.$str_prompt.'</p>';
       return $arr_return;
     }
@@ -1149,7 +1035,7 @@ class tx_browser_pi1_navi_4x
         $tableFieldIndexBrowser     = $real_tableField;
         if ($this->pObj->b_drs_templating)
         {
-          t3lib_div::devlog('[INFO/TEMPLATING] Synonyms: Index-Browser takes the current rows.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/TEMPLATING] Synonyms: index browser takes the current rows.', $this->pObj->extKey, 0);
         }
       }
       if (!$this->bool_synonyms)
@@ -1165,7 +1051,7 @@ class tx_browser_pi1_navi_4x
       $arr_return['data']['indexBrowserRows'] = $indexBrowserRows;
       if ($this->pObj->b_drs_templating)
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] Synonyms: Index-Browser process the current rows.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[INFO/TEMPLATING] Synonyms: index browser process the current rows.', $this->pObj->extKey, 0);
       }
       return $arr_return;
     }
@@ -1196,7 +1082,7 @@ class tx_browser_pi1_navi_4x
 
     if ($this->pObj->b_drs_templating)
     {
-      t3lib_div::devlog('[INFO/TEMPLATING] Index-Browser query<br />
+      t3lib_div::devlog('[INFO/TEMPLATING] index browser query<br />
         '.$query,  $this->pObj->extKey, 0);
     }
     // DRS - Development Reporting System
@@ -1268,7 +1154,7 @@ class tx_browser_pi1_navi_4x
     if ($this->pObj->b_drs_templating)
     {
       $int_rows = count($indexBrowserRows);
-      t3lib_div::devlog('[INFO/TEMPLATING] Index-Browser has #'.$int_rows.' rows.',  $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/TEMPLATING] index browser has #'.$int_rows.' rows.',  $this->pObj->extKey, 0);
     }
     // DRS - Development Reporting System
 
@@ -1283,11 +1169,11 @@ class tx_browser_pi1_navi_4x
 
     ///////////////////////////////////////////////
     //
-    // RETURN the Index-Browser rows
+    // RETURN the index browser rows
 
     $arr_return['data']['indexBrowserRows'] = $indexBrowserRows;
     return $arr_return;
-    // RETURN the Index-Browser rows
+    // RETURN the index browser rows
   }
 
 
