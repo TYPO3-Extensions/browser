@@ -1125,8 +1125,8 @@ class tx_browser_pi1_viewlist
           $content = $arr_result['error']['header'] . $arr_result['error']['prompt'];
           return $content;
         }
-$this->pObj->dev_var_dump( $this->content );
-die( );
+//$this->pObj->dev_var_dump( $this->content );
+//die( );
 
         unset( $arr_result );
 
