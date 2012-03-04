@@ -1114,8 +1114,8 @@ class tx_browser_pi1_viewlist
         unset( $arr_result );
           // Get filter
 
-          // Set filter
-        $arr_result = $this->subpart_setFilter( $filter );
+          // Set search box and filter
+        $arr_result = $this->subpart_setSearchbox( $filter );
         if( $arr_result['error']['status'] )
         {
             // Prompt the expired time to devlog
@@ -1671,24 +1671,44 @@ if( $this->pObj->bool_accessByIP )
 
 
 
-
-
-
-
-
-
-  /**
- * subpart_setFilter( ):
+/**
+ * subpart_setSearchbox( ):
  *
  * @return	array
  * @version 3.9.8
  * @since 1.0.0
  */
-  private function subpart_setFilter( $filter )
+  private function subpart_setSearchbox( $filter )
   {
-    $template     = $this->pObj->objTemplate->tmplSearchBox( $this->content );
-$this->pObj->dev_var_dump( $template );
+    $this->content  = $this->pObj->objTemplate->tmplSearchBox( $this->content );
+    $arr_return     = $this->subpart_setSearchboxFilter( $filter );
+
+    return $arr_return;
+  }
+
+
+
+/**
+ * subpart_setSearchboxFilter( ):
+ *
+ * @return	array
+ * @version 3.9.8
+ * @since 1.0.0
+ */
+  private function subpart_setSearchboxFilter( $filter )
+  {
+    $searchform     = $this->pObj->cObj->getSubpart( $this->content, '###SEARCHFORM###' );
+    $searchform     = $this->pObj->cObj->substituteMarkerArray( $searchform, $filter );
+      // Add the subparts marker, because another method ( the search template ) need this subpart marker
+    $searchform     = '<!-- ###SEARCHFORM### begin -->' . PHP_EOL .
+                  $searchform . '<!-- ###SEARCHFORM### end -->' . PHP_EOL;
+    $this->content  = $this->pObj->cObj->substituteSubpart( $this->content, '###SEARCHFORM###', $searchform, true );
+
+$this->pObj->dev_var_dump( $this->content );
 die( );
+
+      // Replace filters in the HTML template
+
     $str_header  = '<h1 style="color:red;">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
     $str_prompt  = '<p style="color:red;font-weight:bold;">' . $this->pObj->pi_getLL('error_sql_select') . '</p>';
     $str_prompt  = '<p style="color:red;font-weight:bold;">' . 'Browser engine 4.x' . '</p>';
