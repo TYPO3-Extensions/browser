@@ -1650,6 +1650,20 @@ class tx_browser_pi1_sql_functions
 
 
 
+      /////////////////////////////////////////////////////////////////
+      //
+      // Set bool to false, if TCA type is none
+
+      // #34966, dwildt+
+    if( $bool_tcaConfig )
+    {
+      if( $GLOBALS['TCA'][$table]['columns'][$field]['config']['type'] == none )
+      {
+        $bool_tcaConfig = false;
+      }
+    }
+      // Set bool to false, if TCA type is none
+
     /////////////////////////////////////////////////////////////////
     //
     // Get the typeFlag out of the TCA

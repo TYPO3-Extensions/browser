@@ -112,6 +112,8 @@
 3.7.5
   120317
   Improvements
+  * #34966: Proper order by in case of TCA type none
+            Effected file: pi1/class.tx_browser_pi1_sql_functions.php
   * #29073: GPvar is depecated
             Effected file: static/setup.txt
   Bugfix
