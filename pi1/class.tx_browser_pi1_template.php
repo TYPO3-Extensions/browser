@@ -971,6 +971,8 @@ class tx_browser_pi1_template
       $this->max_elements = $max_elements;
         // #28562: 110830, dwildt+
 
+        // #34963, dwildt+
+      $c = 0;
         // elements
       foreach( ( array ) $rows as $elements )
       {
@@ -1046,7 +1048,11 @@ class tx_browser_pi1_template
         {
           $str_class = 'first ';
         }
-        if($c++%2)
+          // #34963, dwildt, 1-
+        //if($c++%2)
+          // #34963, dwildt, 2+
+        $c++;
+        if($c%2)
         {
           $str_class = $str_class.'odd ';
         }

@@ -109,6 +109,24 @@
   * #29186: Empty rows are tested with ==null instead of empty( )
   * #29323: method ajaxifyOrderBy is undefined. Affected file: res/js/tx_browser_pi1.js
 
+3.7.5
+  120317
+  Improvements
+  * #29073: GPvar is depecated
+            Effected file: static/setup.txt
+  Bugfix
+  * #34963: Counter for table rows out of order
+            Effected file: pi1/class.tx_browser_pi1_template.php
+            Thanks to Bjoern Jacob / Tritum for the bug report
+  * #13186: $GLOBALS['TYPO3_DB']->sql_field_type get a wrong parameter
+            Effected file: pi1/class.tx_browser_pi1_sql_functions.php
+            Thanks to Fabian Constien for the bugfix
+
+3.7.4
+  120102
+  Bugfix
+  * #32689/#32254: Performance - wrong relations for JOINs in case of simple relations
+
 3.7.3
   111023
   New Feature

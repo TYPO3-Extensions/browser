@@ -48,25 +48,25 @@ plugin.tx_browser_pi1 {
           // showUid
         10 = TEXT
         10 {
-          dataWrap        = &tx_browser_pi1[showUid]={GPvar:tx_browser_pi1|showUid}&###CHASH###
+          dataWrap        = &tx_browser_pi1[showUid]={GP:tx_browser_pi1|showUid}
           if.isTrue.data  = GPvar:tx_browser_pi1|showUid
         }
           // indexBrowserTab
         20 = TEXT
         20  {
-          dataWrap        = &tx_browser_pi1[indexBrowserTab]={GPvar:tx_browser_pi1|indexBrowserTab}
+          dataWrap        = &tx_browser_pi1[indexBrowserTab]={GP:tx_browser_pi1|indexBrowserTab}
           if.isTrue.data  = GPvar:tx_browser_pi1|indexBrowserTab
         }
           // mode
         30 = TEXT
         30  {
-          dataWrap        = &tx_browser_pi1[mode]={GPvar:tx_browser_pi1|mode}
+          dataWrap        = &tx_browser_pi1[mode]={GP:tx_browser_pi1|mode}
           if.isTrue.data  = GPvar:tx_browser_pi1|mode
         }
           // pointer
         40 = TEXT
         40  {
-          dataWrap        = &tx_browser_pi1[pointer]={GPvar:tx_browser_pi1|pointer}
+          dataWrap        = &tx_browser_pi1[pointer]={GP:tx_browser_pi1|pointer}
           if.isTrue.data  = GPvar:tx_browser_pi1|pointer
         }
           // sort
@@ -78,7 +78,7 @@ plugin.tx_browser_pi1 {
           // sword
         60 = TEXT
         60  {
-          dataWrap        = &tx_browser_pi1[sword]={GPvar:tx_browser_pi1|sword}
+          dataWrap        = &tx_browser_pi1[sword]={GP:tx_browser_pi1|sword}
           if.isTrue.data  = GPvar:tx_browser_pi1|sword
         }
       }

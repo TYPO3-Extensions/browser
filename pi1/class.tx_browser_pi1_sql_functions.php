@@ -1709,7 +1709,10 @@ class tx_browser_pi1_sql_functions
       $where_clause  = false;
       $query         = $GLOBALS['TYPO3_DB']->SELECTquery($select_fields,$from_table,$where_clause,$groupBy='',$orderBy='',$limit='0');
       $res           = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select_fields,$from_table,$where_clause,$groupBy='',$orderBy='',$limit='0');
-      $str_eval      = $GLOBALS['TYPO3_DB']->sql_field_type($res, $field);
+        // #13186, 120317, fconstien-
+      //$str_eval      = $GLOBALS['TYPO3_DB']->sql_field_type($res, $field);
+        // #13186, 120317, fconstien+
+      $str_eval      = $GLOBALS['TYPO3_DB']->sql_field_type($res, 0);
       // Get field type from the database
 
       // Is eval field SORT_NUMERIC?
