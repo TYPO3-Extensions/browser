@@ -123,6 +123,8 @@
   * #13186: $GLOBALS['TYPO3_DB']->sql_field_type get a wrong parameter
             Effected file: pi1/class.tx_browser_pi1_sql_functions.php
             Thanks to Fabian Constien for the bugfix
+  Sponsors
+  * #00000: New sponsor: lieska.net
 
 3.7.4
   120102

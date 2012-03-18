@@ -1664,6 +1664,8 @@ class tx_browser_pi1_sql_functions
     }
       // Set bool to false, if TCA type is none
 
+
+    
     /////////////////////////////////////////////////////////////////
     //
     // Get the typeFlag out of the TCA
