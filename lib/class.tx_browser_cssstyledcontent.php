@@ -186,13 +186,15 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $marker                         = null;
     list( $cR_table, $cR_uid)       = explode( ':', $GLOBALS['TSFE']->currentRecord );
     $marker['###TT_CONTENT.UID###'] = $cR_uid;
-
+//var_dump( __METHOD__, __LINE__, $marker );
       // 111215, dwildt-
     //$conf                           = $this->cObj->substituteMarkerInObject( $conf, $marker );
       // 111215, dwildt+
+//var_dump( __METHOD__, __LINE__, $conf['userFunc.']['record.'] );
     $serialized_conf  = serialize( $conf );
     $coa_conf         = $this->cObj->substituteMarkerInObject( $conf, $marker );
     $conf             = unserialize( $serialized_conf );
+//var_dump( __METHOD__, __LINE__, $coa_conf['userFunc.']['record.'] );
       // 111215, dwildt+
       // Set tt_content.uid
 
@@ -304,6 +306,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // CONTINUE there isn't any localised record
       if( empty( $llUid ) )
       {
+          // DRS - Development Reporting System
+        if ( $this->b_drs_localisation )
+        {
+          $prompt = 'CONTINUE: ' . $table . '['. $uid . '] hasn\'t any localised record.';
+          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
+        }
+          // DRS - Development Reporting System
         continue;
       }
         // CONTINUE there isn't any localised record
@@ -316,6 +325,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // #35014, 120319, dwildt
       if( empty( $marker ) )
       {
+          // DRS - Development Reporting System
+        if ( $this->b_drs_localisation )
+        {
+          $prompt = 'CONTINUE: ' . $table . '['. $llUid . '] is an empty row.';
+          t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
+        }
+          // DRS - Development Reporting System
         continue;
       }
         // CONTINUE there isn't any localised record
