@@ -311,6 +311,15 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // Set data of the localised record as a marker array
       $marker                             = null;
       $marker                             = $this->sql_marker( $select, $table, $llUid );
+
+        // CONTINUE there isn't any localised record
+        // #35014, 120319, dwildt
+      if( empty( $marker ) )
+      {
+        continue;
+      }
+        // CONTINUE there isn't any localised record
+
       $marker['###SYS_LANGUAGE.FLAG###']  = $llRows[$flag]['flag'];
       $marker['###SYS_LANGUAGE.TITLE###'] = $llRows[$flag]['title'];
         // Set data of the localised record as a marker array

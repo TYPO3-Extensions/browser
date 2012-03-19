@@ -4,6 +4,7 @@
   * #33826: Supporting of the $cObj for filter
   * #33892: Optimisation of performance - Step II
   Bugfixes
+  * #35014: Download module +++ Bug with hidden localised records
   * #34212: TypoScript limit hasn't any effect
   Imrovements
   * #00000: a-z-browser is renamed as index browser
