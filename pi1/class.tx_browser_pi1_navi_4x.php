@@ -315,6 +315,12 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
       $specialChars = implode(',', $matches[0] );
       $this->indexbrowserTab['initials']['specialChars'] = $specialChars;
     }
+    $pattern      = '/[0-9a-zA-Z,]/';
+    if( preg_match_all( $pattern, $subject, $matches ) )
+    {
+      $specialChars = implode(',', $matches[0] );
+      $this->indexbrowserTab['initials']['alphaNum'] = $specialChars;
+    }
   }
 
 
