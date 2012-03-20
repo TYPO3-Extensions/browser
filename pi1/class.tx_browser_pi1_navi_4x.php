@@ -306,6 +306,7 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
     }
       // LOOP tabs TS configuratione array
 
+    $arrInitials  = array_unique( $arrInitials );
     $csvInitials  = implode( ',', ( array ) $arrInitials );
     $this->indexbrowserTab['initials']['all'] = $csvInitials;
     $subject      = utf8_decode( $csvInitials  );
@@ -315,7 +316,7 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
       $specialChars = implode(',', $matches[0] );
       $this->indexbrowserTab['initials']['specialChars'] = $specialChars;
     }
-    $pattern      = '/[0-9a-zA-Z,]/';
+    $pattern      = '/[0-9a-zA-Z]/';
     if( preg_match_all( $pattern, $subject, $matches ) )
     {
       $specialChars = implode(',', $matches[0] );
