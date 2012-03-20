@@ -357,7 +357,7 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
 
 
 /**
- * indexBrowser_rows( ): 
+ * indexBrowser_rows( ):
  *
  * @return	boolean   true / false
  * @version 3.9.9
@@ -365,8 +365,9 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
  */
   private function indexBrowser_rows( )
   {
-      // Take care of special signs
-    
+      // Take care of special chars
+    $this->indexBrowser_rowsInitSpecialChars( );
+
 
       // Take care of filters
 
@@ -377,6 +378,85 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
     $arr_return['error']['prompt'] = '<p style="color:red">No rows.</p>';
 
     return $arr_return;
+  }
+
+
+
+/**
+ * indexBrowser_rowsInitSpecialChars( ):
+ *
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function indexBrowser_rowsInitSpecialChars( )
+  {
+      // RETURN : no special chars
+    if( empty ( $this->indexbrowserTab['initials']['specialChars'] ) )
+    {
+      return;
+    }
+      // RETURN : no special chars
+
+    $arrStatement = array( );
+    $arrSpecialChars    = explode( ',', $this->indexbrowserTab['initials']['specialChars'] );
+    foreach( ( array ) $arrSpecialChars as $specialChar )
+    {
+      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
+    }
+    if( empty ( $arrStatement ) )
+    {
+      die ( __METHOD__ . '(' . __LINE__ . '): undefined error.');
+    }
+
+      // Query for all filter items
+    $select   = implode( ', ', $arrStatement );
+    $from     = null;
+    $where    = null;
+    $groupBy  = null;
+    $orderBy  = null;
+    $limit    = null;
+
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Get query
+      // Execute query
+    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Execute query
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+      $this->pObj->objSqlFun->query = $query;
+      $this->pObj->objSqlFun->error = $error;
+      $arr_return = $this->pObj->objSqlFun->prompt_error( );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( 1 || $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
   }
 
 
