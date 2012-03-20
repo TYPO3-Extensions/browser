@@ -243,13 +243,25 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
       }
         // CONTINUE : key is an array
 
+        // Tab label stdWrap
+      if( $conf_tabs[$tabId . '.']['stdWrap.'] )
+      {
+        $stdWrap  = $conf_tabs[$tabId . '.']['stdWrap.'];
+        $tabLabel = $this->pObj->objWrapper->general_stdWrap( $tabLabel, $stdWrap );
+      }
+        // Tab label stdWrap
+
+        // Init tab array
+      $this->indexbrowserTab['tabIds'][$tabId]['label'] = $tabLabel;
+      $this->indexbrowserTab['tabIds'][$tabId]['sum']   = 0;
+      $this->indexbrowserTab['tabLabels'][$tabLabel]    = $tabId;
+        // Init tab array
+
         // CONTINUE : tab with special value 'all'
       if( $conf_tabs[$tabId . '.']['special'] == 'all' )
       {
         $this->indexbrowserTab['tabIds'][$tabId]['special'] = 'all';
-        $this->indexbrowserTab['tabIds'][$tabId]['label']   = $tabLabel;
-        $this->indexbrowserTab['tabIds'][$tabId]['sum']     = 0;
-        $this->indexbrowserTab['tabLabels']['all']          = $tabId;
+        $this->indexbrowserTab['tabSpecial']['all']         = $tabId;
         continue;
       }
         // CONTINUE : tab with special value 'all'
@@ -258,18 +270,10 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
       if( $conf_tabs[$tabId . '.']['special'] == 'others' )
       {
         $this->indexbrowserTab['tabIds'][$tabId]['special'] = 'others';
-        $this->indexbrowserTab['tabIds'][$tabId]['label']   = $tabLabel;
-        $this->indexbrowserTab['tabIds'][$tabId]['sum']     = 0;
-        $this->indexbrowserTab['tabLabels']['others']       = $tabId;
+        $this->indexbrowserTab['tabSpecial']['others']      = $tabId;
         continue;
       }
         // CONTINUE : tab with special value 'others'
-
-        // Tabs without a special value
-      $this->indexbrowserTab['tabIds'][$tabId]['label'] = $tabLabel;
-      $this->indexbrowserTab['tabIds'][$tabId]['sum']   = 0;
-      $this->indexbrowserTab['tabLabels']['others']     = $tabId;
-        // Tabs without a special value
     }
       // LOOP tabs TS configuratione array
   }
