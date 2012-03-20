@@ -237,10 +237,9 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
 
       // Tab with special value 'default'
     $this->indexbrowserTab['tabSpecial']['default'] = null;
-    if( isset( $this->conf['navigation.']['indexBrowser.']['defaultTabWrap'] ) )
+    if( isset( $this->conf['navigation.']['indexBrowser.']['defaultTab'] ) )
     {
-      $this->indexbrowserTab['tabSpecial']['default'] =
-        $this->conf['navigation.']['indexBrowser.']['defaultTabWrap'];
+      $this->indexbrowserTab['tabSpecial']['default'] = $this->conf['navigation.']['indexBrowser.']['defaultTab'];
     }
       // Tab with special value 'default'
 
