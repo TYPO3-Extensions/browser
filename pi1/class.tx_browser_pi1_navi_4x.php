@@ -226,7 +226,7 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
 /**
  * indexBrowser_initTabs( ):  Loops through the tab TS configuration array
  *                            and inits the class var $this->indexbrowserTab
- *
+ * @return  void
  * @version 3.9.10
  * @since   3.9.10
  */
@@ -244,7 +244,6 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
       $this->indexbrowserTab['tabSpecial']['default'] = $this->conf['navigation.']['indexBrowser.']['defaultTab'];
     }
       // Tab with special value 'default'
-
 
       // LOOP tabs TS configuratione array
     $conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
@@ -306,15 +305,17 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
     }
       // LOOP tabs TS configuratione array
 
+      // Init special chars
     $this->indexBrowser_initTabsSpecialChars( $arrInitials );
   }
 
 
 
 /**
- * indexBrowser_initTabsSpecialChars( ):  Loops through the tab TS configuration array
- *                            and inits the class var $this->indexbrowserTab
+ * indexBrowser_initTabsSpecialChars( ): Inits the class var $this->indexbrowserTab['initials']
  *
+ * @param   array   $arrInitials : initials from the tab TS configuration
+ * @return  void
  * @version 3.9.10
  * @since   3.9.10
  */
@@ -339,8 +340,7 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
     if( preg_match_all( $pattern, $subject, $matches ) )
     {
       $specialChars = implode(',', $matches[0] );
-      $this->indexbrowserTab['initials']['specialChars'] = $specialChars;
-      $this->indexbrowserTab['initials']['specialCharsUtf'] = utf8_encode( $specialChars );
+      $this->indexbrowserTab['initials']['specialChars'] = utf8_encode( $specialChars );
     }
       // Init var with special chars
 
@@ -349,7 +349,7 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
     if( preg_match_all( $pattern, $subject, $matches ) )
     {
       $specialChars = implode(',', $matches[0] );
-      $this->indexbrowserTab['initials']['alphaNum'] = $specialChars;
+      $this->indexbrowserTab['initials']['alphaNum'] = utf8_encode( $specialChars );
     }
       // Init var with alpha numeric chars
   }
