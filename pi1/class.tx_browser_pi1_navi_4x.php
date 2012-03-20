@@ -232,6 +232,9 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
  */
   private function indexBrowser_initTabs( )
   {
+    $defaultWrap            = $this->conf['navigation.']['indexBrowser.']['defaultTabWrap'];
+    $defaultDisplayWoItems  = $this->conf['navigation.']['indexBrowser.']['display.']['tabWithoutItems'];
+
       // LOOP tabs TS configuratione array
     $conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
     foreach( ( array ) $conf_tabs as $tabId => $tabLabel )
@@ -251,10 +254,19 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
       }
         // Tab label stdWrap
 
+        // Tab display withou items
+      $displayWoItems = $defaultDisplayWoItems;
+      if( isset ( $conf_tabs[$tabId . '.']['displayWithoutItems'] ) )
+      {
+        $displayWoItems = $conf_tabs[$tabId . '.']['displayWithoutItems'];
+      }
+        // Tab display withou items
+
         // Init tab array
-      $this->indexbrowserTab['tabIds'][$tabId]['label'] = $tabLabel;
-      $this->indexbrowserTab['tabIds'][$tabId]['sum']   = 0;
-      $this->indexbrowserTab['tabLabels'][$tabLabel]    = $tabId;
+      $this->indexbrowserTab['tabIds'][$tabId]['label']           = $tabLabel;
+      $this->indexbrowserTab['tabIds'][$tabId]['displayWoItems']  = $displayWoItems;
+      $this->indexbrowserTab['tabIds'][$tabId]['sum']             = 0;
+      $this->indexbrowserTab['tabLabels'][$tabLabel] = $tabId;
         // Init tab array
 
         // CONTINUE : tab with special value 'all'
