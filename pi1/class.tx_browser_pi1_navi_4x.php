@@ -393,7 +393,6 @@ class tx_browser_pi1_navi_4x
  */
   private function indexBrowser_rowsInitSpecialChars( )
   {
-$this->pObj->dev_var_dump( $this->indexbrowserTab['initials']['specialChars'] );
       // RETURN : no special chars
     if( empty ( $this->indexbrowserTab['initials']['specialChars'] ) )
     {
@@ -401,21 +400,26 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab['initials']['specialChars'] );
     }
       // RETURN : no special chars
 
+      // Build the select statement parts
     $arrStatement = array( );
     $arrSpecialChars    = explode( ',', $this->indexbrowserTab['initials']['specialChars'] );
     foreach( ( array ) $arrSpecialChars as $specialChar )
     {
       $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
     }
+      // Build the select statement parts
+
+      // DIE : undefined error
     if( empty ( $arrStatement ) )
     {
       die ( __METHOD__ . '(' . __LINE__ . '): undefined error.');
     }
+      // DIE : undefined error
 
+      // Query
     $query  = "SELECT " . implode( ', ', $arrStatement );
-
+      // Execute
     $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
-      // Execute query
 
       // Error management
     $error = $GLOBALS['TYPO3_DB']->sql_error( );
@@ -428,14 +432,17 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab['initials']['specialChars'] );
     }
       // Error management
 
-$this->pObj->dev_var_dump( $query );
       // DRS
-    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
     {
       $prompt = $query;
-      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+      t3lib_div::devlog( '[OK/NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
     }
       // DRS
+
+    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
+$this->pObj->dev_var_dump( $row );
+
   }
 
 
