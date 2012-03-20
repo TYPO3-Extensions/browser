@@ -155,7 +155,6 @@ class tx_browser_pi1_navi_4x
 
 
     $this->indexBrowser_initTabs( );
-$this->pObj->dev_var_dump( $this->indexbrowserTab );
 
 
 
@@ -390,6 +389,7 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
  */
   private function indexBrowser_rowsInitSpecialChars( )
   {
+$this->pObj->dev_var_dump( $this->indexbrowserTab['initials']['specialChars'] );
       // RETURN : no special chars
     if( empty ( $this->indexbrowserTab['initials']['specialChars'] ) )
     {
@@ -450,8 +450,9 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
     }
       // Error management
 
+$this->pObj->dev_var_dump( $query );
       // DRS
-    if( 1 || $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
     {
       $prompt = $query;
       t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
