@@ -51,9 +51,15 @@ plugin.tx_browser_pi1 {
           dataWrap        = &tx_browser_pi1[showUid]={GP:tx_browser_pi1|showUid}
           if.isTrue.data  = GPvar:tx_browser_pi1|showUid
         }
-          // indexBrowserTab
+          // azTab
         20 = TEXT
         20  {
+          dataWrap        = &tx_browser_pi1[azTab]={GP:tx_browser_pi1|azTab}
+          if.isTrue.data  = GPvar:tx_browser_pi1|azTab
+        }
+          // indexBrowserTab
+        21 = TEXT
+        21  {
           dataWrap        = &tx_browser_pi1[indexBrowserTab]={GP:tx_browser_pi1|indexBrowserTab}
           if.isTrue.data  = GPvar:tx_browser_pi1|indexBrowserTab
         }
@@ -3521,16 +3527,19 @@ plugin.tx_browser_pi1 {
   }
 
   _CSS_DEFAULT_STYLE (
+    .tx-browser-pi1 div.azSelector,
     .tx-browser-pi1 div.indexBrowser,
     .tx-browser-pi1 div.modeSelector {
       padding:.4em 0;
       /* 111218, 3.9.6, dwildt-*/
       /*height:1.4em;*/
     }
+    .tx-browser-pi1 div.azSelector,
     .tx-browser-pi1 div.indexBrowser {
       /* 111218, 3.9.6, dwildt+*/
       height:2em;
     }
+    .tx-browser-pi1 ul.azSelector,
     .tx-browser-pi1 ul.indexBrowser,
     .tx-browser-pi1 ul.modeSelector {
       max-width: 100%;
@@ -3540,10 +3549,12 @@ plugin.tx_browser_pi1 {
       height:1em;
       background:#EEE;
     }
+    * html .tx-browser-pi1 ul.azSelector,
     * html .tx-browser-pi1 ul.indexBrowser,
     * html .tx-browser-pi1 ul.modeSelector {
       width: 100%;
     }
+    .tx-browser-pi1 ul.azSelector li,
     .tx-browser-pi1 ul.indexBrowser li,
     .tx-browser-pi1 ul.modeSelector li {
       display: block;
@@ -3552,10 +3563,12 @@ plugin.tx_browser_pi1 {
       float: left;
       border-right:1px solid grey;
     }
+    .tx-browser-pi1 ul.azSelector li.last,
     .tx-browser-pi1 ul.indexBrowser li.last,
     .tx-browser-pi1 ul.modeSelector li.last {
       border-right:0;
     }
+    .tx-browser-pi1 ul.azSelector li.selected,
     .tx-browser-pi1 ul.indexBrowser li.selected,
     .tx-browser-pi1 ul.modeSelector li.selected {
       background:yellow;
