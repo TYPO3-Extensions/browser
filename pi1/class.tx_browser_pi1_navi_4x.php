@@ -443,6 +443,18 @@ class tx_browser_pi1_navi_4x
     $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
 $this->pObj->dev_var_dump( $row );
 
+    foreach( $row as $char => $length )
+    {
+      if( $length < 2 )
+      {
+        continue;
+      }
+      $findInSet[$length][] = "FIND_IN_SET( LEFT ( %field%, " . $length . " ), '" . $char . "' )";
+    }
+$this->pObj->dev_var_dump( $findInSet );
+
+    
+
   }
 
 
