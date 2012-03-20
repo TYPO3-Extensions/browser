@@ -443,17 +443,73 @@ class tx_browser_pi1_navi_4x
     $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
 $this->pObj->dev_var_dump( $row );
 
+$field = "title";
     foreach( $row as $char => $length )
     {
       if( $length < 2 )
       {
         continue;
       }
-      $findInSet[$length][] = "FIND_IN_SET( LEFT ( %field%, " . $length . " ), '" . $char . "' )";
+      $findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $field . ", " . $length . " ), '" . $char . "' )";
     }
 $this->pObj->dev_var_dump( $findInSet );
 
-    
+    foreach( $findInSet as $length => $arrfindInSet )
+    {
+        // Query for all filter items
+      $select   = "COUNT( * ) AS 'count', LEFT ( " . $field . ", " . $length . " ) AS 'initial'";
+      $from     = $table;
+$from     = "tt_news";
+      $where    = "(" . implode ( " OR ", $arrfindInSet ) . ")";
+      $groupBy  = "LEFT ( " . $field . ", " . $length . " )";
+      $orderBy  = "LEFT ( " . $field . ", " . $length . " )";
+      $limit    = null;
+
+        // Get query
+      $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+                                      (
+                                        $select,
+                                        $from,
+                                        $where,
+                                        $groupBy,
+                                        $orderBy,
+                                        $limit
+                                      );
+        // Get query
+var_dump( $query );
+        // Execute query
+      $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+                                      (
+                                        $select,
+                                        $from,
+                                        $where,
+                                        $groupBy,
+                                        $orderBy,
+                                        $limit
+                                      );
+        // Execute query
+
+        // Error management
+      $error = $GLOBALS['TYPO3_DB']->sql_error( );
+      if( $error )
+      {
+        $this->pObj->objSqlFun->query = $query;
+        $this->pObj->objSqlFun->error = $error;
+        $arr_return = $this->pObj->objSqlFun->prompt_error( );
+        return $arr_return;
+      }
+        // Error management
+
+        // DRS
+      if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+      {
+        $prompt = $query;
+        t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+      }
+        // DRS
+
+      
+    }
 
   }
 
