@@ -232,8 +232,10 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
  */
   private function indexBrowser_initTabs( )
   {
+      // Default properties
     $defaultWrap            = $this->conf['navigation.']['indexBrowser.']['defaultTabWrap'];
     $defaultDisplayWoItems  = $this->conf['navigation.']['indexBrowser.']['display.']['tabWithoutItems'];
+      // Default properties
 
       // Tab with special value 'default'
     $this->indexbrowserTab['tabSpecial']['default'] = null;
@@ -254,6 +256,11 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
         continue;
       }
         // CONTINUE : key is an array
+
+      if( $conf_tabs[$tabId . '.']['valuesCSV'] )
+      {
+        $arrInitials[] = $conf_tabs[$tabId . '.']['valuesCSV'];
+      }
 
         // Tab label stdWrap
       if( $conf_tabs[$tabId . '.']['stdWrap.'] )
@@ -297,6 +304,15 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
         // CONTINUE : tab with special value 'others'
     }
       // LOOP tabs TS configuratione array
+
+    $csvInitials  = implode( ',', ( array ) $arrInitials );
+    $subject      = utf8_decode( $csvInitials  );
+    $pattern      = '/[^0-9a-zA-Z,]/';
+    if( preg_match_all( $pattern, $subject, $matches ) )
+    {
+      $specialChars = implode(',', $matches[0] );
+      $this->indexbrowserTab['specialChars'] = $specialChars;
+    }
   }
 
 
