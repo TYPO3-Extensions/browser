@@ -365,7 +365,11 @@ class tx_browser_pi1_navi_4x
   private function indexBrowser_rows( )
   {
       // Take care of special chars
-    $this->indexBrowser_rowsInitSpecialChars( );
+    $arr_return = $this->indexBrowser_rowsInitSpecialChars( );
+    if( ! ( empty ( $arr_return ) ) )
+    {
+      return $arr_return;
+    }
 
 
       // Take care of filters
@@ -408,35 +412,9 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab['initials']['specialChars'] );
       die ( __METHOD__ . '(' . __LINE__ . '): undefined error.');
     }
 
-      // Query for all filter items
-    $select   = implode( ', ', $arrStatement );
-    $from     = null;
-    $where    = null;
-    $groupBy  = null;
-    $orderBy  = null;
-    $limit    = null;
+    $query  = "SELECT " . implode( ', ', $arrStatement );
 
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
-      // Get query
-      // Execute query
-    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
+    $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
       // Execute query
 
       // Error management
