@@ -235,6 +235,16 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
     $defaultWrap            = $this->conf['navigation.']['indexBrowser.']['defaultTabWrap'];
     $defaultDisplayWoItems  = $this->conf['navigation.']['indexBrowser.']['display.']['tabWithoutItems'];
 
+      // Tab with special value 'default'
+    $this->indexbrowserTab['tabSpecial']['default'] = null;
+    if( isset( $this->conf['navigation.']['indexBrowser.']['defaultTabWrap'] ) )
+    {
+      $this->indexbrowserTab['tabSpecial']['default'] =
+        $this->conf['navigation.']['indexBrowser.']['defaultTabWrap'];
+    }
+      // Tab with special value 'default'
+
+
       // LOOP tabs TS configuratione array
     $conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
     foreach( ( array ) $conf_tabs as $tabId => $tabLabel )
