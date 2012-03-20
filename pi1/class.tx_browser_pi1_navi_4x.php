@@ -224,8 +224,8 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
 
 
 /**
- * indexBrowser_rows( ):  Loops through the tab TS configuration array
- *                        and inits the class var $this->indexbrowserTab
+ * indexBrowser_initTabs( ):  Loops through the tab TS configuration array
+ *                            and inits the class var $this->indexbrowserTab
  *
  * @version 3.9.10
  * @since   3.9.10
@@ -306,22 +306,52 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
     }
       // LOOP tabs TS configuratione array
 
+    $this->indexBrowser_initTabsSpecialChars( $arrInitials );
+  }
+
+
+
+/**
+ * indexBrowser_initTabsSpecialChars( ):  Loops through the tab TS configuration array
+ *                            and inits the class var $this->indexbrowserTab
+ *
+ * @version 3.9.10
+ * @since   3.9.10
+ */
+  private function indexBrowser_initTabsSpecialChars( $arrInitials )
+  {
+      // Unique values only
     $arrInitials  = array_unique( $arrInitials );
+
+      // Move array to a csv string
     $csvInitials  = implode( ',', ( array ) $arrInitials );
-    $this->indexbrowserTab['initials']['all'] = $csvInitials;
-    $subject      = utf8_decode( $csvInitials  );
-    $pattern      = '/[^0-9a-zA-Z,]/';
+
+      // Init var with all initials
+    $this->indexbrowserTab['initials']['all']           = $csvInitials;
+    $this->indexbrowserTab['initials']['specialChars']  = null;
+    $this->indexbrowserTab['initials']['alphaNum']      = null;
+
+      // UTF-8 decode initials
+    $subject = utf8_decode( $csvInitials  );
+
+      // Init var with special chars
+    $pattern = '/[^0-9a-zA-Z,]/';
     if( preg_match_all( $pattern, $subject, $matches ) )
     {
       $specialChars = implode(',', $matches[0] );
       $this->indexbrowserTab['initials']['specialChars'] = $specialChars;
+      $this->indexbrowserTab['initials']['specialCharsUtf'] = utf8_encode( $specialChars );
     }
-    $pattern      = '/[0-9a-zA-Z]/';
+      // Init var with special chars
+
+      // Init var with alpha numeric chars
+    $pattern = '/[0-9a-zA-Z]/';
     if( preg_match_all( $pattern, $subject, $matches ) )
     {
       $specialChars = implode(',', $matches[0] );
       $this->indexbrowserTab['initials']['alphaNum'] = $specialChars;
     }
+      // Init var with alpha numeric chars
   }
 
 
