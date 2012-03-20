@@ -155,7 +155,7 @@ class tx_browser_pi1_navi_4x
 
 
     $this->indexBrowser_initTabs( );
-dev_var_dump( $this->indexbrowserTab );
+$this->pObj->dev_var_dump( $this->indexbrowserTab );
 
 
 
