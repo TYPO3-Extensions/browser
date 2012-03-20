@@ -1376,7 +1376,7 @@
  * @version 3.9.3
  * @since 1.0.0
  */
-  function cleanUp_lfCr_doubleSpace($csvValue)
+  public function cleanUp_lfCr_doubleSpace($csvValue)
   {
     $csvValue = str_replace(chr(10), '', $csvValue); // Linefeed
     $csvValue = str_replace(chr(13), '', $csvValue); // Carriage return

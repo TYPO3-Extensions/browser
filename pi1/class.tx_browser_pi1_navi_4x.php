@@ -259,7 +259,8 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
 
       if( $conf_tabs[$tabId . '.']['valuesCSV'] )
       {
-        $arrInitials[] = $conf_tabs[$tabId . '.']['valuesCSV'];
+        $valuesCSV      = $conf_tabs[$tabId . '.']['valuesCSV'];
+        $arrInitials[]  = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $valuesCSV );
       }
 
         // Tab label stdWrap
