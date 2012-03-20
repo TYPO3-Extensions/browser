@@ -111,7 +111,9 @@
   * #29323: method ajaxifyOrderBy is undefined. Affected file: res/js/tx_browser_pi1.js
 
 3.7.5
-  120317
+  120320
+  New Feature
+  * #00000: page tree icon
   Improvements
   * #34966: Proper order by in case of TCA type none
             Effected file: pi1/class.tx_browser_pi1_sql_functions.php

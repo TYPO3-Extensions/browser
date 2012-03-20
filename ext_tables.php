@@ -16,6 +16,7 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
     // Plugin 4 configuration
     // Plugin 3 configuration
     // Add default page and user TSconfig
+    // Add pagetree icon
 
 
 
@@ -186,4 +187,19 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
 
 //t3lib_extMgm::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . $_EXTKEY . '/tsConfig/' . $llStatic . '/page.txt">');
   // Add default page and user TSconfig
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////////
+    //
+    // Add pagetree icon
+
+  $TCA['pages']['columns']['module']['config']['items'][] =
+     array('Browser', 'browser', t3lib_extMgm::extRelPath($_EXTKEY).'ext_icon.gif');
+  t3lib_SpriteManager::addTcaTypeIcon('pages', 'contains-browser', '../typo3conf/ext/browser/ext_icon.gif');
+    // Add pagetree icon
+
+
+
 ?>

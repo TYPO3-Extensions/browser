@@ -11,8 +11,8 @@
 ########################################################################
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'Browser - TYPO3 Frontend Engine',
-	'description' => 'Browser - the TYPO3 Frontend Engine - displays content from related tables. You need 1 line typoscript for a result list with a search form, a record browser and an a-z browser. Images are wrapped self-acting. SEO, Search Engine Optimisation. DRS supports the TypoScript configuration. With manual and tutorial.',
+	'title' => 'Browser - TYPO3 without PHP',
+	'description' => 'Browser - TYPO3 without PHP. Develop your database 8 times faster! You need one line TypoScript for a view with filters, a search form and a page browser among others. SEO, Search Engine Optimisation, is included. DRS supports the TypoScript configuration. Best documented.',
 	'category' => 'plugin',
 	'shy' => 0,
 	'version' => '3.9.9',
