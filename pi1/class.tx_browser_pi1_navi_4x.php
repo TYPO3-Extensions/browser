@@ -567,7 +567,7 @@ var_dump( $query );
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function sqlCharsetGet( $sqlCharset )
+  private function sqlCharsetSet( $sqlCharset )
   {
     $query  = "SET NAMES " . $sqlCharset . ";";
     $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
