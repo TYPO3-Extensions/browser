@@ -84,6 +84,10 @@ class tx_browser_pi1_navi_4x
     // Variables set by the pObj (by class.tx_browser_pi1.php)
 
 
+    // [Array] Array with tabIds and tabLabels
+  var $indexbrowserTab = array( );
+
+
 
 
 
@@ -126,14 +130,13 @@ class tx_browser_pi1_navi_4x
 
 
 /**
- * indexBrowser_set( ):
- *                          No support for synonyms!
+ * indexBrowser_get( ): Get the content of the index browser
  *
  * @return	array
  * @version 3.9.9
  * @since   3.9.9
  */
-  public function indexBrowser_set( $content )
+  public function indexBrowser_get( $content )
   {
     $arr_return['data']['content'] = $content;
     
@@ -149,6 +152,12 @@ class tx_browser_pi1_navi_4x
       return $arr_return;
     }
       // RETURN: requirements aren't met
+
+
+    $this->indexBrowser_initTabs( );
+dev_var_dump( $this->indexbrowserTab );
+
+
 
     $arr_return = $this->indexBrowser_rows( );
     if( $arr_return['error']['status'] )
@@ -215,10 +224,60 @@ class tx_browser_pi1_navi_4x
 
 
 /**
- * indexBrowser_rows( ): Checks
- *                                    * configuration of the flexform
- *                                    * configuration of TS tabs
- *                                    and returns false, if a requirement isn't met
+ * indexBrowser_rows( ):  Loops through the tab TS configuration array
+ *                        and inits the class var $this->indexbrowserTab
+ *
+ * @version 3.9.10
+ * @since   3.9.10
+ */
+  private function indexBrowser_initTabs( )
+  {
+      // LOOP tabs TS configuratione array
+    $conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
+    foreach( ( array ) $conf_tabs as $tabId => $tabLabel )
+    {
+        // CONTINUE : key is an array
+      if( substr( $tabId, -1 ) == '.' )
+      {
+        continue;
+      }
+        // CONTINUE : key is an array
+
+        // CONTINUE : tab with special value 'all'
+      if( $conf_tabs[$tabId . '.']['special'] == 'all' )
+      {
+        $this->indexbrowserTab['tabIds'][$tabId]['special'] = 'all';
+        $this->indexbrowserTab['tabIds'][$tabId]['label']   = $tabLabel;
+        $this->indexbrowserTab['tabIds'][$tabId]['sum']     = 0;
+        $this->indexbrowserTab['tabLabels']['all']          = $tabId;
+        continue;
+      }
+        // CONTINUE : tab with special value 'all'
+
+        // CONTINUE : tab with special value 'others'
+      if( $conf_tabs[$tabId . '.']['special'] == 'others' )
+      {
+        $this->indexbrowserTab['tabIds'][$tabId]['special'] = 'others';
+        $this->indexbrowserTab['tabIds'][$tabId]['label']   = $tabLabel;
+        $this->indexbrowserTab['tabIds'][$tabId]['sum']     = 0;
+        $this->indexbrowserTab['tabLabels']['others']       = $tabId;
+        continue;
+      }
+        // CONTINUE : tab with special value 'others'
+
+        // Tabs without a special value
+      $this->indexbrowserTab['tabIds'][$tabId]['label'] = $tabLabel;
+      $this->indexbrowserTab['tabIds'][$tabId]['sum']   = 0;
+      $this->indexbrowserTab['tabLabels']['others']     = $tabId;
+        // Tabs without a special value
+    }
+      // LOOP tabs TS configuratione array
+  }
+
+
+
+/**
+ * indexBrowser_rows( ): 
  *
  * @return	boolean   true / false
  * @version 3.9.9
@@ -226,6 +285,11 @@ class tx_browser_pi1_navi_4x
  */
   private function indexBrowser_rows( )
   {
+      // Take care of special signs
+    
+
+      // Take care of filters
+
     $arr_return['data']['rows'] = null;
 
     $arr_return['error']['status'] = true;
