@@ -142,7 +142,9 @@ class tx_browser_pi1_navi_4x
       // RETURN: requirements aren't met
     if( ! $this->indexBrowser_checkRequirements( ) )
     {
-      $content = $this->pObj->cObj->substituteSubpart( $content, '###INDEXBROWSER###', null, true );
+       // #35032, 120320
+      $markerIndexbrowser = $this->getMarkerIndexbrowser( );
+      $content = $this->pObj->cObj->substituteSubpart( $content, $markerIndexbrowser, null, true );
       $arr_return['data']['content'] = $content;
       return $arr_return;
     }
@@ -469,7 +471,8 @@ class tx_browser_pi1_navi_4x
       }
 
       $markerArray['###LI_CLASS###'] = $liClass;
-      $tmplIndexBrowserTabs = $this->pObj->cObj->getSubpart($template, '###INDEXBROWSERTABS###');
+      $markerIndexbrowserTabs = $this->getMarkerIndexbrowserTabs( );
+      $tmplIndexBrowserTabs   = $this->pObj->cObj->getSubpart($template, $markerIndexbrowserTabs);
       $tabs .= $this->pObj->cObj->substituteMarkerArray($tmplIndexBrowserTabs, $markerArray);
     }
 
@@ -482,10 +485,13 @@ class tx_browser_pi1_navi_4x
     $markerArray                  = $this->pObj->objWrapper->constant_markers();
     $markerArray['###UL_MODE###'] = $this->mode;
     $markerArray['###UL_VIEW###'] = $this->view;
-    $tmplIndexBrowser  = $this->pObj->cObj->getSubpart($template, '###INDEXBROWSER###');
-    $tmplIndexBrowser  = $this->pObj->cObj->substituteMarkerArray($tmplIndexBrowser, $markerArray);
-    $tmplIndexBrowser  = $this->pObj->cObj->substituteSubpart($tmplIndexBrowser, '###INDEXBROWSERTABS###', $tabs, true);
-    $template       = $this->pObj->cObj->substituteSubpart($template, '###INDEXBROWSER###', $tmplIndexBrowser, true);
+     // #35032, 120320
+    $markerIndexbrowser = $this->getMarkerIndexbrowser( );
+    $tmplIndexBrowser   = $this->pObj->cObj->getSubpart($template, $markerIndexbrowser);
+    $tmplIndexBrowser   = $this->pObj->cObj->substituteMarkerArray($tmplIndexBrowser, $markerArray);
+    $markerIndexbrowserTabs = $this->getMarkerIndexbrowserTabs( );
+    $tmplIndexBrowser   = $this->pObj->cObj->substituteSubpart($tmplIndexBrowser, $markerIndexbrowserTabs, $tabs, true);
+    $template           = $this->pObj->cObj->substituteSubpart($template, $markerIndexbrowser, $tmplIndexBrowser, true);
     // Process the markers, subpart and template
 
 
@@ -2296,6 +2302,112 @@ class tx_browser_pi1_navi_4x
       // Set the session array
 
     return false;
+  }
+
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * downward compatibility
+    *
+    **********************************************/
+
+
+
+ /**
+  * getMarkerIndexbrowser( ): Downward compatibility for ###INDEXBROWSER###
+  *                           If ###AZSELECTOR### is used in an HTML template
+  *                           ###AZSELECTOR### will return
+  *                           * Feature: #35032
+  *
+  * @return   string          ###INDEXBROWSER### || ###AZSELECTOR###
+  * @version  3.9.10
+  * @since    3.9.10
+  */
+  private function getMarkerIndexbrowser( )
+  {
+      // DRS
+    if ($this->pObj->b_drs_devTodo)
+    {
+      $prompt = 'Task #35037: Don\'t support the marker ###AZSELECTOR### from version 5.x';
+      t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
+    }
+      // DRS
+
+      // get th current content
+    $template = $this->currContent;
+
+      // RETURN ###AZSELECTOR###, if ###AZSELECTOR### is part of the current content
+    $pos = strpos( $template, '###AZSELECTOR###');
+    if ( ! ( $pos === false ) )
+    {
+      if ($this->pObj->b_drs_warn)
+      {
+        $prompt = 'The current template contains the marker ###AZSELECTOR###';
+        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 2);
+        $prompt = '###AZSELECTOR### won\'t supported from version 5.x';
+        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
+        $prompt = 'Please move it from ###AZSELECTOR### to ###INDEXBROWSER###';
+        t3lib_div::devlog('[TODO/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
+      }
+      return '###AZSELECTOR###';
+    }
+      // RETURN ###AZSELECTOR###, if ###AZSELECTOR### is part of the current content
+
+      // RETURN ###INDEXBROWSER###
+    return '###INDEXBROWSER###';
+  }
+
+
+
+ /**
+  * getMarkerIndexbrowserTabs( ): Downward compatibility for ###INDEXBROWSERTABS###
+  *                               If ###AZSELECTORTABS### is used in an HTML template
+  *                               ###AZSELECTORTABS### will return
+  *                               * Feature: #35032
+  *
+  * @return   string              ###INDEXBROWSERTABS### || ###AZSELECTORTABS###
+  * @version  3.9.10
+  * @since    3.9.10
+  */
+  private function getMarkerIndexbrowserTabs( )
+  {
+      // DRS
+    if ($this->pObj->b_drs_devTodo)
+    {
+      $prompt = 'Task #35037: Don\'t support the marker ###AZSELECTORTABS### from version 5.x';
+      t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
+    }
+      // DRS
+
+      // get th current content
+    $template = $this->currContent;
+
+      // RETURN ###AZSELECTORTABS###, if ###AZSELECTORTABS### is part of the current content
+    $pos = strpos( $template, '###AZSELECTORTABS###');
+    if ( ! ( $pos === false ) )
+    {
+      if ($this->pObj->b_drs_warn)
+      {
+        $prompt = 'The current template contains the marker ###AZSELECTORTABS###';
+        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 2);
+        $prompt = '###AZSELECTORTABS### won\'t supported from version 5.x';
+        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
+        $prompt = 'Please move it from ###AZSELECTORTABS### to ###INDEXBROWSERTABS###';
+        t3lib_div::devlog('[TODO/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
+      }
+      return '###AZSELECTORTABS###';
+    }
+      // RETURN ###AZSELECTORTABS###, if ###AZSELECTORTABS### is part of the current content
+
+      // RETURN ###INDEXBROWSERTABS###
+    return '###INDEXBROWSERTABS###';
   }
 
 

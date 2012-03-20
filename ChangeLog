@@ -1,3 +1,8 @@
+3.9.10
+  120320
+  Improvements
+  * #35032: Handle HTML templates 3.x compatible
+
 3.9.9
   120219
   New Features
