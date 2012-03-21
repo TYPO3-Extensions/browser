@@ -531,47 +531,13 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // RETURN : no special chars
 
-      // Build the select statement parts
-    $arrStatement = array( );
-    $arrSpecialChars    = explode( ',', $this->indexbrowserTab['initials']['specialChars'] );
-    foreach( ( array ) $arrSpecialChars as $specialChar )
+    $arr_return = $this->rowsInitSpecialCharsLength( );
+    if( $arr_return['error']['status'] )
     {
-      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
-    }
-      // Build the select statement parts
-
-      // DIE : undefined error
-    if( empty ( $arrStatement ) )
-    {
-      die ( __METHOD__ . '(' . __LINE__ . '): undefined error.');
-    }
-      // DIE : undefined error
-
-      // Query
-    $query  = "SELECT " . implode( ', ', $arrStatement );
-      // Execute
-    $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
-
-      // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
-    {
-      $this->pObj->objSqlFun->query = $query;
-      $this->pObj->objSqlFun->error = $error;
-      $arr_return = $this->pObj->objSqlFun->prompt_error( );
       return $arr_return;
     }
-      // Error management
+    $row = $arr_return['data']['row'];
 
-      // DRS
-    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
 $this->pObj->dev_var_dump( $row );
 
     list( $table, $field) = explode( '.', $this->indexBrowserTableField);
@@ -638,9 +604,6 @@ var_dump( $query );
       }
         // Error management
 
-        // Reset SQL char set
-      $this->sqlCharsetSet( $currSqlCharset );
-
         // DRS
       if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
       {
@@ -649,9 +612,66 @@ var_dump( $query );
       }
         // DRS
 
-      
+        // Reset SQL char set
+      $this->sqlCharsetSet( $currSqlCharset );
+
     }
 
+  }
+
+
+
+/**
+ * rowsInitSpecialCharsLength( ):
+ *
+ * @version 3.9.10
+ * @since   3.9.10
+ */
+  private function rowsInitSpecialCharsLength( )
+  {
+      // Build the select statement parts for the length of each special char
+    $arrStatement     = array( );
+    $arrSpecialChars  = explode( ',', $this->indexbrowserTab['initials']['specialChars'] );
+    foreach( ( array ) $arrSpecialChars as $specialChar )
+    {
+      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
+    }
+      // Build the select statement parts for the length of each special char
+
+      // DIE : undefined error
+    if( empty ( $arrStatement ) )
+    {
+      die ( __METHOD__ . '(' . __LINE__ . '): undefined error.');
+    }
+      // DIE : undefined error
+
+      // Execute query for the length of each special char
+    $query  = "SELECT " . implode( ', ', $arrStatement );
+    $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+      $this->pObj->objSqlFun->query = $query;
+      $this->pObj->objSqlFun->error = $error;
+      $arr_return = $this->pObj->objSqlFun->prompt_error( );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
+
+    $arr_return['data']['row'] = $row;
+    return $arr_return;
   }
 
 
@@ -686,16 +706,18 @@ var_dump( $query );
 
       // RETURN
     $row    = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
-$this->pObj->dev_var_dump( $row );
+
     if( empty ( $row ) )
     {
       die( __METHOD__ . '(' . __LINE__ . '): row is empty. Query: ' . $query );
     }
-    if( empty ( $row['Value'] ) )
+
+    $charset = $row['Value'];
+    if( empty ( $charset ) )
     {
-      die( __METHOD__ . '(' . __LINE__ . '): row[value] is empty. Query: ' . $query );
+      die( __METHOD__ . '(' . __LINE__ . '): row[Value] is empty. Query: ' . $query );
     }
-    return $row['Value'];
+    return $charset;
   }
 
 
