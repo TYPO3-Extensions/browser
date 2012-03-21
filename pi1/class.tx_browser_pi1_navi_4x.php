@@ -248,12 +248,15 @@ class tx_browser_pi1_navi_4x
     if( isset( $this->conf_view['navigation.']['indexBrowser.']['field'] ) )
     {
       $this->indexBrowserTableField = $this->conf_view['navigation.']['indexBrowser.']['field'];
-      if( $this->pObj->b_drs_navi )
+      if( ! empty ( $this->indexBrowserTableField ) )
       {
-        $prompt = $this->conf_path . 'indexBrowser.field is ' . $field;
-        t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+        if( $this->pObj->b_drs_navi )
+        {
+          $prompt = $this->conf_path . 'indexBrowser.field is ' . $field;
+          t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+        }
+        return;
       }
-      return;
     }
       // RETURN : table.field for the index browser form is set in the current view
 
@@ -261,12 +264,15 @@ class tx_browser_pi1_navi_4x
     if( isset( $this->conf['navigation.']['indexBrowser.']['field'] ) )
     {
       $this->indexBrowserTableField = $this->conf['navigation.']['indexBrowser.']['field'];
-      if( $this->pObj->b_drs_navi )
+      if( ! empty ( $this->indexBrowserTableField ) )
       {
-        $prompt = 'indexBrowser.field is ' . $field;
-        t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+        if( $this->pObj->b_drs_navi )
+        {
+          $prompt = 'indexBrowser.field is ' . $field;
+          t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+        }
+        return;
       }
-      return;
     }
       // RETURN : table.field  for the index browser form is set in global configuration
 
@@ -280,6 +286,13 @@ class tx_browser_pi1_navi_4x
     $field = $this->pObj->arr_realTables_arrFields[$table][0];
     $this->indexBrowserTableField = $table . '.' . $field;
       // Get the first table of the global arr_realTables_arrFields
+
+      // DIE : undefined error
+    if( empty ( $this->indexBrowserTableField ) )
+    {
+      die( __METHOD__ . '(' . __LINE__ . '): undefined error!');
+    }
+      // DIE : undefined error
 
       // DRS
     if( $this->pObj->b_drs_navi )
