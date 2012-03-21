@@ -686,6 +686,15 @@ var_dump( $query );
 
       // RETURN
     $row    = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
+$this->pObj->dev_var_dump( $row );
+    if( empty ( $row ) )
+    {
+      die( __METHOD__ . '(' . __LINE__ . '): row is empty. Query: ' . $query );
+    }
+    if( empty ( $row['value'] ) )
+    {
+      die( __METHOD__ . '(' . __LINE__ . '): row[value] is empty. Query: ' . $query );
+    }
     return $row['value'];
   }
 
