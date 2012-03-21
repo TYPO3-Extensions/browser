@@ -86,6 +86,8 @@ class tx_browser_pi1_navi_4x
 
     // [Array] Array with tabIds and tabLabels
   var $indexbrowserTab = array( );
+    // [String] table.field of the index browser
+  var $indexBrowserTableField = null;
 
 
 
@@ -153,7 +155,16 @@ class tx_browser_pi1_navi_4x
     }
       // RETURN: requirements aren't met
 
-
+      // Init the table.field
+    $this->indexBrowser_initTableField( );
+    
+      // Check, if table is the local table
+    $arr_return = $this->indexBrowser_checkTableField( );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    
     $this->indexBrowser_initTabs( );
 
 
@@ -218,6 +229,115 @@ class tx_browser_pi1_navi_4x
       // RETURN: index browser hasn't any configured tab
 
     return true;
+  }
+
+
+
+/**
+ * indexBrowser_initTableField( ):  Set the class var $this->indexBrowserTableField
+ *                                  Value is the table.field for SQL queries
+ *
+ * @return  void
+ * @version 3.9.10
+ * @since   3.9.9
+ */
+  private function indexBrowser_initTableField( )
+  {
+
+      // RETURN : table.field for the index browser form is set in the current view
+    if( isset( $this->conf_view['navigation.']['indexBrowser.']['field'] ) )
+    {
+      $this->indexBrowserTableField = $this->conf_view['navigation.']['indexBrowser.']['field'];
+      if( $this->pObj->b_drs_navi )
+      {
+        $prompt = $this->conf_path . 'indexBrowser.field is ' . $field;
+        t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+      }
+      return;
+    }
+      // RETURN : table.field for the index browser form is set in the current view
+
+      // RETURN : table.field for the index browser form is set in global configuration
+    if( isset( $this->conf['navigation.']['indexBrowser.']['field'] ) )
+    {
+      $this->indexBrowserTableField = $this->conf['navigation.']['indexBrowser.']['field'];
+      if( $this->pObj->b_drs_navi )
+      {
+        $prompt = 'indexBrowser.field is ' . $field;
+        t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+      }
+      return;
+    }
+      // RETURN : table.field  for the index browser form is set in global configuration
+
+      // The user hasn't defined a table.field element.
+      // We take the first one of the field views.list.X.select
+
+      // Get the first table of the global arr_realTables_arrFields
+    reset( $this->pObj->arr_realTables_arrFields );
+    $table = key( $this->pObj->arr_realTables_arrFields );
+      // First field of the current table
+    $field = $this->pObj->arr_realTables_arrFields[$table][0];
+    $this->indexBrowserTableField = $table . '.' . $field;
+      // Get the first table of the global arr_realTables_arrFields
+
+      // DRS
+    if( $this->pObj->b_drs_navi )
+    {
+      $prompt = 'indexBrowser.field is the first table.field from ' .
+                $this->conf_path . 'select: ' . $this->indexBrowserTableField;
+      t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
+      $prompt = 'If you need another table.field use ' . $this->conf_path . 'indexBrowser.field';
+      t3lib_div::devlog('[HELP/NAVIGATION] ' . $prompt, $this->pObj->extKey, 1);
+    }
+      // DRS
+
+  }
+
+
+
+/**
+ * indexBrowser_checkTableField( ):
+ *
+ * @return  array   $arr_return
+ * @version 3.9.10
+ * @since   3.9.9
+ */
+  private function indexBrowser_checkTableField( )
+  {
+    list( $table, $field ) = explode( '.', $this->indexBrowserTableField );
+
+      // RETURN : table is the local table
+    if( $table == $this->pObj->localTable )
+    {
+      return;
+    }
+      // RETURN : table is the local table
+
+      // Error management
+    $prompt_01  = 'Sorry, the index browser can\'t handle an index for foreign tables!';
+    $prompt_02  = 'Current table.field is: ' . $this->indexBrowserTableField;
+    $prompt_03  = 'Local table is: ' . $this->pObj->localTable;
+    $prompt_04  = 'Please configure: ' . $this->conf_path . 'indexBrowser.field = ' . $this->pObj->localTable .'... ';
+    if ($this->pObj->b_drs_navi)
+    {
+      t3lib_div::devlog('[ERROR/NAVIGATION] ' . $prompt_01, $this->pObj->extKey, 3);
+      t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt_02, $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt_03, $this->pObj->extKey, 0);
+      t3lib_div::devlog('[HELP/NAVIGATION] ' . $prompt_04, $this->pObj->extKey, 1);
+    }
+
+    $arr_return['error']['status'] = true;
+    $arr_return['error']['header'] = '<h1 style="color:red">Error Index-Browser</h1>';
+    $prompt = $prompt_01 . '<br />' . PHP_EOL;
+    $prompt = $prompt . $prompt_02 . '<br />' . PHP_EOL;
+    $prompt = $prompt . $prompt_03 . '<br />' . PHP_EOL;
+    $prompt = $prompt . $prompt_04 . '<br />' . PHP_EOL;
+    $arr_return['error']['prompt'] = '<p style="color:red">' . $prompt . '</p>';
+      // Error management
+
+      // RETURN error message
+    return $arr_return;
   }
 
 
@@ -443,7 +563,8 @@ class tx_browser_pi1_navi_4x
     $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
 $this->pObj->dev_var_dump( $row );
 
-$field = "title";
+    list( $table, $field) = $this->indexBrowserTableField;
+
     foreach( $row as $char => $length )
     {
       if( $length < 2 )
@@ -464,7 +585,6 @@ $this->pObj->dev_var_dump( $findInSet );
         // Query for all filter items
       $select   = "COUNT( * ) AS 'count', LEFT ( " . $field . ", " . $length . " ) AS 'initial'";
       $from     = $table;
-$from     = "tt_news";
       $where    = "(" . implode ( " OR ", $arrfindInSet ) . ")";
       $groupBy  = "LEFT ( " . $field . ", " . $length . " )";
       $orderBy  = "LEFT ( " . $field . ", " . $length . " )";
