@@ -1464,10 +1464,13 @@ class tx_browser_pi1 extends tslib_pibase {
   public function dev_var_dump( $content )
   //public function dev_var_dump( )
   {
+    $level      = 1; // 1 level up
+    $debugTrail = $this->drs_debugTrail( $level );
+
       // Log a security warning
     if ($this->b_drs_warn )
     {
-      $prompt = 'Security risk: please disable -> dev_var_dump( ) in ' . $method . ' at line ' . $line . '.';
+      $prompt = 'Security risk: please disable -> dev_var_dump( ) in ' . $debugTrail['prompt'] . '.';
       t3lib_div::devlog('[WARN/SECURITY] ' . $prompt, $this->extKey, 2 );
     }
       // Log a security warning
@@ -1484,9 +1487,6 @@ class tx_browser_pi1 extends tslib_pibase {
     $numargs  = func_num_args( );
       // List of arguments;
     $arg_list = func_get_args( );
-    
-    $level      = 1; // 1 level up
-    $debugTrail = $this->drs_debugTrail( $level );
     
     $prompt = '<pre>' . $debugTrail['prompt'] . PHP_EOL .
               '</pre>' . PHP_EOL;
