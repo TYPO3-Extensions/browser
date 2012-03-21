@@ -69,22 +69,34 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  *
  *
  *
- *   91: class tx_browser_pi1 extends tslib_pibase
+ *  102: class tx_browser_pi1 extends tslib_pibase
  *
  *              SECTION: Main Process
- *  331:     function main($content, $conf)
+ *  410:     public function main( $content, $conf )
  *
  *              SECTION: DRS - Development Reporting System
- * 1087:     function init_drs()
+ * 1145:     public function drs_debugTrail( $level = 1 )
+ * 1181:     private function init_drs()
+ * 1477:     public function dev_var_dump( $content )
+  //public function dev_var_dump( )
  *
  *              SECTION: Classes
- * 1405:     function require_classes()
- * 1531:     function init_classVars()
+ * 1548:     private function require_classes()
+ * 1693:     private function init_classVars( )
+ *
+ *              SECTION: Helper
+ * 1934:     private function get_typo3version( )
+ * 1976:     private function init_accessByIP( )
+ *
+ *              SECTION: Time tracking
+ * 2038:     private function timeTracking_init( )
+ * 2076:     public function timeTracking_log( $method, $line, $prompt )
+ * 2137:     public function timeTracking_prompt( $prompt )
  *
  *              SECTION: Template
- * 1683:     function getTemplate($cObj, $conf, $arr_data)
+ * 2180:     private function getTemplate( )
  *
- * TOTAL FUNCTIONS: 5
+ * TOTAL FUNCTIONS: 12
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -181,7 +193,7 @@ class tx_browser_pi1 extends tslib_pibase {
     ////////////////////////////////////////////////////////////////////
     //
     // "SQL"
-    
+
     // [String/CSV] List of fields for the SQL select query
   var $csvSelect;
     // [String/CSV] List of fields for the SQL select query, cleaned up from any function
@@ -1126,8 +1138,8 @@ class tx_browser_pi1 extends tslib_pibase {
  *
  * $param   integer   $level      : integer
  *
- * @return	array     $arr_return : with elements class, method, line and prompt
- *
+ * @param	[type]		$$level: ...
+ * @return	array		$arr_return : with elements class, method, line and prompt
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1135,7 +1147,7 @@ class tx_browser_pi1 extends tslib_pibase {
   {
       // Get the debug trail
     $debugTrail_str = t3lib_utility_Debug::debugTrail( );
-//var_dump( $debugTrail_str );
+var_dump( $debugTrail_str );
 
       // Get debug trail elements
     $debugTrail_arr = explode( '//', $debugTrail_str );
@@ -1458,12 +1470,10 @@ class tx_browser_pi1 extends tslib_pibase {
  * dev_var_dump( ): var_dump the given content in the frontend
  *                  condition: current IP must be an element in the list of allowed IPs
  *
- * @param mixed  $content : String or array for prompting in the frontend
- *
+ * @param	mixed		$content : String or array for prompting in the frontend
  * @return	void
-   *
-   * @version 3.9.9
-   * @since   3.9.9
+ * @version 3.9.9
+ * @since   3.9.9
  */
   public function dev_var_dump( $content )
   //public function dev_var_dump( )
@@ -1481,7 +1491,7 @@ class tx_browser_pi1 extends tslib_pibase {
 
       // RETURN current IP isn't any element of the list of the allowed IPs
     $pos = strpos( $this->str_developer_csvIp, t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
-    if ( $pos === false ) 
+    if ( $pos === false )
     {
       return;
     }
@@ -1491,11 +1501,11 @@ class tx_browser_pi1 extends tslib_pibase {
     $numargs  = func_num_args( );
       // List of arguments;
     $arg_list = func_get_args( );
-    
+
     $prompt = '<pre>' . $debugTrail['prompt'] . PHP_EOL .
               '</pre>' . PHP_EOL;
     echo $prompt;
-   
+
     for( $i = 0; $i < $numargs; $i++ )
     {
         // Generate the prompt
@@ -1678,10 +1688,8 @@ class tx_browser_pi1 extends tslib_pibase {
  *                    Start a script on some helper classes.
  *
  * @return	void
- *
  * @version 3.9.9
  * @since   1.0.0
- *
  */
   private function init_classVars( )
   {
@@ -1939,7 +1947,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // Move version to an integer
     $int_version = t3lib_div::int_from_ver( $str_version );
 
-      // Set the global $bool_typo3_43 
+      // Set the global $bool_typo3_43
     if( $int_version >= 4003000 )
     {
       $this->bool_typo3_43 = true;
@@ -2059,10 +2067,9 @@ class tx_browser_pi1 extends tslib_pibase {
   /**
  * timeTracking_log( ): Prompts a message in devLog with current run time in miliseconds
  *
- *
- * @param   string  $method : calling method
- * @param   string  $line   : current line in calling method
- * @param   string  $prompt : The prompt for devlog.
+ * @param	string		$method : calling method
+ * @param	string		$line   : current line in calling method
+ * @param	string		$prompt : The prompt for devlog.
  * @return	void
  * @version 3.9.8
  * @since   0.0.1
@@ -2123,8 +2130,7 @@ class tx_browser_pi1 extends tslib_pibase {
  * timeTracking_prompt( ):  Method checks, wether previous prompt was a
  *                          warning or an error. If yes the given prompt will loged by devLog
  *
- *
- * @param   string  $prompt: The prompt for devlog.
+ * @param	string		$prompt: The prompt for devlog.
  * @return	void
  * @version 3.9.8
  * @since   3.9.8
@@ -2155,7 +2161,7 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
-  
+
   /***********************************************
    *
    * Template
@@ -2171,7 +2177,6 @@ class tx_browser_pi1 extends tslib_pibase {
  * @return	array		With element template
  * @version 3.9.8
  * @since   1.0.0
- *
  */
   private function getTemplate( )
   {

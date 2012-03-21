@@ -42,54 +42,54 @@
  *
  *              SECTION: piVars
  *  178:     function prepairePiVars()
- *  818:     function removeFiltersFromPiVars($inputPiVars, $filterConf)
- *  874:     function advanced_remove_piVars($keepFilters=0)
- *  980:     function advanced_remove_piVars_filter()
+ *  813:     function removeFiltersFromPiVars($inputPiVars, $filterConf)
+ *  869:     function advanced_remove_piVars($keepFilters=0)
+ *  975:     function advanced_remove_piVars_filter()
  *
  *              SECTION: $GLOBAL markers
- * 1108:     function get_t3globals_value($marker)
- * 1183:     function substitute_t3globals_recurs($arr_multi_dimensional)
+ * 1103:     function get_t3globals_value($marker)
+ * 1177:     function substitute_t3globals_recurs($arr_multi_dimensional)
  *
  *              SECTION: CSV process and format time
- * 1353:     function getCSVasArray($csvValues)
- * 1369:     function getCSVtablefieldsAsArray($csvTableFields)
- * 1390:     function cleanUp_lfCr_doubleSpace($csvValue)
- * 1414:     function setTsStrftime()
+ * 1342:     function getCSVasArray($csvValues)
+ * 1358:     function getCSVtablefieldsAsArray($csvTableFields)
+ * 1379:     public function cleanUp_lfCr_doubleSpace($csvValue)
+ * 1403:     function setTsStrftime()
  *
  *              SECTION: Link
- * 1464:     function linkTP($str, $typolink=array(), $urlParameters=array(), $cache=0, $altPageId=0)
- * 1499:     function linkTP_keepPIvars($str, $typolink=array(), $overrulePIvars=array(), $cache=0, $clearAnyway=0, $altPageId=0)
- * 1533:     function get_absUrl($str_relUrl)
- * 1568:     function get_singlePid_for_listview()
- * 1628:     function get_cHash($str_params)
- * 1651:     function get_pathWoEXT($str_TYPO3_EXT_path)
+ * 1453:     function linkTP($str, $typolink=array(), $urlParameters=array(), $cache=0, $altPageId=0)
+ * 1488:     function linkTP_keepPIvars($str, $typolink=array(), $overrulePIvars=array(), $cache=0, $clearAnyway=0, $altPageId=0)
+ * 1522:     function get_absUrl($str_relUrl)
+ * 1557:     function get_singlePid_for_listview()
+ * 1617:     function get_cHash($str_params)
+ * 1640:     function get_pathWoEXT($str_TYPO3_EXT_path)
  *
  *              SECTION: Markers
- * 1704:     function extend_marker_wi_pivars($markerArray)
+ * 1693:     function extend_marker_wi_pivars($markerArray)
  *
  *              SECTION: TypoScript children records
- * 1749:     function children_tsconf_recurs($key, $arr_multi_dimensional, $str_devider)
+ * 1738:     function children_tsconf_recurs($key, $arr_multi_dimensional, $str_devider)
  *
  *              SECTION: Languages, _LOCAL_LANG
- * 1841:     function getTableFieldLL($tableField)
- * 1933:     function initLang()
+ * 1830:     function getTableFieldLL($tableField)
+ * 1922:     function initLang()
  *
  *              SECTION: Sword and Search respectively
- * 1977:     function search_values($str_sword_phrase)
- * 2421:     function color_swords($tableField, $value)
+ * 1966:     function search_values($str_sword_phrase)
+ * 2410:     function color_swords($tableField, $value)
  *
  *              SECTION: Security
- * 2514:     function secure_piVar($str_value, $str_type)
+ * 2503:     function secure_piVar($str_value, $str_type)
  *
  *              SECTION: TCA
- * 2662:     function loadTCA($str_table)
+ * 2651:     function loadTCA($str_table)
  *
  *              SECTION: TypoScript
- * 2699:     function cleanup_views($conf)
+ * 2688:     function cleanup_views($conf)
  *
  *              SECTION: UTF-8
- * 2754:     function b_TYPO3_utf8()
- * 2832:     function char_single_multi_byte($str_char)
+ * 2743:     function b_TYPO3_utf8()
+ * 2821:     function char_single_multi_byte($str_char)
  *
  * TOTAL FUNCTIONS: 28
  * (This index is automatically created/updated by the extension "extdeveval")

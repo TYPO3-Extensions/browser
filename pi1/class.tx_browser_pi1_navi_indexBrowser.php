@@ -38,29 +38,30 @@
  *
  *
  *
- *   67: class tx_browser_pi1_navi_indexBrowser
- *  116:     public function __construct($parentObj)
+ *   68: class tx_browser_pi1_navi_indexBrowser
+ *  111:     public function __construct($parentObj)
  *
  *              SECTION: Index browser
- *  155:     public function indexBrowser($arr_data)
- *  383:     public function indexBrowserTemplate($arr_data)
- *  649:     public function indexBrowserTabArray($arr_data)
- * 1089:     public function indexBrowserRowsInitial($arr_data)
+ *  143:     public function get( $content )
+ *  203:     private function checkRequirements( )
+ *  246:     private function initTableField( )
+ *  321:     private function checkTableField( )
+ *  368:     private function initTabs( )
+ *  457:     private function initTabsSpecialChars( $arrInitials )
+ *  499:     private function rows( )
+ *  529:     private function rowsInitSpecialChars( )
+ *  566:     private function rowsInitSpecialCharsLength( )
+ *  625:     private function rowsSumSpecialChars( $row )
  *
- *              SECTION: pagebrowser
- * 1357:     public function tmplPageBrowser($arr_data)
+ *              SECTION: SQL
+ *  751:     private function sqlCharsetGet( )
+ *  784:     private function sqlCharsetSet( $sqlCharset )
  *
- *              SECTION: mode selector
- * 1596:     public function prepaireModeSelector()
- * 1663:     public function tmplModeSelector($arr_data)
+ *              SECTION: downward compatibility
+ *  824:     private function getMarkerIndexbrowser( )
+ *  870:     private function getMarkerIndexbrowserTabs( )
  *
- *              SECTION: record browser
- * 1785:     public function recordbrowser_get($str_content)
- * 1872:     public function recordbrowser_callListView()
- * 1941:     private function recordbrowser_rendering()
- * 2271:     public function recordbrowser_set_session_data($rows)
- *
- * TOTAL FUNCTIONS: 12
+ * TOTAL FUNCTIONS: 15
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -138,6 +139,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * get( ): Get the content of the index browser
  *
+ * @param	[type]		$$content: ...
  * @return	array
  * @version 3.9.9
  * @since   3.9.9
@@ -145,7 +147,7 @@ class tx_browser_pi1_navi_indexBrowser
   public function get( $content )
   {
     $arr_return['data']['content'] = $content;
-    
+
     $lDisplay = $this->pObj->lDisplayList['display.'];
 
       // RETURN: requirements aren't met
@@ -161,14 +163,14 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Init the table.field
     $this->initTableField( );
-    
+
       // Check, if table is the local table
     $arr_return = $this->checkTableField( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
-    
+
     $this->initTabs( );
 
 
@@ -198,7 +200,7 @@ class tx_browser_pi1_navi_indexBrowser
  *                                    * configuration of TS tabs
  *                                    and returns false, if a requirement isn't met
  *
- * @return	boolean   true / false
+ * @return	boolean		true / false
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -241,7 +243,7 @@ class tx_browser_pi1_navi_indexBrowser
  * initTableField( ):  Set the class var $this->indexBrowserTableField
  *                                  Value is the table.field for SQL queries
  *
- * @return  void
+ * @return	void
  * @version 3.9.10
  * @since   3.9.9
  */
@@ -316,7 +318,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * checkTableField( ):
  *
- * @return  array   $arr_return
+ * @return	array		$arr_return
  * @version 3.9.10
  * @since   3.9.9
  */
@@ -362,7 +364,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * initTabs( ):  Loops through the tab TS configuration array
  *                            and inits the class var $this->indexbrowserTab
- * @return  void
+ *
+ * @return	void
  * @version 3.9.10
  * @since   3.9.10
  */
@@ -450,8 +453,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * initTabsSpecialChars( ): Inits the class var $this->indexbrowserTab['initials']
  *
- * @param   array   $arrInitials : initials from the tab TS configuration
- * @return  void
+ * @param	array		$arrInitials : initials from the tab TS configuration
+ * @return	void
  * @version 3.9.10
  * @since   3.9.10
  */
@@ -493,7 +496,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * rows( ):
  *
- * @return	boolean   true / false
+ * @return	boolean		true / false
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -523,6 +526,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * rowsInitSpecialChars( ):
  *
+ * @return	[type]		...
  * @version 3.9.10
  * @since   3.9.10
  */
@@ -559,6 +563,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * rowsInitSpecialCharsLength( ):
  *
+ * @return	[type]		...
  * @version 3.9.10
  * @since   3.9.10
  */
@@ -616,6 +621,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * rowsSumSpecialChars( ):
  *
+ * @param	[type]		$$row: ...
+ * @return	[type]		...
  * @version 3.9.10
  * @since   3.9.10
  */
@@ -724,7 +731,7 @@ class tx_browser_pi1_navi_indexBrowser
       {
         $this->rowsSumSpecialChars = $rows;
       }
-      
+
 
     }
       // LOOP : execute a query for each special char length group
@@ -750,7 +757,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * sqlCharsetGet( ): Get the current SQL charset like latin1 or utf8.
  *
- * @return  string    current charset
+ * @return	string		current charset
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -782,7 +789,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * sqlCharsetSet( ):  Execute SET NAMES with given charset
  *
- * @param   string    $sqlCharset : SQL charset like latin1 or utf8
+ * @param	string		$sqlCharset : SQL charset like latin1 or utf8
+ * @return	[type]		...
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -822,7 +830,7 @@ class tx_browser_pi1_navi_indexBrowser
   *                           ###AZSELECTOR### will return
   *                           * Feature: #35032
   *
-  * @return   string          ###INDEXBROWSER### || ###AZSELECTOR###
+  * @return	string		###INDEXBROWSER### || ###AZSELECTOR###
   * @version  3.9.10
   * @since    3.9.10
   */
@@ -868,7 +876,7 @@ class tx_browser_pi1_navi_indexBrowser
   *                               ###AZSELECTORTABS### will return
   *                               * Feature: #35032
   *
-  * @return   string              ###INDEXBROWSERTABS### || ###AZSELECTORTABS###
+  * @return	string		###INDEXBROWSERTABS### || ###AZSELECTORTABS###
   * @version  3.9.10
   * @since    3.9.10
   */

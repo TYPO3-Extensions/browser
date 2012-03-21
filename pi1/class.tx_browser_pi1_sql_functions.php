@@ -40,43 +40,46 @@
  *
  *
  *
- *   83: class tx_browser_pi1_sql_functions
- *   99:     function __construct($parentObj)
+ *   86: class tx_browser_pi1_sql_functions
+ *  106:     function __construct($parentObj)
  *
  *              SECTION: Synonyms
- *  137:     function query_with_synonyms($arr_data)
- *  338:     function rows_with_synonyms($rows)
+ *  144:     function query_with_synonyms($arr_data)
+ *  345:     function rows_with_synonyms($rows)
  *
  *              SECTION: Order rows
- *  527:     function orderBy_by_piVar()
- *  592:     function make_hierarchical($rows)
- *  617:     function init_hierarchical()
- *  675:     function order_and_addLevel_recurs($rows, $pid = NULL)
- *  751:     function wrap_and_rmLevel($rows)
+ *  534:     function orderBy_by_piVar()
+ *  599:     function make_hierarchical($rows)
+ *  624:     function init_hierarchical()
+ *  682:     function order_and_addLevel_recurs($rows, $pid = NULL)
+ *  758:     function wrap_and_rmLevel($rows)
  *
  *              SECTION: Clean up
- *  822:     function rows_with_cleaned_up_fields($rows)
- *  940:     function replace_statement($str_queryPart)
- *  979:     function clean_up_as_and_alias($arr_tablefields)
- * 1040:     function replace_tablealias($arr_aliastableField)
- * 1094:     function set_tablealias($tableField)
- * 1154:     function get_sql_alias_before($str_tablefield)
- * 1172:     function get_sql_alias_behind($str_tablefield)
- * 1191:     function get_sql_alias_behind_or_before($str_tablefield, $b_before_the_as)
- * 1254:     function get_propper_andWhere($str_andWhere)
- * 1462:     function get_orderBy_tableFields($csvOrderBy)
- * 1512:     function get_descOrAsc($strOrderByField)
- * 1584:     function get_sortTypeAndCase($table, $field)
- * 1747:     function human_readable($str_query)
+ *  829:     function rows_with_cleaned_up_fields($rows)
+ *  947:     function replace_statement($str_queryPart)
+ *  986:     function clean_up_as_and_alias($arr_tablefields)
+ * 1047:     function replace_tablealias($arr_aliastableField)
+ * 1101:     function set_tablealias($tableField)
+ * 1161:     function get_sql_alias_before($str_tablefield)
+ * 1179:     function get_sql_alias_behind($str_tablefield)
+ * 1198:     function get_sql_alias_behind_or_before($str_tablefield, $b_before_the_as)
+ * 1261:     function get_propper_andWhere($str_andWhere)
+ * 1469:     function get_orderBy_tableFields($csvOrderBy)
+ * 1519:     function get_descOrAsc($strOrderByField)
+ * 1591:     function get_sortTypeAndCase($table, $field)
+ * 1773:     function human_readable($str_query)
  *
  *              SECTION: Globals
- * 1799:     function global_all()
- * 1847:     function global_csvSelect()
- * 1969:     function global_csvSearch()
- * 2031:     function global_csvOrderBy()
- * 2186:     function global_stdWrap($str_tsProperty, $str_tsValue, $arr_tsArray)
+ * 1827:     function global_all( )
+ * 1891:     function global_csvSelect()
+ * 2015:     function global_csvSearch( )
+ * 2076:     function global_csvOrderBy()
+ * 2231:     function global_stdWrap($str_tsProperty, $str_tsValue, $arr_tsArray)
  *
- * TOTAL FUNCTIONS: 26
+ *              SECTION: Helpers
+ * 2362:     public function prompt_error( )
+ *
+ * TOTAL FUNCTIONS: 27
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -1665,7 +1668,7 @@ class tx_browser_pi1_sql_functions
       // Set bool to false, if TCA type is none
 
 
-    
+
     /////////////////////////////////////////////////////////////////
     //
     // Get the typeFlag out of the TCA
@@ -1818,9 +1821,8 @@ class tx_browser_pi1_sql_functions
  * global_all( ): Set the globals csvSelect, csvSearch, csvOrderBy, arrLocalTable
  *
  * @return	array		$arr_return : Array in case of an error with the error message
-     *
-     * @version 3.9.9
-     * @since   2.0.0
+ * @version 3.9.9
+ * @since   2.0.0
  */
     function global_all( )
     {
@@ -2007,7 +2009,6 @@ class tx_browser_pi1_sql_functions
  * global_csvSearch( ): Set the global csvSearch. Values are from the TypoScript. If search is empty, search will get the values out of the select statement.
  *
  * @return	boolean		TRUE
- *
  * @version 3.9.9
  * @since   2.0.0
  */
@@ -2362,7 +2363,7 @@ class tx_browser_pi1_sql_functions
   {
     $query = $this->query;
     $error = $this->error;
-    
+
     if( $this->pObj->b_drs_error )
     {
       $level      = 1; // 1 level up
