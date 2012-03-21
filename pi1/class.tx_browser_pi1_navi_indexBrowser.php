@@ -23,7 +23,7 @@
  ***************************************************************/
 
 /**
- * The class tx_browser_pi1_navi_4x bundles methods for navigation like the index browser
+ * The class tx_browser_pi1_navi_indexBrowser bundles methods for navigation like the index browser
  * or the page broser. It is part of the extension browser
  *
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
@@ -38,7 +38,7 @@
  *
  *
  *
- *   67: class tx_browser_pi1_navi_4x
+ *   67: class tx_browser_pi1_navi_indexBrowser
  *  116:     public function __construct($parentObj)
  *
  *              SECTION: Index browser
@@ -64,7 +64,7 @@
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-class tx_browser_pi1_navi_4x
+class tx_browser_pi1_navi_indexBrowser
 {
 
     //////////////////////////////////////////////////////
@@ -132,20 +132,20 @@ class tx_browser_pi1_navi_4x
 
 
 /**
- * indexBrowser_get( ): Get the content of the index browser
+ * get( ): Get the content of the index browser
  *
  * @return	array
  * @version 3.9.9
  * @since   3.9.9
  */
-  public function indexBrowser_get( $content )
+  public function get( $content )
   {
     $arr_return['data']['content'] = $content;
     
     $lDisplay = $this->pObj->lDisplayList['display.'];
 
       // RETURN: requirements aren't met
-    if( ! $this->indexBrowser_checkRequirements( ) )
+    if( ! $this->checkRequirements( ) )
     {
        // #35032, 120320
       $markerIndexbrowser = $this->getMarkerIndexbrowser( );
@@ -156,20 +156,20 @@ class tx_browser_pi1_navi_4x
       // RETURN: requirements aren't met
 
       // Init the table.field
-    $this->indexBrowser_initTableField( );
+    $this->initTableField( );
     
       // Check, if table is the local table
-    $arr_return = $this->indexBrowser_checkTableField( );
+    $arr_return = $this->checkTableField( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
     
-    $this->indexBrowser_initTabs( );
+    $this->initTabs( );
 
 
 
-    $arr_return = $this->indexBrowser_rows( );
+    $arr_return = $this->rows( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -189,7 +189,7 @@ class tx_browser_pi1_navi_4x
 
 
 /**
- * indexBrowser_checkRequirements( ): Checks
+ * checkRequirements( ): Checks
  *                                    * configuration of the flexform
  *                                    * configuration of TS tabs
  *                                    and returns false, if a requirement isn't met
@@ -198,7 +198,7 @@ class tx_browser_pi1_navi_4x
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function indexBrowser_checkRequirements( )
+  private function checkRequirements( )
   {
       // RETURN: index browser is disabled
     if( ! $this->pObj->objFlexform->bool_indexBrowser )
@@ -234,14 +234,14 @@ class tx_browser_pi1_navi_4x
 
 
 /**
- * indexBrowser_initTableField( ):  Set the class var $this->indexBrowserTableField
+ * initTableField( ):  Set the class var $this->indexBrowserTableField
  *                                  Value is the table.field for SQL queries
  *
  * @return  void
  * @version 3.9.10
  * @since   3.9.9
  */
-  private function indexBrowser_initTableField( )
+  private function initTableField( )
   {
 
       // RETURN : table.field for the index browser form is set in the current view
@@ -310,13 +310,13 @@ class tx_browser_pi1_navi_4x
 
 
 /**
- * indexBrowser_checkTableField( ):
+ * checkTableField( ):
  *
  * @return  array   $arr_return
  * @version 3.9.10
  * @since   3.9.9
  */
-  private function indexBrowser_checkTableField( )
+  private function checkTableField( )
   {
     list( $table, $field ) = explode( '.', $this->indexBrowserTableField );
 
@@ -356,13 +356,13 @@ class tx_browser_pi1_navi_4x
 
 
 /**
- * indexBrowser_initTabs( ):  Loops through the tab TS configuration array
+ * initTabs( ):  Loops through the tab TS configuration array
  *                            and inits the class var $this->indexbrowserTab
  * @return  void
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function indexBrowser_initTabs( )
+  private function initTabs( )
   {
       // Default properties
     $defaultWrap            = $this->conf['navigation.']['indexBrowser.']['defaultTabWrap'];
@@ -438,33 +438,31 @@ class tx_browser_pi1_navi_4x
       // LOOP tabs TS configuratione array
 
       // Init special chars
-    $this->indexBrowser_initTabsSpecialChars( $arrInitials );
+    $this->initTabsSpecialChars( $arrInitials );
   }
 
 
 
 /**
- * indexBrowser_initTabsSpecialChars( ): Inits the class var $this->indexbrowserTab['initials']
+ * initTabsSpecialChars( ): Inits the class var $this->indexbrowserTab['initials']
  *
  * @param   array   $arrInitials : initials from the tab TS configuration
  * @return  void
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function indexBrowser_initTabsSpecialChars( $arrInitials )
+  private function initTabsSpecialChars( $arrInitials )
   {
-      // Unique values only
+      // Get initials unique
     $arrInitials  = array_unique( $arrInitials );
-
-      // Move array to a csv string
     $csvInitials  = implode( ',', ( array ) $arrInitials );
 
-      // Init var with all initials
+      // Init vars with all initials
     $this->indexbrowserTab['initials']['all']           = $csvInitials;
     $this->indexbrowserTab['initials']['specialChars']  = null;
     $this->indexbrowserTab['initials']['alphaNum']      = null;
 
-      // UTF-8 decode initials
+      // UTF-8 decode
     $subject = utf8_decode( $csvInitials  );
 
       // Init var with special chars
@@ -489,16 +487,16 @@ class tx_browser_pi1_navi_4x
 
 
 /**
- * indexBrowser_rows( ):
+ * rows( ):
  *
  * @return	boolean   true / false
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function indexBrowser_rows( )
+  private function rows( )
   {
       // Take care of special chars
-    $arr_return = $this->indexBrowser_rowsInitSpecialChars( );
+    $arr_return = $this->rowsInitSpecialChars( );
     if( ! ( empty ( $arr_return ) ) )
     {
       return $arr_return;
@@ -519,12 +517,12 @@ class tx_browser_pi1_navi_4x
 
 
 /**
- * indexBrowser_rowsInitSpecialChars( ):
+ * rowsInitSpecialChars( ):
  *
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function indexBrowser_rowsInitSpecialChars( )
+  private function rowsInitSpecialChars( )
   {
       // RETURN : no special chars
     if( empty ( $this->indexbrowserTab['initials']['specialChars'] ) )
@@ -704,6 +702,14 @@ var_dump( $query );
   {
     $query  = "SET NAMES " . $sqlCharset . ";";
     $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
+
+      // DRS
+    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
   }
 
 
@@ -822,9 +828,9 @@ var_dump( $query );
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi_4x.php'])
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi_indexBrowser.php'])
 {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi_4x.php']);
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi_indexBrowser.php']);
 }
 
 ?>

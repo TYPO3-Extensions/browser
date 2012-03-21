@@ -1592,8 +1592,8 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objNavi = new tx_browser_pi1_navi($this);
 
       // Class with methods for the modeSelector, the pageBrowser and the index browser
-    require_once('class.tx_browser_pi1_navi_4x.php');
-    $this->objNavi4x = new tx_browser_pi1_navi_4x($this);
+    require_once('class.tx_browser_pi1_navi_indexBrowser.php');
+    $this->objNaviIndexBrowser = new tx_browser_pi1_navi_indexBrowser($this);
 
       // Class with localisation methods
     require_once('class.tx_browser_pi1_localisation.php');
@@ -1749,18 +1749,18 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
-      // class.tx_browser_pi1_navi_4x.php
+      // class.tx_browser_pi1_navi_indexBrowser.php
 
       // [Array] The current TypoScript configuration array
-    $this->objNavi4x->conf      = $this->conf;
+    $this->objNaviIndexBrowser->conf      = $this->conf;
       // [Integer] The current mode (from modeselector)
-    $this->objNavi4x->mode      = $this->piVar_mode;
+    $this->objNaviIndexBrowser->mode      = $this->piVar_mode;
       // [String] 'list' or 'single': The current view
-    $this->objNavi4x->view      = $this->view;
+    $this->objNaviIndexBrowser->view      = $this->view;
       // [Array] The TypoScript configuration array of the current view
-    $this->objNavi4x->conf_view = $conf_view;
+    $this->objNaviIndexBrowser->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objNavi4x->conf_path = $conf_path;
+    $this->objNaviIndexBrowser->conf_path = $conf_path;
 
 
 
