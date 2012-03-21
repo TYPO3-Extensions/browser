@@ -39,27 +39,27 @@
  *
  *
  *   68: class tx_browser_pi1_navi_indexBrowser
- *  111:     public function __construct($parentObj)
+ *  115:     public function __construct($parentObj)
  *
  *              SECTION: Index browser
- *  143:     public function get( $content )
- *  203:     private function checkRequirements( )
- *  246:     private function initTableField( )
- *  321:     private function checkTableField( )
- *  368:     private function initTabs( )
- *  457:     private function initTabsSpecialChars( $arrInitials )
- *  499:     private function rows( )
- *  529:     private function rowsInitSpecialChars( )
- *  566:     private function rowsInitSpecialCharsLength( )
- *  625:     private function rowsSumSpecialChars( $row )
+ *  147:     public function get( $content )
+ *  207:     private function checkRequirements( )
+ *  250:     private function initTableField( )
+ *  325:     private function checkTableField( )
+ *  372:     private function initTabs( )
+ *  461:     private function initTabsSpecialChars( $arrInitials )
+ *  503:     private function rows( )
+ *  533:     private function rowsInitSpecialChars( )
+ *  570:     private function rowsInitSpecialCharsLength( )
+ *  629:     private function rowsSumSpecialChars( $row )
  *
  *              SECTION: SQL
- *  751:     private function sqlCharsetGet( )
- *  784:     private function sqlCharsetSet( $sqlCharset )
+ *  764:     private function sqlCharsetGet( )
+ *  797:     private function sqlCharsetSet( $sqlCharset )
  *
  *              SECTION: downward compatibility
- *  824:     private function getMarkerIndexbrowser( )
- *  870:     private function getMarkerIndexbrowserTabs( )
+ *  837:     private function getMarkerIndexbrowser( )
+ *  883:     private function getMarkerIndexbrowserTabs( )
  *
  * TOTAL FUNCTIONS: 15
  * (This index is automatically created/updated by the extension "extdeveval")
