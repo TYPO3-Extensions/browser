@@ -576,7 +576,7 @@ class tx_browser_pi1_navi_4x
     $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
 $this->pObj->dev_var_dump( $row );
 
-    list( $table, $field) = $this->indexBrowserTableField;
+    list( $table, $field) = explode( '.', $this->indexBrowserTableField);
 
     foreach( $row as $char => $length )
     {
