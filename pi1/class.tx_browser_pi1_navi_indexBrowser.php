@@ -88,6 +88,10 @@ class tx_browser_pi1_navi_indexBrowser
   var $indexbrowserTab = array( );
     // [String] table.field of the index browser
   var $indexBrowserTableField = null;
+    // [Array] Array with the find in set statements for special chars
+  var $findInSet = array( );
+    // [Array] Array with special chars initials and their sum
+  var $rowsSumSpecialChars = array( );
 
 
 
@@ -636,6 +640,15 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Set SQL char set to latin1
     $this->sqlCharsetSet( 'latin1' );
+
+      // DRS
+    if ($this->pObj->b_drs_devTodo)
+    {
+      $prompt = 'Query needs an and where in case of filter';
+      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+    }
+      // DRS
+
 
       // LOOP : execute a query for each special char length group
     $sum_initialWiSpecialChars = 0;
