@@ -691,11 +691,11 @@ $this->pObj->dev_var_dump( $row );
     {
       die( __METHOD__ . '(' . __LINE__ . '): row is empty. Query: ' . $query );
     }
-    if( empty ( $row['value'] ) )
+    if( empty ( $row['Value'] ) )
     {
       die( __METHOD__ . '(' . __LINE__ . '): row[value] is empty. Query: ' . $query );
     }
-    return $row['value'];
+    return $row['Value'];
   }
 
 
