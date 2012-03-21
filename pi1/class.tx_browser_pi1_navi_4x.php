@@ -644,7 +644,7 @@ var_dump( $query );
       $this->sqlCharsetSet( $currSqlCharset );
 
         // DRS
-      if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+      if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
       {
         $prompt = $query;
         t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
