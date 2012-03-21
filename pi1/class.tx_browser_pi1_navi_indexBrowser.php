@@ -194,6 +194,20 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 
+
+
+
+
+
+
+    /***********************************************
+    *
+    * init
+    *
+    **********************************************/
+
+
+
 /**
  * checkRequirements( ): Checks
  *                                    * configuration of the flexform
@@ -490,6 +504,20 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // Init var with alpha numeric chars
   }
+
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * rows
+    *
+    **********************************************/
 
 
 
