@@ -757,16 +757,18 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
     }
     if( empty ( $strFindInSet ) )
     {
-      $where = 1;
+      $where = "1";
     }
-    if( ! empty ( $strfindInSet ) )
+    if( ! empty ( $strFindInSet ) )
     {
-      $where = "NOT (" . $strfindInSet . ")";
+      $where = "NOT (" . $strFindInSet . ")";
     }
       // Query for all filter items
     $select   = "COUNT( * ) AS 'count', LEFT ( " . $field . ", 1 ) AS 'initial'";
     $from     = $table;
     $where    = $where . $this->pObj->cObj->enableFields( $table );
+    $where    = $where . $this->pObj->objLocalise->localisationFields_where( $table );
+
     $groupBy  = "LEFT ( " . $field . ", 1 )";
     $orderBy  = "LEFT ( " . $field . ", 1 )";
     $limit    = null;
@@ -1012,6 +1014,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
     $from     = $table;
     $where    = "(" . implode ( " OR ", $arrfindInSet ) . ")";
     $where    = $where . $this->pObj->cObj->enableFields( $table );
+    $where    = $where . $this->pObj->objLocalise->localisationFields_where( $table );
     $groupBy  = "LEFT ( " . $field . ", " . $length . " )";
     $orderBy  = "LEFT ( " . $field . ", " . $length . " )";
     $limit    = null;
