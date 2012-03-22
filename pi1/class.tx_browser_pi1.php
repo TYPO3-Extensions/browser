@@ -1506,16 +1506,6 @@ var_dump( $debugTrail_str );
               '</pre>' . PHP_EOL;
     echo $prompt;
 
-      // RETURN : null content
-    if( $numargs < 1 )
-    {
-      $prompt = '<pre>Given content seems to be null.' . PHP_EOL .
-                '</pre>' . PHP_EOL;
-      echo $prompt;
-      return;
-    }
-      // RETURN : null content
-
     for( $i = 0; $i < $numargs; $i++ )
     {
         // Generate the prompt
