@@ -782,8 +782,26 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
         // Set attributes sum
       $this->indexBrowserTab['attributes'][ $attribute ][ 'sum' ] = $rowSum;
 
-        // Get id of the tab with the current attribute
-      $tabId    = $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ];
+        // Get id of the tab for all attributes
+      $tabId    = $this->indexBrowserTab[ 'tabSpecial' ][ 'all' ];
+        // Get sum of the current tab
+      $currSum  = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
+        // Add row sum to current sum
+      $sum      = $currSum + $rowSum;
+        // Allocates result to the current tab
+      $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
+
+        // Get id of the tab others or of the tab with the current attribute
+      if( isset ( $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ] ) )
+      {
+        $tabId  = $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ];
+      }
+      else
+      {
+        $tabId  = $this->indexBrowserTab[ 'tabSpecial' ][ 'others' ];
+      }
+        // Get id of the tab others or of the tab with the current attribute
+
         // Get sum of the current tab
       $currSum  = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
         // Add row sum to current sum
