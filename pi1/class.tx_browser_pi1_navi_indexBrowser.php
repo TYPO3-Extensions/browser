@@ -47,7 +47,7 @@
  *  250:     private function initTableField( )
  *  325:     private function checkTableField( )
  *  372:     private function initTabs( )
- *  461:     private function initTabsSpecialChars( $arrInitials )
+ *  461:     private function initTabsSpecialChars( $arrTabAttributes )
  *  503:     private function rows( )
  *  533:     private function rowsSpecialChars( )
  *  570:     private function rowsSpecialChars_setLength( )
@@ -411,10 +411,33 @@ class tx_browser_pi1_navi_indexBrowser
 
       if( $conf_tabs[$tabId . '.']['valuesCSV'] )
       {
-        $valuesCSV      = $conf_tabs[$tabId . '.']['valuesCSV'];
-        $arrInitials[]  = str_replace(' ', null, $valuesCSV);
+        $csvTabAttributes   = $conf_tabs[$tabId . '.']['valuesCSV'];
+        $arrTabAttributes[] = str_replace(' ', null, $csvTabAttributes);
+        $currKey = key( $arrTabAttributes );
+        foreach( $arrTabAttributes[ $currKey ] as $attribute )
+        {
+            // DRS
+          if( isset ( $arrAttributes[ $attribute ]) )
+          {
+            if( $this->pObj->b_drs_navi )
+            {
+              $prompt = 'The tab attribute ' . $attribute . ' is part of two tabs at least!';
+              t3lib_div::devlog( '[ERROR/NAVI] ' . $prompt, $this->pObj->extKey, 3 );
+              $prompt = 'You will get an unproper result for the index browser';
+              t3lib_div::devlog( '[WARN/NAVI] ' . $prompt, $this->pObj->extKey, 2 );
+              $prompt = $attribute . ' is part of tab[' . $arrAttributes[ $attribute ][ 'initialLabel' ] . '] '.
+                        ' and of tab[' . $tabLabel . '] at least!';
+              t3lib_div::devlog( '[WARN/NAVI] ' . $prompt, $this->pObj->extKey, 2 );
+              $prompt = 'Please take care of a proper TypoScript configuration!';
+              t3lib_div::devlog( '[HELP/NAVI] ' . $prompt, $this->pObj->extKey, 1 );
+            }
+          }
+            // DRS
+          $arrAttributes[ $attribute ][ 'initialLabel' ]  = $tabLabel;
+          $arrAttributes[ $attribute ][ 'initialId' ]     = $tabId;
+        }
       }
-
+$this->pObj->dev_var_dump( $arrAttributes );
         // Tab label stdWrap
       if( $conf_tabs[$tabId . '.']['stdWrap.'] )
       {
@@ -459,7 +482,7 @@ class tx_browser_pi1_navi_indexBrowser
       // LOOP tabs TS configuratione array
 
       // Init special chars
-    $this->initTabsSpecialChars( $arrInitials );
+    $this->initTabsSpecialChars( $arrTabAttributes );
   }
 
 
@@ -467,16 +490,16 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * initTabsSpecialChars( ): Inits the class var $this->indexbrowserTab['initials']
  *
- * @param	array		$arrInitials : initials from the tab TS configuration
+ * @param	array		$arrTabAttributes : initials from the tab TS configuration
  * @return	void
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function initTabsSpecialChars( $arrInitials )
+  private function initTabsSpecialChars( $arrTabAttributes )
   {
       // Get initials unique
-    $arrInitials  = array_unique( $arrInitials );
-    $csvInitials  = implode( ',', ( array ) $arrInitials );
+    $arrTabAttributes  = array_unique( $arrTabAttributes );
+    $csvInitials  = implode( ',', ( array ) $arrTabAttributes );
 
       // Init vars with all initials
     $this->indexbrowserTab['initials']['all']           = $csvInitials;
@@ -579,8 +602,7 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Get the sum for each special char initial
     $arr_return = $this->rowsSpecialChars_setSum( $row );
-$this->pObj->dev_var_dump( $this->rowsSpecialChars_setSum );
-        if( $arr_return['error']['status'] )
+    if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
@@ -761,7 +783,7 @@ $this->pObj->dev_var_dump( $this->rowsSpecialChars_setSum );
       {
         $this->rowsSpecialChars_setSum = $rows;
       }
-
+$this->pObj->dev_var_dump( $this->rowsSpecialChars_setSum, $this->indexbrowserTab );
 
     }
       // LOOP : execute a query for each special char length group
