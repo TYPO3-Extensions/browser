@@ -1,3 +1,8 @@
+3.9.11
+  120322
+  Bugfix
+  * #13186: Ordering: none -> 'none'
+
 3.9.10
   120320
   Improvements

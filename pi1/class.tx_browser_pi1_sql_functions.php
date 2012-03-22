@@ -1660,7 +1660,7 @@ class tx_browser_pi1_sql_functions
       // #34966, dwildt+
     if( $bool_tcaConfig )
     {
-      if( $GLOBALS['TCA'][$table]['columns'][$field]['config']['type'] == none )
+      if( $GLOBALS['TCA'][$table]['columns'][$field]['config']['type'] == 'none' )
       {
         $bool_tcaConfig = false;
       }

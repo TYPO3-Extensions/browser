@@ -604,6 +604,7 @@ class tx_browser_pi1_navi
       }
 
       $markerArray['###LI_CLASS###'] = $liClass;
+        // #35032, 120320
       $markerIndexbrowserTabs = $this->getMarkerIndexbrowserTabs( );
       $tmplIndexBrowserTabs   = $this->pObj->cObj->getSubpart($template, $markerIndexbrowserTabs);
       $tabs .= $this->pObj->cObj->substituteMarkerArray($tmplIndexBrowserTabs, $markerArray);
@@ -619,12 +620,12 @@ class tx_browser_pi1_navi
     $markerArray['###UL_MODE###'] = $this->mode;
     $markerArray['###UL_VIEW###'] = $this->view;
      // #35032, 120320
-    $markerIndexbrowser = $this->getMarkerIndexbrowser( );
-    $tmplIndexBrowser   = $this->pObj->cObj->getSubpart($template, $markerIndexbrowser);
-    $tmplIndexBrowser  = $this->pObj->cObj->substituteMarkerArray($tmplIndexBrowser, $markerArray);
+    $markerIndexbrowser     = $this->getMarkerIndexbrowser( );
+    $tmplIndexBrowser       = $this->pObj->cObj->getSubpart($template, $markerIndexbrowser);
+    $tmplIndexBrowser       = $this->pObj->cObj->substituteMarkerArray($tmplIndexBrowser, $markerArray);
     $markerIndexbrowserTabs = $this->getMarkerIndexbrowserTabs( );
-    $tmplIndexBrowser   = $this->pObj->cObj->substituteSubpart($tmplIndexBrowser, $markerIndexbrowserTabs, $tabs, true);
-    $template       = $this->pObj->cObj->substituteSubpart($template, $markerIndexbrowser, $tmplIndexBrowser, true);
+    $tmplIndexBrowser       = $this->pObj->cObj->substituteSubpart($tmplIndexBrowser, $markerIndexbrowserTabs, $tabs, true);
+    $template               = $this->pObj->cObj->substituteSubpart($template, $markerIndexbrowser, $tmplIndexBrowser, true);
     // Process the markers, subpart and template
 
 
