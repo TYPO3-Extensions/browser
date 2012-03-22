@@ -53,12 +53,12 @@
  *
  *              SECTION: rows
  *  585:     private function rows( )
- *  615:     private function rowsSpecialChars( )
- *  652:     private function rowsSpecialChars_setLength( )
- *  711:     private function rowsSpecialChars_addSum( $row )
- *  759:     private function rowsSpecialChars_addSumToTab( $res )
- *  785:     private function resSqlSpecialChars_count( $length, $arrfindInSet, $currSqlCharset )
- *  872:     private function sqlSpecialCharsFindInSet_set( $row )
+ *  615:     private function specialChars( )
+ *  652:     private function specialChars_setLength( )
+ *  711:     private function specialChars_addSum( $row )
+ *  759:     private function specialChars_addSumToTab( $res )
+ *  785:     private function specialChars_sqlResCount( $length, $arrfindInSet, $currSqlCharset )
+ *  872:     private function specialChars_setFindInSet( $row )
  *
  *              SECTION: SQL
  *  911:     private function sqlCharsetGet( )
@@ -585,7 +585,7 @@ class tx_browser_pi1_navi_indexBrowser
   private function rows( )
   {
       // Take care of special chars
-    $arr_return = $this->rowsSpecialChars( );
+    $arr_return = $this->specialChars( );
     if( ! ( empty ( $arr_return ) ) )
     {
       return $arr_return;
@@ -605,14 +605,31 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 
+
+
+
+
+
+
+    /***********************************************
+    *
+    * Attributes special chars
+    *
+    **********************************************/
+
+
+
+
+
+
 /**
- * rowsSpecialChars( ):
+ * specialChars( ):
  *
  * @return	[type]		...
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function rowsSpecialChars( )
+  private function specialChars( )
   {
       // RETURN : no special chars
     if( empty ( $this->indexbrowserTab['initials']['specialChars'] ) )
@@ -622,7 +639,7 @@ class tx_browser_pi1_navi_indexBrowser
       // RETURN : no special chars
 
       // Get a row with the SQL length for each special char
-    $arr_return = $this->rowsSpecialChars_setLength( );
+    $arr_return = $this->specialChars_setLength( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -632,7 +649,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Get a row with the SQL length for each special char
 
       // Get the sum for each special char initial
-    $arr_return = $this->rowsSpecialChars_addSum( $row );
+    $arr_return = $this->specialChars_addSum( $row );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -643,13 +660,13 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * rowsSpecialChars_setLength( ): Return a row with all special chars and their SQL length
+ * specialChars_setLength( ): Return a row with all special chars and their SQL length
  *
  * @return	array		$arr_return : row with all special chars and their SQL length
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function rowsSpecialChars_setLength( )
+  private function specialChars_setLength( )
   {
       // Build the select statement parts for the length of each special char
     $arrStatement     = array( );
@@ -701,14 +718,14 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * rowsSpecialChars_addSum( ):
+ * specialChars_addSum( ):
  *
  * @param	[type]		$$row: ...
  * @return	[type]		...
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function rowsSpecialChars_addSum( $row )
+  private function specialChars_addSum( $row )
   {
       // Get current table.field of the index browser
     list( $table, $field) = explode( '.', $this->indexBrowserTableField);
@@ -719,13 +736,13 @@ class tx_browser_pi1_navi_indexBrowser
     $this->sqlCharsetSet( 'latin1' );
 
       // Set class var findInSet
-    $this->sqlSpecialCharsFindInSet_set( $row );
+    $this->specialChars_setFindInSet( $row );
 
       // LOOP : find in set for each special char length group
     foreach( $this->findInSet as $length => $arrfindInSet )
     {
         // SQL result with sum for records with a sepecial char as first character
-      $arr_return = $this->resSqlSpecialChars_count( $length, $arrfindInSet, $currSqlCharset );
+      $arr_return = $this->specialChars_sqlResCount( $length, $arrfindInSet, $currSqlCharset );
       if( $arr_return['error']['status'] )
       {
         return $arr_return;
@@ -734,7 +751,7 @@ class tx_browser_pi1_navi_indexBrowser
         // SQL result with sum for records with a sepecial char as first character
 
         // Add the sum to the tab with the special char attribute
-      $this->rowsSpecialChars_addSumToTab( $res );
+      $this->specialChars_addSumToTab( $res );
 
         // Free SQL result
       $GLOBALS['TYPO3_DB']->sql_free_result( $res );
@@ -749,14 +766,14 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * rowsSpecialChars_addSumToTab( ):
+ * specialChars_addSumToTab( ):
  *
  * @param	[type]		$res: ...
  * @return	[type]		...
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function rowsSpecialChars_addSumToTab( $res )
+  private function specialChars_addSumToTab( $res )
   {
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
@@ -773,7 +790,7 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * resSqlSpecialChars_count( ):
+ * specialChars_sqlResCount( ):
  *
  * @param	[type]		$$row: ...
  * @param	[type]		$arrfindInSet: ...
@@ -782,7 +799,7 @@ class tx_browser_pi1_navi_indexBrowser
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function resSqlSpecialChars_count( $length, $arrfindInSet, $currSqlCharset )
+  private function specialChars_sqlResCount( $length, $arrfindInSet, $currSqlCharset )
   {
     static $drsPrompt = true;
 
@@ -862,14 +879,14 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * sqlSpecialCharsFindInSet_set( ):
+ * specialChars_setFindInSet( ):
  *
  * @param	[type]		$$row: ...
  * @return	[type]		...
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function sqlSpecialCharsFindInSet_set( $row )
+  private function specialChars_setFindInSet( $row )
   {
       // Get current table.field of the index browser
     list( $table, $field) = explode( '.', $this->indexBrowserTableField);
