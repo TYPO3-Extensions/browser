@@ -500,7 +500,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
       $arrCsvAttributes[] = $csvAttributes;
 
         // Init tab attributes
-      $this->tabs_initAttributes( $csvAttributes  );
+      $this->tabs_initAttributes( $csvAttributes, $tabLabel, $tabId );
         // Init tab properties
       $this->tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $defaultDisplayWoItems );
     }
@@ -520,7 +520,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
  * @version 3.9.11
  * @since   3.9.10
  */
-  private function tabs_initAttributes( $csvAttributes )
+  private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
   {
       // RETURN : no attributes
     if( empty ( $csvAttributes ) )
