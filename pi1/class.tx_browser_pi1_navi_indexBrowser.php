@@ -295,6 +295,14 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
  */
   private function requirements_check( )
   {
+      // DRS
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Index browser should not handled in a localised context!';
+      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+    }
+      // DRS
+
       // RETURN false : index browser is disabled
     if( ! $this->pObj->objFlexform->bool_indexBrowser )
     {
@@ -711,13 +719,63 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
       // SQL result with sum for records with a sepecial char as first character
 
       // Add the sum to the tab with the special char attribute
-    //$this->specialChars_addSumToTab( $res );
+    $this->chars_addSumToTab( $res );
 
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
       // Reset SQL char set
     $this->sqlCharsetSet( $currSqlCharset );
+  }
+
+
+
+/**
+ * chars_addSumToTab( ): Updates the sum in the arrays tabIds and attributes
+ *                       of the class var $indexBrowserTab
+ *
+ * @param	array		$res  : SQL result
+ * @version 3.9.11
+ * @since   3.9.11
+ */
+  private function chars_addSumToTab( $res )
+  {
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+        // Get values from the SQL row
+      $attribute  = $row[ 'initial' ];
+      $rowSum     = $row[ 'count' ];
+
+        // Set attributes sum
+      $this->indexBrowserTab['attributes'][ $attribute ][ 'sum' ] = $rowSum;
+
+        // Get id of the tab for all attributes
+      $tabId    = $this->indexBrowserTab[ 'tabSpecial' ][ 'all' ];
+        // Get sum of the current tab
+      $currSum  = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
+        // Add row sum to current sum
+      $sum      = $currSum + $rowSum;
+        // Allocates result to the current tab
+      $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
+
+        // Get id of the tab others or of the tab with the current attribute
+      if( isset ( $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ] ) )
+      {
+        $tabId  = $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ];
+      }
+      else
+      {
+        $tabId  = $this->indexBrowserTab[ 'tabSpecial' ][ 'others' ];
+      }
+        // Get id of the tab others or of the tab with the current attribute
+
+        // Get sum of the current tab
+      $currSum  = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
+        // Add row sum to current sum
+      $sum      = $currSum + $rowSum;
+        // Allocates result to the current tab
+      $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
+    }
   }
 
 
@@ -732,13 +790,13 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
  * @param	string		$currSqlCharset : Current SQL charset for reset in error case
  * @return	array		$arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.11
- * @since   3.9.10
+ * @since   3.9.11
  */
   private function chars_resSqlCount( $currSqlCharset )
   {
     static $drsPrompt = true;
 
-    // DRS
+      // DRS
     if( $drsPrompt && $this->pObj->b_drs_devTodo )
     {
       $prompt = 'Query needs an and where in case of filter';
@@ -938,7 +996,6 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
  *                              of the class var $indexBrowserTab
  *
  * @param	array		$res  : SQL result
- * @return	[type]		...
  * @version 3.9.11
  * @since   3.9.10
  */
