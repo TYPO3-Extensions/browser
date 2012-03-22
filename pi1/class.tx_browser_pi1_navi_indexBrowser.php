@@ -703,9 +703,164 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function rowsSpecialChars_addSum( $row )
   {
+      // Get current table.field of the index browser
+    list( $table, $field) = explode( '.', $this->indexBrowserTableField);
+
       // Get current SQL char set
     $currSqlCharset = $this->sqlCharsetGet( );
+      // Set SQL char set to latin1
+    $this->sqlCharsetSet( 'latin1' );
 
+      // Set class var findInSet
+    $this->sqlSpecialCharsFindInSet_set( $row );
+
+      // LOOP : find in set for each special char length group
+    foreach( $this->findInSet as $length => $arrfindInSet )
+    {
+        // SQL result with sum for records with a sepecial char as first character
+      $arr_return = $this->resSqlSpecialChars_count( $length, $arrfindInSet, $currSqlCharset );
+      if( $arr_return['error']['status'] )
+      {
+        return $arr_return;
+      }
+      $res = $arr_return['data']['res'];
+        // SQL result with sum for records with a sepecial char as first character
+
+        // Add the sum to the tab with the special char attribute
+      $this->rowsSpecialChars_addSumToTab( $res );
+
+        // Free SQL result
+      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+    }
+      // LOOP : find in set for each special char length group
+
+      // Reset SQL char set
+    $this->sqlCharsetSet( $currSqlCharset );
+  }
+
+
+
+/**
+ * rowsSpecialChars_addSumToTab( ):
+ *
+ * @param	[type]		$res: ...
+ * @return	[type]		...
+ * @version 3.9.10
+ * @since   3.9.10
+ */
+  private function rowsSpecialChars_addSumToTab( $res )
+  {
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+      $attribute  = $row[ 'initial' ];
+      $count      = $row[ 'count' ];
+      $tabId      = $this->indexbrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ];
+      $currSum    = $this->indexbrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
+      $sum        = $currSum + $count;
+      $this->indexbrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ]       = $sum;
+      $this->indexbrowserTab['attributes'][ $attribute ][ 'sum' ] = $sum;
+    }
+  }
+
+
+
+/**
+ * resSqlSpecialChars_count( ):
+ *
+ * @param	[type]		$$row: ...
+ * @return	[type]		...
+ * @version 3.9.10
+ * @since   3.9.10
+ */
+  private function resSqlSpecialChars_count( $length, $arrfindInSet, $currSqlCharset )
+  {
+    static $drsPrompt = true;
+
+    // DRS
+    if( $drsPrompt && $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Query needs an and where in case of filter';
+      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+      $drsPrompt = false;
+    }
+      // DRS
+
+      // Get current table.field of the index browser
+    list( $table, $field) = explode( '.', $this->indexBrowserTableField);
+
+      // Query for all filter items
+    $select   = "COUNT( * ) AS 'count', LEFT ( " . $field . ", " . $length . " ) AS 'initial'";
+    $from     = $table;
+    $where    = "(" . implode ( " OR ", $arrfindInSet ) . ")";
+    $where    = $where . $this->pObj->cObj->enableFields( $table );
+    $groupBy  = "LEFT ( " . $field . ", " . $length . " )";
+    $orderBy  = "LEFT ( " . $field . ", " . $length . " )";
+    $limit    = null;
+
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Get query
+
+      // Execute query
+    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+      // Execute query
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+        // Free SQL result
+      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+        // Reset SQL charset
+      $this->sqlCharsetSet( $currSqlCharset );
+      $this->pObj->objSqlFun->query = $query;
+      $this->pObj->objSqlFun->error = $error;
+      $arr_return = $this->pObj->objSqlFun->prompt_error( );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+      // Return SQL result
+    $arr_return['data']['res'] = $res;
+    return $arr_return;
+  }
+
+
+
+/**
+ * sqlSpecialCharsFindInSet_set( ):
+ *
+ * @param	[type]		$$row: ...
+ * @return	[type]		...
+ * @version 3.9.10
+ * @since   3.9.10
+ */
+  private function sqlSpecialCharsFindInSet_set( $row )
+  {
       // Get current table.field of the index browser
     list( $table, $field) = explode( '.', $this->indexBrowserTableField);
 
@@ -719,103 +874,7 @@ class tx_browser_pi1_navi_indexBrowser
       $this->findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $field . ", " . $length . " ), '" . $char . "' )";
     }
       // LOOP : generate a find in set statement for each special char
-
-      // Set SQL char set to latin1
-    $this->sqlCharsetSet( 'latin1' );
-
-      // DRS
-    if ($this->pObj->b_drs_devTodo)
-    {
-      $prompt = 'Query needs an and where in case of filter';
-      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-    }
-      // DRS
-
-
-      // LOOP : execute a query for each special char length group
-    $sum_initialWiSpecialChars = 0;
-    foreach( $this->findInSet as $length => $arrfindInSet )
-    {
-        // Query for all filter items
-      $select   = "COUNT( * ) AS 'count', LEFT ( " . $field . ", " . $length . " ) AS 'initial'";
-      $from     = $table;
-      $where    = "(" . implode ( " OR ", $arrfindInSet ) . ")";
-      $where    = $where . $this->pObj->cObj->enableFields( $table );
-      $groupBy  = "LEFT ( " . $field . ", " . $length . " )";
-      $orderBy  = "LEFT ( " . $field . ", " . $length . " )";
-      $limit    = null;
-
-        // Get query
-      $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-                                      (
-                                        $select,
-                                        $from,
-                                        $where,
-                                        $groupBy,
-                                        $orderBy,
-                                        $limit
-                                      );
-        // Get query
-
-        // Execute query
-      $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-                                      (
-                                        $select,
-                                        $from,
-                                        $where,
-                                        $groupBy,
-                                        $orderBy,
-                                        $limit
-                                      );
-        // Execute query
-
-        // Error management
-      $error = $GLOBALS['TYPO3_DB']->sql_error( );
-      if( $error )
-      {
-        $this->sqlCharsetSet( $currSqlCharset );
-        $this->pObj->objSqlFun->query = $query;
-        $this->pObj->objSqlFun->error = $error;
-        $arr_return = $this->pObj->objSqlFun->prompt_error( );
-        return $arr_return;
-      }
-        // Error management
-
-        // DRS
-      if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-      {
-        $prompt = $query;
-        t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-      }
-        // DRS
-
-        // Reset SQL char set
-      $this->sqlCharsetSet( $currSqlCharset );
-
-        // LOOP build the rows
-      while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
-      {
-        $sum_initialWiSpecialChars++;
-        $attribute  = $row[ 'initial' ];
-        $count      = $row[ 'count' ];
-        $tabId      = $this->indexbrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ];
-        $currSum    = $this->indexbrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
-        $sum        = $currSum + $count;
-        $this->indexbrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ]       = $sum;
-        $this->indexbrowserTab['attributes'][ $attribute ][ 'sum' ] = $sum;
-      }
-        // LOOP build the rows
-
-        // Free SQL result
-      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-
-$this->pObj->dev_var_dump( $this->indexbrowserTab );
-
-    }
-      // LOOP : execute a query for each special char length group
-
   }
-
 
 
 
