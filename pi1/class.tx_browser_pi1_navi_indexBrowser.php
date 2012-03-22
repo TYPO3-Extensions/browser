@@ -418,7 +418,7 @@ class tx_browser_pi1_navi_indexBrowser
         foreach( $attributes as $attribute )
         {
             // DRS
-          if( isset ( $arrAttributesTab[ $attribute ]) )
+          if( isset ( $this->indexbrowserTab['attributes'][ $attribute ]) )
           {
             if( $this->pObj->b_drs_navi )
             {
@@ -426,7 +426,7 @@ class tx_browser_pi1_navi_indexBrowser
               t3lib_div::devlog( '[ERROR/NAVI] ' . $prompt, $this->pObj->extKey, 3 );
               $prompt = 'You will get an unproper result for the index browser';
               t3lib_div::devlog( '[WARN/NAVI] ' . $prompt, $this->pObj->extKey, 2 );
-              $prompt = $attribute . ' is part of tab[' . $arrAttributesTab[ $attribute ][ 'initialLabel' ] . '] '.
+              $prompt = $attribute . ' is part of tab[' . $this->indexbrowserTab['attributes'][ $attribute ][ 'tabLabel' ] . '] '.
                         ' and of tab[' . $tabLabel . '] at least!';
               t3lib_div::devlog( '[WARN/NAVI] ' . $prompt, $this->pObj->extKey, 2 );
               $prompt = 'Please take care of a proper TypoScript configuration!';
@@ -434,8 +434,8 @@ class tx_browser_pi1_navi_indexBrowser
             }
           }
             // DRS
-          $arrAttributesTab[ $attribute ][ 'initialLabel' ]  = $tabLabel;
-          $arrAttributesTab[ $attribute ][ 'initialId' ]     = $tabId;
+          $this->indexbrowserTab['attributes'][ $attribute ][ 'tabLabel' ] = $tabLabel;
+          $this->indexbrowserTab['attributes'][ $attribute ][ 'tabId' ]    = $tabId;
         }
       }
         // Tab label stdWrap
@@ -480,7 +480,7 @@ class tx_browser_pi1_navi_indexBrowser
         // CONTINUE : tab with special value 'others'
     }
       // LOOP tabs TS configuratione array
-$this->pObj->dev_var_dump( $arrAttributesTab );
+$this->pObj->dev_var_dump( $this->indexbrowserTab );
 
       // Init special chars
     $this->initTabsSpecialChars( $arrCsvAttributes );
