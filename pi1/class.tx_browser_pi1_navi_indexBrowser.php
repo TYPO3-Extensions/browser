@@ -495,6 +495,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
         // CONTINUE : key is an array
 
         // Get attributes
+      $csvAttributes      = $conf_tabs[$tabId . '.']['valuesCSV'];
       $csvAttributes      = str_replace(' ', null, $csvAttributes);
       $arrCsvAttributes[] = $csvAttributes;
 
