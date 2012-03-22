@@ -750,11 +750,22 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
       // Get current table.field of the index browser
     list( $table, $field) = explode( '.', $this->indexBrowserTableField);
 
+    $strFindInSet = null;
+    foreach( $this->findInSet as $length => $arrfindInSet )
+    {
+      $strFindInSet = $strFindInSet . implode ( " OR ", $arrfindInSet );
+    }
+    if( empty ( $strFindInSet ) )
+    {
+      $where = 1;
+    }
+    if( ! empty ( $strfindInSet ) )
+    {
+      $where = "NOT (" . $strfindInSet . ")";
+    }
       // Query for all filter items
     $select   = "COUNT( * ) AS 'count', LEFT ( " . $field . ", 1 ) AS 'initial'";
     $from     = $table;
-    //$where    = "(" . implode ( " OR ", $arrfindInSet ) . ")";
-    $where    = "";
     $where    = $where . $this->pObj->cObj->enableFields( $table );
     $groupBy  = "LEFT ( " . $field . ", 1 )";
     $orderBy  = "LEFT ( " . $field . ", 1 )";
