@@ -796,10 +796,11 @@ class tx_browser_pi1_viewlist
             TYPO3 Browser Error
           </h1>
           <h2>
-            EN: Subpart marker is empty
+            EN: Subpart of ' . $str_marker . ' is empty
           </h2>
           <p>
-            English: subpart marker is empty.<br />
+            English: subpart is empty.<br />
+            Maybe there is no HTML template, maybe there is a HTML template without the subpart.<br />
             Please take care of a proper TypoScript.<br />
           </p>
           <h2>
@@ -807,6 +808,7 @@ class tx_browser_pi1_viewlist
           </h2>
           <p>
             Deutsch: der Subpartmarker ist leer.<br />
+            Vielleicht fehlt das HTML-Template, vielleicht fehlt im HTML-Teplate der Subpart.<br />
             Bitte k&uuml;mmere Dich um ein korrektes TypoScript.<br />
           </p>
           <p>
