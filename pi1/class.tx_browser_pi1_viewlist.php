@@ -800,16 +800,14 @@ class tx_browser_pi1_viewlist
             EN: Subpart of "' . $str_marker . '" is empty
           </h2>
           <p>
-            English: subpart is empty.<br />
-            Maybe there is no HTML template, maybe there is a HTML template without the subpart.<br />
+            English: Maybe the HTML template doesn\'t have the subpart?<br />
             Please take care of a proper TypoScript.<br />
           </p>
           <h2>
-            DE: Subpartmarker fehlt
+            DE: Subpart von "' . $str_marker . '" ist leer
           </h2>
           <p>
-            Deutsch: der Subpart von "' . $str_marker . '" ist leer.<br />
-            Vielleicht fehlt das HTML-Template, vielleicht fehlt im HTML-Teplate der Subpart.<br />
+            Deutsch: Fehlt im HTML-Teplate der Subpart?<br />
             Bitte k&uuml;mmere Dich um ein korrektes TypoScript.<br />
           </p>
           <p>

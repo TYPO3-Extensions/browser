@@ -1472,7 +1472,7 @@ var_dump( $debugTrail_str );
  *
  * @param	mixed		$content : String or array for prompting in the frontend
  * @return	void
- * @version 3.9.9
+ * @version 3.9.11
  * @since   3.9.9
  */
   public function dev_var_dump( $content )
@@ -1505,6 +1505,16 @@ var_dump( $debugTrail_str );
     $prompt = '<pre>' . $debugTrail['prompt'] . PHP_EOL .
               '</pre>' . PHP_EOL;
     echo $prompt;
+
+      // RETURN : null content
+    if( $numargs < 1 )
+    {
+      $prompt = '<pre>Given content seems to be null.' . PHP_EOL .
+                '</pre>' . PHP_EOL;
+      echo $prompt;
+      return;
+    }
+      // RETURN : null content
 
     for( $i = 0; $i < $numargs; $i++ )
     {
