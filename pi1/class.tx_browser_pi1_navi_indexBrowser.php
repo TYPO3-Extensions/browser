@@ -43,34 +43,34 @@
  *
  *              SECTION: Main
  *  182:     public function get( $content )
- *  233:     private function get_tabs( )
+ *  241:     private function get_tabs( )
  *
  *              SECTION: requirements
- *  280:     private function requirements_check( )
- *  322:     private function tableField_check( )
- *  369:     private function tableField_init( )
+ *  288:     private function requirements_check( )
+ *  333:     private function tableField_check( )
+ *  383:     private function tableField_init( )
  *
  *              SECTION: tabs
- *  459:     private function tabs_init( )
- *  520:     private function tabs_initAttributes( $csvAttributes )
- *  572:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
- *  625:     private function tabs_initSpecialChars( $arrCsvAttributes )
+ *  472:     private function tabs_init( )
+ *  521:     private function tabs_initAttributes( $csvAttributes )
+ *  573:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+ *  626:     private function tabs_initSpecialChars( $arrCsvAttributes )
  *
  *              SECTION: special chars
- *  684:     private function specialChars( )
- *  722:     private function specialChars_addSum( $row )
- *  770:     private function specialChars_addSumToTab( $res )
- *  796:     private function specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
- *  883:     private function specialChars_setSqlFindInSet( $row )
- *  909:     private function specialChars_setSqlLength( )
+ *  685:     private function specialChars( )
+ *  724:     private function specialChars_addSum( $row )
+ *  773:     private function specialChars_addSumToTab( $res )
+ *  802:     private function specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
+ *  888:     private function specialChars_setSqlFindInSet( $row )
+ *  914:     private function specialChars_setSqlLength( )
  *
  *              SECTION: SQL charset
- *  980:     private function sqlCharsetGet( )
- * 1013:     private function sqlCharsetSet( $sqlCharset )
+ *  986:     private function sqlCharsetGet( )
+ * 1019:     private function sqlCharsetSet( $sqlCharset )
  *
  *              SECTION: downward compatibility
- * 1053:     private function getMarkerIndexbrowser( )
- * 1099:     private function getMarkerIndexbrowserTabs( )
+ * 1059:     private function getMarkerIndexbrowser( )
+ * 1105:     private function getMarkerIndexbrowserTabs( )
  *
  * TOTAL FUNCTIONS: 20
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -326,7 +326,7 @@ class tx_browser_pi1_navi_indexBrowser
  *                      correspondends with the local table.
  *                      Sets the class var $indexBrowserTableField.
  *
- * @return	array       $arr_return : Contains an error message in case of an error
+ * @return	array		$arr_return : Contains an error message in case of an error
  * @version 3.9.11
  * @since   3.9.9
  */
@@ -513,8 +513,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * tabs_initAttributes( ):  Sets the array attributes of the class var $indexBrowserTab
  *
- * @param   string          $csvAttributes  : attributes
- * @return	array           $arr_return     : Contains an error message in case of an error
+ * @param	string		$csvAttributes  : attributes
+ * @return	array		$arr_return     : Contains an error message in case of an error
  * @version 3.9.11
  * @since   3.9.10
  */
@@ -562,11 +562,11 @@ class tx_browser_pi1_navi_indexBrowser
  * tabs_initProperties( ):  Sets the elements tabIds and tabLabels of the class var $indexBrowserTab
  *                          Updates the element tabSpecial.
  *
- * @param   array     $conf_tabs      : TS configuration array
- * @param   integer		$tabId          : Current tab ID for TS configuration array
- * @param   string		$tabLabel       : Label of the current tab
- * @param   boolean		$displayWoItems : Default value for displaying tabs without any hit
- * @return	array     $arr_return     : Contains an error message in case of an error
+ * @param	array		$conf_tabs      : TS configuration array
+ * @param	integer		$tabId          : Current tab ID for TS configuration array
+ * @param	string		$tabLabel       : Label of the current tab
+ * @param	boolean		$displayWoItems : Default value for displaying tabs without any hit
+ * @return	array		$arr_return     : Contains an error message in case of an error
  * @version 3.9.11
  * @since   3.9.10
  */
@@ -678,7 +678,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * specialChars( ): Updates sum / number of hits of sepcial chars
  *
- * @return	array   $arr_return : Contains an erreor message in case of an error
+ * @return	array		$arr_return : Contains an erreor message in case of an error
  * @version 3.9.11
  * @since   3.9.10
  */
@@ -716,8 +716,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * specialChars_addSum( ): Updates sum / number of hits of sepcial chars
  *
- * @param   array		$row        : Row with special chars and their SQL length
- * @return	array   $arr_return : Contains an erreor message in case of an error
+ * @param	array		$row        : Row with special chars and their SQL length
+ * @return	array		$arr_return : Contains an erreor message in case of an error
  * @version 3.9.11
  * @since   3.9.10
  */
@@ -765,7 +765,8 @@ class tx_browser_pi1_navi_indexBrowser
  * specialChars_addSumToTab( ): Updates the sum in the arrays tabIds and attributes
  *                              of the class var $indexBrowserTab
  *
- * @param   array		$res  : SQL result
+ * @param	array		$res  : SQL result
+ * @return	[type]		...
  * @version 3.9.11
  * @since   3.9.10
  */
@@ -789,11 +790,12 @@ class tx_browser_pi1_navi_indexBrowser
  * specialChars_resSqlCount( ): SQL query and execution for counting
  *                              special char initials
  *
- * @param   integer             $length         : SQL length of special chars group
- * @param   array               $arrfindInSet   : FIND IN SET statement with proper length
- * @param   string              $currSqlCharset : Current SQL charset for reset in error case
- * @return	array               $arr_return     : SQL ressource or
  *                                                an error message in case of an error
+ *
+ * @param	integer		$length         : SQL length of special chars group
+ * @param	array		$arrfindInSet   : FIND IN SET statement with proper length
+ * @param	string		$currSqlCharset : Current SQL charset for reset in error case
+ * @return	array		$arr_return     : SQL ressource or
  * @version 3.9.11
  * @since   3.9.10
  */
@@ -878,7 +880,8 @@ class tx_browser_pi1_navi_indexBrowser
  *                                  A special char group is grouped by the length of a special
  *                                  char.
  *
- * @param   array                   $row  : Row with special chars and their SQL length
+ * @param	array		$row  : Row with special chars and their SQL length
+ * @return	[type]		...
  * @version 3.9.11
  * @since   3.9.10
  */
@@ -976,7 +979,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * sqlCharsetGet( ):  Get the current SQL charset like latin1 or utf8.
  *
- * @return	string    $charset  : current charset
+ * @return	string		$charset  : current charset
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1008,7 +1011,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * sqlCharsetSet( ):  Execute SET NAMES with given charset
  *
- * @param   string		$sqlCharset : SQL charset like latin1 or utf8
+ * @param	string		$sqlCharset : SQL charset like latin1 or utf8
+ * @return	[type]		...
  * @version 3.9.9
  * @since   3.9.9
  */
