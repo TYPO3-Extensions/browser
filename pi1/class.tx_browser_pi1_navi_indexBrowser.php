@@ -133,6 +133,12 @@ class tx_browser_pi1_navi_indexBrowser
     // [Array] Array with the find in set statements for special chars
   var $findInSet = array( );
 
+    // [Boolean] true: don't localise the current SQL query, false: localise it
+  var $bool_dontLocalise      = null;
+    // [Integer] number of the localisation mode
+  var $int_localisation_mode  = null;
+
+
 
 
 
@@ -273,6 +279,58 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
 
 
+  /**
+ * init_localisation( ):  Inits the localisation mode and localisation TS
+ *                            Sets the class vars
+ *                            * $int_localisation_mode
+ *                            * bool_dontLocalise
+ *
+ * @return	void
+ * @version 3.9.11
+ * @since   3.9.11
+ */
+  private function init_localisation( )
+  {
+
+      // Set class var $int_localisation_mode; init TS of pObj->objLocalise;
+    if( ! isset( $this->int_localisation_mode ) )
+    {
+      $this->int_localisation_mode = $this->pObj->objLocalise->localisationConfig( );
+      $this->pObj->objLocalise->init_typoscript( );
+    }
+
+      // Set class var $bool_dontLocalise
+      // SWTCH $int_localisation_mode
+    switch( $this->int_localisation_mode )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+        $this->bool_dontLocalise = true;
+        $prompt = 'Localisation mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localise!';
+        break;
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+        $this->bool_dontLocalise = true;
+        $prompt = 'Localisation mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localise!';
+        break;
+      default:
+        $this->bool_dontLocalise = false;
+        $prompt = 'Localisation mode is enabled';
+        break;
+    }
+      // SWTCH $int_localisation_mode
+      // Set class var $bool_dontLocalise
+
+      // DRS
+    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
+    {
+      t3lib_div::devlog( '[INFO/NAVI+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+
+    return;
+  }
+
+
+
 
 
 
@@ -318,6 +376,20 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
       return false;
     }
       // RETURN false : index browser is disabled
+
+    $this->init_localisation( );
+    if( ! $this->bool_dontLocalise )
+    {
+        // DRS
+      if( $this->pObj->b_drs_navi || $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'Sorry: index browser isn\'t localised in browser version 4.0.x';
+        t3lib_div::devlog( '[ERROR/NAVI+LOCALISATION] ' . $prompt, $this->pObj->extKey, 3 );
+        $prompt = 'PLease disable the index browser in a localised context';
+        t3lib_div::devlog( '[HELP/NAVI+LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+        // DRS
+    }
 
       // RETURN false : index browser hasn't any configured tab
     $arr_conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
