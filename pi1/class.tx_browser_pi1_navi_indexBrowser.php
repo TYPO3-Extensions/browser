@@ -212,6 +212,7 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Render the tabs
     $arr_return = $this->get_tabs( );
+$this->pObj->dev_var_dump( $this->indexBrowserTab );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -756,7 +757,6 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Reset SQL char set
     $this->sqlCharsetSet( $currSqlCharset );
-//$this->pObj->dev_var_dump( $this->indexBrowserTab );
   }
 
 
