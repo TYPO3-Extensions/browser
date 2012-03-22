@@ -56,13 +56,13 @@
  *
  *              SECTION: special chars
  *  634:     private function specialChars( )
- *  671:     private function specialChars_setSqlLength( )
- *  730:     private function specialChars_addSum( $row )
- *  778:     private function specialChars_addSumToTab( $res )
- *  804:     private function specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
- *  891:     private function specialChars_setSqlFindInSet( $row )
+ *  672:     private function specialChars_addSum( $row )
+ *  720:     private function specialChars_addSumToTab( $res )
+ *  746:     private function specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
+ *  833:     private function specialChars_setSqlFindInSet( $row )
+ *  859:     private function specialChars_setSqlLength( )
  *
- *              SECTION: SQL
+ *              SECTION: SQL charset
  *  930:     private function sqlCharsetGet( )
  *  963:     private function sqlCharsetSet( $sqlCharset )
  *
