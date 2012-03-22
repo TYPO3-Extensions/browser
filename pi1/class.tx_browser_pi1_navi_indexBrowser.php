@@ -413,6 +413,7 @@ class tx_browser_pi1_navi_indexBrowser
       {
         $csvTabAttributes   = $conf_tabs[$tabId . '.']['valuesCSV'];
         $arrTabAttributes[] = str_replace(' ', null, $csvTabAttributes);
+        end( $arrTabAttributes );
         $currKey = key( $arrTabAttributes );
         foreach( $arrTabAttributes[ $currKey ] as $attribute )
         {
@@ -437,7 +438,6 @@ class tx_browser_pi1_navi_indexBrowser
           $arrAttributes[ $attribute ][ 'initialId' ]     = $tabId;
         }
       }
-$this->pObj->dev_var_dump( $arrAttributes );
         // Tab label stdWrap
       if( $conf_tabs[$tabId . '.']['stdWrap.'] )
       {
@@ -480,6 +480,7 @@ $this->pObj->dev_var_dump( $arrAttributes );
         // CONTINUE : tab with special value 'others'
     }
       // LOOP tabs TS configuratione array
+$this->pObj->dev_var_dump( $arrAttributes );
 
       // Init special chars
     $this->initTabsSpecialChars( $arrTabAttributes );
