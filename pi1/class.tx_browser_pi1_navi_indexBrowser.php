@@ -49,9 +49,9 @@
  *  372:     private function initTabs( )
  *  461:     private function initTabsSpecialChars( $arrInitials )
  *  503:     private function rows( )
- *  533:     private function rowsInitSpecialChars( )
- *  570:     private function rowsInitSpecialCharsLength( )
- *  629:     private function rowsSumSpecialChars( $row )
+ *  533:     private function rowsSpecialChars( )
+ *  570:     private function rowsSpecialChars_setLength( )
+ *  629:     private function rowsSpecialChars_setSum( $row )
  *
  *              SECTION: SQL
  *  764:     private function sqlCharsetGet( )
@@ -92,7 +92,7 @@ class tx_browser_pi1_navi_indexBrowser
     // [Array] Array with the find in set statements for special chars
   var $findInSet = array( );
     // [Array] Array with special chars initials and their sum
-  var $rowsSumSpecialChars = array( );
+  var $rowsSpecialChars_setSum = array( );
 
 
 
@@ -377,7 +377,7 @@ class tx_browser_pi1_navi_indexBrowser
 
 /**
  * initTabs( ):  Loops through the tab TS configuration array
- *                            and inits the class var $this->indexbrowserTab
+ *               and inits the class var $this->indexbrowserTab
  *
  * @return	void
  * @version 3.9.10
@@ -531,7 +531,7 @@ class tx_browser_pi1_navi_indexBrowser
   private function rows( )
   {
       // Take care of special chars
-    $arr_return = $this->rowsInitSpecialChars( );
+    $arr_return = $this->rowsSpecialChars( );
     if( ! ( empty ( $arr_return ) ) )
     {
       return $arr_return;
@@ -552,13 +552,13 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * rowsInitSpecialChars( ):
+ * rowsSpecialChars( ):
  *
  * @return	[type]		...
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function rowsInitSpecialChars( )
+  private function rowsSpecialChars( )
   {
       // RETURN : no special chars
     if( empty ( $this->indexbrowserTab['initials']['specialChars'] ) )
@@ -568,7 +568,7 @@ class tx_browser_pi1_navi_indexBrowser
       // RETURN : no special chars
 
       // Get a row with the SQL length for each special char
-    $arr_return = $this->rowsInitSpecialCharsLength( );
+    $arr_return = $this->rowsSpecialChars_setLength( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -578,8 +578,9 @@ class tx_browser_pi1_navi_indexBrowser
       // Get a row with the SQL length for each special char
 
       // Get the sum for each special char initial
-    $arr_return = $this->rowsSumSpecialChars( $row );
-    if( $arr_return['error']['status'] )
+    $arr_return = $this->rowsSpecialChars_setSum( $row );
+$this->pObj->dev_var_dump( $this->rowsSpecialChars_setSum );
+        if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
@@ -589,13 +590,13 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * rowsInitSpecialCharsLength( ):
+ * rowsSpecialChars_setLength( ): Return a row with all special chars and their SQL length
  *
- * @return	[type]		...
+ * @return	array   $arr_return : row with all special chars and their SQL length
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function rowsInitSpecialCharsLength( )
+  private function rowsSpecialChars_setLength( )
   {
       // Build the select statement parts for the length of each special char
     $arrStatement     = array( );
@@ -647,14 +648,14 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * rowsSumSpecialChars( ):
+ * rowsSpecialChars_setSum( ):
  *
  * @param	[type]		$$row: ...
  * @return	[type]		...
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function rowsSumSpecialChars( $row )
+  private function rowsSpecialChars_setSum( $row )
   {
       // Get current SQL char set
     $currSqlCharset = $this->sqlCharsetGet( );
@@ -757,7 +758,7 @@ class tx_browser_pi1_navi_indexBrowser
 
       if( ! empty ( $rows ) )
       {
-        $this->rowsSumSpecialChars = $rows;
+        $this->rowsSpecialChars_setSum = $rows;
       }
 
 
