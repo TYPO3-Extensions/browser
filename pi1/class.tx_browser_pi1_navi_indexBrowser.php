@@ -668,6 +668,153 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
     /***********************************************
     *
+    * chars
+    *
+    **********************************************/
+
+
+
+
+
+
+/**
+ * chars( ): Updates sum / number of hits of chars (one byte)
+ *
+ * @return	array		$arr_return : Contains an erreor message in case of an error
+ * @version 3.9.11
+ * @since   3.9.11
+ */
+  private function chars( )
+  {
+      // Get current table.field of the index browser
+    list( $table, $field) = explode( '.', $this->indexBrowserTableField);
+
+      // Get current SQL char set
+    $currSqlCharset = $this->sqlCharsetGet( );
+      // Set SQL char set to latin1
+    $this->sqlCharsetSet( 'latin1' );
+
+      // SQL result with sum for records with a sepecial char as first character
+    $arr_return = $this->chars_resSqlCount( $currSqlCharset );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    $res = $arr_return['data']['res'];
+      // SQL result with sum for records with a sepecial char as first character
+
+      // Add the sum to the tab with the special char attribute
+    //$this->specialChars_addSumToTab( $res );
+
+      // Free SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+
+      // Reset SQL char set
+    $this->sqlCharsetSet( $currSqlCharset );
+  }
+
+
+
+/**
+ * chars_resSqlCount( ): SQL query and execution for counting
+ *                       char initials
+ *                                                
+ *
+ * @param	integer		$length         : SQL length of special chars group
+ * @param	array		$arrfindInSet   : FIND IN SET statement with proper length
+ * @param	string		$currSqlCharset : Current SQL charset for reset in error case
+ * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @version 3.9.11
+ * @since   3.9.10
+ */
+  private function chars_resSqlCount( $currSqlCharset )
+  {
+    static $drsPrompt = true;
+
+    // DRS
+    if( $drsPrompt && $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Query needs an and where in case of filter';
+      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+      $drsPrompt = false;
+    }
+      // DRS
+
+      // Get current table.field of the index browser
+    list( $table, $field) = explode( '.', $this->indexBrowserTableField);
+
+      // Query for all filter items
+    $select   = "COUNT( * ) AS 'count', LEFT ( " . $field . ", 1 ) AS 'initial'";
+    $from     = $table;
+    //$where    = "(" . implode ( " OR ", $arrfindInSet ) . ")";
+    $where    = "";
+    $where    = $where . $this->pObj->cObj->enableFields( $table );
+    $groupBy  = "LEFT ( " . $field . ", 1 )";
+    $orderBy  = "LEFT ( " . $field . ", 1 )";
+    $limit    = null;
+
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+      // Execute query
+    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+        // Free SQL result
+      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+        // Reset SQL charset
+      $this->sqlCharsetSet( $currSqlCharset );
+      $this->pObj->objSqlFun->query = $query;
+      $this->pObj->objSqlFun->error = $error;
+      $arr_return = $this->pObj->objSqlFun->prompt_error( );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+      // Return SQL result
+    $arr_return['data']['res'] = $res;
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
     * special chars
     *
     **********************************************/
@@ -678,7 +825,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
 
 /**
- * specialChars( ): Updates sum / number of hits of sepcial chars
+ * specialChars( ): Updates sum / number of hits of sepcial chars (multy byte)
  *
  * @return	array		$arr_return : Contains an erreor message in case of an error
  * @version 3.9.11
