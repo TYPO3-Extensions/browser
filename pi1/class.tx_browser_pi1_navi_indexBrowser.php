@@ -248,6 +248,13 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
       return $arr_return;
     }
 
+      // Take care of special chars
+    $arr_return = $this->chars( );
+    if( ! ( empty ( $arr_return ) ) )
+    {
+      return $arr_return;
+    }
+
 
       // Take care of filters
 
