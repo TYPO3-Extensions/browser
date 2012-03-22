@@ -43,34 +43,34 @@
  *
  *              SECTION: Main
  *  180:     public function get( $content )
+ *  231:     private function get_tabs( )
  *
  *              SECTION: init
- *  254:     private function checkRequirements( )
- *  297:     private function initTableField( )
- *  372:     private function checkTableField( )
- *  419:     private function initTabs( )
- *  531:     private function initTabsSpecialChars( $arrCsvAttributes )
- *
- *              SECTION: rows
- *  587:     private function get_tabs( )
+ *  278:     private function checkRequirements( )
+ *  320:     private function checkTableField( )
+ *  367:     private function initTableField( )
+ *  443:     private function initTabs( )
+ *  504:     private function initTabsAttributes( $csvAttributes )
+ *  556:     private function initTabsProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+ *  609:     private function initTabsSpecialChars( $arrCsvAttributes )
  *
  *              SECTION: special chars
- *  634:     private function specialChars( )
- *  672:     private function specialChars_addSum( $row )
- *  720:     private function specialChars_addSumToTab( $res )
- *  746:     private function specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
- *  833:     private function specialChars_setSqlFindInSet( $row )
- *  859:     private function specialChars_setSqlLength( )
+ *  668:     private function specialChars( )
+ *  706:     private function specialChars_addSum( $row )
+ *  754:     private function specialChars_addSumToTab( $res )
+ *  780:     private function specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
+ *  867:     private function specialChars_setSqlFindInSet( $row )
+ *  893:     private function specialChars_setSqlLength( )
  *
  *              SECTION: SQL charset
- *  930:     private function sqlCharsetGet( )
- *  963:     private function sqlCharsetSet( $sqlCharset )
+ *  964:     private function sqlCharsetGet( )
+ *  997:     private function sqlCharsetSet( $sqlCharset )
  *
  *              SECTION: downward compatibility
- * 1003:     private function getMarkerIndexbrowser( )
- * 1049:     private function getMarkerIndexbrowserTabs( )
+ * 1037:     private function getMarkerIndexbrowser( )
+ * 1083:     private function getMarkerIndexbrowserTabs( )
  *
- * TOTAL FUNCTIONS: 18
+ * TOTAL FUNCTIONS: 20
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -172,7 +172,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * get( ): Get the content of the index browser
  *
- * @param   string		$content: current content
+ * @param	string		$content: current content
  * @return	array
  * @version 3.9.9
  * @since   3.9.9
@@ -436,7 +436,7 @@ class tx_browser_pi1_navi_indexBrowser
  * initTabs( ):  Loops through the tab TS configuration array
  *               and inits the class var $this->indexBrowserTab
  *
- * @return	array   $arr_return: Eith an error message in case of an error
+ * @return	array		$arr_return: Eith an error message in case of an error
  * @version 3.9.10
  * @since   3.9.10
  */
@@ -496,7 +496,8 @@ class tx_browser_pi1_navi_indexBrowser
  * initTabsAttributes( ):  Loops through the tab TS configuration array
  *               and inits the class var $this->indexBrowserTab
  *
- * @return	array   $arr_return: Eith an error message in case of an error
+ * @param	[type]		$$csvAttributes: ...
+ * @return	array		$arr_return: Eith an error message in case of an error
  * @version 3.9.10
  * @since   3.9.10
  */
@@ -544,7 +545,11 @@ class tx_browser_pi1_navi_indexBrowser
  * initTabsProperties( ): Loops through the tab TS configuration array
  *                        and inits the class var $this->indexBrowserTab
  *
- * @return	array   $arr_return: Eith an error message in case of an error
+ * @param	[type]		$$conf_tabs: ...
+ * @param	[type]		$tabId: ...
+ * @param	[type]		$tabLabel: ...
+ * @param	[type]		$displayWoItems: ...
+ * @return	array		$arr_return: Eith an error message in case of an error
  * @version 3.9.10
  * @since   3.9.10
  */
