@@ -460,7 +460,7 @@ class tx_browser_pi1 extends tslib_pibase {
 
     switch( $this->arr_extConf['browserEngine'] )
     {
-      case( 'Engine 4.x (recommended)' ):
+      case( 'Engine 4.x (development only)' ):
         if( ! $this->bool_accessByIP )
         {
           $this->dev_browserEngine = 3;

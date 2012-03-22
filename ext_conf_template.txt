@@ -1,5 +1,5 @@
-  # cat=basic/enable/10;                type=options[Engine 4.x (recommended),Engine 3.x]; label= Browser engine: 4.x includes the SQL engine 4.x. If you like to use 4.x, your IP address has to match allowed IP addresses from list below.
-browserEngine = Engine 4.x (recommended)
+  # cat=basic/enable/10;                type=options[Engine 3.x (recommended),Engine 4.x (development only)]; label= Browser engine: 4.x includes the SQL engine 4.x. If you like to use 4.x, your IP address has to match allowed IP addresses from list below.
+browserEngine = Engine 3.x (recommended)
 
   # cat=basic/enable/20;             type=options[English,German]; label= Localise special backend labels: Language for special backend labels like TypoScript static templates and flexforms.
 LLstatic = English
