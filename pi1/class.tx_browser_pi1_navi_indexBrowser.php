@@ -38,41 +38,45 @@
  *
  *
  *
- *   79: class tx_browser_pi1_navi_indexBrowser
- *  150:     public function __construct($parentObj)
+ *   83: class tx_browser_pi1_navi_indexBrowser
+ *  154:     public function __construct($parentObj)
  *
  *              SECTION: Main
- *  182:     public function get( $content )
- *  241:     private function get_tabs( )
+ *  186:     public function get( $content )
+ *  246:     private function get_tabs( )
  *
  *              SECTION: requirements
- *  288:     private function requirements_check( )
- *  333:     private function tableField_check( )
- *  383:     private function tableField_init( )
+ *  300:     private function requirements_check( )
+ *  353:     private function tableField_check( )
+ *  403:     private function tableField_init( )
  *
  *              SECTION: tabs
- *  472:     private function tabs_init( )
- *  521:     private function tabs_initAttributes( $csvAttributes )
- *  573:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
- *  626:     private function tabs_initSpecialChars( $arrCsvAttributes )
+ *  492:     private function tabs_init( )
+ *  544:     private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
+ *  596:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+ *  649:     private function tabs_initSpecialChars( $arrCsvAttributes )
+ *
+ *              SECTION: chars
+ *  708:     private function chars( )
+ *  748:     private function chars_addSumToTab( $res )
+ *  801:     private function chars_resSqlCount( $currSqlCharset )
  *
  *              SECTION: special chars
- *  685:     private function specialChars( )
- *  724:     private function specialChars_addSum( $row )
- *  773:     private function specialChars_addSumToTab( $res )
- *  802:     private function specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
- *  888:     private function specialChars_setSqlFindInSet( $row )
- *  914:     private function specialChars_setSqlLength( )
+ *  922:     private function specialChars( )
+ *  961:     private function specialChars_addSum( $row )
+ * 1013:     private function specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
+ * 1104:     private function specialChars_setSqlFindInSet( $row )
+ * 1130:     private function specialChars_setSqlLength( )
  *
  *              SECTION: SQL charset
- *  986:     private function sqlCharsetGet( )
- * 1019:     private function sqlCharsetSet( $sqlCharset )
+ * 1202:     private function sqlCharsetGet( )
+ * 1235:     private function sqlCharsetSet( $sqlCharset )
  *
  *              SECTION: downward compatibility
- * 1059:     private function getMarkerIndexbrowser( )
- * 1105:     private function getMarkerIndexbrowserTabs( )
+ * 1275:     private function getMarkerIndexbrowser( )
+ * 1321:     private function getMarkerIndexbrowserTabs( )
  *
- * TOTAL FUNCTIONS: 20
+ * TOTAL FUNCTIONS: 22
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -531,6 +535,8 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
  * tabs_initAttributes( ):  Sets the array attributes of the class var $indexBrowserTab
  *
  * @param	string		$csvAttributes  : attributes
+ * @param	[type]		$tabLabel: ...
+ * @param	[type]		$tabId: ...
  * @return	array		$arr_return     : Contains an error message in case of an error
  * @version 3.9.11
  * @since   3.9.10
@@ -735,6 +741,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
  *                       of the class var $indexBrowserTab
  *
  * @param	array		$res  : SQL result
+ * @return	[type]		...
  * @version 3.9.11
  * @since   3.9.11
  */
@@ -783,7 +790,6 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 /**
  * chars_resSqlCount( ): SQL query and execution for counting
  *                       char initials
- *                                                
  *
  * @param	integer		$length         : SQL length of special chars group
  * @param	array		$arrfindInSet   : FIND IN SET statement with proper length
