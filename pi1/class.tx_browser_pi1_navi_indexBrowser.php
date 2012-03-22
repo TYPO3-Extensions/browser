@@ -775,13 +775,21 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
   {
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
+        // Get values from the SQL row
       $attribute  = $row[ 'initial' ];
-      $count      = $row[ 'count' ];
-      $tabId      = $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ];
-      $currSum    = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
-      $sum        = $currSum + $count;
-      $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ]       = $sum;
-      $this->indexBrowserTab['attributes'][ $attribute ][ 'sum' ] = $sum;
+      $rowSum     = $row[ 'count' ];
+
+        // Set attributes sum
+      $this->indexBrowserTab['attributes'][ $attribute ][ 'sum' ] = $rowSum;
+
+        // Get id of the tab with the current attribute
+      $tabId    = $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ];
+        // Get sum of the current tab
+      $currSum  = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
+        // Add row sum to current sum
+      $sum      = $currSum + $rowSum;
+        // Allocates result to the current tab
+      $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
     }
   }
 
