@@ -978,7 +978,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
         // SQL result with sum for records with a sepecial char as first character
 
         // Add the sum to the tab with the special char attribute
-      $this->specialChars_addSumToTab( $res );
+      $this->chars_addSumToTab( $res );
 
         // Free SQL result
       $GLOBALS['TYPO3_DB']->sql_free_result( $res );
@@ -987,56 +987,6 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
       // Reset SQL char set
     $this->sqlCharsetSet( $currSqlCharset );
-  }
-
-
-
-/**
- * specialChars_addSumToTab( ): Updates the sum in the arrays tabIds and attributes
- *                              of the class var $indexBrowserTab
- *
- * @param	array		$res  : SQL result
- * @version 3.9.11
- * @since   3.9.10
- */
-  private function specialChars_addSumToTab( $res )
-  {
-    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
-    {
-        // Get values from the SQL row
-      $attribute  = $row[ 'initial' ];
-      $rowSum     = $row[ 'count' ];
-
-        // Set attributes sum
-      $this->indexBrowserTab['attributes'][ $attribute ][ 'sum' ] = $rowSum;
-
-        // Get id of the tab for all attributes
-      $tabId    = $this->indexBrowserTab[ 'tabSpecial' ][ 'all' ];
-        // Get sum of the current tab
-      $currSum  = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
-        // Add row sum to current sum
-      $sum      = $currSum + $rowSum;
-        // Allocates result to the current tab
-      $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
-
-        // Get id of the tab others or of the tab with the current attribute
-      if( isset ( $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ] ) )
-      {
-        $tabId  = $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ];
-      }
-      else
-      {
-        $tabId  = $this->indexBrowserTab[ 'tabSpecial' ][ 'others' ];
-      }
-        // Get id of the tab others or of the tab with the current attribute
-
-        // Get sum of the current tab
-      $currSum  = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
-        // Add row sum to current sum
-      $sum      = $currSum + $rowSum;
-        // Allocates result to the current tab
-      $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
-    }
   }
 
 
