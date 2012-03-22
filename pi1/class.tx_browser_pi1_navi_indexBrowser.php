@@ -694,6 +694,7 @@ $this->pObj->dev_var_dump( $this->rowsSpecialChars_setSum );
       $select   = "COUNT( * ) AS 'count', LEFT ( " . $field . ", " . $length . " ) AS 'initial'";
       $from     = $table;
       $where    = "(" . implode ( " OR ", $arrfindInSet ) . ")";
+      $where    = $where . $this->pObj->cObj->enableFields( $table );
       $groupBy  = "LEFT ( " . $field . ", " . $length . " )";
       $orderBy  = "LEFT ( " . $field . ", " . $length . " )";
       $limit    = null;
