@@ -38,35 +38,37 @@
  *
  *
  *
- *   75: class tx_browser_pi1_navi_indexBrowser
- *  146:     public function __construct($parentObj)
+ *   77: class tx_browser_pi1_navi_indexBrowser
+ *  148:     public function __construct($parentObj)
  *
  *              SECTION: Index browser
- *  178:     public function get( $content )
+ *  180:     public function get( $content )
  *
  *              SECTION: init
- *  252:     private function checkRequirements( )
- *  295:     private function initTableField( )
- *  370:     private function checkTableField( )
- *  417:     private function initTabs( )
- *  529:     private function initTabsSpecialChars( $arrCsvAttributes )
+ *  254:     private function checkRequirements( )
+ *  297:     private function initTableField( )
+ *  372:     private function checkTableField( )
+ *  419:     private function initTabs( )
+ *  531:     private function initTabsSpecialChars( $arrCsvAttributes )
  *
  *              SECTION: rows
- *  585:     private function rows( )
- *  615:     private function specialChars( )
- *  652:     private function specialChars_setLength( )
- *  711:     private function specialChars_addSum( $row )
- *  759:     private function specialChars_addSumToTab( $res )
- *  785:     private function specialChars_sqlResCount( $length, $arrfindInSet, $currSqlCharset )
- *  872:     private function specialChars_setFindInSet( $row )
+ *  587:     private function rows( )
+ *
+ *              SECTION: Attributes special chars
+ *  634:     private function specialChars( )
+ *  671:     private function specialChars_setLength( )
+ *  730:     private function specialChars_addSum( $row )
+ *  778:     private function specialChars_addSumToTab( $res )
+ *  804:     private function specialChars_sqlResCount( $length, $arrfindInSet, $currSqlCharset )
+ *  891:     private function specialChars_setFindInSet( $row )
  *
  *              SECTION: SQL
- *  911:     private function sqlCharsetGet( )
- *  944:     private function sqlCharsetSet( $sqlCharset )
+ *  930:     private function sqlCharsetGet( )
+ *  963:     private function sqlCharsetSet( $sqlCharset )
  *
  *              SECTION: downward compatibility
- *  984:     private function getMarkerIndexbrowser( )
- * 1030:     private function getMarkerIndexbrowserTabs( )
+ * 1003:     private function getMarkerIndexbrowser( )
+ * 1049:     private function getMarkerIndexbrowserTabs( )
  *
  * TOTAL FUNCTIONS: 18
  * (This index is automatically created/updated by the extension "extdeveval")
