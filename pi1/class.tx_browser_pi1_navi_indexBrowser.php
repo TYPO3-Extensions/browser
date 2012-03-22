@@ -767,7 +767,11 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
     $select   = "COUNT( * ) AS 'count', LEFT ( " . $field . ", 1 ) AS 'initial'";
     $from     = $table;
     $where    = $where . $this->pObj->cObj->enableFields( $table );
-    $where    = $where . $this->pObj->objLocalise->localisationFields_where( $table );
+    $localWhere = $this->pObj->objLocalise->localisationFields_where( $table );
+    if( $localWhere )
+    {
+      $where  = $where . " AND " . $localWhere;
+    }
 
     $groupBy  = "LEFT ( " . $field . ", 1 )";
     $orderBy  = "LEFT ( " . $field . ", 1 )";
@@ -1014,7 +1018,11 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
     $from     = $table;
     $where    = "(" . implode ( " OR ", $arrfindInSet ) . ")";
     $where    = $where . $this->pObj->cObj->enableFields( $table );
-    $where    = $where . $this->pObj->objLocalise->localisationFields_where( $table );
+    $localWhere = $this->pObj->objLocalise->localisationFields_where( $table );
+    if( $localWhere )
+    {
+      $where  = $where . " AND " . $localWhere;
+    }
     $groupBy  = "LEFT ( " . $field . ", " . $length . " )";
     $orderBy  = "LEFT ( " . $field . ", " . $length . " )";
     $limit    = null;
