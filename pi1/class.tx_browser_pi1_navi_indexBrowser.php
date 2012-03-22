@@ -41,7 +41,7 @@
  *   77: class tx_browser_pi1_navi_indexBrowser
  *  148:     public function __construct($parentObj)
  *
- *              SECTION: Index browser
+ *              SECTION: Main
  *  180:     public function get( $content )
  *
  *              SECTION: init
@@ -54,13 +54,13 @@
  *              SECTION: rows
  *  587:     private function rows( )
  *
- *              SECTION: Attributes special chars
+ *              SECTION: special chars
  *  634:     private function specialChars( )
- *  671:     private function specialChars_setLength( )
+ *  671:     private function specialChars_setSqlLength( )
  *  730:     private function specialChars_addSum( $row )
  *  778:     private function specialChars_addSumToTab( $res )
- *  804:     private function specialChars_sqlResCount( $length, $arrfindInSet, $currSqlCharset )
- *  891:     private function specialChars_setFindInSet( $row )
+ *  804:     private function specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
+ *  891:     private function specialChars_setSqlFindInSet( $row )
  *
  *              SECTION: SQL
  *  930:     private function sqlCharsetGet( )
@@ -163,7 +163,7 @@ class tx_browser_pi1_navi_indexBrowser
 
     /***********************************************
     *
-    * Index browser
+    * Main
     *
     **********************************************/
 
@@ -615,7 +615,7 @@ class tx_browser_pi1_navi_indexBrowser
 
     /***********************************************
     *
-    * Attributes special chars
+    * special chars
     *
     **********************************************/
 
@@ -641,7 +641,7 @@ class tx_browser_pi1_navi_indexBrowser
       // RETURN : no special chars
 
       // Get a row with the SQL length for each special char
-    $arr_return = $this->specialChars_setLength( );
+    $arr_return = $this->specialChars_setSqlLength( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -657,64 +657,6 @@ class tx_browser_pi1_navi_indexBrowser
       return $arr_return;
     }
 
-  }
-
-
-
-/**
- * specialChars_setLength( ): Return a row with all special chars and their SQL length
- *
- * @return	array		$arr_return : row with all special chars and their SQL length
- * @version 3.9.10
- * @since   3.9.10
- */
-  private function specialChars_setLength( )
-  {
-      // Build the select statement parts for the length of each special char
-    $arrStatement     = array( );
-    $arrSpecialChars  = explode( ',', $this->indexbrowserTab['initials']['specialChars'] );
-    foreach( ( array ) $arrSpecialChars as $specialChar )
-    {
-      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
-    }
-      // Build the select statement parts for the length of each special char
-
-      // DIE : undefined error
-    if( empty ( $arrStatement ) )
-    {
-      die ( __METHOD__ . '(' . __LINE__ . '): undefined error.');
-    }
-      // DIE : undefined error
-
-      // Execute query for the length of each special char
-    $query  = "SELECT " . implode( ', ', $arrStatement );
-    $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
-
-      // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
-    {
-      $this->pObj->objSqlFun->query = $query;
-      $this->pObj->objSqlFun->error = $error;
-      $arr_return = $this->pObj->objSqlFun->prompt_error( );
-      return $arr_return;
-    }
-      // Error management
-
-      // DRS
-    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
-
-    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-
-    $arr_return['data']['row'] = $row;
-    return $arr_return;
   }
 
 
@@ -738,13 +680,13 @@ class tx_browser_pi1_navi_indexBrowser
     $this->sqlCharsetSet( 'latin1' );
 
       // Set class var findInSet
-    $this->specialChars_setFindInSet( $row );
+    $this->specialChars_setSqlFindInSet( $row );
 
       // LOOP : find in set for each special char length group
     foreach( $this->findInSet as $length => $arrfindInSet )
     {
         // SQL result with sum for records with a sepecial char as first character
-      $arr_return = $this->specialChars_sqlResCount( $length, $arrfindInSet, $currSqlCharset );
+      $arr_return = $this->specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset );
       if( $arr_return['error']['status'] )
       {
         return $arr_return;
@@ -792,7 +734,7 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * specialChars_sqlResCount( ):
+ * specialChars_resSqlCount( ):
  *
  * @param	[type]		$$row: ...
  * @param	[type]		$arrfindInSet: ...
@@ -801,7 +743,7 @@ class tx_browser_pi1_navi_indexBrowser
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function specialChars_sqlResCount( $length, $arrfindInSet, $currSqlCharset )
+  private function specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
   {
     static $drsPrompt = true;
 
@@ -881,14 +823,14 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * specialChars_setFindInSet( ):
+ * specialChars_setSqlFindInSet( ):
  *
  * @param	[type]		$$row: ...
  * @return	[type]		...
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function specialChars_setFindInSet( $row )
+  private function specialChars_setSqlFindInSet( $row )
   {
       // Get current table.field of the index browser
     list( $table, $field) = explode( '.', $this->indexBrowserTableField);
@@ -907,6 +849,64 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 
+/**
+ * specialChars_setSqlLength( ): Return a row with all special chars and their SQL length
+ *
+ * @return	array		$arr_return : row with all special chars and their SQL length
+ * @version 3.9.10
+ * @since   3.9.10
+ */
+  private function specialChars_setSqlLength( )
+  {
+      // Build the select statement parts for the length of each special char
+    $arrStatement     = array( );
+    $arrSpecialChars  = explode( ',', $this->indexbrowserTab['initials']['specialChars'] );
+    foreach( ( array ) $arrSpecialChars as $specialChar )
+    {
+      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
+    }
+      // Build the select statement parts for the length of each special char
+
+      // DIE : undefined error
+    if( empty ( $arrStatement ) )
+    {
+      die ( __METHOD__ . '(' . __LINE__ . '): undefined error.');
+    }
+      // DIE : undefined error
+
+      // Execute query for the length of each special char
+    $query  = "SELECT " . implode( ', ', $arrStatement );
+    $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+      $this->pObj->objSqlFun->query = $query;
+      $this->pObj->objSqlFun->error = $error;
+      $arr_return = $this->pObj->objSqlFun->prompt_error( );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
+
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+
+    $arr_return['data']['row'] = $row;
+    return $arr_return;
+  }
+
+
+
 
 
 
@@ -914,7 +914,7 @@ class tx_browser_pi1_navi_indexBrowser
 
     /***********************************************
     *
-    * SQL
+    * SQL charset
     *
     **********************************************/
 
