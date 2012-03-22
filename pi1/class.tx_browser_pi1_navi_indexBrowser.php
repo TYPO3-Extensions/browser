@@ -38,37 +38,39 @@
  *
  *
  *
- *   77: class tx_browser_pi1_navi_indexBrowser
- *  148:     public function __construct($parentObj)
+ *   79: class tx_browser_pi1_navi_indexBrowser
+ *  150:     public function __construct($parentObj)
  *
  *              SECTION: Main
- *  180:     public function get( $content )
- *  231:     private function get_tabs( )
+ *  182:     public function get( $content )
+ *  233:     private function get_tabs( )
  *
  *              SECTION: requirements
- *  278:     private function requirements_check( )
- *  320:     private function tableField_check( )
- *  367:     private function tableField_init( )
- *  443:     private function tabs( )
- *  504:     private function tabs_setAttributes( $csvAttributes )
- *  556:     private function tabs_setProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
- *  609:     private function tabs_setSpecialChars( $arrCsvAttributes )
+ *  280:     private function requirements_check( )
+ *  322:     private function tableField_check( )
+ *  369:     private function tableField_init( )
+ *
+ *              SECTION: tabs
+ *  459:     private function tabs( )
+ *  520:     private function tabs_setAttributes( $csvAttributes )
+ *  572:     private function tabs_setProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+ *  625:     private function tabs_setSpecialChars( $arrCsvAttributes )
  *
  *              SECTION: special chars
- *  668:     private function specialChars( )
- *  706:     private function specialChars_addSum( $row )
- *  754:     private function specialChars_addSumToTab( $res )
- *  780:     private function specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
- *  867:     private function specialChars_setSqlFindInSet( $row )
- *  893:     private function specialChars_setSqlLength( )
+ *  684:     private function specialChars( )
+ *  722:     private function specialChars_addSum( $row )
+ *  770:     private function specialChars_addSumToTab( $res )
+ *  796:     private function specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
+ *  883:     private function specialChars_setSqlFindInSet( $row )
+ *  909:     private function specialChars_setSqlLength( )
  *
  *              SECTION: SQL charset
- *  964:     private function sqlCharsetGet( )
- *  997:     private function sqlCharsetSet( $sqlCharset )
+ *  980:     private function sqlCharsetGet( )
+ * 1013:     private function sqlCharsetSet( $sqlCharset )
  *
  *              SECTION: downward compatibility
- * 1037:     private function getMarkerIndexbrowser( )
- * 1083:     private function getMarkerIndexbrowserTabs( )
+ * 1053:     private function getMarkerIndexbrowser( )
+ * 1099:     private function getMarkerIndexbrowserTabs( )
  *
  * TOTAL FUNCTIONS: 20
  * (This index is automatically created/updated by the extension "extdeveval")
