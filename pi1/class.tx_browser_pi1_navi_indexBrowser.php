@@ -45,14 +45,14 @@
  *  180:     public function get( $content )
  *  231:     private function get_tabs( )
  *
- *              SECTION: init
- *  278:     private function checkRequirements( )
- *  320:     private function checkTableField( )
- *  367:     private function initTableField( )
- *  443:     private function initTabs( )
- *  504:     private function initTabsAttributes( $csvAttributes )
- *  556:     private function initTabsProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
- *  609:     private function initTabsSpecialChars( $arrCsvAttributes )
+ *              SECTION: requirements
+ *  278:     private function requirements_check( )
+ *  320:     private function tableField_check( )
+ *  367:     private function tableField_init( )
+ *  443:     private function tabs( )
+ *  504:     private function tabs_setAttributes( $csvAttributes )
+ *  556:     private function tabs_setProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+ *  609:     private function tabs_setSpecialChars( $arrCsvAttributes )
  *
  *              SECTION: special chars
  *  668:     private function specialChars( )
@@ -182,7 +182,7 @@ class tx_browser_pi1_navi_indexBrowser
     $arr_return['data']['content'] = $content;
 
       // RETURN: requirements aren't met
-    if( ! $this->checkRequirements( ) )
+    if( ! $this->requirements_check( ) )
     {
        // #35032, 120320
       $markerIndexbrowser = $this->getMarkerIndexbrowser( );
@@ -193,7 +193,7 @@ class tx_browser_pi1_navi_indexBrowser
       // RETURN: requirements aren't met
 
       // Init the tabs
-    $arr_return = $this->initTabs( );
+    $arr_return = $this->tabs( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -259,14 +259,14 @@ class tx_browser_pi1_navi_indexBrowser
 
     /***********************************************
     *
-    * init
+    * requirements
     *
     **********************************************/
 
 
 
 /**
- * checkRequirements( ): Checks
+ * requirements_check( ): Checks
  *                                    * configuration of the flexform
  *                                    * configuration of TS tabs
  *                                    and returns false, if a requirement isn't met
@@ -275,7 +275,7 @@ class tx_browser_pi1_navi_indexBrowser
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function checkRequirements( )
+  private function requirements_check( )
   {
       // RETURN: index browser is disabled
     if( ! $this->pObj->objFlexform->bool_indexBrowser )
@@ -311,13 +311,13 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * checkTableField( ):
+ * tableField_check( ):
  *
  * @return	array		$arr_return
  * @version 3.9.10
  * @since   3.9.9
  */
-  private function checkTableField( )
+  private function tableField_check( )
   {
     list( $table, $field ) = explode( '.', $this->indexBrowserTableField );
 
@@ -357,14 +357,14 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * initTableField( ):  Set the class var $this->indexBrowserTableField
+ * tableField_init( ):  Set the class var $this->indexBrowserTableField
  *                                  Value is the table.field for SQL queries
  *
  * @return	void
  * @version 3.9.10
  * @since   3.9.9
  */
-  private function initTableField( )
+  private function tableField_init( )
   {
 
       // RETURN : table.field for the index browser form is set in the current view
@@ -432,21 +432,35 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 
+
+
+
+
+
+
+    /***********************************************
+    *
+    * tabs
+    *
+    **********************************************/
+
+
+
 /**
- * initTabs( ):  Loops through the tab TS configuration array
+ * tabs( ):  Loops through the tab TS configuration array
  *               and inits the class var $this->indexBrowserTab
  *
  * @return	array		$arr_return: Eith an error message in case of an error
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function initTabs( )
+  private function tabs( )
   {
       // Init the table.field
-    $this->initTableField( );
+    $this->tableField_init( );
 
       // RETURN : table is not the local table
-    $arr_return = $this->checkTableField( );
+    $arr_return = $this->tableField_check( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -480,20 +494,20 @@ class tx_browser_pi1_navi_indexBrowser
       $arrCsvAttributes[] = $csvAttributes;
 
         // Init tab attributes
-      $this->initTabsAttributes( $csvAttributes  );
+      $this->tabs_setAttributes( $csvAttributes  );
         // Init tab properties
-      $this->initTabsProperties( $conf_tabs, $tabId, $tabLabel, $defaultDisplayWoItems );
+      $this->tabs_setProperties( $conf_tabs, $tabId, $tabLabel, $defaultDisplayWoItems );
     }
       // LOOP tabs TS configuratione array
 
       // Init special chars
-    $this->initTabsSpecialChars( $arrCsvAttributes );
+    $this->tabs_setSpecialChars( $arrCsvAttributes );
   }
 
 
 
 /**
- * initTabsAttributes( ):  Loops through the tab TS configuration array
+ * tabs_setAttributes( ):  Loops through the tab TS configuration array
  *               and inits the class var $this->indexBrowserTab
  *
  * @param	[type]		$$csvAttributes: ...
@@ -501,7 +515,7 @@ class tx_browser_pi1_navi_indexBrowser
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function initTabsAttributes( $csvAttributes )
+  private function tabs_setAttributes( $csvAttributes )
   {
       // RETURN : no attributes
     if( empty ( $csvAttributes ) )
@@ -542,7 +556,7 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * initTabsProperties( ): Loops through the tab TS configuration array
+ * tabs_setProperties( ): Loops through the tab TS configuration array
  *                        and inits the class var $this->indexBrowserTab
  *
  * @param	[type]		$$conf_tabs: ...
@@ -553,7 +567,7 @@ class tx_browser_pi1_navi_indexBrowser
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function initTabsProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+  private function tabs_setProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
   {
       // Overwrite tab label in case of stdWrap
     if( $conf_tabs[$tabId . '.']['stdWrap.'] )
@@ -599,14 +613,14 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * initTabsSpecialChars( ): Inits the class var $this->indexBrowserTab['initials']
+ * tabs_setSpecialChars( ): Inits the class var $this->indexBrowserTab['initials']
  *
  * @param	array		$arrCsvAttributes : initials from the tab TS configuration
  * @return	void
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function initTabsSpecialChars( $arrCsvAttributes )
+  private function tabs_setSpecialChars( $arrCsvAttributes )
   {
       // Get initials unique
     $arrCsvAttributes  = array_unique( $arrCsvAttributes );
