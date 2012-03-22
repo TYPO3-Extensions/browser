@@ -38,30 +38,37 @@
  *
  *
  *
- *   68: class tx_browser_pi1_navi_indexBrowser
- *  115:     public function __construct($parentObj)
+ *   75: class tx_browser_pi1_navi_indexBrowser
+ *  146:     public function __construct($parentObj)
  *
  *              SECTION: Index browser
- *  147:     public function get( $content )
- *  207:     private function checkRequirements( )
- *  250:     private function initTableField( )
- *  325:     private function checkTableField( )
- *  372:     private function initTabs( )
- *  461:     private function initTabsSpecialChars( $arrCsvAttributes )
- *  503:     private function rows( )
- *  533:     private function rowsSpecialChars( )
- *  570:     private function rowsSpecialChars_setLength( )
- *  629:     private function rowsSpecialChars_addSum( $row )
+ *  178:     public function get( $content )
+ *
+ *              SECTION: init
+ *  252:     private function checkRequirements( )
+ *  295:     private function initTableField( )
+ *  370:     private function checkTableField( )
+ *  417:     private function initTabs( )
+ *  529:     private function initTabsSpecialChars( $arrCsvAttributes )
+ *
+ *              SECTION: rows
+ *  585:     private function rows( )
+ *  615:     private function rowsSpecialChars( )
+ *  652:     private function rowsSpecialChars_setLength( )
+ *  711:     private function rowsSpecialChars_addSum( $row )
+ *  759:     private function rowsSpecialChars_addSumToTab( $res )
+ *  785:     private function resSqlSpecialChars_count( $length, $arrfindInSet, $currSqlCharset )
+ *  872:     private function sqlSpecialCharsFindInSet_set( $row )
  *
  *              SECTION: SQL
- *  764:     private function sqlCharsetGet( )
- *  797:     private function sqlCharsetSet( $sqlCharset )
+ *  911:     private function sqlCharsetGet( )
+ *  944:     private function sqlCharsetSet( $sqlCharset )
  *
  *              SECTION: downward compatibility
- *  837:     private function getMarkerIndexbrowser( )
- *  883:     private function getMarkerIndexbrowserTabs( )
+ *  984:     private function getMarkerIndexbrowser( )
+ * 1030:     private function getMarkerIndexbrowserTabs( )
  *
- * TOTAL FUNCTIONS: 15
+ * TOTAL FUNCTIONS: 18
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -638,7 +645,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * rowsSpecialChars_setLength( ): Return a row with all special chars and their SQL length
  *
- * @return	array   $arr_return : row with all special chars and their SQL length
+ * @return	array		$arr_return : row with all special chars and their SQL length
  * @version 3.9.10
  * @since   3.9.10
  */
@@ -769,6 +776,8 @@ class tx_browser_pi1_navi_indexBrowser
  * resSqlSpecialChars_count( ):
  *
  * @param	[type]		$$row: ...
+ * @param	[type]		$arrfindInSet: ...
+ * @param	[type]		$currSqlCharset: ...
  * @return	[type]		...
  * @version 3.9.10
  * @since   3.9.10
