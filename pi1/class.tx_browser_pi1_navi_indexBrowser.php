@@ -23,13 +23,13 @@
  ***************************************************************/
 
 /**
- * The class tx_browser_pi1_navi_indexBrowser bundles methods for navigation like the index browser
+ * The class tx_browser_pi1_navi_indexBrowser bundles methods for the index browser
  * or the page broser. It is part of the extension browser
  *
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     3.9.9
+ * @version     3.9.11
  * @since       3.9.9
  */
 
@@ -52,7 +52,7 @@
  *  531:     private function initTabsSpecialChars( $arrCsvAttributes )
  *
  *              SECTION: rows
- *  587:     private function rows( )
+ *  587:     private function get_tabs( )
  *
  *              SECTION: special chars
  *  634:     private function specialChars( )
@@ -95,7 +95,7 @@ class tx_browser_pi1_navi_indexBrowser
 
 
     // [Array] Array with tabIds and tabLabels
-  var $indexbrowserTab = array( );
+  var $indexBrowserTab = array( );
 //  'tabSpecial' =>
 //    'default' => '0',
 //    'all' => 0,
@@ -172,7 +172,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * get( ): Get the content of the index browser
  *
- * @param	[type]		$$content: ...
+ * @param   string		$content: current content
  * @return	array
  * @version 3.9.9
  * @since   3.9.9
@@ -180,8 +180,6 @@ class tx_browser_pi1_navi_indexBrowser
   public function get( $content )
   {
     $arr_return['data']['content'] = $content;
-
-    $lDisplay = $this->pObj->lDisplayList['display.'];
 
       // RETURN: requirements aren't met
     if( ! $this->checkRequirements( ) )
@@ -194,26 +192,22 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // RETURN: requirements aren't met
 
-      // Init the table.field
-    $this->initTableField( );
-
-      // Check, if table is the local table
-    $arr_return = $this->checkTableField( );
+      // Init the tabs
+    $arr_return = $this->initTabs( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
+      // Init the tabs
 
-    $this->initTabs( );
-
-
-
-    $arr_return = $this->rows( );
+      // Render the tabs
+    $arr_return = $this->get_tabs( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
     $rows = $arr_return['data']['rows'];
+      // Render the tabs
 
 
       // :TODO:
@@ -221,6 +215,36 @@ class tx_browser_pi1_navi_indexBrowser
       // Get the index browser rows (uid, initialField)
       // Count the hits per tab, prepaire the tabArray
       // Build the index browser template
+
+    return $arr_return;
+  }
+
+
+
+/**
+ * get_tabs( ):
+ *
+ * @return	boolean		true / false
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function get_tabs( )
+  {
+      // Take care of special chars
+    $arr_return = $this->specialChars( );
+    if( ! ( empty ( $arr_return ) ) )
+    {
+      return $arr_return;
+    }
+
+
+      // Take care of filters
+
+    $arr_return['data']['rows'] = null;
+
+    $arr_return['error']['status'] = true;
+    $arr_return['error']['header'] = '<h1 style="color:red">Error index browser</h1>';
+    $arr_return['error']['prompt'] = '<p style="color:red">No rows.</p>';
 
     return $arr_return;
   }
@@ -282,6 +306,52 @@ class tx_browser_pi1_navi_indexBrowser
       // RETURN: index browser hasn't any configured tab
 
     return true;
+  }
+
+
+
+/**
+ * checkTableField( ):
+ *
+ * @return	array		$arr_return
+ * @version 3.9.10
+ * @since   3.9.9
+ */
+  private function checkTableField( )
+  {
+    list( $table, $field ) = explode( '.', $this->indexBrowserTableField );
+
+      // RETURN : table is the local table
+    if( $table == $this->pObj->localTable )
+    {
+      return;
+    }
+      // RETURN : table is the local table
+
+      // Error management
+    $prompt_01  = 'Sorry, the index browser can\'t handle an index for foreign tables!';
+    $prompt_02  = 'Current table.field is: ' . $this->indexBrowserTableField;
+    $prompt_03  = 'Local table is: ' . $this->pObj->localTable;
+    $prompt_04  = 'Please configure: ' . $this->conf_path . 'indexBrowser.field = ' . $this->pObj->localTable .'... ';
+    if ($this->pObj->b_drs_navi)
+    {
+      t3lib_div::devlog('[ERROR/NAVIGATION] ' . $prompt_01, $this->pObj->extKey, 3);
+      t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt_02, $this->pObj->extKey, 0);
+      t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt_03, $this->pObj->extKey, 0);
+      t3lib_div::devlog('[HELP/NAVIGATION] ' . $prompt_04, $this->pObj->extKey, 1);
+    }
+
+    $arr_return['error']['status'] = true;
+    $arr_return['error']['header'] = '<h1 style="color:red">Error Index-Browser</h1>';
+    $prompt = $prompt_01 . '<br />' . PHP_EOL;
+    $prompt = $prompt . $prompt_02 . '<br />' . PHP_EOL;
+    $prompt = $prompt . $prompt_03 . '<br />' . PHP_EOL;
+    $prompt = $prompt . $prompt_04 . '<br />' . PHP_EOL;
+    $arr_return['error']['prompt'] = '<p style="color:red">' . $prompt . '</p>';
+      // Error management
+
+      // RETURN error message
+    return $arr_return;
   }
 
 
@@ -363,73 +433,36 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * checkTableField( ):
- *
- * @return	array		$arr_return
- * @version 3.9.10
- * @since   3.9.9
- */
-  private function checkTableField( )
-  {
-    list( $table, $field ) = explode( '.', $this->indexBrowserTableField );
-
-      // RETURN : table is the local table
-    if( $table == $this->pObj->localTable )
-    {
-      return;
-    }
-      // RETURN : table is the local table
-
-      // Error management
-    $prompt_01  = 'Sorry, the index browser can\'t handle an index for foreign tables!';
-    $prompt_02  = 'Current table.field is: ' . $this->indexBrowserTableField;
-    $prompt_03  = 'Local table is: ' . $this->pObj->localTable;
-    $prompt_04  = 'Please configure: ' . $this->conf_path . 'indexBrowser.field = ' . $this->pObj->localTable .'... ';
-    if ($this->pObj->b_drs_navi)
-    {
-      t3lib_div::devlog('[ERROR/NAVIGATION] ' . $prompt_01, $this->pObj->extKey, 3);
-      t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt_02, $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt_03, $this->pObj->extKey, 0);
-      t3lib_div::devlog('[HELP/NAVIGATION] ' . $prompt_04, $this->pObj->extKey, 1);
-    }
-
-    $arr_return['error']['status'] = true;
-    $arr_return['error']['header'] = '<h1 style="color:red">Error Index-Browser</h1>';
-    $prompt = $prompt_01 . '<br />' . PHP_EOL;
-    $prompt = $prompt . $prompt_02 . '<br />' . PHP_EOL;
-    $prompt = $prompt . $prompt_03 . '<br />' . PHP_EOL;
-    $prompt = $prompt . $prompt_04 . '<br />' . PHP_EOL;
-    $arr_return['error']['prompt'] = '<p style="color:red">' . $prompt . '</p>';
-      // Error management
-
-      // RETURN error message
-    return $arr_return;
-  }
-
-
-
-/**
  * initTabs( ):  Loops through the tab TS configuration array
- *               and inits the class var $this->indexbrowserTab
+ *               and inits the class var $this->indexBrowserTab
  *
- * @return	void
+ * @return	array   $arr_return: Eith an error message in case of an error
  * @version 3.9.10
  * @since   3.9.10
  */
   private function initTabs( )
   {
-      // Default properties
-    $defaultWrap            = $this->conf['navigation.']['indexBrowser.']['defaultTabWrap'];
-    $defaultDisplayWoItems  = $this->conf['navigation.']['indexBrowser.']['display.']['tabWithoutItems'];
-      // Default properties
+      // Init the table.field
+    $this->initTableField( );
+
+      // RETURN : table is not the local table
+    $arr_return = $this->checkTableField( );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+      // RETURN : table is not the local table
 
       // Tab with special value 'default'
-    $this->indexbrowserTab['tabSpecial']['default'] = null;
+    $this->indexBrowserTab['tabSpecial']['default'] = null;
     if( isset( $this->conf['navigation.']['indexBrowser.']['defaultTab'] ) )
     {
-      $this->indexbrowserTab['tabSpecial']['default'] = $this->conf['navigation.']['indexBrowser.']['defaultTab'];
+      $this->indexBrowserTab['tabSpecial']['default'] = $this->conf['navigation.']['indexBrowser.']['defaultTab'];
     }
       // Tab with special value 'default'
+
+      // Get index browser default property
+    $defaultDisplayWoItems  = $this->conf['navigation.']['indexBrowser.']['display.']['tabWithoutItems'];
 
       // LOOP tabs TS configuratione array
     $conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
@@ -442,75 +475,14 @@ class tx_browser_pi1_navi_indexBrowser
       }
         // CONTINUE : key is an array
 
-      if( $conf_tabs[$tabId . '.']['valuesCSV'] )
-      {
-        $csvAttributes      = $conf_tabs[$tabId . '.']['valuesCSV'];
-        $csvAttributes      = str_replace(' ', null, $csvAttributes);
-        $arrCsvAttributes[] = $csvAttributes;
-        $attributes         = explode( ',', $csvAttributes );
-        foreach( $attributes as $attribute )
-        {
-            // DRS
-          if( isset ( $this->indexbrowserTab['attributes'][ $attribute ]) )
-          {
-            if( $this->pObj->b_drs_navi )
-            {
-              $prompt = 'The tab attribute ' . $attribute . ' is part of two tabs at least!';
-              t3lib_div::devlog( '[ERROR/NAVI] ' . $prompt, $this->pObj->extKey, 3 );
-              $prompt = 'You will get an unproper result for the index browser';
-              t3lib_div::devlog( '[WARN/NAVI] ' . $prompt, $this->pObj->extKey, 2 );
-              $prompt = $attribute . ' is part of tab[' . $this->indexbrowserTab['attributes'][ $attribute ][ 'tabLabel' ] . '] '.
-                        ' and of tab[' . $tabLabel . '] at least!';
-              t3lib_div::devlog( '[WARN/NAVI] ' . $prompt, $this->pObj->extKey, 2 );
-              $prompt = 'Please take care of a proper TypoScript configuration!';
-              t3lib_div::devlog( '[HELP/NAVI] ' . $prompt, $this->pObj->extKey, 1 );
-            }
-          }
-            // DRS
-          $this->indexbrowserTab['attributes'][ $attribute ][ 'tabLabel' ] = $tabLabel;
-          $this->indexbrowserTab['attributes'][ $attribute ][ 'tabId' ]    = $tabId;
-        }
-      }
-        // Tab label stdWrap
-      if( $conf_tabs[$tabId . '.']['stdWrap.'] )
-      {
-        $stdWrap  = $conf_tabs[$tabId . '.']['stdWrap.'];
-        $tabLabel = $this->pObj->objWrapper->general_stdWrap( $tabLabel, $stdWrap );
-      }
-        // Tab label stdWrap
+        // Get attributes
+      $csvAttributes      = str_replace(' ', null, $csvAttributes);
+      $arrCsvAttributes[] = $csvAttributes;
 
-        // Tab display withou items
-      $displayWoItems = $defaultDisplayWoItems;
-      if( isset ( $conf_tabs[$tabId . '.']['displayWithoutItems'] ) )
-      {
-        $displayWoItems = $conf_tabs[$tabId . '.']['displayWithoutItems'];
-      }
-        // Tab display withou items
-
-        // Init tab array
-      $this->indexbrowserTab['tabIds'][$tabId]['label']           = $tabLabel;
-      $this->indexbrowserTab['tabIds'][$tabId]['displayWoItems']  = $displayWoItems;
-      $this->indexbrowserTab['tabIds'][$tabId]['sum']             = 0;
-      $this->indexbrowserTab['tabLabels'][$tabLabel] = $tabId;
-        // Init tab array
-
-        // CONTINUE : tab with special value 'all'
-      if( $conf_tabs[$tabId . '.']['special'] == 'all' )
-      {
-        $this->indexbrowserTab['tabIds'][$tabId]['special'] = 'all';
-        $this->indexbrowserTab['tabSpecial']['all']         = $tabId;
-        continue;
-      }
-        // CONTINUE : tab with special value 'all'
-
-        // CONTINUE : tab with special value 'others'
-      if( $conf_tabs[$tabId . '.']['special'] == 'others' )
-      {
-        $this->indexbrowserTab['tabIds'][$tabId]['special'] = 'others';
-        $this->indexbrowserTab['tabSpecial']['others']      = $tabId;
-        continue;
-      }
-        // CONTINUE : tab with special value 'others'
+        // Init tab attributes
+      $this->initTabsAttributes( $csvAttributes  );
+        // Init tab properties
+      $this->initTabsProperties( $conf_tabs, $tabId, $tabLabel, $defaultDisplayWoItems );
     }
       // LOOP tabs TS configuratione array
 
@@ -521,7 +493,108 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * initTabsSpecialChars( ): Inits the class var $this->indexbrowserTab['initials']
+ * initTabsAttributes( ):  Loops through the tab TS configuration array
+ *               and inits the class var $this->indexBrowserTab
+ *
+ * @return	array   $arr_return: Eith an error message in case of an error
+ * @version 3.9.10
+ * @since   3.9.10
+ */
+  private function initTabsAttributes( $csvAttributes )
+  {
+      // RETURN : no attributes
+    if( empty ( $csvAttributes ) )
+    {
+      return;
+    }
+      // RETURN : no attributes
+
+      // LOOP : attributes
+    $attributes = explode( ',', $csvAttributes );
+    foreach( $attributes as $attribute )
+    {
+        // DRS : ERROR : attribute is part of two tabs at least
+      if( isset ( $this->indexBrowserTab['attributes'][ $attribute ]) )
+      {
+        if( $this->pObj->b_drs_navi )
+        {
+          $prompt = 'The tab attribute ' . $attribute . ' is part of two tabs at least!';
+          t3lib_div::devlog( '[ERROR/NAVI] ' . $prompt, $this->pObj->extKey, 3 );
+          $prompt = 'You will get an unproper result for the index browser';
+          t3lib_div::devlog( '[WARN/NAVI] ' . $prompt, $this->pObj->extKey, 2 );
+          $prompt = $attribute . ' is part of tab[' . $this->indexBrowserTab['attributes'][ $attribute ][ 'tabLabel' ] . '] '.
+                    ' and of tab[' . $tabLabel . '] at least!';
+          t3lib_div::devlog( '[WARN/NAVI] ' . $prompt, $this->pObj->extKey, 2 );
+          $prompt = 'Please take care of a proper TypoScript configuration!';
+          t3lib_div::devlog( '[HELP/NAVI] ' . $prompt, $this->pObj->extKey, 1 );
+        }
+      }
+        // DRS : ERROR : attribute is part of two tabs at least
+
+        // Set class var
+      $this->indexBrowserTab['attributes'][ $attribute ][ 'tabLabel' ] = $tabLabel;
+      $this->indexBrowserTab['attributes'][ $attribute ][ 'tabId' ]    = $tabId;
+    }
+      // LOOP : attributes
+  }
+
+
+
+/**
+ * initTabsProperties( ): Loops through the tab TS configuration array
+ *                        and inits the class var $this->indexBrowserTab
+ *
+ * @return	array   $arr_return: Eith an error message in case of an error
+ * @version 3.9.10
+ * @since   3.9.10
+ */
+  private function initTabsProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+  {
+      // Overwrite tab label in case of stdWrap
+    if( $conf_tabs[$tabId . '.']['stdWrap.'] )
+    {
+      $stdWrap  = $conf_tabs[$tabId . '.']['stdWrap.'];
+      $tabLabel = $this->pObj->objWrapper->general_stdWrap( $tabLabel, $stdWrap );
+    }
+      // Overwrite tab label in case of stdWrap
+
+      // Overwrite property display without items
+    if( isset ( $conf_tabs[$tabId . '.']['displayWithoutItems'] ) )
+    {
+      $displayWoItems = $conf_tabs[$tabId . '.']['displayWithoutItems'];
+    }
+      // Overwrite property display without items
+
+      // Set tab array
+    $this->indexBrowserTab['tabIds'][$tabId]['label']           = $tabLabel;
+    $this->indexBrowserTab['tabIds'][$tabId]['displayWoItems']  = $displayWoItems;
+    $this->indexBrowserTab['tabIds'][$tabId]['sum']             = 0;
+    $this->indexBrowserTab['tabLabels'][$tabLabel]              = $tabId;
+      // Set tab array
+
+      // RETURN : tab with special value 'all'
+    if( $conf_tabs[$tabId . '.']['special'] == 'all' )
+    {
+      $this->indexBrowserTab['tabIds'][$tabId]['special'] = 'all';
+      $this->indexBrowserTab['tabSpecial']['all']         = $tabId;
+      return;
+    }
+      // RETURN : tab with special value 'all'
+
+      // RETURN : tab with special value 'others'
+    if( $conf_tabs[$tabId . '.']['special'] == 'others' )
+    {
+      $this->indexBrowserTab['tabIds'][$tabId]['special'] = 'others';
+      $this->indexBrowserTab['tabSpecial']['others']      = $tabId;
+      return;
+    }
+      // RETURN : tab with special value 'others'
+  }
+
+
+
+/**
+ * initTabsSpecialChars( ): Inits the class var $this->indexBrowserTab['initials']
  *
  * @param	array		$arrCsvAttributes : initials from the tab TS configuration
  * @return	void
@@ -535,9 +608,9 @@ class tx_browser_pi1_navi_indexBrowser
     $csvInitials  = implode( ',', ( array ) $arrCsvAttributes );
 
       // Init vars with all initials
-    $this->indexbrowserTab['initials']['all']           = $csvInitials;
-    $this->indexbrowserTab['initials']['specialChars']  = null;
-    $this->indexbrowserTab['initials']['alphaNum']      = null;
+    $this->indexBrowserTab['initials']['all']           = $csvInitials;
+    $this->indexBrowserTab['initials']['specialChars']  = null;
+    $this->indexBrowserTab['initials']['alphaNum']      = null;
 
       // UTF-8 decode
     $subject = utf8_decode( $csvInitials  );
@@ -547,7 +620,7 @@ class tx_browser_pi1_navi_indexBrowser
     if( preg_match_all( $pattern, $subject, $matches ) )
     {
       $specialChars = implode(',', $matches[0] );
-      $this->indexbrowserTab['initials']['specialChars'] = utf8_encode( $specialChars );
+      $this->indexBrowserTab['initials']['specialChars'] = utf8_encode( $specialChars );
     }
       // Init var with special chars
 
@@ -556,53 +629,9 @@ class tx_browser_pi1_navi_indexBrowser
     if( preg_match_all( $pattern, $subject, $matches ) )
     {
       $specialChars = implode(',', $matches[0] );
-      $this->indexbrowserTab['initials']['alphaNum'] = utf8_encode( $specialChars );
+      $this->indexBrowserTab['initials']['alphaNum'] = utf8_encode( $specialChars );
     }
       // Init var with alpha numeric chars
-  }
-
-
-
-
-
-
-
-
-
-    /***********************************************
-    *
-    * rows
-    *
-    **********************************************/
-
-
-
-/**
- * rows( ):
- *
- * @return	boolean		true / false
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function rows( )
-  {
-      // Take care of special chars
-    $arr_return = $this->specialChars( );
-    if( ! ( empty ( $arr_return ) ) )
-    {
-      return $arr_return;
-    }
-
-
-      // Take care of filters
-
-    $arr_return['data']['rows'] = null;
-
-    $arr_return['error']['status'] = true;
-    $arr_return['error']['header'] = '<h1 style="color:red">Error index browser</h1>';
-    $arr_return['error']['prompt'] = '<p style="color:red">No rows.</p>';
-
-    return $arr_return;
   }
 
 
@@ -634,7 +663,7 @@ class tx_browser_pi1_navi_indexBrowser
   private function specialChars( )
   {
       // RETURN : no special chars
-    if( empty ( $this->indexbrowserTab['initials']['specialChars'] ) )
+    if( empty ( $this->indexBrowserTab['initials']['specialChars'] ) )
     {
       return;
     }
@@ -704,7 +733,7 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Reset SQL char set
     $this->sqlCharsetSet( $currSqlCharset );
-//$this->pObj->dev_var_dump( $this->indexbrowserTab );
+//$this->pObj->dev_var_dump( $this->indexBrowserTab );
   }
 
 
@@ -723,11 +752,11 @@ class tx_browser_pi1_navi_indexBrowser
     {
       $attribute  = $row[ 'initial' ];
       $count      = $row[ 'count' ];
-      $tabId      = $this->indexbrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ];
-      $currSum    = $this->indexbrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
+      $tabId      = $this->indexBrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ];
+      $currSum    = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
       $sum        = $currSum + $count;
-      $this->indexbrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ]       = $sum;
-      $this->indexbrowserTab['attributes'][ $attribute ][ 'sum' ] = $sum;
+      $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ]       = $sum;
+      $this->indexBrowserTab['attributes'][ $attribute ][ 'sum' ] = $sum;
     }
   }
 
@@ -860,7 +889,7 @@ class tx_browser_pi1_navi_indexBrowser
   {
       // Build the select statement parts for the length of each special char
     $arrStatement     = array( );
-    $arrSpecialChars  = explode( ',', $this->indexbrowserTab['initials']['specialChars'] );
+    $arrSpecialChars  = explode( ',', $this->indexBrowserTab['initials']['specialChars'] );
     foreach( ( array ) $arrSpecialChars as $specialChar )
     {
       $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
