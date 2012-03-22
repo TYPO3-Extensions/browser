@@ -87,6 +87,32 @@ class tx_browser_pi1_navi_indexBrowser
 
     // [Array] Array with tabIds and tabLabels
   var $indexbrowserTab = array( );
+//  'tabSpecial' =>
+//    'default' => '0',
+//    'all' => 0,
+//    'others' => 25,
+//  'tabIds' =>
+//    0 =>
+//      'label' => 'Alle',
+//      'displayWoItems' => '1',
+//      'sum' => 0,
+//      'special' => 'all',
+//    1 =>
+//    ...
+//  'tabLabels' =>
+//    'Alle' => 0,
+//    '0-9' => 1,
+//    'A' => 2,
+//    ...
+//  'attributes' =>
+//    0 =>
+//      'tabLabel' => '0-9',
+//      'tabId' => 1,
+//    ...
+//    'Z' =>
+//      'tabLabel' => 'XYZ',
+//      'tabId' => 24,
+
     // [String] table.field of the index browser
   var $indexBrowserTableField = null;
     // [Array] Array with the find in set statements for special chars
@@ -480,7 +506,6 @@ class tx_browser_pi1_navi_indexBrowser
         // CONTINUE : tab with special value 'others'
     }
       // LOOP tabs TS configuratione array
-$this->pObj->dev_var_dump( $this->indexbrowserTab );
 
       // Init special chars
     $this->initTabsSpecialChars( $arrCsvAttributes );
@@ -773,6 +798,12 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
       while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
       {
         $sum_initialWiSpecialChars++;
+        $attribute  = $row[ 'initial' ];
+        $count      = $row[ 'count' ];
+        $tabId      = $this->indexbrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ];
+        $currSum    = $this->indexbrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
+        $sum        = $currSum + $count;
+        $this->indexbrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
         $rows[ $row[ 'initial' ] ] = $row[ 'count' ];
       }
         // LOOP build the rows
@@ -784,7 +815,8 @@ $this->pObj->dev_var_dump( $this->indexbrowserTab );
       {
         $this->rowsSpecialChars_setSum = $rows;
       }
-$this->pObj->dev_var_dump( $this->rowsSpecialChars_setSum, $this->indexbrowserTab );
+//$this->pObj->dev_var_dump( $this->rowsSpecialChars_setSum, $this->indexbrowserTab );
+$this->pObj->dev_var_dump( $this->indexbrowserTab );
 
     }
       // LOOP : execute a query for each special char length group
