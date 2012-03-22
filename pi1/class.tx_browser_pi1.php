@@ -1147,7 +1147,6 @@ class tx_browser_pi1 extends tslib_pibase {
   {
       // Get the debug trail
     $debugTrail_str = t3lib_utility_Debug::debugTrail( );
-var_dump( $debugTrail_str );
 
       // Get debug trail elements
     $debugTrail_arr = explode( '//', $debugTrail_str );
