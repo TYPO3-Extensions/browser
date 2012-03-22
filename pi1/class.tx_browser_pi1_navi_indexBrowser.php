@@ -51,7 +51,7 @@
  *  503:     private function rows( )
  *  533:     private function rowsSpecialChars( )
  *  570:     private function rowsSpecialChars_setLength( )
- *  629:     private function rowsSpecialChars_setSum( $row )
+ *  629:     private function rowsSpecialChars_addSum( $row )
  *
  *              SECTION: SQL
  *  764:     private function sqlCharsetGet( )
@@ -117,8 +117,6 @@ class tx_browser_pi1_navi_indexBrowser
   var $indexBrowserTableField = null;
     // [Array] Array with the find in set statements for special chars
   var $findInSet = array( );
-    // [Array] Array with special chars initials and their sum
-  var $rowsSpecialChars_setSum = array( );
 
 
 
@@ -627,7 +625,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Get a row with the SQL length for each special char
 
       // Get the sum for each special char initial
-    $arr_return = $this->rowsSpecialChars_setSum( $row );
+    $arr_return = $this->rowsSpecialChars_addSum( $row );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -696,14 +694,14 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * rowsSpecialChars_setSum( ):
+ * rowsSpecialChars_addSum( ):
  *
  * @param	[type]		$$row: ...
  * @return	[type]		...
  * @version 3.9.10
  * @since   3.9.10
  */
-  private function rowsSpecialChars_setSum( $row )
+  private function rowsSpecialChars_addSum( $row )
   {
       // Get current SQL char set
     $currSqlCharset = $this->sqlCharsetGet( );
@@ -803,19 +801,14 @@ class tx_browser_pi1_navi_indexBrowser
         $tabId      = $this->indexbrowserTab[ 'attributes' ][ $attribute ][ 'tabId' ];
         $currSum    = $this->indexbrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
         $sum        = $currSum + $count;
-        $this->indexbrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
-        $rows[ $row[ 'initial' ] ] = $row[ 'count' ];
+        $this->indexbrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ]       = $sum;
+        $this->indexbrowserTab['attributes'][ $attribute ][ 'sum' ] = $sum;
       }
         // LOOP build the rows
 
         // Free SQL result
       $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
-      if( ! empty ( $rows ) )
-      {
-        $this->rowsSpecialChars_setSum = $rows;
-      }
-//$this->pObj->dev_var_dump( $this->rowsSpecialChars_setSum, $this->indexbrowserTab );
 $this->pObj->dev_var_dump( $this->indexbrowserTab );
 
     }
