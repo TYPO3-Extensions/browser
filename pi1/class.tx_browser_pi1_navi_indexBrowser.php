@@ -51,10 +51,10 @@
  *  369:     private function tableField_init( )
  *
  *              SECTION: tabs
- *  459:     private function tabs( )
- *  520:     private function tabs_setAttributes( $csvAttributes )
- *  572:     private function tabs_setProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
- *  625:     private function tabs_setSpecialChars( $arrCsvAttributes )
+ *  459:     private function tabs_init( )
+ *  520:     private function tabs_initAttributes( $csvAttributes )
+ *  572:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+ *  625:     private function tabs_initSpecialChars( $arrCsvAttributes )
  *
  *              SECTION: special chars
  *  684:     private function specialChars( )
@@ -172,11 +172,11 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * get( ): Get the content of the index browser
+ * get( ): Get the index browser. It has to replace the subpart in the current content.
  *
  * @param	string		$content: current content
  * @return	array
- * @version 3.9.9
+ * @version 3.9.11
  * @since   3.9.9
  */
   public function get( $content )
@@ -194,8 +194,16 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // RETURN: requirements aren't met
 
+      // RETURN : table is not the local table
+    $arr_return = $this->tableField_check( );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+      // RETURN : table is not the local table
+
       // Init the tabs
-    $arr_return = $this->tabs( );
+    $arr_return = $this->tabs_init( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -227,7 +235,7 @@ class tx_browser_pi1_navi_indexBrowser
  * get_tabs( ):
  *
  * @return	boolean		true / false
- * @version 3.9.9
+ * @version 3.9.11
  * @since   3.9.9
  */
   private function get_tabs( )
@@ -269,17 +277,17 @@ class tx_browser_pi1_navi_indexBrowser
 
 /**
  * requirements_check( ): Checks
- *                                    * configuration of the flexform
- *                                    * configuration of TS tabs
- *                                    and returns false, if a requirement isn't met
+ *                        * configuration of the flexform
+ *                        * configuration of TS tabs
+ *                        It returns false, if a requirement isn't met
  *
  * @return	boolean		true / false
- * @version 3.9.9
+ * @version 3.9.11
  * @since   3.9.9
  */
   private function requirements_check( )
   {
-      // RETURN: index browser is disabled
+      // RETURN false : index browser is disabled
     if( ! $this->pObj->objFlexform->bool_indexBrowser )
     {
       if( $this->pObj->b_drs_navi )
@@ -289,9 +297,9 @@ class tx_browser_pi1_navi_indexBrowser
       }
       return false;
     }
-      // RETURN: index browser is disabled
+      // RETURN false : index browser is disabled
 
-      // RETURN: index browser hasn't any configured tab
+      // RETURN false : index browser hasn't any configured tab
     $arr_conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
     if( ! is_array( $arr_conf_tabs ) )
     {
@@ -305,22 +313,28 @@ class tx_browser_pi1_navi_indexBrowser
       }
       return false;
     }
-      // RETURN: index browser hasn't any configured tab
+      // RETURN false : index browser hasn't any configured tab
 
+      // RETURN true : requirements are OK
     return true;
   }
 
 
 
 /**
- * tableField_check( ):
+ * tableField_check( ): Checks, if the table.field of the index browser
+ *                      correspondends with the local table.
+ *                      Sets the class var $indexBrowserTableField.
  *
- * @return	array		$arr_return
- * @version 3.9.10
+ * @return	array       $arr_return : Contains an error message in case of an error
+ * @version 3.9.11
  * @since   3.9.9
  */
   private function tableField_check( )
   {
+      // Init the table.field
+    $this->tableField_init( );
+
     list( $table, $field ) = explode( '.', $this->indexBrowserTableField );
 
       // RETURN : table is the local table
@@ -360,10 +374,10 @@ class tx_browser_pi1_navi_indexBrowser
 
 /**
  * tableField_init( ):  Set the class var $this->indexBrowserTableField
- *                                  Value is the table.field for SQL queries
+ *                      Value is the table.field for SQL queries
  *
  * @return	void
- * @version 3.9.10
+ * @version 3.9.11
  * @since   3.9.9
  */
   private function tableField_init( )
@@ -449,35 +463,23 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * tabs( ):  Loops through the tab TS configuration array
- *               and inits the class var $this->indexBrowserTab
+ * tabs_init( ):    Sets the class var $indexBrowserTab
  *
- * @return	array		$arr_return: Eith an error message in case of an error
- * @version 3.9.10
+ * @return	array		$arr_return: Contains an error message in case of an error
+ * @version 3.9.11
  * @since   3.9.10
  */
-  private function tabs( )
+  private function tabs_init( )
   {
-      // Init the table.field
-    $this->tableField_init( );
-
-      // RETURN : table is not the local table
-    $arr_return = $this->tableField_check( );
-    if( $arr_return['error']['status'] )
-    {
-      return $arr_return;
-    }
-      // RETURN : table is not the local table
-
-      // Tab with special value 'default'
+      // Get tabSpecial property default
     $this->indexBrowserTab['tabSpecial']['default'] = null;
     if( isset( $this->conf['navigation.']['indexBrowser.']['defaultTab'] ) )
     {
       $this->indexBrowserTab['tabSpecial']['default'] = $this->conf['navigation.']['indexBrowser.']['defaultTab'];
     }
-      // Tab with special value 'default'
+      // Get tabSpecial property default
 
-      // Get index browser default property
+      // Get default property display tabs without any item
     $defaultDisplayWoItems  = $this->conf['navigation.']['indexBrowser.']['display.']['tabWithoutItems'];
 
       // LOOP tabs TS configuratione array
@@ -496,28 +498,27 @@ class tx_browser_pi1_navi_indexBrowser
       $arrCsvAttributes[] = $csvAttributes;
 
         // Init tab attributes
-      $this->tabs_setAttributes( $csvAttributes  );
+      $this->tabs_initAttributes( $csvAttributes  );
         // Init tab properties
-      $this->tabs_setProperties( $conf_tabs, $tabId, $tabLabel, $defaultDisplayWoItems );
+      $this->tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $defaultDisplayWoItems );
     }
       // LOOP tabs TS configuratione array
 
       // Init special chars
-    $this->tabs_setSpecialChars( $arrCsvAttributes );
+    $this->tabs_initSpecialChars( $arrCsvAttributes );
   }
 
 
 
 /**
- * tabs_setAttributes( ):  Loops through the tab TS configuration array
- *               and inits the class var $this->indexBrowserTab
+ * tabs_initAttributes( ):  Sets the array attributes of the class var $indexBrowserTab
  *
- * @param	[type]		$$csvAttributes: ...
- * @return	array		$arr_return: Eith an error message in case of an error
- * @version 3.9.10
+ * @param   string          $csvAttributes  : attributes
+ * @return	array           $arr_return     : Contains an error message in case of an error
+ * @version 3.9.11
  * @since   3.9.10
  */
-  private function tabs_setAttributes( $csvAttributes )
+  private function tabs_initAttributes( $csvAttributes )
   {
       // RETURN : no attributes
     if( empty ( $csvAttributes ) )
@@ -558,18 +559,18 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * tabs_setProperties( ): Loops through the tab TS configuration array
- *                        and inits the class var $this->indexBrowserTab
+ * tabs_initProperties( ):  Sets the elements tabIds and tabLabels of the class var $indexBrowserTab
+ *                          Updates the element tabSpecial.
  *
- * @param	[type]		$$conf_tabs: ...
- * @param	[type]		$tabId: ...
- * @param	[type]		$tabLabel: ...
- * @param	[type]		$displayWoItems: ...
- * @return	array		$arr_return: Eith an error message in case of an error
- * @version 3.9.10
+ * @param   array     $conf_tabs      : TS configuration array
+ * @param   integer		$tabId          : Current tab ID for TS configuration array
+ * @param   string		$tabLabel       : Label of the current tab
+ * @param   boolean		$displayWoItems : Default value for displaying tabs without any hit
+ * @return	array     $arr_return     : Contains an error message in case of an error
+ * @version 3.9.11
  * @since   3.9.10
  */
-  private function tabs_setProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+  private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
   {
       // Overwrite tab label in case of stdWrap
     if( $conf_tabs[$tabId . '.']['stdWrap.'] )
@@ -615,14 +616,14 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * tabs_setSpecialChars( ): Inits the class var $this->indexBrowserTab['initials']
+ * tabs_initSpecialChars( ): Inits the array initials of the class var $indexBrowserTab
  *
  * @param	array		$arrCsvAttributes : initials from the tab TS configuration
  * @return	void
- * @version 3.9.10
+ * @version 3.9.11
  * @since   3.9.10
  */
-  private function tabs_setSpecialChars( $arrCsvAttributes )
+  private function tabs_initSpecialChars( $arrCsvAttributes )
   {
       // Get initials unique
     $arrCsvAttributes  = array_unique( $arrCsvAttributes );
@@ -675,10 +676,10 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * specialChars( ):
+ * specialChars( ): Updates sum / number of hits of sepcial chars
  *
- * @return	[type]		...
- * @version 3.9.10
+ * @return	array   $arr_return : Contains an erreor message in case of an error
+ * @version 3.9.11
  * @since   3.9.10
  */
   private function specialChars( )
@@ -706,17 +707,18 @@ class tx_browser_pi1_navi_indexBrowser
     {
       return $arr_return;
     }
+      // Get the sum for each special char initial
 
   }
 
 
 
 /**
- * specialChars_addSum( ):
+ * specialChars_addSum( ): Updates sum / number of hits of sepcial chars
  *
- * @param	[type]		$$row: ...
- * @return	[type]		...
- * @version 3.9.10
+ * @param   array		$row        : Row with special chars and their SQL length
+ * @return	array   $arr_return : Contains an erreor message in case of an error
+ * @version 3.9.11
  * @since   3.9.10
  */
   private function specialChars_addSum( $row )
@@ -760,11 +762,11 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * specialChars_addSumToTab( ):
+ * specialChars_addSumToTab( ): Updates the sum in the arrays tabIds and attributes
+ *                              of the class var $indexBrowserTab
  *
- * @param	[type]		$res: ...
- * @return	[type]		...
- * @version 3.9.10
+ * @param   array		$res  : SQL result
+ * @version 3.9.11
  * @since   3.9.10
  */
   private function specialChars_addSumToTab( $res )
@@ -784,13 +786,15 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * specialChars_resSqlCount( ):
+ * specialChars_resSqlCount( ): SQL query and execution for counting
+ *                              special char initials
  *
- * @param	[type]		$$row: ...
- * @param	[type]		$arrfindInSet: ...
- * @param	[type]		$currSqlCharset: ...
- * @return	[type]		...
- * @version 3.9.10
+ * @param   integer             $length         : SQL length of special chars group
+ * @param   array               $arrfindInSet   : FIND IN SET statement with proper length
+ * @param   string              $currSqlCharset : Current SQL charset for reset in error case
+ * @return	array               $arr_return     : SQL ressource or
+ *                                                an error message in case of an error
+ * @version 3.9.11
  * @since   3.9.10
  */
   private function specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
@@ -820,27 +824,24 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Get query
     $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
-      // Get query
-
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
       // Execute query
     $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
-      // Execute query
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
 
       // Error management
     $error = $GLOBALS['TYPO3_DB']->sql_error( );
@@ -873,11 +874,12 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * specialChars_setSqlFindInSet( ):
+ * specialChars_setSqlFindInSet( ): Set the FIND IN SET statement for each special char group.
+ *                                  A special char group is grouped by the length of a special
+ *                                  char.
  *
- * @param	[type]		$$row: ...
- * @return	[type]		...
- * @version 3.9.10
+ * @param   array                   $row  : Row with special chars and their SQL length
+ * @version 3.9.11
  * @since   3.9.10
  */
   private function specialChars_setSqlFindInSet( $row )
@@ -903,7 +905,7 @@ class tx_browser_pi1_navi_indexBrowser
  * specialChars_setSqlLength( ): Return a row with all special chars and their SQL length
  *
  * @return	array		$arr_return : row with all special chars and their SQL length
- * @version 3.9.10
+ * @version 3.9.11
  * @since   3.9.10
  */
   private function specialChars_setSqlLength( )
@@ -947,8 +949,9 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // DRS
 
+      // Get the row
     $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
-
+      // SQL free result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
     $arr_return['data']['row'] = $row;
@@ -971,9 +974,9 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * sqlCharsetGet( ): Get the current SQL charset like latin1 or utf8.
+ * sqlCharsetGet( ):  Get the current SQL charset like latin1 or utf8.
  *
- * @return	string		current charset
+ * @return	string    $charset  : current charset
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1005,8 +1008,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * sqlCharsetSet( ):  Execute SET NAMES with given charset
  *
- * @param	string		$sqlCharset : SQL charset like latin1 or utf8
- * @return	[type]		...
+ * @param   string		$sqlCharset : SQL charset like latin1 or utf8
  * @version 3.9.9
  * @since   3.9.9
  */
