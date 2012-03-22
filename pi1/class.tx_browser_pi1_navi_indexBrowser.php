@@ -389,6 +389,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
         t3lib_div::devlog( '[HELP/NAVI+LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
       }
         // DRS
+      return false;
     }
 
       // RETURN false : index browser hasn't any configured tab
