@@ -736,6 +736,7 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Reset SQL char set
     $this->sqlCharsetSet( $currSqlCharset );
+//$this->pObj->dev_var_dump( $this->indexbrowserTab );
   }
 
 
