@@ -861,7 +861,7 @@ class tx_browser_pi1_navi_indexBrowser
     $this->indexBrowserTab['tabIds'][$tabId]['sum']             = 0;
     $this->indexBrowserTab['tabLabels'][$tabLabel]              = $tabId;
       // Set tab selected
-    $this->zz_setTabSlected( $tabLabel, $tabId );
+    $this->zz_setTabSlected( $tabId );
       // Set tab array
 
       // RETURN : tab with special value 'all'
@@ -1829,25 +1829,38 @@ class tx_browser_pi1_navi_indexBrowser
  * zz_setTabSlected( ): Sets the class property selected, if the current tab
  *                      is selected. Sets the class var indexBrowserTab.
  *
- * @param	string		$tabLabel : Label of the current tab
  * @param	integer		$tabId    : Current tab ID for TS configuration array
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function zz_setTabSlected( $tabLabel, $tabId )
+  private function zz_setTabSlected( $tabId )
   {
 //$this->pObj->dev_var_dump( $tabLabel, $this->pObj->piVar_indexBrowserTab );
 //$this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default'] );
       // IF : piVar
     if( $this->pObj->piVar_indexBrowserTab )
     {
+      $label      = $this->indexBrowserTab['tabIds'][$tabId]['label'];
+      $labelAscii = $this->indexBrowserTab['tabIds'][$tabId]['labelAscii'];
+
         // IF : current tab is selected
-      if($tabLabel == $this->pObj->piVar_indexBrowserTab)
+      if($label == $this->pObj->piVar_indexBrowserTab)
       {
         $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
         $this->indexBrowserTab['tabSpecial']['selected']     = $tabId;
+        return;
       }
         // IF : current tab is selected
+        // IF : current tab is selected
+      if($labelAscii == $this->pObj->piVar_indexBrowserTab)
+      {
+        $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
+        $this->indexBrowserTab['tabSpecial']['selected']     = $tabId;
+        return;
+      }
+        // IF : current tab is selected
+
+        // Don't follow workflow
       return;
     }
       // IF : piVar
