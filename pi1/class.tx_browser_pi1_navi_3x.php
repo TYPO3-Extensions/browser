@@ -23,13 +23,13 @@
  ***************************************************************/
 
   /**
- * The class tx_browser_pi1_navi bundles methods for navigation like the Index-Browser
+ * The class tx_browser_pi1_navi_3x bundles methods for navigation like the Index-Browser
  * or the page broser. It is part of the extension browser
  *
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage    browser
- * @version       3.9.10
+ * @version       3.9.12
  * @since 2.0.0
  */
 
@@ -38,7 +38,7 @@
  *
  *
  *
- *   71: class tx_browser_pi1_navi
+ *   71: class tx_browser_pi1_navi_3x
  *  122:     public function __construct($parentObj)
  *
  *              SECTION: Index browser
@@ -68,7 +68,7 @@
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-class tx_browser_pi1_navi
+class tx_browser_pi1_navi_3x
 {
 
     //////////////////////////////////////////////////////
@@ -2562,9 +2562,9 @@ class tx_browser_pi1_navi
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi.php'])
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi_3x.php'])
 {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi.php']);
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_navi_3x.php']);
 }
 
 ?>

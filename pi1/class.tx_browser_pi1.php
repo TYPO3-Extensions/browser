@@ -1553,112 +1553,116 @@ class tx_browser_pi1 extends tslib_pibase {
 
       // Class with methods for get calendar values
     require_once('class.tx_browser_pi1_cal.php');
-    $this->objCal = new tx_browser_pi1_cal($this);
+    $this->objCal = new tx_browser_pi1_cal( $this );
 
       // Class with methods for get flexform values
     require_once('class.tx_browser_pi1_flexform.php');
-    $this->objFlexform = new tx_browser_pi1_flexform($this);
+    $this->objFlexform = new tx_browser_pi1_flexform( $this );
 
       // Class with methods for consolidating rows
     require_once('class.tx_browser_pi1_consolidate.php');
-    $this->objConsolidate = new tx_browser_pi1_consolidate($this);
+    $this->objConsolidate = new tx_browser_pi1_consolidate( $this );
 
       // Class with methods for manage downloads
     require_once('class.tx_browser_pi1_download.php');
-    $this->objDownload = new tx_browser_pi1_download($this);
+    $this->objDownload = new tx_browser_pi1_download( $this );
 
       // Class with methods for exporting rows
     require_once('class.tx_browser_pi1_export.php');
-    $this->objExport = new tx_browser_pi1_export($this);
+    $this->objExport = new tx_browser_pi1_export( $this );
 
       // Class with realurl methods
-    require_once('class.tx_browser_pi1_filter.php');
-    $this->objFilter = new tx_browser_pi1_filter($this);
+    require_once('class.tx_browser_pi1_filter_3x.php');
+    $this->objFilter = new tx_browser_pi1_filter_3x( $this );
 
       // Class with filter methods
-    require_once('class.tx_browser_pi1_filter_4x.php');
-    $this->objFltr4x = new tx_browser_pi1_filter_4x($this);
+    require_once('class.tx_browser_pi1_filter.php');
+    $this->objFltr4x = new tx_browser_pi1_filter( $this );
 
       // #9659, 101016, dwildt
       // Class with methods for ordering rows
     require_once('class.tx_browser_pi1_javascript.php');
-    $this->objJss = new tx_browser_pi1_javascript($this);
+    $this->objJss = new tx_browser_pi1_javascript( $this );
 
       // Class with methods for the map
     require_once('class.tx_browser_pi1_map.php');
-    $this->objMap = new tx_browser_pi1_map($this);
+    $this->objMap = new tx_browser_pi1_map( $this );
 
       // Class with methods for the markers
     require_once('class.tx_browser_pi1_marker.php');
-    $this->objMarker = new tx_browser_pi1_marker($this);
+    $this->objMarker = new tx_browser_pi1_marker( $this );
 
       // Class with methods for ordering rows
     require_once('class.tx_browser_pi1_multisort.php');
-    $this->objMultisort = new tx_browser_pi1_multisort($this);
+    $this->objMultisort = new tx_browser_pi1_multisort( $this );
 
-      // Class with methods for the modeSelector, the pageBrowser and the index browser
-    require_once('class.tx_browser_pi1_navi.php');
-    $this->objNavi = new tx_browser_pi1_navi($this);
+      // Class 3.x with methods for the modeSelector, the pageBrowser and the index browser
+    require_once('class.tx_browser_pi1_navi_3x.php');
+    $this->objNavi = new tx_browser_pi1_navi_3x( $this );
 
-      // Class with methods for the modeSelector, the pageBrowser and the index browser
+      // Class with methods for the index browser
     require_once('class.tx_browser_pi1_navi_indexBrowser.php');
-    $this->objNaviIndexBrowser = new tx_browser_pi1_navi_indexBrowser($this);
+    $this->objNaviIndexBrowser = new tx_browser_pi1_navi_indexBrowser( $this );
+
+      // Class with methods for the pageBrowser
+    require_once('class.tx_browser_pi1_navi_pageBrowser.php');
+    $this->objNaviPageBrowser = new tx_browser_pi1_navi_pageBrowser( $this );
 
       // Class with localisation methods
     require_once('class.tx_browser_pi1_localisation.php');
-    $this->objLocalise = new tx_browser_pi1_localisation($this);
+    $this->objLocalise = new tx_browser_pi1_localisation( $this );
 
       // Class with seo methods for Search Engine Optimization
     require_once('class.tx_browser_pi1_seo.php');
-    $this->objSeo = new tx_browser_pi1_seo($this);
+    $this->objSeo = new tx_browser_pi1_seo( $this );
 
       // Class with session methods for the session management
     require_once('class.tx_browser_pi1_session.php');
-    $this->objSession = new tx_browser_pi1_session($this);
+    $this->objSession = new tx_browser_pi1_session( $this );
 
       // Class with methods for social media
     require_once('class.tx_browser_pi1_socialmedia.php');
-    $this->objSocialmedia = new tx_browser_pi1_socialmedia($this);
+    $this->objSocialmedia = new tx_browser_pi1_socialmedia( $this );
 
       // Class with sql methods, if user defined only a SELECT
     require_once('class.tx_browser_pi1_sql_auto.php');
-    $this->objSqlAut = new tx_browser_pi1_sql_auto($this);
+    $this->objSqlAut = new tx_browser_pi1_sql_auto( $this );
 
       // Class with sql methods for manual mode and auto mode
     require_once('class.tx_browser_pi1_sql_functions.php');
-    $this->objSqlFun = new tx_browser_pi1_sql_functions($this);
+    $this->objSqlFun = new tx_browser_pi1_sql_functions( $this );
 
       // Class with sql methods, if user defined a SELECT, FROM, WHERE and an array JOINS
     require_once('class.tx_browser_pi1_sql_manual.php');
-    $this->objSqlMan = new tx_browser_pi1_sql_manual($this);
+    $this->objSqlMan = new tx_browser_pi1_sql_manual( $this );
 
       // Class with sql methods for SQL querying
     require_once('class.tx_browser_pi1_sql.php');
-    $this->objSql = new tx_browser_pi1_sql($this);
+    $this->objSql = new tx_browser_pi1_sql( $this );
 
       // Class with methods for statistics requirement
     require_once('class.tx_browser_pi1_statistics.php');
-    $this->objStat = new tx_browser_pi1_statistics($this);
+    $this->objStat = new tx_browser_pi1_statistics( $this );
 
       // Class with TCA methods, which evaluate the TYPO3 TCA array
     require_once('class.tx_browser_pi1_tca.php');
-    $this->objTca = new tx_browser_pi1_tca($this);
+    $this->objTca = new tx_browser_pi1_tca( $this );
 
       // Class with template methods, which return HTML
     require_once('class.tx_browser_pi1_template.php');
-    $this->objTemplate = new tx_browser_pi1_template($this);
+    $this->objTemplate = new tx_browser_pi1_template( $this );
 
       // Class with ttcontainer methods, which return HTML
     require_once('class.tx_browser_pi1_ttcontainer.php');
-    $this->objTTContainer = new tx_browser_pi1_ttcontainer($this);
+    $this->objTTContainer = new tx_browser_pi1_ttcontainer( $this );
 
       // Class with typoscript methods, which process typoscript
     require_once('class.tx_browser_pi1_typoscript.php');
-    $this->objTyposcript = new tx_browser_pi1_typoscript($this);
+    $this->objTyposcript = new tx_browser_pi1_typoscript( $this );
 
       // Class with views methods, which process the list view and the single view
     require_once('class.tx_browser_pi1_views.php');
-    $this->objViews = new tx_browser_pi1_views($this);
+    $this->objViews = new tx_browser_pi1_views( $this );
 
       // Class with methods for the list view
     require_once( 'class.tx_browser_pi1_viewlist.php' );
@@ -1666,11 +1670,11 @@ class tx_browser_pi1 extends tslib_pibase {
 
       // Class with wrapper methods for wrapping fields and link values
     require_once('class.tx_browser_pi1_wrapper.php');
-    $this->objWrapper = new tx_browser_pi1_wrapper($this);
+    $this->objWrapper = new tx_browser_pi1_wrapper( $this );
 
       // Class with zz methods
     require_once('class.tx_browser_pi1_zz.php');
-    $this->objZz = new tx_browser_pi1_zz($this);
+    $this->objZz = new tx_browser_pi1_zz( $this );
 
   }
 
@@ -1768,6 +1772,23 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objNaviIndexBrowser->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
     $this->objNaviIndexBrowser->conf_path = $conf_path;
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_navi_pageBrowser.php
+
+      // [Array] The current TypoScript configuration array
+    $this->objNaviPageBrowser->conf      = $this->conf;
+      // [Integer] The current mode (from modeselector)
+    $this->objNaviPageBrowser->mode      = $this->piVar_mode;
+      // [String] 'list' or 'single': The current view
+    $this->objNaviPageBrowser->view      = $this->view;
+      // [Array] The TypoScript configuration array of the current view
+    $this->objNaviPageBrowser->conf_view = $conf_view;
+      // [String] TypoScript path to the current view. I.e. views.single.1
+    $this->objNaviPageBrowser->conf_path = $conf_path;
 
 
 

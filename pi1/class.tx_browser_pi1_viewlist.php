@@ -1556,10 +1556,9 @@ if( $this->pObj->bool_accessByIP )
 
 
 /**
- * content_setCSV( ):
+ * content_setCSV( ): Sets content to CSV template
  *
- * @return	void
- * @version 3.9.9
+ * @version 3.9.12
  * @since   3.9.9
  */
   private function content_setCSV( )
@@ -1578,40 +1577,20 @@ if( $this->pObj->bool_accessByIP )
       // Set the csv content
     $this->content  = $this->pObj->cObj->fileResource( $template_path );
 
-    if( empty( $this->content ) )
-    {
-      $prompt = '<div style="border:2em solid red;color:red;padding:2em;text-align:center;">
-          <h1>
-            TYPO3 Browser Error
-          </h1>
-          <h2>
-            EN: Subpart marker is empty
-          </h2>
-          <p>
-            English: subpart marker is empty.<br />
-            Please take care of a proper TypoScript.<br />
-          </p>
-          <h2>
-            DE: Subpartmarker fehlt
-          </h2>
-          <p>
-            Deutsch: der Subpartmarker ist leer.<br />
-            Bitte k&uuml;mmere Dich um ein korrektes TypoScript.<br />
-          </p>
-          <p>
-            ' . __METHOD__ . ' (' . __LINE__ . ')
-          </p>
-        </div>';
-      die( $prompt );
-    }
+      // Die, if content is empty
+    $this->content_dieIfEmpty( $str_marker, __METHOD__, __LINE__ );
   }
 
 
 
 /**
- * content_setDefault( ):
+ * content_setDefault( ): Sets content to list view template.
+ *                        Takes care of the subparts
+ *                        * searchbox
+ *                        * indexBrowser
+ *                        *
  *
- * @return	void
+ * @return	array         $arr_return: Contains an error message in case of an error
  * @version 3.9.12
  * @since   3.9.9
  */
@@ -1622,32 +1601,8 @@ if( $this->pObj->bool_accessByIP )
       // Set the list view content
     $this->content  = $this->pObj->cObj->getSubpart( $this->content, $str_marker );
 
-    if( empty( $this->content ) )
-    {
-      $prompt = '<div style="border:2em solid red;color:red;padding:2em;text-align:center;">
-          <h1>
-            TYPO3 Browser Error
-          </h1>
-          <h2>
-            EN: Subpart is missing
-          </h2>
-          <p>
-            English: Current HTML template doesn\'t contain the subpart \'' . $str_marker . '\' .<br />
-            Please take care of a proper template.<br />
-          </p>
-          <h2>
-            DE: Subpart fehlt
-          </h2>
-          <p>
-            Deutsch: Dem aktuellen HTML-Template fehlt der Subpart \'' . $str_marker . '\'.<br />
-            Bitte k&uuml;mmere Dich um ein korrektes Template.<br />
-          </p>
-          <p>
-            ' . __METHOD__ . ' (' . __LINE__ . ')
-          </p>
-        </div>';
-      die( $prompt );
-    }
+      // Die, if content is empty
+    $this->content_dieIfEmpty( $str_marker, __METHOD__, __LINE__ );
 
       // Set search box and filter
     $arr_return = $this->subpart_setSearchbox( );
@@ -1658,10 +1613,9 @@ if( $this->pObj->bool_accessByIP )
       $content = $arr_return['error']['header'] . $arr_return['error']['prompt'];
       return $content;
     }
-    unset( $arr_return );
       // Set search box and filter
 
-      // Get index browser
+      // Set index browser
     $arr_return = $this->subpart_setIndexBrowser( );
     if( $arr_return['error']['status'] )
     {
@@ -1670,10 +1624,49 @@ if( $this->pObj->bool_accessByIP )
       $content = $arr_return['error']['header'] . $arr_return['error']['prompt'];
       return $content;
     }
-    unset( $arr_return );
       // Set index browser
-      // Get page browser
+      
+      // Set mode selector
       // Set page browser
+  }
+
+
+
+/**
+ * content_dieIfEmpty( ): If content is empty, the methods will die the workflow
+ *                      with a qualified prompt.
+ *
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function content_dieIfEmpty( $marker, $method, $line )
+  {
+    if( empty( $this->content ) )
+    {
+      $prompt = '<div style="border:2em solid red;color:red;padding:2em;text-align:center;">
+          <h1>
+            TYPO3 Browser Error
+          </h1>
+          <h2>
+            EN: Subpart is missing
+          </h2>
+          <p>
+            English: Current HTML template doesn\'t contain the subpart \'' . $marker . '\' .<br />
+            Please take care of a proper template.<br />
+          </p>
+          <h2>
+            DE: Subpart fehlt
+          </h2>
+          <p>
+            Deutsch: Dem aktuellen HTML-Template fehlt der Subpart \'' . $marker . '\'.<br />
+            Bitte k&uuml;mmere Dich um ein korrektes Template.<br />
+          </p>
+          <p>
+            ' . $method . ' (' . $line . ')
+          </p>
+        </div>';
+      die( $prompt );
+    }
   }
 
 
@@ -1757,6 +1750,8 @@ if( $this->pObj->bool_accessByIP )
  */
   private function subpart_setIndexBrowser( )
   {
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'subpart_setIndexBrowser begin' );
+
     $arr_return = $this->pObj->objNaviIndexBrowser->get( $this->content );
     if( $arr_return['error']['status'] )
     {
@@ -1767,6 +1762,7 @@ if( $this->pObj->bool_accessByIP )
     $marker         = $this->pObj->objNaviIndexBrowser->getMarkerIndexBrowser( );
     $this->content  = $this->pObj->cObj->substituteSubpart( $this->content, $marker, $content, true);
 
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'subpart_setIndexBrowser end' );
     return;
   }
 
