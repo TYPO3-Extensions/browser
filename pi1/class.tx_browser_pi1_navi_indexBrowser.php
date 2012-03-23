@@ -647,7 +647,7 @@ class tx_browser_pi1_navi_indexBrowser
 
       switch( true )
       {
-        case( ! empty( $tab['count'] ) ):
+        case( ! empty( $tab['sum'] ) ):
           $markerArray['###TAB###'] = $this->zz_tabLinkLabel( $tab, $label, $piVar );
           break;
         case( $tab['displayWoItems'] ):
