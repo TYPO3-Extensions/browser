@@ -566,7 +566,6 @@ class tx_browser_pi1_navi_indexBrowser
       return $arr_return;
     }
       // Replace the whole subpart
-$this->pObj->dev_var_dump( $this->subpart, $this->subpartTab, $this->indexBrowserTab );
  
     $content = $this->pObj->cObj->substituteSubpart( $this->subpart, $markerTabs, $this->subpartTab, true);
 
@@ -626,7 +625,7 @@ $this->pObj->dev_var_dump( $this->subpart, $this->subpartTab, $this->indexBrowse
       }
       // #7582, Bugfix, 100501
     }
-
+$this->pObj->dev_var_dump( $this->subpartTab );
       // Get the tab array
     $arrTabs = $this->indexBrowserTab['tabIds'];
       // get id of the last visible tab
@@ -661,8 +660,9 @@ $this->pObj->dev_var_dump( $this->subpart, $this->subpartTab, $this->indexBrowse
 
       $markerArray['###CLASS###']     = $class;
       $markerArray['###LI_CLASS###']  = $class;
+$this->pObj->dev_var_dump( $markerArray );
         // #35032, 120320
-      $content = $content . $this->pObj->cObj->substituteMarkerArray($this->subpartTab, $markerArray);
+      $content = $content . $this->pObj->cObj->substituteMarkerArray( $this->subpartTab, $markerArray );
     }
       // LOOP : tabs
 
