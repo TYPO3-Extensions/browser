@@ -633,6 +633,11 @@ class tx_browser_pi1_navi_indexBrowser
       // LOOP : tabs
     foreach( ( array ) $this->indexBrowserTab['tabIds'] as $key => $tab )
     {
+      if( $tab['sum'] < 1 &&  ! $tab['displayWoItems'] )
+      {
+        continue;
+      }
+      
         // Wrap the label
       $label  = $tab['label'];
       if( isset ( $tab['wrap'] ) )
