@@ -625,7 +625,6 @@ class tx_browser_pi1_navi_indexBrowser
       }
       // #7582, Bugfix, 100501
     }
-$this->pObj->dev_var_dump( $this->subpartTab );
       // Get the tab array
     $arrTabs = $this->indexBrowserTab['tabIds'];
       // get id of the last visible tab
@@ -643,8 +642,10 @@ $this->pObj->dev_var_dump( $this->subpartTab );
 
         // Get piVar
       $piVar = $this->zz_specCharsToASCII( $label );
+$this->pObj->dev_var_dump( $piVar );
         // Get class
       $class  = $this->zz_tabClass( $piVar, $lastTabId, $tab, $key );
+$this->pObj->dev_var_dump( $class );
 
       switch( true )
       {
