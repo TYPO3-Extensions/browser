@@ -642,7 +642,7 @@ $this->pObj->dev_var_dump( $this->subpartTab );
       }
 
         // Get piVar
-      $piVar  = $this->zz_setTabPiVars( $label );
+      $piVar = $this->zz_specCharsToASCII( $label );
         // Get class
       $class  = $this->zz_tabClass( $piVar, $lastTabId, $tab );
 
@@ -829,9 +829,8 @@ $this->pObj->dev_var_dump( $markerArray );
       // Overwrite property display without items
 
       // Set piVar. Label for using in the URL
-    $piVar = strip_tags( html_entity_decode( $tablabel ) );
-    $piVar = $this->t3lib_cs_obj->specCharsToASCII( $this->bool_utf8, $piVar );
-    $piVar = strtolower(preg_replace( '[^a-zA-Z0-9-_]', null ,$piVar ) );
+    $piVar = $this->zz_specCharsToASCII( $tablabel );
+
       // IF : current tab is selected
     if($piVar == $this->pObj->piVar_indexBrowserTab)
     {
@@ -1639,6 +1638,23 @@ $this->pObj->dev_var_dump( $markerArray );
     $this->linkDefaultTab = $boolLink;
   }
 
+
+
+/**
+ * zz_specCharsToASCII( ):
+ *
+ * @return	boolean		true / false
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_specCharsToASCII( $label )
+  {
+    $ascii = strip_tags( html_entity_decode( $label ) );
+    $ascii = $this->t3lib_cs_obj->specCharsToASCII( $this->bool_utf8, $ascii );
+    $ascii = strtolower(preg_replace('/[^a-zA-Z0-9-_]*/','',$ascii));
+
+    return $ascii;
+  }
 
 
 /**
