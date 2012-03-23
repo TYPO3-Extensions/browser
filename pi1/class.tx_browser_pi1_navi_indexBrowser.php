@@ -644,7 +644,7 @@ $this->pObj->dev_var_dump( $this->subpartTab );
         // Get piVar
       $piVar = $this->zz_specCharsToASCII( $label );
         // Get class
-      $class  = $this->zz_tabClass( $piVar, $lastTabId, $tab );
+      $class  = $this->zz_tabClass( $piVar, $lastTabId, $tab, $key );
 
       switch( true )
       {
@@ -1684,6 +1684,8 @@ $this->pObj->dev_var_dump( $markerArray );
       // Last visible tab
 
     $class = ' class="' . $class . '"';
+
+    return $class;
   }
 
 
