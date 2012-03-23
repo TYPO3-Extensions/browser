@@ -196,7 +196,8 @@ class tx_browser_pi1_navi_indexBrowser
  */
   public function get_indexBrowser( $content )
   {
-    $arr_return['data']['content'] = $content;
+    $this->content                  = $content;
+    $arr_return['data']['content']  = $content;
 
       // RETURN: requirements aren't met
     if( ! $this->requirements_check( ) )
