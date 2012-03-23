@@ -842,7 +842,7 @@ class tx_browser_pi1_navi_indexBrowser
     $this->indexBrowserTab['tabIds'][$tabId]['sum']             = 0;
     $this->indexBrowserTab['tabLabels'][$tabLabel]              = $tabId;
       // Set tab selected
-    $this->zz_setTabSlected( $labelAscii, $tabId );
+    $this->zz_setTabSlected( $tabLabel, $tabId );
       // Set tab array
 
       // RETURN : tab with special value 'all'
@@ -1797,15 +1797,15 @@ $this->pObj->dev_var_dump( $label, $ascii );
  * @version 3.9.11
  * @since   3.9.10
  */
-  private function zz_setTabSlected( $labelAscii, $tabId )
+  private function zz_setTabSlected( $tabLabel, $tabId )
   {
-$this->pObj->dev_var_dump( $labelAscii, $this->pObj->piVar_indexBrowserTab );
+$this->pObj->dev_var_dump( $tabLabel, $this->pObj->piVar_indexBrowserTab );
 $this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default'] );
       // IF : piVar
     if( $this->pObj->piVar_indexBrowserTab )
     {
         // IF : current tab is selected
-      if($labelAscii == $this->pObj->piVar_indexBrowserTab)
+      if($tabLabel == $this->pObj->piVar_indexBrowserTab)
       {
         $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
         $this->indexBrowserTab['tabSpecial']['selected']     = $tabId;
