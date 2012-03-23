@@ -263,7 +263,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 //    $arr_return['error']['header'] = '<h1 style="color:red">Error index browser</h1>';
 //    $arr_return['error']['prompt'] = '<p style="color:red">No rows.</p>';
 
-    $arr_result['data']['content'] = 'Index browser';
+    $arr_return['data']['content'] = 'Index browser';
     return $arr_return;
   }
 

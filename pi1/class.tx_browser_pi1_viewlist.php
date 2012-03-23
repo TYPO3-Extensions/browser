@@ -1749,11 +1749,11 @@ if( $this->pObj->bool_accessByIP )
   private function subpart_setIndexBrowser( )
   {
     $arr_return = $this->pObj->objNaviIndexBrowser->get_indexBrowser( $this->content );
-    if( $arr_result['error']['status'] )
+    if( $arr_return['error']['status'] )
     {
-      return $arr_result;
+      return $arr_return;
     }
-    $this->content = $arr_result['data']['content'];
+    $this->content = $arr_return['data']['content'];
 
     return $arr_return;
   }
