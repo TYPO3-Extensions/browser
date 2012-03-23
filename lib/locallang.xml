@@ -47,7 +47,7 @@
             alt="TYPO3 Browser online"
             title="TYPO3 Browser online"
             target="_blank">
-            <img src="lib/icons/typo3_browser.gif"
+            <img src="icons/typo3_browser.gif"
               width="90"
               height="80"
               alt="TYPO3 Browser online" /></a>
@@ -55,7 +55,7 @@
             alt="Die Netzmacher - Internet is trade"
             title="Die Netzmacher - Internet is trade"
             target="_blank">
-            <img src="lib/icons/die-netzmacher.de_200px.gif" 
+            <img src="icons/die-netzmacher.de_200px.gif" 
               width="200" 
               height="80" 
               alt="Die Netzmacher - Internet is trade" /></a>
@@ -103,7 +103,7 @@
           alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsert das TYPO3-Browser-Projekt"
           title="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsert das TYPO3-Browser-Projekt"
           target="_blank">
-          <img src="lib/icons/Lieska_Tuotanto_Oy_130501_01.jpg"
+          <img src="icons/Lieska_Tuotanto_Oy_130501_01.jpg"
             width="120"
             height="90"
             alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsert das TYPO3-Browser-Projekt" /></a>
@@ -111,7 +111,7 @@
           alt="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt"
           title="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt"
           target="_blank">
-          <img src="lib/icons/freemedia.ch.20130301.gif"
+          <img src="icons/freemedia.ch.20130301.gif"
             width="120"
             height="90"
             alt="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt" /></a>
@@ -119,7 +119,7 @@
           alt="Your logo with your URL. 120 x 90 pixel."
           title="Your logo with your URL. 120 x 90 pixel."
           target="_blank">
-          <img src="lib/icons/your-logo_default-grey.gif" 
+          <img src="icons/your-logo_default-grey.gif" 
             width="120" 
             height="90" 
             alt="Your logo with your URL. 120 x 90 pixel." /></a>
@@ -167,7 +167,7 @@
             alt="TYPO3-Browser Online"
             title="TYPO3-Browser Online"
             target="_blank">
-            <img src="lib/icons/typo3_browser.gif"
+            <img src="icons/typo3_browser.gif"
               width="90"
               height="80"
               alt="TYPO3-Browser Online" /></a>
@@ -175,7 +175,7 @@
             alt="Die Netzmacher - Internet ist Handwerk"
             title="Die Netzmacher - Internet ist Handwerk"
             target="_blank">
-            <img src="lib/icons/die-netzmacher.de_200px.gif" 
+            <img src="icons/die-netzmacher.de_200px.gif" 
               width="200" 
               height="80" 
               alt="Die Netzmacher - Internet ist Handwerk" /></a>
@@ -222,7 +222,7 @@
           alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsers the TYPO3-Browser project"
           title="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsers the TYPO3-Browser project"
           target="_blank">
-          <img src="lib/icons/Lieska_Tuotanto_Oy_130501_01.jpg"
+          <img src="icons/Lieska_Tuotanto_Oy_130501_01.jpg"
             width="120"
             height="90"
             alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsers the TYPO3-Browser project" /></a>
@@ -230,7 +230,7 @@
           alt="Freemedia Medien & Verlag, Bern/Switzerland, sponsers the TYPO3-Browser project"
           title="Freemedia Medien & Verlag, Bern/Switzerland, sponsers the TYPO3-Browser project"
           target="_blank">
-          <img src="lib/icons/freemedia.ch.20130301.gif"
+          <img src="icons/freemedia.ch.20130301.gif"
             width="120"
             height="90"
             alt="Freemedia Medien & Verlag, Bern/Switzerland, sponsers the TYPO3-Browser project" /></a>
@@ -238,7 +238,7 @@
           alt="Dein Logo mit Deiner URL. 120 x 90 Pixel."
           title="Dein Logo mit Deiner URL. 120 x 90 Pixel."
           target="_blank">
-          <img src="lib/icons/your-logo_de-grey.gif" 
+          <img src="icons/your-logo_de-grey.gif" 
             width="120" 
             height="90" 
             alt="Dein Logo mit Deiner URL. 120 x 90 Pixel." /></a>
