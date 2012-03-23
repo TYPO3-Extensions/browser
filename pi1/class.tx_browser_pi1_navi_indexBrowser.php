@@ -385,7 +385,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
       {
         $prompt = 'Sorry: index browser isn\'t localised in browser version 4.0.x';
         t3lib_div::devlog( '[ERROR/NAVI+LOCALISATION] ' . $prompt, $this->pObj->extKey, 3 );
-        $prompt = 'PLease disable the index browser in a localised context';
+        $prompt = 'Please disable the index browser in a localised context';
         t3lib_div::devlog( '[HELP/NAVI+LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
       }
         // DRS
