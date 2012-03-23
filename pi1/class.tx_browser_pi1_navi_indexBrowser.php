@@ -1709,7 +1709,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Get the property title
 
       // Set piVars
-    $this->zz_setTabPiVars( $piVar );
+    $this->zz_setTabPiVars( $piVar, $label );
       // Init array with piVars
     $tabLinkedLabel = $this->pObj->objZz->linkTP_keepPIvars
                       (
@@ -1734,7 +1734,7 @@ class tx_browser_pi1_navi_indexBrowser
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function zz_setTabPiVars( $piVar )
+  private function zz_setTabPiVars( $piVar, $label )
   {
       // Backup piVars
     $this->piVarsBak = $this->pObj->piVars;
@@ -1749,7 +1749,7 @@ class tx_browser_pi1_navi_indexBrowser
     $this->pObj->piVars['indexBrowserTab'] = $piVar;
 
       // Handle default tab
-    $this->zz_setTabPiVarsDefaultTab( $piVar );
+    $this->zz_setTabPiVarsDefaultTab( $label );
   }
 
 
@@ -1761,7 +1761,7 @@ class tx_browser_pi1_navi_indexBrowser
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function zz_setTabPiVarsDefaultTab( $piVar )
+  private function zz_setTabPiVarsDefaultTab( $label )
   {
       // RETURN : default tab should get a link
     if( $this->linkDefaultTab )
@@ -1770,8 +1770,8 @@ class tx_browser_pi1_navi_indexBrowser
     }
 
       // RETURN : current tab isn't the default tab
-$this->pObj->dev_var_dump( $piVar, $this->defaultAzTab );
-    if( $piVar != $this->defaultAzTab )
+$this->pObj->dev_var_dump( $label, $this->defaultAzTab );
+    if( $label != $this->defaultAzTab )
     {
       return;
     }
