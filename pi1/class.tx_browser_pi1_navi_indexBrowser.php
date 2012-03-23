@@ -29,7 +29,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     3.9.11
+ * @version     3.9.12
  * @since       3.9.9
  */
 
@@ -42,8 +42,8 @@
  *  154:     public function __construct($parentObj)
  *
  *              SECTION: Main
- *  186:     public function get( $content )
- *  246:     private function get_tabs( )
+ *  186:     public function get_indexBrowser( $content )
+ *  246:     private function get_content( )
  *
  *              SECTION: requirements
  *  300:     private function requirements_check( )
@@ -57,16 +57,16 @@
  *  649:     private function tabs_initSpecialChars( $arrCsvAttributes )
  *
  *              SECTION: chars
- *  708:     private function chars( )
- *  748:     private function chars_addSumToTab( $res )
- *  801:     private function chars_resSqlCount( $currSqlCharset )
+ *  708:     private function count_chars( )
+ *  748:     private function count_chars_addSumToTab( $res )
+ *  801:     private function count_chars_resSqlCount( $currSqlCharset )
  *
  *              SECTION: special chars
- *  922:     private function specialChars( )
- *  961:     private function specialChars_addSum( $row )
- * 1013:     private function specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
- * 1104:     private function specialChars_setSqlFindInSet( $row )
- * 1130:     private function specialChars_setSqlLength( )
+ *  922:     private function count_specialChars( )
+ *  961:     private function count_specialChars_addSum( $row )
+ * 1013:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
+ * 1104:     private function count_specialChars_setSqlFindInSet( $row )
+ * 1130:     private function count_specialChars_setSqlLength( )
  *
  *              SECTION: SQL charset
  * 1202:     private function sqlCharsetGet( )
@@ -182,14 +182,14 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * get( ): Get the index browser. It has to replace the subpart in the current content.
+ * get_indexBrowser( ): Get the index browser. It has to replace the subpart in the current content.
  *
  * @param	string		$content: current content
  * @return	array
- * @version 3.9.11
+ * @version 3.9.12
  * @since   3.9.9
  */
-  public function get( $content )
+  public function get_indexBrowser( $content )
   {
     $arr_return['data']['content'] = $content;
 
@@ -221,13 +221,13 @@ class tx_browser_pi1_navi_indexBrowser
       // Init the tabs
 
       // Render the tabs
-    $arr_return = $this->get_tabs( );
+    $arr_return = $this->get_content( );
 $this->pObj->dev_var_dump( $this->indexBrowserTab );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
-    $rows = $arr_return['data']['rows'];
+    //$arr_result['data']['content']
       // Render the tabs
 
 
@@ -243,37 +243,27 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
 
 /**
- * get_tabs( ):
+ * get_content( ):
  *
  * @return	boolean		true / false
- * @version 3.9.11
+ * @version 3.9.12
  * @since   3.9.9
  */
-  private function get_tabs( )
+  private function get_content( )
   {
-      // Take care of special chars
-    $arr_return = $this->specialChars( );
-    if( ! ( empty ( $arr_return ) ) )
-    {
-      return $arr_return;
-    }
-
-      // Take care of special chars
-    $arr_return = $this->chars( );
-    if( ! ( empty ( $arr_return ) ) )
-    {
-      return $arr_return;
-    }
+      // Init and count chars
+//    $arr_return = $this->chars( );
+//    if( ! ( empty ( $arr_return ) ) )
+//    {
+//      return $arr_return;
+//    }
 
 
-      // Take care of filters
+//    $arr_return['error']['status'] = true;
+//    $arr_return['error']['header'] = '<h1 style="color:red">Error index browser</h1>';
+//    $arr_return['error']['prompt'] = '<p style="color:red">No rows.</p>';
 
-    $arr_return['data']['rows'] = null;
-
-    $arr_return['error']['status'] = true;
-    $arr_return['error']['header'] = '<h1 style="color:red">Error index browser</h1>';
-    $arr_return['error']['prompt'] = '<p style="color:red">No rows.</p>';
-
+    $arr_result['data']['content'] = 'Index browser';
     return $arr_return;
   }
 
@@ -600,6 +590,21 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
       // Init special chars
     $this->tabs_initSpecialChars( $arrCsvAttributes );
+
+      // Count special chars
+    $arr_return = $this->count_specialChars( );
+    if( ! ( empty ( $arr_return ) ) )
+    {
+      return $arr_return;
+    }
+
+      // Count chars
+    $arr_return = $this->count_chars( );
+    if( ! ( empty ( $arr_return ) ) )
+    {
+      return $arr_return;
+    }
+
   }
 
 
@@ -762,7 +767,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
     /***********************************************
     *
-    * chars
+    * count chars
     *
     **********************************************/
 
@@ -772,13 +777,13 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
 
 /**
- * chars( ): Updates sum / number of hits of chars (one byte)
+ * count_chars( ): Updates sum / number of hits of chars (one byte)
  *
  * @return	array		$arr_return : Contains an erreor message in case of an error
- * @version 3.9.11
+ * @version 3.9.12
  * @since   3.9.11
  */
-  private function chars( )
+  private function count_chars( )
   {
       // Get current table.field of the index browser
     list( $table, $field) = explode( '.', $this->indexBrowserTableField);
@@ -789,7 +794,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
     $this->sqlCharsetSet( 'latin1' );
 
       // SQL result with sum for records with a sepecial char as first character
-    $arr_return = $this->chars_resSqlCount( $currSqlCharset );
+    $arr_return = $this->count_chars_resSqlCount( $currSqlCharset );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -798,7 +803,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
       // SQL result with sum for records with a sepecial char as first character
 
       // Add the sum to the tab with the special char attribute
-    $this->chars_addSumToTab( $res );
+    $this->count_chars_addSumToTab( $res );
 
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
@@ -810,15 +815,15 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
 
 /**
- * chars_addSumToTab( ): Updates the sum in the arrays tabIds and attributes
+ * count_chars_addSumToTab( ): Updates the sum in the arrays tabIds and attributes
  *                       of the class var $indexBrowserTab
  *
  * @param	array		$res  : SQL result
  * @return	[type]		...
- * @version 3.9.11
+ * @version 3.9.12
  * @since   3.9.11
  */
-  private function chars_addSumToTab( $res )
+  private function count_chars_addSumToTab( $res )
   {
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
@@ -861,17 +866,17 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
 
 /**
- * chars_resSqlCount( ): SQL query and execution for counting
+ * count_chars_resSqlCount( ): SQL query and execution for counting
  *                       char initials
  *
  * @param	integer		$length         : SQL length of special chars group
  * @param	array		$arrfindInSet   : FIND IN SET statement with proper length
  * @param	string		$currSqlCharset : Current SQL charset for reset in error case
  * @return	array		$arr_return     : SQL ressource or an error message in case of an error
- * @version 3.9.11
+ * @version 3.9.12
  * @since   3.9.11
  */
-  private function chars_resSqlCount( $currSqlCharset )
+  private function count_chars_resSqlCount( $currSqlCharset )
   {
     static $drsPrompt = true;
 
@@ -976,7 +981,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
     /***********************************************
     *
-    * special chars
+    * count special chars
     *
     **********************************************/
 
@@ -986,13 +991,13 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
 
 /**
- * specialChars( ): Updates sum / number of hits of sepcial chars (multy byte)
+ * count_specialChars( ): Updates sum / number of hits of sepcial chars (multy byte)
  *
  * @return	array		$arr_return : Contains an erreor message in case of an error
- * @version 3.9.11
+ * @version 3.9.12
  * @since   3.9.10
  */
-  private function specialChars( )
+  private function count_specialChars( )
   {
       // RETURN : no special chars
     if( empty ( $this->indexBrowserTab['initials']['specialChars'] ) )
@@ -1002,7 +1007,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
       // RETURN : no special chars
 
       // Get a row with the SQL length for each special char
-    $arr_return = $this->specialChars_setSqlLength( );
+    $arr_return = $this->count_specialChars_setSqlLength( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -1012,7 +1017,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
       // Get a row with the SQL length for each special char
 
       // Get the sum for each special char initial
-    $arr_return = $this->specialChars_addSum( $row );
+    $arr_return = $this->count_specialChars_addSum( $row );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -1024,14 +1029,14 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
 
 /**
- * specialChars_addSum( ): Updates sum / number of hits of sepcial chars
+ * count_specialChars_addSum( ): Updates sum / number of hits of sepcial chars
  *
  * @param	array		$row        : Row with special chars and their SQL length
  * @return	array		$arr_return : Contains an erreor message in case of an error
- * @version 3.9.11
+ * @version 3.9.12
  * @since   3.9.10
  */
-  private function specialChars_addSum( $row )
+  private function count_specialChars_addSum( $row )
   {
       // Get current table.field of the index browser
     list( $table, $field) = explode( '.', $this->indexBrowserTableField);
@@ -1042,13 +1047,13 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
     $this->sqlCharsetSet( 'latin1' );
 
       // Set class var findInSet
-    $this->specialChars_setSqlFindInSet( $row );
+    $this->count_specialChars_setSqlFindInSet( $row );
 
       // LOOP : find in set for each special char length group
     foreach( $this->findInSet as $length => $arrfindInSet )
     {
         // SQL result with sum for records with a sepecial char as first character
-      $arr_return = $this->specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset );
+      $arr_return = $this->count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset );
       if( $arr_return['error']['status'] )
       {
         return $arr_return;
@@ -1057,7 +1062,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
         // SQL result with sum for records with a sepecial char as first character
 
         // Add the sum to the tab with the special char attribute
-      $this->chars_addSumToTab( $res );
+      $this->count_chars_addSumToTab( $res );
 
         // Free SQL result
       $GLOBALS['TYPO3_DB']->sql_free_result( $res );
@@ -1071,7 +1076,7 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
 
 /**
- * specialChars_resSqlCount( ): SQL query and execution for counting
+ * count_specialChars_resSqlCount( ): SQL query and execution for counting
  *                              special char initials
  *
  *                                                an error message in case of an error
@@ -1080,10 +1085,10 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
  * @param	array		$arrfindInSet   : FIND IN SET statement with proper length
  * @param	string		$currSqlCharset : Current SQL charset for reset in error case
  * @return	array		$arr_return     : SQL ressource or
- * @version 3.9.11
+ * @version 3.9.12
  * @since   3.9.10
  */
-  private function specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
+  private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
   {
     static $drsPrompt = true;
 
@@ -1165,16 +1170,16 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
 
 /**
- * specialChars_setSqlFindInSet( ): Set the FIND IN SET statement for each special char group.
+ * count_specialChars_setSqlFindInSet( ): Set the FIND IN SET statement for each special char group.
  *                                  A special char group is grouped by the length of a special
  *                                  char.
  *
  * @param	array		$row  : Row with special chars and their SQL length
  * @return	[type]		...
- * @version 3.9.11
+ * @version 3.9.12
  * @since   3.9.10
  */
-  private function specialChars_setSqlFindInSet( $row )
+  private function count_specialChars_setSqlFindInSet( $row )
   {
       // Get current table.field of the index browser
     list( $table, $field) = explode( '.', $this->indexBrowserTableField);
@@ -1194,13 +1199,13 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
 
 
 /**
- * specialChars_setSqlLength( ): Return a row with all special chars and their SQL length
+ * count_specialChars_setSqlLength( ): Return a row with all special chars and their SQL length
  *
  * @return	array		$arr_return : row with all special chars and their SQL length
- * @version 3.9.11
+ * @version 3.9.12
  * @since   3.9.10
  */
-  private function specialChars_setSqlLength( )
+  private function count_specialChars_setSqlLength( )
   {
       // Build the select statement parts for the length of each special char
     $arrStatement     = array( );

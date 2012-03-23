@@ -1748,7 +1748,7 @@ if( $this->pObj->bool_accessByIP )
  */
   private function subpart_setIndexBrowser( )
   {
-    $arr_return = $this->pObj->objNaviIndexBrowser->get( $this->content );
+    $arr_return = $this->pObj->objNaviIndexBrowser->get_indexBrowser( $this->content );
     if( $arr_result['error']['status'] )
     {
       return $arr_result;
