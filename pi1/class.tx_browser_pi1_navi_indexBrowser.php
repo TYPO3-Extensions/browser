@@ -162,6 +162,8 @@ class tx_browser_pi1_navi_indexBrowser
   var $subpartTab = null;
     // [Boolean] Should the deafult tab get a link?
   var $linkDefaultTab = null;
+    // [String] Label of the default tab
+  var $tabDefaultLabel = null;
 
 
 
@@ -275,7 +277,7 @@ class tx_browser_pi1_navi_indexBrowser
 
     /***********************************************
     *
-    * requirements
+    * Requirements
     *
     **********************************************/
 
@@ -537,60 +539,61 @@ class tx_browser_pi1_navi_indexBrowser
 
     /***********************************************
     *
-    * subparts
+    * Subparts
     *
     **********************************************/
 
 
 
 /**
- * subpart( ):
+ * subpart( ): Returns the content for the index browser subpart
  *
- * @return	boolean		true / false
+ * @return	array   $arr_return : Content or an erreor message in case of an error
  * @version 3.9.12
  * @since   3.9.9
  */
   private function subpart( )
   {
+      // Set class vars subpart and $arr_return
     $marker           = $this->pObj->objNavi->getMarkerIndexBrowser( );
     $this->subpart    = $this->pObj->cObj->getSubpart( $this->content, $marker );
     $markerTabs       = $this->pObj->objNavi->getMarkerIndexbrowserTabs( );
     $this->subpartTab = $this->pObj->cObj->getSubpart( $this->subpart, $markerTabs );
+      // Set class vars subpart and $arr_return
 
-    $defaultTab_key     = $this->pObj->conf['navigation.']['indexBrowser.']['defaultTab'];
-    $defaultTab_label   = $this->pObj->conf['navigation.']['indexBrowser.']['tabs.'][$defaultTab_key];
-    $defaultTab_stdWrap = $this->pObj->conf['navigation.']['indexBrowser.']['tabs.'][$defaultTab_key . '.']['stdWrap.'];
-    $this->defaultAzTab = $this->pObj->objWrapper->general_stdWrap( $defaultTab_label, $defaultTab_stdWrap );
+      // Set class var $tabDefaultLabel
+    $this->zz_tabDefaultLabel( );
 
-      // Replace the subpart for the tabs
+      // Set the subpart for the tabs
     $arr_return = $this->subpart_setTabs( );
     if( ! ( empty ( $arr_return ) ) )
     {
       return $arr_return;
     }
-      // Replace the subpart for the tabs
+      // Set the subpart for the tabs
 
-      // Replace the whole subpart
+      // Set the whole subpart
     $arr_return = $this->subpart_setContainer( );
     if( ! ( empty ( $arr_return ) ) )
     {
       return $arr_return;
     }
-      // Replace the whole subpart
+      // Set the whole subpart
 
+      // Replace the subpart tabs in the whole subpart
     $content = $this->pObj->cObj->substituteSubpart( $this->subpart, $markerTabs, $this->subpartTab, true);
 
+      // Retirn the content
     $arr_return['data']['content'] = $content;
-
     return $arr_return;
   }
 
 
 
 /**
- * subpart_setContainer( ):
+ * subpart_setContainer( ): Replace markers in the subpart for the index browser
+ *                          but not the subpart ###TABS###
  *
- * @return	boolean		true / false
  * @version 3.9.12
  * @since   3.9.9
  */
@@ -598,7 +601,9 @@ class tx_browser_pi1_navi_indexBrowser
   {
     $markerArray['###MODE###']    = $this->mode;
     $markerArray['###VIEW###']    = $this->view;
+    $markerArray['###MODE###']    = $this->mode;
     $markerArray['###UL_MODE###'] = $this->mode;
+    $markerArray['###VIEW###']    = $this->view;
     $markerArray['###UL_VIEW###'] = $this->view;
 
     $this->subpart = $this->pObj->cObj->substituteMarkerArray($this->subpart, $markerArray);
@@ -607,9 +612,8 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * subpart_setTabs( ):
+ * subpart_setTabs( ): Set the content in the subpart for the tabs
  *
- * @return	boolean		true / false
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -634,7 +638,6 @@ class tx_browser_pi1_navi_indexBrowser
           t3lib_div::devlog('[INFO/TEMPLATING] The default tab of the index browser will be linked with a piVar by the system!',  $this->pObj->extKey, 0);
         }
       }
-      // #7582, Bugfix, 100501
     }
       // Get the tab array
     $arrTabs = $this->indexBrowserTab['tabIds'];
@@ -656,31 +659,33 @@ class tx_browser_pi1_navi_indexBrowser
         $label = str_replace('|', $label, $tab['wrap']);
       }
 
-        // Get labelAscii
-      $labelAscii = $this->zz_specCharsToASCII( $label );
         // Get class
-      $class  = $this->zz_tabClass( $labelAscii, $lastTabId, $tab, $key );
+      $class                          = $this->zz_tabClass( $lastTabId, $tab, $key );
+      $markerArray['###CLASS###']     = $class;
+      $markerArray['###LI_CLASS###']  = $class;
 
+        // Init the marker array
       unset( $markerArray );
       switch( true )
       {
         case( ! empty( $tab['sum'] ) ):
-          $markerArray['###TAB###'] = $this->zz_tabLinkLabel( $tab, $label, $labelAscii );
+            // Tab with hits
+          $markerArray['###TAB###'] = $this->zz_tabLinkLabel( $tab );
           break;
         case( $tab['displayWoItems'] ):
+            // Tab without hits
           $markerArray['###TAB###'] = $label;
           break;
         default:
           continue;
       }
 
-      $markerArray['###CLASS###']     = $class;
-      $markerArray['###LI_CLASS###']  = $class;
-        // #35032, 120320
+        // Set the content
       $content = $content . $this->pObj->cObj->substituteMarkerArray( $this->subpartTab, $markerArray );
     }
       // LOOP : tabs
 
+      // Set the class var subpartTab
     $this->subpartTab = $content;
   }
 
@@ -694,7 +699,7 @@ class tx_browser_pi1_navi_indexBrowser
 
     /***********************************************
     *
-    * tabs
+    * Tabs
     *
     **********************************************/
 
@@ -768,8 +773,8 @@ class tx_browser_pi1_navi_indexBrowser
  * tabs_initAttributes( ):  Sets the array attributes of the class var $indexBrowserTab
  *
  * @param	string		$csvAttributes  : attributes
- * @param	[type]		$tabLabel: ...
- * @param	[type]		$tabId: ...
+ * @param	string		$tabLabel       : label of the current tab
+ * @param	integer		$tabId          : Id of the current tab
  * @return	array		$arr_return     : Contains an error message in case of an error
  * @version 3.9.11
  * @since   3.9.10
@@ -818,7 +823,7 @@ class tx_browser_pi1_navi_indexBrowser
  * tabs_initProperties( ):  Sets the elements tabIds and tabLabels of the class var $indexBrowserTab
  *                          Updates the element tabSpecial.
  *
- * @param	array		$conf_tabs      : TS configuration array
+ * @param	array     $conf_tabs      : TS configuration array
  * @param	integer		$tabId          : Current tab ID for TS configuration array
  * @param	string		$tabLabel       : Label of the current tab
  * @param	boolean		$displayWoItems : Default value for displaying tabs without any hit
@@ -928,7 +933,7 @@ class tx_browser_pi1_navi_indexBrowser
 
     /***********************************************
     *
-    * count chars
+    * Count chars
     *
     **********************************************/
 
@@ -980,7 +985,6 @@ class tx_browser_pi1_navi_indexBrowser
  *                       of the class var $indexBrowserTab
  *
  * @param	array		$res  : SQL result
- * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.11
  */
@@ -1027,11 +1031,10 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * count_chars_resSqlCount( ): SQL query and execution for counting
- *                       char initials
+ * count_chars_resSqlCount( ): SQL query and execution for counting initials
  *
  * @param	integer		$length         : SQL length of special chars group
- * @param	array		$arrfindInSet   : FIND IN SET statement with proper length
+ * @param	array     $arrfindInSet   : FIND IN SET statement with proper length
  * @param	string		$currSqlCharset : Current SQL charset for reset in error case
  * @return	array		$arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.12
@@ -1238,14 +1241,14 @@ class tx_browser_pi1_navi_indexBrowser
 
 /**
  * count_specialChars_resSqlCount( ): SQL query and execution for counting
- *                              special char initials
+ *                                    special char initials
  *
- *                                                an error message in case of an error
+ *                                                
  *
  * @param	integer		$length         : SQL length of special chars group
- * @param	array		$arrfindInSet   : FIND IN SET statement with proper length
+ * @param	array     $arrfindInSet   : FIND IN SET statement with proper length
  * @param	string		$currSqlCharset : Current SQL charset for reset in error case
- * @return	array		$arr_return     : SQL ressource or
+ * @return	array		$arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.12
  * @since   3.9.10
  */
@@ -1253,7 +1256,7 @@ class tx_browser_pi1_navi_indexBrowser
   {
     static $drsPrompt = true;
 
-    // DRS
+      // DRS
     if( $drsPrompt && $this->pObj->b_drs_devTodo )
     {
       $prompt = 'Query needs an and where in case of filter';
@@ -1332,11 +1335,10 @@ class tx_browser_pi1_navi_indexBrowser
 
 /**
  * count_specialChars_setSqlFindInSet( ): Set the FIND IN SET statement for each special char group.
- *                                  A special char group is grouped by the length of a special
- *                                  char.
+ *                                        A special char group is grouped by the length of a special
+ *                                        char.
  *
  * @param	array		$row  : Row with special chars and their SQL length
- * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.10
  */
@@ -1495,7 +1497,7 @@ class tx_browser_pi1_navi_indexBrowser
 
     /***********************************************
     *
-    * downward compatibility
+    * Downward compatibility
     *
     **********************************************/
 
@@ -1601,16 +1603,86 @@ class tx_browser_pi1_navi_indexBrowser
 
     /***********************************************
     *
-    * zz
+    * Helper
     *
     **********************************************/
 
 
 
 /**
- * zz_tabDefaultLink( ):
+ * zz_specCharsToASCII( ): Convert labels to ascii labels
  *
- * @return	boolean		true / false
+ * @param   string		$string:  the string for conversion
+ * @return	string		$ascii:   the converted string
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_specCharsToASCII( $string )
+  {
+    $ascii = strip_tags( html_entity_decode( $string ) );
+    $ascii = $this->t3lib_cs_obj->specCharsToASCII( $this->bool_utf8, $ascii );
+    $ascii = strtolower( preg_replace( '/[^a-zA-Z0-9-_]*/', null, $ascii ) );
+
+    return $ascii;
+  }
+
+
+/**
+ * zz_tabClass( ): Returns the tab class like ' class="tab-u tab-29 selected last"'
+ *
+ * @param	integer		$lastTabId  : id of the last visible tab
+ * @param	array     $tab        : array with elements of the current tab
+ * @param	integer		$key        : id of the tab from the TS configuration
+ * @return	string	$class      : complete class tag
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_tabClass( $lastTabId, $tab, $key )
+  {
+      // Default class
+    $class = 'tab-' . $tab['labelAscii'] . ' tab-' . $key;
+
+      // Selected tab
+    if( ! empty ( $tab['selected'] ) )
+    {
+      $class = $class . ' selected';
+    }
+      // Selected tab
+
+      // Last visible tab
+    if( $key == $lastTabId )
+    {
+      $class = $class . ' last';
+    }
+      // Last visible tab
+
+    $class = ' class="' . $class . '"';
+
+    return $class;
+  }
+
+
+
+/**
+ * zz_tabDefaultLabel( ): Set class var $tabDefaultLabel
+ *
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_tabDefaultLabel( )
+  {
+    $defaultTab_key     = $this->pObj->conf['navigation.']['indexBrowser.']['defaultTab'];
+    $defaultTab_label   = $this->pObj->conf['navigation.']['indexBrowser.']['tabs.'][$defaultTab_key];
+    $defaultTab_stdWrap = $this->pObj->conf['navigation.']['indexBrowser.']['tabs.'][$defaultTab_key . '.']['stdWrap.'];
+    $this->tabDefaultLabel = $this->pObj->objWrapper->general_stdWrap( $defaultTab_label, $defaultTab_stdWrap );
+  }
+
+
+
+/**
+ * zz_tabDefaultLink( ):  Set the boolean class var linkDefaultTab: Should
+ *                        the default tab get a link?
+ *
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1650,72 +1722,14 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * zz_specCharsToASCII( ):
+ * zz_tabLinkLabel( ): Links the label of the current tab
  *
- * @param	[type]		$$label: ...
- * @return	boolean		true / false
+ * @param   array     $tab            : array with elements of the current tab
+ * @return	string    $tabLinkedLabel : the linked label
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function zz_specCharsToASCII( $label )
-  {
-    $ascii = strip_tags( html_entity_decode( $label ) );
-    $ascii = $this->t3lib_cs_obj->specCharsToASCII( $this->bool_utf8, $ascii );
-    $ascii = strtolower( preg_replace( '/[^a-zA-Z0-9-_]*/', null, $ascii ) );
-$this->pObj->dev_var_dump( $label, $ascii );
-
-    return $ascii;
-  }
-
-
-/**
- * zz_tabClass( ): Returns the tab class like ' class="tab-u tab-29 selected last"'
- *
- * @param	[type]		$$labelAscii: ...
- * @param	[type]		$lastTabId: ...
- * @param	[type]		$tab: ...
- * @param	[type]		$key: ...
- * @return	string		$class  : complete class tag
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function zz_tabClass( $labelAscii, $lastTabId, $tab, $key )
-  {
-      // Default class
-    $class = 'tab-' . $labelAscii . ' tab-' . $key;
-
-      // Selected tab
-    if( ! empty ( $tab['selected'] ) )
-    {
-      $class = $class . ' selected';
-    }
-      // Selected tab
-
-      // Last visible tab
-    if( $key == $lastTabId )
-    {
-      $class = $class . ' last';
-    }
-      // Last visible tab
-
-    $class = ' class="' . $class . '"';
-
-    return $class;
-  }
-
-
-
-/**
- * zz_tabLinkLabel( ):
- *
- * @param	[type]		$$tab: ...
- * @param	[type]		$label: ...
- * @param	[type]		$labelAscii: ...
- * @return	boolean		true / false
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function zz_tabLinkLabel( $tab, $label, $labelAscii )
+  private function zz_tabLinkLabel( $tab )
   {
       // Init typolink
     $typolink['parameter'] = $GLOBALS['TSFE']->id;
@@ -1729,11 +1743,11 @@ $this->pObj->dev_var_dump( $label, $ascii );
       // Get the property title
 
       // Set piVars
-    $this->zz_setTabPiVars( $labelAscii, $label );
+    $this->zz_setTabPiVars( $tab['labelAscii'], $tab['label'] );
       // Init array with piVars
     $tabLinkedLabel = $this->pObj->objZz->linkTP_keepPIvars
                       (
-                        $label,
+                        $tab['label'],
                         $typolink,
                         $this->pObj->piVars,
                         $this->pObj->boolCache
@@ -1748,11 +1762,11 @@ $this->pObj->dev_var_dump( $label, $ascii );
 
 
 /**
- * zz_setTabPiVars( ):
+ * zz_setTabPiVars( ):  Makes a backup of the current piVars. Than it removes some
+ *                      elements, which shouldn't be part of a index browser link.
  *
- * @param	[type]		$$labelAscii: ...
- * @param	[type]		$label: ...
- * @return	boolean		true / false
+ * @param   string		$labelAscii : label of the current tab in ascii format
+ * @param   string		$label      : label of the current tab
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1777,10 +1791,11 @@ $this->pObj->dev_var_dump( $label, $ascii );
 
 
 /**
- * zz_setTabPiVarsDefaultTab( ):
+ * zz_setTabPiVarsDefaultTab( ):  Removes the piVar indexBrowserTab in case of
+ *                                the default tab, if default tab should get a
+ *                                link
  *
- * @param	[type]		$$label: ...
- * @return	boolean		true / false
+ * @param   string      $label: label of the current tab
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1793,7 +1808,7 @@ $this->pObj->dev_var_dump( $label, $ascii );
     }
 
       // RETURN : current tab isn't the default tab
-    if( $label != $this->defaultAzTab )
+    if( $label != $this->tabDefaultLabel )
     {
       return;
     }
@@ -1808,21 +1823,18 @@ $this->pObj->dev_var_dump( $label, $ascii );
 
 
 /**
- * zz_setTabSlected( ):  Sets the elements tabIds and tabLabels of the class var $indexBrowserTab
- *                          Updates the element tabSpecial.
+ * zz_setTabSlected( ): Sets the class property selected, if the current tab
+ *                      is selected. Sets the class var indexBrowserTab.
  *
- * @param	array		$conf_tabs      : TS configuration array
- * @param	integer		$tabId          : Current tab ID for TS configuration array
- * @param	string		$tabLabel       : Label of the current tab
- * @param	boolean		$displayWoItems : Default value for displaying tabs without any hit
- * @return	array		$arr_return     : Contains an error message in case of an error
- * @version 3.9.11
- * @since   3.9.10
+ * @param	string		$tabLabel : Label of the current tab
+ * @param	integer		$tabId    : Current tab ID for TS configuration array
+ * @version 3.9.12
+ * @since   3.9.12
  */
   private function zz_setTabSlected( $tabLabel, $tabId )
   {
-$this->pObj->dev_var_dump( $tabLabel, $this->pObj->piVar_indexBrowserTab );
-$this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default'] );
+//$this->pObj->dev_var_dump( $tabLabel, $this->pObj->piVar_indexBrowserTab );
+//$this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default'] );
       // IF : piVar
     if( $this->pObj->piVar_indexBrowserTab )
     {
@@ -1848,10 +1860,10 @@ $this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default
 
 /**
  * zz_tabLastId( ): Returns the id of the last visible tab. A tab is visible,
- *                  if the property displayWoItems is true
- *                  or of the tab has one hit at least
+ *                  if the property displayWoItems is true or of the tab has
+ *                  one hit at least
  *
- * @return	integer		Id of the last visible tab
+ * @return	integer		$id: Id of the last visible tab
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1866,33 +1878,32 @@ $this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default
       // DO WHILE : a tab should displayed items or a tab has a hit at least
     do
     {
-      $i = key( $arrTabs );
+      $id = key( $arrTabs );
       prev( $arrTabs );
     }
-    while( $arrTabs[$i]['displayWoItems'] + $arrTabs[$i]['count'] < 1 );
+    while( $arrTabs[$id]['displayWoItems'] + $arrTabs[$id]['count'] < 1 );
       // DO WHILE : a tab should displayed items or a tab has a hit at least
 
       // RETURN : id of last visible tab
-    return $i;
+    return $id;
   }
 
 
 
 /**
- * zz_tabTitle( ):
+ * zz_tabTitle( ): Returns the value for the title property. Something like
+ *                 "1 item" or "12 items"
  *
- * @param	[type]		$$sum: ...
- * @return	boolean		true / false
+ * @param   integer		$sum    : Amount of hits of the current tab
+ * @return	string    $title  :	The title value
  * @version 3.9.12
  * @since   3.9.12
  */
   private function zz_tabTitle( $sum )
   {
+      // DRS
     static $drsPrompt_01 = true;
     static $drsPrompt_02 = true;
-
-    $langKey = $GLOBALS['TSFE']->lang;
-
 
       // RETURN : title shouldn't displayed
     $displayTitle = $this->conf['navigation.']['indexBrowser.']['display.']['tabHrefTitle'];
@@ -1902,16 +1913,19 @@ $this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default
     }
       // RETURN : title shouldn't displayed
 
+      // SWITCH : sum of hits
     switch( true )
     {
       case( $sum > 1 ):
-          // Get localised title
+          // Get localised title for more than one item
         $title = htmlspecialchars($this->pObj->pi_getLL( 'browserItems', 'Items', true ) );
           // DRS
         if( $drsPrompt_02 )
         {
           if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi )
           {
+              // Get the current language key
+            $langKey = $GLOBALS['TSFE']->lang;
             $prompt = 'Label for a tab with items is: ' . $title;
             t3lib_div::devlog('[INFO/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 0);
             $prompt = 'If you want another label, please configure ' .
@@ -1923,13 +1937,15 @@ $this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default
           // DRS
         break;
       default:
-          // Get localised title
+          // Get localised title for one item exactly 
         $title = htmlspecialchars($this->pObj->pi_getLL( 'browserItem', 'Item', true ) );
           // DRS
         if( $drsPrompt_01 )
         {
           if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi )
           {
+              // Get the current language key
+            $langKey = $GLOBALS['TSFE']->lang;
             $prompt = 'Label for a tab with one item is: ' . $title;
             t3lib_div::devlog('[INFO/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 0);
             $prompt = 'If you want another label, please configure ' .
@@ -1941,7 +1957,9 @@ $this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default
           // DRS
         break;
     }
+      // SWITCH : sum of hits
 
+      // RETURN the title value
     $title = $sum . ' ' . $title;
     return $title;
   }
