@@ -38,50 +38,61 @@
  *
  *
  *
- *   88: class tx_browser_pi1_navi_indexBrowser
- *  170:     public function __construct($parentObj)
+ *   99: class tx_browser_pi1_navi_indexBrowser
+ *  185:     public function __construct($parentObj)
  *
  *              SECTION: Main
- *  202:     public function get( $content )
+ *  217:     public function get( $content )
  *
  *              SECTION: requirements
- *  279:     private function localisation_init( )
- *  331:     private function requirements_check( )
- *  399:     private function tableField_check( )
- *  449:     private function tableField_init( )
+ *  294:     private function localisation_init( )
+ *  346:     private function requirements_check( )
+ *  414:     private function tableField_check( )
+ *  464:     private function tableField_init( )
  *
  *              SECTION: subparts
- *  538:     private function subpart( )
- *  575:     private function subpart_setContainer( )
- *  591:     private function subpart_setTabs( )
+ *  553:     private function subpart( )
+ *  597:     private function subpart_setContainer( )
+ *  616:     private function subpart_setTabs( )
  *
  *              SECTION: tabs
- *  622:     private function tabs_init( )
- *  689:     private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
- *  741:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
- *  794:     private function tabs_initSpecialChars( $arrCsvAttributes )
+ *  710:     private function tabs_init( )
+ *  777:     private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
+ *  829:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+ *  888:     private function tabs_initSpecialChars( $arrCsvAttributes )
  *
  *              SECTION: count chars
- *  853:     private function count_chars( )
- *  893:     private function count_chars_addSumToTab( $res )
- *  946:     private function count_chars_resSqlCount( $currSqlCharset )
+ *  947:     private function count_chars( )
+ *  987:     private function count_chars_addSumToTab( $res )
+ * 1040:     private function count_chars_resSqlCount( $currSqlCharset )
  *
  *              SECTION: count special chars
- * 1067:     private function count_specialChars( )
- * 1106:     private function count_specialChars_addSum( $row )
- * 1158:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
- * 1249:     private function count_specialChars_setSqlFindInSet( $row )
- * 1275:     private function count_specialChars_setSqlLength( )
+ * 1161:     private function count_specialChars( )
+ * 1200:     private function count_specialChars_addSum( $row )
+ * 1252:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
+ * 1343:     private function count_specialChars_setSqlFindInSet( $row )
+ * 1369:     private function count_specialChars_setSqlLength( )
  *
  *              SECTION: SQL charset
- * 1347:     private function sqlCharsetGet( )
- * 1380:     private function sqlCharsetSet( $sqlCharset )
+ * 1441:     private function sqlCharsetGet( )
+ * 1474:     private function sqlCharsetSet( $sqlCharset )
  *
  *              SECTION: downward compatibility
- * 1420:     private function getMarkerIndexbrowser( )
- * 1466:     private function getMarkerIndexbrowserTabs( )
+ * 1514:     private function getMarkerIndexbrowser( )
+ * 1560:     private function getMarkerIndexbrowserTabs( )
  *
- * TOTAL FUNCTIONS: 25
+ *              SECTION: zz
+ * 1617:     private function zz_tabDefaultLink( )
+ * 1660:     private function zz_specCharsToASCII( $label )
+ * 1682:     private function zz_tabClass( $labelAscii, $lastTabId, $tab, $key )
+ * 1718:     private function zz_tabLinkLabel( $tab, $label, $labelAscii )
+ * 1759:     private function zz_setTabPiVars( $labelAscii, $label )
+ * 1787:     private function zz_setTabPiVarsDefaultTab( $label )
+ * 1822:     private function zz_setTabSlected( $tabLabel, $tabId )
+ * 1858:     private function zz_tabLastId( )
+ * 1889:     private function zz_tabTitle( $sum )
+ *
+ * TOTAL FUNCTIONS: 34
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -566,7 +577,7 @@ class tx_browser_pi1_navi_indexBrowser
       return $arr_return;
     }
       // Replace the whole subpart
- 
+
     $content = $this->pObj->cObj->substituteSubpart( $this->subpart, $markerTabs, $this->subpartTab, true);
 
     $arr_return['data']['content'] = $content;
@@ -637,7 +648,7 @@ class tx_browser_pi1_navi_indexBrowser
       {
         continue;
       }
-      
+
         // Wrap the label
       $label  = $tab['label'];
       if( isset ( $tab['wrap'] ) )
@@ -1641,6 +1652,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * zz_specCharsToASCII( ):
  *
+ * @param	[type]		$$label: ...
  * @return	boolean		true / false
  * @version 3.9.12
  * @since   3.9.12
@@ -1659,6 +1671,10 @@ $this->pObj->dev_var_dump( $label, $ascii );
 /**
  * zz_tabClass( ): Returns the tab class like ' class="tab-u tab-29 selected last"'
  *
+ * @param	[type]		$$labelAscii: ...
+ * @param	[type]		$lastTabId: ...
+ * @param	[type]		$tab: ...
+ * @param	[type]		$key: ...
  * @return	string		$class  : complete class tag
  * @version 3.9.12
  * @since   3.9.12
@@ -1692,6 +1708,9 @@ $this->pObj->dev_var_dump( $label, $ascii );
 /**
  * zz_tabLinkLabel( ):
  *
+ * @param	[type]		$$tab: ...
+ * @param	[type]		$label: ...
+ * @param	[type]		$labelAscii: ...
  * @return	boolean		true / false
  * @version 3.9.12
  * @since   3.9.12
@@ -1731,6 +1750,8 @@ $this->pObj->dev_var_dump( $label, $ascii );
 /**
  * zz_setTabPiVars( ):
  *
+ * @param	[type]		$$labelAscii: ...
+ * @param	[type]		$label: ...
  * @return	boolean		true / false
  * @version 3.9.12
  * @since   3.9.12
@@ -1758,6 +1779,7 @@ $this->pObj->dev_var_dump( $label, $ascii );
 /**
  * zz_setTabPiVarsDefaultTab( ):
  *
+ * @param	[type]		$$label: ...
  * @return	boolean		true / false
  * @version 3.9.12
  * @since   3.9.12
@@ -1859,6 +1881,7 @@ $this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default
 /**
  * zz_tabTitle( ):
  *
+ * @param	[type]		$$sum: ...
  * @return	boolean		true / false
  * @version 3.9.12
  * @since   3.9.12
