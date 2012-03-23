@@ -47,27 +47,27 @@
             alt="TYPO3 Browser online"
             title="TYPO3 Browser online"
             target="_blank">
-            <img src="../../../../typo3conf/ext/browser/lib/icons/typo3_browser.gif"
+            <img src="lib/icons/typo3_browser.gif"
               width="90"
               height="80"
               alt="TYPO3 Browser online" /></a>
           <a href="http://die-netzmacher.de/" 
-            alt="Die Netzmacher - Internet ist Handwerk"
-            title="Die Netzmacher - Internet ist Handwerk"
+            alt="Die Netzmacher - Internet is trade"
+            title="Die Netzmacher - Internet is trade"
             target="_blank">
-            <img src="../../../../typo3conf/ext/browser/lib/icons/die-netzmacher.de_200px.gif" 
+            <img src="lib/icons/die-netzmacher.de_200px.gif" 
               width="200" 
               height="80" 
-              alt="Die Netzmacher - Internet ist Handwerk" /></a>
+              alt="Die Netzmacher - Internet is trade" /></a>
         </div>
         <ul style="list-style:outside;">
           <li>
             TYPO3-Browser website<br />
-            <a href="http://typo3-browser.de/" 
+            <a href="http://typo3-browser.de/en"
               style="text-decoration:underline;"
-              alt="Browser - die TYPO3-Frontend-Engine"
-              title="Browser - die TYPO3-Frontend-Engine"
-              target="_blank">typo3-browser.de</a>
+              alt="Browser - TYPO3 without PHP"
+              title="Browser - TYPO3 without PHP"
+              target="_blank">typo3-browser.de/en</a>
           </li>
           <li>
             TYPO3-Browser forum<br />
@@ -81,17 +81,17 @@
             TYPO3-Browser developer<br />
             <a href="http://die-netzmacher.de/" 
               style="text-decoration:underline;"
-              alt="Die Netzmacher - Internet ist Handwerk"
-              title="Die Netzmacher - Internet ist Handwerk"
+              alt="Die Netzmacher - Internet is trade"
+              title="Die Netzmacher - Internet is trade"
               target="_blank">die-netzmacher.de</a>
           </li>
         </ul>
         </div>
         <p style="font-weight:bold;padding:1em 0;">
-          TYPO3-Browser is sponsored by:
+          The TYPO3-Browser-Project is sponsored by:
         </p>
         <p style="padding:0 0 1em 0;">
-          You like to subsidise the TYPO3-Frontend-Engine Browser?
+          You like to subsidise the TYPO3-Browser-project?
           <a href="http://typo3-browser.de/sponsoring/" 
             style="text-decoration:underline;"
             alt="Your logo with your URL. 120 x 90 pixel."
@@ -103,7 +103,7 @@
           alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsert das TYPO3-Browser-Projekt"
           title="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsert das TYPO3-Browser-Projekt"
           target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/Lieska_Tuotanto_Oy_130501_01.jpg"
+          <img src="lib/icons/Lieska_Tuotanto_Oy_130501_01.jpg"
             width="120"
             height="90"
             alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsert das TYPO3-Browser-Projekt" /></a>
@@ -111,7 +111,7 @@
           alt="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt"
           title="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt"
           target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/freemedia.ch.20130301.gif"
+          <img src="lib/icons/freemedia.ch.20130301.gif"
             width="120"
             height="90"
             alt="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt" /></a>
@@ -119,7 +119,7 @@
           alt="Your logo with your URL. 120 x 90 pixel."
           title="Your logo with your URL. 120 x 90 pixel."
           target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/your-logo_default-grey.gif" 
+          <img src="lib/icons/your-logo_default-grey.gif" 
             width="120" 
             height="90" 
             alt="Your logo with your URL. 120 x 90 pixel." /></a>
@@ -167,7 +167,7 @@
             alt="TYPO3-Browser Online"
             title="TYPO3-Browser Online"
             target="_blank">
-            <img src="../../../../typo3conf/ext/browser/lib/icons/typo3_browser.gif"
+            <img src="lib/icons/typo3_browser.gif"
               width="90"
               height="80"
               alt="TYPO3-Browser Online" /></a>
@@ -175,7 +175,7 @@
             alt="Die Netzmacher - Internet ist Handwerk"
             title="Die Netzmacher - Internet ist Handwerk"
             target="_blank">
-            <img src="../../../../typo3conf/ext/browser/lib/icons/die-netzmacher.de_200px.gif" 
+            <img src="lib/icons/die-netzmacher.de_200px.gif" 
               width="200" 
               height="80" 
               alt="Die Netzmacher - Internet ist Handwerk" /></a>
@@ -185,16 +185,16 @@
             TYPO3-Browser Homepage<br />
             <a href="http://typo3-browser.de/" 
               style="text-decoration:underline;"
-              alt="Browser - die TYPO3-Frontend-Engine"
-              title="Browser - die TYPO3-Frontend-Engine"
+              alt="Browser - TYPO3 ohne PHP"
+              title="Browser - TYPO3 ohne PHP"
               target="_blank">typo3-browser.de</a>
           </li>
           <li>
             TYPO3-Browser Forum<br />
             <a href="http://typo3-browser.de/forum/" 
               style="text-decoration:underline;"
-              alt="Browser - die TYPO3-Frontend-Engine: Forum"
-              title="Browser - die TYPO3-Frontend-Engine: Forum"
+              alt="Browser - TYPO3 ohne PHP: Forum"
+              title="Browser - TYPO3 ohne PHP: Forum"
               target="_blank">typo3-browser.de/forum</a>
           </li>
           <li>
@@ -207,10 +207,10 @@
           </li>
         </ul>
         <p style="font-weight:bold;padding:1em 0;">
-          Der Browser - die TYPO3-Frontend-Engine - wird gesponsert von:
+          Der Browser - TYPO3 ohne PHP - wird gesponsert von:
         </p>
         <p style="padding:0 0 1em 0;">
-          Du m&ouml;chtest den TYPO3-Browser finanziell unterst&uuml;tzen?
+          Du m&ouml;chtest das TYPO3-Browser-Projekt finanziell unterst&uuml;tzen?
           <a href="http://typo3-browser.de/sponsoring/" 
             style="text-decoration:underline;"
             alt="Dein Logo mit Deiner URL. 120 x 90 Pixel."
@@ -222,7 +222,7 @@
           alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsers the TYPO3-Browser project"
           title="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsers the TYPO3-Browser project"
           target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/Lieska_Tuotanto_Oy_130501_01.jpg"
+          <img src="lib/icons/Lieska_Tuotanto_Oy_130501_01.jpg"
             width="120"
             height="90"
             alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsers the TYPO3-Browser project" /></a>
@@ -230,7 +230,7 @@
           alt="Freemedia Medien & Verlag, Bern/Switzerland, sponsers the TYPO3-Browser project"
           title="Freemedia Medien & Verlag, Bern/Switzerland, sponsers the TYPO3-Browser project"
           target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/freemedia.ch.20130301.gif"
+          <img src="lib/icons/freemedia.ch.20130301.gif"
             width="120"
             height="90"
             alt="Freemedia Medien & Verlag, Bern/Switzerland, sponsers the TYPO3-Browser project" /></a>
@@ -238,7 +238,7 @@
           alt="Dein Logo mit Deiner URL. 120 x 90 Pixel."
           title="Dein Logo mit Deiner URL. 120 x 90 Pixel."
           target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/your-logo_de-grey.gif" 
+          <img src="lib/icons/your-logo_de-grey.gif" 
             width="120" 
             height="90" 
             alt="Dein Logo mit Deiner URL. 120 x 90 Pixel." /></a>
