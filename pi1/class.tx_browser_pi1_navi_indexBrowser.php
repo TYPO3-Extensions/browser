@@ -43,7 +43,7 @@
  *
  *              SECTION: Main
  *  200:     public function get_indexBrowser( $content )
- *  260:     private function get_content( )
+ *  260:     private function subpart( )
  *  297:     private function subpart_setContainer( )
  *  310:     private function subpart_setTabs( )
  *  327:     private function init_localisation( )
@@ -230,7 +230,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Init the tabs
 
       // Render the tabs
-    $arr_return = $this->get_content( );
+    $arr_return = $this->subpart( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -250,67 +250,17 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 
-/**
- * get_content( ):
- *
- * @return	boolean		true / false
- * @version 3.9.12
- * @since   3.9.9
- */
-  private function get_content( )
-  {
-    $marker           = $this->pObj->objNavi->getMarkerIndexBrowser( );
-    $this->subpart    = $this->pObj->cObj->getSubpart( $this->content, $marker );
-    $marker           = $this->pObj->objNavi->getMarkerIndexbrowserTabs( );
-    $this->subpartTab = $this->pObj->cObj->getSubpart( $this->subpart, $marker );
-
-      // Replace the subpart for the tabs
-    $arr_return = $this->subpart_setTabs( );
-    if( ! ( empty ( $arr_return ) ) )
-    {
-      return $arr_return;
-    }
-      // Replace the subpart for the tabs
-
-      // Replace the whole subpart
-    $arr_return = $this->subpart_setContainer( );
-    if( ! ( empty ( $arr_return ) ) )
-    {
-      return $arr_return;
-    }
-      // Replace the whole subpart
-
-    $arr_return['data']['content'] = 'Index browser';
-
-    return $arr_return;
-  }
 
 
 
-/**
- * subpart_setContainer( ):
- *
- * @return	boolean		true / false
- * @version 3.9.12
- * @since   3.9.9
- */
-  private function subpart_setContainer( )
-  {
-  }
 
 
 
-/**
- * subpart_setTabs( ):
- *
- * @return	boolean		true / false
- * @version 3.9.12
- * @since   3.9.9
- */
-  private function subpart_setTabs( )
-  {
-$this->pObj->dev_var_dump( $this->subpart, $this->subpartTab, $this->indexBrowserTab );
-  }
+    /***********************************************
+    *
+    * requirements
+    *
+    **********************************************/
 
 
 
@@ -363,20 +313,6 @@ $this->pObj->dev_var_dump( $this->subpart, $this->subpartTab, $this->indexBrowse
 
     return;
   }
-
-
-
-
-
-
-
-
-
-    /***********************************************
-    *
-    * requirements
-    *
-    **********************************************/
 
 
 
@@ -572,6 +508,90 @@ $this->pObj->dev_var_dump( $this->subpart, $this->subpartTab, $this->indexBrowse
     }
       // DRS
 
+  }
+
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * subparts
+    *
+    **********************************************/
+
+
+
+/**
+ * subpart( ):
+ *
+ * @return	boolean		true / false
+ * @version 3.9.12
+ * @since   3.9.9
+ */
+  private function subpart( )
+  {
+    $marker           = $this->pObj->objNavi->getMarkerIndexBrowser( );
+    $this->subpart    = $this->pObj->cObj->getSubpart( $this->content, $marker );
+    $marker           = $this->pObj->objNavi->getMarkerIndexbrowserTabs( );
+    $this->subpartTab = $this->pObj->cObj->getSubpart( $this->subpart, $marker );
+
+      // Replace the subpart for the tabs
+    $arr_return = $this->subpart_setTabs( );
+    if( ! ( empty ( $arr_return ) ) )
+    {
+      return $arr_return;
+    }
+      // Replace the subpart for the tabs
+
+      // Replace the whole subpart
+    $arr_return = $this->subpart_setContainer( );
+    if( ! ( empty ( $arr_return ) ) )
+    {
+      return $arr_return;
+    }
+      // Replace the whole subpart
+
+    $arr_return['data']['content'] = 'Index browser';
+
+    return $arr_return;
+  }
+
+
+
+/**
+ * subpart_setContainer( ):
+ *
+ * @return	boolean		true / false
+ * @version 3.9.12
+ * @since   3.9.9
+ */
+  private function subpart_setContainer( )
+  {
+    $markerArray                  = $this->pObj->objWrapper->constant_markers();
+    $markerArray['###UL_MODE###'] = $this->mode;
+    $markerArray['###UL_VIEW###'] = $this->view;
+  }
+
+
+
+/**
+ * subpart_setTabs( ):
+ *
+ * @return	boolean		true / false
+ * @version 3.9.12
+ * @since   3.9.9
+ */
+  private function subpart_setTabs( )
+  {
+$this->pObj->dev_var_dump( $this->subpart, $this->subpartTab, $this->indexBrowserTab );
+    foreach((array) $lArrTabs as $key_tab => $arr_tab)
+    {
+    }
   }
 
 
