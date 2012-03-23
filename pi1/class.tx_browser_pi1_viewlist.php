@@ -1116,9 +1116,7 @@ class tx_browser_pi1_viewlist
       default:
           // CASE no csv
           // Take the default template (the list view)
-        $this->content_setDefault( );
-          // Set search box and filter
-        $arr_result = $this->subpart_setSearchbox( );
+        $arr_result = $this->content_setDefault( );
         if( $arr_result['error']['status'] )
         {
             // Prompt the expired time to devlog
@@ -1126,22 +1124,6 @@ class tx_browser_pi1_viewlist
           $content = $arr_result['error']['header'] . $arr_result['error']['prompt'];
           return $content;
         }
-        unset( $arr_result );
-          // Set search box and filter
-
-          // Get index browser
-        $arr_result = $this->subpart_setIndexBrowser( );
-        if( $arr_result['error']['status'] )
-        {
-            // Prompt the expired time to devlog
-          $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-          $content = $arr_result['error']['header'] . $arr_result['error']['prompt'];
-          return $content;
-        }
-        unset( $arr_result );
-          // Set index browser
-          // Get page browser
-          // Set page browser
         break;
           // CASE no csv
     }
@@ -1630,7 +1612,7 @@ if( $this->pObj->bool_accessByIP )
  * content_setDefault( ):
  *
  * @return	void
- * @version 3.9.9
+ * @version 3.9.12
  * @since   3.9.9
  */
   private function content_setDefault( )
@@ -1666,6 +1648,32 @@ if( $this->pObj->bool_accessByIP )
         </div>';
       die( $prompt );
     }
+
+      // Set search box and filter
+    $arr_return = $this->subpart_setSearchbox( );
+    if( $arr_return['error']['status'] )
+    {
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $content = $arr_return['error']['header'] . $arr_return['error']['prompt'];
+      return $content;
+    }
+    unset( $arr_return );
+      // Set search box and filter
+
+      // Get index browser
+    $arr_return = $this->subpart_setIndexBrowser( );
+    if( $arr_return['error']['status'] )
+    {
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $content = $arr_return['error']['header'] . $arr_return['error']['prompt'];
+      return $content;
+    }
+    unset( $arr_return );
+      // Set index browser
+      // Get page browser
+      // Set page browser
   }
 
 
@@ -1756,7 +1764,7 @@ if( $this->pObj->bool_accessByIP )
     }
 
     $content        = $arr_return['data']['content'];
-    $marker         = $this->pObj->objNavi->getMarkerIndexBrowser( );
+    $marker         = $this->pObj->objNaviIndexBrowser->getMarkerIndexBrowser( );
     $this->content  = $this->pObj->cObj->substituteSubpart( $this->content, $marker, $content, true);
 
     return;

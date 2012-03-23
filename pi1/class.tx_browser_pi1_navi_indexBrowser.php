@@ -66,7 +66,7 @@
  *  998:     private function count_chars_addSumToTab( $res )
  * 1050:     private function count_chars_resSqlCount( $currSqlCharset )
  *
- *              SECTION: count special chars
+ *              SECTION: Count special chars
  * 1171:     private function count_specialChars( )
  * 1210:     private function count_specialChars_addSum( $row )
  * 1260:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
@@ -1152,7 +1152,7 @@ class tx_browser_pi1_navi_indexBrowser
 
     /***********************************************
     *
-    * count special chars
+    * Count special chars
     *
     **********************************************/
 
