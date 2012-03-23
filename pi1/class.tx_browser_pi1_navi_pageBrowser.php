@@ -166,7 +166,8 @@ class tx_browser_pi1_navi_pageBrowser
  */
   public function get( $content )
   {
-    $arr_return['data']['content'] = $content;
+    $this->content                  = $content;
+    $arr_return['data']['content']  = 'Page Browser';
 
       // RETURN : pagebrowser shouldn't displayed
     if( ! $this->pObj->objFlexform->bool_pageBrowser )
