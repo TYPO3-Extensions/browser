@@ -1753,9 +1753,15 @@ if( $this->pObj->bool_accessByIP )
     {
       return $arr_return;
     }
-    $this->content = $arr_return['data']['content'];
 
-    return $arr_return;
+    $content        = $arr_return['data']['content'];
+    $marker         = $this->pObj->objNavi->getMarkerIndexBrowser( );
+    $this->content  = $this->pObj->cObj->substituteSubpart( $this->content, $marker, $content, true);
+//    $subpartIndexBrowser       = $this->pObj->cObj->substituteMarkerArray($subpartIndexBrowser, $markerArray);
+//    $markerIndexBrowserTabs = $this->getMarkerIndexBrowserTabs( );
+//    $subpartIndexBrowser       = $this->pObj->cObj->substituteSubpart($subpartIndexBrowser, $markerIndexBrowserTabs, $tabs, true);
+
+    return;
   }
 
 

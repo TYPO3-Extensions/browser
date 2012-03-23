@@ -2470,7 +2470,7 @@ class tx_browser_pi1_navi
   * @version  3.9.10
   * @since    3.9.10
   */
-  private function getMarkerIndexbrowser( )
+  public function getMarkerIndexbrowser( )
   {
       // DRS
     if ($this->pObj->b_drs_devTodo)
@@ -2516,7 +2516,7 @@ class tx_browser_pi1_navi
   * @version  3.9.10
   * @since    3.9.10
   */
-  private function getMarkerIndexbrowserTabs( )
+  public function getMarkerIndexbrowserTabs( )
   {
       // DRS
     if ($this->pObj->b_drs_devTodo)
