@@ -1519,7 +1519,7 @@ class tx_browser_pi1_navi_indexBrowser
   * @version  3.9.10
   * @since    3.9.10
   */
-  private function getMarkerIndexbrowser( )
+  public function getMarkerIndexbrowser( )
   {
       // DRS
     if ($this->pObj->b_drs_devTodo)
