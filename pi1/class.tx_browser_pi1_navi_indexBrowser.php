@@ -38,61 +38,62 @@
  *
  *
  *
- *   99: class tx_browser_pi1_navi_indexBrowser
- *  185:     public function __construct($parentObj)
+ *  100: class tx_browser_pi1_navi_indexBrowser
+ *  188:     public function __construct($parentObj)
  *
  *              SECTION: Main
- *  217:     public function get( $content )
+ *  220:     public function get( $content )
  *
- *              SECTION: requirements
- *  294:     private function localisation_init( )
- *  346:     private function requirements_check( )
- *  414:     private function tableField_check( )
- *  464:     private function tableField_init( )
+ *              SECTION: Requirements
+ *  297:     private function localisation_init( )
+ *  349:     private function requirements_check( )
+ *  417:     private function tableField_check( )
+ *  467:     private function tableField_init( )
  *
- *              SECTION: subparts
- *  553:     private function subpart( )
- *  597:     private function subpart_setContainer( )
- *  616:     private function subpart_setTabs( )
+ *              SECTION: Subparts
+ *  556:     private function subpart( )
+ *  602:     private function subpart_setContainer( )
+ *  623:     private function subpart_setTabs( )
  *
- *              SECTION: tabs
- *  710:     private function tabs_init( )
- *  777:     private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
- *  829:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
- *  888:     private function tabs_initSpecialChars( $arrCsvAttributes )
+ *              SECTION: Tabs
+ *  721:     private function tabs_init( )
+ *  788:     private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
+ *  840:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+ *  899:     private function tabs_initSpecialChars( $arrCsvAttributes )
  *
- *              SECTION: count chars
- *  947:     private function count_chars( )
- *  987:     private function count_chars_addSumToTab( $res )
- * 1040:     private function count_chars_resSqlCount( $currSqlCharset )
+ *              SECTION: Count chars
+ *  958:     private function count_chars( )
+ *  998:     private function count_chars_addSumToTab( $res )
+ * 1050:     private function count_chars_resSqlCount( $currSqlCharset )
  *
  *              SECTION: count special chars
- * 1161:     private function count_specialChars( )
- * 1200:     private function count_specialChars_addSum( $row )
- * 1252:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
- * 1343:     private function count_specialChars_setSqlFindInSet( $row )
- * 1369:     private function count_specialChars_setSqlLength( )
+ * 1171:     private function count_specialChars( )
+ * 1210:     private function count_specialChars_addSum( $row )
+ * 1260:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
+ * 1351:     private function count_specialChars_setSqlFindInSet( $row )
+ * 1377:     private function count_specialChars_setSqlLength( )
  *
  *              SECTION: SQL charset
- * 1441:     private function sqlCharsetGet( )
- * 1474:     private function sqlCharsetSet( $sqlCharset )
+ * 1449:     private function sqlCharsetGet( )
+ * 1482:     private function sqlCharsetSet( $sqlCharset )
  *
- *              SECTION: downward compatibility
- * 1514:     private function getMarkerIndexbrowser( )
- * 1560:     private function getMarkerIndexbrowserTabs( )
+ *              SECTION: Downward compatibility
+ * 1522:     private function getMarkerIndexbrowser( )
+ * 1568:     private function getMarkerIndexbrowserTabs( )
  *
- *              SECTION: zz
- * 1617:     private function zz_tabDefaultLink( )
- * 1660:     private function zz_specCharsToASCII( $label )
- * 1682:     private function zz_tabClass( $labelAscii, $lastTabId, $tab, $key )
- * 1718:     private function zz_tabLinkLabel( $tab, $label, $labelAscii )
- * 1759:     private function zz_setTabPiVars( $labelAscii, $label )
- * 1787:     private function zz_setTabPiVarsDefaultTab( $label )
- * 1822:     private function zz_setTabSlected( $tabLabel, $tabId )
- * 1858:     private function zz_tabLastId( )
- * 1889:     private function zz_tabTitle( $sum )
+ *              SECTION: Helper
+ * 1626:     private function zz_specCharsToASCII( $string )
+ * 1646:     private function zz_tabClass( $lastTabId, $tab, $key )
+ * 1679:     private function zz_tabDefaultLabel( )
+ * 1697:     private function zz_tabDefaultLink( )
+ * 1740:     private function zz_tabLinkLabel( $tab )
+ * 1782:     private function zz_setTabPiVars( $labelAscii, $label )
+ * 1812:     private function zz_setTabPiVarsDefaultTab( $label )
+ * 1844:     private function zz_setTabSlected( $tabId )
+ * 1894:     private function zz_tabLastId( )
+ * 1926:     private function zz_tabTitle( $sum )
  *
- * TOTAL FUNCTIONS: 34
+ * TOTAL FUNCTIONS: 35
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -548,7 +549,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * subpart( ): Returns the content for the index browser subpart
  *
- * @return	array   $arr_return : Content or an erreor message in case of an error
+ * @return	array		$arr_return : Content or an erreor message in case of an error
  * @version 3.9.12
  * @since   3.9.9
  */
@@ -594,6 +595,7 @@ class tx_browser_pi1_navi_indexBrowser
  * subpart_setContainer( ): Replace markers in the subpart for the index browser
  *                          but not the subpart ###TABS###
  *
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.9
  */
@@ -614,6 +616,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * subpart_setTabs( ): Set the content in the subpart for the tabs
  *
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -826,7 +829,7 @@ class tx_browser_pi1_navi_indexBrowser
  * tabs_initProperties( ):  Sets the elements tabIds and tabLabels of the class var $indexBrowserTab
  *                          Updates the element tabSpecial.
  *
- * @param	array     $conf_tabs      : TS configuration array
+ * @param	array		$conf_tabs      : TS configuration array
  * @param	integer		$tabId          : Current tab ID for TS configuration array
  * @param	string		$tabLabel       : Label of the current tab
  * @param	boolean		$displayWoItems : Default value for displaying tabs without any hit
@@ -988,6 +991,7 @@ class tx_browser_pi1_navi_indexBrowser
  *                       of the class var $indexBrowserTab
  *
  * @param	array		$res  : SQL result
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.11
  */
@@ -1037,7 +1041,7 @@ class tx_browser_pi1_navi_indexBrowser
  * count_chars_resSqlCount( ): SQL query and execution for counting initials
  *
  * @param	integer		$length         : SQL length of special chars group
- * @param	array     $arrfindInSet   : FIND IN SET statement with proper length
+ * @param	array		$arrfindInSet   : FIND IN SET statement with proper length
  * @param	string		$currSqlCharset : Current SQL charset for reset in error case
  * @return	array		$arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.12
@@ -1246,10 +1250,8 @@ class tx_browser_pi1_navi_indexBrowser
  * count_specialChars_resSqlCount( ): SQL query and execution for counting
  *                                    special char initials
  *
- *                                                
- *
  * @param	integer		$length         : SQL length of special chars group
- * @param	array     $arrfindInSet   : FIND IN SET statement with proper length
+ * @param	array		$arrfindInSet   : FIND IN SET statement with proper length
  * @param	string		$currSqlCharset : Current SQL charset for reset in error case
  * @return	array		$arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.12
@@ -1342,6 +1344,7 @@ class tx_browser_pi1_navi_indexBrowser
  *                                        char.
  *
  * @param	array		$row  : Row with special chars and their SQL length
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.10
  */
@@ -1615,7 +1618,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * zz_specCharsToASCII( ): Convert labels to ascii labels
  *
- * @param   string		$string:  the string for conversion
+ * @param	string		$string:  the string for conversion
  * @return	string		$ascii:   the converted string
  * @version 3.9.12
  * @since   3.9.12
@@ -1634,9 +1637,9 @@ class tx_browser_pi1_navi_indexBrowser
  * zz_tabClass( ): Returns the tab class like ' class="tab-u tab-29 selected last"'
  *
  * @param	integer		$lastTabId  : id of the last visible tab
- * @param	array     $tab        : array with elements of the current tab
+ * @param	array		$tab        : array with elements of the current tab
  * @param	integer		$key        : id of the tab from the TS configuration
- * @return	string	$class      : complete class tag
+ * @return	string		$class      : complete class tag
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1669,6 +1672,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * zz_tabDefaultLabel( ): Set class var $tabDefaultLabel
  *
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1686,6 +1690,7 @@ class tx_browser_pi1_navi_indexBrowser
  * zz_tabDefaultLink( ):  Set the boolean class var linkDefaultTab: Should
  *                        the default tab get a link?
  *
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1727,8 +1732,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * zz_tabLinkLabel( ): Links the label of the current tab
  *
- * @param   array     $tab            : array with elements of the current tab
- * @return	string    $tabLinkedLabel : the linked label
+ * @param	array		$tab            : array with elements of the current tab
+ * @return	string		$tabLinkedLabel : the linked label
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1768,8 +1773,9 @@ class tx_browser_pi1_navi_indexBrowser
  * zz_setTabPiVars( ):  Makes a backup of the current piVars. Than it removes some
  *                      elements, which shouldn't be part of a index browser link.
  *
- * @param   string		$labelAscii : label of the current tab in ascii format
- * @param   string		$label      : label of the current tab
+ * @param	string		$labelAscii : label of the current tab in ascii format
+ * @param	string		$label      : label of the current tab
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1798,7 +1804,8 @@ class tx_browser_pi1_navi_indexBrowser
  *                                the default tab, if default tab should get a
  *                                link
  *
- * @param   string      $label: label of the current tab
+ * @param	string		$label: label of the current tab
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1830,6 +1837,7 @@ class tx_browser_pi1_navi_indexBrowser
  *                      is selected. Sets the class var indexBrowserTab.
  *
  * @param	integer		$tabId    : Current tab ID for TS configuration array
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1910,8 +1918,8 @@ class tx_browser_pi1_navi_indexBrowser
  * zz_tabTitle( ): Returns the value for the title property. Something like
  *                 "1 item" or "12 items"
  *
- * @param   integer		$sum    : Amount of hits of the current tab
- * @return	string    $title  :	The title value
+ * @param	integer		$sum    : Amount of hits of the current tab
+ * @return	string		$title  :	The title value
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1953,7 +1961,7 @@ class tx_browser_pi1_navi_indexBrowser
           // DRS
         break;
       default:
-          // Get localised title for one item exactly 
+          // Get localised title for one item exactly
         $title = htmlspecialchars($this->pObj->pi_getLL( 'browserItem', 'Item', true ) );
           // DRS
         if( $drsPrompt_01 )
