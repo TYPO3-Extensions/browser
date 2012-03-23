@@ -38,46 +38,48 @@
  *
  *
  *
- *   86: class tx_browser_pi1_navi_indexBrowser
- *  168:     public function __construct($parentObj)
+ *   88: class tx_browser_pi1_navi_indexBrowser
+ *  170:     public function __construct($parentObj)
  *
  *              SECTION: Main
- *  200:     public function get_indexBrowser( $content )
- *  260:     private function subpart( )
- *  297:     private function subpart_setContainer( )
- *  310:     private function subpart_setTabs( )
- *  327:     private function init_localisation( )
+ *  202:     public function get_indexBrowser( $content )
  *
  *              SECTION: requirements
- *  393:     private function requirements_check( )
- *  461:     private function tableField_check( )
- *  511:     private function tableField_init( )
+ *  279:     private function init_localisation( )
+ *  331:     private function requirements_check( )
+ *  399:     private function tableField_check( )
+ *  449:     private function tableField_init( )
+ *
+ *              SECTION: subparts
+ *  538:     private function subpart( )
+ *  575:     private function subpart_setContainer( )
+ *  591:     private function subpart_setTabs( )
  *
  *              SECTION: tabs
- *  600:     private function tabs_init( )
- *  667:     private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
- *  719:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
- *  772:     private function tabs_initSpecialChars( $arrCsvAttributes )
+ *  622:     private function tabs_init( )
+ *  689:     private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
+ *  741:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+ *  794:     private function tabs_initSpecialChars( $arrCsvAttributes )
  *
  *              SECTION: count chars
- *  831:     private function count_chars( )
- *  871:     private function count_chars_addSumToTab( $res )
- *  924:     private function count_chars_resSqlCount( $currSqlCharset )
+ *  853:     private function count_chars( )
+ *  893:     private function count_chars_addSumToTab( $res )
+ *  946:     private function count_chars_resSqlCount( $currSqlCharset )
  *
  *              SECTION: count special chars
- * 1045:     private function count_specialChars( )
- * 1084:     private function count_specialChars_addSum( $row )
- * 1136:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
- * 1227:     private function count_specialChars_setSqlFindInSet( $row )
- * 1253:     private function count_specialChars_setSqlLength( )
+ * 1067:     private function count_specialChars( )
+ * 1106:     private function count_specialChars_addSum( $row )
+ * 1158:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
+ * 1249:     private function count_specialChars_setSqlFindInSet( $row )
+ * 1275:     private function count_specialChars_setSqlLength( )
  *
  *              SECTION: SQL charset
- * 1325:     private function sqlCharsetGet( )
- * 1358:     private function sqlCharsetSet( $sqlCharset )
+ * 1347:     private function sqlCharsetGet( )
+ * 1380:     private function sqlCharsetSet( $sqlCharset )
  *
  *              SECTION: downward compatibility
- * 1398:     private function getMarkerIndexbrowser( )
- * 1444:     private function getMarkerIndexbrowserTabs( )
+ * 1420:     private function getMarkerIndexbrowser( )
+ * 1466:     private function getMarkerIndexbrowserTabs( )
  *
  * TOTAL FUNCTIONS: 25
  * (This index is automatically created/updated by the extension "extdeveval")
