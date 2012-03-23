@@ -659,13 +659,15 @@ class tx_browser_pi1_navi_indexBrowser
         $label = str_replace('|', $label, $tab['wrap']);
       }
 
+        // Init the marker array
+      unset( $markerArray );
+
         // Get class
       $class                          = $this->zz_tabClass( $lastTabId, $tab, $key );
       $markerArray['###CLASS###']     = $class;
       $markerArray['###LI_CLASS###']  = $class;
 
-        // Init the marker array
-      unset( $markerArray );
+        // SWITCH : sum of hits of tab, display without items
       switch( true )
       {
         case( ! empty( $tab['sum'] ) ):
@@ -679,6 +681,7 @@ class tx_browser_pi1_navi_indexBrowser
         default:
           continue;
       }
+        // SWITCH : sum of hits of tab, display without items
 
         // Set the content
       $content = $content . $this->pObj->cObj->substituteMarkerArray( $this->subpartTab, $markerArray );
