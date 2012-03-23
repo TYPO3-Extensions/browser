@@ -659,7 +659,6 @@ class tx_browser_pi1_navi_indexBrowser
 
       $markerArray['###CLASS###']     = $class;
       $markerArray['###LI_CLASS###']  = $class;
-$this->pObj->dev_var_dump( $markerArray );
         // #35032, 120320
       $content = $content . $this->pObj->cObj->substituteMarkerArray( $this->subpartTab, $markerArray );
     }
@@ -1721,13 +1720,6 @@ $this->pObj->dev_var_dump( $markerArray );
                       );
 
       // RESET piVars
-$this->pObj->dev_var_dump(
-                        $label,
-                        $typolink,
-                        $this->pObj->piVars,
-                        $this->pObj->boolCache,
-			tabLinkedLabel
- );
     $this->pObj->piVars = $this->piVarsBak;
 
     return $tabLinkedLabel;
@@ -1778,6 +1770,7 @@ $this->pObj->dev_var_dump(
     }
 
       // RETURN : current tab isn't the default tab
+$this->pObj->dev_var_dump( $piVar, $this->defaultAzTab );
     if( $piVar != $this->defaultAzTab )
     {
       return;
@@ -1888,6 +1881,7 @@ $this->pObj->dev_var_dump(
     }
 
     $title = $sum . ' ' . $title;
+    return $title;
   }
 
 
