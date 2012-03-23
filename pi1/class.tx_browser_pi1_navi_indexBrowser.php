@@ -42,10 +42,10 @@
  *  170:     public function __construct($parentObj)
  *
  *              SECTION: Main
- *  202:     public function get_indexBrowser( $content )
+ *  202:     public function get( $content )
  *
  *              SECTION: requirements
- *  279:     private function init_localisation( )
+ *  279:     private function localisation_init( )
  *  331:     private function requirements_check( )
  *  399:     private function tableField_check( )
  *  449:     private function tableField_init( )
@@ -105,6 +105,8 @@ class tx_browser_pi1_navi_indexBrowser
     // Variables set by the pObj (by class.tx_browser_pi1.php)
 
 
+    // [Array] piVars backup
+  var $piVarsBak = null;
     // [Array] Array with tabIds and tabLabels
   var $indexBrowserTab = array( );
 //  'tabSpecial' =>
@@ -147,6 +149,8 @@ class tx_browser_pi1_navi_indexBrowser
   var $subpart    = null;
     // [String] Subpart for a tab within the index browser
   var $subpartTab = null;
+    // [Boolean] Should the deafult tab get a link?
+  var $linkDefaultTab = null;
 
 
 
@@ -192,14 +196,14 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * get_indexBrowser( ): Get the index browser. It has to replace the subpart in the current content.
+ * get( ): Get the index browser. It has to replace the subpart in the current content.
  *
  * @param	string		$content: current content
  * @return	array
  * @version 3.9.12
  * @since   3.9.9
  */
-  public function get_indexBrowser( $content )
+  public function get( $content )
   {
     $this->content                  = $content;
     $arr_return['data']['content']  = $content;
@@ -267,7 +271,7 @@ class tx_browser_pi1_navi_indexBrowser
 
 
   /**
- * init_localisation( ):  Inits the localisation mode and localisation TS
+ * localisation_init( ):  Inits the localisation mode and localisation TS
  *                            Sets the class vars
  *                            * $int_localisation_mode
  *                            * bool_dontLocalise
@@ -276,7 +280,7 @@ class tx_browser_pi1_navi_indexBrowser
  * @version 3.9.11
  * @since   3.9.11
  */
-  private function init_localisation( )
+  private function localisation_init( )
   {
 
       // Set class var $int_localisation_mode; init TS of pObj->objLocalise;
@@ -350,7 +354,7 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // RETURN false : index browser is disabled
 
-    $this->init_localisation( );
+    $this->localisation_init( );
     if( ! $this->bool_dontLocalise )
     {
         // DRS
@@ -539,8 +543,13 @@ class tx_browser_pi1_navi_indexBrowser
   {
     $marker           = $this->pObj->objNavi->getMarkerIndexBrowser( );
     $this->subpart    = $this->pObj->cObj->getSubpart( $this->content, $marker );
-    $marker           = $this->pObj->objNavi->getMarkerIndexbrowserTabs( );
-    $this->subpartTab = $this->pObj->cObj->getSubpart( $this->subpart, $marker );
+    $markerTabs       = $this->pObj->objNavi->getMarkerIndexbrowserTabs( );
+    $this->subpartTab = $this->pObj->cObj->getSubpart( $this->subpart, $markerTabs );
+
+    $defaultTab_key     = $this->pObj->conf['navigation.']['indexBrowser.']['defaultTab'];
+    $defaultTab_label   = $this->pObj->conf['navigation.']['indexBrowser.']['tabs.'][$defaultTab_key];
+    $defaultTab_stdWrap = $this->pObj->conf['navigation.']['indexBrowser.']['tabs.'][$defaultTab_key . '.']['stdWrap.'];
+    $this->defaultAzTab = $this->pObj->objWrapper->general_stdWrap( $defaultTab_label, $defaultTab_stdWrap );
 
       // Replace the subpart for the tabs
     $arr_return = $this->subpart_setTabs( );
@@ -557,8 +566,11 @@ class tx_browser_pi1_navi_indexBrowser
       return $arr_return;
     }
       // Replace the whole subpart
+$this->pObj->dev_var_dump( $this->subpart, $this->subpartTab, $this->indexBrowserTab );
+ 
+    $content = $this->pObj->cObj->substituteSubpart( $this->subpart, $markerTabs, $this->subpartTab, true);
 
-    $arr_return['data']['content'] = 'Index browser';
+    $arr_return['data']['content'] = $content;
 
     return $arr_return;
   }
@@ -574,9 +586,12 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function subpart_setContainer( )
   {
-    $markerArray                  = $this->pObj->objWrapper->constant_markers();
+    $markerArray['###MODE###']    = $this->mode;
+    $markerArray['###VIEW###']    = $this->view;
     $markerArray['###UL_MODE###'] = $this->mode;
     $markerArray['###UL_VIEW###'] = $this->view;
+
+    $this->subpart = $this->pObj->cObj->substituteMarkerArray($this->subpart, $markerArray);
   }
 
 
@@ -586,14 +601,72 @@ class tx_browser_pi1_navi_indexBrowser
  *
  * @return	boolean		true / false
  * @version 3.9.12
- * @since   3.9.9
+ * @since   3.9.12
  */
   private function subpart_setTabs( )
   {
-$this->pObj->dev_var_dump( $this->subpart, $this->subpartTab, $this->indexBrowserTab );
-    foreach((array) $lArrTabs as $key_tab => $arr_tab)
+    $content = null;
+
+    $this->linkDefaultTab = $this->zz_tabDefaultLink( );
+    $bool_dontLinkDefaultTab = false;
+    if ($this->pObj->conf['navigation.']['indexBrowser.']['defaultTab.']['display_in_url'] == 0)
     {
+      $bool_dontLinkDefaultTab = true;
+      // #7582, Bugfix, 100501
+      if($this->pObj->objFlexform->bool_emptyAtStart)
+      {
+        $bool_dontLinkDefaultTab = false;
+        // DRS - Development Reporting System
+        if ($this->pObj->b_drs_templating)
+        {
+          t3lib_div::devlog('[WARN/TEMPLATING] Empty list by start is true and the default tab of the index browser shouldn\'t linked with a piVar. '.
+            'This is not proper.',  $this->pObj->extKey, 2);
+          t3lib_div::devlog('[INFO/TEMPLATING] The default tab of the index browser will be linked with a piVar by the system!',  $this->pObj->extKey, 0);
+        }
+      }
+      // #7582, Bugfix, 100501
     }
+
+      // Get the tab array
+    $arrTabs = $this->indexBrowserTab['tabIds'];
+      // get id of the last visible tab
+    $lastTabId = $this->zz_tabLastId( );
+
+      // LOOP : tabs
+    foreach( ( array ) $this->indexBrowserTab['tabIds'] as $key => $tab )
+    {
+        // Wrap the label
+      $label  = $tab['label'];
+      if( isset ( $tab['wrap'] ) )
+      {
+        $label = str_replace('|', $label, $tab['wrap']);
+      }
+
+        // Get piVar
+      $piVar  = $this->zz_tabPiVar( $label );
+        // Get class
+      $class  = $this->zz_tabClass( $piVar, $lastTabId, $tab );
+
+      switch( true )
+      {
+        case( ! empty( $tab['count'] ) ):
+          $markerArray['###TAB###'] = $this->zz_tabLinkLabel( $tab, $label, $piVar );
+          break;
+        case( $tab['displayWoItems'] ):
+          $markerArray['###TAB###'] = $label;
+          break;
+        default:
+          continue;
+      }
+
+      $markerArray['###CLASS###']     = $class;
+      $markerArray['###LI_CLASS###']  = $class;
+        // #35032, 120320
+      $content = $content . $this->pObj->cObj->substituteMarkerArray($this->subpartTab, $markerArray);
+    }
+      // LOOP : tabs
+
+    $this->subpartTab = $content;
   }
 
 
@@ -1497,6 +1570,290 @@ $this->pObj->dev_var_dump( $this->subpart, $this->subpartTab, $this->indexBrowse
     return '###INDEXBROWSERTABS###';
   }
 
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * zz
+    *
+    **********************************************/
+
+
+
+/**
+ * zz_tabDefaultLink( ):
+ *
+ * @return	boolean		true / false
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_tabDefaultLink( )
+  {
+    $boolLink = true;
+
+      // IF don't display in URL
+    if( empty ( $this->pObj->conf['navigation.']['indexBrowser.']['defaultTab.']['display_in_url'] ) )
+    {
+      $boolLink = false;
+
+        // IF empty list at start
+        // #7582, Bugfix, 100501
+      if( $this->pObj->objFlexform->bool_emptyAtStart )
+      {
+        $boolLink = true;
+          // DRS - Development Reporting System
+        if( $this->pObj->b_drs_templating || $this->pObj->b_drs_navi )
+        {
+          $prompt = 'Empty list by start is true and the default tab of the index browser ' .
+                    'shouldn\'t linked with a piVar. This is not proper.';
+          t3lib_div::devlog('[WARN/TEMPLATING+NAVI] ' . $prompt, $this->pObj->extKey, 2);
+          $prompt = 'The default tab of the index browser will be linked with a piVar by the system!';
+          t3lib_div::devlog('[INFO/TEMPLATING+NAVI] ' . $prompt,  $this->pObj->extKey, 0);
+        }
+          // DRS - Development Reporting System
+      }
+        // IF empty list at start
+    }
+      // IF don't display in URL
+
+      // Set the class var
+    $this->linkDefaultTab = $boolLink;
+  }
+
+
+
+/**
+ * zz_tabClass( ): Returns the tab class like ' class="tab-u tab-29 selected last"'
+ *
+ * @return	string		$class  : complete class tag
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_tabClass( $piVar, $lastTabId, $tab, $key )
+  {
+      // Default class
+    $class = 'tab-' . $piVar . ' tab-' . $key;
+
+//:TODO: Set $tab['active']
+
+      // Selected tab
+    if( ! empty ( $tab['active'] ) )
+    {
+      $class = $class . ' selected';
+    }
+      // Selected tab
+
+      // Last visible tab
+    if( $key == $lastTabId )
+    {
+      $class = $class . ' last';
+    }
+      // Last visible tab
+
+    $class = ' class="' . $class . '"';
+  }
+
+
+
+/**
+ * zz_tabLinkLabel( ):
+ *
+ * @return	boolean		true / false
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_tabLinkLabel( $tab, $label, $piVar )
+  {
+      // Init typolink
+    $typolink['parameter'] = $GLOBALS['TSFE']->id;
+
+      // Get the property title
+    $title  = $this->zz_tabTitle( $tab['sum'] );
+    if( $title )
+    {
+      $typolink['parameter'] = $typolink['parameter'] . ' - - "' . $title . '"';
+    }
+      // Get the property title
+
+      // Set piVars
+    $this->zz_setTabPiVars( $piVar );
+      // Init array with piVars
+    $tabLinkedLabel = $this->pObj->objZz->linkTP_keepPIvars
+                      (
+                        $label,
+                        $typolink,
+                        null,
+                        $this->pObj->boolCache
+                      );
+
+      // RESET piVars
+    $this->pObj->piVars = $this->piVarsBak;
+
+    return $tabLinkedLabel;
+  }
+
+
+
+/**
+ * zz_setTabPiVars( ):
+ *
+ * @return	boolean		true / false
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_setTabPiVars( $piVar )
+  {
+      // Backup piVars
+    $this->piVarsBak = $this->pObj->piVars;
+
+      // Unset the pointer
+    if( isset ( $this->pObj->piVars['pointer'] ) )
+    {
+      unset( $this->pObj->piVars['pointer'] );
+    }
+
+      // Set indexBrowserTab
+    $this->pObj->piVars['indexBrowserTab'] = $piVar;
+
+      // Handle default tab
+    $this->zz_setTabPiVarsDefaultTab( $piVar );
+  }
+
+
+
+/**
+ * zz_setTabPiVarsDefaultTab( ):
+ *
+ * @return	boolean		true / false
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_setTabPiVarsDefaultTab( $piVar )
+  {
+      // RETURN : default tab should get a link
+    if( $this->linkDefaultTab )
+    {
+      return;
+    }
+
+      // RETURN : current tab isn't the default tab
+    if( $piVar != $this->defaultAzTab )
+    {
+      return;
+    }
+
+      // Unset piVars['indexBrowserTab']
+    if( isset( $this->pObj->piVars['indexBrowserTab'] ) )
+    {
+      unset( $this->pObj->piVars['indexBrowserTab'] );
+    }
+  }
+
+
+
+/**
+ * zz_tabLastId( ): Returns the id of the last visible tab. A tab is visible,
+ *                  if the property displayWoItems is true
+ *                  or of the tab has one hit at least
+ *
+ * @return	integer		Id of the last visible tab
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_tabLastId( )
+  {
+      // Get tab array
+    $arrTabs = $this->indexBrowserTab['tabIds'];
+
+      // Get last tab
+    end( $arrTabs );
+
+      // DO WHILE : a tab should displayed items or a tab has a hit at least
+    do
+    {
+      $i = key( $arrTabs );
+      prev( $arrTabs );
+    }
+    while( $arrTabs[$i]['displayWoItems'] || $arrTabs[$i]['count'] < 1 );
+      // DO WHILE : a tab should displayed items or a tab has a hit at least
+
+      // RETURN : id of last visible tab
+    return $i;
+  }
+
+
+
+/**
+ * zz_tabTitle( ):
+ *
+ * @return	boolean		true / false
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_tabTitle( $sum )
+  {
+    static $drsPrompt_01 = true;
+    static $drsPrompt_02 = true;
+
+    $langKey = $GLOBALS['TSFE']->lang;
+
+
+      // RETURN : title shouldn't displayed
+    $displayTitle = $this->conf['navigation.']['indexBrowser.']['display.']['tabHrefTitle'];
+    if( ! $displayTitle )
+    {
+      return;
+    }
+      // RETURN : title shouldn't displayed
+
+    switch( true )
+    {
+      case( $sum > 1 ):
+          // Get localised title
+        $title = htmlspecialchars($this->pObj->pi_getLL( 'browserItem', 'Item', true ) );
+          // DRS
+        if( $drsPrompt_01 )
+        {
+          if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi )
+          {
+            $prompt = 'Label for a tab with one item is: ' . $title;
+            t3lib_div::devlog('[INFO/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 0);
+            $prompt = 'If you want another label, please configure ' .
+                      '_LOCAL_LANG.' . $langKey . '.browserItem';
+            t3lib_div::devlog('[HELP/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 1);
+            $drsPrompt_01 = false;
+          }
+        }
+          // DRS
+        break;
+      default:
+          // Get localised title
+        $title = htmlspecialchars($this->pObj->pi_getLL( 'browserItems', 'Items', true ) );
+          // DRS
+        if( $drsPrompt_02 )
+        {
+          if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi )
+          {
+            $prompt = 'Label for a tab with items is: ' . $title;
+            t3lib_div::devlog('[INFO/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 0);
+            $prompt = 'If you want another label, please configure ' .
+                      '_LOCAL_LANG.' . $langKey . '.browserItems';
+            t3lib_div::devlog('[HELP/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 1);
+            $drsPrompt_02 = false;
+          }
+        }
+          // DRS
+        break;
+    }
+
+    $title = $sum . ' ' . $title;
+  }
 
 
 
