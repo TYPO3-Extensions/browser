@@ -645,6 +645,8 @@ class tx_browser_pi1_navi_indexBrowser
         // Get class
       $class  = $this->zz_tabClass( $piVar, $lastTabId, $tab, $key );
 
+//$this->pObj->dev_var_dump( $label, $this->defaultAzTab );
+      unset( $markerArray );
       switch( true )
       {
         case( ! empty( $tab['sum'] ) ):
@@ -1770,7 +1772,6 @@ class tx_browser_pi1_navi_indexBrowser
     }
 
       // RETURN : current tab isn't the default tab
-$this->pObj->dev_var_dump( $label, $this->defaultAzTab );
     if( $label != $this->defaultAzTab )
     {
       return;
@@ -1844,24 +1845,6 @@ $this->pObj->dev_var_dump( $label, $this->defaultAzTab );
     {
       case( $sum > 1 ):
           // Get localised title
-        $title = htmlspecialchars($this->pObj->pi_getLL( 'browserItem', 'Item', true ) );
-          // DRS
-        if( $drsPrompt_01 )
-        {
-          if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi )
-          {
-            $prompt = 'Label for a tab with one item is: ' . $title;
-            t3lib_div::devlog('[INFO/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 0);
-            $prompt = 'If you want another label, please configure ' .
-                      '_LOCAL_LANG.' . $langKey . '.browserItem';
-            t3lib_div::devlog('[HELP/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 1);
-            $drsPrompt_01 = false;
-          }
-        }
-          // DRS
-        break;
-      default:
-          // Get localised title
         $title = htmlspecialchars($this->pObj->pi_getLL( 'browserItems', 'Items', true ) );
           // DRS
         if( $drsPrompt_02 )
@@ -1874,6 +1857,24 @@ $this->pObj->dev_var_dump( $label, $this->defaultAzTab );
                       '_LOCAL_LANG.' . $langKey . '.browserItems';
             t3lib_div::devlog('[HELP/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 1);
             $drsPrompt_02 = false;
+          }
+        }
+          // DRS
+        break;
+      default:
+          // Get localised title
+        $title = htmlspecialchars($this->pObj->pi_getLL( 'browserItem', 'Item', true ) );
+          // DRS
+        if( $drsPrompt_01 )
+        {
+          if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi )
+          {
+            $prompt = 'Label for a tab with one item is: ' . $title;
+            t3lib_div::devlog('[INFO/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 0);
+            $prompt = 'If you want another label, please configure ' .
+                      '_LOCAL_LANG.' . $langKey . '.browserItem';
+            t3lib_div::devlog('[HELP/LOCALLANG+NAVI] ' . $prompt, $this->pObj->extKey, 1);
+            $drsPrompt_01 = false;
           }
         }
           // DRS
