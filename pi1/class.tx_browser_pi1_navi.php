@@ -38,29 +38,33 @@
  *
  *
  *
- *   67: class tx_browser_pi1_navi
- *  116:     public function __construct($parentObj)
+ *   71: class tx_browser_pi1_navi
+ *  122:     public function __construct($parentObj)
  *
  *              SECTION: Index browser
- *  155:     public function indexBrowser($arr_data)
- *  383:     public function indexBrowserTemplate($arr_data)
- *  649:     public function indexBrowserTabArray($arr_data)
- * 1089:     public function indexBrowserRowsInitial($arr_data)
+ *  161:     public function indexBrowser( $arr_data )
+ *  396:     public function indexBrowserTemplate($arr_data)
+ *  667:     public function indexBrowserTabArray($arr_data)
+ * 1107:     public function indexBrowserRowsInitial($arr_data)
  *
  *              SECTION: pagebrowser
- * 1357:     public function tmplPageBrowser($arr_data)
+ * 1381:     public function tmplPageBrowser($arr_data)
  *
  *              SECTION: mode selector
- * 1596:     public function prepaireModeSelector()
- * 1663:     public function tmplModeSelector($arr_data)
+ * 1620:     public function prepaireModeSelector()
+ * 1687:     public function tmplModeSelector($arr_data)
  *
  *              SECTION: record browser
- * 1785:     public function recordbrowser_get($str_content)
- * 1872:     public function recordbrowser_callListView()
- * 1941:     private function recordbrowser_rendering()
- * 2271:     public function recordbrowser_set_session_data($rows)
+ * 1809:     public function recordbrowser_get($str_content)
+ * 1896:     public function recordbrowser_callListView()
+ * 1968:     private function recordbrowser_rendering()
+ * 2298:     public function recordbrowser_set_session_data($rows)
  *
- * TOTAL FUNCTIONS: 12
+ *              SECTION: downward compatibility
+ * 2476:     public function getMarkerIndexbrowser( )
+ * 2522:     public function getMarkerIndexbrowserTabs( )
+ *
+ * TOTAL FUNCTIONS: 14
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -386,7 +390,6 @@ class tx_browser_pi1_navi
   *
   * @param	array		Array with elements indexBrowserTabArray, tabIds, template
   * @return	array		Array data with the element template
-  * 
   * @version  3.9.10
   * @since    2.0.0
   */
@@ -2466,7 +2469,7 @@ class tx_browser_pi1_navi
   *                           ###AZSELECTOR### will return
   *                           * Feature: #35032
   *
-  * @return   string          ###INDEXBROWSER### || ###AZSELECTOR### 
+  * @return	string		###INDEXBROWSER### || ###AZSELECTOR###
   * @version  3.9.10
   * @since    3.9.10
   */
@@ -2512,7 +2515,7 @@ class tx_browser_pi1_navi
   *                               ###AZSELECTORTABS### will return
   *                               * Feature: #35032
   *
-  * @return   string              ###INDEXBROWSERTABS### || ###AZSELECTORTABS###
+  * @return	string		###INDEXBROWSERTABS### || ###AZSELECTORTABS###
   * @version  3.9.10
   * @since    3.9.10
   */
