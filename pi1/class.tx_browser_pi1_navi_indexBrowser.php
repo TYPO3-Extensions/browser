@@ -650,7 +650,6 @@ class tx_browser_pi1_navi_indexBrowser
         // Get class
       $class  = $this->zz_tabClass( $labelAscii, $lastTabId, $tab, $key );
 
-//$this->pObj->dev_var_dump( $label, $this->defaultAzTab );
       unset( $markerArray );
       switch( true )
       {
@@ -834,7 +833,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Overwrite property display without items
 
       // Set labelAscii. Label for using in the URL
-    $labelAscii = $this->zz_specCharsToASCII( $tablabel );
+    $labelAscii = $this->zz_specCharsToASCII( $tabLabel );
 
       // Set tab array
     $this->indexBrowserTab['tabIds'][$tabId]['label']           = $tabLabel;
@@ -1650,7 +1649,8 @@ class tx_browser_pi1_navi_indexBrowser
   {
     $ascii = strip_tags( html_entity_decode( $label ) );
     $ascii = $this->t3lib_cs_obj->specCharsToASCII( $this->bool_utf8, $ascii );
-    $ascii = strtolower(preg_replace('/[^a-zA-Z0-9-_]*/','',$ascii));
+    $ascii = strtolower( preg_replace( '/[^a-zA-Z0-9-_]*/', null, $ascii ) );
+$this->pObj->dev_var_dump( $label, $ascii );
 
     return $ascii;
   }
@@ -1799,6 +1799,8 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function zz_setTabSlected( $labelAscii, $tabId )
   {
+$this->pObj->dev_var_dump( $labelAscii, $this->pObj->piVar_indexBrowserTab );
+$this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default'] );
       // IF : piVar
     if( $this->pObj->piVar_indexBrowserTab )
     {
