@@ -828,8 +828,21 @@ $this->pObj->dev_var_dump( $this->subpart, $this->subpartTab, $this->indexBrowse
     }
       // Overwrite property display without items
 
+      // Set piVar. Label for using in the URL
+    $piVar = strip_tags( html_entity_decode( $tablabel ) );
+    $piVar = $this->t3lib_cs_obj->specCharsToASCII( $this->bool_utf8, $piVar );
+    $piVar = strtolower(preg_replace( '[^a-zA-Z0-9-_]', null ,$piVar ) );
+      // IF : current tab is selected
+    if($piVar == $this->pObj->piVar_indexBrowserTab)
+    {
+      $this->indexBrowserTab['tabIds'][$tabId]['active'] = true;
+      $this->indexBrowserTab['tabSpecial']['active']     = $tabId;
+    }
+      // IF : current tab is selected
+
       // Set tab array
     $this->indexBrowserTab['tabIds'][$tabId]['label']           = $tabLabel;
+    $this->indexBrowserTab['tabIds'][$tabId]['piVar']           = $piVar;
     $this->indexBrowserTab['tabIds'][$tabId]['displayWoItems']  = $displayWoItems;
     $this->indexBrowserTab['tabIds'][$tabId]['sum']             = 0;
     $this->indexBrowserTab['tabLabels'][$tabLabel]              = $tabId;
@@ -1640,8 +1653,6 @@ $this->pObj->dev_var_dump( $this->subpart, $this->subpartTab, $this->indexBrowse
       // Default class
     $class = 'tab-' . $piVar . ' tab-' . $key;
 
-//:TODO: Set $tab['active']
-
       // Selected tab
     if( ! empty ( $tab['active'] ) )
     {
@@ -1780,7 +1791,7 @@ $this->pObj->dev_var_dump( $this->subpart, $this->subpartTab, $this->indexBrowse
       $i = key( $arrTabs );
       prev( $arrTabs );
     }
-    while( $arrTabs[$i]['displayWoItems'] || $arrTabs[$i]['count'] < 1 );
+    while( $arrTabs[$i]['displayWoItems'] + $arrTabs[$i]['count'] < 1 );
       // DO WHILE : a tab should displayed items or a tab has a hit at least
 
       // RETURN : id of last visible tab
