@@ -1716,7 +1716,7 @@ $this->pObj->dev_var_dump( $markerArray );
                       (
                         $label,
                         $typolink,
-                        null,
+                        $this->pObj->piVars,
                         $this->pObj->boolCache
                       );
 
@@ -1724,7 +1724,7 @@ $this->pObj->dev_var_dump( $markerArray );
 $this->pObj->dev_var_dump(
                         $label,
                         $typolink,
-                        null,
+                        $this->pObj->piVars,
                         $this->pObj->boolCache,
 			tabLinkedLabel
  );
