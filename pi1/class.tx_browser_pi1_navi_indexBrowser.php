@@ -643,7 +643,7 @@ $this->pObj->dev_var_dump( $this->subpart, $this->subpartTab, $this->indexBrowse
       }
 
         // Get piVar
-      $piVar  = $this->zz_tabPiVar( $label );
+      $piVar  = $this->zz_setTabPiVars( $label );
         // Get class
       $class  = $this->zz_tabClass( $piVar, $lastTabId, $tab );
 
