@@ -1740,10 +1740,11 @@ if( $this->pObj->bool_accessByIP )
 
 
 /**
- * subpart_setIndexBrowser( ): 
+ * subpart_setIndexBrowser( ):  Replaces the indexbrowser subpart in the current content
+ *                              with the content from ->get_indexBrowser( )
  *
- * @return	array               $arr_return : Error message in case of an error
- * @version 3.9.8
+ * @return	array               $arr_return : Contains an error message in case of an error
+ * @version 3.9.12
  * @since 1.0.0
  */
   private function subpart_setIndexBrowser( )
@@ -1757,9 +1758,6 @@ if( $this->pObj->bool_accessByIP )
     $content        = $arr_return['data']['content'];
     $marker         = $this->pObj->objNavi->getMarkerIndexBrowser( );
     $this->content  = $this->pObj->cObj->substituteSubpart( $this->content, $marker, $content, true);
-//    $subpartIndexBrowser       = $this->pObj->cObj->substituteMarkerArray($subpartIndexBrowser, $markerArray);
-//    $markerIndexBrowserTabs = $this->getMarkerIndexBrowserTabs( );
-//    $subpartIndexBrowser       = $this->pObj->cObj->substituteSubpart($subpartIndexBrowser, $markerIndexBrowserTabs, $tabs, true);
 
     return;
   }

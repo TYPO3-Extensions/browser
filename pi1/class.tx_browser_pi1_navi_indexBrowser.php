@@ -138,6 +138,11 @@ class tx_browser_pi1_navi_indexBrowser
     // [Integer] number of the localisation mode
   var $int_localisation_mode  = null;
 
+    // [String] Subpart for the index browser
+  var $subpart    = null;
+    // [String] Subpart for a tab within the index browser
+  var $subpartTab = null;
+
 
 
 
@@ -222,7 +227,6 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Render the tabs
     $arr_return = $this->get_content( );
-$this->pObj->dev_var_dump( $this->indexBrowserTab );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -251,20 +255,57 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
  */
   private function get_content( )
   {
-      // Init and count chars
-//    $arr_return = $this->chars( );
-//    if( ! ( empty ( $arr_return ) ) )
-//    {
-//      return $arr_return;
-//    }
+    $marker           = $this->pObj->objNavi->getMarkerIndexBrowser( );
+    $this->subpart    = $this->pObj->cObj->getSubpart( $this->content, $marker );
+    $marker           = $this->pObj->objNavi->getMarkerIndexbrowserTabs( );
+    $this->subpartTab = $this->pObj->cObj->getSubpart( $this->subpart, $marker );
 
+      // Replace the subpart for the tabs
+    $arr_return = $this->subpart_setTabs( );
+    if( ! ( empty ( $arr_return ) ) )
+    {
+      return $arr_return;
+    }
+      // Replace the subpart for the tabs
 
-//    $arr_return['error']['status'] = true;
-//    $arr_return['error']['header'] = '<h1 style="color:red">Error index browser</h1>';
-//    $arr_return['error']['prompt'] = '<p style="color:red">No rows.</p>';
+      // Replace the whole subpart
+    $arr_return = $this->subpart_setContainer( );
+    if( ! ( empty ( $arr_return ) ) )
+    {
+      return $arr_return;
+    }
+      // Replace the whole subpart
 
     $arr_return['data']['content'] = 'Index browser';
+
     return $arr_return;
+  }
+
+
+
+/**
+ * subpart_setContainer( ):
+ *
+ * @return	boolean		true / false
+ * @version 3.9.12
+ * @since   3.9.9
+ */
+  private function subpart_setContainer( )
+  {
+  }
+
+
+
+/**
+ * subpart_setTabs( ):
+ *
+ * @return	boolean		true / false
+ * @version 3.9.12
+ * @since   3.9.9
+ */
+  private function subpart_setTabs( )
+  {
+$this->pObj->dev_var_dump( $this->subpart, $this->subpartTab, $this->indexBrowserTab );
   }
 
 
