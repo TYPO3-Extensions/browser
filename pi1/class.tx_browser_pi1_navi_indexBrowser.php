@@ -241,10 +241,21 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // RETURN : table is not the local table
 
+      // Backup $GLOBALS['TSFE']->id
+    $globalTsfeId = $GLOBALS['TSFE']->id;
+      // Setup $GLOBALS['TSFE']->id temporarily
+    if( ! empty( $this->pObj->objFlexform->int_viewsListPid ) )
+    {
+      $GLOBALS['TSFE']->id = $this->pObj->objFlexform->int_viewsListPid;
+    }
+      // Setup $GLOBALS['TSFE']->id temporarily
+      
       // Init the tabs
     $arr_return = $this->tabs_init( );
     if( $arr_return['error']['status'] )
     {
+        // Reset $GLOBALS['TSFE']->id
+      $GLOBALS['TSFE']->id = $globalTsfeId;
       return $arr_return;
     }
       // Init the tabs
@@ -253,18 +264,15 @@ class tx_browser_pi1_navi_indexBrowser
     $arr_return = $this->subpart( );
     if( $arr_return['error']['status'] )
     {
+        // Reset $GLOBALS['TSFE']->id
+      $GLOBALS['TSFE']->id = $globalTsfeId;
       return $arr_return;
     }
     //$arr_result['data']['content']
       // Render the tabs
 
-
-      // :TODO:
-      // Move $GLOBALS['TSFE']->id temporarily
-      // Get the index browser rows (uid, initialField)
-      // Count the hits per tab, prepaire the tabArray
-      // Build the index browser template
-
+      // Reset $GLOBALS['TSFE']->id
+    $GLOBALS['TSFE']->id = $globalTsfeId;
     return $arr_return;
   }
 

@@ -1627,7 +1627,18 @@ if( $this->pObj->bool_accessByIP )
       // Set index browser
       
       // Set mode selector
+
       // Set page browser
+    $arr_return = $this->subpart_setPageBrowser( );
+    if( $arr_return['error']['status'] )
+    {
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $content = $arr_return['error']['header'] . $arr_return['error']['prompt'];
+      return $content;
+    }
+      // Set page browser
+
   }
 
 
@@ -1763,6 +1774,39 @@ if( $this->pObj->bool_accessByIP )
     $this->content  = $this->pObj->cObj->substituteSubpart( $this->content, $marker, $content, true);
 
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'subpart_setIndexBrowser end' );
+    return;
+  }
+
+
+
+/**
+ * subpart_setPageBrowser( ):  Replaces the indexbrowser subpart in the current content
+ *                              with the content from ->get_indexBrowser( )
+ *
+ * @return	array               $arr_return : Contains an error message in case of an error
+ * @version 3.9.12
+ * @since 1.0.0
+ */
+  private function subpart_setPageBrowser( )
+  {
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'subpart_setPageBrowser begin' );
+
+    $arr_return = $this->pObj->objNaviPageBrowser->get( $this->content );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+
+    $content        = $arr_return['data']['content'];
+    $this->content  = $this->pObj->cObj->substituteSubpart
+                      (
+                        $this->content,
+                        '###PAGEBROWSER###',
+                        $content,
+                        true
+                      );
+
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'subpart_setPageBrowser end' );
     return;
   }
 

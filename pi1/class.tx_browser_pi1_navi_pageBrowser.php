@@ -166,6 +166,189 @@ class tx_browser_pi1_navi_pageBrowser
  */
   public function get( $content )
   {
+    $arr_return['data']['content'] = $content;
+
+      // RETURN : pagebrowser shouldn't displayed
+    if( ! $this->pObj->objFlexform->bool_pageBrowser )
+    {
+      $arr_return['data']['content'] = null;
+      return $arr_return;
+    }
+      // RETURN : pagebrowser shouldn't displayed
+
+      // RETURN : firstVisit but emptyListByStart
+    if( $this->pObj->boolFirstVisit && $this->pObj->objFlexform->bool_emptyAtStart )
+    {
+      $arr_return['data']['content'] = null;
+      return $arr_return;
+    }
+      // RETURN : firstVisit but emptyListByStart
+
+//:TODO: Anzahl Datensaetze
+return $arr_return;
+
+      // RETURN : the sum of records is less than the sum of records per page
+      // RETURN : the sum of records is less than the sum of records per page
+    if (!is_array($rows) || (is_array($rows) && count($rows) < 1))
+    {
+      $template = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSER###', '', true);
+      $arr_return['data']['template'] = $template;
+      return $arr_return;
+    }
+      // RETURN if we have any row
+      //
+      //
+      //
+      // Haben wir einen Index Browser ?
+    $int_currTab    = $arr_data['tabIds']['active'];
+    $arr_currRowIds = $arr_data['indexBrowserTabArray'][$int_currTab]['keyRow'];
+
+    $template       = $arr_data['template'];
+    $rows           = $arr_data['rows'];
+
+    $arr_return['data']['template'] = $template;
+    $arr_return['data']['rows']     = $rows;
+
+
+
+
+
+
+
+
+
+
+
+
+      // Backup $GLOBALS['TSFE']->id
+    $globalTsfeId = $GLOBALS['TSFE']->id;
+      // Setup $GLOBALS['TSFE']->id temporarily
+    if( ! empty( $this->pObj->objFlexform->int_viewsListPid ) )
+    {
+      $GLOBALS['TSFE']->id = $this->pObj->objFlexform->int_viewsListPid;
+    }
+      // Setup $GLOBALS['TSFE']->id temporarily
+
+
+
+
+
+
+      ///////////////////////////////////////////////
+      //
+      // Change pagebrowser in case of limit
+
+    if($this->conf_view['limit'])
+    {
+      list($start, $limit) = explode(',', $this->conf_view['limit']);
+      if($limit < 1) $limit = 20;
+      $this->conf['navigation.']['pageBrowser.']['results_at_a_time'] = trim($limit);
+
+        // DRS - Development Reporting System
+      if ($this->pObj->b_drs_templating)
+      {
+        t3lib_div::devlog('[INFO/TEMPLATING] pageBrowser.result_at_a_time is overriden by limit: '.$limit.'.',  $this->pObj->extKey, 0);
+      }
+        // DRS - Development Reporting System
+    }
+      // Change pagebrowser in case of limit
+
+
+
+      ///////////////////////////////////////////////
+      //
+      // Init piBase for pagebrowser
+
+    $this->pObj->internal['res_count']          = count($rows);
+    $this->pObj->internal['maxPages']           = $this->conf['navigation.']['pageBrowser.']['maxPages'];
+    $this->pObj->internal['results_at_a_time']  = $this->conf['navigation.']['pageBrowser.']['results_at_a_time'];
+    $this->pObj->internal['showRange']          = $this->conf['navigation.']['pageBrowser.']['showRange'];
+    $this->pObj->internal['dontLinkActivePage'] = $this->conf['navigation.']['pageBrowser.']['dontLinkActivePage'];
+    $this->pObj->internal['showFirstLast']      = $this->conf['navigation.']['pageBrowser.']['showFirstLast'];
+    $this->pObj->internal['pagefloat']          = $this->conf['navigation.']['pageBrowser.']['pagefloat'];
+      // Init piBase for pagebrowser
+
+
+
+      ///////////////////////////////////////////////
+      //
+      // Get the wrapped pagebrowser
+
+    $pb = $this->conf['navigation.']['pageBrowser.'];
+    $res_items  = $this->pObj->pi_list_browseresults
+                  (
+                    $pb['showResultCount'], $pb['tableParams'], $pb['wrap.'],$pb['pointer'],$pb['hscText']
+                  );
+      // Get the wrapped pagebrowser
+
+
+
+      ///////////////////////////////////////////////
+      //
+      // Build the template
+
+    $markerArray                            = $this->pObj->objWrapper->constant_markers();
+    $markerArray['###RESULT_AND_ITEMS###']  = $res_items;
+    $markerArray['###MODE###']              = $this->mode;
+    $markerArray['###VIEW###']              = $this->view;
+    $subpart      = $this->pObj->cObj->getSubpart($template, '###PAGEBROWSER###');
+    $pageBrowser  = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
+    $template     = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSER###', $pageBrowser, true);
+      // Build the template
+
+
+
+      ///////////////////////////////////////////////
+      //
+      // Process the rows
+
+    $int_start  = $this->pObj->piVars[$pb['pointer']] * $pb['results_at_a_time'];
+    $int_amount = $pb['results_at_a_time'];
+
+    $int_counter = 0;
+    $int_remove_start = $int_start;
+    $int_remove_end   = $int_start + $int_amount;
+    $drs_rows_before  = count($rows);
+    foreach ($rows as $row => $elements)
+    {
+      if ($int_counter < $int_remove_start || $int_counter >= $int_remove_end)
+      {
+        unset($rows[$row]);
+      }
+      $int_counter++;
+    }
+    $drs_rows_after = count($rows);
+      // Process the rows
+
+
+
+      ///////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
+
+    if ($drs_rows_after != $drs_rows_before)
+    {
+      $removed_rows = $drs_rows_before - $drs_rows_after;
+      if ($this->pObj->b_drs_templating)
+      {
+        t3lib_div::devlog('[INFO/TEMPLATING] The pagebrowser has #'.$removed_rows.' rows removed.',  $this->pObj->extKey, 0);
+      }
+    }
+      // DRS - Development Reporting System
+
+
+
+      ///////////////////////////////////////////////
+      //
+      // RETURN the result
+
+    $arr_return['data']['template'] = $template;
+    $arr_return['data']['rows']     = $rows;
+    $GLOBALS['TSFE']->id            = $globalTsfeId; // #9458
+    return $arr_return;
+      // RETURN the result
+
+##############################################################################
     $this->content                  = $content;
     $arr_return['data']['content']  = $content;
 
