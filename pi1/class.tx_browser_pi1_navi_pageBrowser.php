@@ -130,6 +130,10 @@ class tx_browser_pi1_navi_pageBrowser
     }
       // RETURN : firstVisit but emptyListByStart
 
+
+    $this->pObj->objSql->init( );
+    $this->pObj->dev_var_dump( $this->pObj->objSql->sqlStatements );
+
 //:TODO: Anzahl Datensaetze
 return $arr_return;
 
