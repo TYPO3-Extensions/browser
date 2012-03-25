@@ -1706,10 +1706,7 @@ if( $this->pObj->bool_accessByIP )
     $arr_return = $this->subpart_setSearchbox( );
     if( $arr_return['error']['status'] )
     {
-        // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-      $content = $arr_return['error']['header'] . $arr_return['error']['prompt'];
-      return $content;
+      return $arr_return;
     }
       // Set search box and filter
 
@@ -1717,10 +1714,7 @@ if( $this->pObj->bool_accessByIP )
     $arr_return = $this->subpart_setIndexBrowser( );
     if( $arr_return['error']['status'] )
     {
-        // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-      $content = $arr_return['error']['header'] . $arr_return['error']['prompt'];
-      return $content;
+      return $arr_return;
     }
       // Set index browser
       
@@ -1730,13 +1724,11 @@ if( $this->pObj->bool_accessByIP )
     $arr_return = $this->subpart_setPageBrowser( );
     if( $arr_return['error']['status'] )
     {
-        // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-      $content = $arr_return['error']['header'] . $arr_return['error']['prompt'];
-      return $content;
+      return $arr_return;
     }
       // Set page browser
 
+    return;
   }
 
 
