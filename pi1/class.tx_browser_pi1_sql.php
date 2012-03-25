@@ -87,7 +87,7 @@ class tx_browser_pi1_sql
  * @param	object		The parent object
  * @return	void
  */
-  protected function __construct($parentObj)
+  public function __construct($parentObj)
   {
     $this->pObj = $parentObj;
   }
