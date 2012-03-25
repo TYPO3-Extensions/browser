@@ -1624,6 +1624,10 @@ class tx_browser_pi1 extends tslib_pibase {
     require_once('class.tx_browser_pi1_socialmedia.php');
     $this->objSocialmedia = new tx_browser_pi1_socialmedia( $this );
 
+      // Class with sql methods (engine 4.x)
+    require_once('class.tx_browser_pi1_sql.php');
+    $this->objSql = new tx_browser_pi1_sql( $this );
+
       // Class with sql methods, if user defined only a SELECT
     require_once('class.tx_browser_pi1_sql_auto.php');
     $this->objSqlAut = new tx_browser_pi1_sql_auto( $this );
@@ -1635,10 +1639,6 @@ class tx_browser_pi1 extends tslib_pibase {
       // Class with sql methods, if user defined a SELECT, FROM, WHERE and an array JOINS
     require_once('class.tx_browser_pi1_sql_manual.php');
     $this->objSqlMan = new tx_browser_pi1_sql_manual( $this );
-
-      // Class with sql methods for SQL querying
-    require_once('class.tx_browser_pi1_sql.php');
-    $this->objSql = new tx_browser_pi1_sql( $this );
 
       // Class with methods for statistics requirement
     require_once('class.tx_browser_pi1_statistics.php');

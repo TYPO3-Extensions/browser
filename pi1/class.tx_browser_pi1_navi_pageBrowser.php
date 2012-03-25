@@ -41,61 +41,6 @@
  *  100: class tx_browser_pi1_navi_pageBrowser
  *  188:     public function __construct($parentObj)
  *
- *              SECTION: Main
- *  220:     public function get( $content )
- *
- *              SECTION: Requirements
- *  297:     private function localisation_init( )
- *  349:     private function requirements_check( )
- *  417:     private function tableField_check( )
- *  467:     private function tableField_init( )
- *
- *              SECTION: Subparts
- *  556:     private function subpart( )
- *  602:     private function subpart_setContainer( )
- *  623:     private function subpart_setTabs( )
- *
- *              SECTION: Tabs
- *  721:     private function tabs_init( )
- *  788:     private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
- *  840:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
- *  899:     private function tabs_initSpecialChars( $arrCsvAttributes )
- *
- *              SECTION: Count chars
- *  958:     private function count_chars( )
- *  998:     private function count_chars_addSumToTab( $res )
- * 1050:     private function count_chars_resSqlCount( $currSqlCharset )
- *
- *              SECTION: Count special chars
- * 1171:     private function count_specialChars( )
- * 1210:     private function count_specialChars_addSum( $row )
- * 1260:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
- * 1351:     private function count_specialChars_setSqlFindInSet( $row )
- * 1377:     private function count_specialChars_setSqlLength( )
- *
- *              SECTION: SQL charset
- * 1449:     private function sqlCharsetGet( )
- * 1482:     private function sqlCharsetSet( $sqlCharset )
- *
- *              SECTION: Downward compatibility
- * 1522:     private function getMarkerIndexbrowser( )
- * 1568:     private function getMarkerIndexbrowserTabs( )
- *
- *              SECTION: Helper
- * 1626:     private function zz_specCharsToASCII( $string )
- * 1646:     private function zz_tabClass( $lastTabId, $tab, $key )
- * 1679:     private function zz_tabDefaultLabel( )
- * 1697:     private function zz_tabDefaultLink( )
- * 1740:     private function zz_tabLinkLabel( $tab )
- * 1782:     private function zz_setTabPiVars( $labelAscii, $label )
- * 1812:     private function zz_setTabPiVarsDefaultTab( $label )
- * 1844:     private function zz_setTabSlected( $tabId )
- * 1894:     private function zz_tabLastId( )
- * 1926:     private function zz_tabTitle( $sum )
- *
- * TOTAL FUNCTIONS: 35
- * (This index is automatically created/updated by the extension "extdeveval")
- *
  */
 class tx_browser_pi1_navi_pageBrowser
 {
