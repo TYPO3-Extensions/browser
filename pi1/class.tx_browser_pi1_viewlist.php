@@ -1099,6 +1099,9 @@ class tx_browser_pi1_viewlist
 
 
 
+    $this->sql_4x( );
+
+
       //////////////////////////////////////////////////////////////////////
       //
       // csv export versus list view
@@ -1433,6 +1436,102 @@ if( $this->pObj->bool_accessByIP )
 
     $this->res = $res;
     return false;
+
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * sql( ): Building the SQL query
+ *
+ * @return	array
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function sql_4x( )
+  {
+    $conf_view = $this->conf_view;
+
+
+      // Set the globals csvSelect, csvOrderBy and arrLocalTable
+    $arr_result = $this->pObj->objSqlFun->global_all( );
+    if( $arr_result['error']['status'] )
+    {
+      return $arr_result;
+    }
+    unset( $arr_result );
+      // Set global SQL values
+
+      // SQL query array
+    $arr_result = $this->sql_getQueryArray( );
+    if( $arr_result['error']['status'] )
+    {
+      return $arr_result;
+    }
+
+    $select   = $arr_result['data']['select'];
+    $from     = $arr_result['data']['from'];
+    $where    = $arr_result['data']['where'];
+      // #33892, 120214, dwildt+
+    $groupBy  = null;
+    $orderBy  = $arr_result['data']['orderBy'];
+      // #33892, 120214, dwildt+
+    $limit    = null;
+    $union    = $arr_result['data']['union'];
+    unset( $arr_result );
+      // SQL query array
+
+
+
+      // Set ORDER BY to false - we like to order by PHP
+//:TODO: 120214, performance: order by aktivieren
+    $orderBy = false;
+      // #9917: Selecting a random sample from a set of rows
+    if( $conf_view['random'] == 1 )
+    {
+      $orderBy = 'rand( )';
+    }
+      // Set ORDER BY to false - we like to order by PHP
+
+
+
+      // SQL query
+    $this->bool_union = false;
+      // Query: union case
+    if( $union )
+    {
+        // We have a UNION. Maybe because there are synonyms.
+      $query   = $union;
+      $this->bool_union = true;
+    }
+      // Query: union case
+
+      // Query: default case
+    if( ! $union )
+    {
+      $query = $GLOBALS['TYPO3_DB']->SELECTquery
+                                      (
+                                        $select,
+                                        $from,
+                                        $where,
+                                        $groupBy,
+                                        $orderBy,
+                                        $limit,
+                                        $uidIndexField=""
+                                      );
+    }
+      // Query: default case
+      // SQL query
+
+
+$this->pObj->dev_var_dump( $query );
+    return;
 
   }
 
