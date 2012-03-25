@@ -1531,6 +1531,15 @@ if( $this->pObj->bool_accessByIP )
 
 
 $this->pObj->dev_var_dump( $query );
+$this->pObj->dev_var_dump(
+                                        $select,
+                                        $from,
+                                        $where,
+                                        $groupBy,
+                                        $orderBy,
+                                        $limit,
+                                        $uidIndexField=""
+                                      );
     return;
 
   }

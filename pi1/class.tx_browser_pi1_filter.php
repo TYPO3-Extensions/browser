@@ -2588,8 +2588,7 @@ class tx_browser_pi1_filter {
     }
       // Get FROM statement
       // SWITCH localTable
-$this->pObj->objFilter->andWhere_filter( );
-$this->pObj->dev_var_dump( $this->pObj->objSqlAut->get_joins( ), $this->pObj->objSqlAut->whereClause( ) );
+      
       // RETURN FROM statement
     return $from;
   }
