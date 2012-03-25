@@ -120,6 +120,11 @@
   * #29186: Empty rows are tested with ==null instead of empty( )
   * #29323: method ajaxifyOrderBy is undefined. Affected file: res/js/tx_browser_pi1.js
 
+3.7.7
+  120325
+  Bugfix
+  * #35220: $cleanedArrKeywd = array_unique( (array) $cleanedArrKeywd )
+
 3.7.5
   120320
   New Feature

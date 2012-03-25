@@ -203,7 +203,7 @@ class tx_browser_pi1_seo
               $cleanedArrKeywd[$key] = trim($value);
             }
           }
-            // 110914, dwildt
+            // #35219, 110914, dwildt
           //$cleanedArrKeywd = array_unique($cleanedArrKeywd);
           $cleanedArrKeywd = array_unique( (array) $cleanedArrKeywd );
           $metaKeywd       = implode(',', $cleanedArrKeywd);
