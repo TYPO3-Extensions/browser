@@ -199,12 +199,39 @@ class tx_browser_pi1_sql
 
 
 /**
- * statementsSelect( ): 
+ * statementsSelect( ):
  *
  * @version 3.9.12
  * @since   3.9.12
  */
   private function statementsSelect( )
+  {
+  }
+
+
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * Statements FROM
+    *
+    **********************************************/
+
+
+
+/**
+ * statementsFrom( ):
+ *
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function statementsFrom( )
   {
   }
 
