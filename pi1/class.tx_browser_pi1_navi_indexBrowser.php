@@ -1561,7 +1561,12 @@ class tx_browser_pi1_navi_indexBrowser
         $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
         break;
       default:
-        $where    = $where . $this->pObj->cObj->enableFields( $table );
+        $andEnableFields = $this->pObj->cObj->enableFields( $table );
+        if( $andEnableFields )
+        {
+          $where = "1";
+        }
+        $where    = $where . $andEnableFields;
         if( empty ( $where ) )
         {
           $where = "1";
