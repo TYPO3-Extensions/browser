@@ -234,6 +234,7 @@ class tx_browser_pi1_navi_pageBrowser
     $subpart      = $this->pObj->cObj->getSubpart($template, '###PAGEBROWSER###');
     $pageBrowser  = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
 
+$GLOBALS['TSFE']->id            = $globalTsfeId; // #9458
 $arr_return['data']['content']  = $pageBrowser;
 return $arr_return;
 
