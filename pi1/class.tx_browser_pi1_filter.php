@@ -2598,7 +2598,7 @@ class tx_browser_pi1_filter {
  *              a local table or a foreign table.
  *
  * @return	string		$from : FROM statement without a FROM
- * @version 3.9.9
+ * @version 3.9.12
  * @since   3.9.9
  */
   private function sql_from( )
@@ -2606,27 +2606,36 @@ class tx_browser_pi1_filter {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 $this->pObj->dev_var_dump( $this->pObj->objSqlAut->get_joins( ), $this->pObj->objSql->sql_query_statements );
-      // SWITCH localTable
-      // Get FROM statement
-    switch( true )
+      // RETURN : current table is a foreign table
+    if( $this->pObj->localTable != $table )
     {
-      case( $this->pObj->localTable != $table ):
-          // foreign table
-        $from = $this->pObj->objSql->sql_query_statements['rows']['from'];
-        break;
-      case( $this->pObj->localTable == $table ):
-      default:
-          // local table
-        $from = $this->pObj->objSql->sql_query_statements['rows']['from'];
-        // 120326, dwildt-
-        //$from = $table;
-        break;
+      $from = $this->pObj->objSql->sql_query_statements['rows']['from'];
+      return $from;
     }
-      // Get FROM statement
-      // SWITCH localTable
-      
-      // RETURN FROM statement
-    return $from;
+      // RETURN : current table is a foreign table
+
+      // Flexform configuration
+    $conf_flexform = $this->pObj->objFlexform->sheet_viewList_total_hits;
+
+      // RETURN IF : filters are controlling themeselves
+    if( $conf_flexform == 'controlled' )
+    {
+      $from = $this->pObj->objSql->sql_query_statements['rows']['from'];
+      return $from;
+    }
+      // RETURN IF : filters are controlling themeselves
+
+      // RETURN IF : filters are independent
+    if( $conf_flexform == 'independent' )
+    {
+      $from = $table;
+      return $from;
+    }
+      // RETURN IF : filters are independent
+    
+      // DIE : undefined value
+    $prompt = __METHOD__ . ' (' . __LINE__ . '): undefined value: "' . $conf_flexform . '".';
+    die( $prompt );
   }
 
 
@@ -2841,20 +2850,26 @@ $this->pObj->dev_var_dump( $this->pObj->objSqlAut->get_joins( ), $this->pObj->ob
  */
   private function sql_whereAnd_Filter( )
   {
+      // Flexform configuration
     $conf_flexform = $this->pObj->objFlexform->sheet_viewList_total_hits;
 
+      // RETURN IF : filters are independent
     if( $conf_flexform == 'independent' )
     {
       return false;
     }
+      // RETURN IF : filters are independent
+
+      // RETURN IF : filters are controlling themeselves
     if( $conf_flexform == 'controlled' )
     {
       return $this->andWhereFilter;
     }
+      // RETURN IF : filters are controlling themeselves
 
+      // DIE : undefined value
     $prompt = __METHOD__ . ' (' . __LINE__ . '): undefined value: "' . $conf_flexform . '".';
     die( $prompt );
-
   }
 
 
