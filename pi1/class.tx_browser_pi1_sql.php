@@ -150,7 +150,7 @@ class tx_browser_pi1_sql
     {
       return $arr_result;
     }
-$this->pObj->dev_var_dump( $arr_result );
+
     $this->sql_query_statements['rows'] = $arr_result['data'];
     unset( $arr_result );
       // SQL query array

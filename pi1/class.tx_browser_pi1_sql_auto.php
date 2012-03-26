@@ -1670,15 +1670,15 @@ class tx_browser_pi1_sql_auto
     // Add localisation fields
 
 
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // Is there a andWhere statement from the filter class?
-    if (is_array($this->pObj->arr_andWhereFilter))
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Is there a andWhere statement from the filter class?
+    if ( is_array( $this->pObj->arr_andWhereFilter ) )
     {
       $str_andFilter  = implode(" AND ", $this->pObj->arr_andWhereFilter);
       $whereClause    = $whereClause." AND ".$str_andFilter;
     }
-    // Is there a andWhere statement from the filter class?
+      // Is there a andWhere statement from the filter class?
 
 
     //////////////////////////////////////////////////////////////////////////

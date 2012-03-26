@@ -194,6 +194,8 @@ class tx_browser_pi1_filter {
   var $markerArray            = null;
     // [Array] tables with the fields, which are used in the SQL query
   var $sql_filterFields       = null;
+    // [String] andWhere statement, if a filter is set
+  var $andWhereFilter     = null;
 
     // [Array] Rows of the current filter
   var $rows = null;
@@ -369,6 +371,9 @@ class tx_browser_pi1_filter {
       // Init calendar area
     $this->init_calendarArea( );
 
+      // Init class var $andWhereFilter
+    $this->init_andWhereFilter( );
+
       // Set class var markerArray
     $this->set_markerArray( );
 
@@ -376,6 +381,36 @@ class tx_browser_pi1_filter {
     $this->cObjData_init( );
 
     return;
+  }
+
+
+
+/**
+ * init_andWhereFilter( ):  
+ *
+ * @return	void
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function init_andWhereFilter( )
+  {
+
+    if( ! ( $this->andWhereFilter === null ) )
+    {
+$this->pObj->dev_var_dump( $this->andWhereFilter );
+      return $this->andWhereFilter;
+    }
+
+    $arrAndWhere = $this->pObj->objFilter->andWhere_filter( );
+    $strAndWhere = implode(" AND ", ( array ) $arrAndWhere );
+
+    if( ! $strAndWhere )
+    {
+      $this->andWhereFilter = false;
+    }
+
+    $this->andWhereFilter = " AND ". $strAndWhere;
+$this->pObj->dev_var_dump( $this->andWhereFilter );
   }
 
 
@@ -2738,6 +2773,7 @@ class tx_browser_pi1_filter {
     $where  = '1 ' .
               $this->sql_whereAnd_pidList( ) .
               $this->sql_whereAnd_enableFields( ) .
+              $this->sql_whereAnd_Filter( ) .
               $this->sql_whereAnd_fromTS( ) .
               $this->sql_whereAnd_sysLanguage( );
       // Get WHERE statement
@@ -2745,12 +2781,6 @@ class tx_browser_pi1_filter {
       // RETURN WHERE statement without a WHERE
     return $where;
   }
-
-
-
-
-
-
 
 
 
@@ -2765,8 +2795,9 @@ class tx_browser_pi1_filter {
   private function sql_whereWiHits( )
   {
       // Get WHERE statement
-    $where = $this->pObj->objSql->sql_query_statements['rows']['where'] .
-             $this->sql_whereAnd_fromTS( );
+    $where =  $this->pObj->objSql->sql_query_statements['rows']['where'] .
+              $this->sql_whereAnd_Filter( ) .
+              $this->sql_whereAnd_fromTS( );
 
       // RETURN WHERE statement without a WHERE
     return $where;
@@ -2800,9 +2831,30 @@ class tx_browser_pi1_filter {
 
 
 
+/**
+ * sql_whereAnd_Filter( ):  
+ *
+ * @return	string		
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function sql_whereAnd_Filter( )
+  {
+    $conf_flexform = $this->pObj->objFlexform->sheet_viewList_total_hits;
 
+    if( $conf_flexform == 'independent' )
+    {
+      return false;
+    }
+    if( $conf_flexform == 'controlled' )
+    {
+      return $this->andWhereFilter;
+    }
 
+    $prompt = __METHOD__ . ' (' . __LINE__ . '): undefined value: "' . $conf_flexform . '".';
+    die( $prompt );
 
+  }
 
 
 
