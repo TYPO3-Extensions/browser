@@ -437,7 +437,7 @@ die( $query );
     switch( true )
     {
       case( isset( $this->pObj->piVars['sword'] ) ):
-      case( $this->pObj->objFltr4x->var_aFilterIsSelected( ) ):
+      case( $this->pObj->objNaviIndexBrowser->var_aFilterIsSelected( ) ):
         $from = $this->pObj->objSql->sql_query_statements['rows']['from'];
         break;
       default:
@@ -464,7 +464,7 @@ die( $query );
     switch( true )
     {
       case( isset( $this->pObj->piVars['sword'] ) ):
-      case( $this->pObj->objFltr4x->var_aFilterIsSelected( ) ):
+      case( $this->pObj->objNaviIndexBrowser->var_aFilterIsSelected( ) ):
         $where  = $this->pObj->objSql->sql_query_statements['rows']['where'];
         $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
         break;
