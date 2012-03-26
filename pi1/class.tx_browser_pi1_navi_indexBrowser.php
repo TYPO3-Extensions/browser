@@ -1106,6 +1106,7 @@ class tx_browser_pi1_navi_indexBrowser
         $where = $strFindInSet;
       }
     }
+    $where    = $where . $this->pObj->objFilter->andWhereFilter;
 //$this->pObj->dev_var_dump( $from, $where, $this->pObj->objSql->sql_query_statements['rows'] );
 
     $groupBy  = "LEFT ( " . $tableField . ", 1 )";
@@ -1306,8 +1307,10 @@ class tx_browser_pi1_navi_indexBrowser
 //    {
 //      $where  = $where . " AND " . $localWhere;
 //    }
-    $from   = $this->pObj->objSql->sql_query_statements['rows']['from'];
-    $where  = $this->pObj->objSql->sql_query_statements['rows']['where'];
+    $from     = $this->pObj->objSql->sql_query_statements['rows']['from'];
+    $where    = $this->pObj->objSql->sql_query_statements['rows']['where'];
+    $where    = $where . " AND (" . implode ( " OR ", $arrfindInSet ) . ")";
+    $where    = $where . $this->pObj->objFilter->andWhereFilter;
     $groupBy  = "LEFT ( " . $tableField . ", " . $length . " )";
     $orderBy  = "LEFT ( " . $tableField . ", " . $length . " )";
     $limit    = null;
