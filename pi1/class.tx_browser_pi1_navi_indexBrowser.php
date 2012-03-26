@@ -2102,7 +2102,7 @@ class tx_browser_pi1_navi_indexBrowser
       $id = key( $arrTabs );
 
         // DIE : undefined error - key doesn't exist
-      if( isset ( $arrTabs[$id]) )
+      if( ! isset ( $arrTabs[$id]) )
       {
         $prompt = __METHOD__ . ' (' . __LINE__ . ') undefined key for index browser tabs!';
         die( $prompt );
