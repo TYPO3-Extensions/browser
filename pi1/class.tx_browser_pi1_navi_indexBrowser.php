@@ -2104,10 +2104,11 @@ class tx_browser_pi1_navi_indexBrowser
       {
         case( $arrTabs[$id]['displayWoItems'] ):
         case( $arrTabs[$id]['count'] > 0 ):
-          break;
+          break 2;
         default:
 
       }
+      $i++;
       prev( $arrTabs );
     }
     while( $i < $iMax );
