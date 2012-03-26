@@ -1069,8 +1069,8 @@ class tx_browser_pi1_navi_indexBrowser
       // DRS
 
       // Get current table.field of the index browser
-    $tableField           = explode( '.', $this->indexBrowserTableField);
-    list( $table, $field) = $tableField;
+    $tableField           = $this->indexBrowserTableField;
+    list( $table, $field) = explode( '.', $tableField );
 
     $strFindInSet = null;
     foreach( $this->findInSet as $length => $arrfindInSet )
