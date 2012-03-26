@@ -2605,7 +2605,7 @@ class tx_browser_pi1_filter {
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
-
+$this->pObj->dev_var_dump( $this->pObj->objSqlAut->get_joins( ), $this->pObj->objSql->sql_query_statements );
       // SWITCH localTable
       // Get FROM statement
     switch( true )
