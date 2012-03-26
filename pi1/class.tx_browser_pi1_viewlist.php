@@ -2,7 +2,7 @@
  /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -1718,8 +1718,6 @@ if( $this->pObj->bool_accessByIP )
     }
       // Set index browser
       
-      // Set mode selector
-
       // Set page browser
     $arr_return = $this->subpart_setPageBrowser( );
     if( $arr_return['error']['status'] )
@@ -1727,6 +1725,14 @@ if( $this->pObj->bool_accessByIP )
       return $arr_return;
     }
       // Set page browser
+
+      // Set mode selector
+    $arr_return = $this->subpart_setModeSelector( );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+      // Set mode selector
 
     return;
   }
@@ -1864,6 +1870,50 @@ if( $this->pObj->bool_accessByIP )
     $this->content  = $this->pObj->cObj->substituteSubpart( $this->content, $marker, $content, true);
 
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'subpart_setIndexBrowser end' );
+    return;
+  }
+
+
+
+/**
+ * subpart_setModeSelector( ):  Replaces the indexbrowser subpart in the current content
+ *                              with the content from ->get_indexBrowser( )
+ *
+ * @return	array               $arr_return : Contains an error message in case of an error
+ * @version 3.9.12
+ * @since 1.0.0
+ */
+  private function subpart_setModeSelector( )
+  {
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
+      // Get the mode selector content
+    $arr_return = $this->pObj->objNaviModeSelector->get( $this->content );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+      // Get the mode selector content
+    $content = $arr_return['data']['markerArray'];
+
+      // Set marker the array
+    $markerArray                = $this->pObj->objWrapper->constant_markers( );
+    $markerArray['###MODE###']  = $this->mode;
+    $markerArray['###VIEW###']  = $this->view;
+      // Set marker the array
+
+    $modeSelector   = $this->pObj->cObj->getSubpart( $this->content, '###MODESELECTOR###' );
+    $modeSelector   = $this->pObj->cObj->substituteMarkerArray( $modeSelector, $markerArray );
+    $modeSelector   = $this->pObj->cObj->substituteSubpart
+                      (
+                        $modeSelector, '###MODESELECTORTABS###', $content, true
+                      );
+    $this->content  = $this->pObj->cObj->substituteSubpart
+                      (
+                        $this->content, '###MODESELECTOR###', $modeSelector, true
+                      );
+
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
     return;
   }
 

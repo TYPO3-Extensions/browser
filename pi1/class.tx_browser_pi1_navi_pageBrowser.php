@@ -54,7 +54,7 @@
  *  421:     private function sqlStatement_where( $table )
  *
  *              SECTION: TypoScript
- *  475:     public function tsResultsAtATime( )
+ *  475:     private function tsResultsAtATime( )
  *
  * TOTAL FUNCTIONS: 8
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -132,7 +132,7 @@ class tx_browser_pi1_navi_pageBrowser
  * @param	string		$content    : current content
  * @return	array		$arr_return : Contains null or the page browser
  * @version 3.9.12
- * @since   3.9.9
+ * @since   3.9.12
  */
   public function get( $content )
   {
@@ -468,11 +468,10 @@ class tx_browser_pi1_navi_pageBrowser
  * tsResultsAtATime( ): Override the TypoScript property results_at_a_time, if
  *                      the current view has a limit.
  *
- * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
-  public function tsResultsAtATime( )
+  private function tsResultsAtATime( )
   {
       // RETURN : current view hasn't any limit
     if( empty( $this->conf_view['limit'] ) )
