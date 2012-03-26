@@ -2092,14 +2092,24 @@ class tx_browser_pi1_navi_indexBrowser
       // Get last tab
     end( $arrTabs );
 
-      // DO WHILE : a tab should displayed items or a tab has a hit at least
+      // Security counter
     $i    = 0;
     $iMax = 1000;
+      // DO WHILE : a tab should displayed without items or a tab has a hit at least
     do
     {
+        // Get key
       $id = key( $arrTabs );
 
-        //
+        // DIE : undefined error - key doesn't exist
+      if( isset ( $arrTabs[$id]) )
+      {
+        $prompt = __METHOD__ . ' (' . __LINE__ . ') undefined key for index browser tabs!';
+        die( $prompt );
+      }
+        // DIE : undefined error - key doesn't exist
+
+        // SWITCH display without items or one item at least
       switch( true )
       {
         case( $arrTabs[$id]['displayWoItems'] ):
@@ -2108,11 +2118,15 @@ class tx_browser_pi1_navi_indexBrowser
         default:
 
       }
-      $i++;
+        // SWITCH display without items or one item at least
+
+        // Go to the rpevious tab
       prev( $arrTabs );
+        // Security counter
+      $i++;
     }
     while( $i < $iMax );
-      // DO WHILE : a tab should displayed items or a tab has a hit at least
+      // DO WHILE : a tab should displayed without items or a tab has a hit at least
 
       // RETURN : id of last visible tab
     return $id;
