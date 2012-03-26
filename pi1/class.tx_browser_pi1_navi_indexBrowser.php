@@ -38,62 +38,70 @@
  *
  *
  *
- *  100: class tx_browser_pi1_navi_indexBrowser
- *  188:     public function __construct($parentObj)
+ *  108: class tx_browser_pi1_navi_indexBrowser
+ *  199:     public function __construct($parentObj)
  *
  *              SECTION: Main
- *  220:     public function get( $content )
+ *  231:     public function get( $content )
  *
  *              SECTION: Requirements
- *  297:     private function localisation_init( )
- *  349:     private function requirements_check( )
- *  417:     private function tableField_check( )
- *  467:     private function tableField_init( )
+ *  313:     private function localisation_init( )
+ *  365:     private function requirements_check( )
+ *  442:     private function tableField_check( )
+ *  492:     private function tableField_init( )
  *
  *              SECTION: Subparts
- *  556:     private function subpart( )
- *  602:     private function subpart_setContainer( )
- *  623:     private function subpart_setTabs( )
+ *  581:     private function subpart( )
+ *  627:     private function subpart_setContainer( )
+ *  648:     private function subpart_setTabs( )
  *
  *              SECTION: Tabs
- *  721:     private function tabs_init( )
- *  788:     private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
- *  840:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
- *  899:     private function tabs_initSpecialChars( $arrCsvAttributes )
+ *  746:     private function tabs_init( )
+ *  813:     private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
+ *  865:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+ *  924:     private function tabs_initSpecialChars( $arrCsvAttributes )
  *
  *              SECTION: Count chars
- *  958:     private function count_chars( )
- *  998:     private function count_chars_addSumToTab( $res )
- * 1050:     private function count_chars_resSqlCount( $currSqlCharset )
+ *  983:     private function count_chars( )
+ * 1023:     private function count_chars_addSumToTab( $res )
+ * 1075:     private function count_chars_resSqlCount( $currSqlCharset )
  *
  *              SECTION: Count special chars
- * 1171:     private function count_specialChars( )
- * 1210:     private function count_specialChars_addSum( $row )
- * 1260:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
- * 1351:     private function count_specialChars_setSqlFindInSet( $row )
- * 1377:     private function count_specialChars_setSqlLength( )
+ * 1188:     private function count_specialChars( )
+ * 1227:     private function count_specialChars_addSum( $row )
+ * 1277:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
+ * 1364:     private function count_specialChars_setSqlFindInSet( $row )
+ * 1391:     private function count_specialChars_setSqlLength( )
  *
  *              SECTION: SQL charset
- * 1449:     private function sqlCharsetGet( )
- * 1482:     private function sqlCharsetSet( $sqlCharset )
+ * 1463:     private function sqlCharsetGet( )
+ * 1496:     private function sqlCharsetSet( $sqlCharset )
+ *
+ *              SECTION: SQL statements
+ * 1533:     private function sqlStatement_from( $table )
+ * 1560:     private function sqlStatement_where( $table, $andWhereFindInSet )
+ * 1604:     private function sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet )
  *
  *              SECTION: Downward compatibility
- * 1522:     private function getMarkerIndexbrowser( )
- * 1568:     private function getMarkerIndexbrowserTabs( )
+ * 1652:     public function getMarkerIndexbrowser( )
+ * 1698:     private function getMarkerIndexbrowserTabs( )
+ *
+ *              SECTION: Variables: init and get
+ * 1755:     private function var_aFilterIsSelected( )
  *
  *              SECTION: Helper
- * 1626:     private function zz_specCharsToASCII( $string )
- * 1646:     private function zz_tabClass( $lastTabId, $tab, $key )
- * 1679:     private function zz_tabDefaultLabel( )
- * 1697:     private function zz_tabDefaultLink( )
- * 1740:     private function zz_tabLinkLabel( $tab )
- * 1782:     private function zz_setTabPiVars( $labelAscii, $label )
- * 1812:     private function zz_setTabPiVarsDefaultTab( $label )
- * 1844:     private function zz_setTabSlected( $tabId )
- * 1894:     private function zz_tabLastId( )
- * 1926:     private function zz_tabTitle( $sum )
+ * 1818:     private function zz_specCharsToASCII( $string )
+ * 1838:     private function zz_tabClass( $lastTabId, $tab, $key )
+ * 1871:     private function zz_tabDefaultLabel( )
+ * 1889:     private function zz_tabDefaultLink( )
+ * 1932:     private function zz_tabLinkLabel( $tab )
+ * 1974:     private function zz_setTabPiVars( $labelAscii, $label )
+ * 2004:     private function zz_setTabPiVarsDefaultTab( $label )
+ * 2036:     private function zz_setTabSlected( $tabId )
+ * 2086:     private function zz_tabLastId( )
+ * 2118:     private function zz_tabTitle( $sum )
  *
- * TOTAL FUNCTIONS: 35
+ * TOTAL FUNCTIONS: 39
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -249,7 +257,7 @@ class tx_browser_pi1_navi_indexBrowser
       $GLOBALS['TSFE']->id = $this->pObj->objFlexform->int_viewsListPid;
     }
       // Setup $GLOBALS['TSFE']->id temporarily
-      
+
       // Init the tabs
     $arr_return = $this->tabs_init( );
     if( $arr_return['error']['status'] )
@@ -350,7 +358,7 @@ class tx_browser_pi1_navi_indexBrowser
  *                        * configuration of TS tabs
  *                        It returns true, if a requirement isn't met
  *
- * @return	mixed         true or array, if a requirement isn't met
+ * @return	mixed		true or array, if a requirement isn't met
  * @version 3.9.11
  * @since   3.9.9
  */
@@ -1517,8 +1525,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * sqlStatement_from( ): SQL statement FROM without a FROM
  *
- * @param   string	$table  : The current from table
- * @return	string  $from   : FROM statement without a from
+ * @param	string		$table  : The current from table
+ * @return	string		$from   : FROM statement without a from
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1534,7 +1542,7 @@ class tx_browser_pi1_navi_indexBrowser
         $from = $table;
         break;
     }
-    
+
     return $from;
   }
 
@@ -1543,13 +1551,12 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * sqlStatement_where( ): SQL statement WHERE without a WHERE
  *
- * @param   string	$table  : The current from table
- * @param   string	$andWhereFindInSet  : FIND IN SET
- * @return	string  $where : WHERE statement without a WHERE
+ * @param	string		$table  : The current from table
+ * @param	string		$andWhereFindInSet  : FIND IN SET
+ * @return	string		$where : WHERE statement without a WHERE
  * @version 3.9.12
  * @since   3.9.12
  */
-
   private function sqlStatement_where( $table, $andWhereFindInSet )
   {
     switch( true )
@@ -1588,13 +1595,12 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * sqlStatement_whereAndFindInSet( ): SQL statement WHERE without a WHERE
  *
- * @param   string	$where              : The current WHERE statement
- * @param   string	$andWhereFindInSet  : FIND IN SET
- * @return	string  $where              : WHERE statement without a WHERE
+ * @param	string		$where              : The current WHERE statement
+ * @param	string		$andWhereFindInSet  : FIND IN SET
+ * @return	string		$where              : WHERE statement without a WHERE
  * @version 3.9.12
  * @since   3.9.12
  */
-
   private function sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet )
   {
       // RETURN : there isn't any FIND IN SET
@@ -1742,7 +1748,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * var_aFilterIsSelected( ):
  *
- * @return	string  $from   : FROM statement without a from
+ * @return	string		$from   : FROM statement without a from
  * @version 3.9.12
  * @since   3.9.12
  */

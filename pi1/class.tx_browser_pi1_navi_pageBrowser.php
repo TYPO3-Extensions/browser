@@ -38,8 +38,14 @@
  *
  *
  *
- *  100: class tx_browser_pi1_navi_pageBrowser
- *  188:     public function __construct($parentObj)
+ *   51: class tx_browser_pi1_navi_pageBrowser
+ *   86:     public function __construct($parentObj)
+ *
+ *              SECTION: Main
+ *  118:     public function get( $content )
+ *
+ * TOTAL FUNCTIONS: 2
+ * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
 class tx_browser_pi1_navi_pageBrowser
