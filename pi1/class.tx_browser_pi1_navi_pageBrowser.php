@@ -391,8 +391,8 @@ return $arr_return;
 
       // Get sum of current tab
     $arrTabs    = $this->pObj->objNaviIndexBrowser->indexBrowserTab;
-    $tabId      = $arrIndexBrowser['tabSpecial']['selected'];
-    $sumCurrTab = $arrIndexBrowser['tabIds'][$tabId]['sum'];
+    $tabId      = $arrTabs['tabSpecial']['selected'];
+    $sumCurrTab = $arrTabs['tabIds'][$tabId]['sum'];
       // Get sum of current tab
 
       // Override sum of the page browser
