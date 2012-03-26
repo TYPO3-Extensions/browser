@@ -367,7 +367,7 @@ class tx_browser_pi1_navi_indexBrowser
       // DRS
     if( $this->pObj->b_drs_devTodo )
     {
-      $prompt = 'Index browser should not handled in a localised context!';
+      $prompt = 'Index browser should handled in a localised context!';
       t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
     }
       // DRS
@@ -1551,9 +1551,9 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * sqlStatement_where( ): SQL statement WHERE without a WHERE
  *
- * @param	string		$table  : The current from table
+ * @param	string		$table              : The current from table
  * @param	string		$andWhereFindInSet  : FIND IN SET
- * @return	string		$where : WHERE statement without a WHERE
+ * @return	string		$where            : WHERE statement without a WHERE
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1593,11 +1593,12 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * sqlStatement_whereAndFindInSet( ): SQL statement WHERE without a WHERE
+ * sqlStatement_whereAndFindInSet( ): SQL statement AND WHERE without an AND
+ *                                    especially for FIND IN SET
  *
  * @param	string		$where              : The current WHERE statement
  * @param	string		$andWhereFindInSet  : FIND IN SET
- * @return	string		$where              : WHERE statement without a WHERE
+ * @return	string		$where            : AND WHERE statement without an AND
  * @version 3.9.12
  * @since   3.9.12
  */

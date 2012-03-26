@@ -136,7 +136,7 @@ class tx_browser_pi1_navi_pageBrowser
     }
       // RETURN : firstVisit but emptyListByStart
 
-
+    $this->count( );
 
 //:TODO: Anzahl Datensaetze
 return $arr_return;
@@ -307,6 +307,186 @@ return $arr_return;
     $arr_return['data']['content']  = $content;
 
     return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * Counting
+    *
+    **********************************************/
+
+
+
+/**
+ * count( ):
+ *
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function count( )
+  {
+  }
+
+
+
+/**
+ * count_resSql( ):
+ *
+ * @return  array   $res  : SQL ressource
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function count_resSql( )
+  {
+      // Get current table.field of the index browser
+    $tableField           = $this->pObj->localTable['uid'];
+    list( $table, $field) = explode( '.', $tableField );
+
+      // Query for all filter items
+    $select   = "COUNT( DISTINCT " . $tableField . " ) AS 'count'";
+    $from     = $this->sqlStatement_from( $table );
+    $where    = $this->sqlStatement_where( $table );
+    $groupBy  = null;
+    $orderBy  = null;
+    $limit    = null;
+
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+die( $query );
+      // Execute query
+    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+        // Free SQL result
+      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+        // Reset SQL charset
+      $this->sqlCharsetSet( $currSqlCharset );
+      $this->pObj->objSqlFun->query = $query;
+      $this->pObj->objSqlFun->error = $error;
+      $arr_return = $this->pObj->objSqlFun->prompt_error( );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+      // Return SQL result
+    $arr_return['data']['res'] = $res;
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * SQL statements
+    *
+    **********************************************/
+
+
+
+/**
+ * sqlStatement_from( ): SQL statement FROM without a FROM
+ *
+ * @param	string		$table  : The current from table
+ * @return	string		$from   : FROM statement without a from
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function sqlStatement_from( $table )
+  {
+    switch( true )
+    {
+      case( isset( $this->pObj->piVars['sword'] ) ):
+      case( $this->pObj->objFltr4x->var_aFilterIsSelected( ) ):
+        $from = $this->pObj->objSql->sql_query_statements['rows']['from'];
+        break;
+      default:
+        $from = $table;
+        break;
+    }
+
+    return $from;
+  }
+
+
+
+/**
+ * sqlStatement_where( ): SQL statement WHERE without a WHERE
+ *
+ * @param	string		$table              : The current from table
+ * @param	string		$andWhereFindInSet  : FIND IN SET
+ * @return	string		$where            : WHERE statement without a WHERE
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function sqlStatement_where( $table )
+  {
+    switch( true )
+    {
+      case( isset( $this->pObj->piVars['sword'] ) ):
+      case( $this->pObj->objFltr4x->var_aFilterIsSelected( ) ):
+        $where  = $this->pObj->objSql->sql_query_statements['rows']['where'];
+        $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
+        break;
+      default:
+        $andEnableFields = $this->pObj->cObj->enableFields( $table );
+        if( $andEnableFields )
+        {
+          $where = "1";
+        }
+        $where  = $where . $andEnableFields;
+        if( empty ( $where ) )
+        {
+          $where = "1";
+        }
+        $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
+        if( $llWhere )
+        {
+          $where  = $where . " AND " . $llWhere;
+        }
+        break;
+    }
+
+    return $where;
   }
 
 
