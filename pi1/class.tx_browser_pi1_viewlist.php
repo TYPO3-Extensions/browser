@@ -1829,8 +1829,14 @@ if( $this->pObj->bool_accessByIP )
       return $arr_result;
     }
     $filter = $arr_result['data']['filter'];
-    unset( $arr_result );
       // Get filter
+
+      // RETURN : there isn't any filter
+    if( empty ( $filter ) ) 
+    {
+      return $arr_return;
+    }
+      // RETURN : there isn't any filter
 
       // Get the searchform content
     $searchform     = $this->pObj->cObj->getSubpart( $this->content, '###SEARCHFORM###' );
@@ -1894,13 +1900,13 @@ if( $this->pObj->bool_accessByIP )
       return $arr_return;
     }
       // Get the mode selector content
-    $content = $arr_return['data']['markerArray'];
+    $content = $arr_return['data']['content'];
 
-      // Set marker the array
+      // Set the marker array
     $markerArray                = $this->pObj->objWrapper->constant_markers( );
     $markerArray['###MODE###']  = $this->mode;
     $markerArray['###VIEW###']  = $this->view;
-      // Set marker the array
+      // Set the marker array
 
     $modeSelector   = $this->pObj->cObj->getSubpart( $this->content, '###MODESELECTOR###' );
     $modeSelector   = $this->pObj->cObj->substituteMarkerArray( $modeSelector, $markerArray );

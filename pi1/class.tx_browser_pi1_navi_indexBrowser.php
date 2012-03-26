@@ -2089,7 +2089,7 @@ class tx_browser_pi1_navi_indexBrowser
   {
       // Get tab array
     $arrTabs = $this->indexBrowserTab['tabIds'];
-
+var_dump( __METHOD__, __LINE__, $arrTabs );
       // Get last tab
     end( $arrTabs );
 
