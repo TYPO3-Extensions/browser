@@ -38,13 +38,22 @@
  *
  *
  *
- *   51: class tx_browser_pi1_navi_pageBrowser
- *   86:     public function __construct($parentObj)
+ *   60: class tx_browser_pi1_navi_pageBrowser
+ *  102:     public function __construct($parentObj)
  *
  *              SECTION: Main
- *  118:     public function get( $content )
+ *  134:     public function get( $content )
  *
- * TOTAL FUNCTIONS: 2
+ *              SECTION: Counting
+ *  264:     private function count( )
+ *  304:     private function count_fromIndexBrowser( )
+ *  336:     private function count_resSql( )
+ *
+ *              SECTION: SQL statements
+ *  422:     private function sqlStatement_from( $table )
+ *  449:     private function sqlStatement_where( $table )
+ *
+ * TOTAL FUNCTIONS: 7
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -248,6 +257,7 @@ class tx_browser_pi1_navi_pageBrowser
 /**
  * count( ):
  *
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -319,7 +329,7 @@ class tx_browser_pi1_navi_pageBrowser
  *                  the SQL ressource.
  *                  Result depends on search word and filter.
  *
- * @return  array   $arr_return : SQL ressource or an error message in case of on arror
+ * @return	array		$arr_return : SQL ressource or an error message in case of on arror
  * @version 3.9.12
  * @since   3.9.12
  */
