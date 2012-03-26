@@ -1069,7 +1069,8 @@ class tx_browser_pi1_navi_indexBrowser
       // DRS
 
       // Get current table.field of the index browser
-    list( $table, $field) = explode( '.', $this->indexBrowserTableField);
+    $tableField           = explode( '.', $this->indexBrowserTableField);
+    list( $table, $field) = $tableField;
 
     $strFindInSet = null;
     foreach( $this->findInSet as $length => $arrfindInSet )
@@ -1085,7 +1086,7 @@ class tx_browser_pi1_navi_indexBrowser
       $where = "NOT (" . $strFindInSet . ")";
     }
       // Query for all filter items
-    $select   = "COUNT( * ) AS 'count', LEFT ( " . $field . ", 1 ) AS 'initial'";
+    $select   = "COUNT( * ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
     $from     = $table;
     $where    = $where . $this->pObj->cObj->enableFields( $table );
     $localWhere = $this->pObj->objLocalise->localisationFields_where( $table );
@@ -1094,8 +1095,8 @@ class tx_browser_pi1_navi_indexBrowser
       $where  = $where . " AND " . $localWhere;
     }
 
-    $groupBy  = "LEFT ( " . $field . ", 1 )";
-    $orderBy  = "LEFT ( " . $field . ", 1 )";
+    $groupBy  = "LEFT ( " . $tableField . ", 1 )";
+    $orderBy  = "LEFT ( " . $tableField . ", 1 )";
     $limit    = null;
 
       // Get query
