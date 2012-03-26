@@ -1077,25 +1077,36 @@ class tx_browser_pi1_navi_indexBrowser
     {
       $strFindInSet = $strFindInSet . implode ( " OR ", $arrfindInSet );
     }
-    if( empty ( $strFindInSet ) )
-    {
-      $where = "1";
-    }
     if( ! empty ( $strFindInSet ) )
     {
-      $where = "NOT (" . $strFindInSet . ")";
+      $strFindInSet = "NOT (" . $strFindInSet . ")";
     }
       // Query for all filter items
     $select   = "COUNT( * ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
-    $from     = $table;
-    $where    = $where . $this->pObj->cObj->enableFields( $table );
-    $localWhere = $this->pObj->objLocalise->localisationFields_where( $table );
-    if( $localWhere )
+//    $from     = $table;
+//    $where    = $where . $this->pObj->cObj->enableFields( $table );
+//    $localWhere = $this->pObj->objLocalise->localisationFields_where( $table );
+//    if( $localWhere )
+//    {
+//      $where  = $where . " AND " . $localWhere;
+//    }
+    $from   = $this->pObj->objSql->sql_query_statements['rows']['from'];
+    $where  = $this->pObj->objSql->sql_query_statements['rows']['where'];
+    if( $where )
     {
-      $where  = $where . " AND " . $localWhere;
+      if( $strFindInSet )
+      {
+        $where = $where . " AND " . $strFindInSet;
+      }
     }
-
-$this->pObj->dev_var_dump( $from, $where, $this->pObj->objSql->sql_query_statements['rows'] );
+    if( empty ( $where ) )
+    {
+      if( $strFindInSet )
+      {
+        $where = $strFindInSet;
+      }
+    }
+//$this->pObj->dev_var_dump( $from, $where, $this->pObj->objSql->sql_query_statements['rows'] );
 
     $groupBy  = "LEFT ( " . $tableField . ", 1 )";
     $orderBy  = "LEFT ( " . $tableField . ", 1 )";
@@ -1287,14 +1298,16 @@ $this->pObj->dev_var_dump( $from, $where, $this->pObj->objSql->sql_query_stateme
 
       // Query for all filter items
     $select   = "COUNT( * ) AS 'count', LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
-    $from     = $table;
-    $where    = "(" . implode ( " OR ", $arrfindInSet ) . ")";
-    $where    = $where . $this->pObj->cObj->enableFields( $table );
-    $localWhere = $this->pObj->objLocalise->localisationFields_where( $table );
-    if( $localWhere )
-    {
-      $where  = $where . " AND " . $localWhere;
-    }
+//    $from     = $table;
+//    $where    = "(" . implode ( " OR ", $arrfindInSet ) . ")";
+//    $where    = $where . $this->pObj->cObj->enableFields( $table );
+//    $localWhere = $this->pObj->objLocalise->localisationFields_where( $table );
+//    if( $localWhere )
+//    {
+//      $where  = $where . " AND " . $localWhere;
+//    }
+    $from   = $this->pObj->objSql->sql_query_statements['rows']['from'];
+    $where  = $this->pObj->objSql->sql_query_statements['rows']['where'];
     $groupBy  = "LEFT ( " . $tableField . ", " . $length . " )";
     $orderBy  = "LEFT ( " . $tableField . ", " . $length . " )";
     $limit    = null;
