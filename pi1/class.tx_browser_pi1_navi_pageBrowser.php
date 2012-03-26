@@ -210,6 +210,7 @@ class tx_browser_pi1_navi_pageBrowser
       ///////////////////////////////////////////////
       //
       // Get the wrapped pagebrowser
+var_dump( __METHOD__, __LINE__, $confPageBrowser );
 
     $res_items  = $this->pObj->pi_list_browseresults
                   (
@@ -235,7 +236,7 @@ class tx_browser_pi1_navi_pageBrowser
     $pageBrowser  = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
 
 $GLOBALS['TSFE']->id            = $globalTsfeId; // #9458
-$arr_return['data']['content']  = $pageBrowser;
+$arr_return['data']['content']  = $res_items;
 return $arr_return;
 
     $template     = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSER###', $pageBrowser, true);
