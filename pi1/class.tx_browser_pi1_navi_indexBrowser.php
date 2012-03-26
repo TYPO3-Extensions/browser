@@ -385,7 +385,9 @@ class tx_browser_pi1_navi_indexBrowser
         t3lib_div::devlog( '[HELP/NAVI+LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
       }
         // DRS
-      $arr_return['data']['content'] = 'Sorry: index browser isn\'t localised in browser version 4.0.x';
+      $prompt   = $this->pObj->pi_getLL( 'warn_indexbrowser_ll' );
+      $content  = '<div class="indexBrowser" style="font-size:.85em">' . $prompt . '</div>';
+      $arr_return['data']['content'] = $content;
       return $arr_return;
     }
 
