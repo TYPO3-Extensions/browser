@@ -2103,7 +2103,7 @@ class tx_browser_pi1_navi_indexBrowser
       switch( true )
       {
         case( $arrTabs[$id]['displayWoItems'] ):
-        case( $arrTabs[$id]['count'] > 0 ):
+        case( $arrTabs[$id]['sum'] > 0 ):
           break 2;
         default:
 
@@ -2113,7 +2113,6 @@ class tx_browser_pi1_navi_indexBrowser
     }
     while( $i < $iMax );
       // DO WHILE : a tab should displayed items or a tab has a hit at least
-var_dump( __METHOD__, __LINE__, $id, $i, $arrTabs );
 
       // RETURN : id of last visible tab
     return $id;
