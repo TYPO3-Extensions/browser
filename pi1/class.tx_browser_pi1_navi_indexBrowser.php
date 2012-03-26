@@ -1083,30 +1083,8 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // Query for all filter items
     $select   = "COUNT( * ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
-//    $from     = $table;
-//    $where    = $where . $this->pObj->cObj->enableFields( $table );
-//    $localWhere = $this->pObj->objLocalise->localisationFields_where( $table );
-//    if( $localWhere )
-//    {
-//      $where  = $where . " AND " . $localWhere;
-//    }
-    $from   = $this->pObj->objSql->sql_query_statements['rows']['from'];
-    $where  = $this->pObj->objSql->sql_query_statements['rows']['where'];
-    if( $where )
-    {
-      if( $strFindInSet )
-      {
-        $where = $where . " AND " . $strFindInSet;
-      }
-    }
-    if( empty ( $where ) )
-    {
-      if( $strFindInSet )
-      {
-        $where = $strFindInSet;
-      }
-    }
-    $where    = $where . $this->pObj->objFltr4x->andWhereFilter;
+    $from   = $this->sqlStatement_from( $table );
+    $where  = $this->sqlStatement_where( $strFindInSet );
 //$this->pObj->dev_var_dump( $from, $where, $this->pObj->objSql->sql_query_statements['rows'] );
 
     $groupBy  = "LEFT ( " . $tableField . ", 1 )";
@@ -1299,7 +1277,6 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Query for all filter items
     $select   = "COUNT( * ) AS 'count', LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
-//    $from     = $table;
 //    $where    = "(" . implode ( " OR ", $arrfindInSet ) . ")";
 //    $where    = $where . $this->pObj->cObj->enableFields( $table );
 //    $localWhere = $this->pObj->objLocalise->localisationFields_where( $table );
@@ -1307,10 +1284,9 @@ class tx_browser_pi1_navi_indexBrowser
 //    {
 //      $where  = $where . " AND " . $localWhere;
 //    }
-    $from     = $this->pObj->objSql->sql_query_statements['rows']['from'];
-    $where    = $this->pObj->objSql->sql_query_statements['rows']['where'];
-    $where    = $where . " AND (" . implode ( " OR ", $arrfindInSet ) . ")";
-    $where    = $where . $this->pObj->objFltr4x->andWhereFilter;
+    $from   = $this->sqlStatement_from( );
+    $strFindInSet = "(" . implode ( " OR ", $arrfindInSet ) . ")";
+    $where        = $this->sqlStatement_where( $strFindInSet );
     $groupBy  = "LEFT ( " . $tableField . ", " . $length . " )";
     $orderBy  = "LEFT ( " . $tableField . ", " . $length . " )";
     $limit    = null;
@@ -1522,6 +1498,79 @@ class tx_browser_pi1_navi_indexBrowser
       // DRS
   }
 
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * SQL statements
+    *
+    **********************************************/
+
+
+
+/**
+ * sqlStatement_from( ): SQL statement FROM without a FROM
+ *
+ * @param   string	$table  : The current from table
+ * @return	string  $from   : FROM statement without a from
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function sqlStatement_from( )
+  {
+      // Do we have a search word?
+      // Is a filter selected?
+    
+    $from   = $this->pObj->objSql->sql_query_statements['rows']['from'];
+    return $from;
+  }
+
+
+
+/**
+ * sqlStatement_where( ): SQL statement WHERE without a WHERE
+ *
+ * @param   string	$andWhereFindInSet  : FIND IN SET
+ * @return	string  $where : WHERE statement without a WHERE
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+
+  private function sqlStatement_where( $andWhereFindInSet )
+  {
+      // Do we have a search word?
+      // Is a filter selected?
+
+//    $where    = $where . $this->pObj->cObj->enableFields( $table );
+//    $localWhere = $this->pObj->objLocalise->localisationFields_where( $table );
+//    if( $localWhere )
+//    {
+//      $where  = $where . " AND " . $localWhere;
+//    }
+
+    $where  = $this->pObj->objSql->sql_query_statements['rows']['where'];
+    if( $where )
+    {
+      if( $andWhereFindInSet )
+      {
+        $where = $where . " AND " . $andWhereFindInSet;
+      }
+    }
+    if( empty ( $where ) )
+    {
+      if( $andWhereFindInSet )
+      {
+        $where = $andWhereFindInSet;
+      }
+    }
+    $where    = $where . $this->pObj->objFltr4x->andWhereFilter;
+    return $where;
+  }
 
 
 
