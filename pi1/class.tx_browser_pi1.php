@@ -818,10 +818,18 @@ class tx_browser_pi1 extends tslib_pibase {
     switch( $this->view )
     {
       case( 'list' ):
-          // #33892, 120214, dwildt-
-        //$str_template_completed = $this->objViews->listView( );
-          // #33892, 120214, dwildt+
-        $str_template_completed = $this->objViewlist->main( );
+          // DEVELOPMENT: Browser engine 4.x
+        switch( $this->pObj->dev_browserEngine )
+        {
+          case( 4 ):
+            $str_template_completed = $this->objViewlist_4x->main( );
+            break;
+          case( 3 ):
+          default:
+            $str_template_completed = $this->objViewlist->main( );
+            break;
+        }
+          // DEVELOPMENT: Browser engine 4.x
         break;
       case( 'single' ):
         $str_template_completed = $this->objViews->singleView( );
@@ -1672,6 +1680,10 @@ class tx_browser_pi1 extends tslib_pibase {
     require_once( 'class.tx_browser_pi1_viewlist.php' );
     $this->objViewlist = new tx_browser_pi1_viewlist( $this );
 
+      // Class with methods for the list view
+    require_once( 'class.tx_browser_pi1_viewlist_4x.php' );
+    $this->objViewlist_4x = new tx_browser_pi1_viewlist_4x( $this );
+
       // Class with wrapper methods for wrapping fields and link values
     require_once('class.tx_browser_pi1_wrapper.php');
     $this->objWrapper = new tx_browser_pi1_wrapper( $this );
@@ -1946,6 +1958,24 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objViewlist->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
     $this->objViewlist->conf_path = $conf_path;
+      // class.tx_browser_pi1_viewlist.php
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_viewlist_4x.php
+
+      // [Array] The current TypoScript configuration array
+    $this->objViewlist_4x->conf      = $this->conf;
+      // [Integer] The current mode (from modeselector)
+    $this->objViewlist_4x->mode      = $this->piVar_mode;
+      // [String] 'list' or 'single': The current view
+    $this->objViewlist_4x->view      = $this->view;
+      // [Array] The TypoScript configuration array of the current view
+    $this->objViewlist_4x->conf_view = $conf_view;
+      // [String] TypoScript path to the current view. I.e. views.single.1
+    $this->objViewlist_4x->conf_path = $conf_path;
       // class.tx_browser_pi1_viewlist.php
   }
 

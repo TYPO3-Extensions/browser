@@ -1118,7 +1118,7 @@ class tx_browser_pi1_viewlist
           // CASE csv
       default:
           // CASE no csv
-          // Take the default template (the list view)
+          // Take the default template (the list view) and replace some subparts
         $arr_result = $this->content_setDefault( );
         if( $arr_result['error']['status'] )
         {
@@ -2064,8 +2064,8 @@ if( $this->pObj->bool_accessByIP )
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_views.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_views.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_viewlist.php']) {
+//  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_viewlist.php']);
 }
 
 ?>
