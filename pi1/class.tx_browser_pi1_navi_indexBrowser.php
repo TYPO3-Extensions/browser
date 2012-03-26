@@ -225,10 +225,7 @@ class tx_browser_pi1_navi_indexBrowser
       // RETURN: requirements aren't met
     if( ! $this->requirements_check( ) )
     {
-       // #35032, 120320
-      $markerIndexbrowser = $this->getMarkerIndexbrowser( );
-      $content = $this->pObj->cObj->substituteSubpart( $content, $markerIndexbrowser, null, true );
-      $arr_return['data']['content'] = $content;
+      $arr_return['data']['content'] = null;
       return $arr_return;
     }
       // RETURN: requirements aren't met
