@@ -1566,7 +1566,8 @@ class tx_browser_pi1_navi_indexBrowser
         {
           $where = "1";
         }
-        $where    = $where . $andEnableFields;
+        $where  = $where . $andEnableFields;
+        $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
         if( empty ( $where ) )
         {
           $where = "1";
