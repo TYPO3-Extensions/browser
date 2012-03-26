@@ -377,7 +377,7 @@ class tx_browser_pi1_viewlist_4x
     {
       return $arr_result;
     }
-
+var_dump( __METHOD__, __LINE__, $arr_result );
     $select   = $arr_result['data']['select'];
     $from     = $arr_result['data']['from'];
     $where    = $arr_result['data']['where'];

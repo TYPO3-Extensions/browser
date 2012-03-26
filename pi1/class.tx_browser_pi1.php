@@ -819,7 +819,7 @@ class tx_browser_pi1 extends tslib_pibase {
     {
       case( 'list' ):
           // DEVELOPMENT: Browser engine 4.x
-        switch( $this->pObj->dev_browserEngine )
+        switch( $this->dev_browserEngine )
         {
           case( 4 ):
             $str_template_completed = $this->objViewlist_4x->main( );
