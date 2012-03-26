@@ -1753,7 +1753,7 @@ class tx_browser_pi1_navi_indexBrowser
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function var_aFilterIsSelected( )
+  public function var_aFilterIsSelected( )
   {
       // RETURN : var is initialised
     if( ! $this->aFilterIsSelected === null )
