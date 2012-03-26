@@ -345,9 +345,9 @@ class tx_browser_pi1_navi_indexBrowser
  * requirements_check( ): Checks
  *                        * configuration of the flexform
  *                        * configuration of TS tabs
- *                        It returns false, if a requirement isn't met
+ *                        It returns true, if a requirement isn't met
  *
- * @return	boolean		true / false
+ * @return	mixed         true or array, if a requirement isn't met
  * @version 3.9.11
  * @since   3.9.9
  */
@@ -361,7 +361,7 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // DRS
 
-      // RETURN false : index browser is disabled
+      // RETURN true : index browser is disabled
     if( ! $this->pObj->objFlexform->bool_indexBrowser )
     {
       if( $this->pObj->b_drs_navi )
@@ -369,9 +369,9 @@ class tx_browser_pi1_navi_indexBrowser
         $prompt = 'display.indexBrowser is false.';
         t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
       }
-      return false;
+      return true;
     }
-      // RETURN false : index browser is disabled
+      // RETURN true : index browser is disabled
 
     $this->localisation_init( );
     if( ! $this->bool_dontLocalise )
@@ -389,7 +389,7 @@ class tx_browser_pi1_navi_indexBrowser
       return $arr_return;
     }
 
-      // RETURN false : index browser hasn't any configured tab
+      // RETURN true : index browser hasn't any configured tab
     $arr_conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
     if( ! is_array( $arr_conf_tabs ) )
     {
@@ -401,12 +401,12 @@ class tx_browser_pi1_navi_indexBrowser
         $prompt = 'navigation.indexBrowser won\'t be processed.';
         t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
       }
-      return false;
+      return true;
     }
-      // RETURN false : index browser hasn't any configured tab
+      // RETURN true : index browser hasn't any configured tab
 
-      // RETURN true : requirements are OK
-    return true;
+      // RETURN false : requirements are OK
+    return false;
   }
 
 
