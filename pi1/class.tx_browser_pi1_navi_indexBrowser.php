@@ -2089,18 +2089,30 @@ class tx_browser_pi1_navi_indexBrowser
   {
       // Get tab array
     $arrTabs = $this->indexBrowserTab['tabIds'];
-var_dump( __METHOD__, __LINE__, $arrTabs );
       // Get last tab
     end( $arrTabs );
 
       // DO WHILE : a tab should displayed items or a tab has a hit at least
+    $i    = 0;
+    $iMax = 1000;
     do
     {
       $id = key( $arrTabs );
+
+        //
+      switch( true )
+      {
+        case( $arrTabs[$id]['displayWoItems'] ):
+        case( $arrTabs[$id]['count'] > 0 ):
+          break;
+        default:
+
+      }
       prev( $arrTabs );
     }
-    while( $arrTabs[$id]['displayWoItems'] + $arrTabs[$id]['count'] < 1 );
+    while( $i < $iMax );
       // DO WHILE : a tab should displayed items or a tab has a hit at least
+var_dump( __METHOD__, __LINE__, $id, $i );
 
       // RETURN : id of last visible tab
     return $id;
