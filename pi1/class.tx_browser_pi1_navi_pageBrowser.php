@@ -333,6 +333,7 @@ return $arr_return;
  */
   private function count( )
   {
+    $this->count_resSql( );
   }
 
 
