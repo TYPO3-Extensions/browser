@@ -133,6 +133,7 @@ class tx_browser_pi1_navi_indexBrowser
 //    'default' => '0',
 //    'all' => 0,
 //    'others' => 25,
+//    'selected' => 0,
 //  'tabIds' =>
 //    0 =>
 //      'label' => 'Alle',

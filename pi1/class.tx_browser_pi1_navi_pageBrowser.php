@@ -136,23 +136,22 @@ class tx_browser_pi1_navi_pageBrowser
     }
       // RETURN : firstVisit but emptyListByStart
 
+      // Set class var sum
     $this->count( );
+
+      // RETURN : there isn't any record.
+    if( $this->sum < 1 )
+    {
+      $arr_return['data']['content'] = null;
+      return $arr_return;
+    }
 
     $arr_return['data']['content']  = $this->sum;
 //:TODO: Anzahl Datensaetze
+    $this->pObj->dev_var_dump( $this->pObj->objNaviIndexBrowser->indexBrowserTab );
+
 return $arr_return;
 
-      // RETURN : the sum of records is less than the sum of records per page
-      // RETURN : the sum of records is less than the sum of records per page
-    if (!is_array($rows) || (is_array($rows) && count($rows) < 1))
-    {
-      $template = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSER###', '', true);
-      $arr_return['data']['template'] = $template;
-      return $arr_return;
-    }
-      // RETURN if we have any row
-      //
-      //
       //
       // Haben wir einen Index Browser ?
     $int_currTab    = $arr_data['tabIds']['active'];
