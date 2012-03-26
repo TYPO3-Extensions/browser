@@ -69,6 +69,13 @@ class tx_browser_pi1_navi_pageBrowser
 
 
 
+    // [Integer] sum of records
+  var $sum;
+    // [Boolean] sum of records is taken from index browser
+  var $sumIsFromIndexBrowser;
+
+
+
 
 
 
@@ -145,6 +152,7 @@ class tx_browser_pi1_navi_pageBrowser
       $arr_return['data']['content'] = null;
       return $arr_return;
     }
+
 
     $arr_return['data']['content']  = $this->sum;
 //:TODO: Anzahl Datensaetze
@@ -333,6 +341,15 @@ return $arr_return;
  */
   private function count( )
   {
+      // RETURN : sum is taken from the index browser
+    $this->count_fromIndexBrowser( );
+    if( $this->sumIsFromIndexBrowser )
+    {
+      return;
+    }
+      // RETURN : sum is taken from the index browser
+
+      // SQL result with sum of records, depending on search word and filter
     $arr_return = $this->count_resSql( );
     if( $arr_return['error']['status'] )
     {
@@ -341,15 +358,46 @@ return $arr_return;
     $res = $arr_return['data']['res'];
       // SQL result with sum of records, depending on search word and filter
 
-      // Add the sum to the tab with the special char attribute
+      // Get the row
     $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
-
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-
+      // Set class var
     $this->sum = $row['count'];
 
     return false;
+  }
+
+
+
+/**
+ * count_fromIndexBrowser( ):  Take the sum from the index browser, if it
+ *                                is enabled
+ *
+ * @param	string		$table  : The current from table
+ * @return	string		$from   : FROM statement without a from
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function count_fromIndexBrowser( )
+  {
+      // RETURN : index browser isn't enabled
+    if( ! isset ( $this->pObj->objNaviIndexBrowser->indexBrowserTab ) )
+    {
+      $this->sumIsFromIndexBrowser = false;
+      return;
+    }
+      // RETURN : index browser isn't enabled
+
+      // Get sum of current tab
+    $arrTabs    = $this->pObj->objNaviIndexBrowser->indexBrowserTab;
+    $tabId      = $arrIndexBrowser['tabSpecial']['selected'];
+    $sumCurrTab = $arrIndexBrowser['tabIds'][$tabId]['sum'];
+      // Get sum of current tab
+
+      // Override sum of the page browser
+    $this->sum  = $sumCurrTab;
+    $this->sumIsFromIndexBrowser = true;
   }
 
 
