@@ -2301,7 +2301,7 @@ class tx_browser_pi1_flexform {
           echo '<div style="background:red;color:white;font-weight:bold;padding:2em;text-align:center;">' .
           '  ERROR with the template: You have not uploaded any template!<br />' .
           '  <br />' .
-          '  Browser - the TYPO3-Frontend-Engine.' .
+          '  Browser - TYPO3 without PHP.' .
           '</div>';
         }
         $str_path2template = 'uploads/tx_browser/' . $str_path;
@@ -2315,7 +2315,7 @@ class tx_browser_pi1_flexform {
         echo '<div style="background:red;color:white;font-weight:bold;padding:2em;text-align:center;">' .
         '  ERROR with the template: Path to the template is empty!' .
         '  <br />' .
-        '  Browser - the TYPO3-Frontend-Engine.' .
+        '  Browser - TYPO3 without PHP.' .
         '</div>';
       }
       if (!empty ($this->pObj->conf['views.'][$viewWiDot][$modeWiDot]['template.']['file'])) {

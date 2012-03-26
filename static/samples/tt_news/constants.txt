@@ -13,9 +13,9 @@ plugin.tx_browser_pi1 {
   # cat=Browser for tt_news//331;       type=string;  label=Title (de): Title of the RSS-Feed (German)
   extensions.tt_news._LOCAL_LANG.de.title = Nachrichten
   # cat=Browser for tt_news//332;       type=string;  label=Description: Description of the RSS-Feed in the default language (usually English)
-  extensions.tt_news._LOCAL_LANG.default.description = Browser - the TYPO3-Frontend-Engine. Sample with tt_news. News.
+  extensions.tt_news._LOCAL_LANG.default.description = Browser - TYPO3 without PHP. Sample with tt_news. News.
   # cat=Browser for tt_news//333;       type=string;  label=Description (de): Description of the RSS-Feed (German)
-  extensions.tt_news._LOCAL_LANG.de.description = Browser - die TYPO3-Frontend-Engine: Beispiel mit tt_news. Nachrichten
+  extensions.tt_news._LOCAL_LANG.de.description = Browser - TYPO3 ohne PHP: Beispiel mit tt_news. Nachrichten
 
   # cat=Browser for tt_news//340;       type=string;  label=Path to the RSS icon
   extensions.tt_news.pathToIcon = /typo3conf/ext/browser/res/images/browser_rss-feed.gif

@@ -27,7 +27,7 @@
   // RETURN css_styled_content isn't installed
 if(!file_exists(PATH_site . 'typo3/sysext/css_styled_content/pi1/class.tx_cssstyledcontent_pi1.php'))
 {
-  var_dump(__METHOD__ . '(' . __LINE__ .'): Browser - the TYPO3 frontend engine: [EN] You have to install CSS styled content! [DE] Bitte installiere CSS styled content!');
+  var_dump(__METHOD__ . '(' . __LINE__ .'): Browser - TYPO3 without PHP: [EN] You have to install CSS styled content! [DE] Bitte installiere CSS styled content!');
   return;
 }
 
@@ -669,7 +669,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
                       Item rendering failed. Please enable the DRS by TypoScript and investigate the logs!
                       See userFunc.drs.
                       Maybe the TypoScript property itemRendering is overriden by another extension.<br />
-                      Browser - the TYPO3 frontend engine<br />
+                      Browser - TYPO3 without PHP<br />
                       ' . __METHOD__ . ' (' . __LINE__ . ')
                      </div>';
           $str_outputEntry = $prompt;
