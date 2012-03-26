@@ -2617,7 +2617,9 @@ class tx_browser_pi1_filter {
       case( $this->pObj->localTable == $table ):
       default:
           // local table
-        $from = $table;
+        $from = $this->pObj->objSql->sql_query_statements['rows']['from'];
+        // 120326, dwildt-
+        //$from = $table;
         break;
     }
       // Get FROM statement
