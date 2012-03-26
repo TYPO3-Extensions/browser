@@ -62,7 +62,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
       <label index="error_views_noview">Sorry, there isn't any view configured.</label>
       <label index="error_views_single_noview">Sorry, there isn't any single view configured.</label>
       <label index="warn_sql_h1">SQL Warning</label>
-      <label index="warn_indexbrowser_ll">Sorry: index browser isn't localised (version 4.0). Please disable it on translated pages.</label>
+      <label index="warn_indexbrowser_ll">Sorry: index browser isn't localised (TYPO3 Browser version 4.0). Please disable it on translated pages.</label>
       <label index="pi_list_searchBox_search">Search!</label>
       <label index="browserItem">item</label>
       <label index="browserItems">items</label>
@@ -138,7 +138,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="error_views_noview"><![CDATA[Pardon, es ist keine Ansicht (view) konfiguriert.<br /><br />Browser - die TYPO3-Frontend-Engine]]></label>
       <label index="error_views_single_noview">Pardon, es ist keine Detailansicht konfiguriert.</label>
       <label index="warn_sql_h1">SQL Warnung</label>
-      <label index="warn_indexbrowser_ll">Sorry: Der Index-Browser ist nicht lokalisiert (Version 4.0. Bitte deaktiviere ihn auf <![CDATA[ü]]>bersetzten Seitzen.</label>
+      <label index="warn_indexbrowser_ll">Sorry: Der Index-Browser ist nicht lokalisiert (TYPO3-Browser Version 4.0. Bitte deaktiviere ihn auf <![CDATA[ü]]>bersetzten Seitzen.</label>
       <label index="pi_list_searchBox_search">Suche</label>
       <label index="browserItem">Eintrag</label>
       <label index="browserItems"><![CDATA[Einträge]]></label>
