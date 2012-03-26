@@ -397,20 +397,19 @@ class tx_browser_pi1_filter {
 
     if( ! ( $this->andWhereFilter === null ) )
     {
-$this->pObj->dev_var_dump( $this->andWhereFilter );
       return $this->andWhereFilter;
     }
 
     $arrAndWhere = $this->pObj->objFilter->andWhere_filter( );
     $strAndWhere = implode(" AND ", ( array ) $arrAndWhere );
 
-    if( ! $strAndWhere )
+    if( empty( $strAndWhere ) )
     {
       $this->andWhereFilter = false;
+      return;
     }
 
     $this->andWhereFilter = " AND ". $strAndWhere;
-$this->pObj->dev_var_dump( $this->andWhereFilter );
   }
 
 
