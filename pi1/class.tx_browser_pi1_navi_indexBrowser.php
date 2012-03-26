@@ -1095,6 +1095,8 @@ class tx_browser_pi1_navi_indexBrowser
       $where  = $where . " AND " . $localWhere;
     }
 
+$this->pObj->dev_var_dump( $from, $where, $this->pObj->objSql->sql_query_statements['rows'] );
+
     $groupBy  = "LEFT ( " . $tableField . ", 1 )";
     $orderBy  = "LEFT ( " . $tableField . ", 1 )";
     $limit    = null;
