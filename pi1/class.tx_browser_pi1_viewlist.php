@@ -1879,26 +1879,33 @@ if( $this->pObj->bool_accessByIP )
  */
   private function subpart_setPageBrowser( )
   {
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'subpart_setPageBrowser begin' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
+      // Get the page browser content
     $arr_return = $this->pObj->objNaviPageBrowser->get( $this->content );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
-    $content = $arr_return['data']['content'];
+      // Get the page browser content
 
+      // Set marker the array
     $markerArray                            = $this->pObj->objWrapper->constant_markers( );
-    $markerArray['###RESULT_AND_ITEMS###']  = $content;
+    $markerArray['###RESULT_AND_ITEMS###']  = $arr_return['data']['content'];
     $markerArray['###MODE###']              = $this->mode;
     $markerArray['###VIEW###']              = $this->view;
-    $subpart      = $this->pObj->cObj->getSubpart($this->content, '###PAGEBROWSER###');
-    $pageBrowser  = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
-    $this->content     = $this->pObj->cObj->substituteSubpart($this->content, '###PAGEBROWSER###', $pageBrowser, true);
+      // Set marker the array
 
+      // Replace markers in the current content
+    $subpart        = $this->pObj->cObj->getSubpart(  $this->content, '###PAGEBROWSER###' );
+    $pageBrowser    = $this->pObj->cObj->substituteMarkerArray( $subpart, $markerArray );
+    $this->content  = $this->pObj->cObj->substituteSubpart
+                      (
+                        $this->content, '###PAGEBROWSER###', $pageBrowser, true
+                      );
+      // Replace markers in the current content
 
-
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'subpart_setPageBrowser end' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
     return;
   }
 
