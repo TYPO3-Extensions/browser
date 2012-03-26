@@ -157,6 +157,9 @@ class tx_browser_pi1_navi_indexBrowser
     // [Integer] number of the localisation mode
   var $int_localisation_mode  = null;
 
+    // [Boolean] If a filter is selected by the visitor, this boolean will be true.
+  var $aFilterIsSelected = null;
+
     // [String] Subpart for the index browser
   var $subpart    = null;
     // [String] Subpart for a tab within the index browser
@@ -224,13 +227,11 @@ class tx_browser_pi1_navi_indexBrowser
 
       // RETURN: requirements aren't met
     $arr_return = $this->requirements_check( );
-var_dump( __METHOD__, __LINE__, $arr_return );
     if( ! empty( $arr_return ) )
     {
       return $arr_return;
     }
       // RETURN: requirements aren't met
-var_dump( __METHOD__, __LINE__);
 
       // RETURN : table is not the local table
     $arr_return = $this->tableField_check( );
@@ -405,7 +406,13 @@ var_dump( __METHOD__, __LINE__);
         $prompt = 'navigation.indexBrowser won\'t be processed.';
         t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
       }
-      return true;
+      $arr_return['error']['status'] = true;
+      $arr_return['error']['header'] = '<h1 style="color:red">Error Index Browser</h1>';
+      $prompt = 'Index browser is enabled by the flexform or by TypoScript. ' .
+                'But the TypoScript navigation.indexBrowser.tabs hasn\'t any element. ' .
+                'Please take care of a proper TypoScript or disable the index browser.';
+      $arr_return['error']['prompt'] = '<p style="color:red">' . $prompt . '</p>';
+      return $arr_return;
     }
       // RETURN true : index browser hasn't any configured tab
 
@@ -1086,8 +1093,7 @@ var_dump( __METHOD__, __LINE__);
       // Query for all filter items
     $select   = "COUNT( * ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
     $from   = $this->sqlStatement_from( $table );
-    $where  = $this->sqlStatement_where( $strFindInSet );
-//$this->pObj->dev_var_dump( $from, $where, $this->pObj->objSql->sql_query_statements['rows'] );
+    $where  = $this->sqlStatement_where( $table, $strFindInSet );
 
     $groupBy  = "LEFT ( " . $tableField . ", 1 )";
     $orderBy  = "LEFT ( " . $tableField . ", 1 )";
@@ -1279,16 +1285,9 @@ var_dump( __METHOD__, __LINE__);
 
       // Query for all filter items
     $select   = "COUNT( * ) AS 'count', LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
-//    $where    = "(" . implode ( " OR ", $arrfindInSet ) . ")";
-//    $where    = $where . $this->pObj->cObj->enableFields( $table );
-//    $localWhere = $this->pObj->objLocalise->localisationFields_where( $table );
-//    if( $localWhere )
-//    {
-//      $where  = $where . " AND " . $localWhere;
-//    }
-    $from   = $this->sqlStatement_from( );
+    $from   = $this->sqlStatement_from( $table );
     $strFindInSet = "(" . implode ( " OR ", $arrfindInSet ) . ")";
-    $where        = $this->sqlStatement_where( $strFindInSet );
+    $where        = $this->sqlStatement_where( $table, $strFindInSet );
     $groupBy  = "LEFT ( " . $tableField . ", " . $length . " )";
     $orderBy  = "LEFT ( " . $tableField . ", " . $length . " )";
     $limit    = null;
@@ -1523,12 +1522,19 @@ var_dump( __METHOD__, __LINE__);
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function sqlStatement_from( )
+  private function sqlStatement_from( $table )
   {
-      // Do we have a search word?
-      // Is a filter selected?
+    switch( true )
+    {
+      case( isset( $this->pObj->piVars['sword'] ) ):
+      case( $this->var_aFilterIsSelected( ) ):
+        $from = $this->pObj->objSql->sql_query_statements['rows']['from'];
+        break;
+      default:
+        $from = $table;
+        break;
+    }
     
-    $from   = $this->pObj->objSql->sql_query_statements['rows']['from'];
     return $from;
   }
 
@@ -1537,40 +1543,72 @@ var_dump( __METHOD__, __LINE__);
 /**
  * sqlStatement_where( ): SQL statement WHERE without a WHERE
  *
+ * @param   string	$table  : The current from table
  * @param   string	$andWhereFindInSet  : FIND IN SET
  * @return	string  $where : WHERE statement without a WHERE
  * @version 3.9.12
  * @since   3.9.12
  */
 
-  private function sqlStatement_where( $andWhereFindInSet )
+  private function sqlStatement_where( $table, $andWhereFindInSet )
   {
-      // Do we have a search word?
-      // Is a filter selected?
-
-//    $where    = $where . $this->pObj->cObj->enableFields( $table );
-//    $localWhere = $this->pObj->objLocalise->localisationFields_where( $table );
-//    if( $localWhere )
-//    {
-//      $where  = $where . " AND " . $localWhere;
-//    }
-
-    $where  = $this->pObj->objSql->sql_query_statements['rows']['where'];
-    if( $where )
+    switch( true )
     {
-      if( $andWhereFindInSet )
-      {
+      case( isset( $this->pObj->piVars['sword'] ) ):
+      case( $this->var_aFilterIsSelected( ) ):
+        $where  = $this->pObj->objSql->sql_query_statements['rows']['where'];
+        $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
+        $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
+        break;
+      default:
+        $where    = $where . $this->pObj->cObj->enableFields( $table );
+        if( empty ( $where ) )
+        {
+          $where = "1";
+        }
+        $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
+        if( $llWhere )
+        {
+          $where  = $where . " AND " . $llWhere;
+        }
+        break;
+    }
+
+    return $where;
+  }
+
+
+
+/**
+ * sqlStatement_whereAndFindInSet( ): SQL statement WHERE without a WHERE
+ *
+ * @param   string	$where              : The current WHERE statement
+ * @param   string	$andWhereFindInSet  : FIND IN SET
+ * @return	string  $where              : WHERE statement without a WHERE
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+
+  private function sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet )
+  {
+      // RETURN : there isn't any FIND IN SET
+    if( ! $andWhereFindInSet )
+    {
+      return $where;
+    }
+      // RETURN : there isn't any FIND IN SET
+
+    switch( true )
+    {
+      case( $where ):
         $where = $where . " AND " . $andWhereFindInSet;
-      }
-    }
-    if( empty ( $where ) )
-    {
-      if( $andWhereFindInSet )
-      {
+        break;
+      case( empty( $where ) ):
+      default:
         $where = $andWhereFindInSet;
-      }
+        break;
     }
-    $where    = $where . $this->pObj->objFltr4x->andWhereFilter;
+
     return $where;
   }
 
@@ -1677,6 +1715,68 @@ var_dump( __METHOD__, __LINE__);
 
       // RETURN ###INDEXBROWSERTABS###
     return '###INDEXBROWSERTABS###';
+  }
+
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * Variables: init and get
+    *
+    **********************************************/
+
+
+
+/**
+ * var_aFilterIsSelected( ):
+ *
+ * @return	string  $from   : FROM statement without a from
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function var_aFilterIsSelected( )
+  {
+      // RETURN : var is initialised
+    if( ! $this->aFilterIsSelected === null )
+    {
+      return $this->aFilterIsSelected;
+    }
+      // RETURN : var is initialised
+
+      // RETURN : no piVars, set var to false
+    if( empty( $this->pObj->piVars ) )
+    {
+      $this->aFilterIsSelected = false;
+      return $this->aFilterIsSelected;
+    }
+      // RETURN : no piVars, set var to false
+
+    foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
+    {
+      foreach( ( array ) $fields as $fieldWiDot => $elements )
+      {
+        if( substr( $fieldWiDot, -1 ) != '.' )
+        {
+          continue;
+        }
+        $field      = substr($fieldWiDot, 0, -1);
+        $tableField = $tableWiDot . $field;
+        if( isset( $this->pObj->piVars[$tableField] ) )
+        {
+          $this->aFilterIsSelected = true;
+          return $this->aFilterIsSelected;
+        }
+      }
+    }
+
+    $this->aFilterIsSelected = false;
+    return $this->aFilterIsSelected;
   }
 
 
