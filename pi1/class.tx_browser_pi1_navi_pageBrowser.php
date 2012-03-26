@@ -138,6 +138,7 @@ class tx_browser_pi1_navi_pageBrowser
 
     $this->count( );
 
+    $arr_return['data']['content']  = $this->sum;
 //:TODO: Anzahl Datensaetze
 return $arr_return;
 
@@ -333,22 +334,40 @@ return $arr_return;
  */
   private function count( )
   {
-    $this->count_resSql( );
+    $arr_return = $this->count_resSql( );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    $res = $arr_return['data']['res'];
+      // SQL result with sum of records, depending on search word and filter
+
+      // Add the sum to the tab with the special char attribute
+    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
+
+      // Free SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+
+    $this->sum = $row['count'];
+
+    return false;
   }
 
 
 
 /**
- * count_resSql( ):
+ * count_resSql( ): Builds the query for counting rows, executes it and returns
+ *                  the SQL ressource.
+ *                  Result depends on search word and filter.
  *
- * @return  array   $res  : SQL ressource
+ * @return  array   $arr_return : SQL ressource or an error message in case of on arror
  * @version 3.9.12
  * @since   3.9.12
  */
   private function count_resSql( )
   {
       // Get current table.field of the index browser
-    $tableField           = $this->pObj->localTable['uid'];
+    $tableField           = $this->pObj->arrLocalTable['uid'];
     list( $table, $field) = explode( '.', $tableField );
 
       // Query for all filter items
@@ -369,7 +388,6 @@ return $arr_return;
                 $orderBy,
                 $limit
               );
-die( $query );
       // Execute query
     $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
               (
