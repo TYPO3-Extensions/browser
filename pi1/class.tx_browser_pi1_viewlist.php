@@ -1886,15 +1886,17 @@ if( $this->pObj->bool_accessByIP )
     {
       return $arr_return;
     }
+    $content = $arr_return['data']['content'];
 
-    $content        = $arr_return['data']['content'];
-    $this->content  = $this->pObj->cObj->substituteSubpart
-                      (
-                        $this->content,
-                        '###PAGEBROWSER###',
-                        $content,
-                        true
-                      );
+    $markerArray                            = $this->pObj->objWrapper->constant_markers( );
+    $markerArray['###RESULT_AND_ITEMS###']  = $content;
+    $markerArray['###MODE###']              = $this->mode;
+    $markerArray['###VIEW###']              = $this->view;
+    $subpart      = $this->pObj->cObj->getSubpart($this->content, '###PAGEBROWSER###');
+    $pageBrowser  = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
+    $this->content     = $this->pObj->cObj->substituteSubpart($this->content, '###PAGEBROWSER###', $pageBrowser, true);
+
+
 
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'subpart_setPageBrowser end' );
     return;

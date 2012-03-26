@@ -210,7 +210,6 @@ class tx_browser_pi1_navi_pageBrowser
       ///////////////////////////////////////////////
       //
       // Get the wrapped pagebrowser
-var_dump( __METHOD__, __LINE__, $confPageBrowser );
 
     $res_items  = $this->pObj->pi_list_browseresults
                   (
@@ -224,81 +223,10 @@ var_dump( __METHOD__, __LINE__, $confPageBrowser );
 
 
 
-      ///////////////////////////////////////////////
-      //
-      // Build the template
-
-    $markerArray                            = $this->pObj->objWrapper->constant_markers( );
-    $markerArray['###RESULT_AND_ITEMS###']  = $res_items;
-    $markerArray['###MODE###']              = $this->mode;
-    $markerArray['###VIEW###']              = $this->view;
-    $subpart      = $this->pObj->cObj->getSubpart($template, '###PAGEBROWSER###');
-    $pageBrowser  = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
-
-$GLOBALS['TSFE']->id            = $globalTsfeId; // #9458
-$arr_return['data']['content']  = $res_items;
-return $arr_return;
-
-    $template     = $this->pObj->cObj->substituteSubpart($template, '###PAGEBROWSER###', $pageBrowser, true);
-      // Build the template
-
-
-
-      ///////////////////////////////////////////////
-      //
-      // Process the rows
-
-    $int_start  = $this->pObj->piVars[$confPageBrowser['pointer']] * $confPageBrowser['results_at_a_time'];
-    $int_amount = $confPageBrowser['results_at_a_time'];
-
-    $int_counter = 0;
-    $int_remove_start = $int_start;
-    $int_remove_end   = $int_start + $int_amount;
-    $drs_rows_before  = count($rows);
-    foreach ($rows as $row => $elements)
-    {
-      if ($int_counter < $int_remove_start || $int_counter >= $int_remove_end)
-      {
-        unset($rows[$row]);
-      }
-      $int_counter++;
-    }
-    $drs_rows_after = count($rows);
-      // Process the rows
-
-
-
-      ///////////////////////////////////////////////
-      //
-      // DRS - Development Reporting System
-
-    if ($drs_rows_after != $drs_rows_before)
-    {
-      $removed_rows = $drs_rows_before - $drs_rows_after;
-      if ($this->pObj->b_drs_templating)
-      {
-        t3lib_div::devlog('[INFO/TEMPLATING] The pagebrowser has #'.$removed_rows.' rows removed.',  $this->pObj->extKey, 0);
-      }
-    }
-      // DRS - Development Reporting System
-
-
-
-      ///////////////////////////////////////////////
-      //
-      // RETURN the result
-
-    $arr_return['data']['template'] = $template;
-    $arr_return['data']['rows']     = $rows;
     $GLOBALS['TSFE']->id            = $globalTsfeId; // #9458
+    $arr_return['data']['content']  = $res_items;
     return $arr_return;
-      // RETURN the result
 
-##############################################################################
-    $this->content                  = $content;
-    $arr_return['data']['content']  = $content;
-
-    return $arr_return;
   }
 
 
