@@ -223,9 +223,9 @@ class tx_browser_pi1_navi_indexBrowser
     $arr_return['data']['content']  = $content;
 
       // RETURN: requirements aren't met
-    if( ! $this->requirements_check( ) )
+    $arr_return = $this->requirements_check( );
+    if( ! empty( $arr_return ) )
     {
-      $arr_return['data']['content'] = null;
       return $arr_return;
     }
       // RETURN: requirements aren't met
@@ -385,7 +385,8 @@ class tx_browser_pi1_navi_indexBrowser
         t3lib_div::devlog( '[HELP/NAVI+LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
       }
         // DRS
-      return false;
+      $arr_return['data']['content'] = 'Sorry: index browser isn\'t localised in browser version 4.0.x';
+      return $arr_return;
     }
 
       // RETURN false : index browser hasn't any configured tab
