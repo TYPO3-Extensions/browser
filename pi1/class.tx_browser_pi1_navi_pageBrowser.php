@@ -124,17 +124,17 @@ class tx_browser_pi1_navi_pageBrowser
 
 
 /**
- * get( ): Get the index browser. It has to replace the subpart in the current content.
+ * get( ): Get the page browser for the subpart in the current content.
  *
- * @param	string		$content: current content
- * @return	array
+ * @param	string		$content    : current content
+ * @return	array   $arr_return : Contains null or the page browser
  * @version 3.9.12
  * @since   3.9.9
  */
   public function get( $content )
   {
-    $this->content                  = $content;
-    $arr_return['data']['content']  = 'Page Browser';
+      // Set class var
+    $this->content = $content;
 
       // RETURN : pagebrowser shouldn't displayed
     if( ! $this->pObj->objFlexform->bool_pageBrowser )
@@ -144,13 +144,13 @@ class tx_browser_pi1_navi_pageBrowser
     }
       // RETURN : pagebrowser shouldn't displayed
 
-      // RETURN : firstVisit but emptyListByStart
+      // RETURN : firstVisit but emptyListAtStart
     if( $this->pObj->boolFirstVisit && $this->pObj->objFlexform->bool_emptyAtStart )
     {
       $arr_return['data']['content'] = null;
       return $arr_return;
     }
-      // RETURN : firstVisit but emptyListByStart
+      // RETURN : firstVisit but emptyListAtStart
 
       // Set class var sum
     $this->count( );
@@ -161,8 +161,7 @@ class tx_browser_pi1_navi_pageBrowser
       $arr_return['data']['content'] = null;
       return $arr_return;
     }
-
-
+      // RETURN : there isn't any record.
 
       // Backup $GLOBALS['TSFE']->id
     $globalTsfeId = $GLOBALS['TSFE']->id;
@@ -173,38 +172,13 @@ class tx_browser_pi1_navi_pageBrowser
     }
       // Setup $GLOBALS['TSFE']->id temporarily
 
+      // Set TypoScript property
+    $this->tsResultsAtATime( );
 
-
-      ///////////////////////////////////////////////
-      //
-      // Change pagebrowser TypoScript in case of limit
-
-    if( $this->conf_view['limit'] )
-    {
-      list( $start, $limit ) = explode( ',', $this->conf_view['limit'] );
-      if( $limit < 1 )
-      {
-        $limit = 20;
-      }
-      $this->conf['navigation.']['pageBrowser.']['results_at_a_time'] = trim( $limit );
-
-        // DRS - Development Reporting System
-      if( $this->pObj->b_drs_navi )
-      {
-        $prompt = 'pageBrowser.result_at_a_time is overriden by limit property of current view: ' . $limit . '.';
-        t3lib_div::devlog('[INFO/NAVI] ' . $prompt,  $this->pObj->extKey, 0);
-      }
-        // DRS - Development Reporting System
-    }
-      // Change pagebrowser TypoScript in case of limit
-
-
-
-      ///////////////////////////////////////////////
-      //
-      // Init piBase for pagebrowser
-
+      // Get TypoScript configuration
     $confPageBrowser = $this->conf['navigation.']['pageBrowser.'];
+
+      // Init piBase for pagebrowser
     $this->pObj->internal['res_count']          = $this->sum;
     $this->pObj->internal['maxPages']           = $confPageBrowser['maxPages'];
     $this->pObj->internal['showRange']          = $confPageBrowser['showRange'];
@@ -214,12 +188,7 @@ class tx_browser_pi1_navi_pageBrowser
     $this->pObj->internal['dontLinkActivePage'] = $confPageBrowser['dontLinkActivePage'];
       // Init piBase for pagebrowser
 
-
-
-      ///////////////////////////////////////////////
-      //
       // Get the wrapped pagebrowser
-
     $res_items  = $this->pObj->pi_list_browseresults
                   (
                     $confPageBrowser['showResultCount'],
@@ -230,12 +199,12 @@ class tx_browser_pi1_navi_pageBrowser
                   );
       // Get the wrapped pagebrowser
 
-
-
+      // Reset $GLOBALS['TSFE']->id
     $GLOBALS['TSFE']->id            = $globalTsfeId; // #9458
+
+      // RETURN the content
     $arr_return['data']['content']  = $res_items;
     return $arr_return;
-
   }
 
 
@@ -255,9 +224,10 @@ class tx_browser_pi1_navi_pageBrowser
 
 
 /**
- * count( ):
+ * count( ):  Counts records. If index browser is enabled, sum will taken from it.
+ *            Otherwise there will a database query.
  *
- * @return	[type]		...
+ * @return	array   $arr_return : Contains an error message in case of an error
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -294,10 +264,9 @@ class tx_browser_pi1_navi_pageBrowser
 
 /**
  * count_fromIndexBrowser( ):  Take the sum from the index browser, if it
- *                                is enabled
+ *                             is enabled, and set the class var sum.
  *
- * @param	string		$table  : The current from table
- * @return	string		$from   : FROM statement without a from
+ * @return	void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -477,6 +446,58 @@ class tx_browser_pi1_navi_pageBrowser
     return $where;
   }
 
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * TypoScript
+    *
+    **********************************************/
+
+
+
+/**
+ * tsResultsAtATime( ): Override the TypoScript property results_at_a_time, if
+ *                      the current view has a limit.
+ *
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  public function tsResultsAtATime( )
+  {
+      // RETURN : current view hasn't any limit
+    if( empty( $this->conf_view['limit'] ) )
+    {
+      return;
+    }
+      // RETURN : current view hasn't any limit
+
+      // Get the limit
+    list( $start, $limit ) = explode( ',', $this->conf_view['limit'] );
+
+      // Set default limit
+    if( $limit < 1 )
+    {
+      $limit = 20;
+    }
+
+      // Override ts property
+    $this->conf['navigation.']['pageBrowser.']['results_at_a_time'] = trim( $limit );
+
+      // DRS - Development Reporting System
+    if( $this->pObj->b_drs_navi )
+    {
+      $prompt = 'pageBrowser.result_at_a_time is overriden by limit property of current view: ' .
+                $limit . '.';
+      t3lib_div::devlog('[INFO/NAVI] ' . $prompt,  $this->pObj->extKey, 0);
+    }
+      // DRS - Development Reporting System
+  }
 
 
 
