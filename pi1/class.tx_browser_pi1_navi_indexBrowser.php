@@ -224,11 +224,13 @@ class tx_browser_pi1_navi_indexBrowser
 
       // RETURN: requirements aren't met
     $arr_return = $this->requirements_check( );
+var_dump( __METHOD__, __LINE__, $arr_return );
     if( ! empty( $arr_return ) )
     {
       return $arr_return;
     }
       // RETURN: requirements aren't met
+var_dump( __METHOD__, __LINE__);
 
       // RETURN : table is not the local table
     $arr_return = $this->tableField_check( );
