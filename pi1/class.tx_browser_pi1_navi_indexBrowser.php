@@ -1091,7 +1091,7 @@ class tx_browser_pi1_navi_indexBrowser
       $strFindInSet = "NOT (" . $strFindInSet . ")";
     }
       // Query for all filter items
-    $select   = "COUNT( * ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
+    $select = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
     $from   = $this->sqlStatement_from( $table );
     $where  = $this->sqlStatement_where( $table, $strFindInSet );
 
@@ -1284,8 +1284,8 @@ class tx_browser_pi1_navi_indexBrowser
     list( $table, $field) = explode( '.', $tableField );
 
       // Query for all filter items
-    $select   = "COUNT( * ) AS 'count', LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
-    $from   = $this->sqlStatement_from( $table );
+    $select   = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
+    $from     = $this->sqlStatement_from( $table );
     $strFindInSet = "(" . implode ( " OR ", $arrfindInSet ) . ")";
     $where        = $this->sqlStatement_where( $table, $strFindInSet );
     $groupBy  = "LEFT ( " . $tableField . ", " . $length . " )";
