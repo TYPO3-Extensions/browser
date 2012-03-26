@@ -38,22 +38,25 @@
  *
  *
  *
- *   60: class tx_browser_pi1_navi_pageBrowser
- *  102:     public function __construct($parentObj)
+ *   63: class tx_browser_pi1_navi_pageBrowser
+ *  105:     public function __construct($parentObj)
  *
  *              SECTION: Main
- *  134:     public function get( $content )
+ *  137:     public function get( $content )
  *
  *              SECTION: Counting
- *  264:     private function count( )
- *  304:     private function count_fromIndexBrowser( )
- *  336:     private function count_resSql( )
+ *  237:     private function count( )
+ *  276:     private function count_fromIndexBrowser( )
+ *  308:     private function count_resSql( )
  *
  *              SECTION: SQL statements
- *  422:     private function sqlStatement_from( $table )
- *  449:     private function sqlStatement_where( $table )
+ *  394:     private function sqlStatement_from( $table )
+ *  421:     private function sqlStatement_where( $table )
  *
- * TOTAL FUNCTIONS: 7
+ *              SECTION: TypoScript
+ *  475:     public function tsResultsAtATime( )
+ *
+ * TOTAL FUNCTIONS: 8
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -127,7 +130,7 @@ class tx_browser_pi1_navi_pageBrowser
  * get( ): Get the page browser for the subpart in the current content.
  *
  * @param	string		$content    : current content
- * @return	array   $arr_return : Contains null or the page browser
+ * @return	array		$arr_return : Contains null or the page browser
  * @version 3.9.12
  * @since   3.9.9
  */
@@ -227,7 +230,7 @@ class tx_browser_pi1_navi_pageBrowser
  * count( ):  Counts records. If index browser is enabled, sum will taken from it.
  *            Otherwise there will a database query.
  *
- * @return	array   $arr_return : Contains an error message in case of an error
+ * @return	array		$arr_return : Contains an error message in case of an error
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -465,6 +468,7 @@ class tx_browser_pi1_navi_pageBrowser
  * tsResultsAtATime( ): Override the TypoScript property results_at_a_time, if
  *                      the current view has a limit.
  *
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
