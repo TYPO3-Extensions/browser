@@ -1279,10 +1279,11 @@ class tx_browser_pi1_navi_indexBrowser
       // DRS
 
       // Get current table.field of the index browser
-    list( $table, $field) = explode( '.', $this->indexBrowserTableField);
+    $tableField           = $this->indexBrowserTableField;
+    list( $table, $field) = explode( '.', $tableField );
 
       // Query for all filter items
-    $select   = "COUNT( * ) AS 'count', LEFT ( " . $field . ", " . $length . " ) AS 'initial'";
+    $select   = "COUNT( * ) AS 'count', LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
     $from     = $table;
     $where    = "(" . implode ( " OR ", $arrfindInSet ) . ")";
     $where    = $where . $this->pObj->cObj->enableFields( $table );
@@ -1291,8 +1292,8 @@ class tx_browser_pi1_navi_indexBrowser
     {
       $where  = $where . " AND " . $localWhere;
     }
-    $groupBy  = "LEFT ( " . $field . ", " . $length . " )";
-    $orderBy  = "LEFT ( " . $field . ", " . $length . " )";
+    $groupBy  = "LEFT ( " . $tableField . ", " . $length . " )";
+    $orderBy  = "LEFT ( " . $tableField . ", " . $length . " )";
     $limit    = null;
 
       // Get query
@@ -1359,7 +1360,8 @@ class tx_browser_pi1_navi_indexBrowser
   private function count_specialChars_setSqlFindInSet( $row )
   {
       // Get current table.field of the index browser
-    list( $table, $field) = explode( '.', $this->indexBrowserTableField);
+    $tableField           = $this->indexBrowserTableField;
+    list( $table, $field) = explode( '.', $tableField );
 
       // LOOP : generate a find in set statement for each special char
     foreach( $row as $char => $length )
@@ -1368,7 +1370,7 @@ class tx_browser_pi1_navi_indexBrowser
       {
         continue;
       }
-      $this->findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $field . ", " . $length . " ), '" . $char . "' )";
+      $this->findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
     }
       // LOOP : generate a find in set statement for each special char
   }
