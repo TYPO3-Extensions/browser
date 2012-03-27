@@ -758,10 +758,92 @@ class tx_browser_pi1_sql
 
 
 
+  /**
+   * global_stdWrap: The method wraps sql query parts
+   *
+   * @param	string		$str_tsProperty: the name of the current array like select. or override.select.
+   * @param	string		$str_tsValue:    the TypoScript value like: tt_news.title, tt_news.short
+   * @param	array		$arr_tsArray:    the TypoScript array like select. or override.select.
+   * @return	string		wrapped value, if there is a stdWrap configuration
+   * @version 4.0.0
+   */
+  private function global_stdWrap( $str_tsProperty, $str_tsValue, $arr_tsArray )
+  {
+    $conf       = $this->conf;
+    $mode       = $this->piVar_mode;
+    $view       = $this->view;
+    $conf_path  = $this->conf_path;
+    $conf_view  = $this->conf_view;
+
+      // RETURN value, if there is no stdWrap configuration
+    if( ! is_array( $arr_tsArray ) )
+    {
+      if( $this->pObj->b_drs_sql )
+      {
+        $prompt = $str_tsProperty . ' hasn\'t any stdWrap.';
+        t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 'If you like to wrap it, please configure ' . $conf_path . $str_tsProperty. '.value ...';
+        t3lib_div::devLog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
+      }
+      return $str_tsValue;
+    }
+      // RETURN value, if there is no stdWrap configuration
+
+      // RETURN value, if property isn't uppercase
+    if( $str_tsValue != strtoupper( $str_tsValue ) )
+    {
+      if( $this->pObj->b_drs_sql )
+      {
+        $prompt = $str_tsValue. ' doesn\'t seem to be a TypoScript object like TEXT or COA.';
+        t3lib_div::devlog('[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3);
+        $prompt = 'There will be any wrap.';
+        t3lib_div::devlog('[WARN/SQL] ' . $prompt, $this->pObj->extKey, 2);
+        $prompt = 'If you like to wrap it, please configure i.e. '.
+                  $conf_path . $str_tsProperty . ' = TEXT and ' .
+                  $conf_path . $str_tsProperty . '.value = your value';
+        t3lib_div::devLog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
+      }
+      return $str_tsValue;
+    }
+      // RETURN value, if property isn't uppercase
+
+      // RETURN value, if property is empty
+    if( empty ( $str_tsValue ) )
+    {
+      if ($this->pObj->b_drs_sql)
+      {
+        $prompt = $str_tsValue. ' doesn\'t seem to be a TypoScript object like TEXT or COA.';
+        t3lib_div::devlog('[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3);
+        $prompt = 'There will be any wrap.';
+        t3lib_div::devlog('[WARN/SQL] ' . $prompt, $this->pObj->extKey, 2);
+        $prompt = 'If you like to wrap it, please configure i.e. '.
+                  $conf_path . $str_tsProperty . ' = TEXT and ' .
+                  $conf_path . $str_tsProperty . '.value = your value';
+        t3lib_div::devLog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
+      }
+      return $str_tsValue;
+    }
+    // RETURN value, if property isn't uppercase
+
+    $lConfCObj    = false;
+    $elements     = false;
+    $str_tsValue  = $this->pObj->cObj->cObjGetSingle( $str_tsValue, $arr_tsArray );
+
+    if( $this->pObj->b_drs_sql )
+    {
+      $prompt = $conf_path . $str_tsProperty . ' is wrapped: ' . $str_tsValue;
+      t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+    }
+
+    return $str_tsValue;
   }
 
-  if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql.php']);
-  }
+
+
+}
+
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql.php']) {
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql.php']);
+}
 
 ?>
