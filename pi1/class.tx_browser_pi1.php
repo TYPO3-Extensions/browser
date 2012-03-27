@@ -1844,23 +1844,6 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
-      // class.tx_browser_pi1_sql.php
-
-      // [Array] The current TypoScript configuration array
-    $this->objSql->conf      = $this->conf;
-      // [Integer] The current mode (from modeselector)
-    $this->objSql->mode      = $this->piVar_mode;
-      // [String] 'list' or 'single': The current view
-    $this->objSql->view      = $this->view;
-      // [Array] The TypoScript configuration array of the current view
-    $this->objSql->conf_view = $conf_view;
-      // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objSql->conf_path = $conf_path;
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
       // class.tx_browser_pi1_socialmedia.php
 
       // [Array] The current TypoScript configuration array
@@ -1873,6 +1856,23 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objSocialmedia->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
     $this->objSocialmedia->conf_path = $conf_path;
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_sql.php
+
+      // [Array] The current TypoScript configuration array
+    $this->objSql->conf      = $this->conf;
+      // [Integer] The current mode (from modeselector)
+    $this->objSql->mode      = $this->piVar_mode;
+      // [String] 'list' or 'single': The current view
+    $this->objSql->view      = $this->view;
+      // [Array] The TypoScript configuration array of the current view
+    $this->objSql->conf_view = $conf_view;
+      // [String] TypoScript path to the current view. I.e. views.single.1
+    $this->objSql->conf_path = $conf_path;
 
 
 

@@ -177,7 +177,7 @@ class tx_browser_pi1_viewlist_4x
       // Set SQL query parts in general and statements for rows
 
 
-
+      // Init SQL 
     $this->sql( );
 
 

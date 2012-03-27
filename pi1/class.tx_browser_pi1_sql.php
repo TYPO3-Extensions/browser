@@ -134,7 +134,7 @@ class tx_browser_pi1_sql
     $this->pObj->timeTracking_log( __METHOD__, __LINE__, 'begin' );
 
       // Set the globals csvSelect, csvSelect, csvOrderBy, arrLocalTable
-    $arr_result = $this->pObj->objSqlFun->global_all( );
+    $arr_result = $this->global_all( );
     if( $arr_result['error']['status'] )
     {
         // Prompt the expired time to devlog
@@ -212,7 +212,7 @@ class tx_browser_pi1_sql
 
     $arr_return['error']['status'] = false;
 
-    //$this->pObj->dev_var_dump( $this->pObj->conf_sql );
+    //$this->pObj->dev_var_dump( $this->conf_sql );
 
 
     
@@ -337,6 +337,424 @@ class tx_browser_pi1_sql
 
 
 
+
+
+
+    /***********************************************
+    *
+    * Globals
+    *
+    **********************************************/
+
+
+
+/**
+ * global_all( ): Set the globals csvSelect, csvSearch, csvOrderBy, arrLocalTable
+ *
+ * @return	array		$arr_return : Array in case of an error with the error message
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+    private function global_all( )
+    {
+      $arr_return['error']['status'] = false;
+
+        // Set the globals csvSelect and arrLocalTable
+      if( ! $this->global_csvSelect( ) )
+      {
+        $str_header  =  '<h1 style="color:red;">' . $this->pObj->pi_getLL( 'error_sql_h1' ) . '</h1>';
+        $str_prompt  =  '<p style="color:red;font-weight:bold;">' .
+                          $this->pObj->pi_getLL( 'error_sql_select') .
+                        '</p>';
+        $arr_return['error']['status'] = true;
+        $arr_return['error']['header'] = $str_header;
+        $arr_return['error']['prompt'] = $str_prompt;
+        return $arr_return;
+      }
+        // Set the globals csvSelect and arrLocalTable
+
+        // Set the global csvSearch
+      if( ! $this->global_csvSearch( ) )
+      {
+        $str_header  =  '<h1 style="color:red;">' . $this->pObj->pi_getLL( 'error_sql_h1' ) . '</h1>';
+        $str_prompt  =  '<p style="color:red;font-weight:bold;">' .
+                          $this->pObj->pi_getLL( 'error_sql_search' ) .
+                        '</p>';
+        $arr_return['error']['status'] = true;
+        $arr_return['error']['header'] = $str_header;
+        $arr_return['error']['prompt'] = $str_prompt;
+        return $arr_return;
+      }
+        // Set the global csvSearch
+
+        // Set the global csvOrderBy
+      if( ! $this->global_csvOrderBy( ) )
+      {
+        $str_header  =  '<h1 style="color:red;">' . $this->pObj->pi_getLL( 'error_sql_h1' ) . '</h1>';
+        $str_prompt  =  '<p style="color:red;font-weight:bold;">' .
+                          $this->pObj->pi_getLL( 'error_sql_orderby' ) .
+                        '</p>';
+        $arr_return['error']['status'] = true;
+        $arr_return['error']['header'] = $str_header;
+        $arr_return['error']['prompt'] = $str_prompt;
+        return $arr_return;
+      }
+        // Set the global csvOrderBy
+
+        // #33892, 120219, dwildt+
+      $this->csvSelect      = $this->pObj->csvSelect;
+      $this->csvSearch      = $this->pObj->csvSearch;
+      $this->csvOrderBy     = $this->pObj->csvOrderBy;
+      $this->arrLocalTable  = $this->pObj->arrLocalTable;
+        // #33892, 120219, dwildt+
+
+      return $arr_return;
+    }
+
+
+
+
+
+
+
+ /**
+  * global_csvSelect( ): Set the global csvSelect. Values are from the TypoScript select
+  *
+  * @return	boolean		TRUE, if there is a orderBy value. FALSE, if there isn't any orderBy value
+  * @version 3.9.12
+  * @since   3.9.12
+  */
+    private function global_csvSelect( )
+    {
+      $conf       = $this->conf;
+      $mode       = $this->piVar_mode;
+      $view       = $this->view;
+      $conf_path  = $this->conf_path;
+      $conf_view  = $this->conf_view;
+
+ 
+
+        ///////////////////////////////////
+        //
+        // Get the SELECT statement
+
+      $this->pObj->csvSelect  = $conf_view['select'];
+      $this->pObj->csvSelect  = $this->global_stdWrap
+                                (
+                                  'select',
+                                  $this->pObj->csvSelect,
+                                  $conf_view['select.']
+                                );
+      $this->pObj->csvSelect = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $this->pObj->csvSelect );
+
+      if( empty( $this->pObj->csvSelect ) )
+      {
+        if( $this->pObj->b_drs_error )
+        {
+          $prompt = 'views.'.$viewWiDot.$mode.' hasn\'t any select fields.';
+          t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3 );
+          $prompt = 'Did you included the static template from this extensions?';
+          t3lib_div::devLog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
+          $prompt = 'Did you configure ' . $conf_path . '.select ?';
+          t3lib_div::devLog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
+          $prompt = 'ABORTED';
+          t3lib_div::devlog( '[WARN/SQL] ' . $prompt, $this->pObj->extKey, 2 );
+        }
+        return false;
+      }
+        // Get the SELECT statement
+
+
+
+        //////////////////////////////////////////////////////////////////////
+        //
+        // Get the parts behind an AS, replace aliases with real names
+
+      $csv_before_process = $this->pObj->csvSelect;
+      $csv_after_process  = $this->replace_statement( $csv_before_process );
+      $arr_csv            = explode( ',', $csv_after_process );
+      $arr_csv            = $this->clean_up_as_and_alias( $arr_csv );
+      $csv_after_process  = implode( ', ', $arr_csv );
+        // Get the parts behind an AS, replace aliases with real names
+
+
+        //////////////////////////////////////////////////////////////////////
+        //
+        // RETURN in case of an error
+
+      if( empty( $csv_after_process ) )
+      {
+        if ($this->pObj->b_drs_error)
+        {
+          $prompt = '$csv_after_process is FALSE or is empty.';
+          t3lib_div::devlog('[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3);
+          $prompt = 'ABORTED';
+          t3lib_div::devlog( '[WARN/SQL] ' . $prompt, $this->pObj->extKey, 2 );
+        }
+        return false;
+      }
+        // RETURN in case of an error
+
+
+
+        //////////////////////////////////////////////////////////////////////
+        //
+        // Delete the first table.field, if it is the uid of the arrLocalTable
+
+        // Init the global arrLocalTable, if it isn't inited
+      if( ! is_array( $this->pObj->arrLocalTable) )
+      {
+        $this->global_arrLocalTable( );
+      }
+
+      $str_deleted_tablefield = false;
+      $arr_tablefields        = explode( ',', $csv_after_process );
+      if( trim($arr_tablefields[0] ) == $this->pObj->arrLocalTable['uid'] )
+      {
+        $str_deleted_tablefield = $arr_tablefields[0];
+        unset( $arr_tablefields[0] );
+        foreach( ( array ) $arr_tablefields as $key => $value )
+        {
+          $arr_tablefields[$key] = trim( $value );
+        }
+        $csv_after_process = implode( ', ', $arr_tablefields );
+      }
+        // Delete the first table.field, if it is the uid of the arrLocalTable
+
+
+
+        ///////////////////////////////////
+        //
+        // DRS - Logging if user defined values were changed
+
+      if( $csv_before_process != $csv_after_process )
+      {
+        $this->pObj->csvSelect = $csv_after_process;
+        if( $this->pObj->b_drs_sql )
+        {
+          $prompt = 'Values for the global var csvSelect were changed.<br />
+             Before changing:<br />
+             '.$csv_before_process.'<br />
+             After changing:<br />
+             '.$csv_after_process;
+          t3lib_div::devlog('[INFO/SQL] '.$prompt, $this->pObj->extKey, 0);
+          if( $str_deleted_tablefield )
+          {
+            $prompt = $str_deleted_tablefield . ' is deleted, because it is the ' .
+                      'first field in the statement and the value of the localTable.uid.';
+            t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+          }
+        }
+      }
+        // DRS - Logging if user defined values were changed
+
+      return true;
+    }
+
+
+
+ /**
+  * global_csvSearch( ): Set the global csvSearch. Values are from the TypoScript.
+  *
+  *                      If search is empty, search will get the values out of the select statement.
+  *
+  * @return	boolean		TRUE
+  * @version 3.9.12
+  * @since   3.9.12
+  */
+    private function global_csvSearch( )
+    {
+      $conf = $this->conf;
+      $mode = $this->piVar_mode;
+      $view = $this->view;
+
+      $conf_view = $this->conf_view;
+
+
+        ///////////////////////////////////
+        //
+        // Get the SEARCH values
+
+      $csvSearch = $this->conf_sql['search'];
+      $csvSearch = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $csvSearch );
+
+      if ( empty( $csvSearch ) )
+      {
+        $csvSearch  = $this->conf_sql['select'];
+        $csvSearch  = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $csvSearch );
+        if( $this->pObj->b_drs_sql )
+        {
+          $prompt = 'views.' . $viewWiDot . $mode . ' hasn\'t any extra search field. It is OK.';
+          t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+        }
+      }
+
+        // Is there a statement, which should replaced with an alias?
+      foreach( ( array ) $conf_view['select.']['deal_as_table.'] as $arr_dealastable )
+      {
+        $csvSearch = str_replace( $arr_dealastable['statement'], $arr_dealastable['alias'], $csvSearch );
+        if( $this->pObj->b_drs_sql )
+        {
+          $prompt = 'Used tables: Statement "' . $arr_dealastable['statement'] . '" is replaced with "' . $arr_dealastable['alias'] . '"';
+          t3lib_div::devlog( '[INFO/SQL] ', $this->pObj->extKey, 0 );
+        }
+      }
+        // Is there a statement, which should replaced with an alias?
+
+      $this->pObj->csvSearch = $csvSearch;
+      // Get the SEARCH values
+
+      return true;
+    }
+
+
+
+ /**
+  * global_csvOrderBy( ): Set the global csvOrderBy. Values are from the TypoScript orderBy or select
+  *
+  * @return	boolean		TRUE, if there is a orderBy value. FALSE, if there isn't any orderBy value
+  * @version 3.9.12
+  * @since   3.9.12
+  */
+    private function global_csvOrderBy( )
+    {
+      $conf       = $this->conf;
+      $mode       = $this->piVar_mode;
+      $view       = $this->view;
+      $conf_path  = $this->conf_path;
+      $conf_view  = $this->conf_view;
+
+
+        ///////////////////////////////////
+        //
+        // Get the override ORDER BY clause
+
+      $orderBy = $this->conf_view['override.']['orderBy'];
+      $orderBy = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $orderBy );
+      if( $orderBy )
+      {
+        if( $this->pObj->b_drs_sql )
+        {
+          $prompt = $conf_path . '.override.orderBy is: ' . $orderBy;
+          t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+          $prompt = 'The system generated ORDER BY clause will be ignored!';
+          t3lib_div::devLog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+          $prompt = 'ORDER BY ' . $orderBy;
+          t3lib_div::devLog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+        }
+      }
+        // Get the override ORDER BY clause
+
+
+        ///////////////////////////////////
+        //
+        // If we don't have any override clause, get the ORDER BY clause. If there isn't any one: RETURN with an error
+
+      if( empty ( $orderBy ) )
+      {
+        $this->pObj->csvOrderBy = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $conf_view['orderBy'] );
+        if( empty( $this->pObj->csvOrderBy ) )
+        {
+          $this->pObj->csvOrderBy = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $conf_view['select'] );
+        }
+        if( empty( $this->pObj->csvOrderBy ) )
+        {
+          if ($this->pObj->b_drs_error)
+          {
+            $prompt = 'views.' . $viewWiDot . $mode . ' hasn\'t any orderBy fields.';
+            t3lib_div::devlog( '[ERROR/SQL] ', $this->pObj->extKey, 3 );
+            $prompt = 'ABORTED';
+            t3lib_div::devlog( '[WARN/SQL] '. $prompt, $this->pObj->extKey, 2 );
+          }
+          return false;
+        }
+      }
+        // If we don't have any override clause, get the ORDER BY clause. If there isn't any one: RETURN with an error
+
+
+        ///////////////////////////////////
+        //
+        // Get the parts behind an AS, replace aliases with real names
+
+      $csv_before_process = $this->pObj->csvOrderBy;
+      $csv_before_process = $this->replace_statement( $csv_before_process );
+      $arr_csv            = explode( ',', $csv_before_process );
+      $arr_csv            = $this->clean_up_as_and_alias( $arr_csv );
+      $csv_before_process = implode( ', ', $arr_csv );
+      $csv_after_process  = $csv_before_process;
+        // Get the parts behind an AS, replace aliases with real names
+
+
+
+        ///////////////////////////////////
+        //
+        // RETURN in case of an error
+
+      if( empty ( $csv_after_process ) )
+      {
+        if( $this->pObj->b_drs_error )
+        {
+          $prompt = '$csv_after_process is FALSE or is empty.';
+          t3lib_div::devlog('[ERROR/SQL] '. $prompt, $this->pObj->extKey, 3);
+          $prompt = 'ABORTED';
+          t3lib_div::devlog( '[WARN/SQL] '. $prompt, $this->pObj->extKey, 2 );
+        }
+        return false;
+      }
+        // RETURN in case of an error
+
+
+
+        ///////////////////////////////////
+        //
+        // Delete the first table.field, if it is the uid of the arrLocalTable
+
+        // Init the global arrLocalTable, if it isn't inited
+      if( ! is_array( $this->pObj->arrLocalTable ) )
+      {
+        $this->global_arrLocalTable( );
+      }
+
+      $str_deleted_tablefield = false;
+      $arr_tablefields        = explode( ',', $csv_after_process );
+      if( trim($arr_tablefields[0]) == $this->pObj->arrLocalTable['uid'] )
+      {
+        $str_deleted_tablefield = $arr_tablefields[0];
+        unset( $arr_tablefields[0] );
+        foreach( ( array ) $arr_tablefields as $key => $value )
+        {
+          $arr_tablefields[$key] = trim($value);
+        }
+        $csv_after_process = implode( ', ', $arr_tablefields );
+      }
+        // Init the global arrLocalTable, if it isn't inited
+
+
+        ////////////////////////////////////////////////////////////////////
+        //
+        // DRS - Logging if user defined values were changed
+
+      if( $csv_before_process != $csv_after_process )
+      {
+        $this->pObj->csvOrderBy = $csv_after_process;
+        if( $this->pObj->b_drs_sql )
+        {
+          $prompt = 'Values for the global var csvOrderBy were changed.<br />
+             Before changing:<br />
+             '.$csv_before_process.'<br />
+             After changing:<br />
+             '.$csv_after_process;
+          t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+          if ($str_deleted_tablefield)
+          {
+            $prompt = $str_deleted_tablefield . ' is deleted, because it is the first field in the statement and the value of the localTable.uid.';
+            t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+          }
+        }
+      }
+
+      return true;
+    }
 
 
 
