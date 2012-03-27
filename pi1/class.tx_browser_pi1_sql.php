@@ -471,9 +471,9 @@ class tx_browser_pi1_sql
         // Get the parts behind an AS, replace aliases with real names
 
       $csv_before_process = $this->pObj->csvSelect;
-      $csv_after_process  = $this->pObj->objSqlFun->replace_statement( $csv_before_process );
+      $csv_after_process  = $this->replace_statement( $csv_before_process );
       $arr_csv            = explode( ',', $csv_after_process );
-      $arr_csv            = $this->pObj->objSqlFun->clean_up_as_and_alias( $arr_csv );
+      $arr_csv            = $this->clean_up_as_and_alias( $arr_csv );
       $csv_after_process  = implode( ', ', $arr_csv );
         // Get the parts behind an AS, replace aliases with real names
 
@@ -677,9 +677,9 @@ class tx_browser_pi1_sql
         // Get the parts behind an AS, replace aliases with real names
 
       $csv_before_process = $this->pObj->csvOrderBy;
-      $csv_before_process = $this->pObj->objSqlFun->replace_statement( $csv_before_process );
+      $csv_before_process = $this->replace_statement( $csv_before_process );
       $arr_csv            = explode( ',', $csv_before_process );
-      $arr_csv            = $this->pObj->objSqlFun->clean_up_as_and_alias( $arr_csv );
+      $arr_csv            = $this->clean_up_as_and_alias( $arr_csv );
       $csv_before_process = implode( ', ', $arr_csv );
       $csv_after_process  = $csv_before_process;
         // Get the parts behind an AS, replace aliases with real names
@@ -765,7 +765,8 @@ class tx_browser_pi1_sql
    * @param	string		$str_tsValue:    the TypoScript value like: tt_news.title, tt_news.short
    * @param	array		$arr_tsArray:    the TypoScript array like select. or override.select.
    * @return	string		wrapped value, if there is a stdWrap configuration
-   * @version 4.0.0
+   * @version 3.9.12
+   * @since   3.9.12
    */
   private function global_stdWrap( $str_tsProperty, $str_tsValue, $arr_tsArray )
   {
@@ -837,6 +838,242 @@ class tx_browser_pi1_sql
 
     return $str_tsValue;
   }
+
+
+
+
+
+
+
+
+
+
+  /**
+   * replace_statement( ) : Replace a statement with an alias in a query part
+   *
+   * @param	string		$str_queryPart: The query part, in which should replaced a statement with an alias
+   * @return	string		Returns the processed query part
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function replace_statement( $str_queryPart )
+  {
+    $conf       = $this->conf;
+    $mode       = $this->piVar_mode;
+    $view       = $this->view;
+    $conf_path  = $this->conf_path;
+    $conf_view  = $this->conf_view;
+
+    if( ! is_array( $conf_view['select.']['deal_as_table.'] ) )
+    {
+      return $str_queryPart;
+    }
+
+    foreach( $conf_view['select.']['deal_as_table.'] as $arr_dealastable )
+    {
+      $statement      = $arr_dealastable['statement'];
+      $alias          = $arr_dealastable['alias'];
+      $str_queryPart  = str_replace( $statement, $alias, $str_queryPart );
+      if ($this->pObj->b_drs_sql)
+      {
+        $prompt = 'Statement is replaced with alias. Statement: \"'.$statement.'\"; ' .
+                  'Alias:  \"'.$alias.'\"';
+        t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+      }
+    }
+    return $str_queryPart;
+  }
+
+
+
+
+/**
+ * Replace table aliases in $arr_localtable. If there isn't any alias, than nothing will replaced.
+ *
+ * @param	array		$arr_aliastableField: Array with local table values
+ * @return	array		$arr_aliastableField with replaced table aliases.
+ */
+    function replace_tablealias($arr_aliastableField)
+    {
+      $conf = $this->pObj->conf;
+      $mode = $this->pObj->piVar_mode;
+      $view = $this->pObj->view;
+
+      $viewWiDot = $view.'.';
+      $conf_view = $conf['views.'][$viewWiDot][$mode.'.'];
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN, if we don't have any alias array
+
+      if (!is_array($conf_view['aliases.']['tables.']))
+      {
+        if ($this->pObj->b_drs_sql)
+        {
+          t3lib_div::devlog('[INFO/SQL] views.'.$viewWiDot.$mode.' hasn\'t any array aliases.tables. We don\'t process aliases.', $this->pObj->extKey, 0);
+        }
+        return $arr_aliastableField;
+      }
+
+
+      foreach ($arr_aliastableField as $key_field => $str_tablefield)
+      {
+        $arr_tablefield                   = explode ('.', trim($str_tablefield));
+        list($str_tablealias, $str_field) = $arr_tablefield;
+        $str_tablereal                    = $conf_view['aliases.']['tables.'][$str_tablealias];
+        if ($str_tablereal)
+        {
+          $arr_aliastableField[$key_field] = $str_tablereal.'.'.$str_field;
+        }
+      }
+      return $arr_aliastableField;
+    }
+
+
+
+
+
+
+    /**
+ * Get the SQL part behind the AS. If this is an alias, replace the alias with the real name.
+ *
+ * @param	array		$arr_tablefields: Array with table.field values maybe with an AS
+ * @return	array		$arr_tablefields with real names of table.fields
+ */
+    function clean_up_as_and_alias($arr_tablefields)
+    {
+      $conf = $this->pObj->conf;
+      $mode = $this->pObj->piVar_mode;
+      $view = $this->pObj->view;
+
+      $viewWiDot = $view.'.';
+      $conf_view = $conf['views.'][$viewWiDot][$mode.'.'];
+
+
+      if (!is_array($arr_tablefields))
+      {
+        return $arr_tablefields;
+      }
+
+      foreach((array) $arr_tablefields as $key => $value) {
+        //$value                 = $this->pObj->objZz->cleanCSV_from_lr_and_doubleSpace($value);
+        if (is_array($conf_view['select.']['deal_as_table.']))
+        {
+          foreach ($conf_view['select.']['deal_as_table.'] as $arr_dealastable)
+          {
+            $statement  = $arr_dealastable['statement'];
+            $alias      = $arr_dealastable['alias'];
+            $newvalue   = str_replace($statement, $alias, $value);
+            if ($newvalue != $value)
+            {
+              if ($this->pObj->b_drs_sql)
+              {
+                t3lib_div::devlog('[INFO/SQL] Statement is replaced with alias.<br />
+                  <br />
+                  Statement: "'.$statement.'"<br />
+                  Alias:  "'.$alias.'"', $this->pObj->extKey, 0);
+              }
+              $value = $newvalue;
+            }
+          }
+        }
+        $value                 = $this->get_sql_alias_behind($value);
+        $arr_tablefields[$key] = $value;
+      }
+      $arr_tablefields = $this->replace_tablealias($arr_tablefields);
+      return $arr_tablefields;
+    }
+
+
+
+
+
+    /**
+ * If there is a SQL table.field with an AS, returns the string bebefore the AS
+ *
+ * @param	string		$str_tablefield: table.field with an AS like "news.uid AS 'news.uid'"
+ * @return	string		Part before the AS. If there is no AS, it returns $str_tablefield
+ */
+    function get_sql_alias_before($str_tablefield)
+    {
+      return $this->get_sql_alias_behind_or_before($str_tablefield, true);
+    }
+
+
+
+
+
+
+
+
+    /**
+ * If there is a SQL table.field with an AS, returns the string behind the AS
+ *
+ * @param	string		$str_tablefield: table.field with an AS like "news.uid AS 'news.uid'"
+ * @return	string		Part behind the AS. If there is no AS, it returns $str_tablefield
+ */
+    function get_sql_alias_behind($str_tablefield)
+    {
+      return $this->get_sql_alias_behind_or_before($str_tablefield, false);
+    }
+
+
+
+
+
+
+
+
+    /**
+ * If there is a SQL table.field with an AS, returns the string before or behind the AS
+ *
+ * @param	string		$str_tablefield: table.field with an AS like "news.uid AS 'news.uid'"
+ * @param	boolean		$b_before_the_as: TRUE: return the string before the AS, FALSE: return the striong behind the AS
+ * @return	string		Returns the string before or behind the AS. If there is no AS, it returns $str_tablefield
+ */
+    function get_sql_alias_behind_or_before($str_tablefield, $b_before_the_as)
+    {
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN, if there isn't any AS
+
+      $arr_tablefield = explode (' AS ', $str_tablefield);
+      if(count($arr_tablefield) < 2)
+      {
+        return ($str_tablefield);
+      }
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Get the parts before and behind the AS, delete '
+
+      list($str_before_as, $str_behind_as) = $arr_tablefield;
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Return part before the AS, if $b_before_the_as is TRUE
+
+      if ($b_before_the_as) {
+        // We should return the part before the AS
+        return $str_before_as;
+      }
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Delete the apostroph ('), return the part after the AS
+
+      $str_behind_as = trim($str_behind_as);
+      $str_behind_as = str_replace('\'', '', $str_behind_as);
+      $str_behind_as = str_replace('`', '', $str_behind_as);
+
+      return $str_behind_as;
+    }
 
 
 
