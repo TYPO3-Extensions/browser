@@ -64,16 +64,16 @@
  * 1701:     function str_enableFields($realTable)
  *
  *              SECTION: Relation building
- * 1740:     private function init_class_boolAutorelation( )
- * 1817:     private function init_class_relations_mm_simple( )
- * 1921:     private function relations_confDRSprompt( )
- * 1998:     private function relations_dontUseFields( )
- * 2051:     private function relations_getForeignTable( $tables, $config, $configPath )
- * 2118:     private function relations_requirements( $table, $config, $configPath )
- * 2220:     private function relations_setMm( $table, $config, $foreignTable )
- * 2280:     private function relations_setSingle( $table, $columnsKey, $foreignTable)
+ * 1739:     private function init_class_relations_mm_simple( )
+ * 1843:     private function relations_confDRSprompt( )
+ * 1920:     private function relations_dontUseFields( )
+ * 1973:     private function relations_getForeignTable( $tables, $config, $configPath )
+ * 2040:     private function relations_requirements( $table, $config, $configPath )
+ * 2142:     private function relations_setMm( $table, $config, $foreignTable )
+ * 2202:     private function relations_setSingle( $table, $columnsKey, $foreignTable)
  *
  *              SECTION: Helper
+ * 2288:     private function init_class_boolAutorelation( )
  * 2364:     private function init_class_bLeftJoin( )
  * 2402:     private function init_class_statementTables( $type, $csvStatement )
  * 2447:     private function init_class_statementTablesByFilter( )
@@ -1729,13 +1729,13 @@ class tx_browser_pi1_sql_auto
 
 
 /**
-   * init_class_relations_mm_simple( ): Inits the class var $arr_relations_mm_simple,
-   *                                an array with the arrays MM and/or simple
-   *
-   * @return	void
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * init_class_relations_mm_simple( ): Inits the class var $arr_relations_mm_simple,
+ *                                an array with the arrays MM and/or simple
+ *
+ * @return	void
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function init_class_relations_mm_simple( )
   {
       // RETURN : autoconfig is switched off
@@ -2281,6 +2281,7 @@ class tx_browser_pi1_sql_auto
  *                                  the local and global array autoconfig.relations.
  *                                  Sets the class var $boolAutorelation.
  *
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
