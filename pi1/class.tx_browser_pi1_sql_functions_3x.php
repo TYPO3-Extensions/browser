@@ -23,7 +23,7 @@
 ***************************************************************/
 
 /**
-* The class tx_browser_pi1_sql_functions bundles methods with a workflow for sql queries and rows.
+* The class tx_browser_pi1_sql_functions_3x bundles methods with a workflow for sql queries and rows.
 * statement with a FROM and a WHERE clause and maybe with the array JOINS.
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
@@ -40,7 +40,7 @@
  *
  *
  *
- *   86: class tx_browser_pi1_sql_functions
+ *   86: class tx_browser_pi1_sql_functions_3x
  *  106:     function __construct($parentObj)
  *
  *              SECTION: Synonyms
@@ -83,7 +83,7 @@
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-class tx_browser_pi1_sql_functions
+class tx_browser_pi1_sql_functions_3x
 {
     // [String] SQL error message
   var $error = null;
@@ -2417,8 +2417,8 @@ class tx_browser_pi1_sql_functions
 
   }
 
-  if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_functions.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_functions.php']);
+  if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_functions_3x.php']) {
+    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_functions_3x.php']);
   }
 
 ?>
