@@ -1813,14 +1813,14 @@ class tx_browser_pi1_sql_auto
           // DRS
         if( $this->pObj->b_drs_tca )
         {
-          $prompt = 'Relation builduing is allowed from local table to foreign table ' .
+          $prompt = 'Relation building is allowed from local table to foreign table ' .
                     'only. But current table is a foreign table: ' . $table;
           t3lib_div::devlog( '[INFO/TCA] ' . $prompt, $this->pObj->extKey, 0 );
         }
           // DRS
+        return false;
       }
         // But table is a foreign table
-      return false;
     }
       // IF : relations from the local table only
 
