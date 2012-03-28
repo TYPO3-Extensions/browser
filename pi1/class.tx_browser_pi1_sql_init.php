@@ -160,16 +160,17 @@ class tx_browser_pi1_sql_init
       $this->pObj->timeTracking_log( __METHOD__, __LINE__, 'end' );
       return $arr_return;
     }
-    unset( $arr_return );
       // Set the globals csvSelect, csvSelect, csvOrderBy
 
-      // Set the SQL query statements
+//      // Init the class vars csvSelect, csvSelect, csvOrderBy, arrLocalTable
+//    $this->init_class_csv( );
+
+    // Set the SQL query statements
     $arr_return = $this->init_class_statements( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
-    unset( $arr_return );
       // SQL query array
 
       // Prompt the expired time to devlog
@@ -194,14 +195,33 @@ class tx_browser_pi1_sql_init
 
 
 
-  /**
- * init_class_statements( ):  Get the SQL statements.
- *                            Result depends on SQL mode manual or auto.
- *
- * @return	array
- * @version 3.9.9
- * @since   3.9.9
- */
+//  /**
+//   * init_class_csv( ): Set the class vars csvSelect, csvSearch, csvOrderBy, arrLocalTable
+//   *
+//   * @return	array		$arr_return : Array in case of an error with the error message
+//   * @version 3.9.12
+//   * @since   3.9.12
+//   */
+//  private function init_class_csv( )
+//  {
+//    $this->csvSelect      = $this->pObj->csvSelect;
+//    $this->csvSearch      = $this->pObj->csvSearch;
+//    $this->csvOrderBy     = $this->pObj->csvOrderBy;
+//    $this->arrLocalTable  = $this->pObj->arrLocalTable;
+//
+//    return $arr_return;
+//  }
+
+
+
+    /**
+   * init_class_statements( ):  Get the SQL statements.
+   *                            Result depends on SQL mode manual or auto.
+   *
+   * @return	array
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   private function init_class_statements( )
   {
       // RETURN : array in SQL manual mode
@@ -236,13 +256,13 @@ class tx_browser_pi1_sql_init
 
 
 
-/**
- * init_global_csv( ): Set the globals csvSelect, csvSearch, csvOrderBy, arrLocalTable
- *
- * @return	array		$arr_return : Array in case of an error with the error message
- * @version 3.9.12
- * @since   3.9.12
- */
+  /**
+   * init_global_csv( ): Set the globals csvSelect, csvSearch, csvOrderBy, arrLocalTable
+   *
+   * @return	array		$arr_return : Array in case of an error with the error message
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   private function init_global_csv( )
   {
     $arr_return['error']['status'] = false;
@@ -288,13 +308,6 @@ class tx_browser_pi1_sql_init
       return $arr_return;
     }
       // Set the global csvOrderBy
-
-      // #33892, 120219, dwildt+
-    $this->csvSelect      = $this->pObj->csvSelect;
-    $this->csvSearch      = $this->pObj->csvSearch;
-    $this->csvOrderBy     = $this->pObj->csvOrderBy;
-    $this->arrLocalTable  = $this->pObj->arrLocalTable;
-      // #33892, 120219, dwildt+
 
     return $arr_return;
   }
