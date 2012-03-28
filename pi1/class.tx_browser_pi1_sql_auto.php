@@ -157,6 +157,8 @@ class tx_browser_pi1_sql_auto
    */
   public function get_statements( )
   {
+    $this->init_class_statementTablesByFilter( );
+
       // Get SELECT
     $arr_return['data']['select'] = $this->get_statements_select( );
     if ( ! $arr_return['data']['select'] )
@@ -2007,9 +2009,9 @@ class tx_browser_pi1_sql_auto
       // Loop through the TCA of the foreign tables
 
     $tables = $this->pObj->arr_realTables_arrFields;
-    $tables = $this->statementTables['select']['localtable'];
-    $tables = $tables + $this->statementTables['select']['foreigntable'];
-
+    $tables = $this->statementTables['all']['localtable'];
+    $tables = $tables + $this->statementTables['all']['foreigntable'];
+var_dump( __METHOD__, __LINE__, $tables );
     foreach( (array ) $tables as $tableKey => $tableValue)
     {
       $arrColumns = $GLOBALS['TCA'][$tableKey]['columns'];
@@ -2343,6 +2345,7 @@ class tx_browser_pi1_sql_auto
   }
 
 
+
   /**
  * init_class_statementTables( ): Inits the class var statementTables.
  *          Var is an array like
@@ -2351,7 +2354,6 @@ class tx_browser_pi1_sql_auto
  *
  * @param	string		$type         : select, from, where, orderBy, groupBy
  * @param	string		$csvStatement : current SQL statement
- * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2378,14 +2380,31 @@ class tx_browser_pi1_sql_auto
         // CONTINUE : table is local table
       if( $table == $this->pObj->localTable )
       {
+        $this->statementTables['all']['localtable'][$table] = $table;
         $this->statementTables[$type]['localtable'][$table] = $table;
         continue;
       }
         // CONTINUE : table is local table
 
         // table is foreign table
+      $this->statementTables['all']['foreigntable'][$table] = $table;
       $this->statementTables[$type]['foreigntable'][$table] = $table;
     }
+  }
+
+
+
+  /**
+ * init_class_statementTablesByFilter( ):
+ *
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function init_class_statementTablesByFilter( )
+  {
+    $arrFilter  = array_keys( $this->conf_view['filter.'] );
+    $csvFilter  = implode( ', ', $arrFilter );
+    $this->init_class_statementTables( 'filter', $csvFilter );
   }
 
 
