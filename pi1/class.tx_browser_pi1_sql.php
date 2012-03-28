@@ -42,6 +42,31 @@
  *
  *
  *
+ *   72: class tx_browser_pi1_sql
+ *  127:     function __construct($parentObj)
+ *
+ *              SECTION: Query building
+ *  156:     function init( )
+ *  202:     private function get_queryArray( )
+ *  235:     public function get_queryArrayAuto( )
+ *
+ *              SECTION: Set global variables
+ *  383:     private function setGlobal_all( )
+ *  452:     private function setGlobal_csvSelect( )
+ *  590:     private function setGlobal_csvSearch( )
+ *  644:     private function setGlobal_csvOrderBy( )
+ *  796:     private function setGlobal_stdWrap( $str_tsProperty, $str_tsValue, $arr_tsArray )
+ *
+ *              SECTION: ZZ: Helper
+ *  911:     private function zz_aliasToTable( $arr_aliastableField )
+ *  960:     private function zz_sqlExpressionAndAliasToTable( $arr_tablefields )
+ *  998:     private function zz_sqlExpressionToAlias( $sqlStatement )
+ * 1038:     private function zz_getTableFieldWoAs( $tableFieldWiAlias )
+ * 1055:     private function zz_getAlias( $tableFieldWiAlias )
+ * 1080:     private function zz_getTableFieldOrAlias( $tableFieldWiAlias, $bool_returnTableField )
+ *
+ * TOTAL FUNCTIONS: 15
+ * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
 class tx_browser_pi1_sql
@@ -63,7 +88,7 @@ class tx_browser_pi1_sql
     // Variables set by the pObj (by class.tx_browser_pi1.php)
 
 
-  
+
     // [String] SQL error message
   var $error = null;
     // [String] SQL query
@@ -159,14 +184,14 @@ class tx_browser_pi1_sql
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
   }
 
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
   /**
  * get_queryArray( ):
  *
@@ -201,9 +226,9 @@ class tx_browser_pi1_sql
 
 
 
-  
+
   /**
- * get_queryArrayAuto( ): 
+ * get_queryArrayAuto( ):
  *
  * @return	array		array with the elements error and data. Data has the elements select, from, where, orderBy, groupBy.
  */
@@ -215,7 +240,7 @@ class tx_browser_pi1_sql
     //$this->pObj->dev_var_dump( $this->conf_sql );
 
 
-    
+
       /////////////////////////////////////////////////////////////////
       //
       // Get the SELECT statement
@@ -432,7 +457,7 @@ class tx_browser_pi1_sql
       $conf_path  = $this->conf_path;
       $conf_view  = $this->conf_view;
 
- 
+
 
         ///////////////////////////////////
         //
@@ -759,15 +784,15 @@ class tx_browser_pi1_sql
 
 
   /**
-   * setGlobal_stdWrap: The method wraps sql query parts
-   *
-   * @param	string		$str_tsProperty: the name of the current array like select. or override.select.
-   * @param	string		$str_tsValue:    the TypoScript value like: tt_news.title, tt_news.short
-   * @param	array		$arr_tsArray:    the TypoScript array like select. or override.select.
-   * @return	string		wrapped value, if there is a stdWrap configuration
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * setGlobal_stdWrap: The method wraps sql query parts
+ *
+ * @param	string		$str_tsProperty: the name of the current array like select. or override.select.
+ * @param	string		$str_tsValue:    the TypoScript value like: tt_news.title, tt_news.short
+ * @param	array		$arr_tsArray:    the TypoScript array like select. or override.select.
+ * @return	string		wrapped value, if there is a stdWrap configuration
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function setGlobal_stdWrap( $str_tsProperty, $str_tsValue, $arr_tsArray )
   {
     $conf       = $this->conf;
@@ -874,15 +899,15 @@ class tx_browser_pi1_sql
 
 
   /**
-   * zz_aliasToTable( ) : Moves aliases to tables in $arr_localtable.
-   *                                Aliases come from aliases.tables.
-   *                                If there isn't any alias, than nothing will replaced.
-   *
-   * @param	array		$arr_aliastableField: Array with local table values
-   * @return	array		$arr_aliastableField with replaced table aliases.
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * zz_aliasToTable( ) : Moves aliases to tables in $arr_localtable.
+ *                                Aliases come from aliases.tables.
+ *                                If there isn't any alias, than nothing will replaced.
+ *
+ * @param	array		$arr_aliastableField: Array with local table values
+ * @return	array		$arr_aliastableField with replaced table aliases.
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function zz_aliasToTable( $arr_aliastableField )
   {
     $conf       = $this->conf;
@@ -924,14 +949,14 @@ class tx_browser_pi1_sql
 
 
   /**
-   * zz_sqlExpressionAndAliasToTable( ) : Replaces in expressions to aliases all given
-   *                  table.field-alias pairs. Replaces all aliases to table.field.
-   *
-   * @param	array     $arr_tablefields  : Array with table.field values maybe with an AS
-   * @return	array		$arr_tablefields  : Array with table.fields (real names)
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * zz_sqlExpressionAndAliasToTable( ) : Replaces in expressions to aliases all given
+ *                  table.field-alias pairs. Replaces all aliases to table.field.
+ *
+ * @param	array		$arr_tablefields  : Array with table.field values maybe with an AS
+ * @return	array		$arr_tablefields  : Array with table.fields (real names)
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function zz_sqlExpressionAndAliasToTable( $arr_tablefields )
   {
     $conf       = $this->conf;
@@ -962,14 +987,14 @@ class tx_browser_pi1_sql
 
 
   /**
-   * zz_sqlExpressionToAlias( ) :  Replaces an expression in a SQL statement with
-   *                               the alias from the deal_as_table array
-   *
-   * @param   string		$sqlStatement : The current SQL statement
-   * @return	string		$sqlStatement : The handled SQL statement
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * zz_sqlExpressionToAlias( ) :  Replaces an expression in a SQL statement with
+ *                               the alias from the deal_as_table array
+ *
+ * @param	string		$sqlStatement : The current SQL statement
+ * @return	string		$sqlStatement : The handled SQL statement
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function zz_sqlExpressionToAlias( $sqlStatement )
   {
     $conf       = $this->conf;
@@ -1003,13 +1028,13 @@ class tx_browser_pi1_sql
 
 
   /**
-   * zz_getTableFieldWoAs( ) :  Cuts the AS ..., if table.field is with an AS ...
-   *
-   * @param	string      $tableFieldWiAlias  : table.field with an AS like "news.uid AS 'news.uid'"
-   * @return	string		$tableField         : table.field without an AS
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * zz_getTableFieldWoAs( ) :  Cuts the AS ..., if table.field is with an AS ...
+ *
+ * @param	string		$tableFieldWiAlias  : table.field with an AS like "news.uid AS 'news.uid'"
+ * @return	string		$tableField         : table.field without an AS
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function zz_getTableFieldWoAs( $tableFieldWiAlias )
     {
       $tableField = $this->zz_getTableFieldOrAlias( $tableFieldWiAlias, true );
@@ -1019,15 +1044,14 @@ class tx_browser_pi1_sql
 
 
   /**
-   * zz_getAlias( ) : Returns the part behind the AS, if table.field has an AS ...
-   *                  If not, it returns the table.field
-   *
-   *
-   * @param	string		$tableFieldWiAlias  : table.field with an AS like "news.uid AS 'news.uid'"
-   * @return	string	$alias              :	Part behind the AS. If there is no AS, it returns $str_tablefield
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * zz_getAlias( ) : Returns the part behind the AS, if table.field has an AS ...
+ *                  If not, it returns the table.field
+ *
+ * @param	string		$tableFieldWiAlias  : table.field with an AS like "news.uid AS 'news.uid'"
+ * @return	string		$alias              :	Part behind the AS. If there is no AS, it returns $str_tablefield
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function zz_getAlias( $tableFieldWiAlias )
     {
       $alias = $this->zz_getTableFieldOrAlias( $tableFieldWiAlias, false );
@@ -1042,17 +1066,17 @@ class tx_browser_pi1_sql
 
 
   /**
-   * zz_getTableFieldOrAlias( ) : Returns table.field or the alias.
-   *                              If $bool_returnTableField is true, it returns the table.field.
-   *                              If $bool_returnTableField is false, it returns the alias.
-   *                              If there isn't any AS ... it returns the table.field.
-   *
-   * @param	string		$tableFieldWiAlias      : table.field with an AS like "news.uid AS 'news.uid'"
-   * @param	boolean		$bool_returnTableField  : true: returns the table.field, false: returns the alias
-   * @return	string		Returns the string before or behind the AS. If there is no AS, it returns $str_tablefield
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * zz_getTableFieldOrAlias( ) : Returns table.field or the alias.
+ *                              If $bool_returnTableField is true, it returns the table.field.
+ *                              If $bool_returnTableField is false, it returns the alias.
+ *                              If there isn't any AS ... it returns the table.field.
+ *
+ * @param	string		$tableFieldWiAlias      : table.field with an AS like "news.uid AS 'news.uid'"
+ * @param	boolean		$bool_returnTableField  : true: returns the table.field, false: returns the alias
+ * @return	string		Returns the string before or behind the AS. If there is no AS, it returns $str_tablefield
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function zz_getTableFieldOrAlias( $tableFieldWiAlias, $bool_returnTableField )
   {
     list( $tableField, $alias ) = explode ( ' AS ', $tableFieldWiAlias );
