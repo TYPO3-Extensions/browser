@@ -42,21 +42,22 @@
  *
  *
  *
- *   63: class tx_browser_pi1_sql_init
- *  118:     public function __construct($parentObj)
+ *   64: class tx_browser_pi1_sql_init
+ *  119:     public function __construct($parentObj)
  *
- *              SECTION: Query building
- *  153:     private function init_class_statements( )
- *  184:     public function init_class_statementsSqlAuto( )
+ *              SECTION: Initialise variables
+ *  150:     public function init( )
  *
- *              SECTION: Initialise global vars
- *  330:     public function init( )
- *  370:     public function init_global_csv( )
- *  439:     private function init_global_csvSelect( )
- *  578:     private function init_global_csvSearch( )
- *  632:     private function init_global_csvOrderBy( )
+ *              SECTION: Initialise class variables
+ *  205:     private function init_class_statements( )
  *
- * TOTAL FUNCTIONS: 8
+ *              SECTION: Initialise global variables
+ *  246:     private function init_global_csv( )
+ *  315:     private function init_global_csvSelect( )
+ *  454:     private function init_global_csvSearch( )
+ *  508:     private function init_global_csvOrderBy( )
+ *
+ * TOTAL FUNCTIONS: 7
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -194,13 +195,13 @@ class tx_browser_pi1_sql_init
 
 
   /**
-   * init_class_statements( ):  Get the SQL statements.
-   *                            Result depends on SQL mode manual or auto.
-   *
-   * @return	array
-   * @version 3.9.9
-   * @since   3.9.9
-   */
+ * init_class_statements( ):  Get the SQL statements.
+ *                            Result depends on SQL mode manual or auto.
+ *
+ * @return	array
+ * @version 3.9.9
+ * @since   3.9.9
+ */
   private function init_class_statements( )
   {
       // RETURN : array in SQL manual mode

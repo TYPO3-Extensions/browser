@@ -39,34 +39,34 @@
  *
  *
  *
- *   74: class tx_browser_pi1_sql_auto
- *   97:     function __construct($parentObj)
+ *   75: class tx_browser_pi1_sql_auto
+ *  115:     public function __construct($parentObj)
  *
  *              SECTION: Main method
- *  120:     function get_statements()
+ *  141:     public function get_statements( )
  *
  *              SECTION: SQL relation building with user defined SELECT only
- *  274:     function select()
- *  462:     function sql_from()
- *  616:     function orderBy()
- *  764:     function groupBy()
- *  877:     function get_joins()
+ *  298:     public function select( )
+ *  467:     function sql_from()
+ *  621:     function orderBy()
+ *  769:     function groupBy()
+ *  882:     function get_joins( )
  *
  *              SECTION: SQL relation building WHERE
- * 1369:     function whereSearch()
- * 1626:     function whereClause()
- * 1840:     function andWhere()
- * 1924:     function arr_andWherePid()
- * 1960:     function str_andWherePid($realTable)
- * 2029:     function arr_andWhereEnablefields()
- * 2065:     function str_enableFields($realTable)
+ * 1374:     function whereSearch()
+ * 1631:     function whereClause()
+ * 1845:     function andWhere()
+ * 1929:     function arr_andWherePid()
+ * 1965:     function str_andWherePid($realTable)
+ * 2034:     function arr_andWhereEnablefields()
+ * 2070:     function str_enableFields($realTable)
  *
  *              SECTION: Methods for automatic SQL relation building
- * 2102:     function get_ts_autoconfig_relation()
- * 2168:     function get_arr_relations_mm_simple()
+ * 2107:     public function get_ts_autoconfig_relation()
+ * 2175:     public function get_arr_relations_mm_simple( )
  *
  *              SECTION: Manual SQL Query Building
- * 2569:     function get_sql_query($select, $from, $where, $group, $order, $limit)
+ * 2580:     function get_sql_query($select, $from, $where, $group, $order, $limit)
  *
  * TOTAL FUNCTIONS: 17
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -91,7 +91,7 @@ class tx_browser_pi1_sql_auto
     // Variables set by the pObj (by class.tx_browser_pi1.php)
 
 
-  
+
   var $boolAutorelation = true;
   // [Boolean] If it is TRUE, browser should try to build relations automatically
   var $arr_ts_autoconf_relation;
@@ -131,13 +131,13 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * get_statements( ): It returns the parts for a SQL query. OrderBy and GroupBy aren't used in the SQL statement.
-   * OrderBy is used in php multisort. GroupBy is used in context with consolidation.
-   *
-   * @return	array		array with the elements error and data. Data has the elements select, from, where, orderBy, groupBy.
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * get_statements( ): It returns the parts for a SQL query. OrderBy and GroupBy aren't used in the SQL statement.
+ * OrderBy is used in php multisort. GroupBy is used in context with consolidation.
+ *
+ * @return	array		array with the elements error and data. Data has the elements select, from, where, orderBy, groupBy.
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   public function get_statements( )
   {
 
@@ -292,7 +292,6 @@ class tx_browser_pi1_sql_auto
  *            Added fields will added to the consolidation array.
  *
  * @return	string		SQL select or FALSE, if there is an error
- *
  * @version 3.9.9
  * @since   2.0.0
  */
@@ -308,7 +307,7 @@ class tx_browser_pi1_sql_auto
     $select = false;
 
 
-    
+
       ////////////////////////////////////////////////////////////////////
       //
       // RETURN in case of override.select
@@ -379,7 +378,7 @@ class tx_browser_pi1_sql_auto
       // Add uid field of each table without uid
 
 
-    
+
       ////////////////////////////////////////////////////////////////////
       //
       // Add localisation fields
@@ -424,7 +423,7 @@ class tx_browser_pi1_sql_auto
       ////////////////////////////////////////////////////////////////////
       //
       // Add tables to the consolidation array
-      
+
       // LOOP through all new table.fields
     foreach( ( array ) $arr_addedTableFields as $tableField )
     {
@@ -440,7 +439,7 @@ class tx_browser_pi1_sql_auto
       // LOOP through all new table.fields
       // Add tables to the consolidation array
 
- 
+
 
       // DRS
     if ( $this->pObj->b_drs_sql )
@@ -2170,9 +2169,8 @@ class tx_browser_pi1_sql_auto
  * Generating the $this->arr_relations_mm_simple, an array with the arrays MM and/or simple
  *
  * @return	string		TRUE or $arr_return
-   *
-   * @version 3.9.9
-   * @since   2.0.0
+ * @version 3.9.9
+ * @since   2.0.0
  */
   public function get_arr_relations_mm_simple( )
   {

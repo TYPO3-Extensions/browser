@@ -37,31 +37,27 @@
  *
  *
  *
- *   68: class tx_browser_pi1_viewlist
- *  111:     function __construct( $parentObj )
+ *   64: class tx_browser_pi1_viewlist
+ *  107:     function __construct( $parentObj )
  *
  *              SECTION: Building the views
- *  148:     function main( )
- *  248:     private function init( )
- *  299:     private function check_view( )
- *
- *              SECTION: SQL
- *  361:     private function sql( )
- *  455:     private function sql_getQueryArray( )
+ *  144:     function main( )
+ *  242:     private function init( )
+ *  293:     private function check_view( )
  *
  *              SECTION: Content / Template
- *  498:     private function content_setCSV( )
- *  531:     private function content_setDefault( )
- *  589:     private function content_dieIfEmpty( $marker, $method, $line )
+ *  354:     private function content_setCSV( )
+ *  387:     private function content_setDefault( )
+ *  445:     private function content_dieIfEmpty( $marker, $method, $line )
  *
  *              SECTION: Subparts
- *  643:     private function subpart_setSearchbox( )
- *  660:     private function subpart_setSearchboxFilter( )
- *  704:     private function subpart_setIndexBrowser( )
- *  732:     private function subpart_setModeSelector( )
- *  776:     private function subpart_setPageBrowser( )
+ *  499:     private function subpart_setSearchbox( )
+ *  516:     private function subpart_setSearchboxFilter( )
+ *  560:     private function subpart_setIndexBrowser( )
+ *  588:     private function subpart_setModeSelector( )
+ *  632:     private function subpart_setPageBrowser( )
  *
- * TOTAL FUNCTIONS: 14
+ * TOTAL FUNCTIONS: 12
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
