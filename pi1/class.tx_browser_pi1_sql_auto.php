@@ -1996,7 +1996,7 @@ class tx_browser_pi1_sql_auto
     }
       // DRS
 
-      // Get field names, which shouldn't processed for relation building
+      // Get table.field names, which shouldn't processed for relation building
     $arrDontUseFields = $this->relations_dontUseFields( );
       // Process csv values
 
@@ -2006,8 +2006,8 @@ class tx_browser_pi1_sql_auto
       //
       // Loop through the TCA of the foreign tables
 
-    $tables = $this->pObj->arr_realTables_arrFields;
-    foreach( (array ) $tables as $tableKey => $tableValue)
+    $tables = $this->$statementTables['select']['foreigntable'];
+    foreach( (array ) $tables as $tableKey)
     {
       $arrColumns = $GLOBALS['TCA'][$tableKey]['columns'];
       if( ! is_array( $arrColumns ) )
