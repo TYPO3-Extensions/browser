@@ -2009,6 +2009,7 @@ class tx_browser_pi1_sql_auto
     $tables = $this->pObj->arr_realTables_arrFields;
     $tables = $this->statementTables['select']['localtable'];
     $tables = $tables + $this->statementTables['select']['foreigntable'];
+
     foreach( (array ) $tables as $tableKey => $tableValue)
     {
       $arrColumns = $GLOBALS['TCA'][$tableKey]['columns'];
