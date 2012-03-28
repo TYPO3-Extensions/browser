@@ -63,7 +63,7 @@
  * 1665:     function arr_andWhereEnablefields()
  * 1701:     function str_enableFields($realTable)
  *
- *              SECTION: Automatic SQL relation building
+ *              SECTION: Relation building
  * 1740:     private function init_class_boolAutorelation( )
  * 1817:     private function init_class_relations_mm_simple( )
  * 1921:     private function relations_confDRSprompt( )
@@ -125,7 +125,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * Constructor. The method initiate the parent object
  *
  * @param	object		The parent object
@@ -152,7 +152,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * get_statements( ): It returns the statements for a SQL query:
  *                    SELECT, FROM, WHERE, ORDER BY, LIMIT
  *                    GROUP BY isn't handled
@@ -281,7 +281,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-    /**
+/**
  * get_statements_select( ): It returns the select statement for a SQL query.
  *            If tables hasn't any uid in the SELECT, table.uid will be added.
  *            If required localisation fields will added too.
@@ -313,7 +313,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-    /**
+/**
  * get_statements_from( ): The method returns the FROM clause for the SQL query
  *
  * @return	string		SQL from
@@ -455,7 +455,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * It returns the order part for SQL where clause.
  * If there are piVars, the order of the piVars will preferred.
  * Otherwise it returns the TypoScript configuration.
@@ -481,10 +481,10 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * get_statements_groupBy( )
  *
- * @return	[type]		...
+ * @return	void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -508,7 +508,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * Relation method: Building the whole where clause
  *
  * @return	string		FALSE or the SQL-where-clause
@@ -721,7 +721,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * Relation method: Building the relation part for the where clause
  *
  * @return	string		TRUE || FALSE or the SQL-where-clause
@@ -1209,7 +1209,7 @@ class tx_browser_pi1_sql_auto
     **********************************************/
 
 
-    /**
+/**
  * It returns the part for the where clause with a search, if there are search fields in the TS and a piVar sword.
  * The where clause will have this structure:
  *   (field_1 LIKE sword_1 or field_2 LIKE sword_1 or ...) AND (field_1 LIKE sword_2 or field_2 LIKE sword_2 or ...)
@@ -1471,7 +1471,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * Relation method: Building a further part for the where clause
  *
  * @return	string		TRUE || FALSE or the SQL-where-clause
@@ -1552,7 +1552,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * Searches in the global arr_realTables_arrFields for tables with pids.
  * If there is one, the method generates an array with all table.pid in the syntax:
  * table.pid IN (pidlist). pidlist is a comma seperated list of uids.
@@ -1587,7 +1587,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * Return the AND WHERE statement for the pid
  *
  * @param	string		$realTable: Name of the current table
@@ -1654,7 +1654,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * Searches in the global arr_realTables_arrFields for each tables.
  * Each table will get an AND WHERE enablefields statement in the syntax (i.e.)
  * table.deleted = 0 AND table.hidden = 0.
@@ -1692,7 +1692,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * Get the AND WHERE enablefields for the current table. Replace the real name with an alias, if there is an alias.
  *
  * @param	string		$realTable: Name of the current table
@@ -1722,98 +1722,20 @@ class tx_browser_pi1_sql_auto
 
   /***********************************************
    *
-   * Automatic SQL relation building
+   * Relation building
    *
    **********************************************/
 
 
 
-  /**
- * init_class_boolAutorelation( ):  Checks the TypoScript configuration. Checks
- *                                  the local and global array autoconfig.relations.
- *                                  Sets the class var $boolAutorelation.
- *
- * @return	[type]		...
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function init_class_boolAutorelation( )
-  {
-    $conf_path  = $this->pObj->conf_path;
-    $conf_view  = $this->pObj->conf_view;
-
-    $coa_autoconfigRelations = $conf_view['autoconfig.']['relations.'];
-
-      // Local TypoScript configuration
-    if( $coa_autoconfigRelations )
-    {
-      $boolAutoconf = $conf_view['autoconfig.']['relations'];
-      if ( ! $boolAutoconf )
-      {
-          // Autoconfiguration shouldn't be used
-        if( $this->pObj->b_drs_sql )
-        {
-          $prompt = $conf_path . 'autoconfig.relations is false. '.
-            'Autoconfigured relation building is disabled.';
-          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-        $this->boolAutorelation = false;
-        return false;
-      }
-      if( $this->pObj->b_drs_sql )
-      {
-        $prompt = 'Autoconfigured relation building is enbled.';
-        t3lib_div::devlog( '[OK/SQL] ' . $prompt, $this->pObj->extKey, -1 );
-      }
-    }
-      // Local TypoScript configuration
-
-
-
-      // Global TypoScript configuration
-      // DRS
-    if( $this->pObj->b_drs_sql )
-    {
-      $prompt = $conf_path .' hasn\'t any local autoconfig array. We try the global one.';
-      t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS
-
-    $boolAutoconf = $this->pObj->conf['autoconfig.']['relations'];
-
-      // IF : autoconfiguration shouldn't be used
-    if ( ! $boolAutoconf )
-    {
-      if ($this->pObj->b_drs_sql)
-      {
-        $prompt = 'autoconfig.relations is false. ' .
-                  'Autoconfigured relation building is disabled.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
-      }
-      $this->boolAutorelation = false;
-    }
-      // IF : autoconfiguration shouldn't be used
-
-      // DRS
-    if( $this->pObj->b_drs_sql )
-    {
-      $prompt = 'Autoconfigured relation building is enbled.';
-      t3lib_div::devlog( '[OK/SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-  }
-
-
-
-  /**
- * init_class_relations_mm_simple( ): Inits the class var $arr_relations_mm_simple,
- *                                an array with the arrays MM and/or simple
- *
- * @return	[type]		...
- * @version 3.9.12
- * @since   3.9.12
- */
+/**
+   * init_class_relations_mm_simple( ): Inits the class var $arr_relations_mm_simple,
+   *                                an array with the arrays MM and/or simple
+   *
+   * @return	void
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   private function init_class_relations_mm_simple( )
   {
       // RETURN : autoconfig is switched off
@@ -1910,11 +1832,11 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * relations_confDRSprompt( ):  Prompts to the DRS the current TypoScript
  *                            configuration for relation building
  *
- * @return	[type]		...
+ * @return	void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1987,7 +1909,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * relations_dontUseFields( ):  Returns an array with tablefields, which shouldn't
  *                              used for relation building.
  *
@@ -2037,7 +1959,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * relations_getForeignTable( ): Returns the foreign table from the
  *                               configuration of the current TCA column
  *
@@ -2104,7 +2026,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * relations_requirements( ): Checks requirements for relation building.
  *                            Returns true if they met, false if not.
  *
@@ -2205,7 +2127,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * relations_setMm( ): Sets the class vars
  *          arr_relations_mm_simple['MM'][$table][$config['MM']]
  *          arr_relations_opposite[$table][$config['MM']]['MM_opposite_field']
@@ -2213,7 +2135,7 @@ class tx_browser_pi1_sql_auto
  * @param	string		$$table       : current table from used tables
  * @param	array		$config       : configuration of the current TCA column
  * @param	string		$foreignTable : current foreign table from TCA
- * @return	[type]		...
+ * @return	void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2267,13 +2189,13 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * relations_setSingle( ): Sets the class var $arr_relations_mm_simple['simple']
  *
  * @param	string		$$table       : current table from used tables
  * @param	string		$columnsKey   : current column name from TCA
  * @param	string		$foreignTable : current foreign table from TCA
- * @return	[type]		...
+ * @return	void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2354,10 +2276,87 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
+ * init_class_boolAutorelation( ):  Checks the TypoScript configuration. Checks
+ *                                  the local and global array autoconfig.relations.
+ *                                  Sets the class var $boolAutorelation.
+ *
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function init_class_boolAutorelation( )
+  {
+    $conf_path  = $this->pObj->conf_path;
+    $conf_view  = $this->pObj->conf_view;
+
+    $coa_autoconfigRelations = $conf_view['autoconfig.']['relations.'];
+
+      // Local TypoScript configuration
+    if( $coa_autoconfigRelations )
+    {
+      $boolAutoconf = $conf_view['autoconfig.']['relations'];
+      if ( ! $boolAutoconf )
+      {
+          // Autoconfiguration shouldn't be used
+        if( $this->pObj->b_drs_sql )
+        {
+          $prompt = $conf_path . 'autoconfig.relations is false. '.
+            'Autoconfigured relation building is disabled.';
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        $this->boolAutorelation = false;
+        return;
+      }
+      if( $this->pObj->b_drs_sql )
+      {
+        $prompt = 'Autoconfigured relation building is enabled.';
+        t3lib_div::devlog( '[OK/SQL] ' . $prompt, $this->pObj->extKey, -1 );
+      }
+    }
+      // Local TypoScript configuration
+
+
+
+      // Global TypoScript configuration
+      // DRS
+    if( $this->pObj->b_drs_sql )
+    {
+      $prompt = $conf_path .' hasn\'t any local autoconfig array. We try the global one.';
+      t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+
+    $boolAutoconf = $this->pObj->conf['autoconfig.']['relations'];
+
+      // IF : autoconfiguration shouldn't be used
+    if ( ! $boolAutoconf )
+    {
+      if ($this->pObj->b_drs_sql)
+      {
+        $prompt = 'autoconfig.relations is false. ' .
+                  'Autoconfigured relation building is disabled.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+      }
+      $this->boolAutorelation = false;
+    }
+      // IF : autoconfiguration shouldn't be used
+
+      // DRS
+    if( $this->pObj->b_drs_sql )
+    {
+      $prompt = 'Autoconfigured relation building is enbled.';
+      t3lib_div::devlog( '[OK/SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+  }
+
+
+
+/**
  * init_class_bLeftJoin( ): Initialises the class var $b_left_join
  *
- * @return	[type]		...
+ * @return	void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2387,7 +2386,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * init_class_statementTables( ): Inits the class var statementTables.
  *    Var is an array like
  *    * $statementTables['select']['localtable']['tx_org_cal']        = 'tx_org_cal'
@@ -2395,7 +2394,7 @@ class tx_browser_pi1_sql_auto
  *
  * @param	string		$type         : select, from, where, orderBy, groupBy
  * @param	string		$csvStatement : current SQL statement
- * @return	[type]		...
+ * @return	void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2436,11 +2435,11 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * init_class_statementTablesByFilter( ): Add filter tables to the class var
  *                                        $statementTables
  *
- * @return	[type]		...
+ * @return	void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2453,7 +2452,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * zz_addUid( ):  Adds table.uid to the given statement, if table.uid isn't
  *                any element of the given statement.
  *                table is the fist table of the statement.
@@ -2501,11 +2500,11 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * zz_dieIfOverride( ): Dies if an override for given type is defined
  *
  * @param	string		$type : select, from, where, orderBy, groupBy
- * @return	[type]		...
+ * @return	void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2551,10 +2550,10 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * zz_loadTCAforAllTables( ): Load the TCA for all tables
  *
- * @return	[type]		...
+ * @return	void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2571,7 +2570,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * zz_setToRealTableNames( ): Returns the given SQL statement with table.fields
  *                            (real names) only.
  *
@@ -2594,7 +2593,7 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
+/**
  * zz_woForeignTables( ): Removes foreign table.fields from the given
  *                        statement.
  *
