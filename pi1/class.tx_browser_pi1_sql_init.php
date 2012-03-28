@@ -351,7 +351,7 @@ class tx_browser_pi1_sql_init
     }
 
     $this->sql_query_statements['rows'] = $arr_result['data'];
-var_dump( __MTHOD__, __LINE__, $this->sql_query_statements );
+var_dump( __METHOD__, __LINE__, $this->sql_query_statements );
     unset( $arr_result );
       // SQL query array
 
