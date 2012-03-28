@@ -1254,7 +1254,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_warn       = true;
       $this->b_drs_info       = true;
       $this->b_drs_discover   = true;
-      $this->b_drs_perform    = true;
+      $this->b_drs_sql        = true;
       $this->b_drs_tca        = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }

@@ -2262,7 +2262,6 @@ class tx_browser_pi1_sql_auto
       //
       // Loop through the TCA of the foreign tables
 
-    //$tables = $this->pObj->arr_realTables_arrFields;
     $tables = $this->statementTables['all']['localtable'];
     $tables = $tables + $this->statementTables['all']['foreigntable'];
 
