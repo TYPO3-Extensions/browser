@@ -2531,10 +2531,11 @@ class tx_browser_pi1_sql_auto
     foreach( $arrStatement as $tableField)
     {
       list( $table ) = explode( '.', $tableField );
-      if( $table != $prevTable )
+      if( $table == $prevTable )
       {
-        $arr_test[]['select']['table'] = $table;
+        continue;
       }
+      $arr_test['select']['table'] = $table;
       $prevTable = $table;
     }
     var_dump( __METHOD__, __LINE__, $arr_test );
