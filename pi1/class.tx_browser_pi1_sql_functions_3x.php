@@ -1868,10 +1868,10 @@ class tx_browser_pi1_sql_functions_3x
         // Set the global csvOrderBy
 
         // #33892, 120219, dwildt+
-      $this->pObj->objSql->csvSelect      = $this->pObj->csvSelect;
-      $this->pObj->objSql->csvSearch      = $this->pObj->csvSearch;
-      $this->pObj->objSql->csvOrderBy     = $this->pObj->csvOrderBy;
-      $this->pObj->objSql->arrLocalTable  = $this->pObj->arrLocalTable;
+      $this->pObj->objSqlFun->csvSelect      = $this->pObj->csvSelect;
+      $this->pObj->objSqlFun->csvSearch      = $this->pObj->csvSearch;
+      $this->pObj->objSqlFun->csvOrderBy     = $this->pObj->csvOrderBy;
+      $this->pObj->objSqlFun->arrLocalTable  = $this->pObj->arrLocalTable;
         // #33892, 120219, dwildt+
 
       return $arr_return;

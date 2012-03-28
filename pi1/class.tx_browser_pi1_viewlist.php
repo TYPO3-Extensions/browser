@@ -166,7 +166,7 @@ class tx_browser_pi1_viewlist
     $this->content = $this->pObj->str_template_raw;
 
       // Set SQL query parts in general and statements for rows
-    $arr_result = $this->pObj->objSql->init( );
+    $arr_result = $this->pObj->objSqlInit->init( );
     if( $arr_result['error']['status'] )
     {
         // Prompt the expired time to devlog
@@ -363,7 +363,7 @@ class tx_browser_pi1_viewlist
 
 
       // Set the globals csvSelect, csvOrderBy and arrLocalTable
-    $arr_result = $this->pObj->objSql->init_global_csvAll( );
+    $arr_result = $this->pObj->objSqlFunInit->init_global_csvAll( );
     if( $arr_result['error']['status'] )
     {
       return $arr_result;

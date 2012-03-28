@@ -1636,17 +1636,21 @@ class tx_browser_pi1 extends tslib_pibase {
     require_once('class.tx_browser_pi1_socialmedia.php');
     $this->objSocialmedia = new tx_browser_pi1_socialmedia( $this );
 
-      // Class with sql methods (engine 4.x)
-    require_once('class.tx_browser_pi1_sql.php');
-    $this->objSql = new tx_browser_pi1_sql( $this );
-
       // Class with sql methods, if user defined only a SELECT
     require_once('class.tx_browser_pi1_sql_auto_3x.php');
     $this->objSqlAut_3x = new tx_browser_pi1_sql_auto_3x( $this );
 
+      // Class with sql methods (engine 4.x)
+    require_once('class.tx_browser_pi1_sql.php');
+    $this->objSqlFun = new tx_browser_pi1_sql( $this );
+
       // Class with sql methods for manual mode and auto mode
     require_once('class.tx_browser_pi1_sql_functions_3x.php');
     $this->objSqlFun_3x = new tx_browser_pi1_sql_functions_3x( $this );
+
+      // Class with sql methods (engine 4.x)
+    require_once('class.tx_browser_pi1_sql_init.php');
+    $this->objSqlInit = new tx_browser_pi1_sql_init( $this );
 
       // Class with sql methods, if user defined a SELECT, FROM, WHERE and an array JOINS
     require_once('class.tx_browser_pi1_sql_manual_3x.php');
@@ -1864,15 +1868,32 @@ class tx_browser_pi1 extends tslib_pibase {
       // class.tx_browser_pi1_sql.php
 
       // [Array] The current TypoScript configuration array
-    $this->objSql->conf      = $this->conf;
+    $this->objSqlFun->conf      = $this->conf;
       // [Integer] The current mode (from modeselector)
-    $this->objSql->mode      = $this->piVar_mode;
+    $this->objSqlFun->mode      = $this->piVar_mode;
       // [String] 'list' or 'single': The current view
-    $this->objSql->view      = $this->view;
+    $this->objSqlFun->view      = $this->view;
       // [Array] The TypoScript configuration array of the current view
-    $this->objSql->conf_view = $conf_view;
+    $this->objSqlFun->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objSql->conf_path = $conf_path;
+    $this->objSqlFun->conf_path = $conf_path;
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_sql.php
+
+      // [Array] The current TypoScript configuration array
+    $this->objSqlInit->conf      = $this->conf;
+      // [Integer] The current mode (from modeselector)
+    $this->objSqlInit->mode      = $this->piVar_mode;
+      // [String] 'list' or 'single': The current view
+    $this->objSqlInit->view      = $this->view;
+      // [Array] The TypoScript configuration array of the current view
+    $this->objSqlInit->conf_view = $conf_view;
+      // [String] TypoScript path to the current view. I.e. views.single.1
+    $this->objSqlInit->conf_path = $conf_path;
 
 
 
