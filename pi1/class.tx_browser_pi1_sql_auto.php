@@ -147,14 +147,14 @@ class tx_browser_pi1_sql_auto
 
 
   /**
- * get_statements( ): It returns the statements for a SQL query:
- *                    SELECT, FROM, WHERE, ORDER BY, LIMIT
- *                    GROUP BY isn't handled
- *
- * @return	array		$arr_return : contains statements or an error message
- * @version 3.9.12
- * @since   3.9.12
- */
+   * get_statements( ): It returns the statements for a SQL query:
+   *                    SELECT, FROM, WHERE, ORDER BY, LIMIT
+   *                    GROUP BY isn't handled
+   *
+   * @return	array		$arr_return : contains statements or an error message
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   public function get_statements( )
   {
       // Get SELECT
@@ -173,6 +173,18 @@ class tx_browser_pi1_sql_auto
       return $arr_return;
     }
       // Get SELECT
+
+    $this->zz_loadTCAforAllTables( );
+    // Load the TCA for all tables
+    foreach( $this->statementTables['select'] as $localForeign => $tables )
+    {
+      foreach( $tables as $table)
+      {
+        $this->pObj->objZz->loadTCA($table);
+      }
+    }
+      // Load the TCA for all tables
+
 
 //    // Set the global groupBy
 //    $this->get_statements_groupBy();
@@ -1569,6 +1581,127 @@ class tx_browser_pi1_sql_auto
 
 
   /**
+   * relations_confDRSprompt( )
+   *
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function relations_confDRSprompt( )
+  {
+      // Get TypoScript configuration
+    $boolOneWayOnly           = $this->arr_ts_autoconf_relation['oneWayOnly'];
+    $boolSimpleRelations      = $this->arr_ts_autoconf_relation['simpleRelations'];
+    $boolSelfReference        = $this->arr_ts_autoconf_relation['simpleRelations.']['selfReference'];
+    $boolMMrelations          = $this->arr_ts_autoconf_relation['mmRelations'];
+    $allowedTCAconfigTypesCSV = $this->arr_ts_autoconf_relation['TCAconfig.']['type.']['csvValue'];
+    $dontUseFieldsCSV         = $this->arr_ts_autoconf_relation['csvDontUseFields'];
+      // Get TypoScript configuration
+
+      // DRS
+    if( $this->pObj->b_drs_sql )
+    {
+      if( $boolOneWayOnly )
+      {
+        $prompt = 'Use only relations in the TCA of the local table ' .
+                  $this->pObj->localTable . '.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      else
+      {
+        $prompt = 'Use relations in the TCA of the local table ' .
+                  $this->pObj->localTable . ' and of foreign tables.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      if( $boolSimpleRelations )
+      {
+        $prompt = 'Use simple relations.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        if ($boolSelfReference)
+        {
+          $prompt = 'Use self references in simple relations.';
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        else
+        {
+          $prompt = 'Don\'t use self references in simple relations.';
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+      }
+      else
+      {
+        $prompt = 'Don\'t use simple relations.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      if ( $boolMMrelations )
+      {
+        $prompt = 'Use MM relations.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      else
+      {
+        $prompt = 'Don\'t use MM relations.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+    }
+      // DRS
+  }
+
+
+
+  /**
+   * relations_dontUseFields( ):  Returns an array with tablefields, which shouldn't
+   *                              used for relation building.
+   *
+   * @return	array   $arr_return : 
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function relations_dontUseFields( )
+  {
+      // Get TypoScript configuration
+    $dontUseFieldsCSV = $this->arr_ts_autoconf_relation['csvDontUseFields'];
+
+    if( empty ( $dontUseFieldsCSV ) )
+    {
+      return;
+    }
+
+    $arrDontUseFields = $this->pObj->objZz->getCSVasArray( $dontUseFieldsCSV );
+
+      // LOOP $tableFields
+    foreach( ( array ) $arrDontUseFields as $key => $tableField )
+    {
+      list( $table, $field ) = explode( '.', $tableField );
+      $arr_return[][$table] = $field;
+        // DRS
+      if ( $this->pObj->b_drs_sql )
+      {
+        $arrDRSprompt[] = $table . '.' . $field;
+      }
+        // DRS
+    }
+      // LOOP $tableFields
+
+      // DRS
+    if( $this->pObj->b_drs_sql )
+    {
+      if( is_array( $arrDRSprompt ) )
+      {
+        $csvDRSprompt = implode( ', ', $arrDRSprompt );
+        $prompt = 'If this fields have a relation, don\'t use it: ' . $csvDRSprompt;
+        t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+      }
+    }
+      // DRS
+    
+    return $arr_return;
+  }
+
+
+
+
+
+  /**
  * Return the AND WHERE statement for the pid
  *
  * @param	string		$realTable: Name of the current table
@@ -1791,16 +1924,13 @@ class tx_browser_pi1_sql_auto
 
 
 
-
-
-
   /**
- * Generating the $this->arr_relations_mm_simple, an array with the arrays MM and/or simple
- *
- * @return	string		TRUE or $arr_return
- * @version 3.9.9
- * @since   2.0.0
- */
+   * get_arr_relations_mm_simple( ) Generating the $this->arr_relations_mm_simple, an array with the arrays MM and/or simple
+   *
+   * @return	string		TRUE or $arr_return
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   public function get_arr_relations_mm_simple( )
   {
     $conf       = $this->pObj->conf;
@@ -1820,17 +1950,6 @@ class tx_browser_pi1_sql_auto
       return true;
     }
       // RETURN : autoconfig is switched off
-
-      // Load the TCA for all tables
-    foreach( $this->statementTables['select'] as $localForeign => $tables )
-    {
-      foreach( $tables as $table)
-      {
-        $this->pObj->objZz->loadTCA($table);
-      }
-    }
-      // Load the TCA for all tables
-
 
       // RETURN IF : no foreign table.
     if( ! isset ( $this->statementTables['select']['foreigntable'] ) )
@@ -1853,85 +1972,19 @@ class tx_browser_pi1_sql_auto
     $dontUseFieldsCSV         = $this->arr_ts_autoconf_relation['csvDontUseFields'];
       // Get TypoScript configuration
 
+      // Prompt the current TypoScript configuration to the DRS
+    $this->relations_confDRSprompt( );
 
-      // Initiate the global boolean for LEFT JOIN
-    switch( true )
-    {
-      case( $this->arr_ts_autoconf_relation['left_join'] == 1 ):
-      case( strtolower($this->arr_ts_autoconf_relation['left_join'] == 'true' ) ):
-        $this->b_left_join = true;
-        break;
-      default:
-        $this->b_left_join = false;
-        break;
-    }
-      // Initiate the global boolean for LEFT JOIN
+      // Initialises the class var $b_left_join
+    $this->init_class_bLeftJoin( );
 
-      // DRS
-    if( $this->pObj->b_drs_sql )
-    {
-      if( $boolOneWayOnly )
-      {
-        $prompt = 'Use only relations in the TCA of the local table ' .
-                  $this->pObj->localTable . '.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-      else
-      {
-        $prompt = 'Use relations in the TCA of the local table ' .
-                  $this->pObj->localTable . ' and of foreign tables.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-      if( $boolSimpleRelations )
-      {
-        $prompt = 'Use simple relations.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-        if ($boolSelfReference)
-        {
-          $prompt = 'Use self references in simple relations.';
-          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-        else
-        {
-          $prompt = 'Don\'t use self references in simple relations.';
-          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-      }
-      else
-      {
-        $prompt = 'Don\'t use simple relations.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-      if ( $boolMMrelations )
-      {
-        $prompt = 'Use MM relations.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-      else
-      {
-        $prompt = 'Don\'t use MM relations.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-      if( $this->b_left_join )
-      {
-        $prompt = 'Use LEFT JOIN is true.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-      else
-      {
-        $prompt = 'Use LEFT JOIN is false. FULL JOINS will used.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-    }
-      // DRS
 
-    
 
-      //////////////////////////////////
+      ////////////////////////////////////////////////////////////////////
       //
       // Process csv values
 
-      // get config.type ( should be select and/or group )
+      // get alloewed config.type for relation building ( should be select and/or group )
     $arrAllowedTCAtypes = $this->pObj->objZz->getCSVasArray( $allowedTCAconfigTypesCSV );
 
       // DRS
@@ -1944,33 +1997,8 @@ class tx_browser_pi1_sql_auto
     }
       // DRS
 
-      // get field names, which shouldn't processed for relation building
-    if( $dontUseFieldsCSV )
-    {
-      $arrNoColumns = explode( ',', $dontUseFieldsCSV );
-      foreach( ( array ) $arrNoColumns as $key => $value )
-      {
-        list( $table, $field ) = explode( '.', $value );
-        $arrNoColumns[][ trim( $table ) ] = trim( $field );
-        unset( $arrNoColumns[$key] );
-        if ( $this->pObj->b_drs_sql )
-        {
-          $arrDontUseFields[] = $table . '.' . $field;
-        }
-      }
-    }
-
-      // DRS
-    if( $this->pObj->b_drs_sql )
-    {
-      if( is_array( $arrDontUseFields ) )
-      {
-        $csvTmpPrompt = implode( ', ', $arrDontUseFields );
-        $prompt = 'If this fields have a relation, don\'t use it: ' . $csvTmpPrompt;
-        t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
-      }
-    }
-      // DRS
+      // Get field names, which shouldn't processed for relation building
+    $arrDontUseFields = $this->relations_dontUseFields( );
       // Process csv values
 
 
@@ -1988,7 +2016,7 @@ class tx_browser_pi1_sql_auto
         continue;
       }
 
-      foreach((array) $arrColumns as $columnsKey => $columnsValue)
+      foreach( ( array ) $arrColumns as $columnsKey => $columnsValue )
       {
         $config = $columnsValue['config'];
 
@@ -2068,10 +2096,10 @@ class tx_browser_pi1_sql_auto
             // The TCA.table.column.x.config.type isn't an element in the TS allowedTCAconfigTypes
             $boolRelation = false;
           }
-          if ($boolRelation && is_array($arrNoColumns))
+          if ($boolRelation && is_array($arrDontUseFields))
           {
             // We should build a relation, but we have to check if it isn't one of the forbidden table.fields
-            foreach((array) $arrNoColumns as $ncKey => $ncValue)
+            foreach((array) $arrDontUseFields as $ncKey => $ncValue)
             {
               // var_dump($tableKey, $ncValue[$tableKey], $columnsKey);
               // -> "tx_civserv_service", "sv_organisation", "sv_similar_services"
@@ -2282,6 +2310,38 @@ class tx_browser_pi1_sql_auto
 
 
   /**
+   * init_class_bLeftJoin( ): Initialises the class var $b_left_join
+
+   *
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function init_class_bLeftJoin( )
+  {
+    switch( true )
+    {
+      case( $this->arr_ts_autoconf_relation['left_join'] == 1 ):
+      case( strtolower($this->arr_ts_autoconf_relation['left_join'] == 'true' ) ):
+        $this->b_left_join = true;
+        if( $this->pObj->b_drs_sql )
+        {
+          $prompt = 'LEFT JOIN is true.';
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        break;
+      default:
+        $this->b_left_join = false;
+        if( $this->pObj->b_drs_sql )
+        {
+          $prompt = 'Use LEFT JOIN is false. FULL JOINS will used.';
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        break;
+    }
+  }
+
+
+  /**
  * init_class_statementTables( ): Inits the class var statementTables.
  *          Var is an array like
  *          * $statementTables['select']['localtable']['tx_org_cal']        = 'tx_org_cal'
@@ -2428,18 +2488,23 @@ class tx_browser_pi1_sql_auto
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+  /**
+   * zz_loadTCAforAllTables( ): Load the TCA for all tables
+     *
+   * @return	array		$arr_return : contains statements or an error message
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  public function zz_loadTCAforAllTables( )
+  {
+    foreach( ( array ) $this->statementTables['select'] as $localForeign => $tables )
+    {
+      foreach( $tables as $table)
+      {
+        $this->pObj->objZz->loadTCA($table);
+      }
+    }
+  }
 
 
 
