@@ -300,8 +300,8 @@ var_dump(__METHOD__, __LINE__, $csvSelect );
     $csvSelect = $this->zz_woForeignTables( 'select', $csvSelect );
 
       // Add table.uid
-    $csvSelect = $this->zz_addUid( $csvSelect );
-    $csvSelect = $this->zz_addUid( $csvSelect );
+    $csvSelect = $this->zz_addUid( $type, $csvSelect );
+    $csvSelect = $this->zz_addUid( $type, $csvSelect );
 
 var_dump(__METHOD__, __LINE__, $csvSelect, $this->addedTableFields );
     return $csvSelect;
