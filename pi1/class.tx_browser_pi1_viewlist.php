@@ -464,9 +464,9 @@ var_dump( __METHOD__, __LINE__, $arr_result );
       // RETURN case is SQL manual
 
       // RETURN case is SQL automatically
-    $arr_result = $this->pObj->objSqlInit->get_query_array( );
+    $arr_result = $this->pObj->objSqlAut_3x->get_query_array( );
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlInit->get_query_array( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlAut_3x->get_query_array( )' );
     return $arr_result;
       // RETURN case is SQL automatically
   }

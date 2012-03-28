@@ -46,13 +46,13 @@
  *  116:     public function __construct($parentObj)
  *
  *              SECTION: ZZ: Helper
- *  147:     public function zz_aliasToTable( $arr_aliastableField )
- *  198:     public function zz_cObjGetSingle( $currConfPath, $statement, $coa_name, $coa_conf )
- *  281:     public function zz_sqlExpressionAndAliasToTable( $arr_tablefields )
- *  319:     public function zz_sqlExpressionToAlias( $sqlStatement )
- *  359:     public function zz_getTableFieldWoAs( $tableFieldWiAlias )
- *  376:     public function zz_getAlias( $tableFieldWiAlias )
- *  401:     private function zz_getTableFieldOrAlias( $tableFieldWiAlias, $bool_returnTableField )
+ *  147:     public function aliasToTable( $arr_aliastableField )
+ *  198:     public function cObjGetSingle( $currConfPath, $statement, $coa_name, $coa_conf )
+ *  281:     public function expressionAndAliasToTable( $arr_tablefields )
+ *  319:     public function expressionToAlias( $sqlStatement )
+ *  359:     public function getTableFieldWoAs( $tableFieldWiAlias )
+ *  376:     public function getAlias( $tableFieldWiAlias )
+ *  401:     private function getTableFieldOrAlias( $tableFieldWiAlias, $bool_returnTableField )
  *
  * TOTAL FUNCTIONS: 8
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -128,61 +128,14 @@ class tx_browser_pi1_sql_functions
 
     /***********************************************
     *
-    * ZZ: Helper
+    * TypoScript for SQL statements
     *
     **********************************************/
 
 
 
   /**
- * zz_aliasToTable( ) : Moves aliases to tables in $arr_localtable.
- *                      Aliases come from aliases.tables.
- *                      If there isn't any alias, than nothing will replaced.
- *
- * @param	array		$arr_aliastableField: Array with local table values
- * @return	array		$arr_aliastableField with replaced table aliases.
- * @version 3.9.12
- * @since   3.9.12
- */
-  public function zz_aliasToTable( $arr_aliastableField )
-  {
-    $conf       = $this->conf;
-    $mode       = $this->piVar_mode;
-    $view       = $this->view;
-    $conf_path  = $this->conf_path;
-    $conf_view  = $this->conf_view;
-
-
-      // RETURN, if we don't have any alias array
-    if( ! is_array( $conf_view['aliases.']['tables.'] ) )
-    {
-      if( $this->pObj->b_drs_sql )
-      {
-        $prompt = $conf_path . ' hasn\'t any array ' .
-                  'aliases.tables. We don\'t process aliases.';
-        t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
-      }
-      return $arr_aliastableField;
-    }
-      // RETURN, if we don't have any alias array
-
-    foreach( $arr_aliastableField as $key_field => $str_tablefield )
-    {
-      $arr_tablefield                     = explode( '.', trim( $str_tablefield ) );
-      list( $str_tablealias, $str_field ) = $arr_tablefield;
-      $str_tablereal                      = $conf_view['aliases.']['tables.'][$str_tablealias];
-      if( $str_tablereal )
-      {
-        $arr_aliastableField[$key_field] = $str_tablereal . '.' . $str_field;
-      }
-    }
-    return $arr_aliastableField;
-  }
-
-
-
-  /**
- * zz_cObjGetSingle:  Wraps the given statement by the given TypoScript configuration.
+ * cObjGetSingle:  Wraps the given statement by the given TypoScript configuration.
  *                    It returns the statement unwrapped, if there isn't any TypoScript
  *                    configuratuion.
  *                    It prompts some helpful logs to the DRS for TYPO3 integrators.
@@ -195,7 +148,7 @@ class tx_browser_pi1_sql_functions
  * @version 3.9.12
  * @since   3.9.12
  */
-  public function zz_cObjGetSingle( $currConfPath, $statement, $coa_name, $coa_conf )
+  public function cObjGetSingle( $currConfPath, $statement, $coa_name, $coa_conf )
   {
     $conf       = $this->conf;
     $mode       = $this->piVar_mode;
@@ -269,16 +222,28 @@ class tx_browser_pi1_sql_functions
 
 
 
+
+
+
+    /***********************************************
+    *
+    * Handle SQL aliases
+    *
+    **********************************************/
+
+
+
   /**
- * zz_sqlExpressionAndAliasToTable( ) : Replaces in expressions to aliases all given
- *                  table.field-alias pairs. Replaces all aliases to table.field.
+ * aliasToTable( ) : Moves aliases to tables in $arr_localtable.
+ *                      Aliases come from aliases.tables.
+ *                      If there isn't any alias, than nothing will replaced.
  *
- * @param	array		$arr_tablefields  : Array with table.field values maybe with an AS
- * @return	array		$arr_tablefields  : Array with table.fields (real names)
+ * @param	array		$arr_aliastableField: Array with local table values
+ * @return	array		$arr_aliastableField with replaced table aliases.
  * @version 3.9.12
  * @since   3.9.12
  */
-  public function zz_sqlExpressionAndAliasToTable( $arr_tablefields )
+  private function aliasToTable( $arr_aliastableField )
   {
     $conf       = $this->conf;
     $mode       = $this->piVar_mode;
@@ -286,62 +251,31 @@ class tx_browser_pi1_sql_functions
     $conf_path  = $this->conf_path;
     $conf_view  = $this->conf_view;
 
-    if( ! is_array( $arr_tablefields ) )
+
+      // RETURN, if we don't have any alias array
+    if( ! is_array( $conf_view['aliases.']['tables.'] ) )
     {
-      return $arr_tablefields;
-    }
-
-      // LOOP array with tablefields
-    foreach( ( array ) $arr_tablefields as $key => $tableFieldWiAlias )
-    {
-      $tableFieldWiAlias      = $this->zz_sqlExpressionToAlias( $tableFieldWiAlias );
-      $tableFieldOrAlias      = $this->zz_getAlias( $tableFieldWiAlias );
-      $arr_tablefields[$key]  = $tableFieldOrAlias;
-    }
-      // LOOP array with tablefields
-
-      // Move aliases to real table names
-    $arr_tablefields = $this->zz_aliasToTable( $arr_tablefields );
-    return $arr_tablefields;
-  }
-
-
-
-  /**
- * zz_sqlExpressionToAlias( ) :  Replaces an expression in a SQL statement with
- *                               the alias from the deal_as_table array
- *
- * @param	string		$sqlStatement : The current SQL statement
- * @return	string		$sqlStatement : The handled SQL statement
- * @version 3.9.12
- * @since   3.9.12
- */
-  public function zz_sqlExpressionToAlias( $sqlStatement )
-  {
-    $conf       = $this->conf;
-    $mode       = $this->piVar_mode;
-    $view       = $this->view;
-    $conf_path  = $this->conf_path;
-    $conf_view  = $this->conf_view;
-
-    if( ! is_array( $conf_view['select.']['deal_as_table.'] ) )
-    {
-      return $sqlStatement;
-    }
-
-    foreach( $conf_view['select.']['deal_as_table.'] as $arr_dealastable )
-    {
-      $expression    = $arr_dealastable['statement'];
-      $alias         = $arr_dealastable['alias'];
-      $sqlStatement  = str_replace( $expression, $alias, $sqlStatement );
       if( $this->pObj->b_drs_sql )
       {
-        $prompt = 'SQL expression is replaced with alias. Expression: \"'.$expression.'\"; ' .
-                  'Alias:  \"'.$alias.'\"';
+        $prompt = $conf_path . ' hasn\'t any array ' .
+                  'aliases.tables. We don\'t process aliases.';
         t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
       }
+      return $arr_aliastableField;
     }
-    return $sqlStatement;
+      // RETURN, if we don't have any alias array
+
+    foreach( $arr_aliastableField as $key_field => $str_tablefield )
+    {
+      $arr_tablefield                     = explode( '.', trim( $str_tablefield ) );
+      list( $str_tablealias, $str_field ) = $arr_tablefield;
+      $str_tablereal                      = $conf_view['aliases.']['tables.'][$str_tablealias];
+      if( $str_tablereal )
+      {
+        $arr_aliastableField[$key_field] = $str_tablereal . '.' . $str_field;
+      }
+    }
+    return $arr_aliastableField;
   }
 
 
@@ -349,23 +283,23 @@ class tx_browser_pi1_sql_functions
 
 
   /**
- * zz_getTableFieldWoAs( ) :  Cuts the AS ..., if table.field is with an AS ...
+ * getTableFieldWoAs( ) :  Cuts the AS ..., if table.field is with an AS ...
  *
  * @param	string		$tableFieldWiAlias  : table.field with an AS like "news.uid AS 'news.uid'"
  * @return	string		$tableField         : table.field without an AS
  * @version 3.9.12
  * @since   3.9.12
  */
-  public function zz_getTableFieldWoAs( $tableFieldWiAlias )
+  private function getTableFieldWoAs( $tableFieldWiAlias )
   {
-    $tableField = $this->zz_getTableFieldOrAlias( $tableFieldWiAlias, true );
+    $tableField = $this->getTableFieldOrAlias( $tableFieldWiAlias, true );
     return $tableField;
   }
 
 
 
   /**
- * zz_getAlias( ) : Returns the part behind the AS, if table.field has an AS ...
+ * getAlias( ) : Returns the part behind the AS, if table.field has an AS ...
  *                  If not, it returns the table.field
  *
  * @param	string		$tableFieldWiAlias  : table.field with an AS like "news.uid AS 'news.uid'"
@@ -373,9 +307,9 @@ class tx_browser_pi1_sql_functions
  * @version 3.9.12
  * @since   3.9.12
  */
-  public function zz_getAlias( $tableFieldWiAlias )
+  private function getAlias( $tableFieldWiAlias )
   {
-    $alias = $this->zz_getTableFieldOrAlias( $tableFieldWiAlias, false );
+    $alias = $this->getTableFieldOrAlias( $tableFieldWiAlias, false );
     return $alias;
   }
 
@@ -387,7 +321,7 @@ class tx_browser_pi1_sql_functions
 
 
   /**
- * zz_getTableFieldOrAlias( ) : Returns table.field or the alias.
+ * getTableFieldOrAlias( ) : Returns table.field or the alias.
  *                              If $bool_returnTableField is true, it returns the table.field.
  *                              If $bool_returnTableField is false, it returns the alias.
  *                              If there isn't any AS ... it returns the table.field.
@@ -398,7 +332,7 @@ class tx_browser_pi1_sql_functions
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function zz_getTableFieldOrAlias( $tableFieldWiAlias, $bool_returnTableField )
+  private function getTableFieldOrAlias( $tableFieldWiAlias, $bool_returnTableField )
   {
     list( $tableField, $alias ) = explode ( ' AS ', $tableFieldWiAlias );
 
@@ -424,6 +358,97 @@ class tx_browser_pi1_sql_functions
 
       // RETURN : alias
     return $alias;
+  }
+
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * Handle SQL expressions
+    *
+    **********************************************/
+
+
+
+  /**
+ * expressionAndAliasToTable( ) : Replaces in expressions to aliases all given
+ *                  table.field-alias pairs. Replaces all aliases to table.field.
+ *
+ * @param	array		$arr_tablefields  : Array with table.field values maybe with an AS
+ * @return	array		$arr_tablefields  : Array with table.fields (real names)
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  public function expressionAndAliasToTable( $arr_tablefields )
+  {
+    $conf       = $this->conf;
+    $mode       = $this->piVar_mode;
+    $view       = $this->view;
+    $conf_path  = $this->conf_path;
+    $conf_view  = $this->conf_view;
+
+    if( ! is_array( $arr_tablefields ) )
+    {
+      return $arr_tablefields;
+    }
+
+      // LOOP array with tablefields
+    foreach( ( array ) $arr_tablefields as $key => $tableFieldWiAlias )
+    {
+      $tableFieldWiAlias      = $this->expressionToAlias( $tableFieldWiAlias );
+      $tableFieldOrAlias      = $this->getAlias( $tableFieldWiAlias );
+      $arr_tablefields[$key]  = $tableFieldOrAlias;
+    }
+      // LOOP array with tablefields
+
+      // Move aliases to real table names
+    $arr_tablefields = $this->aliasToTable( $arr_tablefields );
+    return $arr_tablefields;
+  }
+
+
+
+  /**
+ * expressionToAlias( ) :  Replaces an expression in a SQL statement with
+ *                               the alias from the deal_as_table array
+ *
+ * @param	string		$sqlStatement : The current SQL statement
+ * @return	string		$sqlStatement : The handled SQL statement
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  public function expressionToAlias( $sqlStatement )
+  {
+    $conf       = $this->conf;
+    $mode       = $this->piVar_mode;
+    $view       = $this->view;
+    $conf_path  = $this->conf_path;
+    $conf_view  = $this->conf_view;
+
+    if( ! is_array( $conf_view['select.']['deal_as_table.'] ) )
+    {
+      return $sqlStatement;
+    }
+
+    foreach( $conf_view['select.']['deal_as_table.'] as $arr_dealastable )
+    {
+      $expression    = $arr_dealastable['statement'];
+      $alias         = $arr_dealastable['alias'];
+      $sqlStatement  = str_replace( $expression, $alias, $sqlStatement );
+      if( $this->pObj->b_drs_sql )
+      {
+        $prompt = 'SQL expression is replaced with alias. Expression: \"'.$expression.'\"; ' .
+                  'Alias:  \"'.$alias.'\"';
+        t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+      }
+    }
+    return $sqlStatement;
   }
 
 
