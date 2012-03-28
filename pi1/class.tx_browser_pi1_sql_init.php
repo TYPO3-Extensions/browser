@@ -233,6 +233,7 @@ class tx_browser_pi1_sql_init
       // RETURN : array in SQL auto mode
     $arr_return = $this->pObj->objSqlAut->get_statements( );
     $this->statements['rows'] = $arr_return['data'];
+var_dump( __METHOD__, __LINE__, $this->statements );
     return $arr_return;
       // RETURN : array in SQL auto mode
   }

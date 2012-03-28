@@ -526,59 +526,59 @@ class tx_browser_pi1_sql_functions_3x
 
 
 
-    /**
- * Returns a SQL ORDER BY statement in case of the piVars[sort]
- *
- * @return	string		The ORDER BY statement
- */
-    function orderBy_by_piVar()
+  /**
+   * Returns a SQL ORDER BY statement in case of the piVars[sort]
+   *
+   * @return	string		The ORDER BY statement
+   */
+  function orderBy_by_piVar()
+  {
+    $b_desc       = false;
+    $str_order_by = false;
+
+
+    //////////////////////////////////////////
+    //
+    // RETURN without any piVar[sort]
+
+    if (!$this->pObj->piVars['sort'])
     {
-      $b_desc       = false;
-      $str_order_by = false;
-
-
-      //////////////////////////////////////////
-      //
-      // RETURN without any piVar[sort]
-
-      if (!$this->pObj->piVars['sort'])
-      {
-        return false;
-      }
-      // RETURN without any piVar[sort]
-
-
-      //////////////////////////////////////////
-      //
-      // Building the ORDER BY statement
-
-      // I.e: tt_news.title:1
-      $arr_sort = explode(':', $this->pObj->piVars['sort']);
-      list($tablefield, $b_desc) = $arr_sort;
-      // We need $tablefield and $b_desc local
-      list($this->pObj->internal['orderBy'], $this->pObj->internal['descFlag']) = $arr_sort;
-      // Set the alias-AS-alias syntax
-      $tablefield = $this->set_tablealias($tablefield);
-      // We need only the part infront of the AS
-      $tablefield = $this->get_sql_alias_before($tablefield);
-
-      if ($b_desc)
-      {
-        $str_order = ' DESC';
-      }
-      else
-      {
-        $str_order = ' ASC';
-      }
-
-      if ($tablefield)
-      {
-        $str_order_by = $tablefield.$str_order;
-      }
-      // Building the ORDER BY statement
-
-      return $str_order_by;
+      return false;
     }
+    // RETURN without any piVar[sort]
+
+
+    //////////////////////////////////////////
+    //
+    // Building the ORDER BY statement
+
+    // I.e: tt_news.title:1
+    $arr_sort = explode(':', $this->pObj->piVars['sort']);
+    list($tablefield, $b_desc) = $arr_sort;
+    // We need $tablefield and $b_desc local
+    list($this->pObj->internal['orderBy'], $this->pObj->internal['descFlag']) = $arr_sort;
+    // Set the alias-AS-alias syntax
+    $tablefield = $this->set_tablealias($tablefield);
+    // We need only the part infront of the AS
+    $tablefield = $this->get_sql_alias_before($tablefield);
+
+    if ($b_desc)
+    {
+      $str_order = ' DESC';
+    }
+    else
+    {
+      $str_order = ' ASC';
+    }
+
+    if ($tablefield)
+    {
+      $str_order_by = $tablefield.$str_order;
+    }
+    // Building the ORDER BY statement
+
+    return $str_order_by;
+  }
 
 
 

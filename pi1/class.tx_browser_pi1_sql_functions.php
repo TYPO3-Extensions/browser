@@ -507,6 +507,81 @@ class tx_browser_pi1_sql_functions
 
 
 
+
+
+
+
+
+
+    /***********************************************
+    *
+    * Helpers
+    *
+    **********************************************/
+
+
+
+
+  
+  
+  /**
+   * zz_prependPiVarSort( ):  Prepends the value from the piVars['sort'] to the
+   *                          the given ORCER BY statement, if there is a piVar.
+   *
+   * @return	string		The ORDER BY statement
+   */
+  public function zz_prependPiVarSort( $orderBy )
+  {
+    $b_desc       = false;
+    $str_order_by = false;
+
+
+      // RETURN without any piVar[sort]
+    if( ! isset( $this->pObj->piVars['sort'] ) )
+    {
+      return $orderBy;
+    }
+      // RETURN without any piVar[sort]
+
+
+      // I.e: tt_news.title:1
+    $arr_sort = explode( ':', $this->pObj->piVars['sort'] );
+    list( $tablefield, $b_desc ) = $arr_sort;
+
+    // We need $tablefield and $b_desc local
+    list( $this->pObj->internal['orderBy'], $this->pObj->internal['descFlag'] ) = $arr_sort;
+
+      // Get DESC or ASC
+    if( $b_desc )
+    {
+      $str_order = ' DESC';
+    }
+    if( ! $b_desc )
+    {
+      $str_order = ' ASC';
+    }
+      // Get DESC or ASC
+
+      // piVarSort expression
+    if( $tablefield )
+    {
+      $piVarSort = $tablefield . $str_order;
+    }
+
+    if( $orderBy )
+    {
+      $orderBy = $piVarSort . ', ' . $orderBy;
+    }
+    else
+    {
+      $orderBy = $piVarSort;
+    }
+
+    return $orderBy;
+  }
+
+
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_functions.php']) {
