@@ -209,8 +209,8 @@ class tx_browser_pi1_sql_auto
 
 
       // Get Relations
-    $this->arr_ts_autoconf_relation = $this->zz_class_boolAutorelation( );
-    $this->arr_relations_mm_simple  = $this->get_arr_relations_mm_simple( );
+//    $this->arr_ts_autoconf_relation = $this->zz_class_boolAutorelation( );
+//    $this->arr_relations_mm_simple  = $this->get_arr_relations_mm_simple( );
       // Get Relations
 
 
