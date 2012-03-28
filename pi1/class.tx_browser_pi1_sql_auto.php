@@ -59,30 +59,30 @@
  * 1224:     function whereSearch()
  * 1482:     function andWhere()
  * 1566:     function arr_andWherePid()
- * 1603:     private function relations_confDRSprompt( )
- * 1673:     private function relations_dontUseFields( )
- * 1725:     private function relations_getForeignTable( $tables, $config, $configPath )
- * 1792:     private function relations_requirements( $table, $config, $configPath, $arrAllowedTCAtypes )
- * 1861:     private function relations_setMm( $table, $config, $foreignTable )
- * 1921:     private function relations_setSingle( $table, $columnsKey, $foreignTable)
- * 1990:     function str_andWherePid($realTable)
- * 2059:     function arr_andWhereEnablefields()
- * 2095:     function str_enableFields($realTable)
+ * 1599:     function str_andWherePid($realTable)
+ * 1668:     function arr_andWhereEnablefields()
+ * 1704:     function str_enableFields($realTable)
  *
  *              SECTION: Methods for automatic SQL relation building
- * 2134:     public function init_class_boolAutorelation( )
- * 2214:     private function init_class_relations_mm_simple( )
+ * 1741:     private function init_class_boolAutorelation( )
+ * 1821:     private function init_class_relations_mm_simple( )
+ * 1979:     private function relations_confDRSprompt( )
+ * 2049:     private function relations_dontUseFields( )
+ * 2101:     private function relations_getForeignTable( $tables, $config, $configPath )
+ * 2168:     private function relations_requirements( $table, $config, $configPath, $arrAllowedTCAtypes )
+ * 2237:     private function relations_setMm( $table, $config, $foreignTable )
+ * 2297:     private function relations_setSingle( $table, $columnsKey, $foreignTable)
  *
  *              SECTION: Manual SQL Query Building
- * 2397:     function get_sql_query($select, $from, $where, $group, $order, $limit)
- * 2420:     private function die_ifOverride( $type )
- * 2469:     private function init_class_bLeftJoin( )
- * 2507:     private function init_class_statementTables( $type, $csvStatement )
- * 2552:     private function init_class_statementTablesByFilter( )
- * 2571:     private function zz_woForeignTables( $type, $csvStatement )
- * 2603:     private function zz_addUid( $type, $csvStatement )
- * 2647:     private function zz_setToRealTableNames( $csvStatement )
- * 2668:     public function zz_loadTCAforAllTables( )
+ * 2384:     function get_sql_query($select, $from, $where, $group, $order, $limit)
+ * 2407:     private function die_ifOverride( $type )
+ * 2456:     private function init_class_bLeftJoin( )
+ * 2494:     private function init_class_statementTables( $type, $csvStatement )
+ * 2539:     private function init_class_statementTablesByFilter( )
+ * 2558:     private function zz_woForeignTables( $type, $csvStatement )
+ * 2590:     private function zz_addUid( $type, $csvStatement )
+ * 2634:     private function zz_setToRealTableNames( $csvStatement )
+ * 2655:     public function zz_loadTCAforAllTables( )
  *
  * TOTAL FUNCTIONS: 31
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -1732,12 +1732,12 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * init_class_boolAutorelation( ):  Checks the TypoScript configuration. Checks
-   *                                the local and global array autoconfig.relations.
-   *                                Sets the class var $boolAutorelation.
-   *
-   * @return	array		FALSE || $arr_ts_autoconf_relation
-   */
+ * init_class_boolAutorelation( ):  Checks the TypoScript configuration. Checks
+ *                                the local and global array autoconfig.relations.
+ *                                Sets the class var $boolAutorelation.
+ *
+ * @return	array		FALSE || $arr_ts_autoconf_relation
+ */
   private function init_class_boolAutorelation( )
   {
     $conf_path  = $this->pObj->conf_path;
