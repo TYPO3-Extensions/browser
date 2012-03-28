@@ -369,7 +369,7 @@ class tx_browser_pi1_sql_functions
 
 
   /**
-   * error_prompt( ): Prompts a SQL error.
+   * prompt_error( ): Prompts a SQL error.
    *                  It is with the query in case of an enabled DRS.
    *
    * @param   string  $query: the current query
@@ -378,7 +378,7 @@ class tx_browser_pi1_sql_functions
    * @version 3.9.12
    * @since   3.9.12
    */
-  public function error_prompt( $query, $error )
+  public function prompt_error( $query, $error )
   {
 
     if( $this->pObj->b_drs_error )
