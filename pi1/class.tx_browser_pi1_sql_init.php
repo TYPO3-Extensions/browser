@@ -161,7 +161,7 @@ class tx_browser_pi1_sql_init
       // RETURN : array in SQL manual mode
 
       // RETURN : array in SQL auto mode
-    $arr_result = $this->get_queryArraySqlAuto( );
+    $arr_result = $this->pObj->objSqlAut->get_query_array( );
     return $arr_result;
       // RETURN : array in SQL auto mode
   }

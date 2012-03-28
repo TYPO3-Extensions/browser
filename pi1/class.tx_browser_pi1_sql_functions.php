@@ -453,6 +453,60 @@ class tx_browser_pi1_sql_functions
 
 
 
+
+
+
+
+
+
+    /***********************************************
+    *
+    * Handle SQL error
+    *
+    **********************************************/
+
+
+
+  /**
+   * error_prompt( ): Prompts a SQL error.
+   *                  It is with the query in case of an enabled DRS.
+   *
+   * @param   string  $query: the current query
+   * @param   string  $error: the error message delivered by SQL
+   * @return	array		$arr_return with elements for prompting
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  public function error_prompt( $query, $error )
+  {
+
+    if( $this->pObj->b_drs_error )
+    {
+      $level      = 1; // 1 level up
+      $debugTrail = $this->pObj->drs_debugTrail( $level );
+      t3lib_div::devlog( '[ERROR/SQL] ' . $query,  $this->pObj->extKey, 3 );
+      t3lib_div::devlog( '[ERROR/SQL] ' . $error,  $this->pObj->extKey, 3 );
+      t3lib_div::devlog( '[ERROR/SQL] ABORT at ' . $debugTrail['prompt'], $this->pObj->extKey, 3 );
+      $str_warn    = '<p style="border: 1em solid red; background:white; color:red; font-weight:bold; text-align:center; padding:2em;">' .
+                      $this->pObj->pi_getLL( 'drs_security' ) . '</p>';
+      $str_prompt  = '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $error . '</p>';
+      $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $query . '</p>';
+      $str_prompt .= '<p style="font-family:monospace;font-size:smaller;padding-top:2em;">' . $debugTrail['prompt'] . '</p>';
+    }
+    if( ! $this->pObj->b_drs_error )
+    {
+      $str_prompt = '<p style="border: 2px dotted red; font-weight:bold;text-align:center; padding:1em;">' .
+                      $this->pObj->pi_getLL( 'drs_sql_prompt' ) . '</p>';
+    }
+    $str_header  = '<h1 style="color:red">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
+    $arr_return['error']['status'] = true;
+    $arr_return['error']['header'] = $str_warn . $str_header;
+    $arr_return['error']['prompt'] = $str_prompt;
+    return $arr_return;
+  }
+
+
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_functions.php']) {
