@@ -39,52 +39,51 @@
  *
  *
  *
- *   91: class tx_browser_pi1_sql_auto
- *  137:     public function __construct($parentObj)
+ *   90: class tx_browser_pi1_sql_auto
+ *  134:     public function __construct($parentObj)
  *
  *              SECTION: Statements
- *  167:     public function get_statements( )
+ *  164:     public function get_statements( )
  *
  *              SECTION: Statements SELECT
- *  297:     private function get_statements_select( )
- *  326:     private function get_statements_from( )
- *  472:     private function get_statements_orderBy()
- *  494:     private function get_statements_groupBy( )
+ *  294:     private function get_statements_select( )
+ *  323:     private function get_statements_from( )
+ *  469:     private function get_statements_orderBy()
+ *  491:     private function get_statements_groupBy( )
  *
  *              SECTION: Statements WHERE
- *  521:     private function get_statements_where( )
- *  732:     function get_joins( )
+ *  518:     private function get_statements_where( )
+ *  729:     function get_joins( )
  *
  *              SECTION: WHERE helper
- * 1224:     function whereSearch()
- * 1482:     function andWhere()
- * 1566:     function arr_andWherePid()
- * 1599:     function str_andWherePid($realTable)
- * 1668:     function arr_andWhereEnablefields()
- * 1704:     function str_enableFields($realTable)
+ * 1221:     function whereSearch()
+ * 1479:     function andWhere()
+ * 1563:     function arr_andWherePid()
+ * 1596:     function str_andWherePid($realTable)
+ * 1665:     function arr_andWhereEnablefields()
+ * 1701:     function str_enableFields($realTable)
  *
  *              SECTION: Automatic SQL relation building
- * 1741:     private function init_class_boolAutorelation( )
- * 1821:     private function init_class_relations_mm_simple( )
- * 1979:     private function relations_confDRSprompt( )
- * 2049:     private function relations_dontUseFields( )
- * 2101:     private function relations_getForeignTable( $tables, $config, $configPath )
- * 2168:     private function relations_requirements( $table, $config, $configPath, $arrAllowedTCAtypes )
- * 2237:     private function relations_setMm( $table, $config, $foreignTable )
- * 2297:     private function relations_setSingle( $table, $columnsKey, $foreignTable)
+ * 1740:     private function init_class_boolAutorelation( )
+ * 1817:     private function init_class_relations_mm_simple( )
+ * 1921:     private function relations_confDRSprompt( )
+ * 1998:     private function relations_dontUseFields( )
+ * 2051:     private function relations_getForeignTable( $tables, $config, $configPath )
+ * 2118:     private function relations_requirements( $table, $config, $configPath )
+ * 2220:     private function relations_setMm( $table, $config, $foreignTable )
+ * 2280:     private function relations_setSingle( $table, $columnsKey, $foreignTable)
  *
- *              SECTION: Manual SQL Query Building
- * 2384:     function get_sql_query($select, $from, $where, $group, $order, $limit)
- * 2407:     private function zz_dieIfOverride( $type )
- * 2456:     private function init_class_bLeftJoin( )
- * 2494:     private function init_class_statementTables( $type, $csvStatement )
- * 2539:     private function init_class_statementTablesByFilter( )
- * 2558:     private function zz_woForeignTables( $type, $csvStatement )
- * 2590:     private function zz_addUid( $type, $csvStatement )
- * 2634:     private function zz_setToRealTableNames( $csvStatement )
- * 2655:     public function zz_loadTCAforAllTables( )
+ *              SECTION: Helper
+ * 2364:     private function init_class_bLeftJoin( )
+ * 2402:     private function init_class_statementTables( $type, $csvStatement )
+ * 2447:     private function init_class_statementTablesByFilter( )
+ * 2468:     private function zz_addUid( $type, $csvStatement )
+ * 2512:     private function zz_dieIfOverride( $type )
+ * 2561:     private function zz_loadTCAforAllTables( )
+ * 2583:     private function zz_setToRealTableNames( $csvStatement )
+ * 2607:     private function zz_woForeignTables( $type, $csvStatement )
  *
- * TOTAL FUNCTIONS: 31
+ * TOTAL FUNCTIONS: 30
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -1730,13 +1729,14 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * init_class_boolAutorelation( ):  Checks the TypoScript configuration. Checks
-   *                                  the local and global array autoconfig.relations.
-   *                                  Sets the class var $boolAutorelation.
-   *
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * init_class_boolAutorelation( ):  Checks the TypoScript configuration. Checks
+ *                                  the local and global array autoconfig.relations.
+ *                                  Sets the class var $boolAutorelation.
+ *
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function init_class_boolAutorelation( )
   {
     $conf_path  = $this->pObj->conf_path;
@@ -1807,12 +1807,13 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * init_class_relations_mm_simple( ): Inits the class var $arr_relations_mm_simple,
-   *                                an array with the arrays MM and/or simple
-   *
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * init_class_relations_mm_simple( ): Inits the class var $arr_relations_mm_simple,
+ *                                an array with the arrays MM and/or simple
+ *
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function init_class_relations_mm_simple( )
   {
       // RETURN : autoconfig is switched off
@@ -1910,12 +1911,13 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * relations_confDRSprompt( ):  Prompts to the DRS the current TypoScript
-   *                            configuration for relation building
-   *
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * relations_confDRSprompt( ):  Prompts to the DRS the current TypoScript
+ *                            configuration for relation building
+ *
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function relations_confDRSprompt( )
   {
       // RETURN : DRS is disabled
@@ -1924,7 +1926,7 @@ class tx_browser_pi1_sql_auto
       return;
     }
       // RETURN : DRS is disabled
-      
+
       // Get TypoScript configuration
     $boolOneWayOnly       = $this->pObj->conf['autoconfig.']['relations.']['oneWayOnly'];
     $boolSimpleRelations  = $this->pObj->conf['autoconfig.']['relations.']['simpleRelations'];
@@ -1986,13 +1988,13 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * relations_dontUseFields( ):  Returns an array with tablefields, which shouldn't
-   *                              used for relation building.
-   *
-   * @return	array		$arr_return : table.fields, which shouldn't used for relation building
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * relations_dontUseFields( ):  Returns an array with tablefields, which shouldn't
+ *                              used for relation building.
+ *
+ * @return	array		$arr_return : table.fields, which shouldn't used for relation building
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function relations_dontUseFields( )
   {
       // Get TypoScript configuration
@@ -2036,16 +2038,16 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * relations_getForeignTable( ): Returns the foreign table from the
-   *                               configuration of the current TCA column
-   *
-   * @param	string		$table        : current table from used tables
-   * @param	array     $config       : configuration of current TCA column
-   * @param	string		$configPath   : configuration path of curren TCA columen
-   * @return	string	$foreignTable : the foreign table
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * relations_getForeignTable( ): Returns the foreign table from the
+ *                               configuration of the current TCA column
+ *
+ * @param	string		$table        : current table from used tables
+ * @param	array		$config       : configuration of current TCA column
+ * @param	string		$configPath   : configuration path of curren TCA columen
+ * @return	string		$foreignTable : the foreign table
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function relations_getForeignTable( $tables, $config, $configPath )
   {
     switch( $config['type'])
@@ -2103,16 +2105,16 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * relations_requirements( ): Checks requirements for relation building.
-   *                            Returns true if they met, false if not.
-   *
-   * @param	string		$table              : current table from used tables
-   * @param	array     $config             : configuration of current TCA column
-   * @param	string		$configPath         : configuration path of curren TCA columen
-   * @return	boolean   true: requirements are met, false: req. aren't met
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * relations_requirements( ): Checks requirements for relation building.
+ *                            Returns true if they met, false if not.
+ *
+ * @param	string		$table              : current table from used tables
+ * @param	array		$config             : configuration of current TCA column
+ * @param	string		$configPath         : configuration path of curren TCA columen
+ * @return	boolean		true: requirements are met, false: req. aren't met
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function relations_requirements( $table, $config, $configPath )
   {
     static $first_call = true;
@@ -2204,16 +2206,17 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * relations_setMm( ): Sets the class vars
-   *          arr_relations_mm_simple['MM'][$table][$config['MM']]
-   *          arr_relations_opposite[$table][$config['MM']]['MM_opposite_field']
-   *
-   * @param	string		$$table       : current table from used tables
-   * @param	array     $config       : configuration of the current TCA column
-   * @param	string		$foreignTable : current foreign table from TCA
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * relations_setMm( ): Sets the class vars
+ *          arr_relations_mm_simple['MM'][$table][$config['MM']]
+ *          arr_relations_opposite[$table][$config['MM']]['MM_opposite_field']
+ *
+ * @param	string		$$table       : current table from used tables
+ * @param	array		$config       : configuration of the current TCA column
+ * @param	string		$foreignTable : current foreign table from TCA
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function relations_setMm( $table, $config, $foreignTable )
   {
     $boolMMrelations = $this->pObj->conf['autoconfig.']['relations.']['mmRelations'];
@@ -2265,14 +2268,15 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * relations_setSingle( ): Sets the class var $arr_relations_mm_simple['simple']
-   *
-   * @param	string		$$table       : current table from used tables
-   * @param	string		$columnsKey   : current column name from TCA
-   * @param	string		$foreignTable : current foreign table from TCA
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * relations_setSingle( ): Sets the class var $arr_relations_mm_simple['simple']
+ *
+ * @param	string		$$table       : current table from used tables
+ * @param	string		$columnsKey   : current column name from TCA
+ * @param	string		$foreignTable : current foreign table from TCA
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function relations_setSingle( $table, $columnsKey, $foreignTable)
   {
     $boolSimpleRelations = $this->pObj->conf['autoconfig.']['relations.']['simpleRelations'];
@@ -2353,6 +2357,7 @@ class tx_browser_pi1_sql_auto
   /**
  * init_class_bLeftJoin( ): Initialises the class var $b_left_join
  *
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2390,6 +2395,7 @@ class tx_browser_pi1_sql_auto
  *
  * @param	string		$type         : select, from, where, orderBy, groupBy
  * @param	string		$csvStatement : current SQL statement
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2434,6 +2440,7 @@ class tx_browser_pi1_sql_auto
  * init_class_statementTablesByFilter( ): Add filter tables to the class var
  *                                        $statementTables
  *
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2495,12 +2502,13 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * zz_dieIfOverride( ): Dies if an override for given type is defined
-   *
-   * @param	string		$type : select, from, where, orderBy, groupBy
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * zz_dieIfOverride( ): Dies if an override for given type is defined
+ *
+ * @param	string		$type : select, from, where, orderBy, groupBy
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function zz_dieIfOverride( $type )
   {
       // RETURN : any override.select isn't defined
@@ -2544,11 +2552,12 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * zz_loadTCAforAllTables( ): Load the TCA for all tables
-   *
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * zz_loadTCAforAllTables( ): Load the TCA for all tables
+ *
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function zz_loadTCAforAllTables( )
   {
     foreach( ( array ) $this->statementTables['select'] as $localForeign => $tables )
@@ -2563,14 +2572,14 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * zz_setToRealTableNames( ): Returns the given SQL statement with table.fields
-   *                            (real names) only.
-   *
-   * @param   string		$csvStatement: current SQL statement
-   * @return	string		$csvStatement: SQL statement with table.fields only
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * zz_setToRealTableNames( ): Returns the given SQL statement with table.fields
+ *                            (real names) only.
+ *
+ * @param	string		$csvStatement: current SQL statement
+ * @return	string		$csvStatement: SQL statement with table.fields only
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function zz_setToRealTableNames( $csvStatement )
   {
       // Move csvStatement to an array
@@ -2586,15 +2595,15 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * zz_woForeignTables( ): Removes foreign table.fields from the given
-   *                        statement.
-   *
-   * @param	string		$type         : select, from, where, orderBy, groupBy
-   * @param	string		$csvStatement : current SQL statement
-   * @return	string		$csvStatement : the statement without foreign tables
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * zz_woForeignTables( ): Removes foreign table.fields from the given
+ *                        statement.
+ *
+ * @param	string		$type         : select, from, where, orderBy, groupBy
+ * @param	string		$csvStatement : current SQL statement
+ * @return	string		$csvStatement : the statement without foreign tables
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function zz_woForeignTables( $type, $csvStatement )
   {
       // Move csvStatement to an array
