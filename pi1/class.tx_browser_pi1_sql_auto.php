@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,8 +30,8 @@
  * @package     TYPO3
  * @subpackage  browser
  *
- * @version     3.9.9
- * @since       2.0.0
+ * @version     3.9.12
+ * @since       3.9.12
  */
 
 /**
@@ -43,7 +43,7 @@
  *   97:     function __construct($parentObj)
  *
  *              SECTION: Main method
- *  120:     function get_query_array()
+ *  120:     function get_statements()
  *
  *              SECTION: SQL relation building with user defined SELECT only
  *  274:     function select()
@@ -74,7 +74,24 @@
  */
 class tx_browser_pi1_sql_auto
 {
+    //////////////////////////////////////////////////////
+    //
+    // Variables set by the pObj (by class.tx_browser_pi1.php)
 
+    // [Array] The current TypoScript configuration array
+  var $conf       = false;
+    // [Integer] The current mode (from modeselector)
+  var $mode       = false;
+    // [String] 'list' or 'single': The current view
+  var $view       = false;
+    // [Array] The TypoScript configuration array of the current view
+  var $conf_view  = false;
+    // [String] TypoScript path to the current view. I.e. views.single.1
+  var $conf_path  = false;
+    // Variables set by the pObj (by class.tx_browser_pi1.php)
+
+
+  
   var $boolAutorelation = true;
   // [Boolean] If it is TRUE, browser should try to build relations automatically
   var $arr_ts_autoconf_relation;
@@ -95,7 +112,7 @@ class tx_browser_pi1_sql_auto
  * @param	object		The parent object
  * @return	void
  */
-  function __construct($parentObj)
+  public function __construct($parentObj)
   {
     $this->pObj = $parentObj;
   }
@@ -112,13 +129,16 @@ class tx_browser_pi1_sql_auto
    **********************************************/
 
 
+
   /**
- * It returns the parts for a SQL query. OrderBy and GroupBy aren't used in the SQL statement.
- * OrderBy is used in php multisort. GroupBy is used in context with consolidation.
- *
- * @return	array		array with the elements error and data. Data has the elements select, from, where, orderBy, groupBy.
- */
-  function get_query_array()
+   * get_statements( ): It returns the parts for a SQL query. OrderBy and GroupBy aren't used in the SQL statement.
+   * OrderBy is used in php multisort. GroupBy is used in context with consolidation.
+   *
+   * @return	array		array with the elements error and data. Data has the elements select, from, where, orderBy, groupBy.
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  public function get_statements( )
   {
 
     $arr_return['error']['status'] = false;

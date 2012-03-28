@@ -1531,7 +1531,7 @@ class tx_browser_pi1_navi_indexBrowser
     {
       case( isset( $this->pObj->piVars['sword'] ) ):
       case( $this->var_aFilterIsSelected( ) ):
-        $from = $this->pObj->objSqlInit->sql_query_statements['rows']['from'];
+        $from = $this->pObj->objSqlInit->statements['rows']['from'];
         break;
       default:
         $from = $table;
@@ -1558,7 +1558,7 @@ class tx_browser_pi1_navi_indexBrowser
     {
       case( isset( $this->pObj->piVars['sword'] ) ):
       case( $this->var_aFilterIsSelected( ) ):
-        $where  = $this->pObj->objSqlInit->sql_query_statements['rows']['where'];
+        $where  = $this->pObj->objSqlInit->statements['rows']['where'];
         $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
         $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
         break;

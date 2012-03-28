@@ -46,12 +46,12 @@
  *  118:     public function __construct($parentObj)
  *
  *              SECTION: Query building
- *  153:     private function get_queryArray( )
- *  184:     public function get_queryArraySqlAuto( )
+ *  153:     private function init_class_statements( )
+ *  184:     public function init_class_statementsSqlAuto( )
  *
  *              SECTION: Initialise global vars
  *  330:     public function init( )
- *  370:     public function init_global_csvAll( )
+ *  370:     public function init_global_csv( )
  *  439:     private function init_global_csvSelect( )
  *  578:     private function init_global_csvSearch( )
  *  632:     private function init_global_csvOrderBy( )
@@ -99,7 +99,7 @@ class tx_browser_pi1_sql_init
   var $csvOrderBy = null;
     // [Array]      Array with elements like rows, ... Each element contains SQL query statements
     //              like for SELECT, FROM, WHERE, GROUP BY, ORDER BY
-  var $sql_query_statements = null;
+  var $statements = null;
 
 
 
@@ -128,192 +128,11 @@ class tx_browser_pi1_sql_init
 
 
 
-    /***********************************************
-    *
-    * Query building
-    *
-    **********************************************/
-
-
-
-
-
-
-
-
-
-  /**
- * get_queryArray( ):
- *                    Result depends on SQL mode manual or auto
- *
- * @return	array
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function get_queryArray( )
-  {
-      // RETURN : array in SQL manual mode
-    if( $this->pObj->b_sql_manual )
-    {
-      $arr_result = $this->pObj->objSqlMan_3x->get_query_array( $this );
-      return $arr_result;
-    }
-      // RETURN : array in SQL manual mode
-
-      // RETURN : array in SQL auto mode
-    $arr_result = $this->pObj->objSqlAut->get_query_array( );
-    return $arr_result;
-      // RETURN : array in SQL auto mode
-  }
-
-
-
-
-
-
-
-
-
-  /**
- * get_queryArraySqlAuto( ):
- *
- * @return	array		array with the elements error and data. Data has the elements select, from, where, orderBy, groupBy.
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function get_queryArraySqlAuto( )
-  {
-    $arr_return['error']['status'] = false;
-
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Set the SELECT statement
-
-      // Localise it, add uids
-    $arr_return['data']['select'] = $this->pObj->objSqlAut_3x->select( );
-    if( ! $arr_return['data']['select'] )
-    {
-      $str_header  =  '<h1 style="color:red">' . $this->pObj->pi_getLL( 'error_sql_h1' ) . '</h1>';
-      $str_prompt  =  '<p style="color:red; font-weight:bold;">' .
-                        $this->pObj->pi_getLL('error_sql_select') .
-                      '</p>';
-      $arr_return['error']['status'] = true;
-      $arr_return['error']['header'] = $str_header;
-      $arr_return['error']['prompt'] = $str_prompt;
-      return $arr_return;
-    }
-      // Set the SELECT statement
-
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Set the global groupBy
-
-    $this->pObj->objSqlAut_3x->groupBy( );
-      // Set the global groupBy
-
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Get the ORDER BY statement
-
-    $arr_return['data']['orderBy'] = $this->pObj->objSqlAut_3x->orderBy( );
-    if( ! $arr_return['data']['orderBy'] )
-    {
-      $str_header   = '<h1 style="color:red">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
-      $str_prompt   = '<p style="color:red; font-weight:bold;">' .
-                        $this->pObj->pi_getLL('error_sql_orderby') .
-                      '</p>';
-      $arr_return['error']['status'] = true;
-      $arr_return['error']['header'] = $str_header;
-      $arr_return['error']['prompt'] = $str_prompt;
-      return $arr_return;
-    }
-      // Get the ORDER BY statement
-
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Get Relations
-
-    $this->pObj->objSqlAut_3x->arr_ts_autoconf_relation = $this->pObj->objSqlAut_3x->get_ts_autoconfig_relation( );
-    $this->pObj->objSqlAut_3x->arr_relations_mm_simple  = $this->pObj->objSqlAut_3x->get_arr_relations_mm_simple( );
-      // Get Relations
-
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Get WHERE and FROM
-
-    $arr_return['data']['where']  = $this->pObj->objSqlAut_3x->whereClause( );
-    $arr_return['data']['from']   = $this->pObj->objSqlAut_3x->sql_from( );
-    // From has to be the last, because whereClause can have new tables.
-    // Get WHERE and FROM
-
-
-
-      ////////////////////////////////////////////////////////////////////
-      //
-      // Enable the ordering by table_mm.sorting
-
-      // 091128: ADDED in context with table_mm.sorting (see below)
-    $str_mmSorting = false;
-    $arr_mmSorting = false;
-    if( is_array( $this->pObj->arrConsolidate['select']['mmSortingTableFields'] ) )
-    {
-      foreach( ( array ) $this->pObj->arrConsolidate['select']['mmSortingTableFields'] as $tableField )
-      {
-        list( $table, $field ) = explode( '.', $tableField );
-        $arr_mmSorting[] = $tableField . ' AS \'' . $tableField . '\'';
-      }
-    }
-    if( is_array( $arr_mmSorting ) )
-    {
-      $str_mmSorting = $str_mmSorting . implode( ', ', $arr_mmSorting );
-      $str_mmSorting = ', ' . $str_mmSorting;
-    }
-    $arr_return['data']['select'] = $arr_return['data']['select'] . $str_mmSorting;
-      // 091128: ADDED in context with table_mm.sorting (see below)
-      // Enable the ordering by table_mm.sorting
-
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Replace Markers for pidlist and uid
-
-    $str_pid_list = $this->pObj->pidList;
-      // For human readable
-    $str_pid_list = str_replace( ',', ', ', $str_pid_list );
-
-    foreach( ( array ) $arr_return['data'] as $str_query_part => $str_statement )
-    {
-      $str_statement = str_replace('###PID_LIST###', $str_pid_list,                  $str_statement);
-      $str_statement = str_replace('###UID###',      $this->pObj->piVars['showUid'], $str_statement);
-      $arr_return['data'][$str_query_part]  = $str_statement;
-    }
-      // Replace Markers for pidlist and uid
-
-    return $arr_return;
-  }
-
-
-
-
-
-
-
 
 
     /***********************************************
     *
-    * Initialise global vars
+    * Initialise variables
     *
     **********************************************/
 
@@ -333,25 +152,23 @@ class tx_browser_pi1_sql_init
     $this->pObj->timeTracking_log( __METHOD__, __LINE__, 'begin' );
 
       // Set the globals csvSelect, csvSelect, csvOrderBy, arrLocalTable
-    $arr_result = $this->init_global_csvAll( );
-    if( $arr_result['error']['status'] )
+    $arr_return = $this->init_global_csv( );
+    if( $arr_return['error']['status'] )
     {
         // Prompt the expired time to devlog
       $this->pObj->timeTracking_log( __METHOD__, __LINE__, 'end' );
-      return $arr_result;
+      return $arr_return;
     }
-    unset( $arr_result );
+    unset( $arr_return );
       // Set the globals csvSelect, csvSelect, csvOrderBy
 
       // Set the SQL query statements
-    $arr_result = $this->get_queryArray( );
-    if( $arr_result['error']['status'] )
+    $arr_return = $this->init_class_statements( );
+    if( $arr_return['error']['status'] )
     {
-      return $arr_result;
+      return $arr_return;
     }
-
-    $this->sql_query_statements['rows'] = $arr_result['data'];
-    unset( $arr_result );
+    unset( $arr_return );
       // SQL query array
 
       // Prompt the expired time to devlog
@@ -360,14 +177,72 @@ class tx_browser_pi1_sql_init
 
 
 
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * Initialise class variables
+    *
+    **********************************************/
+
+
+
+  /**
+   * init_class_statements( ):  Get the SQL statements.
+   *                            Result depends on SQL mode manual or auto.
+   *
+   * @return	array
+   * @version 3.9.9
+   * @since   3.9.9
+   */
+  private function init_class_statements( )
+  {
+      // RETURN : array in SQL manual mode
+    if( $this->pObj->b_sql_manual )
+    {
+      $arr_return = $this->pObj->objSqlMan_3x->get_query_array( $this );
+      $this->statements['rows'] = $arr_return['data'];
+      return $arr_return;
+    }
+      // RETURN : array in SQL manual mode
+
+      // RETURN : array in SQL auto mode
+    $arr_return = $this->pObj->objSqlAut->get_statements( );
+    $this->statements['rows'] = $arr_return['data'];
+    return $arr_return;
+      // RETURN : array in SQL auto mode
+  }
+
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * Initialise global variables
+    *
+    **********************************************/
+
+
+
 /**
- * init_global_csvAll( ): Set the globals csvSelect, csvSearch, csvOrderBy, arrLocalTable
+ * init_global_csv( ): Set the globals csvSelect, csvSearch, csvOrderBy, arrLocalTable
  *
  * @return	array		$arr_return : Array in case of an error with the error message
  * @version 3.9.12
  * @since   3.9.12
  */
-  public function init_global_csvAll( )
+  private function init_global_csv( )
   {
     $arr_return['error']['status'] = false;
 
