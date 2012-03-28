@@ -1702,6 +1702,50 @@ class tx_browser_pi1_sql_auto
 
 
 
+  /**
+   * relations_requirements( ):
+   *
+   * @return	string		TRUE or $arr_return
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function relations_requirements( $config, $configPath, $arrAllowedTCAtypes )
+  {
+      // RETURN : internal_type is db
+    if( $config['internal_type'] == 'db')
+    {
+        // DRS
+      if( $this->pObj->b_drs_tca )
+      {
+        $prompt = $configPath . 'internal_type is \'db\'. ' .
+                  'But \'db\' isn\'t supported by the TYPO3-Browser.';
+        t3lib_div::devlog( '[INFO/TCA] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // DRS
+      return false;
+    }
+      // RETURN : internal_type is db
+
+      // RETURN : type isn't any element of $arrAllowedTCAtypes
+    if( ! in_array( $config['type'], $arrAllowedTCAtypes ) )
+    {
+        // DRS
+      if( $this->pObj->b_drs_tca )
+      {
+        $prompt = $configPath . 'type is \'' .
+                  $config['type']. '\', but any element in the list of ' .
+                  'allowed types.';
+        t3lib_div::devlog( '[INFO/TCA] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // DRS
+      return false;
+    }
+      // RETURN : type isn't any element of $arrAllowedTCAtypes
+
+    return true;
+  }
+
+
 
 
   /**
@@ -2027,53 +2071,34 @@ class tx_browser_pi1_sql_auto
 
       foreach( ( array ) $arrColumns as $columnsKey => $columnsValue )
       {
-        $config = $columnsValue['config'];
+        $config     = $columnsValue['config'];
+        $configPath = $table . '.' . $columnsKey . '.config.';
 
-
-        //////////////////////////////////////////////
-        //
-        // Look for a destination table
-
-        if ( $this->pObj->b_drs_tca )
-        {
-          t3lib_div::devlog('[INFO/TCA] \''.$table.'.'.$columnsKey.'.config.type: \''.$config['type'].'\'', $this->pObj->extKey, 0);
-        }
-        $boolDB           = true;
         $foreignTable     = false;
         $arrForeignTables = false;
 
-          // CONTINUE
-        if( $config['internal_type'] == 'db')
+          // CONTINUE: requirements aren't met
+        if( ! $this->relations_requirements( $config, $configPath, $arrAllowedTCAtypes ) )
         {
-            // DRS
-          if( $this->pObj->b_drs_tca )
-          {
-            $prompt = $table . '.' . $columnsKey . '.config.internal_type is \'db\'. ' .
-                      'But db isn\'t supported by the TYPO3-Browser.';
-            t3lib_div::devlog('[INFO/TCA] ' . $table, $this->pObj->extKey, 0);
-          }
-            // DRS
           continue;
         }
-          // CONTINUE
+          // CONTINUE: requirements aren't met
 
-        // There is a different workflow for select and group
-        if ($boolDB && in_array('select', $arrAllowedTCAtypes) && $config['type'] == 'select')
+          // There is a different workflow for select and group
+        if( $config['type'] == 'select' )
         {
-          // Config.internal_type is 'db', user wants to process config.type 'select', the config.type is 'select'
           $foreignTable = $config['foreign_table'];
           if( ! empty( $foreignTable ) )
           {
             if( $this->pObj->b_drs_sql )
             {
-              $prompt = 'TCA \'' . $table . '.' . $columnsKey . '.config.foreign_table: \'' . $foreignTable . '\'';
+              $prompt = 'TCA \'' . $configPath . 'foreign_table: \'' . $foreignTable . '\'';
               t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
             }
           }
         }
-        if ($boolDB && in_array('group',  $arrAllowedTCAtypes) && $config['type'] == 'group')
+        if( $config['type'] == 'group')
         {
-          // Config.internal_type is 'db', user wants to process config.type 'group', the config.type is 'group'
           $arrForeignTables = $this->pObj->objZz->getCSVasArray($config['allowed']);
           if ($this->pObj->b_drs_sql)
           {
