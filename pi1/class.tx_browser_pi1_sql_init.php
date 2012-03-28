@@ -86,18 +86,15 @@ class tx_browser_pi1_sql_init
     // [String] SQL query
   var $query = null;
 
-    // [Array]      Array tableFields for uid and pid of the localTable
-    //              I.e: array( 'uid' => 'tx_org_cal.uid', 'pid' => 'tx_org_cal.pid' )
-  var $arrLocalTable = null;
-    // [String/CSV] Proper select statement for current rows.
-    //              I.e: 'tx_org_cal.title,  tx_org_cal.subtitle,  tx_org_cal.teaser_short, ...'
-  var $csvSelect  = null;
-    // [String/CSV] Proper select statement for current rows for the search query.
-    //              I.e: 'tx_org_cal.title AS \'tx_org_cal.title\', tx_org_cal.subtitle AS ...'
-  var $csvSearch  = null;
-    // [String/CSV] Proper order by statement (without ORDER BY).
-    //              I.e: 'tx_org_cal.datetime DESC'
-  var $csvOrderBy = null;
+//    // [String/CSV] Proper select statement for current rows.
+//    //              I.e: 'tx_org_cal.title,  tx_org_cal.subtitle,  tx_org_cal.teaser_short, ...'
+//  var $csvSelect  = null;
+//    // [String/CSV] Proper select statement for current rows for the search query.
+//    //              I.e: 'tx_org_cal.title AS \'tx_org_cal.title\', tx_org_cal.subtitle AS ...'
+//  var $csvSearch  = null;
+//    // [String/CSV] Proper order by statement (without ORDER BY).
+//    //              I.e: 'tx_org_cal.datetime DESC'
+//  var $csvOrderBy = null;
     // [Array]      Array with elements like rows, ... Each element contains SQL query statements
     //              like for SELECT, FROM, WHERE, GROUP BY, ORDER BY
   var $statements = null;
