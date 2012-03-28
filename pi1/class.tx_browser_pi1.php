@@ -1641,7 +1641,7 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objSqlAut_3x = new tx_browser_pi1_sql_auto_3x( $this );
 
       // Class with sql methods (engine 4.x)
-    require_once('class.tx_browser_pi1_sql.php');
+    require_once('class.tx_browser_pi1_sql_functions.php');
     $this->objSqlFun = new tx_browser_pi1_sql_functions( $this );
 
       // Class with sql methods for manual mode and auto mode
