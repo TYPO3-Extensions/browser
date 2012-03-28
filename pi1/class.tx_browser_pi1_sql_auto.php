@@ -63,7 +63,7 @@
  * 1668:     function arr_andWhereEnablefields()
  * 1704:     function str_enableFields($realTable)
  *
- *              SECTION: Methods for automatic SQL relation building
+ *              SECTION: Automatic SQL relation building
  * 1741:     private function init_class_boolAutorelation( )
  * 1821:     private function init_class_relations_mm_simple( )
  * 1979:     private function relations_confDRSprompt( )
@@ -75,7 +75,7 @@
  *
  *              SECTION: Manual SQL Query Building
  * 2384:     function get_sql_query($select, $from, $where, $group, $order, $limit)
- * 2407:     private function die_ifOverride( $type )
+ * 2407:     private function zz_dieIfOverride( $type )
  * 2456:     private function init_class_bLeftJoin( )
  * 2494:     private function init_class_statementTables( $type, $csvStatement )
  * 2539:     private function init_class_statementTablesByFilter( )
@@ -111,8 +111,6 @@ class tx_browser_pi1_sql_auto
     // [Boolean] If it is TRUE, browser should try to build relations automatically
   var $boolAutorelation = true;
 
-  var $arr_ts_autoconf_relation;
-  // [Array] Array with some configuration from the TS for an automatic relation building
   var $arr_relations_mm_simple;
   // [Array] Array with the arrays MM and/or simple
   var $arr_relations_opposite;
@@ -221,7 +219,7 @@ class tx_browser_pi1_sql_auto
 
 
       // Get Relations
-    $this->arr_ts_autoconf_relation = $this->init_class_boolAutorelation( );
+    $this->init_class_boolAutorelation( );
     $this->init_class_relations_mm_simple( );
       // Get Relations
 
@@ -297,7 +295,7 @@ class tx_browser_pi1_sql_auto
   private function get_statements_select( )
   {
       // DIE in case of override.select
-    $this->die_ifOverride( 'select' );
+    $this->zz_dieIfOverride( 'select' );
 
       // Remove all expressions and aliases in the SELECT statement
     $csvSelect = $this->zz_setToRealTableNames( $this->conf_view['select'] );
@@ -333,7 +331,7 @@ class tx_browser_pi1_sql_auto
     $viewWiDot = $view.'.';
 
       // DIE in case of override.from
-    $this->die_ifOverride( 'from' );
+    $this->zz_dieIfOverride( 'from' );
 
 
 
@@ -472,7 +470,7 @@ class tx_browser_pi1_sql_auto
   private function get_statements_orderBy()
   {
       // DIE in case of override.from
-    $this->die_ifOverride( 'orderBy' );
+    $this->zz_dieIfOverride( 'orderBy' );
 
     $csvOrder = $this->conf_view['orderBy'];
 
@@ -1725,19 +1723,20 @@ class tx_browser_pi1_sql_auto
 
   /***********************************************
    *
-   * Methods for automatic SQL relation building
+   * Automatic SQL relation building
    *
    **********************************************/
 
 
 
   /**
- * init_class_boolAutorelation( ):  Checks the TypoScript configuration. Checks
- *                                the local and global array autoconfig.relations.
- *                                Sets the class var $boolAutorelation.
- *
- * @return	array		FALSE || $arr_ts_autoconf_relation
- */
+   * init_class_boolAutorelation( ):  Checks the TypoScript configuration. Checks
+   *                                  the local and global array autoconfig.relations.
+   *                                  Sets the class var $boolAutorelation.
+   *
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   private function init_class_boolAutorelation( )
   {
     $conf_path  = $this->pObj->conf_path;
@@ -1792,11 +1791,8 @@ class tx_browser_pi1_sql_auto
         t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
       }
       $this->boolAutorelation = false;
-      return false;
     }
       // IF : autoconfiguration shouldn't be used
-
-    $coa_autoconfigRelations = $this->pObj->conf['autoconfig.']['relations.'];
 
       // DRS
     if( $this->pObj->b_drs_sql )
@@ -1805,27 +1801,20 @@ class tx_browser_pi1_sql_auto
       t3lib_div::devlog( '[OK/SQL] ' . $prompt, $this->pObj->extKey, -1 );
     }
       // DRS
-    return $coa_autoconfigRelations;
-      // Global TypoScript configuration
+
   }
 
 
 
   /**
- * init_class_relations_mm_simple( ) Generating the $this->arr_relations_mm_simple, an array with the arrays MM and/or simple
- *
- * @return	string		TRUE or $arr_return
- * @version 3.9.12
- * @since   3.9.12
- */
+   * init_class_relations_mm_simple( ): Inits the class var $arr_relations_mm_simple,
+   *                                an array with the arrays MM and/or simple
+   *
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   private function init_class_relations_mm_simple( )
   {
-    $conf       = $this->pObj->conf;
-    $mode       = $this->pObj->piVar_mode;
-    $view       = $this->pObj->view;
-    $conf_path  = $this->pObj->conf_path;
-    $conf_view  = $this->pObj->conf_view;
-
       // RETURN : autoconfig is switched off
     if ( ! $this->boolAutorelation )
     {
@@ -1850,55 +1839,20 @@ class tx_browser_pi1_sql_auto
     }
       // RETURN IF : no foreign table.
 
-      // Get TypoScript configuration
-    $boolOneWayOnly           = $this->arr_ts_autoconf_relation['oneWayOnly'];
-    $boolSimpleRelations      = $this->arr_ts_autoconf_relation['simpleRelations'];
-    $boolSelfReference        = $this->arr_ts_autoconf_relation['simpleRelations.']['selfReference'];
-    $boolMMrelations          = $this->arr_ts_autoconf_relation['mmRelations'];
-    $allowedTCAconfigTypesCSV = $this->arr_ts_autoconf_relation['TCAconfig.']['type.']['csvValue'];
-      // Get TypoScript configuration
-
       // Prompt the current TypoScript configuration to the DRS
     $this->relations_confDRSprompt( );
 
       // Initialises the class var $b_left_join
     $this->init_class_bLeftJoin( );
 
-
-
-      ////////////////////////////////////////////////////////////////////
-      //
-      // Process csv values
-
-      // get alloewed config.type for relation building ( should be select and/or group )
-    $arrAllowedTCAtypes = $this->pObj->objZz->getCSVasArray( $allowedTCAconfigTypesCSV );
-
-      // DRS
-    if ( $this->pObj->b_drs_sql )
-    {
-      $csvAllowedTCAtypes = implode(', ', $arrAllowedTCAtypes);
-      $prompt = 'Only TCA config.types \'' . $csvAllowedTCAtypes .
-                '\' will used for autorelation building.';
-      t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
-    }
-      // DRS
-
-      // Get table.field names, which shouldn't processed for relation building
-    $arrDontUseTableFields = $this->relations_dontUseFields( );
-      // Process csv values
-
-
-
-      //////////////////////////////////////////////////////////////////
-      //
-      // Loop through the TCA of the foreign tables
-
+      // Get all used tables
     $tables = $this->statementTables['all']['localtable'];
     $tables = $tables + $this->statementTables['all']['foreigntable'];
 
       // LOOP tables
     foreach( (array ) $tables as $table )
     {
+        // Get the TCA array of the current column
       $arrColumns = $GLOBALS['TCA'][$table]['columns'];
 
         // CONTINUE : current table hasn't any TCA columns
@@ -1911,33 +1865,17 @@ class tx_browser_pi1_sql_auto
         // LOOP each TCA column
       foreach( ( array ) $arrColumns as $columnsKey => $columnsValue )
       {
+          // Get the TCA configuration of the current column
         $config     = $columnsValue['config'];
+          // Get the TCA configuration path of the current column
         $configPath = $table . '.' . $columnsKey . '.config.';
 
           // CONTINUE : requirements aren't met
-        if( ! $this->relations_requirements( $table, $config, $configPath, $arrAllowedTCAtypes ) )
+        if( ! $this->relations_requirements( $table, $config, $configPath ) )
         {
           continue;
         }
           // CONTINUE : requirements aren't met
-
-          // CONTINUE : current column is element of $arrDontUseTableFields
-        if ( is_array( $arrDontUseTableFields ) )
-        {
-          $tableField = $table. '.' . $columnsKey;
-          if( in_array( $tableField, $arrDontUseTableFields ) )
-          {
-              // DRS
-            if ( $this->pObj->b_drs_tca )
-            {
-              $prompt = $tableField . ' is element of dontUseTableFields.';
-              t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
-            }
-              // DRS
-            continue;
-          }
-        }
-          // CONTINUE : current column is element of $arrDontUseTableFields
 
           // Get the foreign table
         $foreignTable = $this->relations_getForeignTable( $tables, $config, $configPath );
@@ -1949,6 +1887,7 @@ class tx_browser_pi1_sql_auto
           // CONTINUE : there is no foreign table
           // Get the foreign table
 
+          // SWITCH mm or single
         switch( true )
         {
           case( $config['MM'] ):
@@ -1959,6 +1898,7 @@ class tx_browser_pi1_sql_auto
             $this->relations_setSingle( $table, $columnsKey, $foreignTable);
             break;
         }
+          // SWITCH mm or single
       }
         // LOOP each TCA column
     }
@@ -1970,86 +1910,93 @@ class tx_browser_pi1_sql_auto
 
 
   /**
- * relations_confDRSprompt( )
- *
- * @return	[type]		...
- * @version 3.9.12
- * @since   3.9.12
- */
+   * relations_confDRSprompt( ):  Prompts to the DRS the current TypoScript
+   *                            configuration for relation building
+   *
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   private function relations_confDRSprompt( )
   {
+      // RETURN : DRS is disabled
+    if( ! $this->pObj->b_drs_sql && ! $this->pObj->b_drs_tca )
+    {
+      return;
+    }
+      // RETURN : DRS is disabled
+      
       // Get TypoScript configuration
-    $boolOneWayOnly           = $this->arr_ts_autoconf_relation['oneWayOnly'];
-    $boolSimpleRelations      = $this->arr_ts_autoconf_relation['simpleRelations'];
-    $boolSelfReference        = $this->arr_ts_autoconf_relation['simpleRelations.']['selfReference'];
-    $boolMMrelations          = $this->arr_ts_autoconf_relation['mmRelations'];
-    $allowedTCAconfigTypesCSV = $this->arr_ts_autoconf_relation['TCAconfig.']['type.']['csvValue'];
-    $dontUseFieldsCSV         = $this->arr_ts_autoconf_relation['csvDontUseFields'];
+    $boolOneWayOnly       = $this->pObj->conf['autoconfig.']['relations.']['oneWayOnly'];
+    $boolSimpleRelations  = $this->pObj->conf['autoconfig.']['relations.']['simpleRelations'];
+    $boolSelfReference    = $this->pObj->conf['autoconfig.']['relations.']['simpleRelations.']['selfReference'];
+    $boolMMrelations      = $this->pObj->conf['autoconfig.']['relations.']['mmRelations'];
+    $csvAllowedTCAtypes   = $this->pObj->conf['autoconfig.']['relations.']['TCAconfig.']['type.']['csvValue'];
+    $dontUseFieldsCSV     = $this->pObj->conf['autoconfig.']['relations.']['csvDontUseFields'];
       // Get TypoScript configuration
 
-      // DRS
-    if( $this->pObj->b_drs_sql )
+    if( $boolOneWayOnly )
     {
-      if( $boolOneWayOnly )
+      $prompt = 'Use only relations in the TCA of the local table ' .
+                $this->pObj->localTable . '.';
+      t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+    else
+    {
+      $prompt = 'Use relations in the TCA of the local table ' .
+                $this->pObj->localTable . ' and of foreign tables.';
+      t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+    if( $boolSimpleRelations )
+    {
+      $prompt = 'Use simple relations.';
+      t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      if ($boolSelfReference)
       {
-        $prompt = 'Use only relations in the TCA of the local table ' .
-                  $this->pObj->localTable . '.';
+        $prompt = 'Use self references in simple relations.';
         t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
       else
       {
-        $prompt = 'Use relations in the TCA of the local table ' .
-                  $this->pObj->localTable . ' and of foreign tables.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-      if( $boolSimpleRelations )
-      {
-        $prompt = 'Use simple relations.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-        if ($boolSelfReference)
-        {
-          $prompt = 'Use self references in simple relations.';
-          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-        else
-        {
-          $prompt = 'Don\'t use self references in simple relations.';
-          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-      }
-      else
-      {
-        $prompt = 'Don\'t use simple relations.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-      if ( $boolMMrelations )
-      {
-        $prompt = 'Use MM relations.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-      else
-      {
-        $prompt = 'Don\'t use MM relations.';
+        $prompt = 'Don\'t use self references in simple relations.';
         t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
     }
+    else
+    {
+      $prompt = 'Don\'t use simple relations.';
+      t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+    if ( $boolMMrelations )
+    {
+      $prompt = 'Use MM relations.';
+      t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+    else
+    {
+      $prompt = 'Don\'t use MM relations.';
+      t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+
+    $prompt = 'Only TCA config.types \'' . $csvAllowedTCAtypes .
+              '\' will used for autorelation building.';
+    t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
       // DRS
   }
 
 
 
   /**
- * relations_dontUseFields( ):  Returns an array with tablefields, which shouldn't
- *                              used for relation building.
- *
- * @return	array		$arr_return :
- * @version 3.9.12
- * @since   3.9.12
- */
+   * relations_dontUseFields( ):  Returns an array with tablefields, which shouldn't
+   *                              used for relation building.
+   *
+   * @return	array		$arr_return : table.fields, which shouldn't used for relation building
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   private function relations_dontUseFields( )
   {
       // Get TypoScript configuration
-    $dontUseFieldsCSV = $this->arr_ts_autoconf_relation['csvDontUseFields'];
+    $dontUseFieldsCSV = $this->pObj->conf['autoconfig.']['relations.']['csvDontUseFields'];
 
     if( empty ( $dontUseFieldsCSV ) )
     {
@@ -2089,15 +2036,16 @@ class tx_browser_pi1_sql_auto
 
 
   /**
- * relations_getForeignTable( ):
- *
- * @param	[type]		$$tables: ...
- * @param	[type]		$config: ...
- * @param	[type]		$configPath: ...
- * @return	string		TRUE or $arr_return
- * @version 3.9.12
- * @since   3.9.12
- */
+   * relations_getForeignTable( ): Returns the foreign table from the
+   *                               configuration of the current TCA column
+   *
+   * @param	string		$table        : current table from used tables
+   * @param	array     $config       : configuration of current TCA column
+   * @param	string		$configPath   : configuration path of curren TCA columen
+   * @return	string	$foreignTable : the foreign table
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   private function relations_getForeignTable( $tables, $config, $configPath )
   {
     switch( $config['type'])
@@ -2155,18 +2103,21 @@ class tx_browser_pi1_sql_auto
 
 
   /**
- * relations_requirements( ):
- *
- * @param	[type]		$$table: ...
- * @param	[type]		$config: ...
- * @param	[type]		$configPath: ...
- * @param	[type]		$arrAllowedTCAtypes: ...
- * @return	string		TRUE or $arr_return
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function relations_requirements( $table, $config, $configPath, $arrAllowedTCAtypes )
+   * relations_requirements( ): Checks requirements for relation building.
+   *                            Returns true if they met, false if not.
+   *
+   * @param	string		$table              : current table from used tables
+   * @param	array     $config             : configuration of current TCA column
+   * @param	string		$configPath         : configuration path of curren TCA columen
+   * @return	boolean   true: requirements are met, false: req. aren't met
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function relations_requirements( $table, $config, $configPath )
   {
+    static $first_call = true;
+    static $arrDontUseTableFields;
+
       // RETURN : internal_type is db
     if( $config['internal_type'] == 'db')
     {
@@ -2182,6 +2133,9 @@ class tx_browser_pi1_sql_auto
     }
       // RETURN : internal_type is db
 
+      // Get TypoScript configuration
+    $csvAllowedTCAtypes = $this->pObj->conf['autoconfig.']['relations.']['TCAconfig.']['type.']['csvValue'];
+    $arrAllowedTCAtypes = $this->pObj->objZz->getCSVasArray( $csvAllowedTCAtypes );
       // RETURN : type isn't any element of $arrAllowedTCAtypes
     if( ! in_array( $config['type'], $arrAllowedTCAtypes ) )
     {
@@ -2199,7 +2153,7 @@ class tx_browser_pi1_sql_auto
       // RETURN : type isn't any element of $arrAllowedTCAtypes
 
       // IF : relations from the local table only
-    if( $this->arr_ts_autoconf_relation['oneWayOnly'] )
+    if( $this->pObj->conf['autoconfig.']['relations.']['oneWayOnly'] )
     {
         // But table is a foreign table
       if( $table != $this->pObj->localTable )
@@ -2218,6 +2172,31 @@ class tx_browser_pi1_sql_auto
     }
       // IF : relations from the local table only
 
+      // Get table.field names, which shouldn't processed for relation building
+    if( $first_call )
+    {
+      $arrDontUseTableFields = $this->relations_dontUseFields( );
+      $first_call = false;
+    }
+      // Get table.field names, which shouldn't processed for relation building
+
+      // CONTINUE : current column is element of $arrDontUseTableFields
+    if ( is_array( $arrDontUseTableFields ) )
+    {
+      $tableField = $table. '.' . $columnsKey;
+      if( in_array( $tableField, $arrDontUseTableFields ) )
+      {
+          // DRS
+        if ( $this->pObj->b_drs_tca )
+        {
+          $prompt = $tableField . ' is element of dontUseTableFields.';
+          t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+        }
+          // DRS
+        continue;
+      }
+    }
+      // CONTINUE : current column is element of $arrDontUseTableFields
 
     return true;
   }
@@ -2225,18 +2204,19 @@ class tx_browser_pi1_sql_auto
 
 
   /**
- * relations_setMm( ):
- *
- * @param	[type]		$$table: ...
- * @param	[type]		$config: ...
- * @param	[type]		$foreignTable: ...
- * @return	string		TRUE or $arr_return
- * @version 3.9.12
- * @since   3.9.12
- */
+   * relations_setMm( ): Sets the class vars
+   *          arr_relations_mm_simple['MM'][$table][$config['MM']]
+   *          arr_relations_opposite[$table][$config['MM']]['MM_opposite_field']
+   *
+   * @param	string		$$table       : current table from used tables
+   * @param	array     $config       : configuration of the current TCA column
+   * @param	string		$foreignTable : current foreign table from TCA
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   private function relations_setMm( $table, $config, $foreignTable )
   {
-    $boolMMrelations = $this->arr_ts_autoconf_relation['mmRelations'];
+    $boolMMrelations = $this->pObj->conf['autoconfig.']['relations.']['mmRelations'];
 
       // RETURN IF : mmRelations should set manually
     if( ! $boolMMrelations )
@@ -2285,18 +2265,17 @@ class tx_browser_pi1_sql_auto
 
 
   /**
- * relations_setMm( ):
- *
- * @param	[type]		$$table: ...
- * @param	[type]		$columnsKey: ...
- * @param	[type]		$foreignTable: ...
- * @return	string		TRUE or $arr_return
- * @version 3.9.12
- * @since   3.9.12
- */
+   * relations_setSingle( ): Sets the class var $arr_relations_mm_simple['simple']
+   *
+   * @param	string		$$table       : current table from used tables
+   * @param	string		$columnsKey   : current column name from TCA
+   * @param	string		$foreignTable : current foreign table from TCA
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   private function relations_setSingle( $table, $columnsKey, $foreignTable)
   {
-    $boolSimpleRelations = $this->arr_ts_autoconf_relation['simpleRelations'];
+    $boolSimpleRelations = $this->pObj->conf['autoconfig.']['relations.']['simpleRelations'];
 
       // RETURN IF : Don't process simple relations automatically
     if( ! $boolSimpleRelations )
@@ -2365,91 +2344,15 @@ class tx_browser_pi1_sql_auto
 
   /***********************************************
    *
-   * Manual SQL Query Building
+   * Helper
    *
    **********************************************/
-
-
-  /**
- * The method returns a SQL query.
- *
- * @param	string		$select: SELECT clause
- * @param	string		$from:   FROM clause
- * @param	string		$where:  WHERE clause
- * @param	string		$group:  GROUP clause
- * @param	string		$order:  ORDER clause
- * @param	string		$limit:  LIMIT clause
- * @return	string		SQL query
- */
-  function get_sql_query($select, $from, $where, $group, $order, $limit)
-  {
-
-    $str_query = ''.
-'  ###SELECT###
-  ###FROM###
-  ###WHERE###
-  ###GROUP###
-  ###ORDER###
-  ###LIMIT###
-';
-
-  }
-
-
-  /**
- * die_ifOverride( ): Dies if an override for given type is defined
- *
- * @param	string		$type : select, from, where, orderBy, groupBy
- * @return	[type]		...
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function die_ifOverride( $type )
-  {
-      // RETURN : any override.select isn't defined
-    if( ! isset ( $this->conf_view['override.'][$type] ) )
-    {
-      return;
-    }
-      // RETURN : any override.select isn't defined
-
-      // DRS
-    if( $this->pObj->b_drs_sql )
-    {
-      $prompt = $this->conf_path . 'override.' . $type . ' is true. ' .
-                $this->conf_path .'' . $type . ' will be ignored!';
-      t3lib_div::devLog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      $prompr = 'SELECT ' . $select;
-      t3lib_div::devLog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS
-
-      // DRS
-    if( $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Index browser should handle override.' . $type . '.';
-      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-    }
-      // DRS
-
-    $prompt = '<h1>
-                  override.' . $type . '
-                </h1>
-                <p>
-                  ' .$this->conf_path . 'override.' . $type . ' is used.<br />
-                  But TYPO3-Browser 4.0 doesn\'t support this TypoScript property now.<br />
-                  <br />
-                  Sorry.
-                </p>';
-    die ( $prompt );
-   }
 
 
 
   /**
  * init_class_bLeftJoin( ): Initialises the class var $b_left_join
  *
- * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2457,8 +2360,8 @@ class tx_browser_pi1_sql_auto
   {
     switch( true )
     {
-      case( $this->arr_ts_autoconf_relation['left_join'] == 1 ):
-      case( strtolower($this->arr_ts_autoconf_relation['left_join'] == 'true' ) ):
+      case( $this->pObj->conf['autoconfig.']['relations.']['left_join'] == 1 ):
+      case( strtolower($this->pObj->conf['autoconfig.']['relations.']['left_join'] == 'true' ) ):
         $this->b_left_join = true;
         if( $this->pObj->b_drs_sql )
         {
@@ -2481,13 +2384,12 @@ class tx_browser_pi1_sql_auto
 
   /**
  * init_class_statementTables( ): Inits the class var statementTables.
- *          Var is an array like
- *          * $statementTables['select']['localtable']['tx_org_cal']        = 'tx_org_cal'
- *          * $statementTables['select']['foreigntable']['tx_org_caltype']  = 'tx_org_caltype'
+ *    Var is an array like
+ *    * $statementTables['select']['localtable']['tx_org_cal']        = 'tx_org_cal'
+ *    * $statementTables['select']['foreigntable']['tx_org_caltype']  = 'tx_org_caltype'
  *
  * @param	string		$type         : select, from, where, orderBy, groupBy
  * @param	string		$csvStatement : current SQL statement
- * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2532,7 +2434,6 @@ class tx_browser_pi1_sql_auto
  * init_class_statementTablesByFilter( ): Add filter tables to the class var
  *                                        $statementTables
  *
- * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2541,36 +2442,6 @@ class tx_browser_pi1_sql_auto
     $arrFilter  = array_keys( $this->conf_view['filter.'] );
     $csvFilter  = implode( ', ', $arrFilter );
     $this->init_class_statementTables( 'filter', $csvFilter );
-  }
-
-
-
-  /**
- * zz_woForeignTables( ): Removes foreign table.fields from the given
- *                        statement.
- *
- * @param	string		$type         : select, from, where, orderBy, groupBy
- * @param	string		$csvStatement : current SQL statement
- * @return	string		$csvStatement : the statement without foreign tables
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function zz_woForeignTables( $type, $csvStatement )
-  {
-      // Move csvStatement to an array
-    $arrStatement = $this->pObj->objZz->getCSVasArray( $csvStatement );
-
-    foreach( $arrStatement as $key => $tableField)
-    {
-      list( $table ) = explode( '.', $tableField );
-      if( in_array( $table, $this->statementTables[$type]['foreigntable'] ) )
-      {
-        unset( $arrStatement[$key] );
-      }
-    }
-
-    $csvStatement = implode( ', ', $arrStatement );
-    return $csvStatement;
   }
 
 
@@ -2624,13 +2495,82 @@ class tx_browser_pi1_sql_auto
 
 
   /**
- * zz_setToRealTableNames( ):
- *
- * @param	[type]		$$csvStatement: ...
- * @return	string
- * @version 3.9.12
- * @since   3.9.12
- */
+   * zz_dieIfOverride( ): Dies if an override for given type is defined
+   *
+   * @param	string		$type : select, from, where, orderBy, groupBy
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function zz_dieIfOverride( $type )
+  {
+      // RETURN : any override.select isn't defined
+    if( ! isset ( $this->conf_view['override.'][$type] ) )
+    {
+      return;
+    }
+      // RETURN : any override.select isn't defined
+
+      // DRS
+    if( $this->pObj->b_drs_sql )
+    {
+      $prompt = $this->conf_path . 'override.' . $type . ' is true. ' .
+                $this->conf_path .'' . $type . ' will be ignored!';
+      t3lib_div::devLog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompr = 'SELECT ' . $select;
+      t3lib_div::devLog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+
+      // DRS
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Index browser should handle override.' . $type . '.';
+      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+    }
+      // DRS
+
+    $prompt = '<h1>
+                  override.' . $type . '
+                </h1>
+                <p>
+                  ' .$this->conf_path . 'override.' . $type . ' is used.<br />
+                  But TYPO3-Browser 4.0 doesn\'t support this TypoScript property now.<br />
+                  <br />
+                  Sorry.
+                </p>';
+    die ( $prompt );
+   }
+
+
+
+  /**
+   * zz_loadTCAforAllTables( ): Load the TCA for all tables
+   *
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function zz_loadTCAforAllTables( )
+  {
+    foreach( ( array ) $this->statementTables['select'] as $localForeign => $tables )
+    {
+      foreach( $tables as $table)
+      {
+        $this->pObj->objZz->loadTCA($table);
+      }
+    }
+  }
+
+
+
+  /**
+   * zz_setToRealTableNames( ): Returns the given SQL statement with table.fields
+   *                            (real names) only.
+   *
+   * @param   string		$csvStatement: current SQL statement
+   * @return	string		$csvStatement: SQL statement with table.fields only
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   private function zz_setToRealTableNames( $csvStatement )
   {
       // Move csvStatement to an array
@@ -2646,21 +2586,31 @@ class tx_browser_pi1_sql_auto
 
 
   /**
- * zz_loadTCAforAllTables( ): Load the TCA for all tables
- *
- * @return	array		$arr_return : contains statements or an error message
- * @version 3.9.12
- * @since   3.9.12
- */
-  public function zz_loadTCAforAllTables( )
+   * zz_woForeignTables( ): Removes foreign table.fields from the given
+   *                        statement.
+   *
+   * @param	string		$type         : select, from, where, orderBy, groupBy
+   * @param	string		$csvStatement : current SQL statement
+   * @return	string		$csvStatement : the statement without foreign tables
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function zz_woForeignTables( $type, $csvStatement )
   {
-    foreach( ( array ) $this->statementTables['select'] as $localForeign => $tables )
+      // Move csvStatement to an array
+    $arrStatement = $this->pObj->objZz->getCSVasArray( $csvStatement );
+
+    foreach( $arrStatement as $key => $tableField)
     {
-      foreach( $tables as $table)
+      list( $table ) = explode( '.', $tableField );
+      if( in_array( $table, $this->statementTables[$type]['foreigntable'] ) )
       {
-        $this->pObj->objZz->loadTCA($table);
+        unset( $arrStatement[$key] );
       }
     }
+
+    $csvStatement = implode( ', ', $arrStatement );
+    return $csvStatement;
   }
 
 
