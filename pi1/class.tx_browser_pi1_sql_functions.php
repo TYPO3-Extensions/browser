@@ -155,7 +155,7 @@ class tx_browser_pi1_sql_functions
    * @version 3.9.12
    * @since   3.9.12
    */
-  private function zz_aliasToTable( $arr_aliastableField )
+  public function zz_aliasToTable( $arr_aliastableField )
   {
     $conf       = $this->conf;
     $mode       = $this->piVar_mode;
@@ -206,7 +206,7 @@ class tx_browser_pi1_sql_functions
    * @version 3.9.12
    * @since   3.9.12
    */
-  private function zz_cObjGetSingle( $currConfPath, $statement, $coa_name, $coa_conf )
+  public function zz_cObjGetSingle( $currConfPath, $statement, $coa_name, $coa_conf )
   {
     $conf       = $this->conf;
     $mode       = $this->piVar_mode;
@@ -289,7 +289,7 @@ class tx_browser_pi1_sql_functions
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function zz_sqlExpressionAndAliasToTable( $arr_tablefields )
+  public function zz_sqlExpressionAndAliasToTable( $arr_tablefields )
   {
     $conf       = $this->conf;
     $mode       = $this->piVar_mode;
@@ -327,7 +327,7 @@ class tx_browser_pi1_sql_functions
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function zz_sqlExpressionToAlias( $sqlStatement )
+  public function zz_sqlExpressionToAlias( $sqlStatement )
   {
     $conf       = $this->conf;
     $mode       = $this->piVar_mode;
@@ -367,7 +367,7 @@ class tx_browser_pi1_sql_functions
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function zz_getTableFieldWoAs( $tableFieldWiAlias )
+  public function zz_getTableFieldWoAs( $tableFieldWiAlias )
   {
     $tableField = $this->zz_getTableFieldOrAlias( $tableFieldWiAlias, true );
     return $tableField;
@@ -384,7 +384,7 @@ class tx_browser_pi1_sql_functions
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function zz_getAlias( $tableFieldWiAlias )
+  public function zz_getAlias( $tableFieldWiAlias )
   {
     $alias = $this->zz_getTableFieldOrAlias( $tableFieldWiAlias, false );
     return $alias;
