@@ -42,30 +42,21 @@
  *
  *
  *
- *   72: class tx_browser_pi1_sql_init
- *  127:     function __construct($parentObj)
+ *   63: class tx_browser_pi1_sql_init
+ *  118:     public function __construct($parentObj)
  *
  *              SECTION: Query building
- *  156:     function init( )
- *  202:     private function get_queryArray( )
- *  235:     public function get_queryArrayAuto( )
+ *  153:     private function get_queryArray( )
+ *  184:     public function get_queryArrayAuto( )
  *
- *              SECTION: Set global variables
- *  383:     private function init_global_csvAll( )
- *  452:     private function init_global_csvSelect( )
- *  590:     private function init_global_csvSearch( )
- *  644:     private function init_global_csvOrderBy( )
- *  796:     private function zz_cObjGetSingle( $currConfPath, $statement )
+ *              SECTION: Initialise global vars
+ *  330:     public function init( )
+ *  370:     public function init_global_csvAll( )
+ *  439:     private function init_global_csvSelect( )
+ *  578:     private function init_global_csvSearch( )
+ *  632:     private function init_global_csvOrderBy( )
  *
- *              SECTION: ZZ: Helper
- *  911:     private function zz_aliasToTable( $arr_aliastableField )
- *  960:     private function zz_sqlExpressionAndAliasToTable( $arr_tablefields )
- *  998:     private function zz_sqlExpressionToAlias( $sqlStatement )
- * 1038:     private function zz_getTableFieldWoAs( $tableFieldWiAlias )
- * 1055:     private function zz_getAlias( $tableFieldWiAlias )
- * 1080:     private function zz_getTableFieldOrAlias( $tableFieldWiAlias, $bool_returnTableField )
- *
- * TOTAL FUNCTIONS: 15
+ * TOTAL FUNCTIONS: 8
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -152,13 +143,13 @@ class tx_browser_pi1_sql_init
 
 
   /**
-   * get_queryArray( ):
-   *                    Result depends on SQL mode manual or auto
-   *
-   * @return	array
-   * @version 3.9.9
-   * @since   3.9.9
-   */
+ * get_queryArray( ):
+ *                    Result depends on SQL mode manual or auto
+ *
+ * @return	array
+ * @version 3.9.9
+ * @since   3.9.9
+ */
   private function get_queryArray( )
   {
       // RETURN : array in SQL manual mode
@@ -184,12 +175,12 @@ class tx_browser_pi1_sql_init
 
 
   /**
-   * get_queryArrayAuto( ):
-   *
-   * @return	array		array with the elements error and data. Data has the elements select, from, where, orderBy, groupBy.
-   * @version 3.9.9
-   * @since   3.9.9
-   */
+ * get_queryArrayAuto( ):
+ *
+ * @return	array		array with the elements error and data. Data has the elements select, from, where, orderBy, groupBy.
+ * @version 3.9.9
+ * @since   3.9.9
+ */
   public function get_queryArrayAuto( )
   {
     $arr_return['error']['status'] = false;

@@ -42,30 +42,19 @@
  *
  *
  *
- *   72: class tx_browser_pi1_sql_functions
- *  127:     function __construct($parentObj)
- *
- *              SECTION: Query building
- *  156:     function init( )
- *  202:     private function get_queryArray( )
- *  235:     public function get_queryArrayAuto( )
- *
- *              SECTION: Set global variables
- *  383:     private function init_global_csvAll( )
- *  452:     private function init_global_csvSelect( )
- *  590:     private function init_global_csvSearch( )
- *  644:     private function init_global_csvOrderBy( )
- *  796:     private function zz_cObjGetSingle( $currConfPath, $statement )
+ *   61: class tx_browser_pi1_sql_functions
+ *  116:     public function __construct($parentObj)
  *
  *              SECTION: ZZ: Helper
- *  911:     private function zz_aliasToTable( $arr_aliastableField )
- *  960:     private function zz_sqlExpressionAndAliasToTable( $arr_tablefields )
- *  998:     private function zz_sqlExpressionToAlias( $sqlStatement )
- * 1038:     private function zz_getTableFieldWoAs( $tableFieldWiAlias )
- * 1055:     private function zz_getAlias( $tableFieldWiAlias )
- * 1080:     private function zz_getTableFieldOrAlias( $tableFieldWiAlias, $bool_returnTableField )
+ *  147:     public function zz_aliasToTable( $arr_aliastableField )
+ *  198:     public function zz_cObjGetSingle( $currConfPath, $statement, $coa_name, $coa_conf )
+ *  281:     public function zz_sqlExpressionAndAliasToTable( $arr_tablefields )
+ *  319:     public function zz_sqlExpressionToAlias( $sqlStatement )
+ *  359:     public function zz_getTableFieldWoAs( $tableFieldWiAlias )
+ *  376:     public function zz_getAlias( $tableFieldWiAlias )
+ *  401:     private function zz_getTableFieldOrAlias( $tableFieldWiAlias, $bool_returnTableField )
  *
- * TOTAL FUNCTIONS: 15
+ * TOTAL FUNCTIONS: 8
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -146,15 +135,15 @@ class tx_browser_pi1_sql_functions
 
 
   /**
-   * zz_aliasToTable( ) : Moves aliases to tables in $arr_localtable.
-   *                      Aliases come from aliases.tables.
-   *                      If there isn't any alias, than nothing will replaced.
-   *
-   * @param	array		$arr_aliastableField: Array with local table values
-   * @return	array		$arr_aliastableField with replaced table aliases.
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * zz_aliasToTable( ) : Moves aliases to tables in $arr_localtable.
+ *                      Aliases come from aliases.tables.
+ *                      If there isn't any alias, than nothing will replaced.
+ *
+ * @param	array		$arr_aliastableField: Array with local table values
+ * @return	array		$arr_aliastableField with replaced table aliases.
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   public function zz_aliasToTable( $arr_aliastableField )
   {
     $conf       = $this->conf;
@@ -193,19 +182,19 @@ class tx_browser_pi1_sql_functions
 
 
   /**
-   * zz_cObjGetSingle:  Wraps the given statement by the given TypoScript configuration.
-   *                    It returns the statement unwrapped, if there isn't any TypoScript
-   *                    configuratuion.
-   *                    It prompts some helpful logs to the DRS for TYPO3 integrators.
-   *
-   * @param	string		$currConfPath : current TS configuration path like 'select.' or 'override.select.'
-   * @param	string		$statement    : SQL statement like: "tt_news.title, tt_news.short, ..."
-   * @param	string		$coa_name     : name of COA like TEXT or COA
-   * @param	array     $coa_conf     : the COA, the configuration object array
-   * @return	string	$statement    : wrapped or unwrapped statement
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * zz_cObjGetSingle:  Wraps the given statement by the given TypoScript configuration.
+ *                    It returns the statement unwrapped, if there isn't any TypoScript
+ *                    configuratuion.
+ *                    It prompts some helpful logs to the DRS for TYPO3 integrators.
+ *
+ * @param	string		$currConfPath : current TS configuration path like 'select.' or 'override.select.'
+ * @param	string		$statement    : SQL statement like: "tt_news.title, tt_news.short, ..."
+ * @param	string		$coa_name     : name of COA like TEXT or COA
+ * @param	array		$coa_conf     : the COA, the configuration object array
+ * @return	string		$statement    : wrapped or unwrapped statement
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   public function zz_cObjGetSingle( $currConfPath, $statement, $coa_name, $coa_conf )
   {
     $conf       = $this->conf;
