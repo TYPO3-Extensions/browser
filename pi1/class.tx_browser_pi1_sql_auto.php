@@ -2536,10 +2536,17 @@ class tx_browser_pi1_sql_auto
         continue;
       }
 
-      $arr_test['select'][$table] = $table;
       $prevTable = $table;
+
+      if( $table == $this->pObj->localTable )
+      {
+        $arr_test[$type]['localtable'][$table] = $table;
+        continue;
+      }
+
+      $arr_test[$type]['foreigntable'][$table] = $table;
     }
-    var_dump( __METHOD__, __LINE__, $arr_test, $this->pObj->localTable );
+    var_dump( __METHOD__, __LINE__, $arr_test);
   }
 
 
