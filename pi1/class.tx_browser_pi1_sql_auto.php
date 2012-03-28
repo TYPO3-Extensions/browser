@@ -157,6 +157,7 @@ class tx_browser_pi1_sql_auto
    */
   public function get_statements( )
   {
+      // Add filter tables to class var $statementTables
     $this->init_class_statementTablesByFilter( );
 
       // Get SELECT
@@ -1933,7 +1934,7 @@ class tx_browser_pi1_sql_auto
    * @version 3.9.12
    * @since   3.9.12
    */
-  public function get_arr_relations_mm_simple( )
+  private function get_arr_relations_mm_simple( )
   {
     $conf       = $this->pObj->conf;
     $mode       = $this->pObj->piVar_mode;
@@ -2008,17 +2009,21 @@ class tx_browser_pi1_sql_auto
       //
       // Loop through the TCA of the foreign tables
 
-    $tables = $this->pObj->arr_realTables_arrFields;
+    //$tables = $this->pObj->arr_realTables_arrFields;
     $tables = $this->statementTables['all']['localtable'];
     $tables = $tables + $this->statementTables['all']['foreigntable'];
-var_dump( __METHOD__, __LINE__, $tables );
-    foreach( (array ) $tables as $tableKey => $tableValue)
+
+      // LOOP tables
+    foreach( (array ) $tables as $table )
     {
-      $arrColumns = $GLOBALS['TCA'][$tableKey]['columns'];
+      $arrColumns = $GLOBALS['TCA'][$table]['columns'];
+
+        // CONTINUE : current table hasn't any TCA columns
       if( ! is_array( $arrColumns ) )
       {
         continue;
       }
+        // CONTINUE : current table hasn't any TCA columns
 
       foreach( ( array ) $arrColumns as $columnsKey => $columnsValue )
       {
@@ -2031,20 +2036,26 @@ var_dump( __METHOD__, __LINE__, $tables );
 
         if ( $this->pObj->b_drs_tca )
         {
-          t3lib_div::devlog('[INFO/TCA] \''.$tableKey.'.'.$columnsKey.'.config.type: \''.$config['type'].'\'', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/TCA] \''.$table.'.'.$columnsKey.'.config.type: \''.$config['type'].'\'', $this->pObj->extKey, 0);
         }
         $boolDB           = true;
         $foreignTable     = false;
         $arrForeignTables = false;
-        if ($config['internal_type'] && $config['internal_type'] != 'db')
+
+          // CONTINUE
+        if( $config['internal_type'] == 'db')
         {
-          // We don't have any field with any relation
-          $boolDB = false;
-          if ($this->pObj->b_drs_tca && in_array($config['type'], $arrAllowedTCAtypes))
+            // DRS
+          if( $this->pObj->b_drs_tca )
           {
-            t3lib_div::devlog('[INFO/TCA] \''.$tableKey.'.'.$columnsKey.'.config.internal_type isn\'t \'db\': There isn\'t any relation.', $this->pObj->extKey, 0);
+            $prompt = $table . '.' . $columnsKey . '.config.internal_type is \'db\'. ' .
+                      'But db isn\'t supported by the TYPO3-Browser.';
+            t3lib_div::devlog('[INFO/TCA] ' . $table, $this->pObj->extKey, 0);
           }
+            // DRS
+          continue;
         }
+          // CONTINUE
 
         // There is a different workflow for select and group
         if ($boolDB && in_array('select', $arrAllowedTCAtypes) && $config['type'] == 'select')
@@ -2055,7 +2066,7 @@ var_dump( __METHOD__, __LINE__, $tables );
           {
             if( $this->pObj->b_drs_sql )
             {
-              $prompt = 'TCA \'' . $tableKey . '.' . $columnsKey . '.config.foreign_table: \'' . $foreignTable . '\'';
+              $prompt = 'TCA \'' . $table . '.' . $columnsKey . '.config.foreign_table: \'' . $foreignTable . '\'';
               t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
             }
           }
@@ -2067,11 +2078,11 @@ var_dump( __METHOD__, __LINE__, $tables );
           if ($this->pObj->b_drs_sql)
           {
             $csvForeignTables = implode(', ', $arrForeignTables);
-            t3lib_div::devlog('[INFO/SQL] TCA \''.$tableKey.'.'.$columnsKey.'.config.allowed: \''.$csvForeignTables.'\'', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/SQL] TCA \''.$table.'.'.$columnsKey.'.config.allowed: \''.$csvForeignTables.'\'', $this->pObj->extKey, 0);
           }
           if (count($arrForeignTables) > 1 && ($this->pObj->b_drs_sql || $this->pObj->b_drs_error))
           {
-            t3lib_div::devlog('[WARN/SQL] TCA \''.$tableKey.'.'.$columnsKey.'.config.allowed has more than one table.', $this->pObj->extKey, 2);
+            t3lib_div::devlog('[WARN/SQL] TCA \''.$table.'.'.$columnsKey.'.config.allowed has more than one table.', $this->pObj->extKey, 2);
             t3lib_div::devlog('[ERROR/SQL] But '.$this->pObj->extKey.' can\'t process more than one table.', $this->pObj->extKey, 3);
             t3lib_div::devlog('[HELP/SQL] Please configure your SQL relation manually.', $this->pObj->extKey, 1);
           }
@@ -2090,7 +2101,7 @@ var_dump( __METHOD__, __LINE__, $tables );
           if ($boolOneWayOnly)
           {
             // Don't use relations from foreign tables
-            if ($tableKey != $this->pObj->localTable)
+            if ($table != $this->pObj->localTable)
             {
               $boolRelation = false;
             }
@@ -2105,9 +2116,9 @@ var_dump( __METHOD__, __LINE__, $tables );
             // We should build a relation, but we have to check if it isn't one of the forbidden table.fields
             foreach((array) $arrDontUseFields as $ncKey => $ncValue)
             {
-              // var_dump($tableKey, $ncValue[$tableKey], $columnsKey);
+              // var_dump($table, $ncValue[$table], $columnsKey);
               // -> "tx_civserv_service", "sv_organisation", "sv_similar_services"
-              if ($ncValue[$tableKey] == $columnsKey) {
+              if ($ncValue[$table] == $columnsKey) {
                 // The column is an element in the TS dontUseFields. It is forbidden.
                 $boolRelation = false;
               }
@@ -2123,7 +2134,7 @@ var_dump( __METHOD__, __LINE__, $tables );
               {
                 if ($this->pObj->b_drs_sql)
                 {
-                  t3lib_div::devlog('[INFO/SQL] Result (MM): '.$tableKey.' - '.$config['MM'].' - '.$foreignTable, $this->pObj->extKey, 0);
+                  t3lib_div::devlog('[INFO/SQL] Result (MM): '.$table.' - '.$config['MM'].' - '.$foreignTable, $this->pObj->extKey, 0);
                   t3lib_div::devlog('[INFO/SQL] But MM relations shouldn\'t processed automatically.', $this->pObj->extKey, 0);
                   t3lib_div::devlog('[HELP/SQL] If you want to process it automatically, please enable the MM relation building.', $this->pObj->extKey, 1);
                 }
@@ -2132,18 +2143,18 @@ var_dump( __METHOD__, __LINE__, $tables );
               // Process MM relation automatically
               if ($boolMMrelations)
               {
-                $arr_return['MM'][$tableKey][$config['MM']] = $foreignTable;
+                $arr_return['MM'][$table][$config['MM']] = $foreignTable;
                 // #9697, 100912, dwildt
                 if(!empty($config['MM_opposite_field']))
                 {
-                  $this->arr_relations_opposite[$tableKey][$config['MM']]['MM_opposite_field']  = $config['MM_opposite_field'];
+                  $this->arr_relations_opposite[$table][$config['MM']]['MM_opposite_field']  = $config['MM_opposite_field'];
                 }
                 // #9697, 100912, dwildt
                 if ($this->pObj->b_drs_sql)
                 {
-                  t3lib_div::devlog('[INFO/SQL] Result (MM): '.$tableKey.' - '.$config['MM'].' - '.$foreignTable, $this->pObj->extKey, -1);
+                  t3lib_div::devlog('[INFO/SQL] Result (MM): '.$table.' - '.$config['MM'].' - '.$foreignTable, $this->pObj->extKey, -1);
                   t3lib_div::devlog('[HELP/SQL] Switch off the result above? Use TS config: '.
-                    'autoconfig.relations.csvDontUseFields = ..., '.$tableKey.'.'.$columnsKey.', ...', $this->pObj->extKey, 1);
+                    'autoconfig.relations.csvDontUseFields = ..., '.$table.'.'.$columnsKey.', ...', $this->pObj->extKey, 1);
                 }
                 if ($this->pObj->b_drs_sql && $config['foreign_table_where'])
                 {
@@ -2163,7 +2174,7 @@ var_dump( __METHOD__, __LINE__, $tables );
               {
                 if ($this->pObj->b_drs_sql)
                 {
-                  t3lib_div::devlog('[INFO/SQL] Result (simple): '.$tableKey.'.'.$columnsKey.' - '.$foreignTable, $this->pObj->extKey, 0);
+                  t3lib_div::devlog('[INFO/SQL] Result (simple): '.$table.'.'.$columnsKey.' - '.$foreignTable, $this->pObj->extKey, 0);
                   t3lib_div::devlog('[INFO/SQL] But simple relations shouldn\'t processed automatically.', $this->pObj->extKey, 0);
                   t3lib_div::devlog('[HELP/SQL] If you want to process it automatically, please enable the simple relation building.', $this->pObj->extKey, 1);
                 }
@@ -2178,7 +2189,7 @@ var_dump( __METHOD__, __LINE__, $tables );
                 {
                   if ($this->pObj->b_drs_sql)
                   {
-                    t3lib_div::devlog('[INFO/SQL] Result (simple): '.$tableKey.'.'.$columnsKey.' - '.$foreignTable, $this->pObj->extKey, 0);
+                    t3lib_div::devlog('[INFO/SQL] Result (simple): '.$table.'.'.$columnsKey.' - '.$foreignTable, $this->pObj->extKey, 0);
                     t3lib_div::devlog('[INFO/SQL] It is a self reference. But self references shouldn\'t processed automatically.', $this->pObj->extKey, 0);
                     t3lib_div::devlog('[HELP/SQL] If you want to process it automatically, please self reference relation building.', $this->pObj->extKey, 1);
                   }
@@ -2189,12 +2200,12 @@ var_dump( __METHOD__, __LINE__, $tables );
                 if ($boll_process)
                 {
                   // Build the simple relation
-                  $arr_return['simple'][$tableKey][$columnsKey] = $foreignTable;
+                  $arr_return['simple'][$table][$columnsKey] = $foreignTable;
                   if ($this->pObj->b_drs_sql)
                   {
-                    t3lib_div::devlog('[INFO/SQL] Result (simple): '.$tableKey.'.'.$columnsKey.' - '.$foreignTable, $this->pObj->extKey, -1);
+                    t3lib_div::devlog('[INFO/SQL] Result (simple): '.$table.'.'.$columnsKey.' - '.$foreignTable, $this->pObj->extKey, -1);
                     t3lib_div::devlog('[HELP/SQL] Switch off the result above? Use TS config: '.
-                        'autoconfig.relations.csvDontUseFields = ..., '.$tableKey.'.'.$columnsKey.', ...', $this->pObj->extKey, 1);
+                        'autoconfig.relations.csvDontUseFields = ..., '.$table.'.'.$columnsKey.', ...', $this->pObj->extKey, 1);
                   }
                   if ($this->pObj->b_drs_sql && $config['foreign_table_where'])
                   {
@@ -2210,7 +2221,7 @@ var_dump( __METHOD__, __LINE__, $tables );
         }
       }
     }
-    // Loop through the TCA of the foreign tables
+      // LOOP tables
 
     return $arr_return;
   }
@@ -2395,11 +2406,12 @@ var_dump( __METHOD__, __LINE__, $tables );
 
 
   /**
- * init_class_statementTablesByFilter( ):
- *
- * @version 3.9.12
- * @since   3.9.12
- */
+   * init_class_statementTablesByFilter( ): Add filter tables to the class var
+   *                                        $statementTables
+   *
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   private function init_class_statementTablesByFilter( )
   {
     $arrFilter  = array_keys( $this->conf_view['filter.'] );
