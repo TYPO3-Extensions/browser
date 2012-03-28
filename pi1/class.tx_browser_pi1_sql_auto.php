@@ -2006,7 +2006,7 @@ class tx_browser_pi1_sql_auto
       //
       // Loop through the TCA of the foreign tables
 
-    $tables = $this->$statementTables['select']['foreigntable'];
+    $tables = $this->statementTables['select']['foreigntable'];
     foreach( (array ) $tables as $tableKey)
     {
       $arrColumns = $GLOBALS['TCA'][$tableKey]['columns'];
