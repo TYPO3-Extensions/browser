@@ -39,36 +39,43 @@
  *
  *
  *
- *   75: class tx_browser_pi1_sql_auto
- *  115:     public function __construct($parentObj)
+ *   82: class tx_browser_pi1_sql_auto
+ *  127:     public function __construct($parentObj)
  *
- *              SECTION: Main method
- *  141:     public function get_statements( )
+ *              SECTION: Statements
+ *  157:     public function get_statements( )
  *
- *              SECTION: SQL relation building with user defined SELECT only
- *  298:     public function get_statements_select( )
- *  467:     function get_statements_from()
- *  621:     function get_statements_orderBy()
- *  769:     function get_statements_groupBy()
- *  882:     function get_joins( )
+ *              SECTION: Statements SELECT
+ *  289:     private function get_statements_select( )
+ *  333:     private function get_statements_from( )
+ *  489:     private function get_statements_orderBy()
+ *  639:     private function get_statements_groupBy()
  *
- *              SECTION: SQL relation building WHERE
- * 1374:     function whereSearch()
- * 1631:     function get_statements_where()
- * 1845:     function andWhere()
- * 1929:     function arr_andWherePid()
- * 1965:     function str_andWherePid($realTable)
- * 2034:     function arr_andWhereEnablefields()
- * 2070:     function str_enableFields($realTable)
+ *              SECTION: Statements WHERE
+ *  763:     private function get_statements_where( )
+ *  974:     function get_joins( )
+ *
+ *              SECTION: WHERE helper
+ * 1466:     function whereSearch()
+ * 1724:     function andWhere()
+ * 1808:     function arr_andWherePid()
+ * 1844:     function str_andWherePid($realTable)
+ * 1913:     function arr_andWhereEnablefields()
+ * 1949:     function str_enableFields($realTable)
  *
  *              SECTION: Methods for automatic SQL relation building
- * 2107:     public function get_ts_autoconfig_relation()
- * 2175:     public function get_arr_relations_mm_simple( )
+ * 1986:     public function get_ts_autoconfig_relation()
+ * 2054:     public function get_arr_relations_mm_simple( )
  *
  *              SECTION: Manual SQL Query Building
- * 2580:     function get_sql_query($select, $from, $where, $group, $order, $limit)
+ * 2459:     function get_sql_query($select, $from, $where, $group, $order, $limit)
+ * 2481:     private function die_ifOverrideSelect( )
+ * 2535:     private function init_class_statementTables( $type, $csvStatement )
+ * 2580:     private function zz_woForeignTables( $type, $csvStatement )
+ * 2619:     private function zz_addUid( $type, $csvStatement )
+ * 2663:     private function zz_setToRealTableNames( $csvStatement )
  *
- * TOTAL FUNCTIONS: 17
+ * TOTAL FUNCTIONS: 22
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -139,14 +146,14 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * get_statements( ): It returns the statements for a SQL query:
-   *                    SELECT, FROM, WHERE, ORDER BY, LIMIT
-   *                    GROUP BY isn't handled
-   *
-   * @return	array     $arr_return : contains statements or an error message
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * get_statements( ): It returns the statements for a SQL query:
+ *                    SELECT, FROM, WHERE, ORDER BY, LIMIT
+ *                    GROUP BY isn't handled
+ *
+ * @return	array		$arr_return : contains statements or an error message
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   public function get_statements( )
   {
       // Get SELECT
@@ -270,15 +277,15 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * get_statements_select( ): It returns the select statement for a SQL query.
-   *            If tables hasn't any uid in the SELECT, table.uid will be added.
-   *            If required localisation fields will added too.
-   *            Added fields will added to the consolidation array.
-   *
-   * @return	string		SQL select or FALSE, if there is an error
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * get_statements_select( ): It returns the select statement for a SQL query.
+ *            If tables hasn't any uid in the SELECT, table.uid will be added.
+ *            If required localisation fields will added too.
+ *            Added fields will added to the consolidation array.
+ *
+ * @return	string		SQL select or FALSE, if there is an error
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function get_statements_select( )
   {
 
@@ -317,12 +324,12 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * get_statements_from( ): The method returns the FROM clause for the SQL query
-   *
-   * @return	string		SQL from
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * get_statements_from( ): The method returns the FROM clause for the SQL query
+ *
+ * @return	string		SQL from
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function get_statements_from( )
   {
 
@@ -469,16 +476,16 @@ class tx_browser_pi1_sql_auto
 
 
     /**
-   * It returns the order part for SQL where clause.
-   * If there are piVars, the order of the piVars will preferred.
-   * Otherwise it returns the TypoScript configuration.
-   * If there aren't piVars and there aren't a TypoSCript configuration, it will be empty.
-   * If there are aliases, the aliases will be deleted.
-   *
-   * @return	string		$orderBy: SQL ORDER BY clause.
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * It returns the order part for SQL where clause.
+ * If there are piVars, the order of the piVars will preferred.
+ * Otherwise it returns the TypoScript configuration.
+ * If there aren't piVars and there aren't a TypoSCript configuration, it will be empty.
+ * If there are aliases, the aliases will be deleted.
+ *
+ * @return	string		$orderBy: SQL ORDER BY clause.
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function get_statements_orderBy()
   {
     // 3.3.7
@@ -619,16 +626,16 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * THIS ISN'T THE GROUPBY FOR THE SQL QUERY
-   * Allocates a proper group by in the global groupBy
-   * It returns the group by part, which is needed for consolidation
-   * If there is more than one value, all other values will be removed
-   * If there are aliases, the aliases will be deleted.
-   *
-   * @return	string		$groupBy: The first groupBy value with ASC or DESC, if there is one
-   * @version 2.0.0
-   * @since   2.0.0
-   */
+ * THIS ISN'T THE GROUPBY FOR THE SQL QUERY
+ * Allocates a proper group by in the global groupBy
+ * It returns the group by part, which is needed for consolidation
+ * If there is more than one value, all other values will be removed
+ * If there are aliases, the aliases will be deleted.
+ *
+ * @return	string		$groupBy: The first groupBy value with ASC or DESC, if there is one
+ * @version 2.0.0
+ * @since   2.0.0
+ */
   private function get_statements_groupBy()
   {
     $conf = $this->pObj->conf;
@@ -747,12 +754,12 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * Relation method: Building the whole where clause
-   *
-   * @return	string		FALSE or the SQL-where-clause
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * Relation method: Building the whole where clause
+ *
+ * @return	string		FALSE or the SQL-where-clause
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function get_statements_where( )
   {
 
@@ -2465,11 +2472,12 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * die_ifOverrideSelect( ): Dies if an override.select is defined
-   *
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * die_ifOverrideSelect( ): Dies if an override.select is defined
+ *
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function die_ifOverrideSelect( )
   {
       // RETURN : any override.select isn't defined
@@ -2513,16 +2521,17 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * init_class_statementTables( ): Inits the class var statementTables.
-   *          Var is an array like
-   *          * $statementTables['select']['localtable']['tx_org_cal']        = 'tx_org_cal'
-   *          * $statementTables['select']['foreigntable']['tx_org_caltype']  = 'tx_org_caltype'
-   *
-   * @param   string		$type         : select, from, where, orderBy, groupBy
-   * @param   string		$csvStatement : current SQL statement
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * init_class_statementTables( ): Inits the class var statementTables.
+ *          Var is an array like
+ *          * $statementTables['select']['localtable']['tx_org_cal']        = 'tx_org_cal'
+ *          * $statementTables['select']['foreigntable']['tx_org_caltype']  = 'tx_org_caltype'
+ *
+ * @param	string		$type         : select, from, where, orderBy, groupBy
+ * @param	string		$csvStatement : current SQL statement
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function init_class_statementTables( $type, $csvStatement )
   {
       // Move csvStatement to an array
@@ -2559,15 +2568,15 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * zz_woForeignTables( ): Removes foreign table.fields from the given
-   *                        statement.
-   *
-   * @param   string		$type         : select, from, where, orderBy, groupBy
-   * @param   string		$csvStatement : current SQL statement
-   * @return	string		$csvStatement : the statement without foreign tables
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * zz_woForeignTables( ): Removes foreign table.fields from the given
+ *                        statement.
+ *
+ * @param	string		$type         : select, from, where, orderBy, groupBy
+ * @param	string		$csvStatement : current SQL statement
+ * @return	string		$csvStatement : the statement without foreign tables
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function zz_woForeignTables( $type, $csvStatement )
   {
 
@@ -2596,17 +2605,17 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * zz_addUid( ):  Adds table.uid to the given statement, if table.uid isn't
-   *                any element of the given statement.
-   *                table is the fist table of the statement.
-   *                Adds table.uid to the class var $addedTableFields.
-   *
-   * @param   string		$type         : select, from, where, orderBy, groupBy
-   * @param   string		$csvStatement : current SQL statement
-   * @return	string		$csvStatement : the statement with the table.uid
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * zz_addUid( ):  Adds table.uid to the given statement, if table.uid isn't
+ *                any element of the given statement.
+ *                table is the fist table of the statement.
+ *                Adds table.uid to the class var $addedTableFields.
+ *
+ * @param	string		$type         : select, from, where, orderBy, groupBy
+ * @param	string		$csvStatement : current SQL statement
+ * @return	string		$csvStatement : the statement with the table.uid
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function zz_addUid( $type, $csvStatement )
   {
       // Get first table of the current statement
@@ -2642,14 +2651,15 @@ class tx_browser_pi1_sql_auto
   }
 
 
-   
+
   /**
-   * zz_setToRealTableNames( ):
-   *
-   * @return	string
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * zz_setToRealTableNames( ):
+ *
+ * @param	[type]		$$csvStatement: ...
+ * @return	string
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function zz_setToRealTableNames( $csvStatement )
   {
       // Move csvStatement to an array
