@@ -2535,10 +2535,11 @@ class tx_browser_pi1_sql_auto
       {
         continue;
       }
-      $arr_test['select']['table'] = $table;
+
+      $arr_test['select'][$table] = $table;
       $prevTable = $table;
     }
-    var_dump( __METHOD__, __LINE__, $arr_test );
+    var_dump( __METHOD__, __LINE__, $arr_test, $this->pObj->localTable );
   }
 
 
