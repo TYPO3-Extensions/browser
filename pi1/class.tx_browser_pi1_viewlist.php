@@ -37,30 +37,31 @@
  *
  *
  *
- *   67: class tx_browser_pi1_viewlist
- *  110:     function __construct( $parentObj )
+ *   68: class tx_browser_pi1_viewlist
+ *  111:     function __construct( $parentObj )
  *
  *              SECTION: Building the views
- *  141:     function main( )
- * 1043:     function main( )
- * 1183:     private function init( )
- * 1234:     private function check_view( )
+ *  148:     function main( )
+ *  248:     private function init( )
+ *  299:     private function check_view( )
  *
  *              SECTION: SQL
- * 1301:     private function sql( )
- * 1471:     private function sql_getQueryArray( )
- * 1506:     private function rows( )
+ *  361:     private function sql( )
+ *  455:     private function sql_getQueryArray( )
  *
  *              SECTION: Content / Template
- * 1583:     private function content_setCSV( )
- * 1636:     private function content_setDefault( )
+ *  498:     private function content_setCSV( )
+ *  531:     private function content_setDefault( )
+ *  589:     private function content_dieIfEmpty( $marker, $method, $line )
  *
  *              SECTION: Subparts
- * 1695:     private function subpart_setSearchbox( $filter )
- * 1713:     private function subpart_setSearchboxFilter( $filter )
- * 1756:     private function set_arrLinkToSingle( )
+ *  643:     private function subpart_setSearchbox( )
+ *  660:     private function subpart_setSearchboxFilter( )
+ *  704:     private function subpart_setIndexBrowser( )
+ *  732:     private function subpart_setModeSelector( )
+ *  776:     private function subpart_setPageBrowser( )
  *
- * TOTAL FUNCTIONS: 13
+ * TOTAL FUNCTIONS: 14
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -177,7 +178,7 @@ class tx_browser_pi1_viewlist
       // Set SQL query parts in general and statements for rows
 
 
-      // Init SQL 
+      // Init SQL
     $this->sql( );
 
 
@@ -490,6 +491,7 @@ var_dump( __METHOD__, __LINE__, $arr_result );
 /**
  * content_setCSV( ): Sets content to CSV template
  *
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.9
  */
@@ -522,7 +524,7 @@ var_dump( __METHOD__, __LINE__, $arr_result );
  *                        * indexBrowser
  *                        *
  *
- * @return	array         $arr_return: Contains an error message in case of an error
+ * @return	array		$arr_return: Contains an error message in case of an error
  * @version 3.9.12
  * @since   3.9.9
  */
@@ -551,7 +553,7 @@ var_dump( __METHOD__, __LINE__, $arr_result );
       return $arr_return;
     }
       // Set index browser
-      
+
       // Set page browser
     $arr_return = $this->subpart_setPageBrowser( );
     if( $arr_return['error']['status'] )
@@ -577,6 +579,10 @@ var_dump( __METHOD__, __LINE__, $arr_result );
  * content_dieIfEmpty( ): If content is empty, the methods will die the workflow
  *                      with a qualified prompt.
  *
+ * @param	[type]		$$marker: ...
+ * @param	[type]		$method: ...
+ * @param	[type]		$line: ...
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -630,7 +636,7 @@ var_dump( __METHOD__, __LINE__, $arr_result );
  * subpart_setSearchbox( ): Get the searchform. Part of content is generated
  *                          by the template class. Replace filter marker.
  *
- * @return	array           $arr_return : Error message in case of an error
+ * @return	array		$arr_return : Error message in case of an error
  * @version 3.9.8
  * @since 1.0.0
  */
@@ -647,7 +653,7 @@ var_dump( __METHOD__, __LINE__, $arr_result );
 /**
  * subpart_setSearchboxFilter( ): Get filter values and then replace filter marker with filter content.
  *
- * @return	array                 $arr_return: Error message in case of an error
+ * @return	array		$arr_return: Error message in case of an error
  * @version 3.9.8
  * @since 1.0.0
  */
@@ -666,7 +672,7 @@ var_dump( __METHOD__, __LINE__, $arr_result );
       // Get filter
 
       // RETURN : there isn't any filter
-    if( empty ( $filter ) ) 
+    if( empty ( $filter ) )
     {
       return $arr_return;
     }
@@ -691,7 +697,7 @@ var_dump( __METHOD__, __LINE__, $arr_result );
  * subpart_setIndexBrowser( ):  Replaces the indexbrowser subpart in the current content
  *                              with the content from ->get_indexBrowser( )
  *
- * @return	array               $arr_return : Contains an error message in case of an error
+ * @return	array		$arr_return : Contains an error message in case of an error
  * @version 3.9.12
  * @since 1.0.0
  */
@@ -719,7 +725,7 @@ var_dump( __METHOD__, __LINE__, $arr_result );
  * subpart_setModeSelector( ):  Replaces the indexbrowser subpart in the current content
  *                              with the content from ->get_indexBrowser( )
  *
- * @return	array               $arr_return : Contains an error message in case of an error
+ * @return	array		$arr_return : Contains an error message in case of an error
  * @version 3.9.12
  * @since 1.0.0
  */
@@ -763,7 +769,7 @@ var_dump( __METHOD__, __LINE__, $arr_result );
  * subpart_setPageBrowser( ):  Replaces the indexbrowser subpart in the current content
  *                              with the content from ->get_indexBrowser( )
  *
- * @return	array               $arr_return : Contains an error message in case of an error
+ * @return	array		$arr_return : Contains an error message in case of an error
  * @version 3.9.12
  * @since 1.0.0
  */
