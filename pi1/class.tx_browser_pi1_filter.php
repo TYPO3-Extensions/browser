@@ -2276,7 +2276,8 @@ class tx_browser_pi1_filter {
     switch( $bool_count )
     {
       case( true ):
-        $count = "count(*)";
+        //$count = "count(*)";
+        $count = "COUNT( DISTINCT " . $table . ".uid )";
         break;
       case( false ):
       default:
