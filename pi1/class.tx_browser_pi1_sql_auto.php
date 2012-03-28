@@ -299,10 +299,11 @@ var_dump(__METHOD__, __LINE__, $csvSelect );
       // Remove foreign tables
     $csvSelect = $this->zz_woForeignTables( 'select', $csvSelect );
 
-//      // Add table.uid
-//    $csvSelect = $this->zz_addUid( $csvSelect );
+      // Add table.uid
+    $csvSelect = $this->zz_addUid( $csvSelect );
+    $csvSelect = $this->zz_addUid( $csvSelect );
 
-var_dump(__METHOD__, __LINE__, $csvSelect );
+var_dump(__METHOD__, __LINE__, $csvSelect, $this->addedTableFields );
     return $csvSelect;
   }
 
@@ -2589,6 +2590,39 @@ var_dump(__METHOD__, __LINE__, $csvSelect );
     }
 
     $csvStatement = implode( ', ', $arrStatement );
+    return $csvStatement;
+  }
+
+
+
+  /**
+   * zz_addUid( ):
+   *
+   * @return	string		SQL select or FALSE, if there is an error
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function zz_addUid( $type, $csvStatement )
+  {
+      // Get first table of the current statement
+    list( $table ) = explode( '.', $csvStatement );
+    $tableUid = $table . '.uid';
+
+    $pos = strpos( $csvStatement, $tableUid );
+    if( ! ( $pos === false ) )
+    {
+      return $csvStatement;
+    }
+
+    $csvStatement = $csvStatement . ', ' . $tableUid;
+
+    if( in_array( $tableUid, $this->addedTableFields[$type][$table] ) )
+    {
+      return $csvStatement;
+    }
+
+    $this->addedTableFields[$type][$table][] = $tableUid;
+    
     return $csvStatement;
   }
 
