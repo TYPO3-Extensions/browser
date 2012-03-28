@@ -70,7 +70,7 @@
  * 2095:     function str_enableFields($realTable)
  *
  *              SECTION: Methods for automatic SQL relation building
- * 2134:     public function zz_class_boolAutorelation( )
+ * 2134:     public function init_class_boolAutorelation( )
  * 2214:     private function init_class_relations_mm_simple( )
  *
  *              SECTION: Manual SQL Query Building
@@ -221,7 +221,7 @@ class tx_browser_pi1_sql_auto
 
 
       // Get Relations
-    $this->arr_ts_autoconf_relation = $this->zz_class_boolAutorelation( );
+    $this->arr_ts_autoconf_relation = $this->init_class_boolAutorelation( );
     $this->init_class_relations_mm_simple( );
       // Get Relations
 
@@ -1590,6 +1590,382 @@ class tx_browser_pi1_sql_auto
 
 
 
+  /**
+ * Return the AND WHERE statement for the pid
+ *
+ * @param	string		$realTable: Name of the current table
+ * @return	string		$str_andWherePid: String with statement: table.pid IN (pidlist)
+ */
+  function str_andWherePid($realTable)
+  {
+    $conf = $this->pObj->conf;
+
+    // Get the syntax table.field
+    $tableField = $realTable.'.pid';
+
+    // Replace real name of the table with its alias, if there is an alias
+    $tableField = $this->pObj->objSqlFun_3x->set_tablealias($tableField);
+    $tableField = $this->pObj->objSqlFun_3x->get_sql_alias_before($tableField);
+    // Replace real name of the table with its alias, if there is an alias
+
+    $str_currPidList = $this->pObj->pidList;
+    // Do we have a foreignTable with a pid in the TypoScript?
+    if(isset($conf['foreignTables.'][$realTable.'.']['csvPidList']))
+    {
+      $str_pidList = $conf['foreignTables.'][$realTable.'.']['csvPidList'];
+      if ($this->pObj->b_drs_sql)
+      {
+        t3lib_div::devlog('[INFO/SQL] '.$realTable.' has a pidList in foreignTables.'.$realTable.'.csvPidList: '.$str_pidList,
+          $this->pObj->extKey, 0);
+      }
+      $int_deep = 0;
+      if(isset($conf['foreignTables.'][$realTable.'.']['intDeep']))
+      {
+        $int_deep = $conf['foreignTables.'][$realTable.'.']['intDeep'];
+        if ($this->pObj->b_drs_sql)
+        {
+          t3lib_div::devlog('[INFO/SQL] pidList should be exetended with '.$int_deep.' levels. See intDeep.', $this->pObj->extKey, 0);
+        }
+      }
+      if(!isset($conf['foreignTables.'][$realTable.'.']['intDeep']))
+      {
+        if ($this->pObj->b_drs_sql)
+        {
+          t3lib_div::devlog('[INFO/SQL] pidList shouldn\'t be exetended.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/SQL] Change it? Configure foreignTables.'.$realTable.'.intDeep', $this->pObj->extKey, 1);
+        }
+      }
+      $str_currPidList = $this->pObj->pi_getPidList($str_pidList, $int_deep);
+    }
+    if(!isset($conf['foreignTables.'][$realTable.'.']['csvPidList']))
+    {
+      if ($this->pObj->b_drs_sql)
+      {
+        t3lib_div::devlog('[INFO/SQL] '.$realTable.' hasn\'t any own pidList.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[HELP/SQL] Change it? Please configure foreignTables.'.$realTable.'.csvPidList', $this->pObj->extKey, 1);
+      }
+    }
+    // Do we have a foreignTable with a pid in the TypoScript?
+
+    // Push the pid statement to the return array
+    $str_andWherePid= $tableField." IN (".$str_currPidList.")";
+    return $str_andWherePid;
+  }
+
+
+
+
+
+
+  /**
+ * Searches in the global arr_realTables_arrFields for each tables.
+ * Each table will get an AND WHERE enablefields statement in the syntax (i.e.)
+ * table.deleted = 0 AND table.hidden = 0.
+ * If aliases are configured, table will become an alias.
+ *
+ * @return	array		$arr_andWhereEnablefields: Array with enablefields statements
+ */
+  function arr_andWhereEnablefields()
+  {
+    // Return array
+    $arr_andWhereEnablefields = false;
+    foreach ($this->pObj->arr_realTables_arrFields as $realTable => $arrFields)
+    {
+      // Get the enablefields statement
+      $str_enablefields = $this->pObj->cObj->enableFields($realTable);
+      // Cut of the first ' AND '
+      $str_enablefields = substr($str_enablefields, 5, strlen($str_enablefields));
+
+      // Replace real name of the table with its alias, if there is an alias
+      $tableField = $realTable.'.dummy';
+      $tableField = $this->pObj->objSqlFun_3x->set_tablealias($tableField);
+      $tableField = $this->pObj->objSqlFun_3x->get_sql_alias_before($tableField);
+      list($aliasTable, $field) = explode('.', $tableField);
+      $str_enablefields = str_replace($realTable.'.', $aliasTable.'.', $str_enablefields);
+      // Replace real name of the table with its alias, if there is an alias
+
+      // Push the enbalefields statement to the return array
+      $arr_andWhereEnablefields[] = $str_enablefields;
+    }
+    return $arr_andWhereEnablefields;
+  }
+
+
+
+
+
+
+  /**
+ * Get the AND WHERE enablefields for the current table. Replace the real name with an alias, if there is an alias.
+ *
+ * @param	string		$realTable: Name of the current table
+ * @return	array		$arr_andWhereEnablefields: Array with enablefields statements
+ */
+  function str_enableFields($realTable)
+  {
+    $str_enablefields = $this->pObj->cObj->enableFields($realTable);
+    // Cut of the first ' AND '
+    $str_enablefields = substr($str_enablefields, 5, strlen($str_enablefields));
+
+    // Replace real name of the table with its alias, if there is an alias
+    $tableField = $realTable.'.dummy';
+    $tableField = $this->pObj->objSqlFun_3x->set_tablealias($tableField);
+    $tableField = $this->pObj->objSqlFun_3x->get_sql_alias_before($tableField);
+    list($aliasTable, $field) = explode('.', $tableField);
+    $str_enablefields = str_replace($realTable.'.', $aliasTable.'.', $str_enablefields);
+    // Replace real name of the table with its alias, if there is an alias
+
+    return $str_enablefields;
+  }
+
+
+
+
+
+
+  /***********************************************
+   *
+   * Methods for automatic SQL relation building
+   *
+   **********************************************/
+
+
+
+  /**
+   * init_class_boolAutorelation( ):  Checks the TypoScript configuration. Checks
+   *                                the local and global array autoconfig.relations.
+   *                                Sets the class var $boolAutorelation.
+   *
+   * @return	array		FALSE || $arr_ts_autoconf_relation
+   */
+  private function init_class_boolAutorelation( )
+  {
+    $conf_path  = $this->pObj->conf_path;
+    $conf_view  = $this->pObj->conf_view;
+
+    $coa_autoconfigRelations = $conf_view['autoconfig.']['relations.'];
+
+      // Local TypoScript configuration
+    if( $coa_autoconfigRelations )
+    {
+      $boolAutoconf = $conf_view['autoconfig.']['relations'];
+      if ( ! $boolAutoconf )
+      {
+          // Autoconfiguration shouldn't be used
+        if( $this->pObj->b_drs_sql )
+        {
+          $prompt = $conf_path . 'autoconfig.relations is false. '.
+            'Autoconfigured relation building is disabled.';
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        $this->boolAutorelation = false;
+        return false;
+      }
+      if( $this->pObj->b_drs_sql )
+      {
+        $prompt = 'Autoconfigured relation building is enbled.';
+        t3lib_div::devlog( '[OK/SQL] ' . $prompt, $this->pObj->extKey, -1 );
+      }
+    }
+      // Local TypoScript configuration
+
+
+
+      // Global TypoScript configuration
+      // DRS
+    if( $this->pObj->b_drs_sql )
+    {
+      $prompt = $conf_path .' hasn\'t any local autoconfig array. We try the global one.';
+      t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+
+    $boolAutoconf = $this->pObj->conf['autoconfig.']['relations'];
+
+      // IF : autoconfiguration shouldn't be used
+    if ( ! $boolAutoconf )
+    {
+      if ($this->pObj->b_drs_sql)
+      {
+        $prompt = 'autoconfig.relations is false. ' .
+                  'Autoconfigured relation building is disabled.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+      }
+      $this->boolAutorelation = false;
+      return false;
+    }
+      // IF : autoconfiguration shouldn't be used
+
+    $coa_autoconfigRelations = $this->pObj->conf['autoconfig.']['relations.'];
+
+      // DRS
+    if( $this->pObj->b_drs_sql )
+    {
+      $prompt = 'Autoconfigured relation building is enbled.';
+      t3lib_div::devlog( '[OK/SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+    return $coa_autoconfigRelations;
+      // Global TypoScript configuration
+  }
+
+
+
+  /**
+ * init_class_relations_mm_simple( ) Generating the $this->arr_relations_mm_simple, an array with the arrays MM and/or simple
+ *
+ * @return	string		TRUE or $arr_return
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function init_class_relations_mm_simple( )
+  {
+    $conf       = $this->pObj->conf;
+    $mode       = $this->pObj->piVar_mode;
+    $view       = $this->pObj->view;
+    $conf_path  = $this->pObj->conf_path;
+    $conf_view  = $this->pObj->conf_view;
+
+      // RETURN : autoconfig is switched off
+    if ( ! $this->boolAutorelation )
+    {
+      if( $this->pObj->b_drs_sql )
+      {
+        $prompt = 'Nothing to do, autoconfig is switched off.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return true;
+    }
+      // RETURN : autoconfig is switched off
+
+      // RETURN IF : no foreign table.
+    if( ! isset ( $this->statementTables['select']['foreigntable'] ) )
+    {
+      if ( $this->pObj->b_drs_sql )
+      {
+        $prompt = 'Autorelation building isn\'t needed, there isn\'t any foreign table.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return true;
+    }
+      // RETURN IF : no foreign table.
+
+      // Get TypoScript configuration
+    $boolOneWayOnly           = $this->arr_ts_autoconf_relation['oneWayOnly'];
+    $boolSimpleRelations      = $this->arr_ts_autoconf_relation['simpleRelations'];
+    $boolSelfReference        = $this->arr_ts_autoconf_relation['simpleRelations.']['selfReference'];
+    $boolMMrelations          = $this->arr_ts_autoconf_relation['mmRelations'];
+    $allowedTCAconfigTypesCSV = $this->arr_ts_autoconf_relation['TCAconfig.']['type.']['csvValue'];
+      // Get TypoScript configuration
+
+      // Prompt the current TypoScript configuration to the DRS
+    $this->relations_confDRSprompt( );
+
+      // Initialises the class var $b_left_join
+    $this->init_class_bLeftJoin( );
+
+
+
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Process csv values
+
+      // get alloewed config.type for relation building ( should be select and/or group )
+    $arrAllowedTCAtypes = $this->pObj->objZz->getCSVasArray( $allowedTCAconfigTypesCSV );
+
+      // DRS
+    if ( $this->pObj->b_drs_sql )
+    {
+      $csvAllowedTCAtypes = implode(', ', $arrAllowedTCAtypes);
+      $prompt = 'Only TCA config.types \'' . $csvAllowedTCAtypes .
+                '\' will used for autorelation building.';
+      t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+    }
+      // DRS
+
+      // Get table.field names, which shouldn't processed for relation building
+    $arrDontUseTableFields = $this->relations_dontUseFields( );
+      // Process csv values
+
+
+
+      //////////////////////////////////////////////////////////////////
+      //
+      // Loop through the TCA of the foreign tables
+
+    $tables = $this->statementTables['all']['localtable'];
+    $tables = $tables + $this->statementTables['all']['foreigntable'];
+
+      // LOOP tables
+    foreach( (array ) $tables as $table )
+    {
+      $arrColumns = $GLOBALS['TCA'][$table]['columns'];
+
+        // CONTINUE : current table hasn't any TCA columns
+      if( ! is_array( $arrColumns ) )
+      {
+        continue;
+      }
+        // CONTINUE : current table hasn't any TCA columns
+
+        // LOOP each TCA column
+      foreach( ( array ) $arrColumns as $columnsKey => $columnsValue )
+      {
+        $config     = $columnsValue['config'];
+        $configPath = $table . '.' . $columnsKey . '.config.';
+
+          // CONTINUE : requirements aren't met
+        if( ! $this->relations_requirements( $table, $config, $configPath, $arrAllowedTCAtypes ) )
+        {
+          continue;
+        }
+          // CONTINUE : requirements aren't met
+
+          // CONTINUE : current column is element of $arrDontUseTableFields
+        if ( is_array( $arrDontUseTableFields ) )
+        {
+          $tableField = $table. '.' . $columnsKey;
+          if( in_array( $tableField, $arrDontUseTableFields ) )
+          {
+              // DRS
+            if ( $this->pObj->b_drs_tca )
+            {
+              $prompt = $tableField . ' is element of dontUseTableFields.';
+              t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+            }
+              // DRS
+            continue;
+          }
+        }
+          // CONTINUE : current column is element of $arrDontUseTableFields
+
+          // Get the foreign table
+        $foreignTable = $this->relations_getForeignTable( $tables, $config, $configPath );
+          // CONTINUE : there is no foreign table
+        if( empty ( $foreignTable ) )
+        {
+          continue;
+        }
+          // CONTINUE : there is no foreign table
+          // Get the foreign table
+
+        switch( true )
+        {
+          case( $config['MM'] ):
+            $this->relations_setMm( $table, $config, $foreignTable );
+            break;
+          case( ! $config['MM'] ):
+          default:
+            $this->relations_setSingle( $table, $columnsKey, $foreignTable);
+            break;
+        }
+      }
+        // LOOP each TCA column
+    }
+      // LOOP tables
+
+    return;
+  }
 
 
 
@@ -1978,395 +2354,6 @@ class tx_browser_pi1_sql_auto
     }
       // DRS
   }
-
-
-
-  /**
- * Return the AND WHERE statement for the pid
- *
- * @param	string		$realTable: Name of the current table
- * @return	string		$str_andWherePid: String with statement: table.pid IN (pidlist)
- */
-  function str_andWherePid($realTable)
-  {
-    $conf = $this->pObj->conf;
-
-    // Get the syntax table.field
-    $tableField = $realTable.'.pid';
-
-    // Replace real name of the table with its alias, if there is an alias
-    $tableField = $this->pObj->objSqlFun_3x->set_tablealias($tableField);
-    $tableField = $this->pObj->objSqlFun_3x->get_sql_alias_before($tableField);
-    // Replace real name of the table with its alias, if there is an alias
-
-    $str_currPidList = $this->pObj->pidList;
-    // Do we have a foreignTable with a pid in the TypoScript?
-    if(isset($conf['foreignTables.'][$realTable.'.']['csvPidList']))
-    {
-      $str_pidList = $conf['foreignTables.'][$realTable.'.']['csvPidList'];
-      if ($this->pObj->b_drs_sql)
-      {
-        t3lib_div::devlog('[INFO/SQL] '.$realTable.' has a pidList in foreignTables.'.$realTable.'.csvPidList: '.$str_pidList,
-          $this->pObj->extKey, 0);
-      }
-      $int_deep = 0;
-      if(isset($conf['foreignTables.'][$realTable.'.']['intDeep']))
-      {
-        $int_deep = $conf['foreignTables.'][$realTable.'.']['intDeep'];
-        if ($this->pObj->b_drs_sql)
-        {
-          t3lib_div::devlog('[INFO/SQL] pidList should be exetended with '.$int_deep.' levels. See intDeep.', $this->pObj->extKey, 0);
-        }
-      }
-      if(!isset($conf['foreignTables.'][$realTable.'.']['intDeep']))
-      {
-        if ($this->pObj->b_drs_sql)
-        {
-          t3lib_div::devlog('[INFO/SQL] pidList shouldn\'t be exetended.', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[HELP/SQL] Change it? Configure foreignTables.'.$realTable.'.intDeep', $this->pObj->extKey, 1);
-        }
-      }
-      $str_currPidList = $this->pObj->pi_getPidList($str_pidList, $int_deep);
-    }
-    if(!isset($conf['foreignTables.'][$realTable.'.']['csvPidList']))
-    {
-      if ($this->pObj->b_drs_sql)
-      {
-        t3lib_div::devlog('[INFO/SQL] '.$realTable.' hasn\'t any own pidList.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[HELP/SQL] Change it? Please configure foreignTables.'.$realTable.'.csvPidList', $this->pObj->extKey, 1);
-      }
-    }
-    // Do we have a foreignTable with a pid in the TypoScript?
-
-    // Push the pid statement to the return array
-    $str_andWherePid= $tableField." IN (".$str_currPidList.")";
-    return $str_andWherePid;
-  }
-
-
-
-
-
-
-  /**
- * Searches in the global arr_realTables_arrFields for each tables.
- * Each table will get an AND WHERE enablefields statement in the syntax (i.e.)
- * table.deleted = 0 AND table.hidden = 0.
- * If aliases are configured, table will become an alias.
- *
- * @return	array		$arr_andWhereEnablefields: Array with enablefields statements
- */
-  function arr_andWhereEnablefields()
-  {
-    // Return array
-    $arr_andWhereEnablefields = false;
-    foreach ($this->pObj->arr_realTables_arrFields as $realTable => $arrFields)
-    {
-      // Get the enablefields statement
-      $str_enablefields = $this->pObj->cObj->enableFields($realTable);
-      // Cut of the first ' AND '
-      $str_enablefields = substr($str_enablefields, 5, strlen($str_enablefields));
-
-      // Replace real name of the table with its alias, if there is an alias
-      $tableField = $realTable.'.dummy';
-      $tableField = $this->pObj->objSqlFun_3x->set_tablealias($tableField);
-      $tableField = $this->pObj->objSqlFun_3x->get_sql_alias_before($tableField);
-      list($aliasTable, $field) = explode('.', $tableField);
-      $str_enablefields = str_replace($realTable.'.', $aliasTable.'.', $str_enablefields);
-      // Replace real name of the table with its alias, if there is an alias
-
-      // Push the enbalefields statement to the return array
-      $arr_andWhereEnablefields[] = $str_enablefields;
-    }
-    return $arr_andWhereEnablefields;
-  }
-
-
-
-
-
-
-  /**
- * Get the AND WHERE enablefields for the current table. Replace the real name with an alias, if there is an alias.
- *
- * @param	string		$realTable: Name of the current table
- * @return	array		$arr_andWhereEnablefields: Array with enablefields statements
- */
-  function str_enableFields($realTable)
-  {
-    $str_enablefields = $this->pObj->cObj->enableFields($realTable);
-    // Cut of the first ' AND '
-    $str_enablefields = substr($str_enablefields, 5, strlen($str_enablefields));
-
-    // Replace real name of the table with its alias, if there is an alias
-    $tableField = $realTable.'.dummy';
-    $tableField = $this->pObj->objSqlFun_3x->set_tablealias($tableField);
-    $tableField = $this->pObj->objSqlFun_3x->get_sql_alias_before($tableField);
-    list($aliasTable, $field) = explode('.', $tableField);
-    $str_enablefields = str_replace($realTable.'.', $aliasTable.'.', $str_enablefields);
-    // Replace real name of the table with its alias, if there is an alias
-
-    return $str_enablefields;
-  }
-
-
-
-
-
-
-  /***********************************************
-   *
-   * Methods for automatic SQL relation building
-   *
-   **********************************************/
-
-
-
-
-
-  /**
- * zz_class_boolAutorelation( ):  Checks the TypoScript configuration. Checks
- *                                the local and global array autoconfig.relations.
- *                                Sets the class var $boolAutorelation.
- *
- * @return	array		FALSE || $arr_ts_autoconf_relation
- */
-  public function zz_class_boolAutorelation( )
-  {
-    $conf_path  = $this->pObj->conf_path;
-    $conf_view  = $this->pObj->conf_view;
-
-    $coa_autoconfigRelations = $conf_view['autoconfig.']['relations.'];
-
-      // Local TypoScript configuration
-    if( $coa_autoconfigRelations )
-    {
-      $boolAutoconf = $conf_view['autoconfig.']['relations'];
-      if ( ! $boolAutoconf )
-      {
-          // Autoconfiguration shouldn't be used
-        if( $this->pObj->b_drs_sql )
-        {
-          $prompt = $conf_path . 'autoconfig.relations is false. '.
-            'Autoconfigured relation building is disabled.';
-          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-        $this->boolAutorelation = false;
-        return false;
-      }
-      if( $this->pObj->b_drs_sql )
-      {
-        $prompt = 'Autoconfigured relation building is enbled.';
-        t3lib_div::devlog( '[OK/SQL] ' . $prompt, $this->pObj->extKey, -1 );
-      }
-    }
-      // Local TypoScript configuration
-
-
-
-      // Global TypoScript configuration
-      // DRS
-    if( $this->pObj->b_drs_sql )
-    {
-      $prompt = $conf_path .' hasn\'t any local autoconfig array. We try the global one.';
-      t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS
-
-    $boolAutoconf = $this->pObj->conf['autoconfig.']['relations'];
-
-      // IF : autoconfiguration shouldn't be used
-    if ( ! $boolAutoconf )
-    {
-      if ($this->pObj->b_drs_sql)
-      {
-        $prompt = 'autoconfig.relations is false. ' .
-                  'Autoconfigured relation building is disabled.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
-      }
-      $this->boolAutorelation = false;
-      return false;
-    }
-      // IF : autoconfiguration shouldn't be used
-
-    $coa_autoconfigRelations = $this->pObj->conf['autoconfig.']['relations.'];
-
-      // DRS
-    if( $this->pObj->b_drs_sql )
-    {
-      $prompt = 'Autoconfigured relation building is enbled.';
-      t3lib_div::devlog( '[OK/SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-    return $coa_autoconfigRelations;
-      // Global TypoScript configuration
-  }
-
-
-
-  /**
- * init_class_relations_mm_simple( ) Generating the $this->arr_relations_mm_simple, an array with the arrays MM and/or simple
- *
- * @return	string		TRUE or $arr_return
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function init_class_relations_mm_simple( )
-  {
-    $conf       = $this->pObj->conf;
-    $mode       = $this->pObj->piVar_mode;
-    $view       = $this->pObj->view;
-    $conf_path  = $this->pObj->conf_path;
-    $conf_view  = $this->pObj->conf_view;
-
-      // RETURN : autoconfig is switched off
-    if ( ! $this->boolAutorelation )
-    {
-      if( $this->pObj->b_drs_sql )
-      {
-        $prompt = 'Nothing to do, autoconfig is switched off.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-      return true;
-    }
-      // RETURN : autoconfig is switched off
-
-      // RETURN IF : no foreign table.
-    if( ! isset ( $this->statementTables['select']['foreigntable'] ) )
-    {
-      if ( $this->pObj->b_drs_sql )
-      {
-        $prompt = 'Autorelation building isn\'t needed, there isn\'t any foreign table.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-      return true;
-    }
-      // RETURN IF : no foreign table.
-
-      // Get TypoScript configuration
-    $boolOneWayOnly           = $this->arr_ts_autoconf_relation['oneWayOnly'];
-    $boolSimpleRelations      = $this->arr_ts_autoconf_relation['simpleRelations'];
-    $boolSelfReference        = $this->arr_ts_autoconf_relation['simpleRelations.']['selfReference'];
-    $boolMMrelations          = $this->arr_ts_autoconf_relation['mmRelations'];
-    $allowedTCAconfigTypesCSV = $this->arr_ts_autoconf_relation['TCAconfig.']['type.']['csvValue'];
-      // Get TypoScript configuration
-
-      // Prompt the current TypoScript configuration to the DRS
-    $this->relations_confDRSprompt( );
-
-      // Initialises the class var $b_left_join
-    $this->init_class_bLeftJoin( );
-
-
-
-      ////////////////////////////////////////////////////////////////////
-      //
-      // Process csv values
-
-      // get alloewed config.type for relation building ( should be select and/or group )
-    $arrAllowedTCAtypes = $this->pObj->objZz->getCSVasArray( $allowedTCAconfigTypesCSV );
-
-      // DRS
-    if ( $this->pObj->b_drs_sql )
-    {
-      $csvAllowedTCAtypes = implode(', ', $arrAllowedTCAtypes);
-      $prompt = 'Only TCA config.types \'' . $csvAllowedTCAtypes .
-                '\' will used for autorelation building.';
-      t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
-    }
-      // DRS
-
-      // Get table.field names, which shouldn't processed for relation building
-    $arrDontUseTableFields = $this->relations_dontUseFields( );
-      // Process csv values
-
-
-
-      //////////////////////////////////////////////////////////////////
-      //
-      // Loop through the TCA of the foreign tables
-
-    $tables = $this->statementTables['all']['localtable'];
-    $tables = $tables + $this->statementTables['all']['foreigntable'];
-
-      // LOOP tables
-    foreach( (array ) $tables as $table )
-    {
-      $arrColumns = $GLOBALS['TCA'][$table]['columns'];
-
-        // CONTINUE : current table hasn't any TCA columns
-      if( ! is_array( $arrColumns ) )
-      {
-        continue;
-      }
-        // CONTINUE : current table hasn't any TCA columns
-
-        // LOOP each TCA column
-      foreach( ( array ) $arrColumns as $columnsKey => $columnsValue )
-      {
-        $config     = $columnsValue['config'];
-        $configPath = $table . '.' . $columnsKey . '.config.';
-
-          // CONTINUE : requirements aren't met
-        if( ! $this->relations_requirements( $table, $config, $configPath, $arrAllowedTCAtypes ) )
-        {
-          continue;
-        }
-          // CONTINUE : requirements aren't met
-
-          // CONTINUE : current column is element of $arrDontUseTableFields
-        if ( is_array( $arrDontUseTableFields ) )
-        {
-          $tableField = $table. '.' . $columnsKey;
-          if( in_array( $tableField, $arrDontUseTableFields ) )
-          {
-              // DRS
-            if ( $this->pObj->b_drs_tca )
-            {
-              $prompt = $tableField . ' is element of dontUseTableFields.';
-              t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
-            }
-              // DRS
-            continue;
-          }
-        }
-          // CONTINUE : current column is element of $arrDontUseTableFields
-
-          // Get the foreign table
-        $foreignTable = $this->relations_getForeignTable( $tables, $config, $configPath );
-          // CONTINUE : there is no foreign table
-        if( empty ( $foreignTable ) )
-        {
-          continue;
-        }
-          // CONTINUE : there is no foreign table
-          // Get the foreign table
-
-        switch( true )
-        {
-          case( $config['MM'] ):
-            $this->relations_setMm( $table, $config, $foreignTable );
-            break;
-          case( ! $config['MM'] ):
-          default:
-            $this->relations_setSingle( $table, $columnsKey, $foreignTable);
-            break;
-        }
-      }
-        // LOOP each TCA column
-    }
-      // LOOP tables
-
-    return;
-  }
-
-
-
-
-
-
-
-
 
 
 
