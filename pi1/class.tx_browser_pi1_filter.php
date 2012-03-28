@@ -2276,8 +2276,8 @@ class tx_browser_pi1_filter {
     switch( $bool_count )
     {
       case( true ):
-        //$count = "count(*)";
-        $count = "COUNT( DISTINCT " . $table . ".uid )";
+        $localTableUid = $this->pObj->$arrLocalTable['uid'];
+        $count = "COUNT( DISTINCT " . $localTableUid . " )";
         break;
       case( false ):
       default:
