@@ -47,7 +47,7 @@
  *
  *              SECTION: Query building
  *  153:     private function get_queryArray( )
- *  184:     public function get_queryArrayAuto( )
+ *  184:     public function get_queryArraySqlAuto( )
  *
  *              SECTION: Initialise global vars
  *  330:     public function init( )
@@ -161,7 +161,7 @@ class tx_browser_pi1_sql_init
       // RETURN : array in SQL manual mode
 
       // RETURN : array in SQL auto mode
-    $arr_result = $this->get_queryArrayAuto( );
+    $arr_result = $this->get_queryArraySqlAuto( );
     return $arr_result;
       // RETURN : array in SQL auto mode
   }
@@ -175,13 +175,13 @@ class tx_browser_pi1_sql_init
 
 
   /**
- * get_queryArrayAuto( ):
+ * get_queryArraySqlAuto( ):
  *
  * @return	array		array with the elements error and data. Data has the elements select, from, where, orderBy, groupBy.
  * @version 3.9.9
  * @since   3.9.9
  */
-  public function get_queryArrayAuto( )
+  private function get_queryArraySqlAuto( )
   {
     $arr_return['error']['status'] = false;
 
@@ -351,6 +351,7 @@ class tx_browser_pi1_sql_init
     }
 
     $this->sql_query_statements['rows'] = $arr_result['data'];
+var_dump( __MTHOD__, __LINE__, $this->sql_query_statements );
     unset( $arr_result );
       // SQL query array
 
