@@ -363,7 +363,7 @@ class tx_browser_pi1_viewlist
 
 
       // Set the globals csvSelect, csvOrderBy and arrLocalTable
-    $arr_result = $this->pObj->objSqlFunInit->init_global_csvAll( );
+    $arr_result = $this->pObj->objSqlInit->init_global_csvAll( );
     if( $arr_result['error']['status'] )
     {
       return $arr_result;
