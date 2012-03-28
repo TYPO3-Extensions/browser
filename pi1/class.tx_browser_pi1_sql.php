@@ -134,7 +134,7 @@ class tx_browser_pi1_sql
     $this->pObj->timeTracking_log( __METHOD__, __LINE__, 'begin' );
 
       // Set the globals csvSelect, csvSelect, csvOrderBy, arrLocalTable
-    $arr_result = $this->global_all( );
+    $arr_result = $this->setGlobal_all( );
     if( $arr_result['error']['status'] )
     {
         // Prompt the expired time to devlog
@@ -342,25 +342,25 @@ class tx_browser_pi1_sql
 
     /***********************************************
     *
-    * Globals
+    * Set global variables
     *
     **********************************************/
 
 
 
 /**
- * global_all( ): Set the globals csvSelect, csvSearch, csvOrderBy, arrLocalTable
+ * setGlobal_all( ): Set the globals csvSelect, csvSearch, csvOrderBy, arrLocalTable
  *
  * @return	array		$arr_return : Array in case of an error with the error message
  * @version 3.9.12
  * @since   3.9.12
  */
-    private function global_all( )
+    private function setGlobal_all( )
     {
       $arr_return['error']['status'] = false;
 
         // Set the globals csvSelect and arrLocalTable
-      if( ! $this->global_csvSelect( ) )
+      if( ! $this->setGlobal_csvSelect( ) )
       {
         $str_header  =  '<h1 style="color:red;">' . $this->pObj->pi_getLL( 'error_sql_h1' ) . '</h1>';
         $str_prompt  =  '<p style="color:red;font-weight:bold;">' .
@@ -374,7 +374,7 @@ class tx_browser_pi1_sql
         // Set the globals csvSelect and arrLocalTable
 
         // Set the global csvSearch
-      if( ! $this->global_csvSearch( ) )
+      if( ! $this->setGlobal_csvSearch( ) )
       {
         $str_header  =  '<h1 style="color:red;">' . $this->pObj->pi_getLL( 'error_sql_h1' ) . '</h1>';
         $str_prompt  =  '<p style="color:red;font-weight:bold;">' .
@@ -388,7 +388,7 @@ class tx_browser_pi1_sql
         // Set the global csvSearch
 
         // Set the global csvOrderBy
-      if( ! $this->global_csvOrderBy( ) )
+      if( ! $this->setGlobal_csvOrderBy( ) )
       {
         $str_header  =  '<h1 style="color:red;">' . $this->pObj->pi_getLL( 'error_sql_h1' ) . '</h1>';
         $str_prompt  =  '<p style="color:red;font-weight:bold;">' .
@@ -418,13 +418,13 @@ class tx_browser_pi1_sql
 
 
  /**
-  * global_csvSelect( ): Set the global csvSelect. Values are from the TypoScript select
+  * setGlobal_csvSelect( ): Set the global csvSelect. Values are from the TypoScript select
   *
   * @return	boolean		TRUE, if there is a orderBy value. FALSE, if there isn't any orderBy value
   * @version 3.9.12
   * @since   3.9.12
   */
-    private function global_csvSelect( )
+    private function setGlobal_csvSelect( )
     {
       $conf       = $this->conf;
       $mode       = $this->piVar_mode;
@@ -439,7 +439,7 @@ class tx_browser_pi1_sql
         // Get the SELECT statement
 
       $this->pObj->csvSelect  = $conf_view['select'];
-      $this->pObj->csvSelect  = $this->global_stdWrap
+      $this->pObj->csvSelect  = $this->setGlobal_stdWrap
                                 (
                                   'select',
                                   $this->pObj->csvSelect,
@@ -471,9 +471,9 @@ class tx_browser_pi1_sql
         // Get the parts behind an AS, replace aliases with real names
 
       $csv_before_process = $this->pObj->csvSelect;
-      $csv_after_process  = $this->replace_statement( $csv_before_process );
+      $csv_after_process  = $this->zz_sqlExpressionToAlias( $csv_before_process );
       $arr_csv            = explode( ',', $csv_after_process );
-      $arr_csv            = $this->clean_up_as_and_alias( $arr_csv );
+      $arr_csv            = $this->zz_sqlExpressionAndAliasToTable( $arr_csv );
       $csv_after_process  = implode( ', ', $arr_csv );
         // Get the parts behind an AS, replace aliases with real names
 
@@ -504,7 +504,7 @@ class tx_browser_pi1_sql
         // Init the global arrLocalTable, if it isn't inited
       if( ! is_array( $this->pObj->arrLocalTable) )
       {
-        $this->global_arrLocalTable( );
+        $this->setGlobal_arrLocalTable( );
       }
 
       $str_deleted_tablefield = false;
@@ -554,7 +554,7 @@ class tx_browser_pi1_sql
 
 
  /**
-  * global_csvSearch( ): Set the global csvSearch. Values are from the TypoScript.
+  * setGlobal_csvSearch( ): Set the global csvSearch. Values are from the TypoScript.
   *
   *                      If search is empty, search will get the values out of the select statement.
   *
@@ -562,7 +562,7 @@ class tx_browser_pi1_sql
   * @version 3.9.12
   * @since   3.9.12
   */
-    private function global_csvSearch( )
+    private function setGlobal_csvSearch( )
     {
       $conf = $this->conf;
       $mode = $this->piVar_mode;
@@ -610,13 +610,13 @@ class tx_browser_pi1_sql
 
 
  /**
-  * global_csvOrderBy( ): Set the global csvOrderBy. Values are from the TypoScript orderBy or select
+  * setGlobal_csvOrderBy( ): Set the global csvOrderBy. Values are from the TypoScript orderBy or select
   *
   * @return	boolean		TRUE, if there is a orderBy value. FALSE, if there isn't any orderBy value
   * @version 3.9.12
   * @since   3.9.12
   */
-    private function global_csvOrderBy( )
+    private function setGlobal_csvOrderBy( )
     {
       $conf       = $this->conf;
       $mode       = $this->piVar_mode;
@@ -677,9 +677,9 @@ class tx_browser_pi1_sql
         // Get the parts behind an AS, replace aliases with real names
 
       $csv_before_process = $this->pObj->csvOrderBy;
-      $csv_before_process = $this->replace_statement( $csv_before_process );
+      $csv_before_process = $this->zz_sqlExpressionToAlias( $csv_before_process );
       $arr_csv            = explode( ',', $csv_before_process );
-      $arr_csv            = $this->clean_up_as_and_alias( $arr_csv );
+      $arr_csv            = $this->zz_sqlExpressionAndAliasToTable( $arr_csv );
       $csv_before_process = implode( ', ', $arr_csv );
       $csv_after_process  = $csv_before_process;
         // Get the parts behind an AS, replace aliases with real names
@@ -712,7 +712,7 @@ class tx_browser_pi1_sql
         // Init the global arrLocalTable, if it isn't inited
       if( ! is_array( $this->pObj->arrLocalTable ) )
       {
-        $this->global_arrLocalTable( );
+        $this->setGlobal_arrLocalTable( );
       }
 
       $str_deleted_tablefield = false;
@@ -759,7 +759,7 @@ class tx_browser_pi1_sql
 
 
   /**
-   * global_stdWrap: The method wraps sql query parts
+   * setGlobal_stdWrap: The method wraps sql query parts
    *
    * @param	string		$str_tsProperty: the name of the current array like select. or override.select.
    * @param	string		$str_tsValue:    the TypoScript value like: tt_news.title, tt_news.short
@@ -768,7 +768,7 @@ class tx_browser_pi1_sql
    * @version 3.9.12
    * @since   3.9.12
    */
-  private function global_stdWrap( $str_tsProperty, $str_tsValue, $arr_tsArray )
+  private function setGlobal_stdWrap( $str_tsProperty, $str_tsValue, $arr_tsArray )
   {
     $conf       = $this->conf;
     $mode       = $this->piVar_mode;
@@ -847,16 +847,130 @@ class tx_browser_pi1_sql
 
 
 
+    /***********************************************
+    *
+    * ...
+    *
+    **********************************************/
+
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * ZZ: Helper
+    *
+    **********************************************/
+
+
+
+
+
+
 
   /**
-   * replace_statement( ) : Replace a statement with an alias in a query part
+   * zz_aliasToTable( ) : Moves aliases to tables in $arr_localtable.
+   *                                Aliases come from aliases.tables.
+   *                                If there isn't any alias, than nothing will replaced.
    *
-   * @param	string		$str_queryPart: The query part, in which should replaced a statement with an alias
-   * @return	string		Returns the processed query part
+   * @param	array		$arr_aliastableField: Array with local table values
+   * @return	array		$arr_aliastableField with replaced table aliases.
    * @version 3.9.12
    * @since   3.9.12
    */
-  private function replace_statement( $str_queryPart )
+  private function zz_aliasToTable( $arr_aliastableField )
+  {
+    $conf       = $this->conf;
+    $mode       = $this->piVar_mode;
+    $view       = $this->view;
+    $conf_path  = $this->conf_path;
+    $conf_view  = $this->conf_view;
+
+
+      // RETURN, if we don't have any alias array
+    if( ! is_array( $conf_view['aliases.']['tables.'] ) )
+    {
+      if( $this->pObj->b_drs_sql )
+      {
+        $prompt = $conf_path . ' hasn\'t any array ' .
+                  'aliases.tables. We don\'t process aliases.';
+        t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+      }
+      return $arr_aliastableField;
+    }
+      // RETURN, if we don't have any alias array
+
+    foreach( $arr_aliastableField as $key_field => $str_tablefield )
+    {
+      $arr_tablefield                     = explode( '.', trim( $str_tablefield ) );
+      list( $str_tablealias, $str_field ) = $arr_tablefield;
+      $str_tablereal                      = $conf_view['aliases.']['tables.'][$str_tablealias];
+      if( $str_tablereal )
+      {
+        $arr_aliastableField[$key_field] = $str_tablereal . '.' . $str_field;
+      }
+    }
+    return $arr_aliastableField;
+  }
+
+
+
+
+
+
+  /**
+   * zz_sqlExpressionAndAliasToTable( ) : Replaces in expressions to aliases all given
+   *                  table.field-alias pairs. Replaces all aliases to table.field.
+   *
+   * @param	array     $arr_tablefields  : Array with table.field values maybe with an AS
+   * @return	array		$arr_tablefields  : Array with table.fields (real names)
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function zz_sqlExpressionAndAliasToTable( $arr_tablefields )
+  {
+    $conf       = $this->conf;
+    $mode       = $this->piVar_mode;
+    $view       = $this->view;
+    $conf_path  = $this->conf_path;
+    $conf_view  = $this->conf_view;
+
+    if( ! is_array( $arr_tablefields ) )
+    {
+      return $arr_tablefields;
+    }
+
+      // LOOP array with tablefields
+    foreach( ( array ) $arr_tablefields as $key => $tableFieldWiAlias )
+    {
+      $tableFieldWiAlias      = $this->zz_sqlExpressionToAlias( $tableFieldWiAlias );
+      $tableFieldOrAlias      = $this->zz_getAlias( $tableFieldWiAlias );
+      $arr_tablefields[$key]  = $tableFieldOrAlias;
+    }
+      // LOOP array with tablefields
+
+      // Move aliases to real table names
+    $arr_tablefields = $this->zz_aliasToTable( $arr_tablefields );
+    return $arr_tablefields;
+  }
+
+
+
+  /**
+   * zz_sqlExpressionToAlias( ) :  Replaces an expression in a SQL statement with
+   *                               the alias from the deal_as_table array
+   *
+   * @param   string		$sqlStatement : The current SQL statement
+   * @return	string		$sqlStatement : The handled SQL statement
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function zz_sqlExpressionToAlias( $sqlStatement )
   {
     $conf       = $this->conf;
     $mode       = $this->piVar_mode;
@@ -866,138 +980,58 @@ class tx_browser_pi1_sql
 
     if( ! is_array( $conf_view['select.']['deal_as_table.'] ) )
     {
-      return $str_queryPart;
+      return $sqlStatement;
     }
 
     foreach( $conf_view['select.']['deal_as_table.'] as $arr_dealastable )
     {
-      $statement      = $arr_dealastable['statement'];
-      $alias          = $arr_dealastable['alias'];
-      $str_queryPart  = str_replace( $statement, $alias, $str_queryPart );
-      if ($this->pObj->b_drs_sql)
+      $expression    = $arr_dealastable['statement'];
+      $alias         = $arr_dealastable['alias'];
+      $sqlStatement  = str_replace( $expression, $alias, $sqlStatement );
+      if( $this->pObj->b_drs_sql )
       {
-        $prompt = 'Statement is replaced with alias. Statement: \"'.$statement.'\"; ' .
+        $prompt = 'SQL expression is replaced with alias. Expression: \"'.$expression.'\"; ' .
                   'Alias:  \"'.$alias.'\"';
         t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
       }
     }
-    return $str_queryPart;
+    return $sqlStatement;
   }
 
 
 
 
-/**
- * Replace table aliases in $arr_localtable. If there isn't any alias, than nothing will replaced.
- *
- * @param	array		$arr_aliastableField: Array with local table values
- * @return	array		$arr_aliastableField with replaced table aliases.
- */
-    function replace_tablealias($arr_aliastableField)
+
+  /**
+   * zz_getTableFieldWoAs( ) :  Cuts the AS ..., if table.field is with an AS ...
+   *
+   * @param	string      $tableFieldWiAlias  : table.field with an AS like "news.uid AS 'news.uid'"
+   * @return	string		$tableField         : table.field without an AS
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function zz_getTableFieldWoAs( $tableFieldWiAlias )
     {
-      $conf = $this->pObj->conf;
-      $mode = $this->pObj->piVar_mode;
-      $view = $this->pObj->view;
-
-      $viewWiDot = $view.'.';
-      $conf_view = $conf['views.'][$viewWiDot][$mode.'.'];
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // RETURN, if we don't have any alias array
-
-      if (!is_array($conf_view['aliases.']['tables.']))
-      {
-        if ($this->pObj->b_drs_sql)
-        {
-          t3lib_div::devlog('[INFO/SQL] views.'.$viewWiDot.$mode.' hasn\'t any array aliases.tables. We don\'t process aliases.', $this->pObj->extKey, 0);
-        }
-        return $arr_aliastableField;
-      }
-
-
-      foreach ($arr_aliastableField as $key_field => $str_tablefield)
-      {
-        $arr_tablefield                   = explode ('.', trim($str_tablefield));
-        list($str_tablealias, $str_field) = $arr_tablefield;
-        $str_tablereal                    = $conf_view['aliases.']['tables.'][$str_tablealias];
-        if ($str_tablereal)
-        {
-          $arr_aliastableField[$key_field] = $str_tablereal.'.'.$str_field;
-        }
-      }
-      return $arr_aliastableField;
+      $tableField = $this->zz_getTableFieldOrAlias( $tableFieldWiAlias, true );
+      return $tableField;
     }
 
 
 
-
-
-
-    /**
- * Get the SQL part behind the AS. If this is an alias, replace the alias with the real name.
- *
- * @param	array		$arr_tablefields: Array with table.field values maybe with an AS
- * @return	array		$arr_tablefields with real names of table.fields
- */
-    function clean_up_as_and_alias($arr_tablefields)
+  /**
+   * zz_getAlias( ) : Returns the part behind the AS, if table.field has an AS ...
+   *                  If not, it returns the table.field
+   *
+   *
+   * @param	string		$tableFieldWiAlias  : table.field with an AS like "news.uid AS 'news.uid'"
+   * @return	string	$alias              :	Part behind the AS. If there is no AS, it returns $str_tablefield
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function zz_getAlias( $tableFieldWiAlias )
     {
-      $conf = $this->pObj->conf;
-      $mode = $this->pObj->piVar_mode;
-      $view = $this->pObj->view;
-
-      $viewWiDot = $view.'.';
-      $conf_view = $conf['views.'][$viewWiDot][$mode.'.'];
-
-
-      if (!is_array($arr_tablefields))
-      {
-        return $arr_tablefields;
-      }
-
-      foreach((array) $arr_tablefields as $key => $value) {
-        //$value                 = $this->pObj->objZz->cleanCSV_from_lr_and_doubleSpace($value);
-        if (is_array($conf_view['select.']['deal_as_table.']))
-        {
-          foreach ($conf_view['select.']['deal_as_table.'] as $arr_dealastable)
-          {
-            $statement  = $arr_dealastable['statement'];
-            $alias      = $arr_dealastable['alias'];
-            $newvalue   = str_replace($statement, $alias, $value);
-            if ($newvalue != $value)
-            {
-              if ($this->pObj->b_drs_sql)
-              {
-                t3lib_div::devlog('[INFO/SQL] Statement is replaced with alias.<br />
-                  <br />
-                  Statement: "'.$statement.'"<br />
-                  Alias:  "'.$alias.'"', $this->pObj->extKey, 0);
-              }
-              $value = $newvalue;
-            }
-          }
-        }
-        $value                 = $this->get_sql_alias_behind($value);
-        $arr_tablefields[$key] = $value;
-      }
-      $arr_tablefields = $this->replace_tablealias($arr_tablefields);
-      return $arr_tablefields;
-    }
-
-
-
-
-
-    /**
- * If there is a SQL table.field with an AS, returns the string bebefore the AS
- *
- * @param	string		$str_tablefield: table.field with an AS like "news.uid AS 'news.uid'"
- * @return	string		Part before the AS. If there is no AS, it returns $str_tablefield
- */
-    function get_sql_alias_before($str_tablefield)
-    {
-      return $this->get_sql_alias_behind_or_before($str_tablefield, true);
+      $alias = $this->zz_getTableFieldOrAlias( $tableFieldWiAlias, false );
+      return $alias;
     }
 
 
@@ -1007,73 +1041,45 @@ class tx_browser_pi1_sql
 
 
 
-    /**
- * If there is a SQL table.field with an AS, returns the string behind the AS
- *
- * @param	string		$str_tablefield: table.field with an AS like "news.uid AS 'news.uid'"
- * @return	string		Part behind the AS. If there is no AS, it returns $str_tablefield
- */
-    function get_sql_alias_behind($str_tablefield)
+  /**
+   * zz_getTableFieldOrAlias( ) : Returns table.field or the alias.
+   *                              If $bool_returnTableField is true, it returns the table.field.
+   *                              If $bool_returnTableField is false, it returns the alias.
+   *                              If there isn't any AS ... it returns the table.field.
+   *
+   * @param	string		$tableFieldWiAlias      : table.field with an AS like "news.uid AS 'news.uid'"
+   * @param	boolean		$bool_returnTableField  : true: returns the table.field, false: returns the alias
+   * @return	string		Returns the string before or behind the AS. If there is no AS, it returns $str_tablefield
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function zz_getTableFieldOrAlias( $tableFieldWiAlias, $bool_returnTableField )
+  {
+    list( $tableField, $alias ) = explode ( ' AS ', $tableFieldWiAlias );
+
+      // RETURN : table.field, there isn't any alias
+    if( empty ( $alias ) )
     {
-      return $this->get_sql_alias_behind_or_before($str_tablefield, false);
+      return $tableField;
     }
+      // RETURN : table.field, there isn't any alias
 
-
-
-
-
-
-
-
-    /**
- * If there is a SQL table.field with an AS, returns the string before or behind the AS
- *
- * @param	string		$str_tablefield: table.field with an AS like "news.uid AS 'news.uid'"
- * @param	boolean		$b_before_the_as: TRUE: return the string before the AS, FALSE: return the striong behind the AS
- * @return	string		Returns the string before or behind the AS. If there is no AS, it returns $str_tablefield
- */
-    function get_sql_alias_behind_or_before($str_tablefield, $b_before_the_as)
+      // RETURN : table.field
+    if( $bool_returnTableField )
     {
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // RETURN, if there isn't any AS
-
-      $arr_tablefield = explode (' AS ', $str_tablefield);
-      if(count($arr_tablefield) < 2)
-      {
-        return ($str_tablefield);
-      }
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Get the parts before and behind the AS, delete '
-
-      list($str_before_as, $str_behind_as) = $arr_tablefield;
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Return part before the AS, if $b_before_the_as is TRUE
-
-      if ($b_before_the_as) {
-        // We should return the part before the AS
-        return $str_before_as;
-      }
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Delete the apostroph ('), return the part after the AS
-
-      $str_behind_as = trim($str_behind_as);
-      $str_behind_as = str_replace('\'', '', $str_behind_as);
-      $str_behind_as = str_replace('`', '', $str_behind_as);
-
-      return $str_behind_as;
+      return $tableField;
     }
+      // RETURN : table.field
+
+      // Delete apostrophs (') and spaces
+    $alias = trim( $alias );
+    $alias = str_replace( '\'', null, $alias );
+    $alias = str_replace( '`',  null, $alias );
+      // Delete apostrophs (') and spaces
+
+      // RETURN : alias
+    return $alias;
+  }
 
 
 
