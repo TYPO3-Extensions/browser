@@ -105,6 +105,8 @@ class tx_browser_pi1_sql_auto
 
     // [Array] array like $statementTables['select']['localtable']['tx_org_cal'] = 'tx_org_cal'
   var $statementTables = null;
+    // [Array] array like $addedTableFields['select']['tx_org_cal'][] = 'tx_org_cal.uid'
+  var $addedTableFields = null;
 
 
 
@@ -291,7 +293,6 @@ class tx_browser_pi1_sql_auto
 
       // Remove all expressions and aliases in the SELECT statement
     $csvSelect = $this->zz_setToRealTableNames( $this->conf_view['select'] );
-var_dump(__METHOD__, __LINE__, $csvSelect );
 
       // Devide in local table and foreign tables
     $this->init_class_statementTables( 'select', $csvSelect );
@@ -301,9 +302,7 @@ var_dump(__METHOD__, __LINE__, $csvSelect );
 
       // Add table.uid
     $csvSelect = $this->zz_addUid( 'select', $csvSelect );
-    $csvSelect = $this->zz_addUid( 'select', $csvSelect );
 
-var_dump(__METHOD__, __LINE__, $csvSelect, $this->addedTableFields );
     return $csvSelect;
   }
 
@@ -2560,11 +2559,12 @@ var_dump(__METHOD__, __LINE__, $csvSelect, $this->addedTableFields );
 
 
   /**
-   * zz_woForeignTables( ):
+   * zz_woForeignTables( ): Removes foreign table.fields from the given
+   *                        statement.
    *
    * @param   string		$type         : select, from, where, orderBy, groupBy
    * @param   string		$csvStatement : current SQL statement
-   * @return	string		SQL select or FALSE, if there is an error
+   * @return	string		$csvStatement : the statement without foreign tables
    * @version 3.9.12
    * @since   3.9.12
    */
@@ -2596,9 +2596,14 @@ var_dump(__METHOD__, __LINE__, $csvSelect, $this->addedTableFields );
 
 
   /**
-   * zz_addUid( ):
+   * zz_addUid( ):  Adds table.uid to the given statement, if table.uid isn't
+   *                any element of the given statement.
+   *                table is the fist table of the statement.
+   *                Adds table.uid to the class var $addedTableFields.
    *
-   * @return	string		SQL select or FALSE, if there is an error
+   * @param   string		$type         : select, from, where, orderBy, groupBy
+   * @param   string		$csvStatement : current SQL statement
+   * @return	string		$csvStatement : the statement with the table.uid
    * @version 3.9.12
    * @since   3.9.12
    */
@@ -2606,23 +2611,33 @@ var_dump(__METHOD__, __LINE__, $csvSelect, $this->addedTableFields );
   {
       // Get first table of the current statement
     list( $table ) = explode( '.', $csvStatement );
+
+      // Short var
     $tableUid = $table . '.uid';
 
+      // Get position of $tableUid
     $pos = strpos( $csvStatement, $tableUid );
+
+      // RETURN : $tableUid is an element in the given statement
     if( ! ( $pos === false ) )
     {
       return $csvStatement;
     }
+      // RETURN : $tableUid is an element in the given statement
 
+      // Add table.uid to the end of the statement
     $csvStatement = $csvStatement . ', ' . $tableUid;
 
+      // RETURN : table.uid is an element of the class var addedTableFields
     if( in_array( $tableUid, $this->addedTableFields[$type][$table] ) )
     {
       return $csvStatement;
     }
+      // RETURN : table.uid is an element of the class var addedTableFields
 
+      // Add table.uid to the class var addedTableFields
     $this->addedTableFields[$type][$table][] = $tableUid;
-    
+
     return $csvStatement;
   }
 
