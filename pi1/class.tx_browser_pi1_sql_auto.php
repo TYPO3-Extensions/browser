@@ -209,8 +209,8 @@ class tx_browser_pi1_sql_auto
 
 
       // Get Relations
-//    $this->arr_ts_autoconf_relation = $this->zz_class_boolAutorelation( );
-//    $this->arr_relations_mm_simple  = $this->get_arr_relations_mm_simple( );
+    $this->arr_ts_autoconf_relation = $this->zz_class_boolAutorelation( );
+    $this->arr_relations_mm_simple  = $this->get_arr_relations_mm_simple( );
       // Get Relations
 
 
@@ -1969,7 +1969,6 @@ class tx_browser_pi1_sql_auto
     $boolSelfReference        = $this->arr_ts_autoconf_relation['simpleRelations.']['selfReference'];
     $boolMMrelations          = $this->arr_ts_autoconf_relation['mmRelations'];
     $allowedTCAconfigTypesCSV = $this->arr_ts_autoconf_relation['TCAconfig.']['type.']['csvValue'];
-    $dontUseFieldsCSV         = $this->arr_ts_autoconf_relation['csvDontUseFields'];
       // Get TypoScript configuration
 
       // Prompt the current TypoScript configuration to the DRS
