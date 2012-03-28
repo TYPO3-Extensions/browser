@@ -460,7 +460,7 @@ class tx_browser_pi1_sql_init
       // Get the SELECT statement
 
     $this->pObj->csvSelect  = $conf_view['select'];
-    $this->pObj->csvSelect  = $this->zz_cObjGetSingle
+    $this->pObj->csvSelect  = $this->pObj->objSqlFun->zz_cObjGetSingle
                               (
                                 'select',
                                 $this->pObj->csvSelect,
@@ -493,9 +493,9 @@ class tx_browser_pi1_sql_init
       // Get the parts behind an AS, replace aliases with real names
 
     $csv_before_process = $this->pObj->csvSelect;
-    $csv_after_process  = $this->zz_sqlExpressionToAlias( $csv_before_process );
+    $csv_after_process  = $this->pObj->objSqlFun->zz_sqlExpressionToAlias( $csv_before_process );
     $arr_csv            = explode( ',', $csv_after_process );
-    $arr_csv            = $this->zz_sqlExpressionAndAliasToTable( $arr_csv );
+    $arr_csv            = $this->pObj->objSqlFun->zz_sqlExpressionAndAliasToTable( $arr_csv );
     $csv_after_process  = implode( ', ', $arr_csv );
       // Get the parts behind an AS, replace aliases with real names
 
@@ -699,9 +699,9 @@ class tx_browser_pi1_sql_init
       // Get the parts behind an AS, replace aliases with real names
 
     $csv_before_process = $this->pObj->csvOrderBy;
-    $csv_before_process = $this->zz_sqlExpressionToAlias( $csv_before_process );
+    $csv_before_process = $this->pObj->objSqlFun->zz_sqlExpressionToAlias( $csv_before_process );
     $arr_csv            = explode( ',', $csv_before_process );
-    $arr_csv            = $this->zz_sqlExpressionAndAliasToTable( $arr_csv );
+    $arr_csv            = $this->pObj->objSqlFun->zz_sqlExpressionAndAliasToTable( $arr_csv );
     $csv_before_process = implode( ', ', $arr_csv );
     $csv_after_process  = $csv_before_process;
       // Get the parts behind an AS, replace aliases with real names
