@@ -117,7 +117,7 @@
       $str_ts_plugin_name   = 'plugin.'.$this->pObj->prefixId;
       // Typoscript plugin path (root) like: plugin.tx_browser_pi1
 
-      $str_sword            = $this->pObj->objSqlAut->whereSearch();
+      $str_sword            = $this->pObj->objSqlAut_3x->whereSearch();
       // Search word
       $b_hierarchical       = $conf_view['functions.']['hierarchical'];
       // Should the datas ordered hierarchical?
@@ -373,10 +373,10 @@
       // ORDER BY
 
       // Process the piVar sort
-      $str_order_by = $this->pObj->objSqlFun->orderBy_by_piVar();
+      $str_order_by = $this->pObj->objSqlFun_3x->orderBy_by_piVar();
       if (!$str_order_by)
       {
-        $tablefield = $this->pObj->objSqlFun->get_sql_alias_before($tablefield);
+        $tablefield = $this->pObj->objSqlFun_3x->get_sql_alias_before($tablefield);
         $str_order_by = $conf_view['order_by'];
       }
       if ($str_order_by)
@@ -431,7 +431,7 @@
       //
       // Extend the query, if it has synonyms
 
-      $arr_return = $this->pObj->objSqlFun->query_with_synonyms($arr_return);
+      $arr_return = $this->pObj->objSqlFun_3x->query_with_synonyms($arr_return);
 
 
       /////////////////////////////////////////////////////////////////

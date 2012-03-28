@@ -1845,9 +1845,9 @@
     //
     // Process string with AS and alias
 
-    $tableField     = $this->pObj->objSqlFun->get_sql_alias_behind($tableField);
+    $tableField     = $this->pObj->objSqlFun_3x->get_sql_alias_behind($tableField);
     $arrColumns[0]  = $tableField;
-    $arrColumns     = $this->pObj->objSqlFun->replace_tablealias($arrColumns);
+    $arrColumns     = $this->pObj->objSqlFun_3x->replace_tablealias($arrColumns);
     $tableField     = $arrColumns[0];
 
 

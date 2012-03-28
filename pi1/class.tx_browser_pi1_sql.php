@@ -30,7 +30,7 @@
  *
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *
- * @version   3.9.9
+ * @version   3.9.12
  * @since     3.9.9
  *
  * @package     TYPO3
@@ -51,11 +51,11 @@
  *  235:     public function get_queryArrayAuto( )
  *
  *              SECTION: Set global variables
- *  383:     private function setGlobal_all( )
- *  452:     private function setGlobal_csvSelect( )
- *  590:     private function setGlobal_csvSearch( )
- *  644:     private function setGlobal_csvOrderBy( )
- *  796:     private function setGlobal_stdWrap( $str_tsProperty, $str_tsValue, $arr_tsArray )
+ *  383:     private function init_global_csvAll( )
+ *  452:     private function init_global_csvSelect( )
+ *  590:     private function init_global_csvSearch( )
+ *  644:     private function init_global_csvOrderBy( )
+ *  796:     private function zz_cObjGetSingle( $currConfPath, $statement )
  *
  *              SECTION: ZZ: Helper
  *  911:     private function zz_aliasToTable( $arr_aliastableField )
@@ -124,7 +124,7 @@ class tx_browser_pi1_sql
  * @param	object		The parent object
  * @return	void
  */
-  function __construct($parentObj)
+  public function __construct($parentObj)
   {
     $this->pObj = $parentObj;
   }
@@ -145,47 +145,6 @@ class tx_browser_pi1_sql
 
 
 
-/**
- * init( ): Sets the class vars csvSelect, csvSelect, csvOrderBy, arrLocalTable.
- *          Sets the class var sql_query_statements['rows'] (sql query statements)
- *
- * @return	void
- * @version 3.9.8
- * @since   3.9.8
- */
-  function init( )
-  {
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__, 'begin' );
-
-      // Set the globals csvSelect, csvSelect, csvOrderBy, arrLocalTable
-    $arr_result = $this->setGlobal_all( );
-    if( $arr_result['error']['status'] )
-    {
-        // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__, 'end' );
-      return $arr_result;
-    }
-    unset( $arr_result );
-      // Set the globals csvSelect, csvSelect, csvOrderBy
-
-      // Set the SQL query statements
-    $arr_result = $this->get_queryArray( );
-    if( $arr_result['error']['status'] )
-    {
-      return $arr_result;
-    }
-
-    $this->sql_query_statements['rows'] = $arr_result['data'];
-    unset( $arr_result );
-      // SQL query array
-
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-  }
-
-
-
 
 
 
@@ -193,30 +152,27 @@ class tx_browser_pi1_sql
 
 
   /**
- * get_queryArray( ):
- *
- * @return	array
- * @version 3.9.9
- * @since   3.9.9
- */
+   * get_queryArray( ):
+   *                    Result depends on SQL mode manual or auto
+   *
+   * @return	array
+   * @version 3.9.9
+   * @since   3.9.9
+   */
   private function get_queryArray( )
   {
-      // RETURN case is SQL manual
+      // RETURN : array in SQL manual mode
     if( $this->pObj->b_sql_manual )
     {
-      $arr_result = $this->pObj->objSqlMan->get_query_array( $this );
-        // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlMan->get_query_array( )' );
+      $arr_result = $this->pObj->objSqlMan_3x->get_query_array( $this );
       return $arr_result;
     }
-      // RETURN case is SQL manual
+      // RETURN : array in SQL manual mode
 
-      // RETURN case is SQL automatically
+      // RETURN : array in SQL auto mode
     $arr_result = $this->get_queryArrayAuto( );
-      // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlAut->get_query_array( )' );
     return $arr_result;
-      // RETURN case is SQL automatically
+      // RETURN : array in SQL auto mode
   }
 
 
@@ -228,25 +184,24 @@ class tx_browser_pi1_sql
 
 
   /**
- * get_queryArrayAuto( ):
- *
- * @return	array		array with the elements error and data. Data has the elements select, from, where, orderBy, groupBy.
- */
+   * get_queryArrayAuto( ):
+   *
+   * @return	array		array with the elements error and data. Data has the elements select, from, where, orderBy, groupBy.
+   * @version 3.9.9
+   * @since   3.9.9
+   */
   public function get_queryArrayAuto( )
   {
-
     $arr_return['error']['status'] = false;
-
-    //$this->pObj->dev_var_dump( $this->conf_sql );
 
 
 
       /////////////////////////////////////////////////////////////////
       //
-      // Get the SELECT statement
+      // Set the SELECT statement
 
       // Localise it, add uids
-    $arr_return['data']['select'] = $this->pObj->objSqlAut->select( );
+    $arr_return['data']['select'] = $this->pObj->objSqlAut_3x->select( );
     if( ! $arr_return['data']['select'] )
     {
       $str_header  =  '<h1 style="color:red">' . $this->pObj->pi_getLL( 'error_sql_h1' ) . '</h1>';
@@ -258,7 +213,7 @@ class tx_browser_pi1_sql
       $arr_return['error']['prompt'] = $str_prompt;
       return $arr_return;
     }
-      // Get the SELECT statement
+      // Set the SELECT statement
 
 
 
@@ -266,7 +221,7 @@ class tx_browser_pi1_sql
       //
       // Set the global groupBy
 
-    $this->pObj->objSqlAut->groupBy( );
+    $this->pObj->objSqlAut_3x->groupBy( );
       // Set the global groupBy
 
 
@@ -275,7 +230,7 @@ class tx_browser_pi1_sql
       //
       // Get the ORDER BY statement
 
-    $arr_return['data']['orderBy'] = $this->pObj->objSqlAut->orderBy( );
+    $arr_return['data']['orderBy'] = $this->pObj->objSqlAut_3x->orderBy( );
     if( ! $arr_return['data']['orderBy'] )
     {
       $str_header   = '<h1 style="color:red">' . $this->pObj->pi_getLL('error_sql_h1') . '</h1>';
@@ -295,8 +250,8 @@ class tx_browser_pi1_sql
       //
       // Get Relations
 
-    $this->pObj->objSqlAut->arr_ts_autoconf_relation = $this->pObj->objSqlAut->get_ts_autoconfig_relation( );
-    $this->pObj->objSqlAut->arr_relations_mm_simple  = $this->pObj->objSqlAut->get_arr_relations_mm_simple( );
+    $this->pObj->objSqlAut_3x->arr_ts_autoconf_relation = $this->pObj->objSqlAut_3x->get_ts_autoconfig_relation( );
+    $this->pObj->objSqlAut_3x->arr_relations_mm_simple  = $this->pObj->objSqlAut_3x->get_arr_relations_mm_simple( );
       // Get Relations
 
 
@@ -305,8 +260,8 @@ class tx_browser_pi1_sql
       //
       // Get WHERE and FROM
 
-    $arr_return['data']['where']  = $this->pObj->objSqlAut->whereClause( );
-    $arr_return['data']['from']   = $this->pObj->objSqlAut->sql_from( );
+    $arr_return['data']['where']  = $this->pObj->objSqlAut_3x->whereClause( );
+    $arr_return['data']['from']   = $this->pObj->objSqlAut_3x->sql_from( );
     // From has to be the last, because whereClause can have new tables.
     // Get WHERE and FROM
 
@@ -367,25 +322,66 @@ class tx_browser_pi1_sql
 
     /***********************************************
     *
-    * Set global variables
+    * Initialise global vars
     *
     **********************************************/
 
 
 
 /**
- * setGlobal_all( ): Set the globals csvSelect, csvSearch, csvOrderBy, arrLocalTable
+ * init( ): Sets the class vars csvSelect, csvSelect, csvOrderBy, arrLocalTable.
+ *          Sets the class var sql_query_statements['rows'] (sql query statements)
+ *
+ * @return	void
+ * @version 3.9.8
+ * @since   3.9.8
+ */
+  public function init( )
+  {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__, 'begin' );
+
+      // Set the globals csvSelect, csvSelect, csvOrderBy, arrLocalTable
+    $arr_result = $this->init_global_csvAll( );
+    if( $arr_result['error']['status'] )
+    {
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__, 'end' );
+      return $arr_result;
+    }
+    unset( $arr_result );
+      // Set the globals csvSelect, csvSelect, csvOrderBy
+
+      // Set the SQL query statements
+    $arr_result = $this->get_queryArray( );
+    if( $arr_result['error']['status'] )
+    {
+      return $arr_result;
+    }
+
+    $this->sql_query_statements['rows'] = $arr_result['data'];
+    unset( $arr_result );
+      // SQL query array
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+  }
+
+
+
+/**
+ * init_global_csvAll( ): Set the globals csvSelect, csvSearch, csvOrderBy, arrLocalTable
  *
  * @return	array		$arr_return : Array in case of an error with the error message
  * @version 3.9.12
  * @since   3.9.12
  */
-    private function setGlobal_all( )
+    private function init_global_csvAll( )
     {
       $arr_return['error']['status'] = false;
 
         // Set the globals csvSelect and arrLocalTable
-      if( ! $this->setGlobal_csvSelect( ) )
+      if( ! $this->init_global_csvSelect( ) )
       {
         $str_header  =  '<h1 style="color:red;">' . $this->pObj->pi_getLL( 'error_sql_h1' ) . '</h1>';
         $str_prompt  =  '<p style="color:red;font-weight:bold;">' .
@@ -399,7 +395,7 @@ class tx_browser_pi1_sql
         // Set the globals csvSelect and arrLocalTable
 
         // Set the global csvSearch
-      if( ! $this->setGlobal_csvSearch( ) )
+      if( ! $this->init_global_csvSearch( ) )
       {
         $str_header  =  '<h1 style="color:red;">' . $this->pObj->pi_getLL( 'error_sql_h1' ) . '</h1>';
         $str_prompt  =  '<p style="color:red;font-weight:bold;">' .
@@ -413,7 +409,7 @@ class tx_browser_pi1_sql
         // Set the global csvSearch
 
         // Set the global csvOrderBy
-      if( ! $this->setGlobal_csvOrderBy( ) )
+      if( ! $this->init_global_csvOrderBy( ) )
       {
         $str_header  =  '<h1 style="color:red;">' . $this->pObj->pi_getLL( 'error_sql_h1' ) . '</h1>';
         $str_prompt  =  '<p style="color:red;font-weight:bold;">' .
@@ -443,13 +439,13 @@ class tx_browser_pi1_sql
 
 
  /**
-  * setGlobal_csvSelect( ): Set the global csvSelect. Values are from the TypoScript select
+  * init_global_csvSelect( ): Set the global csvSelect. Values are from the TypoScript select
   *
   * @return	boolean		TRUE, if there is a orderBy value. FALSE, if there isn't any orderBy value
   * @version 3.9.12
   * @since   3.9.12
   */
-    private function setGlobal_csvSelect( )
+    private function init_global_csvSelect( )
     {
       $conf       = $this->conf;
       $mode       = $this->piVar_mode;
@@ -464,10 +460,11 @@ class tx_browser_pi1_sql
         // Get the SELECT statement
 
       $this->pObj->csvSelect  = $conf_view['select'];
-      $this->pObj->csvSelect  = $this->setGlobal_stdWrap
+      $this->pObj->csvSelect  = $this->zz_cObjGetSingle
                                 (
                                   'select',
                                   $this->pObj->csvSelect,
+                                  $conf_view['select'],
                                   $conf_view['select.']
                                 );
       $this->pObj->csvSelect = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $this->pObj->csvSelect );
@@ -579,7 +576,7 @@ class tx_browser_pi1_sql
 
 
  /**
-  * setGlobal_csvSearch( ): Set the global csvSearch. Values are from the TypoScript.
+  * init_global_csvSearch( ): Set the global csvSearch. Values are from the TypoScript.
   *
   *                      If search is empty, search will get the values out of the select statement.
   *
@@ -587,7 +584,7 @@ class tx_browser_pi1_sql
   * @version 3.9.12
   * @since   3.9.12
   */
-    private function setGlobal_csvSearch( )
+    private function init_global_csvSearch( )
     {
       $conf = $this->conf;
       $mode = $this->piVar_mode;
@@ -635,13 +632,13 @@ class tx_browser_pi1_sql
 
 
  /**
-  * setGlobal_csvOrderBy( ): Set the global csvOrderBy. Values are from the TypoScript orderBy or select
+  * init_global_csvOrderBy( ): Set the global csvOrderBy. Values are from the TypoScript orderBy or select
   *
   * @return	boolean		TRUE, if there is a orderBy value. FALSE, if there isn't any orderBy value
   * @version 3.9.12
   * @since   3.9.12
   */
-    private function setGlobal_csvOrderBy( )
+    private function init_global_csvOrderBy( )
     {
       $conf       = $this->conf;
       $mode       = $this->piVar_mode;
@@ -783,103 +780,6 @@ class tx_browser_pi1_sql
 
 
 
-  /**
- * setGlobal_stdWrap: The method wraps sql query parts
- *
- * @param	string		$str_tsProperty: the name of the current array like select. or override.select.
- * @param	string		$str_tsValue:    the TypoScript value like: tt_news.title, tt_news.short
- * @param	array		$arr_tsArray:    the TypoScript array like select. or override.select.
- * @return	string		wrapped value, if there is a stdWrap configuration
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function setGlobal_stdWrap( $str_tsProperty, $str_tsValue, $arr_tsArray )
-  {
-    $conf       = $this->conf;
-    $mode       = $this->piVar_mode;
-    $view       = $this->view;
-    $conf_path  = $this->conf_path;
-    $conf_view  = $this->conf_view;
-
-      // RETURN value, if there is no stdWrap configuration
-    if( ! is_array( $arr_tsArray ) )
-    {
-      if( $this->pObj->b_drs_sql )
-      {
-        $prompt = $str_tsProperty . ' hasn\'t any stdWrap.';
-        t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
-        $prompt = 'If you like to wrap it, please configure ' . $conf_path . $str_tsProperty. '.value ...';
-        t3lib_div::devLog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
-      }
-      return $str_tsValue;
-    }
-      // RETURN value, if there is no stdWrap configuration
-
-      // RETURN value, if property isn't uppercase
-    if( $str_tsValue != strtoupper( $str_tsValue ) )
-    {
-      if( $this->pObj->b_drs_sql )
-      {
-        $prompt = $str_tsValue. ' doesn\'t seem to be a TypoScript object like TEXT or COA.';
-        t3lib_div::devlog('[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3);
-        $prompt = 'There will be any wrap.';
-        t3lib_div::devlog('[WARN/SQL] ' . $prompt, $this->pObj->extKey, 2);
-        $prompt = 'If you like to wrap it, please configure i.e. '.
-                  $conf_path . $str_tsProperty . ' = TEXT and ' .
-                  $conf_path . $str_tsProperty . '.value = your value';
-        t3lib_div::devLog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
-      }
-      return $str_tsValue;
-    }
-      // RETURN value, if property isn't uppercase
-
-      // RETURN value, if property is empty
-    if( empty ( $str_tsValue ) )
-    {
-      if ($this->pObj->b_drs_sql)
-      {
-        $prompt = $str_tsValue. ' doesn\'t seem to be a TypoScript object like TEXT or COA.';
-        t3lib_div::devlog('[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3);
-        $prompt = 'There will be any wrap.';
-        t3lib_div::devlog('[WARN/SQL] ' . $prompt, $this->pObj->extKey, 2);
-        $prompt = 'If you like to wrap it, please configure i.e. '.
-                  $conf_path . $str_tsProperty . ' = TEXT and ' .
-                  $conf_path . $str_tsProperty . '.value = your value';
-        t3lib_div::devLog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
-      }
-      return $str_tsValue;
-    }
-    // RETURN value, if property isn't uppercase
-
-    $lConfCObj    = false;
-    $elements     = false;
-    $str_tsValue  = $this->pObj->cObj->cObjGetSingle( $str_tsValue, $arr_tsArray );
-
-    if( $this->pObj->b_drs_sql )
-    {
-      $prompt = $conf_path . $str_tsProperty . ' is wrapped: ' . $str_tsValue;
-      t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
-    }
-
-    return $str_tsValue;
-  }
-
-
-
-
-
-
-
-
-
-    /***********************************************
-    *
-    * ...
-    *
-    **********************************************/
-
-
-
 
 
 
@@ -894,20 +794,16 @@ class tx_browser_pi1_sql
 
 
 
-
-
-
-
   /**
- * zz_aliasToTable( ) : Moves aliases to tables in $arr_localtable.
- *                                Aliases come from aliases.tables.
- *                                If there isn't any alias, than nothing will replaced.
- *
- * @param	array		$arr_aliastableField: Array with local table values
- * @return	array		$arr_aliastableField with replaced table aliases.
- * @version 3.9.12
- * @since   3.9.12
- */
+   * zz_aliasToTable( ) : Moves aliases to tables in $arr_localtable.
+   *                      Aliases come from aliases.tables.
+   *                      If there isn't any alias, than nothing will replaced.
+   *
+   * @param	array		$arr_aliastableField: Array with local table values
+   * @return	array		$arr_aliastableField with replaced table aliases.
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   private function zz_aliasToTable( $arr_aliastableField )
   {
     $conf       = $this->conf;
@@ -941,6 +837,91 @@ class tx_browser_pi1_sql
       }
     }
     return $arr_aliastableField;
+  }
+
+
+
+  /**
+   * zz_cObjGetSingle:  Wraps the given statement by the given TypoScript configuration.
+   *                    It returns the statement unwrapped, if there isn't any TypoScript
+   *                    configuratuion.
+   *                    It prompts some helpful logs to the DRS for TYPO3 integrators.
+   *
+   * @param	string		$currConfPath : current TS configuration path like 'select.' or 'override.select.'
+   * @param	string		$statement    : SQL statement like: "tt_news.title, tt_news.short, ..."
+   * @param	string		$coa_name     : name of COA like TEXT or COA
+   * @param	array     $coa_conf     : the COA, the configuration object array
+   * @return	string	$statement    : wrapped or unwrapped statement
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function zz_cObjGetSingle( $currConfPath, $statement, $coa_name, $coa_conf )
+  {
+    $conf       = $this->conf;
+    $mode       = $this->piVar_mode;
+    $view       = $this->view;
+    $conf_path  = $this->conf_path;
+    $conf_view  = $this->conf_view;
+
+      // RETURN : coa_conf isn't an array
+    if( ! is_array( $coa_conf ) )
+    {
+      if( $this->pObj->b_drs_sql )
+      {
+        $prompt = $conf_path . $currConfPath . ' hasn\'t any elements.';
+        t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 'If you like to wrap it, please configure i.e. '.
+                  $conf_path . $currConfPath . ' = TEXT and ' .
+                  $conf_path . $currConfPath . '.value = your value';
+        t3lib_div::devLog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
+      }
+      return $statement;
+    }
+      // RETURN : coa_conf isn't an array
+
+      // RETURN value, if property isn't uppercase
+    if( $coa_name != strtoupper( $coa_name ) )
+    {
+      if( $this->pObj->b_drs_sql )
+      {
+        $prompt = $coa_name. ' doesn\'t seem to be a name for a TypoScript object like TEXT or COA.';
+        t3lib_div::devlog('[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3);
+        $prompt = 'There won\'t be any wrap.';
+        t3lib_div::devlog('[WARN/SQL] ' . $prompt, $this->pObj->extKey, 2);
+        $prompt = 'If you like to wrap it, please configure i.e. '.
+                  $conf_path . $currConfPath . ' = TEXT and ' .
+                  $conf_path . $currConfPath . '.value = your value';
+        t3lib_div::devLog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
+      }
+      return $coa_name;
+    }
+      // RETURN value, if property isn't uppercase
+
+      // RETURN : statement is empty
+    if( empty ( $statement ) )
+    {
+      if ($this->pObj->b_drs_sql)
+      {
+        $prompt = 'Statement is empty.';
+        t3lib_div::devlog('[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3);
+        $prompt = 'This is an undefined error. Please post this bug at http://typo3-browser-forum.de/';
+        t3lib_div::devLog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
+        $prompt = 'Statement won\'t be wrapped';
+        t3lib_div::devlog('[WARN/SQL] ' . $prompt, $this->pObj->extKey, 2);
+      }
+      return $statement;
+    }
+      // RETURN : statement is empty
+
+    $statement  = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+
+    if( $this->pObj->b_drs_sql )
+    {
+      $prompt = $conf_path . $currConfPath . ' is wrapped: ' . $statement;
+      t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+    }
+
+    return $statement;
   }
 
 

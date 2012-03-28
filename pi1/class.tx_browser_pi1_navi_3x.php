@@ -1277,9 +1277,9 @@ class tx_browser_pi1_navi_3x
 
     if( $error )
     {
-      $this->pObj->objSqlFun->query = $query;
-      $this->pObj->objSqlFun->error = $error;
-      return $this->pObj->objSqlFun->prompt_error( );
+      $this->pObj->objSqlFun_3x->query = $query;
+      $this->pObj->objSqlFun_3x->error = $error;
+      return $this->pObj->objSqlFun_3x->prompt_error( );
     }
 //    if ($error != '')
 //    {

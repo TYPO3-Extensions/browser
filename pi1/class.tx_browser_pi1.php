@@ -767,7 +767,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // Set the manual SQL mode or the auto SQL mode
 
       // Process of the query building in case of a manual configuration with SELECT, FROM and WHERE and maybe JOINS
-    $arr_result = $this->objSqlMan->check_typoscript_query_parts( );
+    $arr_result = $this->objSqlMan_3x->check_typoscript_query_parts( );
 
       // RETURN error
     if( $arr_result['error']['status'] )
@@ -803,7 +803,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // Manual SQL mode: The user configured more than a select statement
 
       // Prompt the expired time to devlog
-    $this->timeTracking_log( __METHOD__, __LINE__,  'after $this->objSqlMan->check_typoscript_query_parts( )' );
+    $this->timeTracking_log( __METHOD__, __LINE__,  'after $this->objSqlMan_3x->check_typoscript_query_parts( )' );
       // Set the manual SQL mode or the auto SQL mode
 
 
@@ -1641,16 +1641,16 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objSql = new tx_browser_pi1_sql( $this );
 
       // Class with sql methods, if user defined only a SELECT
-    require_once('class.tx_browser_pi1_sql_auto.php');
-    $this->objSqlAut = new tx_browser_pi1_sql_auto( $this );
+    require_once('class.tx_browser_pi1_sql_auto_3x.php');
+    $this->objSqlAut_3x = new tx_browser_pi1_sql_auto_3x( $this );
 
       // Class with sql methods for manual mode and auto mode
-    require_once('class.tx_browser_pi1_sql_functions.php');
-    $this->objSqlFun = new tx_browser_pi1_sql_functions( $this );
+    require_once('class.tx_browser_pi1_sql_functions_3x.php');
+    $this->objSqlFun_3x = new tx_browser_pi1_sql_functions_3x( $this );
 
       // Class with sql methods, if user defined a SELECT, FROM, WHERE and an array JOINS
-    require_once('class.tx_browser_pi1_sql_manual.php');
-    $this->objSqlMan = new tx_browser_pi1_sql_manual( $this );
+    require_once('class.tx_browser_pi1_sql_manual_3x.php');
+    $this->objSqlMan_3x = new tx_browser_pi1_sql_manual_3x( $this );
 
       // Class with methods for statistics requirement
     require_once('class.tx_browser_pi1_statistics.php');

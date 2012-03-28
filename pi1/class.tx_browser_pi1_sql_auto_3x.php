@@ -23,7 +23,7 @@
  ***************************************************************/
 
 /**
- * The class tx_browser_pi1_sql_auto bundles SQL methods for this case: The user has defined a SELECT
+ * The class tx_browser_pi1_sql_auto_3x bundles SQL methods for this case: The user has defined a SELECT
  * statement only. Browser should generate a full sql query automatically
  *
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
@@ -39,7 +39,7 @@
  *
  *
  *
- *   74: class tx_browser_pi1_sql_auto
+ *   74: class tx_browser_pi1_sql_auto_3x
  *   97:     function __construct($parentObj)
  *
  *              SECTION: Main method
@@ -72,7 +72,7 @@
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-class tx_browser_pi1_sql_auto
+class tx_browser_pi1_sql_auto_3x
 {
 
   var $boolAutorelation = true;
@@ -635,7 +635,7 @@ class tx_browser_pi1_sql_auto
     //
     // Set the orderBy by piVars
 
-    $orderBy = $this->pObj->objSqlFun->orderBy_by_piVar();
+    $orderBy = $this->pObj->objSqlFun_3x->orderBy_by_piVar();
     if($orderBy)
     {
       $bool_setGroupBy = false;
@@ -690,7 +690,7 @@ class tx_browser_pi1_sql_auto
     $arr_orderBy = explode(',', $orderBy);
     foreach ($arr_orderBy as $key => $str_tableFieldAlias)
     {
-      $arr_orderBy[$key] = $this->pObj->objSqlFun->get_sql_alias_before($str_tableFieldAlias);
+      $arr_orderBy[$key] = $this->pObj->objSqlFun_3x->get_sql_alias_before($str_tableFieldAlias);
     }
     if (is_array($arr_orderBy))
     {
@@ -825,7 +825,7 @@ class tx_browser_pi1_sql_auto
 
     foreach ($arr_groupBy as $key => $str_tableFieldAlias)
     {
-      $arr_groupBy[$key] = $this->pObj->objSqlFun->get_sql_alias_before($str_tableFieldAlias);
+      $arr_groupBy[$key] = $this->pObj->objSqlFun_3x->get_sql_alias_before($str_tableFieldAlias);
     }
     if (is_array($arr_groupBy))
     {
@@ -1920,8 +1920,8 @@ class tx_browser_pi1_sql_auto
         $tableField = $realTable.'.pid';
 
         // Replace real name of the table with its alias, if there is an alias
-        $tableField = $this->pObj->objSqlFun->set_tablealias($tableField);
-        $tableField = $this->pObj->objSqlFun->get_sql_alias_before($tableField);
+        $tableField = $this->pObj->objSqlFun_3x->set_tablealias($tableField);
+        $tableField = $this->pObj->objSqlFun_3x->get_sql_alias_before($tableField);
         // Replace real name of the table with its alias, if there is an alias
 
         // Push the pid statement to the return array
@@ -1951,8 +1951,8 @@ class tx_browser_pi1_sql_auto
     $tableField = $realTable.'.pid';
 
     // Replace real name of the table with its alias, if there is an alias
-    $tableField = $this->pObj->objSqlFun->set_tablealias($tableField);
-    $tableField = $this->pObj->objSqlFun->get_sql_alias_before($tableField);
+    $tableField = $this->pObj->objSqlFun_3x->set_tablealias($tableField);
+    $tableField = $this->pObj->objSqlFun_3x->get_sql_alias_before($tableField);
     // Replace real name of the table with its alias, if there is an alias
 
     $str_currPidList = $this->pObj->pidList;
@@ -2025,8 +2025,8 @@ class tx_browser_pi1_sql_auto
 
       // Replace real name of the table with its alias, if there is an alias
       $tableField = $realTable.'.dummy';
-      $tableField = $this->pObj->objSqlFun->set_tablealias($tableField);
-      $tableField = $this->pObj->objSqlFun->get_sql_alias_before($tableField);
+      $tableField = $this->pObj->objSqlFun_3x->set_tablealias($tableField);
+      $tableField = $this->pObj->objSqlFun_3x->get_sql_alias_before($tableField);
       list($aliasTable, $field) = explode('.', $tableField);
       $str_enablefields = str_replace($realTable.'.', $aliasTable.'.', $str_enablefields);
       // Replace real name of the table with its alias, if there is an alias
@@ -2056,8 +2056,8 @@ class tx_browser_pi1_sql_auto
 
     // Replace real name of the table with its alias, if there is an alias
     $tableField = $realTable.'.dummy';
-    $tableField = $this->pObj->objSqlFun->set_tablealias($tableField);
-    $tableField = $this->pObj->objSqlFun->get_sql_alias_before($tableField);
+    $tableField = $this->pObj->objSqlFun_3x->set_tablealias($tableField);
+    $tableField = $this->pObj->objSqlFun_3x->get_sql_alias_before($tableField);
     list($aliasTable, $field) = explode('.', $tableField);
     $str_enablefields = str_replace($realTable.'.', $aliasTable.'.', $str_enablefields);
     // Replace real name of the table with its alias, if there is an alias
@@ -2592,8 +2592,8 @@ class tx_browser_pi1_sql_auto
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_auto.php']) {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_auto.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_auto_3x.php']) {
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_auto_3x.php']);
 }
 
 ?>

@@ -1910,7 +1910,7 @@ class tx_browser_pi1_template
     reset($this->pObj->rows);
     $key          = key($this->pObj->rows);
     $lRows[0]     = $this->pObj->rows[$key];
-    $arr_result   = $this->pObj->objSqlFun->rows_with_cleaned_up_fields($lRows);
+    $arr_result   = $this->pObj->objSqlFun_3x->rows_with_cleaned_up_fields($lRows);
     $lArrColumns  = $arr_result['data']['rows'];
     if(!is_array($lArrColumns[0]))
     {
@@ -3185,7 +3185,7 @@ class tx_browser_pi1_template
     $conf_rmFields      = $this->conf_view['functions.']['clean_up.']['csvTableFields'];
     $arr_rmFields       = $this->pObj->objZz->getCSVasArray($conf_rmFields);
     $lArr_RmFields[0]   = array_flip($arr_rmFields);
-    $arr_result         = $this->pObj->objSqlFun->rows_with_cleaned_up_fields($lArr_RmFields);
+    $arr_result         = $this->pObj->objSqlFun_3x->rows_with_cleaned_up_fields($lArr_RmFields);
     $lArr_RmFields      = $arr_result['data']['rows'];
     $this->arr_rmFields = ( array ) $arr_rmFields;
   }
@@ -3320,7 +3320,7 @@ class tx_browser_pi1_template
 
     if($this->bool_groupby)
     {
-      $str_tableField = trim($this->pObj->objSqlFun->get_orderBy_tableFields($this->pObj->conf_sql['groupBy']));
+      $str_tableField = trim($this->pObj->objSqlFun_3x->get_orderBy_tableFields($this->pObj->conf_sql['groupBy']));
       $str_value      = $elements[$str_tableField];
     }
     return $str_value;
@@ -3358,7 +3358,7 @@ class tx_browser_pi1_template
     $str_value  = false;
 
     // Get value from SQL table
-    $str_tableField      = trim($this->pObj->objSqlFun->get_orderBy_tableFields($this->pObj->conf_sql['groupBy']));
+    $str_tableField      = trim($this->pObj->objSqlFun_3x->get_orderBy_tableFields($this->pObj->conf_sql['groupBy']));
     list($table, $field) = explode('.', $str_tableField);
     $str_value           = $elements[$table.'.'.$field];
     // Get value from SQL table

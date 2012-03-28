@@ -269,7 +269,7 @@ class tx_browser_pi1_typoscript
       // Set the global csvSelectWoFunc with table.fields only and without any function
     $csvSelectWoFunc = $lConfSql['select'];
     $arrSelectWoFunc = explode(',', $csvSelectWoFunc);
-    $arrSelectWoFunc = $this->pObj->objSqlFun->clean_up_as_and_alias($arrSelectWoFunc);
+    $arrSelectWoFunc = $this->pObj->objSqlFun_3x->clean_up_as_and_alias($arrSelectWoFunc);
     $csvSelectWoFunc = implode(', ', $arrSelectWoFunc);
     $this->pObj->csvSelectWoFunc = $csvSelectWoFunc;
       // Set the global csvSelectWoFunc with table.fields only and without any function
@@ -298,7 +298,7 @@ class tx_browser_pi1_typoscript
       // Try to fetch used tables from the AND WHERE statement
     if( $lConfSql['andWhere'] )
     {
-      $arr_result        = $this->pObj->objSqlFun->get_propper_andWhere( $lConfSql['andWhere'] );
+      $arr_result        = $this->pObj->objSqlFun_3x->get_propper_andWhere( $lConfSql['andWhere'] );
       $strCsvTableFields = implode( ',', $arr_result['data']['arr_used_tableFields'] );
       unset( $arr_result );
       $this->fetch_realTableWiField( $strCsvTableFields );
@@ -484,7 +484,7 @@ class tx_browser_pi1_typoscript
 
     $arr_localTable['uid'] = $str_localTable.'.'.$arr_localTable['uid'];
     $arr_localTable['pid'] = $str_localTable.'.'.$arr_localTable['pid'];
-    $arr_localTable = $this->pObj->objSqlFun->replace_tablealias($arr_localTable);
+    $arr_localTable = $this->pObj->objSqlFun_3x->replace_tablealias($arr_localTable);
 
     return $arr_localTable;
 
@@ -565,7 +565,7 @@ class tx_browser_pi1_typoscript
           t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
         }
           // DRS
-        $conf_sql[$str_query_part]  = $this->pObj->objSqlFun->global_stdWrap
+        $conf_sql[$str_query_part]  = $this->pObj->objSqlFun_3x->global_stdWrap
                                       (
                                         'override.' . $str_query_part,
                                         $coa_name,
@@ -589,7 +589,7 @@ class tx_browser_pi1_typoscript
         $coa_name = $this->conf_view[$str_query_part];
         $coa_conf = $this->conf_view[$str_query_part.'.'];
         // 3.3.7
-        $conf_sql[$str_query_part]  = $this->pObj->objSqlFun->global_stdWrap
+        $conf_sql[$str_query_part]  = $this->pObj->objSqlFun_3x->global_stdWrap
                                       (
                                         $str_query_part,
                                         $coa_name,
@@ -694,14 +694,14 @@ class tx_browser_pi1_typoscript
       // Does ORDER BY contains further tables and fields?
 
     $arr_addToSelect      = false;
-    $csvOrderByWoAscDesc  = $this->pObj->objSqlFun->get_orderBy_tableFields( $conf_sql['orderBy'] );
+    $csvOrderByWoAscDesc  = $this->pObj->objSqlFun_3x->get_orderBy_tableFields( $conf_sql['orderBy'] );
     $arrOrderByWoAscDesc  = $this->pObj->objZz->getCSVasArray( $csvOrderByWoAscDesc );
     $arrSelect            = $this->pObj->objZz->getCSVasArray( $conf_sql['select'] );
 
       // #110110, cweiske, '11870
     foreach ( $arrSelect as $key => $field )
     {
-      $arrSelect[$key] = $this->pObj->objSqlFun->get_sql_alias_behind( $field );
+      $arrSelect[$key] = $this->pObj->objSqlFun_3x->get_sql_alias_behind( $field );
     }
       // #110110, cweiske, '11870
 
@@ -982,9 +982,9 @@ class tx_browser_pi1_typoscript
       return false;
     }
     $arrCsv     = explode(',', $str_queryPart);
-    $arrCsv     = $this->pObj->objSqlFun->clean_up_as_and_alias($arrCsv);
+    $arrCsv     = $this->pObj->objSqlFun_3x->clean_up_as_and_alias($arrCsv);
     $arrTmp[0]  = $arrCsv;
-    $arrTmp     = $this->pObj->objSqlFun->replace_tablealias($arrTmp);
+    $arrTmp     = $this->pObj->objSqlFun_3x->replace_tablealias($arrTmp);
     $arrCsv     = $arrTmp[0];
     foreach((array) $arrCsv as $tableField) {
       list($table, $field) = explode('.', $tableField);

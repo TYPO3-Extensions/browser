@@ -184,7 +184,7 @@ class tx_browser_pi1_tca
         }
       }
       $arrColumns = $this->pObj->objZz->getCSVasArray($csvSelect);
-      $arrColumns = $this->pObj->objSqlFun->clean_up_as_and_alias($arrColumns);
+      $arrColumns = $this->pObj->objSqlFun_3x->clean_up_as_and_alias($arrColumns);
       // Get the selected fields out of the TS
       foreach ($arrColumns as $columnValue)
       {

@@ -113,9 +113,9 @@ class tx_browser_pi1_multisort
 
     $args                 = false;
     $arr_usedTableFields  = array();  //:todo: Wird nicht gefuellt
-    $csvOrderBy           = $this->pObj->objSqlAut->orderBy();
+    $csvOrderBy           = $this->pObj->objSqlAut_3x->orderBy();
     $arrOrderByWiAscDesc  = $this->pObj->objZz->getCSVasArray($csvOrderBy);
-    $csvOrderByWoAscDesc  = $this->pObj->objSqlFun->get_orderBy_tableFields($csvOrderBy);
+    $csvOrderByWoAscDesc  = $this->pObj->objSqlFun_3x->get_orderBy_tableFields($csvOrderBy);
     $arrOrderByWoAscDesc  = $this->pObj->objZz->getCSVasArray($csvOrderByWoAscDesc);
     $rows                 = $this->pObj->rows;
 //var_dump(__METHOD__ . ': ' . __LINE__, $rows);
@@ -217,12 +217,12 @@ class tx_browser_pi1_multisort
       if(!in_array($tableField, $arr_usedTableFields))
       {
         $args[$int_count]['table.field']    = $tableField;
-        $args[$int_count]['int_orderFlag']  = $this->pObj->objSqlFun->get_descOrAsc($strOrderByField);
+        $args[$int_count]['int_orderFlag']  = $this->pObj->objSqlFun_3x->get_descOrAsc($strOrderByField);
 
         list($table, $field)  = explode('.', $tableField);
 
         // dwildt, 100915
-        $arr_sortTypeAndCase = $this->pObj->objSqlFun->get_sortTypeAndCase($table, $field);
+        $arr_sortTypeAndCase = $this->pObj->objSqlFun_3x->get_sortTypeAndCase($table, $field);
         $args[$int_count]['int_typeFlag']   = $arr_sortTypeAndCase['int_typeFlag'];
         $args[$int_count]['caseSensitive']  = $arr_sortTypeAndCase['bool_caseSensitive'];
         // Get the typeFlag
@@ -422,9 +422,9 @@ class tx_browser_pi1_multisort
         $error  = $GLOBALS['TYPO3_DB']->sql_error();
         if( $error )
         {
-          $this->pObj->objSqlFun->query = $query;
-          $this->pObj->objSqlFun->error = $error;
-          $arr_result = $this->pObj->objSqlFun->prompt_error( );
+          $this->pObj->objSqlFun_3x->query = $query;
+          $this->pObj->objSqlFun_3x->error = $error;
+          $arr_result = $this->pObj->objSqlFun_3x->prompt_error( );
           $prompt     = $arr_result['error']['header'] . $arr_result['error']['prompt'];
           die( $prompt );
         }
@@ -497,7 +497,7 @@ class tx_browser_pi1_multisort
  */
   function multisort_mm_children_single($rows)
   {
-    $csvOrderBy           = $this->pObj->objSqlAut->orderBy();
+    $csvOrderBy           = $this->pObj->objSqlAut_3x->orderBy();
     $arrOrderByWiAscDesc  = $this->pObj->objZz->getCSVasArray($csvOrderBy);
     $rows                 = $this->pObj->rows;
 //if($this->pObj->cObj->data['uid'] == 23)
@@ -550,8 +550,8 @@ class tx_browser_pi1_multisort
       // Get all mm relation tables and all foreign tables -  #9727
 //if($this->pObj->cObj->data['uid'] == 23)
 //{
-//  var_dump(__METHOD__ . ': ' . __LINE__, $this->pObj->objSqlAut->arr_relations_opposite);
-//  var_dump(__METHOD__ . ': ' . __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple['MM']);
+//  var_dump(__METHOD__ . ': ' . __LINE__, $this->pObj->objSqlAut_3x->arr_relations_opposite);
+//  var_dump(__METHOD__ . ': ' . __LINE__, $this->pObj->objSqlAut_3x->arr_relations_mm_simple['MM']);
 //}
 
     $arr_mm_tables = array();
@@ -559,11 +559,11 @@ class tx_browser_pi1_multisort
     $arr_foreign_tables = array();
       // fsander, 101023    -- check if we have an array first
       // There is an relations_mm_simple_array
-    if (is_array($this->pObj->objSqlAut->arr_relations_mm_simple['MM']))
+    if (is_array($this->pObj->objSqlAut_3x->arr_relations_mm_simple['MM']))
     {
-      if(is_array($this->pObj->objSqlAut->arr_relations_mm_simple['MM']))
+      if(is_array($this->pObj->objSqlAut_3x->arr_relations_mm_simple['MM']))
       {
-        foreach((array) $this->pObj->objSqlAut->arr_relations_mm_simple['MM'] as $arr_relation_tables)
+        foreach((array) $this->pObj->objSqlAut_3x->arr_relations_mm_simple['MM'] as $arr_relation_tables)
         {
           foreach((array) $arr_relation_tables as $str_relation_table => $str_foreign_table)
           {
@@ -683,7 +683,7 @@ class tx_browser_pi1_multisort
         // Set dest_table depending on mm table
 
         // Get sort type and case sensitive
-      $arr_sortTypeAndCase    = $this->pObj->objSqlFun->get_sortTypeAndCase($table, $field);
+      $arr_sortTypeAndCase    = $this->pObj->objSqlFun_3x->get_sortTypeAndCase($table, $field);
         // Get sort type and case sensitive
 
         // Get array order for children table
@@ -720,7 +720,7 @@ class tx_browser_pi1_multisort
         {
           //var_dump('sqlFun 1160', $dest_table, $i_counter_table, $table.'.'.$field, $arr_order, count($arr_order[$dest_table][$i_counter_table][$table.'.'.$field]));
           $arr_check_elements[$dest_table][$i_counter_table]         = count($arr_order[$dest_table][$i_counter_table][$table.'.'.$field]);
-          $arr_order[$dest_table][$i_counter_table]['int_orderFlag'] = $this->pObj->objSqlFun->get_descOrAsc($tableFieldOrder);
+          $arr_order[$dest_table][$i_counter_table]['int_orderFlag'] = $this->pObj->objSqlFun_3x->get_descOrAsc($tableFieldOrder);
           $arr_order[$dest_table][$i_counter_table]['int_typeFlag']  = $arr_sortTypeAndCase['int_typeFlag'];
             // Generate one multisort array
 

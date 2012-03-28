@@ -348,9 +348,9 @@ class tx_browser_pi1_navi_pageBrowser
       $GLOBALS['TYPO3_DB']->sql_free_result( $res );
         // Reset SQL charset
       $this->sqlCharsetSet( $currSqlCharset );
-      $this->pObj->objSqlFun->query = $query;
-      $this->pObj->objSqlFun->error = $error;
-      $arr_return = $this->pObj->objSqlFun->prompt_error( );
+      $this->pObj->objSqlFun_3x->query = $query;
+      $this->pObj->objSqlFun_3x->error = $error;
+      $arr_return = $this->pObj->objSqlFun_3x->prompt_error( );
       return $arr_return;
     }
       // Error management

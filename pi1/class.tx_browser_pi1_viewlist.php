@@ -285,9 +285,9 @@ class tx_browser_pi1_viewlist
 
               // Error management
             if( $error ) {
-              $this->pObj->objSqlFun->query = $query;
-              $this->pObj->objSqlFun->error = $error;
-              $arr_result = $this->pObj->objSqlFun->prompt_error( );
+              $this->pObj->objSqlFun_3x->query = $query;
+              $this->pObj->objSqlFun_3x->error = $error;
+              $arr_result = $this->pObj->objSqlFun_3x->prompt_error( );
               if( $arr_result['error']['status'] )
               {
                 $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
@@ -336,9 +336,9 @@ class tx_browser_pi1_viewlist
 
     if( $error )
     {
-      $this->pObj->objSqlFun->query = $query;
-      $this->pObj->objSqlFun->error = $error;
-      $arr_result = $this->pObj->objSqlFun->prompt_error( );
+      $this->pObj->objSqlFun_3x->query = $query;
+      $this->pObj->objSqlFun_3x->error = $error;
+      $arr_result = $this->pObj->objSqlFun_3x->prompt_error( );
       if( $arr_result['error']['status'] )
       {
         $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
@@ -387,12 +387,12 @@ class tx_browser_pi1_viewlist
       //
       // Process synonyms if rows have synonyms
 
-    $arr_result = $this->pObj->objSqlFun->rows_with_synonyms( $rows );
+    $arr_result = $this->pObj->objSqlFun_3x->rows_with_synonyms( $rows );
     $rows       = $arr_result['data']['rows'];
     unset( $arr_result );
     $this->pObj->rows = $rows;
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun->rows_with_synonyms( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun_3x->rows_with_synonyms( )' );
       // Process synonyms if rows have synonyms
 
 
@@ -560,7 +560,7 @@ class tx_browser_pi1_viewlist
     $b_hierarchical = $conf_view['functions.']['hierarchical'];
     if( $b_hierarchical )
     {
-      $rows = $this->pObj->objSqlFun->make_hierarchical( $rows );
+      $rows = $this->pObj->objSqlFun_3x->make_hierarchical( $rows );
         // 120127, dwildt+
       $this->pObj->rows = $rows;
       if( $this->pObj->b_drs_sql )
@@ -568,7 +568,7 @@ class tx_browser_pi1_viewlist
         t3lib_div::devlog( '[INFO/SQL] Result should ordered hierarchical.',  $this->pObj->extKey, 0 );
       }
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun->make_hierarchical( $rows )' );
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun_3x->make_hierarchical( $rows )' );
     }
       // Order and edit the rows hierarchical
 
@@ -623,13 +623,13 @@ class tx_browser_pi1_viewlist
       //
       // Clean up: Delete fields, we don't want to display
 
-    $arr_result = $this->pObj->objSqlFun->rows_with_cleaned_up_fields( $rows );
+    $arr_result = $this->pObj->objSqlFun_3x->rows_with_cleaned_up_fields( $rows );
     $rows       = $arr_result['data']['rows'];
     unset($arr_result);
       // 110801, dwildt
     $this->pObj->rows = $rows;
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun->rows_with_cleaned_up_fields( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun_3x->rows_with_cleaned_up_fields( )' );
       // Clean up: Delete rows, we don't want to display
 
 
@@ -1151,9 +1151,9 @@ class tx_browser_pi1_viewlist
 
 
       // Set the globals csvSelect, csvOrderBy and arrLocalTable
-    $arr_result = $this->pObj->objSqlFun->global_all( );
+    $arr_result = $this->pObj->objSqlFun_3x->global_all( );
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun->global_all( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlFun_3x->global_all( )' );
       // RETURN error
     if( $arr_result['error']['status'] )
     {
@@ -1261,9 +1261,9 @@ class tx_browser_pi1_viewlist
       // Error management
     if( $error )
     {
-      $this->pObj->objSqlFun->query = $query;
-      $this->pObj->objSqlFun->error = $error;
-      return $this->pObj->objSqlFun->prompt_error( );
+      $this->pObj->objSqlFun_3x->query = $query;
+      $this->pObj->objSqlFun_3x->error = $error;
+      return $this->pObj->objSqlFun_3x->prompt_error( );
     }
       // Error management
 
@@ -1320,17 +1320,17 @@ if( $this->pObj->bool_accessByIP )
       // RETURN case is SQL manual
     if( $this->pObj->b_sql_manual )
     {
-      $arr_result = $this->pObj->objSqlMan->get_query_array( $this );
+      $arr_result = $this->pObj->objSqlMan_3x->get_query_array( $this );
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlMan->get_query_array( )' );
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlMan_3x->get_query_array( )' );
       return $arr_result;
     }
       // RETURN case is SQL manual
 
       // RETURN case is SQL automatically
-    $arr_result = $this->pObj->objSqlAut->get_query_array( );
+    $arr_result = $this->pObj->objSqlAut_3x->get_query_array( );
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlAut->get_query_array( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlAut_3x->get_query_array( )' );
     return $arr_result;
       // RETURN case is SQL automatically
   }
@@ -1475,9 +1475,9 @@ if( $this->pObj->bool_accessByIP )
     {
       foreach( $this->pObj->arrLinkToSingle as $i_key => $str_tablefield )
       {
-        $this->pObj->arrLinkToSingle[$i_key] = $this->pObj->objSqlFun->get_sql_alias_before( $str_tablefield );
+        $this->pObj->arrLinkToSingle[$i_key] = $this->pObj->objSqlFun_3x->get_sql_alias_before( $str_tablefield );
       }
-      $this->pObj->arrLinkToSingle = $this->pObj->objSqlFun->replace_tablealias( $this->pObj->arrLinkToSingle );
+      $this->pObj->arrLinkToSingle = $this->pObj->objSqlFun_3x->replace_tablealias( $this->pObj->arrLinkToSingle );
     }
       // Replace aliases in case of aliases
 

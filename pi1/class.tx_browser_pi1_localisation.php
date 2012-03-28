@@ -2022,9 +2022,9 @@ class tx_browser_pi1_localisation
     $error  = $GLOBALS['TYPO3_DB']->sql_error( );
     if( $error )
     {
-      $this->pObj->objSqlFun->query = $query;
-      $this->pObj->objSqlFun->error = $error;
-      $arr_result = $this->pObj->objSqlFun->prompt_error( );
+      $this->pObj->objSqlFun_3x->query = $query;
+      $this->pObj->objSqlFun_3x->error = $error;
+      $arr_result = $this->pObj->objSqlFun_3x->prompt_error( );
       $prompt     = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       echo $prompt;
     }
@@ -2322,9 +2322,9 @@ class tx_browser_pi1_localisation
     $error  = $GLOBALS['TYPO3_DB']->sql_error( );
     if( $error )
     {
-      $this->pObj->objSqlFun->query = $query;
-      $this->pObj->objSqlFun->error = $error;
-      $arr_result = $this->pObj->objSqlFun->prompt_error( );
+      $this->pObj->objSqlFun_3x->query = $query;
+      $this->pObj->objSqlFun_3x->error = $error;
+      $arr_result = $this->pObj->objSqlFun_3x->prompt_error( );
       $prompt     = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       echo $prompt;
     }

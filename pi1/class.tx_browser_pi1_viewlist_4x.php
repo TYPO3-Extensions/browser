@@ -363,7 +363,7 @@ class tx_browser_pi1_viewlist_4x
 
 
       // Set the globals csvSelect, csvOrderBy and arrLocalTable
-    $arr_result = $this->pObj->objSqlFun->global_all( );
+    $arr_result = $this->pObj->objSql->global_all( );
     if( $arr_result['error']['status'] )
     {
       return $arr_result;
@@ -456,17 +456,17 @@ var_dump( __METHOD__, __LINE__, $arr_result );
       // RETURN case is SQL manual
     if( $this->pObj->b_sql_manual )
     {
-      $arr_result = $this->pObj->objSqlMan->get_query_array( $this );
+      $arr_result = $this->pObj->objSqlMan_3x->get_query_array( $this );
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlMan->get_query_array( )' );
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlMan_3x->get_query_array( )' );
       return $arr_result;
     }
       // RETURN case is SQL manual
 
       // RETURN case is SQL automatically
-    $arr_result = $this->pObj->objSqlAut->get_query_array( );
+    $arr_result = $this->pObj->objSqlAut_3x->get_query_array( );
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlAut->get_query_array( )' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objSqlAut_3x->get_query_array( )' );
     return $arr_result;
       // RETURN case is SQL automatically
   }

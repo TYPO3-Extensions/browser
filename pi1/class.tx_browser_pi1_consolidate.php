@@ -293,8 +293,8 @@ class tx_browser_pi1_consolidate
 
     $arr_mm_tables = array();
       // fsander, 101023    -- check if we have an array first
-    if (is_array($this->pObj->objSqlAut->arr_relations_mm_simple['MM'])) {
-      foreach((array) $this->pObj->objSqlAut->arr_relations_mm_simple['MM'] as $arr_relation_tables)
+    if (is_array($this->pObj->objSqlAut_3x->arr_relations_mm_simple['MM'])) {
+      foreach((array) $this->pObj->objSqlAut_3x->arr_relations_mm_simple['MM'] as $arr_relation_tables)
       {
         foreach((array) $arr_relation_tables as $str_relation_table => $str_foreign_table)
         {
