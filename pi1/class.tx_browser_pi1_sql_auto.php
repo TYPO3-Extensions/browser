@@ -103,6 +103,9 @@ class tx_browser_pi1_sql_auto
   var $b_left_join = false;
   // [Boolean] TRUE if we should use LEFT JOIN. From TypoScript global or local autoconfig.relations.left_join
 
+    // [Array] array like $statementTables['select']['localtable']['tx_org_cal'] = 'tx_org_cal'
+  var $statementTables = null;
+
 
 
 
@@ -288,18 +291,19 @@ class tx_browser_pi1_sql_auto
 
       // Remove all expressions and aliases in the SELECT statement
     $csvSelect = $this->zz_setToRealTableNames( $this->conf_view['select'] );
+var_dump(__METHOD__, __LINE__, $csvSelect );
 
       // Devide in local table and foreign tables
-    $this->init_class_localAndForeignTables( 'select', $csvSelect );
+    $this->init_class_statementTables( 'select', $csvSelect );
 
-//      // Remove foreign tables
-//    $csvSelect = $this->zz_woForeignTables( $csvSelect );
-//
+      // Remove foreign tables
+    $csvSelect = $this->zz_woForeignTables( 'select', $csvSelect );
+
 //      // Add table.uid
 //    $csvSelect = $this->zz_addUid( $csvSelect );
 
-
-    return $select;
+var_dump(__METHOD__, __LINE__, $csvSelect );
+    return $csvSelect;
   }
 
 
@@ -2509,15 +2513,63 @@ class tx_browser_pi1_sql_auto
 
 
   /**
-   * init_class_localAndForeignTables( ): 
+   * init_class_statementTables( ): Inits the class var statementTables.
+   *          Var is an array like
+   *          * $statementTables['select']['localtable']['tx_org_cal']        = 'tx_org_cal'
+   *          * $statementTables['select']['foreigntable']['tx_org_caltype']  = 'tx_org_caltype'
    *
    * @param   string		$type         : select, from, where, orderBy, groupBy
    * @param   string		$csvStatement : current SQL statement
    * @version 3.9.12
    * @since   3.9.12
    */
-  private function init_class_localAndForeignTables( $type, $csvStatement )
+  private function init_class_statementTables( $type, $csvStatement )
   {
+      // Move csvStatement to an array
+    $arrStatement = $this->pObj->objZz->getCSVasArray( $csvStatement );
+
+    $prevTable = null;
+    foreach( $arrStatement as $tableField)
+    {
+      list( $table ) = explode( '.', $tableField );
+
+        // CONTINUE : table is handled before
+      if( $table == $prevTable )
+      {
+        continue;
+      }
+        // CONTINUE : table is handled before
+
+        // Set previous table to current table
+      $prevTable = $table;
+
+        // CONTINUE : table is local table
+      if( $table == $this->pObj->localTable )
+      {
+        $this->statementTables[$type]['localtable'][$table] = $table;
+        continue;
+      }
+        // CONTINUE : table is local table
+
+        // table is foreign table
+      $this->statementTables[$type]['foreigntable'][$table] = $table;
+    }
+  }
+
+
+
+  /**
+   * zz_woForeignTables( ):
+   *
+   * @param   string		$type         : select, from, where, orderBy, groupBy
+   * @param   string		$csvStatement : current SQL statement
+   * @return	string		SQL select or FALSE, if there is an error
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function zz_woForeignTables( $type, $csvStatement )
+  {
+
     $conf       = $this->conf;
     $mode       = $this->piVar_mode;
     $view       = $this->view;
@@ -2527,26 +2579,17 @@ class tx_browser_pi1_sql_auto
       // Move csvStatement to an array
     $arrStatement = $this->pObj->objZz->getCSVasArray( $csvStatement );
 
-    $prevTable = null;
-    foreach( $arrStatement as $tableField)
+    foreach( $arrStatement as $key => $tableField)
     {
       list( $table ) = explode( '.', $tableField );
-      if( $table == $prevTable )
+      if( in_array( $table, $this->statementTables[$type]['foreigntable'] ) )
       {
-        continue;
+        unset( $arrStatement[$key] );
       }
-
-      $prevTable = $table;
-
-      if( $table == $this->pObj->localTable )
-      {
-        $arr_test[$type]['localtable'][$table] = $table;
-        continue;
-      }
-
-      $arr_test[$type]['foreigntable'][$table] = $table;
     }
-    var_dump( __METHOD__, __LINE__, $arr_test);
+
+    $csvStatement = implode( ', ', $arrStatement );
+    return $csvStatement;
   }
 
 
