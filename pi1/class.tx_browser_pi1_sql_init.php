@@ -474,12 +474,12 @@ class tx_browser_pi1_sql_init
       //
       // Get the SEARCH values
 
-    $csvSearch = $this->conf_sql['search'];
+    $csvSearch = $this->pObj->conf_sql['search'];
     $csvSearch = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $csvSearch );
 
     if ( empty( $csvSearch ) )
     {
-      $csvSearch  = $this->conf_sql['select'];
+      $csvSearch  = $this->pObj->conf_sql['select'];
       $csvSearch  = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $csvSearch );
       if( $this->pObj->b_drs_sql )
       {

@@ -616,12 +616,12 @@ class tx_browser_pi1_typoscript
     }
       // Set default order by
 
-      // Concatennate groupb by and order by
+      // Concatenate group by and order by
     if( ! empty ( $conf_sql['groupBy'] ) )
     {
       $conf_sql['orderBy'] = $conf_sql['groupBy'] . ', ' . $conf_sql['orderBy'];
     }
-      // Concatennate groupb by and order by
+      // Concatenate group by and order by
 
       // Set where
     if( ! empty ( $conf_sql['where']) )
@@ -664,7 +664,10 @@ class tx_browser_pi1_typoscript
 
     foreach ($arr_query_parts as $str_query_part)
     {
-      $conf_sql[$str_query_part] = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $conf_sql[$str_query_part] );
+      $conf_sql[$str_query_part]  = $this->pObj->objZz->cleanUp_lfCr_doubleSpace
+                                    (
+                                      $conf_sql[$str_query_part]
+                                    );
     }
       // Clean up LF and CR (Line Feed and Carriage Return)
 

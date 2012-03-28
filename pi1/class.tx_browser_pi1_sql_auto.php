@@ -46,15 +46,15 @@
  *  141:     public function get_statements( )
  *
  *              SECTION: SQL relation building with user defined SELECT only
- *  298:     public function select( )
- *  467:     function sql_from()
- *  621:     function orderBy()
- *  769:     function groupBy()
+ *  298:     public function get_statements_select( )
+ *  467:     function get_statements_from()
+ *  621:     function get_statements_orderBy()
+ *  769:     function get_statements_groupBy()
  *  882:     function get_joins( )
  *
  *              SECTION: SQL relation building WHERE
  * 1374:     function whereSearch()
- * 1631:     function whereClause()
+ * 1631:     function get_statements_where()
  * 1845:     function andWhere()
  * 1929:     function arr_andWherePid()
  * 1965:     function str_andWherePid($realTable)
@@ -122,69 +122,70 @@ class tx_browser_pi1_sql_auto
 
 
 
+
+
+
   /***********************************************
    *
-   * Main method
+   * Statements
    *
    **********************************************/
 
 
 
   /**
- * get_statements( ): It returns the parts for a SQL query. OrderBy and GroupBy aren't used in the SQL statement.
- * OrderBy is used in php multisort. GroupBy is used in context with consolidation.
- *
- * @return	array		array with the elements error and data. Data has the elements select, from, where, orderBy, groupBy.
- * @version 3.9.12
- * @since   3.9.12
- */
+   * get_statements( ): It returns the statements for a SQL query:
+   *                    SELECT, FROM, WHERE, ORDER BY, LIMIT
+   *                    GROUP BY isn't handled
+   *
+   * @return	array     $arr_return : contains statements or an error message
+   * @version 3.9.12
+   * @since   3.9.12
+   */
   public function get_statements( )
   {
-
-    $arr_return['error']['status'] = false;
-
-
-    /////////////////////////////////////////////////////////////////
-    //
-    // Get SELECT
-
-    $arr_return['data']['select'] = $this->select( );
+      // Get SELECT
+    $arr_return['data']['select'] = $this->get_statements_select( );
     if ( ! $arr_return['data']['select'] )
     {
-      $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
-      $str_prompt  = '<p style="color:red; font-weight:bold;">'.$this->pObj->pi_getLL('error_sql_select').'</p>';
+      $str_header = '<h1 style="color:red">' .
+                      $this->pObj->pi_getLL( 'error_sql_h1' ).
+                    '</h1>';
+      $str_prompt = '<p style="color:red; font-weight:bold;">' .
+                      $this->pObj->pi_getLL('error_sql_select') .
+                    '</p>';
       $arr_return['error']['status'] = true;
       $arr_return['error']['header'] = $str_header;
       $arr_return['error']['prompt'] = $str_prompt;
       return $arr_return;
     }
-    // Get SELECT
+      // Get SELECT
 
-// :todo: 100429: remove methods orderBy() and groupBy() in this class
+// :todo: 100429: remove methods get_statements_orderBy() and get_statements_groupBy() in this class
 
 //    /////////////////////////////////////////////////////////////////
 //    //
 //    // Set the global groupBy
 //
-//    $this->groupBy();
+//    $this->get_statements_groupBy();
 //    // Set the global groupBy
 
 
-// 100429, dwildt: auskommentiert, war vermutlich für SQL query. Sortiert wird aber mit PHP
-//    /////////////////////////////////////////////////////////////////
-//    //
-//    // Get ORDER BY
-//
-//    $arr_return['data']['orderBy'] = $this->orderBy();
-//    if (!$arr_return['data']['orderBy'])
-//    {
-//      $str_header  = '<h1 style="color:red">'.$this->pObj->pi_getLL('error_sql_h1').'</h1>';
-//      $str_prompt  = '<p style="color:red; font-weight:bold;">'.$this->pObj->pi_getLL('error_sql_orderby').'</p>';
-//      $arr_return['error']['status'] = true;
-//      $arr_return['error']['header'] = $str_header;
-//      $arr_return['error']['prompt'] = $str_prompt;
-//      return $arr_return;
-//    }
+      // Get ORDER BY
+    $arr_return['data']['orderBy'] = $this->get_statements_orderBy( );
+    if (!$arr_return['data']['orderBy'])
+    {
+      $str_header = '<h1 style="color:red">' .
+                      $this->pObj->pi_getLL( 'error_sql_h1' ) .
+                    '</h1>';
+      $str_prompt = '<p style="color:red; font-weight:bold;">' .
+                      $this->pObj->pi_getLL( 'error_sql_orderby' ) .
+                    '</p>';
+      $arr_return['error']['status'] = true;
+      $arr_return['error']['header'] = $str_header;
+      $arr_return['error']['prompt'] = $str_prompt;
+      return $arr_return;
+    }
 // 100429, dwildt: auskommentiert, da kein $arr_result vorhanden
 //    if (isset($arr_result['data']['addToSelect']))
 //    {
@@ -196,33 +197,23 @@ class tx_browser_pi1_sql_auto
 //      }
 //    }
 //    unset($arr_result);
-    // Get ORDER BY
+      // Get ORDER BY
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Get Relations
-
-    $this->arr_ts_autoconf_relation = $this->get_ts_autoconfig_relation();
-    $this->arr_relations_mm_simple  = $this->get_arr_relations_mm_simple();
-    // Get Relations
+      // Get Relations
+    $this->arr_ts_autoconf_relation = $this->get_ts_autoconfig_relation( );
+    $this->arr_relations_mm_simple  = $this->get_arr_relations_mm_simple( );
+      // Get Relations
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Get WHERE and FROM
-
-    $arr_return['data']['where']  = $this->whereClause();
-    $arr_return['data']['from']   = $this->sql_from();
-    // From has to be the last, because whereClause can have new tables.
-    // Get WHERE and FROM
+      // Get WHERE and FROM
+    $arr_return['data']['where']  = $this->get_statements_where( );
+      // From has to be the last, because whereClause can have new tables.
+    $arr_return['data']['from']   = $this->get_statements_from( );
+      // Get WHERE and FROM
 
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Enable the ordering by table_mm.sorting
-
-    // 091128: ADDED in context with table_mm.sorting (see below)
+      // Enable the ordering by table_mm.sorting
     $str_mmSorting = false;
     $arr_mmSorting = false;
     if(is_array($this->pObj->arrConsolidate['select']['mmSortingTableFields']))
@@ -239,17 +230,13 @@ class tx_browser_pi1_sql_auto
       $str_mmSorting = ', '.$str_mmSorting;
     }
     $arr_return['data']['select'] = $arr_return['data']['select'].$str_mmSorting;
-    // 091128: ADDED in context with table_mm.sorting (see below)
-    // Enable the ordering by table_mm.sorting
+      // Enable the ordering by table_mm.sorting
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Replace Markers for pidlist and uid
-
+      // Replace Markers for pidlist and uid
     $str_pid_list = $this->pObj->pidList;
+      // For human readable
     $str_pid_list = str_replace(',', ', ', $str_pid_list);
-    // For human readable
 
     foreach((array) $arr_return['data'] as $str_query_part => $str_statement)
     {
@@ -269,184 +256,47 @@ class tx_browser_pi1_sql_auto
 
 
 
-
-
-
-
-
-
-
-
-
   /***********************************************
    *
-   * SQL relation building with user defined SELECT only
+   * Statements SELECT
    *
    **********************************************/
 
 
-/**
- * select( ): It returns the select statement for a SQL query.
- *            If tables hasn't any uid in the SELECT, table.uid will be added.
- *            If required localisation fields will added too.
- *            Added fields will added to the consolidation array.
- *
- * @return	string		SQL select or FALSE, if there is an error
- * @version 3.9.9
- * @since   2.0.0
- */
-  public function select( )
+
+  /**
+   * get_statements_select( ): It returns the select statement for a SQL query.
+   *            If tables hasn't any uid in the SELECT, table.uid will be added.
+   *            If required localisation fields will added too.
+   *            Added fields will added to the consolidation array.
+   *
+   * @return	string		SQL select or FALSE, if there is an error
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function get_statements_select( )
   {
 
-    $conf = $this->pObj->conf;
-    $mode = $this->pObj->piVar_mode;
-    $view = $this->pObj->view;
+    $conf       = $this->conf;
+    $mode       = $this->piVar_mode;
+    $view       = $this->view;
+    $conf_path  = $this->conf_path;
+    $conf_view  = $this->conf_view;
 
-    $viewWiDot = $view.'.';
+      // DIE in case of override.select
+    $this->die_ifOverrideSelect( );
 
-    $select = false;
+      // Remove all expressions and aliases in the SELECT statement
+    $csvSelect = $this->zz_setToRealTableNames( $this->conf_view['select'] );
 
+      // Devide in local table and foreign tables
+    $this->init_class_localAndForeignTables( 'select', $csvSelect );
 
-
-      ////////////////////////////////////////////////////////////////////
-      //
-      // RETURN in case of override.select
-
-    if( $conf['views.'][$viewWiDot][$mode.'.']['override.']['select'] )
-    {
-      $select = $this->pObj->conf_sql['select'];
-      if( $this->pObj->b_drs_sql )
-      {
-        t3lib_div::devLog('[INFO/SQL] override.select is true. views.'.$viewWiDot.$mode.'.select will be ignored!', $this->pObj->extKey, 0);
-        t3lib_div::devLog('[INFO/SQL] SELECT '.$select, $this->pObj->extKey, 0);
-      }
-      return $select;
-    }
-      // RETURN in case of override.select
-
-
-
-      ////////////////////////////////////////////////////////////////////
-      //
-      // RETURN, if the global array conf_sql['select'] isn't set
-
-    if( ! $this->pObj->conf_sql['select'] )
-    {
-      if ($this->pObj->b_drs_error)
-      {
-        t3lib_div::devlog('[ERROR/SQL] ABORTED', $this->pObj->extKey, 3);
-      }
-      return false;
-    }
-      // RETURN, if the global array conf_sql['select'] isn't set
-
-
-
-      ////////////////////////////////////////////////////////////////////
-      //
-      // Get the SELECT statement from the global conf_sql['select']
-
-      // Values from the TypoScript setup
-    $select = $this->pObj->conf_sql['select'];
-      // Get the SELECT statement from the global conf_sql['select']
-
-
-
-      ////////////////////////////////////////////////////////////////////
-      //
-      // Add uid field of each table without uid
-
-    $str_addTableUids = false;
-    $arr_addTableUids = false;
-    if( is_array( $this->pObj->arrConsolidate['addedTableFields'] ) )
-    {
-      foreach( ( array ) $this->pObj->arrConsolidate['addedTableFields'] as $tableField )
-      {
-        list( $table, $field ) = explode( '.', $tableField );
-        if( $field == 'uid' )
-        {
-          $arr_addTableUids[] = $tableField .' AS \'' . $tableField .'\'';
-        }
-      }
-    }
-    if( is_array( $arr_addTableUids ) )
-    {
-      $str_addTableUids = $str_addTableUids . implode( ', ', $arr_addTableUids );
-      $str_addTableUids = ', ' . $str_addTableUids;
-    }
-    $select = $select . $str_addTableUids;
-      // Add uid field of each table without uid
-
-
-
-      ////////////////////////////////////////////////////////////////////
-      //
-      // Add localisation fields
-
-    //$arr_addedTableFields = array( );
-      // Loop through all used tables
-    foreach( $this->pObj->arr_realTables_arrFields as $table => $arrFields )
-    {
-      $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
-        // Get the and SELECT statement with aliases
-      if( $arr_result['wiAlias'] )
-      {
-        $arr_localSelect[] = $arr_result['wiAlias'];
-      }
-        // Get all added table.fields
-      if( is_array( $arr_result['addedFields'] ) )
-      {
-        $arr_addedTableFields = array_merge
-                                (
-                                  ( array ) $arr_addedTableFields,
-                                  $arr_result['addedFields']
-                                );
-      }
-    }
-    unset( $arr_result );
-      // Loop through all used tables
-
-      // Build the SELECT statement
-    if( is_array( $arr_localSelect ) )
-    {
-      $str_localSelect = implode( ', ', $arr_localSelect );
-      if( $str_localSelect )
-      {
-        $select = $select . ', ' . $str_localSelect;
-      }
-    }
-      // Build the SELECT statement
-      // Add localisation fields
-
-
-
-      ////////////////////////////////////////////////////////////////////
-      //
-      // Add tables to the consolidation array
-
-      // LOOP through all new table.fields
-    foreach( ( array ) $arr_addedTableFields as $tableField )
-    {
-      list( $table, $field ) = explode( '.', $tableField );
-      if( ! in_array( $field, $this->pObj->arr_realTables_arrFields[$table] ) )
-      {
-          // Add every new table.field to the global array arr_realTables_arrFields
-        $this->pObj->arr_realTables_arrFields[$table][] = $field;
-          // Add every new table.field to the global array consolidate
-        $this->pObj->arrConsolidate['addedTableFields'][] = $tableField;
-      }
-    }
-      // LOOP through all new table.fields
-      // Add tables to the consolidation array
-
-
-
-      // DRS
-    if ( $this->pObj->b_drs_sql )
-    {
-      t3lib_div::devLog( '[INFO/SQL] SELECT ' . $select, $this->pObj->extKey, 0 );
-    }
-    // DRS
+//      // Remove foreign tables
+//    $csvSelect = $this->zz_woForeignTables( $csvSelect );
+//
+//      // Add table.uid
+//    $csvSelect = $this->zz_addUid( $csvSelect );
 
 
     return $select;
@@ -459,12 +309,17 @@ class tx_browser_pi1_sql_auto
 
 
 
+
+
+
   /**
- * The method returns the FROM clause for the SQL query
- *
- * @return	string		SQL from
- */
-  function sql_from()
+   * get_statements_from( ): The method returns the FROM clause for the SQL query
+   *
+   * @return	string		SQL from
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function get_statements_from( )
   {
 
     $conf = $this->pObj->conf;
@@ -609,16 +464,18 @@ class tx_browser_pi1_sql_auto
 
 
 
-  /**
- * It returns the order part for SQL where clause.
- * If there are piVars, the order of the piVars will preferred.
- * Otherwise it returns the TypoScript configuration.
- * If there aren't piVars and there aren't a TypoSCript configuration, it will be empty.
- * If there are aliases, the aliases will be deleted.
- *
- * @return	string		$orderBy: SQL ORDER BY clause.
- */
-  function orderBy()
+    /**
+   * It returns the order part for SQL where clause.
+   * If there are piVars, the order of the piVars will preferred.
+   * Otherwise it returns the TypoScript configuration.
+   * If there aren't piVars and there aren't a TypoSCript configuration, it will be empty.
+   * If there are aliases, the aliases will be deleted.
+   *
+   * @return	string		$orderBy: SQL ORDER BY clause.
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function get_statements_orderBy()
   {
     // 3.3.7
     $conf = $this->pObj->conf;
@@ -758,15 +615,17 @@ class tx_browser_pi1_sql_auto
 
 
   /**
- * THIS ISN'T THE GROUPBY FOR THE SQL QUERY
- * Allocates a proper group by in the global groupBy
- * It returns the group by part, which is needed for consolidation
- * If there is more than one value, all other values will be removed
- * If there are aliases, the aliases will be deleted.
- *
- * @return	string		$groupBy: The first groupBy value with ASC or DESC, if there is one
- */
-  function groupBy()
+   * THIS ISN'T THE GROUPBY FOR THE SQL QUERY
+   * Allocates a proper group by in the global groupBy
+   * It returns the group by part, which is needed for consolidation
+   * If there is more than one value, all other values will be removed
+   * If there are aliases, the aliases will be deleted.
+   *
+   * @return	string		$groupBy: The first groupBy value with ASC or DESC, if there is one
+   * @version 2.0.0
+   * @since   2.0.0
+   */
+  private function get_statements_groupBy()
   {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -865,6 +724,228 @@ class tx_browser_pi1_sql_auto
 
     $this->pObj->groupBy = $groupBy;
     return $groupBy;
+  }
+
+
+
+
+
+
+
+
+
+  /***********************************************
+   *
+   * Statements WHERE
+   *
+   **********************************************/
+
+
+
+  /**
+   * Relation method: Building the whole where clause
+   *
+   * @return	string		FALSE or the SQL-where-clause
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function get_statements_where( )
+  {
+
+    $conf = $this->pObj->conf;
+    $mode = $this->pObj->piVar_mode;
+    $view = $this->pObj->view;
+
+    $viewWiDot    = $view.'.';
+
+
+
+// 3.3.7
+    ////////////////////////////////////////////////////////////////////
+    //
+    // RETURN in case of override.where
+
+    if($conf['views.'][$viewWiDot][$mode.'.']['override.']['where'])
+    {
+      $where = $this->pObj->conf_sql['where'];
+      if ($this->pObj->b_drs_sql)
+      {
+        t3lib_div::devLog('[INFO/SQL] override.where is true. views.'.$viewWiDot.$mode.'.where will be ignored!', $this->pObj->extKey, 0);
+        t3lib_div::devLog('[INFO/SQL] all andWhere configuration will be ignored too!', $this->pObj->extKey, 0);
+        t3lib_div::devLog('[INFO/SQL] WHERE '.$where, $this->pObj->extKey, 0);
+      }
+      return $where;
+    }
+    // RETURN in case of override.where
+// 3.3.7
+
+
+
+    $whereClause  = false;
+
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // Get enableFields like hiddden, deleted, starttime ... only for the localTable
+
+    $str_enablefields = $this->str_enableFields($this->pObj->localTable);
+    // #11429, cweiske, 101219
+    //if (strpos($whereClause, $str_enablefields) === false)
+    if ($str_enablefields !== '' && strpos($whereClause, $str_enablefields) === false)
+    {
+      $whereClause = $whereClause." AND ".$str_enablefields;
+    }
+    // Get enableFields like hiddden, deleted, starttime ... only for the localTable
+
+
+    ////////////////////////////////////////////////////////////////////
+    //
+    // Add localisation fields
+
+    $str_local_where = $this->pObj->objLocalise->localisationFields_where($this->pObj->localTable);
+    if ($str_local_where)
+    {
+      $whereClause      = $whereClause." AND ".$str_local_where;
+    }
+    // Add localisation fields
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Is there a andWhere statement from the filter class?
+    if ( is_array( $this->pObj->arr_andWhereFilter ) )
+    {
+      $str_andFilter  = implode(" AND ", $this->pObj->arr_andWhereFilter);
+      $whereClause    = $whereClause." AND ".$str_andFilter;
+    }
+      // Is there a andWhere statement from the filter class?
+
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // If we have a sword, allocates the global $arr_swordPhrasesTableField
+
+    if ($this->pObj->arr_swordPhrases && $this->pObj->csvSearch)
+    {
+      $arrSearchFields = explode(',', $this->pObj->csvSearch);
+      foreach ($arrSearchFields as $arrSearchField)
+      {
+        list($str_before_as, $str_behind_as) = explode(' AS ', $arrSearchField);
+        list($table, $field)                 = explode('.', $str_before_as);
+        $tableField                          = trim($table).'.'.trim($field);
+        foreach ($this->pObj->arr_swordPhrases as $sword)
+        {
+          $this->pObj->arr_swordPhrasesTableField[$tableField][] = $sword;
+        }
+      }
+    }
+    // If we have a sword, allocates the global $arr_swordPhrasesTableField
+
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // Get SWORD, AND WHERE and JOINS
+
+    if ($view == 'list')
+    {
+      $whereSword = $this->whereSearch();
+    }
+    $andWhere       = $this->andWhere();
+    $arr_result     = $this->get_joins();
+    $str_full_join  = $arr_result['data']['full_join'];
+    unset($arr_result);
+    // Get SWORD, AND WHERE and JOINS
+
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // Add a FULL JOIN
+
+    if ($str_full_join != '')
+    {
+      $whereClause .= ' '.$str_full_join;
+    }
+    // Add a FULL JOIN
+
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // Add an AND WHERE from TypoScript
+
+    if ($andWhere != '')
+    {
+      $whereClause .= ' AND '.$andWhere;
+    }
+    // Add an AND WHERE from TypoScript
+
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // Process depending on the view (LIST || SINGLE)
+
+    switch($view)
+    {
+      case('single'):
+        // Add the uid of the choosen record
+        //$whereClause .= ' AND '.$this->pObj->arrLocalTable['uid'].' = '.$this->pObj->piVars['showUid'];
+        $whereClause .= $this->pObj->objLocalise->localisationSingle_where($this->pObj->localTable);
+        break;
+      case('list'):
+        // Add the search clause, if there is a search (sword)
+        if ($whereSword != '')
+        {
+          $whereClause .= ' '.$whereSword;
+        }
+        break;
+    }
+    // Process depending on the view (LIST || SINGLE)
+
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // Add pid IN list
+
+    $str_pidStatement = $this->str_andWherePid($this->pObj->localTable);
+    // Do we have a showUid not for the local table but for the foreign table? 3.3.3
+
+    if (strpos($whereClause, $str_pidStatement) === false)
+    {
+      $whereClause = $whereClause." AND ".$str_pidStatement;
+    }
+    // Add pid IN list
+
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // BUGFIX
+
+    // #11430, cweise, 101219
+    //if (strpos(Clause, " AND ") == 0)
+    if (substr(ltrim($whereClause), 0, 4) == 'AND ')
+    {
+      //$whereClause = substr($whereClause, strlen(" AND"), strlen($whereClause));
+      $whereClause = substr(ltrim($whereClause), 3);
+    }
+    // BUGFIX
+
+
+    //////////////////////////////////////////////////////////////////////////
+    //
+    // DRS - Development Reporting System
+
+// 3.3.7
+    // Human readable format
+    #10111
+    $hr_whereClause = str_replace(',', ', ', $whereClause);
+    if ($this->pObj->b_drs_sql)
+    {
+      t3lib_div::devLog('[INFO/SQL] WHERE '.$hr_whereClause, $this->pObj->extKey, 0);
+      t3lib_div::devlog('[HELP/SQL] Change it? Use views.'.$viewWiDot.$mode.'.override.where', $this->pObj->extKey, 1);
+    }
+    // DRS - Development Reporting System
+
+    return $whereClause;
+
   }
 
 
@@ -1355,11 +1436,11 @@ class tx_browser_pi1_sql_auto
 
 
 
-/***********************************************
-*
-* SQL relation building WHERE
-*
-**********************************************/
+    /***********************************************
+    *
+    * WHERE helper
+    *
+    **********************************************/
 
 
     /**
@@ -1611,219 +1692,6 @@ class tx_browser_pi1_sql_auto
 
     return $str_return;
     // RETURN andWhere
-
-  }
-
-
-
-
-
-
-
-
-
-
-  /**
- * Relation method: Building the whole where clause
- *
- * @return	string		FALSE or the SQL-where-clause
- */
-  function whereClause()
-  {
-
-    $conf = $this->pObj->conf;
-    $mode = $this->pObj->piVar_mode;
-    $view = $this->pObj->view;
-
-    $viewWiDot    = $view.'.';
-
-
-
-// 3.3.7
-    ////////////////////////////////////////////////////////////////////
-    //
-    // RETURN in case of override.where
-
-    if($conf['views.'][$viewWiDot][$mode.'.']['override.']['where'])
-    {
-      $where = $this->pObj->conf_sql['where'];
-      if ($this->pObj->b_drs_sql)
-      {
-        t3lib_div::devLog('[INFO/SQL] override.where is true. views.'.$viewWiDot.$mode.'.where will be ignored!', $this->pObj->extKey, 0);
-        t3lib_div::devLog('[INFO/SQL] all andWhere configuration will be ignored too!', $this->pObj->extKey, 0);
-        t3lib_div::devLog('[INFO/SQL] WHERE '.$where, $this->pObj->extKey, 0);
-      }
-      return $where;
-    }
-    // RETURN in case of override.where
-// 3.3.7
-
-
-
-    $whereClause  = false;
-
-
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // Get enableFields like hiddden, deleted, starttime ... only for the localTable
-
-    $str_enablefields = $this->str_enableFields($this->pObj->localTable);
-    // #11429, cweiske, 101219
-    //if (strpos($whereClause, $str_enablefields) === false)
-    if ($str_enablefields !== '' && strpos($whereClause, $str_enablefields) === false)
-    {
-      $whereClause = $whereClause." AND ".$str_enablefields;
-    }
-    // Get enableFields like hiddden, deleted, starttime ... only for the localTable
-
-
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Add localisation fields
-
-    $str_local_where = $this->pObj->objLocalise->localisationFields_where($this->pObj->localTable);
-    if ($str_local_where)
-    {
-      $whereClause      = $whereClause." AND ".$str_local_where;
-    }
-    // Add localisation fields
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Is there a andWhere statement from the filter class?
-    if ( is_array( $this->pObj->arr_andWhereFilter ) )
-    {
-      $str_andFilter  = implode(" AND ", $this->pObj->arr_andWhereFilter);
-      $whereClause    = $whereClause." AND ".$str_andFilter;
-    }
-      // Is there a andWhere statement from the filter class?
-
-
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // If we have a sword, allocates the global $arr_swordPhrasesTableField
-
-    if ($this->pObj->arr_swordPhrases && $this->pObj->csvSearch)
-    {
-      $arrSearchFields = explode(',', $this->pObj->csvSearch);
-      foreach ($arrSearchFields as $arrSearchField)
-      {
-        list($str_before_as, $str_behind_as) = explode(' AS ', $arrSearchField);
-        list($table, $field)                 = explode('.', $str_before_as);
-        $tableField                          = trim($table).'.'.trim($field);
-        foreach ($this->pObj->arr_swordPhrases as $sword)
-        {
-          $this->pObj->arr_swordPhrasesTableField[$tableField][] = $sword;
-        }
-      }
-    }
-    // If we have a sword, allocates the global $arr_swordPhrasesTableField
-
-
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // Get SWORD, AND WHERE and JOINS
-
-    if ($view == 'list')
-    {
-      $whereSword = $this->whereSearch();
-    }
-    $andWhere       = $this->andWhere();
-    $arr_result     = $this->get_joins();
-    $str_full_join  = $arr_result['data']['full_join'];
-    unset($arr_result);
-    // Get SWORD, AND WHERE and JOINS
-
-
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // Add a FULL JOIN
-
-    if ($str_full_join != '')
-    {
-      $whereClause .= ' '.$str_full_join;
-    }
-    // Add a FULL JOIN
-
-
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // Add an AND WHERE from TypoScript
-
-    if ($andWhere != '')
-    {
-      $whereClause .= ' AND '.$andWhere;
-    }
-    // Add an AND WHERE from TypoScript
-
-
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // Process depending on the view (LIST || SINGLE)
-
-    switch($view)
-    {
-      case('single'):
-        // Add the uid of the choosen record
-        //$whereClause .= ' AND '.$this->pObj->arrLocalTable['uid'].' = '.$this->pObj->piVars['showUid'];
-        $whereClause .= $this->pObj->objLocalise->localisationSingle_where($this->pObj->localTable);
-        break;
-      case('list'):
-        // Add the search clause, if there is a search (sword)
-        if ($whereSword != '')
-        {
-          $whereClause .= ' '.$whereSword;
-        }
-        break;
-    }
-    // Process depending on the view (LIST || SINGLE)
-
-
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // Add pid IN list
-
-    $str_pidStatement = $this->str_andWherePid($this->pObj->localTable);
-    // Do we have a showUid not for the local table but for the foreign table? 3.3.3
-
-    if (strpos($whereClause, $str_pidStatement) === false)
-    {
-      $whereClause = $whereClause." AND ".$str_pidStatement;
-    }
-    // Add pid IN list
-
-
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // BUGFIX
-
-    // #11430, cweise, 101219
-    //if (strpos(Clause, " AND ") == 0)
-    if (substr(ltrim($whereClause), 0, 4) == 'AND ')
-    {
-      //$whereClause = substr($whereClause, strlen(" AND"), strlen($whereClause));
-      $whereClause = substr(ltrim($whereClause), 3);
-    }
-    // BUGFIX
-
-
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Development Reporting System
-
-// 3.3.7
-    // Human readable format
-    #10111
-    $hr_whereClause = str_replace(',', ', ', $whereClause);
-    if ($this->pObj->b_drs_sql)
-    {
-      t3lib_div::devLog('[INFO/SQL] WHERE '.$hr_whereClause, $this->pObj->extKey, 0);
-      t3lib_div::devlog('[HELP/SQL] Change it? Use views.'.$viewWiDot.$mode.'.override.where', $this->pObj->extKey, 1);
-    }
-    // DRS - Development Reporting System
-
-    return $whereClause;
 
   }
 
@@ -2589,6 +2457,108 @@ class tx_browser_pi1_sql_auto
   ###LIMIT###
 ';
 
+  }
+
+
+  /**
+   * die_ifOverrideSelect( ): Dies if an override.select is defined
+   *
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function die_ifOverrideSelect( )
+  {
+      // RETURN : any override.select isn't defined
+    if( ! isset ( $this->conf_view['override.']['select'] ) )
+    {
+      return;
+    }
+      // RETURN : any override.select isn't defined
+
+      // DRS
+    if( $this->pObj->b_drs_sql )
+    {
+      $prompt = $this->conf_path . 'override.select is true. ' .
+                $this->conf_path .'select will be ignored!';
+      t3lib_div::devLog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompr = 'SELECT ' . $select;
+      t3lib_div::devLog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+
+      // DRS
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Index browser should handle override.select.';
+      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+    }
+      // DRS
+
+    $prompt = '<h1>
+                  override.select
+                </h1>
+                <p>
+                  ' .$this->conf_path . 'override.select is used.<br />
+                  But TYPO3-Browser 4.0 doesn\'t support this TypoScript property now.<br />
+                  <br />
+                  Sorry.
+                </p>';
+    die ( $prompt );
+   }
+
+
+
+  /**
+   * init_class_localAndForeignTables( ): 
+   *
+   * @param   string		$type         : select, from, where, orderBy, groupBy
+   * @param   string		$csvStatement : current SQL statement
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function init_class_localAndForeignTables( $type, $csvStatement )
+  {
+    $conf       = $this->conf;
+    $mode       = $this->piVar_mode;
+    $view       = $this->view;
+    $conf_path  = $this->conf_path;
+    $conf_view  = $this->conf_view;
+
+      // Move csvStatement to an array
+    $arrStatement = $this->pObj->objZz->getCSVasArray( $csvStatement );
+
+    $prevTable = null;
+    foreach( $arrStatement as $tableField)
+    {
+      list( $table ) = explode( '.', $tableField );
+      if( $table != $prevTable )
+      {
+        $arr_test[]['select']['table'] = $table;
+      }
+      $prevTable = $table;
+    }
+    var_dump( __METHOD__, __LINE__, $arr_test );
+  }
+
+
+   
+  /**
+   * zz_setToRealTableNames( ):
+   *
+   * @return	string
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function zz_setToRealTableNames( $csvStatement )
+  {
+      // Move csvStatement to an array
+    $arrStatement = $this->pObj->objZz->getCSVasArray( $csvStatement );
+      // Clean up: remove all expressions and aliases
+    $arrStatement = $this->pObj->objSqlFun->expressionAndAliasToTable( $arrStatement );
+      // Implode array to a csv string
+    $csvStatement = implode( ', ', $arrStatement );
+
+    return $csvStatement;
   }
 
 
