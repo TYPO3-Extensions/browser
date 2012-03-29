@@ -1913,7 +1913,16 @@ class tx_browser_pi1_filter {
                                     );
       // Get query
       // Execute query
-    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+//    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+//                                    (
+//                                      $select,
+//                                      $from,
+//                                      $where,
+//                                      $groupBy,
+//                                      $orderBy,
+//                                      $limit
+//                                    );
+    $res = $this->pObj->objSqlFun->exec_SELECTquery
                                     (
                                       $select,
                                       $from,
@@ -1994,7 +2003,16 @@ class tx_browser_pi1_filter {
                                     );
       // Get query
       // Execute query
-    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+//    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+//                                    (
+//                                      $select,
+//                                      $from,
+//                                      $where,
+//                                      $groupBy,
+//                                      $orderBy,
+//                                      $limit
+//                                    );
+    $res = $this->pObj->objSqlFun->exec_SELECTquery
                                     (
                                       $select,
                                       $from,
@@ -2065,7 +2083,16 @@ class tx_browser_pi1_filter {
                                     );
       // Get query
       // Execute query
-    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+//    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+//                                    (
+//                                      $select,
+//                                      $from,
+//                                      $where,
+//                                      $groupBy,
+//                                      $orderBy,
+//                                      $limit
+//                                    );
+    $res = $this->pObj->objSqlFun->exec_SELECTquery
                                     (
                                       $select,
                                       $from,

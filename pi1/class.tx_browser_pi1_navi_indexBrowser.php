@@ -1119,15 +1119,24 @@ class tx_browser_pi1_navi_indexBrowser
                 $limit
               );
       // Execute query
-    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
+//    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+//              (
+//                $select,
+//                $from,
+//                $where,
+//                $groupBy,
+//                $orderBy,
+//                $limit
+//              );
+    $res = $this->pObj->objSqlFun->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
 
       // Error management
     $error = $GLOBALS['TYPO3_DB']->sql_error( );
@@ -1310,15 +1319,24 @@ class tx_browser_pi1_navi_indexBrowser
                 $limit
               );
       // Execute query
-    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
+//    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+//              (
+//                $select,
+//                $from,
+//                $where,
+//                $groupBy,
+//                $orderBy,
+//                $limit
+//              );
+    $res = $this->pObj->objSqlFun->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
 
       // Error management
     $error = $GLOBALS['TYPO3_DB']->sql_error( );

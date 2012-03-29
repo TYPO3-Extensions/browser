@@ -582,6 +582,73 @@ class tx_browser_pi1_sql_functions
 
 
 
+  /**
+ * getAlias( ) : Returns the part behind the AS, if table.field has an AS ...
+ *                  If not, it returns the table.field
+ *
+ * @param	string		$tableFieldWiAlias  : table.field with an AS like "news.uid AS 'news.uid'"
+ * @return	string		$alias              :	Part behind the AS. If there is no AS, it returns $str_tablefield
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function sql_query( $query )
+  {
+    if( $this->pObj->drs_sqlPromptsOnly )
+    {
+      var_dump( $query );
+      return;
+    }
+
+    $res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
+    return $res;
+  }
+
+
+
+  /**
+ * getAlias( ) : Returns the part behind the AS, if table.field has an AS ...
+ *                  If not, it returns the table.field
+ *
+ * @param	string		$tableFieldWiAlias  : table.field with an AS like "news.uid AS 'news.uid'"
+ * @return	string		$alias              :	Part behind the AS. If there is no AS, it returns $str_tablefield
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function exec_SELECTquery( $select, $from, $where, $groupBy, $orderBy, $limit )
+  {
+    if( $this->pObj->drs_sqlPromptsOnly )
+    {
+        // Get query
+      $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+                                      (
+                                        $select,
+                                        $from,
+                                        $where,
+                                        $groupBy,
+                                        $orderBy,
+                                        $limit
+                                      );
+
+        // Get query
+      return;
+    }
+
+      // Execute query
+    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );      var_dump( $query );
+
+    return $res;
+  }
+
+
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_functions.php']) {
