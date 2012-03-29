@@ -212,9 +212,22 @@ class tx_browser_pi1_viewlist
 var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements );
 var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple );
 
-      // Get rows
-    $this->rows_listViewSqlRes( );
+      // Building SQL query and get the SQL result
+    $arr_return = $this->rows_listViewSqlRes( );
+    if( $arr_return['error']['status'] )
+    {
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $content = $arr_return['error']['header'] . $arr_return['error']['prompt'];
+      return $content;
+    }
+    $res = $arr_return['data']['res'];
+      // Building SQL query and get the SQL result
+    
       // Set rows
+    $this->rows_listViewFromRes( $res );
+var_dump( __METHOD__, __LINE__, $this->pObj->rows );
+
 
 
 
@@ -492,11 +505,73 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple 
 
 
   /**
-   * rows_listViewSqlRes( ): Building the SQL query
+   * rows_listViewSqlRes( ): Building the SQL query, returns the SQL result.
    *
-   * @return	array
-   * @version 3.9.8
-   * @since 1.0.0
+   * @return	array   $arr_return: Contains the SQL res or an error message
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function rows_listViewFromRes( $res )
+  {
+    $conf_view = $this->conf_view;
+
+
+      // Get aliases
+    $arr_table_realnames = $conf_view['aliases.']['tables.'];
+
+      // IF aliases
+    if( is_array( $arr_table_realnames ) )
+    {
+      $i_row = 0;
+      while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+      {
+        foreach( $row as $str_tablealias_field => $value )
+        {
+          $arr_tablealias_field = explode( '.', $str_tablealias_field ); // table_1.sv_name
+          $str_tablealias       = $arr_tablealias_field[0];              // table_1
+          $str_field            = $arr_tablealias_field[1];              // sv_name
+          $str_table            = $arr_table_realnames[$str_tablealias]; // tx_civserv_service
+          $str_table_field      = $str_table . '.' . $str_field;         // tx_civserv_service.sv_name
+          if( $str_table_field == '.' )
+          {
+            $str_table_field = $str_tablealias_field;
+          }
+          $rows[$i_row][$str_table_field] = $row[$str_tablealias_field];
+        }
+        $i_row++;
+      }
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after: We have aliases.' );
+    }
+      // IF aliases
+
+      // IF no aliases
+    if( ! is_array( $arr_table_realnames ) )
+    {
+      while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+      {
+        $rows[] = $row;
+      }
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after: We haven\'t aliases.' );
+    }
+      // IF no aliases
+
+    $this->pObj->rows = $rows;
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after building rows.' );
+      // Building $rows
+  }
+
+
+
+  /**
+   * rows_listViewSqlRes( ): Building the SQL query, returns the SQL result.
+   *
+   * @return	array   $arr_return: Contains the SQL res or an error message 
+   * @version 3.9.12
+   * @since   3.9.12
    */
   private function rows_listViewSqlRes( )
   {
@@ -509,7 +584,6 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple 
     $groupBy  = null;
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
     $limit    = $this->pObj->objSqlInit->statements['listView']['limit'];
-$limit    = '0,20';
       // SQL query array
 
       // #9917: Selecting a random sample from a set of rows
@@ -602,14 +676,10 @@ $limit    = '0,20';
     }
       // DRS - Performance
 
-var_dump( __METHOD__, __LINE__, $query, $sMilliseconds, $tt_end, $tt_start );
-
       // Error management
     if( $error )
     {
-      $this->pObj->objSqlFun_3x->query = $query;
-      $this->pObj->objSqlFun_3x->error = $error;
-      return $this->pObj->objSqlFun_3x->prompt_error( );
+      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
     }
       // Error management
 
@@ -623,9 +693,8 @@ var_dump( __METHOD__, __LINE__, $query, $sMilliseconds, $tt_end, $tt_start );
       // DRS - Development Reporting System
       // Execute the SQL query
 
-
-    $this->res = $res;
-    return false;
+    $arr_return['data']['res'] = $res;
+    return $arr_return;
 
   }
 
