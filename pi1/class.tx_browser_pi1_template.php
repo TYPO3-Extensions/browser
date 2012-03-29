@@ -1256,9 +1256,13 @@ class tx_browser_pi1_template
         if( ! $this->ignore_empty_rows_rule )
         {
           // Allocates the collected rows to the current group
-          $arr_htmlGroupby[$int_groupCounter] = $this->pObj->cObj->substituteSubpart(
+          $arr_htmlGroupby[$int_groupCounter] = $this->pObj->cObj->substituteSubpart
+                                                (
                                                   $arr_htmlGroupby[$int_groupCounter],
-                                                  '###LISTBODY###', $tmpl_rows, true);
+                                                  '###LISTBODY###',
+                                                  $tmpl_rows,
+                                                  true
+                                                );
           $str_htmlGroupby = implode("\n",$arr_htmlGroupby);
           $template = $this->pObj->cObj->substituteSubpart($template, '###GROUPBY###', $str_htmlGroupby, true);
         }

@@ -320,7 +320,7 @@ class tx_browser_pi1_viewlist
 
 //var_dump( __METHOD__, __LINE__, $rows );
     $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
-
+    $this->content = $content;
 
 
 
