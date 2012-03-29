@@ -209,10 +209,11 @@ class tx_browser_pi1_viewlist
       // #29370, 110831, dwildt+
 
 
-var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->statements );
+var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements );
 var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple );
 
       // Get rows
+    $this->rows_listViewSqlRes( );
       // Set rows
 
 
@@ -502,12 +503,12 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple 
     $conf_view = $this->conf_view;
 
       // SQL query array
-    $select   = $this->pObj->objSqlAut->statements['listView']['select'];
-    $from     = $this->pObj->objSqlAut->statements['listView']['from'];
-    $where    = $this->pObj->objSqlAut->statements['listView']['where'];
+    $select   = $this->pObj->objSqlInit->statements['listView']['select'];
+    $from     = $this->pObj->objSqlInit->statements['listView']['from'];
+    $where    = $this->pObj->objSqlInit->statements['listView']['where'];
     $groupBy  = null;
     $orderBy = false;
-    $limit    = $this->pObj->objSqlAut->statements['listView']['limit'];
+    $limit    = $this->pObj->objSqlInit->statements['listView']['limit'];
       // SQL query array
 
       // #9917: Selecting a random sample from a set of rows
