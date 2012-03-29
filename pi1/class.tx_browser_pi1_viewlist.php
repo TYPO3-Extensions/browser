@@ -773,7 +773,7 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements, $this->pObj
     $select   = $this->pObj->objSqlInit->statements['listView']['select'];
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
-    if( $this->pObj->objFltr4x->var_aFilterIsSelected( ) )
+    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
     {
       $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
     }
