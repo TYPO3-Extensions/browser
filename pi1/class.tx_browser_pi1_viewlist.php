@@ -204,16 +204,17 @@ class tx_browser_pi1_viewlist
         break;
           // CASE no csv
     }
+    $content = $this->content;
       // Get template for csv
       // csv export versus list view
       // #29370, 110831, dwildt+
 
 
-var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements );
-var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple );
+//var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements );
+//var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple );
 
       // Building SQL query and get the SQL result
-    $arr_return = $this->rows_listViewSqlRes( );
+    $arr_return = $this->rows_sqlRes( );
     if( $arr_return['error']['status'] )
     {
         // Prompt the expired time to devlog
@@ -225,8 +226,105 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple 
       // Building SQL query and get the SQL result
     
       // Set rows
-    $this->rows_listViewFromRes( $res );
-var_dump( __METHOD__, __LINE__, $this->pObj->rows );
+    $this->rows_fromSqlRes( $res );
+
+      // DRS
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Synonyms aren\'t supported any longer! Refer it to the release notes.';
+      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+    }
+      // DRS
+
+      // Consolidate localisation
+    $rows = $this->rows_consolidateLL( $rows );
+      // Consolidate children
+    $rows = $this->rows_consolidateChildren( $rows );
+    $this->pObj->rows = $rows;
+
+      // Implement the hook rows_filter_values
+    $this->hook_afterConsolidatetRows( );
+    $rows = $this->pObj->rows;
+
+      // Order the rows
+    $this->pObj->objMultisort->multisort_rows( );
+    $rows = $this->pObj->rows;
+
+      // Ordering the children rows
+    $rows = $this->pObj->objMultisort->multisort_mm_children( $rows );
+    $this->pObj->rows = $rows;
+
+      // DRS - :TODO:
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Hierarchical order isn\'t supported any longer! Refer it to the release notes.';
+      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+    }
+      // DRS - :TODO:
+
+      // Delete fields, which were added whily runtime
+    $arr_return = $this->pObj->objSqlFun_3x->rows_with_cleaned_up_fields( $rows );
+    $rows       = $arr_return['data']['rows'];
+    unset($arr_return);
+    $this->pObj->rows = $rows;
+
+      // DRS - display first row
+    $this->drs_firstRow( );
+
+      // Set the global $arrLinkToSingle
+    $this->set_arrLinkToSingle( );
+
+
+    
+      /////////////////////////////////////////////////////////////////
+      //
+      // Extension pi5: +Browser Calendar
+
+      // Will executed in case, that the Browser is extended with the Browser Calendar user Interface
+    $arr_result   = $this->pObj->objCal->cal( $rows, $content );
+    $bool_success = $arr_result['success'];
+    if( $bool_success )
+    {
+      $rows         = $arr_result['rows'];
+      $content     = $arr_result['template'];
+      $this->pObj->objTemplate->ignore_empty_rows_rule = true;
+      if ($this->pObj->b_drs_cal || $this->pObj->b_drs_templating)
+      {
+        t3lib_div::devLog('[INFO/TEMPLATING/CAL/UI]: +Browser Calendar User Interface is loaded.', $this->pObj->extKey, 0);
+      }
+      if ($this->pObj->b_drs_warn)
+      {
+        t3lib_div::devLog('[WARN/TEMPLATING/CAL/UI]: +Browser Calendar set ignore_empty_rows_rule to true!', $this->pObj->extKey, 2);
+      }
+    }
+    $this->pObj->rows = $rows;
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objCal->cal( )' );
+      // Extension pi5: +Browser Calendar
+
+
+
+      /////////////////////////////////////
+      //
+      // record browser
+
+    $arr_result = $this->pObj->objNavi->recordbrowser_set_session_data( $rows );
+    if ($arr_result['error']['status'])
+    {
+      $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
+      return $this->pObj->pi_wrapInBaseClass( $prompt );
+    }
+      // record browser
+
+
+
+    $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
+
+
+
+
+
+//    var_dump( __METHOD__, __LINE__, $this->pObj->rows );
 
 
 
@@ -505,75 +603,178 @@ var_dump( __METHOD__, __LINE__, $this->pObj->rows );
 
 
   /**
-   * rows_listViewSqlRes( ): Building the SQL query, returns the SQL result.
+   * rows_consolidateLL( ): Consolidate localisation. Returns consolidated rows.
    *
-   * @return	array   $arr_return: Contains the SQL res or an error message
+   * @param   array   $rows  : consolidated rows
+   * @return	void
    * @version 3.9.12
    * @since   3.9.12
    */
-  private function rows_listViewFromRes( $res )
+  private function rows_consolidateLL( $rows )
   {
-    $conf_view = $this->conf_view;
+      // RETURN : SQL manual mode
+    if( $this->pObj->b_sql_manual )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'Manual SQL mode: Rows didn\'t get any localisation consolidation.';
+        t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
+      }
+      return $rows;
+    }
+      // RETURN : SQL manual mode
 
+      // Consolidate Localisation
+    $rows = $this->pObj->objLocalise->consolidate_rows( $rows, $this->pObj->localTable );
+
+    return $rows;
+  }
+
+
+
+  /**
+   * rows_consolidateChildren( ): Consolidate children, returns consolidated rows.
+   *
+   * @param   array   $rows  : consolidated rows
+   * @return	void
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function rows_consolidateChildren( $rows )
+  {
+      // RETURN : SQL manual mode
+    if( $this->pObj->b_sql_manual )
+    {
+      if( $this->pObj->b_drs_localisation )
+      {
+        $prompt = 'Manual SQL mode: Rows didn\'t get any consolidation for children.';
+        t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
+      }
+      return $rows;
+    }
+      // RETURN : SQL manual mode
+
+      // Consolidate children
+    $arr_return       = $this->pObj->objConsolidate->consolidate( $rows );
+    $rows             = $arr_return['data']['rows'];
+//    $int_rows_wo_cons = $arr_return['data']['rows_wo_cons'];
+//    $int_rows_wi_cons = $arr_return['data']['rows_wi_cons'];
+
+    return $rows;
+
+  }
+
+  
+
+  /**
+   * rows_sqlRes( ): Move SQL result to rows and set the global var $rows.
+   *
+   * @param   array   $res  : current SQL result
+   * @return	void
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function rows_fromSqlRes( $res )
+  {
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'start' );
+
+    $conf_view = $this->conf_view;
 
       // Get aliases
     $arr_table_realnames = $conf_view['aliases.']['tables.'];
 
-      // IF aliases
-    if( is_array( $arr_table_realnames ) )
+      // SWITCH case aliases
+    switch( true )
     {
-      $i_row = 0;
-      while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
-      {
-        foreach( $row as $str_tablealias_field => $value )
-        {
-          $arr_tablealias_field = explode( '.', $str_tablealias_field ); // table_1.sv_name
-          $str_tablealias       = $arr_tablealias_field[0];              // table_1
-          $str_field            = $arr_tablealias_field[1];              // sv_name
-          $str_table            = $arr_table_realnames[$str_tablealias]; // tx_civserv_service
-          $str_table_field      = $str_table . '.' . $str_field;         // tx_civserv_service.sv_name
-          if( $str_table_field == '.' )
-          {
-            $str_table_field = $str_tablealias_field;
-          }
-          $rows[$i_row][$str_table_field] = $row[$str_tablealias_field];
-        }
-        $i_row++;
-      }
-        // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after: We have aliases.' );
+      case( is_array( $arr_table_realnames ) ):
+        $rows = $this->rows_getCaseAliases( $res );
+        break;
+      case( ! is_array( $arr_table_realnames ) ):
+      default:
+        $rows = $this->rows_getDefault( $res );
+        break;
     }
-      // IF aliases
+      // SWITCH case aliases
 
-      // IF no aliases
-    if( ! is_array( $arr_table_realnames ) )
-    {
-      while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
-      {
-        $rows[] = $row;
-      }
-        // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after: We haven\'t aliases.' );
-    }
-      // IF no aliases
+      // SQL Free Result
+    $GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
 
+      // Set global var
     $this->pObj->rows = $rows;
 
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after building rows.' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'stop' );
       // Building $rows
   }
 
 
 
   /**
-   * rows_listViewSqlRes( ): Building the SQL query, returns the SQL result.
+   * rows_getCaseAliases( ):  Move SQL result to rows, depending on
+   *                          values from aliases.tables
+   *
+   * @param   array   $res  : current SQL result
+   * @return	array   $rows : the rows
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function rows_getCaseAliases( $res )
+  {
+    $conf_view            = $this->conf_view;
+    $arr_table_realnames  = $conf_view['aliases.']['tables.'];
+
+    $i_row = 0;
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+      foreach( $row as $str_tablealias_field => $value )
+      {
+        $arr_tablealias_field = explode( '.', $str_tablealias_field ); // table_1.sv_name
+        $str_tablealias       = $arr_tablealias_field[0];              // table_1
+        $str_field            = $arr_tablealias_field[1];              // sv_name
+        $str_table            = $arr_table_realnames[$str_tablealias]; // tx_civserv_service
+        $str_table_field      = $str_table . '.' . $str_field;         // tx_civserv_service.sv_name
+        if( $str_table_field == '.' )
+        {
+          $str_table_field = $str_tablealias_field;
+        }
+        $rows[$i_row][$str_table_field] = $row[$str_tablealias_field];
+      }
+      $i_row++;
+    }
+
+    return $rows;
+  }
+
+
+
+  /**
+   * rows_getDefault( ): Move SQL result to rows
+   *
+   * @param   array   $res  : current SQL result
+   * @return	array   $rows : the rows
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function rows_getDefault( $res )
+  {
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+      $rows[] = $row;
+    }
+
+    return $rows;
+  }
+
+
+
+  /**
+   * rows_sqlRes( ): Building the SQL query, returns the SQL result.
    *
    * @return	array   $arr_return: Contains the SQL res or an error message 
    * @version 3.9.12
    * @since   3.9.12
    */
-  private function rows_listViewSqlRes( )
+  private function rows_sqlRes( )
   {
     $conf_view = $this->conf_view;
 
@@ -891,6 +1092,120 @@ var_dump( __METHOD__, __LINE__, $this->pObj->rows );
 
 
 
+
+
+
+
+ /***********************************************
+  *
+  * DRS
+  *
+  **********************************************/
+
+
+
+  /**
+   * drs_firstRow( ): Implement the hook rows_filter_values
+   *
+   * @return	void
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function drs_firstRow( )
+  {
+    if( ! $this->pObj->b_drs_sql )
+    {
+      return;
+    }
+
+    if( count ( ( array ) $this->pObj->rows ) <= 0 )
+    {
+      return;
+    }
+
+    reset( $this->pObj->rows );
+    $firstKey   = key( $this->pObj->rows );
+    $firstRow   = $rows[$firstKey];
+
+    $prompt = 'Result of the first row: ' . PHP_EOL;
+    $prompt = $prompt . var_export( $firstRow, true );
+    t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * Hooks
+  *
+  **********************************************/
+
+
+
+  /**
+   * hook_afterConsolidatetRows( ): Implement the hook rows_filter_values
+   *
+   * @return	void
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  private function hook_afterConsolidatetRows( )
+  {
+      // DRS
+    if( $this->pObj->b_drs_hooks )
+    {
+        // Any foreign extension is using this hook
+      if( ! is_array( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] ) )
+      {
+        $prompt = 'Any third party extension doesn\'t use the HOOK rows_filter_values.';
+        t3lib_div::devlog( '[INFO/HOOK] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'See Tutorial Hooks: http://typo3.org/extensions/repository/view/browser_tut_hooks_en/current/';
+        t3lib_div::devlog( '[HELP/HOOK] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+        // Any foreign extension is using this hook
+
+        // One foreign extension is using this hook at least
+      if( is_array( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] ) )
+      {
+        $i_extensions = count( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] );
+        $arr_ext      = array_values( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] );
+        $csv_ext      = implode( ',', $arr_ext );
+        if( $i_extensions == 1 )
+        {
+          $prompt = 'The third party extension ' . $csv_ext . ' uses the HOOK rows_filter_values.';
+          t3lib_div::devlog( '[INFO/HOOK] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = 'In case of errors or strange behaviour please check this extension!';
+          t3lib_div::devlog( '[HELP/HOOK] ' . $prompt, $this->pObj->extKey, 1 );
+        }
+        if( $i_extensions > 1 )
+        {
+          $prompt = 'The third party extensions ' . $csv_ext . ' use the HOOK rows_filter_values.';
+          t3lib_div::devlog( '[INFO/HOOK] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = 'In case of errors or strange behaviour please check this extenions!';
+          t3lib_div::devlog( '[HELP/HOOK] ' . $prompt, $this->pObj->extKey, 1 );
+        }
+      }
+        // One foreign extension is using this hook at least
+    }
+      // DRS
+
+      // Implement the hook
+    if( is_array( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] ) )
+    {
+      $_params = array( 'pObj' => &$this );
+      foreach( ( array ) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] as $_funcRef )
+      {
+        t3lib_div::callUserFunction( $_funcRef, $_params, $this );
+      }
+    }
+      // Implement the hook
+  }
 
 
 

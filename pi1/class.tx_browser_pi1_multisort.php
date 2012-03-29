@@ -93,18 +93,28 @@ class tx_browser_pi1_multisort
 
 
 
-    /**
- * Order the rows depending on csvOrderBy and piVars[sort]
- *
- * @param	array		&$array: Reference to the array with the rows
- * @return	void
- * @version 3.4.5
- */
-  function multisort_rows()
+  /**
+   * multisort_rows( ): Order the rows depending on csvOrderBy and piVars[sort]
+   *
+   * @param	array		&$array: Reference to the array with the rows
+   * @return	void
+   * @version 3.9.12
+   */
+  function multisort_rows( )
   {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
     $view = $this->pObj->view;
+    $conf_view = $this->pObj->conf_view;
+
+      // 120329, dwildt+
+      // RETURN : rows should ordered randomly
+    if( $conf_view['random'] == 1 )
+    {
+      return;
+    }
+      // RETURN : rows should ordered randomly
+      // 120329, dwildt+
 
     $viewWiDot = $view.'.';
 

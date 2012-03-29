@@ -3625,7 +3625,7 @@ class tx_browser_pi1_template
  * @author 	Martin Bless
  * @internal 	#12723, mbless, 110310
  */
-  function hook_template_elements_transformed() {
+  function hook_template_elements_transformed( ) {
       // debug($this->_elementsTransformed,'$this->_elementsTransformed',__LINE__,__FILE__);
       // debug($this->_elementsBoolSubstitute,'$this->_elementsBoolSubstitute',__LINE__,__FILE__);
     if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['BR_TemplateElementsTransformedHook'])) {
