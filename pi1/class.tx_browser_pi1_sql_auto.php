@@ -178,7 +178,7 @@ class tx_browser_pi1_sql_auto
                       $this->pObj->pi_getLL( 'error_sql_h1' ).
                     '</h1>';
       $str_prompt = '<p style="color:red; font-weight:bold;">' .
-                      $this->pObj->pi_getLL('error_value_empty') .
+                      'SELECT-' . $this->pObj->pi_getLL('error_value_empty') .
                     '</p>';
       $arr_return['error']['status'] = true;
       $arr_return['error']['header'] = $str_header;
@@ -211,7 +211,7 @@ class tx_browser_pi1_sql_auto
                       $this->pObj->pi_getLL( 'error_sql_h1' ) .
                     '</h1>';
       $str_prompt = '<p style="color:red; font-weight:bold;">' .
-                      $this->pObj->pi_getLL( 'error_value_empty' ) .
+                      'ORDER BY-' . $this->pObj->pi_getLL( 'error_value_empty' ) .
                     '</p>';
       $arr_return['error']['status'] = true;
       $arr_return['error']['header'] = $str_header;
