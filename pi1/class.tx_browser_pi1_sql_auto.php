@@ -167,7 +167,6 @@ class tx_browser_pi1_sql_auto
  */
   public function get_statements( )
   {
-var_dump( __METHOD__, __LINE__ );
       // Add filter tables to class var $statementTables
     $this->init_class_statementTablesByFilter( );
 
@@ -188,7 +187,6 @@ var_dump( __METHOD__, __LINE__ );
     }
       // Get SELECT
 
-var_dump( __METHOD__, __LINE__ );
     $this->zz_loadTCAforAllTables( );
     // Load the TCA for all tables
     foreach( $this->statementTables['all'] as $localForeign => $tables )
@@ -227,7 +225,6 @@ var_dump( __METHOD__, __LINE__ );
     $this->init_class_boolAutorelation( );
     $this->init_class_relations( );
         // Get Relations
-var_dump( __METHOD__, __LINE__ );
 
 
       // Get WHERE and FROM
@@ -1275,7 +1272,6 @@ var_dump( __METHOD__, __LINE__ );
  */
   private function init_class_relations( )
   {
-var_dump( __METHOD__, __LINE__, $this->statementTables );
       // RETURN : autoconfig is switched off
     if ( ! $this->boolAutorelation )
     {
@@ -2381,7 +2377,6 @@ var_dump( __METHOD__, __LINE__, $this->statementTables );
  */
   private function init_class_bLeftJoin( )
   {
-var_dump( __METHOD__, __LINE__, $this->pObj->conf['autoconfig.']['relations.'] );
     switch( true )
     {
       case( $this->pObj->conf['autoconfig.']['relations.']['left_join'] == 1 ):
