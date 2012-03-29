@@ -2193,22 +2193,26 @@ class tx_browser_pi1_sql_auto
                               "   " . $str_enablefields_foreign .
                               "   " . $str_pidStatement ;
             break;
-          case($localTableFieldMaxItems == 2):
-            $str_query_part = "   ( " .
-                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
-                              "     " . $localTableField . " LIKE CONCAT(" . $foreignTableField . ", ',%') OR " .
-                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField .
-                              "   )" .
-                              "   " . $str_enablefields_foreign .
-                              "   " . $str_pidStatement ;
-            break;
+//          case($localTableFieldMaxItems == 2):
+//            $str_query_part = "   ( " .
+//                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
+//                              "     " . $localTableField . " LIKE CONCAT(" . $foreignTableField . ", ',%') OR " .
+//                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField .
+//                              "   )" .
+//                              "   " . $str_enablefields_foreign .
+//                              "   " . $str_pidStatement ;
+//            break;
+//          default:
+//            $str_query_part = "   ( " .
+//                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
+//                              "     " . $localTableField . " LIKE CONCAT(" . $foreignTableField . ", ',%') OR " .
+//                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField . ", ',%') OR " .
+//                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField . ") " .
+//                              "   )" .
+//                              "   " . $str_enablefields_foreign .
+//                              "   " . $str_pidStatement ;
           default:
-            $str_query_part = "   ( " .
-                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
-                              "     " . $localTableField . " LIKE CONCAT(" . $foreignTableField . ", ',%') OR " .
-                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField . ", ',%') OR " .
-                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField . ") " .
-                              "   )" .
+            $str_query_part = "   FIND_IN_SET ( " . $foreignTableField . ", " . $localTableField . " )" .
                               "   " . $str_enablefields_foreign .
                               "   " . $str_pidStatement ;
         }
