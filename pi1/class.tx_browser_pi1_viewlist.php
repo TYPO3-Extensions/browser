@@ -210,7 +210,7 @@ class tx_browser_pi1_viewlist
       // #29370, 110831, dwildt+
 
 
-//var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements );
+var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements );
 //var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple );
 
       // Building SQL query and get the SQL result
