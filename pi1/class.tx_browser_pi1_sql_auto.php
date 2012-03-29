@@ -81,7 +81,7 @@
  * 2378:     private function init_class_bLeftJoin( )
  * 2416:     private function init_class_statementTables( $type, $csvStatement )
  * 2461:     private function init_class_statementTablesByFilter( )
- * 2482:     private function zz_addUid( $type, $csvStatement )
+ * 2482:     private function zz_addUidsToSelect( $type, $csvStatement )
  * 2526:     private function zz_dieIfOverride( $type )
  * 2575:     private function zz_loadTCAforAllTables( )
  * 2597:     private function zz_setToRealTableNames( $csvStatement )
@@ -303,8 +303,7 @@ class tx_browser_pi1_sql_auto
       // Remove all expressions and aliases in the SELECT statement
     $csvSelect = $this->zz_setToRealTableNames( $this->conf_view['select'] );
       // Add table.uid
-    $csvSelect = $this->zz_addUid( 'select', $csvSelect );
-var_dump( __METHOD__, __LINE__, $csvSelect );
+    $csvSelect = $this->zz_addUidsToSelect( 'select', $csvSelect );
       // Add aliases
     $csvSelect = $this->zz_addAliases( $csvSelect );
 
@@ -312,8 +311,8 @@ var_dump( __METHOD__, __LINE__, $csvSelect );
     $this->init_class_statementTables( 'select', $csvSelect );
 
       // Remove foreign tables
-//    $csvSelect = $this->zz_woForeignTables( 'select', $csvSelect );
-var_dump( __METHOD__, __LINE__, $csvSelect );
+      // 120329, Don't remove, because of missing table.uids!
+    //$csvSelect = $this->zz_woForeignTables( 'select', $csvSelect );
 
 
     return $csvSelect;
@@ -2475,7 +2474,7 @@ var_dump( __METHOD__, __LINE__, $csvSelect );
 
 
 /**
- * zz_addUid( ):  Adds table.uid to the given statement, if table.uid isn't
+ * zz_addUidsToSelect( ):  Adds table.uid to the given statement, if table.uid isn't
  *                any element of the given statement.
  *                table is the fist table of the statement.
  *                Adds table.uid to the class var $addedTableFields.
@@ -2523,24 +2522,23 @@ var_dump( __METHOD__, __LINE__, $csvSelect );
     return $statement;
   }
 
+  
 
 /**
- * zz_addUid( ):  Adds table.uid to the given statement, if table.uid isn't
- *                any element of the given statement.
- *                table is the fist table of the statement.
- *                Adds table.uid to the class var $addedTableFields.
+ * zz_addUidsToSelect( ): Adds table.uids to the given statement.
+ *                        Values are taken from the global var
+ *                        $arrConsolidate['addedTableFields'].
  *
- * @param	string		$type         : select, from, where, orderBy, groupBy
- * @param	string		$csvStatement : current SQL statement
- * @return	string		$csvStatement : the statement with the table.uid
+ * @param	string		$csvSelect : current SQL statement
+ * @return	string		$csvSelect : the statement with the table.uid
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function zz_addUid( $type, $csvStatement )
+  private function zz_addUidsToSelect( $csvSelect )
   {
     if( ! is_array( $this->pObj->arrConsolidate['addedTableFields'] ) )
     {
-      return $csvStatement;
+      return $csvSelect;
     }
 
       // Add uid field of each table without uid
@@ -2552,41 +2550,10 @@ var_dump( __METHOD__, __LINE__, $csvSelect );
       list( $table, $field ) = explode( '.', $tableField );
       if( $field == 'uid' )
       {
-        $csvStatement = $csvStatement . ", " . $tableField . " AS '" . $tableField . "'";
+        $csvSelect = $csvSelect . ", " . $tableField . " AS '" . $tableField . "'";
       }
     }
-    return $csvStatement;
-
-      // Get first table of the current statement
-    list( $table ) = explode( '.', $csvStatement );
-
-      // Short var
-    $tableUid = $table . '.uid';
-
-      // Get position of $tableUid
-    $pos = strpos( $csvStatement, $tableUid );
-
-      // RETURN : $tableUid is an element in the given statement
-    if( ! ( $pos === false ) )
-    {
-      return $csvStatement;
-    }
-      // RETURN : $tableUid is an element in the given statement
-
-      // Add table.uid to the end of the statement
-    $csvStatement = $csvStatement . ', ' . $tableUid;
-
-      // RETURN : table.uid is an element of the class var addedTableFields
-    if( in_array( $tableUid, $this->addedTableFields[$type][$table] ) )
-    {
-      return $csvStatement;
-    }
-      // RETURN : table.uid is an element of the class var addedTableFields
-
-      // Add table.uid to the class var addedTableFields
-    $this->addedTableFields[$type][$table][] = $tableUid;
-
-    return $csvStatement;
+    return $csvSelect;
   }
 
 
