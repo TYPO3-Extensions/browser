@@ -1579,12 +1579,12 @@ class tx_browser_pi1_navi_indexBrowser
         break;
       default:
         $andEnableFields = $this->pObj->cObj->enableFields( $table );
-var_dump( __METHOD__, __LINE__, $andEnableFields );
         if( $andEnableFields )
         {
           $where = "1";
         }
         $where  = $where . $andEnableFields;
+        $where  = $where . $this->pObj->objSqlFun->get_andWherePid( $table );
         $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
         if( empty ( $where ) )
         {

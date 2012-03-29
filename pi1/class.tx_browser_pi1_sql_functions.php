@@ -525,6 +525,72 @@ class tx_browser_pi1_sql_functions
 
 
   /**
+   * get_andWherePid( ):  Get the table.pid IN (1,2,3,4) for an
+   *                      and WHERE statement. Statement is with an AND
+   *
+   * @param	string		$table: Name of the current table
+   * @return	string		$andWherePid: statement: table.pid IN (pidlist)
+   */
+  public function get_andWherePid( $table )
+  {
+    $conf       = $this->pObj->conf;
+    $tableField = $table.'.pid';
+    $pidList    = $this->pObj->pidList;
+
+      // IF foreignTable has a pidList in the TypoScript
+    if( isset( $conf['foreignTables.'][$table . '.']['csvPidList'] ) )
+    {
+      $confPidList = $conf['foreignTables.'][$table.'.']['csvPidList'];
+      if ( $this->pObj->b_drs_sql )
+      {
+        $prompt = $table . ' has a pidList in foreignTables.' . $table . '.csvPidList: ' . $confPidList;
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      $int_deep = 0;
+      if( isset( $conf['foreignTables.'][$table.'.']['intDeep'] ) )
+      {
+        $int_deep = $conf['foreignTables.'][$table.'.']['intDeep'];
+        if( $this->pObj->b_drs_sql )
+        {
+          $prompt = 'pidList should be exetended with ' . $int_deep.' levels. See intDeep.';
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+      }
+      if( ! isset($conf['foreignTables.'][$table.'.']['intDeep'] ) )
+      {
+        if( $this->pObj->b_drs_sql )
+        {
+          $prompt = 'pidList shouldn\'t be extended.';
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = 'Change it? Configure foreignTables.' . $table . '.intDeep';
+          t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
+        }
+      }
+      $pidList = $this->pObj->pi_getPidList( $confPidList, $int_deep );
+    }
+      // IF foreignTable has a pidList in the TypoScript
+
+      // IF foreignTable hasn't any pidList in the TypoScript
+    if( ! isset( $conf['foreignTables.'][$table.'.']['csvPidList'] ) )
+    {
+      if( $this->pObj->b_drs_sql )
+      {
+        $prompt = $table . ' hasn\'t any own pidList.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'Change it? Please configure foreignTables.' . $table . '.csvPidList';
+        t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+    }
+      // IF foreignTable hasn't any pidList in the TypoScript
+
+      // RETURN the result
+    $andWherePid = " AND " . $tableField ." IN (" . $pidList .")";
+    return $andWherePid;
+  }
+
+
+
+  /**
    * exec_SELECTquery( ) :  Same as $GLOBALS['TYPO3_DB']->SELECTquery. But if
    *                        class var $dev_sqlPromptsOnly is true, SQL query
    *                        won't executed but prompted in the frontend.
