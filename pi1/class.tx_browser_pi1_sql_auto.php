@@ -64,13 +64,13 @@
  * 1701:     function str_enableFields($realTable)
  *
  *              SECTION: Relation building
- * 1739:     private function init_class_relations_mm_simple( )
+ * 1739:     private function init_class_relations( )
  * 1843:     private function relations_confDRSprompt( )
  * 1920:     private function relations_dontUseFields( )
  * 1973:     private function relations_getForeignTable( $tables, $config, $configPath )
  * 2040:     private function relations_requirements( $table, $config, $configPath )
- * 2142:     private function relations_setMm( $table, $config, $foreignTable )
- * 2202:     private function relations_setSingle( $table, $columnsKey, $foreignTable)
+ * 2142:     private function init_class_relationsMm( $table, $config, $foreignTable )
+ * 2202:     private function init_class_relationsSingle( $table, $columnsKey, $foreignTable)
  *
  *              SECTION: Helper
  * 2288:     private function init_class_boolAutorelation( )
@@ -219,7 +219,7 @@ class tx_browser_pi1_sql_auto
 
       // Get Relations
     $this->init_class_boolAutorelation( );
-    $this->init_class_relations_mm_simple( );
+    $this->init_class_relations( );
       // Get Relations
 
 
@@ -1729,14 +1729,14 @@ class tx_browser_pi1_sql_auto
 
 
 /**
- * init_class_relations_mm_simple( ): Inits the class var $arr_relations_mm_simple,
+ * init_class_relations( ): Inits the class var $arr_relations_mm_simple,
  *                                an array with the arrays MM and/or simple
  *
  * @return	void
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function init_class_relations_mm_simple( )
+  private function init_class_relations( )
   {
       // RETURN : autoconfig is switched off
     if ( ! $this->boolAutorelation )
@@ -1814,11 +1814,11 @@ class tx_browser_pi1_sql_auto
         switch( true )
         {
           case( $config['MM'] ):
-            $this->relations_setMm( $table, $config, $foreignTable );
+            $this->init_class_relationsMm( $table, $config, $foreignTable );
             break;
           case( ! $config['MM'] ):
           default:
-            $this->relations_setSingle( $table, $columnsKey, $foreignTable);
+            $this->init_class_relationsSingle( $table, $columnsKey, $foreignTable);
             break;
         }
           // SWITCH mm or single
@@ -1828,6 +1828,141 @@ class tx_browser_pi1_sql_auto
       // LOOP tables
 
     return;
+  }
+
+
+
+/**
+ * init_class_relationsMm( ): Sets the class vars
+ *          arr_relations_mm_simple['MM'][$table][$config['MM']]
+ *          arr_relations_opposite[$table][$config['MM']]['MM_opposite_field']
+ *
+ * @param	string		$$table       : current table from used tables
+ * @param	array		$config       : configuration of the current TCA column
+ * @param	string		$foreignTable : current foreign table from TCA
+ * @return	void
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function init_class_relationsMm( $table, $config, $foreignTable )
+  {
+    $boolMMrelations = $this->pObj->conf['autoconfig.']['relations.']['mmRelations'];
+
+      // RETURN IF : mmRelations should set manually
+    if( ! $boolMMrelations )
+    {
+        // DRS
+      if( $this->pObj->b_drs_tca )
+      {
+        $prompt = 'Result (MM): ' . $table . ' - ' . $config['MM'] . ' - ' . $foreignTable;
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'But MM relations shouldn\'t processed automatically.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 'If you want to process it automatically, please enable the MM relation building.';
+        t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
+      }
+        // DRS
+      return;
+    }
+      // RETURN IF : mmRelations should set manually
+
+    $this->arr_relations_mm_simple['MM'][$table][$config['MM']] = $foreignTable;
+
+    if( ! empty($config['MM_opposite_field'] ) )
+    {
+      $this->arr_relations_opposite[$table][$config['MM']]['MM_opposite_field']  = $config['MM_opposite_field'];
+    }
+
+      // DRS
+    if ( $this->pObj->b_drs_tca )
+    {
+      $prompt = 'Result (MM): ' . $table . ' - ' . $config['MM'] . ' - ' . $foreignTable;
+      t3lib_div::devlog('[OK/SQL] ' . $prompt , $this->pObj->extKey, -1);
+      $prompt = 'Switch off the result above? Use TS config: ' .
+        'autoconfig.relations.csvDontUseFields = ..., ' . $table . '.' . $columnsKey . ', ...';
+      t3lib_div::devlog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
+      if( $config['foreign_table_where'] )
+      {
+        $prompt = 'In TCA is foreign_table_where configured. This may be a risk, ' .
+          'because the TYPO3 Browser won\'t process the clause: ' .
+          $config['foreign_table_where'];
+        t3lib_div::devlog('[WARN/SQL] ' . $prompt, $this->pObj->extKey, 2);
+      }
+    }
+      // DRS
+  }
+
+
+
+/**
+ * init_class_relationsSingle( ): Sets the class var $arr_relations_mm_simple['simple']
+ *
+ * @param	string		$$table       : current table from used tables
+ * @param	string		$columnsKey   : current column name from TCA
+ * @param	string		$foreignTable : current foreign table from TCA
+ * @return	void
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function init_class_relationsSingle( $table, $columnsKey, $foreignTable)
+  {
+    $boolSimpleRelations = $this->pObj->conf['autoconfig.']['relations.']['simpleRelations'];
+
+      // RETURN IF : Don't process simple relations automatically
+    if( ! $boolSimpleRelations )
+    {
+        // DRS
+      if( $this->pObj->b_drs_tca )
+      {
+        $prompt = 'Result (simple): ' . $table . '.' . $columnsKey . ' - ' . $foreignTable;
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'But simple relations shouldn\'t processed automatically.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you want to process it automatically, please enable the simple relation building.';
+        t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+        // DRS
+      return;
+    }
+      // RETURN IF : Don't process simple relations automatically
+
+      // Foreign table is the local table, but self references aren't allowed
+    if( $this->pObj->localTable == $foreignTable &&  ! $boolSelfReference )
+    {
+        // DRS
+      if( $this->pObj->b_drs_tca )
+      {
+        $prompt = 'Result (simple): ' . $table . '.' . $columnsKey . ' - ' . $foreignTable;
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'It is a self reference. But self references shouldn\'t processed automatically.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you want to process it automatically, please enable self reference relation building.';
+        t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+        // DRS
+      return;
+    }
+
+    $this->arr_relations_mm_simple['simple'][$table][$columnsKey] = $foreignTable;
+
+      // DRS
+    if ($this->pObj->b_drs_tca )
+    {
+      $prompt = 'Result (simple): ' . $table . '.' . $columnsKey . ' - ' . $foreignTable;
+      t3lib_div::devlog( '[OK/SQL] ' . $prompt, $this->pObj->extKey, -1 );
+      $prompt = 'Switch off the result above? Use TS config: '.
+                'autoconfig.relations.csvDontUseFields = ..., ' .
+                $table . '.' . $columnsKey . ', ...';
+      t3lib_div::devlog( '[HELP/SQL]' . $prompt, $this->pObj->extKey, 1 );
+      if( $config['foreign_table_where'] )
+      {
+        $prompt = 'In TCA is foreign_table_where configured. This may be a risk, ' .
+                  'because the TYPO3 Browser won\'t process the clause: ' .
+                  $config['foreign_table_where'];
+        t3lib_div::devlog( '[WARN/SQL] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+    }
+      // DRS
   }
 
 
@@ -2127,141 +2262,6 @@ class tx_browser_pi1_sql_auto
 
 
 
-/**
- * relations_setMm( ): Sets the class vars
- *          arr_relations_mm_simple['MM'][$table][$config['MM']]
- *          arr_relations_opposite[$table][$config['MM']]['MM_opposite_field']
- *
- * @param	string		$$table       : current table from used tables
- * @param	array		$config       : configuration of the current TCA column
- * @param	string		$foreignTable : current foreign table from TCA
- * @return	void
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function relations_setMm( $table, $config, $foreignTable )
-  {
-    $boolMMrelations = $this->pObj->conf['autoconfig.']['relations.']['mmRelations'];
-
-      // RETURN IF : mmRelations should set manually
-    if( ! $boolMMrelations )
-    {
-        // DRS
-      if( $this->pObj->b_drs_tca )
-      {
-        $prompt = 'Result (MM): ' . $table . ' - ' . $config['MM'] . ' - ' . $foreignTable;
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-        $prompt = 'But MM relations shouldn\'t processed automatically.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
-        $prompt = 'If you want to process it automatically, please enable the MM relation building.';
-        t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
-      }
-        // DRS
-      return;
-    }
-      // RETURN IF : mmRelations should set manually
-
-    $this->arr_relations_mm_simple['MM'][$table][$config['MM']] = $foreignTable;
-
-    if( ! empty($config['MM_opposite_field'] ) )
-    {
-      $this->arr_relations_opposite[$table][$config['MM']]['MM_opposite_field']  = $config['MM_opposite_field'];
-    }
-
-      // DRS
-    if ( $this->pObj->b_drs_tca )
-    {
-      $prompt = 'Result (MM): ' . $table . ' - ' . $config['MM'] . ' - ' . $foreignTable;
-      t3lib_div::devlog('[OK/SQL] ' . $prompt , $this->pObj->extKey, -1);
-      $prompt = 'Switch off the result above? Use TS config: ' .
-        'autoconfig.relations.csvDontUseFields = ..., ' . $table . '.' . $columnsKey . ', ...';
-      t3lib_div::devlog('[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1);
-      if( $config['foreign_table_where'] )
-      {
-        $prompt = 'In TCA is foreign_table_where configured. This may be a risk, ' .
-          'because the TYPO3 Browser won\'t process the clause: ' .
-          $config['foreign_table_where'];
-        t3lib_div::devlog('[WARN/SQL] ' . $prompt, $this->pObj->extKey, 2);
-      }
-    }
-      // DRS
-  }
-
-
-
-/**
- * relations_setSingle( ): Sets the class var $arr_relations_mm_simple['simple']
- *
- * @param	string		$$table       : current table from used tables
- * @param	string		$columnsKey   : current column name from TCA
- * @param	string		$foreignTable : current foreign table from TCA
- * @return	void
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function relations_setSingle( $table, $columnsKey, $foreignTable)
-  {
-    $boolSimpleRelations = $this->pObj->conf['autoconfig.']['relations.']['simpleRelations'];
-
-      // RETURN IF : Don't process simple relations automatically
-    if( ! $boolSimpleRelations )
-    {
-        // DRS
-      if( $this->pObj->b_drs_tca )
-      {
-        $prompt = 'Result (simple): ' . $table . '.' . $columnsKey . ' - ' . $foreignTable;
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-        $prompt = 'But simple relations shouldn\'t processed automatically.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-        $prompt = 'If you want to process it automatically, please enable the simple relation building.';
-        t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
-      }
-        // DRS
-      return;
-    }
-      // RETURN IF : Don't process simple relations automatically
-
-      // Foreign table is the local table, but self references aren't allowed
-    if( $this->pObj->localTable == $foreignTable &&  ! $boolSelfReference )
-    {
-        // DRS
-      if( $this->pObj->b_drs_tca )
-      {
-        $prompt = 'Result (simple): ' . $table . '.' . $columnsKey . ' - ' . $foreignTable;
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-        $prompt = 'It is a self reference. But self references shouldn\'t processed automatically.';
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-        $prompt = 'If you want to process it automatically, please enable self reference relation building.';
-        t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
-      }
-        // DRS
-      return;
-    }
-
-    $this->arr_relations_mm_simple['simple'][$table][$columnsKey] = $foreignTable;
-
-      // DRS
-    if ($this->pObj->b_drs_tca )
-    {
-      $prompt = 'Result (simple): ' . $table . '.' . $columnsKey . ' - ' . $foreignTable;
-      t3lib_div::devlog( '[OK/SQL] ' . $prompt, $this->pObj->extKey, -1 );
-      $prompt = 'Switch off the result above? Use TS config: '.
-                'autoconfig.relations.csvDontUseFields = ..., ' .
-                $table . '.' . $columnsKey . ', ...';
-      t3lib_div::devlog( '[HELP/SQL]' . $prompt, $this->pObj->extKey, 1 );
-      if( $config['foreign_table_where'] )
-      {
-        $prompt = 'In TCA is foreign_table_where configured. This may be a risk, ' .
-                  'because the TYPO3 Browser won\'t process the clause: ' .
-                  $config['foreign_table_where'];
-        t3lib_div::devlog( '[WARN/SQL] ' . $prompt, $this->pObj->extKey, 2 );
-      }
-    }
-      // DRS
-  }
-
-
-
 
 
 
@@ -2281,7 +2281,7 @@ class tx_browser_pi1_sql_auto
  *                                  the local and global array autoconfig.relations.
  *                                  Sets the class var $boolAutorelation.
  *
- * @return	[type]		...
+ * @return	void
  * @version 3.9.12
  * @since   3.9.12
  */
