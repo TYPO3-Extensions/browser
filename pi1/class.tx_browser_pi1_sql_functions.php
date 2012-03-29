@@ -82,6 +82,9 @@ class tx_browser_pi1_sql_functions
   var $error = null;
     // [String] SQL query
   var $query = null;
+    // [Boolean]  For development only: If it is true, SQL queries will prompted
+    //            in the frontend but not executed.
+  var $dev_sqlPromptsOnly = false;
 
     // [Array]      Array tableFields for uid and pid of the localTable
     //              I.e: array( 'uid' => 'tx_org_cal.uid', 'pid' => 'tx_org_cal.pid' )
@@ -521,9 +524,81 @@ class tx_browser_pi1_sql_functions
 
 
 
+  /**
+   * exec_SELECTquery( ) :  Same as $GLOBALS['TYPO3_DB']->SELECTquery. But if
+   *                        class var $dev_sqlPromptsOnly is true, SQL query
+   *                        won't executed but prompted in the frontend.
+   *
+   * @param	string		$select   : SELECT statement
+   * @param	string		$from     : FROM statement
+   * @param	string		$where    : WHERE statement
+   * @param	string		$groupBy  : GROUP BY statement
+   * @param	string		$orderBy  : ORDER BY statement
+   * @param	string		$limit    : LIMIT statement
+   * @return	array		$res      : SQL result
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  public function exec_SELECTquery( $select, $from, $where, $groupBy, $orderBy, $limit )
+  {
+    if( $this->dev_sqlPromptsOnly )
+    {
+        // Get query
+      $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+                                      (
+                                        $select,
+                                        $from,
+                                        $where,
+                                        $groupBy,
+                                        $orderBy,
+                                        $limit
+                                      );
 
-  
-  
+        // Get query
+      var_dump( $query );
+      return;
+    }
+
+      // Execute query
+    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );      
+
+    return $res;
+  }
+
+
+
+  /**
+   * sql_query( ) :  Same as $GLOBALS['TYPO3_DB']->sql_query. But if
+   *                 class var $dev_sqlPromptsOnly is true, SQL query
+   *                 won't executed but prompted in the frontend.
+   *
+   * @param	string		$query  : SQL query
+   * @return	array		$res    : SQL result
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  public function sql_query( $query )
+  {
+    if( $this->dev_sqlPromptsOnly )
+    {
+      var_dump( $query );
+      return;
+    }
+
+    $res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
+    return $res;
+  }
+
+
+
   /**
    * zz_prependPiVarSort( ):  Prepends the value from the piVars['sort'] to the
    *                          the given ORCER BY statement, if there is a piVar.
@@ -578,74 +653,6 @@ class tx_browser_pi1_sql_functions
     }
 
     return $orderBy;
-  }
-
-
-
-  /**
- * getAlias( ) : Returns the part behind the AS, if table.field has an AS ...
- *                  If not, it returns the table.field
- *
- * @param	string		$tableFieldWiAlias  : table.field with an AS like "news.uid AS 'news.uid'"
- * @return	string		$alias              :	Part behind the AS. If there is no AS, it returns $str_tablefield
- * @version 3.9.12
- * @since   3.9.12
- */
-  public function sql_query( $query )
-  {
-    if( $this->pObj->drs_sqlPromptsOnly )
-    {
-      var_dump( $query );
-      return;
-    }
-
-    $res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
-    return $res;
-  }
-
-
-
-  /**
- * getAlias( ) : Returns the part behind the AS, if table.field has an AS ...
- *                  If not, it returns the table.field
- *
- * @param	string		$tableFieldWiAlias  : table.field with an AS like "news.uid AS 'news.uid'"
- * @return	string		$alias              :	Part behind the AS. If there is no AS, it returns $str_tablefield
- * @version 3.9.12
- * @since   3.9.12
- */
-  public function exec_SELECTquery( $select, $from, $where, $groupBy, $orderBy, $limit )
-  {
-    if( $this->pObj->drs_sqlPromptsOnly || 1 )
-    {
-        // Get query
-      $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-                                      (
-                                        $select,
-                                        $from,
-                                        $where,
-                                        $groupBy,
-                                        $orderBy,
-                                        $limit
-                                      );
-
-        // Get query
-      var_dump( $query );
-      return;
-    }
-
-      // Execute query
-    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );      
-
-    return $res;
   }
 
 

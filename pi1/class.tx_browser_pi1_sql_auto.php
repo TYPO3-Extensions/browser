@@ -2184,7 +2184,6 @@ class tx_browser_pi1_sql_auto
         $str_pidStatement         = " AND " . $str_pidStatement . " " ;
           // #32254, 111201, dwildt+
 
-          // #11843, fconstien, 110310
         $localTableFieldMaxItems = $GLOBALS['TCA'][$localTable]['columns'][$localField]['config']['maxitems'];
         switch(true)
         {
@@ -2193,6 +2192,7 @@ class tx_browser_pi1_sql_auto
                               "   " . $str_enablefields_foreign .
                               "   " . $str_pidStatement ;
             break;
+          // 120329, dwildt-
 //          case($localTableFieldMaxItems == 2):
 //            $str_query_part = "   ( " .
 //                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
@@ -2211,21 +2211,17 @@ class tx_browser_pi1_sql_auto
 //                              "   )" .
 //                              "   " . $str_enablefields_foreign .
 //                              "   " . $str_pidStatement ;
+          // 120329, dwildt-
+          // 120329, dwildt, 4+
           default:
             $str_query_part = "   FIND_IN_SET ( " . $foreignTableField . ", " . $localTableField . " )" .
                               "   " . $str_enablefields_foreign .
                               "   " . $str_pidStatement ;
         }
-          // #11843, fconstien, 110310
 
           // #11650, cweiske, 101223
         if ($this->b_left_join)
         {
-            // #32254, 11120, dwildt-
-          //$str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
-          //$str_pidStatement         = $this->str_andWherePid($foreignTable);
-          //$str_pidStatement         = " AND " . $str_pidStatement . " " ;
-            // #32254, 111201, dwildt-
           $str_left_join_uidforeign = " LEFT JOIN " . $foreignTable .
                                       " ON ( " .
                                       $str_query_part .

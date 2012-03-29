@@ -507,7 +507,7 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple 
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
     $groupBy  = null;
-    $orderBy = false;
+    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
     $limit    = $this->pObj->objSqlInit->statements['listView']['limit'];
 $limit    = '0,20';
       // SQL query array
@@ -540,9 +540,7 @@ $limit    = '0,20';
                                     );
       // SQL query
 
-var_dump( __METHOD__, __LINE__, $query );
-die( "Hallöchen" );
-      // Prompt the expired time to devlog
+      // DRS - Prompt the expired time to devlog
     if( $this->pObj->b_drs_warn )
     {
       $b_drs_performBak = $this->pObj->b_drs_perform;
@@ -550,14 +548,15 @@ die( "Hallöchen" );
     }
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'SQL query list view - START' );
     $tt_start = $this->pObj->tt_prevEndTime;
-      // Prompt the expired time to devlog
+      // DRS - Prompt the expired time to devlog
 
       // Execute
-    $res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    //$res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
+    $res    = $this->pObj->objSqlFun->sql_query( $query );
+    $error  = $GLOBALS['TYPO3_DB']->sql_error( );
       // Execute
 
-      // Prompt the expired time to devlog
+      // DRS - Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'SQL query list view - STOP' );
     $this->pObj->timeTracking_prompt( $query );
     if( $this->pObj->b_drs_warn )
@@ -565,7 +564,7 @@ die( "Hallöchen" );
       $this->pObj->b_drs_perform = $b_drs_performBak;
     }
     $tt_end = $this->pObj->tt_prevEndTime;
-      // Prompt the expired time to devlog
+      // DRS - Prompt the expired time to devlog
 
       // DRS - Performance
     if( $this->pObj->b_drs_warn )
