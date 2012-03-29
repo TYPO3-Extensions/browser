@@ -1021,6 +1021,10 @@ class tx_browser_pi1_viewlist
     $arr_return = $this->pObj->objNaviModeSelector->get( $this->content );
     if( $arr_return['error']['status'] )
     {
+      $this->content  = $this->pObj->cObj->substituteSubpart
+                        (
+                          $this->content, '###MODESELECTOR###', null, true
+                        );
       return $arr_return;
     }
       // Get the mode selector content
