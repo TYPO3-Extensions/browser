@@ -2606,7 +2606,7 @@ class tx_browser_pi1_filter {
       // RETURN : current table is a foreign table
     if( $this->pObj->localTable != $table )
     {
-      $from = $this->pObj->objSqlInit->statements['rows']['from'];
+      $from = $this->pObj->objSqlInit->statements['listView']['from'];
       return $from;
     }
       // RETURN : current table is a foreign table
@@ -2617,7 +2617,7 @@ class tx_browser_pi1_filter {
       // RETURN IF : filters are controlling themeselves
     if( $conf_flexform == 'controlled' )
     {
-      $from = $this->pObj->objSqlInit->statements['rows']['from'];
+      $from = $this->pObj->objSqlInit->statements['listView']['from'];
       return $from;
     }
       // RETURN IF : filters are controlling themeselves
@@ -2802,7 +2802,7 @@ class tx_browser_pi1_filter {
   private function sql_whereWiHits( )
   {
       // Get WHERE statement
-    $where =  $this->pObj->objSqlInit->statements['rows']['where'] .
+    $where =  $this->pObj->objSqlInit->statements['listView']['where'] .
               $this->sql_whereAnd_Filter( ) .
               $this->sql_whereAnd_fromTS( );
 

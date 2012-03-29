@@ -163,12 +163,12 @@ class tx_browser_pi1_viewlist
     $this->content = $this->pObj->str_template_raw;
 
       // Set SQL query parts in general and statements for rows
-    $arr_result = $this->pObj->objSqlInit->init( );
-    if( $arr_result['error']['status'] )
+    $arr_return = $this->pObj->objSqlInit->init( );
+    if( $arr_return['error']['status'] )
     {
         // Prompt the expired time to devlog
       $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-      $content = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+      $content = $arr_return['error']['header'] . $arr_return['error']['prompt'];
       return $content;
     }
       // Set SQL query parts in general and statements for rows
@@ -193,12 +193,12 @@ class tx_browser_pi1_viewlist
       default:
           // CASE no csv
           // Take the default template (the list view) and replace some subparts
-        $arr_result = $this->content_setDefault( );
-        if( $arr_result['error']['status'] )
+        $arr_return = $this->content_setDefault( );
+        if( $arr_return['error']['status'] )
         {
             // Prompt the expired time to devlog
           $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
-          $content = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+          $content = $arr_return['error']['header'] . $arr_return['error']['prompt'];
           return $content;
         }
         break;
@@ -209,6 +209,8 @@ class tx_browser_pi1_viewlist
       // #29370, 110831, dwildt+
 
 
+var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->statements );
+var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple );
 
       // Get rows
       // Set rows
@@ -480,6 +482,149 @@ class tx_browser_pi1_viewlist
 
 
 
+  /***********************************************
+  *
+  * SQL
+  *
+  **********************************************/
+
+
+
+  /**
+   * rows_listViewSqlRes( ): Building the SQL query
+   *
+   * @return	array
+   * @version 3.9.8
+   * @since 1.0.0
+   */
+  private function rows_listViewSqlRes( )
+  {
+    $conf_view = $this->conf_view;
+
+      // SQL query array
+    $select   = $this->pObj->objSqlAut->statements['listView']['select'];
+    $from     = $this->pObj->objSqlAut->statements['listView']['from'];
+    $where    = $this->pObj->objSqlAut->statements['listView']['where'];
+    $groupBy  = null;
+    $orderBy = false;
+    $limit    = $this->pObj->objSqlAut->statements['listView']['limit'];
+      // SQL query array
+
+      // #9917: Selecting a random sample from a set of rows
+    if( $conf_view['random'] == 1 )
+    {
+      $orderBy = 'rand( )';
+    }
+      // Set ORDER BY to false - we like to order by PHP
+    
+      // DRS
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'UNION isn\'t supported any longer! Refer it to the release notes.';
+      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+    }
+      // DRS
+
+      // SQL query
+    $query = $GLOBALS['TYPO3_DB']->SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit,
+                                      $uidIndexField=""
+                                    );
+      // SQL query
+
+var_dump( __METHOD__, __LINE__, $query );
+return;
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'SQL query list view - START' );
+    $tt_start = $this->pObj->tt_prevEndTime;
+      // Prompt the expired time to devlog
+
+      // Execute
+    $res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+      // Execute
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'SQL query list view - STOP' );
+    $this->pObj->timeTracking_prompt( $query );
+    $tt_end = $this->pObj->tt_prevEndTime;
+      // Prompt the expired time to devlog
+
+      // DRS - Performance
+    if( $this->pObj->b_drs_warn )
+    {
+      $iMilliseconds = $tt_end - $tt_start;
+      $sMilliseconds = '(' . $iMilliseconds . ' ms)';
+      $promptHelp = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
+                    'Don\'t use the query in a localised context.';
+      switch( true )
+      {
+        case( $iMilliseconds < 500 ):
+          $prompt = 'Query for the list view needs less than a half second ' . $sMilliseconds . '.';
+          t3lib_div::devlog( '[OK/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, -1 );
+          break;
+        case( $iMilliseconds >= 500 && $iMilliseconds < 5000 ):
+          $prompt = 'Query for the list view needs more than a half second ' . $sMilliseconds . '.';
+          t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
+          t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
+          break;
+        case( $iMilliseconds >= 5000 && $iMilliseconds < 10000 ):
+          $prompt = 'Query needs more than 5 seconds ' . $sMilliseconds . '.';
+          t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
+          t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
+          t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
+          t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
+          t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
+          t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
+          break;
+        case( $iMilliseconds >= 10000 ):
+          $prompt = 'Query for the list view needs more than 10 seconds ' . $sMilliseconds . '.';
+          t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 3 );
+          t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
+          break;
+      }
+    }
+      // DRS - Performance
+
+      // Error management
+    if( $error )
+    {
+      $this->pObj->objSqlFun_3x->query = $query;
+      $this->pObj->objSqlFun_3x->error = $error;
+      return $this->pObj->objSqlFun_3x->prompt_error( );
+    }
+      // Error management
+
+      // DRS - Development Reporting System
+    if( $this->pObj->b_drs_sql )
+    {
+      t3lib_div::devlog( '[OK/SQL] ' . $query,  $this->pObj->extKey, -1 );
+      t3lib_div::devlog( '[HELP/SQL] Be aware of the multi-byte notation, if you want to use the query ' .
+                          'in your SQL shell or in phpMyAdmin.', $this->pObj->extKey, 1 );
+    }
+      // DRS - Development Reporting System
+      // Execute the SQL query
+
+
+    $this->res = $res;
+    return false;
+
+  }
+
+
+
+
+
+
+
+
+
  /***********************************************
   *
   * Subparts
@@ -519,12 +664,12 @@ class tx_browser_pi1_viewlist
     $arr_return = array( );
 
       // Get filter
-    $arr_result = $this->pObj->objFltr4x->get( );
-    if( $arr_result['error']['status'] )
+    $arr_return = $this->pObj->objFltr4x->get( );
+    if( $arr_return['error']['status'] )
     {
-      return $arr_result;
+      return $arr_return;
     }
-    $filter = $arr_result['data']['filter'];
+    $filter = $arr_return['data']['filter'];
       // Get filter
 
       // RETURN : there isn't any filter

@@ -138,7 +138,7 @@ class tx_browser_pi1_sql_init
 
 /**
  * init( ): Sets the class vars csvSelect, csvSelect, csvOrderBy, arrLocalTable.
- *          Sets the class var sql_query_statements['rows'] (sql query statements)
+ *          Sets the class var sql_query_statements['listView'] (sql query statements)
  *
  * @return	void
  * @version 3.9.8
@@ -169,8 +169,6 @@ class tx_browser_pi1_sql_init
       return $arr_return;
     }
       // SQL query array
-var_dump( __METHOD__, __LINE__, $this->statements );
-var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple );
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -227,14 +225,14 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple 
     if( $this->pObj->b_sql_manual )
     {
       $arr_return = $this->pObj->objSqlMan_3x->get_query_array( $this );
-      $this->statements['rows'] = $arr_return['data'];
+      $this->statements['listView'] = $arr_return['data'];
       return $arr_return;
     }
       // RETURN : array in SQL manual mode
 
       // RETURN : array in SQL auto mode
     $arr_return = $this->pObj->objSqlAut->get_statements( );
-    $this->statements['rows'] = $arr_return['data'];
+    $this->statements['listView'] = $arr_return['data'];
     return $arr_return;
       // RETURN : array in SQL auto mode
   }
