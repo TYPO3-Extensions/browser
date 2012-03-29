@@ -1098,6 +1098,104 @@ class tx_browser_pi1_viewlist
 
  /***********************************************
   *
+  * ZZ
+  *
+  **********************************************/
+
+  
+  
+  /**
+   * set_arrLinkToSingle( ): Set the global $arrLinkToSingle
+   *
+   * @return	array
+   * @version 3.9.8
+   * @since 1.0.0
+   */
+  private function set_arrLinkToSingle( )
+  {
+    $conf_view = $this->conf_view;
+
+
+      // Get linkToSingle CSV list
+    $csvLinkToSingle = $conf_view['csvLinkToSingleView'];
+
+      // IF no CSV list
+    if ( ! $csvLinkToSingle )
+    {
+        // Set CSV list: take values from the select
+      $csvLinkToSingle = $conf_view['select'];
+      $csvLinkToSingle = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $csvLinkToSingle );
+        // LOOP replace table.field with an alias
+      foreach( ( array ) $conf_view['select.']['deal_as_table.'] as $arr_dealastable )
+      {
+        $csvLinkToSingle = str_replace( $arr_dealastable['statement'], $arr_dealastable['alias'], $csvLinkToSingle );
+          // DRS
+        if ( $this->pObj->b_drs_sql )
+        {
+          $prompt = 'Used tables: Statement "' . $arr_dealastable['statement'] . '" ' .
+                    'is replaced with "' . $arr_dealastable['alias'] . '"';
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+          // DRS
+      }
+        // LOOP replace table.field with an alias
+        // DRS
+      if ( $this->pObj->b_drs_sql )
+      {
+        $prompt = $this->conf_path . ' hasn\'t any linkToSingleView.';
+        t3lib_div::devlog( '[INFO/DRS] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you want a link to a single view, please configure ' .
+                  $this->conf_path . '.csvLinkToSingleView.';
+        t3lib_div::devLog( '[HELP/DRS] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+        // DRS
+    }
+      // IF no CSV list
+
+      // Set the global $arrLinkToSingle
+    $arrLinkToSingleFields = explode( ',', $csvLinkToSingle );
+    $this->pObj->arrLinkToSingle = array( );
+    foreach( ( array ) $arrLinkToSingleFields as $arrLinkToSingleField )
+    {
+      list( $table, $field ) = explode( '.', trim( $arrLinkToSingleField ) );
+      $this->pObj->arrLinkToSingle[] = $table.'.'.$field;
+    }
+      // Set the global $arrLinkToSingle
+
+      // Replace aliases in case of aliases
+    if( is_array( $conf_view['aliases.']['tables.'] ) )
+    {
+      foreach( $this->pObj->arrLinkToSingle as $i_key => $str_tablefield )
+      {
+        $this->pObj->arrLinkToSingle[$i_key] = $this->pObj->objSqlFun_3x->get_sql_alias_before( $str_tablefield );
+      }
+      $this->pObj->arrLinkToSingle = $this->pObj->objSqlFun_3x->replace_tablealias( $this->pObj->arrLinkToSingle );
+    }
+      // Replace aliases in case of aliases
+
+      // DRS
+    if( $this->pObj->b_drs_sql )
+    {
+      $str_csvList  = implode( ', ', $this->pObj->arrLinkToSingle );
+      $prompt       = 'Fields which will get a link to a single view: ' . $str_csvList . '.';
+      t3lib_div::devlog( '[INFO/DRS] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompt       = 'If you want to configure the field list, please use ' .
+                      $this->conf_path . '.csvLinkToSingleView.';
+      t3lib_div::devLog( '[HELP/DRS] ' . $prompt, $this->pObj->extKey, 1 );
+    }
+      // DRS
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
   * DRS
   *
   **********************************************/
