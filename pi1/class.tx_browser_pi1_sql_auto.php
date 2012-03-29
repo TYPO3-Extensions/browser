@@ -302,6 +302,8 @@ class tx_browser_pi1_sql_auto
 
       // Remove all expressions and aliases in the SELECT statement
     $csvSelect = $this->zz_setToRealTableNames( $this->conf_view['select'] );
+      // Add table.uid
+    $csvSelect = $this->zz_addUid( 'select', $csvSelect );
     $csvSelect = $this->zz_addAliases( $csvSelect );
 
       // Devide in local table and foreign tables
@@ -310,8 +312,6 @@ class tx_browser_pi1_sql_auto
       // Remove foreign tables
     $csvSelect = $this->zz_woForeignTables( 'select', $csvSelect );
 
-      // Add table.uid
-    $csvSelect = $this->zz_addUid( 'select', $csvSelect );
 
     return $csvSelect;
   }
