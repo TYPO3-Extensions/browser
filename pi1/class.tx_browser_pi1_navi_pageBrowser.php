@@ -403,7 +403,7 @@ class tx_browser_pi1_navi_pageBrowser
     switch( true )
     {
       case( isset( $this->pObj->piVars['sword'] ) ):
-      case( $this->pObj->objNaviIndexBrowser->var_aFilterIsSelected( ) ):
+      case( $this->pObj->objFltr4x->var_aFilterIsSelected( ) ):
         $from = $this->pObj->objSqlInit->statements['listView']['from'];
         break;
       default:
@@ -430,7 +430,7 @@ class tx_browser_pi1_navi_pageBrowser
     switch( true )
     {
       case( isset( $this->pObj->piVars['sword'] ) ):
-      case( $this->pObj->objNaviIndexBrowser->var_aFilterIsSelected( ) ):
+      case( $this->pObj->objFltr4x->var_aFilterIsSelected( ) ):
         $where  = $this->pObj->objSqlInit->statements['listView']['where'];
         $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
         break;

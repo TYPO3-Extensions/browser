@@ -214,6 +214,8 @@ class tx_browser_pi1_filter {
     // [Array] Array with elements maxItemsPerHtmlRow, rowBegin, rowEnd, noItemValue
   var $itemsPerHtmlRow = null;
 
+    // [Boolean] If a filter is selected by the visitor, this boolean will be true.
+  var $aFilterIsSelected = null;
 
 
 
@@ -412,6 +414,55 @@ class tx_browser_pi1_filter {
     }
 
     $this->andWhereFilter = " AND ". $strAndWhere;
+  }
+
+
+
+  /**
+   * init_aFilterIsSelected( ): Sets the class var $aFilterIsSelected. The boolaen
+   *                            is true, if a filter is an element of the piVars.
+   *
+   * @return	boolean $aFilterIsSelected: true, if a filter is slected
+   * @version 3.9.12
+   * @since   3.9.12
+   */
+  public function init_aFilterIsSelected( )
+  {
+      // RETURN : var is initialised
+    if( ! $this->aFilterIsSelected === null )
+    {
+      return $this->aFilterIsSelected;
+    }
+      // RETURN : var is initialised
+
+      // RETURN : no piVars, set var to false
+    if( empty( $this->pObj->piVars ) )
+    {
+      $this->aFilterIsSelected = false;
+      return $this->aFilterIsSelected;
+    }
+      // RETURN : no piVars, set var to false
+
+    foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
+    {
+      foreach( ( array ) $fields as $fieldWiDot => $elements )
+      {
+        if( substr( $fieldWiDot, -1 ) != '.' )
+        {
+          continue;
+        }
+        $field      = substr($fieldWiDot, 0, -1);
+        $tableField = $tableWiDot . $field;
+        if( isset( $this->pObj->piVars[$tableField] ) )
+        {
+          $this->aFilterIsSelected = true;
+          return $this->aFilterIsSelected;
+        }
+      }
+    }
+
+    $this->aFilterIsSelected = false;
+    return $this->aFilterIsSelected;
   }
 
 

@@ -317,18 +317,8 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements, $this->pObj
     }
       // record browser
 
-
-//var_dump( __METHOD__, __LINE__, $rows );
     $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
     $this->content = $content;
-
-
-
-
-//    var_dump( __METHOD__, __LINE__, $this->pObj->rows );
-
-
-
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
