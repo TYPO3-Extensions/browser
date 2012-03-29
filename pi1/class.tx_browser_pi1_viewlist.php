@@ -591,7 +591,7 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple 
     }
       // DRS - Performance
 
-var_dump( __METHOD__, __LINE__, $query, $sM );
+var_dump( __METHOD__, __LINE__, $query, $sMilliseconds, $tt_end, $tt_start );
 
       // Error management
     if( $error )
