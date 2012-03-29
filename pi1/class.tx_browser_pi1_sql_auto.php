@@ -304,6 +304,7 @@ class tx_browser_pi1_sql_auto
     $csvSelect = $this->zz_setToRealTableNames( $this->conf_view['select'] );
       // Add table.uid
     $csvSelect = $this->zz_addUid( 'select', $csvSelect );
+var_dump( __METHOD__, __LINE__, $csvSelect );
       // Add aliases
     $csvSelect = $this->zz_addAliases( $csvSelect );
 
@@ -311,7 +312,8 @@ class tx_browser_pi1_sql_auto
     $this->init_class_statementTables( 'select', $csvSelect );
 
       // Remove foreign tables
-    $csvSelect = $this->zz_woForeignTables( 'select', $csvSelect );
+//    $csvSelect = $this->zz_woForeignTables( 'select', $csvSelect );
+var_dump( __METHOD__, __LINE__, $csvSelect );
 
 
     return $csvSelect;
@@ -2508,7 +2510,7 @@ class tx_browser_pi1_sql_auto
       }
       if( strpos( $tableField, ' AS ' ) !== false )
       {
-        $arr_aliasedSelect[] = $tableField;
+        $arr_tableFieldWiAlias[] = $tableField;
         continue;
       }
 
