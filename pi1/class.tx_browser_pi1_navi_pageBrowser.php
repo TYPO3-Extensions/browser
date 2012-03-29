@@ -441,6 +441,7 @@ class tx_browser_pi1_navi_pageBrowser
           $where = "1";
         }
         $where  = $where . $andEnableFields;
+        $where  = $where . $this->pObj->objSqlFun->get_andWherePid( $table );
         if( empty ( $where ) )
         {
           $where = "1";
