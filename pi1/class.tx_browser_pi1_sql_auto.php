@@ -302,6 +302,7 @@ class tx_browser_pi1_sql_auto
 
       // Remove all expressions and aliases in the SELECT statement
     $csvSelect = $this->zz_setToRealTableNames( $this->conf_view['select'] );
+    $csvSelect = $this->zz_addAliases( $csvSelect );
 
       // Devide in local table and foreign tables
     $this->init_class_statementTables( 'select', $csvSelect );
@@ -2465,6 +2466,45 @@ class tx_browser_pi1_sql_auto
     $this->init_class_statementTables( 'filter', $csvFilter );
   }
 
+
+
+/**
+ * zz_addUid( ):  Adds table.uid to the given statement, if table.uid isn't
+ *                any element of the given statement.
+ *                table is the fist table of the statement.
+ *                Adds table.uid to the class var $addedTableFields.
+ *
+ * @param	string		$type         : select, from, where, orderBy, groupBy
+ * @param	string		$csvStatement : current SQL statement
+ * @return	string		$csvStatement : the statement with the table.uid
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_addAliases( $statement )
+  {
+    $arr_tableFields = $this->pObj->objZz->getCSVasArray( $statement );
+
+      // LOOP all tableFields from statement
+    foreach( $arr_tableFields as $tableField )
+    {
+      if( empty ( $tableField ) )
+      {
+        continue;
+      }
+      if( strpos( $tableField, ' AS ' ) !== false )
+      {
+        $arr_aliasedSelect[] = $tableField;
+        continue;
+      }
+
+      $alias                    = $tableField;
+      $arr_tableFieldWiAlias[]  = $tableField.' AS \'' . $alias . '\'';
+    }
+      // LOOP all tableFields from statement
+
+    $statement = implode( ', ', ( array ) $arr_tableFieldWiAlias );
+    return $statement;
+  }
 
 
 /**
