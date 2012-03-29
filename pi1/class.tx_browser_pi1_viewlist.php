@@ -540,8 +540,11 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple 
       // SQL query
 
       // Prompt the expired time to devlog
-    $b_drs_performBak = $this->pObj->b_drs_perform;
-    $this->pObj->b_drs_perform = true;
+    if( $this->pObj->b_drs_warn )
+    {
+      $b_drs_performBak = $this->pObj->b_drs_perform;
+      $this->pObj->b_drs_perform = true;
+    }
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'SQL query list view - START' );
     $tt_start = $this->pObj->tt_prevEndTime;
       // Prompt the expired time to devlog
@@ -554,7 +557,10 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'SQL query list view - STOP' );
     $this->pObj->timeTracking_prompt( $query );
-    $this->pObj->b_drs_perform = $b_drs_performBak;
+    if( $this->pObj->b_drs_warn )
+    {
+      $this->pObj->b_drs_perform = $b_drs_performBak;
+    }
     $tt_end = $this->pObj->tt_prevEndTime;
       // Prompt the expired time to devlog
 
