@@ -591,7 +591,7 @@ class tx_browser_pi1_sql_functions
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function sql_query( $query )
+  public function sql_query( $query )
   {
     if( $this->pObj->drs_sqlPromptsOnly )
     {
@@ -614,7 +614,7 @@ class tx_browser_pi1_sql_functions
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function exec_SELECTquery( $select, $from, $where, $groupBy, $orderBy, $limit )
+  public function exec_SELECTquery( $select, $from, $where, $groupBy, $orderBy, $limit )
   {
     if( $this->pObj->drs_sqlPromptsOnly )
     {
