@@ -65,12 +65,12 @@
  *
  *              SECTION: Relation building
  * 1739:     private function init_class_relations( )
- * 1843:     private function relations_confDRSprompt( )
- * 1920:     private function relations_dontUseFields( )
- * 1973:     private function relations_getForeignTable( $tables, $config, $configPath )
- * 2040:     private function relations_requirements( $table, $config, $configPath )
- * 2142:     private function init_class_relationsMm( $table, $config, $foreignTable )
- * 2202:     private function init_class_relationsSingle( $table, $columnsKey, $foreignTable)
+ * 1847:     private function init_class_relationsMm( $table, $config, $foreignTable )
+ * 1907:     private function init_class_relationsSingle( $table, $columnsKey, $foreignTable)
+ * 1978:     private function relations_confDRSprompt( )
+ * 2055:     private function relations_dontUseFields( )
+ * 2108:     private function relations_getForeignTable( $tables, $config, $configPath )
+ * 2175:     private function relations_requirements( $table, $config, $configPath )
  *
  *              SECTION: Helper
  * 2288:     private function init_class_boolAutorelation( )
