@@ -616,7 +616,7 @@ class tx_browser_pi1_sql_functions
  */
   public function exec_SELECTquery( $select, $from, $where, $groupBy, $orderBy, $limit )
   {
-    if( $this->pObj->drs_sqlPromptsOnly )
+    if( $this->pObj->drs_sqlPromptsOnly || 1 )
     {
         // Get query
       $query  = $GLOBALS['TYPO3_DB']->SELECTquery
@@ -630,6 +630,7 @@ class tx_browser_pi1_sql_functions
                                       );
 
         // Get query
+      var_dump( $query );
       return;
     }
 
@@ -642,7 +643,7 @@ class tx_browser_pi1_sql_functions
                                       $groupBy,
                                       $orderBy,
                                       $limit
-                                    );      var_dump( $query );
+                                    );      
 
     return $res;
   }
