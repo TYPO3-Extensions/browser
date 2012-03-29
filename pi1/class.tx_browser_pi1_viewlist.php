@@ -227,7 +227,9 @@ class tx_browser_pi1_viewlist
     
       // Set rows
     $this->rows_fromSqlRes( $res );
+    $rows = $this->pObj->rows;
 
+var_dump( __METHOD__, __LINE__, $rows );
       // DRS
     if( $this->pObj->b_drs_devTodo )
     {
@@ -317,7 +319,7 @@ class tx_browser_pi1_viewlist
       // record browser
 
 
-var_dump( __METHOD__, __LINE__, $rows, $content );
+var_dump( __METHOD__, __LINE__, $rows );
     $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
 
 
