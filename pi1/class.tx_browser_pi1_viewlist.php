@@ -509,6 +509,7 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple 
     $groupBy  = null;
     $orderBy = false;
     $limit    = $this->pObj->objSqlInit->statements['listView']['limit'];
+$limit    = '0,20';
       // SQL query array
 
       // #9917: Selecting a random sample from a set of rows
@@ -539,6 +540,8 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple 
                                     );
       // SQL query
 
+var_dump( __METHOD__, __LINE__, $query );
+die( "Hallöchen" );
       // Prompt the expired time to devlog
     if( $this->pObj->b_drs_warn )
     {
