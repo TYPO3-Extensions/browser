@@ -220,7 +220,8 @@ class tx_browser_pi1_sql_auto
       // Get Relations
     $this->init_class_boolAutorelation( );
     $this->init_class_relations( );
-      // Get Relations
+var_dump( __METHOD__, __LINE__, $this->arr_relations_mm_simple );
+        // Get Relations
 
 
       // Get WHERE and FROM
