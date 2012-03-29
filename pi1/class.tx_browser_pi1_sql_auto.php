@@ -303,7 +303,7 @@ class tx_browser_pi1_sql_auto
       // Remove all expressions and aliases in the SELECT statement
     $csvSelect = $this->zz_setToRealTableNames( $this->conf_view['select'] );
       // Add table.uid
-    $csvSelect = $this->zz_addUidsToSelect( 'select', $csvSelect );
+    $csvSelect = $this->zz_addUidsToSelect( $csvSelect );
       // Add aliases
     $csvSelect = $this->zz_addAliases( $csvSelect );
 
