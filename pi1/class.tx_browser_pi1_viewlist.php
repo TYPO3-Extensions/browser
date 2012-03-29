@@ -773,6 +773,10 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements, $this->pObj
     $select   = $this->pObj->objSqlInit->statements['listView']['select'];
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
+    if( $this->pObj->objFltr4x->var_aFilterIsSelected( ) )
+    {
+      $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
+    }
     $groupBy  = null;
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
     $limit    = $this->pObj->objSqlInit->statements['listView']['limit'];

@@ -166,9 +166,6 @@ class tx_browser_pi1_navi_indexBrowser
     // [Integer] number of the localisation mode
   var $int_localisation_mode  = null;
 
-    // [Boolean] If a filter is selected by the visitor, this boolean will be true.
-  var $aFilterIsSelected = null;
-
     // [String] Subpart for the index browser
   var $subpart    = null;
     // [String] Subpart for a tab within the index browser
@@ -1750,70 +1747,8 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 
-
-    /***********************************************
-    *
-    * Variables: init and get
-    *
-    **********************************************/
-
-
-
-/**
- * var_aFilterIsSelected( ):
- *
- * @return	string		$from   : FROM statement without a from
- * @version 3.9.12
- * @since   3.9.12
- */
-  public function var_aFilterIsSelected( )
-  {
-      // RETURN : var is initialised
-    if( ! $this->aFilterIsSelected === null )
-    {
-      return $this->aFilterIsSelected;
-    }
-      // RETURN : var is initialised
-
-      // RETURN : no piVars, set var to false
-    if( empty( $this->pObj->piVars ) )
-    {
-      $this->aFilterIsSelected = false;
-      return $this->aFilterIsSelected;
-    }
-      // RETURN : no piVars, set var to false
-
-    foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
-    {
-      foreach( ( array ) $fields as $fieldWiDot => $elements )
-      {
-        if( substr( $fieldWiDot, -1 ) != '.' )
-        {
-          continue;
-        }
-        $field      = substr($fieldWiDot, 0, -1);
-        $tableField = $tableWiDot . $field;
-        if( isset( $this->pObj->piVars[$tableField] ) )
-        {
-          $this->aFilterIsSelected = true;
-          return $this->aFilterIsSelected;
-        }
-      }
-    }
-
-    $this->aFilterIsSelected = false;
-    return $this->aFilterIsSelected;
-  }
-
-
-
-
-
-
-
-
-
-    /***********************************************
+  
+   /***********************************************
     *
     * Helper
     *
