@@ -169,6 +169,8 @@ class tx_browser_pi1_sql_init
       return $arr_return;
     }
       // SQL query array
+var_dump( __METHOD__, __LINE__, $this->statements );
+var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple );
 
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
@@ -233,7 +235,6 @@ class tx_browser_pi1_sql_init
       // RETURN : array in SQL auto mode
     $arr_return = $this->pObj->objSqlAut->get_statements( );
     $this->statements['rows'] = $arr_return['data'];
-var_dump( __METHOD__, __LINE__, $this->statements );
     return $arr_return;
       // RETURN : array in SQL auto mode
   }

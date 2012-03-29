@@ -59,6 +59,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
         <![CDATA[<br />]]>
         Browser - TYPO3 without PHP.
       </label>
+      <label index="error_value_empty">Error: value is empty.</label>
       <label index="error_views_noview">Sorry, there isn't any view configured.</label>
       <label index="error_views_single_noview">Sorry, there isn't any single view configured.</label>
       <label index="warn_sql_h1">SQL Warning</label>
@@ -135,6 +136,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
         <![CDATA[<br />]]>
         Browser - TYPO3 ohne PHP.
       </label>
+      <label index="error_value_empty">Fehler: Der Wert ist leer.</label>
       <label index="error_views_noview"><![CDATA[Pardon, es ist keine Ansicht (view) konfiguriert.<br /><br />Browser - TYPO3 ohne PHP]]></label>
       <label index="error_views_single_noview">Pardon, es ist keine Detailansicht konfiguriert.</label>
       <label index="warn_sql_h1">SQL Warnung</label>

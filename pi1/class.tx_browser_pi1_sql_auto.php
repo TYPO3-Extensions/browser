@@ -178,7 +178,7 @@ class tx_browser_pi1_sql_auto
                       $this->pObj->pi_getLL( 'error_sql_h1' ).
                     '</h1>';
       $str_prompt = '<p style="color:red; font-weight:bold;">' .
-                      $this->pObj->pi_getLL('error_sql_select') .
+                      $this->pObj->pi_getLL('error_value_empty') .
                     '</p>';
       $arr_return['error']['status'] = true;
       $arr_return['error']['header'] = $str_header;
@@ -205,13 +205,13 @@ class tx_browser_pi1_sql_auto
 
       // Get ORDER BY
     $arr_return['data']['orderBy'] = $this->get_statements_orderBy( );
-    if (!$arr_return['data']['orderBy'])
+    if ( ! $arr_return['data']['orderBy'] )
     {
       $str_header = '<h1 style="color:red">' .
                       $this->pObj->pi_getLL( 'error_sql_h1' ) .
                     '</h1>';
       $str_prompt = '<p style="color:red; font-weight:bold;">' .
-                      $this->pObj->pi_getLL( 'error_sql_orderby' ) .
+                      $this->pObj->pi_getLL( 'error_value_empty' ) .
                     '</p>';
       $arr_return['error']['status'] = true;
       $arr_return['error']['header'] = $str_header;
@@ -224,7 +224,6 @@ class tx_browser_pi1_sql_auto
       // Get Relations
     $this->init_class_boolAutorelation( );
     $this->init_class_relations( );
-var_dump( __METHOD__, __LINE__, $this->arr_relations_mm_simple );
         // Get Relations
 
 
