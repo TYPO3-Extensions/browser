@@ -39,56 +39,55 @@
  *
  *
  *
- *   95: class tx_browser_pi1_sql_auto
- *  139:     public function __construct($parentObj)
+ *   94: class tx_browser_pi1_sql_auto
+ *  138:     public function __construct($parentObj)
  *
  *              SECTION: Statements
- *  169:     public function get_statements( )
+ *  168:     public function get_statements( )
  *
  *              SECTION: Statements SELECT
- *  299:     private function get_statements_select( )
+ *  298:     private function get_statements_select( )
  *
  *              SECTION: Statements FROM
- *  345:     private function get_statements_from( )
+ *  344:     private function get_statements_from( )
  *
  *              SECTION: Statements ORDER BY, GROUP BY (disabled)
- *  500:     private function get_statements_orderBy()
- *  522:     private function get_statements_groupBy( )
+ *  499:     private function get_statements_orderBy()
+ *  521:     private function get_statements_groupBy( )
  *
  *              SECTION: Statements WHERE
- *  549:     private function get_statements_where( )
- *  759:     private function whereSearch()
- * 1017:     private function andWhere()
- * 1101:     private function arr_andWherePid()
- * 1134:     private function str_andWherePid($realTable)
- * 1203:     private function arr_andWhereEnablefields()
- * 1239:     private function str_enableFields($realTable)
+ *  548:     private function get_statements_where( )
+ *  758:     private function whereSearch()
+ * 1016:     private function andWhere()
+ * 1100:     private function arr_andWherePid()
+ * 1135:     private function arr_andWhereEnablefields()
+ * 1171:     private function str_enableFields($realTable)
  *
  *              SECTION: Relation building
- * 1277:     private function init_class_relations( )
- * 1385:     private function init_class_relationsMm( $table, $config, $foreignTable )
- * 1445:     private function init_class_relationsSingle( $table, $columnsKey, $foreignTable)
- * 1516:     private function relations_confDRSprompt( )
- * 1593:     private function relations_dontUseFields( )
- * 1646:     private function relations_getForeignTable( $tables, $config, $configPath )
- * 1713:     private function relations_requirements( $table, $config, $configPath )
+ * 1209:     private function init_class_relations( )
+ * 1317:     private function init_class_relationsMm( $table, $config, $foreignTable )
+ * 1377:     private function init_class_relationsSingle( $table, $columnsKey, $foreignTable)
+ * 1448:     private function relations_confDRSprompt( )
+ * 1525:     private function relations_dontUseFields( )
+ * 1578:     private function relations_getForeignTable( $tables, $config, $configPath )
+ * 1645:     private function relations_requirements( $table, $config, $configPath )
  *
  *              SECTION: Joins
- * 1822:     private function get_joins( )
+ * 1754:     private function get_joins( )
  *
  *              SECTION: Helper
- * 2304:     private function init_class_boolAutorelation( )
- * 2380:     private function init_class_bLeftJoin( )
- * 2418:     private function init_class_statementTables( $type, $csvStatement )
- * 2466:     private function init_class_statementTablesByFilter( )
- * 2487:     private function zz_addAliases( $statement )
- * 2536:     private function zz_addUidsToSelect( $csvSelect )
- * 2568:     private function zz_dieIfOverride( $type )
- * 2617:     private function zz_loadTCAforAllTables( )
- * 2639:     private function zz_setToRealTableNames( $csvStatement )
- * 2663:     private function zz_woForeignTables( $type, $csvStatement )
+ * 2236:     private function init_class_boolAutorelation( )
+ * 2312:     private function init_class_bLeftJoin( )
+ * 2350:     private function init_class_statementTables( $type, $csvStatement )
+ * 2398:     private function init_class_statementTablesByFilter( )
+ * 2419:     private function zz_addAliases( $statement )
+ * 2468:     private function zz_addUidsToSelect( $csvSelect )
+ * 2500:     private function zz_dieIfOverride( $type )
+ * 2549:     private function zz_loadTCAforAllTables( )
+ * 2571:     private function zz_setToRealTableNames( $csvStatement )
+ * 2595:     private function zz_woForeignTables( $type, $csvStatement )
  *
- * TOTAL FUNCTIONS: 31
+ * TOTAL FUNCTIONS: 30
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
