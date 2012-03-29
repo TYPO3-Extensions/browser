@@ -304,6 +304,7 @@ class tx_browser_pi1_sql_auto
     $csvSelect = $this->zz_setToRealTableNames( $this->conf_view['select'] );
       // Add table.uid
     $csvSelect = $this->zz_addUid( 'select', $csvSelect );
+      // Add aliases
     $csvSelect = $this->zz_addAliases( $csvSelect );
 
       // Devide in local table and foreign tables
@@ -2482,6 +2483,17 @@ class tx_browser_pi1_sql_auto
  */
   private function zz_addAliases( $statement )
   {
+    static $drsPrompt = true;
+
+      // DRS
+    if( $this->pObj->b_drs_devTodo && $drsPrompt )
+    {
+      $prompt     = 'Aliases should added depending on deal_as_table.';
+      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+      $drsPrompt  = false;
+    }
+      // DRS
+
     $arr_tableFields = $this->pObj->objZz->getCSVasArray( $statement );
 
       // LOOP all tableFields from statement
