@@ -793,7 +793,6 @@ class tx_browser_pi1_template
       // Init the global array $arrHandleAs
 
 
-
       //////////////////////////////////////////////////////////////////
       //
       // Get oddClasses

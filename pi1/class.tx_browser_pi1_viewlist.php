@@ -210,7 +210,7 @@ class tx_browser_pi1_viewlist
       // #29370, 110831, dwildt+
 
 
-var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements );
+//var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements );
 //var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple );
 
       // Building SQL query and get the SQL result
@@ -229,7 +229,6 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements );
     $this->rows_fromSqlRes( $res );
     $rows = $this->pObj->rows;
 
-var_dump( __METHOD__, __LINE__, $rows );
       // DRS
     if( $this->pObj->b_drs_devTodo )
     {
@@ -319,7 +318,7 @@ var_dump( __METHOD__, __LINE__, $rows );
       // record browser
 
 
-var_dump( __METHOD__, __LINE__, $rows );
+//var_dump( __METHOD__, __LINE__, $rows );
     $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
 
 
