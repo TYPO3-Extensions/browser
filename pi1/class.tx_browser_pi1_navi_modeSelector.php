@@ -38,33 +38,14 @@
  *
  *
  *
- *   71: class tx_browser_pi1_navi_modeSelector
- *  122:     public function __construct($parentObj)
+ *   52: class tx_browser_pi1_navi_modeSelector
+ *   87:     public function __construct($parentObj)
  *
- *              SECTION: Index browser
- *  161:     public function indexBrowser( $arr_data )
- *  396:     public function indexBrowserTemplate($arr_data)
- *  667:     public function indexBrowserTabArray($arr_data)
- * 1107:     public function indexBrowserRowsInitial($arr_data)
+ *              SECTION: Main
+ *  117:     public function get( $content )
+ *  153:     public function get_tabs( $content )
  *
- *              SECTION: pagebrowser
- * 1381:     public function tmplPageBrowser($arr_data)
- *
- *              SECTION: mode selector
- * 1620:     public function prepaireModeSelector()
- * 1687:     public function tmplModeSelector($arr_data)
- *
- *              SECTION: record browser
- * 1809:     public function recordbrowser_get($str_content)
- * 1896:     public function recordbrowser_callListView()
- * 1968:     private function recordbrowser_rendering()
- * 2298:     public function recordbrowser_set_session_data($rows)
- *
- *              SECTION: downward compatibility
- * 2476:     public function getMarkerIndexbrowser( )
- * 2522:     public function getMarkerIndexbrowserTabs( )
- *
- * TOTAL FUNCTIONS: 14
+ * TOTAL FUNCTIONS: 3
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -130,6 +111,7 @@ class tx_browser_pi1_navi_modeSelector
  /**
   * get( ): Building the mode selector HTML code.
   *
+  * @param	[type]		$$content: ...
   * @return	string		template
   */
   public function get( $content )
@@ -165,6 +147,7 @@ class tx_browser_pi1_navi_modeSelector
  /**
   * get_tabs( ): Building the mode selector HTML code.
   *
+  * @param	[type]		$$content: ...
   * @return	string		template
   */
   public function get_tabs( $content )

@@ -50,11 +50,11 @@
  *  308:     private function count_resSql( )
  *
  *              SECTION: SQL statements
- *  394:     private function sqlStatement_from( $table )
- *  421:     private function sqlStatement_where( $table )
+ *  401:     private function sqlStatement_from( $table )
+ *  428:     private function sqlStatement_where( $table )
  *
  *              SECTION: TypoScript
- *  475:     private function tsResultsAtATime( )
+ *  483:     private function tsResultsAtATime( )
  *
  * TOTAL FUNCTIONS: 8
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -476,6 +476,7 @@ class tx_browser_pi1_navi_pageBrowser
  * tsResultsAtATime( ): Override the TypoScript property results_at_a_time, if
  *                      the current view has a limit.
  *
+ * @return	[type]		...
  * @version 3.9.12
  * @since   3.9.12
  */

@@ -42,19 +42,32 @@
  *
  *
  *
- *   61: class tx_browser_pi1_sql_functions
- *  116:     public function __construct($parentObj)
+ *   74: class tx_browser_pi1_sql_functions
+ *  132:     public function __construct($parentObj)
  *
- *              SECTION: ZZ: Helper
- *  147:     public function aliasToTable( $arr_aliastableField )
- *  198:     public function cObjGetSingle( $currConfPath, $statement, $coa_name, $coa_conf )
- *  281:     public function expressionAndAliasToTable( $arr_tablefields )
- *  319:     public function expressionToAlias( $sqlStatement )
- *  359:     public function getTableFieldWoAs( $tableFieldWiAlias )
- *  376:     public function getAlias( $tableFieldWiAlias )
- *  401:     private function getTableFieldOrAlias( $tableFieldWiAlias, $bool_returnTableField )
+ *              SECTION: Handle SQL aliases
+ *  163:     private function aliasToTable( $arr_aliastableField )
+ *  210:     private function getTableFieldWoAs( $tableFieldWiAlias )
+ *  227:     private function getAlias( $tableFieldWiAlias )
+ *  252:     private function getTableFieldOrAlias( $tableFieldWiAlias, $bool_returnTableField )
  *
- * TOTAL FUNCTIONS: 8
+ *              SECTION: Handle SQL expressions
+ *  305:     public function expressionAndAliasToTable( $arr_tablefields )
+ *  343:     public function expressionToAlias( $sqlStatement )
+ *
+ *              SECTION: Handle SQL error
+ *  397:     public function prompt_error( $query, $error )
+ *
+ *              SECTION: TypoScript for SQL statements
+ *  455:     public function cObjGetSingle( $currConfPath, $statement, $coa_name, $coa_conf )
+ *
+ *              SECTION: Helpers
+ *  547:     public function get_andWherePid( $table )
+ *  621:     public function exec_SELECTquery( $select, $from, $where, $groupBy, $orderBy, $limit )
+ *  667:     public function sql_query( $query )
+ *  688:     public function zz_prependPiVarSort( $orderBy )
+ *
+ * TOTAL FUNCTIONS: 13
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -372,15 +385,15 @@ class tx_browser_pi1_sql_functions
 
 
   /**
-   * prompt_error( ): Prompts a SQL error.
-   *                  It is with the query in case of an enabled DRS.
-   *
-   * @param   string  $query: the current query
-   * @param   string  $error: the error message delivered by SQL
-   * @return	array		$arr_return with elements for prompting
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * prompt_error( ): Prompts a SQL error.
+ *                  It is with the query in case of an enabled DRS.
+ *
+ * @param	string		$query: the current query
+ * @param	string		$error: the error message delivered by SQL
+ * @return	array		$arr_return with elements for prompting
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   public function prompt_error( $query, $error )
   {
 
@@ -434,7 +447,7 @@ class tx_browser_pi1_sql_functions
  * @param	string		$currConfPath : current TS configuration path like 'select.' or 'override.select.'
  * @param	string		$statement    : SQL statement like: "tt_news.title, tt_news.short, ..."
  * @param	string		$coa_name     : name of COA like TEXT or COA
- * @param	array     $coa_conf     : the COA, the configuration object array
+ * @param	array		$coa_conf     : the COA, the configuration object array
  * @return	string		$statement    : wrapped or unwrapped statement
  * @version 3.9.12
  * @since   3.9.12
@@ -525,12 +538,12 @@ class tx_browser_pi1_sql_functions
 
 
   /**
-   * get_andWherePid( ):  Get the table.pid IN (1,2,3,4) for an
-   *                      and WHERE statement. Statement is with an AND
-   *
-   * @param	string		$table: Name of the current table
-   * @return	string		$andWherePid: statement: table.pid IN (pidlist)
-   */
+ * get_andWherePid( ):  Get the table.pid IN (1,2,3,4) for an
+ *                      and WHERE statement. Statement is with an AND
+ *
+ * @param	string		$table: Name of the current table
+ * @return	string		$andWherePid: statement: table.pid IN (pidlist)
+ */
   public function get_andWherePid( $table )
   {
     $conf       = $this->pObj->conf;
@@ -591,20 +604,20 @@ class tx_browser_pi1_sql_functions
 
 
   /**
-   * exec_SELECTquery( ) :  Same as $GLOBALS['TYPO3_DB']->SELECTquery. But if
-   *                        class var $dev_sqlPromptsOnly is true, SQL query
-   *                        won't executed but prompted in the frontend.
-   *
-   * @param	string		$select   : SELECT statement
-   * @param	string		$from     : FROM statement
-   * @param	string		$where    : WHERE statement
-   * @param	string		$groupBy  : GROUP BY statement
-   * @param	string		$orderBy  : ORDER BY statement
-   * @param	string		$limit    : LIMIT statement
-   * @return	array		$res      : SQL result
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * exec_SELECTquery( ) :  Same as $GLOBALS['TYPO3_DB']->SELECTquery. But if
+ *                        class var $dev_sqlPromptsOnly is true, SQL query
+ *                        won't executed but prompted in the frontend.
+ *
+ * @param	string		$select   : SELECT statement
+ * @param	string		$from     : FROM statement
+ * @param	string		$where    : WHERE statement
+ * @param	string		$groupBy  : GROUP BY statement
+ * @param	string		$orderBy  : ORDER BY statement
+ * @param	string		$limit    : LIMIT statement
+ * @return	array		$res      : SQL result
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   public function exec_SELECTquery( $select, $from, $where, $groupBy, $orderBy, $limit )
   {
     if( $this->dev_sqlPromptsOnly )
@@ -634,7 +647,7 @@ class tx_browser_pi1_sql_functions
                                       $groupBy,
                                       $orderBy,
                                       $limit
-                                    );      
+                                    );
 
     return $res;
   }
@@ -642,15 +655,15 @@ class tx_browser_pi1_sql_functions
 
 
   /**
-   * sql_query( ) :  Same as $GLOBALS['TYPO3_DB']->sql_query. But if
-   *                 class var $dev_sqlPromptsOnly is true, SQL query
-   *                 won't executed but prompted in the frontend.
-   *
-   * @param	string		$query  : SQL query
-   * @return	array		$res    : SQL result
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * sql_query( ) :  Same as $GLOBALS['TYPO3_DB']->sql_query. But if
+ *                 class var $dev_sqlPromptsOnly is true, SQL query
+ *                 won't executed but prompted in the frontend.
+ *
+ * @param	string		$query  : SQL query
+ * @return	array		$res    : SQL result
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   public function sql_query( $query )
   {
     if( $this->dev_sqlPromptsOnly )
@@ -666,11 +679,12 @@ class tx_browser_pi1_sql_functions
 
 
   /**
-   * zz_prependPiVarSort( ):  Prepends the value from the piVars['sort'] to the
-   *                          the given ORCER BY statement, if there is a piVar.
-   *
-   * @return	string		The ORDER BY statement
-   */
+ * zz_prependPiVarSort( ):  Prepends the value from the piVars['sort'] to the
+ *                          the given ORCER BY statement, if there is a piVar.
+ *
+ * @param	[type]		$$orderBy: ...
+ * @return	string		The ORDER BY statement
+ */
   public function zz_prependPiVarSort( $orderBy )
   {
     $b_desc       = false;
