@@ -704,9 +704,9 @@ class tx_browser_pi1_sql_auto
     $str_pidStatement = $this->pObj->objSqlFun->get_andWherePid($this->pObj->localTable);
     // Do we have a showUid not for the local table but for the foreign table? 3.3.3
 
-    if (strpos($whereClause, $str_pidStatement) === false)
+    if( strpos( $whereClause, $str_pidStatement ) === false )
     {
-      $whereClause = $whereClause." AND ".$str_pidStatement;
+      $whereClause = $whereClause . $str_pidStatement;
     }
     // Add pid IN list
 
@@ -2032,7 +2032,6 @@ class tx_browser_pi1_sql_auto
 
               $str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
               $str_pidStatement         = $this->pObj->objSqlFun->get_andWherePid($foreignTable);
-              $str_pidStatement         = ' AND '.$str_pidStatement.' ';
 
                 // #9697, 100912, dwildt
                 // Opposite relation: true
@@ -2184,7 +2183,6 @@ class tx_browser_pi1_sql_auto
           // #32254, 111201, dwildt+
         $str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
         $str_pidStatement         = $this->pObj->objSqlFun->get_andWherePid($foreignTable);
-        $str_pidStatement         = " AND " . $str_pidStatement . " " ;
           // #32254, 111201, dwildt+
 
         $localTableFieldMaxItems = $GLOBALS['TCA'][$localTable]['columns'][$localField]['config']['maxitems'];
