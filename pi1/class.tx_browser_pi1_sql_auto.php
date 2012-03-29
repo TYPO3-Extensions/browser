@@ -75,7 +75,7 @@
  * 1667:     private function relations_getForeignTable( $tables, $config, $configPath )
  * 1734:     private function relations_requirements( $table, $config, $configPath )
  *
- *              SECTION: Join
+ *              SECTION: Joins
  * 1843:     private function get_joins( )
  *
  *              SECTION: Helper
@@ -744,29 +744,7 @@ var_dump( __METHOD__, __LINE__, $this->arr_relations_mm_simple );
 
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /***********************************************
-    *
-    * WHERE helper
-    *
-    **********************************************/
-
+  
 
 /**
  * It returns the part for the where clause with a search, if there are search fields in the TS and a piVar sword.
@@ -1829,7 +1807,7 @@ var_dump( __METHOD__, __LINE__, $this->arr_relations_mm_simple );
 
   /***********************************************
    *
-   * Join
+   * Joins
    *
    **********************************************/
 
