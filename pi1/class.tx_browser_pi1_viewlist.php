@@ -317,7 +317,7 @@ class tx_browser_pi1_viewlist
       // record browser
 
 
-
+var_dump( __METHOD__, __LINE__, $rows, $content );
     $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
 
 
