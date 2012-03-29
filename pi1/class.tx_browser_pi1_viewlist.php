@@ -1030,6 +1030,15 @@ class tx_browser_pi1_viewlist
       // Get the mode selector content
     $content = $arr_return['data']['content'];
 
+    if( empty ( $content ) )
+    {
+      $this->content  = $this->pObj->cObj->substituteSubpart
+                        (
+                          $this->content, '###MODESELECTOR###', null, true
+                        );
+      return;
+    }
+
       // Set the marker array
     $markerArray                = $this->pObj->objWrapper->constant_markers( );
     $markerArray['###MODE###']  = $this->mode;
