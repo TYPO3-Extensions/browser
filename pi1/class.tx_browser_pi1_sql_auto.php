@@ -355,9 +355,9 @@ class tx_browser_pi1_sql_auto
 
 
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // RETURN in case of override.from
+      ////////////////////////////////////////////////////////////////////
+      //
+      // RETURN in case of override.from
 
     if($conf['views.'][$viewWiDot][$mode.'.']['override.']['from'])
     {
@@ -369,27 +369,27 @@ class tx_browser_pi1_sql_auto
       }
       return $from;
     }
-    // RETURN in case of override.from
-// 3.3.7
+      // RETURN in case of override.from
 
 
 
     $from = false;
 
-    // Add the first element of fetched tables to FROM
-    if ($this->pObj->localTable)
+      // Add the local table to FROM
+    if( $this->pObj->localTable )
     {
       $from = $this->pObj->localTable;
-      if ($this->pObj->b_drs_sql)
+      if( $this->pObj->b_drs_sql )
       {
         t3lib_div::devLog('[INFO/SQL] Value from the localTable: FROM \''.$from.'\'', $this->pObj->extKey, 0);
       }
     }
 
 
-    if(!$from)
+    if( ! $from )
     {
-      if ($this->b_left_join)
+        // Add the first element of fetched tables to FROM
+      if( $this->b_left_join )
       {
         reset($this->pObj->arr_realTables_arrFields);
         // Take the key of the first element. This is the name of the first table
@@ -399,7 +399,7 @@ class tx_browser_pi1_sql_auto
           t3lib_div::devLog('[INFO/SQL] Value from the TypoScript select: FROM \''.$from.'\'', $this->pObj->extKey, 0);
         }
       }
-      // Add the first element of fetched tables to FROM
+        // Add the first element of fetched tables to FROM
     }
 
     // LEFT JOIN
@@ -2421,6 +2421,8 @@ class tx_browser_pi1_sql_auto
     $arrStatement = $this->pObj->objZz->getCSVasArray( $csvStatement );
 
     $prevTable = null;
+
+      // LOOP each tableField
     foreach( $arrStatement as $tableField)
     {
       list( $table ) = explode( '.', $tableField );
@@ -2448,6 +2450,7 @@ class tx_browser_pi1_sql_auto
       $this->statementTables['all']['foreigntable'][$table] = $table;
       $this->statementTables[$type]['foreigntable'][$table] = $table;
     }
+      // LOOP each tableField
   }
 
 
@@ -2533,6 +2536,25 @@ class tx_browser_pi1_sql_auto
  */
   private function zz_addUid( $type, $csvStatement )
   {
+    if( ! is_array( $this->pObj->arrConsolidate['addedTableFields'] ) )
+    {
+      return $csvStatement;
+    }
+
+      // Add uid field of each table without uid
+    $str_addTableUids = false;
+    $arr_addTableUids = false;
+
+    foreach( ( array ) $this->pObj->arrConsolidate['addedTableFields'] as $tableField )
+    {
+      list( $table, $field ) = explode( '.', $tableField );
+      if( $field == 'uid' )
+      {
+        $csvStatement = $csvStatement . ", " . $tableField . " AS '" . $tableField . "'";
+      }
+    }
+    return $csvStatement;
+
       // Get first table of the current statement
     list( $table ) = explode( '.', $csvStatement );
 
