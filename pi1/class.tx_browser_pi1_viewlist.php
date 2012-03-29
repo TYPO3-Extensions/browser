@@ -539,8 +539,6 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple 
                                     );
       // SQL query
 
-var_dump( __METHOD__, __LINE__, $query );
-return;
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'SQL query list view - START' );
     $tt_start = $this->pObj->tt_prevEndTime;
@@ -592,6 +590,8 @@ return;
       }
     }
       // DRS - Performance
+
+var_dump( __METHOD__, __LINE__, $query, $sM );
 
       // Error management
     if( $error )
