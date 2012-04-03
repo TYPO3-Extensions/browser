@@ -120,6 +120,11 @@
   * #29186: Empty rows are tested with ==null instead of empty( )
   * #29323: method ajaxifyOrderBy is undefined. Affected file: res/js/tx_browser_pi1.js
 
+3.7.8
+  120403
+  Bugfix
+  * #32220: Wrong path to jQuery UI and AJAX files when TYPO3 resides in a subdirectory
+
 3.7.7
   120325
   Bugfix

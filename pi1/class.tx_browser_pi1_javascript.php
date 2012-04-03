@@ -1111,6 +1111,12 @@ class tx_browser_pi1_javascript
       {
         $bool_file_exists = false;
       }
+        // #32220, uherrmann, 111202, 4-
+//        // absolute path ./. root path
+//      $rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT');
+//        // relative path
+//      $path     = substr($absPath, strlen($rootPath.'/'));
+        // #32220, uherrmann, 111202, 2+
         // relative path
       $path = preg_replace('%' . PATH_site . '%', '', $absPath);
     }
