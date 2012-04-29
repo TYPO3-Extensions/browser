@@ -120,6 +120,13 @@
   * #29186: Empty rows are tested with ==null instead of empty( )
   * #29323: method ajaxifyOrderBy is undefined. Affected file: res/js/tx_browser_pi1.js
 
+3.8.0
+  120429
+  Improvement
+  * #36707: Handle empty showUid
+  Bugfix
+  * #36704: Bugfix for Browser for Civserv (browser_civserv)
+
 3.7.8
   120403
   Bugfix

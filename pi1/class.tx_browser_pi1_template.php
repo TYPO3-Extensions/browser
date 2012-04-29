@@ -2980,6 +2980,9 @@ class tx_browser_pi1_template
         // #12723, mbless, 110310
       $this->_elementsTransformed[$key]     = $value;
       $this->_elementsBoolSubstitute[$key]  = $boolSubstitute;
+
+        // #36704, dwildt, 120429, 1+
+      $i_count_element++;
     }
       // LOOP elements
 
@@ -3088,7 +3091,8 @@ class tx_browser_pi1_template
       }
         // DRS - Performance
 
-      $i_count_element++;
+        // #36704, dwildt, 120429, 1-
+      //$i_count_element++;
     }
       // Loop through all elements
 

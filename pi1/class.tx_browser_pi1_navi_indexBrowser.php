@@ -1294,13 +1294,13 @@ class tx_browser_pi1_navi_indexBrowser
     list( $table, $field) = explode( '.', $tableField );
 
       // Query for all filter items
-    $select   = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
-    $from     = $this->sqlStatement_from( $table );
+    $select       = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
+    $from         = $this->sqlStatement_from( $table );
     $strFindInSet = "(" . implode ( " OR ", $arrfindInSet ) . ")";
     $where        = $this->sqlStatement_where( $table, $strFindInSet );
-    $groupBy  = "LEFT ( " . $tableField . ", " . $length . " )";
-    $orderBy  = "LEFT ( " . $tableField . ", " . $length . " )";
-    $limit    = null;
+    $groupBy      = "LEFT ( " . $tableField . ", " . $length . " )";
+    $orderBy      = "LEFT ( " . $tableField . ", " . $length . " )";
+    $limit        = null;
 
       // Get query
     $query  = $GLOBALS['TYPO3_DB']->SELECTquery
@@ -1575,11 +1575,14 @@ class tx_browser_pi1_navi_indexBrowser
         $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
         break;
       default:
+          // 120421, dwildt, 1+
+        $where = "1";
         $andEnableFields = $this->pObj->cObj->enableFields( $table );
-        if( $andEnableFields )
-        {
-          $where = "1";
-        }
+          // 120421, dwildt, 4-
+//        if( $andEnableFields )
+//        {
+//          $where = "1";
+//        }
         $where  = $where . $andEnableFields;
         $where  = $where . $this->pObj->objSqlFun->get_andWherePid( $table );
         $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );

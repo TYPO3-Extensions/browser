@@ -297,7 +297,10 @@
       // Security showUid
 
       // RELOAD the HTML page with another URL, if showUid isn't proper
-    if (isset($this->pObj->piVars['showUid']))
+      // #36707, dwildt, 1-
+    //if ( isset( $this->pObj->piVars['showUid'] ) )
+      // #36707, dwildt, 1+
+    if ( isset( $this->pObj->piVars['showUid'] ) && ! empty( $this->pObj->piVars['showUid'] ) )
     {
       $str_showUid = $this->pObj->piVars['showUid'];
       if (!is_numeric($str_showUid))
