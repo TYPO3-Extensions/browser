@@ -787,6 +787,8 @@ class tx_browser_pi1_viewlist
     $limit    = $this->pObj->objSqlInit->statements['listView']['limit'];
       // SQL query array
 
+var_dump( __METHOD__, __LINE__, $limit );
+exit;
       // #9917: Selecting a random sample from a set of rows
     if( $conf_view['random'] == 1 )
     {
