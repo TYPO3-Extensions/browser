@@ -23,13 +23,13 @@
 ***************************************************************/
 
   /**
-* The class tx_browser_pi1_localisation bundles methods for localisation for the extension browser
+* The class tx_browser_pi1_localisation bundles methods for localisation for the extension browser from version 4.x
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 3.9.3
+* @version 3.9.13
 * @since 2.0.0
 */
 
@@ -668,7 +668,7 @@ class tx_browser_pi1_localisation
  * Constants were defined in the constructor.
  *
  * @return	integer		See description above
- * @version 3.9.3
+ * @version 3.9.13
  * @since 2.0.0
  */
   public function localisationConfig()
@@ -690,30 +690,24 @@ class tx_browser_pi1_localisation
       // Get localisation configuration
 
     $this->lang_id      = $GLOBALS['TSFE']->sys_language_content;
+    $this->lang_mode    = $GLOBALS['TSFE']->sys_language_mode;
     $this->overlay_mode = $GLOBALS['TSFE']->sys_language_contentOL;
 
       // DRS - Development Reporting System
     if ($this->pObj->b_drs_localisation)
     {
-      t3lib_div::devlog('[INFO/LOCALISATION] config.sys_language_uid = '.$this->lang_id, $this->pObj->extKey, 0);
-      t3lib_div::devlog('[INFO/LOCALISATION] config.sys_language_overlay = '.$this->overlay_mode, $this->pObj->extKey, 0);
+      $prompt = 'config.sys_language_uid = ' . $this->lang_id;
+      t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompt = 'config.sys_language_mode = ' . $this->lang_mode;
+      t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompt = 'config.sys_language_overlay = ' . $this->overlay_mode;
+      t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS - Development Reporting System
       // Get localisation configuration
 
-//    if ($this->lang_id == 0 && $this->overlay_mode === 0)
-//    {
-//      // Display records with sys_language_uid = 0 or -1
-//      return PI1_ANY_LANGUAGE;
-//    }
-//    if ($this->lang_id == 0 && $this->overlay_mode === 1)
-//    {
-//      // Display only records with sys_language_uid = 0
-//      return PI1_DEFAULT_LANGUAGE_ONLY;
-//    }
-
-
-
+    
+    
       ////////////////////////////////////////////////////////////////////////////////
       //
       // RETURN current language is default language

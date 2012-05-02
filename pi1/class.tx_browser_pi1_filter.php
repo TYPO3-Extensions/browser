@@ -504,11 +504,11 @@ class tx_browser_pi1_filter {
   private function init_localisation( )
   {
 
-      // Set class var $int_localisation_mode; init TS of pObj->objLocalise3x;
+      // Set class var $int_localisation_mode; init TS of pObj->objLocalise;
     if( ! isset( $this->int_localisation_mode ) )
     {
-      $this->int_localisation_mode = $this->pObj->objLocalise3x->localisationConfig( );
-      $this->pObj->objLocalise3x->init_typoscript( );
+      $this->int_localisation_mode = $this->pObj->objLocalise->localisationConfig( );
+      $this->pObj->objLocalise->init_typoscript( );
     }
 
       // Set class var $bool_dontLocalise
@@ -2515,7 +2515,7 @@ class tx_browser_pi1_filter {
     $this->pObj->objZz->loadTCA( $table );
 
       // Get language overlay appendix
-    $lang_ol        = $this->pObj->objLocalise3x->conf_localisation['TCA.']['field.']['appendix'];
+    $lang_ol        = $this->pObj->objLocalise->conf_localisation['TCA.']['field.']['appendix'];
 
       // Label of the  field for language overlay
     $field_lang_ol  = $field . $lang_ol;
@@ -3367,7 +3367,7 @@ class tx_browser_pi1_filter {
  */
   private function localise_langOl( )
   {
-    $boolOlPrefix = $this->pObj->objLocalise3x->conf_localisation['TCA.']['value.']['langPrefix'];
+    $boolOlPrefix = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['langPrefix'];
 
     switch( $boolOlPrefix )
     {
@@ -3403,7 +3403,7 @@ class tx_browser_pi1_filter {
     $langOlField  = $this->sql_filterFields[$this->curr_tableField]['lang_ol'];
 
       // Get the language devider
-    $devider      = $this->pObj->objLocalise3x->conf_localisation['TCA.']['value.']['devider'];
+    $devider      = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['devider'];
 
     // Get the language prefix
     $prefix       = $GLOBALS['TSFE']->lang . ':' ; // Value i.e.: 'de:'
@@ -3481,7 +3481,7 @@ class tx_browser_pi1_filter {
     $langOlField  = $this->sql_filterFields[$this->curr_tableField]['lang_ol'];
 
       // Get the language devider
-    $devider      = $this->pObj->objLocalise3x->conf_localisation['TCA.']['value.']['devider'];
+    $devider      = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['devider'];
       // Get position (language id)
     $lang_pos     = $GLOBALS['TSFE']->sys_language_content - 1;
 

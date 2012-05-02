@@ -1620,13 +1620,13 @@ class tx_browser_pi1 extends tslib_pibase {
     require_once('class.tx_browser_pi1_navi_pageBrowser.php');
     $this->objNaviPageBrowser = new tx_browser_pi1_navi_pageBrowser( $this );
 
-      // Class with localisation methods
+      // Class with localisation methods version 3.x
     require_once('class.tx_browser_pi1_localisation_3x.php');
     $this->objLocalise3x = new tx_browser_pi1_localisation_3x( $this );
 
-//      // Class with localisation methods
-//    require_once('class.tx_browser_pi1_localisation.php');
-//    $this->objLocalise = new tx_browser_pi1_localisation( $this );
+      // Class with localisation methods version 4.x
+    require_once('class.tx_browser_pi1_localisation.php');
+    $this->objLocalise = new tx_browser_pi1_localisation( $this );
 
       // Class with seo methods for Search Engine Optimization
     require_once('class.tx_browser_pi1_seo.php');
@@ -1768,6 +1768,27 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objLocalise3x->init_typoscript();
 
 
+
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_localisation.php
+
+      // [Array] The current Typoscript configuration array
+    $this->objLocalise->conf      = $this->conf;
+      // [Integer] The current mode (from modeselector)
+    $this->objLocalise->mode      = $this->piVar_mode;
+      // [String] 'list' or 'single': The current view
+    $this->objLocalise->view      = $this->view;
+      // [Array] The TypoScript configuration array of the current view
+    $this->objLocalise->conf_view = $conf_view;
+      // [String] TypoScript path to the current view. I.e. views.single.1
+    $this->objLocalise->conf_path = $conf_path;
+    $this->objLocalise->init_typoscript();
+
+    
 
       //////////////////////////////////////////////////////////////////////
       //
