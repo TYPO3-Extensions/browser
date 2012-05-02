@@ -446,7 +446,7 @@ class tx_browser_pi1_navi_pageBrowser
         {
           $where = "1";
         }
-        $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
+        $llWhere  = $this->pObj->objLocalise3x->localisationFields_where( $table );
         if( $llWhere )
         {
           $where  = $where . " AND " . $llWhere;

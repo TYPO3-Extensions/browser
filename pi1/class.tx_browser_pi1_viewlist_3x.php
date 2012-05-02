@@ -223,7 +223,7 @@ class tx_browser_pi1_viewlist_3x
        */
 
       // User selected a non default language
-    if( $this->pObj->objLocalise->int_localisation_mode >= 3 )
+    if( $this->pObj->objLocalise3x->int_localisation_mode >= 3 )
     {
         // User selected a filter
       if( ! empty( $this->pObj->arr_andWhereFilter ) )
@@ -250,7 +250,7 @@ class tx_browser_pi1_viewlist_3x
             }
             $where    = implode( ' OR ', $arr_where );
             $where    = '(' . $where . ')';
-            $andWhere = $this->pObj->objLocalise->localisationFields_where( $table );
+            $andWhere = $this->pObj->objLocalise3x->localisationFields_where( $table );
               // 13505, 110302, dwildt
             if( ! $andWhere )
             {
@@ -403,10 +403,10 @@ class tx_browser_pi1_viewlist_3x
 
     if( ! $this->pObj->b_sql_manual )
     {
-      $rows = $this->pObj->objLocalise->consolidate_rows( $rows, $this->pObj->localTable );
+      $rows = $this->pObj->objLocalise3x->consolidate_rows( $rows, $this->pObj->localTable );
       $this->pObj->rows = $rows;
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objLocalise->consolidate_rows( )' );
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objLocalise3x->consolidate_rows( )' );
     }
     if( $this->pObj->b_sql_manual && $this->pObj->b_drs_localisation )
     {

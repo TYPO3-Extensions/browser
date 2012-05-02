@@ -308,11 +308,11 @@ class tx_browser_pi1_navi_indexBrowser
   private function localisation_init( )
   {
 
-      // Set class var $int_localisation_mode; init TS of pObj->objLocalise;
+      // Set class var $int_localisation_mode; init TS of pObj->objLocalise3x;
     if( ! isset( $this->int_localisation_mode ) )
     {
-      $this->int_localisation_mode = $this->pObj->objLocalise->localisationConfig( );
-      $this->pObj->objLocalise->init_typoscript( );
+      $this->int_localisation_mode = $this->pObj->objLocalise3x->localisationConfig( );
+      $this->pObj->objLocalise3x->init_typoscript( );
     }
 
       // Set class var $bool_dontLocalise
@@ -1590,7 +1590,7 @@ class tx_browser_pi1_navi_indexBrowser
         {
           $where = "1";
         }
-        $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
+        $llWhere  = $this->pObj->objLocalise3x->localisationFields_where( $table );
         if( $llWhere )
         {
           $where  = $where . " AND " . $llWhere;

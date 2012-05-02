@@ -1423,7 +1423,7 @@ class tx_browser_pi1_filter_3x {
       // QUERY
 
       // BUGFIX - part I: If table.field isn't in $this->pObj->arr_realTables_arrFields
-      //                  we will get trouble in $this->pObj->objLocalise->localisationFields_select()
+      //                  we will get trouble in $this->pObj->objLocalise3x->localisationFields_select()
     $bool_table_is_added = false;
     $bool_field_is_added = false;
     if (!is_array($this->pObj->arr_realTables_arrFields[$table]))
@@ -1450,7 +1450,7 @@ class tx_browser_pi1_filter_3x {
     }
       // BUGFIX - part I
 
-    $arr_local_select = $this->pObj->objLocalise->localisationFields_select( $table );
+    $arr_local_select = $this->pObj->objLocalise3x->localisationFields_select( $table );
       // BUGFIX - part II: Remove added table.fields
     if ($bool_table_is_added)
     {
@@ -1479,7 +1479,7 @@ class tx_browser_pi1_filter_3x {
       "         " . $str_local_select . PHP_EOL;
     }
     $query = str_replace('###LOCALISATION_SELECT###', $str_local_select, $query);
-    $str_local_where = $this->pObj->objLocalise->localisationFields_where($table);
+    $str_local_where = $this->pObj->objLocalise3x->localisationFields_where($table);
     if ($str_local_where)
     {
       $str_local_where = " AND " . $str_local_where;
@@ -1568,7 +1568,7 @@ class tx_browser_pi1_filter_3x {
       //
       // Consolidate Localisation
 
-    $rows = $this->pObj->objLocalise->consolidate_filter($rows);
+    $rows = $this->pObj->objLocalise3x->consolidate_filter($rows);
       // Consolidate Localisation
 
 

@@ -3606,6 +3606,7 @@ plugin.tx_browser_pi1 {
       pi_list_browseresults_next      = &#187;
       pi_list_browseresults_last      = &#187;&#187;
       pi_list_browseresults_displays  = %s to %s out of %s records
+      pi_list_browseresults_page      = Page
     }
     de {
       pi_list_browseresults_prev      = &#171;
@@ -3613,6 +3614,7 @@ plugin.tx_browser_pi1 {
       pi_list_browseresults_next      = &#187;
       pi_list_browseresults_last      = &#187;&#187;
       pi_list_browseresults_displays  = %s bis %s von insgesamt %s Datens&auml;tzen
+      pi_list_browseresults_page      = Seite
     }
   }
 

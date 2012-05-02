@@ -598,7 +598,7 @@ class tx_browser_pi1_sql_auto
     //
     // Add localisation fields
 
-    $str_local_where = $this->pObj->objLocalise->localisationFields_where($this->pObj->localTable);
+    $str_local_where = $this->pObj->objLocalise3x->localisationFields_where($this->pObj->localTable);
     if ($str_local_where)
     {
       $whereClause      = $whereClause." AND ".$str_local_where;
@@ -684,7 +684,7 @@ class tx_browser_pi1_sql_auto
       case('single'):
         // Add the uid of the choosen record
         //$whereClause .= ' AND '.$this->pObj->arrLocalTable['uid'].' = '.$this->pObj->piVars['showUid'];
-        $whereClause .= $this->pObj->objLocalise->localisationSingle_where($this->pObj->localTable);
+        $whereClause .= $this->pObj->objLocalise3x->localisationSingle_where($this->pObj->localTable);
         break;
       case('list'):
         // Add the search clause, if there is a search (sword)
