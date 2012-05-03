@@ -1101,17 +1101,19 @@ class tx_browser_pi1_navi_indexBrowser
             <br />
             <div style="border:1em solid orange;padding:1em">
               <h1>
-                hat can you do?
+                What can you do?
               </h1>
               <ul>
                 <li>
                   Change the localisation configuration in your TypoScript in config { ... }
                 </li>
                 <li>
-                  Post this prompt at <a href="http://typo3-browser-forum.de" target="_blank">typo3-browser-forum.de</a>
+                  Post this prompt at <a href="http://typo3-browser-forum.de" target="_blank">typo3-browser-forum.de</a><br />
+                  Posts are welcome in English and German.
                 </li>
                 <li>
-                  Mail this prompt to <a href="http://wildt.at.die-netzmacher.de" target="_blank">wildt.at.die-netzmacher.de</a>
+                  Mail this prompt to <a href="http://wildt.at.die-netzmacher.de" target="_blank">wildt.at.die-netzmacher.de</a><br />
+                  Mails are welcome in English and German.
                 </li>
               </ul>
             </div>
