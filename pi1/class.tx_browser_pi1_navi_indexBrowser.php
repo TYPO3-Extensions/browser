@@ -1073,7 +1073,7 @@ class tx_browser_pi1_navi_indexBrowser
   {
 
       // SWITCH $int_localisation_mode
-    switch( $this->int_localisation_mode + 100 )
+    switch( $this->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
