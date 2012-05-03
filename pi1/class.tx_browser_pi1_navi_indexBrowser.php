@@ -1074,7 +1074,7 @@ class tx_browser_pi1_navi_indexBrowser
     static $drsPrompt = true;
 
       // SWITCH $int_localisation_mode
-    switch( $this->int_localisation_mode )
+    switch( $this->int_localisation_mode + 100 )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
@@ -1102,6 +1102,7 @@ class tx_browser_pi1_navi_indexBrowser
             </p>
           </div>
           ';
+        die( $pompt );
         break;
     }
       // SWITCH $int_localisation_mode
