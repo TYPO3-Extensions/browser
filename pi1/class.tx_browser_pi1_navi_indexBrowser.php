@@ -172,7 +172,8 @@ class tx_browser_pi1_navi_indexBrowser
     // [String] Label of the default tab
   var $tabDefaultLabel = null;
 
-
+    // [Boolean] Run class code in language consolidation mode? true : yes; false : no.
+  var $bool_LLconsolidationMode = false;
 
 
 
@@ -346,6 +347,84 @@ class tx_browser_pi1_navi_indexBrowser
 //      // DRS
 
     return;
+  }
+
+
+
+/**
+ * localisation_consolidate( )  : ...
+ *
+ * @return	array		$arr_return: Contains an error message in case of an error
+ * @version 3.9.11
+ * @since   3.9.10
+ */
+  private function localisation_consolidate( )
+  {
+      // SWITCH $int_localisation_mode
+    switch( $this->int_localisation_mode )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+          // RETURN : nothing to do
+        return false;
+        break;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+        $curr_int_localisation_mode   = $this->int_localisation_mode;
+        $this->int_localisation_mode  = PI1_DEFAULT_LANGUAGE; 
+        $this->bool_LLconsolidationMode = true; 
+        $arr_return = $this->count_chars_resSqlCount_LLcurrOrDef( $currSqlCharset );
+        $this->bool_LLconsolidationMode = false; 
+        $this->int_localisation_mode  = $curr_int_localisation_mode;
+        return $arr_return;
+        break;
+      default:
+        $prompt = '
+          <div style="text-align:center;">
+            <div style="border:1em solid red;padding:1em">
+              <h1>
+                Error with localisation mode
+              </h1>
+              <p>
+                The value of localisation mode isn\'t defined in the current switch.<br />
+                Value is: "' . $this->int_localisation_mode  . '"
+              </p>
+              <p>
+                Method: ' . __METHOD__ . '<br />
+                Line: ' . __LINE__ . '
+              </p>
+            </div>
+            <br />
+            <div style="border:1em solid orange;padding:1em">
+              <h1>
+                What can you do?
+              </h1>
+              <ul>
+                <li>
+                  Change the localisation configuration in your TypoScript in config { ... } or page.config { ... }.
+                </li>
+                <li>
+                  Post this prompt at <a href="http://typo3-browser-forum.de" target="_blank">typo3-browser-forum.de</a><br />
+                  Posts are welcome in English and German.
+                </li>
+                <li>
+                  Mail this prompt to <a href="http://wildt.at.die-netzmacher.de" target="_blank">wildt.at.die-netzmacher.de</a><br />
+                  Mails are welcome in English and German.
+                </li>
+              </ul>
+            </div>
+            <br />
+            <div style="border:1em;padding:1em">
+              <h1>
+                Browser - TYPO3 without PHP
+              </h1>
+            </div>
+          </div>
+          ';
+        die( $prompt );
+        break;
+    }
+      // SWITCH $int_localisation_mode
+    $this->tabs_init( );
   }
 
 
@@ -787,18 +866,25 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Count special chars
     $arr_return = $this->count_specialChars( );
+      // RETURN : error prompt
     if( ! ( empty ( $arr_return ) ) )
     {
       return $arr_return;
     }
+      // RETURN : error prompt
+      // Count special chars
 
       // Count chars
     $arr_return = $this->count_chars( );
+      // RETURN : error prompt
     if( ! ( empty ( $arr_return ) ) )
     {
       return $arr_return;
     }
+      // RETURN : error prompt
+      // Count chars
 
+    $this->localisation_consolidate( );
   }
 
 
@@ -1014,11 +1100,11 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * count_chars_addSumToTab( ): Updates the sum in the arrays tabIds and attributes
- *                       of the class var $indexBrowserTab
+ * count_chars_addSumToTab( ) : Updates the sum in the arrays tabIds and attributes
+ *                              of the class var $indexBrowserTab
  *
  * @param	array		$res  : SQL result
- * @return	[type]		...
+ * @return	void
  * @version 3.9.12
  * @since   3.9.11
  */
@@ -1165,193 +1251,8 @@ class tx_browser_pi1_navi_indexBrowser
       // Return SQL result
     $arr_return['data']['res'] = $res;
     return $arr_return;
-
-      // Get SQL result 
-    $arr_return = $this->count_chars_resSqlCount_query( $currSqlCharset );
-
-      // SWITCH $int_localisation_mode
-    switch( $this->int_localisation_mode )
-    {
-      case( PI1_DEFAULT_LANGUAGE ):
-      case( PI1_DEFAULT_LANGUAGE_ONLY ):
-          // Do nothing
-        break;
-      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
-        $arr_return = $this->count_chars_resSqlCount_LLcurrOrDef( $currSqlCharset );
-        break;
-      default:
-        $prompt = '
-          <div style="text-align:center;">
-            <div style="border:1em solid red;padding:1em">
-              <h1>
-                Error with localisation mode
-              </h1>
-              <p>
-                The value of localisation mode isn\'t defined in the current switch.<br />
-                Value is: "' . $this->int_localisation_mode  . '"
-              </p>
-              <p>
-                Method: ' . __METHOD__ . '<br />
-                Line: ' . __LINE__ . '
-              </p>
-            </div>
-            <br />
-            <div style="border:1em solid orange;padding:1em">
-              <h1>
-                What can you do?
-              </h1>
-              <ul>
-                <li>
-                  Change the localisation configuration in your TypoScript in config { ... } or page.config { ... }.
-                </li>
-                <li>
-                  Post this prompt at <a href="http://typo3-browser-forum.de" target="_blank">typo3-browser-forum.de</a><br />
-                  Posts are welcome in English and German.
-                </li>
-                <li>
-                  Mail this prompt to <a href="http://wildt.at.die-netzmacher.de" target="_blank">wildt.at.die-netzmacher.de</a><br />
-                  Mails are welcome in English and German.
-                </li>
-              </ul>
-            </div>
-            <br />
-            <div style="border:1em;padding:1em">
-              <h1>
-                Browser - TYPO3 without PHP
-              </h1>
-            </div>
-          </div>
-          ';
-        die( $prompt );
-        break;
-    }
-      // SWITCH $int_localisation_mode
-
-    return $arr_return;
-  }
-
-
-
-/**
- * count_chars_resSqlCount_query( ): SQL query and execution for counting initials
- *
- * @param	string		$currSqlCharset : Current SQL charset for reset in error case
- * @return	array		$arr_return     : SQL ressource or an error message in case of an error
- * @version 3.9.13
- * @since   3.9.13
- */
-  private function count_chars_resSqlCount_query( $currSqlCharset )
-  {
-    static $drsPrompt = true;
-
-      // DRS
-    if( $drsPrompt && $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Query needs an and where in case of filter';
-      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-      $drsPrompt = false;
-    }
-      // DRS
-
-      // Get current table.field of the index browser
-    $tableField     = $this->indexBrowserTableField;
-    list( $table )  = explode( '.', $tableField );
-
-      // Build FIND IN SET
-    $strFindInSet = null;
-    foreach( $this->findInSet as $arrfindInSet )
-    {
-      $strFindInSet = $strFindInSet . implode ( " OR ", $arrfindInSet );
-    }
-    if( ! empty ( $strFindInSet ) )
-    {
-      $strFindInSet = "NOT (" . $strFindInSet . ")";
-    }
-      // Build FIND IN SET
-    
-      // Query for all filter items
-    $select = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
-    $from   = $this->sqlStatement_from( $table );
-    $where  = $this->sqlStatement_where( $table, $strFindInSet );
-
-    $groupBy  = "LEFT ( " . $tableField . ", 1 )";
-    $orderBy  = "LEFT ( " . $tableField . ", 1 )";
-    $limit    = null;
-      // Query for all filter items
-
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-      // Execute query
-//    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-//              (
-//                $select,
-//                $from,
-//                $where,
-//                $groupBy,
-//                $orderBy,
-//                $limit
-//              );
-    $res = $this->pObj->objSqlFun->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
-
-      // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
-    {
-        // Free SQL result
-      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-        // Reset SQL charset
-      $this->sqlCharsetSet( $currSqlCharset );
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
-      return $arr_return;
-    }
-      // Error management
-
-      // DRS
-    if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-      // Return SQL result
-    $arr_return['data']['res'] = $res;
-    return $arr_return;
-  }
-
-
-
-/**
- * count_chars_resSqlCount_LLcurrOrDef( ): SQL query and execution for counting initials
- *
- * @param	string		$currSqlCharset : Current SQL charset for reset in error case
- * @return	array		$arr_return     : SQL ressource or an error message in case of an error
- * @version 3.9.13
- * @since   3.9.13
- */
-  private function count_chars_resSqlCount_LLcurrOrDef( $currSqlCharset )
-  {
-    return $this->count_chars_resSqlCount_query( $currSqlCharset );
   }
   
-
-
 
 
 
@@ -1366,9 +1267,6 @@ class tx_browser_pi1_navi_indexBrowser
     * Count special chars
     *
     **********************************************/
-
-
-
 
 
 
