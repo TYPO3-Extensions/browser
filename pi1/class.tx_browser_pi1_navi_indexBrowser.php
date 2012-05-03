@@ -360,6 +360,12 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function localisation_consolidate( )
   {
+    if( $this->pObj->b_drs_navi )
+    {
+      $prompt = 'localisation_consolidate( )';
+      t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+
     static $thisMethodIsUsed = false;
     
       // RETURN : method is called twice at least
