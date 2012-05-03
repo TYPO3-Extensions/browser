@@ -360,6 +360,18 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function localisation_consolidate( )
   {
+    static $thisMethodIsUsed = false;
+    
+      // RETURN : method is called twice at least
+    if( $thisMethodIsUsed )
+    {
+      return;
+    }
+      // RETURN : method is called twice at least
+    
+      // Don't call method twice
+    $thisMethodIsUsed = true;
+    
       // SWITCH $int_localisation_mode
     switch( $this->int_localisation_mode )
     {
@@ -372,7 +384,7 @@ class tx_browser_pi1_navi_indexBrowser
         $curr_int_localisation_mode   = $this->int_localisation_mode;
         $this->int_localisation_mode  = PI1_DEFAULT_LANGUAGE; 
         $this->bool_LLconsolidationMode = true; 
-        $arr_return = $this->count_chars_resSqlCount_LLcurrOrDef( $currSqlCharset );
+        $arr_return = $this->tabs_init( );
         $this->bool_LLconsolidationMode = false; 
         $this->int_localisation_mode  = $curr_int_localisation_mode;
         return $arr_return;
