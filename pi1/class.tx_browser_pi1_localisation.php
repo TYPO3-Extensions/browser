@@ -401,55 +401,39 @@ class tx_browser_pi1_localisation
 
 
  /**
-  * Returns an AND WHERE statement with the localisation fields from the current table,
-  * Result depends on the localisation mode and on TCA.
+  * localisationFields_where( ):  Returns an AND WHERE statement with the localisation 
+  *                               fields from the current table,
+  *                               Result depends on the localisation mode and on TCA.
   *
   * The mothod supports languageField and transOrigPointerField only.
   *
   * @param	string		$table: Name of the table in the TYPO3 database / in TCA
   * @return	string		$str_addSelect: An add select string
-  * @version 3.9.3
+  * @version 3.9.13
   * @since 2.0.0
+  * @todo   120503: Remove $this->int_localisation_mode == PI1_SELECTED_OR_DEFAULT_LANGUAGE
   */
-  function localisationFields_where($table)
+  function localisationFields_where( $table )
   {
-      ////////////////////////////////////////////////////////////////////////////////
-      //
       // Load the TCA, if we don't have an table.columns array
+    $this->pObj->objZz->loadTCA( $table );
 
-    $this->pObj->objZz->loadTCA($table);
-      // Load the TCA, if we don't have an table.columns array
-
-
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //
-    // Get the field names for sys_language_content and for l10n_parent
-
+      // Get the field names for sys_language_content and for l10n_parent
     $arr_localise['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
     $arr_localise['pid_field']  = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
-    // Get the field names for sys_language_content and for l10n_parent
+      // Get the field names for sys_language_content and for l10n_parent
 
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //
-    // Clean up the array
-
+      // Clean up the array
     $arr_localise = $this->propper_locArray($arr_localise, $table);
-    // Clean up the array
 
-
-    ////////////////////////////////////////////////////////////////////////////////
-    //
     // Get the localisation configuration
-
     $this->int_localisation_mode = $this->localisationConfig();
-    // Get the localisation configuration
 
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //
-    // Return, if we don't have localisation fields
+
+      ////////////////////////////////////////////////////////////////////////////////
+      //
+      // Return, if we don't have localisation fields
 
     if (!$arr_localise)
     {
@@ -460,49 +444,97 @@ class tx_browser_pi1_localisation
       }
       return false;
     }
-    // Return, if we don't have localisation fields
+      // Return, if we don't have localisation fields
 
+
+//      // DRS :TODO:
+//    if( $this->pObj->b_drs_devTodo )
+//    {
+//      $prompt = '$this->int_localisation_mode == PI1_SELECTED_OR_DEFAULT_LANGUAGE';
+//      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+//    }
+//      // DRS :TODO:
+//    if ($this->int_localisation_mode == PI1_SELECTED_OR_DEFAULT_LANGUAGE)
+//    {
+//      // These andWhere needs a consolidation
+//        // DEVELOPMENT: Browser engine 4.x
+//      if( $this->pObj->dev_browserEngine == 4 )
+//      {
+//          // DRS
+//        if( $this->pObj->b_drs_filter || $this->pObj->b_drs_localisation || $this->pObj->b_drs_sql )
+//        {
+//          $prompt = '+++ Browser engine 4.x ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++';
+//          t3lib_div::devlog( $prompt, $this->pObj->extKey, 2 );
+//          $prompt = 'Browser engine 4.x: andWhere for localised fields is modified. ' .
+//                    'Only records of the default language will selected.';
+//          t3lib_div::devlog( '[WARN/FILTER+LL+SQL] ' . $prompt, $this->pObj->extKey, 2 );
+//          $prompt = 'Browser engine 4.x: If you are using this with the Browser engine 3.x, you will get trouble.';
+//          t3lib_div::devlog( '[WARN/FILTER+LL+SQL] ' . $prompt, $this->pObj->extKey, 2 );
+//        }
+//          // DRS
+//        $str_andWhere = $arr_localise['id_field']." <= 0 ";
+//      }
+//    }
 
       ////////////////////////////////////////////////////////////////////////////////
       //
       // Building AND WHERE
 
-      // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo )
+    switch( $this->int_localisation_mode )
     {
-      $prompt = '$this->int_localisation_mode == PI1_SELECTED_OR_DEFAULT_LANGUAGE';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS :TODO:
-    if ($this->int_localisation_mode == PI1_DEFAULT_LANGUAGE)
-    {
-      $str_andWhere = $arr_localise['id_field']." <= 0 ";
-    }
-    if ($this->int_localisation_mode == PI1_SELECTED_OR_DEFAULT_LANGUAGE)
-    {
-      $str_andWhere = "( ".$arr_localise['id_field']." <= 0 OR ".$arr_localise['id_field']." = ".intval($this->lang_id)." ) ";
-      // These andWhere needs a consolidation
-        // DEVELOPMENT: Browser engine 4.x
-      if( $this->pObj->dev_browserEngine == 4 )
-      {
-          // DRS
-        if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
-        {
-          $prompt = '+++ Browser engine 4.x ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++';
-          t3lib_div::devlog( $prompt, $this->pObj->extKey, 2 );
-          $prompt = 'Browser engine 4.x: andWhere for localised fields is modified. ' .
-                    'Only records of the default language will selected.';
-          t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-          $prompt = 'Browser engine 4.x: If you are using this with the Browser engine 3.x, you will get trouble.';
-          t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-        }
-          // DRS
-        $str_andWhere = $arr_localise['id_field']." <= 0 ";
-      }
-    }
-    if ($this->int_localisation_mode == PI1_SELECTED_LANGUAGE_ONLY)
-    {
-      $str_andWhere = $arr_localise['id_field']." = ".intval($this->lang_id)." ";
+      case( PI1_DEFAULT_LANGUAGE ) :
+        $str_andWhere = $arr_localise['id_field'] . " <= 0 ";
+        break;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ) :
+        $str_andWhere = "( " . $arr_localise['id_field'] . " <= 0 OR " . $arr_localise['id_field'] . " = " . intval( $this->lang_id ) . " ) ";
+        break;
+      case( PI1_SELECTED_LANGUAGE_ONLY ) :
+        $str_andWhere = $arr_localise['id_field'] . " = " . intval( $this->lang_id ) . " ";
+        break;
+      default:
+        $prompt = '
+          <div style="text-align:center;">
+            <div style="border:1em solid red;padding:1em">
+              <h1>
+                Error with localisation mode
+              </h1>
+              <p>
+                The value of localisation mode isn\'t defined in the current switch.<br />
+                Value is: "' . $this->int_localisation_mode  . '"
+              </p>
+              <p>
+                Method: ' . __METHOD__ . '<br />
+                Line: ' . __LINE__ . '
+              </p>
+            </div>
+            <br />
+            <div style="border:1em solid orange;padding:1em">
+              <h1>
+                What can you do?
+              </h1>
+              <ul>
+                <li>
+                  Change the localisation configuration in your TypoScript in config { ... } or page.config { ... }.
+                </li>
+                <li>
+                  Post this prompt at <a href="http://typo3-browser-forum.de" target="_blank">typo3-browser-forum.de</a><br />
+                  Posts are welcome in English and German.
+                </li>
+                <li>
+                  Mail this prompt to <a href="http://wildt.at.die-netzmacher.de" target="_blank">wildt.at.die-netzmacher.de</a><br />
+                  Mails are welcome in English and German.
+                </li>
+              </ul>
+            </div>
+            <br />
+            <div style="border:1em;padding:1em">
+              <h1>
+                Browser - TYPO3 without PHP
+              </h1>
+            </div>
+          </div>
+          ';
+        die( $prompt );
     }
       // Building AND WHERE
 

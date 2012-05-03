@@ -1229,7 +1229,7 @@ class tx_browser_pi1_navi_indexBrowser
     if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
     {
       $prompt = $query;
-      t3lib_div::devlog( '[OK/LL+FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+      t3lib_div::devlog( '[OK/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
     }
       // DRS
 
