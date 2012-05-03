@@ -1071,7 +1071,6 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function count_chars_resSqlCount( $currSqlCharset )
   {
-    static $drsPrompt = true;
 
       // SWITCH $int_localisation_mode
     switch( $this->int_localisation_mode + 100 )
@@ -1102,7 +1101,7 @@ class tx_browser_pi1_navi_indexBrowser
             </p>
           </div>
           ';
-        die( $pompt );
+        die( $prompt );
         break;
     }
       // SWITCH $int_localisation_mode
