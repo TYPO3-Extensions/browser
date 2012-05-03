@@ -1105,7 +1105,7 @@ class tx_browser_pi1_navi_indexBrowser
               </h1>
               <ul>
                 <li>
-                  Change the localisation configuration in your TypoScript in config { ... }
+                  Change the localisation configuration in your TypoScript in config { ... } or page.config { ... }.
                 </li>
                 <li>
                   Post this prompt at <a href="http://typo3-browser-forum.de" target="_blank">typo3-browser-forum.de</a><br />
