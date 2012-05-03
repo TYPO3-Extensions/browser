@@ -1097,8 +1097,17 @@ class tx_browser_pi1_navi_indexBrowser
               Line: ' . __LINE__ . '
             </p>
             <p>
+              You can do this:
               Please send this prompt to http://wildt.at.die-netzmacher.de
             </p>
+            <ul>
+              <li>
+                Change the localisation configuration in your TypoScript in config { ... }
+              </li>
+              <li>
+                Send this prompt to http://wildt.at.die-netzmacher.de
+              </li>
+            </ul>
             <p>
               Browser - TYPO3 without PHP
             </p>
