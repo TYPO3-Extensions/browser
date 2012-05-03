@@ -1097,6 +1097,9 @@ class tx_browser_pi1_navi_indexBrowser
               Line: ' . __LINE__ . '
             </p>
             <p>
+              Please send this prompt to http://wildt.at.die-netzmacher.de
+            </p>
+            <p>
               Browser - TYPO3 without PHP
             </p>
           </div>
