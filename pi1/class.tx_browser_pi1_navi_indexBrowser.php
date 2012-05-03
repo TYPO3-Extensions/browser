@@ -296,44 +296,47 @@ class tx_browser_pi1_navi_indexBrowser
 
 
   /**
- * localisation_init( ):  Inits the localisation mode and localisation TS
- *                            Sets the class vars
- *                            * $int_localisation_mode
- *                            * bool_dontLocalise
- *
- * @return	void
- * @version 3.9.11
- * @since   3.9.11
+   * localisation_init( ):  Inits the localisation mode and localisation TS
+   *                            Sets the class vars
+   *                            * $int_localisation_mode
+   *                            * bool_dontLocalise
+   *
+   * @return	void
+   * @version 3.9.11
+   * @since   3.9.11
+   * @todo  120503: Remove $this->bool_dontLocalise from the method and from the class
  */
   private function localisation_init( )
   {
 
-      // Set class var $int_localisation_mode; init TS of pObj->objLocalise3x;
+      // Set class var $int_localisation_mode; init TS of pObj->objLocalise;
     if( ! isset( $this->int_localisation_mode ) )
     {
-      $this->int_localisation_mode = $this->pObj->objLocalise3x->localisationConfig( );
-      $this->pObj->objLocalise3x->init_typoscript( );
+      $this->int_localisation_mode = $this->pObj->objLocalise->localisationConfig( );
+      $this->pObj->objLocalise->init_typoscript( );
     }
 
-      // Set class var $bool_dontLocalise
-      // SWTCH $int_localisation_mode
-    switch( $this->int_localisation_mode )
-    {
-      case( PI1_DEFAULT_LANGUAGE ):
-        $this->bool_dontLocalise = true;
-        $prompt = 'Localisation mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localise!';
-        break;
-      case( PI1_DEFAULT_LANGUAGE_ONLY ):
-        $this->bool_dontLocalise = true;
-        $prompt = 'Localisation mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localise!';
-        break;
-      default:
+//
+//      // Set class var $bool_dontLocalise
+//      // SWTCH $int_localisation_mode
+//    switch( $this->int_localisation_mode )
+//    {
+//      case( PI1_DEFAULT_LANGUAGE ):
+//        $this->bool_dontLocalise = true;
+//        $prompt = 'Localisation mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localise!';
+//        break;
+//      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+//        $this->bool_dontLocalise = true;
+//        $prompt = 'Localisation mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localise!';
+//        break;
+//      default:
+//        $this->bool_dontLocalise = false;
+//        $prompt = 'Localisation mode is enabled';
+//        break;
+//    }
+//      // SWTCH $int_localisation_mode
+//      // Set class var $bool_dontLocalise
         $this->bool_dontLocalise = false;
-        $prompt = 'Localisation mode is enabled';
-        break;
-    }
-      // SWTCH $int_localisation_mode
-      // Set class var $bool_dontLocalise
 
       // DRS
     if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
@@ -356,6 +359,7 @@ class tx_browser_pi1_navi_indexBrowser
  * @return	mixed		true or array, if a requirement isn't met
  * @version 3.9.11
  * @since   3.9.9
+ * @todo  120503: Remove $this->bool_dontLocalise. It isn't needed.
  */
   private function requirements_check( )
   {
@@ -1590,7 +1594,7 @@ class tx_browser_pi1_navi_indexBrowser
         {
           $where = "1";
         }
-        $llWhere  = $this->pObj->objLocalise3x->localisationFields_where( $table );
+        $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
         if( $llWhere )
         {
           $where  = $where . " AND " . $llWhere;
