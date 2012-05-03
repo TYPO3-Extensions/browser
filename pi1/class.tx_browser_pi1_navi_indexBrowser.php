@@ -1084,35 +1084,43 @@ class tx_browser_pi1_navi_indexBrowser
         break;
       default:
         $prompt = '
-          <div style="border:1em solid red;padding:1em;text-align:center;">
-            <h1>
-              Error with localisation mode
-            </h1>
-            <p>
-              The value of localisation mode isn\'t defined in the current switch.<br />
-              Value is: "' . $this->int_localisation_mode  . '"
-            </p>
-            <p>
-              Method: ' . __METHOD__ . '<br />
-              Line: ' . __LINE__ . '
-            </p>
-            <p>
-              You can do this:
-            </p>
-            <ul>
-              <li>
-                Change the localisation configuration in your TypoScript in config { ... }
-              </li>
-              <li>
-                Post this prompt at <a href="http://typo3-browser-forum.de">typo3-browser-forum.de</a>
-              </li>
-              <li>
-                Mail this prompt to <a href="http://wildt.at.die-netzmacher.de">wildt.at.die-netzmacher.de</a>
-              </li>
-            </ul>
-            <p>
-              Browser - TYPO3 without PHP
-            </p>
+          <div style="text-align:center;">
+            <div style="border:1em solid red;padding:1em">
+              <h1>
+                Error with localisation mode
+              </h1>
+              <p>
+                The value of localisation mode isn\'t defined in the current switch.<br />
+                Value is: "' . $this->int_localisation_mode  . '"
+              </p>
+              <p>
+                Method: ' . __METHOD__ . '<br />
+                Line: ' . __LINE__ . '
+              </p>
+            </div>
+            <br />
+            <div style="border:1em solid orange;padding:1em">
+              <h1>
+                You can do this:
+              </h1>
+              <ul>
+                <li>
+                  Change the localisation configuration in your TypoScript in config { ... }
+                </li>
+                <li>
+                  Post this prompt at <a href="http://typo3-browser-forum.de">typo3-browser-forum.de</a>
+                </li>
+                <li>
+                  Mail this prompt to <a href="http://wildt.at.die-netzmacher.de">wildt.at.die-netzmacher.de</a>
+                </li>
+              </ul>
+            </div>
+            <br />
+            <div style="border:1em;padding:1em">
+              <h1>
+                Browser - TYPO3 without PHP
+              </h1>
+            </div>
           </div>
           ';
         die( $prompt );
