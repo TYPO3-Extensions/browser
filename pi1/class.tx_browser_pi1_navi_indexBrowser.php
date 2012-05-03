@@ -384,22 +384,22 @@ class tx_browser_pi1_navi_indexBrowser
       // RETURN true : index browser is disabled
 
     $this->localisation_init( );
-    if( ! $this->bool_dontLocalise )
-    {
-        // DRS
-      if( $this->pObj->b_drs_navi || $this->pObj->b_drs_localisation )
-      {
-        $prompt = 'Sorry: index browser isn\'t localised in browser version 4.0.x';
-        t3lib_div::devlog( '[ERROR/NAVI+LOCALISATION] ' . $prompt, $this->pObj->extKey, 3 );
-        $prompt = 'Please disable the index browser in a localised context';
-        t3lib_div::devlog( '[HELP/NAVI+LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
-      }
-        // DRS
-      $prompt   = $this->pObj->pi_getLL( 'warn_indexbrowser_ll' );
-      $content  = '<div class="indexBrowser" style="font-size:.85em">' . $prompt . '</div>';
-      $arr_return['data']['content'] = $content;
-      return $arr_return;
-    }
+//    if( ! $this->bool_dontLocalise )
+//    {
+//        // DRS
+//      if( $this->pObj->b_drs_navi || $this->pObj->b_drs_localisation )
+//      {
+//        $prompt = 'Sorry: index browser isn\'t localised in browser version 4.0.x';
+//        t3lib_div::devlog( '[ERROR/NAVI+LOCALISATION] ' . $prompt, $this->pObj->extKey, 3 );
+//        $prompt = 'Please disable the index browser in a localised context';
+//        t3lib_div::devlog( '[HELP/NAVI+LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
+//      }
+//        // DRS
+//      $prompt   = $this->pObj->pi_getLL( 'warn_indexbrowser_ll' );
+//      $content  = '<div class="indexBrowser" style="font-size:.85em">' . $prompt . '</div>';
+//      $arr_return['data']['content'] = $content;
+//      return $arr_return;
+//    }
 
       // RETURN true : index browser hasn't any configured tab
     $arr_conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
