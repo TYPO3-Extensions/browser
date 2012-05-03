@@ -338,12 +338,12 @@ class tx_browser_pi1_navi_indexBrowser
 //      // Set class var $bool_dontLocalise
         $this->bool_dontLocalise = false;
 
-      // DRS
-    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
-    {
-      t3lib_div::devlog( '[INFO/NAVI+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS
+//      // DRS
+//    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql || $this->pObj->b_drs_localisation )
+//    {
+//      t3lib_div::devlog( '[INFO/NAVI+SQL+LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+//    }
+//      // DRS
 
     return;
   }
@@ -413,6 +413,7 @@ class tx_browser_pi1_navi_indexBrowser
         $prompt = 'navigation.indexBrowser won\'t be processed.';
         t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
       }
+      $arr_return = array( );
       $arr_return['error']['status'] = true;
       $arr_return['error']['header'] = '<h1 style="color:red">Error Index Browser</h1>';
       $prompt = 'Index browser is enabled by the flexform or by TypoScript. ' .
@@ -443,7 +444,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Init the table.field
     $this->tableField_init( );
 
-    list( $table, $field ) = explode( '.', $this->indexBrowserTableField );
+    list( $table ) = explode( '.', $this->indexBrowserTableField );
 
       // RETURN : table is the local table
     if( $table == $this->pObj->localTable )
@@ -465,6 +466,7 @@ class tx_browser_pi1_navi_indexBrowser
       t3lib_div::devlog('[HELP/NAVIGATION] ' . $prompt_04, $this->pObj->extKey, 1);
     }
 
+    $arr_return = array( );
     $arr_return['error']['status'] = true;
     $arr_return['error']['header'] = '<h1 style="color:red">Error Index-Browser</h1>';
     $prompt = $prompt_01 . '<br />' . PHP_EOL;
@@ -667,7 +669,7 @@ class tx_browser_pi1_navi_indexBrowser
       }
     }
       // Get the tab array
-    $arrTabs = $this->indexBrowserTab['tabIds'];
+    ( array ) $arrTabs= $this->indexBrowserTab['tabIds'];
       // get id of the last visible tab
     $lastTabId = $this->zz_tabLastId( );
 
@@ -744,6 +746,8 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function tabs_init( )
   {
+    $arrCsvAttributes   = array( );
+
       // Get tabSpecial property default
     $this->indexBrowserTab['tabSpecial']['default'] = null;
     if( isset( $this->conf['navigation.']['indexBrowser.']['defaultTab'] ) )
@@ -922,6 +926,8 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function tabs_initSpecialChars( $arrCsvAttributes )
   {
+    $matches = array( );
+    
       // Get initials unique
     $arrCsvAttributes  = array_unique( $arrCsvAttributes );
     $csvInitials  = implode( ',', ( array ) $arrCsvAttributes );
@@ -981,9 +987,6 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function count_chars( )
   {
-      // Get current table.field of the index browser
-    list( $table, $field) = explode( '.', $this->indexBrowserTableField);
-
       // Get current SQL char set
     $currSqlCharset = $this->sqlCharsetGet( );
       // Set SQL char set to latin1
@@ -1071,13 +1074,107 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function count_chars_resSqlCount( $currSqlCharset )
   {
+    static $drsPrompt = true;
+
+      // DRS
+    if( $drsPrompt && $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Query needs an and where in case of filter';
+      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+      $drsPrompt = false;
+    }
+      // DRS
+
+      // Get current table.field of the index browser
+    $tableField     = $this->indexBrowserTableField;
+    list( $table )  = explode( '.', $tableField );
+
+      // Build FIND IN SET
+    $strFindInSet = null;
+    foreach( $this->findInSet as $arrfindInSet )
+    {
+      $strFindInSet = $strFindInSet . implode ( " OR ", $arrfindInSet );
+    }
+    if( ! empty ( $strFindInSet ) )
+    {
+      $strFindInSet = "NOT (" . $strFindInSet . ")";
+    }
+      // Build FIND IN SET
+    
+      // Query for all filter items
+    $select = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
+    $from   = $this->sqlStatement_from( $table );
+    $where  = $this->sqlStatement_where( $table, $strFindInSet );
+
+    $groupBy  = "LEFT ( " . $tableField . ", 1 )";
+    $orderBy  = "LEFT ( " . $tableField . ", 1 )";
+    $limit    = null;
+      // Query for all filter items
+
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+      // Execute query
+//    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+//              (
+//                $select,
+//                $from,
+//                $where,
+//                $groupBy,
+//                $orderBy,
+//                $limit
+//              );
+    $res = $this->pObj->objSqlFun->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+        // Free SQL result
+      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+        // Reset SQL charset
+      $this->sqlCharsetSet( $currSqlCharset );
+      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+      // Return SQL result
+    $arr_return['data']['res'] = $res;
+    return $arr_return;
+
+      // Get SQL result 
+    $arr_return = $this->count_chars_resSqlCount_query( $currSqlCharset );
 
       // SWITCH $int_localisation_mode
     switch( $this->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
-        $arr_return = $this->count_chars_resSqlCount_LLdefault( $currSqlCharset );
+          // Do nothing
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
         $arr_return = $this->count_chars_resSqlCount_LLcurrOrDef( $currSqlCharset );
@@ -1136,14 +1233,14 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * count_chars_resSqlCount_LLdefault( ): SQL query and execution for counting initials
+ * count_chars_resSqlCount_query( ): SQL query and execution for counting initials
  *
  * @param	string		$currSqlCharset : Current SQL charset for reset in error case
  * @return	array		$arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.13
  */
-  private function count_chars_resSqlCount_LLdefault( $currSqlCharset )
+  private function count_chars_resSqlCount_query( $currSqlCharset )
   {
     static $drsPrompt = true;
 
@@ -1157,12 +1254,12 @@ class tx_browser_pi1_navi_indexBrowser
       // DRS
 
       // Get current table.field of the index browser
-    $tableField           = $this->indexBrowserTableField;
-    list( $table, $field) = explode( '.', $tableField );
+    $tableField     = $this->indexBrowserTableField;
+    list( $table )  = explode( '.', $tableField );
 
       // Build FIND IN SET
     $strFindInSet = null;
-    foreach( $this->findInSet as $length => $arrfindInSet )
+    foreach( $this->findInSet as $arrfindInSet )
     {
       $strFindInSet = $strFindInSet . implode ( " OR ", $arrfindInSet );
     }
@@ -1250,7 +1347,7 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function count_chars_resSqlCount_LLcurrOrDef( $currSqlCharset )
   {
-    return $this->count_chars_resSqlCount_LLdefault( $currSqlCharset );
+    return $this->count_chars_resSqlCount_query( $currSqlCharset );
   }
   
 
@@ -1323,9 +1420,6 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function count_specialChars_addSum( $row )
   {
-      // Get current table.field of the index browser
-    list( $table, $field) = explode( '.', $this->indexBrowserTableField);
-
       // Get current SQL char set
     $currSqlCharset = $this->sqlCharsetGet( );
       // Set SQL char set to latin1
@@ -1385,8 +1479,8 @@ class tx_browser_pi1_navi_indexBrowser
       // DRS
 
       // Get current table.field of the index browser
-    $tableField           = $this->indexBrowserTableField;
-    list( $table, $field) = explode( '.', $tableField );
+    $tableField     = $this->indexBrowserTableField;
+    list( $table )  = explode( '.', $tableField );
 
       // Query for all filter items
     $select       = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
@@ -1469,7 +1563,6 @@ class tx_browser_pi1_navi_indexBrowser
   {
       // Get current table.field of the index browser
     $tableField           = $this->indexBrowserTableField;
-    list( $table, $field) = explode( '.', $tableField );
 
       // LOOP : generate a find in set statement for each special char
     foreach( $row as $char => $length )
@@ -1598,7 +1691,7 @@ class tx_browser_pi1_navi_indexBrowser
   private function sqlCharsetSet( $sqlCharset )
   {
     $query  = "SET NAMES " . $sqlCharset . ";";
-    $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
+    $GLOBALS['TYPO3_DB']->sql_query( $query );
 
       // DRS
     if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
