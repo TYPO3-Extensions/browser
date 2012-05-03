@@ -318,7 +318,7 @@ class tx_browser_pi1_navi_indexBrowser
 
 //
 //      // Set class var $bool_dontLocalise
-//      // SWTCH $int_localisation_mode
+//      // SWITCH $int_localisation_mode
 //    switch( $this->int_localisation_mode )
 //    {
 //      case( PI1_DEFAULT_LANGUAGE ):
@@ -334,7 +334,7 @@ class tx_browser_pi1_navi_indexBrowser
 //        $prompt = 'Localisation mode is enabled';
 //        break;
 //    }
-//      // SWTCH $int_localisation_mode
+//      // SWITCH $int_localisation_mode
 //      // Set class var $bool_dontLocalise
         $this->bool_dontLocalise = false;
 
@@ -640,7 +640,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * subpart_setTabs( ): Set the content in the subpart for the tabs
  *
- * @return	[type]		...
+ * @return	void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1064,14 +1064,62 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * count_chars_resSqlCount( ): SQL query and execution for counting initials
  *
- * @param	integer		$length         : SQL length of special chars group
- * @param	array		$arrfindInSet   : FIND IN SET statement with proper length
  * @param	string		$currSqlCharset : Current SQL charset for reset in error case
  * @return	array		$arr_return     : SQL ressource or an error message in case of an error
- * @version 3.9.12
+ * @version 3.9.13
  * @since   3.9.11
  */
   private function count_chars_resSqlCount( $currSqlCharset )
+  {
+    static $drsPrompt = true;
+
+      // SWITCH $int_localisation_mode
+    switch( $this->int_localisation_mode )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+        $arr_return = $this->count_chars_resSqlCount_LLdefault( $currSqlCharset );
+        break;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+        $arr_return = $this->count_chars_resSqlCount_LLcurrOrDef( $currSqlCharset );
+        break;
+      default:
+        $prompt = '
+          <div style="border:1em solid red;padding:1em;text-align:center;">
+            <h1>
+              Error with localisation mode
+            </h1>
+            <p>
+              The value of localisation mode isn\'t defined in the current switch.<br />
+              Value is: "' . $this->int_localisation_mode  . '"
+            </p>
+            <p>
+              Method: ' . __METHOD__ . '<br />
+              Line: ' . __LINE__ . '
+            </p>
+            <p>
+              Browser - TYPO3 without PHP
+            </p>
+          </div>
+          ';
+        break;
+    }
+      // SWITCH $int_localisation_mode
+
+    return $arr_return;
+  }
+
+
+
+/**
+ * count_chars_resSqlCount_LLdefault( ): SQL query and execution for counting initials
+ *
+ * @param	string		$currSqlCharset : Current SQL charset for reset in error case
+ * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @version 3.9.13
+ * @since   3.9.13
+ */
+  private function count_chars_resSqlCount_LLdefault( $currSqlCharset )
   {
     static $drsPrompt = true;
 
@@ -1088,6 +1136,7 @@ class tx_browser_pi1_navi_indexBrowser
     $tableField           = $this->indexBrowserTableField;
     list( $table, $field) = explode( '.', $tableField );
 
+      // Build FIND IN SET
     $strFindInSet = null;
     foreach( $this->findInSet as $length => $arrfindInSet )
     {
@@ -1097,6 +1146,8 @@ class tx_browser_pi1_navi_indexBrowser
     {
       $strFindInSet = "NOT (" . $strFindInSet . ")";
     }
+      // Build FIND IN SET
+    
       // Query for all filter items
     $select = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
     $from   = $this->sqlStatement_from( $table );
@@ -1105,6 +1156,7 @@ class tx_browser_pi1_navi_indexBrowser
     $groupBy  = "LEFT ( " . $tableField . ", 1 )";
     $orderBy  = "LEFT ( " . $tableField . ", 1 )";
     $limit    = null;
+      // Query for all filter items
 
       // Get query
     $query  = $GLOBALS['TYPO3_DB']->SELECTquery
@@ -1162,6 +1214,21 @@ class tx_browser_pi1_navi_indexBrowser
     return $arr_return;
   }
 
+
+
+/**
+ * count_chars_resSqlCount_LLcurrOrDef( ): SQL query and execution for counting initials
+ *
+ * @param	string		$currSqlCharset : Current SQL charset for reset in error case
+ * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @version 3.9.13
+ * @since   3.9.13
+ */
+  private function count_chars_resSqlCount_LLcurrOrDef( $currSqlCharset )
+  {
+    return $this->count_chars_resSqlCount_LLdefault( $currSqlCharset );
+  }
+  
 
 
 
