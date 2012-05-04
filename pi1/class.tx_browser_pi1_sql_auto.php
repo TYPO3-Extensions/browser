@@ -544,7 +544,7 @@ class tx_browser_pi1_sql_auto
  * Relation method: Building the whole where clause
  *
  * @return	string		FALSE or the SQL-where-clause
- * @version 3.9.12
+ * @version 3.9.13
  * @since   3.9.12
  */
   private function get_statements_where( )
@@ -554,27 +554,30 @@ class tx_browser_pi1_sql_auto
     $mode = $this->pObj->piVar_mode;
     $view = $this->pObj->view;
 
-    $viewWiDot    = $view.'.';
+    $viewWiDot = $view.'.';
 
 
 
 // 3.3.7
-    ////////////////////////////////////////////////////////////////////
-    //
-    // RETURN in case of override.where
+      ////////////////////////////////////////////////////////////////////
+      //
+      // RETURN in case of override.where
 
     if($conf['views.'][$viewWiDot][$mode.'.']['override.']['where'])
     {
       $where = $this->pObj->conf_sql['where'];
-      if ($this->pObj->b_drs_sql)
+      if ( $this->pObj->b_drs_sql )
       {
-        t3lib_div::devLog('[INFO/SQL] override.where is true. views.'.$viewWiDot.$mode.'.where will be ignored!', $this->pObj->extKey, 0);
-        t3lib_div::devLog('[INFO/SQL] all andWhere configuration will be ignored too!', $this->pObj->extKey, 0);
-        t3lib_div::devLog('[INFO/SQL] WHERE '.$where, $this->pObj->extKey, 0);
+        $prompt = 'override.where is true. views.' . $viewWiDot.$mode . '.where will be ignored!';
+        t3lib_div::devLog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'all andWhere configuration will be ignored too!';
+        t3lib_div::devLog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'WHERE  ' . $where;
+        t3lib_div::devLog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return $where;
     }
-    // RETURN in case of override.where
+      // RETURN in case of override.where
 // 3.3.7
 
 
@@ -582,30 +585,31 @@ class tx_browser_pi1_sql_auto
     $whereClause  = false;
 
 
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // Get enableFields like hiddden, deleted, starttime ... only for the localTable
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Get enableFields like hiddden, deleted, starttime ... only for the localTable
 
-    $str_enablefields = $this->str_enableFields($this->pObj->localTable);
-    // #11429, cweiske, 101219
+    $str_enablefields = $this->str_enableFields( $this->pObj->localTable );
+      // #11429, cweiske, 101219
     //if (strpos($whereClause, $str_enablefields) === false)
-    if ($str_enablefields !== '' && strpos($whereClause, $str_enablefields) === false)
+    if ( $str_enablefields !== '' && strpos( $whereClause, $str_enablefields ) === false )
     {
       $whereClause = $whereClause." AND ".$str_enablefields;
     }
-    // Get enableFields like hiddden, deleted, starttime ... only for the localTable
+      // Get enableFields like hiddden, deleted, starttime ... only for the localTable
 
 
-    ////////////////////////////////////////////////////////////////////
-    //
-    // Add localisation fields
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Add localisation fields
 
-    $str_local_where = $this->pObj->objLocalise->localisationFields_where($this->pObj->localTable);
-    if ($str_local_where)
+    $str_local_where = $this->pObj->objLocalise->localisationFields_where( $this->pObj->localTable );
+$this->pObj->var_dump( $str_local_where );
+    if ( $str_local_where )
     {
-      $whereClause      = $whereClause." AND ".$str_local_where;
+      $whereClause = $whereClause." AND ".$str_local_where;
     }
-    // Add localisation fields
+      // Add localisation fields
 
 
       //////////////////////////////////////////////////////////////////////////
@@ -619,30 +623,31 @@ class tx_browser_pi1_sql_auto
       // Is there a andWhere statement from the filter class?
 
 
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // If we have a sword, allocates the global $arr_swordPhrasesTableField
+    
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // If we have a sword, allocates the global $arr_swordPhrasesTableField
 
-    if ($this->pObj->arr_swordPhrases && $this->pObj->csvSearch)
+    if ( $this->pObj->arr_swordPhrases && $this->pObj->csvSearch )
     {
-      $arrSearchFields = explode(',', $this->pObj->csvSearch);
-      foreach ($arrSearchFields as $arrSearchField)
+      $arrSearchFields = explode( ',', $this->pObj->csvSearch );
+      foreach ( $arrSearchFields as $arrSearchField )
       {
-        list( $str_before_as )  = explode(' AS ', $arrSearchField);
-        list($table, $field)    = explode('.', $str_before_as);
-        $tableField             = trim($table).'.'.trim($field);
-        foreach ($this->pObj->arr_swordPhrases as $sword)
+        list( $str_before_as )  = explode( ' AS ', $arrSearchField );
+        list( $table, $field )  = explode( '.', $str_before_as );
+        $tableField             = trim( $table ) . '.' . trim( $field );
+        foreach ( $this->pObj->arr_swordPhrases as $sword )
         {
           $this->pObj->arr_swordPhrasesTableField[$tableField][] = $sword;
         }
       }
     }
-    // If we have a sword, allocates the global $arr_swordPhrasesTableField
+        // If we have a sword, allocates the global $arr_swordPhrasesTableField
 
 
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // Get SWORD, AND WHERE and JOINS
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Get SWORD, AND WHERE and JOINS
 
     if ($view == 'list')
     {

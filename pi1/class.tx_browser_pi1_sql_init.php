@@ -262,6 +262,7 @@ class tx_browser_pi1_sql_init
    */
   private function init_global_csv( )
   {
+    $arr_return = array( );
     $arr_return['error']['status'] = false;
 
       // Set the globals csvSelect and arrLocalTable
@@ -324,9 +325,7 @@ class tx_browser_pi1_sql_init
   */
   private function init_global_csvSelect( )
   {
-    $conf       = $this->conf;
     $mode       = $this->piVar_mode;
-    $view       = $this->view;
     $conf_path  = $this->conf_path;
     $conf_view  = $this->conf_view;
 
@@ -463,9 +462,7 @@ class tx_browser_pi1_sql_init
   */
   private function init_global_csvSearch( )
   {
-    $conf = $this->conf;
     $mode = $this->piVar_mode;
-    $view = $this->view;
 
     $conf_view = $this->conf_view;
 
@@ -517,9 +514,7 @@ class tx_browser_pi1_sql_init
   */
   private function init_global_csvOrderBy( )
   {
-    $conf       = $this->conf;
     $mode       = $this->piVar_mode;
-    $view       = $this->view;
     $conf_path  = $this->conf_path;
     $conf_view  = $this->conf_view;
 
