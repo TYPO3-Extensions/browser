@@ -1398,7 +1398,8 @@ if( 1 )
 
     $select = "uid";
     $from   = $this->sqlStatement_from( $table );
-    $where    = $table . ".l18n_parent IN (" . $str_rows . ")";
+    $where    = $table . ".l18n_parent IN (" . $str_rows . ")
+                AND " . $table . ".sys_language_uid = 1" ;
     $groupBy  = null;
     $orderBy  = "uid";
     $limit    = null;
