@@ -389,17 +389,20 @@ class tx_browser_pi1_navi_indexBrowser
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
         $curr_int_localisation_mode     = $this->int_localisation_mode;
         $this->int_localisation_mode    = PI1_DEFAULT_LANGUAGE; 
+        $this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
         $this->bool_LLconsolidationMode = true; 
         $arr_return = $this->count_specialChars( );
         if( ! ( empty ( $arr_return ) ) )
         {
           $this->bool_LLconsolidationMode = false; 
           $this->int_localisation_mode    = $curr_int_localisation_mode;
+          $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
           return $arr_return;
         }
         $arr_return = $this->count_chars( );
         $this->bool_LLconsolidationMode = false; 
         $this->int_localisation_mode    = $curr_int_localisation_mode;
+        $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
         return $arr_return;
         break;
       default:
