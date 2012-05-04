@@ -1394,7 +1394,7 @@ if( 1 )
       $arr_rows[] = $row['uid'];
     }
     $str_rows = implode( ',', ( array ) $arr_rows );
-    var_dump( __METHOD__, __LINE__, $query );
+    var_dump( __METHOD__, __LINE__, $str_rows );
 }
 #############################################################
       // Query for all filter items
