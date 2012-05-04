@@ -1363,6 +1363,30 @@ ON (
 
     var_dump( __METHOD__, __LINE__, $query );
 }
+if( 1 )
+{
+    $select = $table . ".uid AS '" . $table . ".uid' ";
+    $from   = $this->sqlStatement_from( $table );
+    $where  = $this->sqlStatement_where( $table, $strFindInSet );
+
+    $groupBy  = null;
+    $orderBy  = null;
+    $limit    = null;
+      // Query for all filter items
+
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+
+    var_dump( __METHOD__, __LINE__, $query );
+}
 #############################################################
       // Query for all filter items
     $select = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
