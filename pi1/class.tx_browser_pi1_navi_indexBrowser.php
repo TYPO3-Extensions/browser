@@ -1335,6 +1335,8 @@ class tx_browser_pi1_navi_indexBrowser
 #############################################################
 if( 1 )
 {
+    $parentUid = 'l18parent';
+    
     $select = "uid";
     $from   = $this->sqlStatement_from( $table );
     $where  = $this->sqlStatement_where( $table, $strFindInSet );
@@ -1393,12 +1395,12 @@ if( 1 )
         // Get values from the SQL row
       $arr_rows[] = $row['uid'];
     }
-    $str_rows = implode( ',', ( array ) $arr_rows );
-    var_dump( __METHOD__, __LINE__, $str_rows );
+    $uidListOfDefLanguage = implode( ',', ( array ) $arr_rows );
+    var_dump( __METHOD__, __LINE__, $uidListOfDefLanguage );
 
-    $select = "uid, l18n_parent";
+    $select = "uid, " . $parentUid;
     $from   = $this->sqlStatement_from( $table );
-    $where    = $table . ".l18n_parent IN (" . $str_rows . ")
+    $where    = $table . "." . $parentUid . " IN (" . $str_rows . ")
                 AND " . $table . ".sys_language_uid = 1" ;
     $groupBy  = null;
     $orderBy  = "uid";
@@ -1451,11 +1453,17 @@ if( 1 )
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
         // Get values from the SQL row
-      $arr_rows[] = $row['uid'];
+      $arr_rowsLL['uid'][]          = $row['uid'];
+      $arr_rowsLL[$parentUid][]  = $row[$parentUid];
     }
-    $str_rows = implode( ',', ( array ) $arr_rows );
-    var_dump( __METHOD__, __LINE__, $str_rows );
+    $uidListOfCurrLanguage  = implode( ',', ( array ) $arr_rowsLL['uid'] );
+    var_dump( __METHOD__, __LINE__, $uidListOfCurrLanguage );
     
+    $arr_rowsDefWoTranslated = array_diff( $arr_rows['uid'], $arr_rowsLL[$parentUid] );
+    $arr_rowsDefWiCurr  = array_merge( $arr_rowsDefWoTranslated, $arr_rowsLL['uid'] );
+    $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );  
+    
+    var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
 }
 #############################################################
       // Query for all filter items
