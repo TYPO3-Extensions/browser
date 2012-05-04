@@ -1335,14 +1335,8 @@ class tx_browser_pi1_navi_indexBrowser
 #############################################################
 if( 1 )
 {
-    $select = $table . ".uid AS '" . $table . ".uid', " . $table . "LL.uid AS '" . $table . "LL.uid', " . $table . "LL.l10n_parent AS '" . $table . "LL.l10n_parent' ";
+    $select = "uid";
     $from   = $this->sqlStatement_from( $table );
-    $from   = $from . "
-LEFT JOIN " . $table . " as " . $table . "LL
-ON ( 
-      " . $table . ".uid = " . $table . "LL.l10n_parent 
-  AND " . $table . "LL.sys_language_uid = 1 
-)";
     $where  = $this->sqlStatement_where( $table, $strFindInSet );
 
     $groupBy  = null;
@@ -1362,29 +1356,44 @@ ON (
               );
 
     var_dump( __METHOD__, __LINE__, $query );
-}
-if( 1 )
-{
-    $select = $table . ".uid AS '" . $table . ".uid' ";
-    $from   = $this->sqlStatement_from( $table );
-    $where  = $this->sqlStatement_where( $table, $strFindInSet );
+      // Execute query
+    $res = $this->pObj->objSqlFun->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
 
-    $groupBy  = null;
-    $orderBy  = null;
-    $limit    = null;
-      // Query for all filter items
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+        // Free SQL result
+      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+        // Reset SQL charset
+      $this->sqlCharsetSet( $currSqlCharset );
+      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
+      return $arr_return;
+    }
+      // Error management
 
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
+      // DRS
+    if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
 
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+        // Get values from the SQL row
+      $arr_rows[] = $row['uid'];
+    }
+    $str_rows = implode( ',', ( array ) $arr_rows );
     var_dump( __METHOD__, __LINE__, $query );
 }
 #############################################################
