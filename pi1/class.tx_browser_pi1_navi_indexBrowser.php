@@ -1340,7 +1340,7 @@ if( 1 )
     $where  = $this->sqlStatement_where( $table, $strFindInSet );
 
     $groupBy  = null;
-    $orderBy  = null;
+    $orderBy  = "uid DESC";
     $limit    = null;
       // Query for all filter items
 
