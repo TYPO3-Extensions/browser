@@ -1396,11 +1396,11 @@ if( 1 )
     $str_rows = implode( ',', ( array ) $arr_rows );
     var_dump( __METHOD__, __LINE__, $str_rows );
 
-    $select = "l18n_parent";
+    $select = "uid";
     $from   = $this->sqlStatement_from( $table );
-    $where    = $table . ".uid IN (" . $str_rows . ")";
+    $where    = $table . ".l18n_parent IN (" . $str_rows . ")";
     $groupBy  = null;
-    $orderBy  = "l18n_parent";
+    $orderBy  = "uid";
     $limit    = null;
 
       // Get query
