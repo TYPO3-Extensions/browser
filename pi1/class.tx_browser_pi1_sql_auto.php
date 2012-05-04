@@ -230,9 +230,10 @@ class tx_browser_pi1_sql_auto
 
 
       // Get WHERE and FROM
-    $arr_return['data']['where']  = $this->get_statements_where( );
+    $arr_return['data']['where']    = $this->get_statements_where( );
+    $arr_return['data']['whereLL']  = $this->get_statements_whereLL( );
       // From has to be the last, because whereClause can have new tables.
-    $arr_return['data']['from']   = $this->get_statements_from( );
+    $arr_return['data']['from']     = $this->get_statements_from( );
       // Get WHERE and FROM
 
 
@@ -599,12 +600,12 @@ class tx_browser_pi1_sql_auto
       // Get enableFields like hiddden, deleted, starttime ... only for the localTable
 
 
-      ////////////////////////////////////////////////////////////////////
-      //
-      // Add localisation fields
-
-    $whereClause = $this->whereLL( $whereClause );
-      // Add localisation fields
+//      ////////////////////////////////////////////////////////////////////
+//      //
+//      // Add localisation fields
+//
+//    $whereClause = $this->whereLL( $whereClause );
+//      // Add localisation fields
 
 
       //////////////////////////////////////////////////////////////////////////
@@ -749,13 +750,13 @@ class tx_browser_pi1_sql_auto
 
 
 /**
- * whereLL( ) : Building the whole where clause
+ * get_statements_whereLL( ) : ...
  *
  * @return	string		FALSE or the SQL-where-clause
  * @version 3.9.13
  * @since   3.9.12
  */
-  private function whereLL( $where )
+  private function get_statements_whereLL( $where )
   {
     $whereLL = $this->pObj->objLocalise->localisationFields_where( $this->pObj->localTable );
 $this->pObj->dev_var_dump( $whereLL );

@@ -2880,10 +2880,18 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_whereWiHits( )
   {
+      // Get table
+    list( $table ) = explode( '.', $this->curr_tableField );
+
       // Get WHERE statement
     $where =  $this->pObj->objSqlInit->statements['listView']['where'] .
               $this->sql_whereAnd_Filter( ) .
               $this->sql_whereAnd_fromTS( );
+    $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
+    if( $llWhere )
+    {
+      $where  = $where . " AND " . $llWhere;
+    }
 
       // RETURN WHERE statement without a WHERE
     return $where;
