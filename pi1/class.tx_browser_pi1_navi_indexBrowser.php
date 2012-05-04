@@ -1783,7 +1783,7 @@ class tx_browser_pi1_navi_indexBrowser
 //$this->pObj->dev_var_dump( $this->pObj->objSqlInit->statements['listView']['where'] );        
         $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
         $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
-$this->pObj->dev_var_dump( $whereLL );
+$this->pObj->dev_var_dump( $llWhere );
         if( $llWhere )
         {
           $where  = $where . " AND " . $llWhere;
