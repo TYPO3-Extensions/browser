@@ -1581,11 +1581,11 @@ class tx_browser_pi1 extends tslib_pibase {
 
       // Class with realurl methods
     require_once('class.tx_browser_pi1_filter_3x.php');
-    $this->objFilter = new tx_browser_pi1_filter_3x( $this );
+    $this->oblFltr3x = new tx_browser_pi1_filter_3x( $this );
 
       // Class with filter methods
-    require_once('class.tx_browser_pi1_filter.php');
-    $this->objFltr4x = new tx_browser_pi1_filter( $this );
+    require_once('class.tx_browser_pi1_filter_4x.php');
+    $this->objFltr4x = new tx_browser_pi1_filter_4x( $this );
 
       // #9659, 101016, dwildt
       // Class with methods for ordering rows

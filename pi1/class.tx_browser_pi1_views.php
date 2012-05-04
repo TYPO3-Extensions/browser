@@ -201,16 +201,16 @@ class tx_browser_pi1_views
 //
 //      // 3.5.0
 //      // #30912, 120127, dwildt-
-////    $arr_andWhereFilter = $this->pObj->objFilter->andWhere_filter();
+////    $arr_andWhereFilter = $this->pObj->oblFltr3x->andWhere_filter();
 ////    if ( ! empty( $arr_andWhereFilter ) )
 ////    {
 ////      $this->pObj->arr_andWhereFilter = $arr_andWhereFilter;
 ////    }
 //      // #30912, 120127, dwildt-
 //      // #30912, 120127, dwildt+
-//    $this->pObj->objFilter->andWhere_filter( );
+//    $this->pObj->oblFltr3x->andWhere_filter( );
 //      // Prompt the expired time to devlog
-//    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objFilter->andWhere_filter( )' );
+//    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->oblFltr3x->andWhere_filter( )' );
 //      // Filter - part I/II: SQL andWhere statement
 //
 //
@@ -772,8 +772,8 @@ class tx_browser_pi1_views
 //
 //      // Count hits, filter rows, update template
 //
-//    $this->pObj->objFilter->rows_wo_limit = $rows;
-//    $arr_result = $this->pObj->objFilter->filter( $template );
+//    $this->pObj->oblFltr3x->rows_wo_limit = $rows;
+//    $arr_result = $this->pObj->oblFltr3x->filter( $template );
 //    if( $arr_result['error']['status'] )
 //    {
 //      $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
@@ -786,7 +786,7 @@ class tx_browser_pi1_views
 //      // 120127, dwildt+
 //    unset( $arr_result );
 //      // Prompt the expired time to devlog
-//    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objFilter->filter( )' );
+//    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->oblFltr3x->filter( )' );
 //      // Filter - part II/II - HTML code / template
 //
 //

@@ -29,7 +29,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     3.9.12
+ * @version     3.9.13
  * @since       3.9.9
  */
 
@@ -352,19 +352,27 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * localisation_consolidate( )  : ...
+ * localisation_consolidate( )  : The method is called by tabs_init( ). If a localised language
+ *                                is used by the website visitor, this method call again:
+ *                                * $this->count_specialChars( )
+ *                                * $this->count_chars( )
+ *                                but for the default language only.
+ *                                The counted hits will substracted of the hits, which were
+ *                                counted before for the default language and the localised 
+ *                                language.
  *
  * @return	array		$arr_return: Contains an error message in case of an error
- * @version 3.9.11
+ * @version 3.9.13
  * @since   3.9.10
+ * @internal  #36842
  */
   private function localisation_consolidate( )
   {
-    if( $this->pObj->b_drs_navi )
-    {
-      $prompt = 'localisation_consolidate( )';
-      t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
-    }
+//    if( $this->pObj->b_drs_navi )
+//    {
+//      $prompt = 'localisation_consolidate( )';
+//      t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+//    }
 
     static $thisMethodIsUsed = false;
     
@@ -387,25 +395,45 @@ class tx_browser_pi1_navi_indexBrowser
         return false;
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+        if( $this->pObj->b_drs_localise )
+        {
+          $prompt = 'Index browser: Hits of the default language will substracted.';
+          t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+          // Store current localisation mode
         $curr_int_localisation_mode     = $this->int_localisation_mode;
+          // Set all to default language
         $this->int_localisation_mode    = PI1_DEFAULT_LANGUAGE; 
         $this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
         $this->bool_LLconsolidationMode = true; 
+          // Set all to default language
+
+          // Substract of special char tabs the hits of default language 
         $arr_return = $this->count_specialChars( );
         if( ! ( empty ( $arr_return ) ) )
         {
+            // Restore former localisation mode
           $this->bool_LLconsolidationMode = false; 
           $this->int_localisation_mode    = $curr_int_localisation_mode;
           $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+            // Restore former localisation mode
+            // RETURN : Array with error prompt in case of an error
           return $arr_return;
         }
+          // Substract of special char tabs the hits of default language 
+          // Substract of default char tabs the hits of default language 
         $arr_return = $this->count_chars( );
+          // Restore former localisation mode
         $this->bool_LLconsolidationMode = false; 
         $this->int_localisation_mode    = $curr_int_localisation_mode;
         $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+          // Restore former localisation mode
+          // RETURN : Array with error prompt in case of an error
         return $arr_return;
+          // Substract of default char tabs the hits of default language 
         break;
       default:
+          // DIE
         $prompt = '
           <div style="text-align:center;">
             <div style="border:1em solid red;padding:1em">
@@ -452,7 +480,6 @@ class tx_browser_pi1_navi_indexBrowser
         break;
     }
       // SWITCH $int_localisation_mode
-    $this->tabs_init( );
   }
 
 
@@ -912,6 +939,7 @@ class tx_browser_pi1_navi_indexBrowser
       // RETURN : error prompt
       // Count chars
 
+      // #36842, dwildt, 120504
     $this->localisation_consolidate( );
   }
 
@@ -1146,49 +1174,59 @@ class tx_browser_pi1_navi_indexBrowser
 
         // Set attributes sum
       $sum  = $this->indexBrowserTab['attributes'][ $attribute ][ 'sum' ];
+        // #36842, dwildt, 120504
       if( ! $this->bool_LLconsolidationMode )
       {
-        if( $this->pObj->b_drs_navi )
-        {
-          $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] : $sum = $rowSum (#' . $rowSum . ')';
-          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
-        }
+//        if( $this->pObj->b_drs_navi )
+//        {
+//          $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] : $sum = $rowSum (#' . $rowSum . ')';
+//          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+//        }
+          // Rows of the default language and a localised language optionally
         $sum = $rowSum;
       }
       else
       {
-        if( $this->pObj->b_drs_navi )
-        {
-          $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] : $sum = $sum - $rowSum (#' . $sum . ' - #' . $rowSum . ')';
-          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
-        }
+//        if( $this->pObj->b_drs_navi )
+//        {
+//          $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] : $sum = $sum - $rowSum (#' . $sum . ' - #' . $rowSum . ')';
+//          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+//        }
+          // Substract rows of the default language
         $sum = $sum - $rowSum;
       }
       $this->indexBrowserTab['attributes'][ $attribute ][ 'sum' ] = $sum;
+        // Set attributes sum
 
         // Get id of the tab for all attributes
       $tabId    = $this->indexBrowserTab[ 'tabSpecial' ][ 'all' ];
         // Get sum of the current tab
       $sum  = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
         // Add row sum to current sum
+        // #36842, dwildt, 120504
       if( ! $this->bool_LLconsolidationMode )
       {
-        if( $this->pObj->b_drs_navi )
-        {
-          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum + $rowSum (#' . $sum . ' + #' . $rowSum . ')';
-          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
-        }
+//        if( $this->pObj->b_drs_navi )
+//        {
+//          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum + $rowSum (#' . $sum . ' + #' . $rowSum . ')';
+//          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+//        }
+          // Rows of the default language and a localised language optionally
         $sum = $sum + $rowSum;
       }
       else
       {
-        if( $this->pObj->b_drs_navi )
-        {
-          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum - $rowSum (#' . $sum . ' - #' . $rowSum . ')';
-          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
-        }
+//        if( $this->pObj->b_drs_navi )
+//        {
+//          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum - $rowSum (#' . $sum . ' - #' . $rowSum . ')';
+//          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+//        }
+          // Substract rows of the default language
         $sum = $sum - $rowSum;
       }
+      
+      
+      
         // Allocates result to the current tab
       $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
 
@@ -1206,25 +1244,29 @@ class tx_browser_pi1_navi_indexBrowser
         // Get sum of the current tab
       $sum  = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
         // Add row sum to current sum
+        // #36842, dwildt, 120504
       if( ! $this->bool_LLconsolidationMode )
       {
-        if( $this->pObj->b_drs_navi )
-        {
-          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum + $rowSum (#' . $sum . ' + #' . $rowSum . ')';
-          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
-        }
+//        if( $this->pObj->b_drs_navi )
+//        {
+//          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum + $rowSum (#' . $sum . ' + #' . $rowSum . ')';
+//          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+//        }
+          // Rows of the default language and a localised language optionally
         $sum = $sum + $rowSum;
       }
       else
       {
-        if( $this->pObj->b_drs_navi )
-        {
-          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum - $rowSum (#' . $sum . ' - #' . $rowSum . ')';
-          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
-        }
+//        if( $this->pObj->b_drs_navi )
+//        {
+//          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum - $rowSum (#' . $sum . ' - #' . $rowSum . ')';
+//          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+//        }
+          // Substract rows of the default language
         $sum = $sum - $rowSum;
       }
         // Allocates result to the current tab
+
       $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
     }
   }
@@ -1743,13 +1785,8 @@ class tx_browser_pi1_navi_indexBrowser
         break;
       default:
           // 120421, dwildt, 1+
-        $where = "1";
+        $where  = "1";
         $andEnableFields = $this->pObj->cObj->enableFields( $table );
-          // 120421, dwildt, 4-
-//        if( $andEnableFields )
-//        {
-//          $where = "1";
-//        }
         $where  = $where . $andEnableFields;
         $where  = $where . $this->pObj->objSqlFun->get_andWherePid( $table );
         $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );

@@ -2276,7 +2276,7 @@ class tx_browser_pi1_template
 //      #10204, dwildt, 101012
 //      $arr_orderBox_value_label[$field.':'.$b_asc] = $fieldLL;
 
-      $arr_result       = $this->pObj->objFilter->items_order_and_addFirst($arr_ts, $arr_orderBox_value_label, $conf_tableField);
+      $arr_result       = $this->pObj->oblFltr3x->items_order_and_addFirst($arr_ts, $arr_orderBox_value_label, $conf_tableField);
       $arr_values       = $arr_result['data']['values'];
 
       unset($arr_result);
@@ -2288,7 +2288,7 @@ class tx_browser_pi1_template
         // Process nice_piVar
 
         // #8337, 101011, dwildt
-      $arr_result     = $this->pObj->objFilter->get_nice_piVar($obj_ts, $arr_ts, 'orderBy');
+      $arr_result     = $this->pObj->oblFltr3x->get_nice_piVar($obj_ts, $arr_ts, 'orderBy');
       $key_piVar      = $arr_result['data']['key_piVar'];
       $arr_piVar      = $arr_result['data']['arr_piVar'];
       $str_nice_piVar = $arr_result['data']['nice_piVar'];
@@ -2320,15 +2320,15 @@ class tx_browser_pi1_template
         {
           $str_order = 'desc';
         }
-        $conf_item  = $this->pObj->objFilter->get_wrappedItemClass($arr_ts, $conf_item, $str_order);
+        $conf_item  = $this->pObj->oblFltr3x->get_wrappedItemClass($arr_ts, $conf_item, $str_order);
         // Wrap the item style
-        $conf_item  = $this->pObj->objFilter->get_wrappedItemStyle($arr_ts, $conf_item, $str_order);
+        $conf_item  = $this->pObj->oblFltr3x->get_wrappedItemStyle($arr_ts, $conf_item, $str_order);
         // Wrap the item uid
         $conf_item  = str_replace('###VALUE###', $value, $conf_item);
         // Get the item selected (or not selected)
         $arr_piVar  = $this->pObj->piVars;
           // dwildt, 110102
-        //$conf_item  = $this->pObj->objFilter->get_wrappedItemSelected($value, $arr_piVar, $conf_selected, $conf_item);
+        //$conf_item  = $this->pObj->oblFltr3x->get_wrappedItemSelected($value, $arr_piVar, $conf_selected, $conf_item);
         $tmp_value = null;
         if($value !== 0)
         {
@@ -2346,7 +2346,7 @@ class tx_browser_pi1_template
             }
           }
         }
-        $conf_item  = $this->pObj->objFilter->get_wrappedItemSelected(null, $tmp_value, $arr_piVar, $arr_ts, $conf_selected, $conf_item);
+        $conf_item  = $this->pObj->oblFltr3x->get_wrappedItemSelected(null, $tmp_value, $arr_piVar, $arr_ts, $conf_selected, $conf_item);
           // Wrap the value
         $conf_item  = str_replace('|', $label, $conf_item);
         $conf_item  = $conf_item."\n";
@@ -2359,10 +2359,10 @@ class tx_browser_pi1_template
 
         // Wrap all items / the object
         // #8337, 101011, dwildt
-      $conf_object    = $this->pObj->objFilter->wrap_allItems($obj_ts, $arr_ts, $str_nice_piVar, $key_piVar, count($arr_values));
+      $conf_object    = $this->pObj->oblFltr3x->wrap_allItems($obj_ts, $arr_ts, $str_nice_piVar, $key_piVar, count($arr_values));
       $str_html       = str_replace('|', "\n".$str_html."\n".$str_space_left, $conf_object);
         // Wrap the object title
-      $conf_wrap      = $this->pObj->objFilter->wrap_objectTitle($arr_ts, $conf_tableField);
+      $conf_wrap      = $this->pObj->oblFltr3x->wrap_objectTitle($arr_ts, $conf_tableField);
         // Wrap the object
       if ($conf_wrap)
       {

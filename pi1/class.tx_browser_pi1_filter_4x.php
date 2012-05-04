@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      3.9.9
+ * @version      3.9.13
  * @since        3.9.9
  */
 
@@ -40,7 +40,7 @@
  *
  *
  *
- *  167: class tx_browser_pi1_filter
+ *  167: class tx_browser_pi1_filter_4x
  *  233:     function __construct($pObj)
  *
  *              SECTION: Main
@@ -164,7 +164,7 @@
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
-class tx_browser_pi1_filter {
+class tx_browser_pi1_filter_4x {
 
 
     //////////////////////////////////////////////////////
@@ -197,7 +197,7 @@ class tx_browser_pi1_filter {
     // [Array] tables with the fields, which are used in the SQL query
   var $sql_filterFields       = null;
     // [String] andWhere statement, if a filter is set
-  var $andWhereFilter     = null;
+  var $andWhereFilter         = null;
 
     // [Array] Rows of the current filter
   var $rows = null;
@@ -271,6 +271,7 @@ class tx_browser_pi1_filter {
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
       // Default return value
+    $arr_return = array( );
     $arr_return['data']['marker'] = array( );
 
       // RETURN there isn't any filter
@@ -360,13 +361,13 @@ class tx_browser_pi1_filter {
       // DRS :TODO:
     if( $this->pObj->b_drs_devTodo )
     {
-      $prompt = 'Integrate $this->pObj->objFilter->arr_conf_tableFields!';
+      $prompt = 'Integrate $this->pObj->oblFltr3x->arr_conf_tableFields!';
       t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-      $prompt = 'Integrate $this->pObj->objFilter->arr_tablesWiTreeparentfield!';
+      $prompt = 'Integrate $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield!';
       t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS :TODO:
-    $this->pObj->objFilter->get_tableFields( );
+    $this->pObj->oblFltr3x->get_tableFields( );
       // Set class var $arr_conf_tableFields
 
       // Init localisation
@@ -404,7 +405,7 @@ class tx_browser_pi1_filter {
       return $this->andWhereFilter;
     }
 
-    $arrAndWhere = $this->pObj->objFilter->andWhere_filter( );
+    $arrAndWhere = $this->pObj->oblFltr3x->andWhere_filter( );
     $strAndWhere = implode(" AND ", ( array ) $arrAndWhere );
 
     if( empty( $strAndWhere ) )
@@ -587,11 +588,11 @@ class tx_browser_pi1_filter {
  */
   private function get_filter( )
   {
+    $arr_return = array( );
+
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
       // Set marker label
     $markerLabel = '###' . strtoupper( $this->curr_tableField ) . '###';
 
@@ -653,6 +654,8 @@ class tx_browser_pi1_filter {
  */
   private function get_filterItems( )
   {
+    $arr_return = array( );
+
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
@@ -690,7 +693,7 @@ class tx_browser_pi1_filter {
     $this->set_maxItemsPerHtmlRow( );
 
       // SWITCH current filter is a tree view
-    switch( in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
+    switch( in_array( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
         $arr_return = $this->get_filterItemsTree( );
@@ -726,6 +729,7 @@ class tx_browser_pi1_filter {
   private function get_filterItemsFromRows( )
   {
       // Default return value
+    $arr_return = array( );
     $arr_return['data']['items'] = null;
 
       // RETURN rows are empty
@@ -744,7 +748,7 @@ class tx_browser_pi1_filter {
 
 
       // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
+    list( $table ) = explode( '.', $this->curr_tableField );
 
       // Set nice_piVar
     $this->set_nicePiVar( );
@@ -756,7 +760,7 @@ class tx_browser_pi1_filter {
     $this->set_maxItemsPerHtmlRow( );
 
       // SWITCH current filter is a tree view
-    switch( in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
+    switch( in_array( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
         $arr_return = $this->get_filterItemsTree( );
@@ -792,6 +796,8 @@ class tx_browser_pi1_filter {
  */
   private function get_filterItemsDefault( )
   {
+    $arr_return = array( );
+
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
@@ -843,6 +849,8 @@ class tx_browser_pi1_filter {
  */
   private function get_filterItemsTree( )
   {
+    $arr_return = array( );
+    
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
@@ -855,13 +863,11 @@ class tx_browser_pi1_filter {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get TS filter configuration
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
       // Parent uid of the root records: 0 of course
     $uid_parent = 0;
-      // Current level of the treeview: 0 of course
-    $level      = 0;
 
       // Needed for tree_setOneDim( )
     $this->arr_rowsTablefield = $this->rows;
@@ -879,6 +885,7 @@ class tx_browser_pi1_filter {
       // Order the values
 
       // Get the values for ordering
+    $arr_value = array( );
     foreach ( $this->arr_rowsTablefield as $key => $row )
     {
       $arr_value[$key] = $row[$this->valueField];
@@ -943,6 +950,8 @@ class tx_browser_pi1_filter {
  */
   private function get_filterItemsWrap( $items )
   {
+    $arr_return = array( );
+
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
@@ -998,7 +1007,7 @@ class tx_browser_pi1_filter {
 
       // Get nice piVar
     $key_piVar      = $this->nicePiVar['key_piVar'];
-    $arr_piVar      = $this->nicePiVar['arr_piVar'];
+    //$arr_piVar      = $this->nicePiVar['arr_piVar'];
     $str_nicePiVar  = $this->nicePiVar['nice_piVar'];
 
       // Get ID
@@ -1057,8 +1066,6 @@ class tx_browser_pi1_filter {
       // Get TS configuration of the current filter / tableField
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-
-    $markerArray_bak = $this->markerArray;
 
       // Make a backup
     $cObjDataBak = $this->pObj->cObj->data;
@@ -1377,7 +1384,7 @@ class tx_browser_pi1_filter {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get TS filter configuration
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
 
@@ -1499,7 +1506,7 @@ class tx_browser_pi1_filter {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get TS filter configuration
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
       // Get the items title
@@ -1598,6 +1605,7 @@ class tx_browser_pi1_filter {
  */
   private function areas_toRowsConverter( $areas )
   {
+    $rows = array( );
 
       // Get the labels for the fields uid and hits
     $uidField   = $this->sql_filterFields[$this->curr_tableField]['uid'];
@@ -1657,7 +1665,7 @@ class tx_browser_pi1_filter {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get TS configuration of the current filter / tableField
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
       // Get labels for the fields hits and value
@@ -1781,9 +1789,6 @@ class tx_browser_pi1_filter {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
 
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
       // 1. step: filter items with one hit at least
     $arr_return = $this->get_rowsWiHits( );
     if( $arr_return['error']['status'] )
@@ -1860,8 +1865,10 @@ class tx_browser_pi1_filter {
  */
   private function get_rowsAllItems( $rows_wiHits )
   {
+    $arr_return = array( );
+
       // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
+    list( $table ) = explode( '.', $this->curr_tableField );
 
       // RETURN display items only, if they have one hit at least
     if( ! $this->ts_getDisplayWithoutAnyHit( ) )
@@ -1939,7 +1946,7 @@ class tx_browser_pi1_filter {
   private function sql_resAllItems( )
   {
       // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
+    list( $table ) = explode( '.', $this->curr_tableField );
 
       // Don't count hits
     $bool_count = false;
@@ -2023,7 +2030,7 @@ class tx_browser_pi1_filter {
   private function sql_resSysLanguageRows( )
   {
       // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
+    list( $table ) = explode( '.', $this->curr_tableField );
 
       // Get ids
     $uids_arr = array_keys( $this->rows );
@@ -2206,8 +2213,7 @@ class tx_browser_pi1_filter {
  */
   private function sql_resToRows( $res )
   {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
+    $rows = array( );
 
       // Get the field label of the uid
     $uidField = $this->sql_filterFields[$this->curr_tableField]['uid'];
@@ -2262,9 +2268,6 @@ class tx_browser_pi1_filter {
       return $rows_wiAllItems;
     }
       // RETURN all rows, there isn't any row with a hit
-
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get label of the hits field
     $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
@@ -2434,7 +2437,7 @@ class tx_browser_pi1_filter {
   private function sql_select_addLL_sysLanguage( )
   {
       // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
+    list( $table ) = explode( '.', $this->curr_tableField );
 
       // RETURN no languageField
     if( ! isset( $GLOBALS['TCA'][$table]['ctrl']['languageField'] ) )
@@ -2633,7 +2636,7 @@ class tx_browser_pi1_filter {
     $this->sql_filterFields[$this->curr_tableField]['treeParentField']  = $tableTreeParentField;
 
       // Add table to arr_tablesWiTreeparentfield
-    $this->pObj->objFilter->arr_tablesWiTreeparentfield[] = $table;
+    $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield[] = $table;
 
       // DRS
     if( $this->pObj->b_drs_filter )
@@ -2679,7 +2682,7 @@ class tx_browser_pi1_filter {
   private function sql_from( )
   {
       // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
+    list( $table ) = explode( '.', $this->curr_tableField );
 
       // RETURN : current table is a foreign table
     if( $this->pObj->localTable != $table )
@@ -2759,6 +2762,7 @@ class tx_browser_pi1_filter {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Short var
+    $arr_order  = null;
     $arr_order  = $this->conf_view['filter.'][$table . '.'][$field . '.']['order.'];
 
       // Order field
@@ -2850,9 +2854,6 @@ class tx_browser_pi1_filter {
  */
   private function sql_whereAllItems( )
   {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
 //    $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields );
 
     $where  = '1 ' .
@@ -2906,7 +2907,7 @@ class tx_browser_pi1_filter {
   private function sql_whereAnd_enableFields( )
   {
       // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
+    list( $table ) = explode( '.', $this->curr_tableField );
 
     $andWhere = $this->pObj->cObj->enableFields( $table );
 
@@ -2992,7 +2993,7 @@ class tx_browser_pi1_filter {
   private function sql_whereAnd_pidList( )
   {
       // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
+    list( $table ) = explode( '.', $this->curr_tableField );
 
     if( empty ( $this->pObj->pidList ) )
     {
@@ -3044,9 +3045,6 @@ class tx_browser_pi1_filter {
  */
   private function sql_whereAnd_sysLanguage( )
   {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
     if( ! isset( $this->sql_filterFields[$this->curr_tableField]['languageField'] ) )
     {
       return;
@@ -3309,8 +3307,8 @@ class tx_browser_pi1_filter {
 /**
  * localise( ):  Get the localised value
  *
- * @return	array		$value: value
- * @version 3.9.9
+ * @return	void
+ * @version 3.9.13
  * @since   3.9.9
  */
   private function localise( )
@@ -3346,8 +3344,6 @@ class tx_browser_pi1_filter {
     }
       // SWITCH language overlay or sys language
 
-      // RETURN localised value
-    return $value;
   }
 
 
@@ -3528,8 +3524,10 @@ class tx_browser_pi1_filter {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get localisation configuration
+    $l10n_mode        = null;
     $l10n_mode        = $GLOBALS['TCA'][$table]['columns'][$field]['l10n_mode'];
     $l10n_displayCsv  = $GLOBALS['TCA'][$table]['columns'][$field]['l10n_display'];
+    $l10n_displayArr  = null;
     $l10n_displayArr  = $this->pObj->objZz->getCSVasArray( $l10n_displayCsv );
       // Get localisation configuration
 
@@ -3617,7 +3615,7 @@ class tx_browser_pi1_filter {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get TS configuration of the current filter / tableField
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
       // Get areas from TS
@@ -3790,7 +3788,7 @@ class tx_browser_pi1_filter {
     $display_without_any_hit = $currFilterWrap['item.']['display_without_any_hit'];
 
       // RETURN ts value directly: filter isn't a tree view filter
-    if ( ! in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
+    if ( ! in_array( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
     {
       return $display_without_any_hit;
     }
@@ -3887,13 +3885,15 @@ class tx_browser_pi1_filter {
  */
   private function tree_getRendered( )
   {
+    $arr_result = array( );
+    
     static $firstCallDrsTreeview = true;
 
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get TS filter configuration
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
 
@@ -4273,6 +4273,7 @@ class tx_browser_pi1_filter {
  * @return	string		$item   :	Returns the wrapped item
  * @version 3.9.9
  * @since   3.0.0
+ * @todo    dwildt, 120504: $conf_array isn't used in the method. Has the method sense?
  */
   private function replace_itemTitle( $conf_array, $item )
   {
@@ -4735,7 +4736,7 @@ class tx_browser_pi1_filter {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get TS filter configuration
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
       // Set display hits flag
@@ -4838,9 +4839,6 @@ class tx_browser_pi1_filter {
  */
   private function sum_hits( $rows )
   {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
       // Get the label for the hit field
     $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
 
@@ -4933,7 +4931,7 @@ class tx_browser_pi1_filter {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get TS filter configuration
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
       // RETURN first item shouldn't displayed
@@ -4996,10 +4994,10 @@ class tx_browser_pi1_filter {
   private function set_firstItemTreeView( )
   {
       // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
+    list( $table ) = explode( '.', $this->curr_tableField );
 
       // RETURN current filter isn't a tree view
-    if( ! in_array( $table, $this->pObj->objFilter->arr_tablesWiTreeparentfield ) )
+    if( ! in_array( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
     {
       return;
     }
@@ -5032,7 +5030,7 @@ class tx_browser_pi1_filter {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get TS filter configuration
-    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
       // Get TS value
@@ -5146,7 +5144,7 @@ class tx_browser_pi1_filter {
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_filter.php']) {
-  include_once ($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_filter.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_filter_4x.php']) {
+  include_once ($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_filter_4x.php']);
 }
 ?>

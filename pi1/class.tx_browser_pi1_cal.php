@@ -2074,7 +2074,7 @@ class tx_browser_pi1_cal
     $viewWiDot = $view . '.';
     $conf_view = $conf['views.'][$viewWiDot][$mode . '.'];
 
-    foreach ($this->pObj->objFilter->arr_conf_tableFields as $tableField)
+    foreach ($this->pObj->oblFltr3x->arr_conf_tableFields as $tableField)
     {
       list ($table, $field) = explode('.', $tableField);
       $arr_ts = $conf_view['filter.'][$table . '.'][$field . '.'];
@@ -2453,7 +2453,7 @@ class tx_browser_pi1_cal
             // Line has to correspondend with similar code some lines below and code in filter::filter_fetch_rows()
           if ($keyValue >= $currFrom && $keyValue < $currTo)
           {
-            $arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFilter->arr_hits[$tableField][$keyValue];
+            $arr_hits[$key] = $arr_hits[$key] + $this->pObj->oblFltr3x->arr_hits[$tableField][$keyValue];
           }
         }
           // Current table is the local table
@@ -2494,7 +2494,7 @@ class tx_browser_pi1_cal
             // Line has to correspondend with similar code some lines above and code in filter::filter_fetch_rows()
           if( $valueValue >= $currFrom && $valueValue < $currTo )
           {
-            $arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFilter->arr_hits[$tableField][$keyValue];
+            $arr_hits[$key] = $arr_hits[$key] + $this->pObj->oblFltr3x->arr_hits[$tableField][$keyValue];
           }
         }
           // Current table is a foreign table
@@ -2506,8 +2506,8 @@ class tx_browser_pi1_cal
 
 
       // Set the global arr_hits
-    unset($this->pObj->objFilter->arr_hits[$tableField]);
-    $this->pObj->objFilter->arr_hits[$tableField] = $arr_hits;
+    unset($this->pObj->oblFltr3x->arr_hits[$tableField]);
+    $this->pObj->oblFltr3x->arr_hits[$tableField] = $arr_hits;
       // Set the global arr_hits
 
       // RETURN the result
