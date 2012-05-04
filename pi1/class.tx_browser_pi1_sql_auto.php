@@ -167,6 +167,8 @@ class tx_browser_pi1_sql_auto
  */
   public function get_statements( )
   {
+    $arr_return = array( );
+    
       // Add filter tables to class var $statementTables
     $this->init_class_statementTablesByFilter( );
 
@@ -189,7 +191,7 @@ class tx_browser_pi1_sql_auto
 
     $this->zz_loadTCAforAllTables( );
     // Load the TCA for all tables
-    foreach( $this->statementTables['all'] as $localForeign => $tables )
+    foreach( $this->statementTables['all'] as $tables )
     {
       foreach( $tables as $table)
       {
@@ -241,7 +243,7 @@ class tx_browser_pi1_sql_auto
     {
       foreach((array) $this->pObj->arrConsolidate['select']['mmSortingTableFields'] as $tableField)
       {
-        list($table, $field) = explode('.', $tableField);
+        list( $table ) = explode('.', $tableField);
         $arr_mmSorting[] = $tableField.' AS \''.$tableField.'\'';
       }
     }
@@ -626,9 +628,9 @@ class tx_browser_pi1_sql_auto
       $arrSearchFields = explode(',', $this->pObj->csvSearch);
       foreach ($arrSearchFields as $arrSearchField)
       {
-        list($str_before_as, $str_behind_as) = explode(' AS ', $arrSearchField);
-        list($table, $field)                 = explode('.', $str_before_as);
-        $tableField                          = trim($table).'.'.trim($field);
+        list( $str_before_as )  = explode(' AS ', $arrSearchField);
+        list($table, $field)    = explode('.', $str_before_as);
+        $tableField             = trim($table).'.'.trim($field);
         foreach ($this->pObj->arr_swordPhrases as $sword)
         {
           $this->pObj->arr_swordPhrasesTableField[$tableField][] = $sword;
@@ -758,19 +760,15 @@ class tx_browser_pi1_sql_auto
   private function whereSearch()
   {
 
-    $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
-    $view = $this->pObj->view;
 
-    $viewWiDot  = $view.'.';
-
-    // Query with OR and AND
+      // Query with OR and AND
     $str_whereOr  = false;
-    $arr_whereOr  = array();
-    // Query with AND NOT LIKE
+      // Query with AND NOT LIKE
     $str_whereNot = false;
-    $arr_whereNot = array();
+    $arr_whereNot = array( );
 
+    $arr_whereSword = array( );
 
 
     //////////////////////////////////////////////////////////////////////////
@@ -891,7 +889,7 @@ class tx_browser_pi1_sql_auto
       }
       $int_sword++;
     }
-    foreach ($arr_whereSword as $key_sword => $arr_fields)
+    foreach ( $arr_whereSword as $arr_fields )
     {
       $str_or     = implode(' OR ',$arr_fields);
       $arr_or[]   = '( '.$str_or.' )';
@@ -1021,7 +1019,6 @@ class tx_browser_pi1_sql_auto
     $view = $this->pObj->view;
 
     $viewWiDot = $view.'.';
-    $conf_view = $conf['views.'][$viewWiDot][$mode.'.'];
 
 // 3.3.7
     ////////////////////////////////////////////////////////////////////
@@ -1147,7 +1144,7 @@ class tx_browser_pi1_sql_auto
       $tableField = $realTable.'.dummy';
       $tableField = $this->pObj->objSqlFun_3x->set_tablealias($tableField);
       $tableField = $this->pObj->objSqlFun_3x->get_sql_alias_before($tableField);
-      list($aliasTable, $field) = explode('.', $tableField);
+      list( $aliasTable ) = explode('.', $tableField);
       $str_enablefields = str_replace($realTable.'.', $aliasTable.'.', $str_enablefields);
       // Replace real name of the table with its alias, if there is an alias
 
@@ -1178,7 +1175,7 @@ class tx_browser_pi1_sql_auto
     $tableField = $realTable.'.dummy';
     $tableField = $this->pObj->objSqlFun_3x->set_tablealias($tableField);
     $tableField = $this->pObj->objSqlFun_3x->get_sql_alias_before($tableField);
-    list($aliasTable, $field) = explode('.', $tableField);
+    list( $aliasTable ) = explode('.', $tableField);
     $str_enablefields = str_replace($realTable.'.', $aliasTable.'.', $str_enablefields);
     // Replace real name of the table with its alias, if there is an alias
 
@@ -1373,6 +1370,7 @@ class tx_browser_pi1_sql_auto
  * @return	void
  * @version 3.9.12
  * @since   3.9.12
+ * @todo    120404, dwildt: Initialise $boolSelfReference, initialise $config
  */
   private function init_class_relationsSingle( $table, $columnsKey, $foreignTable)
   {
@@ -1460,7 +1458,7 @@ class tx_browser_pi1_sql_auto
     $boolSelfReference    = $this->pObj->conf['autoconfig.']['relations.']['simpleRelations.']['selfReference'];
     $boolMMrelations      = $this->pObj->conf['autoconfig.']['relations.']['mmRelations'];
     $csvAllowedTCAtypes   = $this->pObj->conf['autoconfig.']['relations.']['TCAconfig.']['type.']['csvValue'];
-    $dontUseFieldsCSV     = $this->pObj->conf['autoconfig.']['relations.']['csvDontUseFields'];
+    //$dontUseFieldsCSV     = $this->pObj->conf['autoconfig.']['relations.']['csvDontUseFields'];
       // Get TypoScript configuration
 
     if( $boolOneWayOnly )
@@ -1535,7 +1533,7 @@ class tx_browser_pi1_sql_auto
     $arrDontUseTableFields = $this->pObj->objZz->getCSVasArray( $dontUseFieldsCSV );
 
       // LOOP $tableFields
-    foreach( ( array ) $arrDontUseTableFields as $key => $tableField )
+    foreach( ( array ) $arrDontUseTableFields as $tableField )
     {
       $arr_return[] = $tableField;
         // DRS
@@ -1645,7 +1643,7 @@ class tx_browser_pi1_sql_auto
   private function relations_requirements( $table, $config, $configPath )
   {
     static $first_call = true;
-    static $arrDontUseTableFields;
+    static $arrDontUseTableFields = array( );
 
       // RETURN : internal_type is db
     if( $config['internal_type'] == 'db')
@@ -1753,6 +1751,8 @@ class tx_browser_pi1_sql_auto
  */
   private function get_joins( )
   {
+    $arr_return = array( );
+    
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
     $view = $this->pObj->view;
@@ -2118,6 +2118,7 @@ class tx_browser_pi1_sql_auto
         $str_pidStatement         = $this->pObj->objSqlFun->get_andWherePid($foreignTable);
           // #32254, 111201, dwildt+
 
+        $localTableFieldMaxItems = 0;
         $localTableFieldMaxItems = $GLOBALS['TCA'][$localTable]['columns'][$localField]['config']['maxitems'];
         switch(true)
         {
@@ -2472,10 +2473,6 @@ class tx_browser_pi1_sql_auto
       return $csvSelect;
     }
 
-      // Add uid field of each table without uid
-    $str_addTableUids = false;
-    $arr_addTableUids = false;
-
     foreach( ( array ) $this->pObj->arrConsolidate['addedTableFields'] as $tableField )
     {
       list( $table, $field ) = explode( '.', $tableField );
@@ -2512,7 +2509,7 @@ class tx_browser_pi1_sql_auto
       $prompt = $this->conf_path . 'override.' . $type . ' is true. ' .
                 $this->conf_path .'' . $type . ' will be ignored!';
       t3lib_div::devLog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      $prompr = 'SELECT ' . $select;
+      $prompt = 'SELECT ' . $select;
       t3lib_div::devLog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS
@@ -2548,7 +2545,7 @@ class tx_browser_pi1_sql_auto
  */
   private function zz_loadTCAforAllTables( )
   {
-    foreach( ( array ) $this->statementTables['all'] as $localForeign => $tables )
+    foreach( ( array ) $this->statementTables['all'] as $tables )
     {
       foreach( $tables as $table)
       {
