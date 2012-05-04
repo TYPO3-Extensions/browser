@@ -598,7 +598,7 @@ class tx_browser_pi1_sql_auto
     //
     // Add localisation fields
 
-    $str_local_where = $this->pObj->objLocalise3x->localisationFields_where($this->pObj->localTable);
+    $str_local_where = $this->pObj->objLocalise->localisationFields_where($this->pObj->localTable);
     if ($str_local_where)
     {
       $whereClause      = $whereClause." AND ".$str_local_where;
