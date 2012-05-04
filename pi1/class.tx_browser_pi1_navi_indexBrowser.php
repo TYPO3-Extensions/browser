@@ -1400,7 +1400,7 @@ if( 1 )
 
     $select = "uid, " . $parentUid;
     $from   = $this->sqlStatement_from( $table );
-    $where    = $table . "." . $parentUid . " IN (" . $str_rows . ")
+    $where    = $table . "." . $parentUid . " IN (" . $uidListOfDefLanguage . ")
                 AND " . $table . ".sys_language_uid = 1" ;
     $groupBy  = null;
     $orderBy  = "uid";
@@ -1463,7 +1463,7 @@ if( 1 )
     $arr_rowsDefWiCurr  = array_merge( $arr_rowsDefWoTranslated, $arr_rowsLL['uid'] );
     $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );  
     
-    var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
+    var_dump( __METHOD__, __LINE__, $uidListDefAndCurr );
 }
 #############################################################
       // Query for all filter items
