@@ -1335,7 +1335,7 @@ class tx_browser_pi1_navi_indexBrowser
 #############################################################
 if( 1 )
 {
-    $parentUid = 'l18parent';
+    $parentUid = 'l18n_parent';
     
     $select = "uid";
     $from   = $this->sqlStatement_from( $table );
