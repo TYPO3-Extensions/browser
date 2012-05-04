@@ -1142,29 +1142,49 @@ class tx_browser_pi1_navi_indexBrowser
       $rowSum     = $row[ 'count' ];
 
         // Set attributes sum
-      $currSum  = $this->indexBrowserTab['attributes'][ $attribute ][ 'sum' ];
+      $sum  = $this->indexBrowserTab['attributes'][ $attribute ][ 'sum' ];
       if( ! $this->bool_LLconsolidationMode )
       {
+        if( $this->pObj->b_drs_navi )
+        {
+          $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] : $sum = $rowSum (#' . $rowSum . ')';
+          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+        }
         $sum = $rowSum;
       }
       else
       {
-        $sum = $currSum - $rowSum;
+        if( $this->pObj->b_drs_navi )
+        {
+          $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] : $sum = $sum - $rowSum (#' . $sum . ' - #' . $sum . ')';
+          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        $sum = $sum - $rowSum;
       }
       $this->indexBrowserTab['attributes'][ $attribute ][ 'sum' ] = $sum;
 
         // Get id of the tab for all attributes
       $tabId    = $this->indexBrowserTab[ 'tabSpecial' ][ 'all' ];
         // Get sum of the current tab
-      $currSum  = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
+      $sum  = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
         // Add row sum to current sum
       if( ! $this->bool_LLconsolidationMode )
       {
-        $sum = $currSum + $rowSum;
+        if( $this->pObj->b_drs_navi )
+        {
+          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum + $rowSum (#' . $sum . ' + #' . $sum . ')';
+          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        $sum = $sum + $rowSum;
       }
       else
       {
-        $sum = $currSum - $rowSum;
+        if( $this->pObj->b_drs_navi )
+        {
+          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum - $rowSum (#' . $sum . ' - #' . $sum . ')';
+          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        $sum = $sum - $rowSum;
       }
         // Allocates result to the current tab
       $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
@@ -1181,15 +1201,25 @@ class tx_browser_pi1_navi_indexBrowser
         // Get id of the tab others or of the tab with the current attribute
 
         // Get sum of the current tab
-      $currSum  = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
+      $sum  = $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ];
         // Add row sum to current sum
       if( ! $this->bool_LLconsolidationMode )
       {
-        $sum = $currSum + $rowSum;
+        if( $this->pObj->b_drs_navi )
+        {
+          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum + $rowSum (#' . $sum . ' + #' . $sum . ')';
+          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        $sum = $sum + $rowSum;
       }
       else
       {
-        $sum = $currSum - $rowSum;
+        if( $this->pObj->b_drs_navi )
+        {
+          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum - $rowSum (#' . $sum . ' - #' . $sum . ')';
+          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        $sum = $sum - $rowSum;
       }
         // Allocates result to the current tab
       $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
