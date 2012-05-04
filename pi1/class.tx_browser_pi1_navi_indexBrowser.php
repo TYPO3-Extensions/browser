@@ -1402,6 +1402,18 @@ if( 1 )
     $groupBy  = null;
     $orderBy  = "l18n_parent";
     $limit    = null;
+
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+
     var_dump( __METHOD__, __LINE__, $query );
       // Execute query
     $res = $this->pObj->objSqlFun->exec_SELECTquery
