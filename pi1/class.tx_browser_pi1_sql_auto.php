@@ -603,12 +603,7 @@ class tx_browser_pi1_sql_auto
       //
       // Add localisation fields
 
-    $str_local_where = $this->pObj->objLocalise->localisationFields_where( $this->pObj->localTable );
-$this->pObj->dev_var_dump( $str_local_where );
-    if ( $str_local_where )
-    {
-      $whereClause = $whereClause." AND ".$str_local_where;
-    }
+    $whereClause = $this->whereLL( $whereClause );
       // Add localisation fields
 
 
@@ -748,6 +743,28 @@ $this->pObj->dev_var_dump( $str_local_where );
     // DRS - Development Reporting System
 
     return $whereClause;
+
+  }
+
+
+
+/**
+ * whereLL( ) : Building the whole where clause
+ *
+ * @return	string		FALSE or the SQL-where-clause
+ * @version 3.9.13
+ * @since   3.9.12
+ */
+  private function whereLL( $where )
+  {
+    $whereLL = $this->pObj->objLocalise->localisationFields_where( $this->pObj->localTable );
+$this->pObj->dev_var_dump( $whereLL );
+    if ( $whereLL )
+    {
+      $where = $where . " AND " . $whereLL;
+    }
+
+    return $where;
 
   }
 
