@@ -391,36 +391,36 @@ class tx_browser_pi1_navi_indexBrowser
     {
       case( PI1_DEFAULT_LANGUAGE ):
           // RETURN : nothing to do
-        if( $this->pObj->b_drs_localise )
+        if( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
         {
           $prompt = 'Index browser doesn\'t need any localisation consolidation. Localisation is PI1_DEFAULT_LANGUAGE.';
-          t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
         }
         return false;
         break;
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
-        if( $this->pObj->b_drs_localise )
+        if( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
         {
           $prompt = 'Index browser doesn\'t need any localisation consolidation. Localisation is PI1_DEFAULT_LANGUAGE_ONLY.';
-          t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
         }
           // RETURN : nothing to do
         return false;
         break;
       case( $this->pObj->objFltr4x->init_aFilterIsSelected( ) ):
-        if( $this->pObj->b_drs_localise )
+        if( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
         {
           $prompt = 'Index browser doesn\'t need any localisation consolidation. A filter is selected.';
-          t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
         }
           // RETURN : nothing to do
         return false;
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
-        if( $this->pObj->b_drs_localise )
+        if( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
         {
           $prompt = 'Index browser: Hits of the default language will substracted.';
-          t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->pObj->extKey, 0 );
+          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
         }
           // Store current localisation mode
         $curr_int_localisation_mode     = $this->int_localisation_mode;
