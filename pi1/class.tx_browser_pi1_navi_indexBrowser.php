@@ -1396,7 +1396,7 @@ if( 1 )
     $str_rows = implode( ',', ( array ) $arr_rows );
     var_dump( __METHOD__, __LINE__, $str_rows );
 
-    $select = "uid";
+    $select = "uid, l18n_parent";
     $from   = $this->sqlStatement_from( $table );
     $where    = $table . ".l18n_parent IN (" . $str_rows . ")
                 AND " . $table . ".sys_language_uid = 1" ;
