@@ -1332,6 +1332,38 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // Build FIND IN SET
     
+#############################################################
+if( 1 )
+{
+    $select = $table . ".uid AS '" . $table . ".uid', " . $table . "LL.uid AS '" . $table . "LL.uid', " . $table . "LL.l10n_parent AS '" . $table . "LL.l10n_parent' ";
+    $from   = $this->sqlStatement_from( $table );
+    $from   = $from . "
+LEFT JOIN " . $table . " as " . $table . "LL
+ON ( 
+      " . $table . ".uid = " . $table . "LL.l10n_parent 
+  AND " . $table . "LL.sys_language_uid = 1 
+)";
+    $where  = $this->sqlStatement_where( $table, $strFindInSet );
+
+    $groupBy  = null;
+    $orderBy  = null;
+    $limit    = null;
+      // Query for all filter items
+
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+
+    var_dump( __METHOD__, __LINE__, $query );
+}
+#############################################################
       // Query for all filter items
     $select = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
     $from   = $this->sqlStatement_from( $table );
@@ -1353,15 +1385,6 @@ class tx_browser_pi1_navi_indexBrowser
                 $limit
               );
       // Execute query
-//    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-//              (
-//                $select,
-//                $from,
-//                $where,
-//                $groupBy,
-//                $orderBy,
-//                $limit
-//              );
     $res = $this->pObj->objSqlFun->exec_SELECTquery
                                     (
                                       $select,
