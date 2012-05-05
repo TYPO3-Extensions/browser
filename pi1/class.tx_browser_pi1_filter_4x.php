@@ -2888,6 +2888,8 @@ class tx_browser_pi1_filter_4x {
               $this->sql_whereAnd_Filter( ) .
               $this->sql_whereAnd_fromTS( );
     $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
+var_dump( __METHOD__, __LINE__, $table );
+var_dump( __METHOD__, __LINE__, $llWhere );
     if( $llWhere )
     {
       $where  = $where . " AND " . $llWhere;
