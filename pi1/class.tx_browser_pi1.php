@@ -2233,8 +2233,12 @@ class tx_browser_pi1 extends tslib_pibase {
       // Get the current time
 
       // Prompt the current time
-    $prompt = '[' . ( $endTime - $this->tt_startTime ) . ' ms] ' . $method . '(' . $line . '): ' . $prompt;
-    t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt, $this->extKey, 0 );
+//    $prompt = '[' . ( $endTime - $this->tt_startTime ) . ' ms] ' . $method . '(' . $line . '): ' . $prompt;
+//    t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt, $this->extKey, 0 );
+//    t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt, $this->extKey, 0 );
+    $prompt = ( $endTime - $this->tt_startTime ) . ' ms ### ' . 
+              $method . '(' . $line . '): ' . $prompt;
+    t3lib_div::devLog( $prompt, $this->extKey, 0 );
 
 
     switch( true )
