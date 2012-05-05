@@ -456,49 +456,7 @@ class tx_browser_pi1_navi_indexBrowser
         break;
       default:
           // DIE
-        $prompt = '
-          <div style="text-align:center;">
-            <div style="border:1em solid red;padding:1em">
-              <h1>
-                Error with localisation mode
-              </h1>
-              <p>
-                The value of localisation mode isn\'t defined in the current switch.<br />
-                Value is: "' . $this->int_localisation_mode  . '"
-              </p>
-              <p>
-                Method: ' . __METHOD__ . '<br />
-                Line: ' . __LINE__ . '
-              </p>
-            </div>
-            <br />
-            <div style="border:1em solid orange;padding:1em">
-              <h1>
-                What can you do?
-              </h1>
-              <ul>
-                <li>
-                  Change the localisation configuration in your TypoScript in config { ... } or page.config { ... }.
-                </li>
-                <li>
-                  Post this prompt at <a href="http://typo3-browser-forum.de" target="_blank">typo3-browser-forum.de</a><br />
-                  Posts are welcome in English and German.
-                </li>
-                <li>
-                  Mail this prompt to <a href="http://wildt.at.die-netzmacher.de" target="_blank">wildt.at.die-netzmacher.de</a><br />
-                  Mails are welcome in English and German.
-                </li>
-              </ul>
-            </div>
-            <br />
-            <div style="border:1em;padding:1em">
-              <h1>
-                Browser - TYPO3 without PHP
-              </h1>
-            </div>
-          </div>
-          ';
-        die( $prompt );
+        $this->zz_LLdie( __METHOD__, __LINE__ );
         break;
     }
       // SWITCH $int_localisation_mode
@@ -1295,6 +1253,19 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 
+
+
+
+
+
+    /***********************************************
+    *
+    * SQL statements
+    *
+    **********************************************/
+
+
+
 /**
  * count_chars_resSqlCount( ): SQL query and execution for counting initials
  *
@@ -1332,153 +1303,46 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // Build FIND IN SET
     
-#############################################################
-if( 1 )
-{
-    $parentUid = 'l10n_parent';
-    
-    $select = "uid";
-    $from   = $this->sqlStatement_from( $table );
-    $where  = $this->sqlStatement_where( $table, $strFindInSet );
 
-    $groupBy  = null;
-    $orderBy  = "uid";
-    $limit    = null;
-      // Query for all filter items
-
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-
-    var_dump( __METHOD__, __LINE__, $query );
-      // Execute query
-    $res = $this->pObj->objSqlFun->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
-
-      // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
+      // SWITCH $int_localisation_mode
+    switch( $this->int_localisation_mode )
     {
-        // Free SQL result
-      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-        // Reset SQL charset
-      $this->sqlCharsetSet( $currSqlCharset );
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
-      return $arr_return;
+      case( PI1_DEFAULT_LANGUAGE ):
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+        $arr_return = $this->count_chars_resSqlCountDefLL( $strFindInSet, $currSqlCharset );
+        break;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+        $arr_return = $this->count_chars_resSqlCountSelOrDefLL( $strFindInSet, $currSqlCharset );
+        break;
+      default:
+          // DIE
+        $this->zz_LLdie( __METHOD__, __LINE__ );
+        break;
     }
-      // Error management
+      // SWITCH $int_localisation_mode
 
-      // DRS
-    if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
+    return $arr_return;
+  }
 
-    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
-    {
-        // Get values from the SQL row
-      $arr_rows[] = $row['uid'];
-    }
-    $uidListOfDefLanguage = implode( ',', ( array ) $arr_rows );
-    var_dump( __METHOD__, __LINE__, $uidListOfDefLanguage );
 
-    $select = "uid, " . $parentUid;
-    $from   = $this->sqlStatement_from( $table );
-    $where    = $table . "." . $parentUid . " IN (" . $uidListOfDefLanguage . ")
-                AND " . $table . ".sys_language_uid = 1" ;
-    $groupBy  = null;
-    $orderBy  = "uid";
-    $limit    = null;
 
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-
-    var_dump( __METHOD__, __LINE__, $query );
-      // Execute query
-    $res = $this->pObj->objSqlFun->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
-
-      // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
-    {
-        // Free SQL result
-      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-        // Reset SQL charset
-      $this->sqlCharsetSet( $currSqlCharset );
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
-      return $arr_return;
-    }
-      // Error management
-
-      // DRS
-    if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
-    {
-        // Get values from the SQL row
-      $arr_rowsLL['uid'][]          = $row['uid'];
-      $arr_rowsLL[$parentUid][]  = $row[$parentUid];
-    }
-    $uidListOfCurrLanguage  = implode( ',', ( array ) $arr_rowsLL['uid'] );
-    var_dump( __METHOD__, __LINE__, $uidListOfCurrLanguage );
-    
-    $arr_rowsDefWoTranslated = array_diff( $arr_rows, $arr_rowsLL[$parentUid] );
-    var_dump( __METHOD__, __LINE__, 'array_diff' );
-    var_dump( __METHOD__, __LINE__, $arr_rows );
-    var_dump( __METHOD__, __LINE__, $arr_rowsLL[$parentUid] );
-    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
-    $arr_rowsDefWiCurr  = array_merge( $arr_rowsDefWoTranslated, $arr_rowsLL['uid'] );
-    var_dump( __METHOD__, __LINE__, 'array_merge' );
-    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
-    var_dump( __METHOD__, __LINE__, $arr_rowsLL['uid'] );
-    var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
-
-    sort( $arr_rowsDefWiCurr, SORT_NUMERIC );
-    $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );  
-    
-    
-    var_dump( __METHOD__, __LINE__, $uidListDefAndCurr );
+/**
+ * count_chars_resSqlCountDefLL( ): 
+ *
+ * @param	string    $strFindInSet : Current SQL charset for reset in error case
+ * @return	array     $arr_return     : SQL ressource or an error message in case of an error
+ * @version 3.9.13
+ * @since   3.9.11
+ */
+  private function count_chars_resSqlCountDefLL( $strFindInSet )
+  {
+      // Get current table.field of the index browser
+    $tableField     = $this->indexBrowserTableField;
+    list( $table )  = explode( '.', $tableField );
 
     $select = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
-    $from   = $table;
-    $where    = $table . ".uid IN (" . $uidListDefAndCurr . ")";
+    $from   = $this->sqlStatement_from( $table );
+    $where  = $this->sqlStatement_where( $table, $strFindInSet );
     $groupBy  = "LEFT ( " . $tableField . ", 1 )";
     $orderBy  = "LEFT ( " . $tableField . ", 1 )";
     $limit    = null;
@@ -1494,8 +1358,6 @@ if( 1 )
                 $orderBy,
                 $limit
               );
-    var_dump( __METHOD__, __LINE__, $query );
-
       // Execute query
     $res = $this->pObj->objSqlFun->exec_SELECTquery
                                     (
@@ -1531,63 +1393,90 @@ if( 1 )
       // Return SQL result
     $arr_return['data']['res'] = $res;
     return $arr_return;
+  }
 
-}
-#############################################################
-      // Query for all filter items
-    $select = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
-    $from   = $this->sqlStatement_from( $table );
-    $where  = $this->sqlStatement_where( $table, $strFindInSet );
-#    $where    = $table . ".uid IN (" . $str_rows . ")";
-    $groupBy  = "LEFT ( " . $tableField . ", 1 )";
-    $orderBy  = "LEFT ( " . $tableField . ", 1 )";
-    $limit    = null;
-      // Query for all filter items
 
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-      // Execute query
-    $res = $this->pObj->objSqlFun->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
 
-      // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
+/**
+ * count_chars_resSqlCountSelOrDefLL( ) : SQL query and execution for counting initials
+ *
+ * @param	string		$currSqlCharset : Current SQL charset for reset in error case
+ * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @version 3.9.13
+ * @since   3.9.11
+ */
+  private function count_chars_resSqlCountSelOrDefLL( $strFindInSet, $currSqlCharset )
+  {
+      // Get current table.field of the index browser
+    $tableField     = $this->indexBrowserTableField;
+    list( $table )  = explode( '.', $tableField );
+
+      // Label of field with the uid of the record with the default language
+    $parentUid = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+    
+      // RETURN : table isn't localised
+    if( empty ( $parentUid ) )
     {
-        // Free SQL result
-      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-        // Reset SQL charset
-      $this->sqlCharsetSet( $currSqlCharset );
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
+      if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi )
+      {
+        $prompt = 'Index browser won\'t be localised, because ' . $table . ' hasn\'t any transOrigPointerField.';
+        t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      $arr_return = $this->count_chars_resSqlCountDefLL( $strFindInSet );
+    }
+
+      // Get Ids of all (!) default language records
+    $arr_return = $this->zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset );
+    if( $arr_return['error']['status'] )
+    {
       return $arr_return;
     }
-      // Error management
+    $arr_rows = $arr_return['data']['rows'];
+    $uidListOfDefLL = implode( ',', ( array )  $arr_rows );
+    var_dump( __METHOD__, __LINE__, $uidListOfDefLL );
+      // Get Ids of all (!) default language records
 
-      // DRS
-    if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+      // Get Ids of all (!) translated language records
+    $arr_return = $this->zz_sqlIdsOfTranslatedLL( $uidListOfDefLL, $currSqlCharset );
+    if( $arr_return['error']['status'] )
     {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+      return $arr_return;
     }
-      // DRS
+    $arr_rowsLL             = $arr_return['data']['rows'];
+    $uidListOfCurrLanguage  = implode( ',', ( array ) $arr_rowsLL['uid'] );
+    var_dump( __METHOD__, __LINE__, $uidListOfCurrLanguage );
+      // Get Ids of all (!) translated language records
+    
+      // Substract uids of default language records, which are translated
+    $arr_rowsDefWoTranslated = array_diff( $arr_rows, $arr_rowsLL[$parentUid] );
+    
+    
+    var_dump( __METHOD__, __LINE__, 'array_diff' );
+    var_dump( __METHOD__, __LINE__, $arr_rows );
+    var_dump( __METHOD__, __LINE__, $arr_rowsLL[$parentUid] );
+    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
 
-      // Return SQL result
-    $arr_return['data']['res'] = $res;
+      // Add uids of translated recors
+    $arr_rowsDefWiCurr  = array_merge( $arr_rowsDefWoTranslated, $arr_rowsLL['uid'] );
+
+    var_dump( __METHOD__, __LINE__, 'array_merge' );
+    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
+    var_dump( __METHOD__, __LINE__, $arr_rowsLL['uid'] );
+    var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
+
+      // Sort the array of uids
+    sort( $arr_rowsDefWiCurr, SORT_NUMERIC );
+
+      // Get list of uids from the array
+    $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );  
+     
+    var_dump( __METHOD__, __LINE__, $uidListDefAndCurr );
+
+ 
+      // Count initials
+    $arr_return = $this->zz_sqlCountInitialsLL( $uidListDefAndCurr, $currSqlCharset );
+
+      // RETURN : the sql result 
     return $arr_return;
   }
   
@@ -1947,9 +1836,264 @@ if( 1 )
 
     /***********************************************
     *
-    * SQL statements
+    * SQL ids
     *
     **********************************************/
+
+
+
+/**
+ * zz_sqlCountInitialsLL( ) : SQL query and execution for counting initials
+ *
+ * @param	string		$currSqlCharset : Current SQL charset for reset in error case
+ * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @version 3.9.13
+ * @since   3.9.11
+ */
+  private function zz_sqlCountInitialsLL( $uidListDefAndCurr, $currSqlCharset )
+  {
+      // Get current table.field of the index browser
+    $tableField     = $this->indexBrowserTableField;
+    list( $table )  = explode( '.', $tableField );
+
+      // Configure the query
+    $select   = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
+    $from     = $table;
+    $where    = $table . ".uid IN (" . $uidListDefAndCurr . ")";
+    $groupBy  = "LEFT ( " . $tableField . ", 1 )";
+    $orderBy  = "LEFT ( " . $tableField . ", 1 )";
+    $limit    = null;
+      // Query for all filter items
+
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+    var_dump( __METHOD__, __LINE__, $query );
+
+      // Execute query
+    $res = $this->pObj->objSqlFun->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+        // Free SQL result
+      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+        // Reset SQL charset
+      $this->sqlCharsetSet( $currSqlCharset );
+      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+      // Return SQL result
+    $arr_return['data']['res'] = $res;
+    return $arr_return;
+  }
+
+
+
+/**
+ * zz_sqlIdsOfDefLL( ) : Get Ids of all (!) default language records
+ *
+ * @param	string		$currSqlCharset : Current SQL charset for reset in error case
+ * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @version 3.9.13
+ * @since   3.9.11
+ */
+  private function zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset )
+  {
+      // Get current table.field of the index browser
+    $tableField     = $this->indexBrowserTableField;
+    list( $table )  = explode( '.', $tableField );
+
+      // Configure the query
+    $select   = "uid";
+    $from     = $this->sqlStatement_from( $table );
+    $where    = $this->sqlStatement_where( $table, $strFindInSet );
+    $groupBy  = null;
+    $orderBy  = "uid";
+    $limit    = null;
+
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+
+    var_dump( __METHOD__, __LINE__, $query );
+      // Execute query
+    $res = $this->pObj->objSqlFun->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+        // Free SQL result
+      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+        // Reset SQL charset
+      $this->sqlCharsetSet( $currSqlCharset );
+      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+        // Get values from the SQL row
+      $arr_rows[] = $row['uid'];
+    }
+    
+    $arr_return['data']['rows'] = $arr_rows;
+    return $arr_return;
+  }
+
+
+
+/**
+ * zz_sqlIdsOfTranslatedLL( ) : Get Ids of all (!) translated language records
+ *
+ * @param	string		$currSqlCharset : Current SQL charset for reset in error case
+ * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @version 3.9.13
+ * @since   3.9.11
+ */
+  private function zz_sqlIdsOfTranslatedLL( $uidListOfDefLL, $currSqlCharset )
+  {
+      // Get current table.field of the index browser
+    $tableField     = $this->indexBrowserTableField;
+    list( $table )  = explode( '.', $tableField );
+
+      // Label of field with the uid of the record with the default language
+    $parentUid = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+    
+      // Configure the query
+    $select   = "uid, " . $parentUid;
+    $from     = $this->sqlStatement_from( $table );
+
+    $curr_int_localisation_mode                     = $this->int_localisation_mode;
+    $this->pObj->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
+var_dump( __METHOD__, __LINE__, $this->pObj->objLocalise->localisationFields_where( $table ) );
+    $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+    
+    $where    = $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ")
+                AND " . $table . ".sys_language_uid = 1" ;
+    $groupBy  = null;
+    $orderBy  = "uid";
+    $limit    = null;
+
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+
+    var_dump( __METHOD__, __LINE__, $query );
+    
+      // Execute query
+    $res = $this->pObj->objSqlFun->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+        // Free SQL result
+      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+        // Reset SQL charset
+      $this->sqlCharsetSet( $currSqlCharset );
+      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+        // Get values from the SQL row
+      $arr_rowsLL['uid'][]          = $row['uid'];
+      $arr_rowsLL[$parentUid][]  = $row[$parentUid];
+    }
+    $uidListOfCurrLanguage  = implode( ',', ( array ) $arr_rowsLL['uid'] );
+    var_dump( __METHOD__, __LINE__, $uidListOfCurrLanguage );
+    
+    $arr_rowsDefWoTranslated = array_diff( $arr_rows, $arr_rowsLL[$parentUid] );
+    var_dump( __METHOD__, __LINE__, 'array_diff' );
+    var_dump( __METHOD__, __LINE__, $arr_rows );
+    var_dump( __METHOD__, __LINE__, $arr_rowsLL[$parentUid] );
+    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
+    $arr_rowsDefWiCurr  = array_merge( $arr_rowsDefWoTranslated, $arr_rowsLL['uid'] );
+    var_dump( __METHOD__, __LINE__, 'array_merge' );
+    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
+    var_dump( __METHOD__, __LINE__, $arr_rowsLL['uid'] );
+    var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
+
+    $arr_return['data']['rows'] = $arr_rowsLL;
+    return $arr_return;
+  }
 
 
 
@@ -2333,6 +2477,64 @@ $this->pObj->dev_var_dump( $llWhere );
     $this->pObj->piVars = $this->piVarsBak;
 
     return $tabLinkedLabel;
+  }
+
+
+
+/**
+ * zz_LLdie( ): Prompts a localisation error and dies
+ *
+ * @param	string    $method : name of calling method
+ * @param	integer   $line   : line number of the call
+ * @return	void
+ * @version 3.9.13
+ * @since   3.9.13
+ */
+  private function zz_LLdie( $method, $line )
+  {
+    $prompt = '
+      <div style="text-align:center;">
+        <div style="border:1em solid red;padding:1em">
+          <h1>
+            Error with localisation mode
+          </h1>
+          <p>
+            The value of localisation mode isn\'t defined in the current switch.<br />
+            Value is: "' . $this->int_localisation_mode  . '"
+          </p>
+          <p>
+            Method: ' . $method . '<br />
+            Line: ' . $line . '
+          </p>
+        </div>
+        <br />
+        <div style="border:1em solid orange;padding:1em">
+          <h1>
+            What can you do?
+          </h1>
+          <ul>
+            <li>
+              Change the localisation configuration in your TypoScript in config { ... } or page.config { ... }.
+            </li>
+            <li>
+              Post this prompt at <a href="http://typo3-browser-forum.de" target="_blank">typo3-browser-forum.de</a><br />
+              Posts are welcome in English and German.
+            </li>
+            <li>
+              Mail this prompt to <a href="http://wildt.at.die-netzmacher.de" target="_blank">wildt.at.die-netzmacher.de</a><br />
+              Mails are welcome in English and German.
+            </li>
+          </ul>
+        </div>
+        <br />
+        <div style="border:1em;padding:1em">
+          <h1>
+            Browser - TYPO3 without PHP
+          </h1>
+        </div>
+      </div>
+      ';
+    die( $prompt );
   }
 
 
