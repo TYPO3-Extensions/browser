@@ -132,6 +132,11 @@
   Bugfix
   * #36704: Bugfix for Browser for Civserv (browser_civserv)
 
+3.7.9
+  120505
+  Improvement
+  * #00000: Plugin 3 - manuals - link to local PDF files, but not to the TER.
+            
 3.7.8
   120403
   Bugfix

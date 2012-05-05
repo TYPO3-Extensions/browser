@@ -25,14 +25,14 @@ plugin.tx_browser_pi3 {
       11 {
         typolink {
           extTarget   = _blank
-          parameter   = http://typo3.org/extensions/repository/view/browser_tut_basics_en/current/
+          parameter   = typo3conf/ext/browser_tut_basics_en/doc/manual.pdf
           returnLast  = url
         }
       }
       // Link III/IV
       12 = TEXT
       12 {
-        value = " title="typo3.org">
+        value = " title="Download PDF">
       }
       // Icon
       20 = IMAGE
@@ -97,7 +97,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser/current/
+            parameter   = typo3conf/ext/browser/doc/manual.pdf
           }
         }
         30 {
@@ -118,7 +118,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_manual_en/current/
+            parameter   = typo3conf/ext/browser_manual_en/doc/manual.pdf
           }
         }
         30 {
@@ -151,7 +151,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter = http://typo3.org/extensions/repository/view/browser_tut_basics_en/current/
+            //parameter = http://typo3.org/extensions/repository/view/browser_tut_basics_en/current/
             parameter   = typo3conf/ext/browser_tut_basics_en/doc/manual.pdf
           }
         }
@@ -173,7 +173,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_ajax_en/current/
+            parameter   = typo3conf/ext/browser_tut_ajax_en/doc/manual.pdf
           }
         }
         30 {
@@ -194,7 +194,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_befilter_en/current/
+            parameter   = typo3conf/ext/browser_tut_befilter_en/doc/manual.pdf
           }
         }
         30 {
@@ -215,7 +215,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_cal_en/current/
+            parameter   = typo3conf/ext/browser_tut_cal_en/doc/manual.pdf
           }
         }
         30 {
@@ -236,7 +236,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_database_en/current/
+            parameter   = typo3conf/ext/browser_tut_database_en/doc/manual.pdf
           }
         }
         30 {
@@ -257,7 +257,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_dev_en/current/
+            parameter   = typo3conf/ext/browser_tut_dev_en/doc/manual.pdf
           }
         }
         30 {
@@ -278,7 +278,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_downloads_en/current/
+            parameter   = typo3conf/ext/browser_tut_downloads_en/doc/manual.pdf
           }
         }
         30 {
@@ -299,7 +299,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_rss_en/current/
+            parameter   = typo3conf/ext/browser_tut_rss_en/doc/manual.pdf
           }
         }
         30 {
@@ -320,7 +320,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_hooks_en/current/
+            parameter   = typo3conf/ext/browser_tut_hooks_en/doc/manual.pdf
           }
         }
         30 {
@@ -341,7 +341,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_images_en/current/
+            parameter   = typo3conf/ext/browser_tut_images_en/doc/manual.pdf
           }
         }
         30 {
@@ -362,7 +362,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_labeling_en/current/
+            parameter   = typo3conf/ext/browser_tut_labeling_en/doc/manual.pdf
           }
         }
         30 {
@@ -383,7 +383,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_localisation_en/current/
+            parameter   = typo3conf/ext/browser_tut_localisation_en/doc/manual.pdf
           }
         }
         30 {
@@ -404,7 +404,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_marker_en/current/
+            parameter   = typo3conf/ext/browser_tut_marker_en/doc/manual.pdf
           }
         }
         30 {
@@ -425,7 +425,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_realurl_en/current/
+            parameter   = typo3conf/ext/browser_tut_realurl_en/doc/manual.pdf
           }
         }
         30 {
@@ -446,7 +446,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_search_en/current/
+            parameter   = typo3conf/ext/browser_tut_search_en/doc/manual.pdf
           }
         }
         30 {
@@ -467,7 +467,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_severalplugins_en/current/
+            parameter   = typo3conf/ext/browser_tut_severalplugins_en/doc/manual.pdf
           }
         }
         30 {
@@ -488,7 +488,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_socialmedia_en/current/
+            parameter   = typo3conf/ext/browser_tut_socialmedia_en/doc/manual.pdf
           }
         }
         30 {
@@ -509,7 +509,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_statistics_en/current/
+            parameter   = typo3conf/ext/browser_tut_statistics_en/doc/manual.pdf
           }
         }
         30 {
@@ -530,7 +530,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_tca_en/current/
+            parameter   = typo3conf/ext/browser_tut_tca_en/doc/manual.pdf
           }
         }
         30 {
@@ -551,7 +551,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_templating_en/current/
+            parameter   = typo3conf/ext/browser_tut_templating_en/doc/manual.pdf
           }
         }
         30 {
@@ -572,7 +572,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_tt_news_en/current/
+            parameter   = typo3conf/ext/browser_tut_tt_news_en/doc/manual.pdf
           }
         }
         30 {
@@ -593,7 +593,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = http://typo3.org/extensions/repository/view/browser_tut_userfunc_en/current/
+            parameter   = typo3conf/ext/browser_tut_userfunc_en/doc/manual.pdf
           }
         }
         30 {
