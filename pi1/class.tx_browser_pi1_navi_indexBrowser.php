@@ -1452,7 +1452,7 @@ class tx_browser_pi1_navi_indexBrowser
     }
     $arr_rows = $arr_return['data']['rows'];
     $uidListOfDefLL = implode( ',', ( array )  $arr_rows );
-    var_dump( __METHOD__, __LINE__, $uidListOfDefLL );
+//    var_dump( __METHOD__, __LINE__, $uidListOfDefLL );
       // Get Ids of all (!) default language records
 
       // Get Ids of all (!) translated language records
@@ -1463,25 +1463,25 @@ class tx_browser_pi1_navi_indexBrowser
     }
     $arr_rowsLL             = $arr_return['data']['rows'];
     $uidListOfCurrLanguage  = implode( ',', ( array ) $arr_rowsLL['uid'] );
-    var_dump( __METHOD__, __LINE__, $uidListOfCurrLanguage );
+//    var_dump( __METHOD__, __LINE__, $uidListOfCurrLanguage );
       // Get Ids of all (!) translated language records
     
       // Substract uids of default language records, which are translated
     $arr_rowsDefWoTranslated = array_diff( $arr_rows, $arr_rowsLL[$parentUid] );
     
     
-    var_dump( __METHOD__, __LINE__, 'array_diff' );
-    var_dump( __METHOD__, __LINE__, $arr_rows );
-    var_dump( __METHOD__, __LINE__, $arr_rowsLL[$parentUid] );
-    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
+//    var_dump( __METHOD__, __LINE__, 'array_diff' );
+//    var_dump( __METHOD__, __LINE__, $arr_rows );
+//    var_dump( __METHOD__, __LINE__, $arr_rowsLL[$parentUid] );
+//    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
 
       // Add uids of translated recors
     $arr_rowsDefWiCurr  = array_merge( $arr_rowsDefWoTranslated, $arr_rowsLL['uid'] );
 
-    var_dump( __METHOD__, __LINE__, 'array_merge' );
-    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
-    var_dump( __METHOD__, __LINE__, $arr_rowsLL['uid'] );
-    var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
+//    var_dump( __METHOD__, __LINE__, 'array_merge' );
+//    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
+//    var_dump( __METHOD__, __LINE__, $arr_rowsLL['uid'] );
+//    var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
 
       // Sort the array of uids
     sort( $arr_rowsDefWiCurr, SORT_NUMERIC );
@@ -1489,7 +1489,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Get list of uids from the array
     $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );  
      
-    var_dump( __METHOD__, __LINE__, $uidListDefAndCurr );
+//    var_dump( __METHOD__, __LINE__, $uidListDefAndCurr );
 
  
       // Count initials
@@ -1894,7 +1894,7 @@ class tx_browser_pi1_navi_indexBrowser
                 $orderBy,
                 $limit
               );
-    var_dump( __METHOD__, __LINE__, $query );
+//    var_dump( __METHOD__, __LINE__, $query );
 
       // Execute query
     $res = $this->pObj->objSqlFun->exec_SELECTquery
@@ -1976,7 +1976,7 @@ class tx_browser_pi1_navi_indexBrowser
                 $limit
               );
 
-    var_dump( __METHOD__, __LINE__, $query );
+//    var_dump( __METHOD__, __LINE__, $query );
       // Execute query
     $res = $this->pObj->objSqlFun->exec_SELECTquery
                                     (
@@ -2077,7 +2077,7 @@ class tx_browser_pi1_navi_indexBrowser
                 $limit
               );
 
-    var_dump( __METHOD__, __LINE__, $query );
+//    var_dump( __METHOD__, __LINE__, $query );
     
       // Execute query
     $res = $this->pObj->objSqlFun->exec_SELECTquery
