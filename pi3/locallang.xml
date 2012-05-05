@@ -18,15 +18,15 @@
       <label index="tutorials.browser_tut_ajax_en.description">Publish your data supported by AJAX.</label>
       <label index="tutorials.browser_tut_basics_en.title">Browser Tutorial Basics</label>
       <label index="tutorials.browser_tut_basics_en.description">Step-by-step introduction for the basics.</label>
-      <label index="tutorials.browser_tut_befilter_en.title">Browser Tutorial Backend Filter</label>
+      <label index="tutorials.browser_tut_befilter_en.title">Browser Tutorial Backend Filter - from version 4.0!</label>
       <label index="tutorials.browser_tut_befilter_en.description">Extend the TYPO3 backend list view with filters (from version 4.0).</label>
-      <label index="tutorials.browser_tut_cal_en.title">Browser Tutorial Calendar</label>
+      <label index="tutorials.browser_tut_cal_en.title">Browser Tutorial Calendar - from version 4.0!</label>
       <label index="tutorials.browser_tut_cal_en.description">Publish your data in form of a calendar. Be aware: Only day's schedule is supported in the current version. (from version 4.0)</label>
       <label index="tutorials.browser_tut_database_en.title">Browser Tutorial Database</label>
       <label index="tutorials.browser_tut_database_en.description">Relation Building and special functions, provided by the Browser.</label>
       <label index="tutorials.browser_tut_dev_en.title">Browser Tutorial Development</label>
       <label index="tutorials.browser_tut_dev_en.description">Develop the Browser! Use the SVN repository on forge.typo3.org.</label>
-      <label index="tutorials.browser_tut_downloads_en.title">Browser Tutorial Downloads</label>
+      <label index="tutorials.browser_tut_downloads_en.title">Browser Tutorial Downloads - from version 4.0!</label>
       <label index="tutorials.browser_tut_downloads_en.description">Manage your downloads with the Browser! The Browser takes care of user access rights. It is counting hits and visits for downloaded files. See Tutorial Statistics below. (from version 4.0)</label>
       <label index="tutorials.browser_tut_hooks_en.title">Browser Tutorial Hooks</label>
       <label index="tutorials.browser_tut_hooks_en.description">Use hooks for your data. Handle data of any extension in your extension.</label>
@@ -48,7 +48,7 @@
       <label index="tutorials.browser_tut_severalplugins_en.description">Use the Browser plugin several times on the same page.</label>
       <label index="tutorials.browser_tut_socialmedia_en.title">Browser Tutorial Social Media</label>
       <label index="tutorials.browser_tut_socialmedia_en.description">Use social bookmarks. Publish your data on facebook.com.</label>
-      <label index="tutorials.browser_tut_statistics_en.title">Browser Tutorial Statistics</label>
+      <label index="tutorials.browser_tut_statistics_en.title">Browser Tutorial Statistics - from version 4.0!</label>
       <label index="tutorials.browser_tut_statistics_en.description">Manage your statistics data with the Browser! The Browser collects hits and vistis for records and files. The statistics data is the basis for displaying the most frequented records or files. A good example are top 10 lists for news, products and records of your own database. (from version 4.0)</label>
       <label index="tutorials.browser_tut_templating_en.title">Browser Tutorial Templating</label>
       <label index="tutorials.browser_tut_templating_en.description">Create your own template and your own view.</label>
@@ -56,7 +56,7 @@
       <label index="tutorials.browser_tut_tca_en.description">Configure the TCA Browser properties. Use ready methods for TCA backend form (itemsProcFunc)</label>
       <label index="tutorials.browser_tut_tt_news_en.title">Browser Tutorial tt_news Sample</label>
       <label index="tutorials.browser_tut_tt_news_en.description">Test the Browser out of the box with tt_news and than with your won data.</label>
-      <label index="tutorials.browser_tut_userfunc_en.title">Browser Tutorial Userfunc</label>
+      <label index="tutorials.browser_tut_userfunc_en.title">Browser Tutorial Userfunc - from version 4.0!</label>
       <label index="tutorials.browser_tut_userfunc_en.description">The Browser provides some user defined functions (userFunc). The tutorial is a overwiew with the reference. (from version 4.0)</label>
       <label index="websites.section_header">Browser Demo Websites</label>
       <label index="websites.green_cars.green_cars.title">gr<![CDATA[&uuml;]]>ne-autos.org (green cars)</label>
@@ -74,7 +74,7 @@
       <label index="manuals.section_header">Browser Handb<![CDATA[&uuml;]]>cher</label>
       <label index="manuals.browser.title">TYPO3 Handbuch (Kurzform)</label>
       <label index="manuals.browser.description">Das Browser-TYPO3-Handbuch (Kurzform): Installation und Schnellstart. Beachte bitte das TYPO3 Handbuch in der Langfassung unten.</label>
-      <label index="manuals.browser_manual_en.title">TYPO3 Handbuch (Langfassung)</label>
+      <label index="manuals.browser_manual_en.title">TYPO3 Handbuch (Langfassung) - erst ab Version 4.0!</label>
       <label index="manuals.browser_manual_en.description">Das komplette Browser-TYPO3-Handbuch: Installation, Schnellstart, viele Beispiele und die Referenz.</label>
       <label index="tutorials.section_header">Browser Tutorials</label>
       <label index="tutorials.browser_tut_ajax_en.title">Browser Tutorial AJAX</label>
@@ -89,7 +89,7 @@
       <label index="tutorials.browser_tut_database_en.description">Datenbank-Relationen und spezielle SQL-Funktionen f<![CDATA[&uuml;]]>r hierachische Ordnungen und Synonyme.</label>
       <label index="tutorials.browser_tut_dev_en.title">Browser Tutorial Development</label>
       <label index="tutorials.browser_tut_dev_en.description">Hilf mit, den Browser weiterzuentwickeln! Benutze das SVN Repository auf forge.typo3.org.</label>
-      <label index="tutorials.browser_tut_downloads_en.title">Browser Tutorial Downloads</label>
+      <label index="tutorials.browser_tut_downloads_en.title">Browser Tutorial Downloads - erst ab Version 4.0!</label>
       <label index="tutorials.browser_tut_downloads_en.description">Biete Deine Downloads mit dem Browser an! Der Browser k<![CDATA[&uuml;]]>mmert sich um Benutzerrechte. Der Browser z<![CDATA[&auml;]]>hlt Aufrufe und Besuche f<![CDATA[&uuml;]]>r heruntergeladene Dateien. Siehe dazu auch das Tutorial Statistik unten. (ab Version 4.0)</label>
       <label index="tutorials.browser_tut_hooks_en.title">Browser Tutorial Hooks</label>
       <label index="tutorials.browser_tut_hooks_en.description">Benutze Hooks <![CDATA[f&uuml;r]]> Deine Daten. Verarbeite die Daten von jeder Extension in Deiner Extension.</label>
@@ -119,7 +119,7 @@
       <label index="tutorials.browser_tut_tca_en.description">Konfiguriere die TCA-Browser-Eigenschaften. Nutze die fertigen Methoden f<![CDATA[&uuml;]]>r TCA-Backend-Formulare (itemsProcFunc)!</label>
       <label index="tutorials.browser_tut_tt_news_en.title">Browser Tutorial tt_news Sample</label>
       <label index="tutorials.browser_tut_tt_news_en.description">Teste den Browser "out of the box" mit tt_news. Und danach mit Deinen eigenen Daten.</label>
-      <label index="tutorials.browser_tut_userfunc_en.title">Browser Tutorial Userfunc - Benutzer-Funktionen</label>
+      <label index="tutorials.browser_tut_userfunc_en.title">Browser Tutorial Userfunc - Benutzer-Funktionen - erst ab Version 4.0!</label>
       <label index="tutorials.browser_tut_userfunc_en.description">Der Browser stellt einige Benutzer-Funktionen (userFunc) zur Verf<![CDATA[&uuml;]]>gung. Das Tutorial zeigt einen <![CDATA[&Uuml;]]>berblick mit der Referenz. (ab Version 4.0)</label>
       <label index="websites.section_header">Browser Demo-Websites</label>
       <label index="websites.green_cars.green_cars.title">gr<![CDATA[&uuml;]]>ne-autos.org (green cars)</label>
