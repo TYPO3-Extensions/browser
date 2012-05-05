@@ -25,7 +25,8 @@ plugin.tx_browser_pi3 {
       11 {
         typolink {
           extTarget   = _blank
-          parameter   = http://typo3.org/extensions/repository/view/browser_tut_basics_en/current/
+          //parameter   = http://typo3.org/extensions/repository/view/browser_tut_basics_en/current/
+          parameter   = typo3conf/ext/browser_tut_basics_en/doc/manual.pdf
           returnLast  = url
         }
       }
