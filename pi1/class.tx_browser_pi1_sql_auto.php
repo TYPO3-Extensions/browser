@@ -759,7 +759,7 @@ class tx_browser_pi1_sql_auto
   private function get_statements_whereLL( $where )
   {
     $whereLL = $this->pObj->objLocalise->localisationFields_where( $this->pObj->localTable );
-$this->pObj->dev_var_dump( $whereLL );
+//$this->pObj->dev_var_dump( $whereLL );
     if ( $whereLL )
     {
       $where = $where . " AND " . $whereLL;
