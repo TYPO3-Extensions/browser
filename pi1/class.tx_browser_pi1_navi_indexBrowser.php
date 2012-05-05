@@ -226,6 +226,9 @@ class tx_browser_pi1_navi_indexBrowser
  */
   public function get( $content )
   {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+
     $this->content                  = $content;
     $arr_return['data']['content']  = $content;
 
@@ -233,6 +236,8 @@ class tx_browser_pi1_navi_indexBrowser
     $arr_return = $this->requirements_check( );
     if( ! empty( $arr_return ) )
     {
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
       return $arr_return;
     }
       // RETURN: requirements aren't met
@@ -241,6 +246,8 @@ class tx_browser_pi1_navi_indexBrowser
     $arr_return = $this->tableField_check( );
     if( $arr_return['error']['status'] )
     {
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
       return $arr_return;
     }
       // RETURN : table is not the local table
@@ -260,6 +267,8 @@ class tx_browser_pi1_navi_indexBrowser
     {
         // Reset $GLOBALS['TSFE']->id
       $GLOBALS['TSFE']->id = $globalTsfeId;
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
       return $arr_return;
     }
       // Init the tabs
@@ -270,6 +279,8 @@ class tx_browser_pi1_navi_indexBrowser
     {
         // Reset $GLOBALS['TSFE']->id
       $GLOBALS['TSFE']->id = $globalTsfeId;
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
       return $arr_return;
     }
     //$arr_result['data']['content']
@@ -277,6 +288,8 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Reset $GLOBALS['TSFE']->id
     $GLOBALS['TSFE']->id = $globalTsfeId;
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
     return $arr_return;
   }
 
@@ -860,6 +873,9 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function tabs_init( )
   {
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+    
     $arrCsvAttributes   = array( );
 
       // Get tabSpecial property default
@@ -904,6 +920,8 @@ class tx_browser_pi1_navi_indexBrowser
       // RETURN : error prompt
     if( ! ( empty ( $arr_return ) ) )
     {
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
       return $arr_return;
     }
       // RETURN : error prompt
@@ -914,6 +932,8 @@ class tx_browser_pi1_navi_indexBrowser
       // RETURN : error prompt
     if( ! ( empty ( $arr_return ) ) )
     {
+        // Prompt the expired time to devlog
+      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
       return $arr_return;
     }
       // RETURN : error prompt
@@ -921,6 +941,9 @@ class tx_browser_pi1_navi_indexBrowser
 
       // #36842, dwildt, 120504
     $this->localisation_consolidate( );
+
+      // Prompt the expired time to devlog
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
   }
 
 
@@ -1287,10 +1310,6 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // DRS
 
-      // Get current table.field of the index browser
-    $tableField     = $this->indexBrowserTableField;
-    list( $table )  = explode( '.', $tableField );
-
       // Build FIND IN SET
     $strFindInSet = null;
     foreach( $this->findInSet as $arrfindInSet )
@@ -1334,7 +1353,7 @@ class tx_browser_pi1_navi_indexBrowser
  * @version 3.9.13
  * @since   3.9.11
  */
-  private function count_chars_resSqlCountDefLL( $strFindInSet )
+  private function count_chars_resSqlCountDefLL( $currSqlCharset, $strFindInSet )
   {
       // Get current table.field of the index browser
     $tableField     = $this->indexBrowserTableField;
@@ -1422,7 +1441,7 @@ class tx_browser_pi1_navi_indexBrowser
         $prompt = 'Index browser won\'t be localised, because ' . $table . ' hasn\'t any transOrigPointerField.';
         t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
       }
-      $arr_return = $this->count_chars_resSqlCountDefLL( $strFindInSet );
+      $arr_return = $this->count_chars_resSqlCountDefLL( $strFindInSet, $currSqlCharset );
     }
 
       // Get Ids of all (!) default language records
@@ -2150,7 +2169,7 @@ class tx_browser_pi1_navi_indexBrowser
 //$this->pObj->dev_var_dump( $this->pObj->objSqlInit->statements['listView']['where'] );        
         $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
         $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
-$this->pObj->dev_var_dump( $llWhere );
+//$this->pObj->dev_var_dump( $llWhere );
         if( $llWhere )
         {
           $where  = $where . " AND " . $llWhere;
