@@ -1930,7 +1930,9 @@ class tx_browser_pi1_navi_indexBrowser
     $tableField     = $this->indexBrowserTableField;
     list( $table )  = explode( '.', $tableField );
 
-    $curr_int_localisation_mode                     = $this->int_localisation_mode;
+      // Store current localisation mode
+    $curr_int_localisation_mode = $this->int_localisation_mode;
+      // Set localisation mode to default language
     $this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
 
     // Configure the query
@@ -1941,6 +1943,7 @@ class tx_browser_pi1_navi_indexBrowser
     $orderBy  = "uid";
     $limit    = null;
 
+      // Reset localisation mode to current language mode
     $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
 
     // Get query
@@ -2016,17 +2019,30 @@ class tx_browser_pi1_navi_indexBrowser
       // Label of field with the uid of the record with the default language
     $parentUid = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
     
+      // Store current localisation mode
+    $curr_int_localisation_mode = $this->int_localisation_mode;
+      // Set localisation mode to translated language
+    $this->pObj->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
+    
+      // Get where for localisation
+    $whereLL = $this->pObj->objLocalise->localisationFields_where( $table );
+    if( empty ( $whereLL ) )
+    {
+      $prompt = 'Sorry, this error shouldn\'t happen.<br />
+        Method: ' . __METHOD__ . '<br />
+        Line: ' . __METHOD__ . '<br />
+        Extension: TYPO3 Browser.';
+      die( $prompt );
+    }
+      // Get where for localisation
+
+      // Reset localisation mode to current language mode
+    $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+
       // Configure the query
     $select   = "uid, " . $parentUid;
     $from     = $this->sqlStatement_from( $table );
-
-    $curr_int_localisation_mode                     = $this->int_localisation_mode;
-    $this->pObj->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
-var_dump( __METHOD__, __LINE__, $this->pObj->objLocalise->localisationFields_where( $table ) );
-    $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
-    
-    $where    = $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ")
-                AND " . $table . ".sys_language_uid = 1" ;
+    $where    = $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL ;
     $groupBy  = null;
     $orderBy  = "uid";
     $limit    = null;
@@ -2082,19 +2098,6 @@ var_dump( __METHOD__, __LINE__, $this->pObj->objLocalise->localisationFields_whe
       $arr_rowsLL['uid'][]          = $row['uid'];
       $arr_rowsLL[$parentUid][]  = $row[$parentUid];
     }
-    $uidListOfCurrLanguage  = implode( ',', ( array ) $arr_rowsLL['uid'] );
-    var_dump( __METHOD__, __LINE__, $uidListOfCurrLanguage );
-    
-    $arr_rowsDefWoTranslated = array_diff( $arr_rows, $arr_rowsLL[$parentUid] );
-    var_dump( __METHOD__, __LINE__, 'array_diff' );
-    var_dump( __METHOD__, __LINE__, $arr_rows );
-    var_dump( __METHOD__, __LINE__, $arr_rowsLL[$parentUid] );
-    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
-    $arr_rowsDefWiCurr  = array_merge( $arr_rowsDefWoTranslated, $arr_rowsLL['uid'] );
-    var_dump( __METHOD__, __LINE__, 'array_merge' );
-    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
-    var_dump( __METHOD__, __LINE__, $arr_rowsLL['uid'] );
-    var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
 
     $arr_return['data']['rows'] = $arr_rowsLL;
     return $arr_return;
