@@ -1469,15 +1469,16 @@ if( 1 )
     var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
     var_dump( __METHOD__, __LINE__, $arr_rowsLL['uid'] );
     var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
+
+    sort( $arr_rowsDefWiCurr, SORT_NUMERIC );
     $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );  
     
-    sort( $uidListDefAndCurr, SORT_NUMERIC );
     
     var_dump( __METHOD__, __LINE__, $uidListDefAndCurr );
 
     $select = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
     $from   = $table;
-    $where    = $table . ".uid IN (" . $str_rows . ")";
+    $where    = $table . ".uid IN (" . $uidListDefAndCurr . ")";
     $groupBy  = "LEFT ( " . $tableField . ", 1 )";
     $orderBy  = "LEFT ( " . $tableField . ", 1 )";
     $limit    = null;
@@ -1493,7 +1494,7 @@ if( 1 )
                 $orderBy,
                 $limit
               );
-    var_dump( __METHOD__, __LINE__, $uidListDefAndCurr );
+    var_dump( __METHOD__, __LINE__, $query );
 
       // Execute query
     $res = $this->pObj->objSqlFun->exec_SELECTquery
