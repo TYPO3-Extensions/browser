@@ -1335,7 +1335,7 @@ class tx_browser_pi1_navi_indexBrowser
 #############################################################
 if( 1 )
 {
-    $parentUid = 'l18n_parent';
+    $parentUid = 'l10n_parent';
     
     $select = "uid";
     $from   = $this->sqlStatement_from( $table );
@@ -1460,10 +1460,19 @@ if( 1 )
     var_dump( __METHOD__, __LINE__, $uidListOfCurrLanguage );
     
     $arr_rowsDefWoTranslated = array_diff( $arr_rows['uid'], $arr_rowsLL[$parentUid] );
+    var_dump( __METHOD__, __LINE__, 'array_diff' );
+    var_dump( __METHOD__, __LINE__, $arr_rows['uid'] );
+    var_dump( __METHOD__, __LINE__, $arr_rowsLL[$parentUid] );
+    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
     $arr_rowsDefWiCurr  = array_merge( $arr_rowsDefWoTranslated, $arr_rowsLL['uid'] );
+    var_dump( __METHOD__, __LINE__, 'array_merge' );
+    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
+    var_dump( __METHOD__, __LINE__, $arr_rowsLL['uid'] );
+    var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
     $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );  
     
     var_dump( __METHOD__, __LINE__, $uidListDefAndCurr );
+    exit;
 }
 #############################################################
       // Query for all filter items
