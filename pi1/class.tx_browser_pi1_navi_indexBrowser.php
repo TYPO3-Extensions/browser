@@ -1471,8 +1471,66 @@ if( 1 )
     var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
     $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );  
     
+    sort( $uidListDefAndCurr, SORT_NUMERIC );
+    
     var_dump( __METHOD__, __LINE__, $uidListDefAndCurr );
-    exit;
+
+    $select = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
+    $from   = $table;
+    $where    = $table . ".uid IN (" . $str_rows . ")";
+    $groupBy  = "LEFT ( " . $tableField . ", 1 )";
+    $orderBy  = "LEFT ( " . $tableField . ", 1 )";
+    $limit    = null;
+      // Query for all filter items
+
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+    var_dump( __METHOD__, __LINE__, $uidListDefAndCurr );
+
+      // Execute query
+    $res = $this->pObj->objSqlFun->exec_SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit
+                                    );
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+        // Free SQL result
+      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+        // Reset SQL charset
+      $this->sqlCharsetSet( $currSqlCharset );
+      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+      // Return SQL result
+    $arr_return['data']['res'] = $res;
+    return $arr_return;
+
 }
 #############################################################
       // Query for all filter items
