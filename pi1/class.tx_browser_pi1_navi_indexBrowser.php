@@ -1930,7 +1930,10 @@ class tx_browser_pi1_navi_indexBrowser
     $tableField     = $this->indexBrowserTableField;
     list( $table )  = explode( '.', $tableField );
 
-      // Configure the query
+    $curr_int_localisation_mode                     = $this->int_localisation_mode;
+    $this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
+
+    // Configure the query
     $select   = "uid";
     $from     = $this->sqlStatement_from( $table );
     $where    = $this->sqlStatement_where( $table, $strFindInSet );
@@ -1938,7 +1941,9 @@ class tx_browser_pi1_navi_indexBrowser
     $orderBy  = "uid";
     $limit    = null;
 
-      // Get query
+    $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+
+    // Get query
     $query  = $GLOBALS['TYPO3_DB']->SELECTquery
               (
                 $select,
