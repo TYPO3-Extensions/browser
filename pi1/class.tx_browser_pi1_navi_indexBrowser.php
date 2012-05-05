@@ -1353,7 +1353,7 @@ class tx_browser_pi1_navi_indexBrowser
  * @version 3.9.13
  * @since   3.9.11
  */
-  private function count_chars_resSqlCountDefLL( $currSqlCharset, $strFindInSet )
+  private function count_chars_resSqlCountDefLL( $strFindInSet, $currSqlCharset )
   {
       // Get current table.field of the index browser
     $tableField     = $this->indexBrowserTableField;
