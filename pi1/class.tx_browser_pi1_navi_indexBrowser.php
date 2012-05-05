@@ -1459,9 +1459,9 @@ if( 1 )
     $uidListOfCurrLanguage  = implode( ',', ( array ) $arr_rowsLL['uid'] );
     var_dump( __METHOD__, __LINE__, $uidListOfCurrLanguage );
     
-    $arr_rowsDefWoTranslated = array_diff( $arr_rows['uid'], $arr_rowsLL[$parentUid] );
+    $arr_rowsDefWoTranslated = array_diff( $arr_rows, $arr_rowsLL[$parentUid] );
     var_dump( __METHOD__, __LINE__, 'array_diff' );
-    var_dump( __METHOD__, __LINE__, $arr_rows['uid'] );
+    var_dump( __METHOD__, __LINE__, $arr_rows );
     var_dump( __METHOD__, __LINE__, $arr_rowsLL[$parentUid] );
     var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
     $arr_rowsDefWiCurr  = array_merge( $arr_rowsDefWoTranslated, $arr_rowsLL['uid'] );
