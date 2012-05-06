@@ -2059,11 +2059,11 @@ class tx_browser_pi1_navi_indexBrowser
     $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
 
       // Configure the query
-    $select   = $table . "uid, " . $table. "." . $parentUid;
+    $select   = $table . ".uid, " . $table. "." . $parentUid;
     $from     = $this->sqlStatement_from( $table );
     $where    = $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL ;
     $groupBy  = null;
-    $orderBy  = $table . "uid";
+    $orderBy  = $table . ".uid";
     $limit    = null;
 
       // Get query
