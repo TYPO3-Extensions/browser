@@ -2875,24 +2875,33 @@ class tx_browser_pi1_filter_4x {
  *                      filter items with a hit only.
  *
  * @return	string		$where : WHERE statement without WHERE
- * @version 3.9.9
+ * @version 3.9.13
  * @since   3.9.9
  */
   private function sql_whereWiHits( )
   {
-      // Get table
-    list( $table ) = explode( '.', $this->curr_tableField );
-
       // Get WHERE statement
     $where =  $this->pObj->objSqlInit->statements['listView']['where'] .
               $this->sql_whereAnd_Filter( ) .
               $this->sql_whereAnd_fromTS( );
+
+    
+      // Get table
+      // 120506, dwildt, 1-
+    //list( $table ) = explode( '.', $this->curr_tableField );
+      // 120506, dwildt, 1+
+    $table = $this->pObj->localTable;
+
+    $curr_int_localisation_mode = $this->pObj->objLocalise->int_localisation_mode;
+      // Set all to default language
+    $this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
     $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
 $this->pObj->dev_var_dump( $this->curr_tableField, $llWhere );
     if( $llWhere )
     {
       $where  = $where . " AND " . $llWhere;
     }
+    $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
 
       // RETURN WHERE statement without a WHERE
     return $where;
