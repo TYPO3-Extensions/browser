@@ -4937,7 +4937,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function requiredMarker( $tableField )
   {
-    if( $this->subpart != null )
+    if( $this->subpart === null )
     {
       $this->subpart = $this->pObj->cObj->getSubpart( $this->pObj->str_template_raw, '###SEARCHFORM###' );
     }
