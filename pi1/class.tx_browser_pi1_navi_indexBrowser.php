@@ -378,10 +378,19 @@ class tx_browser_pi1_navi_indexBrowser
  * @version 3.9.13
  * @since   3.9.10
  * @internal  #36842
+ * @todo      120506, dwildt: Method seem's to be waste.
  */
   private function localisation_consolidate( )
   {
+      // DRS
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Method localisation_consolidate( ) seem\'s to be waste!';
+      t3lib_div::devlog('[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2);
+    }
+      // DRS
     return;
+    
 //    if( $this->pObj->b_drs_navi )
 //    {
 //      $prompt = 'localisation_consolidate( )';
