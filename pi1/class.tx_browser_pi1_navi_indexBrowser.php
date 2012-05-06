@@ -1202,6 +1202,16 @@ class tx_browser_pi1_navi_indexBrowser
       $this->indexBrowserTab['attributes'][ $attribute ][ 'sum' ] = $sum;
         // Set attributes sum
 
+      if( $this->pObj->b_drs_navi )
+      {
+        foreach( ( array ) $this->indexBrowserTab['attributes'][ $attribute ][ 'sum' ] as $sum ) 
+        {
+          $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] = #' . $sum;
+          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+      }
+
+      
         // Get id of the tab for all attributes
       $tabId    = $this->indexBrowserTab[ 'tabSpecial' ][ 'all' ];
         // Get sum of the current tab
