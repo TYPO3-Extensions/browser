@@ -1514,7 +1514,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Get Ids of all (!) default language records
 
       // Get Ids of all (!) translated language records
-    $arr_return = $this->zz_sqlIdsOfTranslatedLL( $uidListOfDefLL, $currSqlCharset );
+    $arr_return = $this->zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -1837,7 +1837,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Get Ids of all (!) default language records
 
       // Get Ids of all (!) translated language records
-    $arr_return = $this->zz_sqlIdsOfTranslatedLL( $uidListOfDefLL, $currSqlCharset );
+    $arr_return = $this->zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -2129,8 +2129,8 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
 /**
  * zz_sqlIdsOfDefLL( ) : Get Ids of all (!) default language records
  *
- * @param	string		$currSqlCharset : Current SQL charset for reset in error case
- * @param	[type]		$currSqlCharset: ...
+ * @param	string		$strFindInSet   : FIND IN SET( )
+ * @param	string		$currSqlCharset : Current SQL charset like 'latin1'
  * @return	array		$arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.13
@@ -2231,7 +2231,7 @@ $this->pObj->dev_var_dump( $this->idsOfAllDefaultLLrecords );
  * @version 3.9.13
  * @since   3.9.11
  */
-  private function zz_sqlIdsOfTranslatedLL( $uidListOfDefLL, $currSqlCharset )
+  private function zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset )
   {
     if( ! ( $this->idsOfAllTranslatedLLrecords === null ) )
     {
@@ -2271,6 +2271,8 @@ $this->pObj->dev_var_dump( $this->idsOfAllTranslatedLLrecords );
     $select   = $table . ".uid, " . $table. "." . $parentUid;
     $from     = $this->sqlStatement_from( $table );
     $where    = $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL ;
+      // 120507, dwildt, 1+;
+    $where    = $this->sqlStatement_whereAndFindInSet( $where, $strFindInSet );
     $groupBy  = null;
     $orderBy  = $table . ".uid";
     $limit    = null;
