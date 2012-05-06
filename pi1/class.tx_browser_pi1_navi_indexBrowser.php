@@ -1489,7 +1489,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Get list of uids from the array
     $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );  
      
-//    var_dump( __METHOD__, __LINE__, $uidListDefAndCurr );
+$this->pObj->dev_var_dump( $uidListDefAndCurr );
 
  
       // Count initials
