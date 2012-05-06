@@ -769,6 +769,7 @@ class tx_browser_pi1_viewlist
    * @return	array   $arr_return: Contains the SQL res or an error message 
    * @version 3.9.12
    * @since   3.9.12
+   * @todo    120506, dwildt: empty limit
    */
   private function rows_sqlRes( )
   {
@@ -776,6 +777,7 @@ class tx_browser_pi1_viewlist
 
       // SQL query array
     $select   = $this->pObj->objSqlInit->statements['listView']['select'];
+$this->pObj->dev_var_dump( $select );
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
     if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
@@ -792,7 +794,7 @@ class tx_browser_pi1_viewlist
         // DRS
       if( $this->pObj->b_drs_devTodo )
       {
-        $prompt = 'Empty limit will overriden with 0,20. Take care of a proper code.';
+        $prompt = 'Limit is empty. It will overriden with 0,20. Take care of a proper code.';
         t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
       }
         // DRS
