@@ -4931,7 +4931,7 @@ class tx_browser_pi1_filter_4x {
  * requiredMarker( )  : Check, whether a marker is configured in the HTML template
  *
  * @param     string    $tableField : label for the marker
- * @return    boolean   true: marker is configures; false: marker isn't configured
+ * @return    boolean   true: marker is configured; false: marker isn't configured
  * @version   3.9.9
  * @since     3.9.9
  */
@@ -4960,8 +4960,7 @@ class tx_browser_pi1_filter_4x {
     }
       // RETURN false : HTML marker isn't a part of the current HTML subpart
     
-    
-//    var_dump( __METHOD__, __LINE__, $searchform );
+      // RETURN true : HTML marker is a part of the current HTML subpart
     return true;
   }
 
