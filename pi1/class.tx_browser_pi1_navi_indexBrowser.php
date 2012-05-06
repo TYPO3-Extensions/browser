@@ -1192,7 +1192,8 @@ class tx_browser_pi1_navi_indexBrowser
       {
         if( $this->pObj->b_drs_navi )
         {
-          $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] : $sum = $sum - $rowSum (#' . $sum . ' - #' . $rowSum . ')';
+          $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] : $sum = $sum - $rowSum (#' . 
+                    $sum . ' - #' . $rowSum . ' = #' . ( $sum - $rowSum ) . ')';
           t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
           // Substract rows of the default language
