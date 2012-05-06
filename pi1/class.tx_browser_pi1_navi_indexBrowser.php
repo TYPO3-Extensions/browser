@@ -1955,11 +1955,11 @@ class tx_browser_pi1_navi_indexBrowser
     $this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
 
     // Configure the query
-    $select   = "uid";
+    $select   = $table . ".uid";
     $from     = $this->sqlStatement_from( $table );
     $where    = $this->sqlStatement_where( $table, $strFindInSet );
     $groupBy  = null;
-    $orderBy  = "uid";
+    $orderBy  = $table . ".uid";
     $limit    = null;
 
       // Reset localisation mode to current language mode
@@ -2059,11 +2059,11 @@ class tx_browser_pi1_navi_indexBrowser
     $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
 
       // Configure the query
-    $select   = "uid, " . $parentUid;
+    $select   = $table . "uid, " . $table. "." . $parentUid;
     $from     = $this->sqlStatement_from( $table );
     $where    = $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL ;
     $groupBy  = null;
-    $orderBy  = "uid";
+    $orderBy  = $table . "uid";
     $limit    = null;
 
       // Get query
