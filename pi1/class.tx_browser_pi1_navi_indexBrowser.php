@@ -1280,9 +1280,9 @@ class tx_browser_pi1_navi_indexBrowser
 
     if( $this->pObj->b_drs_navi )
     {
-      foreach( ( array ) $this->indexBrowserTab['attributes'] as $attribute => $sum ) 
+      foreach( ( array ) $this->indexBrowserTab['attributes'] as $attribute => $arrAttribute ) 
       {
-        $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] = #' . $sum;
+        $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] = #' . $arrAttribute['sum'];
         t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
       }
     }
