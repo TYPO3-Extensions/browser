@@ -1169,6 +1169,7 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function count_chars_addSumToTab( $res )
   {
+      // WHILE $row
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
         // Get values from the SQL row
@@ -1202,16 +1203,6 @@ class tx_browser_pi1_navi_indexBrowser
       $this->indexBrowserTab['attributes'][ $attribute ][ 'sum' ] = $sum;
         // Set attributes sum
 
-      if( $this->pObj->b_drs_navi )
-      {
-        foreach( ( array ) $this->indexBrowserTab['attributes'][ $attribute ][ 'sum' ] as $sum ) 
-        {
-          $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] = #' . $sum;
-          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-      }
-
-      
         // Get id of the tab for all attributes
       $tabId    = $this->indexBrowserTab[ 'tabSpecial' ][ 'all' ];
         // Get sum of the current tab
@@ -1284,6 +1275,16 @@ class tx_browser_pi1_navi_indexBrowser
         // Allocates result to the current tab
 
       $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
+    }
+      // WHILE $row
+
+    if( $this->pObj->b_drs_navi )
+    {
+      foreach( ( array ) $this->indexBrowserTab['attributes'] as $attribute => $sum ) 
+      {
+        $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] = #' . $sum;
+        t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
     }
   }
 
