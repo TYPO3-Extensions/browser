@@ -2139,6 +2139,7 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
   {
     if( ! ( $this->idsOfAllDefaultLLrecords === null ) )
     {
+$this->pObj->dev_var_dump( $this->idsOfAllDefaultLLrecords );
       return $this->idsOfAllDefaultLLrecords;
     }
     
@@ -2214,6 +2215,7 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
 
     
     $arr_return['data']['rows'] = $this->idsOfAllDefaultLLrecords;
+$this->pObj->dev_var_dump( $this->idsOfAllDefaultLLrecords );
     return $arr_return;
   }
 
@@ -2232,6 +2234,7 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
   {
     if( ! ( $this->idsOfAllTranslatedLLrecords === null ) )
     {
+$this->pObj->dev_var_dump( $this->idsOfAllTranslatedLLrecords );
       return $this->idsOfAllTranslatedLLrecords;
     }
            
@@ -2323,6 +2326,7 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
     }
 
     $arr_return['data']['rows'] = $this->idsOfAllTranslatedLLrecords;
+$this->pObj->dev_var_dump( $this->idsOfAllTranslatedLLrecords );
     return $arr_return;
   }
 
