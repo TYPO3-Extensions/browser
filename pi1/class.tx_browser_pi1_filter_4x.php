@@ -4937,8 +4937,31 @@ class tx_browser_pi1_filter_4x {
  */
   private function requiredMarker( $tableField )
   {
-    $searchform     = $this->pObj->cObj->getSubpart( $this->pObj->str_template_raw, '###SEARCHFORM###' );
-    var_dump( __METHOD__, __LINE__, $searchform );
+    if( $this->subpart != null )
+    {
+      $this->subpart = $this->pObj->cObj->getSubpart( $this->pObj->str_template_raw, '###SEARCHFORM###' );
+    }
+    
+      // Convert table.field to HTML marker
+    $htmlMarker = '###' . strtoupper( $tableField ) . '###';
+
+      // RETURN false : HTML marker isn't a part of the current HTML subpart
+    $pos = strpos( $this->subpart, $htmlMarker );
+    if( $pos === false )
+    {
+      if( $this->pObj->b_drs_warn )
+      {
+        $prompt = $tableField . ' hasn\'t the correspondending HTML marker ' . $htmlMarker . '.';
+        t3lib_div :: devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
+        $prompt = 'Please add ' . $htmlMarker . ' to the subpart ###SEARCHFORM###.';
+        t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return false;
+    }
+      // RETURN false : HTML marker isn't a part of the current HTML subpart
+    
+    
+//    var_dump( __METHOD__, __LINE__, $searchform );
     return true;
   }
 
