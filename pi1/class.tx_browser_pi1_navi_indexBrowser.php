@@ -2139,8 +2139,9 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
   {
     if( ! ( $this->idsOfAllDefaultLLrecords === null ) )
     {
+      $arr_return['data']['rows'] = $this->idsOfAllDefaultLLrecords;
 $this->pObj->dev_var_dump( $this->idsOfAllDefaultLLrecords );
-      return $this->idsOfAllDefaultLLrecords;
+      return $arr_return;
     }
     
       // Get current table.field of the index browser
@@ -2234,8 +2235,9 @@ $this->pObj->dev_var_dump( $this->idsOfAllDefaultLLrecords );
   {
     if( ! ( $this->idsOfAllTranslatedLLrecords === null ) )
     {
+      $arr_return['data']['rows'] = $this->idsOfAllTranslatedLLrecords;
 $this->pObj->dev_var_dump( $this->idsOfAllTranslatedLLrecords );
-      return $this->idsOfAllTranslatedLLrecords;
+      return $arr_return;
     }
            
       // Get current table.field of the index browser
