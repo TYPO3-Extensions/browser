@@ -296,14 +296,26 @@ class tx_browser_pi1_filter_4x {
     {
       foreach( ( array ) $fields as $field => $confField )
       {
+          // CONTINUE : field has an dot
         if( rtrim($field, '.') != $field )
         {
           continue;
         }
+          // CONTINUE : field has an dot
+
+          // Class var table.field
         $this->curr_tableField = $tableWiDot . $field;
 
           // Get table
         list( $table ) = explode( '.', $this->curr_tableField );
+        
+          // CONTINUE : marker is missing in the HTML template
+        if( ! $this->requiredMarker( $this->curr_tableField ) )
+        {
+          continue;
+        }
+          // CONTINUE : marker is missing in the HTML template
+        
           // Load TCA
         $this->pObj->objZz->loadTCA( $table );
 
@@ -2884,6 +2896,7 @@ class tx_browser_pi1_filter_4x {
     $where =  $this->pObj->objSqlInit->statements['listView']['where'] .
               $this->sql_whereAnd_Filter( ) .
               $this->sql_whereAnd_fromTS( );
+      // Localise the WHERE statement
     $where =  $this->sql_whereWiHitsLL( $where );
 
       // RETURN WHERE statement without a WHERE
@@ -2893,11 +2906,15 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_whereWiHitsLL( ):  
+ * sql_whereWiHitsLL( ):  Add an andWhere for the localisation field of the local table.
+ *                        Current language will be the default language in every case,
+ *                        because local table records of the default language only
+ *                        are connected with a category.
  *
- * @return	string		$where : WHERE statement without WHERE
- * @version 3.9.13
- * @since   3.9.13
+ * @param     string      $where : current WHERE statement
+ * @return    string      $where : WHERE statement added with localisation and Where
+ * @version   3.9.13
+ * @since     3.9.13
  */
   private function sql_whereWiHitsLL( $where )
   {
@@ -4892,6 +4909,37 @@ class tx_browser_pi1_filter_4x {
     $this->hits_sum[$this->curr_tableField] = $sum_hits;
 
     return;
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * Requirements
+  *
+  **********************************************/
+
+
+
+/**
+ * requiredMarker( )  : Check, whether a marker is configured in the HTML template
+ *
+ * @param     string    $tableField : label for the marker
+ * @return    boolean   true: marker is configures; false: marker isn't configured
+ * @version   3.9.9
+ * @since     3.9.9
+ */
+  private function requiredMarker( $tableField )
+  {
+    $searchform     = $this->pObj->cObj->getSubpart( $this->content, '###SEARCHFORM###' );
+    var_dump( __METHOD__, __LINE__, $searchform );
+    return true;
   }
 
 
