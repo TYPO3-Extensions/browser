@@ -1211,7 +1211,8 @@ class tx_browser_pi1_navi_indexBrowser
       {
         if( $this->pObj->b_drs_navi )
         {
-          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum + $rowSum (#' . $sum . ' + #' . $rowSum . ')';
+          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum + $rowSum (#' . 
+                    $sum . ' + #' . $rowSum . ' = #' . ( $sum + $rowSum ) . ')';
           t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
           // Rows of the default language and a localised language optionally
@@ -1221,7 +1222,8 @@ class tx_browser_pi1_navi_indexBrowser
       {
         if( $this->pObj->b_drs_navi )
         {
-          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum - $rowSum (#' . $sum . ' - #' . $rowSum . ')';
+          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum - $rowSum (#' . 
+                    $sum . ' - #' . $rowSum . ' = #' . ( $sum - $rowSum ) . ')';
           t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
           // Substract rows of the default language
@@ -1489,9 +1491,6 @@ class tx_browser_pi1_navi_indexBrowser
       // Get list of uids from the array
     $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );  
      
-$this->pObj->dev_var_dump( $uidListDefAndCurr );
-
- 
       // Count initials
     $arr_return = $this->zz_sqlCountInitialsLL( $uidListDefAndCurr, $currSqlCharset );
 
@@ -1871,6 +1870,8 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
  */
   private function zz_sqlCountInitialsLL( $uidListDefAndCurr, $currSqlCharset )
   {
+$this->pObj->dev_var_dump( $uidListDefAndCurr );
+
       // Get current table.field of the index browser
     $tableField     = $this->indexBrowserTableField;
     list( $table )  = explode( '.', $tableField );
