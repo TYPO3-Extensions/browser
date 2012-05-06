@@ -2230,9 +2230,9 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
  */
   private function zz_sqlIdsOfTranslatedLL( $uidListOfDefLL, $currSqlCharset )
   {
-    if( ! ( $this-> idsOfAllTranslatedLLrecords === null ) )
+    if( ! ( $this->idsOfAllTranslatedLLrecords === null ) )
     {
-      return $this-> idsOfAllTranslatedLLrecords;
+      return $this->idsOfAllTranslatedLLrecords;
     }
            
       // Get current table.field of the index browser
