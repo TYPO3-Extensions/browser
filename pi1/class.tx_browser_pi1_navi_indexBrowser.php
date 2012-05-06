@@ -381,6 +381,7 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function localisation_consolidate( )
   {
+    return;
 //    if( $this->pObj->b_drs_navi )
 //    {
 //      $prompt = 'localisation_consolidate( )';
@@ -1304,7 +1305,7 @@ class tx_browser_pi1_navi_indexBrowser
             t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
             break;
           case( $sum < 0 ) :
-            t3lib_div::devlog( '[ERROR/NAVIGATION] ' . $prompt, $this->pObj->extKey, -1 );
+            t3lib_div::devlog( '[ERROR/NAVIGATION] ' . $prompt, $this->pObj->extKey, 3 );
             break;
         }
       }
