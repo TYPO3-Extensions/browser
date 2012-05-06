@@ -1520,7 +1520,7 @@ class tx_browser_pi1_navi_indexBrowser
       return $arr_return;
     }
     $arr_rowsLL             = $arr_return['data']['rows'];
-    $uidListOfCurrLanguage  = implode( ',', ( array ) $arr_rowsLL['uid'] );
+//    $uidListOfCurrLanguage  = implode( ',', ( array ) $arr_rowsLL['uid'] );
 //    var_dump( __METHOD__, __LINE__, $uidListOfCurrLanguage );
       // Get Ids of all (!) translated language records
 
@@ -1548,7 +1548,8 @@ class tx_browser_pi1_navi_indexBrowser
     $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );
 
       // Count initials
-    $arr_return = $this->zz_sqlCountInitialsLL( $uidListDefAndCurr, $currSqlCharset );
+    $length = 1;
+    $arr_return = $this->zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset );
 
       // RETURN : the sql result
     return $arr_return;
@@ -1681,10 +1682,63 @@ class tx_browser_pi1_navi_indexBrowser
     $tableField     = $this->indexBrowserTableField;
     list( $table )  = explode( '.', $tableField );
 
-      // Query for all filter items
-    $select       = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
-    $from         = $this->sqlStatement_from( $table );
     $strFindInSet = "(" . implode ( " OR ", $arrfindInSet ) . ")";
+
+      // SWITCH $int_localisation_mode
+    switch( $this->int_localisation_mode )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+        $arr_return = $this->count_specialChars_resSqlCountDefLL( $length, $strFindInSet, $currSqlCharset );
+        break;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+        $arr_return = $this->count_specialChars_resSqlCountSelOrDefLL( $length, $strFindInSet, $currSqlCharset );
+        break;
+      default:
+          // DIE
+        $this->zz_LLdie( __METHOD__, __LINE__ );
+        break;
+    }
+      // SWITCH $int_localisation_mode
+
+      // Return SQL result
+    return $arr_return;
+  }
+
+
+
+/**
+ * count_specialChars_resSqlCountDefLL( ): SQL query and execution for counting
+ *                                    special char initials
+ *
+ * @param	integer		$length         : SQL length of special chars group
+ * @param	array		$strFindInSet   : FIND IN SET statement with proper length
+ * @param	string		$currSqlCharset : Current SQL charset for reset in error case
+ * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @version 3.9.13
+ * @since   3.9.13
+ */
+  private function count_specialChars_resSqlCountDefLL( $length, $strFindInSet, $currSqlCharset )
+  {
+    static $drsPrompt = true;
+
+      // DRS
+    if( $drsPrompt && $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Query needs an and where in case of filter';
+      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+      $drsPrompt = false;
+    }
+      // DRS
+
+      // Get current table.field of the index browser
+    $tableField     = $this->indexBrowserTableField;
+    list( $table )  = explode( '.', $tableField );
+
+      // Query for all filter items
+    $select       = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', " . 
+                    "LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
+    $from         = $this->sqlStatement_from( $table );
     $where        = $this->sqlStatement_where( $table, $strFindInSet );
     $groupBy      = "LEFT ( " . $tableField . ", " . $length . " )";
     $orderBy      = "LEFT ( " . $tableField . ", " . $length . " )";
@@ -1700,16 +1754,8 @@ class tx_browser_pi1_navi_indexBrowser
                 $orderBy,
                 $limit
               );
+
       // Execute query
-//    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-//              (
-//                $select,
-//                $from,
-//                $where,
-//                $groupBy,
-//                $orderBy,
-//                $limit
-//              );
     $res = $this->pObj->objSqlFun->exec_SELECTquery
                                     (
                                       $select,
@@ -1743,6 +1789,91 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Return SQL result
     $arr_return['data']['res'] = $res;
+    return $arr_return;
+  }
+
+
+
+/**
+ * count_specialChars_resSqlCountSelOrDefLL( ): SQL query and execution for counting
+ *                                    special char initials
+ *
+ * @param	integer		$length         : SQL length of special chars group
+ * @param	array		$strFindInSet   : FIND IN SET statement with proper length
+ * @param	string		$currSqlCharset : Current SQL charset for reset in error case
+ * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @version 3.9.13
+ * @since   3.9.13
+ */
+  private function count_specialChars_resSqlCountSelOrDefLL( $length, $strFindInSet, $currSqlCharset )
+  {
+      // Get current table.field of the index browser
+    $tableField     = $this->indexBrowserTableField;
+    list( $table )  = explode( '.', $tableField );
+
+      // Label of field with the uid of the record with the default language
+    $parentUid = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+
+      // RETURN : table isn't localised
+    if( empty ( $parentUid ) )
+    {
+      if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi )
+      {
+        $prompt = 'Index browser won\'t be localised, because ' . $table . ' hasn\'t any transOrigPointerField.';
+        t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      $arr_return = $this->count_chars_resSqlCountDefLL( $strFindInSet, $currSqlCharset );
+    }
+
+      // Get Ids of all (!) default language records
+    $arr_return = $this->zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    $arr_rows = $arr_return['data']['rows'];
+    $uidListOfDefLL = implode( ',', ( array )  $arr_rows );
+//    var_dump( __METHOD__, __LINE__, $uidListOfDefLL );
+      // Get Ids of all (!) default language records
+
+      // Get Ids of all (!) translated language records
+    $arr_return = $this->zz_sqlIdsOfTranslatedLL( $uidListOfDefLL, $currSqlCharset );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    $arr_rowsLL             = $arr_return['data']['rows'];
+//    $uidListOfCurrLanguage  = implode( ',', ( array ) $arr_rowsLL['uid'] );
+//    var_dump( __METHOD__, __LINE__, $uidListOfCurrLanguage );
+      // Get Ids of all (!) translated language records
+
+      // Substract uids of default language records, which are translated
+    $arr_rowsDefWoTranslated = array_diff( $arr_rows, $arr_rowsLL[$parentUid] );
+
+
+//    var_dump( __METHOD__, __LINE__, 'array_diff' );
+//    var_dump( __METHOD__, __LINE__, $arr_rows );
+//    var_dump( __METHOD__, __LINE__, $arr_rowsLL[$parentUid] );
+//    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
+
+      // Add uids of translated recors
+    $arr_rowsDefWiCurr  = array_merge( $arr_rowsDefWoTranslated, $arr_rowsLL['uid'] );
+
+//    var_dump( __METHOD__, __LINE__, 'array_merge' );
+//    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
+//    var_dump( __METHOD__, __LINE__, $arr_rowsLL['uid'] );
+//    var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
+
+      // Sort the array of uids
+    sort( $arr_rowsDefWiCurr, SORT_NUMERIC );
+
+      // Get list of uids from the array
+    $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );
+
+      // Count initials
+    $arr_return = $this->zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset );
+
+      // RETURN : the sql result
     return $arr_return;
   }
 
@@ -1917,15 +2048,16 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * zz_sqlCountInitialsLL( ) : SQL query and execution for counting initials
+ * zz_sqlCountInitialsLL( ) : SQL query and execution for counting initials by given uids
  *
- * @param	string		$currSqlCharset : Current SQL charset for reset in error case
- * @param	[type]		$currSqlCharset: ...
- * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @param	integer		$length             : SQL length of special chars group
+ * @param	string		$uidListDefAndCurr  : Record uids of translated records and default language records, which aren't translated
+ * @param	string		$currSqlCharset     : Current SQL charset like 'latin1'
+ * @return	array		$arr_return         : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.11
  */
-  private function zz_sqlCountInitialsLL( $uidListDefAndCurr, $currSqlCharset )
+  private function zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset )
   {
 $this->pObj->dev_var_dump( $uidListDefAndCurr );
 
@@ -1934,11 +2066,12 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
     list( $table )  = explode( '.', $tableField );
 
       // Configure the query
-    $select   = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
+    $select   = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', " . 
+                "LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
     $from     = $table;
     $where    = $table . ".uid IN (" . $uidListDefAndCurr . ")";
-    $groupBy  = "LEFT ( " . $tableField . ", 1 )";
-    $orderBy  = "LEFT ( " . $tableField . ", 1 )";
+    $groupBy  = "LEFT ( " . $tableField . ", " . $length . " )";
+    $orderBy  = "LEFT ( " . $tableField . ", " . $length . " )";
     $limit    = null;
       // Query for all filter items
 
@@ -2000,10 +2133,15 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
  * @param	[type]		$currSqlCharset: ...
  * @return	array		$arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.13
- * @since   3.9.11
+ * @since   3.9.13
  */
   private function zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset )
   {
+    if( ! ( $this->idsOfAllDefaultLLrecords === null ) )
+    {
+      return $this->idsOfAllDefaultLLrecords;
+    }
+    
       // Get current table.field of the index browser
     $tableField     = $this->indexBrowserTableField;
     list( $table )  = explode( '.', $tableField );
@@ -2071,10 +2209,11 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
         // Get values from the SQL row
-      $arr_rows[] = $row['uid'];
+      $this->idsOfAllDefaultLLrecords[] = $row['uid'];
     }
 
-    $arr_return['data']['rows'] = $arr_rows;
+    
+    $arr_return['data']['rows'] = $this->idsOfAllDefaultLLrecords;
     return $arr_return;
   }
 
@@ -2091,6 +2230,11 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
  */
   private function zz_sqlIdsOfTranslatedLL( $uidListOfDefLL, $currSqlCharset )
   {
+    if( ! ( $this-> idsOfAllTranslatedLLrecords === null ) )
+    {
+      return $this-> idsOfAllTranslatedLLrecords;
+    }
+           
       // Get current table.field of the index browser
     $tableField     = $this->indexBrowserTableField;
     list( $table )  = explode( '.', $tableField );
@@ -2174,11 +2318,11 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
         // Get values from the SQL row
-      $arr_rowsLL['uid'][]          = $row['uid'];
-      $arr_rowsLL[$parentUid][]  = $row[$parentUid];
+      $this->idsOfAllTranslatedLLrecords['uid'][]       = $row['uid'];
+      $this->idsOfAllTranslatedLLrecords[$parentUid][]  = $row[$parentUid];
     }
 
-    $arr_return['data']['rows'] = $arr_rowsLL;
+    $arr_return['data']['rows'] = $this->idsOfAllTranslatedLLrecords;
     return $arr_return;
   }
 
