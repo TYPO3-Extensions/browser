@@ -2884,26 +2884,43 @@ class tx_browser_pi1_filter_4x {
     $where =  $this->pObj->objSqlInit->statements['listView']['where'] .
               $this->sql_whereAnd_Filter( ) .
               $this->sql_whereAnd_fromTS( );
+    $where =  $this->sql_whereWiHitsLL( $where );
 
-    
-      // Get table
-      // 120506, dwildt, 1-
-    //list( $table ) = explode( '.', $this->curr_tableField );
-      // 120506, dwildt, 1+
+      // RETURN WHERE statement without a WHERE
+    return $where;
+  }
+
+
+
+/**
+ * sql_whereWiHitsLL( ):  
+ *
+ * @return	string		$where : WHERE statement without WHERE
+ * @version 3.9.13
+ * @since   3.9.13
+ */
+  private function sql_whereWiHitsLL( $where )
+  {
+      // Short var
     $table = $this->pObj->localTable;
 
+      // Store current localisation mode
     $curr_int_localisation_mode = $this->pObj->objLocalise->int_localisation_mode;
-      // Set all to default language
+      // Set localisation mode to default language
     $this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
+
+      // Get where localisation
     $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
-$this->pObj->dev_var_dump( $this->curr_tableField, $llWhere );
     if( $llWhere )
     {
       $where  = $where . " AND " . $llWhere;
     }
+      // Get where localisation
+      
+      // Reset localisation mode 
     $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
 
-      // RETURN WHERE statement without a WHERE
+      // RETURN 
     return $where;
   }
 
