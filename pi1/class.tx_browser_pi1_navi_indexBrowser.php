@@ -38,67 +38,76 @@
  *
  *
  *
- *  105: class tx_browser_pi1_navi_indexBrowser
- *  194:     public function __construct($parentObj)
+ *  114: class tx_browser_pi1_navi_indexBrowser
+ *  204:     public function __construct($parentObj)
  *
  *              SECTION: Main
- *  226:     public function get( $content )
+ *  236:     public function get( $content )
  *
  *              SECTION: Requirements
- *  308:     private function localisation_init( )
- *  360:     private function requirements_check( )
- *  437:     private function tableField_check( )
- *  487:     private function tableField_init( )
+ *  332:     private function localisation_init( )
+ *  392:     private function localisation_consolidate( )
+ *  510:     private function requirements_check( )
+ *  588:     private function tableField_check( )
+ *  639:     private function tableField_init( )
  *
  *              SECTION: Subparts
- *  576:     private function subpart( )
- *  622:     private function subpart_setContainer( )
- *  643:     private function subpart_setTabs( )
+ *  728:     private function subpart( )
+ *  774:     private function subpart_setContainer( )
+ *  795:     private function subpart_setTabs( )
  *
  *              SECTION: Tabs
- *  741:     private function tabs_init( )
- *  808:     private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
- *  860:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
- *  919:     private function tabs_initSpecialChars( $arrCsvAttributes )
+ *  893:     private function tabs_init( )
+ *  980:     private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
+ * 1032:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+ * 1091:     private function tabs_initSpecialChars( $arrCsvAttributes )
  *
  *              SECTION: Count chars
- *  978:     private function count_chars( )
- * 1018:     private function count_chars_addSumToTab( $res )
- * 1070:     private function count_chars_resSqlCount( $currSqlCharset )
- *
- *              SECTION: Count special chars
- * 1190:     private function count_specialChars( )
- * 1229:     private function count_specialChars_addSum( $row )
- * 1279:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
- * 1373:     private function count_specialChars_setSqlFindInSet( $row )
- * 1400:     private function count_specialChars_setSqlLength( )
- *
- *              SECTION: SQL charset
- * 1470:     private function sqlCharsetGet( )
- * 1503:     private function sqlCharsetSet( $sqlCharset )
+ * 1152:     private function count_chars( )
+ * 1189:     private function count_chars_addSumToTab( $res )
  *
  *              SECTION: SQL statements
- * 1540:     private function sqlStatement_from( $table )
- * 1567:     private function sqlStatement_where( $table, $andWhereFindInSet )
- * 1613:     private function sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet )
+ * 1356:     private function count_chars_resSqlCount( $currSqlCharset )
+ * 1413:     private function count_chars_resSqlCountDefLL( $strFindInSet, $currSqlCharset )
+ * 1485:     private function count_chars_resSqlCountSelOrDefLL( $strFindInSet, $currSqlCharset )
+ *
+ *              SECTION: Count special chars
+ * 1581:     private function count_specialChars( )
+ * 1620:     private function count_specialChars_addSum( $row )
+ * 1667:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
+ * 1761:     private function count_specialChars_setSqlFindInSet( $row )
+ * 1787:     private function count_specialChars_setSqlLength( )
+ *
+ *              SECTION: SQL charset
+ * 1857:     private function sqlCharsetGet( )
+ * 1890:     private function sqlCharsetSet( $sqlCharset )
+ *
+ *              SECTION: SQL ids
+ * 1928:     private function zz_sqlCountInitialsLL( $uidListDefAndCurr, $currSqlCharset )
+ * 2005:     private function zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset )
+ * 2092:     private function zz_sqlIdsOfTranslatedLL( $uidListOfDefLL, $currSqlCharset )
+ * 2195:     private function sqlStatement_from( $table )
+ * 2222:     private function sqlStatement_where( $table, $andWhereFindInSet )
+ * 2273:     private function sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet )
  *
  *              SECTION: Downward compatibility
- * 1661:     public function getMarkerIndexbrowser( )
- * 1707:     private function getMarkerIndexbrowserTabs( )
+ * 2321:     public function getMarkerIndexbrowser( )
+ * 2367:     private function getMarkerIndexbrowserTabs( )
  *
  *              SECTION: Helper
- * 1765:     private function zz_specCharsToASCII( $string )
- * 1785:     private function zz_tabClass( $lastTabId, $tab, $key )
- * 1818:     private function zz_tabDefaultLabel( )
- * 1836:     private function zz_tabDefaultLink( )
- * 1879:     private function zz_tabLinkLabel( $tab )
- * 1921:     private function zz_setTabPiVars( $labelAscii, $label )
- * 1951:     private function zz_setTabPiVarsDefaultTab( $label )
- * 1983:     private function zz_setTabSlected( $tabId )
- * 2033:     private function zz_tabLastId( )
- * 2091:     private function zz_tabTitle( $sum )
+ * 2425:     private function zz_specCharsToASCII( $string )
+ * 2445:     private function zz_tabClass( $lastTabId, $tab, $key )
+ * 2478:     private function zz_tabDefaultLabel( )
+ * 2496:     private function zz_tabDefaultLink( )
+ * 2539:     private function zz_tabLinkLabel( $tab )
+ * 2580:     private function zz_LLdie( $method, $line )
+ * 2639:     private function zz_setTabPiVars( $labelAscii, $label )
+ * 2669:     private function zz_setTabPiVarsDefaultTab( $label )
+ * 2701:     private function zz_setTabSlected( $tabId )
+ * 2751:     private function zz_tabLastId( )
+ * 2809:     private function zz_tabTitle( $sum )
  *
- * TOTAL FUNCTIONS: 38
+ * TOTAL FUNCTIONS: 45
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -310,15 +319,15 @@ class tx_browser_pi1_navi_indexBrowser
 
 
   /**
-   * localisation_init( ):  Inits the localisation mode and localisation TS
-   *                            Sets the class vars
-   *                            * $int_localisation_mode
-   *                            * bool_dontLocalise
-   *
-   * @return	void
-   * @version 3.9.11
-   * @since   3.9.11
-   * @todo  120503: Remove $this->bool_dontLocalise from the method and from the class
+ * localisation_init( ):  Inits the localisation mode and localisation TS
+ *                            Sets the class vars
+ *                            * $int_localisation_mode
+ *                            * bool_dontLocalise
+ *
+ * @return	void
+ * @version 3.9.11
+ * @since   3.9.11
+ * @todo  120503: Remove $this->bool_dontLocalise from the method and from the class
  */
   private function localisation_init( )
   {
@@ -371,7 +380,7 @@ class tx_browser_pi1_navi_indexBrowser
  *                                * $this->count_chars( )
  *                                but for the default language only.
  *                                The counted hits will substracted of the hits, which were
- *                                counted before for the default language and the localised 
+ *                                counted before for the default language and the localised
  *                                language.
  *
  * @return	array		$arr_return: Contains an error message in case of an error
@@ -390,7 +399,7 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // DRS
     return;
-    
+
 //    if( $this->pObj->b_drs_navi )
 //    {
 //      $prompt = 'localisation_consolidate( )';
@@ -398,17 +407,17 @@ class tx_browser_pi1_navi_indexBrowser
 //    }
 
     static $thisMethodIsUsed = false;
-    
+
       // RETURN : method is called twice at least
     if( $thisMethodIsUsed )
     {
       return;
     }
       // RETURN : method is called twice at least
-    
+
       // Don't call method twice
     $thisMethodIsUsed = true;
-    
+
       // SWITCH $int_localisation_mode
     switch( $this->int_localisation_mode )
     {
@@ -448,34 +457,34 @@ class tx_browser_pi1_navi_indexBrowser
           // Store current localisation mode
         $curr_int_localisation_mode     = $this->int_localisation_mode;
           // Set all to default language
-        $this->int_localisation_mode    = PI1_DEFAULT_LANGUAGE; 
+        $this->int_localisation_mode    = PI1_DEFAULT_LANGUAGE;
         $this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
-        $this->bool_LLconsolidationMode = true; 
+        $this->bool_LLconsolidationMode = true;
           // Set all to default language
 
-          // Substract of special char tabs the hits of default language 
+          // Substract of special char tabs the hits of default language
         $arr_return = $this->count_specialChars( );
         if( ! ( empty ( $arr_return ) ) )
         {
             // Restore former localisation mode
-          $this->bool_LLconsolidationMode = false; 
+          $this->bool_LLconsolidationMode = false;
           $this->int_localisation_mode    = $curr_int_localisation_mode;
           $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
             // Restore former localisation mode
             // RETURN : Array with error prompt in case of an error
           return $arr_return;
         }
-          // Substract of special char tabs the hits of default language 
-          // Substract of default char tabs the hits of default language 
+          // Substract of special char tabs the hits of default language
+          // Substract of default char tabs the hits of default language
         $arr_return = $this->count_chars( );
           // Restore former localisation mode
-        $this->bool_LLconsolidationMode = false; 
+        $this->bool_LLconsolidationMode = false;
         $this->int_localisation_mode    = $curr_int_localisation_mode;
         $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
           // Restore former localisation mode
           // RETURN : Array with error prompt in case of an error
         return $arr_return;
-          // Substract of default char tabs the hits of default language 
+          // Substract of default char tabs the hits of default language
         break;
       default:
           // DIE
@@ -885,7 +894,7 @@ class tx_browser_pi1_navi_indexBrowser
   {
       // Prompt the expired time to devlog
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
-    
+
     $arrCsvAttributes   = array( );
 
       // Get tabSpecial property default
@@ -1082,7 +1091,7 @@ class tx_browser_pi1_navi_indexBrowser
   private function tabs_initSpecialChars( $arrCsvAttributes )
   {
     $matches = array( );
-    
+
       // Get initials unique
     $arrCsvAttributes  = array_unique( $arrCsvAttributes );
     $csvInitials  = implode( ',', ( array ) $arrCsvAttributes );
@@ -1203,7 +1212,7 @@ class tx_browser_pi1_navi_indexBrowser
       {
         if( $this->pObj->b_drs_navi )
         {
-          $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] : $sum = $sum - $rowSum (#' . 
+          $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] : $sum = $sum - $rowSum (#' .
                     $sum . ' - #' . $rowSum . ' = #' . ( $sum - $rowSum ) . ')';
           t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
@@ -1223,7 +1232,7 @@ class tx_browser_pi1_navi_indexBrowser
       {
         if( $this->pObj->b_drs_navi )
         {
-          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum + $rowSum (#' . 
+          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum + $rowSum (#' .
                     $sum . ' + #' . $rowSum . ' = #' . ( $sum + $rowSum ) . ')';
           t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
@@ -1234,16 +1243,16 @@ class tx_browser_pi1_navi_indexBrowser
       {
         if( $this->pObj->b_drs_navi )
         {
-          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum - $rowSum (#' . 
+          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] : $sum = $sum - $rowSum (#' .
                     $sum . ' - #' . $rowSum . ' = #' . ( $sum - $rowSum ) . ')';
           t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
         }
           // Substract rows of the default language
         $sum = $sum - $rowSum;
       }
-      
-      
-      
+
+
+
         // Allocates result to the current tab
       $this->indexBrowserTab[ 'tabIds' ][ $tabId ][ 'sum' ] = $sum;
 
@@ -1290,7 +1299,7 @@ class tx_browser_pi1_navi_indexBrowser
 
     if( $this->pObj->b_drs_navi )
     {
-      foreach( ( array ) $this->indexBrowserTab['attributes'] as $attribute => $arrAttribute ) 
+      foreach( ( array ) $this->indexBrowserTab['attributes'] as $attribute => $arrAttribute )
       {
         $sum    = $arrAttribute['sum'];
         $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] = #' . $sum;
@@ -1304,7 +1313,7 @@ class tx_browser_pi1_navi_indexBrowser
             break;
         }
       }
-      foreach( ( array ) $this->indexBrowserTab[ 'tabIds' ] as $tabId => $arrTabId ) 
+      foreach( ( array ) $this->indexBrowserTab[ 'tabIds' ] as $tabId => $arrTabId )
       {
         $sum = $arrTabId['sum'];
         $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] = #' . $sum;
@@ -1368,7 +1377,7 @@ class tx_browser_pi1_navi_indexBrowser
       $strFindInSet = "NOT (" . $strFindInSet . ")";
     }
       // Build FIND IN SET
-    
+
 
       // SWITCH $int_localisation_mode
     switch( $this->int_localisation_mode )
@@ -1393,10 +1402,11 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * count_chars_resSqlCountDefLL( ): 
+ * count_chars_resSqlCountDefLL( ):
  *
- * @param	string    $strFindInSet : Current SQL charset for reset in error case
- * @return	array     $arr_return     : SQL ressource or an error message in case of an error
+ * @param	string		$strFindInSet : Current SQL charset for reset in error case
+ * @param	[type]		$currSqlCharset: ...
+ * @return	array		$arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.11
  */
@@ -1467,6 +1477,7 @@ class tx_browser_pi1_navi_indexBrowser
  * count_chars_resSqlCountSelOrDefLL( ) : SQL query and execution for counting initials
  *
  * @param	string		$currSqlCharset : Current SQL charset for reset in error case
+ * @param	[type]		$currSqlCharset: ...
  * @return	array		$arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.11
@@ -1479,7 +1490,7 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Label of field with the uid of the record with the default language
     $parentUid = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
-    
+
       // RETURN : table isn't localised
     if( empty ( $parentUid ) )
     {
@@ -1512,11 +1523,11 @@ class tx_browser_pi1_navi_indexBrowser
     $uidListOfCurrLanguage  = implode( ',', ( array ) $arr_rowsLL['uid'] );
 //    var_dump( __METHOD__, __LINE__, $uidListOfCurrLanguage );
       // Get Ids of all (!) translated language records
-    
+
       // Substract uids of default language records, which are translated
     $arr_rowsDefWoTranslated = array_diff( $arr_rows, $arr_rowsLL[$parentUid] );
-    
-    
+
+
 //    var_dump( __METHOD__, __LINE__, 'array_diff' );
 //    var_dump( __METHOD__, __LINE__, $arr_rows );
 //    var_dump( __METHOD__, __LINE__, $arr_rowsLL[$parentUid] );
@@ -1534,15 +1545,15 @@ class tx_browser_pi1_navi_indexBrowser
     sort( $arr_rowsDefWiCurr, SORT_NUMERIC );
 
       // Get list of uids from the array
-    $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );  
-     
+    $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );
+
       // Count initials
     $arr_return = $this->zz_sqlCountInitialsLL( $uidListDefAndCurr, $currSqlCharset );
 
-      // RETURN : the sql result 
+      // RETURN : the sql result
     return $arr_return;
   }
-  
+
 
 
 
@@ -1909,6 +1920,7 @@ class tx_browser_pi1_navi_indexBrowser
  * zz_sqlCountInitialsLL( ) : SQL query and execution for counting initials
  *
  * @param	string		$currSqlCharset : Current SQL charset for reset in error case
+ * @param	[type]		$currSqlCharset: ...
  * @return	array		$arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.11
@@ -1985,6 +1997,7 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
  * zz_sqlIdsOfDefLL( ) : Get Ids of all (!) default language records
  *
  * @param	string		$currSqlCharset : Current SQL charset for reset in error case
+ * @param	[type]		$currSqlCharset: ...
  * @return	array		$arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.11
@@ -2060,7 +2073,7 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
         // Get values from the SQL row
       $arr_rows[] = $row['uid'];
     }
-    
+
     $arr_return['data']['rows'] = $arr_rows;
     return $arr_return;
   }
@@ -2071,6 +2084,7 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
  * zz_sqlIdsOfTranslatedLL( ) : Get Ids of all (!) translated language records
  *
  * @param	string		$currSqlCharset : Current SQL charset for reset in error case
+ * @param	[type]		$currSqlCharset: ...
  * @return	array		$arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.11
@@ -2083,12 +2097,12 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
 
       // Label of field with the uid of the record with the default language
     $parentUid = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
-    
+
       // Store current localisation mode
     $curr_int_localisation_mode = $this->int_localisation_mode;
       // Set localisation mode to translated language
     $this->pObj->objLocalise->int_localisation_mode = PI1_SELECTED_LANGUAGE_ONLY;
-    
+
       // Get where for localisation
     $whereLL = $this->pObj->objLocalise->localisationFields_where( $table );
     if( empty ( $whereLL ) )
@@ -2124,7 +2138,7 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
               );
 
 //    var_dump( __METHOD__, __LINE__, $query );
-    
+
       // Execute query
     $res = $this->pObj->objSqlFun->exec_SELECTquery
                                     (
@@ -2212,7 +2226,7 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
       case( isset( $this->pObj->piVars['sword'] ) ):
       case( $this->pObj->objFltr4x->init_aFilterIsSelected( ) ):
         $where  = $this->pObj->objSqlInit->statements['listView']['where'];
-//$this->pObj->dev_var_dump( $this->pObj->objSqlInit->statements['listView']['where'] );        
+//$this->pObj->dev_var_dump( $this->pObj->objSqlInit->statements['listView']['where'] );
         $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
         $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
 //$this->pObj->dev_var_dump( $llWhere );
@@ -2557,8 +2571,8 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
 /**
  * zz_LLdie( ): Prompts a localisation error and dies
  *
- * @param	string    $method : name of calling method
- * @param	integer   $line   : line number of the call
+ * @param	string		$method : name of calling method
+ * @param	integer		$line   : line number of the call
  * @return	void
  * @version 3.9.13
  * @since   3.9.13
