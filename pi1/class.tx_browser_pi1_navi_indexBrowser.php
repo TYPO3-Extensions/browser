@@ -2060,6 +2060,10 @@ class tx_browser_pi1_navi_indexBrowser
   private function zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset )
   {
 $this->pObj->dev_var_dump( $uidListDefAndCurr );
+    if( empty ( $uidListDefAndCurr ) )
+    {
+      return false;
+    }
 
       // Get current table.field of the index browser
     $tableField     = $this->indexBrowserTableField;
@@ -2417,15 +2421,15 @@ $this->pObj->dev_var_dump( $this->idsOfAllTranslatedLLrecords );
  *                                    especially for FIND IN SET
  *
  * @param	string		$where              : The current WHERE statement
- * @param	string		$andWhereFindInSet  : FIND IN SET
+ * @param	string		$findInSet  : FIND IN SET
  * @return	string		$where            : AND WHERE statement without an AND
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet )
+  private function sqlStatement_whereAndFindInSet( $where, $findInSet )
   {
       // RETURN : there isn't any FIND IN SET
-    if( ! $andWhereFindInSet )
+    if( ! $findInSet )
     {
       return $where;
     }
@@ -2434,11 +2438,11 @@ $this->pObj->dev_var_dump( $this->idsOfAllTranslatedLLrecords );
     switch( true )
     {
       case( $where ):
-        $where = $where . " AND " . $andWhereFindInSet;
+        $where = $where . " AND " . $findInSet;
         break;
       case( empty( $where ) ):
       default:
-        $where = $andWhereFindInSet;
+        $where = $findInSet;
         break;
     }
 
