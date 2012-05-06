@@ -1282,20 +1282,30 @@ class tx_browser_pi1_navi_indexBrowser
     {
       foreach( ( array ) $this->indexBrowserTab['attributes'] as $attribute => $arrAttribute ) 
       {
-        $sum = $arrAttribute['sum'];
-        if( $sum != 0 )
+        $sum    = $arrAttribute['sum'];
+        $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] = #' . $sum;
+        switch( true )
         {
-          $prompt = '$this->indexBrowserTab[attributes][' . $attribute . '][sum] = #' . $sum;
-          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+          case( $sum > 0 ) :
+            t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+            break;
+          case( $sum < 0 ) :
+            t3lib_div::devlog( '[ERROR/NAVIGATION] ' . $prompt, $this->pObj->extKey, 3 );
+            break;
         }
       }
       foreach( ( array ) $this->indexBrowserTab[ 'tabIds' ] as $tabId => $arrTabId ) 
       {
         $sum = $arrTabId['sum'];
-        if( $sum != 0 )
+        $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] = #' . $sum;
+        switch( true )
         {
-          $prompt = '$this->indexBrowserTab[tabIds][' . $tabId . '][sum] = #' . $sum;
-          t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+          case( $sum > 0 ) :
+            t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+            break;
+          case( $sum < 0 ) :
+            t3lib_div::devlog( '[ERROR/NAVIGATION] ' . $prompt, $this->pObj->extKey, -1 );
+            break;
         }
       }
     }
