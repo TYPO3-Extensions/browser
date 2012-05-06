@@ -4937,7 +4937,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function requiredMarker( $tableField )
   {
-    $searchform     = $this->pObj->cObj->getSubpart( $this->content, '###SEARCHFORM###' );
+    $searchform     = $this->pObj->cObj->getSubpart( $this->pObj->str_template_raw, '###SEARCHFORM###' );
     var_dump( __METHOD__, __LINE__, $searchform );
     return true;
   }
