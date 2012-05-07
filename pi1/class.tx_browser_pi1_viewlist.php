@@ -792,11 +792,15 @@ if( $this->pObj->b_drs_devTodo )
   t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
 }
   // DRS
-if( $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL )
+if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
 {
-  $uidList  = $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL;
-  $where    = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $uidList . ")";
+  if( $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL )
+  {
+    $uidList  = $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL;
+    $where    = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $uidList . ")";
+  }
 }
+
     $groupBy  = null;
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
     $limit    = $this->pObj->objSqlInit->statements['listView']['limit'];
