@@ -1177,9 +1177,9 @@ class tx_browser_pi1_navi_indexBrowser
       // Reset SQL char set
     $this->sqlCharsetSet( $currSqlCharset );
 
-    $arrUids = explode( ',', ( array ) $this->uidListDefaultAndCurrentLL );
+    $arrUids = explode( ',', $this->uidListDefaultAndCurrentLL );
     sort( $arrUids, SORT_NUMERIC );
-    $this->uidListDefaultAndCurrentLL = implode( ',', ( array ) $arrUids );
+    $this->uidListDefaultAndCurrentLL = implode( ',', $arrUids );
 
     $this->pObj->dev_var_dump( $this->uidListDefaultAndCurrentLL );
   }
