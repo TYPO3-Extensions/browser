@@ -166,6 +166,9 @@ class tx_browser_pi1_navi_indexBrowser
   var $indexBrowserTableField = null;
     // [Array] Array with the find in set statements for special chars
   var $findInSet = array( );
+    // [String/CSV] Comma seperated list of all records of the current language and the default language,
+    //              which aren't translated
+  var $uidListDefaultAndCurrentLL = null;
 
     // [Boolean] true: don't localise the current SQL query, false: localise it
   var $bool_dontLocalise      = null;
@@ -2058,7 +2061,6 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset )
   {
-$this->pObj->dev_var_dump( $uidListDefAndCurr );
     if( empty ( $uidListDefAndCurr ) )
     {
         // DRS
@@ -2070,6 +2072,16 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
         // DRS
       return false;
     }
+
+    if( empty ( $this->uidListDefaultAndCurrentLL ) ) 
+    {
+      $this->uidListDefaultAndCurrentLL = $uidListDefAndCurr;
+    }
+    else
+    {
+      $this->uidListDefaultAndCurrentLL = $this->uidListDefaultAndCurrentLL . ',' . $uidListDefAndCurr;
+    }
+$this->pObj->dev_var_dump( $this->uidListDefaultAndCurrentLL );
 
       // Get current table.field of the index browser
     $tableField     = $this->indexBrowserTableField;
