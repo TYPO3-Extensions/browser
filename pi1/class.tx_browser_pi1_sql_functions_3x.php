@@ -1046,6 +1046,9 @@ class tx_browser_pi1_sql_functions_3x
  */
     function replace_tablealias($arr_aliastableField)
     {
+        // 120507, dwildt
+      static $firstLoop = true;
+      
       $conf = $this->pObj->conf;
       $mode = $this->pObj->piVar_mode;
       $view = $this->pObj->view;
@@ -1060,10 +1063,11 @@ class tx_browser_pi1_sql_functions_3x
 
       if (!is_array($conf_view['aliases.']['tables.']))
       {
-        if ($this->pObj->b_drs_sql)
+        if ($this->pObj->b_drs_sql && $firstLoop )
         {
           t3lib_div::devlog('[INFO/SQL] views.'.$viewWiDot.$mode.' hasn\'t any array aliases.tables. We don\'t process aliases.', $this->pObj->extKey, 0);
         }
+        $firstLoop = false;
         return $arr_aliastableField;
       }
 
@@ -1078,6 +1082,8 @@ class tx_browser_pi1_sql_functions_3x
           $arr_aliastableField[$key_field] = $str_tablereal.'.'.$str_field;
         }
       }
+
+      $firstLoop = false;
       return $arr_aliastableField;
     }
 
