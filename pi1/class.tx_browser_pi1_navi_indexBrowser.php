@@ -2141,12 +2141,12 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
  */
   private function zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset )
   {
-    if( ! ( $this->idsOfAllDefaultLLrecords === null ) )
-    {
-      $arr_return['data']['rows'] = $this->idsOfAllDefaultLLrecords;
-$this->pObj->dev_var_dump( $this->idsOfAllDefaultLLrecords );
-      return $arr_return;
-    }
+//    if( ! ( $this->idsOfAllDefaultLLrecords === null ) )
+//    {
+//      $arr_return['data']['rows'] = $this->idsOfAllDefaultLLrecords;
+//$this->pObj->dev_var_dump( $this->idsOfAllDefaultLLrecords );
+//      return $arr_return;
+//    }
     
       // Get current table.field of the index browser
     $tableField     = $this->indexBrowserTableField;
@@ -2215,12 +2215,15 @@ $this->pObj->dev_var_dump( $this->idsOfAllDefaultLLrecords );
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
         // Get values from the SQL row
-      $this->idsOfAllDefaultLLrecords[] = $row['uid'];
+//      $this->idsOfAllDefaultLLrecords[] = $row['uid'];
+      $idsOfAllDefaultLLrecords[] = $row['uid'];
     }
 
     
-    $arr_return['data']['rows'] = $this->idsOfAllDefaultLLrecords;
-$this->pObj->dev_var_dump( $this->idsOfAllDefaultLLrecords );
+//    $arr_return['data']['rows'] = $this->idsOfAllDefaultLLrecords;
+//$this->pObj->dev_var_dump( $this->idsOfAllDefaultLLrecords );
+    $arr_return['data']['rows'] = $idsOfAllDefaultLLrecords;
+$this->pObj->dev_var_dump( $idsOfAllDefaultLLrecords );
     return $arr_return;
   }
 
@@ -2237,12 +2240,12 @@ $this->pObj->dev_var_dump( $this->idsOfAllDefaultLLrecords );
  */
   private function zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset )
   {
-    if( ! ( $this->idsOfAllTranslatedLLrecords === null ) )
-    {
-      $arr_return['data']['rows'] = $this->idsOfAllTranslatedLLrecords;
-$this->pObj->dev_var_dump( $this->idsOfAllTranslatedLLrecords );
-      return $arr_return;
-    }
+//    if( ! ( $this->idsOfAllTranslatedLLrecords === null ) )
+//    {
+//      $arr_return['data']['rows'] = $this->idsOfAllTranslatedLLrecords;
+//$this->pObj->dev_var_dump( $this->idsOfAllTranslatedLLrecords );
+//      return $arr_return;
+//    }
            
       // Get current table.field of the index browser
     $tableField     = $this->indexBrowserTableField;
@@ -2329,12 +2332,16 @@ $this->pObj->dev_var_dump( $this->idsOfAllTranslatedLLrecords );
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
         // Get values from the SQL row
-      $this->idsOfAllTranslatedLLrecords['uid'][]       = $row['uid'];
-      $this->idsOfAllTranslatedLLrecords[$parentUid][]  = $row[$parentUid];
+//      $this->idsOfAllTranslatedLLrecords['uid'][]       = $row['uid'];
+//      $this->idsOfAllTranslatedLLrecords[$parentUid][]  = $row[$parentUid];
+      $idsOfAllTranslatedLLrecords['uid'][]       = $row['uid'];
+      $idsOfAllTranslatedLLrecords[$parentUid][]  = $row[$parentUid];
     }
 
-    $arr_return['data']['rows'] = $this->idsOfAllTranslatedLLrecords;
-$this->pObj->dev_var_dump( $this->idsOfAllTranslatedLLrecords );
+//    $arr_return['data']['rows'] = $this->idsOfAllTranslatedLLrecords;
+//$this->pObj->dev_var_dump( $this->idsOfAllTranslatedLLrecords );
+    $arr_return['data']['rows'] = $idsOfAllTranslatedLLrecords;
+$this->pObj->dev_var_dump( $idsOfAllTranslatedLLrecords );
     return $arr_return;
   }
 
