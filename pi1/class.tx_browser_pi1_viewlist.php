@@ -777,7 +777,7 @@ class tx_browser_pi1_viewlist
 
       // SQL query array
     $select   = $this->pObj->objSqlInit->statements['listView']['select'];
-$this->pObj->dev_var_dump( $select );
+//$this->pObj->dev_var_dump( $select );
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
     if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
