@@ -2062,6 +2062,13 @@ class tx_browser_pi1_navi_indexBrowser
 $this->pObj->dev_var_dump( $uidListDefAndCurr );
     if( empty ( $uidListDefAndCurr ) )
     {
+        // DRS
+      if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+      {
+        $prompt = '$uidListDefAndCurr is empty';
+        t3lib_div::devlog( '[WARN/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+        // DRS
       return false;
     }
 
@@ -2277,9 +2284,16 @@ $this->pObj->dev_var_dump( $idsOfAllDefaultLLrecords );
       // Configure the query
     $select   = $table . ".uid, " . $table. "." . $parentUid;
     $from     = $this->sqlStatement_from( $table );
-    $where    = $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL ;
-      // 120507, dwildt, 1+;
-    $where    = $this->sqlStatement_whereAndFindInSet( $where, $strFindInSet );
+      // 120507, dwildt, 1-;
+    //$where    = $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL ;
+      // 120507, dwildt, 6+;
+    $where    = $this->sqlStatement_where( $table, $strFindInSet );
+    if ( $where )
+    {
+      $where = $where . " AND ";
+    }
+    $where    = $where . $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL ;
+      // 120507, dwildt, 6+;
     $groupBy  = null;
     $orderBy  = $table . ".uid";
     $limit    = null;
