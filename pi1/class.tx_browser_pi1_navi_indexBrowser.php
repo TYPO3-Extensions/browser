@@ -1093,7 +1093,7 @@ class tx_browser_pi1_navi_indexBrowser
     $matches = array( );
 
       // Get initials unique
-    $arrCsvAttributes  = array_unique( $arrCsvAttributes );
+    $arrCsvAttributes  = array_unique( ( array) $arrCsvAttributes );
     $csvInitials  = implode( ',', ( array ) $arrCsvAttributes );
 
       // Init vars with all initials
@@ -1525,7 +1525,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Get Ids of all (!) translated language records
 
       // Substract uids of default language records, which are translated
-    $arr_rowsDefWoTranslated = array_diff( $arr_rows, $arr_rowsLL[$parentUid] );
+    $arr_rowsDefWoTranslated = array_diff( ( array) $arr_rows, ( array) $arr_rowsLL[$parentUid] );
 
 
 //    var_dump( __METHOD__, __LINE__, 'array_diff' );
@@ -1534,7 +1534,7 @@ class tx_browser_pi1_navi_indexBrowser
 //    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
 
       // Add uids of translated recors
-    $arr_rowsDefWiCurr  = array_merge( $arr_rowsDefWoTranslated, $arr_rowsLL['uid'] );
+    $arr_rowsDefWiCurr  = array_merge( ( array) $arr_rowsDefWoTranslated, ( array) $arr_rowsLL['uid'] );
 
 //    var_dump( __METHOD__, __LINE__, 'array_merge' );
 //    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
@@ -1848,16 +1848,15 @@ class tx_browser_pi1_navi_indexBrowser
       // Get Ids of all (!) translated language records
 
       // Substract uids of default language records, which are translated
-    $arr_rowsDefWoTranslated = array_diff( $arr_rows, ( array ) $arr_rowsLL[$parentUid] );
+    $arr_rowsDefWoTranslated = array_diff( ( array) $arr_rows, ( array ) $arr_rowsLL[$parentUid] );
 
-
-    var_dump( __METHOD__, __LINE__, 'array_diff' );
-    var_dump( __METHOD__, __LINE__, $arr_rows );
-    var_dump( __METHOD__, __LINE__, ( array ) $arr_rowsLL[$parentUid] );
-    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
+//    var_dump( __METHOD__, __LINE__, 'array_diff' );
+//    var_dump( __METHOD__, __LINE__, $arr_rows );
+//    var_dump( __METHOD__, __LINE__, ( array ) $arr_rowsLL[$parentUid] );
+//    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
 
       // Add uids of translated recors
-    $arr_rowsDefWiCurr  = array_merge( $arr_rowsDefWoTranslated, ( array) $arr_rowsLL['uid'] );
+    $arr_rowsDefWiCurr  = array_merge( ( array) $arr_rowsDefWoTranslated, ( array) $arr_rowsLL['uid'] );
 
 //    var_dump( __METHOD__, __LINE__, 'array_merge' );
 //    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
@@ -2059,7 +2058,7 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset )
   {
-$this->pObj->dev_var_dump( $uidListDefAndCurr );
+//$this->pObj->dev_var_dump( $uidListDefAndCurr );
     if( empty ( $uidListDefAndCurr ) )
     {
         // DRS
@@ -2230,7 +2229,7 @@ $this->pObj->dev_var_dump( $uidListDefAndCurr );
 //    $arr_return['data']['rows'] = $this->idsOfAllDefaultLLrecords;
 //$this->pObj->dev_var_dump( $this->idsOfAllDefaultLLrecords );
     $arr_return['data']['rows'] = $idsOfAllDefaultLLrecords;
-$this->pObj->dev_var_dump( $idsOfAllDefaultLLrecords );
+//$this->pObj->dev_var_dump( $idsOfAllDefaultLLrecords );
     return $arr_return;
   }
 
@@ -2358,7 +2357,7 @@ $this->pObj->dev_var_dump( $idsOfAllDefaultLLrecords );
 //    $arr_return['data']['rows'] = $this->idsOfAllTranslatedLLrecords;
 //$this->pObj->dev_var_dump( $this->idsOfAllTranslatedLLrecords );
     $arr_return['data']['rows'] = $idsOfAllTranslatedLLrecords;
-$this->pObj->dev_var_dump( $idsOfAllTranslatedLLrecords );
+//$this->pObj->dev_var_dump( $idsOfAllTranslatedLLrecords );
     return $arr_return;
   }
 
