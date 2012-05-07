@@ -2058,7 +2058,7 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset )
   {
-//$this->pObj->dev_var_dump( $uidListDefAndCurr );
+$this->pObj->dev_var_dump( $uidListDefAndCurr );
     if( empty ( $uidListDefAndCurr ) )
     {
         // DRS
