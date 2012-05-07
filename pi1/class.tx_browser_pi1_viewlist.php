@@ -792,7 +792,7 @@ if( $this->pObj->b_drs_devTodo )
   t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
 }
   // DRS
-if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
+if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
 {
   if( $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL )
   {
