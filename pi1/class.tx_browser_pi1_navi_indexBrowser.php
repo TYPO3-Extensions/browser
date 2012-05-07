@@ -1848,7 +1848,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Get Ids of all (!) translated language records
 
       // Substract uids of default language records, which are translated
-    $arr_rowsDefWoTranslated = array_diff( $arr_rows, $arr_rowsLL[$parentUid] );
+    $arr_rowsDefWoTranslated = array_diff( $arr_rows, ( array ) $arr_rowsLL[$parentUid] );
 
 
 //    var_dump( __METHOD__, __LINE__, 'array_diff' );
