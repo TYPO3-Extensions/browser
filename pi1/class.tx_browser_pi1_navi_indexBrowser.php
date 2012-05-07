@@ -2285,15 +2285,16 @@ $this->pObj->dev_var_dump( $idsOfAllDefaultLLrecords );
     $select   = $table . ".uid, " . $table. "." . $parentUid;
     $from     = $this->sqlStatement_from( $table );
       // 120507, dwildt, 1-;
-    //$where    = $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL ;
-      // 120507, dwildt, 6+;
-    $where    = $this->sqlStatement_where( $table, $strFindInSet );
-    if ( $where )
-    {
-      $where = $where . " AND ";
-    }
-    $where    = $where . $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL ;
-      // 120507, dwildt, 6+;
+    $where    = $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL ;
+    $where    = $this->sqlStatement_whereAndFindSet( $where, $strFindInSet );
+//      // 120507, dwildt, 6+;
+//    $where    = $this->sqlStatement_where( $table, $strFindInSet );
+//    if ( $where )
+//    {
+//      $where = $where . " AND ";
+//    }
+//    $where    = $where . $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL ;
+//      // 120507, dwildt, 6+;
     $groupBy  = null;
     $orderBy  = $table . ".uid";
     $limit    = null;
