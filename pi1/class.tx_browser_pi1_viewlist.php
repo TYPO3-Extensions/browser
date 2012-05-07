@@ -784,6 +784,11 @@ class tx_browser_pi1_viewlist
     {
       $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
     }
+if( $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL )
+{
+  $uidList  = $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL;
+  $where    = " AND " . $this->pObj->localTable . " IN (" . $uidList . ")";
+}
     $groupBy  = null;
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
     $limit    = $this->pObj->objSqlInit->statements['listView']['limit'];
