@@ -1857,7 +1857,7 @@ class tx_browser_pi1_navi_indexBrowser
     var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
 
       // Add uids of translated recors
-    $arr_rowsDefWiCurr  = array_merge( $arr_rowsDefWoTranslated, $arr_rowsLL['uid'] );
+    $arr_rowsDefWiCurr  = array_merge( $arr_rowsDefWoTranslated, ( array) $arr_rowsLL['uid'] );
 
 //    var_dump( __METHOD__, __LINE__, 'array_merge' );
 //    var_dump( __METHOD__, __LINE__, $arr_rowsDefWoTranslated );
