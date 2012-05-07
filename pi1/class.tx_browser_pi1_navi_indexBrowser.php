@@ -1176,6 +1176,12 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Reset SQL char set
     $this->sqlCharsetSet( $currSqlCharset );
+
+    $arrUids = explode( ',', ( array ) $this->uidListDefaultAndCurrentLL );
+    sort( ( array ) $arrUids, SORT_NUMERIC );
+    $this->uidListDefaultAndCurrentLL = implode( ',', ( array ) $arrUids );
+
+    $this->pObj->dev_var_dump( $this->uidListDefaultAndCurrentLL );
   }
 
 
@@ -1545,7 +1551,7 @@ class tx_browser_pi1_navi_indexBrowser
 //    var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
 
       // Sort the array of uids
-    sort( $arr_rowsDefWiCurr, SORT_NUMERIC );
+    sort( ( array ) $arr_rowsDefWiCurr, SORT_NUMERIC );
 
       // Get list of uids from the array
     $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );
@@ -1867,7 +1873,7 @@ class tx_browser_pi1_navi_indexBrowser
 //    var_dump( __METHOD__, __LINE__, $arr_rowsDefWiCurr );
 
       // Sort the array of uids
-    sort( $arr_rowsDefWiCurr, SORT_NUMERIC );
+    sort( ( array) $arr_rowsDefWiCurr, SORT_NUMERIC );
 
       // Get list of uids from the array
     $uidListDefAndCurr  = implode( ',', ( array ) $arr_rowsDefWiCurr );
@@ -2081,7 +2087,6 @@ class tx_browser_pi1_navi_indexBrowser
     {
       $this->uidListDefaultAndCurrentLL = $this->uidListDefaultAndCurrentLL . ',' . $uidListDefAndCurr;
     }
-$this->pObj->dev_var_dump( $this->uidListDefaultAndCurrentLL );
 
       // Get current table.field of the index browser
     $tableField     = $this->indexBrowserTableField;
