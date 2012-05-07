@@ -2287,6 +2287,8 @@ $this->pObj->dev_var_dump( $idsOfAllDefaultLLrecords );
       // 120507, dwildt, 1-;
     $where    = $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL ;
     $where    = $this->sqlStatement_whereAndFindInSet( $where, $strFindInSet );
+    $andEnableFields = $this->pObj->cObj->enableFields( $table );
+    $where  = $where . $andEnableFields;
 //      // 120507, dwildt, 6+;
 //    $where    = $this->sqlStatement_where( $table, $strFindInSet );
 //    if ( $where )
