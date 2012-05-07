@@ -784,6 +784,14 @@ class tx_browser_pi1_viewlist
     {
       $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
     }
+
+  // DRS
+if( $this->pObj->b_drs_devTodo )
+{
+  $prompt = '$this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL';
+  t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+}
+  // DRS
 if( $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL )
 {
   $uidList  = $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL;

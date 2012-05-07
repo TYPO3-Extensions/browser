@@ -2263,6 +2263,17 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset )
   {
+    if( empty ( $uidListOfDefLL ) )
+    {
+        // DRS
+      if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+      {
+        $prompt = '$uidListOfDefLL is empty';
+        t3lib_div::devlog( '[INFO/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // DRS
+      return;
+    }
 //    if( ! ( $this->idsOfAllTranslatedLLrecords === null ) )
 //    {
 //      $arr_return['data']['rows'] = $this->idsOfAllTranslatedLLrecords;
