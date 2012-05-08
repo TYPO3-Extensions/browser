@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 - 2011 - Dirk Wildt http://wildt.at.die-netzmacher.de
+*  (c) 2008 - 2012 - Dirk Wildt http://wildt.at.die-netzmacher.de
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +29,7 @@
 * @package    TYPO3
 * @subpackage    browser
 *
-* @version 4.0.0
+* @version 3.9.13
 * @since 3.0.0
 */
 
@@ -604,10 +604,13 @@ class tx_browser_pi1_wrapper
     $view_path = $viewWiDot.$mode;
     if (!is_array($lAutoconf))
     {
-      if ($this->pObj->b_drs_sql)
+      if ($bool_firsttime)
       {
-        t3lib_div::devlog('[INFO/SQL] views.'.$view_path.' hasn\'t any autoconf array.<br />
-          We take the global one.', $this->pObj->extKey, 0);
+        if ($this->pObj->b_drs_sql)
+        {
+          t3lib_div::devlog('[INFO/SQL] views.'.$view_path.' hasn\'t any autoconf array.<br />
+            We take the global one.', $this->pObj->extKey, 0);
+        }
       }
       $view_path  = null;
       $lAutoconf  = $conf['autoconfig.'];
