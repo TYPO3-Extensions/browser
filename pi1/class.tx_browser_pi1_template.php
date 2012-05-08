@@ -29,7 +29,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 4.0.0
+ * @version 3.9.13
  * @since 1.0.0
  */
 
@@ -2551,6 +2551,8 @@ class tx_browser_pi1_template
  */
   function tmplRows($elements, $subpart, $template)
   {
+    static $bool_firstLoop = true;
+    
       // Get the global $arrHandleAs array
     $handleAs                   = $this->pObj->arrHandleAs;
       // [Boolean] Shouldn't empty values handled?
@@ -2594,10 +2596,13 @@ class tx_browser_pi1_template
     $lAutoconf = $this->conf_view['autoconfig.'];
     if (!is_array($lAutoconf))
     {
-      if ($this->pObj->b_drs_sql)
+      if( $bool_firstLoop )
       {
-        t3lib_div::devlog('[INFO/SQL] views.single|list.X. hasn\'t any autoconf array.<br />
-          We take the global one.', $this->pObj->extKey, 0);
+        if ($this->pObj->b_drs_sql)
+        {
+          t3lib_div::devlog('[INFO/SQL] views.single|list.X. hasn\'t any autoconf array.<br />
+            We take the global one.', $this->pObj->extKey, 0);
+        }
       }
       $lAutoconf = $this->pObj->conf['autoconfig.'];
     }
@@ -3133,6 +3138,8 @@ class tx_browser_pi1_template
 //}
 
 
+    $bool_firstLoop = false;
+    
     return $htmlRow;
   }
 
