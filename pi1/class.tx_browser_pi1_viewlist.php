@@ -971,11 +971,160 @@ $this->pObj->dev_var_dump( $arr_return );
    */
   private function rows_idsOfHitsWoCurrTranslation( $idsOfHitsWiCurrTranslation )
   {
-    $arr_return = array( );
       // Get ids of records of default language, which match the rules but haven't any translation
 //    $arr_return                   = rows_idsOfHitsWiCurrTranslation( $idsOfHitsWiCurrTranslation );
 //    $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
     
+    $arr_return = array( );
+    
+      // SWITCH $int_localisation_mode
+    switch( $this->pObj->objLocalise->int_localisation_mode )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+          // Follow the workflow
+        break;
+      default:
+          // DIE
+        $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
+        break;
+    }
+      // SWITCH $int_localisation_mode
+
+      // Get localtable
+    $table = $this->pObj->localTable;
+
+    $labelSysLanguageId = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+    $idList = implode( ',', ( array ) $idsOfHitsWiCurrTranslation );
+
+    
+      // RETURN : table is not localised
+    if( ( ! $labelOfParentUid ) || ( $sys_language_id ) ) 
+    {
+      if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
+      {
+        $prompt = $table . ' isn\'t localised.';
+        t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // RETURN : nothing to do
+      return $arr_return;
+    }
+      // RETURN : table is not localised
+
+    $tableUid = $table . ".uid";
+    $tableTpf = $table . "." . $labelOfParentUid;
+    
+    
+      // SQL query array
+    $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "'";
+//$this->pObj->dev_var_dump( $select );
+    $from     = $this->pObj->objSqlInit->statements['listView']['from'];
+    $where    = $this->pObj->objSqlInit->statements['listView']['where'];
+    if ( $where && $labelSysLanguageId )
+    {
+      $where = $where . " AND ";
+    }
+    if( $labelSysLanguageId )
+    {
+      $where = $where . $labelSysLanguageId . " <= 0";
+    }
+    if ( $where && $idList )
+    {
+      $where = $where . " AND ";
+    }
+    if( $idList )
+    {
+      $where = $where . $tableUid . " NOT IN (" . $idList . ")";
+    }
+    
+
+//    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
+//    {
+//      $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
+//    }
+//
+//  // DRS
+//if( $this->pObj->b_drs_devTodo )
+//{
+//  $prompt = '$this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL';
+//  t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+//}
+//  // DRS
+//if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
+//{
+//  if( $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL )
+//  {
+//    $uidList  = $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL;
+//    $where    = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $uidList . ")";
+//  }
+//}
+
+    $groupBy  = null;
+    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
+    $limit    = $this->pObj->objSqlInit->statements['listView']['limit'];
+      // SQL query array
+
+    if( empty( $limit ) )
+    {
+        // DRS
+      if( $this->pObj->b_drs_devTodo )
+      {
+        $prompt = 'Limit is empty. It will overriden with 0,20. Take care of a proper code.';
+        t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+      }
+        // DRS
+      $limit = '0,20';
+    }
+    
+    list( $start, $amount ) = explode( ',', $limit );
+    $amount = $amount - count ( $idsOfHitsWiCurrTranslation );
+    $limit  = $start . "," . $amount;
+
+      // #9917: Selecting a random sample from a set of rows
+    if( $this->conf_view['random'] == 1 )
+    {
+      $orderBy = 'rand( )';
+    }
+      // Set ORDER BY to false - we like to order by PHP
+    
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+
+$this->pObj->dev_var_dump( $query );
+
+      // Execute
+    $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
+                      'Don\'t use the query in a localised context.';
+    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise );
+      // Execute
+
+      // Error management
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+
+      // $rows
+    $res = $arr_return['data']['res'];
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+      $arr_return['data']['idsWiCurrTranslation'][] = $row[$tableTpf];
+      $arr_return['data']['idsOfTranslationRows'][] = $row[$tableUid];
+    }
+$this->pObj->dev_var_dump( $arr_return );
+    
+      // Free SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+
     return $arr_return;
 
   }
