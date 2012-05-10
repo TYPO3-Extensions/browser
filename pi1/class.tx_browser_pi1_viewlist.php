@@ -789,6 +789,7 @@ class tx_browser_pi1_viewlist
     }
     $idsWiCurrTranslation = $arr_return['data']['idsWiCurrTranslation'];
     $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
+      // Get ids of records, which match the rules and have a translation for the current language
 
       // Get ids of records of default language, which match the rules but haven't any translation
     $arr_return = $this->rows_idsWoTranslation( $idsWiCurrTranslation );
@@ -797,13 +798,16 @@ class tx_browser_pi1_viewlist
       return $arr_return;
     }
     $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+      // Get ids of records of default language, which match the rules but haven't any translation
     
+      // Merge all ids
     $allIds = array_merge( 
                 ( array ) $idsWiCurrTranslation,
                 ( array ) $idsOfTranslationRows,
                 ( array ) $idsOfHitsWoCurrTranslation
               );
     
+      // Get rows for the list view
     $arr_return = $this->rows_byIds( $allIds );
 
     return $arr_return;
@@ -852,7 +856,6 @@ class tx_browser_pi1_viewlist
     $labelOfParentUid   = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
     $labelSysLanguageId = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
 
-    
       // RETURN : table is not localised
     if( ( ! $labelOfParentUid ) || ( ! $labelSysLanguageId ) ) 
     {
@@ -861,11 +864,11 @@ class tx_browser_pi1_viewlist
         $prompt = $table . ' isn\'t localised.';
         t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
-        // RETURN : nothing to do
       return $arr_return;
     }
       // RETURN : table is not localised
 
+      // Fields for the SELECT statement
     $tableUid = $table . ".uid";
     $tableTpf = $table . "." . $labelOfParentUid;
     
@@ -875,11 +878,8 @@ class tx_browser_pi1_viewlist
                           " . $tableTpf . " AS '" . $tableTpf . "'";
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
-    if ( $where )
-    {
-      $where = $where . " AND ";
-    }
-    $where = $where . $labelSysLanguageId . " = " . intval( $this->pObj->objLocalise->lang_id ) . " ";
+    $andWhere = $labelSysLanguageId . " = " . intval( $this->pObj->objLocalise->lang_id ) . " ";
+    $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
 
 //    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
 //    {
@@ -1260,15 +1260,7 @@ var_dump( __METHOD__, __LINE__, $query );
     $testArray = explode( ',', $select );
     $this->pObj->objZz->zz_devPromptArrayNonUnique( $testArray, __METHOD__, __LINE__ );
         
-    
-
-
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arrConsolidate );
-
-      ////////////////////////////////////////////////////////////////////
-      //
       // Add tables to the consolidation array
-      
       // LOOP through all new table.fields
     foreach( ( array ) $arr_result['addedFields'] as $tableField )
     {
@@ -1284,9 +1276,7 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
       // LOOP through all new table.fields
       // Add tables to the consolidation array
 
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arrConsolidate );
     return $select;
-
   }
 
 

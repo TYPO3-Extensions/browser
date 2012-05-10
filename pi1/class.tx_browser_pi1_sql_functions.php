@@ -917,6 +917,39 @@ class tx_browser_pi1_sql_functions
 
 
 
+ /**
+  * zz_concatenateWithAnd( )  : Concatenate first param AND second param. Method
+  *                             handles empty params.
+  *
+  * @param    string    $param_1  : first param
+  * @param    string    $param_2  : second param
+  * @return   string	Pramams cocatenated with AND
+  * @version  3.1.13
+  * @since    3.1.13
+  */
+  public function zz_concatenateWithAnd( $param_1, $param_2 )
+  {
+      // RETURN $param_2
+    if( empty ( $param_1 ) )
+    {
+      return $param_2;
+    }
+      // RETURN $param_2
+
+      // RETURN $param_1
+    if( empty ( $param_2 ) )
+    {
+      return $param_1;
+    }
+      // RETURN $param_1
+
+      // RETURN $param_1 AND $param_2
+    $param_1 = $param_1 . " AND " . $param_2;
+    return $param_1;
+  }
+
+
+
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_sql_functions.php']) {
