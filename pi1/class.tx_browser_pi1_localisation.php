@@ -1275,7 +1275,8 @@ class tx_browser_pi1_localisation
     {
       $this->pObj->objSqlFun->query = $query;
       $this->pObj->objSqlFun->error = $error;
-      $arr_result = $this->pObj->objSqlFun->prompt_error( );
+      $level = 1;
+      $arr_result = $this->pObj->objSqlFun->prompt_error( $query, $error, $level );
       $prompt     = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       echo $prompt;
     }
@@ -1551,7 +1552,8 @@ class tx_browser_pi1_localisation
     {
       $this->pObj->objSqlFun->query = $query;
       $this->pObj->objSqlFun->error = $error;
-      $arr_result = $this->pObj->objSqlFun->prompt_error( );
+      $level = 1;
+      $arr_result = $this->pObj->objSqlFun->prompt_error( $query, $error, $level );
       $prompt     = $arr_result['error']['header'] . $arr_result['error']['prompt'];
       echo $prompt;
     }

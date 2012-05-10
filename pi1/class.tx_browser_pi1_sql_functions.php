@@ -394,12 +394,13 @@ class tx_browser_pi1_sql_functions
   * @version 3.9.12
   * @since   3.9.12
   */
-  public function prompt_error( $query, $error )
+  public function prompt_error( $query, $error, $level )
   {
+    $arr_return = array( );
 
     if( $this->pObj->b_drs_error )
     {
-      $level      = 1; // 1 level up
+      //$level      = 1; // 1 level up
       $debugTrail = $this->pObj->drs_debugTrail( $level );
       t3lib_div::devlog( '[ERROR/SQL] ' . $query,  $this->pObj->extKey, 3 );
       t3lib_div::devlog( '[ERROR/SQL] ' . $error,  $this->pObj->extKey, 3 );
@@ -762,7 +763,8 @@ class tx_browser_pi1_sql_functions
     {
         // Free SQL result
       $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-      $arr_return = $this->prompt_error( $query, $error );
+      $level = 2;
+      $arr_return = $this->prompt_error( $query, $error, $level );
     }
       // Error management
 
@@ -845,7 +847,8 @@ class tx_browser_pi1_sql_functions
       // Error management
     if( $error )
     {
-      $arr_return = $this->prompt_error( $query, $error );
+      $level = 2;
+      $arr_return = $this->prompt_error( $query, $error, $level );
     }
       // Error management
 

@@ -1894,7 +1894,8 @@ class tx_browser_pi1_navi_indexBrowser
     $error = $GLOBALS['TYPO3_DB']->sql_error( );
     if( $error )
     {
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
+      $level = 1;
+      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error, $level );
       return $arr_return;
     }
       // Error management
