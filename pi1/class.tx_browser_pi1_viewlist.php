@@ -767,11 +767,92 @@ class tx_browser_pi1_viewlist
    * rows_sqlRes( ): Building the SQL query, returns the SQL result.
    *
    * @return	array   $arr_return: Contains the SQL res or an error message 
-   * @version 3.9.12
+   * @version 3.9.13
    * @since   3.9.12
    * @todo    120506, dwildt: empty limit
    */
   private function rows_sqlRes( )
+  {
+      // Get ids of records, which match the rules and have a translation for the current language
+    $arr_return                   = rows_idsOfHitsWiCurrTranslation( );
+    if( $arr_return['error']['status'] ) 
+    {
+      return $arr_return;
+    }
+    $idsOfHitsWiCurrTranslation   = $arr_return['data']['idsWiCurrTranslation'];
+    $idsOfTranslationRows         = $arr_return['data']['idsOfTranslationRows'];
+
+      // Get ids of records of default language, which match the rules but haven't any translation
+    $arr_return                   = rows_idsOfHitsWoCurrTranslation( $idsOfHitsWiCurrTranslation );
+    if( $arr_return['error']['status'] ) 
+    {
+      return $arr_return;
+    }
+    $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+    
+    $allIds = $idsOfHitsWiCurrTranslation +
+              $idsOfTranslationRows       + 
+              $idsOfHitsWoCurrTranslation;
+    
+    $arr_return = rows_byIds( $allIds );
+
+    return $arr_return;
+  }
+
+
+
+  /**
+   * rows_idsOfHitsWiCurrTranslation( ): ....
+   *
+   * @return	array   $arr_return: Contains the SQL res or an error message 
+   * @version 3.9.13
+   * @since   3.9.13
+   */
+  private function rows_idsOfHitsWiCurrTranslation( )
+  {
+    $arr_return = array( );
+      // Get ids of records, which match the rules and have a translation for the current language
+//    $arr_return                   = rows_idsOfHitsWiCurrTranslation( );
+//    $idsOfHitsWiCurrTranslation   = $arr_return['data']['idsWiCurrTranslation'];
+//    $idsOfTranslationRows         = $arr_return['data']['idsOfTranslationRows'];
+
+    return $arr_return;
+  }
+
+
+
+  /**
+   * rows_idsOfHitsWoCurrTranslation( ): Building the SQL query, returns the SQL result.
+   *
+   * @param     string  $idsOfHitsWiCurrTranslation : ...
+   * @return	array   $arr_return                 : Contains the SQL res or an error message 
+   * @version 3.9.13
+   * @since   3.9.13
+   * @todo    120506, dwildt: empty limit
+   */
+  private function rows_idsOfHitsWoCurrTranslation( $idsOfHitsWiCurrTranslation )
+  {
+    $arr_return = array( );
+      // Get ids of records of default language, which match the rules but haven't any translation
+//    $arr_return                   = rows_idsOfHitsWiCurrTranslation( $idsOfHitsWiCurrTranslation );
+//    $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+    
+    return $arr_return;
+
+  }
+
+
+
+  /**
+   * rows_byIds( ): Building the SQL query, returns the SQL result.
+   *
+   * @param     string  $allIds     : ...
+   * @return	array   $arr_return : Contains the SQL res or an error message 
+   * @version 3.9.13
+   * @since   3.9.12
+   * @todo    120506, dwildt: empty limit
+   */
+  private function rows_byIds( $allIds )
   {
     $conf_view = $this->conf_view;
 
@@ -873,39 +954,10 @@ if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
       // DRS - Prompt the expired time to devlog
 
       // DRS - Performance
-    if( $this->pObj->b_drs_warn )
-    {
-      $iMilliseconds = $tt_end - $tt_start;
-      $sMilliseconds = '(' . $iMilliseconds . ' ms)';
-      $promptHelp = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
-                    'Don\'t use the query in a localised context.';
-      switch( true )
-      {
-        case( $iMilliseconds < 500 ):
-          $prompt = 'Query for the list view needs less than a half second ' . $sMilliseconds . '.';
-          t3lib_div::devlog( '[OK/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, -1 );
-          break;
-        case( $iMilliseconds >= 500 && $iMilliseconds < 5000 ):
-          $prompt = 'Query for the list view needs more than a half second ' . $sMilliseconds . '.';
-          t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
-          t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
-          break;
-        case( $iMilliseconds >= 5000 && $iMilliseconds < 10000 ):
-          $prompt = 'Query needs more than 5 seconds ' . $sMilliseconds . '.';
-          t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
-          t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
-          t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
-          t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
-          t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
-          t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
-          break;
-        case( $iMilliseconds >= 10000 ):
-          $prompt = 'Query for the list view needs more than 10 seconds ' . $sMilliseconds . '.';
-          t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 3 );
-          t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
-          break;
-      }
-    }
+    $iMilliseconds  = $tt_end - $tt_start;
+    $promptHelp     = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
+                      'Don\'t use the query in a localised context.';
+    $this->zz_drsPromptPerformance( $iMilliseconds, $promptHelp );
       // DRS - Performance
 
       // Error management
@@ -1347,6 +1399,78 @@ if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
       }
     }
       // Implement the hook
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * Helpers
+  *
+  **********************************************/
+
+
+
+
+
+
+  /**
+   * zz_drsPromptPerformance( ): Building the SQL query, returns the SQL result.
+   *
+   * @param     string  $iMilliseconds  : ...
+   * @param     string  $promptHelp     : ...
+   * @return	void
+   * @version 3.9.13
+   * @since   3.9.13
+   */
+  private function zz_drsPromptPerformance( $iMilliseconds, $promptHelp )
+  {
+
+      // RETURN : DRS is off
+    if( ! $this->pObj->b_drs_warn )
+    {
+      return;
+    }
+      // RETURN : DRS is off
+    
+
+      // String for milliseconds
+    $sMilliseconds = '(' . $iMilliseconds . ' ms)';
+
+      // SWITCH : limit for milliseconds
+    switch( true )
+    {
+      case( $iMilliseconds < 500 ):
+        $prompt = 'Query for the list view needs less than a half second ' . $sMilliseconds . '.';
+        t3lib_div::devlog( '[OK/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, -1 );
+        break;
+      case( $iMilliseconds >= 500 && $iMilliseconds < 5000 ):
+        $prompt = 'Query for the list view needs more than a half second ' . $sMilliseconds . '.';
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
+        t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
+        break;
+      case( $iMilliseconds >= 5000 && $iMilliseconds < 10000 ):
+        $prompt = 'Query needs more than 5 seconds ' . $sMilliseconds . '.';
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
+        t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
+        break;
+      case( $iMilliseconds >= 10000 ):
+        $prompt = 'Query for the list view needs more than 10 seconds ' . $sMilliseconds . '.';
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 3 );
+        t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
+        break;
+    }
+      // SWITCH : limit for milliseconds
   }
 
 
