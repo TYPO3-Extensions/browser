@@ -782,15 +782,14 @@ class tx_browser_pi1_sql_functions
   *                 class var $dev_sqlPromptsOnly is true, SQL query
   *                 won't executed but prompted in the frontend.
   *
-  * @param    string	$query          : SQL query
-  * @param    string	$promptOptimise : Prompt in case of a performance problem
-  * @param    string    $method         : Calling method
-  * @param    string    $line           : Calling line
-  * @return   array	$res            : SQL result
+  * @param    string	$query            : SQL query
+  * @param    string	$promptOptimise   : Prompt in case of a performance problem
+  * @param    string    $debugTrailLevel  : level for debug trail
+  * @return   array	$res              : SQL result
   * @version 3.9.12
   * @since   3.9.12
   */
-  public function sql_query( $query, $promptOptimise, $method, $line )
+  public function sql_query( $query, $promptOptimise, $debugTrailLevel )
   {
     if( $this->dev_sqlPromptsOnly )
     {
@@ -798,6 +797,8 @@ class tx_browser_pi1_sql_functions
       return;
     }
 
+    $localDebugTrailLevel = $debugTrailLevel + 1;
+    
       // Enable DRS performance
     if( $this->pObj->b_drs_warn )
     {
@@ -807,8 +808,7 @@ class tx_browser_pi1_sql_functions
       // Enable DRS performance
 
       // Log the time
-    $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log( $debugTrailLevel,  'START' );
+    $this->pObj->timeTracking_log( $localDebugTrailLevel,  'START' );
     $tt_start = $this->pObj->tt_prevEndTime;
 
       // Execute the query
@@ -825,9 +825,8 @@ class tx_browser_pi1_sql_functions
       // DRS - Development Reporting System
       
       // Log the time
-    $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log( $debugTrailLevel, 'STOP' );
-    $this->pObj->timeTracking_prompt( $debugTrailLevel, $query );
+    $this->pObj->timeTracking_log( $localDebugTrailLevel, 'STOP' );
+    $this->pObj->timeTracking_prompt( $localDebugTrailLevel, $query );
 
       // RESET DRS performance
     if( $this->pObj->b_drs_warn )
@@ -844,8 +843,7 @@ class tx_browser_pi1_sql_functions
       // Error management
     if( $error )
     {
-      $debugTrailLevel = 2;
-      $arr_return = $this->prompt_error( $query, $error, $debugTrailLevel );
+      $arr_return = $this->prompt_error( $query, $error, $localDebugTrailLevel );
     }
       // Error management
 

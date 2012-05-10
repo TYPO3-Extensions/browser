@@ -939,9 +939,10 @@ class tx_browser_pi1_viewlist
               );
 
       // Execute
-    $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
-                      'Don\'t use the query in a localised context.';
-    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, __METHOD__, __LINE__ );
+    $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
+                        'Don\'t use the query in a localised context.';
+    $debugTrailLevel  = 1;
+    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
       // Execute
 
       // Error management
@@ -1106,9 +1107,10 @@ class tx_browser_pi1_viewlist
 $this->pObj->dev_var_dump( $query );
 
       // Execute
-    $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
-                      'Don\'t use the query in a localised context.';
-    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, __METHOD__, __LINE__ );
+    $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
+                        'Don\'t use the query in a localised context.';
+    $debugTrailLevel  = 1;
+    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
       // Execute
 
       // Error management
@@ -1226,9 +1228,10 @@ $this->pObj->dev_var_dump( $allIds );
       // SQL query
 var_dump( __METHOD__, __LINE__, $query );
       // Execute
-    $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
-                      'Don\'t use the query in a localised context.';
-    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, __METHOD__, __LINE__ );
+    $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
+                        'Don\'t use the query in a localised context.';
+    $debugTrailLevel  = 1;
+    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
     //$arr_return['data']['res'] = $res;
       // Execute
 
