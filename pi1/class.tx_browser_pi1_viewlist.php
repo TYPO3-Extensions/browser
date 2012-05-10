@@ -946,8 +946,8 @@ $this->pObj->dev_var_dump( $query );
     $res = $arr_return['data']['res'];
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
-      $arr_return['data']['idsWiCurrTranslation'][$tableTpf] = $row[];
-      $arr_return['data']['idsOfTranslationRows'][$tableUid] = $row[];
+      $arr_return['data']['idsWiCurrTranslation'][] = $row[$tableTpf];
+      $arr_return['data']['idsOfTranslationRows'][] = $row[$tableUid];
     }
 $this->pObj->dev_var_dump( $arr_return );
     
