@@ -779,18 +779,18 @@ class tx_browser_pi1_viewlist
     {
       return $arr_return;
     }
-    $idsOfHitsWiCurrTranslation   = $arr_return['data']['idsWiCurrTranslation'];
-    $idsOfTranslationRows         = $arr_return['data']['idsOfTranslationRows'];
+    $idsWiCurrTranslation = $arr_return['data']['idsWiCurrTranslation'];
+    $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
 
       // Get ids of records of default language, which match the rules but haven't any translation
-    $arr_return                   = $this->rows_idsOfHitsWoCurrTranslation( $idsOfHitsWiCurrTranslation );
+    $arr_return                   = $this->rows_idsOfHitsWoCurrTranslation( $idsWiCurrTranslation );
     if( $arr_return['error']['status'] ) 
     {
       return $arr_return;
     }
     $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
     
-    $allIds = ( array ) $idsOfHitsWiCurrTranslation +
+    $allIds = ( array ) $idsWiCurrTranslation +
               ( array ) $idsOfTranslationRows       + 
               ( array ) $idsOfHitsWoCurrTranslation;
     
@@ -960,13 +960,13 @@ class tx_browser_pi1_viewlist
   /**
    * rows_idsOfHitsWoCurrTranslation( ): Building the SQL query, returns the SQL result.
    *
-   * @param     string  $idsOfHitsWiCurrTranslation : ...
+   * @param     string  $idsWiCurrTranslation : ...
    * @return	array   $arr_return                 : Contains the SQL res or an error message 
    * @version 3.9.13
    * @since   3.9.13
    * @todo    120506, dwildt: empty limit
    */
-  private function rows_idsOfHitsWoCurrTranslation( $idsOfHitsWiCurrTranslation )
+  private function rows_idsOfHitsWoCurrTranslation( $idsWiCurrTranslation )
   {
     $arr_return = array( );
     
@@ -989,7 +989,7 @@ class tx_browser_pi1_viewlist
     $table = $this->pObj->localTable;
 
     $labelSysLanguageId = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
-    $idList = implode( ',', ( array ) $idsOfHitsWiCurrTranslation );
+    $idList = implode( ',', ( array ) $idsWiCurrTranslation );
 
     
       // RETURN : table is not localised
@@ -1071,7 +1071,7 @@ class tx_browser_pi1_viewlist
     }
     
     list( $start, $amount ) = explode( ',', $limit );
-    $amount = $amount - count ( $idsOfHitsWiCurrTranslation );
+    $amount = $amount - count ( $idsWiCurrTranslation );
     $limit  = $start . "," . $amount;
 
       // #9917: Selecting a random sample from a set of rows
