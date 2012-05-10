@@ -388,13 +388,10 @@ class tx_browser_pi1_sql_auto_3x
       // Loop through all used tables
 
       // Build the SELECT statement
-    if( is_array( $arr_localSelect ) )
+    $str_localSelect = implode( ', ', ( array ) $arr_localSelect );
+    if( $str_localSelect )
     {
-      $str_localSelect = implode( ', ', $arr_localSelect );
-      if( $str_localSelect )
-      {
-        $select = $select . ', ' . $str_localSelect;
-      }
+      $select = $select . ', ' . $str_localSelect;
     }
       // Build the SELECT statement
       // Add localisation fields

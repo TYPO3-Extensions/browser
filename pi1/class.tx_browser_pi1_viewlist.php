@@ -1140,12 +1140,37 @@ $this->pObj->dev_var_dump( $allIds );
     $idList = implode( ',', ( array ) $allIds );
 
       // SQL query array
-    $select   = $this->pObj->objSqlInit->statements['listView']['select'];
+    $select = $this->pObj->objSqlInit->statements['listView']['select'];
 
-    $select = $select . ",
-          tx_org_news.sys_language_uid AS `tx_org_news.sys_language_uid`, 
-          tx_org_news.l10n_parent AS `tx_org_news.l10n_parent`
-      ";
+    $select = $this->sql_selectLocalised( $select );
+      // SWITCH $int_localisation_mode
+    switch( $this->pObj->objLocalise->int_localisation_mode )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+        if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
+        {
+          $prompt = 'Any id of translated row isn\'t needed.';
+          t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+          // RETURN : nothing to do
+        return $arr_return;
+        break;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+          // Follow the workflow
+        break;
+      default:
+          // DIE
+        $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
+        break;
+    }
+      // SWITCH $int_localisation_mode
+
+
+//    $select = $select . ",
+//          tx_org_news.sys_language_uid AS `tx_org_news.sys_language_uid`, 
+//          tx_org_news.l10n_parent AS `tx_org_news.l10n_parent`
+//      ";
 //$this->pObj->dev_var_dump( $select );
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
@@ -1227,6 +1252,85 @@ var_dump( __METHOD__, __LINE__, $query );
       // Execute
 
     return $arr_return;
+
+  }
+
+
+
+  /**
+   * sql_selectLocalised(  )
+   *
+   * @param     string  $select     : Current select without SELECT
+   * @return	array   $arr_return : ...
+   * @version 3.9.13
+   * @since   3.9.12
+   * @todo    120506, dwildt: empty limit, filterIsSelected
+   */
+  private function sql_selectLocalised( $select )
+  {
+      // SWITCH $int_localisation_mode
+    switch( $this->pObj->objLocalise->int_localisation_mode )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+        if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
+        {
+          $prompt = 'SELECT doens\'t need to be localised.';
+          t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+          // RETURN : nothing to do
+        return $select;
+        break;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+          // Follow the workflow
+        break;
+      default:
+          // DIE
+        $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
+        break;
+    }
+      // SWITCH $int_localisation_mode
+
+      // Get array with localised parts
+    $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
+
+      // Add the localised part with aliases to the current SELECT statement
+    $selectLocalisedPart = implode( ', ', ( array ) $arr_result['wiAlias'] );
+    if( $selectLocalisedPart )
+    {
+      $select = $select . ', ' . $selectLocalisedPart;
+      if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
+      {
+        $prompt = 'SELECT got the part for localising.';
+        t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+    }
+      // Add the localised part with aliases to the current SELECT statement
+    
+      // Check array for non unique elements
+    $testArray = explode( ',', $select );
+    $this->pObj->objZz->zz_devPromptArrayNonUnique( $testArray, __METHOD__, __LINE__ );
+    
+
+      // Get all added table.fields
+    // @todo
+    $arr_addedTableFields = array( );
+    if( is_array( $arr_result['addedFields'] ) )
+    {
+      $arr_addedTableFields = array_merge
+                              (
+                                ( array ) $arr_addedTableFields,
+                                $arr_result['addedFields']
+                              );
+    }
+
+//    $select = $select . ",
+//          tx_org_news.sys_language_uid AS `tx_org_news.sys_language_uid`, 
+//          tx_org_news.l10n_parent AS `tx_org_news.l10n_parent`
+//      ";
+$this->pObj->dev_var_dump( $select );
+
+    return $select;
 
   }
 

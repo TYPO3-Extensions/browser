@@ -28,7 +28,7 @@
  * @author      Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package     TYPO3
  * @subpackage  browser
- * @version     3.9.8
+ * @version     3.9.13
  * @since       1.0.0
  */
 
@@ -2719,14 +2719,6 @@
 
 
 
-
-
-
-
-
-
-
-
   /***********************************************
     *
     * UTF-8
@@ -2735,14 +2727,14 @@
 
 
 
-    /**
- * Checks the TYPO3 utf-8 configuration.
- *
- *                      $GLOBALS[TSFE]->metaCharset, $GLOBALS[TSFE]->renderCharset
- *                      Result can be overriden by $conf['navigation.']['indexBrowser.']['charset']
- *
- * @return	boolean		TRUE, if one of the following variables has the value utf-8: $TYPO3_CONF_VARS[BE][forceCharset]
- */
+ /**
+  * Checks the TYPO3 utf-8 configuration.
+  *
+  *                      $GLOBALS[TSFE]->metaCharset, $GLOBALS[TSFE]->renderCharset
+  *                      Result can be overriden by $conf['navigation.']['indexBrowser.']['charset']
+  *
+  * @return	boolean		TRUE, if one of the following variables has the value utf-8: $TYPO3_CONF_VARS[BE][forceCharset]
+  */
   function b_TYPO3_utf8()
   {
     global $TYPO3_CONF_VARS;
@@ -2872,7 +2864,63 @@
 
 
 
+
+  /***********************************************
+    *
+    * Arrays
+    *
+    **********************************************/
+
+
+
+ /**
+  * zz_devPromptArrayNonUnique( ) : Checks whether values of an array are unique or not.
+  *                                 If not, method will prompts to devLog
+  * 
+  * @param    array     $testArray  : Array which shopuld checked
+  * @param    string    $method     : Calling method
+  * @param    string    $line       : Calling line
+  * @return   void
+  * @version  3.9.13
+  * @since    3.9.13
+  */
+  public function zz_devPromptArrayNonUnique( $testArray, $method, $line )
+  {
+      // RETURN : DRS is disabled
+    if( ! $this->pObj->b_drs_warn )
+    {
+      return;
+    }
+      // RETURN : DRS is disabled
+
+      // Get non unique elements
+    $testArrayDiff    = array_diff( $testArray, array_unique( $testArray ) );
+    
+      // RETURN : test array is unique
+    if( empty ( $testArrayDiff ) )
+    {
+      return;
+    }
+      // RETURN : test array is unique
+
+      // CSV list of non unique elements
+    $csvElementNonUnique = implode( ',', $testArrayDiff );
+    
+      // Prompt to devlog
+    $prompt = 'elements aren\'t unique: ' . $csvElementNonUnique . ' in ' . $method . ' (line ' . $line . ')';
+    t3lib_div::devlog( '[WARN/DRS] ' . $prompt, $this->pObj->extKey, 2 );
+    
+    return;
   }
+  
+
+
+
+
+
+
+
+}
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_zz.php']) {
   include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_zz.php']);
