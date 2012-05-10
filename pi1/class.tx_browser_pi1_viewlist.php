@@ -778,7 +778,6 @@ class tx_browser_pi1_viewlist
    * @return	array   $arr_return: Contains the SQL res or an error message 
    * @version 3.9.13
    * @since   3.9.12
-   * @todo    120506, dwildt: empty limit
    */
   private function rows_sqlRes( )
   {
@@ -821,7 +820,6 @@ class tx_browser_pi1_viewlist
    */
   private function rows_idsWiTranslation( )
   {
-$this->pObj->dev_var_dump( $this->conf_view['limit'] );
     $arr_return = array( );
     
       // SWITCH $int_localisation_mode
@@ -906,20 +904,8 @@ $this->pObj->dev_var_dump( $this->conf_view['limit'] );
 
     $groupBy  = null;
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
-    $limit    = $this->pObj->objSqlInit->statements['listView']['limit'];
+    $limit    = $this->conf_view['limit'];
       // SQL query array
-
-    if( empty( $limit ) )
-    {
-        // DRS
-      if( $this->pObj->b_drs_devTodo )
-      {
-        $prompt = 'Limit is empty. It will overriden with 0,20. Take care of a proper code.';
-        t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-      }
-        // DRS
-      $limit = '0,20';
-    }
 
       // #9917: Selecting a random sample from a set of rows
     if( $this->conf_view['random'] == 1 )
@@ -977,7 +963,6 @@ $this->pObj->dev_var_dump( $this->conf_view['limit'] );
    * @return	array   $arr_return                 : Contains the SQL res or an error message 
    * @version 3.9.13
    * @since   3.9.13
-   * @todo    120506, dwildt: empty limit
    */
   private function rows_idsWoTranslation( $idsWiCurrTranslation )
   {
@@ -1068,21 +1053,9 @@ $this->pObj->dev_var_dump( $this->conf_view['limit'] );
 
     $groupBy  = null;
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
-    $limit    = $this->pObj->objSqlInit->statements['listView']['limit'];
+    $limit    = $this->conf_view['limit'];
       // SQL query array
 
-    if( empty( $limit ) )
-    {
-        // DRS
-      if( $this->pObj->b_drs_devTodo )
-      {
-        $prompt = 'Limit is empty. It will overriden with 0,20. Take care of a proper code.';
-        t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-      }
-        // DRS
-      $limit = '0,20';
-    }
-    
     list( $start, $amount ) = explode( ',', $limit );
     $amount = $amount - count ( $idsWiCurrTranslation );
     $limit  = $start . "," . $amount;
@@ -1148,7 +1121,6 @@ $this->pObj->dev_var_dump( $query );
    */
   private function rows_byIds( $allIds )
   {
-$this->pObj->dev_var_dump( $allIds );
     $idList = implode( ',', ( array ) $allIds );
 
       // SQL query array
@@ -1185,20 +1157,6 @@ $this->pObj->dev_var_dump( $allIds );
 
     $groupBy  = null;
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
-//    $limit    = $this->pObj->objSqlInit->statements['listView']['limit'];
-//      // SQL query array
-//
-//    if( empty( $limit ) )
-//    {
-//        // DRS
-//      if( $this->pObj->b_drs_devTodo )
-//      {
-//        $prompt = 'Limit is empty. It will overriden with 0,20. Take care of a proper code.';
-//        t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-//      }
-//        // DRS
-//      $limit = '0,20';
-//    }
 
       // #9917: Selecting a random sample from a set of rows
     if( $this->conf_view['random'] == 1 )
@@ -1207,7 +1165,9 @@ $this->pObj->dev_var_dump( $allIds );
     }
       // Set ORDER BY to false - we like to order by PHP
     
-      // DRS
+    $limit = null;
+    
+    // DRS
     if( $this->pObj->b_drs_devTodo )
     {
       $prompt = 'UNION isn\'t supported any longer! Refer it to the release notes.';
@@ -1228,6 +1188,7 @@ $this->pObj->dev_var_dump( $allIds );
                                     );
       // SQL query
 var_dump( __METHOD__, __LINE__, $query );
+
       // Execute
     $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                         'Don\'t use the query in a localised context.';
@@ -1243,13 +1204,14 @@ var_dump( __METHOD__, __LINE__, $query );
 
 
   /**
-   * sql_selectLocalised(  )
+   * sql_selectLocalised( ) : If local table has language overlay fields or 
+   *                          is localised, fields for language controlling
+   *                          are added
    *
-   * @param     string  $select     : Current select without SELECT
-   * @return	array   $arr_return : ...
+   * @param     string  $select : Current select
+   * @return	string  $select : Select with fields for localisation
    * @version 3.9.13
    * @since   3.9.12
-   * @todo    120506, dwildt: empty limit, filterIsSelected
    */
   private function sql_selectLocalised( $select )
   {
@@ -1281,7 +1243,7 @@ var_dump( __METHOD__, __LINE__, $query );
     $table = $this->pObj->localTable;
     $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
 
-      // Add the localised part with aliases to the current SELECT statement
+      // Add the localised parts with aliases to the current SELECT statement
     $selectLocalisedPart = implode( ', ', ( array ) $arr_result['wiAlias'] );
     if( $selectLocalisedPart )
     {
@@ -1301,6 +1263,7 @@ var_dump( __METHOD__, __LINE__, $query );
 
       // Get all added table.fields
     // @todo
+$this->pObj->dev_var_dump( $arr_result['addedFields'] );
     $arr_addedTableFields = array( );
     if( is_array( $arr_result['addedFields'] ) )
     {
@@ -1311,11 +1274,26 @@ var_dump( __METHOD__, __LINE__, $query );
                               );
     }
 
-//    $select = $select . ",
-//          tx_org_news.sys_language_uid AS `tx_org_news.sys_language_uid`, 
-//          tx_org_news.l10n_parent AS `tx_org_news.l10n_parent`
-//      ";
-$this->pObj->dev_var_dump( $select );
+
+
+      ////////////////////////////////////////////////////////////////////
+      //
+      // Add tables to the consolidation array
+      
+      // LOOP through all new table.fields
+//    foreach( ( array ) $arr_result['addedFields'] as $tableField )
+//    {
+//      list( $table, $field ) = explode( '.', $tableField );
+//      if( ! in_array( $field, $this->pObj->arr_realTables_arrFields[$table] ) )
+//      {
+//          // Add every new table.field to the global array arr_realTables_arrFields
+//        $this->pObj->arr_realTables_arrFields[$table][] = $field;
+//          // Add every new table.field to the global array consolidate
+//        $this->pObj->arrConsolidate['addedTableFields'][] = $tableField;
+//      }
+//    }
+      // LOOP through all new table.fields
+      // Add tables to the consolidation array
 
     return $select;
 
