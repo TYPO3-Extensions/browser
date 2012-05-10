@@ -1137,6 +1137,7 @@ $this->pObj->dev_var_dump( $query );
   private function rows_byIds( $allIds )
   {
 $this->pObj->dev_var_dump( $allIds );
+    $idList = implode( ',', ( array ) $allIds );
 
       // SQL query array
     $select   = $this->pObj->objSqlInit->statements['listView']['select'];
@@ -1147,39 +1148,43 @@ $this->pObj->dev_var_dump( $allIds );
     {
       $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
     }
+    if( $idList )
+    {
+      $where  = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $idList . ")";    
+    }
 
-  // DRS
-if( $this->pObj->b_drs_devTodo )
-{
-  $prompt = '$this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL';
-  t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-}
-  // DRS
-if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
-{
-  if( $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL )
-  {
-    $uidList  = $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL;
-    $where    = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $uidList . ")";
-  }
-}
+//  // DRS
+//if( $this->pObj->b_drs_devTodo )
+//{
+//  $prompt = '$this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL';
+//  t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+//}
+//  // DRS
+//if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
+//{
+//  if( $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL )
+//  {
+//    $uidList  = $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL;
+//    $where    = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $idList . ")";
+//  }
+//}
 
     $groupBy  = null;
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
-    $limit    = $this->pObj->objSqlInit->statements['listView']['limit'];
-      // SQL query array
-
-    if( empty( $limit ) )
-    {
-        // DRS
-      if( $this->pObj->b_drs_devTodo )
-      {
-        $prompt = 'Limit is empty. It will overriden with 0,20. Take care of a proper code.';
-        t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-      }
-        // DRS
-      $limit = '0,20';
-    }
+//    $limit    = $this->pObj->objSqlInit->statements['listView']['limit'];
+//      // SQL query array
+//
+//    if( empty( $limit ) )
+//    {
+//        // DRS
+//      if( $this->pObj->b_drs_devTodo )
+//      {
+//        $prompt = 'Limit is empty. It will overriden with 0,20. Take care of a proper code.';
+//        t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+//      }
+//        // DRS
+//      $limit = '0,20';
+//    }
 
       // #9917: Selecting a random sample from a set of rows
     if( $this->conf_view['random'] == 1 )
