@@ -1143,35 +1143,7 @@ $this->pObj->dev_var_dump( $allIds );
     $select = $this->pObj->objSqlInit->statements['listView']['select'];
 
     $select = $this->sql_selectLocalised( $select );
-      // SWITCH $int_localisation_mode
-    switch( $this->pObj->objLocalise->int_localisation_mode )
-    {
-      case( PI1_DEFAULT_LANGUAGE ):
-      case( PI1_DEFAULT_LANGUAGE_ONLY ):
-        if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
-        {
-          $prompt = 'Any id of translated row isn\'t needed.';
-          t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-          // RETURN : nothing to do
-        return $arr_return;
-        break;
-      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
-          // Follow the workflow
-        break;
-      default:
-          // DIE
-        $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
-        break;
-    }
-      // SWITCH $int_localisation_mode
 
-
-//    $select = $select . ",
-//          tx_org_news.sys_language_uid AS `tx_org_news.sys_language_uid`, 
-//          tx_org_news.l10n_parent AS `tx_org_news.l10n_parent`
-//      ";
-//$this->pObj->dev_var_dump( $select );
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
     if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
