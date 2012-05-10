@@ -821,6 +821,7 @@ class tx_browser_pi1_viewlist
    */
   private function rows_idsWiTranslation( )
   {
+$this->pObj->dev_var_dump( $this->conf_view['limit'] );
     $arr_return = array( );
     
       // SWITCH $int_localisation_mode
