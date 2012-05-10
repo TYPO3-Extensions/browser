@@ -794,7 +794,7 @@ class tx_browser_pi1_viewlist
               $idsOfTranslationRows       + 
               $idsOfHitsWoCurrTranslation;
     
-    $arr_return = rows_byIds( $allIds );
+    $arr_return = $this->rows_byIds( $allIds );
 
     return $arr_return;
   }
