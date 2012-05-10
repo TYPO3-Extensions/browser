@@ -790,7 +790,7 @@ $this->pObj->dev_var_dump( $arr_return );
       return $arr_return;
     }
     $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
-$this->pObj->dev_var_dump( $arr_return );
+$this->pObj->dev_var_dump( $arr_return, $idsWiCurrTranslation, $idsOfTranslationRows, $idsOfHitsWoCurrTranslation );
     
     $allIds = ( array ) $idsWiCurrTranslation +
               ( array ) $idsOfTranslationRows + 
