@@ -1141,6 +1141,11 @@ $this->pObj->dev_var_dump( $allIds );
 
       // SQL query array
     $select   = $this->pObj->objSqlInit->statements['listView']['select'];
+
+    $select = $select . ",
+          tx_org_news.sys_language_uid AS `tx_org_news.sys_language_uid`, 
+          tx_org_news.l10n_parent AS `tx_org_news.l10n_parent`
+      ";
 //$this->pObj->dev_var_dump( $select );
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
