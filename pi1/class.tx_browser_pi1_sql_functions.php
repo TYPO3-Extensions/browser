@@ -698,14 +698,6 @@ class tx_browser_pi1_sql_functions
     }
       // RETURN : query should prompt only
 
-      // DRS
-    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
       // Enable DRS performance
     if( $this->pObj->b_drs_warn )
     {
@@ -715,7 +707,7 @@ class tx_browser_pi1_sql_functions
       // Enable DRS performance
 
       // Log the time
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'SQL execute START' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'START' );
     $tt_start = $this->pObj->tt_prevEndTime;
 
       // Execute query
@@ -741,7 +733,7 @@ class tx_browser_pi1_sql_functions
       // DRS - Development Reporting System
       
       // Log the time
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'SQL execute STOP' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'STOP' );
     $this->pObj->timeTracking_prompt( $query );
 
       // RESET DRS performance
