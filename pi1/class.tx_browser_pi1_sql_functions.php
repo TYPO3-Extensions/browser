@@ -96,7 +96,7 @@ class tx_browser_pi1_sql_functions
     // [String] SQL query
   var $query = null;
     // [Boolean]  For development only: If it is true, SQL queries will prompted
-    //            in the frontend but not executed.
+    //            in the frontend but will not executed.
   var $dev_sqlPromptsOnly = false;
 
     // [Array]      Array tableFields for uid and pid of the localTable
@@ -675,6 +675,8 @@ class tx_browser_pi1_sql_functions
  */
   public function exec_SELECTquery( $select, $from, $where, $groupBy, $orderBy, $limit )
   {
+    $promptOptimise = 'Sorry, no help!';
+    
     if( $this->dev_sqlPromptsOnly )
     {
         // Get query
@@ -693,18 +695,75 @@ class tx_browser_pi1_sql_functions
       return;
     }
 
-      // Execute query
-    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
+      // DRS
+    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
 
-    return $res;
+      // Enable DRS performance
+    if( $this->pObj->b_drs_warn )
+    {
+      $b_drs_performBak           = $this->pObj->b_drs_perform;
+      $this->pObj->b_drs_perform  = true;
+    }
+      // Enable DRS performance
+
+      // Log the time
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'SQL query list view - START' );
+    $tt_start = $this->pObj->tt_prevEndTime;
+
+      // Execute query
+    $res   = $GLOBALS['TYPO3_DB']->exec_SELECTquery
+            (
+              $select,
+              $from,
+              $where,
+              $groupBy,
+              $orderBy,
+              $limit
+            );
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+      // Execute query
+
+      // DRS - Development Reporting System
+    if( $this->pObj->b_drs_sql )
+    {
+      t3lib_div::devlog( '[OK/SQL] ' . $query,  $this->pObj->extKey, -1 );
+      t3lib_div::devlog( '[HELP/SQL] Be aware of the multi-byte notation, if you want to use the query ' .
+                          'in your SQL shell or in phpMyAdmin.', $this->pObj->extKey, 1 );
+    }
+      // DRS - Development Reporting System
+      
+      // Log the time
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'SQL query list view - STOP' );
+    $this->pObj->timeTracking_prompt( $query );
+
+      // RESET DRS performance
+    if( $this->pObj->b_drs_warn )
+    {
+      $this->pObj->b_drs_perform = $b_drs_performBak;
+    }
+    $tt_end = $this->pObj->tt_prevEndTime;
+
+      // DRS - Performance
+    $iMilliseconds  = $tt_end - $tt_start;
+    $this->prompt_performance( $iMilliseconds, $promptOptimise );
+      // DRS - Performance
+
+      // Error management
+    if( $error )
+    {
+        // Free SQL result
+      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+      $arr_return = $this->prompt_error( $query, $error );
+    }
+      // Error management
+
+    $arr_return['data']['res'] = $res;
+    return $arr_return;
   }
 
 

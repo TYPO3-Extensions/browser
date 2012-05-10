@@ -811,50 +811,7 @@ class tx_browser_pi1_viewlist
   private function rows_idsOfHitsWiCurrTranslation( )
   {
     $arr_return = array( );
-      // Get ids of records, which match the rules and have a translation for the current language
-//    $arr_return                   = rows_idsOfHitsWiCurrTranslation( );
-//    $idsOfHitsWiCurrTranslation   = $arr_return['data']['idsWiCurrTranslation'];
-//    $idsOfTranslationRows         = $arr_return['data']['idsOfTranslationRows'];
 
-    return $arr_return;
-  }
-
-
-
-  /**
-   * rows_idsOfHitsWoCurrTranslation( ): Building the SQL query, returns the SQL result.
-   *
-   * @param     string  $idsOfHitsWiCurrTranslation : ...
-   * @return	array   $arr_return                 : Contains the SQL res or an error message 
-   * @version 3.9.13
-   * @since   3.9.13
-   * @todo    120506, dwildt: empty limit
-   */
-  private function rows_idsOfHitsWoCurrTranslation( $idsOfHitsWiCurrTranslation )
-  {
-    $arr_return = array( );
-      // Get ids of records of default language, which match the rules but haven't any translation
-//    $arr_return                   = rows_idsOfHitsWiCurrTranslation( $idsOfHitsWiCurrTranslation );
-//    $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
-    
-    return $arr_return;
-
-  }
-
-
-
-  /**
-   * rows_byIds( ): Building the SQL query, returns the SQL result.
-   *
-   * @param     string  $allIds     : ...
-   * @return	array   $arr_return : Contains the SQL res or an error message 
-   * @version 3.9.13
-   * @since   3.9.12
-   * @todo    120506, dwildt: empty limit, filterIsSelected
-   */
-  private function rows_byIds( $allIds )
-  {
-    $conf_view = $this->conf_view;
 
       // SQL query array
     $select   = $this->pObj->objSqlInit->statements['listView']['select'];
@@ -900,7 +857,133 @@ if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
     }
 
       // #9917: Selecting a random sample from a set of rows
-    if( $conf_view['random'] == 1 )
+    if( $this->conf_view['random'] == 1 )
+    {
+      $orderBy = 'rand( )';
+    }
+      // Set ORDER BY to false - we like to order by PHP
+    
+      // DRS
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'UNION isn\'t supported any longer! Refer it to the release notes.';
+      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+    }
+      // DRS
+
+      // SQL query
+    $query = $GLOBALS['TYPO3_DB']->SELECTquery
+                                    (
+                                      $select,
+                                      $from,
+                                      $where,
+                                      $groupBy,
+                                      $orderBy,
+                                      $limit,
+                                      $uidIndexField=""
+                                    );
+      // SQL query
+
+      // Execute
+    $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
+                      'Don\'t use the query in a localised context.';
+    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise );
+    //$arr_return['data']['res'] = $res;
+      // Execute
+
+    return $arr_return;
+
+    
+
+    // Get ids of records, which match the rules and have a translation for the current language
+//    $arr_return                   = rows_idsOfHitsWiCurrTranslation( );
+//    $idsOfHitsWiCurrTranslation   = $arr_return['data']['idsWiCurrTranslation'];
+//    $idsOfTranslationRows         = $arr_return['data']['idsOfTranslationRows'];
+
+    return $arr_return;
+  }
+
+
+
+  /**
+   * rows_idsOfHitsWoCurrTranslation( ): Building the SQL query, returns the SQL result.
+   *
+   * @param     string  $idsOfHitsWiCurrTranslation : ...
+   * @return	array   $arr_return                 : Contains the SQL res or an error message 
+   * @version 3.9.13
+   * @since   3.9.13
+   * @todo    120506, dwildt: empty limit
+   */
+  private function rows_idsOfHitsWoCurrTranslation( $idsOfHitsWiCurrTranslation )
+  {
+    $arr_return = array( );
+      // Get ids of records of default language, which match the rules but haven't any translation
+//    $arr_return                   = rows_idsOfHitsWiCurrTranslation( $idsOfHitsWiCurrTranslation );
+//    $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+    
+    return $arr_return;
+
+  }
+
+
+
+  /**
+   * rows_byIds( ): Building the SQL query, returns the SQL result.
+   *
+   * @param     string  $allIds     : ...
+   * @return	array   $arr_return : Contains the SQL res or an error message 
+   * @version 3.9.13
+   * @since   3.9.12
+   * @todo    120506, dwildt: empty limit, filterIsSelected
+   */
+  private function rows_byIds( $allIds )
+  {
+
+      // SQL query array
+    $select   = $this->pObj->objSqlInit->statements['listView']['select'];
+//$this->pObj->dev_var_dump( $select );
+    $from     = $this->pObj->objSqlInit->statements['listView']['from'];
+    $where    = $this->pObj->objSqlInit->statements['listView']['where'];
+    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
+    {
+      $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
+    }
+
+  // DRS
+if( $this->pObj->b_drs_devTodo )
+{
+  $prompt = '$this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL';
+  t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+}
+  // DRS
+if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
+{
+  if( $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL )
+  {
+    $uidList  = $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL;
+    $where    = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $uidList . ")";
+  }
+}
+
+    $groupBy  = null;
+    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
+    $limit    = $this->pObj->objSqlInit->statements['listView']['limit'];
+      // SQL query array
+
+    if( empty( $limit ) )
+    {
+        // DRS
+      if( $this->pObj->b_drs_devTodo )
+      {
+        $prompt = 'Limit is empty. It will overriden with 0,20. Take care of a proper code.';
+        t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+      }
+        // DRS
+      $limit = '0,20';
+    }
+
+      // #9917: Selecting a random sample from a set of rows
+    if( $this->conf_view['random'] == 1 )
     {
       $orderBy = 'rand( )';
     }

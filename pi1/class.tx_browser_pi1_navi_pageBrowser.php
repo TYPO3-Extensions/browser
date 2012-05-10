@@ -319,59 +319,23 @@ class tx_browser_pi1_navi_pageBrowser
     $orderBy  = null;
     $limit    = null;
 
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-      // Execute query
-//    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-//              (
-//                $select,
-//                $from,
-//                $where,
-//                $groupBy,
-//                $orderBy,
-//                $limit
-//              );
-    $res = $this->pObj->objSqlFun->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
+      // Execute the query
+    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
+                  (
+                    $select,
+                    $from,
+                    $where,
+                    $groupBy,
+                    $orderBy,
+                    $limit
+                  );
 
-      // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
-    {
-        // Free SQL result
-      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-        // Reset SQL charset
-      $this->sqlCharsetSet( $currSqlCharset );
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
-      return $arr_return;
-    }
-      // Error management
+//      // Error management
+//    if( $arr_return['error']['status'] )
+//    {
+//      $this->sqlCharsetSet( $currSqlCharset );
+//    }
 
-      // DRS
-    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-      // Return SQL result
-    $arr_return['data']['res'] = $res;
     return $arr_return;
   }
 

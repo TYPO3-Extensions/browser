@@ -1425,58 +1425,31 @@ class tx_browser_pi1_navi_indexBrowser
     $tableField     = $this->indexBrowserTableField;
     list( $table )  = explode( '.', $tableField );
 
+      // Query for all filter items
     $select = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
     $from   = $this->sqlStatement_from( $table );
     $where  = $this->sqlStatement_where( $table, $strFindInSet );
     $groupBy  = "LEFT ( " . $tableField . ", 1 )";
     $orderBy  = "LEFT ( " . $tableField . ", 1 )";
     $limit    = null;
-      // Query for all filter items
 
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-      // Execute query
-    $res = $this->pObj->objSqlFun->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
+      // Execute the query
+    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
+                  (
+                    $select,
+                    $from,
+                    $where,
+                    $groupBy,
+                    $orderBy,
+                    $limit
+                  );
 
       // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
+    if( $arr_return['error']['status'] )
     {
-        // Free SQL result
-      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-        // Reset SQL charset
       $this->sqlCharsetSet( $currSqlCharset );
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
-      return $arr_return;
     }
-      // Error management
 
-      // DRS
-    if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-      // Return SQL result
-    $arr_return['data']['res'] = $res;
     return $arr_return;
   }
 
@@ -1753,51 +1726,23 @@ class tx_browser_pi1_navi_indexBrowser
     $orderBy      = "LEFT ( " . $tableField . ", " . $length . " )";
     $limit        = null;
 
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-
-      // Execute query
-    $res = $this->pObj->objSqlFun->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
+      // Execute the query
+    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
+                  (
+                    $select,
+                    $from,
+                    $where,
+                    $groupBy,
+                    $orderBy,
+                    $limit
+                  );
 
       // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
+    if( $arr_return['error']['status'] )
     {
-        // Free SQL result
-      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-        // Reset SQL charset
       $this->sqlCharsetSet( $currSqlCharset );
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
-      return $arr_return;
     }
-      // Error management
 
-      // DRS
-    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-      // Return SQL result
-    $arr_return['data']['res'] = $res;
     return $arr_return;
   }
 
@@ -2102,52 +2047,23 @@ class tx_browser_pi1_navi_indexBrowser
     $limit    = null;
       // Query for all filter items
 
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-//    var_dump( __METHOD__, __LINE__, $query );
-
-      // Execute query
-    $res = $this->pObj->objSqlFun->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
+      // Execute the query
+    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
+                  (
+                    $select,
+                    $from,
+                    $where,
+                    $groupBy,
+                    $orderBy,
+                    $limit
+                  );
 
       // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
+    if( $arr_return['error']['status'] )
     {
-        // Free SQL result
-      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-        // Reset SQL charset
       $this->sqlCharsetSet( $currSqlCharset );
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
-      return $arr_return;
     }
-      // Error management
 
-      // DRS
-    if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-      // Return SQL result
-    $arr_return['data']['res'] = $res;
     return $arr_return;
   }
 
@@ -2191,50 +2107,25 @@ class tx_browser_pi1_navi_indexBrowser
       // Reset localisation mode to current language mode
     $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
 
-    // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-
-//    var_dump( __METHOD__, __LINE__, $query );
-      // Execute query
-    $res = $this->pObj->objSqlFun->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
+      // Execute the query
+    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
+                  (
+                    $select,
+                    $from,
+                    $where,
+                    $groupBy,
+                    $orderBy,
+                    $limit
+                  );
 
       // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
+    if( $arr_return['error']['status'] )
     {
-        // Free SQL result
-      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-        // Reset SQL charset
       $this->sqlCharsetSet( $currSqlCharset );
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
       return $arr_return;
     }
-      // Error management
 
-      // DRS
-    if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
+    $res =  $arr_return['data']['res'];
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
         // Get values from the SQL row
@@ -2328,51 +2219,25 @@ class tx_browser_pi1_navi_indexBrowser
     $orderBy  = $table . ".uid";
     $limit    = null;
 
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-
-//    var_dump( __METHOD__, __LINE__, $query );
-
-      // Execute query
-    $res = $this->pObj->objSqlFun->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
+      // Execute the query
+    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
+                  (
+                    $select,
+                    $from,
+                    $where,
+                    $groupBy,
+                    $orderBy,
+                    $limit
+                  );
 
       // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
+    if( $arr_return['error']['status'] )
     {
-        // Free SQL result
-      $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-        // Reset SQL charset
       $this->sqlCharsetSet( $currSqlCharset );
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
       return $arr_return;
     }
-      // Error management
 
-      // DRS
-    if( $this->pObj->b_drs_localisation || $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/LL+NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
+    $res =  $arr_return['data']['res'];
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
         // Get values from the SQL row

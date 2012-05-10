@@ -1973,54 +1973,27 @@ class tx_browser_pi1_filter_4x {
 
       // Get query
     $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
       // Get query
       // Execute query
-//    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-//                                    (
-//                                      $select,
-//                                      $from,
-//                                      $where,
-//                                      $groupBy,
-//                                      $orderBy,
-//                                      $limit
-//                                    );
-    $res = $this->pObj->objSqlFun->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
+    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
+                  (
+                    $select,
+                    $from,
+                    $where,
+                    $groupBy,
+                    $orderBy,
+                    $limit
+                  );
       // Execute query
 
-      // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
-    {
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
-      return $arr_return;
-    }
-      // Error management
-
-      // DRS
-    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-    $arr_return['data']['res'] = $res;
     return $arr_return;
   }
 
@@ -2073,44 +2046,17 @@ class tx_browser_pi1_filter_4x {
                                     );
       // Get query
       // Execute query
-//    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-//                                    (
-//                                      $select,
-//                                      $from,
-//                                      $where,
-//                                      $groupBy,
-//                                      $orderBy,
-//                                      $limit
-//                                    );
-    $res = $this->pObj->objSqlFun->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
+    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
+                  (
+                    $select,
+                    $from,
+                    $where,
+                    $groupBy,
+                    $orderBy,
+                    $limit
+                  );
       // Execute query
 
-      // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
-    {
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
-      return $arr_return;
-    }
-      // Error management
-
-      // DRS
-    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-    $arr_return['data']['res'] = $res;
     return $arr_return;
   }
 
@@ -2153,44 +2099,17 @@ class tx_browser_pi1_filter_4x {
                                     );
       // Get query
       // Execute query
-//    $res    = $GLOBALS['TYPO3_DB']->exec_SELECTquery
-//                                    (
-//                                      $select,
-//                                      $from,
-//                                      $where,
-//                                      $groupBy,
-//                                      $orderBy,
-//                                      $limit
-//                                    );
-    $res = $this->pObj->objSqlFun->exec_SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
+    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
+                  (
+                    $select,
+                    $from,
+                    $where,
+                    $groupBy,
+                    $orderBy,
+                    $limit
+                  );
       // Execute query
 
-      // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
-    {
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
-      return $arr_return;
-    }
-      // Error management
-
-      // DRS
-    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/FILTER+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-    $arr_return['data']['res'] = $res;
     return $arr_return;
   }
 
