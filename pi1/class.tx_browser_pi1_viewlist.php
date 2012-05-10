@@ -1259,42 +1259,32 @@ var_dump( __METHOD__, __LINE__, $query );
       // Check array for non unique elements
     $testArray = explode( ',', $select );
     $this->pObj->objZz->zz_devPromptArrayNonUnique( $testArray, __METHOD__, __LINE__ );
+        
     
 
-      // Get all added table.fields
-    // @todo
-$this->pObj->dev_var_dump( $arr_result['addedFields'] );
-    $arr_addedTableFields = array( );
-    if( is_array( $arr_result['addedFields'] ) )
-    {
-      $arr_addedTableFields = array_merge
-                              (
-                                ( array ) $arr_addedTableFields,
-                                $arr_result['addedFields']
-                              );
-    }
 
-
+$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arrConsolidate );
 
       ////////////////////////////////////////////////////////////////////
       //
       // Add tables to the consolidation array
       
       // LOOP through all new table.fields
-//    foreach( ( array ) $arr_result['addedFields'] as $tableField )
-//    {
-//      list( $table, $field ) = explode( '.', $tableField );
-//      if( ! in_array( $field, $this->pObj->arr_realTables_arrFields[$table] ) )
-//      {
-//          // Add every new table.field to the global array arr_realTables_arrFields
-//        $this->pObj->arr_realTables_arrFields[$table][] = $field;
-//          // Add every new table.field to the global array consolidate
-//        $this->pObj->arrConsolidate['addedTableFields'][] = $tableField;
-//      }
-//    }
+    foreach( ( array ) $arr_result['addedFields'] as $tableField )
+    {
+      list( $table, $field ) = explode( '.', $tableField );
+      if( ! in_array( $field, $this->pObj->arr_realTables_arrFields[$table] ) )
+      {
+          // Add every new table.field to the global array arr_realTables_arrFields
+        $this->pObj->arr_realTables_arrFields[$table][] = $field;
+          // Add every new table.field to the global array consolidate
+        $this->pObj->arrConsolidate['addedTableFields'][] = $tableField;
+      }
+    }
       // LOOP through all new table.fields
       // Add tables to the consolidation array
 
+$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arrConsolidate );
     return $select;
 
   }
