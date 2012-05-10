@@ -790,12 +790,14 @@ $this->pObj->dev_var_dump( $arr_return );
       return $arr_return;
     }
     $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+    
+    $allIds = array_merge( 
+                ( array ) $idsWiCurrTranslation,
+                ( array ) $idsOfTranslationRows,
+                ( array ) $idsOfHitsWoCurrTranslation
+              );
+    
 $this->pObj->dev_var_dump( $arr_return, $idsWiCurrTranslation, $idsOfTranslationRows, $idsOfHitsWoCurrTranslation );
-    
-    $allIds = ( array ) $idsWiCurrTranslation +
-              ( array ) $idsOfTranslationRows + 
-              ( array ) $idsOfHitsWoCurrTranslation;
-    
     $arr_return = $this->rows_byIds( $allIds );
 
     return $arr_return;
