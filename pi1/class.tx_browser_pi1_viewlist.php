@@ -863,7 +863,6 @@ class tx_browser_pi1_viewlist
       // SQL query array
     $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "', 
                           " . $tableTpf . " AS '" . $tableTpf . "'";
-//$this->pObj->dev_var_dump( $select );
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
     if ( $where )
@@ -928,8 +927,6 @@ class tx_browser_pi1_viewlist
                 $limit
               );
 
-$this->pObj->dev_var_dump( $query );
-
       // Execute
     $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                       'Don\'t use the query in a localised context.';
@@ -949,7 +946,7 @@ $this->pObj->dev_var_dump( $query );
       $arr_return['data']['idsWiCurrTranslation'][] = $row[$tableTpf];
       $arr_return['data']['idsOfTranslationRows'][] = $row[$tableUid];
     }
-$this->pObj->dev_var_dump( $arr_return );
+//$this->pObj->dev_var_dump( $arr_return );
     
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
@@ -1115,7 +1112,7 @@ $this->pObj->dev_var_dump( $query );
     {
       $arr_return['data']['idsOfHitsWoCurrTranslation'][] = $row[$tableUid];
     }
-$this->pObj->dev_var_dump( $arr_return );
+//$this->pObj->dev_var_dump( $arr_return );
     
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
@@ -1137,6 +1134,7 @@ $this->pObj->dev_var_dump( $arr_return );
    */
   private function rows_byIds( $allIds )
   {
+$this->pObj->dev_var_dump( $allIds );
 
       // SQL query array
     $select   = $this->pObj->objSqlInit->statements['listView']['select'];
