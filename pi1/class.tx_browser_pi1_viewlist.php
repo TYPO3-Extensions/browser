@@ -1279,7 +1279,6 @@ var_dump( __METHOD__, __LINE__, $query );
       // Get localtable
     $table = $this->pObj->localTable;
     $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
-$this->pObj->dev_var_dump( $arr_result );
 
       // Add the localised part with aliases to the current SELECT statement
     $selectLocalisedPart = implode( ', ', ( array ) $arr_result['wiAlias'] );
@@ -1288,7 +1287,7 @@ $this->pObj->dev_var_dump( $arr_result );
       $select = $select . ', ' . $selectLocalisedPart;
       if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
       {
-        $prompt = 'SELECT got the part for localising.';
+        $prompt = 'SELECT got the part for localising: ... ' . $selectLocalisedPart;
         t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
     }
