@@ -934,19 +934,28 @@ $this->pObj->dev_var_dump( $query );
     $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                       'Don\'t use the query in a localised context.';
     $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise );
-    //$arr_return['data']['res'] = $res;
       // Execute
 
-    return $arr_return;
+      // Error management
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
 
+      // $rows
+    $res = $arr_return['data']['res'];
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+      $arr_return['data']['idsWiCurrTranslation'][$tableTpf] = $row[];
+      $arr_return['data']['idsOfTranslationRows'][$tableUid] = $row[];
+    }
+$this->pObj->dev_var_dump( $arr_return );
     
-
-    // Get ids of records, which match the rules and have a translation for the current language
-//    $arr_return                   = rows_idsOfHitsWiCurrTranslation( );
-//    $idsOfHitsWiCurrTranslation   = $arr_return['data']['idsWiCurrTranslation'];
-//    $idsOfTranslationRows         = $arr_return['data']['idsOfTranslationRows'];
+      // Free SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
     return $arr_return;
+
   }
 
 
