@@ -451,11 +451,11 @@ class tx_browser_pi1_sql_functions
     switch( true )
     {
       case( $iMilliseconds < 500 ):
-        $prompt = 'Query for the list view needs less than a half second ' . $sMilliseconds . '.';
+        $prompt = 'Query needs less than a half second ' . $sMilliseconds . '.';
         t3lib_div::devlog( '[OK/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, -1 );
         break;
       case( $iMilliseconds >= 500 && $iMilliseconds < 5000 ):
-        $prompt = 'Query for the list view needs more than a half second ' . $sMilliseconds . '.';
+        $prompt = 'Query needs more than a half second ' . $sMilliseconds . '.';
         t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
         t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
         break;
@@ -469,7 +469,16 @@ class tx_browser_pi1_sql_functions
         t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
         break;
       case( $iMilliseconds >= 10000 ):
-        $prompt = 'Query for the list view needs more than 10 seconds ' . $sMilliseconds . '.';
+        $prompt = 'Query needs more than 10 seconds ' . $sMilliseconds . '.';
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 3 );
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 3 );
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 3 );
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 3 );
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 3 );
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 3 );
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 3 );
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 3 );
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 3 );
         t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 3 );
         t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
         break;
