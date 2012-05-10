@@ -811,33 +811,87 @@ class tx_browser_pi1_viewlist
   private function rows_idsOfHitsWiCurrTranslation( )
   {
     $arr_return = array( );
+    
+      // SWITCH $int_localisation_mode
+    switch( $this->pObj->objLocalise->int_localisation_mode )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+        if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
+        {
+          $prompt = 'Any id of translated row isn\'t needed.';
+          t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+          // RETURN : nothing to do
+        return $arr_return;
+        break;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+          // Follow the workflow
+        break;
+      default:
+          // DIE
+        $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
+        break;
+    }
+      // SWITCH $int_localisation_mode
 
+      // Get localtable
+    $table = $this->pObj->localTable;
 
+      // Label of field with the uid of the record with the default language
+    $labelOfParentUid   = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
+    $labelSysLanguageId = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+
+    
+      // RETURN : table is not localised
+    if( ( ! $labelOfParentUid ) || ( $sys_language_id ) ) 
+    {
+      if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
+      {
+        $prompt = $table . ' isn\'t localised.';
+        t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // RETURN : nothing to do
+      return $arr_return;
+    }
+      // RETURN : table is not localised
+
+    $tableUid = $table . ".uid";
+    $tableTpf = $table . "." . $labelOfParentUid;
+    
+    
       // SQL query array
-    $select   = $this->pObj->objSqlInit->statements['listView']['select'];
+    $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "', 
+                          " . $tableTpf . " AS '" . $tableTpf . "'";
 //$this->pObj->dev_var_dump( $select );
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
-    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
+    if ( $where )
     {
-      $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
+      $where = $where . " AND ";
     }
+    $where = $where . $labelSysLanguageId . " = " . intval( $this->pObj->objLocalise->lang_id ) . " ";
 
-  // DRS
-if( $this->pObj->b_drs_devTodo )
-{
-  $prompt = '$this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL';
-  t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-}
-  // DRS
-if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
-{
-  if( $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL )
-  {
-    $uidList  = $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL;
-    $where    = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $uidList . ")";
-  }
-}
+//    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
+//    {
+//      $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
+//    }
+//
+//  // DRS
+//if( $this->pObj->b_drs_devTodo )
+//{
+//  $prompt = '$this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL';
+//  t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+//}
+//  // DRS
+//if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
+//{
+//  if( $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL )
+//  {
+//    $uidList  = $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL;
+//    $where    = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $uidList . ")";
+//  }
+//}
 
     $groupBy  = null;
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
@@ -863,27 +917,6 @@ if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
     }
       // Set ORDER BY to false - we like to order by PHP
     
-      // DRS
-    if( $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'UNION isn\'t supported any longer! Refer it to the release notes.';
-      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-    }
-      // DRS
-
-      // SQL query
-    $query = $GLOBALS['TYPO3_DB']->SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit,
-                                      $uidIndexField=""
-                                    );
-      // SQL query
-
       // Execute
     $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                       'Don\'t use the query in a localised context.';
@@ -891,6 +924,7 @@ if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
     //$arr_return['data']['res'] = $res;
       // Execute
 
+$this->pObj->dev_var_dump( $arr_return['data']['query'] );
     return $arr_return;
 
     

@@ -1679,6 +1679,64 @@ class tx_browser_pi1_localisation
 
 
 
+ /**
+  * zz_promptLLdie( ): Prompts a localisation error and dies
+  *
+  * @param	string		$method : name of calling method
+  * @param	integer		$line   : line number of the call
+  * @return	void
+  * @version 3.9.13
+  * @since   3.9.13
+  */
+  public function zz_promptLLdie( $method, $line )
+  {
+    $prompt = '
+      <div style="text-align:center;">
+        <div style="border:1em solid red;padding:1em">
+          <h1>
+            Error with localisation mode
+          </h1>
+          <p>
+            The value of localisation mode isn\'t defined in the current switch.<br />
+            Value is: "' . $this->int_localisation_mode  . '"
+          </p>
+          <p>
+            Method: ' . $method . '<br />
+            Line: ' . $line . '
+          </p>
+        </div>
+        <br />
+        <div style="border:1em solid orange;padding:1em">
+          <h1>
+            What can you do?
+          </h1>
+          <ul>
+            <li>
+              Change the localisation configuration in your TypoScript in config { ... } or page.config { ... }.
+            </li>
+            <li>
+              Post this prompt at <a href="http://typo3-browser-forum.de" target="_blank">typo3-browser-forum.de</a><br />
+              Posts are welcome in English and German.
+            </li>
+            <li>
+              Mail this prompt to <a href="http://wildt.at.die-netzmacher.de" target="_blank">wildt.at.die-netzmacher.de</a><br />
+              Mails are welcome in English and German.
+            </li>
+          </ul>
+        </div>
+        <br />
+        <div style="border:1em;padding:1em">
+          <h1>
+            Browser - TYPO3 without PHP
+          </h1>
+        </div>
+      </div>
+      ';
+    die( $prompt );
+  }
+
+
+
 
 
 

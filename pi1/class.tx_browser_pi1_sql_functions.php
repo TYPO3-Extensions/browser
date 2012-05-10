@@ -784,6 +784,17 @@ class tx_browser_pi1_sql_functions
  */
   public function sql_query( $query, $promptOptimise )
   {
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+
     if( $this->dev_sqlPromptsOnly )
     {
       var_dump( $query );
@@ -838,7 +849,8 @@ class tx_browser_pi1_sql_functions
     }
       // Error management
 
-    $arr_return['data']['res'] = $res;
+    $arr_return['data']['query'] = $query;
+    $arr_return['data']['res']   = $res;
     return $arr_return;
   }
 
