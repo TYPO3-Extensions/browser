@@ -779,7 +779,6 @@ class tx_browser_pi1_viewlist
     {
       return $arr_return;
     }
-$this->pObj->dev_var_dump( $arr_return );
     $idsWiCurrTranslation = $arr_return['data']['idsWiCurrTranslation'];
     $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
 
@@ -797,7 +796,6 @@ $this->pObj->dev_var_dump( $arr_return );
                 ( array ) $idsOfHitsWoCurrTranslation
               );
     
-$this->pObj->dev_var_dump( $arr_return, $idsWiCurrTranslation, $idsOfTranslationRows, $idsOfHitsWoCurrTranslation );
     $arr_return = $this->rows_byIds( $allIds );
 
     return $arr_return;
@@ -1210,7 +1208,7 @@ if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
                                       $uidIndexField=""
                                     );
       // SQL query
-
+var_dump( __METHOD__, __LINE__, $query );
       // Execute
     $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                       'Don\'t use the query in a localised context.';
