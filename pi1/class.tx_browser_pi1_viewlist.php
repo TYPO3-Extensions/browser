@@ -844,7 +844,7 @@ class tx_browser_pi1_viewlist
 
     
       // RETURN : table is not localised
-    if( ( ! $labelOfParentUid ) || ( $sys_language_id ) ) 
+    if( ( ! $labelOfParentUid ) || ( ! $labelSysLanguageId ) ) 
     {
       if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
       {
@@ -1000,7 +1000,7 @@ $this->pObj->dev_var_dump( $arr_return );
 
     
       // RETURN : table is not localised
-    if( ( ! $labelOfParentUid ) || ( $sys_language_id ) ) 
+    if( ! $labelSysLanguageId ) 
     {
       if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
       {
