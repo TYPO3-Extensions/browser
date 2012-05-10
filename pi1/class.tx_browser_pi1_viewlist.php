@@ -779,6 +779,7 @@ class tx_browser_pi1_viewlist
     {
       return $arr_return;
     }
+$this->pObj->dev_var_dump( $arr_return );
     $idsWiCurrTranslation = $arr_return['data']['idsWiCurrTranslation'];
     $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
 
@@ -789,9 +790,10 @@ class tx_browser_pi1_viewlist
       return $arr_return;
     }
     $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+$this->pObj->dev_var_dump( $arr_return );
     
     $allIds = ( array ) $idsWiCurrTranslation +
-              ( array ) $idsOfTranslationRows       + 
+              ( array ) $idsOfTranslationRows + 
               ( array ) $idsOfHitsWoCurrTranslation;
     
     $arr_return = $this->rows_byIds( $allIds );
