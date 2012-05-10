@@ -790,7 +790,7 @@ class tx_browser_pi1_sql_functions
       // Enable DRS performance
 
       // Log the time
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'SQL query list view - START' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'START' );
     $tt_start = $this->pObj->tt_prevEndTime;
 
       // Execute the query
@@ -807,7 +807,7 @@ class tx_browser_pi1_sql_functions
       // DRS - Development Reporting System
       
       // Log the time
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'SQL query list view - STOP' );
+    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'STOP' );
     $this->pObj->timeTracking_prompt( $query );
 
       // RESET DRS performance
