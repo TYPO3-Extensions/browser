@@ -971,10 +971,6 @@ $this->pObj->dev_var_dump( $arr_return );
    */
   private function rows_idsOfHitsWoCurrTranslation( $idsOfHitsWiCurrTranslation )
   {
-      // Get ids of records of default language, which match the rules but haven't any translation
-//    $arr_return                   = rows_idsOfHitsWiCurrTranslation( $idsOfHitsWiCurrTranslation );
-//    $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
-    
     $arr_return = array( );
     
       // SWITCH $int_localisation_mode
@@ -1117,8 +1113,7 @@ $this->pObj->dev_var_dump( $query );
     $res = $arr_return['data']['res'];
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
-      $arr_return['data']['idsWiCurrTranslation'][] = $row[$tableTpf];
-      $arr_return['data']['idsOfTranslationRows'][] = $row[$tableUid];
+      $arr_return['data']['idsOfHitsWoCurrTranslation'][] = $row[$tableUid];
     }
 $this->pObj->dev_var_dump( $arr_return );
     
