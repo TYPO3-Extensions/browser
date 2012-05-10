@@ -2205,16 +2205,16 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
-  /**
- * timeTracking_log( ): Prompts a message in devLog with current run time in miliseconds
- *
- * @param	string		$method : calling method
- * @param	string		$line   : current line in calling method
- * @param	string		$prompt : The prompt for devlog.
- * @return	void
- * @version 3.9.8
- * @since   0.0.1
- */
+ /**
+  * timeTracking_log( ): Prompts a message in devLog with current run time in miliseconds
+  *
+  * @param	string		$method : calling method
+  * @param	string		$line   : current line in calling method
+  * @param	string		$prompt : The prompt for devlog.
+  * @return	void
+  * @version 3.9.8
+  * @since   0.0.1
+  */
   public function timeTracking_log( $method, $line, $prompt )
   {
       // RETURN: DRS shouldn't report performance prompts
@@ -2272,16 +2272,18 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
-  /**
- * timeTracking_prompt( ):  Method checks, wether previous prompt was a
- *                          warning or an error. If yes the given prompt will loged by devLog
- *
- * @param	string		$prompt: The prompt for devlog.
- * @return	void
- * @version 3.9.8
- * @since   3.9.8
- */
-  public function timeTracking_prompt( $prompt )
+ /**
+  * timeTracking_prompt( ):  Method checks, wether previous prompt was a
+  *                          warning or an error. If yes the given prompt will loged by devLog
+  *
+  * @param	string		$method : calling method
+  * @param	string		$line   : current line in calling method
+  * @param	string		$prompt: The prompt for devlog.
+  * @return	void
+  * @version 3.9.8
+  * @since   3.9.8
+  */
+  public function timeTracking_prompt( $method, $line, $prompt )
   {
     switch( true )
     {

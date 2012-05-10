@@ -744,7 +744,7 @@ class tx_browser_pi1_sql_functions
       
       // Log the time
     $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'STOP' );
-    $this->pObj->timeTracking_prompt( $query );
+    $this->pObj->timeTracking_prompt( __METHOD__, __LINE__, $query );
 
       // RESET DRS performance
     if( $this->pObj->b_drs_warn )
@@ -775,17 +775,20 @@ class tx_browser_pi1_sql_functions
 
 
 
-  /**
- * sql_query( ) :  Same as $GLOBALS['TYPO3_DB']->sql_query. But if
- *                 class var $dev_sqlPromptsOnly is true, SQL query
- *                 won't executed but prompted in the frontend.
- *
- * @param	string		$query  : SQL query
- * @return	array		$res    : SQL result
- * @version 3.9.12
- * @since   3.9.12
- */
-  public function sql_query( $query, $promptOptimise )
+ /**
+  * sql_query( ) :  Same as $GLOBALS['TYPO3_DB']->sql_query. But if
+  *                 class var $dev_sqlPromptsOnly is true, SQL query
+  *                 won't executed but prompted in the frontend.
+  *
+  * @param    string	$query          : SQL query
+  * @param    string	$promptOptimise : Prompt in case of a performance problem
+  * @param    string    $method         : Calling method
+  * @param    string    $line           : Calling line
+  * @return   array	$res            : SQL result
+  * @version 3.9.12
+  * @since   3.9.12
+  */
+  public function sql_query( $query, $promptOptimise, $method, $line )
   {
     if( $this->dev_sqlPromptsOnly )
     {
@@ -802,7 +805,7 @@ class tx_browser_pi1_sql_functions
       // Enable DRS performance
 
       // Log the time
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'START' );
+    $this->pObj->timeTracking_log( $method, $line,  'START' );
     $tt_start = $this->pObj->tt_prevEndTime;
 
       // Execute the query
@@ -819,8 +822,8 @@ class tx_browser_pi1_sql_functions
       // DRS - Development Reporting System
       
       // Log the time
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'STOP' );
-    $this->pObj->timeTracking_prompt( $query );
+    $this->pObj->timeTracking_log( $method, $line, 'STOP' );
+    $this->pObj->timeTracking_prompt( $method, $line, $query );
 
       // RESET DRS performance
     if( $this->pObj->b_drs_warn )

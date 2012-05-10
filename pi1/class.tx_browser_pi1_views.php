@@ -331,7 +331,7 @@ class tx_browser_pi1_views
 //
 //      // Prompt the expired time to devlog
 //    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $GLOBALS[TYPO3_DB]->sql_query( )' );
-//    $this->pObj->timeTracking_prompt( $query );
+//    $this->pObj->timeTracking_prompt( __METHOD__, __LINE__, $query );
 //if( $this->pObj->bool_accessByIP )
 //{
 //  die( $query );

@@ -774,7 +774,7 @@ class tx_browser_pi1_viewlist
   private function rows_sqlRes( )
   {
       // Get ids of records, which match the rules and have a translation for the current language
-    $arr_return                   = $this->rows_idsOfHitsWiCurrTranslation( );
+    $arr_return                   = $this->rows_idsWiTranslation( );
     if( $arr_return['error']['status'] ) 
     {
       return $arr_return;
@@ -783,7 +783,7 @@ class tx_browser_pi1_viewlist
     $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
 
       // Get ids of records of default language, which match the rules but haven't any translation
-    $arr_return                   = $this->rows_idsOfHitsWoCurrTranslation( $idsWiCurrTranslation );
+    $arr_return                   = $this->rows_idsWoTranslation( $idsWiCurrTranslation );
     if( $arr_return['error']['status'] ) 
     {
       return $arr_return;
@@ -804,13 +804,13 @@ class tx_browser_pi1_viewlist
 
 
   /**
-   * rows_idsOfHitsWiCurrTranslation( ): ....
+   * rows_idsWiTranslation( ): ....
    *
    * @return	array   $arr_return: Contains the SQL res or an error message 
    * @version 3.9.13
    * @since   3.9.13
    */
-  private function rows_idsOfHitsWiCurrTranslation( )
+  private function rows_idsWiTranslation( )
   {
     $arr_return = array( );
     
@@ -932,7 +932,7 @@ class tx_browser_pi1_viewlist
       // Execute
     $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                       'Don\'t use the query in a localised context.';
-    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise );
+    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, __METHOD__, __LINE__ );
       // Execute
 
       // Error management
@@ -960,7 +960,7 @@ class tx_browser_pi1_viewlist
 
 
   /**
-   * rows_idsOfHitsWoCurrTranslation( ): Building the SQL query, returns the SQL result.
+   * rows_idsWoTranslation( ): Building the SQL query, returns the SQL result.
    *
    * @param     string  $idsWiCurrTranslation : ...
    * @return	array   $arr_return                 : Contains the SQL res or an error message 
@@ -968,7 +968,7 @@ class tx_browser_pi1_viewlist
    * @since   3.9.13
    * @todo    120506, dwildt: empty limit
    */
-  private function rows_idsOfHitsWoCurrTranslation( $idsWiCurrTranslation )
+  private function rows_idsWoTranslation( $idsWiCurrTranslation )
   {
     $arr_return = array( );
     
@@ -1099,7 +1099,7 @@ $this->pObj->dev_var_dump( $query );
       // Execute
     $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                       'Don\'t use the query in a localised context.';
-    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise );
+    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, __METHOD__, __LINE__ );
       // Execute
 
       // Error management
@@ -1219,7 +1219,7 @@ var_dump( __METHOD__, __LINE__, $query );
       // Execute
     $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                       'Don\'t use the query in a localised context.';
-    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise );
+    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, __METHOD__, __LINE__ );
     //$arr_return['data']['res'] = $res;
       // Execute
 
