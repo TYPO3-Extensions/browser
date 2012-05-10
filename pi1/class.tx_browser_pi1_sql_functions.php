@@ -717,8 +717,8 @@ class tx_browser_pi1_sql_functions
       // Enable DRS performance
 
       // Log the time
-    $debugTrailLevel = 2;
-    $this->pObj->timeTracking_log( $debugTrailLevel, 'START' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel + 1, 'START' );
     $tt_start = $this->pObj->tt_prevEndTime;
 
       // Execute query
@@ -737,16 +737,18 @@ class tx_browser_pi1_sql_functions
       // DRS - Development Reporting System
     if( $this->pObj->b_drs_sql )
     {
-      t3lib_div::devlog( '[OK/SQL] ' . $query,  $this->pObj->extKey, -1 );
-      t3lib_div::devlog( '[HELP/SQL] Be aware of the multi-byte notation, if you want to use the query ' .
-                          'in your SQL shell or in phpMyAdmin.', $this->pObj->extKey, 1 );
+      $debugTrail = $this->pObj->drs_debugTrail( $debugTrailLevel );
+      $prompt     = $debugTrail['prompt'] . ': ' . $query;
+      t3lib_div::devlog( '[OK/SQL] ' . $prompt,  $this->pObj->extKey, -1 );
+      $prompt     = 'Be aware of the multi-byte notation, if you want to use the query ' .
+                    'in your SQL shell or in phpMyAdmin.';
+      t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
     }
       // DRS - Development Reporting System
       
       // Log the time
-    $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log( $debugTrailLevel,  'STOP' );
-    $this->pObj->timeTracking_prompt( $debugTrailLevel, $query );
+    $this->pObj->timeTracking_log( $debugTrailLevel + 1,  'STOP' );
+    $this->pObj->timeTracking_prompt( $debugTrailLevel + 1, $query );
 
       // RESET DRS performance
     if( $this->pObj->b_drs_warn )
@@ -765,8 +767,7 @@ class tx_browser_pi1_sql_functions
     {
         // Free SQL result
       $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-      $debugTrailLevel = 2;
-      $arr_return = $this->prompt_error( $query, $error, $debugTrailLevel );
+      $arr_return = $this->prompt_error( $query, $error, $debugTrailLevel + 1 );
     }
       // Error management
 
@@ -797,6 +798,7 @@ class tx_browser_pi1_sql_functions
       return;
     }
 
+    $debugTrail           = $this->pObj->drs_debugTrail( $debugTrailLevel );
     $localDebugTrailLevel = $debugTrailLevel + 1;
     
       // Enable DRS performance
@@ -818,9 +820,11 @@ class tx_browser_pi1_sql_functions
       // DRS - Development Reporting System
     if( $this->pObj->b_drs_sql )
     {
-      t3lib_div::devlog( '[OK/SQL] ' . $query,  $this->pObj->extKey, -1 );
-      t3lib_div::devlog( '[HELP/SQL] Be aware of the multi-byte notation, if you want to use the query ' .
-                          'in your SQL shell or in phpMyAdmin.', $this->pObj->extKey, 1 );
+      $prompt = $debugTrail['prompt'] . ': ' . $query;
+      t3lib_div::devlog( '[OK/SQL] ' . $prompt,  $this->pObj->extKey, -1 );
+      $prompt = 'Be aware of the multi-byte notation, if you want to use the query ' .
+                'in your SQL shell or in phpMyAdmin.';
+      t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
     }
       // DRS - Development Reporting System
       
