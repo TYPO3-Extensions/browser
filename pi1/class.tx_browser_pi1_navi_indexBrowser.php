@@ -239,7 +239,8 @@ class tx_browser_pi1_navi_indexBrowser
   public function get( $content )
   {
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
     $this->content                  = $content;
     $arr_return['data']['content']  = $content;
@@ -249,7 +250,8 @@ class tx_browser_pi1_navi_indexBrowser
     if( ! empty( $arr_return ) )
     {
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return $arr_return;
     }
       // RETURN: requirements aren't met
@@ -259,7 +261,8 @@ class tx_browser_pi1_navi_indexBrowser
     if( $arr_return['error']['status'] )
     {
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return $arr_return;
     }
       // RETURN : table is not the local table
@@ -280,7 +283,8 @@ class tx_browser_pi1_navi_indexBrowser
         // Reset $GLOBALS['TSFE']->id
       $GLOBALS['TSFE']->id = $globalTsfeId;
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return $arr_return;
     }
       // Init the tabs
@@ -292,7 +296,8 @@ class tx_browser_pi1_navi_indexBrowser
         // Reset $GLOBALS['TSFE']->id
       $GLOBALS['TSFE']->id = $globalTsfeId;
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return $arr_return;
     }
     //$arr_result['data']['content']
@@ -300,8 +305,9 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Reset $GLOBALS['TSFE']->id
     $GLOBALS['TSFE']->id = $globalTsfeId;
-        // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      // Prompt the expired time to devlog
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
     return $arr_return;
   }
 
@@ -896,7 +902,8 @@ class tx_browser_pi1_navi_indexBrowser
   private function tabs_init( )
   {
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
     $arrCsvAttributes   = array( );
 
@@ -943,7 +950,8 @@ class tx_browser_pi1_navi_indexBrowser
     if( ! ( empty ( $arr_return ) ) )
     {
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return $arr_return;
     }
       // RETURN : error prompt
@@ -955,7 +963,8 @@ class tx_browser_pi1_navi_indexBrowser
     if( ! ( empty ( $arr_return ) ) )
     {
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return $arr_return;
     }
       // RETURN : error prompt
@@ -965,7 +974,8 @@ class tx_browser_pi1_navi_indexBrowser
     $this->localisation_consolidate( );
 
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
   }
 
 

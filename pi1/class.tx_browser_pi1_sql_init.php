@@ -147,14 +147,16 @@ class tx_browser_pi1_sql_init
   public function init( )
   {
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__, 'begin' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'begin' );
 
       // Set the globals csvSelect, csvSelect, csvOrderBy, arrLocalTable
     $arr_return = $this->init_global_csv( );
     if( $arr_return['error']['status'] )
     {
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__, 'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end' );
       return $arr_return;
     }
       // Set the globals csvSelect, csvSelect, csvOrderBy
@@ -171,7 +173,8 @@ class tx_browser_pi1_sql_init
       // SQL query array
 
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
   }
 
 

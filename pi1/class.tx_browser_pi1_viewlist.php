@@ -144,14 +144,16 @@ class tx_browser_pi1_viewlist
   function main( )
   {
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
       // RETURN there isn't any list configured
     $prompt = $this->check_view( );
     if( $prompt )
     {
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return $prompt;
     }
       // RETURN there isn't any list configured
@@ -167,7 +169,8 @@ class tx_browser_pi1_viewlist
     if( $arr_return['error']['status'] )
     {
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       $content = $arr_return['error']['header'] . $arr_return['error']['prompt'];
       return $content;
     }
@@ -197,7 +200,8 @@ class tx_browser_pi1_viewlist
         if( $arr_return['error']['status'] )
         {
             // Prompt the expired time to devlog
-          $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+          $debugTrailLevel = 1;
+          $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
           $content = $arr_return['error']['header'] . $arr_return['error']['prompt'];
           return $content;
         }
@@ -223,7 +227,8 @@ class tx_browser_pi1_viewlist
     if( $arr_return['error']['status'] )
     {
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       $content = $arr_return['error']['header'] . $arr_return['error']['prompt'];
       return $content;
     }
@@ -305,7 +310,8 @@ class tx_browser_pi1_viewlist
     }
     $this->pObj->rows = $rows;
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'after $this->pObj->objCal->cal( )' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'after $this->pObj->objCal->cal( )' );
       // Extension pi5: +Browser Calendar
 
 
@@ -326,7 +332,8 @@ class tx_browser_pi1_viewlist
     $this->content = $content;
 
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
       // RETURN content
     return $this->content;
@@ -672,7 +679,8 @@ class tx_browser_pi1_viewlist
    */
   private function rows_fromSqlRes( $res )
   {
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'start' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'start' );
 
     $conf_view = $this->conf_view;
 
@@ -699,7 +707,8 @@ class tx_browser_pi1_viewlist
     $this->pObj->rows = $rows;
 
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'stop' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'stop' );
       // Building $rows
   }
 
@@ -1393,7 +1402,8 @@ $this->pObj->dev_var_dump( $select );
  */
   private function subpart_setIndexBrowser( )
   {
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'subpart_setIndexBrowser begin' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'subpart_setIndexBrowser begin' );
 
     $arr_return = $this->pObj->objNaviIndexBrowser->get( $this->content );
     if( $arr_return['error']['status'] )
@@ -1405,7 +1415,8 @@ $this->pObj->dev_var_dump( $select );
     $marker         = $this->pObj->objNaviIndexBrowser->getMarkerIndexBrowser( );
     $this->content  = $this->pObj->cObj->substituteSubpart( $this->content, $marker, $content, true);
 
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'subpart_setIndexBrowser end' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'subpart_setIndexBrowser end' );
     return;
   }
 
@@ -1421,7 +1432,8 @@ $this->pObj->dev_var_dump( $select );
  */
   private function subpart_setModeSelector( )
   {
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
       // Get the mode selector content
     $arr_return = $this->pObj->objNaviModeSelector->get( $this->content );
@@ -1462,7 +1474,8 @@ $this->pObj->dev_var_dump( $select );
                         $this->content, '###MODESELECTOR###', $modeSelector, true
                       );
 
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
     return;
   }
 
@@ -1478,7 +1491,8 @@ $this->pObj->dev_var_dump( $select );
  */
   private function subpart_setPageBrowser( )
   {
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
       // Get the page browser content
     $arr_return = $this->pObj->objNaviPageBrowser->get( $this->content );
@@ -1504,7 +1518,8 @@ $this->pObj->dev_var_dump( $select );
                       );
       // Replace markers in the current content
 
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
     return;
   }
 

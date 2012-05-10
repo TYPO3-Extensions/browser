@@ -268,7 +268,8 @@ class tx_browser_pi1_filter_4x {
   public function get( )
   {
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
       // Default return value
     $arr_return = array( );
@@ -322,7 +323,8 @@ class tx_browser_pi1_filter_4x {
         $arr_result = $this->get_filter( );
         if( $arr_result['error']['status'] )
         {
-          $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+          $debugTrailLevel = 1;
+          $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
           return $arr_result;
         }
         $arr_return['data']['filter'] = ( array ) $arr_return['data']['filter'] + $arr_result['data']['marker'];
@@ -335,7 +337,8 @@ class tx_browser_pi1_filter_4x {
     $this->reset( );
 
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
     return $arr_return;
   }
 
@@ -603,7 +606,8 @@ class tx_browser_pi1_filter_4x {
     $arr_return = array( );
 
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
       // Set marker label
     $markerLabel = '###' . strtoupper( $this->curr_tableField ) . '###';
@@ -612,7 +616,8 @@ class tx_browser_pi1_filter_4x {
     if( ! $this->ts_getCondition( ) )
     {
       $arr_return['data']['marker'][$markerLabel] = null;
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return $arr_return;
     }
       // RETURN condition isn't met
@@ -623,7 +628,8 @@ class tx_browser_pi1_filter_4x {
     $arr_return = $this->get_rows( );
     if( $arr_return['error']['status'] )
     {
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return $arr_return;
     }
     $rows = $arr_return['data']['rows'];
@@ -644,7 +650,8 @@ class tx_browser_pi1_filter_4x {
       // Render the filter rows
 
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
     return $arr_return;
   }
 
@@ -811,7 +818,8 @@ class tx_browser_pi1_filter_4x {
     $arr_return = array( );
 
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
       // Default return value
     $item                       = null;
@@ -836,7 +844,8 @@ class tx_browser_pi1_filter_4x {
     $items = $this->get_maxItemsWrapBeginEnd( $items );
 
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
     $arr_return['data']['items'] = $items;
     return $arr_return;
@@ -864,7 +873,8 @@ class tx_browser_pi1_filter_4x {
     $arr_return = array( );
     
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
       // Set cObj->data treeview
     $this->cObjData_setTreeview( );
@@ -930,7 +940,8 @@ class tx_browser_pi1_filter_4x {
 
 
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
     $items = $this->get_filterWrap( $items );
 
@@ -1799,7 +1810,8 @@ class tx_browser_pi1_filter_4x {
   private function get_rows( )
   {
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'begin' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
       // 1. step: filter items with one hit at least
     $arr_return = $this->get_rowsWiHits( );
@@ -1838,7 +1850,8 @@ class tx_browser_pi1_filter_4x {
     $arr_return = $this->sql_resWiHits( );
     if( $arr_return['error']['status'] )
     {
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return $arr_return;
     }
     $res = $arr_return['data']['res'];
@@ -1887,7 +1900,8 @@ class tx_browser_pi1_filter_4x {
     {
       $arr_return['data']['rows'] = $rows_wiHits;
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return $arr_return;
     }
       // RETURN display items only, if they have one hit at least
@@ -1901,7 +1915,8 @@ class tx_browser_pi1_filter_4x {
         $arr_return = $this->sql_resAllItems( );
         if( $arr_return['error']['status'] )
         {
-          $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+          $debugTrailLevel = 1;
+          $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
           return $arr_return;
         }
         $res = $arr_return['data']['res'];
@@ -2551,7 +2566,8 @@ class tx_browser_pi1_filter_4x {
         t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
       }
         // Prompt the expired time to devlog
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return;
     }
       // RETURN table hasn't any treeParentField in the TCA
@@ -3520,7 +3536,8 @@ class tx_browser_pi1_filter_4x {
 
     if( $arr_return['error']['status'] )
     {
-      $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'end' );
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       die( $arr_return['error']['header'] . $arr_return['error']['prompt'] );
     }
     $res = $arr_return['data']['res'];

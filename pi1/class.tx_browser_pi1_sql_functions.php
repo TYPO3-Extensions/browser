@@ -394,14 +394,14 @@ class tx_browser_pi1_sql_functions
   * @version 3.9.12
   * @since   3.9.12
   */
-  public function prompt_error( $query, $error, $level )
+  public function prompt_error( $query, $error, $debugTrailLevel )
   {
     $arr_return = array( );
 
     if( $this->pObj->b_drs_error )
     {
-      //$level      = 1; // 1 level up
-      $debugTrail = $this->pObj->drs_debugTrail( $level );
+      //$debugTrailLevel      = 1; // 1 level up
+      $debugTrail = $this->pObj->drs_debugTrail( $debugTrailLevel );
       t3lib_div::devlog( '[ERROR/SQL] ' . $query,  $this->pObj->extKey, 3 );
       t3lib_div::devlog( '[ERROR/SQL] ' . $error,  $this->pObj->extKey, 3 );
       t3lib_div::devlog( '[ERROR/SQL] ABORT at ' . $debugTrail['prompt'], $this->pObj->extKey, 3 );
@@ -717,7 +717,8 @@ class tx_browser_pi1_sql_functions
       // Enable DRS performance
 
       // Log the time
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'START' );
+    $debugTrailLevel = 2;
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'START' );
     $tt_start = $this->pObj->tt_prevEndTime;
 
       // Execute query
@@ -743,8 +744,9 @@ class tx_browser_pi1_sql_functions
       // DRS - Development Reporting System
       
       // Log the time
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'STOP' );
-    $this->pObj->timeTracking_prompt( __METHOD__, __LINE__, $query );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'STOP' );
+    $this->pObj->timeTracking_prompt( $debugTrailLevel, $query );
 
       // RESET DRS performance
     if( $this->pObj->b_drs_warn )
@@ -763,8 +765,8 @@ class tx_browser_pi1_sql_functions
     {
         // Free SQL result
       $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-      $level = 2;
-      $arr_return = $this->prompt_error( $query, $error, $level );
+      $debugTrailLevel = 2;
+      $arr_return = $this->prompt_error( $query, $error, $debugTrailLevel );
     }
       // Error management
 
@@ -805,7 +807,8 @@ class tx_browser_pi1_sql_functions
       // Enable DRS performance
 
       // Log the time
-    $this->pObj->timeTracking_log( $method, $line,  'START' );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'START' );
     $tt_start = $this->pObj->tt_prevEndTime;
 
       // Execute the query
@@ -822,8 +825,9 @@ class tx_browser_pi1_sql_functions
       // DRS - Development Reporting System
       
       // Log the time
-    $this->pObj->timeTracking_log( $method, $line, 'STOP' );
-    $this->pObj->timeTracking_prompt( $method, $line, $query );
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'STOP' );
+    $this->pObj->timeTracking_prompt( $debugTrailLevel, $query );
 
       // RESET DRS performance
     if( $this->pObj->b_drs_warn )
@@ -840,8 +844,8 @@ class tx_browser_pi1_sql_functions
       // Error management
     if( $error )
     {
-      $level = 2;
-      $arr_return = $this->prompt_error( $query, $error, $level );
+      $debugTrailLevel = 2;
+      $arr_return = $this->prompt_error( $query, $error, $debugTrailLevel );
     }
       // Error management
 
