@@ -850,7 +850,7 @@ class tx_browser_pi1_viewlist
    * @return	array   $arr_return : Contains the SQL res or an error message 
    * @version 3.9.13
    * @since   3.9.12
-   * @todo    120506, dwildt: empty limit
+   * @todo    120506, dwildt: empty limit, filterIsSelected
    */
   private function rows_byIds( $allIds )
   {
@@ -927,57 +927,13 @@ if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
                                     );
       // SQL query
 
-      // DRS - Prompt the expired time to devlog
-    if( $this->pObj->b_drs_warn )
-    {
-      $b_drs_performBak = $this->pObj->b_drs_perform;
-      $this->pObj->b_drs_perform = true;
-    }
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'SQL query list view - START' );
-    $tt_start = $this->pObj->tt_prevEndTime;
-      // DRS - Prompt the expired time to devlog
-
       // Execute
-    //$res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
-    $res    = $this->pObj->objSqlFun->sql_query( $query );
-    $error  = $GLOBALS['TYPO3_DB']->sql_error( );
-      // Execute
-
-      // DRS - Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( __METHOD__, __LINE__,  'SQL query list view - STOP' );
-    $this->pObj->timeTracking_prompt( $query );
-    if( $this->pObj->b_drs_warn )
-    {
-      $this->pObj->b_drs_perform = $b_drs_performBak;
-    }
-    $tt_end = $this->pObj->tt_prevEndTime;
-      // DRS - Prompt the expired time to devlog
-
-      // DRS - Performance
-    $iMilliseconds  = $tt_end - $tt_start;
-    $promptHelp     = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
+    $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                       'Don\'t use the query in a localised context.';
-    $this->zz_drsPromptPerformance( $iMilliseconds, $promptHelp );
-      // DRS - Performance
+    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise );
+    //$arr_return['data']['res'] = $res;
+      // Execute
 
-      // Error management
-    if( $error )
-    {
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error );
-    }
-      // Error management
-
-      // DRS - Development Reporting System
-    if( $this->pObj->b_drs_sql )
-    {
-      t3lib_div::devlog( '[OK/SQL] ' . $query,  $this->pObj->extKey, -1 );
-      t3lib_div::devlog( '[HELP/SQL] Be aware of the multi-byte notation, if you want to use the query ' .
-                          'in your SQL shell or in phpMyAdmin.', $this->pObj->extKey, 1 );
-    }
-      // DRS - Development Reporting System
-      // Execute the SQL query
-
-    $arr_return['data']['res'] = $res;
     return $arr_return;
 
   }
@@ -1406,72 +1362,6 @@ if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
 
 
 
-
-
-
- /***********************************************
-  *
-  * Helpers
-  *
-  **********************************************/
-
-
-
-
-
-
-  /**
-   * zz_drsPromptPerformance( ): Building the SQL query, returns the SQL result.
-   *
-   * @param     string  $iMilliseconds  : ...
-   * @param     string  $promptHelp     : ...
-   * @return	void
-   * @version 3.9.13
-   * @since   3.9.13
-   */
-  private function zz_drsPromptPerformance( $iMilliseconds, $promptHelp )
-  {
-
-      // RETURN : DRS is off
-    if( ! $this->pObj->b_drs_warn )
-    {
-      return;
-    }
-      // RETURN : DRS is off
-    
-
-      // String for milliseconds
-    $sMilliseconds = '(' . $iMilliseconds . ' ms)';
-
-      // SWITCH : limit for milliseconds
-    switch( true )
-    {
-      case( $iMilliseconds < 500 ):
-        $prompt = 'Query for the list view needs less than a half second ' . $sMilliseconds . '.';
-        t3lib_div::devlog( '[OK/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, -1 );
-        break;
-      case( $iMilliseconds >= 500 && $iMilliseconds < 5000 ):
-        $prompt = 'Query for the list view needs more than a half second ' . $sMilliseconds . '.';
-        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
-        t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
-        break;
-      case( $iMilliseconds >= 5000 && $iMilliseconds < 10000 ):
-        $prompt = 'Query needs more than 5 seconds ' . $sMilliseconds . '.';
-        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
-        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
-        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
-        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
-        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
-        t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
-        break;
-      case( $iMilliseconds >= 10000 ):
-        $prompt = 'Query for the list view needs more than 10 seconds ' . $sMilliseconds . '.';
-        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 3 );
-        t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
-        break;
-    }
-      // SWITCH : limit for milliseconds
-  }
 
 
 
