@@ -783,7 +783,7 @@ class tx_browser_pi1_viewlist
   private function rows_sqlRes( )
   {
       // Get ids of records, which match the rules and have a translation for the current language
-    $arr_return                   = $this->rows_idsWiTranslation( );
+    $arr_return = $this->rows_idsWiTranslation( );
     if( $arr_return['error']['status'] ) 
     {
       return $arr_return;
@@ -792,7 +792,7 @@ class tx_browser_pi1_viewlist
     $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
 
       // Get ids of records of default language, which match the rules but haven't any translation
-    $arr_return                   = $this->rows_idsWoTranslation( $idsWiCurrTranslation );
+    $arr_return = $this->rows_idsWoTranslation( $idsWiCurrTranslation );
     if( $arr_return['error']['status'] ) 
     {
       return $arr_return;
@@ -1277,6 +1277,7 @@ var_dump( __METHOD__, __LINE__, $query );
 
       // Get array with localised parts
     $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
+$this->pObj->dev_var_dump( $arr_result );
 
       // Add the localised part with aliases to the current SELECT statement
     $selectLocalisedPart = implode( ', ', ( array ) $arr_result['wiAlias'] );
