@@ -2257,7 +2257,7 @@ class tx_browser_pi1 extends tslib_pibase {
     }
       // Get the current time
 
-    $debugTrail = $this->pObj->drs_debugTrail( $debugTrailLevel );
+    $debugTrail = $this->drs_debugTrail( $debugTrailLevel );
 
     // Prompt the current time
 //    $prompt = '[' . ( $endTime - $this->tt_startTime ) . ' ms] ' . $method . '(' . $line . '): ' . $prompt;
@@ -2308,7 +2308,7 @@ class tx_browser_pi1 extends tslib_pibase {
   */
   public function timeTracking_prompt( $debugTrailLevel, $prompt )
   {
-    $debugTrail = $this->pObj->drs_debugTrail( $debugTrailLevel );
+    $debugTrail = $this->drs_debugTrail( $debugTrailLevel );
 
     switch( true )
     {
