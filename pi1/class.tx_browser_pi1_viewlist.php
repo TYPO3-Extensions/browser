@@ -790,9 +790,9 @@ class tx_browser_pi1_viewlist
     }
     $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
     
-    $allIds = $idsOfHitsWiCurrTranslation +
-              $idsOfTranslationRows       + 
-              $idsOfHitsWoCurrTranslation;
+    $allIds = ( array ) $idsOfHitsWiCurrTranslation +
+              ( array ) $idsOfTranslationRows       + 
+              ( array ) $idsOfHitsWoCurrTranslation;
     
     $arr_return = $this->rows_byIds( $allIds );
 
