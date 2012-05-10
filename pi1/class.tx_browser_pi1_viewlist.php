@@ -1276,6 +1276,8 @@ var_dump( __METHOD__, __LINE__, $query );
       // SWITCH $int_localisation_mode
 
       // Get array with localised parts
+      // Get localtable
+    $table = $this->pObj->localTable;
     $arr_result = $this->pObj->objLocalise->localisationFields_select( $table );
 $this->pObj->dev_var_dump( $arr_result );
 
