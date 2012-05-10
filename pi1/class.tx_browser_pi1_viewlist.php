@@ -917,6 +917,19 @@ class tx_browser_pi1_viewlist
     }
       // Set ORDER BY to false - we like to order by PHP
     
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+
+$this->pObj->dev_var_dump( $query );
+
       // Execute
     $promptOptimise = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                       'Don\'t use the query in a localised context.';
@@ -924,7 +937,6 @@ class tx_browser_pi1_viewlist
     //$arr_return['data']['res'] = $res;
       // Execute
 
-$this->pObj->dev_var_dump( $arr_return['data']['query'] );
     return $arr_return;
 
     
