@@ -677,23 +677,26 @@ class tx_browser_pi1_sql_functions
   {
     $promptOptimise = 'Sorry, no help!';
     
+      // Get query
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+
+      // RETURN : query should prompt only
     if( $this->dev_sqlPromptsOnly )
     {
-        // Get query
-      $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-                                      (
-                                        $select,
-                                        $from,
-                                        $where,
-                                        $groupBy,
-                                        $orderBy,
-                                        $limit
-                                      );
 
         // Get query
       var_dump( $query );
       return;
     }
+      // RETURN : query should prompt only
 
       // DRS
     if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
