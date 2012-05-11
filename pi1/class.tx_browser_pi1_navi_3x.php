@@ -1556,6 +1556,7 @@ class tx_browser_pi1_navi_3x
       // Process the rows
 
     $int_start  = $this->pObj->piVars[$pb['pointer']] * $pb['results_at_a_time'];
+$this->pObj->dev_var_dump( $int_start, $this->pObj->piVars[$pb['pointer']], $pb['results_at_a_time'] );
     $int_amount = $pb['results_at_a_time'];
 
     $int_counter = 0;
