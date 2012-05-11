@@ -985,6 +985,10 @@ class tx_browser_pi1_viewlist
       $andWhere = $tableTpf . " IN (" . $withIdList . ")";
     }
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
+    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
+    {
+      $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
+    }
 
 //    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
 //    {
