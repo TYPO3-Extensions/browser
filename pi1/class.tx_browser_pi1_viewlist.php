@@ -907,6 +907,7 @@ class tx_browser_pi1_viewlist
     $groupBy  = null;
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
     $limit    = $this->conf_view['limit'];
+$this->pObj->dev_var_dump( $this->conf['navigation.']['pageBrowser.'] );
       // SQL query array
 
       // #9917: Selecting a random sample from a set of rows

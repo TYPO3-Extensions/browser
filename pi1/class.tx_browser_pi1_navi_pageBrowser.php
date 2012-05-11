@@ -184,7 +184,7 @@ class tx_browser_pi1_navi_pageBrowser
     $this->pObj->internal['results_at_a_time']  = $confPageBrowser['results_at_a_time'];
     $this->pObj->internal['dontLinkActivePage'] = $confPageBrowser['dontLinkActivePage'];
       // Init piBase for pagebrowser
-$this->pObj->dev_var_dump( $this->conf['navigation.']['pageBrowser.'] );
+
       // Get the wrapped pagebrowser
     $pageBrowser  = $this->pObj->pi_list_browseresults
                     (
