@@ -816,9 +816,9 @@ class tx_browser_pi1_viewlist
 
 
   /**
-   * rows_idsWiTranslation( ): ....
+   * rows_idsWiTranslation( ) : Get ids of rows with translated records and ids of translated records
    *
-   * @return	array   $arr_return: Contains the SQL res or an error message 
+   * @return	array   $arr_return: Array with two elements with the ids
    * @version 3.9.13
    * @since   3.9.13
    */
@@ -937,15 +937,16 @@ class tx_browser_pi1_viewlist
     {
       return $arr_return;
     }
+      // Error management
 
-      // $rows
+      // Get ids of rows with translated records and ids of translated records
     $res = $arr_return['data']['res'];
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
       $arr_return['data']['idsWiCurrTranslation'][] = $row[$tableTpf];
       $arr_return['data']['idsOfTranslationRows'][] = $row[$tableUid];
     }
-//$this->pObj->dev_var_dump( $arr_return );
+      // Get ids of rows with translated records and ids of translated records
     
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
@@ -957,10 +958,10 @@ class tx_browser_pi1_viewlist
 
 
   /**
-   * rows_idsWoTranslation( ): Building the SQL query, returns the SQL result.
+   * rows_idsWoTranslation( ): Get ids of rows, which haven't a translated record
    *
-   * @param     string  $idsWiCurrTranslation : ...
-   * @return	array   $arr_return                 : Contains the SQL res or an error message 
+   * @param     string  $idsWiCurrTranslation : Ids of rows, which have a translated record
+   * @return	array   $arr_return           : Contains the ids of rows
    * @version 3.9.13
    * @since   3.9.13
    */
@@ -1078,21 +1079,21 @@ class tx_browser_pi1_viewlist
                 $orderBy,
                 $limit
               );
+      // Get query
 
-$this->pObj->dev_var_dump( $query );
-
-      // Execute
+      // Execute query
     $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                         'Don\'t use the query in a localised context.';
     $debugTrailLevel  = 1;
     $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
-      // Execute
+      // Execute query
 
       // Error management
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
+      // Error management
 
       // Get the SQL result
     $res = $arr_return['data']['res'];
@@ -1113,17 +1114,16 @@ $this->pObj->dev_var_dump( $query );
 
 
   /**
-   * rows_byIds( ): Building the SQL query, returns the SQL result.
+   * rows_byIds( ): Get the rows for the list view. The method returns the SQL result, but an array.
    *
-   * @param     string  $allIds     : ...
+   * @param     string  $allIds     : Ids of the rows for the lost view
    * @return	array   $arr_return : Contains the SQL res or an error message 
    * @version 3.9.13
    * @since   3.9.12
-   * @todo    120506, dwildt: empty limit, filterIsSelected
+   * @todo    120506, dwildt: filterIsSelected
    */
   private function rows_byIds( $allIds )
   {
-    $idList = implode( ',', ( array ) $allIds );
 
       // SQL query array
     $select = $this->pObj->objSqlInit->statements['listView']['select'];
@@ -1132,10 +1132,12 @@ $this->pObj->dev_var_dump( $query );
 
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
-    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
-    {
-      $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
-    }
+//    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
+//    {
+//      $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
+//    }
+
+    $idList = implode( ',', ( array ) $allIds );
     if( $idList )
     {
       $where  = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $idList . ")";    
@@ -1158,18 +1160,18 @@ $this->pObj->dev_var_dump( $query );
 //}
 
     $groupBy  = null;
-    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
 
+    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
       // #9917: Selecting a random sample from a set of rows
     if( $this->conf_view['random'] == 1 )
     {
       $orderBy = 'rand( )';
     }
-      // Set ORDER BY to false - we like to order by PHP
     
+      // Don't limit the rows (we have a list of ids!)
     $limit = null;
     
-    // DRS
+      // DRS
     if( $this->pObj->b_drs_devTodo )
     {
       $prompt = 'UNION isn\'t supported any longer! Refer it to the release notes.';
@@ -1178,29 +1180,27 @@ $this->pObj->dev_var_dump( $query );
       // DRS
 
       // SQL query
-    $query = $GLOBALS['TYPO3_DB']->SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit,
-                                      $uidIndexField=""
-                                    );
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit,
+                $uidIndexField=""
+              );
       // SQL query
 var_dump( __METHOD__, __LINE__, $query );
 
-      // Execute
+      // Execute query
     $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                         'Don\'t use the query in a localised context.';
     $debugTrailLevel  = 1;
     $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
-    //$arr_return['data']['res'] = $res;
-      // Execute
+      // Execute query
 
     return $arr_return;
-
   }
 
 

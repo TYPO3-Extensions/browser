@@ -10,7 +10,7 @@
       <label index="config_error_h1">Error Browser Plugin</label>
       <label index="config_error_prompt">Error in %class%::%sheet%: Value '%field%' isn't defined: '%value%'.</label>
       <label index="config_reload">Please reload your plugin Browser! Id of the page: %pid%, id of the content element: %uid%</label>
-      <label index="drs_security">SECURITY WARNING: Please deactivate the DRS - Development Reporting System - on every operating system!.</label>
+      <label index="drs_security">SECURITY WARNING: Please deactivate the DRS - Development Reporting System - on every operating system.</label>
       <label index="drs_sql_prompt">The SQL query has an error. Please use the DRS - the Development Reporting System. The DRS will display the query and the error. 
 
 Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable DRS.</label>
