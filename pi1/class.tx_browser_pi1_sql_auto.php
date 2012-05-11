@@ -510,7 +510,7 @@ class tx_browser_pi1_sql_auto
         // DRS
       if( $this->pObj->b_drs_sql )
       {
-        $prompt = 'Order of rows should randomise. If there is any ORDER BY configuration, 
+        $prompt = 'Order of rows should randomise. If there is a ORDER BY configuration, 
                    it will ignored!';
         t3lib_div::devLog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
         $prompt = 'ORDER BY ' . $csvOrder;
@@ -526,12 +526,13 @@ class tx_browser_pi1_sql_auto
 
       ///////////////////////////////////
       //
-      // Get the override ORDER BY clause
+      // RETURN : override ORDER BY clause
 
     $csvOrder = $this->conf_view['override.']['orderBy'];
     $csvOrder = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $csvOrder );
     if( $csvOrder )
     {
+        // DRS
       if( $this->pObj->b_drs_sql )
       {
         $prompt = $conf_path . '.override.orderBy is: ' . $csvOrder;
@@ -541,8 +542,11 @@ class tx_browser_pi1_sql_auto
         $prompt = 'ORDER BY ' . $csvOrder;
         t3lib_div::devLog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
       }
+        // DRS
+      $csvOrder = $this->pObj->objSqlFun->zz_prependPiVarSort( $csvOrder );
+      return $csvOrder;
     }
-      // Get the override ORDER BY clause
+      // RETURN : override ORDER BY clause
     
     
     
@@ -550,34 +554,50 @@ class tx_browser_pi1_sql_auto
       //
       // If we don't have any override clause, get the ORDER BY clause. If there isn't any one: RETURN with an error
 
-    if( empty ( $csvOrder ) )
+    $csvOrder = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $this->conf_view['orderBy'] );
+    
+      // ORDER BY is empty. Take frist value from SELECT
+    if( empty( $csvOrder ) )
     {
-      $csvOrder = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $this->conf_view['orderBy'] );
-      if( empty( $csvOrder ) )
-      {
-        $csvOrder = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $this->conf_view['select'] );
-        list( $csvOrder ) = explode( ' ', $csvOrder );
-      }
-      if( empty( $csvOrder ) )
-      {
-        if ($this->pObj->b_drs_error)
-        {
-          $prompt = 'views.' . $viewWiDot . $mode . ' hasn\'t any orderBy fields.';
-          t3lib_div::devlog( '[ERROR/SQL] ', $this->pObj->extKey, 3 );
-          $prompt = 'ABORTED';
-          t3lib_div::devlog( '[WARN/SQL] '. $prompt, $this->pObj->extKey, 2 );
-        }
-        return false;
-      }
+      $csvOrder = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $this->conf_view['select'] );
+      list( $csvOrder ) = explode( ' ', $csvOrder );
     }
+      // ORDER BY is empty. Take frist value from SELECT
+
+      // RETURN : ORDER BY
+    if( ! empty( $csvOrder ) )
+    {
+        // DRS
+      if( $this->pObj->b_drs_sql )
+      {
+        $prompt = $conf_path . '.override.orderBy is: ' . $csvOrder;
+        t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 'The system generated ORDER BY clause will be ignored!';
+        t3lib_div::devLog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 'ORDER BY ' . $csvOrder;
+        t3lib_div::devLog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+      }
+        // DRS
+        
+        // Set the orderBy by piVars
+      $csvOrder = $this->pObj->objSqlFun->zz_prependPiVarSort( $csvOrder );
+      return $csvOrder;
+    }
+      // RETURN : ORDER BY
       // If we don't have any override clause, get the ORDER BY clause. If there isn't any one: RETURN with an error
 
+    
+      // ERROR  : ORDER BY is undefined
+    if( $this->pObj->b_drs_error )
+    {
+      $prompt = 'views.' . $viewWiDot . $mode . ' hasn\'t any orderBy fields.';
+      t3lib_div::devlog( '[ERROR/SQL] ', $this->pObj->extKey, 3 );
+      $prompt = 'ABORTED';
+      t3lib_div::devlog( '[WARN/SQL] '. $prompt, $this->pObj->extKey, 2 );
+    }
+    return false;
+      // ERROR  : ORDER BY is undefined
 
-
-      // Set the orderBy by piVars
-    $csvOrder = $this->pObj->objSqlFun->zz_prependPiVarSort( $csvOrder );
-
-    return $csvOrder;
   }
 
 
