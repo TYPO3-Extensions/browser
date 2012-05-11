@@ -850,7 +850,8 @@ class tx_browser_pi1_viewlist
     list( $tableField ) = explode( ' ', $orderBy );
     
       // Get first tableField
-$this->pObj->dev_var_dump( $tableField, $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField ) );
+var_dump( $orderBy , $tableField, $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField ) );
+$this->pObj->dev_var_dump( $orderBy , $tableField, $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField ) );
 $this->pObj->dev_var_dump( 'tx_org_news.title', $this->pObj->objLocalise->zz_tablefieldIsLocalised( 'tx_org_news.title') );
 $this->pObj->dev_var_dump( 'tx_org_news.datetime', $this->pObj->objLocalise->zz_tablefieldIsLocalised( 'tx_org_news.datetime') );
 
