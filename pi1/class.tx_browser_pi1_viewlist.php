@@ -847,7 +847,7 @@ class tx_browser_pi1_viewlist
       
       // Get ORDER BY
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];    
-    list( $tableField ) = explode( ' ', $orderBy );
+    list( $tableField ) = explode( ' ', trim( $orderBy ) );
     
       // Get first tableField
 var_dump( $orderBy , $tableField );
