@@ -807,24 +807,43 @@ class tx_browser_pi1_viewlist
 
 
   /**
- * rows_sqlLanguageDefaultOrTranslated( ): Building the SQL query, returns the SQL result.
+ * rows_sqlLanguageDefaultOrTranslated( ): Get the ids of default or translated rows
  *
- * @return	array		$arr_return: Contains the SQL res or an error message
+ * @return	array		$arr_return: Contains the ids
  * @version 3.9.13
  * @since   3.9.13
  */
   private function rows_sqlLanguageDefaultOrTranslated( )
   {
+      // SWITCH : first value of ORDER BY is loaclised
     switch( $this->orderByValueIsLocalised( ) )
     {
       case( true ):
+          // First value of ORDER BY is loaclised
+          // DRS
+        if( $this->pObj->b_drs_warn )
+        {
+          $orderBy            = $this->pObj->objSqlInit->statements['listView']['orderBy'];    
+          list( $tableField ) = explode( ' ', $orderBy );
+          $prompt = 'ORDER BY ' . $tableField . ' ... has unwanted effects!';
+          t3lib_div::devlog( '[WARN/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 2 );
+          $prompt = $tableField . ' is translated. The sequence of rows will be: [ ordered [ordered rows of foreign 
+                    language] + [oderded rows of default language]], but not [ordered rows]. Sorry, but this is a 
+                    need of performance.';
+          t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 0 );
+        }
+          // DRS
         $arr_return = $this->rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( );
         break;
+          // First value of ORDER BY is loaclised
       case( false ):
       default:
+          // First value of ORDER BY isn't loaclised
         $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( );
         break;
+          // First value of ORDER BY isn't loaclised
     }
+      // SWITCH : first value of ORDER BY is loaclised
 
     return $arr_return;
   }
@@ -851,7 +870,7 @@ class tx_browser_pi1_viewlist
       // Get ORDER BY
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];    
       // Get the first tableField
-    list( $tableField ) = explode( ' ', trim( $orderBy ) );
+    list( $tableField ) = explode( ' ', $orderBy );
     
       // Get localised status of the tableField
     $orderByValueIsLocalised = $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField );
@@ -862,22 +881,23 @@ class tx_browser_pi1_viewlist
 
 
  /**
-  * rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( ): Building the SQL query, returns the SQL result.
+  * rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( ) : Get the ids of default or translated rows
   *
-  * @return	array		$arr_return: Contains the SQL res or an error message
+  * @return	array		$arr_return: Contains the ids
   * @version 3.9.13
   * @since   3.9.13
   */
   private function rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( )
   {
       // Get ids of records, which match the rules and have a translation for the current language
+      // Get all ids
     $withIds = array( );
     $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $withIds );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
-    $withoutIds = $arr_return['data']['idsWiCurrTranslation'];
+    $withoutIds           = $arr_return['data']['idsWiCurrTranslation'];
     $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
       // Get ids of records, which match the rules and have a translation for the current language
 
@@ -906,7 +926,7 @@ class tx_browser_pi1_viewlist
 
 
  /**
-  * rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( ): Building the SQL query, returns the SQL result.
+  * rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( ) : Get the ids of default or translated rows
   *
   * @return	array		$arr_return: Contains the SQL res or an error message
   * @version 3.9.13
@@ -915,7 +935,8 @@ class tx_browser_pi1_viewlist
   private function rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( )
   {
 
-      // Get ids of records of default language, which match the rules but haven't any translation
+      // Get ids of records of default language, which match the rules
+      // get all ids
     $withoutIds = array( );
     $arr_return = $this->rows_sqlIdsOfRowsDefaultLanguage( $withoutIds );
     if( $arr_return['error']['status'] )
@@ -923,26 +944,23 @@ class tx_browser_pi1_viewlist
       return $arr_return;
     }
     $idsOfDefaultLanguageRows   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
-      // Get ids of records of default language, which match the rules but haven't any translation
+      // Get ids of records of default language, which match the rules
 
-      // Get ids of records, which match the rules and have a translation for the current language
+      // Get ids of the translation records of the matched default records
     $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $idsOfDefaultLanguageRows );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
-      //$withoutIds = $arr_return['data']['idsWiCurrTranslation'];
     $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
-      // Get ids of records, which match the rules and have a translation for the current language
+      // Get ids of the translation records of the matched default records
       
       // Merge all ids
     $withIds = array_merge(
-      //          ( array ) $withoutIds,
                 ( array ) $idsOfTranslationRows,
                 ( array ) $idsOfDefaultLanguageRows
               );
 
-//$this->pObj->dev_var_dump( $withIds );
       // Get rows for the list view
     $arr_return = $this->rows_sqlRowsbyIds( $withIds );
 
