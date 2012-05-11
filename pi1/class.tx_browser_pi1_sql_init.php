@@ -575,6 +575,7 @@ class tx_browser_pi1_sql_init
       $this->pObj->csvOrderBy = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $conf_view['orderBy'] );
       if( empty( $this->pObj->csvOrderBy ) )
       {
+        // @todo: 120511, dwildt: Only the first element!
         $this->pObj->csvOrderBy = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $conf_view['select'] );
       }
       if( empty( $this->pObj->csvOrderBy ) )
@@ -656,7 +657,7 @@ class tx_browser_pi1_sql_init
 
     if( $csv_before_process != $csv_after_process )
     {
-      $this->pObj->csvOrderBy = $csv_after_process;
+      $this->pObj->csvOrderBy = trim( $csv_after_process );
       if( $this->pObj->b_drs_sql )
       {
         $prompt = 'Values for the global var csvOrderBy were changed.<br />

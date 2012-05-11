@@ -1386,19 +1386,19 @@
  */
   public function cleanUp_lfCr_doubleSpace($csvValue)
   {
-    $csvValue = str_replace(chr(10), '', $csvValue); // Linefeed
-    $csvValue = str_replace(chr(13), '', $csvValue); // Carriage return
+    $csvValue = str_replace( chr( 10 ), '', $csvValue ); // Linefeed
+    $csvValue = str_replace( chr( 13 ), '', $csvValue ); // Carriage return
 
     //$int_levelRecursMax = $this->int_advanced_recursionGard;
     $int_levelRecurs = 0;
     do
     {
-      $csvValue = str_replace('  ', ' ', $csvValue);
+      $csvValue = str_replace( '  ', ' ', $csvValue );
       $int_levelRecurs++;
     }
     //while (!(strpos($csvValue, '  ') === false) && ($int_levelRecurs < $int_levelRecursMax));
     while ( ! ( strpos( $csvValue, '  ' ) === false ) );
-    $csvValue = trim($csvValue);
+    $csvValue = trim( $csvValue );
     return $csvValue;
   }
 
