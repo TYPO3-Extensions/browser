@@ -37,46 +37,51 @@
  *
  *
  *
- *   83: class tx_browser_pi1_viewlist
- *  126:     function __construct( $parentObj )
+ *   88: class tx_browser_pi1_viewlist
+ *  131:     function __construct( $parentObj )
  *
  *              SECTION: Building the views
- *  154:     function main( )
- *  362:     private function init( )
- *  408:     private function check_view( )
+ *  159:     function main( )
+ *  370:     private function init( )
+ *  416:     private function check_view( )
  *
  *              SECTION: Content / Template
- *  470:     private function content_setCSV( )
- *  503:     private function content_setDefault( )
- *  561:     private function content_dieIfEmpty( $marker, $method, $line )
+ *  478:     private function content_setCSV( )
+ *  511:     private function content_setDefault( )
+ *  569:     private function content_dieIfEmpty( $marker, $method, $line )
  *
  *              SECTION: SQL
- *  615:     private function rows_consolidateLL( $rows )
- *  645:     private function rows_consolidateChildren( $rows )
- *  679:     private function rows_fromSqlRes( $res )
- *  725:     private function rows_getCaseAliases( $res )
- *  763:     private function rows_getDefault( $res )
- *  784:     private function rows_sql( )
- *  827:     private function rows_sqlIdsOfRowsWiTranslation( )
- *  970:     private function rows_sqlIdsOfRowsDefaultLanguage( $withoutIds )
- * 1127:     private function rows_sqlRowsbyIds( $withIds )
- * 1220:     private function sql_selectLocalised( $select )
+ *  623:     private function rows_consolidateLL( $rows )
+ *  653:     private function rows_consolidateChildren( $rows )
+ *  687:     private function rows_fromSqlRes( $res )
+ *  733:     private function rows_getCaseAliases( $res )
+ *  771:     private function rows_getDefault( $res )
+ *  792:     private function rows_sql( )
+ *  821:     private function rows_sqlLanguageDefaultOrTranslated( )
+ *  866:     private function orderByValueIsLocalised( )
+ *  895:     private function rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( )
+ *  940:     private function rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( )
+ *  984:     private function rows_sqlLanguageDefault( )
+ * 1011:     private function rows_sqlIdsOfRowsWiTranslation( $withIds )
+ * 1161:     private function rows_sqlIdsOfRowsDefaultLanguage( $withoutIds )
+ * 1314:     private function rows_sqlRowsbyIds( $withIds )
+ * 1401:     private function sql_selectLocalised( $select )
  *
  *              SECTION: Subparts
- * 1310:     private function subpart_setSearchbox( )
- * 1327:     private function subpart_setSearchboxFilter( )
- * 1371:     private function subpart_setIndexBrowser( )
- * 1401:     private function subpart_setModeSelector( )
- * 1460:     private function subpart_setPageBrowser( )
+ * 1491:     private function subpart_setSearchbox( )
+ * 1508:     private function subpart_setSearchboxFilter( )
+ * 1552:     private function subpart_setIndexBrowser( )
+ * 1582:     private function subpart_setModeSelector( )
+ * 1641:     private function subpart_setPageBrowser( )
  *
  *              SECTION: Hooks
- * 1517:     private function hook_afterConsolidatetRows( )
+ * 1698:     private function hook_afterConsolidatetRows( )
  *
  *              SECTION: ZZ
- * 1592:     private function zz_drsFirstRow( )
- * 1622:     private function zz_setGlobalArrLinkToSingle( )
+ * 1773:     private function zz_drsFirstRow( )
+ * 1803:     private function zz_setGlobalArrLinkToSingle( )
  *
- * TOTAL FUNCTIONS: 25
+ * TOTAL FUNCTIONS: 30
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -823,12 +828,12 @@ class tx_browser_pi1_viewlist
           // DRS
         if( $this->pObj->b_drs_warn )
         {
-          $orderBy            = $this->pObj->objSqlInit->statements['listView']['orderBy'];    
+          $orderBy            = $this->pObj->objSqlInit->statements['listView']['orderBy'];
           list( $tableField ) = explode( ' ', $orderBy );
           $prompt = 'ORDER BY ' . $tableField . ' ... has unwanted effects!';
           t3lib_div::devlog( '[WARN/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 2 );
-          $prompt = $tableField . ' is translated. The sequence of rows will be: [ ordered [ordered rows of foreign 
-                    language] + [oderded rows of default language]], but not [ordered rows]. Sorry, but this is a 
+          $prompt = $tableField . ' is translated. The sequence of rows will be: [ ordered [ordered rows of foreign
+                    language] + [oderded rows of default language]], but not [ordered rows]. Sorry, but this is a
                     need of performance.';
           t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 0 );
         }
@@ -854,7 +859,7 @@ class tx_browser_pi1_viewlist
   * orderByValueIsLocalised( )  : Method returns true, if the first value in the ORDER BY
   *                               clause is localised.
   *
-  * @return	boolean  $orderByValueIsLocalised : true or false
+  * @return	boolean		$orderByValueIsLocalised : true or false
   * @version 3.9.13
   * @since   3.9.13
   */
@@ -866,12 +871,12 @@ class tx_browser_pi1_viewlist
       return false;
     }
       // RETURN : ORDER BY is randomised
-       
+
       // Get ORDER BY
-    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];    
+    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
       // Get the first tableField
     list( $tableField ) = explode( ' ', $orderBy );
-    
+
       // Get localised status of the tableField
     $orderByValueIsLocalised = $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField );
       // RETURN the localised status
@@ -954,7 +959,7 @@ class tx_browser_pi1_viewlist
     }
     $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
       // Get ids of the translation records of the matched default records
-      
+
       // Merge all ids
     $withIds = array_merge(
                 ( array ) $idsOfTranslationRows,
@@ -967,7 +972,7 @@ class tx_browser_pi1_viewlist
     return $arr_return;
   }
 
-  
+
 
   /**
  * rows_sqlLanguageDefault( ): Building the SQL query, returns the SQL result.
@@ -998,6 +1003,7 @@ class tx_browser_pi1_viewlist
   /**
  * rows_sqlIdsOfRowsWiTranslation( ) : Get ids of rows with translated records and ids of translated records
  *
+ * @param	[type]		$$withIds: ...
  * @return	array		$arr_return: Array with two elements with the ids
  * @version 3.9.13
  * @since   3.9.13
@@ -1146,10 +1152,9 @@ class tx_browser_pi1_viewlist
   * rows_sqlIdsOfRowsDefaultLanguage( ):  Get ids of rows of the default language. Rows
   *                                       which ids within the array $withoutIds will
   *                                       ignored
-  *                                    
   *
-  * @param	array   $withoutIds : Ids of rows, which have a translated record
-  * @return	array	$arr_return : Contains the ids of rows
+  * @param	array		$withoutIds : Ids of rows, which have a translated record
+  * @return	array		$arr_return : Contains the ids of rows
   * @version 3.9.13
   * @since   3.9.13
   */
