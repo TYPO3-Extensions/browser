@@ -501,15 +501,12 @@ class tx_browser_pi1_sql_auto
  */
   private function get_statements_orderBy()
   {
-//      // DIE in case of override.from
-//    $this->zz_dieIfOverride( 'orderBy' );
-//
-//    $csvOrder = $this->conf_view['orderBy'];
-//
-//      // Set the orderBy by piVars
-//    $csvOrder = $this->pObj->objSqlFun->zz_prependPiVarSort( $csvOrder );
-//
-//    return $csvOrder;
+    $csvOrder = $this->conf_view['orderBy'];
+
+      // Set the orderBy by piVars
+    $csvOrder = $this->pObj->objSqlFun->zz_prependPiVarSort( $csvOrder );
+
+    return $csvOrder;
   }
 
 
