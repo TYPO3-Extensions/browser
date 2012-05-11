@@ -1563,7 +1563,7 @@ class tx_browser_pi1_navi_3x
     $int_remove_start = $int_start;
     $int_remove_end   = $int_start + $int_amount;
     $drs_rows_before  = count($rows);
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
     foreach ($rows as $row => $elements)
     {
       if ($int_counter < $int_remove_start || $int_counter >= $int_remove_end)
@@ -1572,7 +1572,7 @@ $this->pObj->dev_var_dump( $rows );
       }
       $int_counter++;
     }
-$this->pObj->dev_var_dump( $rows );
+//$this->pObj->dev_var_dump( $rows );
     $drs_rows_after = count($rows);
       // Process the rows
 

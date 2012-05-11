@@ -951,7 +951,11 @@ class tx_browser_pi1_viewlist_3x
     if( isset( $conf_view['limit'] ) )
     {
       $arr_limit        = explode(',', $conf_view['limit']);
-      $int_start        = (int) trim($arr_limit[0]);
+        // 120511, dwildt, 1-
+      //$int_start        = (int) trim($arr_limit[0]);
+        // 120511, dwildt, 1+
+        // Workaround because of Browser 4.x
+      $int_start        = 0;  // <- Should be the value out of the flexform
       $int_amount       = (int) trim($arr_limit[1]);
       $int_counter      = 0;
       $int_remove_start = $int_start;
