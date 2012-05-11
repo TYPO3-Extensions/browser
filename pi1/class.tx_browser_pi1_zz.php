@@ -2653,20 +2653,31 @@
 /**
  * Load the TCA, if we don't have an table.columns array
  *
- * @param	string		$str_table: name of table
+ * @param	string		$table: name of table
  * @return	void
+ * 
+ * @version 3.1.13
+ * @since   2.0.0
  */
-  function loadTCA($str_table)
+  function loadTCA( $table )
   {
-
-    if (!is_array($GLOBALS['TCA'][$str_table]['columns']))
+      // RETURN : TCA is loaded
+    if( is_array( $GLOBALS['TCA'][$table]['columns'] ) )
     {
-      t3lib_div::loadTCA($str_table);
-      if ($this->pObj->b_drs_tca)
-      {
-        t3lib_div::devlog('[INFO/DISCOVER] $GLOBALS[\'TCA\'][\''.$str_table.'\'] is loaded.', $this->pObj->extKey, 0);
-      }
+      return;
     }
+      // RETURN : TCA is loaded
+    
+      // Load the TCA
+    t3lib_div::loadTCA($table);
+
+      // DRS
+    if ($this->pObj->b_drs_tca)
+    {
+      $prompt = '$GLOBALS[TCA]['.$table.'] is loaded.';
+      t3lib_div::devlog('[INFO/DISCOVER] ' . $prompt, $this->pObj->extKey, 0);
+    }
+      // DRS
 
   }
 

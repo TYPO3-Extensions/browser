@@ -101,12 +101,16 @@ class tx_browser_pi1_localisation
   var $lang_id                    = null;
     // [String] $GLOBALS['TSFE']->sys_language_contentOL. Set by localisationConfig().
   var $overlay_mode               = null;
-    // [Array] The The current TypoScript configuration array local or global: advanced.localisation
+    // [Array] The current TypoScript configuration array local or global: advanced.localisation
   var $conf_localisation          = false;
-    // [String] The The current TypoScript configuration path local or global: advanced.localisation
+    // [String] The current TypoScript configuration path local or global: advanced.localisation
   var $conf_localisation_path     = false;
+    // [Array] l10n_mode of tableFields
+  var $arr_l10n_mode              = null;
+    // [Array] localised status of a tableField (true or false)
+  var $arr_localisedTableField                = null;
     // Variables set by this class
-
+  
 
 
 
@@ -1679,6 +1683,86 @@ class tx_browser_pi1_localisation
       // RETURN the localised uid
   }
 
+
+
+ /**
+  * zz_tablefieldIsLocalised( ): Returns whether a tableField is localised
+  *
+  * @param	string    $tableField : table and field in table.field-syntax
+  * @return	boolean   true or false
+  * @version 3.9.13
+  * @since   3.9.13
+  */
+  public function zz_tablefieldIsLocalised( $tableField )
+  {
+      // RETURN : l10n_mode 
+    if( isset( $this->arr_localisedTableField[$tableField] ) )
+    {
+      return $this->arr_localisedTableField[$tableField];
+    }
+      // RETURN : l10n_mode 
+    
+    $l10n_mode = $this->zz_getL10n_mode( $tableField );
+    switch( $l10n_mode )
+    {
+      case( 'exclude' ):
+        $this->arr_localisedTableField[$tableField] = false;
+        break;
+      case( 'mergeIfNotBlank' ):
+        break;
+      case( 'noCopy' ):
+      case( 'prefixLangTitle' ):
+      case( false ):
+      case( null ):
+        $this->arr_localisedTableField[$tableField] = true;
+        break;
+      default:
+        $prompt = 'Sorry, this error shouldn\'t occured: l10n_mode is undefined: ' . 
+                  $l10n_mode . '<br />
+                  <br />
+                  Browser - TYPO3 without PHP<br />
+                  method: ' . __METHOD__ . '<br />
+                  line: ' . __LINE__ ;
+        die( $prompt );
+        break;
+    }
+
+    return $this->arr_localisedTableField[$tableField];
+  }
+
+
+
+ /**
+  * zz_getL10n_mode( ): Returns the l10n_mode of the given tableField
+  *
+  * @param	string	$tableField : table and field in table.field-syntax
+  * @return	string  $l10n_mode  : l10n_mode of the tableField
+  * @version 3.9.13
+  * @since   3.9.13
+  */
+  private function zz_getL10n_mode( $tableField )
+  {
+      // RETURN : l10n_mode 
+    if( isset( $this->arr_l10n_mode[$tableField] ) )
+    {
+      return $this->arr_l10n_mode[$tableField];
+    }
+      // RETURN : l10n_mode 
+    
+      // Devide tableField
+    list($table, $field) = explode('.', $tableField);
+    
+      // Load the TCA
+    $this->pObj->objZz->loadTCA($table);
+    
+      // Get and set the l10n_mode
+    $l10n_mode = $GLOBALS['TCA'][$table]['columns'][$field]['l10n_mode'];
+    $this->arr_l10n_mode[$tableField] = $l10n_mode;
+    
+      // RETURN : l10n_mode 
+    return $l10n_mode;
+  }
+  
 
 
  /**

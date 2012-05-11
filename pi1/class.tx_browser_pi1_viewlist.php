@@ -58,8 +58,8 @@
  *  763:     private function rows_getDefault( $res )
  *  784:     private function rows_sql( )
  *  827:     private function rows_sqlIdsOfRowsWiTranslation( )
- *  970:     private function rows_sqlIdsOfRowsWoTranslation( $idsWiCurrTranslation )
- * 1127:     private function rows_sqlRowsbyIds( $allIds )
+ *  970:     private function rows_sqlIdsOfRowsDefaultLanguage( $withoutIds )
+ * 1127:     private function rows_sqlRowsbyIds( $withIds )
  * 1220:     private function sql_selectLocalised( $select )
  *
  *              SECTION: Subparts
@@ -808,19 +808,18 @@ class tx_browser_pi1_viewlist
  *
  * @return	array		$arr_return: Contains the SQL res or an error message
  * @version 3.9.13
- * @since   3.9.12
+ * @since   3.9.13
  */
   private function rows_sqlLanguageDefaultOrTranslated( )
   {
-//    switch( $this->orderValueIsTranslated( ) )
-    switch( true )
+    switch( $this->orderByValueIsLocalised( ) )
     {
       case( true ):
         $arr_return = $this->rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( );
         break;
       case( false ):
       default:
-//        $arr_return = $this->rows_sqlIdsOfRowsDefaultLanguageAndThanWiTranslation( );
+        $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( );
         break;
     }
 
@@ -829,28 +828,44 @@ class tx_browser_pi1_viewlist
 
 
 
-  /**
- * rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( ): Building the SQL query, returns the SQL result.
- *
- * @return	array		$arr_return: Contains the SQL res or an error message
- * @version 3.9.13
- * @since   3.9.12
- */
+ /**
+  * orderByValueIsLocalised( ): 
+  *
+  * @return	array		$arr_return: Contains the SQL res or an error message
+  * @version 3.9.13
+  * @since   3.9.13
+  */
+  private function orderByValueIsLocalised( )
+  {
+$this->pObj->dev_var_dump( 'tx_org_news.title', $this->pObj->objLocalise->zz_tablefieldIsLocalised( 'tx_org_news.title') );
+$this->pObj->dev_var_dump( 'tx_org_news.datetime', $this->pObj->objLocalise->zz_tablefieldIsLocalised( 'tx_org_news.datetime') );
+
+    return false;
+  }
+
+
+
+ /**
+  * rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( ): Building the SQL query, returns the SQL result.
+  *
+  * @return	array		$arr_return: Contains the SQL res or an error message
+  * @version 3.9.13
+  * @since   3.9.13
+  */
   private function rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( )
   {
-$this->pObj->dev_var_dump( 1 );
       // Get ids of records, which match the rules and have a translation for the current language
     $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
-    $idsWiCurrTranslation = $arr_return['data']['idsWiCurrTranslation'];
+    $withoutIds = $arr_return['data']['idsWiCurrTranslation'];
     $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
       // Get ids of records, which match the rules and have a translation for the current language
 
       // Get ids of records of default language, which match the rules but haven't any translation
-    $arr_return = $this->rows_sqlIdsOfRowsWoTranslation( $idsWiCurrTranslation );
+    $arr_return = $this->rows_sqlIdsOfRowsDefaultLanguage( $withoutIds );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -859,15 +874,57 @@ $this->pObj->dev_var_dump( 1 );
       // Get ids of records of default language, which match the rules but haven't any translation
 
       // Merge all ids
-    $allIds = array_merge(
-                ( array ) $idsWiCurrTranslation,
+    $withIds = array_merge(
+                ( array ) $withoutIds,
                 ( array ) $idsOfTranslationRows,
                 ( array ) $idsOfHitsWoCurrTranslation
               );
 
       // Get rows for the list view
-    $arr_return = $this->rows_sqlRowsbyIds( $allIds );
-$this->pObj->dev_var_dump( $arr_return );
+    $arr_return = $this->rows_sqlRowsbyIds( $withIds );
+
+    return $arr_return;
+  }
+
+
+
+ /**
+  * rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( ): Building the SQL query, returns the SQL result.
+  *
+  * @return	array		$arr_return: Contains the SQL res or an error message
+  * @version 3.9.13
+  * @since   3.9.13
+  */
+  private function rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( )
+  {
+      // Get ids of records, which match the rules and have a translation for the current language
+    $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    $withoutIds = $arr_return['data']['idsWiCurrTranslation'];
+    $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
+      // Get ids of records, which match the rules and have a translation for the current language
+
+      // Get ids of records of default language, which match the rules but haven't any translation
+    $arr_return = $this->rows_sqlIdsOfRowsDefaultLanguage( $withoutIds );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+      // Get ids of records of default language, which match the rules but haven't any translation
+
+      // Merge all ids
+    $withIds = array_merge(
+                ( array ) $withoutIds,
+                ( array ) $idsOfTranslationRows,
+                ( array ) $idsOfHitsWoCurrTranslation
+              );
+
+      // Get rows for the list view
+    $arr_return = $this->rows_sqlRowsbyIds( $withIds );
 
     return $arr_return;
   }
@@ -879,12 +936,12 @@ $this->pObj->dev_var_dump( $arr_return );
  *
  * @return	array		$arr_return: Contains the SQL res or an error message
  * @version 3.9.13
- * @since   3.9.12
+ * @since   3.9.13
  */
   private function rows_sqlLanguageDefault( )
   {
-    $idsWiCurrTranslation = array( );
-    $arr_return = $this->rows_sqlIdsOfRowsWoTranslation( $idsWiCurrTranslation );
+    $withoutIds = array( );
+    $arr_return = $this->rows_sqlIdsOfRowsDefaultLanguage( $withoutIds );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -1043,15 +1100,18 @@ $this->pObj->dev_var_dump( $arr_return );
 
 
 
-  /**
- * rows_sqlIdsOfRowsWoTranslation( ): Get ids of rows, which haven't a translated record
- *
- * @param	string		$idsWiCurrTranslation : Ids of rows, which have a translated record
- * @return	array		$arr_return           : Contains the ids of rows
- * @version 3.9.13
- * @since   3.9.13
- */
-  private function rows_sqlIdsOfRowsWoTranslation( $idsWiCurrTranslation )
+ /**
+  * rows_sqlIdsOfRowsDefaultLanguage( ):  Get ids of rows of the default language. Rows
+  *                                       which ids within the array $withoutIds will
+  *                                       ignored
+  *                                    
+  *
+  * @param	array   $withoutIds : Ids of rows, which have a translated record
+  * @return	array	$arr_return : Contains the ids of rows
+  * @version 3.9.13
+  * @since   3.9.13
+  */
+  private function rows_sqlIdsOfRowsDefaultLanguage( $withoutIds )
   {
     $arr_return = array( );
 
@@ -1092,11 +1152,11 @@ $this->pObj->dev_var_dump( $arr_return );
     $andWhereSysLanguage = $GLOBALS['TCA'][$table]['ctrl']['languageField'] . " <= 0";
 
       // andWhere list of ids ...
-    $idList             = implode( ',', ( array ) $idsWiCurrTranslation );
+    $withoutIdList             = implode( ',', ( array ) $withoutIds );
     $andWhereIdList     = null;
-    if( $idList )
+    if( $withoutIdList )
     {
-      $andWhereIdList = $tableUid . " NOT IN (" . $idList . ")";
+      $andWhereIdList = $tableUid . " NOT IN (" . $withoutIdList . ")";
     }
 
       // SQL query array
@@ -1140,7 +1200,7 @@ $this->pObj->dev_var_dump( $arr_return );
       // LIMIT  : reduce amount of rows by amount of translated rows
     $limit  = $this->conf_view['limit'];
     list( $start, $results_at_a_time ) = explode( ',', $limit );
-    $results_at_a_time = ( int ) $results_at_a_time - count ( $idsWiCurrTranslation );
+    $results_at_a_time = ( int ) $results_at_a_time - count ( $withoutIds );
     if( $results_at_a_time < 0 )
     {
       $prompt = 'Sorry, this error shouldn\'t occurred: Amount of displayed rows is \'' . $results_at_a_time . '\'.<br />
@@ -1202,13 +1262,13 @@ $this->pObj->dev_var_dump( $arr_return );
   /**
  * rows_sqlRowsbyIds( ): Get the rows for the list view. The method returns the SQL result, but an array.
  *
- * @param	string		$allIds     : Ids of the rows for the lost view
+ * @param	string		$withIds     : Ids of the rows for the lost view
  * @return	array		$arr_return : Contains the SQL res or an error message
  * @version 3.9.13
- * @since   3.9.12
+ * @since   3.9.13
  * @todo    120506, dwildt: filterIsSelected
  */
-  private function rows_sqlRowsbyIds( $allIds )
+  private function rows_sqlRowsbyIds( $withIds )
   {
 
       // SQL query array
@@ -1223,10 +1283,10 @@ $this->pObj->dev_var_dump( $arr_return );
 //      $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
 //    }
 
-    $idList = implode( ',', ( array ) $allIds );
-    if( $idList )
+    $thisIdList = implode( ',', ( array ) $withIds );
+    if( $thisIdList )
     {
-      $where  = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $idList . ")";
+      $where  = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $thisIdList . ")";
     }
 
 //  // DRS
@@ -1241,7 +1301,7 @@ $this->pObj->dev_var_dump( $arr_return );
 //  if( $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL )
 //  {
 //    $uidList  = $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL;
-//    $where    = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $idList . ")";
+//    $where    = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $thisIdList . ")";
 //  }
 //}
 
