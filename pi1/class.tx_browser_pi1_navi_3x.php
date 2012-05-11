@@ -1523,14 +1523,13 @@ class tx_browser_pi1_navi_3x
       //
       // Get the wrapped pagebrowser
     
-    $pageBrowserPointerLabel = $this->conf['navigation.']['pageBrowser.']['pointer'];
     $pb = $this->conf['navigation.']['pageBrowser.'];
     $res_items  = $this->pObj->pi_list_browseresults
                   (
                     $pb['showResultCount'], 
                     $pb['tableParams'], 
                     $pb['wrap.'],
-                    $pb[$pageBrowserPointerLabel],
+                    $pb['pointer'],
                     $pb['hscText']
                   );
       // Get the wrapped pagebrowser
@@ -1556,8 +1555,7 @@ class tx_browser_pi1_navi_3x
       //
       // Process the rows
 
-    $pageBrowserPointerLabel = $this->conf['navigation.']['pageBrowser.']['pointer'];
-    $int_start  = $this->pObj->piVars[$pageBrowserPointerLabel] * $pb['results_at_a_time'];
+    $int_start  = $this->pObj->piVars[$pb['pointer']] * $pb['results_at_a_time'];
     $int_amount = $pb['results_at_a_time'];
 
     $int_counter = 0;

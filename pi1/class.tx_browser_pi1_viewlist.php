@@ -1056,11 +1056,11 @@ $this->pObj->dev_var_dump( $this->pObj->piVars['pointer'] );
 
       // LIMIT  : reduce amount of rows by amount of translated rows
     $limit  = $this->conf_view['limit'];
-    list( $start, $amount ) = explode( ',', $limit );
-    $amount = ( int ) $amount - count ( $idsWiCurrTranslation );
-    if( $amount < 0 )
+    list( $start, $results_at_a_time ) = explode( ',', $limit );
+    $results_at_a_time = ( int ) $results_at_a_time - count ( $idsWiCurrTranslation );
+    if( $results_at_a_time < 0 )
     {
-      $prompt = 'Sorry, this error shouldn\'t occurred: Amount of displayed rows is \'' . $amount . '\'.<br />
+      $prompt = 'Sorry, this error shouldn\'t occurred: Amount of displayed rows is \'' . $results_at_a_time . '\'.<br />
                 <br />
                 Method: ' . __METHOD__ . '<br />
                 Line: ' . __LINE__ . '<br />
@@ -1068,7 +1068,7 @@ $this->pObj->dev_var_dump( $this->pObj->piVars['pointer'] );
                 TYPO3 Browser';
       echo $prompt;
     }
-    $limit  = ( int ) $start . "," . $amount;
+    $limit  = ( int ) $start . "," . $results_at_a_time;
       // LIMIT  : reduce amount of rows by amount of translated rows
       // SQL query array
 

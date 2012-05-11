@@ -2877,8 +2877,17 @@ class tx_browser_pi1_flexform {
     }
       // #34212: 120223, dwildt-
     //$conf_limit = $str_limit;
-$pageBrowserPointerLabel = $this->pObj->conf['navigation.']['pageBrowser.']['pointer'];
-$this->pObj->dev_var_dump( $pageBrowserPointerLabel, $this->pObj->piVars );
+    
+      // Set start
+    $pageBrowserPointerLabel  = $this->pObj->conf['navigation.']['pageBrowser.']['pointer'];
+    if( isset( $this->pObj->piVars[$pageBrowserPointerLabel] ) )
+    {
+      $multiplier = ( int ) $this->pObj->piVars[$pageBrowserPointerLabel] + 1;
+      list( $start, $results_at_a_time ) = explode( $conf_limit );
+      $start      = $start + ( $multiplier * $results_at_a_time ) ;
+      $conf_limit = $start . ',' . $results_at_a_time; 
+    }
+//$this->pObj->dev_var_dump( $pageBrowserPointerLabel, $this->pObj->piVars );
     $this->pObj->conf['views.']['list.'][$this->mode . '.']['limit'] = $conf_limit;
       // View has a local limit
       // Field limit
