@@ -1450,8 +1450,8 @@ var_dump( __METHOD__, __LINE__, $query );
 
 
 /**
- * subpart_setPageBrowser( ):  Replaces the indexbrowser subpart in the current content
- *                              with the content from ->get_indexBrowser( )
+ * subpart_setPageBrowser( ):  Replaces the pagebrowser subpart in the current content
+ *                              with the content from ->objNaviPageBrowser->get( )
  *
  * @return	array		$arr_return : Contains an error message in case of an error
  * @version 3.9.12

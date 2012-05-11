@@ -136,24 +136,18 @@ class tx_browser_pi1_navi_pageBrowser
  */
   public function get( $content )
   {
+    $arr_return = array( );
+    
       // Set class var
     $this->content = $content;
 
-      // RETURN : pagebrowser shouldn't displayed
-    if( ! $this->pObj->objFlexform->bool_pageBrowser )
+      // RETURN : requierments aren't met
+    if( ! $this->requirements( ) )
     {
       $arr_return['data']['content'] = null;
       return $arr_return;
     }
-      // RETURN : pagebrowser shouldn't displayed
-
-      // RETURN : firstVisit but emptyListAtStart
-    if( $this->pObj->boolFirstVisit && $this->pObj->objFlexform->bool_emptyAtStart )
-    {
-      $arr_return['data']['content'] = null;
-      return $arr_return;
-    }
-      // RETURN : firstVisit but emptyListAtStart
+      // RETURN : requierments aren't met
 
       // Set class var sum
     $this->count( );
@@ -189,7 +183,8 @@ class tx_browser_pi1_navi_pageBrowser
     $this->pObj->internal['showFirstLast']      = $confPageBrowser['showFirstLast'];
     $this->pObj->internal['results_at_a_time']  = $confPageBrowser['results_at_a_time'];
     $this->pObj->internal['dontLinkActivePage'] = $confPageBrowser['dontLinkActivePage'];
-      // Init piBase for pagebrowser
+$this->pObj->dev_var_dump( $this->pObj->internal );
+    // Init piBase for pagebrowser
 
       // Get the wrapped pagebrowser
     $res_items  = $this->pObj->pi_list_browseresults
@@ -208,6 +203,34 @@ class tx_browser_pi1_navi_pageBrowser
       // RETURN the content
     $arr_return['data']['content']  = $res_items;
     return $arr_return;
+  }
+
+
+
+ /**
+  * requirements( ):
+  *
+  * @return	boolean   true, if requirements are met; false if not
+  * @version 3.9.13
+  * @since   3.9.13
+  */
+  private function requirements( )
+  {
+      // RETURN : pagebrowser shouldn't displayed
+    if( ! $this->pObj->objFlexform->bool_pageBrowser )
+    {
+     return false;
+    }
+      // RETURN : pagebrowser shouldn't displayed
+
+      // RETURN : firstVisit but emptyListAtStart
+    if( $this->pObj->boolFirstVisit && $this->pObj->objFlexform->bool_emptyAtStart )
+    {
+     return false;
+    }
+      // RETURN : firstVisit but emptyListAtStart
+
+   return true;
   }
 
 
@@ -308,8 +331,8 @@ class tx_browser_pi1_navi_pageBrowser
   private function count_resSql( )
   {
       // Get current table.field of the index browser
-    $tableField           = $this->pObj->arrLocalTable['uid'];
-    list( $table, $field) = explode( '.', $tableField );
+    $tableField     = $this->pObj->arrLocalTable['uid'];
+    list( $table )  = explode( '.', $tableField );
 
       // Query for all filter items
     $select   = "COUNT( DISTINCT " . $tableField . " ) AS 'count'";
@@ -329,12 +352,6 @@ class tx_browser_pi1_navi_pageBrowser
                     $orderBy,
                     $limit
                   );
-
-//      // Error management
-//    if( $arr_return['error']['status'] )
-//    {
-//      $this->sqlCharsetSet( $currSqlCharset );
-//    }
 
     return $arr_return;
   }
