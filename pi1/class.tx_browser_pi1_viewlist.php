@@ -986,12 +986,8 @@ class tx_browser_pi1_viewlist
       // Get localtable
     $table = $this->pObj->localTable;
 
-    $labelSysLanguageId = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
-    $idList = implode( ',', ( array ) $idsWiCurrTranslation );
-
-    
       // RETURN : table is not localised
-    if( ! $labelSysLanguageId ) 
+    if( ! $GLOBALS['TCA'][$table]['ctrl']['languageField'] ) 
     {
       if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
       {
@@ -1003,31 +999,26 @@ class tx_browser_pi1_viewlist
     }
       // RETURN : table is not localised
 
-    $tableUid = $table . ".uid";
-    $tableTpf = $table . "." . $labelOfParentUid;
+      // andWhere sys_language_uid ...
+    $andWhereSysLanguage = $GLOBALS['TCA'][$table]['ctrl']['languageField'] . " <= 0";
+
+      // andWhere list of ids ...
+    $idList             = implode( ',', ( array ) $idsWiCurrTranslation );
+    $andWhereIdList     = null;
+    if( $idList )
+    {
+      $andWhereIdList = $tableUid . " NOT IN (" . $idList . ")";
+    }
     
+      // fields for the SELECT statement
+    $tableUid = $table . ".uid";
     
       // SQL query array
     $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "'";
-//$this->pObj->dev_var_dump( $select );
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
-    if ( $where && $labelSysLanguageId )
-    {
-      $where = $where . " AND ";
-    }
-    if( $labelSysLanguageId )
-    {
-      $where = $where . $labelSysLanguageId . " <= 0";
-    }
-    if ( $where && $idList )
-    {
-      $where = $where . " AND ";
-    }
-    if( $idList )
-    {
-      $where = $where . $tableUid . " NOT IN (" . $idList . ")";
-    }
+    $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereSysLanguage );
+    $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereIdList );
     
 
 //    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
@@ -1052,21 +1043,32 @@ class tx_browser_pi1_viewlist
 //}
 
     $groupBy  = null;
-    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
-    $limit    = $this->conf_view['limit'];
-      // SQL query array
-
-    list( $start, $amount ) = explode( ',', $limit );
-    $amount = $amount - count ( $idsWiCurrTranslation );
-    $limit  = $start . "," . $amount;
-
+    
       // #9917: Selecting a random sample from a set of rows
+    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
     if( $this->conf_view['random'] == 1 )
     {
       $orderBy = 'rand( )';
     }
-      // Set ORDER BY to false - we like to order by PHP
     
+      // LIMIT  : reduce amount of rows by amount of translated rows
+    $limit  = $this->conf_view['limit'];
+    list( $start, $amount ) = explode( ',', $limit );
+    $amount = ( int ) $amount - count ( $idsWiCurrTranslation );
+    if( $amount < 0 )
+    {
+      $prompt = 'Sorry, this error shouldn\'t occurred: Amount of displayed rows is \'' . $amount . '\'.<br /> 
+                <br />
+                Method: ' . __METHOD__ . '<br />
+                Line: ' . __LINE__ . '<br />
+                <br />
+                TYPO3 Browser';
+      echo $prompt;
+    }
+    $limit  = ( int ) $start . "," . $amount;
+      // LIMIT  : reduce amount of rows by amount of translated rows
+      // SQL query array
+
       // Get query
     $query  = $GLOBALS['TYPO3_DB']->SELECTquery
               (
@@ -1093,19 +1095,20 @@ $this->pObj->dev_var_dump( $query );
       return $arr_return;
     }
 
-      // $rows
+      // Get the SQL result
     $res = $arr_return['data']['res'];
+
+      // Get the ids
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
       $arr_return['data']['idsOfHitsWoCurrTranslation'][] = $row[$tableUid];
     }
-//$this->pObj->dev_var_dump( $arr_return );
+      // Get the ids
     
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
     return $arr_return;
-
   }
 
 
