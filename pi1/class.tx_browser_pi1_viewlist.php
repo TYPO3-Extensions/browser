@@ -985,6 +985,8 @@ class tx_browser_pi1_viewlist
 
       // Get localtable
     $table = $this->pObj->localTable;
+      // fields for the SELECT statement
+    $tableUid = $table . ".uid";
 
       // RETURN : table is not localised
     if( ! $GLOBALS['TCA'][$table]['ctrl']['languageField'] ) 
@@ -1009,9 +1011,6 @@ class tx_browser_pi1_viewlist
     {
       $andWhereIdList = $tableUid . " NOT IN (" . $idList . ")";
     }
-    
-      // fields for the SELECT statement
-    $tableUid = $table . ".uid";
     
       // SQL query array
     $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "'";
