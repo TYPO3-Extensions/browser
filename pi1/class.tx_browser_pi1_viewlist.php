@@ -58,7 +58,7 @@
  *  771:     private function rows_getDefault( $res )
  *  792:     private function rows_sql( )
  *  821:     private function rows_sqlLanguageDefaultOrTranslated( )
- *  866:     private function orderByValueIsLocalised( )
+ *  866:     private function zz_orderByValueIsLocalised( )
  *  895:     private function rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( )
  *  940:     private function rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( )
  *  984:     private function rows_sqlLanguageDefault( )
@@ -273,7 +273,7 @@ class tx_browser_pi1_viewlist
     $rows = $this->pObj->rows;
 
       // Order the rows
-    if( ! $this->orderByValueIsLocalised( ) )
+    if( ! $this->zz_orderByValueIsLocalised( ) )
     {
       $this->pObj->objMultisort->multisort_rows( );
       $rows = $this->pObj->rows;
@@ -811,80 +811,6 @@ class tx_browser_pi1_viewlist
 
 
 
-  /**
- * rows_sqlLanguageDefaultOrTranslated( ): Get the ids of default or translated rows
- *
- * @return	array		$arr_return: Contains the ids
- * @version 3.9.13
- * @since   3.9.13
- */
-  private function rows_sqlLanguageDefaultOrTranslated( )
-  {
-      // SWITCH : first value of ORDER BY is loaclised
-    switch( $this->orderByValueIsLocalised( ) )
-    {
-      case( true ):
-          // First value of ORDER BY is loaclised
-          // DRS
-        if( $this->pObj->b_drs_warn )
-        {
-          $orderBy            = $this->pObj->objSqlInit->statements['listView']['orderBy'];
-          list( $tableField ) = explode( ' ', $orderBy );
-          $prompt = 'ORDER BY ' . $tableField . ' ... has unwanted effects!';
-          t3lib_div::devlog( '[WARN/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 2 );
-          $prompt = $tableField . ' is translated. The sequence of rows will be: [ ordered [ordered rows of foreign
-                    language] + [oderded rows of default language]], but not [ordered rows]. Sorry, but this is a
-                    need of performance.';
-          t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 0 );
-        }
-          // DRS
-        $arr_return = $this->rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( );
-        break;
-          // First value of ORDER BY is loaclised
-      case( false ):
-      default:
-          // First value of ORDER BY isn't loaclised
-        $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( );
-        break;
-          // First value of ORDER BY isn't loaclised
-    }
-      // SWITCH : first value of ORDER BY is loaclised
-
-    return $arr_return;
-  }
-
-
-
- /**
-  * orderByValueIsLocalised( )  : Method returns true, if the first value in the ORDER BY
-  *                               clause is localised.
-  *
-  * @return	boolean		$orderByValueIsLocalised : true or false
-  * @version 3.9.13
-  * @since   3.9.13
-  */
-  private function orderByValueIsLocalised( )
-  {
-      // RETURN : ORDER BY is randomised
-    if( $this->conf_view['random'] == 1 )
-    {
-      return false;
-    }
-      // RETURN : ORDER BY is randomised
-
-      // Get ORDER BY
-    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
-      // Get the first tableField
-    list( $tableField ) = explode( ' ', $orderBy );
-
-      // Get localised status of the tableField
-    $orderByValueIsLocalised = $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField );
-      // RETURN the localised status
-    return $orderByValueIsLocalised;
-  }
-
-
-
  /**
   * rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( ) : Get the ids of default or translated rows
   *
@@ -968,32 +894,6 @@ class tx_browser_pi1_viewlist
 
       // Get rows for the list view
     $arr_return = $this->rows_sqlRowsbyIds( $withIds );
-
-    return $arr_return;
-  }
-
-
-
-  /**
- * rows_sqlLanguageDefault( ): Building the SQL query, returns the SQL result.
- *
- * @return	array		$arr_return: Contains the SQL res or an error message
- * @version 3.9.13
- * @since   3.9.13
- */
-  private function rows_sqlLanguageDefault( )
-  {
-    $withoutIds = array( );
-    $arr_return = $this->rows_sqlIdsOfRowsDefaultLanguage( $withoutIds );
-    if( $arr_return['error']['status'] )
-    {
-      return $arr_return;
-    }
-    $idsOfRowsDefaultLanguage = $arr_return['data']['idsOfHitsWoCurrTranslation'];
-      // Get ids of records of default language
-
-      // Get rows for the list view
-    $arr_return = $this->rows_sqlRowsbyIds( $idsOfRowsDefaultLanguage );
 
     return $arr_return;
   }
@@ -1296,6 +1196,75 @@ class tx_browser_pi1_viewlist
 
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+
+    return $arr_return;
+  }
+
+
+
+  /**
+ * rows_sqlLanguageDefault( ): Building the SQL query, returns the SQL result.
+ *
+ * @return	array		$arr_return: Contains the SQL res or an error message
+ * @version 3.9.13
+ * @since   3.9.13
+ */
+  private function rows_sqlLanguageDefault( )
+  {
+    $withoutIds = array( );
+    $arr_return = $this->rows_sqlIdsOfRowsDefaultLanguage( $withoutIds );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    $idsOfRowsDefaultLanguage = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+      // Get ids of records of default language
+
+      // Get rows for the list view
+    $arr_return = $this->rows_sqlRowsbyIds( $idsOfRowsDefaultLanguage );
+
+    return $arr_return;
+  }
+
+
+  /**
+ * rows_sqlLanguageDefaultOrTranslated( ): Get the ids of default or translated rows
+ *
+ * @return	array		$arr_return: Contains the ids
+ * @version 3.9.13
+ * @since   3.9.13
+ */
+  private function rows_sqlLanguageDefaultOrTranslated( )
+  {
+      // SWITCH : first value of ORDER BY is loaclised
+    switch( $this->zz_orderByValueIsLocalised( ) )
+    {
+      case( true ):
+          // First value of ORDER BY is loaclised
+          // DRS
+        if( $this->pObj->b_drs_warn )
+        {
+          $orderBy            = $this->pObj->objSqlInit->statements['listView']['orderBy'];
+          list( $tableField ) = explode( ' ', $orderBy );
+          $prompt = 'ORDER BY ' . $tableField . ' ... has unwanted effects!';
+          t3lib_div::devlog( '[WARN/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 2 );
+          $prompt = $tableField . ' is translated. The sequence of rows will be: [ ordered [ordered rows of foreign
+                    language] + [oderded rows of default language]], but not [ordered rows]. Sorry, but this is a
+                    need of performance.';
+          t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 0 );
+        }
+          // DRS
+        $arr_return = $this->rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( );
+        break;
+          // First value of ORDER BY is loaclised
+      case( false ):
+      default:
+          // First value of ORDER BY isn't loaclised
+        $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( );
+        break;
+          // First value of ORDER BY isn't loaclised
+    }
+      // SWITCH : first value of ORDER BY is loaclised
 
     return $arr_return;
   }
@@ -1789,6 +1758,36 @@ class tx_browser_pi1_viewlist
     $prompt = 'Result of the first row: ' . PHP_EOL;
     $prompt = $prompt . var_export( $firstRow, true );
     t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+  }
+
+
+
+ /**
+  * zz_orderByValueIsLocalised( )  : Method returns true, if the first value in the ORDER BY
+  *                               clause is localised.
+  *
+  * @return	boolean		$orderByValueIsLocalised : true or false
+  * @version 3.9.13
+  * @since   3.9.13
+  */
+  private function zz_orderByValueIsLocalised( )
+  {
+      // RETURN : ORDER BY is randomised
+    if( $this->conf_view['random'] == 1 )
+    {
+      return false;
+    }
+      // RETURN : ORDER BY is randomised
+
+      // Get ORDER BY
+    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
+      // Get the first tableField
+    list( $tableField ) = explode( ' ', $orderBy );
+
+      // Get localised status of the tableField
+    $orderByValueIsLocalised = $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField );
+      // RETURN the localised status
+    return $orderByValueIsLocalised;
   }
 
 
