@@ -829,9 +829,10 @@ class tx_browser_pi1_viewlist
 
 
  /**
-  * orderByValueIsLocalised( ): 
+  * orderByValueIsLocalised( )  : Method returns true, if the first value in the ORDER BY
+  *                               clause is localised.
   *
-  * @return	array		$arr_return: Contains the SQL res or an error message
+  * @return	boolean  $orderByValueIsLocalised : true or false
   * @version 3.9.13
   * @since   3.9.13
   */
@@ -844,18 +845,15 @@ class tx_browser_pi1_viewlist
     }
       // RETURN : ORDER BY is randomised
        
-      
       // Get ORDER BY
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];    
+      // Get the first tableField
     list( $tableField ) = explode( ' ', trim( $orderBy ) );
     
-      // Get first tableField
-var_dump( $orderBy , $tableField );
-$this->pObj->dev_var_dump( $orderBy , $tableField, $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField ) );
-$this->pObj->dev_var_dump( 'tx_org_news.title', $this->pObj->objLocalise->zz_tablefieldIsLocalised( 'tx_org_news.title') );
-$this->pObj->dev_var_dump( 'tx_org_news.datetime', $this->pObj->objLocalise->zz_tablefieldIsLocalised( 'tx_org_news.datetime') );
-
-    return false;
+      // Get localised status of the tableField
+    $orderByValueIsLocalised = $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField );
+      // RETURN the localised status
+    return $orderByValueIsLocalised;
   }
 
 
@@ -870,7 +868,8 @@ $this->pObj->dev_var_dump( 'tx_org_news.datetime', $this->pObj->objLocalise->zz_
   private function rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( )
   {
       // Get ids of records, which match the rules and have a translation for the current language
-    $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( );
+    $withIds = array( );
+    $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $withIds );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -885,14 +884,14 @@ $this->pObj->dev_var_dump( 'tx_org_news.datetime', $this->pObj->objLocalise->zz_
     {
       return $arr_return;
     }
-    $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+    $idsOfDefaultLanguageRows   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
       // Get ids of records of default language, which match the rules but haven't any translation
 
       // Merge all ids
     $withIds = array_merge(
                 ( array ) $withoutIds,
                 ( array ) $idsOfTranslationRows,
-                ( array ) $idsOfHitsWoCurrTranslation
+                ( array ) $idsOfDefaultLanguageRows
               );
 
       // Get rows for the list view
@@ -912,30 +911,32 @@ $this->pObj->dev_var_dump( 'tx_org_news.datetime', $this->pObj->objLocalise->zz_
   */
   private function rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( )
   {
-      // Get ids of records, which match the rules and have a translation for the current language
-    $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( );
-    if( $arr_return['error']['status'] )
-    {
-      return $arr_return;
-    }
-    $withoutIds = $arr_return['data']['idsWiCurrTranslation'];
-    $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
-      // Get ids of records, which match the rules and have a translation for the current language
 
       // Get ids of records of default language, which match the rules but haven't any translation
+    $withoutIds = array( );
     $arr_return = $this->rows_sqlIdsOfRowsDefaultLanguage( $withoutIds );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
-    $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+    $idsOfDefaultLanguageRows   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
       // Get ids of records of default language, which match the rules but haven't any translation
 
+      // Get ids of records, which match the rules and have a translation for the current language
+    $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $idsOfDefaultLanguageRows );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    //$withoutIds = $arr_return['data']['idsWiCurrTranslation'];
+    $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
+      // Get ids of records, which match the rules and have a translation for the current language
+      
       // Merge all ids
     $withIds = array_merge(
-                ( array ) $withoutIds,
+      //          ( array ) $withoutIds,
                 ( array ) $idsOfTranslationRows,
-                ( array ) $idsOfHitsWoCurrTranslation
+                ( array ) $idsOfDefaultLanguageRows
               );
 
       // Get rows for the list view
@@ -979,7 +980,7 @@ $this->pObj->dev_var_dump( 'tx_org_news.datetime', $this->pObj->objLocalise->zz_
  * @version 3.9.13
  * @since   3.9.13
  */
-  private function rows_sqlIdsOfRowsWiTranslation( )
+  private function rows_sqlIdsOfRowsWiTranslation( $withIds )
   {
     $arr_return = array( );
 
@@ -1038,6 +1039,14 @@ $this->pObj->dev_var_dump( 'tx_org_news.datetime', $this->pObj->objLocalise->zz_
     $andWhere = $labelSysLanguageId . " = " . intval( $this->pObj->objLocalise->lang_id ) . " ";
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
 
+    $withIdList = implode( ',', ( array ) $withIds );
+    $andWhere = null;
+    if( $withIdList )
+    {
+      $andWhere = $tableUid . " IN (" . $withIdList . ")";
+    }
+    $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
+
 //    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
 //    {
 //      $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
@@ -1062,7 +1071,10 @@ $this->pObj->dev_var_dump( 'tx_org_news.datetime', $this->pObj->objLocalise->zz_
     $groupBy  = null;
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
     $limit    = $this->conf_view['limit'];
-//$this->pObj->dev_var_dump( $this->pObj->piVars['pointer'] );
+    if( $withIdList )
+    {
+      $limit = null;
+    }
       // SQL query array
 
       // Get query
@@ -1160,8 +1172,8 @@ $this->pObj->dev_var_dump( 'tx_org_news.datetime', $this->pObj->objLocalise->zz_
     $andWhereSysLanguage = $GLOBALS['TCA'][$table]['ctrl']['languageField'] . " <= 0";
 
       // andWhere list of ids ...
-    $withoutIdList             = implode( ',', ( array ) $withoutIds );
-    $andWhereIdList     = null;
+    $withoutIdList  = implode( ',', ( array ) $withoutIds );
+    $andWhereIdList = null;
     if( $withoutIdList )
     {
       $andWhereIdList = $tableUid . " NOT IN (" . $withoutIdList . ")";
