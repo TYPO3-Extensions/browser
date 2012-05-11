@@ -183,25 +183,24 @@ class tx_browser_pi1_navi_pageBrowser
     $this->pObj->internal['showFirstLast']      = $confPageBrowser['showFirstLast'];
     $this->pObj->internal['results_at_a_time']  = $confPageBrowser['results_at_a_time'];
     $this->pObj->internal['dontLinkActivePage'] = $confPageBrowser['dontLinkActivePage'];
-$this->pObj->dev_var_dump( $this->pObj->internal );
-    // Init piBase for pagebrowser
-
+      // Init piBase for pagebrowser
+$this->pObj->dev_var_dump( $this->conf['navigation.']['pageBrowser.'] );
       // Get the wrapped pagebrowser
-    $res_items  = $this->pObj->pi_list_browseresults
-                  (
-                    $confPageBrowser['showResultCount'],
-                    $confPageBrowser['tableParams'],
-                    $confPageBrowser['wrap.'],
-                    $confPageBrowser['pointer'],
-                    $confPageBrowser['hscText']
-                  );
+    $pageBrowser  = $this->pObj->pi_list_browseresults
+                    (
+                      $confPageBrowser['showResultCount'],
+                      $confPageBrowser['tableParams'],
+                      $confPageBrowser['wrap.'],
+                      $confPageBrowser['pointer'],
+                      $confPageBrowser['hscText']
+                    );
       // Get the wrapped pagebrowser
 
       // Reset $GLOBALS['TSFE']->id
-    $GLOBALS['TSFE']->id            = $globalTsfeId; // #9458
+    $GLOBALS['TSFE']->id = $globalTsfeId; // #9458
 
       // RETURN the content
-    $arr_return['data']['content']  = $res_items;
+    $arr_return['data']['content'] = $pageBrowser;
     return $arr_return;
   }
 
