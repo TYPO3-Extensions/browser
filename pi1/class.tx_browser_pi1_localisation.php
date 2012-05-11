@@ -1756,6 +1756,17 @@ class tx_browser_pi1_localisation
     $this->pObj->objZz->loadTCA($table);
     
       // Get and set the l10n_mode
+    if( ! isset( $GLOBALS['TCA'][$table]['columns'][$field] ) )
+    {
+      $prompt = 'tableField isn\'t part of the TCA. Sorry, this error shouldn\'t occurred!<br />
+                <br />
+                Browser - TYPO3 without PHP<br />
+                <br />
+                Method: ' . __METHOD__ . '<br />
+                Line: ' . __LINE__ . '
+                ';
+      die( $prompt );
+    }
     $l10n_mode = $GLOBALS['TCA'][$table]['columns'][$field]['l10n_mode'];
     $this->arr_l10n_mode[$tableField] = $l10n_mode;
     
