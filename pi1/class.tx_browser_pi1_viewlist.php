@@ -25,11 +25,11 @@
  /**
  * The class tx_browser_pi1_viewlist bundles methods for displaying the list view and the singe view for the extension browser
  *
- * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
- * @package    TYPO3
+ * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ * @package     TYPO3
  * @subpackage  browser
- * @version 3.9.8
- * @since 1.0
+ * @version     3.9.13
+ * @since       1.0
  */
 
  /**
@@ -57,9 +57,9 @@
  *  747:     private function rows_getCaseAliases( $res )
  *  784:     private function rows_getDefault( $res )
  *  803:     private function rows_sqlRes( )
- *  846:     private function rows_idsWiTranslation( )
- *  989:     private function rows_idsWoTranslation( $idsWiCurrTranslation )
- * 1146:     private function rows_byIds( $allIds )
+ *  846:     private function rows_sqlRes_idsWiTranslation( )
+ *  989:     private function rows_sqlRes_idsWoTranslation( $idsWiCurrTranslation )
+ * 1146:     private function rows_sqlRes_byIds( $allIds )
  * 1239:     private function sql_selectLocalised( $select )
  *
  *              SECTION: Subparts
@@ -70,10 +70,10 @@
  * 1479:     private function subpart_setPageBrowser( )
  *
  *              SECTION: ZZ
- * 1536:     private function set_arrLinkToSingle( )
+ * 1536:     private function zz_setGlobalArrLinkToSingle( )
  *
  *              SECTION: DRS
- * 1634:     private function drs_firstRow( )
+ * 1634:     private function zz_drsFirstRow( )
  *
  *              SECTION: Hooks
  * 1678:     private function hook_afterConsolidatetRows( )
@@ -301,10 +301,10 @@ class tx_browser_pi1_viewlist
     $this->pObj->rows = $rows;
 
       // DRS - display first row
-    $this->drs_firstRow( );
+    $this->zz_drsFirstRow( );
 
       // Set the global $arrLinkToSingle
-    $this->set_arrLinkToSingle( );
+    $this->zz_setGlobalArrLinkToSingle( );
 
 
 
@@ -746,6 +746,7 @@ class tx_browser_pi1_viewlist
  */
   private function rows_getCaseAliases( $res )
   {
+    $rows                 = array( );
     $conf_view            = $this->conf_view;
     $arr_table_realnames  = $conf_view['aliases.']['tables.'];
 
@@ -783,6 +784,8 @@ class tx_browser_pi1_viewlist
  */
   private function rows_getDefault( $res )
   {
+    $rows = array( );
+    
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
       $rows[] = $row;
@@ -803,7 +806,7 @@ class tx_browser_pi1_viewlist
   private function rows_sqlRes( )
   {
       // Get ids of records, which match the rules and have a translation for the current language
-    $arr_return = $this->rows_idsWiTranslation( );
+    $arr_return = $this->rows_sqlRes_idsWiTranslation( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -813,7 +816,7 @@ class tx_browser_pi1_viewlist
       // Get ids of records, which match the rules and have a translation for the current language
 
       // Get ids of records of default language, which match the rules but haven't any translation
-    $arr_return = $this->rows_idsWoTranslation( $idsWiCurrTranslation );
+    $arr_return = $this->rows_sqlRes_idsWoTranslation( $idsWiCurrTranslation );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -829,7 +832,7 @@ class tx_browser_pi1_viewlist
               );
 
       // Get rows for the list view
-    $arr_return = $this->rows_byIds( $allIds );
+    $arr_return = $this->rows_sqlRes_byIds( $allIds );
 
     return $arr_return;
   }
@@ -837,13 +840,13 @@ class tx_browser_pi1_viewlist
 
 
   /**
- * rows_idsWiTranslation( ) : Get ids of rows with translated records and ids of translated records
+ * rows_sqlRes_idsWiTranslation( ) : Get ids of rows with translated records and ids of translated records
  *
  * @return	array		$arr_return: Array with two elements with the ids
  * @version 3.9.13
  * @since   3.9.13
  */
-  private function rows_idsWiTranslation( )
+  private function rows_sqlRes_idsWiTranslation( )
   {
     $arr_return = array( );
 
@@ -979,14 +982,14 @@ class tx_browser_pi1_viewlist
 
 
   /**
- * rows_idsWoTranslation( ): Get ids of rows, which haven't a translated record
+ * rows_sqlRes_idsWoTranslation( ): Get ids of rows, which haven't a translated record
  *
  * @param	string		$idsWiCurrTranslation : Ids of rows, which have a translated record
  * @return	array		$arr_return           : Contains the ids of rows
  * @version 3.9.13
  * @since   3.9.13
  */
-  private function rows_idsWoTranslation( $idsWiCurrTranslation )
+  private function rows_sqlRes_idsWoTranslation( $idsWiCurrTranslation )
   {
     $arr_return = array( );
 
@@ -1135,7 +1138,7 @@ class tx_browser_pi1_viewlist
 
 
   /**
- * rows_byIds( ): Get the rows for the list view. The method returns the SQL result, but an array.
+ * rows_sqlRes_byIds( ): Get the rows for the list view. The method returns the SQL result, but an array.
  *
  * @param	string		$allIds     : Ids of the rows for the lost view
  * @return	array		$arr_return : Contains the SQL res or an error message
@@ -1143,7 +1146,7 @@ class tx_browser_pi1_viewlist
  * @since   3.9.12
  * @todo    120506, dwildt: filterIsSelected
  */
-  private function rows_byIds( $allIds )
+  private function rows_sqlRes_byIds( $allIds )
   {
 
       // SQL query array
@@ -1520,6 +1523,81 @@ var_dump( __METHOD__, __LINE__, $query );
 
  /***********************************************
   *
+  * Hooks
+  *
+  **********************************************/
+
+
+
+  /**
+ * hook_afterConsolidatetRows( ): Implement the hook rows_filter_values
+ *
+ * @return	void
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function hook_afterConsolidatetRows( )
+  {
+      // DRS
+    if( $this->pObj->b_drs_hooks )
+    {
+        // Any foreign extension is using this hook
+      if( ! is_array( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] ) )
+      {
+        $prompt = 'Any third party extension doesn\'t use the HOOK rows_filter_values.';
+        t3lib_div::devlog( '[INFO/HOOK] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'See Tutorial Hooks: http://typo3.org/extensions/repository/view/browser_tut_hooks_en/current/';
+        t3lib_div::devlog( '[HELP/HOOK] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+        // Any foreign extension is using this hook
+
+        // One foreign extension is using this hook at least
+      if( is_array( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] ) )
+      {
+        $i_extensions = count( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] );
+        $arr_ext      = array_values( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] );
+        $csv_ext      = implode( ',', $arr_ext );
+        if( $i_extensions == 1 )
+        {
+          $prompt = 'The third party extension ' . $csv_ext . ' uses the HOOK rows_filter_values.';
+          t3lib_div::devlog( '[INFO/HOOK] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = 'In case of errors or strange behaviour please check this extension!';
+          t3lib_div::devlog( '[HELP/HOOK] ' . $prompt, $this->pObj->extKey, 1 );
+        }
+        if( $i_extensions > 1 )
+        {
+          $prompt = 'The third party extensions ' . $csv_ext . ' use the HOOK rows_filter_values.';
+          t3lib_div::devlog( '[INFO/HOOK] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = 'In case of errors or strange behaviour please check this extenions!';
+          t3lib_div::devlog( '[HELP/HOOK] ' . $prompt, $this->pObj->extKey, 1 );
+        }
+      }
+        // One foreign extension is using this hook at least
+    }
+      // DRS
+
+      // Implement the hook
+    if( is_array( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] ) )
+    {
+      $_params = array( 'pObj' => &$this );
+      foreach( ( array ) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] as $_funcRef )
+      {
+        t3lib_div::callUserFunction( $_funcRef, $_params, $this );
+      }
+    }
+      // Implement the hook
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
   * ZZ
   *
   **********************************************/
@@ -1527,13 +1605,43 @@ var_dump( __METHOD__, __LINE__, $query );
 
 
   /**
- * set_arrLinkToSingle( ): Set the global $arrLinkToSingle
+ * zz_drsFirstRow( ): Prompt to devLog the first row
  *
- * @return	array
- * @version 3.9.8
- * @since 1.0.0
+ * @return	void
+ * @version 3.9.12
+ * @since   3.9.12
  */
-  private function set_arrLinkToSingle( )
+  private function zz_drsFirstRow( )
+  {
+    if( ! $this->pObj->b_drs_sql )
+    {
+      return;
+    }
+
+    if( count ( ( array ) $this->pObj->rows ) <= 0 )
+    {
+      return;
+    }
+
+    reset( $this->pObj->rows );
+    $firstKey   = key( $this->pObj->rows );
+    $firstRow   = $rows[$firstKey];
+
+    $prompt = 'Result of the first row: ' . PHP_EOL;
+    $prompt = $prompt . var_export( $firstRow, true );
+    t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+  }
+
+  
+  
+ /**
+  * zz_setGlobalArrLinkToSingle( ): Set the global $arrLinkToSingle
+  *
+  * @return	array
+  * @version 3.9.8
+  * @since 1.0.0
+  */
+  private function zz_setGlobalArrLinkToSingle( )
   {
     $conf_view = $this->conf_view;
 
@@ -1607,126 +1715,6 @@ var_dump( __METHOD__, __LINE__, $query );
     }
       // DRS
   }
-
-
-
-
-
-
-
-
-
- /***********************************************
-  *
-  * DRS
-  *
-  **********************************************/
-
-
-
-  /**
- * drs_firstRow( ): Implement the hook rows_filter_values
- *
- * @return	void
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function drs_firstRow( )
-  {
-    if( ! $this->pObj->b_drs_sql )
-    {
-      return;
-    }
-
-    if( count ( ( array ) $this->pObj->rows ) <= 0 )
-    {
-      return;
-    }
-
-    reset( $this->pObj->rows );
-    $firstKey   = key( $this->pObj->rows );
-    $firstRow   = $rows[$firstKey];
-
-    $prompt = 'Result of the first row: ' . PHP_EOL;
-    $prompt = $prompt . var_export( $firstRow, true );
-    t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
-  }
-
-
-
-
-
-
-
-
-
- /***********************************************
-  *
-  * Hooks
-  *
-  **********************************************/
-
-
-
-  /**
- * hook_afterConsolidatetRows( ): Implement the hook rows_filter_values
- *
- * @return	void
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function hook_afterConsolidatetRows( )
-  {
-      // DRS
-    if( $this->pObj->b_drs_hooks )
-    {
-        // Any foreign extension is using this hook
-      if( ! is_array( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] ) )
-      {
-        $prompt = 'Any third party extension doesn\'t use the HOOK rows_filter_values.';
-        t3lib_div::devlog( '[INFO/HOOK] ' . $prompt, $this->pObj->extKey, 0 );
-        $prompt = 'See Tutorial Hooks: http://typo3.org/extensions/repository/view/browser_tut_hooks_en/current/';
-        t3lib_div::devlog( '[HELP/HOOK] ' . $prompt, $this->pObj->extKey, 1 );
-      }
-        // Any foreign extension is using this hook
-
-        // One foreign extension is using this hook at least
-      if( is_array( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] ) )
-      {
-        $i_extensions = count( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] );
-        $arr_ext      = array_values( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] );
-        $csv_ext      = implode( ',', $arr_ext );
-        if( $i_extensions == 1 )
-        {
-          $prompt = 'The third party extension ' . $csv_ext . ' uses the HOOK rows_filter_values.';
-          t3lib_div::devlog( '[INFO/HOOK] ' . $prompt, $this->pObj->extKey, 0 );
-          $prompt = 'In case of errors or strange behaviour please check this extension!';
-          t3lib_div::devlog( '[HELP/HOOK] ' . $prompt, $this->pObj->extKey, 1 );
-        }
-        if( $i_extensions > 1 )
-        {
-          $prompt = 'The third party extensions ' . $csv_ext . ' use the HOOK rows_filter_values.';
-          t3lib_div::devlog( '[INFO/HOOK] ' . $prompt, $this->pObj->extKey, 0 );
-          $prompt = 'In case of errors or strange behaviour please check this extenions!';
-          t3lib_div::devlog( '[HELP/HOOK] ' . $prompt, $this->pObj->extKey, 1 );
-        }
-      }
-        // One foreign extension is using this hook at least
-    }
-      // DRS
-
-      // Implement the hook
-    if( is_array( $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] ) )
-    {
-      $_params = array( 'pObj' => &$this );
-      foreach( ( array ) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['browser']['rows_filter_values'] as $_funcRef )
-      {
-        t3lib_div::callUserFunction( $_funcRef, $_params, $this );
-      }
-    }
-      // Implement the hook
-  }
-
 
 
 
