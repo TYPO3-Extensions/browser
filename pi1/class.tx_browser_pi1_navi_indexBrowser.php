@@ -2667,9 +2667,10 @@ class tx_browser_pi1_navi_indexBrowser
     $this->piVarsBak = $this->pObj->piVars;
 
       // Unset the pointer
-    if( isset ( $this->pObj->piVars['pointer'] ) )
+    $pageBrowserPointerLabel = $this->conf['navigation.']['pageBrowser.']['pointer'];
+    if( isset ( $this->pObj->piVars[$pageBrowserPointerLabel] ) )
     {
-      unset( $this->pObj->piVars['pointer'] );
+      unset( $this->pObj->piVars[$pageBrowserPointerLabel] );
     }
 
       // Set indexBrowserTab

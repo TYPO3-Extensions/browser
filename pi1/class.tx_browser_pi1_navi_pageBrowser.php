@@ -186,12 +186,13 @@ class tx_browser_pi1_navi_pageBrowser
       // Init piBase for pagebrowser
 
       // Get the wrapped pagebrowser
+    $pageBrowserPointerLabel = $this->conf['navigation.']['pageBrowser.']['pointer'];
     $pageBrowser  = $this->pObj->pi_list_browseresults
                     (
                       $confPageBrowser['showResultCount'],
                       $confPageBrowser['tableParams'],
                       $confPageBrowser['wrap.'],
-                      $confPageBrowser['pointer'],
+                      $pageBrowserPointerLabel,
                       $confPageBrowser['hscText']
                     );
       // Get the wrapped pagebrowser

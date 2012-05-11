@@ -4365,7 +4365,8 @@ class tx_browser_pi1_filter_4x {
     $arr_currPiVars = $this->pObj->piVars;
 
       // Remove sort and pointer
-    $arr_removePiVars = array( 'sort', 'pointer' );
+    $pageBrowserPointerLabel = $this->conf['navigation.']['pageBrowser.']['pointer'];
+    $arr_removePiVars = array( 'sort', $pageBrowserPointerLabel );
 
       // Remove 'plugin', if current plugin is the default plugin
     if( ! $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin )

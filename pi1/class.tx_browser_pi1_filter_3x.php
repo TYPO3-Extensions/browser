@@ -3077,7 +3077,8 @@ class tx_browser_pi1_filter_3x {
     $value = $this->pObj->objCal->area_get_urlPeriod($arr_ts, $tableField, $value);
 
       // Remove piVars temporarily
-    $arr_removePiVars = array('sort', 'pointer');
+    $pageBrowserPointerLabel = $this->conf['navigation.']['pageBrowser.']['pointer'];
+    $arr_removePiVars = array( 'sort', $pageBrowserPointerLabel );
 
       // Remove piVars['plugin'], if current plugin is trhe default plugin
       // #11576, dwildt, 101219

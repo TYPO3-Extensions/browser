@@ -176,7 +176,7 @@
  * Prepaire piVars. Allocates values to $this->piVars and $this->pi_isOnlyFields
  *
  * @return	void
- * @version 3.7.3
+ * @version 3.9.13
  */
   function prepairePiVars()
   {
@@ -439,39 +439,41 @@
       // Pointer of the Page Browser
 
       // Security
-$this->pObj->dev_var_dump(  $this->conf['navigation.']['pageBrowser.']['pointer'] );
-    if (isset($this->pObj->piVars['pointer']))
+    $pageBrowserPointerLabel = $this->conf['navigation.']['pageBrowser.']['pointer'];
+    if (isset($this->pObj->piVars[$pageBrowserPointerLabel]))
     {
-      $this->pObj->piVars['pointer'] = $this->secure_piVar($this->pObj->piVars['pointer'], 'integer');
+      $this->pObj->piVars[$pageBrowserPointerLabel] = $this->secure_piVar($this->pObj->piVars[$pageBrowserPointerLabel], 'integer');
     }
       // Security
 
       // Default Process
-    if (!isset($this->pObj->piVars['pointer']))
+    if (!isset($this->pObj->piVars[$pageBrowserPointerLabel]))
     {
-      $this->pObj->piVars['pointer'] = 0;
+      $this->pObj->piVars[$pageBrowserPointerLabel] = 0;
     }
       // Default Process
 
       // DRS- Development Reporting System
     if(!$this->pObj->b_drs_all && $this->pObj->b_drs_navi)
     {
-      t3lib_div::devlog('[INFO/NAVIGATION] tx_browser_pi1[pointer] = '.$this->pObj->piVars['pointer'], $this->pObj->extKey, 0);
+      $prompt = 'tx_browser_pi1[' . $pageBrowserPointerLabel . '] = '.$this->pObj->piVars[$pageBrowserPointerLabel];
+      t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
     }
       // DRS- Development Reporting System
 
       // Unset pointer, if it is 0 or empty
-    if($this->pObj->piVars['pointer'] == 0)
+    if($this->pObj->piVars[$pageBrowserPointerLabel] == 0)
     {
-      unset($this->pObj->piVars['pointer']);
+      unset($this->pObj->piVars[$pageBrowserPointerLabel]);
       if($this->pObj->b_drs_navi)
       {
-        t3lib_div::devlog('[INFO/NAVIGATION] tx_browser_pi1[pointer] is deleted, because its value is 0.', $this->pObj->extKey, 0);
+        $prompt = 'tx_browser_pi1[pointer] is deleted, because its value is 0.';
+        t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
       }
     }
-    if($this->pObj->piVars['pointer'] == '')
+    if($this->pObj->piVars[$pageBrowserPointerLabel] == '')
     {
-      unset($this->pObj->piVars['pointer']);
+      unset($this->pObj->piVars[$pageBrowserPointerLabel]);
     }
       // Unset pointer, if it is 0 or empty
       // Pointer of the Page Browser
@@ -870,7 +872,7 @@ $this->pObj->dev_var_dump(  $this->conf['navigation.']['pageBrowser.']['pointer'
  *
  * @param	boolean		$keepFilters
  * @return	void
- * @version   3.4.2
+ * @version   3.9.13
  * @internal  Suggestion #9495 by Frank Sander
  */
   function advanced_remove_piVars($keepFilters=0)
@@ -893,23 +895,22 @@ $this->pObj->dev_var_dump(  $this->conf['navigation.']['pageBrowser.']['pointer'
     //
     // Should we process dont_display_piVars?
 
-    $arr_rmPiVars = false;
-    $arr_noPiVars['indexBrowserTab']   = !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_indexBrowserTab;
-    $arr_noPiVars['mode']    = !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_mode;
-    $arr_noPiVars['pointer'] = !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_pointer;
-    $arr_noPiVars['plugin']  = !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin;
-    $arr_noPiVars['sort']    = !$this->pObj->objFlexform->bool_linkToSingle_wi_piVar_sort;
-    $arr_noPiVars['sword']   = !$this->pObj->objFlexform->bool_searchForm_wiColoredSwordsSingle;
+    $pageBrowserPointerLabel = $this->conf['navigation.']['pageBrowser.']['pointer'];
 
-    // Do we have an array with piVar keys?
-    if (is_array($arr_noPiVars))
+    $arr_rmPiVars = false;
+    $arr_noPiVars['indexBrowserTab']        = ! $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_indexBrowserTab;
+    $arr_noPiVars['mode']                   = ! $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_mode;
+    $arr_noPiVars[$pageBrowserPointerLabel] = ! $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_pointer;
+    $arr_noPiVars['plugin']                 = ! $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin;
+    $arr_noPiVars['sort']                   = ! $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_sort;
+    $arr_noPiVars['sword']                  = ! $this->pObj->objFlexform->bool_searchForm_wiColoredSwordsSingle;
+
+      // Do we have an array with piVar keys?
+    foreach( ( array ) $arr_noPiVars as $key => $value )
     {
-      foreach((array) $arr_noPiVars as $key => $value)
+      if ($value && isset($this->pObj->piVars[$key]))
       {
-        if ($value && isset($this->pObj->piVars[$key]))
-        {
-          $arr_rmPiVars[$key] = $value;
-        }
+        $arr_rmPiVars[$key] = $value;
       }
     }
     // Do we have an array with piVar keys?
