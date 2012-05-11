@@ -1194,7 +1194,7 @@ $this->pObj->dev_var_dump( $this->pObj->piVars['pointer'] );
                 $uidIndexField=""
               );
       // SQL query
-var_dump( __METHOD__, __LINE__, $query );
+//var_dump( __METHOD__, __LINE__, $query );
 
       // Execute query
     $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .

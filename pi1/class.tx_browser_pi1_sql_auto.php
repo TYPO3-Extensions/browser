@@ -205,22 +205,22 @@ class tx_browser_pi1_sql_auto
 //    $this->get_statements_groupBy();
 
 
-//      // Get ORDER BY
-//    $arr_return['data']['orderBy'] = $this->get_statements_orderBy( );
-//    if ( ! $arr_return['data']['orderBy'] )
-//    {
-//      $str_header = '<h1 style="color:red">' .
-//                      $this->pObj->pi_getLL( 'error_sql_h1' ) .
-//                    '</h1>';
-//      $str_prompt = '<p style="color:red; font-weight:bold;">' .
-//                      'ORDER BY-' . $this->pObj->pi_getLL( 'error_value_empty' ) .
-//                    '</p>';
-//      $arr_return['error']['status'] = true;
-//      $arr_return['error']['header'] = $str_header;
-//      $arr_return['error']['prompt'] = $str_prompt;
-//      return $arr_return;
-//    }
-//      // Get ORDER BY
+      // Get ORDER BY
+    $arr_return['data']['orderBy'] = $this->get_statements_orderBy( );
+    if ( ! $arr_return['data']['orderBy'] )
+    {
+      $str_header = '<h1 style="color:red">' .
+                      $this->pObj->pi_getLL( 'error_sql_h1' ) .
+                    '</h1>';
+      $str_prompt = '<p style="color:red; font-weight:bold;">' .
+                      'ORDER BY-' . $this->pObj->pi_getLL( 'error_value_empty' ) .
+                    '</p>';
+      $arr_return['error']['status'] = true;
+      $arr_return['error']['header'] = $str_header;
+      $arr_return['error']['prompt'] = $str_prompt;
+      return $arr_return;
+    }
+      // Get ORDER BY
 
 
       // Get Relations
