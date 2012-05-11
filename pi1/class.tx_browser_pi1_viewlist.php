@@ -37,46 +37,44 @@
  *
  *
  *
- *   85: class tx_browser_pi1_viewlist
- *  128:     function __construct( $parentObj )
+ *   83: class tx_browser_pi1_viewlist
+ *  126:     function __construct( $parentObj )
  *
  *              SECTION: Building the views
- *  165:     function main( )
- *  380:     private function init( )
- *  431:     private function check_view( )
+ *  163:     function main( )
+ *  378:     private function init( )
+ *  429:     private function check_view( )
  *
  *              SECTION: Content / Template
- *  492:     private function content_setCSV( )
- *  525:     private function content_setDefault( )
- *  583:     private function content_dieIfEmpty( $marker, $method, $line )
+ *  490:     private function content_setCSV( )
+ *  523:     private function content_setDefault( )
+ *  581:     private function content_dieIfEmpty( $marker, $method, $line )
  *
  *              SECTION: SQL
- *  637:     private function rows_consolidateLL( $rows )
- *  667:     private function rows_consolidateChildren( $rows )
- *  701:     private function rows_fromSqlRes( $res )
- *  747:     private function rows_getCaseAliases( $res )
- *  784:     private function rows_getDefault( $res )
- *  803:     private function rows_sqlRes( )
- *  846:     private function rows_sqlRes_idsWiTranslation( )
- *  989:     private function rows_sqlRes_idsWoTranslation( $idsWiCurrTranslation )
- * 1146:     private function rows_sqlRes_byIds( $allIds )
- * 1239:     private function sql_selectLocalised( $select )
+ *  635:     private function rows_consolidateLL( $rows )
+ *  665:     private function rows_consolidateChildren( $rows )
+ *  699:     private function rows_fromSqlRes( $res )
+ *  745:     private function rows_getCaseAliases( $res )
+ *  783:     private function rows_getDefault( $res )
+ *  804:     private function rows_sqlRes( )
+ *  847:     private function rows_sqlRes_idsWiTranslation( )
+ *  990:     private function rows_sqlRes_idsWoTranslation( $idsWiCurrTranslation )
+ * 1147:     private function rows_sqlRes_byIds( $allIds )
+ * 1240:     private function sql_selectLocalised( $select )
  *
  *              SECTION: Subparts
- * 1329:     private function subpart_setSearchbox( )
- * 1346:     private function subpart_setSearchboxFilter( )
- * 1390:     private function subpart_setIndexBrowser( )
- * 1420:     private function subpart_setModeSelector( )
- * 1479:     private function subpart_setPageBrowser( )
- *
- *              SECTION: ZZ
- * 1536:     private function zz_setGlobalArrLinkToSingle( )
- *
- *              SECTION: DRS
- * 1634:     private function zz_drsFirstRow( )
+ * 1330:     private function subpart_setSearchbox( )
+ * 1347:     private function subpart_setSearchboxFilter( )
+ * 1391:     private function subpart_setIndexBrowser( )
+ * 1421:     private function subpart_setModeSelector( )
+ * 1480:     private function subpart_setPageBrowser( )
  *
  *              SECTION: Hooks
- * 1678:     private function hook_afterConsolidatetRows( )
+ * 1537:     private function hook_afterConsolidatetRows( )
+ *
+ *              SECTION: ZZ
+ * 1612:     private function zz_drsFirstRow( )
+ * 1642:     private function zz_setGlobalArrLinkToSingle( )
  *
  * TOTAL FUNCTIONS: 25
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -785,7 +783,7 @@ class tx_browser_pi1_viewlist
   private function rows_getDefault( $res )
   {
     $rows = array( );
-    
+
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
       $rows[] = $row;
@@ -1632,8 +1630,8 @@ var_dump( __METHOD__, __LINE__, $query );
     t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
   }
 
-  
-  
+
+
  /**
   * zz_setGlobalArrLinkToSingle( ): Set the global $arrLinkToSingle
   *
