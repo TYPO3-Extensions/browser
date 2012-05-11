@@ -919,6 +919,7 @@ class tx_browser_pi1_viewlist
     {
       return $arr_return;
     }
+$this->pObj->dev_var_dump( $arr_return );
     $idsOfDefaultLanguageRows   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
       // Get ids of records of default language, which match the rules but haven't any translation
 
@@ -928,6 +929,7 @@ class tx_browser_pi1_viewlist
     {
       return $arr_return;
     }
+$this->pObj->dev_var_dump( $arr_return );
     //$withoutIds = $arr_return['data']['idsWiCurrTranslation'];
     $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
       // Get ids of records, which match the rules and have a translation for the current language
@@ -939,6 +941,7 @@ class tx_browser_pi1_viewlist
                 ( array ) $idsOfDefaultLanguageRows
               );
 
+$this->pObj->dev_var_dump( $withIds );
       // Get rows for the list view
     $arr_return = $this->rows_sqlRowsbyIds( $withIds );
 
