@@ -495,13 +495,84 @@ class tx_browser_pi1_sql_auto
  * If there aren't piVars and there aren't a TypoSCript configuration, it will be empty.
  * If there are aliases, the aliases will be deleted.
  *
- * @return	string		$orderBy: SQL ORDER BY clause.
- * @version 3.9.12
+ * @return	string		$csvOrder: SQL ORDER BY clause.
+ * @version 3.9.13
  * @since   3.9.12
  */
   private function get_statements_orderBy()
   {
-    $csvOrder = $this->conf_view['orderBy'];
+      // RETURN : ORDER BY is random( )
+      // #9917: Selecting a random sample from a set of rows
+    if( $this->conf_view['random'] == 1 )
+    {
+      $csvOrder = 'rand( )';
+
+        // DRS
+      if( $this->pObj->b_drs_sql )
+      {
+        $prompt = 'Order of rows should randomise. If there is any ORDER BY configuration, 
+                   it will ignored!';
+        t3lib_div::devLog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 'ORDER BY ' . $csvOrder;
+        t3lib_div::devLog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+      }
+        // DRS
+
+      return $csvOrder;
+    }
+      // RETURN : ORDER BY is random( )
+
+    
+
+      ///////////////////////////////////
+      //
+      // Get the override ORDER BY clause
+
+    $csvOrder = $this->conf_view['override.']['orderBy'];
+    $csvOrder = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $csvOrder );
+    if( $csvOrder )
+    {
+      if( $this->pObj->b_drs_sql )
+      {
+        $prompt = $conf_path . '.override.orderBy is: ' . $csvOrder;
+        t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 'The system generated ORDER BY clause will be ignored!';
+        t3lib_div::devLog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 'ORDER BY ' . $csvOrder;
+        t3lib_div::devLog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+      }
+    }
+      // Get the override ORDER BY clause
+    
+    
+    
+      ///////////////////////////////////
+      //
+      // If we don't have any override clause, get the ORDER BY clause. If there isn't any one: RETURN with an error
+
+    if( empty ( $csvOrder ) )
+    {
+      $csvOrder = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $this->conf_view['orderBy'] );
+      if( empty( $csvOrder ) )
+      {
+        $csvOrder = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $this->conf_view['select'] );
+        list( $csvOrder ) = explode( ' ', $csvOrder );
+      }
+      if( empty( $csvOrder ) )
+      {
+        if ($this->pObj->b_drs_error)
+        {
+          $prompt = 'views.' . $viewWiDot . $mode . ' hasn\'t any orderBy fields.';
+          t3lib_div::devlog( '[ERROR/SQL] ', $this->pObj->extKey, 3 );
+          $prompt = 'ABORTED';
+          t3lib_div::devlog( '[WARN/SQL] '. $prompt, $this->pObj->extKey, 2 );
+        }
+        return false;
+      }
+    }
+      // If we don't have any override clause, get the ORDER BY clause. If there isn't any one: RETURN with an error
+
+
 
       // Set the orderBy by piVars
     $csvOrder = $this->pObj->objSqlFun->zz_prependPiVarSort( $csvOrder );
