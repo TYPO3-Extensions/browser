@@ -268,7 +268,7 @@ class tx_browser_pi1_viewlist
     $rows = $this->pObj->rows;
 
       // Order the rows
-    $this->pObj->objMultisort->multisort_rows( );
+//    $this->pObj->objMultisort->multisort_rows( );
     $rows = $this->pObj->rows;
 
       // Ordering the children rows
