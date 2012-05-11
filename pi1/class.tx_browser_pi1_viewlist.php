@@ -974,6 +974,7 @@ class tx_browser_pi1_viewlist
     $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "',
                           " . $tableTpf . " AS '" . $tableTpf . "'";
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
+    $from     = str_replace( $tableUid, $tableTpf, $from );
 $this->pObj->dev_var_dump( $from );
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
     $andWhere = $labelSysLanguageId . " = " . intval( $this->pObj->objLocalise->lang_id ) . " ";
