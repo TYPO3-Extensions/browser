@@ -59,7 +59,7 @@
  *  784:     private function rows_sql( )
  *  827:     private function rows_sqlIdsOfRowsWiTranslation( )
  *  970:     private function rows_sqlIdsOfRowsWoTranslation( $idsWiCurrTranslation )
- * 1127:     private function rows_sql_byIds( $allIds )
+ * 1127:     private function rows_sqlRowsbyIds( $allIds )
  * 1220:     private function sql_selectLocalised( $select )
  *
  *              SECTION: Subparts
@@ -815,10 +815,10 @@ class tx_browser_pi1_viewlist
 //    switch( $this->orderValueIsTranslated( ) )
     switch( true )
     {
-      case( false ):
+      case( true ):
         $arr_return = $this->rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( );
         break;
-      case( true ):
+      case( false ):
       default:
 //        $arr_return = $this->rows_sqlIdsOfRowsDefaultLanguageAndThanWiTranslation( );
         break;
@@ -838,6 +838,7 @@ class tx_browser_pi1_viewlist
  */
   private function rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( )
   {
+$this->pObj->dev_var_dump( 1 );
       // Get ids of records, which match the rules and have a translation for the current language
     $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( );
     if( $arr_return['error']['status'] )
@@ -865,7 +866,8 @@ class tx_browser_pi1_viewlist
               );
 
       // Get rows for the list view
-    $arr_return = $this->rows_sql_byIds( $allIds );
+    $arr_return = $this->rows_sqlRowsbyIds( $allIds );
+$this->pObj->dev_var_dump( $arr_return );
 
     return $arr_return;
   }
@@ -891,7 +893,7 @@ class tx_browser_pi1_viewlist
       // Get ids of records of default language
 
       // Get rows for the list view
-    $arr_return = $this->rows_sql_byIds( $idsOfRowsDefaultLanguage );
+    $arr_return = $this->rows_sqlRowsbyIds( $idsOfRowsDefaultLanguage );
 
     return $arr_return;
   }
@@ -988,7 +990,7 @@ class tx_browser_pi1_viewlist
     $groupBy  = null;
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
     $limit    = $this->conf_view['limit'];
-$this->pObj->dev_var_dump( $this->pObj->piVars['pointer'] );
+//$this->pObj->dev_var_dump( $this->pObj->piVars['pointer'] );
       // SQL query array
 
       // #9917: Selecting a random sample from a set of rows
@@ -1198,7 +1200,7 @@ $this->pObj->dev_var_dump( $this->pObj->piVars['pointer'] );
 
 
   /**
- * rows_sql_byIds( ): Get the rows for the list view. The method returns the SQL result, but an array.
+ * rows_sqlRowsbyIds( ): Get the rows for the list view. The method returns the SQL result, but an array.
  *
  * @param	string		$allIds     : Ids of the rows for the lost view
  * @return	array		$arr_return : Contains the SQL res or an error message
@@ -1206,7 +1208,7 @@ $this->pObj->dev_var_dump( $this->pObj->piVars['pointer'] );
  * @since   3.9.12
  * @todo    120506, dwildt: filterIsSelected
  */
-  private function rows_sql_byIds( $allIds )
+  private function rows_sqlRowsbyIds( $allIds )
   {
 
       // SQL query array
