@@ -136,20 +136,11 @@ class tx_browser_pi1_viewlist
 
 
 
-
-
   /***********************************************
    *
    * Building the views
    *
    **********************************************/
-
-
-
-
-
-
-
 
 
 
@@ -361,13 +352,6 @@ class tx_browser_pi1_viewlist
 
 
 
-
-
-
-
-
-
-
   /**
  * init( ): Overwrite general_stdWrap, set globals $lDisplayList and $lDisplay
  *
@@ -410,11 +394,6 @@ class tx_browser_pi1_viewlist
     }
       // Get the local or global displayList.display
   }
-
-
-
-
-
 
 
 
@@ -467,11 +446,12 @@ class tx_browser_pi1_viewlist
 
 
 
-
-
-
-
-
+  
+  
+  
+  
+  
+  
  /***********************************************
   *
   * Content / Template
@@ -483,7 +463,7 @@ class tx_browser_pi1_viewlist
 /**
  * content_setCSV( ): Sets content to CSV template
  *
- * @return	[type]		...
+ * @return	void
  * @version 3.9.12
  * @since   3.9.9
  */
@@ -569,12 +549,12 @@ class tx_browser_pi1_viewlist
 
 /**
  * content_dieIfEmpty( ): If content is empty, the methods will die the workflow
- *                      with a qualified prompt.
+ *                        with a qualified prompt.
  *
- * @param	[type]		$$marker: ...
- * @param	[type]		$method: ...
- * @param	[type]		$line: ...
- * @return	[type]		...
+ * @param	string		$marker:  subpart marker 
+ * @param	string		$method:  calling method
+ * @param	string		$line:    line of calling method
+ * @return	void		...
  * @version 3.9.12
  * @since   3.9.12
  */
