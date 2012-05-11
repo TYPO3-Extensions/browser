@@ -796,8 +796,8 @@ class tx_browser_pi1_viewlist
     {
       $prompt = 'Update the manual: ORDER BY has unwanted effects, if ORDER BY value is localised.';
       $prompt = $prompt . ' The sequence of rows will be: [ ordered [ordered rows of foreign
-                language] + [oderded rows of default language]], but not [ordered rows]. Sorry, but this is a
-                need of performance.';
+                language limit 0,20] + [oderded rows of default language limit the rest]], but not 
+                [ordered rows 0,20]. Sorry, but this is a need of performance.';
       t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
     }
       // DRS
@@ -967,15 +967,17 @@ class tx_browser_pi1_viewlist
 
       // Fields for the SELECT statement
     $tableUid = $table . ".uid";
-    $tableTpf = $table . "." . $labelOfParentUid;
+    $tableL10nParent = $table . "." . $labelOfParentUid;
 
 
       // SQL query array
     $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "',
-                          " . $tableTpf . " AS '" . $tableTpf . "'";
+                          " . $tableL10nParent . " AS '" . $tableL10nParent . "'";
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
-    $from     = str_replace( $tableUid, $tableTpf, $from );
-$this->pObj->dev_var_dump( $from );
+      // If FROM contains a relation from $tableUid to a foreign table, move
+      //    $tableUid to $tableL10nParent
+    $from     = str_replace( $tableUid, $tableL10nParent, $from );
+//$this->pObj->dev_var_dump( $from );
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
     $andWhere = $labelSysLanguageId . " = " . intval( $this->pObj->objLocalise->lang_id ) . " ";
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
@@ -984,7 +986,7 @@ $this->pObj->dev_var_dump( $from );
     $andWhere = null;
     if( $withIdList )
     {
-      $andWhere = $tableTpf . " IN (" . $withIdList . ")";
+      $andWhere = $tableL10nParent . " IN (" . $withIdList . ")";
     }
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
     if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
@@ -1051,7 +1053,7 @@ $this->pObj->dev_var_dump( $from );
     $res = $arr_return['data']['res'];
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
-      $arr_return['data']['idsWiCurrTranslation'][] = $row[$tableTpf];
+      $arr_return['data']['idsWiCurrTranslation'][] = $row[$tableL10nParent];
       $arr_return['data']['idsOfTranslationRows'][] = $row[$tableUid];
     }
       // Get ids of rows with translated records and ids of translated records
@@ -1264,7 +1266,7 @@ $this->pObj->dev_var_dump( $from );
           $prompt = 'ORDER BY ' . $tableField . ' ... has unwanted effects!';
           t3lib_div::devlog( '[WARN/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 2 );
           $prompt = $tableField . ' is translated. The sequence of rows will be: [ ordered [ordered rows of foreign
-                    language] + [oderded rows of default language]], but not [ordered rows]. Sorry, but this is a
+                    language limit 0,20] + [oderded rows of default language limit the rest]], but not [ordered rows limit 0,20]. Sorry, but this is a
                     need of performance.';
           t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 0 );
         }
