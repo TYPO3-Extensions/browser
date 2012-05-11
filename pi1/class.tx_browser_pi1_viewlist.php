@@ -57,29 +57,29 @@
  *  733:     private function rows_getCaseAliases( $res )
  *  771:     private function rows_getDefault( $res )
  *  792:     private function rows_sql( )
- *  821:     private function rows_sqlLanguageDefaultOrTranslated( )
- *  866:     private function zz_orderByValueIsLocalised( )
- *  895:     private function rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( )
- *  940:     private function rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( )
- *  984:     private function rows_sqlLanguageDefault( )
- * 1011:     private function rows_sqlIdsOfRowsWiTranslation( $withIds )
- * 1161:     private function rows_sqlIdsOfRowsDefaultLanguage( $withoutIds )
- * 1314:     private function rows_sqlRowsbyIds( $withIds )
- * 1401:     private function sql_selectLocalised( $select )
+ *  821:     private function rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( )
+ *  866:     private function rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( )
+ *  911:     private function rows_sqlIdsOfRowsWiTranslation( $withIds )
+ * 1061:     private function rows_sqlIdsOfRowsDefaultLanguage( $withoutIds )
+ * 1212:     private function rows_sqlLanguageDefault( )
+ * 1237:     private function rows_sqlLanguageDefaultOrTranslated( )
+ * 1283:     private function rows_sqlRowsbyIds( $withIds )
+ * 1370:     private function sql_selectLocalised( $select )
  *
  *              SECTION: Subparts
- * 1491:     private function subpart_setSearchbox( )
- * 1508:     private function subpart_setSearchboxFilter( )
- * 1552:     private function subpart_setIndexBrowser( )
- * 1582:     private function subpart_setModeSelector( )
- * 1641:     private function subpart_setPageBrowser( )
+ * 1460:     private function subpart_setSearchbox( )
+ * 1477:     private function subpart_setSearchboxFilter( )
+ * 1521:     private function subpart_setIndexBrowser( )
+ * 1551:     private function subpart_setModeSelector( )
+ * 1610:     private function subpart_setPageBrowser( )
  *
  *              SECTION: Hooks
- * 1698:     private function hook_afterConsolidatetRows( )
+ * 1667:     private function hook_afterConsolidatetRows( )
  *
  *              SECTION: ZZ
- * 1773:     private function zz_drsFirstRow( )
- * 1803:     private function zz_setGlobalArrLinkToSingle( )
+ * 1742:     private function zz_drsFirstRow( )
+ * 1773:     private function zz_orderByValueIsLocalised( )
+ * 1802:     private function zz_setGlobalArrLinkToSingle( )
  *
  * TOTAL FUNCTIONS: 30
  * (This index is automatically created/updated by the extension "extdeveval")
