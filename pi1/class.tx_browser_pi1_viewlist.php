@@ -57,8 +57,8 @@
  *  725:     private function rows_getCaseAliases( $res )
  *  763:     private function rows_getDefault( $res )
  *  784:     private function rows_sql( )
- *  827:     private function rows_sql_idsWiTranslation( )
- *  970:     private function rows_sql_idsWoTranslation( $idsWiCurrTranslation )
+ *  827:     private function rows_sqlIdsOfRowsWiTranslation( )
+ *  970:     private function rows_sqlIdsOfRowsWoTranslation( $idsWiCurrTranslation )
  * 1127:     private function rows_sql_byIds( $allIds )
  * 1220:     private function sql_selectLocalised( $select )
  *
@@ -783,7 +783,7 @@ class tx_browser_pi1_viewlist
  */
   private function rows_sql( )
   {
-    switch( true )
+    switch( $this->pObj->objLocalise->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
@@ -813,7 +813,7 @@ class tx_browser_pi1_viewlist
   private function rows_sqlLanguageDefaultOrTranslated( )
   {
       // Get ids of records, which match the rules and have a translation for the current language
-    $arr_return = $this->rows_sql_idsWiTranslation( );
+    $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -823,7 +823,7 @@ class tx_browser_pi1_viewlist
       // Get ids of records, which match the rules and have a translation for the current language
 
       // Get ids of records of default language, which match the rules but haven't any translation
-    $arr_return = $this->rows_sql_idsWoTranslation( $idsWiCurrTranslation );
+    $arr_return = $this->rows_sqlIdsOfRowsWoTranslation( $idsWiCurrTranslation );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -856,7 +856,7 @@ class tx_browser_pi1_viewlist
   private function rows_sqlLanguageDefault( )
   {
     $idsWiCurrTranslation = array( );
-    $arr_return = $this->rows_sql_idsWoTranslation( $idsWiCurrTranslation );
+    $arr_return = $this->rows_sqlIdsOfRowsWoTranslation( $idsWiCurrTranslation );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -873,13 +873,13 @@ class tx_browser_pi1_viewlist
 
 
   /**
- * rows_sql_idsWiTranslation( ) : Get ids of rows with translated records and ids of translated records
+ * rows_sqlIdsOfRowsWiTranslation( ) : Get ids of rows with translated records and ids of translated records
  *
  * @return	array		$arr_return: Array with two elements with the ids
  * @version 3.9.13
  * @since   3.9.13
  */
-  private function rows_sql_idsWiTranslation( )
+  private function rows_sqlIdsOfRowsWiTranslation( )
   {
     $arr_return = array( );
 
@@ -1016,14 +1016,14 @@ $this->pObj->dev_var_dump( $this->pObj->piVars['pointer'] );
 
 
   /**
- * rows_sql_idsWoTranslation( ): Get ids of rows, which haven't a translated record
+ * rows_sqlIdsOfRowsWoTranslation( ): Get ids of rows, which haven't a translated record
  *
  * @param	string		$idsWiCurrTranslation : Ids of rows, which have a translated record
  * @return	array		$arr_return           : Contains the ids of rows
  * @version 3.9.13
  * @since   3.9.13
  */
-  private function rows_sql_idsWoTranslation( $idsWiCurrTranslation )
+  private function rows_sqlIdsOfRowsWoTranslation( $idsWiCurrTranslation )
   {
     $arr_return = array( );
 
