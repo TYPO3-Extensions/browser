@@ -837,6 +837,20 @@ class tx_browser_pi1_viewlist
   */
   private function orderByValueIsLocalised( )
   {
+      // RETURN : ORDER BY is randomised
+    if( $this->conf_view['random'] == 1 )
+    {
+      return false;
+    }
+      // RETURN : ORDER BY is randomised
+       
+      
+      // Get ORDER BY
+    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];    
+    list( $tableField ) = explode( ' ', $orderBy );
+    
+      // Get first tableField
+$this->pObj->dev_var_dump( $tableField, $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField ) );
 $this->pObj->dev_var_dump( 'tx_org_news.title', $this->pObj->objLocalise->zz_tablefieldIsLocalised( 'tx_org_news.title') );
 $this->pObj->dev_var_dump( 'tx_org_news.datetime', $this->pObj->objLocalise->zz_tablefieldIsLocalised( 'tx_org_news.datetime') );
 
@@ -1050,13 +1064,6 @@ $this->pObj->dev_var_dump( 'tx_org_news.datetime', $this->pObj->objLocalise->zz_
 //$this->pObj->dev_var_dump( $this->pObj->piVars['pointer'] );
       // SQL query array
 
-      // #9917: Selecting a random sample from a set of rows
-    if( $this->conf_view['random'] == 1 )
-    {
-      $orderBy = 'rand( )';
-    }
-      // Set ORDER BY to false - we like to order by PHP
-
       // Get query
     $query  = $GLOBALS['TYPO3_DB']->SELECTquery
               (
@@ -1192,10 +1199,6 @@ $this->pObj->dev_var_dump( 'tx_org_news.datetime', $this->pObj->objLocalise->zz_
 
       // #9917: Selecting a random sample from a set of rows
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
-    if( $this->conf_view['random'] == 1 )
-    {
-      $orderBy = 'rand( )';
-    }
 
       // LIMIT  : reduce amount of rows by amount of translated rows
     $limit  = $this->conf_view['limit'];
@@ -1306,13 +1309,7 @@ $this->pObj->dev_var_dump( 'tx_org_news.datetime', $this->pObj->objLocalise->zz_
 //}
 
     $groupBy  = null;
-
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
-      // #9917: Selecting a random sample from a set of rows
-    if( $this->conf_view['random'] == 1 )
-    {
-      $orderBy = 'rand( )';
-    }
 
       // Don't limit the rows (we have a list of ids!)
     $limit = null;

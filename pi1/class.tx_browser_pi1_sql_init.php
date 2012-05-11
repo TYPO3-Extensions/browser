@@ -512,7 +512,7 @@ class tx_browser_pi1_sql_init
   * init_global_csvOrderBy( ): Set the global csvOrderBy. Values are from the TypoScript orderBy or select
   *
   * @return	boolean		TRUE, if there is a orderBy value. FALSE, if there isn't any orderBy value
-  * @version 3.9.12
+  * @version 3.9.13
   * @since   3.9.12
   */
   private function init_global_csvOrderBy( )
@@ -521,7 +521,30 @@ class tx_browser_pi1_sql_init
     $conf_path  = $this->conf_path;
     $conf_view  = $this->conf_view;
 
+    
+      // RETURN : ORDER BY is random( )
+      // #9917: Selecting a random sample from a set of rows
+    if( $this->conf_view['random'] == 1 )
+    {
+      $this->pObj->csvOrderBy = 'rand( )';
 
+        // DRS
+      if( $this->pObj->b_drs_sql )
+      {
+        $prompt = 'Order of rows should randomise. If there is any ORDER BY configuration, 
+                   it will ignored!';
+        t3lib_div::devLog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 'ORDER BY ' . $this->pObj->csvOrderBy;
+        t3lib_div::devLog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+      }
+        // DRS
+
+      return true;
+    }
+      // RETURN : ORDER BY is random( )
+
+
+    
       ///////////////////////////////////
       //
       // Get the override ORDER BY clause
