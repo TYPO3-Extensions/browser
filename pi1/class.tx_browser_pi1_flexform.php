@@ -2882,7 +2882,7 @@ class tx_browser_pi1_flexform {
     $pageBrowserPointerLabel  = $this->pObj->conf['navigation.']['pageBrowser.']['pointer'];
     if( isset( $this->pObj->piVars[$pageBrowserPointerLabel] ) )
     {
-      $multiplier = ( int ) $this->pObj->piVars[$pageBrowserPointerLabel] + 1;
+      $multiplier = ( int ) $this->pObj->piVars[$pageBrowserPointerLabel];
       list( $start, $results_at_a_time ) = explode( ',', $conf_limit );
       $start      = $start + ( $multiplier * $results_at_a_time ) ;
       $conf_limit = $start . ',' . $results_at_a_time; 
