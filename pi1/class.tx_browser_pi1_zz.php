@@ -37,61 +37,64 @@
  *
  *
  *
- *   98: class tx_browser_pi1_zz
- *  144:     function __construct($parentObj)
+ *  101: class tx_browser_pi1_zz
+ *  147:     function __construct($parentObj)
  *
  *              SECTION: piVars
- *  178:     function prepairePiVars()
- *  813:     function removeFiltersFromPiVars($inputPiVars, $filterConf)
- *  869:     function advanced_remove_piVars($keepFilters=0)
- *  975:     function advanced_remove_piVars_filter()
+ *  181:     function prepairePiVars()
+ *  819:     function removeFiltersFromPiVars($inputPiVars, $filterConf)
+ *  875:     function advanced_remove_piVars($keepFilters=0)
+ *  981:     function advanced_remove_piVars_filter()
  *
  *              SECTION: $GLOBAL markers
- * 1103:     function get_t3globals_value($marker)
- * 1177:     function substitute_t3globals_recurs($arr_multi_dimensional)
+ * 1109:     function get_t3globals_value($marker)
+ * 1183:     function substitute_t3globals_recurs($arr_multi_dimensional)
  *
  *              SECTION: CSV process and format time
- * 1342:     function getCSVasArray($csvValues)
- * 1358:     function getCSVtablefieldsAsArray($csvTableFields)
- * 1379:     public function cleanUp_lfCr_doubleSpace($csvValue)
- * 1403:     function setTsStrftime()
+ * 1348:     function getCSVasArray($csvValues)
+ * 1364:     function getCSVtablefieldsAsArray($csvTableFields)
+ * 1385:     public function cleanUp_lfCr_doubleSpace($csvValue)
+ * 1409:     function setTsStrftime()
  *
  *              SECTION: Link
- * 1453:     function linkTP($str, $typolink=array(), $urlParameters=array(), $cache=0, $altPageId=0)
- * 1488:     function linkTP_keepPIvars($str, $typolink=array(), $overrulePIvars=array(), $cache=0, $clearAnyway=0, $altPageId=0)
- * 1522:     function get_absUrl($str_relUrl)
- * 1557:     function get_singlePid_for_listview()
- * 1617:     function get_cHash($str_params)
- * 1640:     function get_pathWoEXT($str_TYPO3_EXT_path)
+ * 1459:     function linkTP($str, $typolink=array(), $urlParameters=array(), $cache=0, $altPageId=0)
+ * 1494:     function linkTP_keepPIvars($str, $typolink=array(), $overrulePIvars=array(), $cache=0, $clearAnyway=0, $altPageId=0)
+ * 1528:     function get_absUrl($str_relUrl)
+ * 1563:     function get_singlePid_for_listview()
+ * 1623:     function get_cHash($str_params)
+ * 1646:     function get_pathWoEXT($str_TYPO3_EXT_path)
  *
  *              SECTION: Markers
- * 1693:     function extend_marker_wi_pivars($markerArray)
+ * 1699:     function extend_marker_wi_pivars($markerArray)
  *
  *              SECTION: TypoScript children records
- * 1738:     function children_tsconf_recurs($key, $arr_multi_dimensional, $str_devider)
+ * 1744:     function children_tsconf_recurs($key, $arr_multi_dimensional, $str_devider)
  *
  *              SECTION: Languages, _LOCAL_LANG
- * 1830:     function getTableFieldLL($tableField)
- * 1922:     function initLang()
+ * 1836:     function getTableFieldLL($tableField)
+ * 1928:     function initLang()
  *
  *              SECTION: Sword and Search respectively
- * 1966:     function search_values($str_sword_phrase)
- * 2410:     function color_swords($tableField, $value)
+ * 1972:     function search_values($str_sword_phrase)
+ * 2416:     function color_swords($tableField, $value)
  *
  *              SECTION: Security
- * 2503:     function secure_piVar($str_value, $str_type)
+ * 2509:     function secure_piVar($str_value, $str_type)
  *
  *              SECTION: TCA
- * 2651:     function loadTCA($str_table)
+ * 2657:     function loadTCA($str_table)
  *
  *              SECTION: TypoScript
- * 2688:     function cleanup_views($conf)
+ * 2694:     function cleanup_views($conf)
  *
  *              SECTION: UTF-8
- * 2743:     function b_TYPO3_utf8()
- * 2821:     function char_single_multi_byte($str_char)
+ * 2741:     function b_TYPO3_utf8()
+ * 2819:     function char_single_multi_byte($str_char)
  *
- * TOTAL FUNCTIONS: 28
+ *              SECTION: Arrays
+ * 2890:     public function zz_devPromptArrayNonUnique( $testArray, $method, $line )
+ *
+ * TOTAL FUNCTIONS: 29
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -2876,11 +2879,11 @@
  /**
   * zz_devPromptArrayNonUnique( ) : Checks whether values of an array are unique or not.
   *                                 If not, method will prompts to devLog
-  * 
-  * @param    array     $testArray  : Array which shopuld checked
-  * @param    string    $method     : Calling method
-  * @param    string    $line       : Calling line
-  * @return   void
+  *
+  * @param	array		$testArray  : Array which shopuld checked
+  * @param	string		$method     : Calling method
+  * @param	string		$line       : Calling line
+  * @return	void
   * @version  3.9.13
   * @since    3.9.13
   */
@@ -2895,7 +2898,7 @@
 
       // Get non unique elements
     $testArrayDiff    = array_diff( $testArray, array_unique( $testArray ) );
-    
+
       // RETURN : test array is unique
     if( empty ( $testArrayDiff ) )
     {
@@ -2905,14 +2908,14 @@
 
       // CSV list of non unique elements
     $csvElementNonUnique = implode( ',', $testArrayDiff );
-    
+
       // Prompt to devlog
     $prompt = 'elements aren\'t unique: ' . $csvElementNonUnique . ' in ' . $method . ' (line ' . $line . ')';
     t3lib_div::devlog( '[WARN/DRS] ' . $prompt, $this->pObj->extKey, 2 );
-    
+
     return;
   }
-  
+
 
 
 

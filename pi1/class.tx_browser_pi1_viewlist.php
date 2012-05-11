@@ -37,27 +37,48 @@
  *
  *
  *
- *   64: class tx_browser_pi1_viewlist
- *  107:     function __construct( $parentObj )
+ *   85: class tx_browser_pi1_viewlist
+ *  128:     function __construct( $parentObj )
  *
  *              SECTION: Building the views
- *  144:     function main( )
- *  242:     private function init( )
- *  293:     private function check_view( )
+ *  165:     function main( )
+ *  380:     private function init( )
+ *  431:     private function check_view( )
  *
  *              SECTION: Content / Template
- *  354:     private function content_setCSV( )
- *  387:     private function content_setDefault( )
- *  445:     private function content_dieIfEmpty( $marker, $method, $line )
+ *  492:     private function content_setCSV( )
+ *  525:     private function content_setDefault( )
+ *  583:     private function content_dieIfEmpty( $marker, $method, $line )
+ *
+ *              SECTION: SQL
+ *  637:     private function rows_consolidateLL( $rows )
+ *  667:     private function rows_consolidateChildren( $rows )
+ *  701:     private function rows_fromSqlRes( $res )
+ *  747:     private function rows_getCaseAliases( $res )
+ *  784:     private function rows_getDefault( $res )
+ *  803:     private function rows_sqlRes( )
+ *  846:     private function rows_idsWiTranslation( )
+ *  989:     private function rows_idsWoTranslation( $idsWiCurrTranslation )
+ * 1146:     private function rows_byIds( $allIds )
+ * 1239:     private function sql_selectLocalised( $select )
  *
  *              SECTION: Subparts
- *  499:     private function subpart_setSearchbox( )
- *  516:     private function subpart_setSearchboxFilter( )
- *  560:     private function subpart_setIndexBrowser( )
- *  588:     private function subpart_setModeSelector( )
- *  632:     private function subpart_setPageBrowser( )
+ * 1329:     private function subpart_setSearchbox( )
+ * 1346:     private function subpart_setSearchboxFilter( )
+ * 1390:     private function subpart_setIndexBrowser( )
+ * 1420:     private function subpart_setModeSelector( )
+ * 1479:     private function subpart_setPageBrowser( )
  *
- * TOTAL FUNCTIONS: 12
+ *              SECTION: ZZ
+ * 1536:     private function set_arrLinkToSingle( )
+ *
+ *              SECTION: DRS
+ * 1634:     private function drs_firstRow( )
+ *
+ *              SECTION: Hooks
+ * 1678:     private function hook_afterConsolidatetRows( )
+ *
+ * TOTAL FUNCTIONS: 25
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -216,9 +237,9 @@ class tx_browser_pi1_viewlist
 
 //var_dump( __METHOD__, __LINE__,
 //	$this->pObj->arrConsolidate['addedTableFields'],
-//	$this->pObj->objSqlAut->statementTables, 
-//	$this->pObj->objSqlInit->statements, 
-//	$this->pObj->objFltr4x->andWhereFilter 
+//	$this->pObj->objSqlAut->statementTables,
+//	$this->pObj->objSqlInit->statements,
+//	$this->pObj->objFltr4x->andWhereFilter
 //);
 //var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple );
 
@@ -234,7 +255,7 @@ class tx_browser_pi1_viewlist
     }
     $res = $arr_return['data']['res'];
       // Building SQL query and get the SQL result
-    
+
       // Set rows
     $this->rows_fromSqlRes( $res );
     $rows = $this->pObj->rows;
@@ -286,7 +307,7 @@ class tx_browser_pi1_viewlist
     $this->set_arrLinkToSingle( );
 
 
-    
+
       /////////////////////////////////////////////////////////////////
       //
       // Extension pi5: +Browser Calendar
@@ -606,13 +627,13 @@ class tx_browser_pi1_viewlist
 
 
   /**
-   * rows_consolidateLL( ): Consolidate localisation. Returns consolidated rows.
-   *
-   * @param   array   $rows  : consolidated rows
-   * @return	void
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * rows_consolidateLL( ): Consolidate localisation. Returns consolidated rows.
+ *
+ * @param	array		$rows  : consolidated rows
+ * @return	void
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function rows_consolidateLL( $rows )
   {
       // RETURN : SQL manual mode
@@ -636,13 +657,13 @@ class tx_browser_pi1_viewlist
 
 
   /**
-   * rows_consolidateChildren( ): Consolidate children, returns consolidated rows.
-   *
-   * @param   array   $rows  : consolidated rows
-   * @return	void
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * rows_consolidateChildren( ): Consolidate children, returns consolidated rows.
+ *
+ * @param	array		$rows  : consolidated rows
+ * @return	void
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function rows_consolidateChildren( $rows )
   {
       // RETURN : SQL manual mode
@@ -667,16 +688,16 @@ class tx_browser_pi1_viewlist
 
   }
 
-  
+
 
   /**
-   * rows_sqlRes( ): Move SQL result to rows and set the global var $rows.
-   *
-   * @param   array   $res  : current SQL result
-   * @return	void
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * rows_sqlRes( ): Move SQL result to rows and set the global var $rows.
+ *
+ * @param	array		$res  : current SQL result
+ * @return	void
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function rows_fromSqlRes( $res )
   {
     $debugTrailLevel = 1;
@@ -715,14 +736,14 @@ class tx_browser_pi1_viewlist
 
 
   /**
-   * rows_getCaseAliases( ):  Move SQL result to rows, depending on
-   *                          values from aliases.tables
-   *
-   * @param   array   $res  : current SQL result
-   * @return	array   $rows : the rows
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * rows_getCaseAliases( ):  Move SQL result to rows, depending on
+ *                          values from aliases.tables
+ *
+ * @param	array		$res  : current SQL result
+ * @return	array		$rows : the rows
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function rows_getCaseAliases( $res )
   {
     $conf_view            = $this->conf_view;
@@ -753,13 +774,13 @@ class tx_browser_pi1_viewlist
 
 
   /**
-   * rows_getDefault( ): Move SQL result to rows
-   *
-   * @param   array   $res  : current SQL result
-   * @return	array   $rows : the rows
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * rows_getDefault( ): Move SQL result to rows
+ *
+ * @param	array		$res  : current SQL result
+ * @return	array		$rows : the rows
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function rows_getDefault( $res )
   {
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
@@ -773,17 +794,17 @@ class tx_browser_pi1_viewlist
 
 
   /**
-   * rows_sqlRes( ): Building the SQL query, returns the SQL result.
-   *
-   * @return	array   $arr_return: Contains the SQL res or an error message 
-   * @version 3.9.13
-   * @since   3.9.12
-   */
+ * rows_sqlRes( ): Building the SQL query, returns the SQL result.
+ *
+ * @return	array		$arr_return: Contains the SQL res or an error message
+ * @version 3.9.13
+ * @since   3.9.12
+ */
   private function rows_sqlRes( )
   {
       // Get ids of records, which match the rules and have a translation for the current language
     $arr_return = $this->rows_idsWiTranslation( );
-    if( $arr_return['error']['status'] ) 
+    if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
@@ -793,20 +814,20 @@ class tx_browser_pi1_viewlist
 
       // Get ids of records of default language, which match the rules but haven't any translation
     $arr_return = $this->rows_idsWoTranslation( $idsWiCurrTranslation );
-    if( $arr_return['error']['status'] ) 
+    if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
     $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
       // Get ids of records of default language, which match the rules but haven't any translation
-    
+
       // Merge all ids
-    $allIds = array_merge( 
+    $allIds = array_merge(
                 ( array ) $idsWiCurrTranslation,
                 ( array ) $idsOfTranslationRows,
                 ( array ) $idsOfHitsWoCurrTranslation
               );
-    
+
       // Get rows for the list view
     $arr_return = $this->rows_byIds( $allIds );
 
@@ -816,16 +837,16 @@ class tx_browser_pi1_viewlist
 
 
   /**
-   * rows_idsWiTranslation( ) : Get ids of rows with translated records and ids of translated records
-   *
-   * @return	array   $arr_return: Array with two elements with the ids
-   * @version 3.9.13
-   * @since   3.9.13
-   */
+ * rows_idsWiTranslation( ) : Get ids of rows with translated records and ids of translated records
+ *
+ * @return	array		$arr_return: Array with two elements with the ids
+ * @version 3.9.13
+ * @since   3.9.13
+ */
   private function rows_idsWiTranslation( )
   {
     $arr_return = array( );
-    
+
       // SWITCH $int_localisation_mode
     switch( $this->pObj->objLocalise->int_localisation_mode )
     {
@@ -857,7 +878,7 @@ class tx_browser_pi1_viewlist
     $labelSysLanguageId = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
 
       // RETURN : table is not localised
-    if( ( ! $labelOfParentUid ) || ( ! $labelSysLanguageId ) ) 
+    if( ( ! $labelOfParentUid ) || ( ! $labelSysLanguageId ) )
     {
       if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
       {
@@ -871,10 +892,10 @@ class tx_browser_pi1_viewlist
       // Fields for the SELECT statement
     $tableUid = $table . ".uid";
     $tableTpf = $table . "." . $labelOfParentUid;
-    
-    
+
+
       // SQL query array
-    $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "', 
+    $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "',
                           " . $tableTpf . " AS '" . $tableTpf . "'";
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
@@ -913,7 +934,7 @@ class tx_browser_pi1_viewlist
       $orderBy = 'rand( )';
     }
       // Set ORDER BY to false - we like to order by PHP
-    
+
       // Get query
     $query  = $GLOBALS['TYPO3_DB']->SELECTquery
               (
@@ -947,7 +968,7 @@ class tx_browser_pi1_viewlist
       $arr_return['data']['idsOfTranslationRows'][] = $row[$tableUid];
     }
       // Get ids of rows with translated records and ids of translated records
-    
+
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
@@ -958,17 +979,17 @@ class tx_browser_pi1_viewlist
 
 
   /**
-   * rows_idsWoTranslation( ): Get ids of rows, which haven't a translated record
-   *
-   * @param     string  $idsWiCurrTranslation : Ids of rows, which have a translated record
-   * @return	array   $arr_return           : Contains the ids of rows
-   * @version 3.9.13
-   * @since   3.9.13
-   */
+ * rows_idsWoTranslation( ): Get ids of rows, which haven't a translated record
+ *
+ * @param	string		$idsWiCurrTranslation : Ids of rows, which have a translated record
+ * @return	array		$arr_return           : Contains the ids of rows
+ * @version 3.9.13
+ * @since   3.9.13
+ */
   private function rows_idsWoTranslation( $idsWiCurrTranslation )
   {
     $arr_return = array( );
-    
+
       // SWITCH $int_localisation_mode
     switch( $this->pObj->objLocalise->int_localisation_mode )
     {
@@ -990,7 +1011,7 @@ class tx_browser_pi1_viewlist
     $tableUid = $table . ".uid";
 
       // RETURN : table is not localised
-    if( ! $GLOBALS['TCA'][$table]['ctrl']['languageField'] ) 
+    if( ! $GLOBALS['TCA'][$table]['ctrl']['languageField'] )
     {
       if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
       {
@@ -1012,14 +1033,14 @@ class tx_browser_pi1_viewlist
     {
       $andWhereIdList = $tableUid . " NOT IN (" . $idList . ")";
     }
-    
+
       // SQL query array
     $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "'";
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereSysLanguage );
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereIdList );
-    
+
 
 //    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
 //    {
@@ -1043,21 +1064,21 @@ class tx_browser_pi1_viewlist
 //}
 
     $groupBy  = null;
-    
+
       // #9917: Selecting a random sample from a set of rows
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
     if( $this->conf_view['random'] == 1 )
     {
       $orderBy = 'rand( )';
     }
-    
+
       // LIMIT  : reduce amount of rows by amount of translated rows
     $limit  = $this->conf_view['limit'];
     list( $start, $amount ) = explode( ',', $limit );
     $amount = ( int ) $amount - count ( $idsWiCurrTranslation );
     if( $amount < 0 )
     {
-      $prompt = 'Sorry, this error shouldn\'t occurred: Amount of displayed rows is \'' . $amount . '\'.<br /> 
+      $prompt = 'Sorry, this error shouldn\'t occurred: Amount of displayed rows is \'' . $amount . '\'.<br />
                 <br />
                 Method: ' . __METHOD__ . '<br />
                 Line: ' . __LINE__ . '<br />
@@ -1104,7 +1125,7 @@ class tx_browser_pi1_viewlist
       $arr_return['data']['idsOfHitsWoCurrTranslation'][] = $row[$tableUid];
     }
       // Get the ids
-    
+
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
@@ -1114,14 +1135,14 @@ class tx_browser_pi1_viewlist
 
 
   /**
-   * rows_byIds( ): Get the rows for the list view. The method returns the SQL result, but an array.
-   *
-   * @param     string  $allIds     : Ids of the rows for the lost view
-   * @return	array   $arr_return : Contains the SQL res or an error message 
-   * @version 3.9.13
-   * @since   3.9.12
-   * @todo    120506, dwildt: filterIsSelected
-   */
+ * rows_byIds( ): Get the rows for the list view. The method returns the SQL result, but an array.
+ *
+ * @param	string		$allIds     : Ids of the rows for the lost view
+ * @return	array		$arr_return : Contains the SQL res or an error message
+ * @version 3.9.13
+ * @since   3.9.12
+ * @todo    120506, dwildt: filterIsSelected
+ */
   private function rows_byIds( $allIds )
   {
 
@@ -1140,7 +1161,7 @@ class tx_browser_pi1_viewlist
     $idList = implode( ',', ( array ) $allIds );
     if( $idList )
     {
-      $where  = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $idList . ")";    
+      $where  = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $idList . ")";
     }
 
 //  // DRS
@@ -1167,10 +1188,10 @@ class tx_browser_pi1_viewlist
     {
       $orderBy = 'rand( )';
     }
-    
+
       // Don't limit the rows (we have a list of ids!)
     $limit = null;
-    
+
       // DRS
     if( $this->pObj->b_drs_devTodo )
     {
@@ -1206,15 +1227,15 @@ var_dump( __METHOD__, __LINE__, $query );
 
 
   /**
-   * sql_selectLocalised( ) : If local table has language overlay fields or 
-   *                          is localised, fields for language controlling
-   *                          are added
-   *
-   * @param     string  $select : Current select
-   * @return	string  $select : Select with fields for localisation
-   * @version 3.9.13
-   * @since   3.9.12
-   */
+ * sql_selectLocalised( ) : If local table has language overlay fields or
+ *                          is localised, fields for language controlling
+ *                          are added
+ *
+ * @param	string		$select : Current select
+ * @return	string		$select : Select with fields for localisation
+ * @version 3.9.13
+ * @since   3.9.12
+ */
   private function sql_selectLocalised( $select )
   {
       // SWITCH $int_localisation_mode
@@ -1257,11 +1278,11 @@ var_dump( __METHOD__, __LINE__, $query );
       }
     }
       // Add the localised part with aliases to the current SELECT statement
-    
+
       // Check array for non unique elements
     $testArray = explode( ',', $select );
     $this->pObj->objZz->zz_devPromptArrayNonUnique( $testArray, __METHOD__, __LINE__ );
-        
+
       // Add tables to the consolidation array
       // LOOP through all new table.fields
     foreach( ( array ) $arr_result['addedFields'] as $tableField )
@@ -1503,15 +1524,15 @@ var_dump( __METHOD__, __LINE__, $query );
   *
   **********************************************/
 
-  
-  
+
+
   /**
-   * set_arrLinkToSingle( ): Set the global $arrLinkToSingle
-   *
-   * @return	array
-   * @version 3.9.8
-   * @since 1.0.0
-   */
+ * set_arrLinkToSingle( ): Set the global $arrLinkToSingle
+ *
+ * @return	array
+ * @version 3.9.8
+ * @since 1.0.0
+ */
   private function set_arrLinkToSingle( )
   {
     $conf_view = $this->conf_view;
@@ -1604,12 +1625,12 @@ var_dump( __METHOD__, __LINE__, $query );
 
 
   /**
-   * drs_firstRow( ): Implement the hook rows_filter_values
-   *
-   * @return	void
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * drs_firstRow( ): Implement the hook rows_filter_values
+ *
+ * @return	void
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function drs_firstRow( )
   {
     if( ! $this->pObj->b_drs_sql )
@@ -1648,12 +1669,12 @@ var_dump( __METHOD__, __LINE__, $query );
 
 
   /**
-   * hook_afterConsolidatetRows( ): Implement the hook rows_filter_values
-   *
-   * @return	void
-   * @version 3.9.12
-   * @since   3.9.12
-   */
+ * hook_afterConsolidatetRows( ): Implement the hook rows_filter_values
+ *
+ * @return	void
+ * @version 3.9.12
+ * @since   3.9.12
+ */
   private function hook_afterConsolidatetRows( )
   {
       // DRS
