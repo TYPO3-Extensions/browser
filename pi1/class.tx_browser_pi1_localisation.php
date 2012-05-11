@@ -1758,7 +1758,7 @@ class tx_browser_pi1_localisation
       // Get and set the l10n_mode
     if( ! isset( $GLOBALS['TCA'][$table]['columns'][$field] ) )
     {
-      $prompt = 'tableField isn\'t part of the TCA. Sorry, this error shouldn\'t occurred!<br />
+      $prompt = 'tableField "' . $tableField . '" isn\'t part of the TCA. Sorry, this error shouldn\'t occurred!<br />
                 <br />
                 Browser - TYPO3 without PHP<br />
                 <br />
