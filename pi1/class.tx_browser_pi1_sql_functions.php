@@ -943,6 +943,12 @@ class tx_browser_pi1_sql_functions
     }
       // RETURN $param_1
 
+    $param_1 = trim( $param_1 );
+    $param_1 = rtrim( $param_1, ' AND' );
+    $param_2 = trim( $param_2 );
+    $param_2 = ltrim( $param_2, 'AND ' );
+    
+    
       // RETURN $param_1 AND $param_2
     $param_1 = $param_1 . " AND " . $param_2;
     return $param_1;

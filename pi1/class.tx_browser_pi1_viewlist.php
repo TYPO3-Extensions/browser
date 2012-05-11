@@ -791,6 +791,17 @@ class tx_browser_pi1_viewlist
  */
   private function rows_sql( )
   {
+      // DRS
+    if( $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Update the manual: ORDER BY has unwanted effects, if ORDER BY value is localised.';
+      $prompt = $prompt . ' The sequence of rows will be: [ ordered [ordered rows of foreign
+                language] + [oderded rows of default language]], but not [ordered rows]. Sorry, but this is a
+                need of performance.';
+      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
+    }
+      // DRS
+
     switch( $this->pObj->objLocalise->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
@@ -1112,12 +1123,10 @@ class tx_browser_pi1_viewlist
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereSysLanguage );
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereIdList );
-
-
-//    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
-//    {
-//      $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
-//    }
+    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
+    {
+      $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
+    }
 //
 //  // DRS
 //if( $this->pObj->b_drs_devTodo )
