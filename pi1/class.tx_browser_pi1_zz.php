@@ -439,6 +439,7 @@
       // Pointer of the Page Browser
 
       // Security
+$this->conf['navigation.']['pageBrowser.']['pointer'];    
     if (isset($this->pObj->piVars['pointer']))
     {
       $this->pObj->piVars['pointer'] = $this->secure_piVar($this->pObj->piVars['pointer'], 'integer');
