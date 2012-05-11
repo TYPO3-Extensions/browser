@@ -631,7 +631,6 @@ class tx_browser_pi1_viewlist
 
       // Consolidate Localisation
     $rows = $this->pObj->objLocalise3x->consolidate_rows( $rows, $this->pObj->localTable );
-$this->pObj->dev_var_dump( $rows );
 
     return $rows;
   }
