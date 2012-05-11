@@ -1046,7 +1046,7 @@ $this->pObj->dev_var_dump( $withIds );
     $andWhere = null;
     if( $withIdList )
     {
-      $andWhere = $tableUid . " IN (" . $withIdList . ")";
+      $andWhere = $tableTpf . " IN (" . $withIdList . ")";
     }
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
 
