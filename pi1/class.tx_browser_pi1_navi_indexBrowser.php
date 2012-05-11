@@ -957,6 +957,7 @@ class tx_browser_pi1_navi_indexBrowser
       // RETURN : error prompt
       // Count special chars
 
+$this->pObj->dev_var_dump( $this->indexBrowserTab, $this->pObj->piVars['indexBrowserTab'] );
       // Count chars
     $arr_return = $this->count_chars( );
       // RETURN : error prompt
