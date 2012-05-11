@@ -41,40 +41,40 @@
  *  126:     function __construct( $parentObj )
  *
  *              SECTION: Building the views
- *  163:     function main( )
- *  378:     private function init( )
- *  429:     private function check_view( )
+ *  154:     function main( )
+ *  362:     private function init( )
+ *  408:     private function check_view( )
  *
  *              SECTION: Content / Template
- *  490:     private function content_setCSV( )
- *  523:     private function content_setDefault( )
- *  581:     private function content_dieIfEmpty( $marker, $method, $line )
+ *  470:     private function content_setCSV( )
+ *  503:     private function content_setDefault( )
+ *  561:     private function content_dieIfEmpty( $marker, $method, $line )
  *
  *              SECTION: SQL
- *  635:     private function rows_consolidateLL( $rows )
- *  665:     private function rows_consolidateChildren( $rows )
- *  699:     private function rows_fromSqlRes( $res )
- *  745:     private function rows_getCaseAliases( $res )
- *  783:     private function rows_getDefault( $res )
- *  804:     private function rows_sqlRes( )
- *  847:     private function rows_sqlRes_idsWiTranslation( )
- *  990:     private function rows_sqlRes_idsWoTranslation( $idsWiCurrTranslation )
- * 1147:     private function rows_sqlRes_byIds( $allIds )
- * 1240:     private function sql_selectLocalised( $select )
+ *  615:     private function rows_consolidateLL( $rows )
+ *  645:     private function rows_consolidateChildren( $rows )
+ *  679:     private function rows_fromSqlRes( $res )
+ *  725:     private function rows_getCaseAliases( $res )
+ *  763:     private function rows_getDefault( $res )
+ *  784:     private function rows_sqlRes( )
+ *  827:     private function rows_sqlRes_idsWiTranslation( )
+ *  970:     private function rows_sqlRes_idsWoTranslation( $idsWiCurrTranslation )
+ * 1127:     private function rows_sqlRes_byIds( $allIds )
+ * 1220:     private function sql_selectLocalised( $select )
  *
  *              SECTION: Subparts
- * 1330:     private function subpart_setSearchbox( )
- * 1347:     private function subpart_setSearchboxFilter( )
- * 1391:     private function subpart_setIndexBrowser( )
- * 1421:     private function subpart_setModeSelector( )
- * 1480:     private function subpart_setPageBrowser( )
+ * 1310:     private function subpart_setSearchbox( )
+ * 1327:     private function subpart_setSearchboxFilter( )
+ * 1371:     private function subpart_setIndexBrowser( )
+ * 1401:     private function subpart_setModeSelector( )
+ * 1460:     private function subpart_setPageBrowser( )
  *
  *              SECTION: Hooks
- * 1537:     private function hook_afterConsolidatetRows( )
+ * 1517:     private function hook_afterConsolidatetRows( )
  *
  *              SECTION: ZZ
- * 1612:     private function zz_drsFirstRow( )
- * 1642:     private function zz_setGlobalArrLinkToSingle( )
+ * 1592:     private function zz_drsFirstRow( )
+ * 1622:     private function zz_setGlobalArrLinkToSingle( )
  *
  * TOTAL FUNCTIONS: 25
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -446,12 +446,12 @@ class tx_browser_pi1_viewlist
 
 
 
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
  /***********************************************
   *
   * Content / Template
@@ -551,7 +551,7 @@ class tx_browser_pi1_viewlist
  * content_dieIfEmpty( ): If content is empty, the methods will die the workflow
  *                        with a qualified prompt.
  *
- * @param	string		$marker:  subpart marker 
+ * @param	string		$marker:  subpart marker
  * @param	string		$method:  calling method
  * @param	string		$line:    line of calling method
  * @return	void		...
