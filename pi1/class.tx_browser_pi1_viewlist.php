@@ -783,6 +783,20 @@ class tx_browser_pi1_viewlist
  */
   private function rows_sqlRes( )
   {
+    switch( true )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+        $arr_return = $this->rows_sqlResLanguageDefault( );
+        break;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+        $arr_return = $this->rows_sqlResLanguageDefaultOrTranslated( );
+        break;
+      default:
+          // DIE
+        $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
+        break;
+    }
       // Get ids of records, which match the rules and have a translation for the current language
     $arr_return = $this->rows_sqlRes_idsWiTranslation( );
     if( $arr_return['error']['status'] )
@@ -811,6 +825,75 @@ class tx_browser_pi1_viewlist
 
       // Get rows for the list view
     $arr_return = $this->rows_sqlRes_byIds( $allIds );
+
+    return $arr_return;
+  }
+
+
+
+  /**
+ * rows_sqlResLanguageDefaultOrTranslated( ): Building the SQL query, returns the SQL result.
+ *
+ * @return	array		$arr_return: Contains the SQL res or an error message
+ * @version 3.9.13
+ * @since   3.9.12
+ */
+  private function rows_sqlResLanguageDefaultOrTranslated( )
+  {
+      // Get ids of records, which match the rules and have a translation for the current language
+    $arr_return = $this->rows_sqlRes_idsWiTranslation( );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    $idsWiCurrTranslation = $arr_return['data']['idsWiCurrTranslation'];
+    $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
+      // Get ids of records, which match the rules and have a translation for the current language
+
+      // Get ids of records of default language, which match the rules but haven't any translation
+    $arr_return = $this->rows_sqlRes_idsWoTranslation( $idsWiCurrTranslation );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    $idsOfHitsWoCurrTranslation   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+      // Get ids of records of default language, which match the rules but haven't any translation
+
+      // Merge all ids
+    $allIds = array_merge(
+                ( array ) $idsWiCurrTranslation,
+                ( array ) $idsOfTranslationRows,
+                ( array ) $idsOfHitsWoCurrTranslation
+              );
+
+      // Get rows for the list view
+    $arr_return = $this->rows_sqlRes_byIds( $allIds );
+
+    return $arr_return;
+  }
+
+
+
+  /**
+ * rows_sqlResLanguageDefault( ): Building the SQL query, returns the SQL result.
+ *
+ * @return	array		$arr_return: Contains the SQL res or an error message
+ * @version 3.9.13
+ * @since   3.9.12
+ */
+  private function rows_sqlResLanguageDefault( )
+  {
+    $idsWiCurrTranslation = array( );
+    $arr_return = $this->rows_sqlRes_idsWoTranslation( $idsWiCurrTranslation );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    $idsOfRowsDefaultLanguage = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+      // Get ids of records of default language
+
+      // Get rows for the list view
+    $arr_return = $this->rows_sqlRes_byIds( $idsOfRowsDefaultLanguage );
 
     return $arr_return;
   }
