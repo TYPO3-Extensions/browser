@@ -812,6 +812,32 @@ class tx_browser_pi1_viewlist
  */
   private function rows_sqlLanguageDefaultOrTranslated( )
   {
+//    switch( $this->orderValueIsTranslated( ) )
+    switch( true )
+    {
+      case( false ):
+        $arr_return = $this->rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( );
+        break;
+      case( true ):
+      default:
+//        $arr_return = $this->rows_sqlIdsOfRowsDefaultLanguageAndThanWiTranslation( );
+        break;
+    }
+
+    return $arr_return;
+  }
+
+
+
+  /**
+ * rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( ): Building the SQL query, returns the SQL result.
+ *
+ * @return	array		$arr_return: Contains the SQL res or an error message
+ * @version 3.9.13
+ * @since   3.9.12
+ */
+  private function rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( )
+  {
       // Get ids of records, which match the rules and have a translation for the current language
     $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( );
     if( $arr_return['error']['status'] )
@@ -844,7 +870,7 @@ class tx_browser_pi1_viewlist
     return $arr_return;
   }
 
-
+  
 
   /**
  * rows_sqlLanguageDefault( ): Building the SQL query, returns the SQL result.
