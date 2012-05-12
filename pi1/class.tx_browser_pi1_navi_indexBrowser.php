@@ -2514,11 +2514,22 @@ $tabId      = $this->indexBrowserTab['tabLabels'][$tabLabel];
 $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
 $arr_return = $this->count_charSetSqlLength( $attributes );
 $row        = $arr_return['data']['row'];
-$findInSet  = $this->count_charSetSqlFindInSet( $row ); 
-$this->findInSetForCurrTab = $findInSet;
+$arrFindInSet  = $this->count_charSetSqlFindInSet( $row ); 
+$orFindInSet = array( );
+foreach( $arrFindInSet as $length => $arr_statement )
+{
+  foreach( $arr_statement as $statement )
+  {
+    $orFindInSet[] = $statement;
+  }
+}
+$findInSet = implode( ' OR ', $orFindInSet );
+$findInSet = '(' . $findInSet . ')';
+
+$this->findInSetForCurrTab;
 //$this->pObj->dev_var_dump( $this->indexBrowserTab, $this->pObj->piVars['indexBrowserTab'] );
 //$this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes, $arr_return, $row, $findInSet );
-$this->pObj->dev_var_dump( $findInSet );
+$this->pObj->dev_var_dump( $arrFindInSet, $findInSet );
   }
 
 

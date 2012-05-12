@@ -977,7 +977,6 @@ class tx_browser_pi1_viewlist
       // If FROM contains a relation from $tableUid to a foreign table, move
       //    $tableUid to $tableL10nParent
     $from     = str_replace( $tableUid, $tableL10nParent, $from );
-//$this->pObj->dev_var_dump( $from );
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
     $andWhere = $labelSysLanguageId . " = " . intval( $this->pObj->objLocalise->lang_id ) . " ";
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
@@ -994,6 +993,11 @@ class tx_browser_pi1_viewlist
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
     }
 
+    if( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab )
+    {
+//      $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objNaviIndexBrowser->findInSetForCurrTab );
+    }
+    
 //    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
 //    {
 //      $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
