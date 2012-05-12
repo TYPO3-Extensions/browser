@@ -39,55 +39,65 @@
  *
  *
  *
- *   94: class tx_browser_pi1_sql_auto
- *  138:     public function __construct($parentObj)
+ *  104: class tx_browser_pi1_sql_auto
+ *  150:     public function __construct($parentObj)
  *
  *              SECTION: Statements
- *  168:     public function get_statements( )
+ *  180:     public function get_statements( )
  *
  *              SECTION: Statements SELECT
- *  298:     private function get_statements_select( )
+ *  313:     private function get_statements_select( )
  *
  *              SECTION: Statements FROM
- *  344:     private function get_statements_from( )
+ *  359:     private function get_statements_from( )
  *
  *              SECTION: Statements ORDER BY, GROUP BY (disabled)
- *  499:     private function get_statements_orderBy()
- *  521:     private function get_statements_groupBy( )
+ *  514:     private function get_statements_orderBy()
+ *  624:     private function get_statements_groupBy( )
  *
  *              SECTION: Statements WHERE
- *  548:     private function get_statements_where( )
- *  758:     private function whereSearch()
- * 1016:     private function andWhere()
- * 1100:     private function arr_andWherePid()
- * 1135:     private function arr_andWhereEnablefields()
- * 1171:     private function str_enableFields($realTable)
+ *  651:     private function get_statements_where( )
+ *  861:     private function get_statements_whereLL( $where )
+ *  884:     private function whereSearch()
+ * 1138:     private function andWhere()
+ * 1221:     private function arr_andWherePid()
+ * 1256:     private function arr_andWhereEnablefields()
+ * 1293:     private function str_enableFields($realTable)
  *
  *              SECTION: Relation building
- * 1209:     private function init_class_relations( )
- * 1317:     private function init_class_relationsMm( $table, $config, $foreignTable )
- * 1377:     private function init_class_relationsSingle( $table, $columnsKey, $foreignTable)
- * 1448:     private function relations_confDRSprompt( )
- * 1525:     private function relations_dontUseFields( )
- * 1578:     private function relations_getForeignTable( $tables, $config, $configPath )
- * 1645:     private function relations_requirements( $table, $config, $configPath )
+ * 1331:     private function init_class_relations( )
+ * 1439:     private function init_class_relationsMm( $table, $config, $foreignTable )
+ * 1500:     private function init_class_relationsSingle( $table, $columnsKey, $foreignTable)
+ * 1571:     private function relations_confDRSprompt( )
+ * 1648:     private function relations_dontUseFields( )
+ * 1704:     private function relations_getForeignTable( $tables, $config, $configPath )
+ * 1771:     private function relations_requirements( $table, $config, $configPath )
  *
  *              SECTION: Joins
- * 1754:     private function get_joins( )
+ * 1882:     private function get_joins( )
+ * 1961:     private function get_joinsSetMm( )
+ * 2071:     private function get_joinsAddTablesForeign( $foreignTable )
+ * 2094:     private function get_joinsAddTablesMm( $mmTable )
+ * 2150:     private function get_joinsSetMmFullJoin( $localTable, $mmTable, $foreignTable, $fullJoin )
+ * 2202:     private function get_joinsSetMmLeftJoin( $localTable, $mmTable, $foreignTable, $leftJoin )
+ * 2268:     private function get_joinsSetCsv( $arr_return )
+ * 2379:     private function get_joinsSetCsvTablesOneDim( )
  *
  *              SECTION: Helper
- * 2236:     private function init_class_boolAutorelation( )
- * 2312:     private function init_class_bLeftJoin( )
- * 2350:     private function init_class_statementTables( $type, $csvStatement )
- * 2398:     private function init_class_statementTablesByFilter( )
- * 2419:     private function zz_addAliases( $statement )
- * 2468:     private function zz_addUidsToSelect( $csvSelect )
- * 2500:     private function zz_dieIfOverride( $type )
- * 2549:     private function zz_loadTCAforAllTables( )
- * 2571:     private function zz_setToRealTableNames( $csvStatement )
- * 2595:     private function zz_woForeignTables( $type, $csvStatement )
+ * 2430:     private function init_class_boolAutorelation( )
+ * 2506:     private function init_class_arrRelationsMmSimple( )
+ * 2542:     private function init_class_bLeftJoin( )
+ * 2580:     private function init_class_statementTables( $type, $csvStatement )
+ * 2628:     private function init_class_statementTablesByFilter( )
+ * 2649:     private function zz_addAliases( $statement )
+ * 2698:     private function zz_addUidsToSelect( $csvSelect )
+ * 2725:     private function zz_checkIfOneTabelIsUsedAtLeast( )
+ * 2764:     private function zz_dieIfOverride( $type )
+ * 2813:     private function zz_loadTCAforAllTables( )
+ * 2835:     private function zz_setToRealTableNames( $csvStatement )
+ * 2859:     private function zz_woForeignTables( $type, $csvStatement )
  *
- * TOTAL FUNCTIONS: 30
+ * TOTAL FUNCTIONS: 40
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
@@ -122,7 +132,7 @@ class tx_browser_pi1_sql_auto
   var $b_left_join = false;
     // [Boolean] TRUE if the current relation is opposite
   var $opposite = null;
-  
+
     // [Array] array like $statementTables['select']['localtable']['tx_org_cal'] = 'tx_org_cal'
   var $statementTables = null;
     // [Array] array like $addedTableFields['select']['tx_org_cal'][] = 'tx_org_cal.uid'
@@ -170,7 +180,7 @@ class tx_browser_pi1_sql_auto
   public function get_statements( )
   {
     $arr_return = array( );
-    
+
       // Add filter tables to class var $statementTables
     $this->init_class_statementTablesByFilter( );
 
@@ -512,7 +522,7 @@ class tx_browser_pi1_sql_auto
         // DRS
       if( $this->pObj->b_drs_sql )
       {
-        $prompt = 'Order of rows should randomise. If there is a ORDER BY configuration, 
+        $prompt = 'Order of rows should randomise. If there is a ORDER BY configuration,
                    it will ignored!';
         t3lib_div::devLog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
         $prompt = 'ORDER BY ' . $csvOrder;
@@ -524,7 +534,7 @@ class tx_browser_pi1_sql_auto
     }
       // RETURN : ORDER BY is random( )
 
-    
+
 
       ///////////////////////////////////
       //
@@ -549,15 +559,15 @@ class tx_browser_pi1_sql_auto
       return $csvOrder;
     }
       // RETURN : override ORDER BY clause
-    
-    
-    
+
+
+
       ///////////////////////////////////
       //
       // If we don't have any override clause, get the ORDER BY clause. If there isn't any one: RETURN with an error
 
     $csvOrder = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $this->conf_view['orderBy'] );
-    
+
       // ORDER BY is empty. Take frist value from SELECT
     if( empty( $csvOrder ) )
     {
@@ -580,7 +590,7 @@ class tx_browser_pi1_sql_auto
         t3lib_div::devLog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
       }
         // DRS
-        
+
         // Set the orderBy by piVars
       $csvOrder = $this->pObj->objSqlFun->zz_prependPiVarSort( $csvOrder );
       return $csvOrder;
@@ -588,7 +598,7 @@ class tx_browser_pi1_sql_auto
       // RETURN : ORDER BY
       // If we don't have any override clause, get the ORDER BY clause. If there isn't any one: RETURN with an error
 
-    
+
       // ERROR  : ORDER BY is undefined
     if( $this->pObj->b_drs_error )
     {
@@ -709,7 +719,7 @@ class tx_browser_pi1_sql_auto
       // Is there an andWhere statement from the filter class?
 
 
-    
+
       //////////////////////////////////////////////////////////////////////////
       //
       // If we have a sword, allocates the global $arr_swordPhrasesTableField
@@ -843,6 +853,7 @@ class tx_browser_pi1_sql_auto
 /**
  * get_statements_whereLL( ) : ...
  *
+ * @param	[type]		$$where: ...
  * @return	string		FALSE or the SQL-where-clause
  * @version 3.9.13
  * @since   3.9.12
@@ -1637,7 +1648,7 @@ class tx_browser_pi1_sql_auto
   private function relations_dontUseFields( )
   {
     $arr_return = array( );
-    
+
       // Get TypoScript configuration
     $dontUseFieldsCSV = $this->pObj->conf['autoconfig.']['relations.']['csvDontUseFields'];
 
@@ -1885,7 +1896,7 @@ class tx_browser_pi1_sql_auto
 
       // Init the class var $arr_relations_mm_simple
     $this->init_class_arrRelationsMmSimple( );
-    
+
       // RETURN there isn't any table
     if( empty( $this->arr_relations_mm_simple ) )
     {
@@ -1959,14 +1970,14 @@ class tx_browser_pi1_sql_auto
 
       // Get tables with MM relation
     $tables = $this->arr_relations_mm_simple['MM'];
-    
+
       // RETURN : there isn't any table
     if( empty ( $tables ) )
     {
       return $arr_return;
     }
       // RETURN : there isn't any table
-    
+
       // DRS
     if ( $this->pObj->b_drs_sql )
     {
@@ -1975,8 +1986,8 @@ class tx_browser_pi1_sql_auto
     }
       // DRS
 
-  
-      // Convert $tables 
+
+      // Convert $tables
       // Example: from ["tt_news."]["tt_news_cat_mm"] to ["tt_news"]["tt_news_cat_mm"] = "tt_news_cat"
     foreach( array_keys ( ( array ) $tables ) as $localTable )
     {
@@ -2004,7 +2015,7 @@ class tx_browser_pi1_sql_auto
           continue;
         }
           // CONTINUE : foreignTable isn't any element in the array of the real tables
-            
+
           // Load the TCA
         $this->pObj->objZz->loadTCA( $foreignTable );
 
@@ -2032,7 +2043,7 @@ class tx_browser_pi1_sql_auto
             break;
         }
           // SWITCH : left join or full join
-        
+
           // Add tables and fields
         $this->get_joinsAddTablesMm( $mmTable );
         $this->get_joinsAddTablesForeign( $foreignTable );
@@ -2041,7 +2052,7 @@ class tx_browser_pi1_sql_auto
         // Loop: foreignTables
     }
       // Loop: tables
-    
+
     $arr_return['data']['left_join'] = $leftJoin;
     $arr_return['data']['full_join'] = $fullJoin;
     return $arr_return;
@@ -2050,8 +2061,9 @@ class tx_browser_pi1_sql_auto
 
 
 /**
- * get_joinsAddTablesForeign( ) : 
+ * get_joinsAddTablesForeign( ) :
  *
+ * @param	[type]		$$foreignTable: ...
  * @return	array
  * @version   3.9.13
  * @since     2.0.0
@@ -2064,7 +2076,7 @@ class tx_browser_pi1_sql_auto
       return;
     }
       // RETURN : $foreignTable uid is added before
-      
+
       // Add the foreign table uid
     $this->pObj->arr_realTables_arrFields[$foreignTable][] = 'uid';
   }
@@ -2072,8 +2084,9 @@ class tx_browser_pi1_sql_auto
 
 
 /**
- * get_joinsAddTablesMm( ) : 
+ * get_joinsAddTablesMm( ) :
  *
+ * @param	[type]		$$mmTable: ...
  * @return	array
  * @version   3.9.13
  * @since     2.0.0
@@ -2087,7 +2100,7 @@ class tx_browser_pi1_sql_auto
       return;
     }
       // RETURN : mmTable is added before
-    
+
       // Add uid_local and uid_foreign
     $this->pObj->arr_realTables_arrFields[$mmTable][] = 'uid_local';
     $this->pObj->arr_realTables_arrFields[$mmTable][] = 'uid_foreign';
@@ -2102,7 +2115,7 @@ class tx_browser_pi1_sql_auto
       $this->pObj->arrConsolidate['select']['mmSortingTableFields'][] = $mmTable . '.sorting';
     }
       // Add sorting
-      
+
       // Add sorting_foreign
     if( in_array( 'sorting_foreign', $keys_mmTable ) )
     {
@@ -2120,12 +2133,16 @@ class tx_browser_pi1_sql_auto
     }
       // Add the foreign table uid
   }
-  
-  
-  
+
+
+
 /**
- * get_joinsSetMmFullJoin : 
+ * get_joinsSetMmFullJoin :
  *
+ * @param	[type]		$$localTable: ...
+ * @param	[type]		$mmTable: ...
+ * @param	[type]		$foreignTable: ...
+ * @param	[type]		$fullJoin: ...
  * @return	array
  * @version   3.9.13
  * @since     2.0.0
@@ -2133,7 +2150,7 @@ class tx_browser_pi1_sql_auto
   private function get_joinsSetMmFullJoin( $localTable, $mmTable, $foreignTable, $fullJoin )
   {
     $andFullJoin = null;
-    
+
       // Get enabled fields for the foreign table
     $foreignTableEnableFields = $this->pObj->cObj->enableFields( $foreignTable );
       // Get the pid list for the foreign table
@@ -2149,7 +2166,7 @@ class tx_browser_pi1_sql_auto
                         $foreignTablePidList;
         break;
       case( false ) :
-      default : 
+      default :
         $andFullJoin =  ' AND ' . $localTable . '.uid = ' . $mmTable . '.uid_local' .
                         ' AND ' . $mmTable . '.uid_foreign = ' . $foreignTable . '.uid' .
                         $foreignTableEnableFields .
@@ -2172,8 +2189,12 @@ class tx_browser_pi1_sql_auto
 
 
 /**
- * get_joinsSetMmLeftJoin : 
+ * get_joinsSetMmLeftJoin :
  *
+ * @param	[type]		$$localTable: ...
+ * @param	[type]		$mmTable: ...
+ * @param	[type]		$foreignTable: ...
+ * @param	[type]		$leftJoin: ...
  * @return	array
  * @version   3.9.13
  * @since     2.0.0
@@ -2199,7 +2220,7 @@ class tx_browser_pi1_sql_auto
                       ' )';
         break;
       case( false ) :
-      default : 
+      default :
         $relation = ' LEFT JOIN ' . $mmTable .
                     ' ON ( ' . $localTable . '.uid = ' . $mmTable . '.uid_local )';
         $where    = ' LEFT JOIN ' . $foreignTable .
@@ -2223,7 +2244,7 @@ class tx_browser_pi1_sql_auto
       $leftJoin = $leftJoin . $relation;
     }
       // Add relation once only
-    
+
       // Add where once only
     if( strpos($leftJoin, $where) === false )
     {
@@ -2234,11 +2255,12 @@ class tx_browser_pi1_sql_auto
     return $leftJoin;
   }
 
-  
+
 
 /**
  * get_joinsSetCsv( ) : Relation method: Building the relation part for the where clause
  *
+ * @param	[type]		$$arr_return: ...
  * @return	string		TRUE || FALSE or the SQL-where-clause
  * @version   3.9.13
  * @since     2.0.0
@@ -2251,17 +2273,17 @@ class tx_browser_pi1_sql_auto
 
       // Get the tables with a CSV relation
     $tables = $this->arr_relations_mm_simple['simple'];
-    
+
       // RETURN : there isn't any table
     if( empty ( $tables ) )
     {
       return  $arr_return;
     }
       // RETURN : there isn't any table
-        
+
       // Get tableFields as an one dimensional array like ["tt_news.cruser_id"]
     $tables = $this->get_joinsSetCsvTablesOneDim( );
-    
+
       // LOOP tables
     foreach( ( array ) $tables as $localTableField => $foreignTable )
     {
@@ -2331,7 +2353,7 @@ class tx_browser_pi1_sql_auto
           break;
       }
         // SWITCH : left join or full join
-      
+
         // Add tables and fields
       $this->get_joinsAddTablesForeign( $foreignTable );
     }
@@ -2358,7 +2380,7 @@ class tx_browser_pi1_sql_auto
   {
       // get tables with CSV relation
     $tables = $this->arr_relations_mm_simple['simple'];
-    
+
       // LOOP tables
     foreach( (array) $tables as $keyTable => $arrFields)
     {
@@ -2475,7 +2497,7 @@ class tx_browser_pi1_sql_auto
 
 
 /**
- * init_class_arrRelationsMmSimple( ) : 
+ * init_class_arrRelationsMmSimple( ) :
  *
  * @return	void
  * @version   3.9.13
@@ -2483,7 +2505,7 @@ class tx_browser_pi1_sql_auto
  */
   private function init_class_arrRelationsMmSimple( )
   {
-    
+
       // relations.simple is configured
     if( is_array( $this->conf_view['relations.']['simple.'] ) )
     {
@@ -2703,14 +2725,14 @@ class tx_browser_pi1_sql_auto
   private function zz_checkIfOneTabelIsUsedAtLeast( )
   {
     $arr_return = array( );
-    
+
       // RETURN : OK : a table is used at least
     if( ! empty ( $this->pObj->arr_realTables_arrFields ) )
     {
       return;
     }
       // RETURN : OK : a table is used at least
-    
+
       // RETURN ERROR : any table isn't used
     if( $this->pObj->b_drs_error )
     {
