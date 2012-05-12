@@ -958,6 +958,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Count special chars
 
 $tabLabel   = $this->pObj->piVars['indexBrowserTab'];    
+$tabLabel   = strtoupper( $tabLabel );
 $tabId      = $this->indexBrowserTab['tabLabels'][$tabLabel];
 $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
 //$this->pObj->dev_var_dump( $this->indexBrowserTab, $this->pObj->piVars['indexBrowserTab'] );
