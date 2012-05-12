@@ -2469,7 +2469,7 @@ class tx_browser_pi1_navi_indexBrowser
   private function zz_getFindInSetForAllByte( $row ) 
   {
       // Chars from one byte to unlimited bytes
-    $fromLength = 2;
+    $fromLength = 1;
     return $this->zz_getFindInSetFromLength( $row, $fromLength );
 
 //      // Get current table.field of the index browser
