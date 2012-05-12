@@ -90,19 +90,19 @@
  * 2110:     public function getMarkerIndexbrowser( )
  * 2156:     private function getMarkerIndexbrowserTabs( )
  *
- *              SECTION: Helper - SQL FIND IN SET
- * 2216:     private function zz_getFindInSetForAllByte( $row )
- * 2236:     private function zz_getFindInSetForMultibyte( $row )
- * 2257:     private function zz_getFindInSetFromLength( $row, $fromLength )
- * 2287:     private function zz_getSqlLengthAsRow( $arrChars )
- *
  *              SECTION: Helper - ascii
- * 2366:     private function zz_specCharsToASCII( $string )
+ * 2214:     private function zz_specCharsToASCII( $string )
  *
  *              SECTION: Helper - SQL
- * 2401:     private function zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset )
- * 2469:     private function zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset )
- * 2544:     private function zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset )
+ * 2249:     private function zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset )
+ * 2317:     private function zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset )
+ * 2392:     private function zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset )
+ *
+ *              SECTION: Helper - SQL FIND IN SET
+ * 2511:     private function zz_getFindInSetForAllByte( $row )
+ * 2531:     private function zz_getFindInSetForMultibyte( $row )
+ * 2552:     private function zz_getFindInSetFromLength( $row, $fromLength )
+ * 2582:     private function zz_getSqlLengthAsRow( $arrChars )
  *
  *              SECTION: Helper - tabs
  * 2662:     private function zz_setTabClassSelected( $tabId )
