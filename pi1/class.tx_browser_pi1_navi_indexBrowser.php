@@ -107,7 +107,7 @@
  * 2722:     private function zz_tabLinkLabel( $tab )
  * 2764:     private function zz_setTabPiVars( $labelAscii, $label )
  * 2795:     private function zz_setTabPiVarsDefaultTab( $label )
- * 2827:     private function zz_setTabSlected( $tabId )
+ * 2827:     private function zz_setTabSelected( $tabId )
  * 2877:     private function zz_tabLastId( )
  * 2935:     private function zz_tabTitle( $sum )
  *
@@ -948,6 +948,9 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // LOOP tabs TS configuratione array
 
+      // Set tab selected
+    $this->zz_setTabSelected( $tabId );
+
       // Init special chars
     $this->tabs_initSpecialChars( $arrCsvAttributes );
 
@@ -983,6 +986,57 @@ class tx_browser_pi1_navi_indexBrowser
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+  }
+
+
+
+/**
+ * zz_setTabSelected( ): Sets the class property selected, if the current tab
+ *                      is selected. Sets the class var indexBrowserTab.
+ *
+ * @param	integer		$tabId    : Current tab ID for TS configuration array
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_setTabSelected( $tabId )
+  {
+//$this->pObj->dev_var_dump( $tabLabel, $this->pObj->piVar_indexBrowserTab );
+//$this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default'] );
+      // IF : piVar
+    if( $this->pObj->piVar_indexBrowserTab )
+    {
+      $label      = $this->indexBrowserTab['tabIds'][$tabId]['label'];
+      $labelAscii = $this->indexBrowserTab['tabIds'][$tabId]['labelAscii'];
+
+        // IF : current tab is selected
+      if($label == $this->pObj->piVar_indexBrowserTab)
+      {
+        $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
+        $this->indexBrowserTab['tabSpecial']['selected']     = $tabId;
+        return;
+      }
+        // IF : current tab is selected
+        // IF : current tab is selected
+      if($labelAscii == $this->pObj->piVar_indexBrowserTab)
+      {
+        $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
+        $this->indexBrowserTab['tabSpecial']['selected']     = $tabId;
+        return;
+      }
+        // IF : current tab is selected
+
+        // Don't follow workflow
+      return;
+    }
+      // IF : piVar
+
+      // no piVar
+    if( $tabId == $this->indexBrowserTab['tabSpecial']['default'] )
+    {
+      $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
+      $this->indexBrowserTab['tabSpecial']['selected']     = $tabId;
+    }
   }
 
 
@@ -1079,8 +1133,6 @@ class tx_browser_pi1_navi_indexBrowser
     $this->indexBrowserTab['tabIds'][$tabId]['attributes']      = $attributes;
     $this->indexBrowserTab['tabIds'][$tabId]['sum']             = 0;
     $this->indexBrowserTab['tabLabels'][$labelAscii]            = $tabId;
-      // Set tab selected
-    $this->zz_setTabSlected( $tabId );
       // Set tab array
 
       // RETURN : tab with special value 'all'
@@ -2598,6 +2650,70 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
+ * zz_setTabPiVars( ):  Makes a backup of the current piVars. Than it removes some
+ *                      elements, which shouldn't be part of a index browser link.
+ *
+ * @param	string		$labelAscii : label of the current tab in ascii format
+ * @param	string		$label      : label of the current tab
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_setTabPiVars( $labelAscii, $label )
+  {
+      // Backup piVars
+    $this->piVarsBak = $this->pObj->piVars;
+
+      // Unset the pointer
+    $pageBrowserPointerLabel = $this->conf['navigation.']['pageBrowser.']['pointer'];
+    if( isset ( $this->pObj->piVars[$pageBrowserPointerLabel] ) )
+    {
+      unset( $this->pObj->piVars[$pageBrowserPointerLabel] );
+    }
+
+      // Set indexBrowserTab
+    $this->pObj->piVars['indexBrowserTab'] = $labelAscii;
+
+      // Handle default tab
+    $this->zz_setTabPiVarsDefaultTab( $label );
+  }
+
+
+
+/**
+ * zz_setTabPiVarsDefaultTab( ):  Removes the piVar indexBrowserTab in case of
+ *                                the default tab, if default tab should get a
+ *                                link
+ *
+ * @param	string		$label: label of the current tab
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_setTabPiVarsDefaultTab( $label )
+  {
+      // RETURN : default tab should get a link
+    if( $this->linkDefaultTab )
+    {
+      return;
+    }
+
+      // RETURN : current tab isn't the default tab
+    if( $label != $this->tabDefaultLabel )
+    {
+      return;
+    }
+
+      // Unset piVars['indexBrowserTab']
+    if( isset( $this->pObj->piVars['indexBrowserTab'] ) )
+    {
+      unset( $this->pObj->piVars['indexBrowserTab'] );
+    }
+  }
+
+
+
+/**
  * zz_specCharsToASCII( ): Convert labels to ascii labels
  *
  * @param	string		$string:  the string for conversion
@@ -2749,121 +2865,7 @@ class tx_browser_pi1_navi_indexBrowser
     return $tabLinkedLabel;
   }
 
-
-
-/**
- * zz_setTabPiVars( ):  Makes a backup of the current piVars. Than it removes some
- *                      elements, which shouldn't be part of a index browser link.
- *
- * @param	string		$labelAscii : label of the current tab in ascii format
- * @param	string		$label      : label of the current tab
- * @return	[type]		...
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function zz_setTabPiVars( $labelAscii, $label )
-  {
-      // Backup piVars
-    $this->piVarsBak = $this->pObj->piVars;
-
-      // Unset the pointer
-    $pageBrowserPointerLabel = $this->conf['navigation.']['pageBrowser.']['pointer'];
-    if( isset ( $this->pObj->piVars[$pageBrowserPointerLabel] ) )
-    {
-      unset( $this->pObj->piVars[$pageBrowserPointerLabel] );
-    }
-
-      // Set indexBrowserTab
-    $this->pObj->piVars['indexBrowserTab'] = $labelAscii;
-
-      // Handle default tab
-    $this->zz_setTabPiVarsDefaultTab( $label );
-  }
-
-
-
-/**
- * zz_setTabPiVarsDefaultTab( ):  Removes the piVar indexBrowserTab in case of
- *                                the default tab, if default tab should get a
- *                                link
- *
- * @param	string		$label: label of the current tab
- * @return	[type]		...
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function zz_setTabPiVarsDefaultTab( $label )
-  {
-      // RETURN : default tab should get a link
-    if( $this->linkDefaultTab )
-    {
-      return;
-    }
-
-      // RETURN : current tab isn't the default tab
-    if( $label != $this->tabDefaultLabel )
-    {
-      return;
-    }
-
-      // Unset piVars['indexBrowserTab']
-    if( isset( $this->pObj->piVars['indexBrowserTab'] ) )
-    {
-      unset( $this->pObj->piVars['indexBrowserTab'] );
-    }
-  }
-
-
-
-/**
- * zz_setTabSlected( ): Sets the class property selected, if the current tab
- *                      is selected. Sets the class var indexBrowserTab.
- *
- * @param	integer		$tabId    : Current tab ID for TS configuration array
- * @return	[type]		...
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function zz_setTabSlected( $tabId )
-  {
-//$this->pObj->dev_var_dump( $tabLabel, $this->pObj->piVar_indexBrowserTab );
-//$this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default'] );
-      // IF : piVar
-    if( $this->pObj->piVar_indexBrowserTab )
-    {
-      $label      = $this->indexBrowserTab['tabIds'][$tabId]['label'];
-      $labelAscii = $this->indexBrowserTab['tabIds'][$tabId]['labelAscii'];
-
-        // IF : current tab is selected
-      if($label == $this->pObj->piVar_indexBrowserTab)
-      {
-        $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
-        $this->indexBrowserTab['tabSpecial']['selected']     = $tabId;
-        return;
-      }
-        // IF : current tab is selected
-        // IF : current tab is selected
-      if($labelAscii == $this->pObj->piVar_indexBrowserTab)
-      {
-        $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
-        $this->indexBrowserTab['tabSpecial']['selected']     = $tabId;
-        return;
-      }
-        // IF : current tab is selected
-
-        // Don't follow workflow
-      return;
-    }
-      // IF : piVar
-
-      // no piVar
-    if( $tabId == $this->indexBrowserTab['tabSpecial']['default'] )
-    {
-      $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
-      $this->indexBrowserTab['tabSpecial']['selected']     = $tabId;
-    }
-  }
-
+  
 
 /**
  * zz_tabLastId( ): Returns the id of the last visible tab. A tab is visible,
