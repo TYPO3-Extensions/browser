@@ -2290,8 +2290,7 @@ $this->pObj->dev_var_dump( $arr_result );
     {
       return  $arr_return;
     }
-    if (is_array($tables))
-    {
+    
       // RETURN : there isn't any CSV relation
         
       //////////////////////////////////
