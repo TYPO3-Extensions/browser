@@ -943,32 +943,22 @@ class tx_browser_pi1_sql_functions
     }
       // RETURN $param_1
 
+      // Cut the ' AND' of the end of param_1
     $param_1 = trim( $param_1 );
     if( substr( $param_1, -4) == ' AND' )
     {
       $param_1 = substr( $param_1, 0, strlen( $param_1 ) - 4 );
     }
+      // Cut the ' AND' of the end of param_1
+      
+      // Cut the 'AND ' of the beginning of param_2
     $param_2 = trim( $param_2 );
     if( substr( $param_1, 0, 4) == 'AND ' )
     {
       $param_2 = substr( $param_2, 4 );
     }
+      // Cut the 'AND ' of the beginning of param_2
 
-    $param_3 = 'param_3 AND';
-$this->pObj->dev_var_dump( $param_3, substr( $param_3, -4) );
-    if( substr( $param_3, -4) == ' AND' )
-    {
-      $param_3 = substr( $param_3, 0, strlen( $param_3 ) - 4 );
-    }
-    $param_4 = 'AND param_4';
-$this->pObj->dev_var_dump( $param_4, substr( $param_4, 0, 4) );
-    if( substr( $param_4, 0, 4) == 'AND ' )
-    {
-      $param_4 = substr( $param_4, 4 );
-    }
-$this->pObj->dev_var_dump( $param_3, $param_4 );
-    
-    
       // RETURN $param_1 AND $param_2
     $param_1 = $param_1 . " AND " . $param_2;
     return $param_1;

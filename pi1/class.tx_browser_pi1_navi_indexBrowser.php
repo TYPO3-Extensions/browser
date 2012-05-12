@@ -1040,10 +1040,10 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * tabs_initFindInSetForCurrentTab( ): Convert labels to ascii labels
+ * tabs_initFindInSetForCurrentTab( ) : Set the FIND IN SET SQL statement for the
+ *                                      current tab. It is needed by the list view. 
  *
- * @param	string		$string:  the string for conversion
- * @return	string		$ascii:   the converted string
+ * @return	array		$ar_return  : Contains an error message in case of an error
  * @version 3.9.13
  * @since   3.9.13
  */
@@ -1057,35 +1057,46 @@ class tx_browser_pi1_navi_indexBrowser
       // RETURN : Any tab isn't selected
 
 
-      // Get the attributes of the selected tab
+      // Get the array id of the selected tab
     $labelAscii = $this->pObj->piVars['indexBrowserTab'];
     $tabId      = $this->indexBrowserTab['tabLabels'][$labelAscii];
-    if( $this->indexBrowserTab['tabIds'][$tabId]['special'] == 'others' )
-    {
-      $attributes = $this->indexBrowserTab['initials']['all'];
+      // Get the array id of the selected tab
       
-    }
-    if( $this->indexBrowserTab['tabIds'][$tabId]['special'] != 'others' )
+      // SWITCH : the special tab 'others'
+    switch( $this->indexBrowserTab['tabIds'][$tabId]['special'] )
     {
-      $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
+      case( 'others' ):
+          // Get all defined attributes
+        $attributes = $this->indexBrowserTab['initials']['all'];
+        break;
+      default:
+          // Get the attributes of the selected tab
+        $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
+        break;
     }
-//$this->pObj->dev_var_dump( $labelAscii, $this->indexBrowserTab['tabLabels'][$labelAscii], $this->indexBrowserTab['tabIds'][$tabId]['attributes'] );
-//$this->pObj->dev_var_dump( $this->indexBrowserTab );
-    $arrChars   = explode( ',', $attributes );
-//$this->pObj->dev_var_dump( $attributes );
-      // Get the attributes of the selected tab
+      // SWITCH : the special tab 'others'
 
-    $arr_return   = $this->zz_getSqlLengthAsRow( $arrChars );
+      // Get a row with the byte length og each attribute
+    $arrChars   = explode( ',', $attributes );
+    $arr_return = $this->zz_getSqlLengthAsRow( $arrChars );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
     $row          = $arr_return['data']['row'];
-    $arrFindInSet = $this->zz_getFindInSetForAllByte( $row );
-    if( empty ( $arrFindInSet ) )
+      // Get a row with the byte length og each attribute
+
+      // RETURN : there isn't any SQL result
+    if( empty ( $row ) )
     {
       return;
     }
+      // RETURN : there isn't any SQL result
+
+      // Get an array with all FIND IN SET statements
+    $arrFindInSet = $this->zz_getFindInSetForAllByte( $row );
+
+      // Get the SQL statement for all FIND IN SET
     $orFindInSet  = array( );
     foreach( $arrFindInSet as $length )
     {
@@ -1096,14 +1107,17 @@ class tx_browser_pi1_navi_indexBrowser
     }
     $findInSet = implode( ' OR ', $orFindInSet );
     $findInSet = '( ' . $findInSet . ' )';
+      // Get the SQL statement for all FIND IN SET
 
+      // In case of special tab 'others' prepend a NOT
     if( $this->indexBrowserTab['tabIds'][$tabId]['special'] == 'others' )
     {
       $findInSet = 'NOT ' . $findInSet;
     }
-//$this->pObj->dev_var_dump( $findInSet );
+      // In case of special tab 'others' prepend a NOT
+
+      // Set the class var $findInSetForCurrTab
     $this->findInSetForCurrTab = $findInSet;
-//    $this->pObj->dev_var_dump( $arrFindInSet, $findInSet );
   }
 
 
