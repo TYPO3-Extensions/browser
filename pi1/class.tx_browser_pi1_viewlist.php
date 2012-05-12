@@ -856,8 +856,10 @@ $this->pObj->dev_var_dump( 1 );
       }
       $idsOfDefaultLanguageRows   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
         // Get ids of records of default language, which match the rules but haven't any translation
-
-//      return $arr_return;
+      if( empty ( $idsOfDefaultLanguageRows ) )
+      {
+        return $arr_return;
+      }
     }
     
       // Merge all ids
