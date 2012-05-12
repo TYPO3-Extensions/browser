@@ -954,13 +954,15 @@ class tx_browser_pi1_sql_functions
       $param_2 = substr( $param_2, 4 );
     }
 
-    $param_3 = trim( $param_1 ) . ' AND';
-    if( substr( $param_1, -4) == ' AND' )
+    $param_3 = 'param_3 AND';
+$this->pObj->dev_var_dump( $param_3, substr( $param_3, -4) );
+    if( substr( $param_3, -4) == ' AND' )
     {
       $param_3 = substr( $param_3, 0, strlen( $param_3 ) - 4 );
     }
-    $param_4 = 'AND ' . trim( $param_2 );
-    if( substr( $param_1, 0, 4) == 'AND ' )
+    $param_4 = 'AND param_4';
+$this->pObj->dev_var_dump( $param_4, substr( $param_4, 0, 4) );
+    if( substr( $param_4, 0, 4) == 'AND ' )
     {
       $param_4 = substr( $param_4, 4 );
     }
