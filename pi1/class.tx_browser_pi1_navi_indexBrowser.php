@@ -66,8 +66,6 @@
  *              SECTION: Count chars
  * 1219:     private function count_chars( )
  * 1262:     private function count_chars_addSumToTab( $res )
- *
- *              SECTION: SQL statements
  * 1429:     private function count_chars_resSqlCount( $currSqlCharset )
  * 1486:     private function count_chars_resSqlCountDefLL( $strFindInSet, $currSqlCharset )
  * 1531:     private function count_chars_resSqlCountSelOrDefLL( $strFindInSet, $currSqlCharset )
@@ -83,7 +81,7 @@
  * 1922:     private function sqlCharsetGet( )
  * 1955:     private function sqlCharsetSet( $sqlCharset )
  *
- *              SECTION: SQL ids
+ *              SECTION: SQL statements
  * 1994:     private function zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset )
  * 2062:     private function zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset )
  * 2137:     private function zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset )
@@ -1405,19 +1403,6 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 
-
-
-
-
-
-    /***********************************************
-    *
-    * SQL statements
-    *
-    **********************************************/
-
-
-
 /**
  * count_chars_resSqlCount( ): SQL query and execution for counting initials
  *
@@ -1973,9 +1958,425 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 
+  
     /***********************************************
     *
-    * SQL ids
+    * SQL statements
+    *
+    **********************************************/
+
+
+
+/**
+ * sqlStatement_from( ): SQL statement FROM without a FROM
+ *
+ * @param	string		$table  : The current from table
+ * @return	string		$from   : FROM statement without a from
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function sqlStatement_from( $table )
+  {
+    switch( true )
+    {
+      case( isset( $this->pObj->piVars['sword'] ) ):
+      case( $this->pObj->objFltr4x->init_aFilterIsSelected( ) ):
+        $from = $this->pObj->objSqlInit->statements['listView']['from'];
+        break;
+      default:
+        $from = $table;
+        break;
+    }
+
+    return $from;
+  }
+
+
+
+/**
+ * sqlStatement_where( ): SQL statement WHERE without a WHERE
+ *
+ * @param	string		$table              : The current from table
+ * @param	string		$andWhereFindInSet  : FIND IN SET
+ * @return	string		$where            : WHERE statement without a WHERE
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function sqlStatement_where( $table, $andWhereFindInSet )
+  {
+    switch( true )
+    {
+      case( isset( $this->pObj->piVars['sword'] ) ):
+      case( $this->pObj->objFltr4x->init_aFilterIsSelected( ) ):
+        $where  = $this->pObj->objSqlInit->statements['listView']['where'];
+//$this->pObj->dev_var_dump( $this->pObj->objSqlInit->statements['listView']['where'] );
+        $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
+        $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
+//$this->pObj->dev_var_dump( $llWhere );
+        if( $llWhere )
+        {
+          $where  = $where . " AND " . $llWhere;
+        }
+        $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
+        break;
+      default:
+          // 120421, dwildt, 1+
+        $where  = "1";
+        $andEnableFields = $this->pObj->cObj->enableFields( $table );
+        $where  = $where . $andEnableFields;
+        $where  = $where . $this->pObj->objSqlFun->get_andWherePid( $table );
+        $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
+        if( empty ( $where ) )
+        {
+          $where = "1";
+        }
+        $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
+        if( $llWhere )
+        {
+          $where  = $where . " AND " . $llWhere;
+        }
+        break;
+    }
+
+    return $where;
+  }
+
+
+
+/**
+ * sqlStatement_whereAndFindInSet( ): SQL statement AND WHERE without an AND
+ *                                    especially for FIND IN SET
+ *
+ * @param	string		$where              : The current WHERE statement
+ * @param	string		$findInSet  : FIND IN SET
+ * @return	string		$where            : AND WHERE statement without an AND
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function sqlStatement_whereAndFindInSet( $where, $findInSet )
+  {
+      // RETURN : there isn't any FIND IN SET
+    if( ! $findInSet )
+    {
+      return $where;
+    }
+      // RETURN : there isn't any FIND IN SET
+
+    switch( true )
+    {
+      case( $where ):
+        $where = $where . " AND " . $findInSet;
+        break;
+      case( empty( $where ) ):
+      default:
+        $where = $findInSet;
+        break;
+    }
+
+    return $where;
+  }
+
+
+
+
+
+
+
+
+    /***********************************************
+    *
+    * Downward compatibility
+    *
+    **********************************************/
+
+
+
+ /**
+  * getMarkerIndexbrowser( ): Downward compatibility for ###INDEXBROWSER###
+  *                           If ###AZSELECTOR### is used in an HTML template
+  *                           ###AZSELECTOR### will return
+  *                           * Feature: #35032
+  *
+  * @return	string		###INDEXBROWSER### || ###AZSELECTOR###
+  * @version  3.9.10
+  * @since    3.9.10
+  */
+  public function getMarkerIndexbrowser( )
+  {
+      // DRS
+    if ($this->pObj->b_drs_devTodo)
+    {
+      $prompt = 'Task #35037: Don\'t support the marker ###AZSELECTOR### from version 5.x';
+      t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
+    }
+      // DRS
+
+      // get th current content
+    $template = $this->currContent;
+
+      // RETURN ###AZSELECTOR###, if ###AZSELECTOR### is part of the current content
+    $pos = strpos( $template, '###AZSELECTOR###');
+    if ( ! ( $pos === false ) )
+    {
+      if ($this->pObj->b_drs_warn)
+      {
+        $prompt = 'The current template contains the marker ###AZSELECTOR###';
+        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 2);
+        $prompt = '###AZSELECTOR### won\'t supported from version 5.x';
+        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
+        $prompt = 'Please move it from ###AZSELECTOR### to ###INDEXBROWSER###';
+        t3lib_div::devlog('[TODO/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
+      }
+      return '###AZSELECTOR###';
+    }
+      // RETURN ###AZSELECTOR###, if ###AZSELECTOR### is part of the current content
+
+      // RETURN ###INDEXBROWSER###
+    return '###INDEXBROWSER###';
+  }
+
+
+
+ /**
+  * getMarkerIndexbrowserTabs( ): Downward compatibility for ###INDEXBROWSERTABS###
+  *                               If ###AZSELECTORTABS### is used in an HTML template
+  *                               ###AZSELECTORTABS### will return
+  *                               * Feature: #35032
+  *
+  * @return	string		###INDEXBROWSERTABS### || ###AZSELECTORTABS###
+  * @version  3.9.10
+  * @since    3.9.10
+  */
+  private function getMarkerIndexbrowserTabs( )
+  {
+      // DRS
+    if ($this->pObj->b_drs_devTodo)
+    {
+      $prompt = 'Task #35037: Don\'t support the marker ###AZSELECTORTABS### from version 5.x';
+      t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
+    }
+      // DRS
+
+      // get th current content
+    $template = $this->currContent;
+
+      // RETURN ###AZSELECTORTABS###, if ###AZSELECTORTABS### is part of the current content
+    $pos = strpos( $template, '###AZSELECTORTABS###');
+    if ( ! ( $pos === false ) )
+    {
+      if ($this->pObj->b_drs_warn)
+      {
+        $prompt = 'The current template contains the marker ###AZSELECTORTABS###';
+        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 2);
+        $prompt = '###AZSELECTORTABS### won\'t supported from version 5.x';
+        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
+        $prompt = 'Please move it from ###AZSELECTORTABS### to ###INDEXBROWSERTABS###';
+        t3lib_div::devlog('[TODO/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
+      }
+      return '###AZSELECTORTABS###';
+    }
+      // RETURN ###AZSELECTORTABS###, if ###AZSELECTORTABS### is part of the current content
+
+      // RETURN ###INDEXBROWSERTABS###
+    return '###INDEXBROWSERTABS###';
+  }
+
+
+
+
+
+
+
+
+
+   /***********************************************
+    *
+    * Helper  : SQL FIND IN SET
+    *
+    **********************************************/
+
+
+
+  /**
+ * zz_getFindInSetForAllByte( ): Set the FIND IN SET statement for each special char group.
+ *                                        A special char group is grouped by the length of a special
+ *                                        char.
+ *
+ * @param	array		$row  : Row with special chars and their SQL length
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.10
+ */
+  private function zz_getFindInSetForAllByte( $row )
+  {
+      // Chars from one byte to unlimited bytes
+    $fromLength = 1;
+    return $this->zz_getFindInSetFromLength( $row, $fromLength );
+
+  }
+
+
+
+/**
+ * zz_getFindInSetForMultibyte( ): Set the FIND IN SET statement for each special char group.
+ *                                        A special char group is grouped by the length of a special
+ *                                        char.
+ *
+ * @param	array		$row  : Row with special chars and their SQL length
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.10
+ */
+  private function zz_getFindInSetForMultibyte( $row )
+  {
+      // Chars from two bytes only to unlimited bytes
+    $fromLength = 2;
+    return $this->zz_getFindInSetFromLength( $row, $fromLength );
+
+  }
+
+
+
+/**
+ * zz_getFindInSetFromLength( ): Set the FIND IN SET statement for each special char group.
+ *                                        A special char group is grouped by the length of a special
+ *                                        char.
+ *
+ * @param	array		$row  : Row with special chars and their SQL length
+ * @param	[type]		$fromLength: ...
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.10
+ */
+  private function zz_getFindInSetFromLength( $row, $fromLength )
+  {
+      // Get current table.field of the index browser
+    $tableField = $this->indexBrowserTableField;
+
+      // LOOP : generate a find in set statement for each special char
+    $findInSet = null;
+    foreach( $row as $char => $length )
+    {
+      if( $length < $fromLength )
+      {
+        continue;
+      }
+      $findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
+    }
+      // LOOP : generate a find in set statement for each special char
+
+    return $findInSet;
+  }
+
+  
+  
+ /**
+  * zz_getSqlLengthAsRow( ): Return a row with the SQL length of the given chars
+  *
+  * @param	array		$arrChars  : array with the chars
+  * @return	array		$arr_return       : row with all special chars and their SQL length
+  * @version 3.9.12
+  * @since   3.9.10
+  */
+  private function zz_getSqlLengthAsRow( $arrChars )
+  {
+      // RETURN : $arrChars is empty
+    if( empty ( $arrChars ) )
+    {
+      return;
+    }
+      // RETURN : $arrChars is empty
+
+      // Build the select statement parts for the length of each special char
+    $arrStatement = array( );
+    foreach( ( array ) $arrChars as $specialChar )
+    {
+      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
+    }
+      // Build the select statement parts for the length of each special char
+
+      // DIE : undefined error
+    if( empty ( $arrStatement ) )
+    {
+      die ( __METHOD__ . '(' . __LINE__ . '): undefined error.');
+    }
+      // DIE : undefined error
+
+      // Execute query for the length of each special char
+    $query  = "SELECT " . implode( ', ', $arrStatement );
+    $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+      $level = 1;
+      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error, $level );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+      // Get the row
+    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
+      // SQL free result
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+
+    $arr_return['data']['row'] = $row;
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+   /***********************************************
+    *
+    * Helper  : ascii
+    *
+    **********************************************/
+
+
+
+/**
+ * zz_specCharsToASCII( ): Convert labels to ascii labels
+ *
+ * @param	string		$string:  the string for conversion
+ * @return	string		$ascii:   the converted string
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_specCharsToASCII( $string )
+  {
+    $ascii = strip_tags( html_entity_decode( $string ) );
+    $ascii = $this->t3lib_cs_obj->specCharsToASCII( $this->bool_utf8, $ascii );
+    $ascii = strtolower( preg_replace( '/[^a-zA-Z0-9-_]*/', null, $ascii ) );
+
+    return $ascii;
+  }
+
+
+
+
+
+
+
+
+
+   /***********************************************
+    *
+    * Helper  : SQL
     *
     **********************************************/
 
@@ -2229,222 +2630,6 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 
-/**
- * sqlStatement_from( ): SQL statement FROM without a FROM
- *
- * @param	string		$table  : The current from table
- * @return	string		$from   : FROM statement without a from
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function sqlStatement_from( $table )
-  {
-    switch( true )
-    {
-      case( isset( $this->pObj->piVars['sword'] ) ):
-      case( $this->pObj->objFltr4x->init_aFilterIsSelected( ) ):
-        $from = $this->pObj->objSqlInit->statements['listView']['from'];
-        break;
-      default:
-        $from = $table;
-        break;
-    }
-
-    return $from;
-  }
-
-
-
-/**
- * sqlStatement_where( ): SQL statement WHERE without a WHERE
- *
- * @param	string		$table              : The current from table
- * @param	string		$andWhereFindInSet  : FIND IN SET
- * @return	string		$where            : WHERE statement without a WHERE
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function sqlStatement_where( $table, $andWhereFindInSet )
-  {
-    switch( true )
-    {
-      case( isset( $this->pObj->piVars['sword'] ) ):
-      case( $this->pObj->objFltr4x->init_aFilterIsSelected( ) ):
-        $where  = $this->pObj->objSqlInit->statements['listView']['where'];
-//$this->pObj->dev_var_dump( $this->pObj->objSqlInit->statements['listView']['where'] );
-        $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
-        $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
-//$this->pObj->dev_var_dump( $llWhere );
-        if( $llWhere )
-        {
-          $where  = $where . " AND " . $llWhere;
-        }
-        $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
-        break;
-      default:
-          // 120421, dwildt, 1+
-        $where  = "1";
-        $andEnableFields = $this->pObj->cObj->enableFields( $table );
-        $where  = $where . $andEnableFields;
-        $where  = $where . $this->pObj->objSqlFun->get_andWherePid( $table );
-        $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
-        if( empty ( $where ) )
-        {
-          $where = "1";
-        }
-        $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
-        if( $llWhere )
-        {
-          $where  = $where . " AND " . $llWhere;
-        }
-        break;
-    }
-
-    return $where;
-  }
-
-
-
-/**
- * sqlStatement_whereAndFindInSet( ): SQL statement AND WHERE without an AND
- *                                    especially for FIND IN SET
- *
- * @param	string		$where              : The current WHERE statement
- * @param	string		$findInSet  : FIND IN SET
- * @return	string		$where            : AND WHERE statement without an AND
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function sqlStatement_whereAndFindInSet( $where, $findInSet )
-  {
-      // RETURN : there isn't any FIND IN SET
-    if( ! $findInSet )
-    {
-      return $where;
-    }
-      // RETURN : there isn't any FIND IN SET
-
-    switch( true )
-    {
-      case( $where ):
-        $where = $where . " AND " . $findInSet;
-        break;
-      case( empty( $where ) ):
-      default:
-        $where = $findInSet;
-        break;
-    }
-
-    return $where;
-  }
-
-
-
-
-
-
-
-
-    /***********************************************
-    *
-    * Downward compatibility
-    *
-    **********************************************/
-
-
-
- /**
-  * getMarkerIndexbrowser( ): Downward compatibility for ###INDEXBROWSER###
-  *                           If ###AZSELECTOR### is used in an HTML template
-  *                           ###AZSELECTOR### will return
-  *                           * Feature: #35032
-  *
-  * @return	string		###INDEXBROWSER### || ###AZSELECTOR###
-  * @version  3.9.10
-  * @since    3.9.10
-  */
-  public function getMarkerIndexbrowser( )
-  {
-      // DRS
-    if ($this->pObj->b_drs_devTodo)
-    {
-      $prompt = 'Task #35037: Don\'t support the marker ###AZSELECTOR### from version 5.x';
-      t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
-    }
-      // DRS
-
-      // get th current content
-    $template = $this->currContent;
-
-      // RETURN ###AZSELECTOR###, if ###AZSELECTOR### is part of the current content
-    $pos = strpos( $template, '###AZSELECTOR###');
-    if ( ! ( $pos === false ) )
-    {
-      if ($this->pObj->b_drs_warn)
-      {
-        $prompt = 'The current template contains the marker ###AZSELECTOR###';
-        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 2);
-        $prompt = '###AZSELECTOR### won\'t supported from version 5.x';
-        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
-        $prompt = 'Please move it from ###AZSELECTOR### to ###INDEXBROWSER###';
-        t3lib_div::devlog('[TODO/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
-      }
-      return '###AZSELECTOR###';
-    }
-      // RETURN ###AZSELECTOR###, if ###AZSELECTOR### is part of the current content
-
-      // RETURN ###INDEXBROWSER###
-    return '###INDEXBROWSER###';
-  }
-
-
-
- /**
-  * getMarkerIndexbrowserTabs( ): Downward compatibility for ###INDEXBROWSERTABS###
-  *                               If ###AZSELECTORTABS### is used in an HTML template
-  *                               ###AZSELECTORTABS### will return
-  *                               * Feature: #35032
-  *
-  * @return	string		###INDEXBROWSERTABS### || ###AZSELECTORTABS###
-  * @version  3.9.10
-  * @since    3.9.10
-  */
-  private function getMarkerIndexbrowserTabs( )
-  {
-      // DRS
-    if ($this->pObj->b_drs_devTodo)
-    {
-      $prompt = 'Task #35037: Don\'t support the marker ###AZSELECTORTABS### from version 5.x';
-      t3lib_div::devlog('[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0);
-    }
-      // DRS
-
-      // get th current content
-    $template = $this->currContent;
-
-      // RETURN ###AZSELECTORTABS###, if ###AZSELECTORTABS### is part of the current content
-    $pos = strpos( $template, '###AZSELECTORTABS###');
-    if ( ! ( $pos === false ) )
-    {
-      if ($this->pObj->b_drs_warn)
-      {
-        $prompt = 'The current template contains the marker ###AZSELECTORTABS###';
-        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 2);
-        $prompt = '###AZSELECTORTABS### won\'t supported from version 5.x';
-        t3lib_div::devlog('[WARN/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
-        $prompt = 'Please move it from ###AZSELECTORTABS### to ###INDEXBROWSERTABS###';
-        t3lib_div::devlog('[TODO/DEPRECATED] ' . $prompt, $this->pObj->extKey, 1);
-      }
-      return '###AZSELECTORTABS###';
-    }
-      // RETURN ###AZSELECTORTABS###, if ###AZSELECTORTABS### is part of the current content
-
-      // RETURN ###INDEXBROWSERTABS###
-    return '###INDEXBROWSERTABS###';
-  }
-
-
-
 
 
 
@@ -2453,147 +2638,9 @@ class tx_browser_pi1_navi_indexBrowser
 
    /***********************************************
     *
-    * Helper
+    * Helper  : tabs
     *
     **********************************************/
-
-
-
-  /**
- * zz_getFindInSetForAllByte( ): Set the FIND IN SET statement for each special char group.
- *                                        A special char group is grouped by the length of a special
- *                                        char.
- *
- * @param	array		$row  : Row with special chars and their SQL length
- * @return	[type]		...
- * @version 3.9.12
- * @since   3.9.10
- */
-  private function zz_getFindInSetForAllByte( $row )
-  {
-      // Chars from one byte to unlimited bytes
-    $fromLength = 1;
-    return $this->zz_getFindInSetFromLength( $row, $fromLength );
-
-  }
-
-
-
-/**
- * zz_getFindInSetForMultibyte( ): Set the FIND IN SET statement for each special char group.
- *                                        A special char group is grouped by the length of a special
- *                                        char.
- *
- * @param	array		$row  : Row with special chars and their SQL length
- * @return	[type]		...
- * @version 3.9.12
- * @since   3.9.10
- */
-  private function zz_getFindInSetForMultibyte( $row )
-  {
-      // Chars from two bytes only to unlimited bytes
-    $fromLength = 2;
-    return $this->zz_getFindInSetFromLength( $row, $fromLength );
-
-  }
-
-
-
-/**
- * zz_getFindInSetFromLength( ): Set the FIND IN SET statement for each special char group.
- *                                        A special char group is grouped by the length of a special
- *                                        char.
- *
- * @param	array		$row  : Row with special chars and their SQL length
- * @param	[type]		$fromLength: ...
- * @return	[type]		...
- * @version 3.9.12
- * @since   3.9.10
- */
-  private function zz_getFindInSetFromLength( $row, $fromLength )
-  {
-      // Get current table.field of the index browser
-    $tableField = $this->indexBrowserTableField;
-
-      // LOOP : generate a find in set statement for each special char
-    $findInSet = null;
-    foreach( $row as $char => $length )
-    {
-      if( $length < $fromLength )
-      {
-        continue;
-      }
-      $findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
-    }
-      // LOOP : generate a find in set statement for each special char
-
-    return $findInSet;
-  }
-
-
-
-/**
- * zz_getSqlLengthAsRow( ): Return a row with the SQL length of the given chars
- *
- * @param	array		$arrChars  : array with the chars
- * @return	array		$arr_return       : row with all special chars and their SQL length
- * @version 3.9.12
- * @since   3.9.10
- */
-  private function zz_getSqlLengthAsRow( $arrChars )
-  {
-      // RETURN : $arrChars is empty
-    if( empty ( $arrChars ) )
-    {
-      return;
-    }
-      // RETURN : $arrChars is empty
-
-      // Build the select statement parts for the length of each special char
-    $arrStatement = array( );
-    foreach( ( array ) $arrChars as $specialChar )
-    {
-      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
-    }
-      // Build the select statement parts for the length of each special char
-
-      // DIE : undefined error
-    if( empty ( $arrStatement ) )
-    {
-      die ( __METHOD__ . '(' . __LINE__ . '): undefined error.');
-    }
-      // DIE : undefined error
-
-      // Execute query for the length of each special char
-    $query  = "SELECT " . implode( ', ', $arrStatement );
-    $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
-
-      // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
-    {
-      $level = 1;
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error, $level );
-      return $arr_return;
-    }
-      // Error management
-
-      // DRS
-    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-      // Get the row
-    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
-      // SQL free result
-    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-
-    $arr_return['data']['row'] = $row;
-    return $arr_return;
-  }
 
 
 
@@ -2710,25 +2757,7 @@ class tx_browser_pi1_navi_indexBrowser
     }
   }
 
-
-
-/**
- * zz_specCharsToASCII( ): Convert labels to ascii labels
- *
- * @param	string		$string:  the string for conversion
- * @return	string		$ascii:   the converted string
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function zz_specCharsToASCII( $string )
-  {
-    $ascii = strip_tags( html_entity_decode( $string ) );
-    $ascii = $this->t3lib_cs_obj->specCharsToASCII( $this->bool_utf8, $ascii );
-    $ascii = strtolower( preg_replace( '/[^a-zA-Z0-9-_]*/', null, $ascii ) );
-
-    return $ascii;
-  }
-
+  
 
 /**
  * zz_tabClass( ): Returns the tab class like ' class="tab-u tab-29 selected last"'
