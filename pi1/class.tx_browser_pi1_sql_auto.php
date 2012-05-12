@@ -2240,7 +2240,7 @@ class tx_browser_pi1_sql_auto
       // Add relation once only
 
       // Add where once only
-    if( strpos($leftJoin, $where) === false )
+    if( strpos( $leftJoin, $where ) === false )
     {
       $leftJoin = $leftJoin . $where;
     }
