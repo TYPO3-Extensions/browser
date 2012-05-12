@@ -303,6 +303,8 @@ class tx_browser_pi1_navi_indexBrowser
     //$arr_result['data']['content']
       // Render the tabs
 
+    $this->zz_findInSetForCurrentTab( );
+    
       // Reset $GLOBALS['TSFE']->id
     $GLOBALS['TSFE']->id = $globalTsfeId;
       // Prompt the expired time to devlog
@@ -957,15 +959,6 @@ class tx_browser_pi1_navi_indexBrowser
       // RETURN : error prompt
       // Count special chars
 
-$tabLabel   = $this->pObj->piVars['indexBrowserTab'];    
-$tabLabel   = strtoupper( $tabLabel );
-$tabId      = $this->indexBrowserTab['tabLabels'][$tabLabel];
-$attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
-//$this->pObj->dev_var_dump( $this->indexBrowserTab, $this->pObj->piVars['indexBrowserTab'] );
-$this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes );
-
-
-
       // Count chars
     $arr_return = $this->count_chars( );
       // RETURN : error prompt
@@ -1182,16 +1175,16 @@ $this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes );
       // Set SQL char set to latin1
     $this->sqlCharsetSet( 'latin1' );
 
-      // SQL result with sum for records with a sepecial char as first character
+      // SQL result with sum for records with one byte chars as first character
     $arr_return = $this->count_chars_resSqlCount( $currSqlCharset );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
     $res = $arr_return['data']['res'];
-      // SQL result with sum for records with a sepecial char as first character
+      // SQL result with sum for records with one byte chars as first character
 
-      // Add the sum to the tab with the special char attribute
+      // Add the sum to the tabs
     $this->count_chars_addSumToTab( $res );
 
       // Free SQL result
@@ -1868,7 +1861,7 @@ $this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes );
   private function count_specialChars_setSqlFindInSet( $row )
   {
       // Get current table.field of the index browser
-    $tableField           = $this->indexBrowserTableField;
+    $tableField = $this->indexBrowserTableField;
 
       // LOOP : generate a find in set statement for each special char
     foreach( $row as $char => $length )
@@ -2226,19 +2219,10 @@ $this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes );
       // Configure the query
     $select   = $table . ".uid, " . $table. "." . $parentUid;
     $from     = $this->sqlStatement_from( $table );
-      // 120507, dwildt, 1-;
     $where    = $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL ;
     $where    = $this->sqlStatement_whereAndFindInSet( $where, $strFindInSet );
     $andEnableFields = $this->pObj->cObj->enableFields( $table );
     $where  = $where . $andEnableFields;
-//      // 120507, dwildt, 6+;
-//    $where    = $this->sqlStatement_where( $table, $strFindInSet );
-//    if ( $where )
-//    {
-//      $where = $where . " AND ";
-//    }
-//    $where    = $where . $table . "." . $parentUid . " IN (" . $uidListOfDefLL . ") AND " . $whereLL ;
-//      // 120507, dwildt, 6+;
     $groupBy  = null;
     $orderBy  = $table . ".uid";
     $limit    = null;
@@ -2507,6 +2491,26 @@ $this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes );
     * Helper
     *
     **********************************************/
+
+
+
+/**
+ * zz_findInSetForCurrentTab( ): Convert labels to ascii labels
+ *
+ * @param	string		$string:  the string for conversion
+ * @return	string		$ascii:   the converted string
+ * @version 3.9.13
+ * @since   3.9.13
+ */
+  private function zz_findInSetForCurrentTab( )
+  {
+$tabLabel   = $this->pObj->piVars['indexBrowserTab'];    
+$tabLabel   = strtoupper( $tabLabel );
+$tabId      = $this->indexBrowserTab['tabLabels'][$tabLabel];
+$attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
+//$this->pObj->dev_var_dump( $this->indexBrowserTab, $this->pObj->piVars['indexBrowserTab'] );
+$this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes );
+  }
 
 
 
