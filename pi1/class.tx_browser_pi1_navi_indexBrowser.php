@@ -90,21 +90,21 @@
  * 2110:     public function getMarkerIndexbrowser( )
  * 2156:     private function getMarkerIndexbrowserTabs( )
  *
- *              SECTION: Helper  : SQL FIND IN SET
+ *              SECTION: Helper - SQL FIND IN SET
  * 2216:     private function zz_getFindInSetForAllByte( $row )
  * 2236:     private function zz_getFindInSetForMultibyte( $row )
  * 2257:     private function zz_getFindInSetFromLength( $row, $fromLength )
  * 2287:     private function zz_getSqlLengthAsRow( $arrChars )
  *
- *              SECTION: Helper  : ascii
+ *              SECTION: Helper - ascii
  * 2366:     private function zz_specCharsToASCII( $string )
  *
- *              SECTION: Helper  : SQL
+ *              SECTION: Helper - SQL
  * 2401:     private function zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset )
  * 2469:     private function zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset )
  * 2544:     private function zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset )
  *
- *              SECTION: Helper  : tabs
+ *              SECTION: Helper - tabs
  * 2662:     private function zz_setTabClassSelected( $tabId )
  * 2714:     private function zz_setTabPiVars( $labelAscii, $label )
  * 2745:     private function zz_setTabPiVarsDefaultTab( $label )
@@ -2197,159 +2197,7 @@ class tx_browser_pi1_navi_indexBrowser
 
    /***********************************************
     *
-    * Helper  : SQL FIND IN SET
-    *
-    **********************************************/
-
-
-
-  /**
- * zz_getFindInSetForAllByte( ): Set the FIND IN SET statement for each special char group.
- *                                        A special char group is grouped by the length of a special
- *                                        char.
- *
- * @param	array		$row  : Row with special chars and their SQL length
- * @return	[type]		...
- * @version 3.9.12
- * @since   3.9.10
- */
-  private function zz_getFindInSetForAllByte( $row )
-  {
-      // Chars from one byte to unlimited bytes
-    $fromLength = 1;
-    return $this->zz_getFindInSetFromLength( $row, $fromLength );
-
-  }
-
-
-
-/**
- * zz_getFindInSetForMultibyte( ): Set the FIND IN SET statement for each special char group.
- *                                        A special char group is grouped by the length of a special
- *                                        char.
- *
- * @param	array		$row  : Row with special chars and their SQL length
- * @return	[type]		...
- * @version 3.9.12
- * @since   3.9.10
- */
-  private function zz_getFindInSetForMultibyte( $row )
-  {
-      // Chars from two bytes only to unlimited bytes
-    $fromLength = 2;
-    return $this->zz_getFindInSetFromLength( $row, $fromLength );
-
-  }
-
-
-
-/**
- * zz_getFindInSetFromLength( ): Set the FIND IN SET statement for each special char group.
- *                                        A special char group is grouped by the length of a special
- *                                        char.
- *
- * @param	array		$row  : Row with special chars and their SQL length
- * @param	[type]		$fromLength: ...
- * @return	[type]		...
- * @version 3.9.12
- * @since   3.9.10
- */
-  private function zz_getFindInSetFromLength( $row, $fromLength )
-  {
-      // Get current table.field of the index browser
-    $tableField = $this->indexBrowserTableField;
-
-      // LOOP : generate a find in set statement for each special char
-    $findInSet = null;
-    foreach( $row as $char => $length )
-    {
-      if( $length < $fromLength )
-      {
-        continue;
-      }
-      $findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
-    }
-      // LOOP : generate a find in set statement for each special char
-
-    return $findInSet;
-  }
-
-
-
- /**
-  * zz_getSqlLengthAsRow( ): Return a row with the SQL length of the given chars
-  *
-  * @param	array		$arrChars  : array with the chars
-  * @return	array		$arr_return       : row with all special chars and their SQL length
-  * @version 3.9.12
-  * @since   3.9.10
-  */
-  private function zz_getSqlLengthAsRow( $arrChars )
-  {
-      // RETURN : $arrChars is empty
-    if( empty ( $arrChars ) )
-    {
-      return;
-    }
-      // RETURN : $arrChars is empty
-
-      // Build the select statement parts for the length of each special char
-    $arrStatement = array( );
-    foreach( ( array ) $arrChars as $specialChar )
-    {
-      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
-    }
-      // Build the select statement parts for the length of each special char
-
-      // DIE : undefined error
-    if( empty ( $arrStatement ) )
-    {
-      die ( __METHOD__ . '(' . __LINE__ . '): undefined error.');
-    }
-      // DIE : undefined error
-
-      // Execute query for the length of each special char
-    $query  = "SELECT " . implode( ', ', $arrStatement );
-    $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
-
-      // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
-    {
-      $level = 1;
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error, $level );
-      return $arr_return;
-    }
-      // Error management
-
-      // DRS
-    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-      // Get the row
-    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
-      // SQL free result
-    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-
-    $arr_return['data']['row'] = $row;
-    return $arr_return;
-  }
-
-
-
-
-
-
-
-
-
-   /***********************************************
-    *
-    * Helper  : ascii
+    * Helper - ascii
     *
     **********************************************/
 
@@ -2382,7 +2230,7 @@ class tx_browser_pi1_navi_indexBrowser
 
    /***********************************************
     *
-    * Helper  : SQL
+    * Helper - SQL
     *
     **********************************************/
 
@@ -2644,7 +2492,159 @@ class tx_browser_pi1_navi_indexBrowser
 
    /***********************************************
     *
-    * Helper  : tabs
+    * Helper - SQL FIND IN SET
+    *
+    **********************************************/
+
+
+
+  /**
+ * zz_getFindInSetForAllByte( ): Set the FIND IN SET statement for each special char group.
+ *                                        A special char group is grouped by the length of a special
+ *                                        char.
+ *
+ * @param	array		$row  : Row with special chars and their SQL length
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.10
+ */
+  private function zz_getFindInSetForAllByte( $row )
+  {
+      // Chars from one byte to unlimited bytes
+    $fromLength = 1;
+    return $this->zz_getFindInSetFromLength( $row, $fromLength );
+
+  }
+
+
+
+/**
+ * zz_getFindInSetForMultibyte( ): Set the FIND IN SET statement for each special char group.
+ *                                        A special char group is grouped by the length of a special
+ *                                        char.
+ *
+ * @param	array		$row  : Row with special chars and their SQL length
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.10
+ */
+  private function zz_getFindInSetForMultibyte( $row )
+  {
+      // Chars from two bytes only to unlimited bytes
+    $fromLength = 2;
+    return $this->zz_getFindInSetFromLength( $row, $fromLength );
+
+  }
+
+
+
+/**
+ * zz_getFindInSetFromLength( ): Set the FIND IN SET statement for each special char group.
+ *                                        A special char group is grouped by the length of a special
+ *                                        char.
+ *
+ * @param	array		$row  : Row with special chars and their SQL length
+ * @param	[type]		$fromLength: ...
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.10
+ */
+  private function zz_getFindInSetFromLength( $row, $fromLength )
+  {
+      // Get current table.field of the index browser
+    $tableField = $this->indexBrowserTableField;
+
+      // LOOP : generate a find in set statement for each special char
+    $findInSet = null;
+    foreach( $row as $char => $length )
+    {
+      if( $length < $fromLength )
+      {
+        continue;
+      }
+      $findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
+    }
+      // LOOP : generate a find in set statement for each special char
+
+    return $findInSet;
+  }
+
+
+
+ /**
+  * zz_getSqlLengthAsRow( ): Return a row with the SQL length of the given chars
+  *
+  * @param	array		$arrChars  : array with the chars
+  * @return	array		$arr_return       : row with all special chars and their SQL length
+  * @version 3.9.12
+  * @since   3.9.10
+  */
+  private function zz_getSqlLengthAsRow( $arrChars )
+  {
+      // RETURN : $arrChars is empty
+    if( empty ( $arrChars ) )
+    {
+      return;
+    }
+      // RETURN : $arrChars is empty
+
+      // Build the select statement parts for the length of each special char
+    $arrStatement = array( );
+    foreach( ( array ) $arrChars as $specialChar )
+    {
+      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
+    }
+      // Build the select statement parts for the length of each special char
+
+      // DIE : undefined error
+    if( empty ( $arrStatement ) )
+    {
+      die ( __METHOD__ . '(' . __LINE__ . '): undefined error.');
+    }
+      // DIE : undefined error
+
+      // Execute query for the length of each special char
+    $query  = "SELECT " . implode( ', ', $arrStatement );
+    $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+      $level = 1;
+      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error, $level );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+      // Get the row
+    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
+      // SQL free result
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+
+    $arr_return['data']['row'] = $row;
+    return $arr_return;
+  }
+
+
+
+
+
+
+
+
+
+   /***********************************************
+    *
+    * Helper - tabs
     *
     **********************************************/
 
