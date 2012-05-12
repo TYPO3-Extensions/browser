@@ -76,7 +76,7 @@
  * 1620:     private function count_specialChars_addSum( $row )
  * 1667:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
  * 1761:     private function count_specialChars_setSqlFindInSet( $row )
- * 1787:     private function count_specialChars_setSqlLength( )
+ * 1787:     private function zz_getSqlLengthAsRow( )
  *
  *              SECTION: SQL charset
  * 1857:     private function sqlCharsetGet( )
@@ -1588,7 +1588,8 @@ class tx_browser_pi1_navi_indexBrowser
       // RETURN : no special chars
 
       // Get a row with the SQL length for each special char
-    $arr_return = $this->count_specialChars_setSqlLength( );
+    $arrSpecialChars = explode( ',', $this->indexBrowserTab['initials']['specialChars'] );
+    $arr_return = $this->zz_getSqlLengthAsRow( $arrSpecialChars );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -1878,69 +1879,12 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 
-/**
- * count_specialChars_setSqlLength( ): Return a row with all special chars and their SQL length
- *
- * @return	array		$arr_return : row with all special chars and their SQL length
- * @version 3.9.12
- * @since   3.9.10
- */
-  private function count_specialChars_setSqlLength( )
-  {
-      // Build the select statement parts for the length of each special char
-    $arrStatement     = array( );
-    $arrSpecialChars  = explode( ',', $this->indexBrowserTab['initials']['specialChars'] );
-    foreach( ( array ) $arrSpecialChars as $specialChar )
-    {
-      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
-    }
-      // Build the select statement parts for the length of each special char
-
-      // DIE : undefined error
-    if( empty ( $arrStatement ) )
-    {
-      die ( __METHOD__ . '(' . __LINE__ . '): undefined error.');
-    }
-      // DIE : undefined error
-
-      // Execute query for the length of each special char
-    $query  = "SELECT " . implode( ', ', $arrStatement );
-    $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
-
-      // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
-    {
-      $level = 1;
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error, $level );
-      return $arr_return;
-    }
-      // Error management
-
-      // DRS
-    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-      // Get the row
-    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
-      // SQL free result
-    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-
-    $arr_return['data']['row'] = $row;
-    return $arr_return;
-  }
 
 
 
 
 
-
-
-
+  
     /***********************************************
     *
     * SQL charset
@@ -2512,29 +2456,93 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // RETURN : Any tab isn't selected
 
-    
-$labelAscii = $this->pObj->piVars['indexBrowserTab'];    
-//$tabLabel   = strtoupper( $tabLabel );
-$tabId      = $this->indexBrowserTab['tabLabels'][$labelAscii];
-$attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
-$arr_return = $this->count_charSetSqlLength( $attributes );
-$row        = $arr_return['data']['row'];
-$arrFindInSet  = $this->count_charSetSqlFindInSet( $row ); 
-$orFindInSet = array( );
-foreach( $arrFindInSet as $length => $arr_statement )
-{
-  foreach( $arr_statement as $statement )
-  {
-    $orFindInSet[] = $statement;
-  }
-}
-$findInSet = implode( ' OR ', $orFindInSet );
-$findInSet = '( ' . $findInSet . ' )';
+      // Get the attributes of the selected tab
+    $labelAscii = $this->pObj->piVars['indexBrowserTab'];    
+    $tabId      = $this->indexBrowserTab['tabLabels'][$labelAscii];
+    $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
+      // Get the attributes of the selected tab
 
-$this->findInSetForCurrTab = $findInSet;
-//$this->pObj->dev_var_dump( $this->indexBrowserTab, $this->pObj->piVars['indexBrowserTab'] );
-//$this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes, $arr_return, $row, $findInSet );
-$this->pObj->dev_var_dump( $arrFindInSet, $findInSet );
+    $arr_return = $this->count_charSetSqlLength( $attributes );
+    $row        = $arr_return['data']['row'];
+    $arrFindInSet  = $this->count_charSetSqlFindInSet( $row ); 
+    $orFindInSet = array( );
+    foreach( $arrFindInSet as $length => $arr_statement )
+    {
+      foreach( $arr_statement as $statement )
+      {
+        $orFindInSet[] = $statement;
+      }
+    }
+    $findInSet = implode( ' OR ', $orFindInSet );
+    $findInSet = '( ' . $findInSet . ' )';
+
+    $this->findInSetForCurrTab = $findInSet;
+    //$this->pObj->dev_var_dump( $this->indexBrowserTab, $this->pObj->piVars['indexBrowserTab'] );
+    //$this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes, $arr_return, $row, $findInSet );
+    $this->pObj->dev_var_dump( $arrFindInSet, $findInSet );
+  }
+
+
+
+/**
+ * zz_getSqlLengthAsRow( ): Return a row with all special chars and their SQL length
+ *
+ * @return	array		$arr_return : row with all special chars and their SQL length
+ * @version 3.9.12
+ * @since   3.9.10
+ */
+  private function zz_getSqlLengthAsRow( $arrSpecialChars )
+  {
+      // RETURN : $arrSpecialChars is empty
+    if( empty ( $arrSpecialChars ) )
+    {
+      return;
+    }
+      // RETURN : $arrSpecialChars is empty
+
+      // Build the select statement parts for the length of each special char
+    foreach( ( array ) $arrSpecialChars as $specialChar )
+    {
+      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
+    }
+      // Build the select statement parts for the length of each special char
+
+      // DIE : undefined error
+    if( empty ( $arrStatement ) )
+    {
+      die ( __METHOD__ . '(' . __LINE__ . '): undefined error.');
+    }
+      // DIE : undefined error
+
+      // Execute query for the length of each special char
+    $query  = "SELECT " . implode( ', ', $arrStatement );
+    $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+      $level = 1;
+      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error, $level );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+      // Get the row
+    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
+      // SQL free result
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+
+    $arr_return['data']['row'] = $row;
+    return $arr_return;
   }
 
 
@@ -2568,7 +2576,7 @@ $this->pObj->dev_var_dump( $arrFindInSet, $findInSet );
   }
 
   /**
- * count_specialChars_setSqlLength( ): Return a row with all special chars and their SQL length
+ * zz_getSqlLengthAsRow( ): Return a row with all special chars and their SQL length
  *
  * @return	array		$arr_return : row with all special chars and their SQL length
  * @version 3.9.12
