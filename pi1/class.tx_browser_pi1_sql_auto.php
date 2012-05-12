@@ -991,7 +991,7 @@ class tx_browser_pi1_sql_auto
         list( $table, $field )              = explode( '.', $tableField );
         $table                              = trim( $table );
         $field                              = trim( $field );
-$tablesForRelations[] = $table;
+//$tablesForRelations[] = $table;
         // Suggestion #7730
         // Wildcard are used by default
         if(!$this->pObj->bool_searchWildcardsManual)
@@ -1050,7 +1050,7 @@ $tablesForRelations[] = $table;
         list($table, $field)                  = explode('.', $tableField);
         $table                                = trim($table);
         $field                                = trim($field);
-$tablesForRelations[] = $table;
+//$tablesForRelations[] = $table;
 
         // Suggestion #7730
         // Wildcard are used by default
@@ -1109,9 +1109,9 @@ $tablesForRelations[] = $table;
     }
     // andWhere NOT
 
-$tablesForRelations = array_unique( $tablesForRelations );
-$this->pObj->dev_var_dump( $tablesForRelations );
-$this->init_class_relationsLoop( $tablesForRelations );
+//$tablesForRelations = array_unique( $tablesForRelations );
+//$this->pObj->dev_var_dump( $tablesForRelations );
+//$this->init_class_relationsLoop( $tablesForRelations );
     //////////////////////////////////////////////////////////////////////////
     //
     // RETURN andWhere
@@ -2328,6 +2328,7 @@ $this->pObj->dev_var_dump( $this->arr_relations_mm_simple );
         break;
     }
       // SWITCH : opposite
+$this->pObj->dev_var_dump( $relation, $where );
 
       // Add relation once only
     if( strpos( $leftJoin, $relation ) === false )
