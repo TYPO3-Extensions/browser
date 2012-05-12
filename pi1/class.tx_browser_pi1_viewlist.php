@@ -1181,11 +1181,11 @@ class tx_browser_pi1_viewlist
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
     }
 
-//    if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
-//    {
-//      $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
-//      $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
-//    }
+    if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
+    {
+      $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
+      $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
+    }
 //
 //  // DRS
 //if( $this->pObj->b_drs_devTodo )
@@ -1308,8 +1308,7 @@ class tx_browser_pi1_viewlist
     switch( true )
     {
       case( $this->zz_indexBrowserIsLocalised( ) ):
-//        $arr_return = $this->rows_sqlIdsOfRowsWiTranslationOnly( );
-        $arr_return = $this->rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( );
+        $arr_return = $this->rows_sqlIdsOfRowsWiTranslationOnly( );
         break;
       case( $this->zz_orderByValueIsLocalised( ) ):
           // First value of ORDER BY is localised
@@ -1349,11 +1348,6 @@ class tx_browser_pi1_viewlist
 
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
-    if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
-    {
-      $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
-      $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
-    }
 //    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
 //    {
 //      $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
