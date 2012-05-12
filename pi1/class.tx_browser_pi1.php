@@ -461,34 +461,32 @@ class tx_browser_pi1 extends tslib_pibase {
 
     switch( $this->arr_extConf['browserEngine'] )
     {
-      case( 'Engine 4.x (development only)' ):
-        if( ! $this->bool_accessByIP )
-        {
-          $this->dev_browserEngine = 3;
-          if ($this->b_drs_sql)
-          {
-            $prompt = 'Browser engine 4.x is enabled. But current IP doesn\'t match list of allowed IPs!';
-            t3lib_div::devLog('[WARN/SQL] ' . $prompt, $this->extKey, 2);
-            $prompt = 'Browser engine 3.x is used';
-            t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
-          }
-          break;
-        }
+      case( 'Engine 4.x (alpha): recommended' ):
+//        if( ! $this->bool_accessByIP )
+//        {
+//          $this->dev_browserEngine = 3;
+//          if ($this->b_drs_sql)
+//          {
+//            $prompt = 'Browser engine 4.x is enabled. But current IP doesn\'t match list of allowed IPs!';
+//            t3lib_div::devLog('[WARN/SQL] ' . $prompt, $this->extKey, 2);
+//            $prompt = 'Browser engine 3.x is used';
+//            t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
+//          }
+//          break;
+//        }
         $this->dev_browserEngine = 4;
         if ($this->b_drs_sql)
         {
-          $prompt = 'Browser engine 4.x is enabled. This is for development only!';
-          t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
-          $prompt = 'Browser engine 4.x is used';
+          $prompt = 'Browser engine 4.x is enabled';
           t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
         }
         break;
-      case( 'Browser engine 3.x (recommended)' ):
+      case( 'Browser Engine 3.x (beta)' ):
       default:
         $this->dev_browserEngine = 3;
         if ($this->b_drs_sql)
         {
-          $prompt = 'Browser engine 3.x is used';
+          $prompt = 'Browser engine 3.x is enabled';
           t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
         }
     }

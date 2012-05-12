@@ -482,23 +482,23 @@ class tx_browser_pi1_localisation_3x
     {
       $str_andWhere = "( ".$arr_localise['id_field']." <= 0 OR ".$arr_localise['id_field']." = ".intval($this->lang_id)." ) ";
       // These andWhere needs a consolidation
-        // DEVELOPMENT: Browser engine 4.x
-      if( $this->pObj->dev_browserEngine == 4 )
-      {
-          // DRS
-        if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
-        {
-          $prompt = '+++ Browser engine 4.x ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++';
-          t3lib_div::devlog( $prompt, $this->pObj->extKey, 2 );
-          $prompt = 'Browser engine 4.x: andWhere for localised fields is modified. ' .
-                    'Only records of the default language will selected.';
-          t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-          $prompt = 'Browser engine 4.x: If you are using this with the Browser engine 3.x, you will get trouble.';
-          t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-        }
-          // DRS
-        $str_andWhere = $arr_localise['id_field']." <= 0 ";
-      }
+//        // DEVELOPMENT: Browser engine 4.x
+//      if( $this->pObj->dev_browserEngine == 4 )
+//      {
+//          // DRS
+//        if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+//        {
+//          $prompt = '+++ Browser engine 4.x ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++';
+//          t3lib_div::devlog( $prompt, $this->pObj->extKey, 2 );
+//          $prompt = 'Browser engine 4.x: andWhere for localised fields is modified. ' .
+//                    'Only records of the default language will selected.';
+//          t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
+//          $prompt = 'Browser engine 4.x: If you are using this with the Browser engine 3.x, you will get trouble.';
+//          t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
+//        }
+//          // DRS
+//        $str_andWhere = $arr_localise['id_field']." <= 0 ";
+//      }
     }
     if ($this->int_localisation_mode == PI1_SELECTED_LANGUAGE_ONLY)
     {
