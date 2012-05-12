@@ -2274,7 +2274,7 @@ class tx_browser_pi1 extends tslib_pibase {
       case( ( $endTime - $this->tt_prevEndTime ) >= 10000 ):
         $this->tt_prevPrompt = 3;
         $prompt = 'Previous process needs more than 10 sec';
-        t3lib_div::devLog('[ERROR/PERFORMANCE] ' . $prompt, $this->extKey, 3 );
+        t3lib_div::devLog('[WARN/PERFORMANCE] ' . $prompt, $this->extKey, 3 );
         break;
       case( ( $endTime - $this->tt_prevEndTime ) >= 1000 ):
         $this->tt_prevPrompt = 2;
