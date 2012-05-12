@@ -107,7 +107,7 @@
  * 2722:     private function zz_tabLinkLabel( $tab )
  * 2764:     private function zz_setTabPiVars( $labelAscii, $label )
  * 2795:     private function zz_setTabPiVarsDefaultTab( $label )
- * 2827:     private function zz_setTabSelected( $tabId )
+ * 2827:     private function zz_setTabSlected( $tabId )
  * 2877:     private function zz_tabLastId( )
  * 2935:     private function zz_tabTitle( $sum )
  *
@@ -948,9 +948,6 @@ class tx_browser_pi1_navi_indexBrowser
     }
       // LOOP tabs TS configuratione array
 
-      // Set tab selected
-    $this->zz_setTabSelected( $tabId );
-
       // Init special chars
     $this->tabs_initSpecialChars( $arrCsvAttributes );
 
@@ -991,7 +988,7 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * zz_setTabSelected( ): Sets the class property selected, if the current tab
+ * zz_setTabSlected( ): Sets the class property selected, if the current tab
  *                      is selected. Sets the class var indexBrowserTab.
  *
  * @param	integer		$tabId    : Current tab ID for TS configuration array
@@ -999,7 +996,7 @@ class tx_browser_pi1_navi_indexBrowser
  * @version 3.9.12
  * @since   3.9.12
  */
-  private function zz_setTabSelected( $tabId )
+  private function zz_setTabSlected( $tabId )
   {
 //$this->pObj->dev_var_dump( $tabLabel, $this->pObj->piVar_indexBrowserTab );
 //$this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default'] );
@@ -1134,6 +1131,9 @@ class tx_browser_pi1_navi_indexBrowser
     $this->indexBrowserTab['tabIds'][$tabId]['sum']             = 0;
     $this->indexBrowserTab['tabLabels'][$labelAscii]            = $tabId;
       // Set tab array
+
+      // Set tab selected
+    $this->zz_setTabSlected( $tabId );
 
       // RETURN : tab with special value 'all'
     if( $conf_tabs[$tabId . '.']['special'] == 'all' )
