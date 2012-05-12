@@ -698,13 +698,13 @@ class tx_browser_pi1_sql_auto
 
       //////////////////////////////////////////////////////////////////////////
       //
-      // Is there a andWhere statement from the filter class?
+      // Is there an andWhere statement from the filter class?
     if ( is_array( $this->pObj->arr_andWhereFilter ) )
     {
       $str_andFilter  = implode(" AND ", $this->pObj->arr_andWhereFilter);
       $whereClause    = $whereClause." AND ".$str_andFilter;
     }
-      // Is there a andWhere statement from the filter class?
+      // Is there an andWhere statement from the filter class?
 
 
     
@@ -739,9 +739,10 @@ class tx_browser_pi1_sql_auto
     }
     $andWhere       = $this->andWhere();
     $arr_result     = $this->get_joins();
+$this->pObj->dev_var_dump( $arr_result );
     $str_full_join  = $arr_result['data']['full_join'];
     unset($arr_result);
-    // Get SWORD, AND WHERE and JOINS
+      // Get SWORD, AND WHERE and JOINS
 
 
     //////////////////////////////////////////////////////////////////////////
