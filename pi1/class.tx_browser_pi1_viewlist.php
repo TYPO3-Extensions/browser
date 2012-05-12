@@ -62,7 +62,7 @@
  *  911:     private function rows_sqlIdsOfRowsWiTranslation( $withIds )
  * 1061:     private function rows_sqlIdsOfRowsDefaultLanguage( $withoutIds )
  * 1212:     private function rows_sqlLanguageDefault( )
- * 1237:     private function rows_sqlLanguageDefaultOrTranslated( )
+ * 1237:     private function rows_sqlLanguageFirstDefaultOrFirstTranslated( )
  * 1283:     private function rows_sqlRowsbyIds( $withIds )
  * 1370:     private function sql_selectLocalised( $select )
  *
@@ -809,7 +809,7 @@ class tx_browser_pi1_viewlist
         $arr_return = $this->rows_sqlLanguageDefault( );
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
-        $arr_return = $this->rows_sqlLanguageDefaultOrTranslated( );
+        $arr_return = $this->rows_sqlLanguageFirstDefaultOrFirstTranslated( );
         break;
       default:
           // DIE
@@ -1256,18 +1256,19 @@ class tx_browser_pi1_viewlist
 
 
   /**
- * rows_sqlLanguageDefaultOrTranslated( ): Get the ids of default or translated rows
+ * rows_sqlLanguageFirstDefaultOrFirstTranslated( ): Get the ids of default or translated rows
  *
  * @return	array		$arr_return: Contains the ids
  * @version 3.9.13
  * @since   3.9.13
  */
-  private function rows_sqlLanguageDefaultOrTranslated( )
+  private function rows_sqlLanguageFirstDefaultOrFirstTranslated( )
   {
       // SWITCH : first value of ORDER BY is loaclised
-    switch( $this->zz_orderByValueIsLocalised( ) )
+    switch( true )
     {
-      case( true ):
+      case( $this->zz_indexBrowserIsLocalised( ) ):
+      case( $this->zz_orderByValueIsLocalised( ) ):
           // First value of ORDER BY is loaclised
           // DRS
         if( $this->pObj->b_drs_warn )
@@ -1285,7 +1286,7 @@ class tx_browser_pi1_viewlist
         $arr_return = $this->rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( );
         break;
           // First value of ORDER BY is loaclised
-      case( false ):
+      case( ! $this->zz_orderByValueIsLocalised( ) ):
       default:
           // First value of ORDER BY isn't loaclised
         $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( );
@@ -1791,10 +1792,39 @@ class tx_browser_pi1_viewlist
 
 
  /**
+  * zz_indexBrowserIsLocalised( ) : Method returns true, if the a tab of the index
+  *                                 browser is selected and the index browser tableField
+  *                                 is localised.
+  *
+  * @return	boolean		$tableFieldIsLocalised : true or false
+  * @version 3.9.13
+  * @since   3.9.13
+  */
+  private function zz_indexBrowserIsLocalised( )
+  {
+      // RETURN false : there isn't any FIND IN SET for the current tab attributes
+    if( ! $this->pObj->objNaviIndexBrowser->findInSetForCurrTab )
+    {
+      return false;
+    }
+      // RETURN false : there isn't any FIND IN SET for the current tab attributes
+
+      // Get the tableField of the index browser
+    $tableField = $this->pObj->objNaviIndexBrowser->indexBrowserTableField;
+
+      // Get localised status of the tableField
+    $tableFieldIsLocalised = $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField );
+      // RETURN the localised status
+    return $tableFieldIsLocalised;
+  }
+
+
+
+ /**
   * zz_orderByValueIsLocalised( )  : Method returns true, if the first value in the ORDER BY
   *                               clause is localised.
   *
-  * @return	boolean		$orderByValueIsLocalised : true or false
+  * @return	boolean		$tableFieldIsLocalised : true or false
   * @version 3.9.13
   * @since   3.9.13
   */
@@ -1813,9 +1843,9 @@ class tx_browser_pi1_viewlist
     list( $tableField ) = explode( ' ', $orderBy );
 
       // Get localised status of the tableField
-    $orderByValueIsLocalised = $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField );
+    $tableFieldIsLocalised = $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField );
       // RETURN the localised status
-    return $orderByValueIsLocalised;
+    return $tableFieldIsLocalised;
   }
 
 

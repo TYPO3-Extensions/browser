@@ -1063,6 +1063,10 @@ class tx_browser_pi1_navi_indexBrowser
       // Get the attributes of the selected tab
 
     $arr_return   = $this->zz_getSqlLengthAsRow( $attributes );
+    if( empty ( $arr_return ) )
+    {
+      return;
+    }
     $row          = $arr_return['data']['row'];
     $arrFindInSet = $this->zz_getFindInSetForAllByte( $row );
     $orFindInSet  = array( );
