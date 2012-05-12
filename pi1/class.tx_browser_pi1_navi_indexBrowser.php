@@ -2462,7 +2462,7 @@ class tx_browser_pi1_navi_indexBrowser
     $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
       // Get the attributes of the selected tab
 
-    $arr_return = $this->count_charSetSqlLength( $attributes );
+    $arr_return = $this->zz_getSqlLengthAsRow( $attributes );
     $row        = $arr_return['data']['row'];
     $arrFindInSet  = $this->count_charSetSqlFindInSet( $row ); 
     $orFindInSet = array( );
@@ -2485,23 +2485,25 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * zz_getSqlLengthAsRow( ): Return a row with all special chars and their SQL length
+ * zz_getSqlLengthAsRow( ): Return a row with the SQL length of the given chars
  *
- * @return	array		$arr_return : row with all special chars and their SQL length
+ * @param	array		$arrChars  : array with the chars
+ * @return	array		$arr_return       : row with all special chars and their SQL length
  * @version 3.9.12
  * @since   3.9.10
  */
-  private function zz_getSqlLengthAsRow( $arrSpecialChars )
+  private function zz_getSqlLengthAsRow( $arrChars )
   {
-      // RETURN : $arrSpecialChars is empty
-    if( empty ( $arrSpecialChars ) )
+      // RETURN : $arrChars is empty
+    if( empty ( $arrChars ) )
     {
       return;
     }
-      // RETURN : $arrSpecialChars is empty
+      // RETURN : $arrChars is empty
 
       // Build the select statement parts for the length of each special char
-    foreach( ( array ) $arrSpecialChars as $specialChar )
+    $arrStatement = array( );
+    foreach( ( array ) $arrChars as $specialChar )
     {
       $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
     }
