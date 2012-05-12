@@ -739,7 +739,7 @@ class tx_browser_pi1_sql_auto
     }
     $andWhere       = $this->andWhere();
     $arr_result     = $this->get_joins();
-$this->pObj->dev_var_dump( $arr_result );
+//$this->pObj->dev_var_dump( $arr_result );
     $str_full_join  = $arr_result['data']['full_join'];
     unset($arr_result);
       // Get SWORD, AND WHERE and JOINS
@@ -2290,7 +2290,6 @@ $this->pObj->dev_var_dump( $arr_result );
     {
       return  $arr_return;
     }
-    
       // RETURN : there isn't any CSV relation
         
       //////////////////////////////////
@@ -2299,6 +2298,8 @@ $this->pObj->dev_var_dump( $arr_result );
       // from: ["tt_news"]["cruser_id"] = "be_users"
       // to:   ["tt_news.cruser_id"]    = "be_users"
 
+
+$tablesBak = $tables;
       // LOOP tables
     foreach( (array) $tables as $keyTable => $arrFields)
     {
@@ -2315,6 +2316,10 @@ $this->pObj->dev_var_dump( $arr_result );
       unset($tables[$keyTable]);
     }
       // LOOP tables
+$this->pObj->dev_var_dump( $tablesBak, $tables );
+$this->pObj->dev_var_dump( t3lib_BEfunc::implodeTSParams( $tablesBak ) );
+
+
 
       // LOOP tables
     foreach( ( array ) $tables as $localTableField => $foreignTable )
