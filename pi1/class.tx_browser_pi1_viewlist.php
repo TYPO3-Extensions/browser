@@ -1173,8 +1173,9 @@ class tx_browser_pi1_viewlist
     if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
     {
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
-$this->pObj->dev_var_dump( $query );
+$this->pObj->dev_var_dump( $this->pObj->objFltr4x->andWhereFilter );
     }
+$this->pObj->dev_var_dump( $where );
 
     if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
     {
