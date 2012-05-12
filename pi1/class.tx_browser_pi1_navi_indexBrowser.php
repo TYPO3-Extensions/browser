@@ -38,82 +38,80 @@
  *
  *
  *
- *  122: class tx_browser_pi1_navi_indexBrowser
- *  215:     public function __construct($parentObj)
+ *  120: class tx_browser_pi1_navi_indexBrowser
+ *  213:     public function __construct($parentObj)
  *
  *              SECTION: Main
- *  247:     public function get( $content )
+ *  245:     public function get( $content )
  *
  *              SECTION: Requirements
- *  352:     private function localisation_init( )
- *  412:     private function localisation_consolidate( )
- *  530:     private function requirements_check( )
- *  608:     private function tableField_check( )
- *  659:     private function tableField_init( )
+ *  350:     private function localisation_init( )
+ *  410:     private function localisation_consolidate( )
+ *  528:     private function requirements_check( )
+ *  606:     private function tableField_check( )
+ *  657:     private function tableField_init( )
  *
  *              SECTION: Subparts
- *  748:     private function subpart( )
- *  794:     private function subpart_setContainer( )
- *  815:     private function subpart_setTabs( )
+ *  746:     private function subpart( )
+ *  792:     private function subpart_setContainer( )
+ *  813:     private function subpart_setTabs( )
  *
  *              SECTION: Tabs
- *  913:     private function tabs_init( )
- * 1004:     private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
- * 1052:     private function tabs_initFindInSetForCurrentTab( )
- * 1099:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
- * 1162:     private function tabs_initSpecialChars( $arrCsvAttributes )
+ *  911:     private function tabs_init( )
+ * 1002:     private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
+ * 1050:     private function tabs_initFindInSetForCurrentTab( )
+ * 1097:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+ * 1160:     private function tabs_initSpecialChars( $arrCsvAttributes )
  *
  *              SECTION: Count chars
- * 1223:     private function count_chars( )
- * 1266:     private function count_chars_addSumToTab( $res )
- * 1420:     private function count_chars_resSqlCount( $currSqlCharset )
- * 1477:     private function count_chars_resSqlCountDefLL( $strFindInSet, $currSqlCharset )
- * 1522:     private function count_chars_resSqlCountSelOrDefLL( $strFindInSet, $currSqlCharset )
+ * 1221:     private function count_chars( )
+ * 1264:     private function count_chars_addSumToTab( $res )
+ * 1418:     private function count_chars_resSqlCount( $currSqlCharset )
+ * 1475:     private function count_chars_resSqlCountDefLL( $strFindInSet, $currSqlCharset )
+ * 1520:     private function count_chars_resSqlCountSelOrDefLL( $strFindInSet, $currSqlCharset )
  *
  *              SECTION: Count special chars
- * 1619:     private function count_specialChars( )
- * 1659:     private function count_specialChars_addSum( $row )
- * 1707:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
- * 1760:     private function count_specialChars_resSqlCountDefLL( $length, $strFindInSet, $currSqlCharset )
- * 1819:     private function count_specialChars_resSqlCountSelOrDefLL( $length, $strFindInSet, $currSqlCharset )
- *
- *              SECTION: SQL charset
- * 1913:     private function sqlCharsetGet( )
- * 1946:     private function sqlCharsetSet( $sqlCharset )
+ * 1617:     private function count_specialChars( )
+ * 1657:     private function count_specialChars_addSum( $row )
+ * 1705:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
+ * 1758:     private function count_specialChars_resSqlCountDefLL( $length, $strFindInSet, $currSqlCharset )
+ * 1817:     private function count_specialChars_resSqlCountSelOrDefLL( $length, $strFindInSet, $currSqlCharset )
  *
  *              SECTION: SQL statements
- * 1984:     private function sqlStatement_from( $table )
- * 2011:     private function sqlStatement_where( $table, $andWhereFindInSet )
- * 2062:     private function sqlStatement_whereAndFindInSet( $where, $findInSet )
+ * 1911:     private function sqlCharsetGet( )
+ * 1944:     private function sqlCharsetSet( $sqlCharset )
+ * 1968:     private function sqlStatement_from( $table )
+ * 1995:     private function sqlStatement_where( $table, $andWhereFindInSet )
+ * 2046:     private function sqlStatement_whereAndFindInSet( $where, $findInSet )
  *
  *              SECTION: Downward compatibility
- * 2110:     public function getMarkerIndexbrowser( )
- * 2156:     private function getMarkerIndexbrowserTabs( )
+ * 2094:     public function getMarkerIndexbrowser( )
+ * 2140:     private function getMarkerIndexbrowserTabs( )
  *
  *              SECTION: Helper - ascii
- * 2214:     private function zz_specCharsToASCII( $string )
+ * 2198:     private function zz_specCharsToASCII( $string )
  *
  *              SECTION: Helper - SQL
- * 2249:     private function zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset )
- * 2317:     private function zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset )
- * 2392:     private function zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset )
+ * 2233:     private function zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset )
+ * 2301:     private function zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset )
+ * 2376:     private function zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset )
  *
  *              SECTION: Helper - SQL FIND IN SET
- * 2511:     private function zz_getFindInSetForAllByte( $row )
- * 2531:     private function zz_getFindInSetForMultibyte( $row )
- * 2552:     private function zz_getFindInSetFromLength( $row, $fromLength )
- * 2582:     private function zz_getSqlLengthAsRow( $arrChars )
+ * 2495:     private function zz_getFindInSetForAllByte( $row )
+ * 2515:     private function zz_getFindInSetForMultibyte( $row )
+ * 2536:     private function zz_getFindInSetFromLength( $row, $fromLength )
+ * 2566:     private function zz_getSqlLengthAsRow( $arrChars )
  *
  *              SECTION: Helper - tabs
- * 2662:     private function zz_setTabClassSelected( $tabId )
- * 2714:     private function zz_setTabPiVars( $labelAscii, $label )
- * 2745:     private function zz_setTabPiVarsDefaultTab( $label )
- * 2778:     private function zz_tabClass( $lastTabId, $tab, $key )
- * 2811:     private function zz_tabDefaultLabel( )
- * 2829:     private function zz_tabDefaultLink( )
- * 2872:     private function zz_tabLinkLabel( $tab )
- * 2913:     private function zz_tabLastId( )
- * 2971:     private function zz_tabTitle( $sum )
+ * 2646:     private function zz_setTabClassSelected( $tabId )
+ * 2698:     private function zz_setTabPiVars( $labelAscii, $label )
+ * 2729:     private function zz_setTabPiVarsDefaultTab( $label )
+ * 2762:     private function zz_tabClass( $lastTabId, $tab, $key )
+ * 2795:     private function zz_tabDefaultLabel( )
+ * 2813:     private function zz_tabDefaultLink( )
+ * 2856:     private function zz_tabLinkLabel( $tab )
+ * 2897:     private function zz_tabLastId( )
+ * 2955:     private function zz_tabTitle( $sum )
  *
  * TOTAL FUNCTIONS: 49
  * (This index is automatically created/updated by the extension "extdeveval")
