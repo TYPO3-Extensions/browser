@@ -2434,13 +2434,13 @@ class tx_browser_pi1_navi_indexBrowser
     $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
       // Get the attributes of the selected tab
 
-    $arr_return = $this->zz_getSqlLengthAsRow( $attributes );
-    $row        = $arr_return['data']['row'];
-    $arrFindInSet  = $this->zz_getFindInSetForAllByte( $row ); 
-    $orFindInSet = array( );
-    foreach( $arrFindInSet as $arr_statement )
+    $arr_return   = $this->zz_getSqlLengthAsRow( $attributes );
+    $row          = $arr_return['data']['row'];
+    $arrFindInSet = $this->zz_getFindInSetForAllByte( $row ); 
+    $orFindInSet  = array( );
+    foreach( $arrFindInSet as $length )
     {
-      foreach( $arr_statement as $statement )
+      foreach( $length as $statement )
       {
         $orFindInSet[] = $statement;
       }
@@ -2449,9 +2449,7 @@ class tx_browser_pi1_navi_indexBrowser
     $findInSet = '( ' . $findInSet . ' )';
 
     $this->findInSetForCurrTab = $findInSet;
-    //$this->pObj->dev_var_dump( $this->indexBrowserTab, $this->pObj->piVars['indexBrowserTab'] );
-    //$this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes, $arr_return, $row, $findInSet );
-    $this->pObj->dev_var_dump( $arrFindInSet, $findInSet );
+//    $this->pObj->dev_var_dump( $arrFindInSet, $findInSet );
   }
 
 
@@ -2472,20 +2470,6 @@ class tx_browser_pi1_navi_indexBrowser
     $fromLength = 1;
     return $this->zz_getFindInSetFromLength( $row, $fromLength );
 
-//      // Get current table.field of the index browser
-//    $tableField = $this->indexBrowserTableField;
-//
-//      // LOOP : generate a find in set statement for each special char
-//    $findInSet = null;
-//    foreach ($row as $char => $length) {
-////      if ($length < 2) {
-////        continue;
-////      }
-//      $findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
-//    }
-//      // LOOP : generate a find in set statement for each special char
-//    
-//    return $findInSet;
   }
 
 
@@ -2506,22 +2490,6 @@ class tx_browser_pi1_navi_indexBrowser
     $fromLength = 2;
     return $this->zz_getFindInSetFromLength( $row, $fromLength );
 
-//      // Get current table.field of the index browser
-//    $tableField = $this->indexBrowserTableField;
-//
-//      // LOOP : generate a find in set statement for each special char
-//    $findInSet = null;
-//    foreach( $row as $char => $length )
-//    {
-//      if( $length < 2 )
-//      {
-//        continue;
-//      }
-//      $findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
-//    }
-//      // LOOP : generate a find in set statement for each special char
-//    
-//    return $findInSet;
   }
 
 
