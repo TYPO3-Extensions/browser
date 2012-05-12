@@ -1154,7 +1154,7 @@ class tx_browser_pi1_viewlist
       // RETURN : table is not localised
 
       // andWhere sys_language_uid ...
-    $andWhereSysLanguage = $GLOBALS['TCA'][$table]['ctrl']['languageField'] . " <= 0";
+    $andWhereSysLanguage = $table . '.' . $GLOBALS['TCA'][$table]['ctrl']['languageField'] . " <= 0";
 
       // andWhere list of ids ...
     $withoutIdList  = implode( ',', ( array ) $withoutIds );
