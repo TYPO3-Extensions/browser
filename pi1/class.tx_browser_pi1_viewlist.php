@@ -823,6 +823,34 @@ class tx_browser_pi1_viewlist
 
 
  /**
+  * rows_sqlIdsOfRowsWiTranslationOnly( ) : Get the ids of default or translated rows
+  *
+  * @return	array		$arr_return: Contains the ids
+  * @version 3.9.13
+  * @since   3.9.13
+  */
+  private function rows_sqlIdsOfRowsWiTranslationOnly( )
+  {
+      // Get ids of records, which match the rules and have a translation for the current language
+      // Get all ids
+    $withIds = array( );
+    $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $withIds );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
+      // Get ids of records, which match the rules and have a translation for the current language
+
+      // Get rows for the list view
+    $arr_return = $this->rows_sqlRowsbyIds( $idsOfTranslationRows );
+
+    return $arr_return;
+  }
+
+
+
+ /**
   * rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( ) : Get the ids of default or translated rows
   *
   * @return	array		$arr_return: Contains the ids
@@ -1264,12 +1292,14 @@ class tx_browser_pi1_viewlist
  */
   private function rows_sqlLanguageFirstDefaultOrFirstTranslated( )
   {
-      // SWITCH : first value of ORDER BY is loaclised
+      // SWITCH : is index browser or ORDER BY ?localised
     switch( true )
     {
       case( $this->zz_indexBrowserIsLocalised( ) ):
+        $arr_return = $this->rows_sqlIdsOfRowsWiTranslationOnly( );
+        break;
       case( $this->zz_orderByValueIsLocalised( ) ):
-          // First value of ORDER BY is loaclised
+          // First value of ORDER BY is localised
           // DRS
         if( $this->pObj->b_drs_warn )
         {
@@ -1285,15 +1315,15 @@ class tx_browser_pi1_viewlist
           // DRS
         $arr_return = $this->rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( );
         break;
-          // First value of ORDER BY is loaclised
+          // First value of ORDER BY is localised
       case( ! $this->zz_orderByValueIsLocalised( ) ):
       default:
-          // First value of ORDER BY isn't loaclised
+          // First value of ORDER BY isn't localised
         $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( );
         break;
-          // First value of ORDER BY isn't loaclised
+          // First value of ORDER BY isn't localised
     }
-      // SWITCH : first value of ORDER BY is loaclised
+      // SWITCH : is index browser or ORDER BY ?localised
 
     return $arr_return;
   }
