@@ -839,6 +839,7 @@ class tx_browser_pi1_viewlist
     {
       return $arr_return;
     }
+    $idsWiCurrTranslation = $arr_return['data']['idsWiCurrTranslation'];
     $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
       // Get ids of records, which match the rules and have a translation for the current language
 
@@ -846,8 +847,15 @@ class tx_browser_pi1_viewlist
     {
       return $arr_return;
     }
+    
+      // Merge all ids
+    $withIds = array_merge(
+                ( array ) idsWiCurrTranslation,
+                ( array ) $idsOfTranslationRows
+              );
+
       // Get rows for the list view
-    $arr_return = $this->rows_sqlRowsbyIds( $idsOfTranslationRows );
+    $arr_return = $this->rows_sqlRowsbyIds( $withIds );
 
     return $arr_return;
   }
