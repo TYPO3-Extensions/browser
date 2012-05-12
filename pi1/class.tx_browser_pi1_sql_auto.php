@@ -2227,6 +2227,7 @@ $this->pObj->dev_var_dump( $this->arr_relations_mm_simple );
 
     $arr_return['data']['left_join'] = $leftJoin;
     $arr_return['data']['full_join'] = $fullJoin;
+$this->pObj->dev_var_dump( $arr_return );
     return $arr_return;
   }
 
@@ -2328,7 +2329,7 @@ $this->pObj->dev_var_dump( $this->arr_relations_mm_simple );
         break;
     }
       // SWITCH : opposite
-$this->pObj->dev_var_dump( $relation, $where );
+//$this->pObj->dev_var_dump( $relation, $where );
 
       // Add relation once only
     if( strpos( $leftJoin, $relation ) === false )
