@@ -939,6 +939,9 @@ $this->pObj->dev_var_dump( $arr_result );
 
     $arrSearchFields = explode(',', $this->pObj->csvSearch);
     $int_sword       = 0;
+    
+$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arrConsolidate['addedTableFields'] );
+
     foreach ($this->pObj->arr_swordPhrases['or'] as $arr_swords_and)
     {
       // Suggestion #7730
@@ -998,7 +1001,10 @@ $this->pObj->dev_var_dump( $arr_result );
           $str_whereTableField = $table.'.'.$field.' LIKE \'%'.$str_whereTableField.'%\'';
         }
         // Wildcard are used by default
+
 $this->pObj->dev_var_dump( $tableField );
+$this->pObj->arr_realTables_arrFields[$table][]   = $field;
+$this->pObj->arrConsolidate['addedTableFields'][] = $tableField;
 
         // The user has to add a wildcard
         if($this->pObj->bool_searchWildcardsManual)
@@ -1018,6 +1024,9 @@ $this->pObj->dev_var_dump( $tableField );
       }
       $int_sword++;
     }
+    
+$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arrConsolidate['addedTableFields'] );
+
     foreach ( $arr_whereSword as $arr_fields )
     {
       $str_or     = implode(' OR ',$arr_fields);
