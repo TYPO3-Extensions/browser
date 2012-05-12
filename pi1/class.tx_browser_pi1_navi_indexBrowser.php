@@ -2504,6 +2504,10 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function zz_findInSetForCurrentTab( )
   {
+    if( empty ( $this->pObj->piVars['indexBrowserTab'] ) )
+    {
+      return;
+    }
 $tabLabel   = $this->pObj->piVars['indexBrowserTab'];    
 $tabLabel   = strtoupper( $tabLabel );
 $tabId      = $this->indexBrowserTab['tabLabels'][$tabLabel];
@@ -2511,8 +2515,10 @@ $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
 $arr_return = $this->count_charSetSqlLength( $attributes );
 $row        = $arr_return['data']['row'];
 $findInSet  = $this->count_charSetSqlFindInSet( $row ); 
+$this->findInSetForCurrTab = $findInSet;
 //$this->pObj->dev_var_dump( $this->indexBrowserTab, $this->pObj->piVars['indexBrowserTab'] );
-$this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes, $arr_return, $row, $findInSet );
+//$this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes, $arr_return, $row, $findInSet );
+$this->pObj->dev_var_dump( $findInSet );
   }
 
 
