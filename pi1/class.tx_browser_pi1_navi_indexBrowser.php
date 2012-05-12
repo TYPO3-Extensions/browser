@@ -2508,8 +2508,67 @@ $tabLabel   = $this->pObj->piVars['indexBrowserTab'];
 $tabLabel   = strtoupper( $tabLabel );
 $tabId      = $this->indexBrowserTab['tabLabels'][$tabLabel];
 $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
+$arr_return = $this->count_charSetSqlLength( $attributes );
 //$this->pObj->dev_var_dump( $this->indexBrowserTab, $this->pObj->piVars['indexBrowserTab'] );
-$this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes );
+$this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes, $arr_return );
+  }
+
+
+
+/**
+ * count_specialChars_setSqlLength( ): Return a row with all special chars and their SQL length
+ *
+ * @return	array		$arr_return : row with all special chars and their SQL length
+ * @version 3.9.12
+ * @since   3.9.10
+ */
+  private function count_charSetSqlLength( $attributes )
+  {
+      // Build the select statement parts for the length of each special char
+    $arrStatement     = array( );
+    $arrSpecialChars  = explode( ',', $attributes );
+    foreach( ( array ) $arrSpecialChars as $specialChar )
+    {
+      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
+    }
+      // Build the select statement parts for the length of each special char
+
+      // DIE : undefined error
+    if( empty ( $arrStatement ) )
+    {
+      die ( __METHOD__ . '(' . __LINE__ . '): undefined error.');
+    }
+      // DIE : undefined error
+
+      // Execute query for the length of each special char
+    $query  = "SELECT " . implode( ', ', $arrStatement );
+    $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
+
+      // Error management
+    $error = $GLOBALS['TYPO3_DB']->sql_error( );
+    if( $error )
+    {
+      $level = 1;
+      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error, $level );
+      return $arr_return;
+    }
+      // Error management
+
+      // DRS
+    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
+    {
+      $prompt = $query;
+      t3lib_div::devlog( '[OK/NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
+    }
+      // DRS
+
+      // Get the row
+    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
+      // SQL free result
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+
+    $arr_return['data']['row'] = $row;
+    return $arr_return;
   }
 
 
