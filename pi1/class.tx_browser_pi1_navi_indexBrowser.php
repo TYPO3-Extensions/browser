@@ -2510,7 +2510,7 @@ $tabId      = $this->indexBrowserTab['tabLabels'][$tabLabel];
 $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
 $arr_return = $this->count_charSetSqlLength( $attributes );
 $row        = $arr_return['data']['row'];
-$findInSet  = count_charSetSqlFindInSet( $row ); 
+$findInSet  = $this->count_charSetSqlFindInSet( $row ); 
 //$this->pObj->dev_var_dump( $this->indexBrowserTab, $this->pObj->piVars['indexBrowserTab'] );
 $this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes, $arr_return, $row, $findInSet );
   }
