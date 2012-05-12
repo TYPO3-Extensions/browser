@@ -850,7 +850,7 @@ class tx_browser_pi1_viewlist
     
       // Merge all ids
     $withIds = array_merge(
-                ( array ) idsWiCurrTranslation,
+                ( array ) $idsWiCurrTranslation,
                 ( array ) $idsOfTranslationRows
               );
 
