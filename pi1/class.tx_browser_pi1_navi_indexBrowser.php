@@ -1097,7 +1097,7 @@ $this->pObj->dev_var_dump( $attributes );
     $findInSet = implode( ' OR ', $orFindInSet );
     $findInSet = '( ' . $findInSet . ' )';
 
-    if( $this->indexBrowserTab['tabLabels'][$labelAscii] == 'others' )
+    if( $this->indexBrowserTab['tabIds'][$tabId]['special'] == 'others' )
     {
       $findInSet = 'NOT ' . $findInSet;
     }
