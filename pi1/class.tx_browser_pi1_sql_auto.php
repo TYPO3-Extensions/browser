@@ -1452,7 +1452,6 @@ class tx_browser_pi1_sql_auto
  */
   private function init_class_relationsLoop( $tables )
   {
-$this->pObj->dev_var_dump( $this->arr_relations_mm_simple );
     if( empty ( $tables ) )
     {
       return;
@@ -1510,7 +1509,6 @@ $this->pObj->dev_var_dump( $this->arr_relations_mm_simple );
       }
         // LOOP each TCA column
     }
-$this->pObj->dev_var_dump( $this->arr_relations_mm_simple );
       // LOOP tables
   }
 
@@ -2227,7 +2225,7 @@ $this->pObj->dev_var_dump( $this->arr_relations_mm_simple );
 
     $arr_return['data']['left_join'] = $leftJoin;
     $arr_return['data']['full_join'] = $fullJoin;
-$this->pObj->dev_var_dump( $arr_return );
+//$this->pObj->dev_var_dump( $arr_return );
     return $arr_return;
   }
 
