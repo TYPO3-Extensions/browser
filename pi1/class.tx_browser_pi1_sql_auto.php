@@ -751,7 +751,7 @@ class tx_browser_pi1_sql_auto
     }
     $andWhere       = $this->andWhere();
     $arr_result     = $this->get_joins();
-$this->pObj->dev_var_dump( $arr_result );
+//$this->pObj->dev_var_dump( $arr_result );
     $fullJoin  = $arr_result['data']['full_join'];
     unset($arr_result);
       // Get SWORD, AND WHERE and JOINS
@@ -940,7 +940,7 @@ $this->pObj->dev_var_dump( $arr_result );
     $arrSearchFields = explode(',', $this->pObj->csvSearch);
     $int_sword       = 0;
     
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arrConsolidate['addedTableFields'] );
+//$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arrConsolidate['addedTableFields'] );
 
     foreach ($this->pObj->arr_swordPhrases['or'] as $arr_swords_and)
     {
@@ -987,11 +987,11 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
 
       foreach( $arrSearchFields as $arrSearchField )
       {
-        list( $tableField, $str_behind_as )  = explode( ' AS ', $arrSearchField );
-        list( $table, $field )                  = explode( '.', $tableField );
-        $table                                = trim( $table );
-        $field                                = trim( $field );
-
+        list( $tableField, $str_behind_as ) = explode( ' AS ', $arrSearchField );
+        list( $table, $field )              = explode( '.', $tableField );
+        $table                              = trim( $table );
+        $field                              = trim( $field );
+$tablesForRelations[] = $table;
         // Suggestion #7730
         // Wildcard are used by default
         if(!$this->pObj->bool_searchWildcardsManual)
@@ -1002,9 +1002,9 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
         }
         // Wildcard are used by default
 
-$this->pObj->dev_var_dump( $tableField );
-$this->pObj->arr_realTables_arrFields[$table][]   = $field;
-$this->pObj->arrConsolidate['addedTableFields'][] = $tableField;
+//$this->pObj->dev_var_dump( $tableField );
+//$this->pObj->arr_realTables_arrFields[$table][]   = $field;
+//$this->pObj->arrConsolidate['addedTableFields'][] = $tableField;
 
         // The user has to add a wildcard
         if($this->pObj->bool_searchWildcardsManual)
@@ -1025,7 +1025,7 @@ $this->pObj->arrConsolidate['addedTableFields'][] = $tableField;
       $int_sword++;
     }
     
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arrConsolidate['addedTableFields'] );
+//$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arrConsolidate['addedTableFields'] );
 
     foreach ( $arr_whereSword as $arr_fields )
     {
@@ -1050,6 +1050,7 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
         list($table, $field)                  = explode('.', $tableField);
         $table                                = trim($table);
         $field                                = trim($field);
+$tablesForRelations[] = $table;
 
         // Suggestion #7730
         // Wildcard are used by default
@@ -1109,7 +1110,8 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
     // andWhere NOT
 
 
-
+$this->pObj->dev_var_dump( $tablesForRelations );
+$this->init_class_relationsLoop( $tablesForRelations );
     //////////////////////////////////////////////////////////////////////////
     //
     // RETURN andWhere
