@@ -114,13 +114,15 @@ class tx_browser_pi1_sql_auto
     // [Boolean] If it is TRUE, browser should try to build relations automatically
   var $boolAutorelation = true;
 
+    // [Array] Array with the arrays MM and/or simple
   var $arr_relations_mm_simple = array( );
-  // [Array] Array with the arrays MM and/or simple
+    // [Array] Array with ...
   var $arr_relations_opposite;
-  // [Array] Array with ...
+    // [Boolean] TRUE if we should use LEFT JOIN. From TypoScript global or local autoconfig.relations.left_join
   var $b_left_join = false;
-  // [Boolean] TRUE if we should use LEFT JOIN. From TypoScript global or local autoconfig.relations.left_join
-
+    // [Boolean] TRUE if the current relation is opposite
+  var $opposite = null;
+  
     // [Array] array like $statementTables['select']['localtable']['tx_org_cal'] = 'tx_org_cal'
   var $statementTables = null;
     // [Array] array like $addedTableFields['select']['tx_org_cal'][] = 'tx_org_cal.uid'
@@ -410,9 +412,9 @@ class tx_browser_pi1_sql_auto
     if ($this->b_left_join)
     {
       $arr_result     = $this->get_joins();
-      $str_left_join  = $arr_result['data']['left_join'];
+      $leftJoin  = $arr_result['data']['left_join'];
       unset($arr_result);
-      $from           = $from.$str_left_join;
+      $from           = $from.$leftJoin;
       if ($this->pObj->b_drs_sql)
       {
         t3lib_div::devLog('[INFO/SQL] autoconfig.relations.left_join is TRUE.<br />
@@ -740,7 +742,7 @@ class tx_browser_pi1_sql_auto
     $andWhere       = $this->andWhere();
     $arr_result     = $this->get_joins();
 //$this->pObj->dev_var_dump( $arr_result );
-    $str_full_join  = $arr_result['data']['full_join'];
+    $fullJoin  = $arr_result['data']['full_join'];
     unset($arr_result);
       // Get SWORD, AND WHERE and JOINS
 
@@ -749,9 +751,9 @@ class tx_browser_pi1_sql_auto
     //
     // Add a FULL JOIN
 
-    if ($str_full_join != '')
+    if ($fullJoin != '')
     {
-      $whereClause .= ' '.$str_full_join;
+      $whereClause .= ' '.$fullJoin;
     }
     // Add a FULL JOIN
 
@@ -1868,9 +1870,9 @@ class tx_browser_pi1_sql_auto
  */
   private function get_joins( )
   {
-    $arr_return     = array( );
-    $str_left_join  = null;
-    $str_full_join  = null;
+    $arr_return = array( );
+    $leftJoin   = null;
+    $fullJoin   = null;
 
 
       // RETURN ERROR : any table isn't used
@@ -1898,42 +1900,42 @@ class tx_browser_pi1_sql_auto
 
       // Set the MM relations
     $arr_return = $this->get_joinsSetMm( );
-    $str_left_join = $arr_return['data']['left_join'];
-    $str_full_join = $arr_return['data']['full_join'];
+    $leftJoin   = $arr_return['data']['left_join'];
+    $fullJoin   = $arr_return['data']['full_join'];
       // Set the MM relations
 
       // Set the CSV relations
     $arr_return = $this->get_joinsSetCsv( );
-    $str_left_join = $str_left_join . $arr_return['data']['left_join'];
-    $str_full_join = $str_full_join . $arr_return['data']['full_join'];
+    $leftJoin   = $leftJoin . $arr_return['data']['left_join'];
+    $fullJoin   = $fullJoin . $arr_return['data']['full_join'];
       // Set the CSV relations
 
-
-
-    //////////////////////////////////////////////////////////////////
-    //
-    // Building $arr_return
-
-    if( $this->b_left_join )
+      // RETURN : left_join or full_join
+      // SWITCH : b_left_join
+    switch( $this->b_left_join )
     {
-      $arr_return['data']['left_join'] = $str_left_join;
-      if( $this->pObj->b_drs_sql )
-      {
-        $prompt = $str_left_join;
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      }
+      case( true ) :
+        $arr_return['data']['left_join'] = $leftJoin;
+        if( $this->pObj->b_drs_sql )
+        {
+          $prompt = $leftJoin;
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        break;
+      case( false ) :
+      default :
+        $arr_return['data']['full_join'] = $fullJoin;
+        if( $this->pObj->b_drs_sql )
+        {
+          $prompt = $fullJoin;
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        break;
     }
-    if( ! $this->b_left_join )
-    {
-      $arr_return['data']['full_join'] = $str_full_join;
-      if( $this->pObj->b_drs_sql )
-      {
-        $prompt = $str_full_join;
-        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-    }
+      // SWITCH : b_left_join
+
     return $arr_return;
-    // Building $arr_return
+      // RETURN : left_join or full_join
   }
 
 
@@ -1951,210 +1953,288 @@ class tx_browser_pi1_sql_auto
     $view       = $this->pObj->view;
     $viewWiDot  = $view.'.';
 
-    $arr_return     = array( );
-    $str_left_join  = false;
-    $str_full_join  = false;
+    $arr_return = array( );
+    $leftJoin   = null;
+    $fullJoin   = null;
 
-
+      // Get tables with MM relation
     $tables = $this->arr_relations_mm_simple['MM'];
-    if (is_array($tables))
-    {
-      if ($this->pObj->b_drs_sql)
-      {
-        t3lib_div::devlog('[INFO/SQL] views.'.$viewWiDot.$mode.' has configured MM relations.', $this->pObj->extKey, 0);
-      }
-      //////////////////////////////////
-      //
-      // Convert Array
-      // from: ["tt_news."]["tt_news_cat_mm"] = "tt_news_cat"
-      // to:   ["tt_news"]["tt_news_cat_mm"] = "tt_news_cat"
-      foreach( array_keys ( ( array ) $tables ) as $localTable )
-      //foreach((array) $tables as $localTable => $localFields)
-      {
-        if(substr($localTable, -1) == '.')
-        {
-          $tableWoDot           = substr($localTable, 0, strlen($localTable) -1);
-          $tables[$tableWoDot]  = $tables[$localTable];
-          unset($tables[$localTable]);
-        }
-      }
-      // Convert Array
-
-//      var_dump($tables);
-//      exit;
-      //  array["tx_ships_main"]["tx_ships_main_g2_shipowner_mm"]   = "tx_ships_owner"
-      //  array["tx_ships_main"]["tx_ships_main_g3_application_mm"] = "tx_ships_application"
-      //  array["tx_ships_main"]["tx_ships_main_g3_rigortype_mm"]   = "tx_ships_rigortype"
-      //  ...
-
-        // Loop: tables
-      foreach ($tables as $localTable => $foreignTables)
-      {
-        //var_dump($foreignTables);
-        //  array["tx_ships_main_g2_shipowner_mm"]    = "tx_ships_owner"
-        //  array["tx_ships_main_g3_application_mm"]  = "tx_ships_application"
-        //  array["tx_ships_main_g3_rigortype_mm"]    = "tx_ships_rigortype"
-        //  array["tx_ships_main_g3_powersystem_mm"]  = ...
-
-          // Load the TCA, if we don't have an table.columns array
-        if (!is_array($GLOBALS['TCA'][$localTable]['columns']))
-        {
-          t3lib_div::loadTCA($localTable);
-          if ($this->pObj->b_drs_localisation)
-          {
-            t3lib_div::devlog('[INFO/SQL] $GLOBALS[\'TCA\'][\''.$localTable.'\'] is loaded.', $this->pObj->extKey, 0);
-          }
-        }
-          // Load the TCA, if we don't have an table.columns array
-
-          // Loop: foreignTables
-        foreach((array) $foreignTables as $mmTable => $foreignTable)
-        {
-            // foreignTable is an element in the array of the real tables
-          if (in_array($foreignTable, array_keys($this->pObj->arr_realTables_arrFields)))
-          {
-              // #9697, 100912, dwildt
-            $bool_opposite = false;
-            if(!empty($this->arr_relations_opposite[$localTable][$mmTable]['MM_opposite_field']))
-            {
-              $bool_opposite = true;
-            }
-              // #9697, 100912, dwildt
-
-              // left join: true
-            if ($this->b_left_join)
-            {
-                // #9697, 100912, dwildt
-              if($bool_opposite)
-              {
-                $str_left_join_uidlocal = ' LEFT JOIN '.$mmTable.
-                                          ' ON ( '.$localTable.'.uid = '.$mmTable.'.uid_foreign )';
-              }
-              if(!$bool_opposite)
-              {
-                $str_left_join_uidlocal = ' LEFT JOIN '.$mmTable.
-                                          ' ON ( '.$localTable.'.uid = '.$mmTable.'.uid_local )';
-              }
-                // #9697, 100912, dwildt
-                // Use current LEFT JOIN once only
-              if (strpos($str_left_join, $str_left_join_uidlocal) === false)
-              {
-                if ($this->pObj->b_drs_sql)
-                {
-                  t3lib_div::devlog('[INFO/SQL] '.$localTable.' get a LEFT JOIN to '.$foreignTable.'.', $this->pObj->extKey, 0);
-                }
-                $str_left_join = $str_left_join.$str_left_join_uidlocal;
-              }
-
-              $str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
-              $str_pidStatement         = $this->pObj->objSqlFun->get_andWherePid($foreignTable);
-
-                // #9697, 100912, dwildt
-                // Opposite relation: true
-              if($bool_opposite)
-              {
-                $str_left_join_uidforeign = ' LEFT JOIN '.$foreignTable.
-                                            ' ON ( '.
-                                                $mmTable.'.uid_local = '.$foreignTable.'.uid'.
-                                                $str_enablefields_foreign.
-                                                $str_pidStatement.
-                                              ' )';
-              }
-                // Opposite relation: true
-                // Opposite relation: false
-              if(!$bool_opposite)
-              {
-                $str_left_join_uidforeign = ' LEFT JOIN '.$foreignTable.
-                                            ' ON ( '.
-                                                $mmTable.'.uid_foreign = '.$foreignTable.'.uid'.
-                                                $str_enablefields_foreign.
-                                                $str_pidStatement.
-                                              ' )';
-              }
-                // Opposite relation: false
-                // #9697, 100912, dwildt
-
-                // Use current LEFT JOIN once only
-              if (strpos($str_left_join, $str_left_join_uidforeign) === false)
-              {
-                $str_left_join = $str_left_join.$str_left_join_uidforeign;
-              }
-                // Use current LEFT JOIN once only
-            }
-              // left join: true
-
-              // left join: false
-            if (!$this->b_left_join)
-            {
-              if ($this->pObj->b_drs_sql)
-              {
-                t3lib_div::devlog('[INFO/SQL] '.$localTable.' get a FULL JOIN to '.$foreignTable.'.', $this->pObj->extKey, 0);
-              }
-                // #9697, 100912, dwildt
-              if($bool_opposite)
-              {
-                $str_full_join .= ' AND '.$localTable.'.uid = '.$mmTable.'.uid_foreign'.
-                                  ' AND '.$mmTable.'.uid_local = '.$foreignTable.'.uid';
-              }
-              if(!$bool_opposite)
-              {
-                $str_full_join .= ' AND '.$localTable.'.uid = '.$mmTable.'.uid_local'.
-                                  ' AND '.$mmTable.'.uid_foreign = '.$foreignTable.'.uid';
-              }
-                // #9697, 100912, dwildt
-            }
-              // left join: false
-
-              // Add the mm table to the fetched tables, if it is new
-            if (!in_array($mmTable, array_keys($this->pObj->arr_realTables_arrFields)))
-            {
-              // Add every new table.field to the global array arr_realTables_arrFields
-              $this->pObj->arr_realTables_arrFields[$mmTable][] = 'uid_local';
-              $this->pObj->arr_realTables_arrFields[$mmTable][] = 'uid_foreign';
-
-                // 091128: ADDED (in context with table_mm.sorting)
-              $keys_mmTable = array_keys(($GLOBALS['TYPO3_DB']->admin_get_fields($mmTable)));
-              if(in_array('sorting', $keys_mmTable))
-              {
-                $this->pObj->arr_realTables_arrFields[$mmTable][] = 'sorting';
-                  // Add every new table.field to the global array consolidate
-                $this->pObj->arrConsolidate['addedTableFields'][] = $mmTable.'.sorting';
-                $this->pObj->arrConsolidate['select']['mmSortingTableFields'][]  = $mmTable.'.sorting';
-              }
-                // 091128: ADDED (in context with table_mm.sorting)
-                // 13803, 110313, dwildt
-              if(in_array('sorting_foreign', $keys_mmTable))
-              {
-                $this->pObj->arr_realTables_arrFields[$mmTable][] = 'sorting_foreign';
-                  // Add every new table.field to the global array consolidate
-                $this->pObj->arrConsolidate['addedTableFields'][] = $mmTable.'.sorting_foreign';
-                $this->pObj->arrConsolidate['select']['mmSortingTableFields'][]  = $mmTable.'.sorting_foreign';
-              }
-                // 13803, 110313, dwildt
-            }
-              // Add the mm table to the fetched tables, if it is new
-
-              // Add the foreign table to the fetched tables, if it is new
-            if (!in_array($foreignTable, array_keys($this->pObj->arr_realTables_arrFields)))
-            {
-              $this->pObj->arr_realTables_arrFields[$foreignTable][] = 'uid';
-            }
-              // Add the foreign table to the fetched tables, if it is new
-          }
-            // foreignTable is an element in the array of the real tables
-        }
-          // Loop: foreignTables
-      }
-        // Loop: tables
-    }
-      // MM-relation-building
     
-    $arr_return['data']['left_join'] = $str_left_join;
-    $arr_return['data']['full_join'] = $str_full_join;
+      // RETURN : there isn't any table
+    if( empty ( $tables ) )
+    {
+      return $arr_return;
+    }
+      // RETURN : there isn't any table
+    
+      // DRS
+    if ( $this->pObj->b_drs_sql )
+    {
+      $prompt = 'views.' . $viewWiDot . $mode . ' has configured MM relations.';
+      t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+    }
+      // DRS
+
+  
+      // Convert $tables 
+      // Example: from ["tt_news."]["tt_news_cat_mm"] to ["tt_news"]["tt_news_cat_mm"] = "tt_news_cat"
+    foreach( array_keys ( ( array ) $tables ) as $localTable )
+    {
+      if( substr( $localTable, -1 ) == '.' )
+      {
+        $tableWoDot           = substr( $localTable, 0, strlen( $localTable ) -1 );
+        $tables[$tableWoDot]  = $tables[$localTable];
+        unset( $tables[$localTable] );
+      }
+    }
+      // Convert $tables from ["tt_news."]["tt_news_cat_mm"] to ["tt_news"]["tt_news_cat_mm"] = "tt_news_cat"
+
+      // Loop: tables
+    foreach( $tables as $localTable => $foreignTables )
+    {
+        // Load the TCA
+      $this->pObj->objZz->loadTCA( $localTable );
+
+        // Loop: foreignTables
+      foreach( ( array ) $foreignTables as $mmTable => $foreignTable )
+      {
+          // CONTINUE : foreignTable isn't any element in the array of the real tables
+        if( ! in_array( $foreignTable, array_keys( $this->pObj->arr_realTables_arrFields ) ) )
+        {
+          continue;
+        }
+          // CONTINUE : foreignTable isn't any element in the array of the real tables
+            
+          // Load the TCA
+        $this->pObj->objZz->loadTCA( $foreignTable );
+
+          // SET flag opposite
+        switch( empty( $this->arr_relations_opposite[$localTable][$mmTable]['MM_opposite_field'] ) )
+        {
+          case( false ):
+            $this->opposite = true;
+            break;
+          default:
+          case( true ):
+            $this->opposite = true;
+            break;
+        }
+          // SET flag opposite
+
+          // SWITCH : left join or full join
+        switch( $this->b_left_join )
+        {
+          case( true ) :
+            $leftJoin = $this->get_joinsSetMmLeftJoin( $localTable, $mmTable, $foreignTable, $leftJoin );
+            break;
+          case ( false ) :
+            $fullJoin = $this->get_joinsSetMmFullJoin( $localTable, $mmTable, $foreignTable, $fullJoin );
+            break;
+        }
+          // SWITCH : left join or full join
+        
+          // Add tables and fields
+        $this->get_joinsAddTablesMm( $mmTable );
+        $this->get_joinsAddTablesForeign( $foreignTable );
+
+      }
+        // Loop: foreignTables
+    }
+      // Loop: tables
+    
+    $arr_return['data']['left_join'] = $leftJoin;
+    $arr_return['data']['full_join'] = $fullJoin;
     return $arr_return;
   }
 
 
+
+/**
+ * get_joinsAddTablesForeign( ) : 
+ *
+ * @return	array
+ * @version   3.9.13
+ * @since     2.0.0
+ */
+  private function get_joinsAddTablesForeign( $foreignTable )
+  {
+      // RETURN : $foreignTable uid is added before
+    if ( in_array( $foreignTable, array_keys( $this->pObj->arr_realTables_arrFields ) ) )
+    {
+      return;
+    }
+      // RETURN : $foreignTable uid is added before
+      
+      // Add the foreign table uid
+    $this->pObj->arr_realTables_arrFields[$foreignTable][] = 'uid';
+  }
+
+
+
+/**
+ * get_joinsAddTablesMm( ) : 
+ *
+ * @return	array
+ * @version   3.9.13
+ * @since     2.0.0
+ */
+  private function get_joinsAddTablesMm( $mmTable )
+  {
+
+      // RETURN : mmTable is added before
+    if ( in_array( $mmTable, array_keys( $this->pObj->arr_realTables_arrFields ) ) )
+    {
+      return;
+    }
+      // RETURN : mmTable is added before
+    
+      // Add uid_local and uid_foreign
+    $this->pObj->arr_realTables_arrFields[$mmTable][] = 'uid_local';
+    $this->pObj->arr_realTables_arrFields[$mmTable][] = 'uid_foreign';
+
+      // Add sorting
+    $keys_mmTable = array_keys( ( $GLOBALS['TYPO3_DB']->admin_get_fields( $mmTable ) ) );
+    if( in_array( 'sorting', $keys_mmTable ) )
+    {
+      $this->pObj->arr_realTables_arrFields[$mmTable][]               = 'sorting';
+        // Add every table.field to the global array consolidate
+      $this->pObj->arrConsolidate['addedTableFields'][]               = $mmTable . '.sorting';
+      $this->pObj->arrConsolidate['select']['mmSortingTableFields'][] = $mmTable . '.sorting';
+    }
+      // Add sorting
+      
+      // Add sorting_foreign
+    if( in_array( 'sorting_foreign', $keys_mmTable ) )
+    {
+      $this->pObj->arr_realTables_arrFields[$mmTable][]               = 'sorting_foreign';
+        // Add every new table.field to the global array consolidate
+      $this->pObj->arrConsolidate['addedTableFields'][]               = $mmTable . '.sorting_foreign';
+      $this->pObj->arrConsolidate['select']['mmSortingTableFields'][] = $mmTable . '.sorting_foreign';
+    }
+      // Add sorting_foreign
+
+      // Add the foreign table uid
+    if ( ! in_array( $foreignTable, array_keys( $this->pObj->arr_realTables_arrFields ) ) )
+    {
+      $this->pObj->arr_realTables_arrFields[$foreignTable][] = 'uid';
+    }
+      // Add the foreign table uid
+  }
+  
+  
+  
+/**
+ * get_joinsSetMmFullJoin : 
+ *
+ * @return	array
+ * @version   3.9.13
+ * @since     2.0.0
+ */
+  private function get_joinsSetMmFullJoin( $localTable, $mmTable, $foreignTable, $fullJoin )
+  {
+    $andFullJoin = null;
+    
+      // Get enabled fields for the foreign table
+    $foreignTableEnableFields = $this->pObj->cObj->enableFields( $foreignTable );
+      // Get the pid list for the foreign table
+    $foreignTablePidList      = $this->pObj->objSqlFun->get_andWherePid( $foreignTable );
+
+      // SWITCH : opposite
+    switch( $this->opposite )
+    {
+      case( true ) :
+        $andFullJoin =  ' AND ' . $localTable . '.uid = ' . $mmTable .'.uid_foreign' .
+                        ' AND ' . $mmTable . ' . uid_local = ' . $foreignTable . '.uid' .
+                        $foreignTableEnableFields .
+                        $foreignTablePidList;
+        break;
+      case( false ) :
+      default : 
+        $andFullJoin =  ' AND ' . $localTable . '.uid = ' . $mmTable . '.uid_local' .
+                        ' AND ' . $mmTable . '.uid_foreign = ' . $foreignTable . '.uid' .
+                        $foreignTableEnableFields .
+                        $foreignTablePidList;
+        break;
+    }
+      // SWITCH : opposite
+
+      // DRS
+    if( $this->pObj->b_drs_sql )
+    {
+      $prompt = $localTable . ' get a FULL JOIN to ' . $foreignTable . '.';
+      t3lib_div::devlog('[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0);
+    }
+      // DRS
+
+    return $fullJoin . $andFullJoin;
+  }
+
+
+
+/**
+ * get_joinsSetMmLeftJoin : 
+ *
+ * @return	array
+ * @version   3.9.13
+ * @since     2.0.0
+ */
+  private function get_joinsSetMmLeftJoin( $localTable, $mmTable, $foreignTable, $leftJoin )
+  {
+      // Get enabled fields for the foreign table
+    $foreignTableEnableFields = $this->pObj->cObj->enableFields( $foreignTable );
+      // Get the pid list for the foreign table
+    $foreignTablePidList      = $this->pObj->objSqlFun->get_andWherePid( $foreignTable );
+
+      // SWITCH : opposite
+    switch( $this->opposite )
+    {
+      case( true ) :
+        $relation = ' LEFT JOIN ' . $mmTable .
+                    ' ON ( ' . $localTable . '.uid = ' . $mmTable . '.uid_foreign )';
+        $where    = ' LEFT JOIN ' . $foreignTable .
+                    ' ON ( '.
+                        $mmTable . '.uid_local = ' . $foreignTable . '.uid'.
+                        $foreignTableEnableFields .
+                        $foreignTablePidList .
+                      ' )';
+        break;
+      case( false ) :
+      default : 
+        $relation = ' LEFT JOIN ' . $mmTable .
+                    ' ON ( ' . $localTable . '.uid = ' . $mmTable . '.uid_local )';
+        $where    = ' LEFT JOIN ' . $foreignTable .
+                    ' ON ( '.
+                        $mmTable . '.uid_foreign = ' . $foreignTable . '.uid'.
+                        $foreignTableEnableFields .
+                        $foreignTablePidList .
+                      ' )';
+        break;
+    }
+      // SWITCH : opposite
+
+      // Add relation once only
+    if( strpos( $leftJoin, $relation ) === false )
+    {
+      if( $this->pObj->b_drs_sql )
+      {
+        $prompt = $localTable . ' get a LEFT JOIN to ' . $foreignTable . '.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      $leftJoin = $leftJoin . $relation;
+    }
+      // Add relation once only
+    
+      // Add where once only
+    if( strpos($leftJoin, $where) === false )
+    {
+      $leftJoin = $leftJoin . $where;
+    }
+      // Add where once only
+
+    return $leftJoin;
+  }
+
+  
 
 /**
  * get_joinsSetCsv( ) : Relation method: Building the relation part for the where clause
@@ -2165,18 +2245,19 @@ class tx_browser_pi1_sql_auto
  */
   private function get_joinsSetCsv( $arr_return )
   {
-    $arr_return     = array( );
-    $str_left_join  = false;
-    $str_full_join  = false;
+    $arr_return = array( );
+    $leftJoin   = false;
+    $fullJoin   = false;
 
+      // Get the tables with a CSV relation
     $tables = $this->arr_relations_mm_simple['simple'];
     
-      // RETURN : there isn't any CSV relation
+      // RETURN : there isn't any table
     if( empty ( $tables ) )
     {
       return  $arr_return;
     }
-      // RETURN : there isn't any CSV relation
+      // RETURN : there isn't any table
         
       // Get tableFields as an one dimensional array like ["tt_news.cruser_id"]
     $tables = $this->get_joinsSetCsvTablesOneDim( );
@@ -2184,10 +2265,10 @@ class tx_browser_pi1_sql_auto
       // LOOP tables
     foreach( ( array ) $tables as $localTableField => $foreignTable )
     {
-        // Get table and field of the local table
+        // Get tableField of the local table
       list( $localTable, $localField ) = explode( '.', $localTableField );
 
-        // Get table and field of the foreign table
+        // Get tableField of the foreign table
       if( strpos( $foreignTable, '.' ) !== false )
       {
         list( $foreignTable, $foreignTableField ) = explode( '.', $foreignTable );
@@ -2196,60 +2277,68 @@ class tx_browser_pi1_sql_auto
       {
         $foreignTableField = $foreignTable.'.uid';
       }
-        // Get table and field of the foreign table
+        // Get tableField of the foreign table
 
         // Get enabled fields for the foreign table
-      $str_enablefields_foreign = $this->pObj->cObj->enableFields( $foreignTable );
-        // Get the andWhere statement ... AND pid IN ( ... )
-      $str_pidStatement         = $this->pObj->objSqlFun->get_andWherePid( $foreignTable );
+      $foreignTableEnableFields = $this->pObj->cObj->enableFields( $foreignTable );
+        // Get the pid list for the foreign table
+      $foreignTablePidList      = $this->pObj->objSqlFun->get_andWherePid( $foreignTable );
 
-        // Max relations
-      $localTableFieldMaxItems = 0;
-      $localTableFieldMaxItems = $GLOBALS['TCA'][$localTable]['columns'][$localField]['config']['maxitems'];
+        // Get max relations
+      $maxRelations = 0;
+      $maxRelations = $GLOBALS['TCA'][$localTable]['columns'][$localField]['config']['maxitems'];
 
+        // SWITCH : max relations
       switch( true )
       {
-        case( $localTableFieldMaxItems == 1 ):
+        case( $maxRelations == 1 ):
           $str_query_part = "   " . $localTableField . " = " . $foreignTableField .
-                            "   " . $str_enablefields_foreign .
-                            "   " . $str_pidStatement ;
+                            "   " . $foreignTableEnableFields .
+                            "   " . $foreignTablePidList ;
           break;
         default:
           $str_query_part = "   FIND_IN_SET ( " . $foreignTableField . ", " . $localTableField . " )" .
-                            "   " . $str_enablefields_foreign .
-                            "   " . $str_pidStatement ;
+                            "   " . $foreignTableEnableFields .
+                            "   " . $foreignTablePidList ;
       }
+        // SWITCH : max relations
 
-      if( $this->b_left_join )
+        // SWITCH : left join or full join
+      switch( $this->b_left_join )
       {
-        $str_left_join_uidforeign = " LEFT JOIN " . $foreignTable .
-                                    " ON ( " .
-                                    $str_query_part .
-                                    " )" ;
-          // Use current LEFT JOIN once only
-        if( strpos( $str_left_join, $str_left_join_uidforeign ) === false )
-        {
-          $str_left_join .= $str_left_join_uidforeign;
-        }
-      }
-      if( !$this->b_left_join )
-      {
-          // The AND clause below makes only sense, if it is a 1:1-relation!
-        $str_full_join .=  " AND (" .
+        case( true ) :
+          $andLeftJoin =  " LEFT JOIN " . $foreignTable .
+                          " ON ( " .
                             $str_query_part .
-                            " )" ;
+                          " )" ;
+            // Add current LEFT JOIN once only
+          if( strpos( $leftJoin, $andLeftJoin ) === false )
+          {
+            $leftJoin = $leftJoin . $andLeftJoin;
+          }
+          break;
+        case( false ) :
+        default :
+            // The AND clause below makes only sense, if it is a 1:1-relation!
+          $andFullJoin =  " AND (" .
+                            $str_query_part .
+                          " )" ;
+            // Add current full join once only
+          if( strpos( $fullJoin, $andFullJoin ) === false )
+          {
+            $fullJoin = $fullJoin . $andFullJoin;
+          }
+          break;
       }
+        // SWITCH : left join or full join
       
-        // Add the foreign table to the fetched tables, if it is new
-      if( ! in_array( $foreignTable, array_keys( $this->pObj->arr_realTables_arrFields ) ) )
-      {
-        $this->pObj->arr_realTables_arrFields[$foreignTable][] = 'uid';
-      }
+        // Add tables and fields
+      $this->get_joinsAddTablesForeign( $foreignTable );
     }
       // LOOP tables
 
-    $arr_return['data']['left_join'] = $str_left_join;
-    $arr_return['data']['full_join'] = $str_full_join;
+    $arr_return['data']['left_join'] = $leftJoin;
+    $arr_return['data']['full_join'] = $fullJoin;
     return $arr_return;
     // Building $arr_return
   }
@@ -2267,6 +2356,7 @@ class tx_browser_pi1_sql_auto
  */
   private function get_joinsSetCsvTablesOneDim( )
   {
+      // get tables with CSV relation
     $tables = $this->arr_relations_mm_simple['simple'];
     
       // LOOP tables
@@ -2275,14 +2365,14 @@ class tx_browser_pi1_sql_auto
       foreach((array) $arrFields as $keyField => $valueField)
       {
         $str_dot = false;
-        if(substr($keyTable, -1) != '.')
+        if( substr( $keyTable, -1 ) != '.' )
         {
           $str_dot = '.';
         }
         $tables[$keyTable.$str_dot.$keyField] = $valueField;
-        unset($tables[$keyTable][$keyField]);
+        unset( $tables[$keyTable][$keyField] );
       }
-      unset($tables[$keyTable]);
+      unset( $tables[$keyTable] );
     }
       // LOOP tables
 
