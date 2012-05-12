@@ -2317,7 +2317,7 @@ $tablesBak = $tables;
     }
       // LOOP tables
 $this->pObj->dev_var_dump( $tablesBak, $tables );
-$this->pObj->dev_var_dump( t3lib_BEfunc::implodeTSParams( $tablesBak ) );
+$this->pObj->dev_var_dump( t3lib_BEfunc::implodeTSParams( $tablesBak, 'XX' ) );
 
 
 
