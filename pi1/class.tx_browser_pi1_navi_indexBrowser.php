@@ -2509,13 +2509,43 @@ $tabLabel   = strtoupper( $tabLabel );
 $tabId      = $this->indexBrowserTab['tabLabels'][$tabLabel];
 $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
 $arr_return = $this->count_charSetSqlLength( $attributes );
+$row        = $arr_return['data']['row'];
+$findInSet  = count_charSetSqlFindInSet( $row ); 
 //$this->pObj->dev_var_dump( $this->indexBrowserTab, $this->pObj->piVars['indexBrowserTab'] );
-$this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes, $arr_return );
+$this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes, $arr_return, $row, $findInSet );
   }
 
 
 
 /**
+   * count_specialChars_setSqlFindInSet( ): Set the FIND IN SET statement for each special char group.
+   *                                        A special char group is grouped by the length of a special
+   *                                        char.
+   *
+   * @param	array		$row  : Row with special chars and their SQL length
+   * @return	[type]		...
+   * @version 3.9.12
+   * @since   3.9.10
+   */
+  private function count_charSetSqlFindInSet( $row ) 
+  {
+      // Get current table.field of the index browser
+    $tableField = $this->indexBrowserTableField;
+
+      // LOOP : generate a find in set statement for each special char
+    $findInSet = null;
+    foreach ($row as $char => $length) {
+//      if ($length < 2) {
+//        continue;
+//      }
+      $findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
+    }
+      // LOOP : generate a find in set statement for each special char
+    
+    return $findInSet;
+  }
+
+  /**
  * count_specialChars_setSqlLength( ): Return a row with all special chars and their SQL length
  *
  * @return	array		$arr_return : row with all special chars and their SQL length
