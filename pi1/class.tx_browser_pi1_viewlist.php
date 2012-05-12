@@ -1033,11 +1033,11 @@ class tx_browser_pi1_viewlist
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
     }
 
-    if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
-    {
-      $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
-      $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
-    }
+//    if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
+//    {
+//      $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
+//      $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
+//    }
     
 //    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
 //    {
@@ -1181,11 +1181,11 @@ class tx_browser_pi1_viewlist
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
     }
 
-    if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
-    {
-      $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
-      $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
-    }
+//    if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
+//    {
+//      $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
+//      $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
+//    }
 //
 //  // DRS
 //if( $this->pObj->b_drs_devTodo )
@@ -1308,23 +1308,11 @@ class tx_browser_pi1_viewlist
     switch( true )
     {
       case( $this->zz_indexBrowserIsLocalised( ) ):
-        $arr_return = $this->rows_sqlIdsOfRowsWiTranslationOnly( );
+//        $arr_return = $this->rows_sqlIdsOfRowsWiTranslationOnly( );
+        $arr_return = $this->rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( );
         break;
       case( $this->zz_orderByValueIsLocalised( ) ):
           // First value of ORDER BY is localised
-          // DRS
-        if( $this->pObj->b_drs_warn )
-        {
-          $orderBy            = $this->pObj->objSqlInit->statements['listView']['orderBy'];
-          list( $tableField ) = explode( ' ', $orderBy );
-          $prompt = 'ORDER BY ' . $tableField . ' ... has unwanted effects!';
-          t3lib_div::devlog( '[WARN/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 2 );
-          $prompt = $tableField . ' is translated. The sequence of rows will be: [ ordered [ordered rows of foreign
-                    language limit 0,20] + [oderded rows of default language limit the rest]], but not [ordered rows limit 0,20]. Sorry, but this is a
-                    need of performance.';
-          t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 0 );
-        }
-          // DRS
         $arr_return = $this->rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( );
         break;
           // First value of ORDER BY is localised
@@ -1361,6 +1349,11 @@ class tx_browser_pi1_viewlist
 
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
+    if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
+    {
+      $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
+      $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
+    }
 //    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
 //    {
 //      $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
@@ -1856,6 +1849,7 @@ class tx_browser_pi1_viewlist
 
       // Get localised status of the tableField
     $tableFieldIsLocalised = $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField );
+
       // RETURN the localised status
     return $tableFieldIsLocalised;
   }
@@ -1886,6 +1880,22 @@ class tx_browser_pi1_viewlist
 
       // Get localised status of the tableField
     $tableFieldIsLocalised = $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField );
+    
+      // DRS
+    if( $tableFieldIsLocalised )
+    {
+      if( $this->pObj->b_drs_warn )
+      {
+        $prompt = 'ORDER BY ' . $tableField . ' ... has unwanted effects!';
+        t3lib_div::devlog( '[WARN/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 2 );
+        $prompt = $tableField . ' is translated. The sequence of rows will be: [ ordered [ordered rows of foreign
+                  language limit 0,20] + [oderded rows of default language limit the rest]], but not [ordered rows limit 0,20]. Sorry, but this is a
+                  need of performance.';
+        t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 0 );
+      }
+    }
+      // DRS
+      
       // RETURN the localised status
     return $tableFieldIsLocalised;
   }
