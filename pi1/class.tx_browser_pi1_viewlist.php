@@ -835,7 +835,7 @@ class tx_browser_pi1_viewlist
       // Get all ids
     $withAllIds = array( );
     $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $withAllIds );
-$ths->pObj->dev_var_dump( 1 );
+$this->pObj->dev_var_dump( 1 );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -857,7 +857,7 @@ $ths->pObj->dev_var_dump( 1 );
 
       // Get rows for the list view
     $arr_return = $this->rows_sqlRowsbyIds( $withIds );
-$ths->pObj->dev_var_dump( 2 );
+$this->pObj->dev_var_dump( 2 );
 
     return $arr_return;
   }
@@ -877,7 +877,7 @@ $ths->pObj->dev_var_dump( 2 );
       // Get all ids
     $withIds = array( );
     $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $withIds );
-$ths->pObj->dev_var_dump( 1 );
+$this->pObj->dev_var_dump( 1 );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -888,7 +888,7 @@ $ths->pObj->dev_var_dump( 1 );
 
       // Get ids of records of default language, which match the rules but haven't any translation
     $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds );
-$ths->pObj->dev_var_dump( 2 );
+$this->pObj->dev_var_dump( 2 );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -905,7 +905,7 @@ $ths->pObj->dev_var_dump( 2 );
 
       // Get rows for the list view
     $arr_return = $this->rows_sqlRowsbyIds( $withIds );
-$ths->pObj->dev_var_dump( 3 );
+$this->pObj->dev_var_dump( 3 );
 
     return $arr_return;
   }
