@@ -1868,13 +1868,9 @@ $this->pObj->dev_var_dump( $arr_result );
  */
   private function get_joins( )
   {
-    $mode       = $this->pObj->piVar_mode;
-    $view       = $this->pObj->view;
-    $viewWiDot  = $view.'.';
-
     $arr_return     = array( );
-    $str_left_join  = false;
-    $str_full_join  = false;
+    $str_left_join  = null;
+    $str_full_join  = null;
 
 
       // RETURN ERROR : any table isn't used
@@ -1887,7 +1883,6 @@ $this->pObj->dev_var_dump( $arr_result );
 
       // Init the class var $arr_relations_mm_simple
     $this->init_class_arrRelationsMmSimple( );
-$this->pObj->dev_var_dump( $this->arr_relations_mm_simple );
     
       // RETURN there isn't any table
     if( empty( $this->arr_relations_mm_simple ) )
@@ -1905,345 +1900,151 @@ $this->pObj->dev_var_dump( $this->arr_relations_mm_simple );
     $arr_return = $this->get_joinsSetMm( );
     $str_left_join = $arr_return['data']['left_join'];
     $str_full_join = $arr_return['data']['full_join'];
-$this->pObj->dev_var_dump( $arr_return );
+      // Set the MM relations
 
+      // Set the CSV relations
+    $arr_return = $this->get_joinsSetCsv( $arr_return );
+    $str_left_join = $arr_return['data']['left_join'];
+    $str_full_join = $arr_return['data']['full_join'];
+      // Set the CSV relations
 
-
-
-//      //////////////////////////////////////////////////////////////////
-//      //
-//      // MM-relation-building
+//    //////////////////////////////////////////////////////////////////
+//    //
+//    // simple-relation-building
 //
-//    $tables = $this->arr_relations_mm_simple['MM'];
+//    $tables = $this->arr_relations_mm_simple['simple'];
 //    if (is_array($tables))
 //    {
-//      if ($this->pObj->b_drs_sql)
+//        //////////////////////////////////
+//        //
+//        // Convert Array
+//        // from: ["tt_news"]["cruser_id"] = "be_users"
+//        // to:   ["tt_news.cruser_id"]    = "be_users"
+//
+//        // LOOP tables
+//      foreach( (array) $tables as $keyTable => $arrFields)
 //      {
-//        t3lib_div::devlog('[INFO/SQL] views.'.$viewWiDot.$mode.' has configured MM relations.', $this->pObj->extKey, 0);
-//      }
-//      //////////////////////////////////
-//      //
-//      // Convert Array
-//      // from: ["tt_news."]["tt_news_cat_mm"] = "tt_news_cat"
-//      // to:   ["tt_news"]["tt_news_cat_mm"] = "tt_news_cat"
-//      foreach( array_keys ( ( array ) $tables ) as $localTable )
-//      //foreach((array) $tables as $localTable => $localFields)
-//      {
-//        $str_dot = false;
-//        if(substr($localTable, -1) == '.')
+//        foreach((array) $arrFields as $keyField => $valueField)
 //        {
-//          $tableWoDot           = substr($localTable, 0, strlen($localTable) -1);
-//          $tables[$tableWoDot]  = $tables[$localTable];
-//          unset($tables[$localTable]);
-//        }
-//      }
-//      // Convert Array
-//
-////      var_dump($tables);
-////      exit;
-//      //  array["tx_ships_main"]["tx_ships_main_g2_shipowner_mm"]   = "tx_ships_owner"
-//      //  array["tx_ships_main"]["tx_ships_main_g3_application_mm"] = "tx_ships_application"
-//      //  array["tx_ships_main"]["tx_ships_main_g3_rigortype_mm"]   = "tx_ships_rigortype"
-//      //  ...
-//
-//        // Loop: tables
-//      foreach ($tables as $localTable => $foreignTables)
-//      {
-//        //var_dump($foreignTables);
-//        //  array["tx_ships_main_g2_shipowner_mm"]    = "tx_ships_owner"
-//        //  array["tx_ships_main_g3_application_mm"]  = "tx_ships_application"
-//        //  array["tx_ships_main_g3_rigortype_mm"]    = "tx_ships_rigortype"
-//        //  array["tx_ships_main_g3_powersystem_mm"]  = ...
-//
-//          // Load the TCA, if we don't have an table.columns array
-//        if (!is_array($GLOBALS['TCA'][$localTable]['columns']))
-//        {
-//          t3lib_div::loadTCA($localTable);
-//          if ($this->pObj->b_drs_localisation)
+//          $str_dot = false;
+//          if(substr($keyTable, -1) != '.')
 //          {
-//            t3lib_div::devlog('[INFO/SQL] $GLOBALS[\'TCA\'][\''.$localTable.'\'] is loaded.', $this->pObj->extKey, 0);
+//            $str_dot = '.';
 //          }
+//          $tables[$keyTable.$str_dot.$keyField] = $valueField;
+//          unset($tables[$keyTable][$keyField]);
 //        }
-//          // Load the TCA, if we don't have an table.columns array
-//
-//          // Loop: foreignTables
-//        foreach((array) $foreignTables as $mmTable => $foreignTable)
-//        {
-//            // foreignTable is an element in the array of the real tables
-//          if (in_array($foreignTable, array_keys($this->pObj->arr_realTables_arrFields)))
-//          {
-//              // #9697, 100912, dwildt
-//            $bool_opposite = false;
-//            if(!empty($this->arr_relations_opposite[$localTable][$mmTable]['MM_opposite_field']))
-//            {
-//              $bool_opposite = true;
-//            }
-//              // #9697, 100912, dwildt
-//
-//              // left join: true
-//            if ($this->b_left_join)
-//            {
-//                // #9697, 100912, dwildt
-//              if($bool_opposite)
-//              {
-//                $str_left_join_uidlocal = ' LEFT JOIN '.$mmTable.
-//                                          ' ON ( '.$localTable.'.uid = '.$mmTable.'.uid_foreign )';
-//              }
-//              if(!$bool_opposite)
-//              {
-//                $str_left_join_uidlocal = ' LEFT JOIN '.$mmTable.
-//                                          ' ON ( '.$localTable.'.uid = '.$mmTable.'.uid_local )';
-//              }
-//                // #9697, 100912, dwildt
-//                // Use current LEFT JOIN once only
-//              if (strpos($str_left_join, $str_left_join_uidlocal) === false)
-//              {
-//                if ($this->pObj->b_drs_sql)
-//                {
-//                  t3lib_div::devlog('[INFO/SQL] '.$localTable.' get a LEFT JOIN to '.$foreignTable.'.', $this->pObj->extKey, 0);
-//                }
-//                $str_left_join = $str_left_join.$str_left_join_uidlocal;
-//              }
-//
-//              $str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
-//              $str_pidStatement         = $this->pObj->objSqlFun->get_andWherePid($foreignTable);
-//
-//                // #9697, 100912, dwildt
-//                // Opposite relation: true
-//              if($bool_opposite)
-//              {
-//                $str_left_join_uidforeign = ' LEFT JOIN '.$foreignTable.
-//                                            ' ON ( '.
-//                                                $mmTable.'.uid_local = '.$foreignTable.'.uid'.
-//                                                $str_enablefields_foreign.
-//                                                $str_pidStatement.
-//                                              ' )';
-//              }
-//                // Opposite relation: true
-//                // Opposite relation: false
-//              if(!$bool_opposite)
-//              {
-//                $str_left_join_uidforeign = ' LEFT JOIN '.$foreignTable.
-//                                            ' ON ( '.
-//                                                $mmTable.'.uid_foreign = '.$foreignTable.'.uid'.
-//                                                $str_enablefields_foreign.
-//                                                $str_pidStatement.
-//                                              ' )';
-//              }
-//                // Opposite relation: false
-//                // #9697, 100912, dwildt
-//
-//                // Use current LEFT JOIN once only
-//              if (strpos($str_left_join, $str_left_join_uidforeign) === false)
-//              {
-//                $str_left_join = $str_left_join.$str_left_join_uidforeign;
-//              }
-//                // Use current LEFT JOIN once only
-//            }
-//              // left join: true
-//
-//              // left join: false
-//            if (!$this->b_left_join)
-//            {
-//              if ($this->pObj->b_drs_sql)
-//              {
-//                t3lib_div::devlog('[INFO/SQL] '.$localTable.' get a FULL JOIN to '.$foreignTable.'.', $this->pObj->extKey, 0);
-//              }
-//                // #9697, 100912, dwildt
-//              if($bool_opposite)
-//              {
-//                $str_full_join .= ' AND '.$localTable.'.uid = '.$mmTable.'.uid_foreign'.
-//                                  ' AND '.$mmTable.'.uid_local = '.$foreignTable.'.uid';
-//              }
-//              if(!$bool_opposite)
-//              {
-//                $str_full_join .= ' AND '.$localTable.'.uid = '.$mmTable.'.uid_local'.
-//                                  ' AND '.$mmTable.'.uid_foreign = '.$foreignTable.'.uid';
-//              }
-//                // #9697, 100912, dwildt
-//            }
-//              // left join: false
-//
-//              // Add the mm table to the fetched tables, if it is new
-//            if (!in_array($mmTable, array_keys($this->pObj->arr_realTables_arrFields)))
-//            {
-//              // Add every new table.field to the global array arr_realTables_arrFields
-//              $this->pObj->arr_realTables_arrFields[$mmTable][] = 'uid_local';
-//              $this->pObj->arr_realTables_arrFields[$mmTable][] = 'uid_foreign';
-//
-//                // 091128: ADDED (in context with table_mm.sorting)
-//              $keys_mmTable = array_keys(($GLOBALS['TYPO3_DB']->admin_get_fields($mmTable)));
-//              if(in_array('sorting', $keys_mmTable))
-//              {
-//                $this->pObj->arr_realTables_arrFields[$mmTable][] = 'sorting';
-//                  // Add every new table.field to the global array consolidate
-//                $this->pObj->arrConsolidate['addedTableFields'][] = $mmTable.'.sorting';
-//                $this->pObj->arrConsolidate['select']['mmSortingTableFields'][]  = $mmTable.'.sorting';
-//              }
-//                // 091128: ADDED (in context with table_mm.sorting)
-//                // 13803, 110313, dwildt
-//              if(in_array('sorting_foreign', $keys_mmTable))
-//              {
-//                $this->pObj->arr_realTables_arrFields[$mmTable][] = 'sorting_foreign';
-//                  // Add every new table.field to the global array consolidate
-//                $this->pObj->arrConsolidate['addedTableFields'][] = $mmTable.'.sorting_foreign';
-//                $this->pObj->arrConsolidate['select']['mmSortingTableFields'][]  = $mmTable.'.sorting_foreign';
-//              }
-//                // 13803, 110313, dwildt
-//            }
-//              // Add the mm table to the fetched tables, if it is new
-//
-//              // Add the foreign table to the fetched tables, if it is new
-//            if (!in_array($foreignTable, array_keys($this->pObj->arr_realTables_arrFields)))
-//            {
-//              $this->pObj->arr_realTables_arrFields[$foreignTable][] = 'uid';
-//            }
-//              // Add the foreign table to the fetched tables, if it is new
-//          }
-//            // foreignTable is an element in the array of the real tables
-//        }
-//          // Loop: foreignTables
+//        unset($tables[$keyTable]);
 //      }
-//        // Loop: tables
-//    }
-//      // MM-relation-building
-
-
-    //////////////////////////////////////////////////////////////////
-    //
-    // simple-relation-building
-
-    $tables = $this->arr_relations_mm_simple['simple'];
-    if (is_array($tables))
-    {
-        //////////////////////////////////
-        //
-        // Convert Array
-        // from: ["tt_news"]["cruser_id"] = "be_users"
-        // to:   ["tt_news.cruser_id"]    = "be_users"
-
-        // LOOP tables
-      foreach( (array) $tables as $keyTable => $arrFields)
-      {
-        foreach((array) $arrFields as $keyField => $valueField)
-        {
-          $str_dot = false;
-          if(substr($keyTable, -1) != '.')
-          {
-            $str_dot = '.';
-          }
-          $tables[$keyTable.$str_dot.$keyField] = $valueField;
-          unset($tables[$keyTable][$keyField]);
-        }
-        unset($tables[$keyTable]);
-      }
-        // LOOP tables
-
-        // LOOP tables
-      foreach( ( array ) $tables as $localTableField => $foreignTable )
-      {
-        list ($localTable, $localField) = explode('.', $localTableField);
-          // #11650, cweiske, 101223
-        //$foreignTableField = $foreignTable.'.uid';
-        if (strpos($foreignTable, '.') !== false)
-        {
-          list($foreignTable, $foreignTableField) = explode('.', $foreignTable);
-        }
-        else
-        {
-          $foreignTableField = $foreignTable.'.uid';
-        }
-
-          // #32254, 111201, dwildt+
-        $str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
-        $str_pidStatement         = $this->pObj->objSqlFun->get_andWherePid($foreignTable);
-          // #32254, 111201, dwildt+
-
-        $localTableFieldMaxItems = 0;
-        $localTableFieldMaxItems = $GLOBALS['TCA'][$localTable]['columns'][$localField]['config']['maxitems'];
-        switch(true)
-        {
-          case($localTableFieldMaxItems == 1):
-            $str_query_part = "   " . $localTableField . " = " . $foreignTableField .
-                              "   " . $str_enablefields_foreign .
-                              "   " . $str_pidStatement ;
-            break;
-          // 120329, dwildt-
-//          case($localTableFieldMaxItems == 2):
-//            $str_query_part = "   ( " .
-//                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
-//                              "     " . $localTableField . " LIKE CONCAT(" . $foreignTableField . ", ',%') OR " .
-//                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField .
-//                              "   )" .
+//        // LOOP tables
+//
+//        // LOOP tables
+//      foreach( ( array ) $tables as $localTableField => $foreignTable )
+//      {
+//        list ($localTable, $localField) = explode('.', $localTableField);
+//          // #11650, cweiske, 101223
+//        //$foreignTableField = $foreignTable.'.uid';
+//        if (strpos($foreignTable, '.') !== false)
+//        {
+//          list($foreignTable, $foreignTableField) = explode('.', $foreignTable);
+//        }
+//        else
+//        {
+//          $foreignTableField = $foreignTable.'.uid';
+//        }
+//
+//          // #32254, 111201, dwildt+
+//        $str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
+//        $str_pidStatement         = $this->pObj->objSqlFun->get_andWherePid($foreignTable);
+//          // #32254, 111201, dwildt+
+//
+//        $localTableFieldMaxItems = 0;
+//        $localTableFieldMaxItems = $GLOBALS['TCA'][$localTable]['columns'][$localField]['config']['maxitems'];
+//        switch(true)
+//        {
+//          case($localTableFieldMaxItems == 1):
+//            $str_query_part = "   " . $localTableField . " = " . $foreignTableField .
 //                              "   " . $str_enablefields_foreign .
 //                              "   " . $str_pidStatement ;
 //            break;
+//          // 120329, dwildt-
+////          case($localTableFieldMaxItems == 2):
+////            $str_query_part = "   ( " .
+////                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
+////                              "     " . $localTableField . " LIKE CONCAT(" . $foreignTableField . ", ',%') OR " .
+////                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField .
+////                              "   )" .
+////                              "   " . $str_enablefields_foreign .
+////                              "   " . $str_pidStatement ;
+////            break;
+////          default:
+////            $str_query_part = "   ( " .
+////                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
+////                              "     " . $localTableField . " LIKE CONCAT(" . $foreignTableField . ", ',%') OR " .
+////                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField . ", ',%') OR " .
+////                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField . ") " .
+////                              "   )" .
+////                              "   " . $str_enablefields_foreign .
+////                              "   " . $str_pidStatement ;
+//          // 120329, dwildt-
+//          // 120329, dwildt, 4+
 //          default:
-//            $str_query_part = "   ( " .
-//                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
-//                              "     " . $localTableField . " LIKE CONCAT(" . $foreignTableField . ", ',%') OR " .
-//                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField . ", ',%') OR " .
-//                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField . ") " .
-//                              "   )" .
+//            $str_query_part = "   FIND_IN_SET ( " . $foreignTableField . ", " . $localTableField . " )" .
 //                              "   " . $str_enablefields_foreign .
 //                              "   " . $str_pidStatement ;
-          // 120329, dwildt-
-          // 120329, dwildt, 4+
-          default:
-            $str_query_part = "   FIND_IN_SET ( " . $foreignTableField . ", " . $localTableField . " )" .
-                              "   " . $str_enablefields_foreign .
-                              "   " . $str_pidStatement ;
-        }
-
-          // #11650, cweiske, 101223
-        if ($this->b_left_join)
-        {
-          $str_left_join_uidforeign = " LEFT JOIN " . $foreignTable .
-                                      " ON ( " .
-                                      $str_query_part .
-                                      " )" ;
-          // Use current LEFT JOIN once only
-          if (strpos($str_left_join, $str_left_join_uidforeign) === false)
-          {
-            $str_left_join .= $str_left_join_uidforeign;
-          }
-        }
-        if (!$this->b_left_join)
-        {
-          // The AND clause below makes only sense, if it is a 1:1-relation!
-          $str_full_join .=  " AND (" .
-                             $str_query_part .
-                             " )" ;
-        }
-        // Add the foreign table to the fetched tables, if it is new
-        if (!in_array($foreignTable, array_keys($this->pObj->arr_realTables_arrFields)))
-        {
-          $this->pObj->arr_realTables_arrFields[$foreignTable][] = 'uid';
-        }
-      }
-        // LOOP tables
-    }
-    // simple-relation-building
+//        }
+//
+//          // #11650, cweiske, 101223
+//        if ($this->b_left_join)
+//        {
+//          $str_left_join_uidforeign = " LEFT JOIN " . $foreignTable .
+//                                      " ON ( " .
+//                                      $str_query_part .
+//                                      " )" ;
+//          // Use current LEFT JOIN once only
+//          if (strpos($str_left_join, $str_left_join_uidforeign) === false)
+//          {
+//            $str_left_join .= $str_left_join_uidforeign;
+//          }
+//        }
+//        if (!$this->b_left_join)
+//        {
+//          // The AND clause below makes only sense, if it is a 1:1-relation!
+//          $str_full_join .=  " AND (" .
+//                             $str_query_part .
+//                             " )" ;
+//        }
+//        // Add the foreign table to the fetched tables, if it is new
+//        if (!in_array($foreignTable, array_keys($this->pObj->arr_realTables_arrFields)))
+//        {
+//          $this->pObj->arr_realTables_arrFields[$foreignTable][] = 'uid';
+//        }
+//      }
+//        // LOOP tables
+//    }
+//    // simple-relation-building
 
 
     //////////////////////////////////////////////////////////////////
     //
     // Building $arr_return
 
-    if ($this->b_left_join)
+    if( $this->b_left_join )
     {
       $arr_return['data']['left_join'] = $str_left_join;
-      if ($this->pObj->b_drs_sql)
+      if( $this->pObj->b_drs_sql )
       {
-        t3lib_div::devlog('[INFO/SQL] '.$str_left_join, $this->pObj->extKey, 0);
+        $prompt = $str_left_join;
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
     }
-    if (!$this->b_left_join)
+    if( ! $this->b_left_join )
     {
       $arr_return['data']['full_join'] = $str_full_join;
-      if ($this->pObj->b_drs_sql)
+      if( $this->pObj->b_drs_sql )
       {
-        t3lib_div::devlog('[INFO/SQL] '.$str_full_join, $this->pObj->extKey, 0);
+        $prompt = $str_full_join;
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
     }
     return $arr_return;
@@ -2466,6 +2267,149 @@ $this->pObj->dev_var_dump( $arr_return );
     $arr_return['data']['left_join'] = $str_left_join;
     $arr_return['data']['full_join'] = $str_full_join;
     return $arr_return;
+  }
+
+
+
+/**
+ * get_joinsSetCsv( ) : Relation method: Building the relation part for the where clause
+ *
+ * @return	string		TRUE || FALSE or the SQL-where-clause
+ * @version   3.9.13
+ * @since     2.0.0
+ */
+  private function get_joinsSetCsv( $arr_return )
+  {
+    $arr_return     = array( );
+    $str_left_join  = $arr_return['data']['left_join'];
+    $str_full_join  = $arr_return['data']['full_join'];
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////
+    //
+    // simple-relation-building
+
+    $tables = $this->arr_relations_mm_simple['simple'];
+    if (is_array($tables))
+    {
+        //////////////////////////////////
+        //
+        // Convert Array
+        // from: ["tt_news"]["cruser_id"] = "be_users"
+        // to:   ["tt_news.cruser_id"]    = "be_users"
+
+        // LOOP tables
+      foreach( (array) $tables as $keyTable => $arrFields)
+      {
+        foreach((array) $arrFields as $keyField => $valueField)
+        {
+          $str_dot = false;
+          if(substr($keyTable, -1) != '.')
+          {
+            $str_dot = '.';
+          }
+          $tables[$keyTable.$str_dot.$keyField] = $valueField;
+          unset($tables[$keyTable][$keyField]);
+        }
+        unset($tables[$keyTable]);
+      }
+        // LOOP tables
+
+        // LOOP tables
+      foreach( ( array ) $tables as $localTableField => $foreignTable )
+      {
+        list ($localTable, $localField) = explode('.', $localTableField);
+          // #11650, cweiske, 101223
+        //$foreignTableField = $foreignTable.'.uid';
+        if (strpos($foreignTable, '.') !== false)
+        {
+          list($foreignTable, $foreignTableField) = explode('.', $foreignTable);
+        }
+        else
+        {
+          $foreignTableField = $foreignTable.'.uid';
+        }
+
+          // #32254, 111201, dwildt+
+        $str_enablefields_foreign = $this->pObj->cObj->enableFields($foreignTable);
+        $str_pidStatement         = $this->pObj->objSqlFun->get_andWherePid($foreignTable);
+          // #32254, 111201, dwildt+
+
+        $localTableFieldMaxItems = 0;
+        $localTableFieldMaxItems = $GLOBALS['TCA'][$localTable]['columns'][$localField]['config']['maxitems'];
+        switch(true)
+        {
+          case($localTableFieldMaxItems == 1):
+            $str_query_part = "   " . $localTableField . " = " . $foreignTableField .
+                              "   " . $str_enablefields_foreign .
+                              "   " . $str_pidStatement ;
+            break;
+          // 120329, dwildt-
+//          case($localTableFieldMaxItems == 2):
+//            $str_query_part = "   ( " .
+//                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
+//                              "     " . $localTableField . " LIKE CONCAT(" . $foreignTableField . ", ',%') OR " .
+//                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField .
+//                              "   )" .
+//                              "   " . $str_enablefields_foreign .
+//                              "   " . $str_pidStatement ;
+//            break;
+//          default:
+//            $str_query_part = "   ( " .
+//                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
+//                              "     " . $localTableField . " LIKE CONCAT(" . $foreignTableField . ", ',%') OR " .
+//                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField . ", ',%') OR " .
+//                              "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField . ") " .
+//                              "   )" .
+//                              "   " . $str_enablefields_foreign .
+//                              "   " . $str_pidStatement ;
+          // 120329, dwildt-
+          // 120329, dwildt, 4+
+          default:
+            $str_query_part = "   FIND_IN_SET ( " . $foreignTableField . ", " . $localTableField . " )" .
+                              "   " . $str_enablefields_foreign .
+                              "   " . $str_pidStatement ;
+        }
+
+          // #11650, cweiske, 101223
+        if ($this->b_left_join)
+        {
+          $str_left_join_uidforeign = " LEFT JOIN " . $foreignTable .
+                                      " ON ( " .
+                                      $str_query_part .
+                                      " )" ;
+          // Use current LEFT JOIN once only
+          if (strpos($str_left_join, $str_left_join_uidforeign) === false)
+          {
+            $str_left_join .= $str_left_join_uidforeign;
+          }
+        }
+        if (!$this->b_left_join)
+        {
+          // The AND clause below makes only sense, if it is a 1:1-relation!
+          $str_full_join .=  " AND (" .
+                             $str_query_part .
+                             " )" ;
+        }
+        // Add the foreign table to the fetched tables, if it is new
+        if (!in_array($foreignTable, array_keys($this->pObj->arr_realTables_arrFields)))
+        {
+          $this->pObj->arr_realTables_arrFields[$foreignTable][] = 'uid';
+        }
+      }
+        // LOOP tables
+    }
+    // simple-relation-building
+
+
+    $arr_return['data']['left_join'] = $str_left_join;
+    $arr_return['data']['full_join'] = $str_full_join;
+    return $arr_return;
+    // Building $arr_return
   }
 
 
