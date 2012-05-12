@@ -2436,7 +2436,7 @@ class tx_browser_pi1_navi_indexBrowser
 
     $arr_return = $this->zz_getSqlLengthAsRow( $attributes );
     $row        = $arr_return['data']['row'];
-    $arrFindInSet  = $this->count_charSetSqlFindInSet( $row ); 
+    $arrFindInSet  = $this->zz_getFindInSetForAllByte( $row ); 
     $orFindInSet = array( );
     foreach( $arrFindInSet as $arr_statement )
     {
@@ -2456,6 +2456,40 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 
+  /**
+   * zz_getFindInSetForAllByte( ): Set the FIND IN SET statement for each special char group.
+   *                                        A special char group is grouped by the length of a special
+   *                                        char.
+   *
+   * @param	array		$row  : Row with special chars and their SQL length
+   * @return	[type]		...
+   * @version 3.9.12
+   * @since   3.9.10
+   */
+  private function zz_getFindInSetForAllByte( $row ) 
+  {
+      // Chars from one byte to unlimited bytes
+    $fromLength = 2;
+    return $this->zz_getFindInSetFromLength( $row, $fromLength );
+
+//      // Get current table.field of the index browser
+//    $tableField = $this->indexBrowserTableField;
+//
+//      // LOOP : generate a find in set statement for each special char
+//    $findInSet = null;
+//    foreach ($row as $char => $length) {
+////      if ($length < 2) {
+////        continue;
+////      }
+//      $findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
+//    }
+//      // LOOP : generate a find in set statement for each special char
+//    
+//    return $findInSet;
+  }
+
+
+
 /**
  * zz_getFindInSetForMultibyte( ): Set the FIND IN SET statement for each special char group.
  *                                        A special char group is grouped by the length of a special
@@ -2468,6 +2502,42 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function zz_getFindInSetForMultibyte( $row )
   {
+      // Chars from two bytes only to unlimited bytes
+    $fromLength = 2;
+    return $this->zz_getFindInSetFromLength( $row, $fromLength );
+
+//      // Get current table.field of the index browser
+//    $tableField = $this->indexBrowserTableField;
+//
+//      // LOOP : generate a find in set statement for each special char
+//    $findInSet = null;
+//    foreach( $row as $char => $length )
+//    {
+//      if( $length < 2 )
+//      {
+//        continue;
+//      }
+//      $findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
+//    }
+//      // LOOP : generate a find in set statement for each special char
+//    
+//    return $findInSet;
+  }
+
+
+
+/**
+ * zz_getFindInSetFromLength( ): Set the FIND IN SET statement for each special char group.
+ *                                        A special char group is grouped by the length of a special
+ *                                        char.
+ *
+ * @param	array		$row  : Row with special chars and their SQL length
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.10
+ */
+  private function zz_getFindInSetFromLength( $row, $fromLength )
+  {
       // Get current table.field of the index browser
     $tableField = $this->indexBrowserTableField;
 
@@ -2475,7 +2545,7 @@ class tx_browser_pi1_navi_indexBrowser
     $findInSet = null;
     foreach( $row as $char => $length )
     {
-      if( $length < 2 )
+      if( $length < $fromLength )
       {
         continue;
       }
@@ -2549,36 +2619,6 @@ class tx_browser_pi1_navi_indexBrowser
 
     $arr_return['data']['row'] = $row;
     return $arr_return;
-  }
-
-
-
-/**
-   * count_charSetSqlFindInSet( ): Set the FIND IN SET statement for each special char group.
-   *                                        A special char group is grouped by the length of a special
-   *                                        char.
-   *
-   * @param	array		$row  : Row with special chars and their SQL length
-   * @return	[type]		...
-   * @version 3.9.12
-   * @since   3.9.10
-   */
-  private function count_charSetSqlFindInSet( $row ) 
-  {
-      // Get current table.field of the index browser
-    $tableField = $this->indexBrowserTableField;
-
-      // LOOP : generate a find in set statement for each special char
-    $findInSet = null;
-    foreach ($row as $char => $length) {
-//      if ($length < 2) {
-//        continue;
-//      }
-      $findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
-    }
-      // LOOP : generate a find in set statement for each special char
-    
-    return $findInSet;
   }
 
 
