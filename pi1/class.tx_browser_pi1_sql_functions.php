@@ -953,7 +953,7 @@ class tx_browser_pi1_sql_functions
       
       // Cut the 'AND ' of the beginning of param_2
     $param_2 = trim( $param_2 );
-    if( substr( $param_1, 0, 4) == 'AND ' )
+    if( substr( $param_2, 0, 4) == 'AND ' )
     {
       $param_2 = substr( $param_2, 4 );
     }
