@@ -833,8 +833,8 @@ class tx_browser_pi1_viewlist
   {
       // Get ids of records, which match the rules and have a translation for the current language
       // Get all ids
-    $withIds = array( );
-    $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $withIds );
+    $withAllIds = array( );
+    $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $withAllIds );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -842,6 +842,10 @@ class tx_browser_pi1_viewlist
     $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
       // Get ids of records, which match the rules and have a translation for the current language
 
+    if( empty ( $idsOfTranslationRows ) )
+    {
+      return $arr_return;
+    }
       // Get rows for the list view
     $arr_return = $this->rows_sqlRowsbyIds( $idsOfTranslationRows );
 
