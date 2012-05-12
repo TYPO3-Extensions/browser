@@ -1109,7 +1109,7 @@ $tablesForRelations[] = $table;
     }
     // andWhere NOT
 
-
+$tablesForRelations = array_unique( $tablesForRelations );
 $this->pObj->dev_var_dump( $tablesForRelations );
 $this->init_class_relationsLoop( $tablesForRelations );
     //////////////////////////////////////////////////////////////////////////
@@ -1452,6 +1452,7 @@ $this->init_class_relationsLoop( $tablesForRelations );
  */
   private function init_class_relationsLoop( $tables )
   {
+$this->pObj->dev_var_dump( $this->arr_relations_mm_simple );
     if( empty ( $tables ) )
     {
       return;
@@ -1509,6 +1510,7 @@ $this->init_class_relationsLoop( $tablesForRelations );
       }
         // LOOP each TCA column
     }
+$this->pObj->dev_var_dump( $this->arr_relations_mm_simple );
       // LOOP tables
   }
 
