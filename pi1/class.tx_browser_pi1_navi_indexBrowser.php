@@ -1070,9 +1070,9 @@ class tx_browser_pi1_navi_indexBrowser
       $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
     }
 //$this->pObj->dev_var_dump( $labelAscii, $this->indexBrowserTab['tabLabels'][$labelAscii], $this->indexBrowserTab['tabIds'][$tabId]['attributes'] );
-$this->pObj->dev_var_dump( $this->indexBrowserTab );
+//$this->pObj->dev_var_dump( $this->indexBrowserTab );
     $arrChars   = explode( ',', $attributes );
-$this->pObj->dev_var_dump( $attributes );
+//$this->pObj->dev_var_dump( $attributes );
       // Get the attributes of the selected tab
 
     $arr_return   = $this->zz_getSqlLengthAsRow( $arrChars );
@@ -1101,7 +1101,7 @@ $this->pObj->dev_var_dump( $attributes );
     {
       $findInSet = 'NOT ' . $findInSet;
     }
-$this->pObj->dev_var_dump( $findInSet );
+//$this->pObj->dev_var_dump( $findInSet );
     $this->findInSetForCurrTab = $findInSet;
 //    $this->pObj->dev_var_dump( $arrFindInSet, $findInSet );
   }
