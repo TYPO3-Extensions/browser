@@ -295,7 +295,8 @@ class tx_browser_pi1_filter_4x {
       // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
     {
-      foreach( ( array ) $fields as $field => $confField )
+      foreach( array_keys ( ( array ) $fields ) as $field )
+//      foreach( ( array ) $fields as $field => $confField )
       {
           // CONTINUE : field has an dot
         if( rtrim($field, '.') != $field )
