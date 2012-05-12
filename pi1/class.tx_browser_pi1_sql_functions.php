@@ -944,9 +944,16 @@ class tx_browser_pi1_sql_functions
       // RETURN $param_1
 
     $param_1 = trim( $param_1 );
-    $param_1 = rtrim( $param_1, ' AND' );
+    if( substr( $param_1, -4) == ' AND' )
+    {
+      $param_1 = substr( $param_1, 0, strlen( $param_1 ) - 4 );
+    }
     $param_2 = trim( $param_2 );
-    $param_2 = ltrim( $param_2, 'AND ' );
+    if( substr( $param_1, 0, 4) == 'AND ' )
+    {
+      $param_2 = substr( $param_2, 4 );
+    }
+$this->pObj->dev_var_dump( $param_1, $param_2 );
     
     
       // RETURN $param_1 AND $param_2
