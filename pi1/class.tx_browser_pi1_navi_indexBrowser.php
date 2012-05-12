@@ -75,7 +75,7 @@
  * 1581:     private function count_specialChars( )
  * 1620:     private function count_specialChars_addSum( $row )
  * 1667:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
- * 1761:     private function count_specialChars_setSqlFindInSet( $row )
+ * 1761:     private function zz_getFindInSetForMultibyte( $row )
  * 1787:     private function zz_getSqlLengthAsRow( )
  *
  *              SECTION: SQL charset
@@ -1626,10 +1626,11 @@ class tx_browser_pi1_navi_indexBrowser
     $this->sqlCharsetSet( 'latin1' );
 
       // Set class var findInSet
-    $this->count_specialChars_setSqlFindInSet( $row );
+    $this->findInSet = $this->zz_getFindInSetForMultibyte( $row );
+    //$this->findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
 
       // LOOP : find in set for each special char length group
-    foreach( $this->findInSet as $length => $arrfindInSet )
+    foreach( ( array ) $this->findInSet as $length => $arrfindInSet )
     {
         // SQL result with sum for records with a sepecial char as first character
       $arr_return = $this->count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset );
@@ -1846,35 +1847,6 @@ class tx_browser_pi1_navi_indexBrowser
 
       // RETURN : the sql result
     return $arr_return;
-  }
-
-
-
-/**
- * count_specialChars_setSqlFindInSet( ): Set the FIND IN SET statement for each special char group.
- *                                        A special char group is grouped by the length of a special
- *                                        char.
- *
- * @param	array		$row  : Row with special chars and their SQL length
- * @return	[type]		...
- * @version 3.9.12
- * @since   3.9.10
- */
-  private function count_specialChars_setSqlFindInSet( $row )
-  {
-      // Get current table.field of the index browser
-    $tableField = $this->indexBrowserTableField;
-
-      // LOOP : generate a find in set statement for each special char
-    foreach( $row as $char => $length )
-    {
-      if( $length < 2 )
-      {
-        continue;
-      }
-      $this->findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
-    }
-      // LOOP : generate a find in set statement for each special char
   }
 
 
@@ -2466,7 +2438,7 @@ class tx_browser_pi1_navi_indexBrowser
     $row        = $arr_return['data']['row'];
     $arrFindInSet  = $this->count_charSetSqlFindInSet( $row ); 
     $orFindInSet = array( );
-    foreach( $arrFindInSet as $length => $arr_statement )
+    foreach( $arrFindInSet as $arr_statement )
     {
       foreach( $arr_statement as $statement )
       {
@@ -2480,6 +2452,38 @@ class tx_browser_pi1_navi_indexBrowser
     //$this->pObj->dev_var_dump( $this->indexBrowserTab, $this->pObj->piVars['indexBrowserTab'] );
     //$this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes, $arr_return, $row, $findInSet );
     $this->pObj->dev_var_dump( $arrFindInSet, $findInSet );
+  }
+
+
+
+/**
+ * zz_getFindInSetForMultibyte( ): Set the FIND IN SET statement for each special char group.
+ *                                        A special char group is grouped by the length of a special
+ *                                        char.
+ *
+ * @param	array		$row  : Row with special chars and their SQL length
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.10
+ */
+  private function zz_getFindInSetForMultibyte( $row )
+  {
+      // Get current table.field of the index browser
+    $tableField = $this->indexBrowserTableField;
+
+      // LOOP : generate a find in set statement for each special char
+    $findInSet = null;
+    foreach( $row as $char => $length )
+    {
+      if( $length < 2 )
+      {
+        continue;
+      }
+      $findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
+    }
+      // LOOP : generate a find in set statement for each special char
+    
+    return $findInSet;
   }
 
 
@@ -2550,7 +2554,7 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
-   * count_specialChars_setSqlFindInSet( ): Set the FIND IN SET statement for each special char group.
+   * count_charSetSqlFindInSet( ): Set the FIND IN SET statement for each special char group.
    *                                        A special char group is grouped by the length of a special
    *                                        char.
    *
@@ -2575,62 +2579,6 @@ class tx_browser_pi1_navi_indexBrowser
       // LOOP : generate a find in set statement for each special char
     
     return $findInSet;
-  }
-
-  /**
- * zz_getSqlLengthAsRow( ): Return a row with all special chars and their SQL length
- *
- * @return	array		$arr_return : row with all special chars and their SQL length
- * @version 3.9.12
- * @since   3.9.10
- */
-  private function count_charSetSqlLength( $attributes )
-  {
-      // Build the select statement parts for the length of each special char
-    $arrStatement     = array( );
-    $arrSpecialChars  = explode( ',', $attributes );
-    foreach( ( array ) $arrSpecialChars as $specialChar )
-    {
-      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
-    }
-      // Build the select statement parts for the length of each special char
-
-      // DIE : undefined error
-    if( empty ( $arrStatement ) )
-    {
-      die ( __METHOD__ . '(' . __LINE__ . '): undefined error.');
-    }
-      // DIE : undefined error
-
-      // Execute query for the length of each special char
-    $query  = "SELECT " . implode( ', ', $arrStatement );
-    $res    = $GLOBALS['TYPO3_DB']->sql_query( $query );
-
-      // Error management
-    $error = $GLOBALS['TYPO3_DB']->sql_error( );
-    if( $error )
-    {
-      $level = 1;
-      $arr_return = $this->pObj->objSqlFun->prompt_error( $query, $error, $level );
-      return $arr_return;
-    }
-      // Error management
-
-      // DRS
-    if( $this->pObj->b_drs_navi || $this->pObj->b_drs_sql )
-    {
-      $prompt = $query;
-      t3lib_div::devlog( '[OK/NAVI+SQL] ' . $prompt, $this->pObj->extKey, -1 );
-    }
-      // DRS
-
-      // Get the row
-    $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res );
-      // SQL free result
-    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-
-    $arr_return['data']['row'] = $row;
-    return $arr_return;
   }
 
 
