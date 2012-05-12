@@ -875,6 +875,7 @@ class tx_browser_pi1_viewlist
       // Get all ids
     $withIds = array( );
     $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $withIds );
+$ths->pObj->dev_var_dump( 1 );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -885,6 +886,7 @@ class tx_browser_pi1_viewlist
 
       // Get ids of records of default language, which match the rules but haven't any translation
     $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds );
+$ths->pObj->dev_var_dump( 2 );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -901,6 +903,7 @@ class tx_browser_pi1_viewlist
 
       // Get rows for the list view
     $arr_return = $this->rows_sqlRowsbyIds( $withIds );
+$ths->pObj->dev_var_dump( 3 );
 
     return $arr_return;
   }
@@ -1181,8 +1184,7 @@ class tx_browser_pi1_viewlist
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
     }
 
-    if( 0 )
-//    if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
+    if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
     {
       $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
