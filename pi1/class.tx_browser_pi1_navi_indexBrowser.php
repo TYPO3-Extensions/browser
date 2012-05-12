@@ -1068,11 +1068,11 @@ class tx_browser_pi1_navi_indexBrowser
     {
       return $arr_return;
     }
-    if( empty ( $arr_return ) )
+    $row          = $arr_return['data']['row'];
+    if( empty ( $row ) )
     {
       return;
     }
-    $row          = $arr_return['data']['row'];
     $arrFindInSet = $this->zz_getFindInSetForAllByte( $row );
     $orFindInSet  = array( );
     foreach( $arrFindInSet as $length )
