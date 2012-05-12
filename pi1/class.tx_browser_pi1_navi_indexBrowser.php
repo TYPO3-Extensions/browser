@@ -1062,11 +1062,15 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab, $this->pObj->piVars['indexBro
 
       // Set labelAscii. Label for using in the URL
     $labelAscii = $this->zz_specCharsToASCII( $tabLabel );
+    $attributes = $conf_tabs[$tabId . '.']['valuesCSV'];
+    $attributes = trim( $attributes );
+    $attributes = str_replace ( ' ', null, $attributes );
 
       // Set tab array
     $this->indexBrowserTab['tabIds'][$tabId]['label']           = $tabLabel;
     $this->indexBrowserTab['tabIds'][$tabId]['labelAscii']      = $labelAscii;
     $this->indexBrowserTab['tabIds'][$tabId]['displayWoItems']  = $displayWoItems;
+    $this->indexBrowserTab['tabIds'][$tabId]['attributes']      = $attributes;
     $this->indexBrowserTab['tabIds'][$tabId]['sum']             = 0;
     $this->indexBrowserTab['tabLabels'][$tabLabel]              = $tabId;
       // Set tab selected
