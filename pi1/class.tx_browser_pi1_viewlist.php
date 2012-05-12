@@ -835,6 +835,7 @@ class tx_browser_pi1_viewlist
       // Get all ids
     $withAllIds = array( );
     $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $withAllIds );
+$ths->pObj->dev_var_dump( 1 );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -856,6 +857,7 @@ class tx_browser_pi1_viewlist
 
       // Get rows for the list view
     $arr_return = $this->rows_sqlRowsbyIds( $withIds );
+$ths->pObj->dev_var_dump( 2 );
 
     return $arr_return;
   }
