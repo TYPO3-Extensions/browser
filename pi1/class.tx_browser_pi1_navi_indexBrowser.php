@@ -303,6 +303,7 @@ class tx_browser_pi1_navi_indexBrowser
     //$arr_result['data']['content']
       // Render the tabs
 
+      // If a tab is selected, store the SQL FIND IN SET
     $this->zz_findInSetForCurrentTab( );
     
       // Reset $GLOBALS['TSFE']->id
@@ -1073,7 +1074,7 @@ class tx_browser_pi1_navi_indexBrowser
     $this->indexBrowserTab['tabIds'][$tabId]['displayWoItems']  = $displayWoItems;
     $this->indexBrowserTab['tabIds'][$tabId]['attributes']      = $attributes;
     $this->indexBrowserTab['tabIds'][$tabId]['sum']             = 0;
-    $this->indexBrowserTab['tabLabels'][$tabLabel]              = $tabId;
+    $this->indexBrowserTab['tabLabels'][$labelAscii]            = $tabId;
       // Set tab selected
     $this->zz_setTabSlected( $tabId );
       // Set tab array
@@ -2504,13 +2505,17 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function zz_findInSetForCurrentTab( )
   {
+      // RETURN : Any tab isn't selected
     if( empty ( $this->pObj->piVars['indexBrowserTab'] ) )
     {
       return;
     }
-$tabLabel   = $this->pObj->piVars['indexBrowserTab'];    
-$tabLabel   = strtoupper( $tabLabel );
-$tabId      = $this->indexBrowserTab['tabLabels'][$tabLabel];
+      // RETURN : Any tab isn't selected
+
+    
+$labelAscii = $this->pObj->piVars['indexBrowserTab'];    
+//$tabLabel   = strtoupper( $tabLabel );
+$tabId      = $this->indexBrowserTab['tabLabels'][$labelAscii];
 $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
 $arr_return = $this->count_charSetSqlLength( $attributes );
 $row        = $arr_return['data']['row'];
