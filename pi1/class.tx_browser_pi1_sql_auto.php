@@ -1886,7 +1886,8 @@ $this->pObj->dev_var_dump( $arr_result );
       // RETURN ERROR : any table isn't used
 
       // Init the class var $arr_relations_mm_simple
-    $this->init_class_arrRelationsMmSimple( $this->arr_relations_mm_simple );
+    $this->init_class_arrRelationsMmSimple( );
+$this->pObj->dev_var_dump( $this->arr_relations_mm_simple );
     
       // RETURN there isn't any table
     if( empty( $this->arr_relations_mm_simple ) )
@@ -1901,7 +1902,10 @@ $this->pObj->dev_var_dump( $arr_result );
       // RETURN there isn't any table
 
       // Set the MM relations
-    $this->get_joinsSetMm( );
+    $arr_return = $this->get_joinsSetMm( );
+    $str_left_join = $arr_return['data']['left_join'];
+    $str_full_join = $arr_return['data']['full_join'];
+$this->pObj->dev_var_dump( $arr_return );
 
 
 
@@ -2261,6 +2265,7 @@ $this->pObj->dev_var_dump( $arr_result );
     $view       = $this->pObj->view;
     $viewWiDot  = $view.'.';
 
+    $arr_return     = array( );
     $str_left_join  = false;
     $str_full_join  = false;
 
@@ -2457,6 +2462,10 @@ $this->pObj->dev_var_dump( $arr_result );
         // Loop: tables
     }
       // MM-relation-building
+    
+    $arr_return['data']['left_join'] = $str_left_join;
+    $arr_return['data']['full_join'] = $str_full_join;
+    return $arr_return;
   }
 
 
