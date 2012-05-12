@@ -995,7 +995,8 @@ class tx_browser_pi1_viewlist
 
     if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
     {
-      $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objNaviIndexBrowser->findInSetForCurrTab );
+      $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
+      $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
     }
     
 //    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
@@ -1138,6 +1139,12 @@ class tx_browser_pi1_viewlist
     if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
     {
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
+    }
+
+    if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
+    {
+      $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
+      $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
     }
 //
 //  // DRS
