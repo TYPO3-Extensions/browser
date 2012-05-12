@@ -95,7 +95,7 @@
  * 2369:     private function getMarkerIndexbrowserTabs( )
  *
  *              SECTION: Helper
- * 2427:     private function zz_findInSetForCurrentTab( )
+ * 2427:     private function tabs_initFindInSetForCurrentTab( )
  * 2472:     private function zz_getFindInSetForAllByte( $row )
  * 2492:     private function zz_getFindInSetForMultibyte( $row )
  * 2513:     private function zz_getFindInSetFromLength( $row, $fromLength )
@@ -107,7 +107,7 @@
  * 2722:     private function zz_tabLinkLabel( $tab )
  * 2764:     private function zz_setTabPiVars( $labelAscii, $label )
  * 2795:     private function zz_setTabPiVarsDefaultTab( $label )
- * 2827:     private function zz_setTabSlected( $tabId )
+ * 2827:     private function zz_setTabClassSelected( $tabId )
  * 2877:     private function zz_tabLastId( )
  * 2935:     private function zz_tabTitle( $sum )
  *
@@ -308,7 +308,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Render the tabs
 
       // If a tab is selected, store the SQL FIND IN SET
-    $this->zz_findInSetForCurrentTab( );
+    $this->tabs_initFindInSetForCurrentTab( );
 
       // Reset $GLOBALS['TSFE']->id
     $GLOBALS['TSFE']->id = $globalTsfeId;
@@ -988,57 +988,6 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
- * zz_setTabSlected( ): Sets the class property selected, if the current tab
- *                      is selected. Sets the class var indexBrowserTab.
- *
- * @param	integer		$tabId    : Current tab ID for TS configuration array
- * @return	[type]		...
- * @version 3.9.12
- * @since   3.9.12
- */
-  private function zz_setTabSlected( $tabId )
-  {
-//$this->pObj->dev_var_dump( $tabLabel, $this->pObj->piVar_indexBrowserTab );
-//$this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default'] );
-      // IF : piVar
-    if( $this->pObj->piVar_indexBrowserTab )
-    {
-      $label      = $this->indexBrowserTab['tabIds'][$tabId]['label'];
-      $labelAscii = $this->indexBrowserTab['tabIds'][$tabId]['labelAscii'];
-
-        // IF : current tab is selected
-      if($label == $this->pObj->piVar_indexBrowserTab)
-      {
-        $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
-        $this->indexBrowserTab['tabSpecial']['selected']     = $tabId;
-        return;
-      }
-        // IF : current tab is selected
-        // IF : current tab is selected
-      if($labelAscii == $this->pObj->piVar_indexBrowserTab)
-      {
-        $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
-        $this->indexBrowserTab['tabSpecial']['selected']     = $tabId;
-        return;
-      }
-        // IF : current tab is selected
-
-        // Don't follow workflow
-      return;
-    }
-      // IF : piVar
-
-      // no piVar
-    if( $tabId == $this->indexBrowserTab['tabSpecial']['default'] )
-    {
-      $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
-      $this->indexBrowserTab['tabSpecial']['selected']     = $tabId;
-    }
-  }
-
-
-
-/**
  * tabs_initAttributes( ):  Sets the array attributes of the class var $indexBrowserTab
  *
  * @param	string		$csvAttributes  : attributes
@@ -1089,6 +1038,49 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 /**
+ * tabs_initFindInSetForCurrentTab( ): Convert labels to ascii labels
+ *
+ * @param	string		$string:  the string for conversion
+ * @return	string		$ascii:   the converted string
+ * @version 3.9.13
+ * @since   3.9.13
+ */
+  private function tabs_initFindInSetForCurrentTab( )
+  {
+      // RETURN : Any tab isn't selected
+    if( empty ( $this->pObj->piVars['indexBrowserTab'] ) )
+    {
+      return;
+    }
+      // RETURN : Any tab isn't selected
+
+      // Get the attributes of the selected tab
+    $labelAscii = $this->pObj->piVars['indexBrowserTab'];
+    $tabId      = $this->indexBrowserTab['tabLabels'][$labelAscii];
+    $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
+      // Get the attributes of the selected tab
+
+    $arr_return   = $this->zz_getSqlLengthAsRow( $attributes );
+    $row          = $arr_return['data']['row'];
+    $arrFindInSet = $this->zz_getFindInSetForAllByte( $row );
+    $orFindInSet  = array( );
+    foreach( $arrFindInSet as $length )
+    {
+      foreach( $length as $statement )
+      {
+        $orFindInSet[] = $statement;
+      }
+    }
+    $findInSet = implode( ' OR ', $orFindInSet );
+    $findInSet = '( ' . $findInSet . ' )';
+
+    $this->findInSetForCurrTab = $findInSet;
+//    $this->pObj->dev_var_dump( $arrFindInSet, $findInSet );
+  }
+
+
+
+/**
  * tabs_initProperties( ):  Sets the elements tabIds and tabLabels of the class var $indexBrowserTab
  *                          Updates the element tabSpecial.
  *
@@ -1130,10 +1122,9 @@ class tx_browser_pi1_navi_indexBrowser
     $this->indexBrowserTab['tabIds'][$tabId]['attributes']      = $attributes;
     $this->indexBrowserTab['tabIds'][$tabId]['sum']             = 0;
     $this->indexBrowserTab['tabLabels'][$labelAscii]            = $tabId;
-      // Set tab array
-
       // Set tab selected
-    $this->zz_setTabSlected( $tabId );
+    $this->zz_setTabClassSelected( $tabId );
+      // Set tab array
 
       // RETURN : tab with special value 'all'
     if( $conf_tabs[$tabId . '.']['special'] == 'all' )
@@ -2468,49 +2459,6 @@ class tx_browser_pi1_navi_indexBrowser
 
 
 
-/**
- * zz_findInSetForCurrentTab( ): Convert labels to ascii labels
- *
- * @param	string		$string:  the string for conversion
- * @return	string		$ascii:   the converted string
- * @version 3.9.13
- * @since   3.9.13
- */
-  private function zz_findInSetForCurrentTab( )
-  {
-      // RETURN : Any tab isn't selected
-    if( empty ( $this->pObj->piVars['indexBrowserTab'] ) )
-    {
-      return;
-    }
-      // RETURN : Any tab isn't selected
-
-      // Get the attributes of the selected tab
-    $labelAscii = $this->pObj->piVars['indexBrowserTab'];
-    $tabId      = $this->indexBrowserTab['tabLabels'][$labelAscii];
-    $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
-      // Get the attributes of the selected tab
-
-    $arr_return   = $this->zz_getSqlLengthAsRow( $attributes );
-    $row          = $arr_return['data']['row'];
-    $arrFindInSet = $this->zz_getFindInSetForAllByte( $row );
-    $orFindInSet  = array( );
-    foreach( $arrFindInSet as $length )
-    {
-      foreach( $length as $statement )
-      {
-        $orFindInSet[] = $statement;
-      }
-    }
-    $findInSet = implode( ' OR ', $orFindInSet );
-    $findInSet = '( ' . $findInSet . ' )';
-
-    $this->findInSetForCurrTab = $findInSet;
-//    $this->pObj->dev_var_dump( $arrFindInSet, $findInSet );
-  }
-
-
-
   /**
  * zz_getFindInSetForAllByte( ): Set the FIND IN SET statement for each special char group.
  *                                        A special char group is grouped by the length of a special
@@ -2645,6 +2593,57 @@ class tx_browser_pi1_navi_indexBrowser
 
     $arr_return['data']['row'] = $row;
     return $arr_return;
+  }
+
+
+
+/**
+ * zz_setTabClassSelected( ): Sets the class property selected, if the current tab
+ *                      is selected. Sets the class var indexBrowserTab.
+ *
+ * @param	integer		$tabId    : Current tab ID for TS configuration array
+ * @return	[type]		...
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function zz_setTabClassSelected( $tabId )
+  {
+//$this->pObj->dev_var_dump( $tabLabel, $this->pObj->piVar_indexBrowserTab );
+//$this->pObj->dev_var_dump( $tabId, $this->indexBrowserTab['tabSpecial']['default'] );
+      // IF : piVar
+    if( $this->pObj->piVar_indexBrowserTab )
+    {
+      $label      = $this->indexBrowserTab['tabIds'][$tabId]['label'];
+      $labelAscii = $this->indexBrowserTab['tabIds'][$tabId]['labelAscii'];
+
+        // IF : current tab is selected
+      if($label == $this->pObj->piVar_indexBrowserTab)
+      {
+        $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
+        $this->indexBrowserTab['tabSpecial']['selected']     = $tabId;
+        return;
+      }
+        // IF : current tab is selected
+        // IF : current tab is selected
+      if($labelAscii == $this->pObj->piVar_indexBrowserTab)
+      {
+        $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
+        $this->indexBrowserTab['tabSpecial']['selected']     = $tabId;
+        return;
+      }
+        // IF : current tab is selected
+
+        // Don't follow workflow
+      return;
+    }
+      // IF : piVar
+
+      // no piVar
+    if( $tabId == $this->indexBrowserTab['tabSpecial']['default'] )
+    {
+      $this->indexBrowserTab['tabIds'][$tabId]['selected'] = true;
+      $this->indexBrowserTab['tabSpecial']['selected']     = $tabId;
+    }
   }
 
 
