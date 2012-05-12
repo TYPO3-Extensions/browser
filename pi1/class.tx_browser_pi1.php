@@ -461,7 +461,15 @@ class tx_browser_pi1 extends tslib_pibase {
 
     switch( $this->arr_extConf['browserEngine'] )
     {
+      case( 'Browser Engine 3.x (beta)' ):
+        $this->dev_browserEngine = 3;
+        if ($this->b_drs_sql)
+        {
+          $prompt = 'Browser engine 3.x is enabled';
+          t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
+        }
       case( 'Engine 4.x (alpha): recommended' ):
+      default:
 //        if( ! $this->bool_accessByIP )
 //        {
 //          $this->dev_browserEngine = 3;
@@ -481,14 +489,6 @@ class tx_browser_pi1 extends tslib_pibase {
           t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
         }
         break;
-      case( 'Browser Engine 3.x (beta)' ):
-      default:
-        $this->dev_browserEngine = 3;
-        if ($this->b_drs_sql)
-        {
-          $prompt = 'Browser engine 3.x is enabled';
-          t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
-        }
     }
       // Init Browser engine
 
