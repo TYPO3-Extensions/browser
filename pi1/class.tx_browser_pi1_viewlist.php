@@ -1033,7 +1033,7 @@ class tx_browser_pi1_viewlist
       //    $tableUid to $tableL10nParent
     $from     = str_replace( $tableUid, $tableL10nParent, $from );
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
-    $andWhere = $labelSysLanguageId . " = " . intval( $this->pObj->objLocalise->lang_id ) . " ";
+    $andWhere = $table . '.' . $labelSysLanguageId . " = " . intval( $this->pObj->objLocalise->lang_id ) . " ";
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
 
     $withIdList = implode( ',', ( array ) $withIds );
