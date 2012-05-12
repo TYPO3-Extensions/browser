@@ -2524,9 +2524,9 @@ foreach( $arrFindInSet as $length => $arr_statement )
   }
 }
 $findInSet = implode( ' OR ', $orFindInSet );
-$findInSet = '(' . $findInSet . ')';
+$findInSet = '( ' . $findInSet . ' )';
 
-$this->findInSetForCurrTab;
+$this->findInSetForCurrTab = $findInSet;
 //$this->pObj->dev_var_dump( $this->indexBrowserTab, $this->pObj->piVars['indexBrowserTab'] );
 //$this->pObj->dev_var_dump( $tabLabel, $tabId, $attributes, $arr_return, $row, $findInSet );
 $this->pObj->dev_var_dump( $arrFindInSet, $findInSet );
