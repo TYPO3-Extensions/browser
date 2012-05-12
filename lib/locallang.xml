@@ -16,7 +16,7 @@
             if you are using the Browser the first time
           </li>
           <li>
-            if your last Browser version was > 3.6.9
+            if your last Browser version was > 3.9.13
           </li>
         </ul>
         <br />
@@ -30,7 +30,8 @@
             Please enable the option <strong>Update Wizard Enabling [x]</strong>.
           </li>
           <li>
-            Please add your IP in the field <strong>Update Wizard Allowed IPs</strong>.
+            Please add your IP in the field <strong>Update Wizard Allowed IPs</strong>.<br />
+            The Update Wizard displays its report for clients with this IP only. 
           </li>
           <li>
             Please clear all TYPO3 caches.
@@ -136,7 +137,7 @@
             wenn Du den Browser zum ersten Mal installierst
           </li>
           <li>
-            wenn Deine letzte Browser-Version > 3.6.9 war
+            wenn Deine letzte Browser-Version > 3.9.13 war
           </li>
         </ul>
         <br />
@@ -150,7 +151,8 @@
             Bitte aktiviere die Option <strong>Update Wizard Enabling [x]</strong>.
           </li>
           <li>
-            Bitte f&uuml;ge im Feld <strong>Update Wizard Allowed IPs</strong> Deine IP-Adresse hinzu.
+            Bitte f&uuml;ge im Feld <strong>Update Wizard Allowed IPs</strong> Deine IP-Adresse hinzu.<br />
+            Nur Rechner mit dieser IP-Adresse sehen den Bericht des Update-Assistenten.
           </li>
           <li>
             Leere alle TYPO3 Caches.
