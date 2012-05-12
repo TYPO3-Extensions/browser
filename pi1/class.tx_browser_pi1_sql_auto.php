@@ -1377,6 +1377,84 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
     $tables = $tables + $this->statementTables['all']['foreigntable'];
 
       // LOOP tables
+    $this->init_class_relationsLoop( $tables );
+//    foreach( (array ) $tables as $table )
+//    {
+//        // Get the TCA array of the current column
+//      $arrColumns = $GLOBALS['TCA'][$table]['columns'];
+//
+//        // CONTINUE : current table hasn't any TCA columns
+//      if( ! is_array( $arrColumns ) )
+//      {
+//        continue;
+//      }
+//        // CONTINUE : current table hasn't any TCA columns
+//
+//        // LOOP each TCA column
+//      foreach( ( array ) $arrColumns as $columnsKey => $columnsValue )
+//      {
+//          // Get the TCA configuration of the current column
+//        $config     = $columnsValue['config'];
+//          // Get the TCA configuration path of the current column
+//        $configPath = $table . '.' . $columnsKey . '.config.';
+//
+//          // CONTINUE : requirements aren't met
+//        if( ! $this->relations_requirements( $table, $config, $configPath ) )
+//        {
+//          continue;
+//        }
+//          // CONTINUE : requirements aren't met
+//
+//          // Get the foreign table
+//        $foreignTable = $this->relations_getForeignTable( $tables, $config, $configPath );
+//          // CONTINUE : there is no foreign table
+//        if( empty ( $foreignTable ) )
+//        {
+//          continue;
+//        }
+//          // CONTINUE : there is no foreign table
+//          // Get the foreign table
+//
+//          // SWITCH mm or single
+//        switch( true )
+//        {
+//          case( $config['MM'] ):
+//            $this->init_class_relationsMm( $table, $config, $foreignTable );
+//            break;
+//          case( ! $config['MM'] ):
+//          default:
+//            $this->init_class_relationsSingle( $table, $columnsKey, $foreignTable);
+//            break;
+//        }
+//          // SWITCH mm or single
+//      }
+//        // LOOP each TCA column
+//    }
+//      // LOOP tables
+
+    return;
+  }
+
+
+
+
+
+
+/**
+ * init_class_relationsLoop( ): Inits the class var $arr_relations_mm_simple,
+ *                                an array with the arrays MM and/or simple
+ *
+ * @return	void
+ * @version 3.9.12
+ * @since   3.9.12
+ */
+  private function init_class_relationsLoop( $tables )
+  {
+    if( empty ( $tables ) )
+    {
+      return;
+    }
+    
     foreach( (array ) $tables as $table )
     {
         // Get the TCA array of the current column
@@ -1415,12 +1493,12 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
           // Get the foreign table
 
           // SWITCH mm or single
-        switch( true )
+        switch( $config['MM'] )
         {
-          case( $config['MM'] ):
+          case( true ):
             $this->init_class_relationsMm( $table, $config, $foreignTable );
             break;
-          case( ! $config['MM'] ):
+          case( false ):
           default:
             $this->init_class_relationsSingle( $table, $columnsKey, $foreignTable);
             break;
@@ -1430,8 +1508,6 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
         // LOOP each TCA column
     }
       // LOOP tables
-
-    return;
   }
 
 
@@ -1450,6 +1526,11 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
  */
   private function init_class_relationsMm( $table, $config, $foreignTable )
   {
+    if( isset ( $this->arr_relations_mm_simple['MM'][$table][$config['MM']] ) )
+    {
+      return;
+    }
+    
     $boolMMrelations = $this->pObj->conf['autoconfig.']['relations.']['mmRelations'];
 
       // RETURN IF : mmRelations should set manually
@@ -1511,6 +1592,11 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->a
  */
   private function init_class_relationsSingle( $table, $columnsKey, $foreignTable)
   {
+    if( isset ( $this->arr_relations_mm_simple['simple'][$table][$columnsKey] ) )
+    {
+      return;
+    }
+    
     $boolSimpleRelations = $this->pObj->conf['autoconfig.']['relations.']['simpleRelations'];
 
       // RETURN IF : Don't process simple relations automatically
