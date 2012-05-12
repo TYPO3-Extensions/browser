@@ -60,58 +60,58 @@
  *  911:     private function tabs_init( )
  * 1002:     private function tabs_initAttributes( $csvAttributes, $tabLabel, $tabId )
  * 1050:     private function tabs_initFindInSetForCurrentTab( )
- * 1097:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
- * 1160:     private function tabs_initSpecialChars( $arrCsvAttributes )
+ * 1137:     private function tabs_initProperties( $conf_tabs, $tabId, $tabLabel, $displayWoItems )
+ * 1200:     private function tabs_initSpecialChars( $arrCsvAttributes )
  *
  *              SECTION: Count chars
- * 1221:     private function count_chars( )
- * 1264:     private function count_chars_addSumToTab( $res )
- * 1418:     private function count_chars_resSqlCount( $currSqlCharset )
- * 1475:     private function count_chars_resSqlCountDefLL( $strFindInSet, $currSqlCharset )
- * 1520:     private function count_chars_resSqlCountSelOrDefLL( $strFindInSet, $currSqlCharset )
+ * 1261:     private function count_chars( )
+ * 1304:     private function count_chars_addSumToTab( $res )
+ * 1458:     private function count_chars_resSqlCount( $currSqlCharset )
+ * 1515:     private function count_chars_resSqlCountDefLL( $strFindInSet, $currSqlCharset )
+ * 1560:     private function count_chars_resSqlCountSelOrDefLL( $strFindInSet, $currSqlCharset )
  *
  *              SECTION: Count special chars
- * 1617:     private function count_specialChars( )
- * 1657:     private function count_specialChars_addSum( $row )
- * 1705:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
- * 1758:     private function count_specialChars_resSqlCountDefLL( $length, $strFindInSet, $currSqlCharset )
- * 1817:     private function count_specialChars_resSqlCountSelOrDefLL( $length, $strFindInSet, $currSqlCharset )
+ * 1657:     private function count_specialChars( )
+ * 1697:     private function count_specialChars_addSum( $row )
+ * 1745:     private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
+ * 1798:     private function count_specialChars_resSqlCountDefLL( $length, $strFindInSet, $currSqlCharset )
+ * 1857:     private function count_specialChars_resSqlCountSelOrDefLL( $length, $strFindInSet, $currSqlCharset )
  *
  *              SECTION: SQL statements
- * 1911:     private function sqlCharsetGet( )
- * 1944:     private function sqlCharsetSet( $sqlCharset )
- * 1968:     private function sqlStatement_from( $table )
- * 1995:     private function sqlStatement_where( $table, $andWhereFindInSet )
- * 2046:     private function sqlStatement_whereAndFindInSet( $where, $findInSet )
+ * 1951:     private function sqlCharsetGet( )
+ * 1984:     private function sqlCharsetSet( $sqlCharset )
+ * 2008:     private function sqlStatement_from( $table )
+ * 2035:     private function sqlStatement_where( $table, $andWhereFindInSet )
+ * 2086:     private function sqlStatement_whereAndFindInSet( $where, $findInSet )
  *
  *              SECTION: Downward compatibility
- * 2094:     public function getMarkerIndexbrowser( )
- * 2140:     private function getMarkerIndexbrowserTabs( )
+ * 2134:     public function getMarkerIndexbrowser( )
+ * 2180:     private function getMarkerIndexbrowserTabs( )
  *
  *              SECTION: Helper - ascii
- * 2198:     private function zz_specCharsToASCII( $string )
+ * 2238:     private function zz_specCharsToASCII( $string )
  *
  *              SECTION: Helper - SQL
- * 2233:     private function zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset )
- * 2301:     private function zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset )
- * 2376:     private function zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset )
+ * 2273:     private function zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset )
+ * 2341:     private function zz_sqlIdsOfDefLL( $strFindInSet, $currSqlCharset )
+ * 2416:     private function zz_sqlIdsOfTranslatedLL( $strFindInSet, $uidListOfDefLL, $currSqlCharset )
  *
  *              SECTION: Helper - SQL FIND IN SET
- * 2495:     private function zz_getFindInSetForAllByte( $row )
- * 2515:     private function zz_getFindInSetForMultibyte( $row )
- * 2536:     private function zz_getFindInSetFromLength( $row, $fromLength )
- * 2566:     private function zz_getSqlLengthAsRow( $arrChars )
+ * 2535:     private function zz_getFindInSetForAllByte( $row )
+ * 2555:     private function zz_getFindInSetForMultibyte( $row )
+ * 2576:     private function zz_getFindInSetFromLength( $row, $fromLength )
+ * 2606:     private function zz_getSqlLengthAsRow( $arrChars )
  *
  *              SECTION: Helper - tabs
- * 2646:     private function zz_setTabClassSelected( $tabId )
- * 2698:     private function zz_setTabPiVars( $labelAscii, $label )
- * 2729:     private function zz_setTabPiVarsDefaultTab( $label )
- * 2762:     private function zz_tabClass( $lastTabId, $tab, $key )
- * 2795:     private function zz_tabDefaultLabel( )
- * 2813:     private function zz_tabDefaultLink( )
- * 2856:     private function zz_tabLinkLabel( $tab )
- * 2897:     private function zz_tabLastId( )
- * 2955:     private function zz_tabTitle( $sum )
+ * 2686:     private function zz_setTabClassSelected( $tabId )
+ * 2738:     private function zz_setTabPiVars( $labelAscii, $label )
+ * 2769:     private function zz_setTabPiVarsDefaultTab( $label )
+ * 2802:     private function zz_tabClass( $lastTabId, $tab, $key )
+ * 2835:     private function zz_tabDefaultLabel( )
+ * 2853:     private function zz_tabDefaultLink( )
+ * 2896:     private function zz_tabLinkLabel( $tab )
+ * 2937:     private function zz_tabLastId( )
+ * 2995:     private function zz_tabTitle( $sum )
  *
  * TOTAL FUNCTIONS: 49
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -1041,7 +1041,7 @@ class tx_browser_pi1_navi_indexBrowser
 
 /**
  * tabs_initFindInSetForCurrentTab( ) : Set the FIND IN SET SQL statement for the
- *                                      current tab. It is needed by the list view. 
+ *                                      current tab. It is needed by the list view.
  *
  * @return	array		$ar_return  : Contains an error message in case of an error
  * @version 3.9.13
@@ -1061,7 +1061,7 @@ class tx_browser_pi1_navi_indexBrowser
     $labelAscii = $this->pObj->piVars['indexBrowserTab'];
     $tabId      = $this->indexBrowserTab['tabLabels'][$labelAscii];
       // Get the array id of the selected tab
-      
+
       // SWITCH : the special tab 'others'
     switch( $this->indexBrowserTab['tabIds'][$tabId]['special'] )
     {
