@@ -1060,9 +1060,10 @@ class tx_browser_pi1_navi_indexBrowser
     $labelAscii = $this->pObj->piVars['indexBrowserTab'];
     $tabId      = $this->indexBrowserTab['tabLabels'][$labelAscii];
     $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
+    $arrChars   = explode( ',', $attributes );
       // Get the attributes of the selected tab
 
-    $arr_return   = $this->zz_getSqlLengthAsRow( $attributes );
+    $arr_return   = $this->zz_getSqlLengthAsRow( $arrChars );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
