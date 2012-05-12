@@ -1053,27 +1053,6 @@ $this->pObj->dev_var_dump( 2 );
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
     }
     
-//    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
-//    {
-//      $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
-//    }
-//
-//  // DRS
-//if( $this->pObj->b_drs_devTodo )
-//{
-//  $prompt = '$this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL';
-//  t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-//}
-//  // DRS
-//if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
-//{
-//  if( $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL )
-//  {
-//    $uidList  = $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL;
-//    $where    = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $uidList . ")";
-//  }
-//}
-
     $groupBy  = null;
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
     $limit    = $this->conf_view['limit'];
@@ -1199,23 +1178,9 @@ $this->pObj->dev_var_dump( 2 );
     {
       $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
+$this->pObj->dev_var_dump( $where );
     }
-//
-//  // DRS
-//if( $this->pObj->b_drs_devTodo )
-//{
-//  $prompt = '$this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL';
-//  t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-//}
-//  // DRS
-//if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
-//{
-//  if( $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL )
-//  {
-//    $uidList  = $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL;
-//    $where    = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $uidList . ")";
-//  }
-//}
+$this->pObj->dev_var_dump( 4 );
 
     $groupBy  = null;
 
@@ -1362,32 +1327,12 @@ $this->pObj->dev_var_dump( 2 );
 
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
-//    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
-//    {
-//      $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
-//    }
 
     $thisIdList = implode( ',', ( array ) $withIds );
     if( $thisIdList )
     {
       $where  = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $thisIdList . ")";
     }
-
-//  // DRS
-//if( $this->pObj->b_drs_devTodo )
-//{
-//  $prompt = '$this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL';
-//  t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-//}
-//  // DRS
-//if( ! $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
-//{
-//  if( $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL )
-//  {
-//    $uidList  = $this->pObj->objNaviIndexBrowser->uidListDefaultAndCurrentLL;
-//    $where    = $where . " AND " . $this->pObj->localTable . ".uid IN (" . $thisIdList . ")";
-//  }
-//}
 
     $groupBy  = null;
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
