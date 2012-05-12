@@ -844,15 +844,27 @@ $this->pObj->dev_var_dump( 1 );
     $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
       // Get ids of records, which match the rules and have a translation for the current language
 
+    $idsOfDefaultLanguageRows = array( );
     if( empty ( $idsOfTranslationRows ) )
     {
-      return $arr_return;
+        // Get ids of records of default language, which match the rules but haven't any translation
+      $withAllIds = array( );
+      $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguage( $withAllIds );
+      if( $arr_return['error']['status'] )
+      {
+        return $arr_return;
+      }
+      $idsOfDefaultLanguageRows   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+        // Get ids of records of default language, which match the rules but haven't any translation
+
+//      return $arr_return;
     }
     
       // Merge all ids
     $withIds = array_merge(
                 ( array ) $idsWiCurrTranslation,
-                ( array ) $idsOfTranslationRows
+                ( array ) $idsOfTranslationRows,
+                ( array ) $idsOfDefaultLanguageRows
               );
 
       // Get rows for the list view
@@ -877,7 +889,6 @@ $this->pObj->dev_var_dump( 2 );
       // Get all ids
     $withIds = array( );
     $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $withIds );
-$this->pObj->dev_var_dump( 1 );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -888,7 +899,6 @@ $this->pObj->dev_var_dump( 1 );
 
       // Get ids of records of default language, which match the rules but haven't any translation
     $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds );
-$this->pObj->dev_var_dump( 2 );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -905,7 +915,6 @@ $this->pObj->dev_var_dump( 2 );
 
       // Get rows for the list view
     $arr_return = $this->rows_sqlRowsbyIds( $withIds );
-$this->pObj->dev_var_dump( 3 );
 
     return $arr_return;
   }
