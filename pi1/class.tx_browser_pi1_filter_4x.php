@@ -462,7 +462,8 @@ class tx_browser_pi1_filter_4x {
 
     foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
     {
-      foreach( ( array ) $fields as $fieldWiDot => $elements )
+      foreach( array_keys ( ( array ) $fields ) as $fieldWiDot )
+//      foreach( ( array ) $fields as $fieldWiDot => $elements )
       {
         if( substr( $fieldWiDot, -1 ) != '.' )
         {
@@ -1269,9 +1270,9 @@ class tx_browser_pi1_filter_4x {
       // Item style
     $item = $this->replace_itemStyle( $conf_array, $item );
       // Item title
-    $item = $this->replace_itemTitle( $conf_array, $item );
+    $item = $this->replace_itemTitle( $item );
       // Item uid
-    $item = $this->replace_itemUid( $conf_array, $uid, $item );
+    $item = $this->replace_itemUid( $uid, $item );
       // Item URL
     $item = $this->replace_itemUrl( $conf_array, $uid, $item );
       // Item selected
@@ -1333,7 +1334,7 @@ class tx_browser_pi1_filter_4x {
       // Item style
     $this->markerArray['###STYLE###']         = $this->replace_itemStyle( $conf_array, '###STYLE###' );
       // Item title
-    $this->markerArray['###TITLE###']         = $this->replace_itemTitle( $conf_array, '###TITLE###' );
+    $this->markerArray['###TITLE###']         = $this->replace_itemTitle( '###TITLE###' );
       // Item URL
     $this->markerArray['###URL###']           = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
       // Item selected
@@ -1700,7 +1701,8 @@ class tx_browser_pi1_filter_4x {
     $area_key = $this->pObj->objCal->arr_area[$this->curr_tableField]['key'];
 
       // LOOP each area
-    foreach( $areas as $areas_uid => $areas_row )
+    foreach( array_keys ( ( array ) $areas ) as $areas_uid )
+//    foreach( $areas as $areas_uid => $areas_row )
     {
         // Short var
       $conf_area  = $conf_array['area.'][$area_key . '.']['options.']['fields.'][$areas_uid . '.'];
@@ -1765,7 +1767,8 @@ class tx_browser_pi1_filter_4x {
 
       // LOOP each area
       // Remove areas without any hit
-    foreach( $areas as $areas_uid => $areas_row )
+    foreach( array_keys ( ( array ) $areas ) as $areas_uid )
+//    foreach( $areas as $areas_uid => $areas_row )
     {
       if( $areas[$areas_uid][$hitsField] < 1 )
       {
@@ -1987,17 +1990,6 @@ class tx_browser_pi1_filter_4x {
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
 
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-      // Get query
       // Execute query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
                   (
@@ -2059,17 +2051,6 @@ class tx_browser_pi1_filter_4x {
     $orderBy  = null;
     $limit    = null;
 
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
-      // Get query
       // Execute query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
                   (
@@ -2112,17 +2093,6 @@ class tx_browser_pi1_filter_4x {
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
 
-      // Get query
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-                                    (
-                                      $select,
-                                      $from,
-                                      $where,
-                                      $groupBy,
-                                      $orderBy,
-                                      $limit
-                                    );
-      // Get query
       // Execute query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
                   (
@@ -2229,7 +2199,8 @@ class tx_browser_pi1_filter_4x {
     $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
 
       // LOOP all items
-    foreach( ( array ) $rows_wiAllItems as $uid => $row )
+    foreach( array_keys ( ( array ) $rows_wiAllItems ) as $uid )
+//    foreach( ( array ) $rows_wiAllItems as $uid => $row )
     {
         // If there is an hit, take it over
       if( isset ( $rows_wiHits[ $uid ] ) )
@@ -3561,7 +3532,7 @@ class tx_browser_pi1_filter_4x {
     $transOrigPointerField  = $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'];
 
       // Override class var $rows
-    foreach( $rows_sysLanguage as $uid => $row_sysLanguage )
+    foreach( $rows_sysLanguage as $row_sysLanguage )
     {
       if( ! empty( $row_sysLanguage[$this->curr_tableField] ) )
       {
@@ -4266,14 +4237,13 @@ class tx_browser_pi1_filter_4x {
  * replace_itemTitle( ):  Replaces the marker ###TITLE### with the value from TS.
  *                        Be aware: This method return null in every case!
  *
- * @param	array		$conf_array : The TS configuration of the current filter
  * @param	string		$item   : The current item
  * @return	string		$item   :	Returns the wrapped item
  * @version 3.9.9
  * @since   3.0.0
  * @todo    dwildt, 120504: $conf_array isn't used in the method. Has the method sense?
  */
-  private function replace_itemTitle( $conf_array, $item )
+  private function replace_itemTitle( $item )
   {
     static $firstLoop = true;
 
@@ -4310,14 +4280,13 @@ class tx_browser_pi1_filter_4x {
 /**
  * replace_itemUid( ): Replaces the marker ###UID### with the given uid
  *
- * @param	array		$conf_array : The TS configuration of the current filter
  * @param	string		$uid        : The uid of the current item
  * @param	string		$item   : The current item
  * @return	string		$item   :	Returns the wrapped item
  * @version 3.9.9
  * @since   3.0.0
  */
-  private function replace_itemUid( $conf_array, $uid, $item )
+  private function replace_itemUid( $uid, $item )
   {
       // Replace the marker
     $item = str_replace( '###UID###', $uid, $item );
@@ -4845,7 +4814,7 @@ class tx_browser_pi1_filter_4x {
     $sum_hits = 0;
 
       // LOOP all rows
-    foreach( ( array ) $rows as $uid => $row )
+    foreach( ( array ) $rows as $row )
     {
         // Add hits
       $sum_hits = $sum_hits + $row[ $hitsField ];
