@@ -1031,7 +1031,7 @@ class tx_browser_pi1_viewlist
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
       // If FROM contains a relation from $tableUid to a foreign table, move
       //    $tableUid to $tableL10nParent
-    $from     = str_replace( $tableUid, $tableL10nParent, $from );
+    $from     = str_replace( $tableUid . ' = ' , $tableL10nParent . ' = ' , $from );
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
     $andWhere = $table . '.' . $labelSysLanguageId . " = " . intval( $this->pObj->objLocalise->lang_id ) . " ";
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
