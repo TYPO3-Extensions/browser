@@ -2808,6 +2808,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_whereWiHits( )
   {
+$this->pObj->dev_var_dump( $this->pObj->objSqlInit->statements['listView']['where'] );
       // Get WHERE statement
     $where =  $this->pObj->objSqlInit->statements['listView']['where'] .
               $this->sql_whereAnd_Filter( ) .
