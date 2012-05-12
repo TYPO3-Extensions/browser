@@ -2097,7 +2097,7 @@ class tx_browser_pi1_sql_auto
             break;
           default:
           case( true ):
-            $this->opposite = true;
+            $this->opposite = false;
             break;
         }
           // SET flag opposite
