@@ -2021,7 +2021,7 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * sql_resL10nRows: Get the SQL ressource for localised rows
+ * sql_resSysLanguageRows: Get the SQL ressource for localised rows
  *
  * @return	array		$arr_return : Array with the SQL ressource or an error message
  * @version 3.9.9
@@ -2029,6 +2029,15 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_resSysLanguageRows( )
   {
+    $arr_return = array( );
+    
+      // RETURN : there isn't any row
+    if( empty( $this->rows ) )
+    {
+      return $arr_return;
+    }
+      // RETURN : there isn't any row
+
       // Get table and field
     list( $table ) = explode( '.', $this->curr_tableField );
 
