@@ -1061,7 +1061,8 @@ class tx_browser_pi1_navi_indexBrowser
     $labelAscii = $this->pObj->piVars['indexBrowserTab'];
     $tabId      = $this->indexBrowserTab['tabLabels'][$labelAscii];
     $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
-$this->pObj->dev_var_dump( $labelAscii, $this->indexBrowserTab['tabLabels'][$labelAscii], $this->indexBrowserTab['tabIds'][$tabId]['attributes'] );
+//$this->pObj->dev_var_dump( $labelAscii, $this->indexBrowserTab['tabLabels'][$labelAscii], $this->indexBrowserTab['tabIds'][$tabId]['attributes'] );
+$this->pObj->dev_var_dump( $this->indexBrowserTab );
     $arrChars   = explode( ',', $attributes );
       // Get the attributes of the selected tab
 
