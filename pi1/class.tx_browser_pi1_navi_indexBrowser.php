@@ -1059,10 +1059,17 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Get the attributes of the selected tab
     $labelAscii = $this->pObj->piVars['indexBrowserTab'];
-    $tabId      = $this->indexBrowserTab['tabLabels'][$labelAscii];
-    $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
+    if( $this->indexBrowserTab['tabLabels'][$labelAscii] == 'others' )
+    {
+      $attributes = $this->indexBrowserTab['initials']['all'];
+      
+    }
+    if( ! ( $this->indexBrowserTab['tabLabels'][$labelAscii] == 'others' ) )
+    {
+      $tabId      = $this->indexBrowserTab['tabLabels'][$labelAscii];
+      $attributes = $this->indexBrowserTab['tabIds'][$tabId]['attributes'];
+    }
 //$this->pObj->dev_var_dump( $labelAscii, $this->indexBrowserTab['tabLabels'][$labelAscii], $this->indexBrowserTab['tabIds'][$tabId]['attributes'] );
-$this->pObj->dev_var_dump( $this->indexBrowserTab );
     $arrChars   = explode( ',', $attributes );
       // Get the attributes of the selected tab
 
@@ -1088,6 +1095,11 @@ $this->pObj->dev_var_dump( $this->indexBrowserTab );
     $findInSet = implode( ' OR ', $orFindInSet );
     $findInSet = '( ' . $findInSet . ' )';
 
+    if( $this->indexBrowserTab['tabLabels'][$labelAscii] == 'others' )
+    {
+      $findInSet = 'NOT ' . $findInSet;
+    }
+$this->pObj->dev_var_dump( $findInSet );
     $this->findInSetForCurrTab = $findInSet;
 //    $this->pObj->dev_var_dump( $arrFindInSet, $findInSet );
   }
