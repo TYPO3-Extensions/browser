@@ -1178,6 +1178,8 @@ $this->pObj->dev_var_dump( $where );
     {
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
     }
+$this->pObj->dev_var_dump( $this->pObj->objFltr4x->andWhereFilter );
+$this->pObj->dev_var_dump( $where );
 
     if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
     {
