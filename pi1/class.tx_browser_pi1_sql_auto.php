@@ -1952,6 +1952,76 @@ class tx_browser_pi1_sql_auto
 
 
 /**
+ * get_joinsAddTablesForeign( ) :
+ *
+ * @param	[type]		$$foreignTable: ...
+ * @return	array
+ * @version   3.9.13
+ * @since     2.0.0
+ */
+  private function get_joinsAddTablesForeign( $foreignTable )
+  {
+      // RETURN : $foreignTable uid is added before
+    if ( in_array( $foreignTable, array_keys( $this->pObj->arr_realTables_arrFields ) ) )
+    {
+      return;
+    }
+      // RETURN : $foreignTable uid is added before
+
+      // Add the foreign table uid
+    $this->pObj->arr_realTables_arrFields[$foreignTable][] = 'uid';
+  }
+
+
+
+/**
+ * get_joinsAddTablesMm( ) :
+ *
+ * @param	[type]		$$mmTable: ...
+ * @return	array
+ * @version   3.9.13
+ * @since     2.0.0
+ */
+  private function get_joinsAddTablesMm( $mmTable )
+  {
+
+      // RETURN : mmTable is added before
+    if ( in_array( $mmTable, array_keys( $this->pObj->arr_realTables_arrFields ) ) )
+    {
+      return;
+    }
+      // RETURN : mmTable is added before
+
+      // Add uid_local and uid_foreign
+    $this->pObj->arr_realTables_arrFields[$mmTable][] = 'uid_local';
+    $this->pObj->arr_realTables_arrFields[$mmTable][] = 'uid_foreign';
+
+      // Add sorting
+    $keys_mmTable = array_keys( ( $GLOBALS['TYPO3_DB']->admin_get_fields( $mmTable ) ) );
+    if( in_array( 'sorting', $keys_mmTable ) )
+    {
+      $this->pObj->arr_realTables_arrFields[$mmTable][]               = 'sorting';
+        // Add every table.field to the global array consolidate
+      $this->pObj->arrConsolidate['addedTableFields'][]               = $mmTable . '.sorting';
+      $this->pObj->arrConsolidate['select']['mmSortingTableFields'][] = $mmTable . '.sorting';
+    }
+      // Add sorting
+
+      // Add sorting_foreign
+    if( in_array( 'sorting_foreign', $keys_mmTable ) )
+    {
+      $this->pObj->arr_realTables_arrFields[$mmTable][]               = 'sorting_foreign';
+        // Add every new table.field to the global array consolidate
+      $this->pObj->arrConsolidate['addedTableFields'][]               = $mmTable . '.sorting_foreign';
+      $this->pObj->arrConsolidate['select']['mmSortingTableFields'][] = $mmTable . '.sorting_foreign';
+    }
+      // Add sorting_foreign
+
+  }
+
+
+
+/**
  * get_joinsSetMm( ) : Relation method: Building the relation part for the where clause
  *
  * @return	string		TRUE || FALSE or the SQL-where-clause
@@ -2056,82 +2126,6 @@ class tx_browser_pi1_sql_auto
     $arr_return['data']['left_join'] = $leftJoin;
     $arr_return['data']['full_join'] = $fullJoin;
     return $arr_return;
-  }
-
-
-
-/**
- * get_joinsAddTablesForeign( ) :
- *
- * @param	[type]		$$foreignTable: ...
- * @return	array
- * @version   3.9.13
- * @since     2.0.0
- */
-  private function get_joinsAddTablesForeign( $foreignTable )
-  {
-      // RETURN : $foreignTable uid is added before
-    if ( in_array( $foreignTable, array_keys( $this->pObj->arr_realTables_arrFields ) ) )
-    {
-      return;
-    }
-      // RETURN : $foreignTable uid is added before
-
-      // Add the foreign table uid
-    $this->pObj->arr_realTables_arrFields[$foreignTable][] = 'uid';
-  }
-
-
-
-/**
- * get_joinsAddTablesMm( ) :
- *
- * @param	[type]		$$mmTable: ...
- * @return	array
- * @version   3.9.13
- * @since     2.0.0
- */
-  private function get_joinsAddTablesMm( $mmTable )
-  {
-
-      // RETURN : mmTable is added before
-    if ( in_array( $mmTable, array_keys( $this->pObj->arr_realTables_arrFields ) ) )
-    {
-      return;
-    }
-      // RETURN : mmTable is added before
-
-      // Add uid_local and uid_foreign
-    $this->pObj->arr_realTables_arrFields[$mmTable][] = 'uid_local';
-    $this->pObj->arr_realTables_arrFields[$mmTable][] = 'uid_foreign';
-
-      // Add sorting
-    $keys_mmTable = array_keys( ( $GLOBALS['TYPO3_DB']->admin_get_fields( $mmTable ) ) );
-    if( in_array( 'sorting', $keys_mmTable ) )
-    {
-      $this->pObj->arr_realTables_arrFields[$mmTable][]               = 'sorting';
-        // Add every table.field to the global array consolidate
-      $this->pObj->arrConsolidate['addedTableFields'][]               = $mmTable . '.sorting';
-      $this->pObj->arrConsolidate['select']['mmSortingTableFields'][] = $mmTable . '.sorting';
-    }
-      // Add sorting
-
-      // Add sorting_foreign
-    if( in_array( 'sorting_foreign', $keys_mmTable ) )
-    {
-      $this->pObj->arr_realTables_arrFields[$mmTable][]               = 'sorting_foreign';
-        // Add every new table.field to the global array consolidate
-      $this->pObj->arrConsolidate['addedTableFields'][]               = $mmTable . '.sorting_foreign';
-      $this->pObj->arrConsolidate['select']['mmSortingTableFields'][] = $mmTable . '.sorting_foreign';
-    }
-      // Add sorting_foreign
-
-      // Add the foreign table uid
-    if ( ! in_array( $foreignTable, array_keys( $this->pObj->arr_realTables_arrFields ) ) )
-    {
-      $this->pObj->arr_realTables_arrFields[$foreignTable][] = 'uid';
-    }
-      // Add the foreign table uid
   }
 
 
