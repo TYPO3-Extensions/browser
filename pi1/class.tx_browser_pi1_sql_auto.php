@@ -751,7 +751,7 @@ class tx_browser_pi1_sql_auto
     }
     $andWhere       = $this->andWhere();
     $arr_result     = $this->get_joins();
-//$this->pObj->dev_var_dump( $arr_result );
+$this->pObj->dev_var_dump( $arr_result );
     $fullJoin  = $arr_result['data']['full_join'];
     unset($arr_result);
       // Get SWORD, AND WHERE and JOINS
@@ -1144,10 +1144,9 @@ class tx_browser_pi1_sql_auto
 
     $viewWiDot = $view.'.';
 
-// 3.3.7
-    ////////////////////////////////////////////////////////////////////
-    //
-    // RETURN in case of override.andWhere
+      ////////////////////////////////////////////////////////////////////
+      //
+      // RETURN in case of override.andWhere
 
     if($conf['views.'][$viewWiDot][$mode.'.']['override.']['andWhere'])
     {
@@ -1159,8 +1158,7 @@ class tx_browser_pi1_sql_auto
       }
       return $andWhere;
     }
-    // RETURN in case of override.andWhere
-// 3.3.7
+      // RETURN in case of override.andWhere
 
 
 
@@ -2353,10 +2351,32 @@ class tx_browser_pi1_sql_auto
     }
       // LOOP tables
 
+      // DRS
+    if( $this->pObj->b_drs_warn )
+    {
+      if( $leftJoin || $fullJoin )
+      {
+        $prompt = 'DANGEROUS: You have csv relation(s) (see next line). Csv relations
+                  are slow as cold glue! If you have a problem with performance, please 
+                  move the database design from csv relations to relations with MM tables!';
+        t3lib_div::devlog( '[WARN/PERFORMANCE+SQL] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+      if( $fullJoin )
+      {
+        $prompt = $fullJoin;
+        t3lib_div::devlog( '[INFO/PERFORMANCE+SQL] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+      if( $leftJoin )
+      {
+        $prompt = $leftJoin;
+        t3lib_div::devlog( '[INFO/PERFORMANCE+SQL] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+    }
+      // DRS
+
     $arr_return['data']['left_join'] = $leftJoin;
     $arr_return['data']['full_join'] = $fullJoin;
     return $arr_return;
-    // Building $arr_return
   }
 
 
