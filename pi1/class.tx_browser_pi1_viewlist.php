@@ -1848,7 +1848,7 @@ class tx_browser_pi1_viewlist
         $prompt = $tableField . ' is translated. The sequence of rows will be: [ ordered [ordered rows of foreign
                   language limit 0,20] + [oderded rows of default language limit the rest]], but not [ordered rows limit 0,20]. Sorry, but this is a
                   need of performance.';
-        t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 0 );
+        t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt,  $this->pObj->extKey, 2 );
       }
     }
       // DRS

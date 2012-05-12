@@ -873,15 +873,17 @@ $this->pObj->dev_var_dump( $arr_result );
 
 
 /**
- * It returns the part for the where clause with a search, if there are search fields in the TS and a piVar sword.
+ * whereSearch( ): It returns the part for the where clause with a search, if there are search fields in the TS and a piVar sword.
  * The where clause will have this structure:
  *   (field_1 LIKE sword_1 or field_2 LIKE sword_1 or ...) AND (field_1 LIKE sword_2 or field_2 LIKE sword_2 or ...)
  * The SQL result will be true:
  * - If every sword will be once in one field at least
  *
  * @return	string		SQL query string
+ * @version   3.9.13
+ * @since     2.0.0
  */
-  private function whereSearch()
+  private function whereSearch( )
   {
 
     $mode = $this->pObj->piVar_mode;
@@ -895,28 +897,30 @@ $this->pObj->dev_var_dump( $arr_result );
     $arr_whereSword = array( );
 
 
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // RETURN in case of no swords or no search fields
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // RETURN in case of no swords or no search fields
 
-    if (!($this->pObj->arr_swordPhrases && $this->pObj->csvSearch))
+    if( ! ( $this->pObj->arr_swordPhrases && $this->pObj->csvSearch ) )
     {
       return false;
     }
-    // RETURN in case of no swords or no search fields
+      // RETURN in case of no swords or no search fields
 
 
 
-    //////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Development Reporting System
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // DRS - Development Reporting System
 
-    if ($this->pObj->b_drs_search)
+    if ( $this->pObj->b_drs_search )
     {
-      t3lib_div::devlog('[INFO/SEARCH] Search fields:<br />'.$this->pObj->csvSearch, $this->pObj->extKey, 0);
-      t3lib_div::devlog('[HELP/SEARCH] Please configure: views.list.'.$mode.'.search', $this->pObj->extKey, 1);
+      $prompt = 'Search fields:<br />' . $this->pObj->csvSearch;
+      t3lib_div::devlog('[INFO/SEARCH] ' . $prompt, $this->pObj->extKey, 0);
+      $prompt = 'Please configure: views.list.' . $mode . '.search';
+      t3lib_div::devlog('[HELP/SEARCH] ' . $prompt, $this->pObj->extKey, 1);
     }
-    // DRS - Development Reporting System
+      // DRS - Development Reporting System
 
 
 
@@ -978,29 +982,30 @@ $this->pObj->dev_var_dump( $arr_result );
       // The user has to add a wildcard
       // Suggestion #7730
 
-      foreach ($arrSearchFields as $arrSearchField)
+      foreach( $arrSearchFields as $arrSearchField )
       {
-        list($str_before_as, $str_behind_as)  = explode(' AS ', $arrSearchField);
-        list($table, $field)                  = explode('.', $str_before_as);
-        $table                                = trim($table);
-        $field                                = trim($field);
+        list( $tableField, $str_behind_as )  = explode( ' AS ', $arrSearchField );
+        list( $table, $field )                  = explode( '.', $tableField );
+        $table                                = trim( $table );
+        $field                                = trim( $field );
 
         // Suggestion #7730
         // Wildcard are used by default
         if(!$this->pObj->bool_searchWildcardsManual)
         {
-          $str_wrap_sword      = '%\' AND '.$table.'.'.$field.' LIKE \'%';
+          $str_wrap_sword      = '%\' AND ' . $tablefield . ' LIKE \'%';
           $str_whereTableField = implode($str_wrap_sword, $arr_swords_and);
           $str_whereTableField = $table.'.'.$field.' LIKE \'%'.$str_whereTableField.'%\'';
         }
         // Wildcard are used by default
+$this->pObj->dev_var_dump( $tableField );
 
         // The user has to add a wildcard
         if($this->pObj->bool_searchWildcardsManual)
         {
-          $str_wrap_sword      = '\') AND ('.$table.'.'.$field.' REGEXP \'';
+          $str_wrap_sword      = '\') AND (' . $tablefield . ' REGEXP \'';
           $str_whereTableField = implode($str_wrap_sword, $arr_swords_and);
-          $str_whereTableField = '('.$table.'.'.$field.' REGEXP \''.$str_whereTableField.'\')';
+          $str_whereTableField = '(' . $tablefield . ' REGEXP \''.$str_whereTableField.'\')';
         }
         // The user has to add a wildcard
         // Suggestion #7730
@@ -1032,8 +1037,8 @@ $this->pObj->dev_var_dump( $arr_result );
     {
       foreach ($arrSearchFields as $arrSearchField)
       {
-        list($str_before_as, $str_behind_as)  = explode(' AS ', $arrSearchField);
-        list($table, $field)                  = explode('.', $str_before_as);
+        list($tableField, $str_behind_as)  = explode(' AS ', $arrSearchField);
+        list($table, $field)                  = explode('.', $tableField);
         $table                                = trim($table);
         $field                                = trim($field);
 
@@ -1041,7 +1046,7 @@ $this->pObj->dev_var_dump( $arr_result );
         // Wildcard are used by default
         if(!$this->pObj->bool_searchWildcardsManual)
         {
-          $str_wrap_sword = '%\' AND '.$table.'.'.$field.' NOT LIKE \'%';
+          $str_wrap_sword = '%\' AND ' . $tablefield . ' NOT LIKE \'%';
           $str_whereNot   = implode($str_wrap_sword, $this->pObj->arr_swordPhrases['not']);
           $str_whereNot   = $table.'.'.$field.' NOT LIKE \'%'.$str_whereNot.'%\'';
         }
@@ -1050,7 +1055,7 @@ $this->pObj->dev_var_dump( $arr_result );
         // The user has to add a wildcard
         if($this->pObj->bool_searchWildcardsManual)
         {
-          $str_wrap_sword = '\') AND ('.$table.'.'.$field.' NOT REGEXP \'';
+          $str_wrap_sword = '\') AND (' . $tablefield . ' NOT REGEXP \'';
           $str_whereNot   = implode($str_wrap_sword, $this->pObj->arr_swordPhrases['not']);
 
           // First char of search word isn't a wildcard
@@ -1079,7 +1084,7 @@ $this->pObj->dev_var_dump( $arr_result );
             $str_whereNot = substr($str_whereNot, 0, -1);
           }
           // Last char of search word is a wildcard
-          $str_whereNot = '('.$table.'.'.$field.' NOT REGEXP \''.$str_whereNot.'\')';
+          $str_whereNot = '(' . $tablefield . ' NOT REGEXP \''.$str_whereNot.'\')';
         }
         // The user has to add a wildcard
         // Suggestion #7730
