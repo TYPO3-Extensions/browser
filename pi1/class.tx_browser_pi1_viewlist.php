@@ -60,7 +60,7 @@
  *  821:     private function rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( )
  *  866:     private function rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( )
  *  911:     private function rows_sqlIdsOfRowsWiTranslation( $withIds )
- * 1061:     private function rows_sqlIdsOfRowsDefaultLanguage( $withoutIds )
+ * 1061:     private function rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds )
  * 1212:     private function rows_sqlLanguageDefault( )
  * 1237:     private function rows_sqlLanguageFirstDefaultOrFirstTranslated( )
  * 1283:     private function rows_sqlRowsbyIds( $withIds )
@@ -884,7 +884,7 @@ class tx_browser_pi1_viewlist
       // Get ids of records, which match the rules and have a translation for the current language
 
       // Get ids of records of default language, which match the rules but haven't any translation
-    $arr_return = $this->rows_sqlIdsOfRowsDefaultLanguage( $withoutIds );
+    $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -920,7 +920,7 @@ class tx_browser_pi1_viewlist
       // Get ids of records of default language, which match the rules
       // get all ids
     $withoutIds = array( );
-    $arr_return = $this->rows_sqlIdsOfRowsDefaultLanguage( $withoutIds );
+    $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -1113,7 +1113,7 @@ class tx_browser_pi1_viewlist
 
 
  /**
-  * rows_sqlIdsOfRowsDefaultLanguage( ):  Get ids of rows of the default language. Rows
+  * rows_sqlIdsOfRowsWiDefaultLanguage( ):  Get ids of rows of the default language. Rows
   *                                       which ids within the array $withoutIds will
   *                                       ignored
   *
@@ -1122,7 +1122,7 @@ class tx_browser_pi1_viewlist
   * @version 3.9.13
   * @since   3.9.13
   */
-  private function rows_sqlIdsOfRowsDefaultLanguage( $withoutIds )
+  private function rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds )
   {
     $arr_return = array( );
 
@@ -1181,7 +1181,8 @@ class tx_browser_pi1_viewlist
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
     }
 
-    if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
+    if( 0 )
+//    if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
     {
       $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
@@ -1280,7 +1281,7 @@ class tx_browser_pi1_viewlist
   private function rows_sqlLanguageDefault( )
   {
     $withoutIds = array( );
-    $arr_return = $this->rows_sqlIdsOfRowsDefaultLanguage( $withoutIds );
+    $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
