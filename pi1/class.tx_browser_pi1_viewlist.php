@@ -835,7 +835,6 @@ class tx_browser_pi1_viewlist
       // Get all ids
     $withAllIds = array( );
     $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $withAllIds );
-$this->pObj->dev_var_dump( 1 );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -856,6 +855,7 @@ $this->pObj->dev_var_dump( 1 );
       }
       $idsOfDefaultLanguageRows   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
         // Get ids of records of default language, which match the rules but haven't any translation
+
       if( empty ( $idsOfDefaultLanguageRows ) )
       {
         return $arr_return;
@@ -871,7 +871,6 @@ $this->pObj->dev_var_dump( 1 );
 
       // Get rows for the list view
     $arr_return = $this->rows_sqlRowsbyIds( $withIds );
-$this->pObj->dev_var_dump( 2 );
 
     return $arr_return;
   }
@@ -1180,9 +1179,7 @@ $this->pObj->dev_var_dump( 2 );
     {
       $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
-$this->pObj->dev_var_dump( $where );
     }
-$this->pObj->dev_var_dump( 4 );
 
     $groupBy  = null;
 
@@ -1268,6 +1265,11 @@ $this->pObj->dev_var_dump( 4 );
     }
     $idsOfRowsDefaultLanguage = $arr_return['data']['idsOfHitsWoCurrTranslation'];
       // Get ids of records of default language
+
+    if( empty ( $idsOfRowsDefaultLanguage ) )
+    {
+      return $arr_return;
+    }
 
       // Get rows for the list view
     $arr_return = $this->rows_sqlRowsbyIds( $idsOfRowsDefaultLanguage );
