@@ -2612,7 +2612,8 @@ class tx_browser_pi1_filter_4x {
       // Get table and field
     list( $table ) = explode( '.', $this->curr_tableField );
 
-      // RETURN : current table is a foreign table
+$this->pObj->dev_var_dump( $this->pObj->objSqlInit->statements );
+    // RETURN : current table is a foreign table
     if( $this->pObj->localTable != $table )
     {
       $from = $this->pObj->objSqlInit->statements['listView']['from'];

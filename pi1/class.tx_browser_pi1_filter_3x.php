@@ -1026,7 +1026,6 @@ class tx_browser_pi1_filter_3x {
         t3lib_div :: devlog('[INFO/FILTER+SQL] andWhere statement:<br /><br />' . $prompt, $this->pObj->extKey, 0);
       }
     }
-$this->pObj->dev_var_dump( $arr_andWhereFilter );
 
     return $arr_andWhereFilter;
 
