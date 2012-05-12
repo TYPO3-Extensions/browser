@@ -2612,37 +2612,30 @@ class tx_browser_pi1_filter_4x {
       // Get table and field
     list( $table ) = explode( '.', $this->curr_tableField );
 
-$this->pObj->dev_var_dump( $this->pObj->objSqlInit->statements );
-    // RETURN : current table is a foreign table
-    if( $this->pObj->localTable != $table )
-    {
-      $from = $this->pObj->objSqlInit->statements['listView']['from'];
-      return $from;
-    }
-      // RETURN : current table is a foreign table
+//$this->pObj->dev_var_dump( $this->pObj->objSqlInit->statements );
 
       // Flexform configuration
     $conf_flexform = $this->pObj->objFlexform->sheet_viewList_total_hits;
 
-      // RETURN IF : filters are controlling themeselves
-    if( $conf_flexform == 'controlled' )
+      // SWITCH
+    switch( true )
     {
-      $from = $this->pObj->objSqlInit->statements['listView']['from'];
-      return $from;
+      case( $this->pObj->localTable != $table ) :
+      case( $conf_flexform == 'controlled' ) :
+      case( isset( $this->pObj->piVars['sword'] ) ):        
+        $from = $this->pObj->objSqlInit->statements['listView']['from'];
+        break;
+      case( $conf_flexform == 'independent' ) :
+        $from = $table;
+        break;
+      default;
+        $prompt = __METHOD__ . ' (' . __LINE__ . '): undefined value: "' . $conf_flexform . '".';
+        die( $prompt );
+        break;
     }
-      // RETURN IF : filters are controlling themeselves
-
-      // RETURN IF : filters are independent
-    if( $conf_flexform == 'independent' )
-    {
-      $from = $table;
-      return $from;
-    }
-      // RETURN IF : filters are independent
-
-      // DIE : undefined value
-    $prompt = __METHOD__ . ' (' . __LINE__ . '): undefined value: "' . $conf_flexform . '".';
-    die( $prompt );
+      // SWITCH
+    
+    return $from;
   }
 
 
