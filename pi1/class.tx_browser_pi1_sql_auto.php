@@ -2356,9 +2356,9 @@ $this->pObj->dev_var_dump( $arr_result );
     {
       if( $leftJoin || $fullJoin )
       {
-        $prompt = 'DANGEROUS: You have csv relation(s) (see next line). Csv relations
-                  are slow as cold glue! If you have a problem with performance, please 
-                  move the database design from csv relations to relations with MM tables!';
+        $prompt = 'DANGEROUS: csv relation(s)! See next line(s). Csv relations
+                  are slow as cold glue. If you have a problem with performance, please 
+                  move the database design from csv relations to relations with MM tables.';
         t3lib_div::devlog( '[WARN/PERFORMANCE+SQL] ' . $prompt, $this->pObj->extKey, 2 );
       }
       if( $fullJoin )
