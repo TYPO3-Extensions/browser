@@ -467,7 +467,7 @@ class tx_browser_pi1 extends tslib_pibase {
         $str_browserEngineIndicator = '
           <div>
             <span style="background:#38d500;color:white;font-size:.85em;">
-              <a style="color:white;" title="You can disable this flag in the extension manager.">&nbsp;TYPO3 Browser Engine 3&nbsp;</a>
+              <a style="color:white;cursor:pointer;" title="You can disable this flag in the extension manager.">&nbsp;TYPO3 Browser Engine 3&nbsp;</a>
             </span>
           </div>';  
         if ($this->b_drs_sql)
@@ -493,7 +493,7 @@ class tx_browser_pi1 extends tslib_pibase {
         $str_browserEngineIndicator = '
           <div>
             <span style="background:#00003A;color:white;font-size:.85em;">
-              <a style="color:white;" title="You can disable this flag in the extension manager.">&nbsp;TYPO3 Browser Engine 4.x - alpha - inofficial&nbsp;</a>
+              <a style="color:white;cursor:pointer;" title="You can disable this flag in the extension manager.">&nbsp;TYPO3 Browser Engine 4.x - alpha - inofficial&nbsp;</a>
             </span>
           </div>';  
         if ($this->b_drs_sql)
@@ -517,7 +517,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $str_checkedUpdate = '
         <div>
           <span style="background:#ad0000;color:white;font-size:.85em;">
-            <a style="color:white;" title="Please confirm that you have checked the update. Go to the extension manager.">&nbsp;Update isn\'t confirmed!&nbsp;</a>
+            <a style="color:white;cursor:pointer;" title="Please confirm that you have checked the update. Go to the extension manager. See: Update Wizrad.">&nbsp;Update isn\'t confirmed!&nbsp;</a>
           </span>
         </div>';  
     }
