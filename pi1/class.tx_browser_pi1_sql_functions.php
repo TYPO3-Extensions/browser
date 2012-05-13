@@ -825,14 +825,14 @@ class tx_browser_pi1_sql_functions
       {
         $iCounter++;
       }
-      if( $iCounter == 0 )
-      {
-        $prompt = 'Result of the query are #0 rows. Maybe this proper.';
-        t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
-      }
     }
     if( $this->pObj->b_drs_sql )
     {
+      $prompt = $debugTrail['prompt'] . ': ' . $query;
+      t3lib_div::devlog( '[OK/SQL] ' . $prompt,  $this->pObj->extKey, -1 );
+//      $prompt = 'Be aware of the multi-byte notation, if you want to use the query ' .
+//                'in your SQL shell or in phpMyAdmin.';
+//      t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
       switch( $iCounter )
       {
         case ( 0 ) :
@@ -847,11 +847,14 @@ class tx_browser_pi1_sql_functions
           t3lib_div::devlog( '[INFO/SQL] ' . $prompt,  $this->pObj->extKey, 0 );
           break;
       }
-      $prompt = $debugTrail['prompt'] . ': ' . $query;
-      t3lib_div::devlog( '[OK/SQL] ' . $prompt,  $this->pObj->extKey, -1 );
-      $prompt = 'Be aware of the multi-byte notation, if you want to use the query ' .
-                'in your SQL shell or in phpMyAdmin.';
-      t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
+    }
+    if( $this->pObj->b_drs_warn )
+    {
+      if( $iCounter == 0 )
+      {
+        $prompt = 'Result of the query are #0 rows. Maybe this proper.';
+        t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
+      }
     }
       // DRS - Development Reporting System
       
