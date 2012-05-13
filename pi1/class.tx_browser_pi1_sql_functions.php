@@ -818,9 +818,35 @@ class tx_browser_pi1_sql_functions
     $error = $GLOBALS['TYPO3_DB']->sql_error( );
 
       // DRS - Development Reporting System
+    $iCounter = 0;
+    if( $this->pObj->b_drs_warn )
+    {
+      while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+      {
+        $iCounter++;
+      }
+      if( $iCounter == 0 )
+      {
+        $prompt = 'Result of the query are #0 rows. Maybe this proper.';
+        t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
+      }
+    }
     if( $this->pObj->b_drs_sql )
     {
-$this->pObj->dev_var_dump( $res );
+      switch( $iCounter )
+      {
+        case ( 0 ) :
+            // Do nothing
+          break;
+        case ( 1 ) :
+          $prompt = 'Result of the query is #1 row.';
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt,  $this->pObj->extKey, 0 );
+          break;
+        default :
+          $prompt = 'Result of the query are #' . $iCounter . ' rows.';
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt,  $this->pObj->extKey, 0 );
+          break;
+      }
       $prompt = $debugTrail['prompt'] . ': ' . $query;
       t3lib_div::devlog( '[OK/SQL] ' . $prompt,  $this->pObj->extKey, -1 );
       $prompt = 'Be aware of the multi-byte notation, if you want to use the query ' .
