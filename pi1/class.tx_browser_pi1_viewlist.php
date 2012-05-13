@@ -1831,9 +1831,10 @@ class tx_browser_pi1_viewlist
       // RETURN : ORDER BY is randomised
 
       // Get ORDER BY
-    $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
+    $orderBy      = $this->pObj->objSqlInit->statements['listView']['orderBy'];
+    $arr_orderBy  = $this->pObj->objZz->getCSVasArray( $orderBy );
       // Get the first tableField
-    list( $tableField ) = explode( ' ', $orderBy );
+    list( $tableField ) = explode( ' ', $arr_orderBy[0] );
 
       // Get localised status of the tableField
     $tableFieldIsLocalised = $this->pObj->objLocalise->zz_tablefieldIsLocalised( $tableField );
