@@ -462,12 +462,12 @@ class tx_browser_pi1 extends tslib_pibase {
     $str_browserEngineIndicator = null;  
     switch( $this->arr_extConf['browserEngine'] )
     {
-      case( 'Browser Engine 3.x (beta)' ):
+      case( 'Engine 3.x (beta)' ):
         $this->dev_browserEngine = 3;
         $str_browserEngineIndicator = '
           <div>
             <span style="background:#38d500;color:white;font-size:.85em;">
-              <a style="color:white;cursor:pointer;" title="You can disable this flag in the extension manager.">&nbsp;TYPO3 Browser Engine 3&nbsp;</a>
+              <a style="color:white;cursor:pointer;" title="You can disable this flag in the extension manager. See section Basic.">&nbsp;TYPO3 Browser Engine 3&nbsp;</a>
             </span>
           </div>';  
         if ($this->b_drs_sql)
@@ -493,7 +493,7 @@ class tx_browser_pi1 extends tslib_pibase {
         $str_browserEngineIndicator = '
           <div>
             <span style="background:#00003A;color:white;font-size:.85em;">
-              <a style="color:white;cursor:pointer;" title="You can disable this flag in the extension manager.">&nbsp;TYPO3 Browser Engine 4.x - alpha - inofficial&nbsp;</a>
+              <a style="color:white;cursor:pointer;" title="You can disable this flag in the extension manager. See section Basic.">&nbsp;TYPO3 Browser Engine 4.x - alpha - inofficial&nbsp;</a>
             </span>
           </div>';  
         if ($this->b_drs_sql)
