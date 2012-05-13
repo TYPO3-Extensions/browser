@@ -475,6 +475,7 @@ class tx_browser_pi1 extends tslib_pibase {
           $prompt = 'Browser engine 3.x is enabled';
           t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
         }
+        break;
       case( 'Engine 4.x (alpha): recommended' ):
       default:
 //        if( ! $this->bool_accessByIP )
