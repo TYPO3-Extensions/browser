@@ -1174,19 +1174,17 @@ class tx_browser_pi1_viewlist
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereSysLanguage );
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereIdList );
-$this->pObj->dev_var_dump( $where );
+//$this->pObj->dev_var_dump( $where );
     if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
     {
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
     }
-$this->pObj->dev_var_dump( $where );
 
     if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
     {
       $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
     }
-$this->pObj->dev_var_dump( $where );
 
     $groupBy  = null;
 
