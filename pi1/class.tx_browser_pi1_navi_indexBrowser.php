@@ -2128,7 +2128,7 @@ $this->pObj->dev_var_dump( $this->subpart, $markerTabs, $this->subpartTab, $cont
       // DRS
 
       // get th current content
-    $template = $this->currContent;
+    $template = $this->content;
 $this->pObj->dev_var_dump( $template );
       // RETURN ###AZSELECTOR###, if ###AZSELECTOR### is part of the current content
     $pos = strpos( $template, '###AZSELECTOR###');
@@ -2174,7 +2174,7 @@ $this->pObj->dev_var_dump( $template );
       // DRS
 
       // get th current content
-    $template = $this->currContent;
+    $template = $this->content;
 
       // RETURN ###AZSELECTORTABS###, if ###AZSELECTORTABS### is part of the current content
     $pos = strpos( $template, '###AZSELECTORTABS###');
