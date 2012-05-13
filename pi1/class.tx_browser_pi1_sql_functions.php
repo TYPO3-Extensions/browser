@@ -818,14 +818,14 @@ class tx_browser_pi1_sql_functions
     $error = $GLOBALS['TYPO3_DB']->sql_error( );
 
       // DRS - Development Reporting System
-    $iCounter = 0;
-    if( $this->pObj->b_drs_warn )
-    {
-      while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
-      {
-        $iCounter++;
-      }
-    }
+//    $iCounter = 0;
+//    if( $this->pObj->b_drs_warn )
+//    {
+//      while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+//      {
+//        $iCounter++;
+//      }
+//    }
     if( $this->pObj->b_drs_sql )
     {
       $prompt = $debugTrail['prompt'] . ': ' . $query;
@@ -833,29 +833,29 @@ class tx_browser_pi1_sql_functions
 //      $prompt = 'Be aware of the multi-byte notation, if you want to use the query ' .
 //                'in your SQL shell or in phpMyAdmin.';
 //      t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
-      switch( $iCounter )
-      {
-        case ( 0 ) :
-            // Do nothing
-          break;
-        case ( 1 ) :
-          $prompt = 'Result of the query is #1 row.';
-          t3lib_div::devlog( '[INFO/SQL] ' . $prompt,  $this->pObj->extKey, 0 );
-          break;
-        default :
-          $prompt = 'Result of the query are #' . $iCounter . ' rows.';
-          t3lib_div::devlog( '[INFO/SQL] ' . $prompt,  $this->pObj->extKey, 0 );
-          break;
-      }
+//      switch( $iCounter )
+//      {
+//        case ( 0 ) :
+//            // Do nothing
+//          break;
+//        case ( 1 ) :
+//          $prompt = 'Result of the query is #1 row.';
+//          t3lib_div::devlog( '[INFO/SQL] ' . $prompt,  $this->pObj->extKey, 0 );
+//          break;
+//        default :
+//          $prompt = 'Result of the query are #' . $iCounter . ' rows.';
+//          t3lib_div::devlog( '[INFO/SQL] ' . $prompt,  $this->pObj->extKey, 0 );
+//          break;
+//      }
     }
-    if( $this->pObj->b_drs_warn )
-    {
-      if( $iCounter == 0 )
-      {
-        $prompt = 'Result of the query are #0 rows. Maybe this proper.';
-        t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
-      }
-    }
+//    if( $this->pObj->b_drs_warn )
+//    {
+//      if( $iCounter == 0 )
+//      {
+//        $prompt = 'Result of the query are #0 rows. Maybe this proper.';
+//        t3lib_div::devlog( '[WARN/SQL] ' . $prompt,  $this->pObj->extKey, 2 );
+//      }
+//    }
       // DRS - Development Reporting System
       
       // Log the time
