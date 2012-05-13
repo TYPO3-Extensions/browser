@@ -2884,6 +2884,7 @@ class tx_browser_pi1_flexform {
     {
       $multiplier = ( int ) $this->pObj->piVars[$pageBrowserPointerLabel];
       list( $start, $results_at_a_time ) = explode( ',', $conf_limit );
+$this->pObj->dev_var_dump( $results_at_a_time );
       if( $results_at_a_time == null )
       {
         if( $this->pObj->b_drs_warn ) 
