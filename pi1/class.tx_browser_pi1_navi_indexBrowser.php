@@ -2052,6 +2052,7 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function sqlStatement_where( $table, $andWhereFindInSet )
   {
+$this->pObj->dev_var_dump( $this->pObj->sqlAut->conf );
 $this->pObj->dev_var_dump( $this->pObj->sqlAut->b_left_join );
     switch( true )
     {
