@@ -2238,7 +2238,7 @@ class tx_browser_pi1_navi_indexBrowser
   {
     $ascii = strip_tags( html_entity_decode( $string ) );
     $ascii = $this->t3lib_cs_obj->specCharsToASCII( $this->bool_utf8, $ascii );
-    $ascii = strtolower( preg_replace( '/[^a-zA-Z0-9-_]*/', null, $ascii ) );
+    $ascii = strtolower( preg_replace( '/[^a-zA-Z0-9-_.]*/', null, $ascii ) );
 
     return $ascii;
   }
