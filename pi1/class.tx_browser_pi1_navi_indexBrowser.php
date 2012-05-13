@@ -731,9 +731,9 @@ $this->pObj->dev_var_dump( $arr_return, $this->content );
   private function subpart( )
   {
       // Set class vars subpart and $arr_return
-    $marker           = $this->pObj->objNavi->getMarkerIndexBrowser( );
+    $marker           = $this->getMarkerIndexBrowser( );
     $this->subpart    = $this->pObj->cObj->getSubpart( $this->content, $marker );
-    $markerTabs       = $this->pObj->objNavi->getMarkerIndexbrowserTabs( );
+    $markerTabs       = $this->getMarkerIndexbrowserTabs( );
     $this->subpartTab = $this->pObj->cObj->getSubpart( $this->subpart, $markerTabs );
 $this->pObj->dev_var_dump( $marker, $this->subpart, $markerTabs, $this->subpartTab );
       // Set class vars subpart and $arr_return
