@@ -1526,13 +1526,13 @@ class tx_browser_pi1_navi_indexBrowser
     switch ( $caseSensitive )
     {
       case( true ) :
-        $uid      = "UPPER ( " . $tableUid . " )";
-        $initial  = "UPPER ( " . $tableField . " )";
+        $uid      = $tableUid;
+        $initial  = $tableField;
         break;
       case( false ) :
       default:
-        $uid      = $tableUid;
-        $initial  = $tableField;
+        $uid      = "UPPER ( " . $tableUid . " )";
+        $initial  = "UPPER ( " . $tableField . " )";
         break;
     }
 
@@ -2320,13 +2320,13 @@ class tx_browser_pi1_navi_indexBrowser
     switch ( $caseSensitive )
     {
       case( true ) :
-        $uid      = "UPPER ( " . $tableUid . " )";
-        $initial  = "UPPER ( " . $tableField . " )";
+        $uid      = $tableUid;
+        $initial  = $tableField;
         break;
       case( false ) :
       default:
-        $uid      = $tableUid;
-        $initial  = $tableField;
+        $uid      = "UPPER ( " . $tableUid . " )";
+        $initial  = "UPPER ( " . $tableField . " )";
         break;
     }
 
