@@ -249,10 +249,11 @@ class tx_browser_pi1_navi_indexBrowser
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
     $this->content                  = $content;
-    $arr_return['data']['content']  = $content;
+//    $arr_return['data']['content']  = $content;
 
       // RETURN: requirements aren't met
     $arr_return = $this->requirements_check( );
+$this->pObj->dev_var_dump( $arr_return );
     if( ! empty( $arr_return ) )
     {
         // Prompt the expired time to devlog
@@ -264,6 +265,7 @@ class tx_browser_pi1_navi_indexBrowser
 
       // RETURN : table is not the local table
     $arr_return = $this->tableField_check( );
+$this->pObj->dev_var_dump( $arr_return );
     if( $arr_return['error']['status'] )
     {
         // Prompt the expired time to devlog
@@ -284,6 +286,7 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Init the tabs
     $arr_return = $this->tabs_init( );
+$this->pObj->dev_var_dump( $arr_return );
     if( $arr_return['error']['status'] )
     {
         // Reset $GLOBALS['TSFE']->id
@@ -297,6 +300,7 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Render the tabs
     $arr_return = $this->subpart( );
+$this->pObj->dev_var_dump( $arr_return );
     if( $arr_return['error']['status'] )
     {
         // Reset $GLOBALS['TSFE']->id
@@ -317,6 +321,7 @@ class tx_browser_pi1_navi_indexBrowser
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+$this->pObj->dev_var_dump( $arr_return );
     return $arr_return;
   }
 
