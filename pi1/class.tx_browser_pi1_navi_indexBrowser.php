@@ -1520,13 +1520,28 @@ class tx_browser_pi1_navi_indexBrowser
       // Get current table.field of the index browser
     $tableField     = $this->indexBrowserTableField;
     list( $table )  = explode( '.', $tableField );
+    $tableUid       = $table . ".uid";
+    
+    $caseSensitive = $this->conf['navigation.']['indexBrowser.']['caseSensitive'];
+    switch ( $caseSensitive )
+    {
+      case( true ) :
+        $uid      = "UPPER ( " . $tableUid . " )";
+        $initial  = "UPPER ( " . $tableField . " )";
+        break;
+      case( false ) :
+      default:
+        $uid      = $tableUid;
+        $initial  = $tableField;
+        break;
+    }
 
       // Query for all filter items
-    $select = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', LEFT ( " . $tableField . ", 1 ) AS 'initial'";
+    $select = "COUNT( DISTINCT " . $uid . " ) AS 'count', LEFT ( " . $initial . ", 1 ) AS 'initial'";
     $from   = $this->sqlStatement_from( $table );
     $where  = $this->sqlStatement_where( $table, $strFindInSet );
-    $groupBy  = "LEFT ( " . $tableField . ", 1 )";
-    $orderBy  = "LEFT ( " . $tableField . ", 1 )";
+    $groupBy  = "LEFT ( " . $initial . ", 1 )";
+    $orderBy  = "LEFT ( " . $initial . ", 1 )";
     $limit    = null;
 
       // Execute the query
@@ -2299,14 +2314,36 @@ class tx_browser_pi1_navi_indexBrowser
       // Get current table.field of the index browser
     $tableField     = $this->indexBrowserTableField;
     list( $table )  = explode( '.', $tableField );
+    $tableUid       = $table . ".uid";
+    
+    $caseSensitive = $this->conf['navigation.']['indexBrowser.']['caseSensitive'];
+    switch ( $caseSensitive )
+    {
+      case( true ) :
+        $uid      = "UPPER ( " . $tableUid . " )";
+        $initial  = "UPPER ( " . $tableField . " )";
+        break;
+      case( false ) :
+      default:
+        $uid      = $tableUid;
+        $initial  = $tableField;
+        break;
+    }
 
       // Configure the query
-    $select   = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', " .
-                "LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
+//    $select   = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', " .
+//                "LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
+//    $from     = $table;
+//    $where    = $table . ".uid IN (" . $uidListDefAndCurr . ")";
+//    $groupBy  = "LEFT ( " . $tableField . ", " . $length . " )";
+//    $orderBy  = "LEFT ( " . $tableField . ", " . $length . " )";
+//    $limit    = null;
+    $select   = "COUNT( DISTINCT " . $uid . " ) AS 'count', " .
+                "LEFT ( " . $initial . ", " . $length . " ) AS 'initial'";
     $from     = $table;
     $where    = $table . ".uid IN (" . $uidListDefAndCurr . ")";
-    $groupBy  = "LEFT ( " . $tableField . ", " . $length . " )";
-    $orderBy  = "LEFT ( " . $tableField . ", " . $length . " )";
+    $groupBy  = "LEFT ( " . $initial . ", " . $length . " )";
+    $orderBy  = "LEFT ( " . $initial . ", " . $length . " )";
     $limit    = null;
       // Query for all filter items
 
