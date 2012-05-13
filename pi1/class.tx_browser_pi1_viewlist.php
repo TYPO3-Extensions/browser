@@ -1152,6 +1152,9 @@ class tx_browser_pi1_viewlist
 //        // RETURN : nothing to do
 //      return $arr_return;
         // andWhere sys_language_uid ...
+    }
+    if( $GLOBALS['TCA'][$table]['ctrl']['languageField'] )
+    {
       $andWhereSysLanguage = $table . '.' . $GLOBALS['TCA'][$table]['ctrl']['languageField'] . " <= 0";
     }
       // RETURN : table is not localised
