@@ -1750,10 +1750,12 @@ class tx_browser_pi1_localisation
       // RETURN : l10n_mode 
     
       // Devide tableField
-    list($table, $field) = explode('.', $tableField);
+    list( $table, $field ) = explode( '.', $tableField );
     
       // Load the TCA
-    $this->pObj->objZz->loadTCA($table);
+    $this->pObj->objZz->loadTCA( $table );
+
+$this->pObj->dev_var_dump( $GLOBALS['TCA'][$table]['columns'] );
     
       // Get and set the l10n_mode
     if( ! isset( $GLOBALS['TCA'][$table]['columns'][$field] ) )
