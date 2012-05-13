@@ -265,7 +265,7 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['function']                        = 'moved_value';
     $arr_release[$int_v][$int_t]['version']                         = '3.1.6';
     $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'navigation.a-z_Browser.defaultTab.realURL';
-    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'navigation.a-z_Browser.defaultTab.display_in_url';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'navigation.indexBrowser.defaultTab.display_in_url';
 
     $int_v++;
     $int_t++;
