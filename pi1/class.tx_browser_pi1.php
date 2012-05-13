@@ -470,7 +470,7 @@ class tx_browser_pi1 extends tslib_pibase {
               <a style="color:white;cursor:pointer;" title="You can disable this flag in the extension manager. See section Basic.">&nbsp;TYPO3 Browser Engine 3&nbsp;</a>
             </span>
           </div>';  
-        if ($this->b_drs_sql)
+        if ($this->b_drs_warn)
         {
           $prompt = 'Browser engine 3.x is enabled';
           t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
@@ -496,7 +496,7 @@ class tx_browser_pi1 extends tslib_pibase {
               <a style="color:white;cursor:pointer;" title="You can disable this flag in the extension manager. See section Basic.">&nbsp;TYPO3 Browser Engine 4.x - alpha - inofficial&nbsp;</a>
             </span>
           </div>';  
-        if ($this->b_drs_sql)
+        if ($this->b_drs_warn)
         {
           $prompt = 'Browser engine 4.x is enabled';
           t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
