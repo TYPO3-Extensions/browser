@@ -1,27 +1,44 @@
-  # cat=basic/enable/10;                type=options[Engine 4.x (alpha): recommended,Engine 3.x (beta)]; label= Browser engine: 4.x has a high performance, but it's alpha - because of a lot revised code. Please use 3.x, if you have any problem. Be aware: You have to use the update wizard in every case.  
+  # cat=basic/enable;                type=options[Engine 4.x (alpha): recommended,Engine 3.x (beta)]; label= Browser engine: 4.x has a high performance, but it's alpha - because of a lot revised code. Please use 3.x, if you have any problem. Be aware: You have to use the update wizard in every case.  
 browserEngine = Engine 4.x (alpha): recommended
 
-  # cat=basic/enable/11;                type=options[Off (recommended),On]; label= Browser engine 4.x indicator: Enable the display of a label in the frontend. For development.
+  # cat=basic/enable;                type=options[Off (recommended),On]; label= Browser engine 4.x indicator: Enable the display of a label in the frontend. For development.
 browserEngineIndicator = Off (recommended)
 
-  # cat=basic/enable/20;             type=options[English,German]; label= Localise special backend labels: Language for special backend labels like TypoScript static templates and flexforms.
+  # cat=basic/others;             type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
+external_links_01=0
+
+
+
+  # cat=BE Language/enable;             type=options[English,German]; label= Localise special backend labels: Language for special backend labels like TypoScript static templates and flexforms.
 LLstatic = English
 
-  # cat=basic/enable/100;              type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptCheckUpdate]; label=Update Wizard
-updateWizard=0
-
-  # cat=basic/enable/120;              type=boolean; label= Update Wizard Enabling
-updateWizardEnable = 0
-
-  # cat=basic/enable/130;              type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptCurrIP]; label=Your current IP
-currentIP = 0
-
-  # cat=basic/enable/131;              type=string; label= Update Wizard Allowed IPs: comma seperated list of IPs, which will shown the report.
-updateWizardAllowedIPs = 127.0.0.1, 127.0.0.2
+  # cat=BE Language/others;             type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
+external_links_02=0
 
 
-  # cat=basic/dev/930;                type=options[Don't log anything,---------------------------------------,Warnings and errors,All,---------------------------------------,Performance,---------------------------------------,Auto Discover development,Calendar,cObj->data,Download,Export,Filter and Category Menu,Flexform,Hooks,Javascript,Localisation,Map,Navigation,Realurl,Search,SEO (Search Engine Optimization),Session Management,Social media,SQL development,Statistics,Templating,Typoscript Template Container,Typoscript Update Checker,---------------------------------------,:TODO: for Development]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
+
+  # cat=Debugging/dev;                type=options[Don't log anything,---------------------------------------,Warnings and errors,All,---------------------------------------,Performance,---------------------------------------,Auto Discover development,Calendar,cObj->data,Download,Export,Filter and Category Menu,Flexform,Hooks,Javascript,Localisation,Map,Navigation,Realurl,Search,SEO (Search Engine Optimization),Session Management,Social media,SQL development,Statistics,Templating,Typoscript Template Container,Typoscript Update Checker,---------------------------------------,:TODO: for Development]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
 drs_mode = Don't log anything
 
-  # cat=basic/others/999;             type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
-external_links=0
+  # cat=Debugging/others;             type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
+external_links_03=0
+
+
+
+  # cat=Update Wizard/enable;                type=options[I checked it,I didn't (frontend label is visible)]; label= Did you checked the Update?: Please confirm, that you have checked the update. The frontend label will disappear.
+checked_3.9.13 = I didn't (frontend label is visible)
+
+  # cat=Update Wizard/enable;              type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptCheckUpdate]; label=Update Wizard
+updateWizard=0
+
+  # cat=Update Wizard/enable;              type=boolean; label= Update Wizard Enabling
+updateWizardEnable = 0
+
+  # cat=Update Wizard/enable;              type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptCurrIP]; label=Your current IP
+currentIP = 0
+
+  # cat=Update Wizard/enable;              type=string; label= Update Wizard Allowed IPs: comma seperated list of IPs, which will shown the report.
+updateWizardAllowedIPs = 127.0.0.1, 127.0.0.2
+
+  # cat=Update Wizard/others;             type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
+external_links_04=0

@@ -459,10 +459,17 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // Init browser engine
 
+    $str_browserEngineIndicator = null;  
     switch( $this->arr_extConf['browserEngine'] )
     {
       case( 'Browser Engine 3.x (beta)' ):
         $this->dev_browserEngine = 3;
+        $str_browserEngineIndicator = '
+          <div>
+            <span style="background:#38d500;color:white;font-size:.85em;">
+              <a title="You can disable this flag in the extension manager.">&nbsp;TYPO3 Browser Engine 3&nbsp;</a>
+            </span>
+          </div>';  
         if ($this->b_drs_sql)
         {
           $prompt = 'Browser engine 3.x is enabled';
@@ -483,6 +490,12 @@ class tx_browser_pi1 extends tslib_pibase {
 //          break;
 //        }
         $this->dev_browserEngine = 4;
+        $str_browserEngineIndicator = '
+          <div>
+            <span style="background:#00003A;color:white;font-size:.85em;">
+              <a title="You can disable this flag in the extension manager.">&nbsp;TYPO3 Browser Engine 4.x - alpha - inofficial&nbsp;</a>
+            </span>
+          </div>';  
         if ($this->b_drs_sql)
         {
           $prompt = 'Browser engine 4.x is enabled';
@@ -496,17 +509,29 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Init browserEngineIndicator
+      // Init checkedUpdate
 
-    $str_browserEngineIndicator = null;  
-    if( $this->arr_extConf['browserEngineIndicator'] )
+    $str_checkedUpdate = null;  
+    if( $this->arr_extConf['checked_3.']['9.']['13'] != 'I checked it' )
     {
-      $str_browserEngineIndicator = '
+      $str_checkedUpdate = '
         <div>
-          <span style="background:#00003A;color:white;font-size:.85em;">
-            &nbsp;TYPO3 Browser Engine 4.x - alpha - inofficial&nbsp;
+          <span style="background:#ad0000;color:white;font-size:.85em;">
+            <a title="Please confirm that you have checked the update. Go to the extension manager.">&nbsp;Update isn\'t confirmed!&nbsp;</a>
           </span>
         </div>';  
+    }
+      // Init Browser engine
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Init browserEngineIndicator
+
+    if( $this->arr_extConf['browserEngineIndicator'] != 'On' )
+    {
+      $str_browserEngineIndicator = null;
     }
       // Init Browser engine
 
