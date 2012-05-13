@@ -1277,6 +1277,45 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
+      // If a plugin disabled the DRS ...
+
+    $this->b_drs_all          = false;
+    $this->b_drs_error        = false;
+    $this->b_drs_warn         = false;
+    $this->b_drs_info         = false;
+    $this->b_drs_cal          = false;
+    $this->b_drs_cObjData     = false;
+    $this->b_drs_devTodo      = false;
+    $this->b_drs_discover     = false;
+    $this->b_drs_download     = false;
+    $this->b_drs_export       = false;
+    $this->b_drs_filter       = false;
+    $this->b_drs_flexform     = false;
+    $this->b_drs_hooks        = false;
+    $this->b_drs_javascript   = false;
+    $this->b_drs_localisation = false;
+    $this->b_drs_map          = false;
+    $this->b_drs_marker       = false;
+    $this->b_drs_navi         = false;
+    $this->b_drs_perform      = false;
+    $this->b_drs_realurl      = false;
+    $this->b_drs_search       = false;
+    $this->b_drs_seo          = false;
+    $this->b_drs_session      = false;
+    $this->b_drs_socialmedia  = false;
+    $this->b_drs_sql          = false;
+    $this->b_drs_session      = false;
+    $this->b_drs_statistics   = false;
+    $this->b_drs_tca          = false;
+    $this->b_drs_templating   = false;
+    $this->b_drs_tsUpdate     = false;
+    $this->b_drs_ttc          = false;
+      // If a plugin disabled the DRS ...
+
+      
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Set the DRS mode
 
     if ($this->arr_extConf['drs_mode'] == 'All')
