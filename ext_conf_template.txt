@@ -1,6 +1,9 @@
   # cat=basic/enable/10;                type=options[Engine 4.x (alpha): recommended,Engine 3.x (beta)]; label= Browser engine: 4.x has a high performance, but it's alpha - because of a lot revised code. Please use 3.x, if you have any problem. Be aware: You have to use the update wizard in every case.  
 browserEngine = Engine 4.x (alpha): recommended
 
+  # cat=basic/enable/11;                type=options[Off (recommended),On]; label= Browser engine 4.x indicator: Enable the display of a label in the frontend. For development.
+browserEngineIndicator = Off (recommended)
+
   # cat=basic/enable/20;             type=options[English,German]; label= Localise special backend labels: Language for special backend labels like TypoScript static templates and flexforms.
 LLstatic = English
 

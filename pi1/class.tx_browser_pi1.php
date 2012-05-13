@@ -496,6 +496,24 @@ class tx_browser_pi1 extends tslib_pibase {
 
       //////////////////////////////////////////////////////////////////////
       //
+      // Init browserEngineIndicator
+
+    $str_browserEngineIndicator = null;  
+    if( $this->arr_extConf['browserEngineIndicator'] )
+    {
+      $str_browserEngineIndicator = '
+        <div style="float:right;">
+          <span style="background:red;color:white;font-weight:bold;font-size:.85em;padding;0 .2em">
+            TYPO3 Browser Engine 4.x - alpha - inofficial
+          </span>
+        </div>';  
+    }
+      // Init Browser engine
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
       // Get the global TCA
 
       /* BACKGROUND : t3lib_div::loadTCA($table) loads for the frontend
@@ -1132,14 +1150,14 @@ class tx_browser_pi1 extends tslib_pibase {
           // Prompt the expired time to devlog
         $debugTrailLevel = 1;
         $this->timeTracking_log( $debugTrailLevel,  'END' );
-        return $html_updateCheck . $str_template_completed;
+        return $html_updateCheck . $str_browserEngineIndicator . $str_template_completed;
         break;
       case( true ):
       default:
           // Prompt the expired time to devlog
         $debugTrailLevel = 1;
         $this->timeTracking_log( $debugTrailLevel,  'END' );
-        return $html_updateCheck . $this->objWrapper->wrapInBaseIdClass( $str_template_completed );
+        return $html_updateCheck . $this->objWrapper->wrapInBaseIdClass( $str_browserEngineIndicator. $str_template_completed );
     }
   }
 
