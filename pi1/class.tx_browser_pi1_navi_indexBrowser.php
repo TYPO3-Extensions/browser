@@ -253,7 +253,6 @@ class tx_browser_pi1_navi_indexBrowser
 
       // RETURN: requirements aren't met
     $arr_return = $this->requirements_check( );
-$this->pObj->dev_var_dump( $arr_return, $this->content );
     if( ! empty( $arr_return ) )
     {
         // Prompt the expired time to devlog
@@ -265,7 +264,6 @@ $this->pObj->dev_var_dump( $arr_return, $this->content );
 
       // RETURN : table is not the local table
     $arr_return = $this->tableField_check( );
-$this->pObj->dev_var_dump( $arr_return, $this->content );
     if( $arr_return['error']['status'] )
     {
         // Prompt the expired time to devlog
@@ -286,7 +284,6 @@ $this->pObj->dev_var_dump( $arr_return, $this->content );
 
       // Init the tabs
     $arr_return = $this->tabs_init( );
-$this->pObj->dev_var_dump( $arr_return, $this->content );
     if( $arr_return['error']['status'] )
     {
         // Reset $GLOBALS['TSFE']->id
@@ -300,7 +297,6 @@ $this->pObj->dev_var_dump( $arr_return, $this->content );
 
       // Render the tabs
     $arr_return = $this->subpart( );
-$this->pObj->dev_var_dump( $arr_return, $this->content );
     if( $arr_return['error']['status'] )
     {
         // Reset $GLOBALS['TSFE']->id
@@ -310,7 +306,7 @@ $this->pObj->dev_var_dump( $arr_return, $this->content );
       $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return $arr_return;
     }
-    //$arr_result['data']['content']
+$this->pObj->dev_var_dump( $arr_return );
       // Render the tabs
 
       // If a tab is selected, store the SQL FIND IN SET
@@ -553,22 +549,6 @@ $this->pObj->dev_var_dump( $arr_return, $this->content );
       // RETURN true : index browser is disabled
 
     $this->localisation_init( );
-//    if( ! $this->bool_dontLocalise )
-//    {
-//        // DRS
-//      if( $this->pObj->b_drs_navi || $this->pObj->b_drs_localisation )
-//      {
-//        $prompt = 'Sorry: index browser isn\'t localised in browser version 4.0.x';
-//        t3lib_div::devlog( '[ERROR/NAVI+LOCALISATION] ' . $prompt, $this->pObj->extKey, 3 );
-//        $prompt = 'Please disable the index browser in a localised context';
-//        t3lib_div::devlog( '[HELP/NAVI+LOCALISATION] ' . $prompt, $this->pObj->extKey, 1 );
-//      }
-//        // DRS
-//      $prompt   = $this->pObj->pi_getLL( 'warn_indexbrowser_ll' );
-//      $content  = '<div class="indexBrowser" style="font-size:.85em">' . $prompt . '</div>';
-//      $arr_return['data']['content'] = $content;
-//      return $arr_return;
-//    }
 
       // RETURN true : index browser hasn't any configured tab
     $arr_conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
@@ -1292,7 +1272,6 @@ $this->pObj->dev_var_dump( $arr_return, $this->content );
     sort( $arrUids, SORT_NUMERIC );
     $this->uidListDefaultAndCurrentLL = implode( ',', $arrUids );
 
-//$this->pObj->dev_var_dump( $this->uidListDefaultAndCurrentLL );
   }
 
 
