@@ -517,7 +517,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $str_checkedUpdate = '
         <div>
           <span style="background:#ad0000;color:white;font-size:.85em;">
-            <a style="color:white;cursor:pointer;" title="Please confirm that you have checked the update. Go to the extension manager. See: Update Wizrad.">&nbsp;Update isn\'t confirmed!&nbsp;</a>
+            <a style="color:white;cursor:pointer;" title="Please confirm that you have checked the update. Go to the extension manager. See: Update Wizard.">&nbsp;Update isn\'t confirmed!&nbsp;</a>
           </span>
         </div>';  
     }
