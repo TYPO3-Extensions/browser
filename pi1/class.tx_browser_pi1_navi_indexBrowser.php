@@ -742,10 +742,10 @@ class tx_browser_pi1_navi_indexBrowser
       if( $this->b_drs_error )
       {
         $prompt = 'Current template doesn\'t contain the subpart marker ###' . $marker . '###';
-        t3lib_div::devLog( '[ERROR/NAVIGATION+TEMPLATING] ' . $prompt, $this->extKey, 3 );
+        t3lib_div::devLog( '[ERROR/NAVIGATION+TEMPLATING] ' . $prompt, $this->pObj->extKey, 3 );
       }
-      $str_header  = '<h1 style="color:red;">' . $this->pi_getLL( 'error_readlog_h1' ) . '</h1>';
-      $str_prompt  = '<p style="color:red;font-weight:bold;">' . $this->pi_getLL( 'error_template_indexbrowser_no_subpart' ) . '</p>';
+      $str_header  = '<h1 style="color:red;">' . $this->pObj->pi_getLL( 'error_readlog_h1' ) . '</h1>';
+      $str_prompt  = '<p style="color:red;font-weight:bold;">' . $this->pObj->pi_getLL( 'error_template_indexbrowser_no_subpart' ) . '</p>';
       $arr_return['error']['status'] = true;
       $arr_return['error']['header'] = $str_header;
       $arr_return['error']['prompt'] = $str_prompt;
