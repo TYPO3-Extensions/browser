@@ -2143,7 +2143,7 @@ class tx_browser_pi1_navi_indexBrowser
 
       // get th current content
     $template = $this->currContent;
-
+$this->pObj->dev_var_dump( $template );
       // RETURN ###AZSELECTOR###, if ###AZSELECTOR### is part of the current content
     $pos = strpos( $template, '###AZSELECTOR###');
     if ( ! ( $pos === false ) )
