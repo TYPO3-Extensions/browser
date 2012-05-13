@@ -5191,7 +5191,16 @@ class tx_browser_pi1_filter_4x {
 
         if ( $this->conf_view['filter.'][$table . '.'][$field . '.']['first_item.']['value_stdWrap.'] )
         {
-          echo '<h1>&auml;tsch!</h1>';
+          echo '
+            <div style="border:1em solid red;padding:2em;background:white;">
+              <h1>TYPO3 Browser Update Wizard</h1>
+              <p>
+                filter.' . $table . '.' . $field . '.first_item.value_stdWrap is deprecated. <br />
+                Please use: <br />
+                filter.' . $table . '.' . $field . '.first_item.cObject
+              </p>
+            </div>
+            ';
         }
         break;
     }
