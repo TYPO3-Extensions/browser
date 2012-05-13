@@ -2027,6 +2027,7 @@ class tx_browser_pi1_navi_indexBrowser
   {
     switch( true )
     {
+      case( ! $this->pObj->objSqlAut->b_left_join ) :
       case( isset( $this->pObj->piVars['sword'] ) ):
       case( $this->pObj->objFltr4x->init_aFilterIsSelected( ) ):
         $from = $this->pObj->objSqlInit->statements['listView']['from'];
@@ -2052,11 +2053,9 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function sqlStatement_where( $table, $andWhereFindInSet )
   {
-//$this->pObj->dev_var_dump( $this->pObj->objSqlAut->get_statements( ) );
-//$this->pObj->dev_var_dump( $this->pObj->objSqlAut->conf );
-$this->pObj->dev_var_dump( $this->pObj->objSqlAut->b_left_join );
     switch( true )
     {
+      case( ! $this->pObj->objSqlAut->b_left_join ) :
       case( isset( $this->pObj->piVars['sword'] ) ):
       case( $this->pObj->objFltr4x->init_aFilterIsSelected( ) ):
         $where  = $this->pObj->objSqlInit->statements['listView']['where'];
