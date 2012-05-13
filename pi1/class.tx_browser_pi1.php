@@ -1245,12 +1245,14 @@ class tx_browser_pi1 extends tslib_pibase {
   }
 
 
-  /**
- * Set the booleans for Warnings, Errors and DRS - Development Reporting System
- *
- * @return	void
- */
-  private function init_drs()
+ /**
+  * Set the booleans for Warnings, Errors and DRS - Development Reporting System
+  *
+  * @return	void
+  * @version  3.9.14
+  * @since    2.0.0
+  */
+  public function init_drs()
   {
 
       //////////////////////////////////////////////////////////////////////
