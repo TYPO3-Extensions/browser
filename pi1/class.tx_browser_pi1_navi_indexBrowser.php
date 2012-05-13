@@ -2052,9 +2052,9 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function sqlStatement_where( $table, $andWhereFindInSet )
   {
-$this->pObj->dev_var_dump( $this->pObj->sqlAut->get_statements( ) );
-$this->pObj->dev_var_dump( $this->pObj->sqlAut->conf );
-$this->pObj->dev_var_dump( $this->pObj->sqlAut->b_left_join );
+//$this->pObj->dev_var_dump( $this->pObj->objSqlAut->get_statements( ) );
+//$this->pObj->dev_var_dump( $this->pObj->objSqlAut->conf );
+$this->pObj->dev_var_dump( $this->pObj->objSqlAut->b_left_join );
     switch( true )
     {
       case( isset( $this->pObj->piVars['sword'] ) ):
