@@ -306,7 +306,6 @@ class tx_browser_pi1_navi_indexBrowser
       $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return $arr_return;
     }
-$this->pObj->dev_var_dump( $arr_return );
       // Render the tabs
 
       // If a tab is selected, store the SQL FIND IN SET
@@ -317,7 +316,6 @@ $this->pObj->dev_var_dump( $arr_return );
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
-$this->pObj->dev_var_dump( $arr_return, $this->content );
     return $arr_return;
   }
 
@@ -730,13 +728,29 @@ $this->pObj->dev_var_dump( $arr_return, $this->content );
  */
   private function subpart( )
   {
+    $arr_return = array( );
+    
       // Set class vars subpart and $arr_return
     $marker           = $this->getMarkerIndexBrowser( );
     $this->subpart    = $this->pObj->cObj->getSubpart( $this->content, $marker );
     $markerTabs       = $this->getMarkerIndexbrowserTabs( );
     $this->subpartTab = $this->pObj->cObj->getSubpart( $this->subpart, $markerTabs );
-$this->pObj->dev_var_dump( $marker, $this->subpart, $markerTabs, $this->subpartTab );
       // Set class vars subpart and $arr_return
+    
+    if( ! empty ( $this->subpart ) )
+    {
+      if( $this->b_drs_error )
+      {
+        $prompt = 'Current template doesn\'t contain the subpart marker ###' . $marker . '###';
+        t3lib_div::devLog( '[ERROR/NAVIGATION+TEMPLATING] ' . $prompt, $this->extKey, 3 );
+      }
+      $str_header  = '<h1 style="color:red;">' . $this->pi_getLL( 'error_readlog_h1' ) . '</h1>';
+      $str_prompt  = '<p style="color:red;font-weight:bold;">' . $this->pi_getLL( 'error_template_indexbrowser_no_subpart' ) . '</p>';
+      $arr_return['error']['status'] = true;
+      $arr_return['error']['header'] = $str_header;
+      $arr_return['error']['prompt'] = $str_prompt;
+      return $arr_return;
+    }
 
       // Set class var $tabDefaultLabel
     $this->zz_tabDefaultLabel( );
@@ -759,7 +773,6 @@ $this->pObj->dev_var_dump( $marker, $this->subpart, $markerTabs, $this->subpartT
 
       // Replace the subpart tabs in the whole subpart
     $content = $this->pObj->cObj->substituteSubpart( $this->subpart, $markerTabs, $this->subpartTab, true);
-$this->pObj->dev_var_dump( $this->subpart, $markerTabs, $this->subpartTab, $content );
 
       // Retirn the content
     $arr_return['data']['content'] = $content;

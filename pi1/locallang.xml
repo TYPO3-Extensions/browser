@@ -30,6 +30,7 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
       <label index="error_sql_search"><![CDATA[The search fields have  an error. You get help in the log of devlog.<br /><br />Browser - TYPO3 without PHP]]></label>
       <label index="error_table_no"><![CDATA[There aren't any tables for processing.<br /><br />Browser - TYPO3 without PHP]]></label>
       <label index="error_template_array"><![CDATA[The returned template is an array. This is an error.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_template_indexbrowser_no_subpart"><![CDATA[The subpart marker INDEXBROWSER (or AZBROWSER (deperecated!))  is missing in the HTML template.<br /><br />Browser - TYPO3 without PHP]]></label>
       <label index="error_template_map_no"><![CDATA[There isn't any HTML template for the open street map.<br /><br />Browser - TYPO3 without PHP]]></label>
       <label index="error_template_map_no_subpart"><![CDATA[The subpart TEMPLATE_MAP is missing in the HTML template for the open street map.<br /><br />Browser - TYPO3 without PHP]]></label>
       <label index="error_template_no">There isn't any HTML template.<![CDATA[<br />]]>
@@ -107,6 +108,7 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
       <label index="error_sql_search"><![CDATA[Die im TypoScript angegenen Suchfelder haben einen Fehler. Weitere Hinweise erh&auml;ltst Du in den Log-Einträgen von devlog.<br /><br />Browser - TYPO3 ohne PHP]]></label>
       <label index="error_table_no"><![CDATA[Es konnten keine Tabellen für die Verarbeitung gefunden werden.]]></label>
       <label index="error_template_array"><![CDATA[Das Template ist ein Array. Das ist ein Fehler.<br /><br />Browser - TYPO3 ohne PHP]]></label>
+      <label index="error_template_indexbrowser_no_subpart"><![CDATA[Der Subpart-Marker INDEXBROWSER (oder AZBROWSER (&uumlberholt!)) fehlt im HTML-Template.<br /><br />Browser - TYPO3 without PHP]]></label>
       <label index="error_template_map_no"><![CDATA[Es gibt kein HTML-Template f&uuml;r die OpenStreetMap-Karte.<br /><br />Browser - TYPO3 ohne PHP]]></label>
       <label index="error_template_map_no_subpart"><![CDATA[Im HTML-Template f&uuml;r die OpenStreetMap-Karte fehlt der Subpart TEMPLATE_MAP<br /><br />Browser - TYPO3 ohne PHP]]></label>
       <label index="error_template_no"> Es gibt kein HTML-Template.<![CDATA[<br />]]>
