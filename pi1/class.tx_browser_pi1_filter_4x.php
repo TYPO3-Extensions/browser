@@ -5189,7 +5189,7 @@ class tx_browser_pi1_filter_4x {
         }
         $loop_filterObject = true;
 
-        if ( $this->conf_view['filter.'][$table . '.'][$field . '.']['display_without_any_hit'] )
+        if ( $this->conf_view['filter.'][$table . '.'][$field . '.']['first_item.']['display_without_any_hit'] )
         {
           $prompt_01 = '
             filter.' . $table . '.' . $field . '.first_item.display_without_any_hit is deprecated. <br />
@@ -5197,7 +5197,7 @@ class tx_browser_pi1_filter_4x {
             filter.' . $table . '.' . $field . '.first_item.cObject
             ';
         }
-        if ( $this->conf_view['filter.'][$table . '.'][$field . '.']['display_hits.'] )
+        if ( $this->conf_view['filter.'][$table . '.'][$field . '.']['first_item.']['display_hits.'] )
         {
           $prompt_02 = '
             filter.' . $table . '.' . $field . '.first_item.display_hits is deprecated. <br />
