@@ -2884,6 +2884,11 @@ class tx_browser_pi1_flexform {
     {
       $multiplier = ( int ) $this->pObj->piVars[$pageBrowserPointerLabel];
       list( $start, $results_at_a_time ) = explode( ',', $conf_limit );
+      if( $results_at_a_time == null )
+      {
+        $results_at_a_time  = $start;
+        $start              = 0;
+      }
       $start      = $start + ( $multiplier * $results_at_a_time ) ;
       $conf_limit = $start . ',' . $results_at_a_time; 
     }

@@ -820,6 +820,7 @@ class tx_browser_pi1_sql_functions
       // DRS - Development Reporting System
     if( $this->pObj->b_drs_sql )
     {
+$this->pObj->dev_var_dump( $res );
       $prompt = $debugTrail['prompt'] . ': ' . $query;
       t3lib_div::devlog( '[OK/SQL] ' . $prompt,  $this->pObj->extKey, -1 );
       $prompt = 'Be aware of the multi-byte notation, if you want to use the query ' .
