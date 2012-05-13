@@ -264,6 +264,7 @@ class tx_browser_pi1_navi_indexBrowser
 
       // RETURN : table is not the local table
     $arr_return = $this->tableField_check( );
+$this->pObj->dev_var_dump( $arr_return, $this->content );
     if( $arr_return['error']['status'] )
     {
         // Prompt the expired time to devlog
