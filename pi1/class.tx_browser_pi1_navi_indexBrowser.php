@@ -665,7 +665,7 @@ class tx_browser_pi1_navi_indexBrowser
       {
         if( $this->pObj->b_drs_navi )
         {
-          $prompt = $this->conf_path . 'indexBrowser.field is ' . $field;
+          $prompt = $this->conf_path . 'indexBrowser.field is ' . $this->indexBrowserTableField;
           t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
         }
         return;
@@ -681,7 +681,7 @@ class tx_browser_pi1_navi_indexBrowser
       {
         if( $this->pObj->b_drs_navi )
         {
-          $prompt = 'indexBrowser.field is ' . $field;
+          $prompt = 'indexBrowser.field is ' . $this->indexBrowserTableField;
           t3lib_div::devlog('[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0);
         }
         return;
