@@ -1111,6 +1111,7 @@ class tx_browser_pi1_filter_4x {
     {
       case( 4 ):
           // Wrap the current valie by the cObject
+        $this->updateWizard( 'filter_cObject' );
         $item = $this->get_filterItemCObj( $conf_name, $conf_array, $uid, $value );
         break;
       case( 3 ):
@@ -5149,6 +5150,39 @@ class tx_browser_pi1_filter_4x {
     return;
   }
 
+
+
+
+
+
+/**
+ * updateWizard( ): 
+ *
+ * @param	integer		$uid        : uid of the current item / row
+ * @param	string		$value      : value of the current item / row
+ * @return	string		$item       : The rendered item
+ * @version 3.9.13
+ * @since   3.9.13
+ */
+  private function updateWizard( $check )
+  {
+    if( ! $this->pObj->arr_extConf['updateWizardEnable'] )
+    {
+      return;
+    }
+      // Current IP has access
+    if( ! $this->pObj->bool_accessByIP )
+    {
+      return;
+    }
+
+    switch( $check )
+    {
+      case( 'filter_cObject' ):
+        echo '<h1>&auml;tsch!</h1>';
+        break;
+    }
+  }
 
 
 
