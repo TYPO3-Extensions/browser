@@ -5189,16 +5189,61 @@ class tx_browser_pi1_filter_4x {
         }
         $loop_filterObject = true;
 
+        if ( $this->conf_view['filter.'][$table . '.'][$field . '.']['display_without_any_hit'] )
+        {
+          $prompt_01 = '
+            filter.' . $table . '.' . $field . '.first_item.display_without_any_hit is deprecated. <br />
+            Please use: <br />
+            filter.' . $table . '.' . $field . '.first_item.cObject
+            ';
+        }
+        if ( $this->conf_view['filter.'][$table . '.'][$field . '.']['display_hits.'] )
+        {
+          $prompt_02 = '
+            filter.' . $table . '.' . $field . '.first_item.display_hits is deprecated. <br />
+            Please use: <br />
+            filter.' . $table . '.' . $field . '.first_item.cObject
+            ';
+        }
         if ( $this->conf_view['filter.'][$table . '.'][$field . '.']['first_item.']['value_stdWrap.'] )
+        {
+          $prompt_03 = '
+            filter.' . $table . '.' . $field . '.first_item.value_stdWrap is deprecated. <br />
+            Please use: <br />
+            filter.' . $table . '.' . $field . '.first_item.cObject
+            ';
+        }
+        if( $prompt_01 . $prompt_02 . $prompt_03 )
         {
           echo '
             <div style="border:1em solid red;padding:2em;background:white;">
               <h1>TYPO3 Browser Update Wizard</h1>
-              <p>
-                filter.' . $table . '.' . $field . '.first_item.value_stdWrap is deprecated. <br />
-                Please use: <br />
-                filter.' . $table . '.' . $field . '.first_item.cObject
-              </p>
+            ';
+          if( $prompt_01 )
+          {
+            echo '
+                <p>
+                  ' . $prompt_01 . '
+                </p>
+              ';
+          }
+          if( $prompt_02 )
+          {
+            echo '
+                <p>
+                  ' . $prompt_02 . '
+                </p>
+              ';
+          }
+          if( $prompt_03 )
+          {
+            echo '
+                <p>
+                  ' . $prompt_03 . '
+                </p>
+              ';
+          }
+          echo '
             </div>
             ';
         }
