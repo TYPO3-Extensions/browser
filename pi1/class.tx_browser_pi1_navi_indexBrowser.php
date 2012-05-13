@@ -253,6 +253,7 @@ class tx_browser_pi1_navi_indexBrowser
 
       // RETURN: requirements aren't met
     $arr_return = $this->requirements_check( );
+$this->pObj->dev_var_dump( $arr_return, $this->content );
     if( ! empty( $arr_return ) )
     {
         // Prompt the expired time to devlog
