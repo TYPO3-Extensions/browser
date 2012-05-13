@@ -513,7 +513,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // Init checkedUpdate
 
     $str_checkedUpdate = null;  
-    if( $this->arr_extConf['checked_3.']['9.']['13'] != 'I checked it' )
+    if( $this->arr_extConf['checked_3.']['9.']['14'] != 'I checked it' )
     {
       $str_checkedUpdate = '
         <div>

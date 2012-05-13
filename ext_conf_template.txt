@@ -26,7 +26,7 @@ external_links_03=0
 
 
   # cat=Update Wizard/enable;                type=options[I checked it,I didn't (frontend label is visible)]; label= Did you checked the Update?: Please confirm, that you have checked the update. The frontend label will disappear.
-checked_3.9.13 = I didn't (frontend label is visible)
+checked_3.9.14 = I didn't (frontend label is visible)
 
   # cat=Update Wizard/enable;              type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptCheckUpdate]; label=Update Wizard
 updateWizard=0

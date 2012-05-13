@@ -1,7 +1,14 @@
+3.9.14
+  120513
+  Bugfixes
+  * #00000: Debugging special chars
+            Effected file: pi1/locallang_flexform.xml
+
 3.9.13
-  120504
+  120513
   Development
   * #36842: Localise the index browser in version 4.0
+  * #33892: Performance/Engine 4: navigation, list view 
 
 3.9.11
   120322
