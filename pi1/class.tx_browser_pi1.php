@@ -522,7 +522,7 @@ class tx_browser_pi1 extends tslib_pibase {
         </div>';  
     }
       // Init Browser engine
-//$this->dev_var_dump( $this->arr_extConf );
+$this->dev_var_dump( $this->arr_extConf );
 
 
       //////////////////////////////////////////////////////////////////////
