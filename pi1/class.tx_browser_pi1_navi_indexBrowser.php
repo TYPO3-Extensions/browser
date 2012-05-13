@@ -253,7 +253,6 @@ class tx_browser_pi1_navi_indexBrowser
 
       // RETURN: requirements aren't met
     $arr_return = $this->requirements_check( );
-$this->pObj->dev_var_dump( $arr_return );
     if( ! empty( $arr_return ) )
     {
         // Prompt the expired time to devlog
@@ -265,7 +264,6 @@ $this->pObj->dev_var_dump( $arr_return );
 
       // RETURN : table is not the local table
     $arr_return = $this->tableField_check( );
-$this->pObj->dev_var_dump( $arr_return );
     if( $arr_return['error']['status'] )
     {
         // Prompt the expired time to devlog
@@ -286,7 +284,7 @@ $this->pObj->dev_var_dump( $arr_return );
 
       // Init the tabs
     $arr_return = $this->tabs_init( );
-$this->pObj->dev_var_dump( $arr_return );
+$this->pObj->dev_var_dump( $arr_return, $this->content );
     if( $arr_return['error']['status'] )
     {
         // Reset $GLOBALS['TSFE']->id
@@ -300,7 +298,7 @@ $this->pObj->dev_var_dump( $arr_return );
 
       // Render the tabs
     $arr_return = $this->subpart( );
-$this->pObj->dev_var_dump( $arr_return );
+$this->pObj->dev_var_dump( $arr_return, $this->content );
     if( $arr_return['error']['status'] )
     {
         // Reset $GLOBALS['TSFE']->id
@@ -321,7 +319,7 @@ $this->pObj->dev_var_dump( $arr_return );
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
-$this->pObj->dev_var_dump( $arr_return );
+$this->pObj->dev_var_dump( $arr_return, $this->content );
     return $arr_return;
   }
 
