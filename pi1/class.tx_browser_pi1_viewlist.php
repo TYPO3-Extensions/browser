@@ -1141,6 +1141,7 @@ class tx_browser_pi1_viewlist
     $tableUid = $table . ".uid";
 
       // RETURN : table is not localised
+    $andWhereSysLanguage = null;
     if( ! $GLOBALS['TCA'][$table]['ctrl']['languageField'] )
     {
       if( $this->pObj->b_drs_localise || $this->pObj->b_drs_sql )
@@ -1148,13 +1149,13 @@ class tx_browser_pi1_viewlist
         $prompt = $table . ' isn\'t localised.';
         t3lib_div::devlog( '[INFO/LOCALISATION+SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
-        // RETURN : nothing to do
-      return $arr_return;
+//        // RETURN : nothing to do
+//      return $arr_return;
+        // andWhere sys_language_uid ...
+      $andWhereSysLanguage = $table . '.' . $GLOBALS['TCA'][$table]['ctrl']['languageField'] . " <= 0";
     }
       // RETURN : table is not localised
 
-      // andWhere sys_language_uid ...
-    $andWhereSysLanguage = $table . '.' . $GLOBALS['TCA'][$table]['ctrl']['languageField'] . " <= 0";
 
       // andWhere list of ids ...
     $withoutIdList  = implode( ',', ( array ) $withoutIds );
