@@ -735,6 +735,7 @@ $this->pObj->dev_var_dump( $arr_return, $this->content );
     $this->subpart    = $this->pObj->cObj->getSubpart( $this->content, $marker );
     $markerTabs       = $this->pObj->objNavi->getMarkerIndexbrowserTabs( );
     $this->subpartTab = $this->pObj->cObj->getSubpart( $this->subpart, $markerTabs );
+$this->pObj->dev_var_dump( $marker, $this->subpart, $markerTabs, $this->subpartTab );
       // Set class vars subpart and $arr_return
 
       // Set class var $tabDefaultLabel
