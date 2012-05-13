@@ -502,9 +502,9 @@ class tx_browser_pi1 extends tslib_pibase {
     if( $this->arr_extConf['browserEngineIndicator'] )
     {
       $str_browserEngineIndicator = '
-        <div style="float:right;">
-          <span style="background:red;color:white;font-weight:bold;font-size:.85em;padding;0 .2em">
-            TYPO3 Browser Engine 4.x - alpha - inofficial
+        <div>
+          <span style="background:red;color:white;font-size:.85em;">
+            &nbsp;TYPO3 Browser Engine 4.x - alpha - inofficial&nbsp;
           </span>
         </div>';  
     }
