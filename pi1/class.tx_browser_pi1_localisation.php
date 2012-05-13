@@ -1755,7 +1755,7 @@ class tx_browser_pi1_localisation
       // Load the TCA
     $this->pObj->objZz->loadTCA( $table );
 
-$this->pObj->dev_var_dump( $field, $GLOBALS['TCA'][$table]['columns'] );
+//$this->pObj->dev_var_dump( $field, $GLOBALS['TCA'][$table]['columns'] );
     
       // Get and set the l10n_mode
     if( ! isset( $GLOBALS['TCA'][$table]['columns'][$field] ) )
@@ -1769,7 +1769,12 @@ $this->pObj->dev_var_dump( $field, $GLOBALS['TCA'][$table]['columns'] );
                 ';
       die( $prompt );
     }
-    $l10n_mode = $GLOBALS['TCA'][$table]['columns'][$field]['l10n_mode'];
+
+    $l10n_mode = false;
+    if( isset( $GLOBALS['TCA'][$table]['columns'][$field]['l10n_mode'] ) )
+    {
+      $l10n_mode = $GLOBALS['TCA'][$table]['columns'][$field]['l10n_mode'];
+    }
     $this->arr_l10n_mode[$tableField] = $l10n_mode;
     
       // RETURN : l10n_mode 
