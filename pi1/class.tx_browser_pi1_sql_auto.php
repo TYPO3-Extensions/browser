@@ -137,6 +137,8 @@ class tx_browser_pi1_sql_auto
   var $statementTables = null;
     // [Array] array like $addedTableFields['select']['tx_org_cal'][] = 'tx_org_cal.uid'
   var $addedTableFields = null;
+  
+  public $b_left_join = true;
 
 
 
