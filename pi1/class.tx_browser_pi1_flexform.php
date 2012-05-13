@@ -2878,12 +2878,11 @@ class tx_browser_pi1_flexform {
       // #34212: 120223, dwildt-
     //$conf_limit = $str_limit;
     list( $start, $results_at_a_time ) = explode( ',', $conf_limit );
-$this->pObj->dev_var_dump( $results_at_a_time );
     if( $results_at_a_time == null )
     {
       if( $this->pObj->b_drs_warn ) 
       {
-        $prompt = 'views.list.' . $this->mode . 'limit is ' . $conf_limit;
+        $prompt = 'views.list.' . $this->mode . '.limit is ' . $conf_limit;
         t3lib_div :: devlog( '[WARN/DRS] ' . $prompt , $this->pObj->extKey, 2 );
       }
       $conf_limit = '0,' . $start; 
