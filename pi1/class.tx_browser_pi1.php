@@ -503,7 +503,7 @@ class tx_browser_pi1 extends tslib_pibase {
     {
       $str_browserEngineIndicator = '
         <div>
-          <span style="background:red;color:white;font-size:.85em;">
+          <span style="background:#00003A;color:white;font-size:.85em;">
             &nbsp;TYPO3 Browser Engine 4.x - alpha - inofficial&nbsp;
           </span>
         </div>';  
