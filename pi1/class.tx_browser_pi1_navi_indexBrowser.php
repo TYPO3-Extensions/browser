@@ -758,6 +758,7 @@ $this->pObj->dev_var_dump( $arr_return, $this->content );
 
       // Replace the subpart tabs in the whole subpart
     $content = $this->pObj->cObj->substituteSubpart( $this->subpart, $markerTabs, $this->subpartTab, true);
+$this->pObj->dev_var_dump( $this->subpart, $markerTabs, $this->subpartTab, $content );
 
       // Retirn the content
     $arr_return['data']['content'] = $content;
