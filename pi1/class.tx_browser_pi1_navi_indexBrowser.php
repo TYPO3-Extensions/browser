@@ -1095,6 +1095,10 @@ class tx_browser_pi1_navi_indexBrowser
 
       // Get an array with all FIND IN SET statements
     $arrFindInSet = $this->zz_getFindInSetForAllByte( $row );
+    if( empty ( $arrFindInSet ) )
+    {
+      return;
+    }
 
       // Get the SQL statement for all FIND IN SET
     $orFindInSet  = array( );
