@@ -1175,14 +1175,14 @@ $this->dev_var_dump( $this->arr_extConf );
           // Prompt the expired time to devlog
         $debugTrailLevel = 1;
         $this->timeTracking_log( $debugTrailLevel,  'END' );
-        return $html_updateCheck . $str_browserEngineIndicator . $str_template_completed;
+        return $html_updateCheck . $str_checkedUpdate .$str_browserEngineIndicator . $str_template_completed;
         break;
       case( true ):
       default:
           // Prompt the expired time to devlog
         $debugTrailLevel = 1;
         $this->timeTracking_log( $debugTrailLevel,  'END' );
-        return $html_updateCheck . $this->objWrapper->wrapInBaseIdClass( $str_browserEngineIndicator. $str_template_completed );
+        return $html_updateCheck . $this->objWrapper->wrapInBaseIdClass( $str_checkedUpdate. $str_browserEngineIndicator. $str_template_completed );
     }
   }
 
