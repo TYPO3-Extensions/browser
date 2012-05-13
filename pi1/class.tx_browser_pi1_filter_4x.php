@@ -5166,6 +5166,8 @@ class tx_browser_pi1_filter_4x {
  */
   private function updateWizard( $check )
   {
+    static $loop_filterObject = false;
+    
     if( ! $this->pObj->arr_extConf['updateWizardEnable'] )
     {
       return;
@@ -5176,10 +5178,21 @@ class tx_browser_pi1_filter_4x {
       return;
     }
 
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
     switch( $check )
     {
       case( 'filter_cObject' ):
-        echo '<h1>&auml;tsch!</h1>';
+        if( $loop_filterObject )
+        {
+          return;
+        }
+        $loop_filterObject = true;
+
+        if ( $this->conf_view['filter.'][$table . '.'][$field . '.']['first_item.']['value_stdWrap.'] )
+        {
+          echo '<h1>&auml;tsch!</h1>';
+        }
         break;
     }
   }
