@@ -129,7 +129,7 @@ class tx_browser_pi1_sql_auto
     // [Array] Array with ...
   var $arr_relations_opposite;
     // [Boolean] TRUE if we should use LEFT JOIN. From TypoScript global or local autoconfig.relations.left_join
-  public $b_left_join = false;
+  var $b_left_join = false;
     // [Boolean] TRUE if the current relation is opposite
   var $opposite = null;
 
