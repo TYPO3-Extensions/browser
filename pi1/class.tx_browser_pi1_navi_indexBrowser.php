@@ -737,7 +737,7 @@ class tx_browser_pi1_navi_indexBrowser
     $this->subpartTab = $this->pObj->cObj->getSubpart( $this->subpart, $markerTabs );
       // Set class vars subpart and $arr_return
     
-    if( ! empty ( $this->subpart ) )
+    if( empty ( $this->subpart ) )
     {
       if( $this->b_drs_error )
       {
@@ -2142,7 +2142,7 @@ class tx_browser_pi1_navi_indexBrowser
 
       // get th current content
     $template = $this->content;
-$this->pObj->dev_var_dump( $template );
+
       // RETURN ###AZSELECTOR###, if ###AZSELECTOR### is part of the current content
     $pos = strpos( $template, '###AZSELECTOR###');
     if ( ! ( $pos === false ) )
