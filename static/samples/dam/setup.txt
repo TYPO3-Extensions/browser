@@ -18,15 +18,61 @@ plugin.tx_browser_pi1 {
       37165 {
           // [String] Name of the view. It will displayed in the plugin/flexform
         name    = +DAM: Sample
+          // [String] Label of the parameter with the uid of the document
+        showUid = docUid
           // [String] Select clause (don't confuse it with the SQL select)
         select (
-          tx_dam.title
+          tx_dam.title,
+          tx_dam.file_name,
+          tx_dam.file_path
         )
+        tx_dam {
+          title = COA
+          title {
+            10 = TEXT
+            10 {
+              value = ###TX_DAM.TITLE###
+            }
+            20 < tt_content.uploads.20
+            20 {
+              userFunc = tx_browser_cssstyledcontent->render_uploads
+              userFunc {
+                drs = TEXT
+                drs {
+                  value = 0
+                }
+              }
+              filePath >
+              linkProc {
+                tx_browser_pi1 = TEXT
+                tx_browser_pi1 {
+                  typolink {
+                    parameter         = {$plugin.org.pages.doc}
+                    additionalParams  = &tx_browser_pi1[docUid]=###TX_DAM.UID###&tx_browser_pi1[download]=###FILENAME###
+                    useCacheHash      = 1
+                    returnLast        = url
+                  }
+                }
+              }
+              tableField = tx_org_doc.documents
+              fields {
+                from_path = ###TX_DAM.FILE_PATH###
+                files     = ###TX_DAM.FILE_NAME###
+                layout    = 2
+              }
+              stdWrap {
+                if.isTrue = ###TX_DAM.FILE_NAME######TX_DAM.FILE_PATH###
+              }
+            }
+          }
+        }
       }
     }
     single {
       37165 = +DAM: Sample
       37165 {
+          // [String] Label of the parameter with the uid of the document
+        showUid = docUid
           // [String] Select clause (don't confuse it with the SQL select)
         select (
           tx_dam.title
