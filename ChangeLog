@@ -1,5 +1,8 @@
 3.9.14
-  120513
+  120514
+  Improvements
+  * #00000: Static template for downgrade 
+            New files: static/downgrade/3.9.0/*
   Bugfixes
   * #00000: Debugging special chars
             Effected file: pi1/locallang_flexform.xml
