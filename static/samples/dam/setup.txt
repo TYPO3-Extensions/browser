@@ -44,13 +44,57 @@ plugin.tx_browser_pi1 {
               }
               filePath >
               linkProc {
-                tx_browser_pi1 = TEXT
+                tx_browser_pi1 = COA
                 tx_browser_pi1 {
-                  typolink {
-                    parameter         = {$plugin.org.pages.doc}
-                    additionalParams  = &tx_browser_pi1[docUid]=###TX_DAM.UID###&tx_browser_pi1[download]=###FILENAME###
-                    useCacheHash      = 1
-                    returnLast        = url
+                    // Link with preview or application icon
+                  10 = IMAGE
+                  10 {
+                    file {
+                      import {
+                        data = register : ICON_REL_PATH
+                      }
+                      width = 80
+                    }
+                    imageLinkWrap = 1
+                    imageLinkWrap {
+                      enable = 1
+                      typolink {
+                        parameter = {page:uid}
+                        title = TEXT
+                        title {
+                          value = Download: '###TX_DAM.TITLE###'
+                          lang {
+                            de  = Herunterladen: '###TX_DAM.TITLE###'
+                            en  = Download: '###TX_DAM.TITLE###'
+                          }
+                        }
+                        additionalParams  = &tx_browser_pi1[docUid]=###TX_DAM.UID###
+                        useCacheHash      = 1
+                      }
+                    }
+                  }
+                    // Link devider
+                  20 = TEXT
+                  20 {
+                    value = //**//
+                  }
+                    // Link with label
+                  30 = TEXT
+                  30 {
+                    data = register : filename
+                    typolink {
+                      parameter = {$plugin.org.pages.downloads}
+                      title = TEXT
+                      title {
+                        value = Download: '###TX_DAM.TITLE###'
+                        lang {
+                          de  = Herunterladen: '###TX_DAM.TITLE###'
+                          en  = Download: '###TX_DAM.TITLE###'
+                        }
+                      }
+                      additionalParams  = &tx_browser_pi1[docUid]=###TX_DAM.UID###
+                      useCacheHash      = 1
+                    }
                   }
                 }
               }
