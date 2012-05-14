@@ -1620,24 +1620,6 @@ plugin.tx_browser_pi1 {
           // [Boolean] Should be added a default item?
         first_item = 1
         first_item {
-            // DEPRECATED - please use cObject below! [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
-          display_without_any_hit = 1
-            // DEPRECATED - please use cObject below! [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
-          display_hits = 0
-          display_hits {
-              // [Boolean] 1: Hits are displayed behind the item. 0: Hits are displayed in front of the item.
-            behindItem = 1
-            stdWrap {
-              noTrimWrap = | (|)|
-            }
-              // [Boolean] 0 (default): Hit must be greater 0 for displaying. 1: Hit will displayed.
-            display_empty_hits = 0
-          }
-            // DEPRECATED - please use cObject below!
-          value_stdWrap =
-          value_stdWrap {
-            data = LLL:EXT:browser/pi1/locallang.xml:label_filter_firstitem_default
-          }
             // Wrap the first items
           cObject = COA
           cObject {
