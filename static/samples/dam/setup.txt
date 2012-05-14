@@ -19,7 +19,7 @@ plugin.tx_browser_pi1 {
           // [String] Name of the view. It will displayed in the plugin/flexform
         name    = +DAM: Sample
           // [String] Label of the parameter with the uid of the document
-        showUid = docUid
+        showUid = downloadsUid
           // [String] Select clause (don't confuse it with the SQL select)
         select (
           tx_dam.title,
@@ -68,7 +68,7 @@ plugin.tx_browser_pi1 {
                             en  = Download: '###TX_DAM.TITLE###'
                           }
                         }
-                        additionalParams  = &tx_browser_pi1[docUid]=###TX_DAM.UID###
+                        additionalParams  = &tx_browser_pi1[downloadsUid]=###TX_DAM.UID###
                         useCacheHash      = 1
                       }
                     }
@@ -92,7 +92,7 @@ plugin.tx_browser_pi1 {
                           en  = Download: '###TX_DAM.TITLE###'
                         }
                       }
-                      additionalParams  = &tx_browser_pi1[docUid]=###TX_DAM.UID###
+                      additionalParams  = &tx_browser_pi1[downloadsUid]=###TX_DAM.UID###
                       useCacheHash      = 1
                     }
                   }
@@ -116,7 +116,7 @@ plugin.tx_browser_pi1 {
       37165 = +DAM: Sample
       37165 {
           // [String] Label of the parameter with the uid of the document
-        showUid = docUid
+        showUid = downloadsUid
           // [String] Select clause (don't confuse it with the SQL select)
         select (
           tx_dam.title
