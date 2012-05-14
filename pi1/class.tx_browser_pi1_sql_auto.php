@@ -572,6 +572,8 @@ class tx_browser_pi1_sql_auto
     if( empty( $csvOrder ) )
     {
       $csvOrder = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $this->conf_view['select'] );
+        // Take the first element only
+      list( $csvOrder ) = explode( ',', $csvOrder );
       list( $csvOrder ) = explode( ' ', $csvOrder );
     }
       // ORDER BY is empty. Take frist value from SELECT
