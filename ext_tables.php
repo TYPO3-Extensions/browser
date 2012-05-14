@@ -65,6 +65,7 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
       t3lib_extMgm::addStaticFile($_EXTKEY,'pi4/static/', '+Browser (kein Cache)');
         // Plugin 1: sample tt_news
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/tt_news/', '+Browser Beispiel fuer tt_news');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/dam/', '+Browser Beispiel fuer DAM');
         // Plugin 3
       t3lib_extMgm::addStaticFile($_EXTKEY,'pi3/static/', 'Browser Handbuecher');
         // TypoScript: Include Static Templates
@@ -80,6 +81,7 @@ if (!defined ('TYPO3_MODE'))  die ('Access denied.');
       t3lib_extMgm::addStaticFile($_EXTKEY,'pi4/static/', '+Browser (no cache)');
         // Plugin 1: sample tt_news
       t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/tt_news/', '+Browser Sample for tt_news');
+      t3lib_extMgm::addStaticFile($_EXTKEY,'static/samples/dam/', '+Browser Sample for DAM');
         // Plugin 3
       t3lib_extMgm::addStaticFile($_EXTKEY,'pi3/static/', 'Browser Manuals');
         // TypoScript: Include Static Templates

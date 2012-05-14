@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <body>
+<pre>
+<em>
+
+VERSION 3.9.14
+
+</em>
+
+<!-- ###TEMPLATE_LIST### begin -->
+      <div class="###MODE### listview-###MODE### ui-widget ui-corner-all">
+<!-- ###LIST_TITLE### begin -->
+        ###MY_TITLE###
+<!-- ###LIST_TITLE### end -->
+<!-- ###SEARCHFORM### begin -->
+        <div id="c###TT_CONTENT.UID###-list-searchbox-###MODE###" class="searchbox searchbox-list-###MODE###">
+          <form id="c###TT_CONTENT.UID###-list-searchbox-form-###MODE###" action="###ACTION###" method="post" >
+            <fieldset class="ui-corner-all">
+              <legend>###MY_SEARCH_LEGEND###</legend>
+              ###HIDDEN###
+              <input type="hidden" name="no_cache" value="1" />
+              <input type="hidden" name="tx_browser_pi1[plugin]" value="###PLUGIN###" />
+              <input class="sword" type="text" name="tx_browser_pi1[sword]" onfocus="if(this.value =='###SWORD_DEFAULT###') this.value=''" value="###SWORD###" />
+              <input class="button hidesubmit" type="submit" value="###MY_SEARCH###" />
+              <!-- ###BUTTON_CSV-EXPORT### begin -->
+              <input id="c###TT_CONTENT.UID###-list-submit-csv-export-###MODE###" class="button hidesubmit"  type="submit"  value="###MY_CSV_EXPORT###" />
+              <!-- ###BUTTON_CSV-EXPORT### end -->
+              <input class="reset" type="button" onclick="location='###MY_URL###'" value="###MY_RESET###" />
+              <!-- Add filters with the ###TABLE.FIELD### syntax and configure your filters with TypoScript --> 
+            </fieldset>
+          </form>
+          ###RESULTPHRASE###
+        </div><!-- ###SEARCHFORM### end -->
+        <div class="listarea">
+          <!-- ###LISTTABS### begin -->
+          <div id="c###TT_CONTENT.UID###-list-tabs-###MODE###" class="ui-tabs ui-tabs-list-###MODE### ui-widget ui-widget-content ui-corner-all">
+<!-- ###LISTHEAD### begin --><!-- ###LISTHEADITEM### begin -->
+            ###ITEM###<!-- ###LISTHEADITEM### end --><!-- ###LISTHEAD### end -->
+<!-- ###INDEXBROWSER### begin -->
+            <div id="c###TT_CONTENT.UID###-indexBrowser-###MODE###" class="indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE###">
+              <ul class="indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE###"><!-- ###INDEXBROWSERTABS### begin -->
+                <li###LI_CLASS###>###TAB###</li><!-- ###INDEXBROWSERTABS### end -->
+              </ul>
+            </div><!-- ###INDEXBROWSER### end -->
+<!-- ###PAGEBROWSER### begin -->
+           <div id="c###TT_CONTENT.UID###-browsebox-###MODE###" class="browsebox browsebox-list-###MODE###">          
+              ###RESULT_AND_ITEMS###
+            </div><!-- ###PAGEBROWSER### end -->
+<!-- ###MODESELECTOR### begin -->
+            <div id="c###TT_CONTENT.UID###-modeSelector-###MODE###" class="modeSelector modeSelector-list-###MODE###">
+              <ul class="ui-tabs-nav ui-tabs-nav-list-###MODE### ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+                <!-- ###MODESELECTORTABS### begin -->
+                <li id="c###TT_CONTENT.UID###-list-tab-###MODE###" class="ui-state-default ui-corner-top c###TT_CONTENT.UID###-list-tab###UI-STATE-ACTIVE######UI-TABS-SELECTED###">###TABS###</li>
+                <!-- ###MODESELECTORTABS### end -->
+              </ul>
+            </div><!-- ###MODESELECTOR### end -->
+<!-- ###LISTVIEW### begin -->
+            <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="listview listview-content listview-###MODE### listview-content-###MODE###">
+<!-- ###GROUPBY### begin -->
+<!-- ###GROUPBYHEAD### begin -->
+              <h2>###GROUPBY_GROUPNAME###</h2>
+<!-- ###GROUPBYHEAD### end -->
+<!-- ###GROUPBYBODY### begin -->
+              <ul><!-- ###LISTBODY### begin --><!-- ###LISTBODYITEM### begin -->
+                <li###CLASS###>###TX_DAM.TITLE### ###SOCIALMEDIA_BOOKMARKS###</li><!-- ###LISTBODYITEM### end -->
+              <!-- ###LISTBODY### end --></ul>
+<!-- ###GROUPBYBODY### end -->
+<!-- ###GROUPBY### end -->
+            </div><!-- /listview --><!-- ###LISTVIEW### end -->
+          </div> <!-- /ui-tabs --><!-- ###LISTTABS### end -->
+        </div> <!-- /listarea -->
+      </div> <!-- /ui-widget -->
+<!-- ###TEMPLATE_LIST### end -->
+
+
+
+<!-- ###TEMPLATE_SINGLE### begin -->
+<!-- ###MODESELECTOR### begin -->
+        <ul id="c###TT_CONTENT.UID###-modeSelector-single-###MODE###" class="modeSelector modeSelector-single-###MODE###"><!-- ###MODESELECTORTABS### begin -->
+          <li###CLASS###>###TABS###</li><!-- ###MODESELECTORTABS### end -->
+        </ul><!-- ###MODESELECTOR### end -->
+        <!-- ###SINGLEVIEW### begin -->
+<!-- ###AREA_FOR_AJAX_LIST_01### begin -->
+        <div id="c###TT_CONTENT.UID###-singleview-###MODE###" class="singleview singleview-###MODE###">
+          ###RECORD_BROWSER###
+          <div class="ui-widget ui-corner-all">
+            <!-- ###SINGLEBODY### begin --><!-- ###SINGLEBODYROW### begin -->
+            ###TX_DAM.TITLE### ###SOCIALMEDIA_BOOKMARKS###
+            <!-- ###SINGLEBODYROW### end -->
+  <!-- ###AREA_FOR_AJAX_LIST_01### end -->
+            <!-- ###BACKBUTTON### begin -->
+            <p class="backbutton">
+              ###BUTTON###
+            </p>
+            <!-- ###BACKBUTTON### end -->
+  <!-- ###AREA_FOR_AJAX_LIST_02### begin -->
+            <!-- ###SINGLEBODY### end -->
+          </div>
+        </div>
+<!-- ###AREA_FOR_AJAX_LIST_02### end -->
+        <!-- ###SINGLEVIEW### end -->
+<!-- ###TEMPLATE_SINGLE### end -->
+
+
+
+<!-- ###TEMPLATE_SELECTBOX_VALID### begin -->
+            <div class="sortbox c###TT_CONTENT.UID###-###VIEW###view-###MODE###-sortbox">
+              <form ###CLASS### action="###URL###" method="POST">
+                <fieldset>
+                  <legend>###LEGEND###</legend>
+                  <input type="hidden" name="no_cache" value="1" />
+                  ###HIDDEN###
+                  ###SELECTBOX###
+                  <input class="button" type="submit" value="###BUTTON###" />
+                </fieldset>
+              </form>
+            </div>
+<!-- ###TEMPLATE_SELECTBOX_VALID### end -->
+
+  </body>
+</html>

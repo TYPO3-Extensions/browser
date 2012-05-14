@@ -1,0 +1,37 @@
+plugin.tx_browser_pi1 {
+  template {
+    extensions {
+      dam {
+        sample {
+            // [String] Name of the template. It will displayed in the plugin/flexform
+          name      = +DAM: Sample
+          file      = EXT:browser/res/sample/dam/default.html
+            // [csv] Comma seperated list with the number of the correspondening views
+          csvViews  = 37165
+        }
+      }
+    }
+  }
+  views {
+    list {
+      37165 = +DAM: Sample
+      37165 {
+          // [String] Name of the view. It will displayed in the plugin/flexform
+        name    = +DAM: Sample
+          // [String] Select clause (don't confuse it with the SQL select)
+        select (
+          tx_dam.title
+        )
+      }
+    }
+    single {
+      37165 = +DAM: Sample
+      37165 {
+          // [String] Select clause (don't confuse it with the SQL select)
+        select (
+          tx_dam.title
+        )
+      }
+    }
+  }
+}
