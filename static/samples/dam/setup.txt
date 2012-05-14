@@ -121,6 +121,12 @@ plugin.tx_browser_pi1 {
         select (
           tx_dam.title
         )
+        tx_dam {
+          title = TEXT
+          title {
+            value = ###TX_DAM.TITLE###
+          }
+        }
       }
     }
   }
