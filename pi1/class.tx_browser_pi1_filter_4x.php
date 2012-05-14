@@ -5205,15 +5205,23 @@ class tx_browser_pi1_filter_4x {
             filter.' . $table . '.' . $field . '.first_item.cObject
             ';
         }
-        if ( $this->conf_view['filter.'][$table . '.'][$field . '.']['first_item.']['value_stdWrap.'] )
+        if ( $this->conf_view['filter.'][$table . '.'][$field . '.']['first_item.']['stdWrap.'] )
         {
           $prompt_03 = '
+            filter.' . $table . '.' . $field . '.first_item.stdWrap is deprecated. <br />
+            Please use: <br />
+            filter.' . $table . '.' . $field . '.first_item.cObject
+            ';
+        }
+        if ( $this->conf_view['filter.'][$table . '.'][$field . '.']['first_item.']['value_stdWrap.'] )
+        {
+          $prompt_04 = '
             filter.' . $table . '.' . $field . '.first_item.value_stdWrap is deprecated. <br />
             Please use: <br />
             filter.' . $table . '.' . $field . '.first_item.cObject
             ';
         }
-        if( $prompt_01 . $prompt_02 . $prompt_03 )
+        if( $prompt_01 . $prompt_02 . $prompt_03 . $prompt_04 )
         {
           echo '
             <div style="border:1em solid red;padding:2em;background:white;">
@@ -5240,6 +5248,14 @@ class tx_browser_pi1_filter_4x {
             echo '
                 <p>
                   ' . $prompt_03 . '
+                </p>
+              ';
+          }
+          if( $prompt_04 )
+          {
+            echo '
+                <p>
+                  ' . $prompt_04 . '
                 </p>
               ';
           }
