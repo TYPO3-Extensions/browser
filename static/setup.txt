@@ -2144,9 +2144,9 @@ plugin.tx_browser_pi1 {
               tableField = ###{$plugin.tx_browser_pi1.downloadmodule.tableField}###
               fields {
                 from_path = ###{$plugin.tx_browser_pi1.downloadmodule.path}###
-                files     = {$plugin.tx_browser_pi1.downloadmodule.files}
+                files     = ###{$plugin.tx_browser_pi1.downloadmodule.files}###
                   // [Integer] 0, 1, 2
-                layout    = {$plugin.tx_browser_pi1.downloadmodule.files}
+                layout    = ###{$plugin.tx_browser_pi1.downloadmodule.layout}###
               }
               stdWrap {
                 if.isTrue = ###{$plugin.tx_browser_pi1.downloadmodule.files}###{$plugin.tx_browser_pi1.downloadmodule.path}###
