@@ -1162,6 +1162,7 @@ class tx_browser_pi1_template
         $arr_wrap_grouptitle = array(false, false);
       }
         // Rows
+      $c = 0;
       foreach((array) $rows as $row => $elements)
       {
         if( $this->ignore_empty_rows_rule )
@@ -1214,21 +1215,22 @@ class tx_browser_pi1_template
           // Bugfix     #10762, dwildt, 101201
           //$markerBodyRows['###CLASS###'] = ($c++%2 ? ' class="odd"' : '');
         $str_class = null;
-        if($c - 2 == 0)
+        //if($c - 2 == 0)
+        if( $c == 0 )
         {
           $str_class = 'first ';
         }
-        if($c++%2)
+        if( ( $c + 1) % 2 )
         {
-          $str_class = $str_class.'odd ';
+          $str_class = $str_class . 'odd ';
         }
-        $str_class = $str_class.'item-'.($c - 2).' ';
-        if(count($rows) == ($c - 2))
+        $str_class = $str_class . 'item-'. ( $c ) . ' ';
+        if( count( $rows ) == ( $c + 1 ) )
         {
-          $str_class = $str_class.'last ';
+          $str_class = $str_class . 'last ';
         }
-        $str_class = trim($str_class);
-        $markerArray['###CLASS###'] = ' class="'.$str_class.'"';
+        $str_class = trim( $str_class );
+        $markerArray['###CLASS###'] = ' class="' . $str_class . '"';
           // Suggestion #8856, dwildt, 100812
 
           // Bug #5922, 100210
@@ -1241,6 +1243,7 @@ class tx_browser_pi1_template
           $tmpl_row   = $this->pObj->cObj->substituteMarkerArray($tmpl_row, $markerArray);
           $tmpl_rows .= $tmpl_row;
         }
+        $c++;
       }
         // Rows
       unset($markerArray);
