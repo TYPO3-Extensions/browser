@@ -12,6 +12,9 @@ plugin.tx_browser_pi1 {
       }
     }
   }
+
+  general_stdWrap >
+
   views {
     list {
       37165 = +DAM: Sample
