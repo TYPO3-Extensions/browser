@@ -1884,13 +1884,13 @@ class tx_browser_pi1_backend
     $arr_jquery_uis = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['templating.']['jquery_ui.'];
 
       // Loop: jquery_ui
-    foreach((array) $arr_jquery_uis as $key_jquery_ui => $arr_jquery_ui)
+    foreach( ( array ) $arr_jquery_uis as $key_jquery_ui => $arr_jquery_ui )
     {
-      $jquery_ui_key    = strtolower(substr($key_jquery_ui, 0, -1));
-      $jquery_ui_label  = $this->locallang[$arr_jquery_ui['label']];
+      $jquery_ui_key    = strtolower( substr( $key_jquery_ui, 0, -1 ) );
+      $jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
       $jquery_ui_icon   = $arr_jquery_ui['icon'];
 
-      $arr_pluginConf['items'][] = array($jquery_ui_label, $jquery_ui_key, $jquery_ui_icon);
+      $arr_pluginConf['items'][] = array( $jquery_ui_label, $jquery_ui_key, $jquery_ui_icon );
     }
       // Loop: jquery_ui
 
@@ -1946,7 +1946,8 @@ class tx_browser_pi1_backend
     //$this->locallang = $LOCAL_LANG[$lang];
       // 111126, dwildt+
       // 111126, dwildt-
-    $fileRef                = 'EXT:browser/pi1/locallang_flexform.xml';
+    $fileRef                = 'EXT:browser/pi1/flexform_locallang.php';
+//    $fileRef                = 'EXT:browser/pi1/locallang_flexform.xml';
     $setGlobal              = 0;
     $mergeLocalOntoDefault  = 0;
     $LOCAL_LANG             = $GLOBALS['LANG']->includeLLFile( $fileRef, $setGlobal, $mergeLocalOntoDefault );
