@@ -1045,7 +1045,7 @@ class tx_browser_pi1_template
           //$markerBodyRows['###CLASS###'] = ($c++%2 ? ' class="odd"' : '');
         $str_class = null;
 //        if( ( $c - 2 ) == 0 )
-        if( ( $c == 0 )
+        if( $c == 0 )
         {
           $str_class = 'first ';
         }
