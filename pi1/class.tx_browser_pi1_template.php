@@ -1043,25 +1043,22 @@ class tx_browser_pi1_template
           // Suggestion #8856,  dwildt, 100812
           // Bugfix     #10762, dwildt, 101201
           //$markerBodyRows['###CLASS###'] = ($c++%2 ? ' class="odd"' : '');
-        $str_class = null;
-//        if( ( $c - 2 ) == 0 )
+          // 120515, dwildt
+        $str_class = 'item-'. ( $c );
         if( $c == 0 )
         {
-          $str_class = 'first ';
+          $str_class = $str_class . ' first';
         }
-          // #34963, dwildt, 1-
-        //if($c++%2)
-          // #34963, dwildt, 2+
-        if( ( $c + 1 ) % 2 )
-        {
-          $str_class = $str_class . 'odd ';
+        else {
+          if( ( $c ) % 2 )
+          {
+            $str_class = $str_class . ' odd ';
+          }
+          if( count( $rows ) == ( $c + 1 ) )
+          {
+            $str_class = $str_class . ' last';
+          }
         }
-        $str_class = $str_class . 'item-' . ( $c - 2 ) . ' XXX ';
-        if( count( $rows ) == ( $c - 2 ) )
-        {
-          $str_class = $str_class . 'last ';
-        }
-        $str_class = trim($str_class);
         $markerBodyRows['###CLASS###'] = ' class="' . $str_class . '"';
           // Suggestion #8856, dwildt, 100812
 
@@ -1214,8 +1211,8 @@ class tx_browser_pi1_template
           // Suggestion #8856,  dwildt, 100812
           // Bugfix     #10762, dwildt, 101201
           //$markerBodyRows['###CLASS###'] = ($c++%2 ? ' class="odd"' : '');
+          // 120515, dwildt
         $str_class = 'item-'. ( $c );
-        //if($c - 2 == 0)
         if( $c == 0 )
         {
           $str_class = $str_class . ' first';
