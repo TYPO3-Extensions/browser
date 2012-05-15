@@ -1,14 +1,14 @@
 plugin.tx_browser_pi1 {
 
-  # cat=Browser - Download Module/enable;   type=boolean;  label= Debugging: If enabled, the download module will prompt to the DRS (Development Reporting System)
+  # cat=Browser - Download Module/enable/100;   type=boolean;  label= Debugging: If enabled, the download module will prompt to the DRS (Development Reporting System)
   downloadmodule.drs = 0
-  # cat=Browser - Download Module/enable;   type=options[0,1,2]; label= 0: no icon, no preview. 1: application icon. 2: preview
+  # cat=Browser - Download Module/enable/101;   type=options[0,1,2]; label= Thumbnail design: 0: no icon, no preview. 1: application icon. 2: preview
   downloadmodule.layout = 2 
-  # cat=Browser - Download Module/enable;   type=string;  label= Uid parameter:Parameter for the uid of the document in the URL
+  # cat=Browser - Download Module/enable/102;   type=string;  label= Uid parameter:Parameter for the uid of the document in the URL
   downloadmodule.urlParam = downloadUid 
-  # cat=Browser - Download Module/dims;     type=int+;    label= Thumbnail list view - width: Max width for a thumbnail in the list view
+  # cat=Browser - Download Module/dims/100;     type=int+;    label= Thumbnail list view - width: Max width for a thumbnail in the list view
   downloadmodule.thumbnailListViewMaxW = 80
-  # cat=Browser - Download Module/dims;     type=int+;    label= Thumbnail single view - width: Max width for a thumbnail in the single view
+  # cat=Browser - Download Module/dims/101;     type=int+;    label= Thumbnail single view - width: Max width for a thumbnail in the single view
   downloadmodule.thumbnailSingleViewMaxW = 240
   # cat=Browser - Download Module//100;          type=string;  label= field files: table.field with the files (lowercase!):Examples: tx_dam.file_name, tx_org_downloads.documents
   downloadmodule.tableField = tx_org_downloads.documents

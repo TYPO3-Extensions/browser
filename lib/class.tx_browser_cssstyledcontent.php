@@ -435,6 +435,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // get layout type
       // 0: link only, 1: with application icon, 2: with based icon
     $type = intval( $this->cObj->stdWrap( $conf['fields.']['layout'], $conf['fields.']['layout.'] ) );
+      // DRS
+    if ( $this->b_drs_renderuploads )
+    {
+      $prompt = 'type = ' . $type . ' <- TypoScript property fields.layout' ;
+      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
 
       // set default path
     $path = 'uploads/media/';
