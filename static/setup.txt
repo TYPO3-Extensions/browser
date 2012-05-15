@@ -2055,6 +2055,116 @@ plugin.tx_browser_pi1 {
           }
         }
       }
+      modules {
+        download {
+          thumbnails {
+            withLinkToListView < tt_content.uploads.20
+            withLinkToListView {
+              userFunc = tx_browser_cssstyledcontent->render_uploads
+              userFunc {
+                  // Enable the DRS (you need devlog)
+                drs = TEXT
+                drs {
+                  value = {$plugin.tx_browser_pi1.downloadmodule.drs}
+                }
+              }
+                // Don't outerWrap with <table> by default
+              outerWrap = |
+              filePath >
+              itemRendering {
+                10 {
+                  if    >
+                  wrap  >
+                }
+                20 >
+                30 >
+                wrap = <div class="csc-uploads-thumbnail csc-uploads-thumbnail-first">|</div> |*| <div class="csc-uploads-thumbnail csc-uploads-thumbnail-even">|</div> || <div class="csc-uploads-thumbnail">|</div> |*| <div class="csc-uploads-thumbnail csc-uploads-thumbnail-last">|</div>
+              }
+              linkProc {
+                iconCObject {
+                  file {
+                    width = 80
+                  }
+                }
+                  // download, download_shipping, shipping
+                tx_browser_pi1 = = COA
+                default {
+                    // Link with preview or application icon
+                  10 = IMAGE
+                  10 {
+                    file {
+                      import {
+                        data = register : ICON_REL_PATH
+                      }
+                      width = 80
+                    }
+                    imageLinkWrap = 1
+                    imageLinkWrap {
+                      enable = 1
+                      typolink {
+                        parameter = {$plugin.org.pages.downloads}
+                        title = TEXT
+                        title {
+                          value = Download: '###TX_ORG_DOWNLOADS.TITLE###'
+                          lang {
+                            de  = Herunterladen: '###TX_ORG_DOWNLOADS.TITLE###'
+                            en  = Download: '###TX_ORG_DOWNLOADS.TITLE###'
+                          }
+                        }
+                        additionalParams  = &tx_browser_pi1[downloadsUid]=###TX_ORG_DOWNLOADS.UID###
+                        useCacheHash      = 1
+                      }
+                    }
+                  }
+                    // Link devider
+                  20 = TEXT
+                  20 {
+                    value = //**//
+                  }
+                    // Link with label
+                  30 = TEXT
+                  30 {
+                    data = register : filename
+                    typolink {
+                      parameter = {$plugin.org.pages.downloads}
+                      title = TEXT
+                      title {
+                        value = Download: '###TX_ORG_DOWNLOADS.TITLE###'
+                        lang {
+                          de  = Herunterladen: '###TX_ORG_DOWNLOADS.TITLE###'
+                          en  = Download: '###TX_ORG_DOWNLOADS.TITLE###'
+                        }
+                      }
+                      additionalParams  = &tx_browser_pi1[downloadsUid]=###TX_ORG_DOWNLOADS.UID###
+                      useCacheHash      = 1
+                    }
+                  }
+                }
+              }
+              tableField = tx_org_downloads.documents
+              fields {
+                from_path = ###TX_ORG_DOWNLOADS.DOCUMENTS_FROM_PATH###
+                files     = ###TX_ORG_DOWNLOADS.DOCUMENTS###
+                  // [Integer] 0, 1, 2
+                layout    = 2
+              }
+              stdWrap {
+                if.isTrue = ###TX_ORG_DOWNLOADS.DOCUMENTS######TX_ORG_DOWNLOADS.DOCUMENTS_FROM_PATH###
+              }
+            }
+
+            }
+            withDownloadLink {
+            }
+          }
+          labels {
+            withLinkToListView {
+            }
+            withDownloadLink {
+            }
+          }
+        }
+      }
     }
 
       // [Boolean] Display caption in List view?

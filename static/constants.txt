@@ -1,68 +1,74 @@
 plugin.tx_browser_pi1 {
 
-  # cat=Browser - TYPO3 without PHP//110;       type=int+;    label= EN:Id of the sys_language record for the English language.
+  # cat=Browser - Download Module//;       type=boolean;  label= Debugging: If enabled, the download module will prompt to the DRS (Development Reporting System)
+  downloadmodule.drs = 0
+
+  # cat=Browser - Image Dimensions/dims;   type=int+;    label= Single image max width: Max width for an image displayed in a single view
+  singleMaxW = 240
+  # cat=Browser - Image Dimensions/dims;   type=int+;    label= Single image max height: Max height for an image displayed in a single view
+  singleMaxH = 180
+  # cat=Browser - Image Dimensions/dims;   type=int+;    label= Single image maximum amount: Amount of maximum images per one record in a single view
+  singleImageCount = 10
+  # cat=Browser - Image Dimensions/dims;   type=int+;    label= List image pop-up max width: Max width for an image displayed in an extra pop-up window
+  singlePopupMaxW = 1000m
+  # cat=Browser - Image Dimensions/dims;   type=int+;    label= List image pop-up max height: Max height for an image displayed in an extra pop-up window
+  singlePopupMaxH = 800
+  # cat=Browser - Image Dimensions/dims;   type=int+;    label= List image max width: Max width for an image displayed in a list view
+  listMaxW = 80
+  # cat=Browser - Image Dimensions/dims;   type=int+;    label= List image max height: Max height for an image displayed in a list view
+  listMaxH = 60
+  # cat=Browser - Image Dimensions/dims;   type=int+;    label= List image maximum amount: Amount of maximum images per one record in a list view
+  listImageCount = 1
+  # cat=Browser - Image Dimensions/dims;   type=int+;    label= List image pop-up max width: Max width for an image displayed in an extra pop-up window
+  listPopupMaxW = 500m
+  # cat=Browser - Image Dimensions/dims;   type=int+;    label= List image pop-up max height: Max height for an image displayed in an extra pop-up window
+  listPopupMaxH = 500
+
+  # cat=Browser - jQuery//;       type=string;  label= jQuery.plugin.jstree selector: HTML id of div tag which contains a tree view
+  jQuery.plugin.jstree.selector = tx-browser-pi1-jstree
+  # cat=Browser - jQuery//;       type=options[apple,classic,default,default-rtl];  label= jQuery.plugin.jstree theme: Name of the theme of tree views
+  jQuery.plugin.jstree.theme    = apple
+
+  # cat=Browser - Localisation/;       type=int+;    label= EN:Id of the sys_language record for the English language.
   typeNum.sys_language_en = 0
-  # cat=Browser - TYPO3 without PHP//111;       type=int+;    label= DE:Id of the sys_language record for the German language.
+  # cat=Browser - Localisation/;       type=int+;    label= DE:Id of the sys_language record for the German language.
   typeNum.sys_language_de = 0
-  # cat=Browser - TYPO3 without PHP//112;       type=int+;    label= ES:Id of the sys_language record for the Spanish language.
+  # cat=Browser - Localisation/;       type=int+;    label= ES:Id of the sys_language record for the Spanish language.
   typeNum.sys_language_es = 0
-  # cat=Browser - TYPO3 without PHP//113;       type=int+;    label= FR:Id of the sys_language record for the French language.
+  # cat=Browser - Localisation/;       type=int+;    label= FR:Id of the sys_language record for the French language.
   typeNum.sys_language_fr = 0
-  # cat=Browser - TYPO3 without PHP//114;       type=int+;    label= IT:Id of the sys_language record for the Italien language.
+  # cat=Browser - Localisation/;       type=int+;    label= IT:Id of the sys_language record for the Italien language.
   typeNum.sys_language_it = 0
 
-  # cat=Browser - TYPO3 without PHP/enable/330; type=boolean; label= SQL Relation Building Automatically: Try to build relations automatically? TRUE is recommended.
+  # cat=Browser - Navigation/;       type=string;  label= Record Browser: uid name (default: showUid)
+  recordBrowser.uidName = showUid
+
+  # cat=Browser - Relation Buildung/enable; type=boolean; label= SQL Relation Building Automatically: Try to build relations automatically? TRUE is recommended.
   autoSQLrelConfig = 1
-  # cat=Browser - TYPO3 without PHP/enable/340; type=boolean; label= SQL Relation Building Oneway Only: Use only relations from the local table to the foreign table? TRUE is recommended.
+  # cat=Browser - Relation Buildung/enable; type=boolean; label= SQL Relation Building Oneway Only: Use only relations from the local table to the foreign table? TRUE is recommended.
   autoSQLrelOnlyOneway = 1
-  # cat=Browser - TYPO3 without PHP/enable/360; type=boolean; label= SQL Simple Relation with Self References: Use self references in simple relations? FALSE is recommended.
+  # cat=Browser - Relation Buildung/enable; type=boolean; label= SQL Simple Relation with Self References: Use self references in simple relations? FALSE is recommended.
   autoSQLrelSelfReference = 0
-  # cat=Browser - TYPO3 without PHP/enable/380; type=boolean; label= Discover Title: Try to discover fields with titles and wrap them as the header? Only for single views. TRUE is recommended.
+  # cat=Browser - Relation Buildung/enable; type=boolean; label= Discover Title: Try to discover fields with titles and wrap them as the header? Only for single views. TRUE is recommended.
   autoDiscoverTitle = 1
-  # cat=Browser - TYPO3 without PHP/enable/381; type=boolean; label= Discover Timestamps: Try to discover fields with timestamps and wrap them in a human readable format (See format in the section 'Others' below) ? TRUE is recommended.
+  # cat=Browser - Relation Buildung/enable; type=boolean; label= Discover Timestamps: Try to discover fields with timestamps and wrap them in a human readable format (See format in the section 'Others' below) ? TRUE is recommended.
   autoDiscoverTimestamp = 1
-  # cat=Browser - TYPO3 without PHP/enable/382; type=boolean; label= Discover Images: Try to discover fields with image file names, image capture, image alttext and image titletext. Wrap it as an image object? TRUE is recommended.
+  # cat=Browser - Relation Buildung/enable; type=boolean; label= Discover Images: Try to discover fields with image file names, image capture, image alttext and image titletext. Wrap it as an image object? TRUE is recommended.
   autoDiscoverImage = 1
-  # cat=Browser - TYPO3 without PHP/enable/383; type=boolean; label= Discover Documents: Try to discover fields with document file names and wrap values as documents? TRUE is recommended.
+  # cat=Browser - Relation Buildung/enable; type=boolean; label= Discover Documents: Try to discover fields with document file names and wrap values as documents? TRUE is recommended.
   autoDiscoverDocument = 1
 
 
-  # cat=Browser - TYPO3 without PHP/dims/210;   type=int+;    label= Single image max width: Max width for an image displayed in a single view
-  singleMaxW = 240
-  # cat=Browser - TYPO3 without PHP/dims/211;   type=int+;    label= Single image max height: Max height for an image displayed in a single view
-  singleMaxH = 180
-  # cat=Browser - TYPO3 without PHP/dims/212;   type=int+;    label= Single image maximum amount: Amount of maximum images per one record in a single view
-  singleImageCount = 10
-  # cat=Browser - TYPO3 without PHP/dims/220;   type=int+;    label= List image pop-up max width: Max width for an image displayed in an extra pop-up window
-  singlePopupMaxW = 1000m
-  # cat=Browser - TYPO3 without PHP/dims/221;   type=int+;    label= List image pop-up max height: Max height for an image displayed in an extra pop-up window
-  singlePopupMaxH = 800
-  # cat=Browser - TYPO3 without PHP/dims/250;   type=int+;    label= List image max width: Max width for an image displayed in a list view
-  listMaxW = 80
-  # cat=Browser - TYPO3 without PHP/dims/251;   type=int+;    label= List image max height: Max height for an image displayed in a list view
-  listMaxH = 60
-  # cat=Browser - TYPO3 without PHP/dims/252;   type=int+;    label= List image maximum amount: Amount of maximum images per one record in a list view
-  listImageCount = 1
-  # cat=Browser - TYPO3 without PHP/dims/260;   type=int+;    label= List image pop-up max width: Max width for an image displayed in an extra pop-up window
-  listPopupMaxW = 500m
-  # cat=Browser - TYPO3 without PHP/dims/261;   type=int+;    label= List image pop-up max height: Max height for an image displayed in an extra pop-up window
-  listPopupMaxH = 500
-
-  # cat=Browser - TYPO3 without PHP//410;       type=int+;    label= AJAX page object: Type number (typenum) of the AJAX page object. Default: 28562
-  typeNum.ajaxPageObj = 28562
-  # cat=Browser - TYPO3 without PHP//411;       type=int+;    label= CSV page object: Type number (typenum) of the CSV page object. Default: 29370
-  typeNum.csvPageObj = 29370
-  # cat=Browser - TYPO3 without PHP//412;       type=int+;    label= Download page object: Type number (typenum) of the page object for downloads. Default: 31230
-  typeNum.downloadPageObj = 31230
-  # cat=Browser - TYPO3 without PHP//413;       type=int+;    label= Page object for map category markers: Type number (typenum) of the map page object. Default: 32654
-  typeNum.mapPageObj = 32654
-  # cat=Browser - TYPO3 without PHP//420;       type=string;  label= Format for strftime
+  # cat=Browser - Time Format//;       type=string;  label= Format for strftime
   strftime = %a, %d.%b.%y %H:%M
-  # cat=Browser - TYPO3 without PHP//430;       type=string;  label= Record Browser: uid name (default: showUid)
-  recordBrowser.uidName = showUid
 
-  # cat=Browser - TYPO3 without PHP//510;       type=string;  label= jQuery.plugin.jstree selector: HTML id of div tag which contains a tree view
-  jQuery.plugin.jstree.selector = tx-browser-pi1-jstree
-  # cat=Browser - TYPO3 without PHP//511;       type=options[apple,classic,default,default-rtl];  label= jQuery.plugin.jstree theme: Name of the theme of tree views
-  jQuery.plugin.jstree.theme    = apple
+  # cat=Browser - Page Objects//;       type=int+;    label= AJAX page object: Type number (typenum) of the AJAX page object. Default: 28562
+  typeNum.ajaxPageObj = 28562
+  # cat=Browser - Page Objects//;       type=int+;    label= CSV page object: Type number (typenum) of the CSV page object. Default: 29370
+  typeNum.csvPageObj = 29370
+  # cat=Browser - Page Objects//;       type=int+;    label= Download page object: Type number (typenum) of the page object for downloads. Default: 31230
+  typeNum.downloadPageObj = 31230
+  # cat=Browser - Page Objects//;       type=int+;    label= Page object for map category markers: Type number (typenum) of the map page object. Default: 32654
+  typeNum.mapPageObj = 32654
+
 }
