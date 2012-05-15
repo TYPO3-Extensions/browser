@@ -2068,7 +2068,7 @@ plugin.tx_browser_pi1 {
                   value = {$plugin.tx_browser_pi1.downloadmodule.drs}
                 }
               }
-                // Don't outerWrap with <table> by default
+                // Don't outerWrap the thumbnail with <table> by default
               outerWrap = |
               filePath >
               itemRendering {
@@ -2083,11 +2083,11 @@ plugin.tx_browser_pi1 {
               linkProc {
                 iconCObject {
                   file {
-                    width = 80
+                    width = {$plugin.tx_browser_pi1.downloadmodule.thumbnailListViewMaxW}
                   }
                 }
-                  // download, download_shipping, shipping
-                tx_browser_pi1 = = COA
+                  // Render the thumbnail
+                tx_browser_pi1 = COA
                 default {
                     // Link with preview or application icon
                   10 = IMAGE
@@ -2096,7 +2096,7 @@ plugin.tx_browser_pi1 {
                       import {
                         data = register : ICON_REL_PATH
                       }
-                      width = 80
+                      width = {$plugin.tx_browser_pi1.downloadmodule.thumbnailListViewMaxW}
                     }
                     imageLinkWrap = 1
                     imageLinkWrap {
@@ -2105,13 +2105,13 @@ plugin.tx_browser_pi1 {
                         parameter = {$plugin.org.pages.downloads}
                         title = TEXT
                         title {
-                          value = Download: '###TX_ORG_DOWNLOADS.TITLE###'
+                          value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
                           lang {
-                            de  = Herunterladen: '###TX_ORG_DOWNLOADS.TITLE###'
-                            en  = Download: '###TX_ORG_DOWNLOADS.TITLE###'
+                            de  = Herunterladen: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+                            en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
                           }
                         }
-                        additionalParams  = &tx_browser_pi1[downloadsUid]=###TX_ORG_DOWNLOADS.UID###
+                        additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.downloadmodule.urlParam}]=###{$plugin.tx_browser_pi1.downloadmodule.titles}###
                         useCacheHash      = 1
                       }
                     }
@@ -2129,13 +2129,13 @@ plugin.tx_browser_pi1 {
                       parameter = {$plugin.org.pages.downloads}
                       title = TEXT
                       title {
-                        value = Download: '###TX_ORG_DOWNLOADS.TITLE###'
+                        value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
                         lang {
-                          de  = Herunterladen: '###TX_ORG_DOWNLOADS.TITLE###'
-                          en  = Download: '###TX_ORG_DOWNLOADS.TITLE###'
+                          de  = Herunterladen: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+                          en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
                         }
                       }
-                      additionalParams  = &tx_browser_pi1[downloadsUid]=###TX_ORG_DOWNLOADS.UID###
+                      additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.downloadmodule.urlParam}]=###{$plugin.tx_browser_pi1.downloadmodule.titles}###
                       useCacheHash      = 1
                     }
                   }
@@ -2143,16 +2143,14 @@ plugin.tx_browser_pi1 {
               }
               tableField = tx_org_downloads.documents
               fields {
-                from_path = ###TX_ORG_DOWNLOADS.DOCUMENTS_FROM_PATH###
-                files     = ###TX_ORG_DOWNLOADS.DOCUMENTS###
+                from_path = ###{$plugin.tx_browser_pi1.downloadmodule.path}###
+                files     = {$plugin.tx_browser_pi1.downloadmodule.files}
                   // [Integer] 0, 1, 2
-                layout    = 2
+                layout    = {$plugin.tx_browser_pi1.downloadmodule.files}
               }
               stdWrap {
-                if.isTrue = ###TX_ORG_DOWNLOADS.DOCUMENTS######TX_ORG_DOWNLOADS.DOCUMENTS_FROM_PATH###
+                if.isTrue = {$plugin.tx_browser_pi1.downloadmodule.files}###{$plugin.tx_browser_pi1.downloadmodule.path}###
               }
-            }
-
             }
             withDownloadLink {
             }

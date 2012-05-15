@@ -1,7 +1,23 @@
 plugin.tx_browser_pi1 {
 
-  # cat=Browser - Download Module//;       type=boolean;  label= Debugging: If enabled, the download module will prompt to the DRS (Development Reporting System)
+  # cat=Browser - Download Module/enable;   type=boolean;  label= Debugging: If enabled, the download module will prompt to the DRS (Development Reporting System)
   downloadmodule.drs = 0
+  # cat=Browser - Download Module/enable;   type=int+;    label= Layout:0: Above center; 1: Above right; 2: Above left; 8: Below center; 9: Below right; 10: Below, left; 17: In text right; 18: In text left; 25: Beside Text right; 26: Beside Text left
+  downloadmodule.layout = 2 
+  # cat=Browser - Download Module/enable;   type=string;  label= Uid parameter:Parameter for the uid of the document in the URL
+  downloadmodule.urlParam = downloadUid 
+  # cat=Browser - Download Module;          type=string;  label= Field uid: TABLE.FIELD with the uid (uppercase !) of your media record:Examples: TX_DAM.UID, TX_ORG_DOWNLOADS.UID, TX_MYEXT_MAIN.UID
+  downloadmodule.uid = TX_ORG_DOWNLOADS.UID 
+  # cat=Browser - Download Module;          type=string;  label= Field files: TABLE.FIELD with the files (uppercase !):Examples: TX_DAM.FILE_NAME, TX_ORG_DOWNLOADS.DOCUMENTS, TX_MYEXT_MAIN.FILES
+  downloadmodule.files = TX_ORG_DOWNLOADS.DOCUMENTS
+  # cat=Browser - Download Module;          type=string;  label= Field path: TABLE.FIELD with the files (uppercase !):Examples: TX_DAM.FILE_NAME, TX_ORG_DOWNLOADS.DOCUMENTS, TX_MYEXT_MAIN.FILES
+  downloadmodule.path = TX_ORG_DOWNLOADS.DOCUMENTS
+  # cat=Browser - Download Module;          type=string;  label= Field titles: TABLE.FIELD with the titles (uppercase !):Examples: TX_DAM.TITLE, TX_ORG_DOWNLOADS.TITLE, TX_MYEXT_MAIN.TITLE
+  downloadmodule.titles = TX_ORG_DOWNLOADS.TITLE
+  # cat=Browser - Download Module/dims;     type=int+;    label= Thumbnail list view - width: Max width for a thumbnail in the list view
+  downloadmodule.thumbnailListViewMaxW = 80
+  # cat=Browser - Download Module/dims;     type=int+;    label= Thumbnail single view - width: Max width for a thumbnail in the single view
+  downloadmodule.thumbnailListViewMaxW = 240
 
   # cat=Browser - Image Dimensions/dims;   type=int+;    label= Single image max width: Max width for an image displayed in a single view
   singleMaxW = 240
