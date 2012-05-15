@@ -16,7 +16,7 @@ plugin.tx_browser_pi1 {
     list {
       37165 = +DAM: Sample
       37165 {
-          // [String] Name of the view. It will displayed in the plugin/flexform
+          // [String] Parameter for the uid of the document in the URL
         name    = +DAM: Sample
           // [String] Label of the parameter with the uid of the document
         showUid = {$plugin.tx_browser_pi1.downloadmodule.urlParam}
@@ -41,8 +41,8 @@ plugin.tx_browser_pi1 {
     single {
       37165 = +DAM: Sample
       37165 {
-          // [String] Label of the parameter with the uid of the document
-        showUid = downloadsUid
+          // [String] Parameter for the uid of the document in the URL
+        showUid = {$plugin.tx_browser_pi1.downloadmodule.urlParam}
           // [String] Select clause (don't confuse it with the SQL select)
         select (
           tx_dam.title
