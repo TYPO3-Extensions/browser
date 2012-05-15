@@ -2113,19 +2113,17 @@ plugin.tx_browser_pi1 {
                     imageLinkWrap {
                       enable = 1
                       typolink {
-                        parameter {
-                          data = page:uid
-                        }
-//                        title = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+                        parameter = {$plugin.tx_browser_pi1.downloadmodule.pageUid}
+                        title = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
 // 120515, dwildt: Bug: TYPO3 renders content as "TEXT"
-                        title = TEXT
-                        title {
-                          value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+//                        title = TEXT
+//                        title {
+//                          value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
 //                          lang {
 //                            de  = Herunterladen: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
 //                            en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
 //                          }
-                        }
+//                        }
                         additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.downloadmodule.urlParam}]=###{$plugin.tx_browser_pi1.downloadmodule.uid}###
                         useCacheHash      = 1
                       }
@@ -2170,6 +2168,7 @@ plugin.tx_browser_pi1 {
                 if.isTrue = ###{$plugin.tx_browser_pi1.downloadmodule.files}###{$plugin.tx_browser_pi1.downloadmodule.path}###
               }
             }
+            withDownloadLink < .withLinkToListView
             withDownloadLink {
             }
           }
