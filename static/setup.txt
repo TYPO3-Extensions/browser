@@ -2102,7 +2102,7 @@ plugin.tx_browser_pi1 {
                     imageLinkWrap {
                       enable = 1
                       typolink {
-                        parameter = {$plugin.org.pages.downloads}
+                        parameter = {page:uid}
                         title = TEXT
                         title {
                           value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
@@ -2126,7 +2126,7 @@ plugin.tx_browser_pi1 {
                   30 {
                     data = register : filename
                     typolink {
-                      parameter = {$plugin.org.pages.downloads}
+                      parameter = {page:uid}
                       title = TEXT
                       title {
                         value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
@@ -2155,7 +2155,7 @@ plugin.tx_browser_pi1 {
             withDownloadLink {
             }
           }
-          labels {
+          textlinks {
             withLinkToListView {
             }
             withDownloadLink {

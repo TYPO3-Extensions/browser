@@ -19,7 +19,7 @@ plugin.tx_browser_pi1 {
           // [String] Name of the view. It will displayed in the plugin/flexform
         name    = +DAM: Sample
           // [String] Label of the parameter with the uid of the document
-        showUid = downloadsUid
+        showUid = {$plugin.tx_browser_pi1.downloadmodule.urlParam}
           // [String] Select clause (don't confuse it with the SQL select)
         select (
           tx_dam.title,
@@ -33,81 +33,7 @@ plugin.tx_browser_pi1 {
             10 {
               value = ###TX_DAM.TITLE###
             }
-            20 < tt_content.uploads.20
-            20 {
-              userFunc = tx_browser_cssstyledcontent->render_uploads
-              userFunc {
-                drs = TEXT
-                drs {
-                  value = 0
-                }
-              }
-              filePath >
-              linkProc {
-                tx_browser_pi1 = COA
-                tx_browser_pi1 {
-                    // Link with preview or application icon
-                  10 = IMAGE
-                  10 {
-                    file {
-                      import {
-                        data = register : ICON_REL_PATH
-                      }
-                      width = 80
-                    }
-                    imageLinkWrap = 1
-                    imageLinkWrap {
-                      enable = 1
-                      typolink {
-                        parameter = {page:uid}
-                        title = TEXT
-                        title {
-                          value = Download: '###TX_DAM.TITLE###'
-                          lang {
-                            de  = Herunterladen: '###TX_DAM.TITLE###'
-                            en  = Download: '###TX_DAM.TITLE###'
-                          }
-                        }
-                        additionalParams  = &tx_browser_pi1[downloadsUid]=###TX_DAM.UID###
-                        useCacheHash      = 1
-                      }
-                    }
-                  }
-                    // Link devider
-                  20 = TEXT
-                  20 {
-                    value = //**//
-                  }
-                    // Link with label
-                  30 = TEXT
-                  30 {
-                    data = register : filename
-                    typolink {
-                      parameter = {$plugin.org.pages.downloads}
-                      title = TEXT
-                      title {
-                        value = Download: '###TX_DAM.TITLE###'
-                        lang {
-                          de  = Herunterladen: '###TX_DAM.TITLE###'
-                          en  = Download: '###TX_DAM.TITLE###'
-                        }
-                      }
-                      additionalParams  = &tx_browser_pi1[downloadsUid]=###TX_DAM.UID###
-                      useCacheHash      = 1
-                    }
-                  }
-                }
-              }
-              tableField = tx_org_doc.documents
-              fields {
-                from_path = ###TX_DAM.FILE_PATH###
-                files     = ###TX_DAM.FILE_NAME###
-                layout    = 2
-              }
-              stdWrap {
-                if.isTrue = ###TX_DAM.FILE_NAME######TX_DAM.FILE_PATH###
-              }
-            }
+            20 < plugin.tx_browser_pi1.displayList.master_templates.modules.download.thumbnails.withLinkToListView
           }
         }
       }
