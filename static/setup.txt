@@ -2118,8 +2118,8 @@ plugin.tx_browser_pi1 {
                         }
                         title = TEXT
                         title {
-                          stdWrap {
-                            value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+                          value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+                          XXX_stdWrap {
                             lang {
                               de  = Herunterladen: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
                               en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
@@ -2146,8 +2146,8 @@ plugin.tx_browser_pi1 {
                       }
                       title = TEXT
                       title {
-                        value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
-                        stdWrap {
+                        value = XXX_Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+                        XXX_stdWrap {
                           lang {
                             de  = Herunterladen: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
                             en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
