@@ -1656,46 +1656,60 @@ class tx_browser_pi1_template
     $displayTitle = $this->pObj->lDisplay['title'];
     if ($displayTitle)
     {
-      $value = false;
-      // 3.4.0
-      unset($this->arr_curr_value);
-      if ($handleAs['title'])
+        // Is the system marker ###TITLE### defined?
+        // 120515, dwildt, 9+
+      $pos = strpos($template, '###TITLE###');
+      if ($pos === false)
       {
-        list($table, $field) = explode('.', $handleAs['title']);
-        $value = $elements[$handleAs['title']];
+        if ($this->pObj->b_drs_templating)
+        {
+          $prompt = 'The system marker ###TITLE### isn\'t used in the HTML-template.';
+          t3lib_div::devlog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+        }
+      }
+      else
+      {
+        $value = false;
         // 3.4.0
-        $this->arr_curr_value[$handleAs['title']] = $value;
+        unset($this->arr_curr_value);
+        if ($handleAs['title'])
+        {
+          list($table, $field) = explode('.', $handleAs['title']);
+          $value = $elements[$handleAs['title']];
+          // 3.4.0
+          $this->arr_curr_value[$handleAs['title']] = $value;
 
-        // Colors the sword words and phrases
-        $bool_dontColorSwords = $arr_TCAitems['title.']['dontColorSwords'];
-        if (!$bool_dontColorSwords)
-        {
-          $value = $this->pObj->objZz->color_swords($handleAs['title'], $value);
+          // Colors the sword words and phrases
+          $bool_dontColorSwords = $arr_TCAitems['title.']['dontColorSwords'];
+          if (!$bool_dontColorSwords)
+          {
+            $value = $this->pObj->objZz->color_swords($handleAs['title'], $value);
+          }
+          // Colors the sword words and phrases
+          if ($this->pObj->b_drs_templating)
+          {
+            t3lib_div::devlog('[INFO/TEMPLATING] '.$handleAs['title'].' will be handled as the title.', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/TEMPLATING] The system marker ###TITLE### will be replaced.', $this->pObj->extKey, 0);
+          }
         }
-        // Colors the sword words and phrases
+        if(!$value)
+        {
+          list($table, $field) = explode('.', $this->pObj->arrLocalTable['uid']);
+          $value = 'ID '.$this->pObj->piVars['showUid'].' from table '.$table;
+          if ($this->pObj->b_drs_templating)
+          {
+            t3lib_div::devlog('[INFO/TEMPLATING] \''.$value.'\' will be handled as the title.', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/TEMPLATING] The system marker ###TITLE### will be replaced.', $this->pObj->extKey, 0);
+          }
+        }
         if ($this->pObj->b_drs_templating)
         {
-          t3lib_div::devlog('[INFO/TEMPLATING] '.$handleAs['title'].' will be handled as the title.', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[INFO/TEMPLATING] The system marker ###TITLE### will be replaced.', $this->pObj->extKey, 0);
+          t3lib_div::devLog('[HELP/TEMPLATING] Please configure displaySingle.display.title = 0, if you don\'t want any title handling.', $this->pObj->extKey, 1);
         }
+        $key   = $handleAs['title'];
+        $value = $this->pObj->objWrapper->wrapAndLinkValue($key, $value, 0);
+        unset($elements[$handleAs['title']]);
       }
-      if(!$value)
-      {
-        list($table, $field) = explode('.', $this->pObj->arrLocalTable['uid']);
-        $value = 'ID '.$this->pObj->piVars['showUid'].' from table '.$table;
-        if ($this->pObj->b_drs_templating)
-        {
-          t3lib_div::devlog('[INFO/TEMPLATING] \''.$value.'\' will be handled as the title.', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[INFO/TEMPLATING] The system marker ###TITLE### will be replaced.', $this->pObj->extKey, 0);
-        }
-      }
-      if ($this->pObj->b_drs_templating)
-      {
-        t3lib_div::devLog('[HELP/TEMPLATING] Please configure displaySingle.display.title = 0, if you don\'t want any title handling.', $this->pObj->extKey, 1);
-      }
-      $key   = $handleAs['title'];
-      $value = $this->pObj->objWrapper->wrapAndLinkValue($key, $value, 0);
-      unset($elements[$handleAs['title']]);
     }
 
     if (!$displayTitle)
