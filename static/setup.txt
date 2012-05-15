@@ -2088,7 +2088,7 @@ plugin.tx_browser_pi1 {
                 }
                   // Render the thumbnail
                 tx_browser_pi1 = COA
-                default {
+                tx_browser_pi1 {
                     // Link with preview or application icon
                   10 = IMAGE
                   10 {
