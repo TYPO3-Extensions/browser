@@ -1887,7 +1887,9 @@ class tx_browser_pi1_backend
     foreach( ( array ) $arr_jquery_uis as $key_jquery_ui => $arr_jquery_ui )
     {
       $jquery_ui_key    = strtolower( substr( $key_jquery_ui, 0, -1 ) );
+        // 120515, dwildt, 1-
       //$jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
+        // 120515, dwildt, 1+
       $jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ][ 0 ][ 'target' ];
       $jquery_ui_icon   = $arr_jquery_ui['icon'];
 
@@ -1942,18 +1944,14 @@ class tx_browser_pi1_backend
       default:
         $lang = 'default';
     }
-      // 111126, dwildt-
-    //require_once('locallang_flexform.xml');
-    //$this->locallang = $LOCAL_LANG[$lang];
-      // 111126, dwildt+
-      // 111126, dwildt-
-    $fileRef                = 'EXT:browser/pi1/flexform_locallang.php';
+      // 120515, dwildt, 1-
 //    $fileRef                = 'EXT:browser/pi1/locallang_flexform.xml';
+      // 120515, dwildt, 1+
+    $fileRef                = 'EXT:browser/pi1/flexform_locallang.php';
     $setGlobal              = 0;
     $mergeLocalOntoDefault  = 0;
     $LOCAL_LANG             = $GLOBALS['LANG']->includeLLFile( $fileRef, $setGlobal, $mergeLocalOntoDefault );
     $this->locallang        = $LOCAL_LANG[$lang];
-var_dump( $this->locallang );
       // 111126, dwildt+
   }
 
