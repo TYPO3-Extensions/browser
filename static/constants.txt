@@ -14,8 +14,8 @@ plugin.tx_browser_pi1 {
   downloadmodule.uid = TX_ORG_DOWNLOADS.UID 
   # cat=Browser - Download Module//101;          type=string;  label= Field files: TABLE.FIELD with the files (uppercase !):Examples: TX_DAM.FILE_NAME, TX_ORG_DOWNLOADS.DOCUMENTS
   downloadmodule.files = TX_ORG_DOWNLOADS.DOCUMENTS
-  # cat=Browser - Download Module//102;          type=string;  label= Field path: TABLE.FIELD with the files (uppercase !):Examples: TX_DAM.FILE_NAME, TX_ORG_DOWNLOADS.DOCUMENTS
-  downloadmodule.path = TX_ORG_DOWNLOADS.DOCUMENTS
+  # cat=Browser - Download Module//102;          type=string;  label= Field path: TABLE.FIELD with the files (uppercase !):Examples: TX_DAM.FILE_PATH, TX_ORG_DOWNLOADS.DOCUMENTS_FROM_PATH
+  downloadmodule.path = TX_ORG_DOWNLOADS.DOCUMENTS_FROM_PATH
   # cat=Browser - Download Module//103;          type=string;  label= Field titles: TABLE.FIELD with the titles (uppercase !):Examples: TX_DAM.TITLE, TX_ORG_DOWNLOADS.TITLE
   downloadmodule.titles = TX_ORG_DOWNLOADS.TITLE
 
