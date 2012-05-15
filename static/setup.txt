@@ -2116,16 +2116,16 @@ plugin.tx_browser_pi1 {
                         parameter {
                           data = page:uid
                         }
-                        title = TEXT
-                        title {
-                          value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
-                          XXX_stdWrap {
-                            lang {
-                              de  = Herunterladen: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
-                              en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
-                            }
-                          }
-                        }
+                        title = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+// 120515, dwildt: Bug: TYPO3 renders content as "TEXT"
+//                        title = TEXT
+//                        title {
+//                          value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+//                          lang {
+//                            de  = Herunterladen: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+//                            en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+//                          }
+//                        }
                         additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.downloadmodule.urlParam}]=###{$plugin.tx_browser_pi1.downloadmodule.uid}###
                         useCacheHash      = 1
                       }
@@ -2144,16 +2144,16 @@ plugin.tx_browser_pi1 {
                       parameter {
                         data = page:uid
                       }
-                      title = TEXT
-                      title {
-                        value = XXX_Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
-                        XXX_stdWrap {
-                          lang {
-                            de  = Herunterladen: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
-                            en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
-                          }
-                        }
-                      }
+                      title = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+// 120515, dwildt: Bug: TYPO3 renders content as "TEXT"
+//                      title = TEXT
+//                      title {
+//                        value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+//                        lang {
+//                          de  = Herunterladen: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+//                          en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+//                        }
+//                      }
                       additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.downloadmodule.urlParam}]=###{$plugin.tx_browser_pi1.downloadmodule.uid}###
                       useCacheHash      = 1
                     }
