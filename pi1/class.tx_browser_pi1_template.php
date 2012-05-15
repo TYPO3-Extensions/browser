@@ -1044,7 +1044,7 @@ class tx_browser_pi1_template
           // Bugfix     #10762, dwildt, 101201
           //$markerBodyRows['###CLASS###'] = ($c++%2 ? ' class="odd"' : '');
           // #12738, 120515, dwildt
-        $str_class = 'item-'. ( $c );
+        $str_class = 'item item-'. ( $c );
         if( $c == 0 )
         {
           $str_class = $str_class . ' first';
@@ -1212,7 +1212,7 @@ class tx_browser_pi1_template
           // Bugfix     #10762, dwildt, 101201
           //$markerBodyRows['###CLASS###'] = ($c++%2 ? ' class="odd"' : '');
           // #12738, 120515, dwildt
-        $str_class = 'item-'. ( $c );
+        $str_class = 'item item-'. ( $c );
         if( $c == 0 )
         {
           $str_class = $str_class . ' first';
