@@ -2149,7 +2149,7 @@ plugin.tx_browser_pi1 {
                 layout    = {$plugin.tx_browser_pi1.downloadmodule.files}
               }
               stdWrap {
-                if.isTrue = {$plugin.tx_browser_pi1.downloadmodule.files}###{$plugin.tx_browser_pi1.downloadmodule.path}###
+                if.isTrue = ###{$plugin.tx_browser_pi1.downloadmodule.files}###{$plugin.tx_browser_pi1.downloadmodule.path}###
               }
             }
             withDownloadLink {
