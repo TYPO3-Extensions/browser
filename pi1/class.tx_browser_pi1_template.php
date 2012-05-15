@@ -1215,21 +1215,22 @@ class tx_browser_pi1_template
           // Bugfix     #10762, dwildt, 101201
           //$markerBodyRows['###CLASS###'] = ($c++%2 ? ' class="odd"' : '');
         $str_class = null;
+        $str_class = 'item-'. ( $c );
         //if($c - 2 == 0)
         if( $c == 0 )
         {
-          $str_class = 'first ';
+          $str_class = ' first';
         }
-        if( ( $c + 1) % 2 )
-        {
-          $str_class = $str_class . 'odd ';
+        else {
+          if( ( $c ) % 2 )
+          {
+            $str_class = $str_class . ' odd ';
+          }
+          if( count( $rows ) == ( $c + 1 ) )
+          {
+            $str_class = $str_class . ' last ';
+          }
         }
-        $str_class = $str_class . 'item-'. ( $c ) . ' ';
-        if( count( $rows ) == ( $c + 1 ) )
-        {
-          $str_class = $str_class . 'last ';
-        }
-        $str_class = trim( $str_class );
         $markerArray['###CLASS###'] = ' class="' . $str_class . '"';
           // Suggestion #8856, dwildt, 100812
 
