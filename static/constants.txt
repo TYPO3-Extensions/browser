@@ -2,7 +2,7 @@ plugin.tx_browser_pi1 {
 
   # cat=Browser - Download Module/enable;   type=boolean;  label= Debugging: If enabled, the download module will prompt to the DRS (Development Reporting System)
   downloadmodule.drs = 0
-  # cat=Browser - Download Module/enable;   type=int+;    label= Layout:0: Above center; 1: Above right; 2: Above left; 8: Below center; 9: Below right; 10: Below, left; 17: In text right; 18: In text left; 25: Beside Text right; 26: Beside Text left
+  # cat=Browser - Download Module/enable;   type=options[0,1,2,8,9,10,17,18,25,26];    label= Layout:0: Above center. 1: Above right. 2: Above left. 8: Below center. 9: Below right. 10: Below, left. 17: In text right. 18: In text left. 25: Beside Text right. 26: Beside Text left
   downloadmodule.layout = 2 
   # cat=Browser - Download Module/enable;   type=string;  label= Uid parameter:Parameter for the uid of the document in the URL
   downloadmodule.urlParam = downloadUid 
