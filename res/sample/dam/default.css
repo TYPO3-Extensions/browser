@@ -1,3 +1,14 @@
-body { 
-  background: red;
+#spample-browser-dam-ul {
+  list-style-type: none;
+  list-style-position: outside;
+  margin: 0 .4em;
+}
+#spample-browser-dam-ul p {
+  margin: 0 0 0 93px;
+}
+#spample-browser-dam-ul .item-odd {
+  margin-left: 0;
+}
+#spample-browser-dam-ul .item-odd {
+  background: #EEE;
 }

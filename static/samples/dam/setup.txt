@@ -24,16 +24,25 @@ plugin.tx_browser_pi1 {
         select (
           tx_dam.title,
           tx_dam.file_name,
-          tx_dam.file_path
+          tx_dam.file_path,
+          tx_dam.caption
         )
         tx_dam {
           title = COA
           title {
             10 = TEXT
             10 {
-              value = ###{$plugin.tx_browser_pi1.downloadmodule.titles}###
+              value = <h2>###TX_DAM.TITLE###</h2>
             }
             20 < plugin.tx_browser_pi1.displayList.master_templates.modules.download.thumbnails.withLinkToListView
+            30 = TEXT
+            30 {
+              value = <p>###TX_DAM.CAPTION###</p>
+            }
+            90 = TEXT
+            90 {
+              value = <div style="clear:both;font-size:0;line-height:0;">&nbsp;</div>
+            }
           }
         }
       }
