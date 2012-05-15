@@ -2103,7 +2103,7 @@ plugin.tx_browser_pi1 {
                       enable = 1
                       typolink {
                         parameter {
-                          data: page:uid
+                          data = page:uid
                         }
                         title = TEXT
                         title {
@@ -2129,7 +2129,7 @@ plugin.tx_browser_pi1 {
                     data = register : filename
                     typolink {
                       parameter {
-                        data: page:uid
+                        data = page:uid
                       }
                       title = TEXT
                       title {
