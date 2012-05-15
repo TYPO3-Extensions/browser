@@ -31,7 +31,7 @@ plugin.tx_browser_pi1 {
           title {
             10 = TEXT
             10 {
-              value = ###TX_DAM.TITLE###
+              value = ###{$plugin.tx_browser_pi1.downloadmodule.titles}###
             }
             20 < plugin.tx_browser_pi1.displayList.master_templates.modules.download.thumbnails.withLinkToListView
           }
