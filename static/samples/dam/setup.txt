@@ -57,3 +57,9 @@ plugin.tx_browser_pi1 {
     }
   }
 }
+
+page {
+  includeCSS {
+    37165 = EXT:browser/res/sample/dam/default.css
+  }
+}
