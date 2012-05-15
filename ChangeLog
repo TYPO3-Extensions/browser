@@ -2,6 +2,9 @@
   120514
   New feature
   * #37165: DAM sample
+  Bugfix
+  * #12738: ###CLASS### marker for rows (even/odd)
+  * #00000: Labels for jQuery UI in the Flexform were broken
 
 3.9.14
   120514

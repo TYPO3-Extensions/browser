@@ -2119,9 +2119,11 @@ plugin.tx_browser_pi1 {
                         title = TEXT
                         title {
                           value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
-                          lang {
-                            de  = Herunterladen: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
-                            en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+                          stdWrap {
+                            lang {
+                              de  = Herunterladen: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+                              en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+                            }
                           }
                         }
                         additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.downloadmodule.urlParam}]=###{$plugin.tx_browser_pi1.downloadmodule.uid}###
@@ -2145,9 +2147,11 @@ plugin.tx_browser_pi1 {
                       title = TEXT
                       title {
                         value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
-                        lang {
-                          de  = Herunterladen: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
-                          en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+                        stdWrap {
+                          lang {
+                            de  = Herunterladen: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+                            en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+                          }
                         }
                       }
                       additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.downloadmodule.urlParam}]=###{$plugin.tx_browser_pi1.downloadmodule.uid}###
