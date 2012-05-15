@@ -2141,7 +2141,7 @@ plugin.tx_browser_pi1 {
                   }
                 }
               }
-              tableField = ###{$plugin.tx_browser_pi1.downloadmodule.tableField}###
+              tableField = {$plugin.tx_browser_pi1.downloadmodule.tableField}
               fields {
                 from_path = ###{$plugin.tx_browser_pi1.downloadmodule.path}###
                 files     = ###{$plugin.tx_browser_pi1.downloadmodule.files}###
