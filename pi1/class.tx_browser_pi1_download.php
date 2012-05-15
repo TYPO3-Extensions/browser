@@ -157,7 +157,9 @@ class tx_browser_pi1_download
     if( $prompt_error )
     {
       $prompt_error = ''.
-      '<div style="border:1em solid red;text-align:center;padding:1em;"><h1>TYPO3 Browser</h1>' . $prompt_error . '</div>';
+      '<div style="border:1em solid red;text-align:center;padding:1em;"><h1>TYPO3 Browser</h1>' . 
+        $prompt_error . 
+      '</div>';
       return $prompt_error;
     }
       // Init global class vars
