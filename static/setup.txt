@@ -2149,8 +2149,7 @@ plugin.tx_browser_pi1 {
               fields {
                 from_path = ###{$plugin.tx_browser_pi1.downloadmodule.path}###
                 files     = ###{$plugin.tx_browser_pi1.downloadmodule.files}###
-                  // [Integer] 0: no icon, no preview. 1: application icon. 2: preview
-                layout    = {$plugin.tx_browser_pi1.downloadmodule.layout}
+                layout    >
               }
               stdWrap {
                 if.isTrue = ###{$plugin.tx_browser_pi1.downloadmodule.files}###{$plugin.tx_browser_pi1.downloadmodule.path}###
