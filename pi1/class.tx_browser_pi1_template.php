@@ -1044,7 +1044,8 @@ class tx_browser_pi1_template
           // Bugfix     #10762, dwildt, 101201
           //$markerBodyRows['###CLASS###'] = ($c++%2 ? ' class="odd"' : '');
         $str_class = null;
-        if( ( $c - 2 ) == 0 )
+//        if( ( $c - 2 ) == 0 )
+        if( ( $c == 0 )
         {
           $str_class = 'first ';
         }
@@ -1054,15 +1055,15 @@ class tx_browser_pi1_template
         $c++;
         if($c%2)
         {
-          $str_class = $str_class.'odd ';
+          $str_class = $str_class . 'odd ';
         }
-        $str_class = $str_class.'item-'.($c - 2).' ';
-        if(count($rows) == ($c - 2))
+        $str_class = $str_class . 'item-' . ( $c - 2 ) . ' ';
+        if( count( $rows ) == ( $c - 2 ) )
         {
-          $str_class = $str_class.'last ';
+          $str_class = $str_class . 'last ';
         }
         $str_class = trim($str_class);
-        $markerBodyRows['###CLASS###'] = ' class="'.$str_class.'"';
+        $markerBodyRows['###CLASS###'] = ' class="' . $str_class . '"';
           // Suggestion #8856, dwildt, 100812
 
         $listBodyRow  = $this->pObj->cObj->substituteMarkerArray($listBodyRow, $markerBodyRows);
