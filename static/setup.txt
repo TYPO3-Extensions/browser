@@ -2070,15 +2070,21 @@ plugin.tx_browser_pi1 {
               }
                 // Don't outerWrap the thumbnail with <table> by default
               outerWrap = |
+              field >
               filePath >
+              itemRendering >
+              itemRendering = TEXT
               itemRendering {
-                10 {
-                  if    >
-                  wrap  >
-                }
-                20 >
-                30 >
-                wrap = <div class="csc-uploads-thumbnail csc-uploads-thumbnail-first">|</div> |*| <div class="csc-uploads-thumbnail csc-uploads-thumbnail-even">|</div> || <div class="csc-uploads-thumbnail">|</div> |*| <div class="csc-uploads-thumbnail csc-uploads-thumbnail-last">|</div>
+                data = register:linkedIcon
+                wrap (
+                  <div class="csc-uploads-thumbnail csc-uploads-thumbnail-first">|</div>
+                  |*| 
+                  <div class="csc-uploads-thumbnail csc-uploads-thumbnail-even">|</div>
+                  ||
+                  <div class="csc-uploads-thumbnail">|</div>
+                  |*|
+                  <div class="csc-uploads-thumbnail csc-uploads-thumbnail-last">|</div>
+)
               }
               linkProc {
                 iconCObject {
