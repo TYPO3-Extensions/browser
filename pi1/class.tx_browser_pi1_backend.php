@@ -1952,6 +1952,7 @@ class tx_browser_pi1_backend
     $mergeLocalOntoDefault  = 0;
     $LOCAL_LANG             = $GLOBALS['LANG']->includeLLFile( $fileRef, $setGlobal, $mergeLocalOntoDefault );
     $this->locallang        = $LOCAL_LANG[$lang];
+var_dump( $this->locallang );
       // 111126, dwildt+
   }
 
