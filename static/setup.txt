@@ -2070,8 +2070,13 @@ plugin.tx_browser_pi1 {
               }
                 // Don't outerWrap the thumbnail with <table> by default
               outerWrap = |
-              field >
-              filePath >
+              field         >
+              filePath      >
+              color         >
+              tableParams_0 >
+              tableParams_1 >
+              tableParams_2 >
+              tableParams_3 >
               itemRendering >
               itemRendering = TEXT
               itemRendering {
