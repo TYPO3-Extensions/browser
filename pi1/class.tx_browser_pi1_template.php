@@ -1052,12 +1052,11 @@ class tx_browser_pi1_template
           // #34963, dwildt, 1-
         //if($c++%2)
           // #34963, dwildt, 2+
-        $c++;
-        if($c%2)
+        if( ( $c + 1 ) % 2 )
         {
           $str_class = $str_class . 'odd ';
         }
-        $str_class = $str_class . 'item-' . ( $c - 2 ) . ' ';
+        $str_class = $str_class . 'item-' . ( $c - 2 ) . ' XXX ';
         if( count( $rows ) == ( $c - 2 ) )
         {
           $str_class = $str_class . 'last ';
@@ -1069,6 +1068,7 @@ class tx_browser_pi1_template
         $listBodyRow  = $this->pObj->cObj->substituteMarkerArray($listBodyRow, $markerBodyRows);
         $bodyRows    .= $listBodyRow;
           // ###LISTBODYITEM###: bodyRows
+        $c++;
       }
         // elements
 
