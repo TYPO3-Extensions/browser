@@ -1047,16 +1047,16 @@ class tx_browser_pi1_template
         $str_class = 'item item-'. ( $c );
         if( $c == 0 )
         {
-          $str_class = $str_class . ' first';
+          $str_class = $str_class . ' item-first first';
         }
         else {
           if( ( $c ) % 2 )
           {
-            $str_class = $str_class . ' odd ';
+            $str_class = $str_class . ' item-odd odd';
           }
           if( count( $rows ) == ( $c + 1 ) )
           {
-            $str_class = $str_class . ' last';
+            $str_class = $str_class . ' item-last last';
           }
         }
         $markerBodyRows['###CLASS###'] = ' class="' . $str_class . '"';
@@ -1215,16 +1215,16 @@ class tx_browser_pi1_template
         $str_class = 'item item-'. ( $c );
         if( $c == 0 )
         {
-          $str_class = $str_class . ' first';
+          $str_class = $str_class . ' item-first first';
         }
         else {
           if( ( $c ) % 2 )
           {
-            $str_class = $str_class . ' odd ';
+            $str_class = $str_class . ' item-odd odd ';
           }
           if( count( $rows ) == ( $c + 1 ) )
           {
-            $str_class = $str_class . ' last';
+            $str_class = $str_class . ' item-last last';
           }
         }
         $markerArray['###CLASS###'] = ' class="' . $str_class . '"';
