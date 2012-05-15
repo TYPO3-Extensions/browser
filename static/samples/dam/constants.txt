@@ -1,0 +1,12 @@
+plugin.tx_browser_pi1.downloadmodule {
+    // field files: table.field with the files (lowercase!)
+  tableField  = tx_dam.file_name
+    // Marker field uid: TABLE.FIELD with the uid (uppercase!) of your media record
+  uid         = TX_DAM.UID
+    // Marker field files: TABLE.FIELD with the files (uppercase!)
+  files       = TX_DAM.FILE_NAME
+    // Marker field path: TABLE.FIELD with the files (uppercase!)
+  path        = TX_DAM.FILE_PATH
+    // Marker field titles: TABLE.FIELD with the titles (uppercase!)
+  titles      = TX_DAM.TITLE
+}

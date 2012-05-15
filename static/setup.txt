@@ -2102,7 +2102,9 @@ plugin.tx_browser_pi1 {
                     imageLinkWrap {
                       enable = 1
                       typolink {
-                        parameter = {page:uid}
+                        parameter {
+                          data: page:uid
+                        }
                         title = TEXT
                         title {
                           value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
@@ -2111,7 +2113,7 @@ plugin.tx_browser_pi1 {
                             en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
                           }
                         }
-                        additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.downloadmodule.urlParam}]=###{$plugin.tx_browser_pi1.downloadmodule.titles}###
+                        additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.downloadmodule.urlParam}]=###{$plugin.tx_browser_pi1.downloadmodule.uid}###
                         useCacheHash      = 1
                       }
                     }
@@ -2126,7 +2128,9 @@ plugin.tx_browser_pi1 {
                   30 {
                     data = register : filename
                     typolink {
-                      parameter = {page:uid}
+                      parameter {
+                        data: page:uid
+                      }
                       title = TEXT
                       title {
                         value = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
@@ -2135,7 +2139,7 @@ plugin.tx_browser_pi1 {
                           en  = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
                         }
                       }
-                      additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.downloadmodule.urlParam}]=###{$plugin.tx_browser_pi1.downloadmodule.titles}###
+                      additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.downloadmodule.urlParam}]=###{$plugin.tx_browser_pi1.downloadmodule.uid}###
                       useCacheHash      = 1
                     }
                   }
