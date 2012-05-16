@@ -526,14 +526,6 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function requirements_check( )
   {
-      // DRS
-    if( $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Index browser should handled in a localised context!';
-      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-    }
-      // DRS
-
       // RETURN true : index browser is disabled
     if( ! $this->pObj->objFlexform->bool_indexBrowser )
     {
@@ -1462,15 +1454,6 @@ class tx_browser_pi1_navi_indexBrowser
   {
     static $drsPrompt = true;
 
-      // DRS
-    if( $drsPrompt && $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Query needs an and where in case of filter';
-      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-      $drsPrompt = false;
-    }
-      // DRS
-
       // Build FIND IN SET
     $strFindInSet = null;
     foreach( $this->findInSet as $arrfindInSet )
@@ -1764,15 +1747,6 @@ class tx_browser_pi1_navi_indexBrowser
   {
     static $drsPrompt = true;
 
-      // DRS
-    if( $drsPrompt && $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Query needs an and where in case of filter';
-      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-      $drsPrompt = false;
-    }
-      // DRS
-
       // Get current table.field of the index browser
     $tableField     = $this->indexBrowserTableField;
     list( $table )  = explode( '.', $tableField );
@@ -1816,15 +1790,6 @@ class tx_browser_pi1_navi_indexBrowser
   private function count_specialChars_resSqlCountDefLL( $length, $strFindInSet, $currSqlCharset )
   {
     static $drsPrompt = true;
-
-      // DRS
-    if( $drsPrompt && $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Query needs an and where in case of filter';
-      t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
-      $drsPrompt = false;
-    }
-      // DRS
 
       // Get current table.field of the index browser
     $tableField     = $this->indexBrowserTableField;

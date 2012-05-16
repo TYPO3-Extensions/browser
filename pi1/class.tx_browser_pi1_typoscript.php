@@ -332,7 +332,7 @@ class tx_browser_pi1_typoscript
           $arr_tableField[]  = $tableField;
         }
           // DEVELOPMENT: Browser engine 4.x
-        if( $this->pObj->dev_browserEngine == 4 )
+        if( $this->pObj->dev_browserEngine >= 4 )
         {
             // IF no pivar (filter isn't set)
           if( ! $this->pObj->piVars[$str_nice_piVar] )
@@ -343,8 +343,6 @@ class tx_browser_pi1_typoscript
                 // DRS
               if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
               {
-                $prompt = '+++ Browser engine 4.x ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++';
-                t3lib_div::devlog( $prompt, $this->pObj->extKey, 2 );
                 $prompt = 'Browser engine 4.x: filter ' . $tableField . ' is added to the array ' .
                           'realTabels_arrFields, but filter isn\'t used.';
                 t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
@@ -358,6 +356,14 @@ class tx_browser_pi1_typoscript
               // IF current filter isn't set in $arr_tableField
           }
             // IF no pivar (filter isn't set)
+        }
+        else
+        {
+          if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_todo )
+          {
+            $prompt = 'Take care of the other workflow in Browser version >= 4';
+            t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
+          }
         }
             // DEVELOPMENT: Browser engine 4.x
       }
