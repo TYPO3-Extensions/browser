@@ -64,7 +64,7 @@ plugin.tx_browser_pi1 {
           tx_dam.description,
           tx_dam.date_mod,
           tx_dam.file_size,
-          tx_dam.category
+          tx_dam_cat.title
         )
         tx_dam {
           title = COA
