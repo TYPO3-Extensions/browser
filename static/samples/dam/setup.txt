@@ -79,11 +79,18 @@ plugin.tx_browser_pi1 {
             }
             12 = TEXT
             12 {
-              value = <p>&Auml;nderungsdatum: ###TX_DAM.DATE_MOD###</p>
+              value       = ###TX_DAM.DATE_MOD###
+              strftime    = %d. %b %Y
+              noTrimWrap  = |<p>&Auml;nderungsdatum: |</p>|
             }
             13 = TEXT
             13 {
               value = <p>Gr&ouml;sse: ###TX_DAM.FILE_SIZE###</p>
+              bytes = 1
+              bytes {
+                labels = {$styles.content.uploads.filesizeBytesLabels}
+              }
+              noTrimWrap = |<p>Gr&ouml;sse: |</p>|
             }
             14 = TEXT
             14 {
