@@ -435,6 +435,7 @@ class tx_browser_pi1_download
       //
       // RETURN: Any upload folder isn't configured
 if( $this->table != 'tx_dam' )
+{
     $uploadFolder = $GLOBALS['TCA'][$this->table]['columns'][$this->field]['config']['uploadfolder'];
     if( empty( $uploadFolder ) )
     {
@@ -448,7 +449,7 @@ if( $this->table != 'tx_dam' )
       }
       return $prompt_01 . ' ' . $prompt_02;
     }
-  }
+}
       // RETURN: Any upload folder isn't configured
 if( $this->table == 'tx_dam' )
 {
