@@ -224,7 +224,7 @@ class tx_browser_pi1_download
     }
 
       // Is table.field part of the select?
-var_dump( __METHOD__, __LINE__, $this->view, $this->mode, $this->pObj->conf['views.'][$this->view . '.'][$this->mode . '.']['select']);
+//var_dump( __METHOD__, __LINE__, $this->view, $this->mode, $this->pObj->conf['views.'][$this->view . '.'][$this->mode . '.']['select']);
     $select = $this->pObj->conf['views.'][$this->view . '.'][$this->mode . '.']['select'];
     $pos    = strpos( $select, $this->table . '.' . $this->field );
     if ( $pos === false )
@@ -434,7 +434,7 @@ var_dump( __METHOD__, __LINE__, $this->view, $this->mode, $this->pObj->conf['vie
       //////////////////////////////////////////////////////////////////////////
       //
       // RETURN: Any upload folder isn't configured
-
+if( $this->table != 'tx_dam' )
     $uploadFolder = $GLOBALS['TCA'][$this->table]['columns'][$this->field]['config']['uploadfolder'];
     if( empty( $uploadFolder ) )
     {
@@ -448,7 +448,12 @@ var_dump( __METHOD__, __LINE__, $this->view, $this->mode, $this->pObj->conf['vie
       }
       return $prompt_01 . ' ' . $prompt_02;
     }
+  }
       // RETURN: Any upload folder isn't configured
+if( $this->table == 'tx_dam' )
+{
+  $uploadFolder = 'fileadmin/media/header-images/';
+}
 
 
 
@@ -456,7 +461,7 @@ var_dump( __METHOD__, __LINE__, $this->view, $this->mode, $this->pObj->conf['vie
       //
       // Get the absoluite path
 
-		$str_pathAbsolute = t3lib_div::getFileAbsFileName( $uploadFolder );
+    $str_pathAbsolute = t3lib_div::getFileAbsFileName( $uploadFolder );
     $str_pathAbsolute = rtrim( $str_pathAbsolute, '/' ) . '/';
       // Get the absoluite path
 
