@@ -434,9 +434,8 @@ class tx_browser_pi1_download
       //////////////////////////////////////////////////////////////////////////
       //
       // RETURN: Any upload folder isn't configured
-if( $this->table != 'tx_dam' )
-{
-    $uploadFolder = $GLOBALS['TCA'][$this->table]['columns'][$this->field]['config']['uploadfolder'];
+
+    $uploadFolder = $this->sendFileAndExitGetUploadFolder( );
     if( empty( $uploadFolder ) )
     {
       $prompt_01 =  'Any upload folder is configured in the TCA.';
@@ -449,12 +448,8 @@ if( $this->table != 'tx_dam' )
       }
       return $prompt_01 . ' ' . $prompt_02;
     }
-}
+
       // RETURN: Any upload folder isn't configured
-if( $this->table == 'tx_dam' )
-{
-  $uploadFolder = 'fileadmin/media/header-images/';
-}
 
 
 
@@ -638,6 +633,104 @@ if( $this->table == 'tx_dam' )
 		@readfile( $str_pathFile ) || die ( __METHOD__ . ' (' . __LINE__ . '): ' . readfile( $str_pathFile ) );
 		exit;
       // Send the header and the file
+  }
+
+
+
+  /**
+ * sendFileAndExitGetUploadFolder( ): The method sends the file and exit in case of success
+ *                    The method checks:
+ *                    * upload folder is proper:  if there is a configuration in the TCA
+ *
+ * @return	string		Prompt, in case of a failure
+ * @version 3.9.14
+ * @since 3.9.14
+ */
+  private function sendFileAndExitGetUploadFolder( )
+  {
+    if( $this->table != 'tx_dam' )
+    {
+      $uploadFolder = $GLOBALS['TCA'][$this->table]['columns'][$this->field]['config']['uploadfolder'];
+      return $uploadFolder;
+//      if( empty( $uploadFolder ) )
+//      {
+//        $prompt_01 =  'Any upload folder is configured in the TCA.';
+//        $prompt_02 =  'Please take care of a proper configuration: ';
+//                      '$TCA. ' . $this->table . 'columns.' . $this->field . 'config.uploadfolder.';
+//        if ( $this->pObj->b_drs_download )
+//        {
+//          t3lib_div::devlog( '[ERROR/DOWNLOAD] ' . $prompt_01, $this->pObj->extKey, 3 );
+//          t3lib_div::devlog( '[HELP/DOWNLOAD] ' . $prompt_02, $this->pObj->extKey, 1 );
+//        }
+//        return $prompt_01 . ' ' . $prompt_02;
+//      }
+    }
+      // RETURN: Any upload folder isn't configured
+
+    
+    
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Build and execute the query for getting files
+
+      // Build the query
+    $uid            = $this->pObj->objLocalise3x->get_localisedUid( $this->table, $this->uid );
+    $select_fields  = 'file_path';
+    $from_table     = $this->table;
+    $where_clause   = 'uid = ' . $uid;
+    $enablefields   = $this->pObj->cObj->enableFields( $this->table );
+    if( $enablefields )
+    {
+      $where_clause = $where_clause . $enablefields;
+    }
+    $query = $GLOBALS['TYPO3_DB']->SELECTquery( $select_fields, $from_table, $where_clause, $groupBy = '', $orderBy = '', $limit = '' );
+    if( $this->pObj->b_drs_sql || $this->pObj->b_drs_download )
+    {
+      t3lib_div::devlog( '[INFO/SQL+DOWNLOAD] ' . $query, $this->pObj->extKey, 0 );
+    }
+      // Build the query
+
+      // Execute the query
+    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery( $select_fields, $from_table, $where_clause, $groupBy = '', $orderBy = '', $limit = '' );
+      // Execute the query
+      // Build and execute the query for getting files
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Evaluate the query
+
+      // LOOP count rows of the SQL result
+    $rows             = array( );
+    $int_rows_counter = 0;
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+      $rows[$int_rows_counter] = $row;
+      $int_rows_counter++;
+    }
+      // LOOP count rows of the SQL result
+
+      // Free the SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result($res);
+
+      // RETURN: There are 0 ore more than one rows
+    if( $int_rows_counter != 1 )
+    {
+      $prompt_01 =  'query: ' . $query;
+      $prompt_02 =  'RETURN: Result are #' . $int_rows_counter . ' rows.';
+      if ($this->pObj->b_drs_error)
+      {
+        t3lib_div::devlog( '[INFO/DOWNLOAD] '   . $prompt_01, $this->pObj->extKey, 3 );
+        t3lib_div::devlog( '[ERROR/DOWNLOAD] '  . $prompt_02, $this->pObj->extKey, 0 );
+      }
+      return $prompt_01 . '<br />' . $prompt_02;
+    }
+      // RETURN: There are 0 ore more than one rows
+      // Evaluate the query
+    $uploadFolder = $rows[0]['file_path'];
+    
+    return $uploadFolder;
   }
 
 
