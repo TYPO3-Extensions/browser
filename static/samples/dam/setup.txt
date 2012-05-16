@@ -33,7 +33,7 @@ plugin.tx_browser_pi1 {
           tx_dam_cat.title
         )
         filter {
-          tx_org_dam {
+          tx_dam {
             date_mod < plugin.tx_browser_pi1.displayList.master_templates.selectbox
             date_mod {
               first_item {
