@@ -29,6 +29,8 @@ plugin.tx_browser_pi1 {
           tx_dam.file_name,
           tx_dam.file_path,
           tx_dam.file_type,
+          tx_dam.type,
+          tx_dam.date_mod,
           tx_dam.caption,
           tx_dam_cat.title
         )
