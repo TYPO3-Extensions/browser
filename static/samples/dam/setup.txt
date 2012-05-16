@@ -85,7 +85,7 @@ plugin.tx_browser_pi1 {
             }
             13 = TEXT
             13 {
-              value = <p>Gr&ouml;sse: ###TX_DAM.FILE_SIZE###</p>
+              value = ###TX_DAM.FILE_SIZE###
               bytes = 1
               bytes {
                 labels = {$styles.content.uploads.filesizeBytesLabels}
