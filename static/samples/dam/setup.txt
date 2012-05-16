@@ -37,7 +37,12 @@ plugin.tx_browser_pi1 {
               first_item {
                 cObject {
                   20 {
-                    //data = LLL:EXT:org/locallang_db.xml:filter_phrase.period
+                    data >
+                    value = Erscheinungsjahr
+                    lang {
+                      de = Erscheinungsjahr
+                      en = Year
+                    }
                   }
                 }
               }
@@ -70,7 +75,12 @@ plugin.tx_browser_pi1 {
               first_item {
                 cObject {
                   20 {
-                    //data = LLL:EXT:org/locallang_db.xml:filter_phrase.doccat
+                    data >
+                    value = Kategorie
+                    lang {
+                      de = Kategorie
+                      en = Category
+                    }
                   }
                 }
               }
