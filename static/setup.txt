@@ -2173,7 +2173,6 @@ plugin.tx_browser_pi1 {
               linkProc {
                 tx_browser_pi1 {
                   10 {
-                  10 {
                     file {
                       width = {$plugin.tx_browser_pi1.downloadmodule.thumbnailSingleViewMaxW}
                     }
