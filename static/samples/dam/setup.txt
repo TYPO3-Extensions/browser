@@ -57,7 +57,8 @@ plugin.tx_browser_pi1 {
         showUid = {$plugin.tx_browser_pi1.downloadmodule.urlParam}
           // [String] Select clause (don't confuse it with the SQL select)
         select (
-          tx_dam.title
+          tx_dam.title,
+          tx_dam.file_name
         )
         tx_dam {
           title = TEXT

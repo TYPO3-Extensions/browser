@@ -2170,6 +2170,18 @@ plugin.tx_browser_pi1 {
             }
             withDownloadLink < .withLinkToListView
             withDownloadLink {
+              linkProc {
+                tx_browser_pi1 {
+                  10 {
+                    imageLinkWrap {
+                      typolink {
+                        parameter         = ###{$plugin.tx_browser_pi1.downloadmodule.pageUid}###,{$plugin.tx_browser_pi1.typeNum.downloadPageObj}
+                        additionalParams  = &tx_browser_pi1[plugin]=###TT_CONTENT.UID###&tx_browser_pi1[file]=single.{$plugin.tx_browser_pi1.downloadmodule.uidSingleView}.tx_dam.###TX_DAM.UID###.file_name.###KEY###
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
           textlinks {
