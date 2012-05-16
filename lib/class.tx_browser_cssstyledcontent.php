@@ -452,14 +452,20 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
       // file path variable is set, this takes precedence
     $filePathConf = $this->cObj->stdWrap($conf['fields.']['from_path'], $conf['fields.']['from_path.']);
-    if (!empty($filePathConf))
+      // #37165, 120517, dwildt, 1-
+    //if ( !empty( $filePathConf ) )
+      // #37165, 120517, dwildt, 1+
+    if ( !empty( $filePathConf ) && $table != 'tx_dam' )
     {
       $fileList   = $this->cObj->filelist($filePathConf);
       list($path) = explode('|', $filePathConf);
     }
 
       // file path variable isn't set
-    if (empty($filePathConf))
+      // #37165, 120517, dwildt, 1-
+    //if (empty($filePathConf))
+      // #37165, 120517, dwildt, 1-
+    if ( empty( $filePathConf ) || $table == 'tx_dam' )
     {
         // Get the list of files from the field
       $fileList = trim($this->cObj->stdWrap($conf['fields.']['files'], $conf['fields.']['files.']));
