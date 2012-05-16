@@ -224,8 +224,9 @@ class tx_browser_pi1_download
     }
 
       // Is table.field part of the select?
+var_dump( __METHOD__, __LINE__, $this->view, $this->mode, $this->pObj->conf['views.'][$this->view . '.'][$this->mode . '.']['select']);
     $select = $this->pObj->conf['views.'][$this->view . '.'][$this->mode . '.']['select'];
-    $pos    = strpos($select, $this->table . '.' . $this->field );
+    $pos    = strpos( $select, $this->table . '.' . $this->field );
     if ( $pos === false )
     {
       $prompt = ''.
