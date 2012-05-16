@@ -2113,7 +2113,7 @@ plugin.tx_browser_pi1 {
                     imageLinkWrap {
                       enable = 1
                       typolink {
-                        parameter = {$plugin.tx_browser_pi1.downloadmodule.pageUid}
+                        parameter = {$plugin.tx_browser_pi1.downloadmodule.pageUid} - linktosingle
                         title = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
 // 120515, dwildt: Bug: TYPO3 renders content as "TEXT"
 //                        title = TEXT
@@ -2139,9 +2139,7 @@ plugin.tx_browser_pi1 {
                   30 {
                     data = register : filename
                     typolink {
-                      parameter {
-                        data = page:uid
-                      }
+                      parameter         = ###{$plugin.tx_browser_pi1.downloadmodule.pageUid}### - linktosingle
                       title = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
 // 120515, dwildt: Bug: TYPO3 renders content as "TEXT"
 //                      title = TEXT
@@ -2178,9 +2176,19 @@ plugin.tx_browser_pi1 {
                     }
                     imageLinkWrap {
                       typolink {
-                        parameter         = ###{$plugin.tx_browser_pi1.downloadmodule.pageUid}###,{$plugin.tx_browser_pi1.typeNum.downloadPageObj}
+                        parameter         = ###{$plugin.tx_browser_pi1.downloadmodule.pageUid}###,{$plugin.tx_browser_pi1.typeNum.downloadPageObj} - linktosingle
                         additionalParams  = &tx_browser_pi1[plugin]=###TT_CONTENT.UID###&tx_browser_pi1[file]=single.{$plugin.tx_browser_pi1.downloadmodule.uidSingleView}.tx_dam.###TX_DAM.UID###.file_name.###KEY###
+                        useCacheHash      = 1
                       }
+                    }
+                  }
+                  30 = TEXT
+                  30 {
+                    data = register : filename
+                    typolink {
+                      parameter         = ###{$plugin.tx_browser_pi1.downloadmodule.pageUid}###,{$plugin.tx_browser_pi1.typeNum.downloadPageObj} - linktosingle
+                      additionalParams  = &tx_browser_pi1[plugin]=###TT_CONTENT.UID###&tx_browser_pi1[file]=single.{$plugin.tx_browser_pi1.downloadmodule.uidSingleView}.tx_dam.###TX_DAM.UID###.file_name.###KEY###
+                      useCacheHash      = 1
                     }
                   }
                 }
@@ -2188,9 +2196,32 @@ plugin.tx_browser_pi1 {
             }
           }
           textlinks {
+            withLinkToListView = TEXT
             withLinkToListView {
+              value = Proceed &raquo;
+              lang {
+                de  = Weiter &raquo;
+                en  = Proceed &raquo;
+              }
+              typolink {
+                parameter         = {$plugin.tx_browser_pi1.downloadmodule.pageUid} - linktosingle
+                title             = Download: '###{$plugin.tx_browser_pi1.downloadmodule.titles}###'
+                additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.downloadmodule.urlParam}]=###{$plugin.tx_browser_pi1.downloadmodule.uid}###
+                useCacheHash      = 1
+              }
             }
+            withDownloadLink = TEXT
             withDownloadLink {
+              value = Download &raquo;
+              lang {
+                de  = Download &raquo;
+                en  = Download &raquo;
+              }
+              typolink {
+                parameter         = ###{$plugin.tx_browser_pi1.downloadmodule.pageUid}###,{$plugin.tx_browser_pi1.typeNum.downloadPageObj} - linktosingle
+                additionalParams  = &tx_browser_pi1[plugin]=###TT_CONTENT.UID###&tx_browser_pi1[file]=single.{$plugin.tx_browser_pi1.downloadmodule.uidSingleView}.tx_dam.###TX_DAM.UID###.file_name.###KEY###
+                useCacheHash      = 1
+              }
             }
           }
         }
