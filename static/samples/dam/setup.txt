@@ -75,19 +75,19 @@ plugin.tx_browser_pi1 {
             }
             11 = TEXT
             11 {
-              value = <p>###TX_DAM.DESCRIPTION###</p>
+              value = <p>Beschreibung: ###TX_DAM.DESCRIPTION###</p>
             }
             12 = TEXT
             12 {
-              value = <p>###TX_DAM.DATE_MOD###</p>
+              value = <p>&Auml;nderungsdatum: ###TX_DAM.DATE_MOD###</p>
             }
             13 = TEXT
             13 {
-              value = <p>###TX_DAM.FILE_SIZE###</p>
+              value = <p>Gr&ouml;sse: ###TX_DAM.FILE_SIZE###</p>
             }
             14 = TEXT
             14 {
-              value = <p>###TX_DAM.CATGORY###</p>
+              value = <p>Kategorie: ###TX_DAM_CAT.TITLE###</p>
             }
             20 < plugin.tx_browser_pi1.displayList.master_templates.modules.download.thumbnails.withDownloadLink
             30 = TEXT
