@@ -69,7 +69,7 @@ plugin.tx_browser_pi1 {
             10 {
               value = <h2>###TX_DAM.TITLE###</h2>
             }
-            20 < plugin.tx_browser_pi1.displayList.master_templates.modules.download.thumbnails.withLinkToListView
+            20 < plugin.tx_browser_pi1.displayList.master_templates.modules.download.thumbnails.withDownloadLink
             30 = TEXT
             30 {
               value = <p>###TX_DAM.CAPTION###</p>
