@@ -28,8 +28,91 @@ plugin.tx_browser_pi1 {
           tx_dam.title,
           tx_dam.file_name,
           tx_dam.file_path,
-          tx_dam.caption
+          tx_dam.file_type,
+          tx_dam.caption,
+          tx_dam_cat.title
         )
+        filter {
+          tx_org_dam {
+            date_mod < plugin.tx_browser_pi1.displayList.master_templates.selectbox
+            date_mod {
+              first_item {
+                cObject {
+                  20 {
+                    //data = LLL:EXT:org/locallang_db.xml:filter_phrase.period
+                  }
+                }
+              }
+              wrap = <span class="category_menu">|</span>
+              wrap {
+                item {
+                  //display_without_any_hit = 1
+                  wraps {
+                    value {
+                      stdWrap {
+                        htmlSpecialChars = 0
+                        crop >
+                      }
+                    }
+                  }
+                }
+              }
+              order.field = uid
+              area < plugin.tx_browser_pi1.displayList.master_templates.areas.sample_period
+              area {
+                interval {
+                  case = year
+                }
+              }
+            }
+            type < plugin.tx_browser_pi1.displayList.master_templates.selectbox
+            type {
+              first_item {
+                cObject {
+                  20 {
+                    //data = LLL:EXT:org/locallang_db.xml:filter_phrase.doccat
+                  }
+                }
+              }
+              wrap = <span class="selectbox">|</span>
+              wrap {
+                item {
+                  wraps {
+                    value {
+                      stdWrap {
+                        crop = 30 | ... | 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          tx_dam_cat {
+            title < plugin.tx_browser_pi1.displayList.master_templates.selectbox
+            title {
+              first_item {
+                cObject {
+                  20 {
+                    //data = LLL:EXT:org/locallang_db.xml:filter_phrase.doccat
+                  }
+                }
+              }
+              wrap = <span class="selectbox">|</span>
+              wrap {
+                item {
+                  wraps {
+                    value {
+                      stdWrap {
+                        crop = 30 | ... | 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
         tx_dam {
           title = COA
           title {
