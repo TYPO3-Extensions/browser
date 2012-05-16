@@ -426,7 +426,7 @@ class tx_browser_pi1_download
  *                    * file is proper:           if the file does exist
  *
  * @return	string		Prompt, in case of a failure
- * @version 3.9.3
+ * @version 3.9.14
  * @since 3.9.3
  */
   private function sendFileAndExit( )
@@ -438,15 +438,17 @@ class tx_browser_pi1_download
     $uploadFolder = $this->sendFileAndExitGetUploadFolder( );
     if( empty( $uploadFolder ) )
     {
-      $prompt_01 =  'Any upload folder is configured in the TCA.';
-      $prompt_02 =  'Please take care of a proper configuration: ';
+      $prompt_01 =  'Any upload folder is configured.';
+      $prompt_02 =  'Please take care of a proper TCA configuration: ';
                     '$TCA. ' . $this->table . 'columns.' . $this->field . 'config.uploadfolder.';
+      $prompt_03 =  'Error in case of DAM: the field file_path is empty.';
       if ( $this->pObj->b_drs_download )
       {
         t3lib_div::devlog( '[ERROR/DOWNLOAD] ' . $prompt_01, $this->pObj->extKey, 3 );
         t3lib_div::devlog( '[HELP/DOWNLOAD] ' . $prompt_02, $this->pObj->extKey, 1 );
+        t3lib_div::devlog( '[HELP/DOWNLOAD] ' . $prompt_02, $this->pObj->extKey, 1 );
       }
-      return $prompt_01 . ' ' . $prompt_02;
+      return $prompt_01 . ' ' . $prompt_02 . ' ' . $prompt_03;
     }
 
       // RETURN: Any upload folder isn't configured
@@ -637,15 +639,15 @@ class tx_browser_pi1_download
 
 
 
-  /**
- * sendFileAndExitGetUploadFolder( ): The method sends the file and exit in case of success
- *                    The method checks:
- *                    * upload folder is proper:  if there is a configuration in the TCA
- *
- * @return	string		Prompt, in case of a failure
- * @version 3.9.14
- * @since 3.9.14
- */
+ /**
+  * sendFileAndExitGetUploadFolder( ) : Get the upload folder.
+  *                                     Method takes the path to the upload folder from TCA.
+  *                                     In case of DAM (tx_dam) ist takes it from tx_dam.file_path
+  * @return	string     $uploadFolder  : The path to the upload folder
+  * @version 3.9.14
+  * @since 3.9.14
+  * @todo: 120516, dwildt: Qualify error prompts
+  */
   private function sendFileAndExitGetUploadFolder( )
   {
     if( $this->table != 'tx_dam' )
@@ -729,6 +731,7 @@ class tx_browser_pi1_download
       // RETURN: There are 0 ore more than one rows
       // Evaluate the query
     $uploadFolder = $rows[0]['file_path'];
+//var_dump( __METHOD__, __LINE__, $uploadFolder );
     
     return $uploadFolder;
   }
