@@ -29,7 +29,6 @@ plugin.tx_browser_pi1 {
           tx_dam.file_name,
           tx_dam.file_path,
           tx_dam.file_type,
-          tx_dam.type,
           tx_dam.date_mod,
           tx_dam.caption,
           tx_dam_cat.title
@@ -67,8 +66,8 @@ plugin.tx_browser_pi1 {
                 }
               }
             }
-            type < plugin.tx_browser_pi1.displayList.master_templates.selectbox
-            type {
+            file_type < plugin.tx_browser_pi1.displayList.master_templates.selectbox
+            file_type {
               first_item {
                 cObject {
                   20 {
