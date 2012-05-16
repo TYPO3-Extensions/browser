@@ -343,8 +343,7 @@ class tx_browser_pi1_typoscript
                 // DRS
               if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
               {
-                $prompt = 'Browser engine 4.x: filter ' . $tableField . ' is added to the array ' .
-                          'realTabels_arrFields, but filter isn\'t used.';
+                $prompt = 'Browser engine 4.x: filter ' . $tableField . ' is added to the array.';
                 t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
                 $prompt = 'Browser engine 4.x: Please check, weather it is a performance problem.';
                 t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
