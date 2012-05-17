@@ -419,6 +419,27 @@ plugin.tx_browser_pi3 {
         }
       }
     }
+      // browser_tut_navigation_en
+    1181 < plugin.tx_browser_pi3.template
+    1181 {
+      10 {
+        11 {
+          typolink {
+            parameter   = typo3conf/ext/browser_tut_navigation_en/doc/manual.pdf
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_navigation_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_navigation_en.description
+        }
+      }
+    }
       // browser_tut_realurl_en
     1190 < plugin.tx_browser_pi3.template
     1190 {
