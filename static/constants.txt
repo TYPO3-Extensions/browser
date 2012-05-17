@@ -4,8 +4,6 @@ plugin.tx_browser_pi1 {
   downloadmodule.drs = 0
   # cat=Browser - Download Module/enable/102;   type=int+;      label= page uid: Id of the download page
   downloadmodule.pageUid = 
-  # cat=Browser - Download Module/enable/103;   type=options[0,1,2]; label= Thumbnail design: 0: no icon, no preview. 1: application icon. 2: preview
-  downloadmodule.layout = 2 
   # cat=Browser - Download Module/enable/104;   type=string;    label= Uid parameter:Parameter for the uid of the document in the URL
   downloadmodule.urlParam = downloadUid 
   # cat=Browser - Download Module/enable/105;   type=string;    label= Uid of the download single view:Take it from your TypoScript. Default in case of the DAM sample is 37165
