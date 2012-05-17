@@ -383,7 +383,7 @@ plugin.tx_browser_pi3 {
       10 {
         11 {
           typolink {
-            parameter   = typo3conf/ext/browser_tut_localisation_en/doc/manual.pdf
+            parameter   = typo3conf/ext/browser_tut_localization_en/doc/manual.pdf
           }
         }
         30 {
