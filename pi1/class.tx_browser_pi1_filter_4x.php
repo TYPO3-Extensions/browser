@@ -4880,10 +4880,10 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data );
       // Init sum hits
     $sum_hits = 0;
 
-//if( $this->curr_tableField == 'tx_greencars_manufacturer' )
-//{
-//  $this->pObj->dev_var_dump( $rows );
-//}
+if( $this->curr_tableField == 'tx_greencars_manufacturer' )
+{
+  $this->pObj->dev_var_dump( $rows );
+}
       // LOOP all rows
     foreach( ( array ) $rows as $row )
     {
