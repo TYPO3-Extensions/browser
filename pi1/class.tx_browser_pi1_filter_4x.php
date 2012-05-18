@@ -3930,10 +3930,10 @@ class tx_browser_pi1_filter_4x {
     switch( $conf_array['first_item'] )
     {
       case( true ):
-$hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
-$sum_hits   = $this->hits_sum[$this->curr_tableField];
-$this->pObj->cObj->data[$hitsField] = $sum_hits;
-$this->pObj->dev_var_dump( $this->pObj->cObj->data, $this->tmpOneDim );
+//$hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+//$sum_hits   = $this->hits_sum[$this->curr_tableField];
+//$this->pObj->cObj->data[$hitsField] = $sum_hits;
+//$this->pObj->dev_var_dump( $this->pObj->cObj->data, $this->tmpOneDim );
 // Set hits!        
           // Render uid and value of the first item
         $first_item_uid   = $conf_array['first_item.']['option_value'];
@@ -4925,7 +4925,7 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data, $this->tmpOneDim );
     }
       // LOOP all rows
 
-if( $table == 'tx_greencars_manufacturer' )
+if( $this->curr_tableField == 'tx_greencars_manufacturer' )
 {
   $this->pObj->dev_var_dump( $bTreeView, $sum_hits );
 }
