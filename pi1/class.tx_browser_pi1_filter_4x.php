@@ -714,6 +714,7 @@ class tx_browser_pi1_filter_4x {
     $this->set_maxItemsPerHtmlRow( );
 
       // SWITCH current filter is a tree view
+      // @todo: 120518, objFltr4x instead of 3x
     switch( in_array( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
@@ -3252,10 +3253,10 @@ class tx_browser_pi1_filter_4x {
     $key    = $this->sql_filterFields[$this->curr_tableField]['hits'];
     $value  = $this->rows[$uid][$key];
     $this->pObj->cObj->data['hits'] = $value;
-if( $uid == 0 )
-{
-  $this->pObj->dev_var_dump( $key, $value, $this->rows );
-}
+//if( $uid == 0 )
+//{
+//  $this->pObj->dev_var_dump( $key, $value, $this->rows );
+//}
 
       // Add the field rowNumber with the number of the current row
     $key    = $this->pObj->prefixId . '.rowNumber';
@@ -5048,6 +5049,7 @@ if( $uid == 0 )
       // Get table and field
     list( $table ) = explode( '.', $this->curr_tableField );
 
+$this->pObj->dev_var_dump( $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield );
       // RETURN current filter isn't a tree view
     if( ! in_array( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
     {
