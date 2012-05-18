@@ -268,7 +268,7 @@
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
-            <default>independent</default>
+            <default>controlled</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>
