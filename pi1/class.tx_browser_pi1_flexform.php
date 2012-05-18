@@ -179,7 +179,7 @@ class tx_browser_pi1_flexform {
     // [string] independent (default) || controlled: Calculate total hits.
   var $sheet_viewList_total_hits      = 'independent';
     // [string] enabled (default) || disabled: count hits
-  var $sheet_viewList_count_hits      = 'enabled';
+  var $sheet_viewList_count_hits      = true;
     // [boolean] Enable CSV export
   var $sheet_viewList_csvexport       = null;
     // [boolean] Enable CSV export
@@ -3266,10 +3266,10 @@ class tx_browser_pi1_flexform {
     switch ( $count_hits )
     {
       case ( 'disabled' ) :
-        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = 'disabled';
+        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = false;
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
         {
-          t3lib_div::devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' is set to disabled.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' is set to false.', $this->pObj->extKey, 0);
         }
         break;
       case ( 'ts' ) :
@@ -3281,10 +3281,10 @@ class tx_browser_pi1_flexform {
         break;
       case ( 'enabled' ) :
       default :
-        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = 'enabled';
+        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = true;
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
         {
-          t3lib_div :: devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' is set to enabled.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' is set to true.', $this->pObj->extKey, 0);
         }
     }
     $this->sheet_viewList_count_hits = $this->pObj->conf['flexform.'][$sheet . '.'][$field];
