@@ -910,6 +910,7 @@ class tx_browser_pi1_filter_4x {
       // Order the values
 
       // Get the values for ordering
+      // @todo: 121018, dwildt, is multisort needed?
     $arr_value = array( );
     foreach ( $this->arr_rowsTablefield as $key => $row )
     {
@@ -933,15 +934,12 @@ class tx_browser_pi1_filter_4x {
       // Order the values
 
 
-  // Get table and field
-list( $table, $field ) = explode( '.', $this->curr_tableField );
-if( $table == 'tx_greencars_manufacturer' )
-{
-  if( $uid == 0 )
-  {
-    $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
-  }
-}
+//  // Get table and field
+//list( $table, $field ) = explode( '.', $this->curr_tableField );
+//if( $table == 'tx_greencars_manufacturer' )
+//{
+//  $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
+//}
       // 120518, dwildt, 1+
 //    $this->set_firstItem( );
 //if( $table == 'tx_greencars_manufacturer' )
@@ -3931,6 +3929,7 @@ if( $table == 'tx_greencars_manufacturer' )
     switch( $conf_array['first_item'] )
     {
       case( true ):
+$this->pObj->dev_var_dump( $this->pObj->cObj->data );
           // Render uid and value of the first item
         $first_item_uid   = $conf_array['first_item.']['option_value'];
         // 120518, dwildt, 2-
