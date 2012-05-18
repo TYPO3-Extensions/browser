@@ -2889,6 +2889,8 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_whereAnd_Filter( )
   {
+      // Get table and field
+    list( $table ) = explode( '.', $this->curr_tableField );
       // Flexform configuration
     $conf_flexform = $this->pObj->objFlexform->sheet_viewList_total_hits;
 
