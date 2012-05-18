@@ -4925,9 +4925,9 @@ class tx_browser_pi1_filter_4x {
     }
       // LOOP all rows
 
-if( $this->curr_tableField == 'tx_greencars_manufacturer' )
+if( 1 || $this->curr_tableField == 'tx_greencars_manufacturer' )
 {
-  $this->pObj->dev_var_dump( $bTreeView, $sum_hits );
+  $this->pObj->dev_var_dump( $this->curr_tableField, $bTreeView, $sum_hits );
 }
 
       // Set class var $this->hits_sum
