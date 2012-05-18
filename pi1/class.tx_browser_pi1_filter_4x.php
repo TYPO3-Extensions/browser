@@ -884,6 +884,8 @@ class tx_browser_pi1_filter_4x {
       // Set marker treeview
     $this->markerArray['###TREEVIEW###'] = 1;
 
+    $this->set_firstItem( );
+
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
