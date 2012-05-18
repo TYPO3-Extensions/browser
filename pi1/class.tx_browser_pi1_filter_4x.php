@@ -4883,7 +4883,8 @@ class tx_browser_pi1_filter_4x {
 
       // Tree view flag
     $bTreeView = false;
-    if( in_array( $this->curr_tableField, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
+    list( $table ) = explode( '.', $this->curr_tableField );
+    if( in_array( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
     {
       $bTreeView = true;
     }
@@ -4925,7 +4926,7 @@ class tx_browser_pi1_filter_4x {
     }
       // LOOP all rows
 
-if( 1 || $this->curr_tableField == 'tx_greencars_manufacturer' )
+if( $table == 'tx_greencars_manufacturer' )
 {
   $this->pObj->dev_var_dump( $this->curr_tableField, $bTreeView, $sum_hits );
 }
