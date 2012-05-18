@@ -880,7 +880,7 @@ class tx_browser_pi1_filter_4x {
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
       // 120518, dwildt, 1+
-    $this->set_firstItem( );
+//    $this->set_firstItem( );
       
       // Set cObj->data treeview
     $this->cObjData_setTreeview( );
