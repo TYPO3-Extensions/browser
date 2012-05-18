@@ -1859,7 +1859,7 @@ class tx_browser_pi1_filter_4x {
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
-$this->pObj-dev_var_dump( $this->pObj->objFlexform->sheet_viewList_count_hits );
+$this->pObj->dev_var_dump( $this->pObj->objFlexform->sheet_viewList_count_hits );
 if( $this->pObj->objFlexform->sheet_viewList_count_hits )
 {
     // 1. step: filter items with one hit at least
