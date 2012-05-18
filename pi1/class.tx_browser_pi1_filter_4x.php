@@ -3897,7 +3897,7 @@ class tx_browser_pi1_filter_4x {
 //        $tsConf           = $conf_array['first_item.']['value_stdWrap.'];
         // 120518, dwildt, 2+
         $tsValue          = $conf_array['first_item.']['cObject'];
-        $tsConf           = $conf_array['first_item.']['cObject..'];
+        $tsConf           = $conf_array['first_item.']['cObject.'];
         $first_item_value = $this->pObj->local_cObj->stdWrap( $tsValue, $tsConf );
           // Render uid and value of the first item
         $tmpOneDim  = array( 'uid'   => $first_item_uid   ) +
