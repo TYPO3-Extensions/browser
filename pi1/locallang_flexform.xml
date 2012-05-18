@@ -316,10 +316,14 @@
       <label index="sheet_viewList.search.wildcards.default">Self-acting (recommended)</label>
       <label index="sheet_viewList.search.wildcards.manual">User have to add wildcards</label>
       <label index="sheet_viewList.search.wildcards.char">Search: char for a wildcard (i.e "*")</label>
-      <label index="sheet_viewList.total_hits">Filter: total hits</label>
+      <label index="sheet_viewList.total_hits">Filter: display items</label>
       <label index="sheet_viewList.total_hits.independent">Independent on selected filters (recommended)</label>
       <label index="sheet_viewList.total_hits.controlled">Controlled by selected filters</label>
       <label index="sheet_viewList.total_hits.ts">Take the value from TypoScript!</label>
+      <label index="sheet_viewList.count_hits">Filter: count hits</label>
+      <label index="sheet_viewList.count_hits.enabled">enabled (default)</label>
+      <label index="sheet_viewList.count_hits.disabled">disabled (best performance)</label>
+      <label index="sheet_viewList.count_hits.ts">Take the value from TypoScript!</label>
       <label index="sheet_viewList.csvexport">CSV export</label>
       <label index="sheet_viewList.csvexport.disabled">Disabled (default)</label>
       <label index="sheet_viewList.csvexport.enabled">Enabled</label>

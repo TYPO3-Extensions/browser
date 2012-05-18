@@ -291,7 +291,7 @@ $LOCAL_LANG = array(
     'sheet_viewList.limitOffset'                => 'Limit: start/offset (from 1st record = 0)',
     'sheet_viewList.limit'                      => 'Limit: records per page (from 1 to 1000)',
     'sheet_viewList.navigation'                 => 'Display: Navigation',
-    'sheet_viewList.navigation.indexBrowser'       => 'Index Browser',
+    'sheet_viewList.navigation.indexBrowser'    => 'Index Browser',
     'sheet_viewList.navigation.pageBrowser'     => 'Page Browser',
     'sheet_viewList.records'                    => 'Display: Records',
     'sheet_viewList.records.emptyAtStart'       => 'Empty List at Start',

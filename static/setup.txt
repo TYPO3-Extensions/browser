@@ -1168,7 +1168,12 @@ plugin.tx_browser_pi1 {
         nice_piVar =
           // [Boolean] Should be added a default item?
         first_item = 1
-        first_item {
+        first_item 
+            // [Boolean] True: hits will counted (default). False: hits won't counted (best performance)
+          count_hits = TEXT
+          count_hits {
+            value = 1
+          }
             // Wrap the first filter item
           cObject = COA
           cObject {
