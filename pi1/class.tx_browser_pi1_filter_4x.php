@@ -3929,7 +3929,11 @@ class tx_browser_pi1_filter_4x {
     switch( $conf_array['first_item'] )
     {
       case( true ):
+$hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+$sum_hits   = $this->hits_sum[$this->curr_tableField];
+$this->pObj->cObj->data[$hitsField] = $sum_hits;
 $this->pObj->dev_var_dump( $this->pObj->cObj->data );
+// Set hits!        
           // Render uid and value of the first item
         $first_item_uid   = $conf_array['first_item.']['option_value'];
         // 120518, dwildt, 2-
