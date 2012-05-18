@@ -2807,7 +2807,7 @@ class tx_browser_pi1_filter_4x {
               $this->sql_whereAnd_fromTS( );
       // Localise the WHERE statement
     $where =  $this->sql_whereWiHitsLL( $where );
-$this->pObj->dev_var_dump( $where );
+//$this->pObj->dev_var_dump( $where );
 
       // RETURN WHERE statement without a WHERE
     return $where;
@@ -2896,7 +2896,6 @@ $this->pObj->dev_var_dump( $where );
       // SWITCH
     switch( true )
     {
-      case( $this->pObj->localTable != $table ) :
       case( $conf_flexform == 'controlled' ) :
       case( isset( $this->pObj->piVars['sword'] ) ):        
 $this->pObj->dev_var_dump( $this->andWhereFilter );
@@ -2905,6 +2904,9 @@ $this->pObj->dev_var_dump( $this->andWhereFilter );
       case( $conf_flexform == 'independent' ) :
 $this->pObj->dev_var_dump( false );
         return false;
+        break;
+      case( $this->pObj->localTable != $table ) :
+        return $this->andWhereFilter;
         break;
       default;
         $prompt = __METHOD__ . ' (' . __LINE__ . '): undefined value: "' . $conf_flexform . '".';
