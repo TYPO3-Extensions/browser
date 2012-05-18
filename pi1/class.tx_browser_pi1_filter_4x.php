@@ -2902,6 +2902,7 @@ $this->pObj->dev_var_dump( $this->andWhereFilter );
         return $this->andWhereFilter;
         break;
       case( $conf_flexform == 'independent' ) :
+$this->pObj->dev_var_dump( false );
         return false;
         break;
       default;
