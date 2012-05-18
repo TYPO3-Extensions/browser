@@ -879,8 +879,24 @@ class tx_browser_pi1_filter_4x {
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
+  // Get table and field
+list( $table, $field ) = explode( '.', $this->curr_tableField );
+if( $table == 'tx_greencars_manufacturer' )
+{
+  if( $uid == 0 )
+  {
+    $this->pObj->dev_var_dump( $this->pObj->cObj->data, $cObj_conf, $item );
+  }
+}
       // 120518, dwildt, 1+
-//    $this->set_firstItem( );
+    $this->set_firstItem( );
+if( $table == 'tx_greencars_manufacturer' )
+{
+  if( $uid == 0 )
+  {
+    $this->pObj->dev_var_dump( $this->pObj->cObj->data, $cObj_conf, $item );
+  }
+}
       
       // Set cObj->data treeview
     $this->cObjData_setTreeview( );
