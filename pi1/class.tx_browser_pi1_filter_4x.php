@@ -5049,13 +5049,14 @@ class tx_browser_pi1_filter_4x {
       // Get table and field
     list( $table ) = explode( '.', $this->curr_tableField );
 
-$this->pObj->dev_var_dump( $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield, $this->pObj->oblFltr4x->arr_tablesWiTreeparentfield );
       // RETURN current filter isn't a tree view
+      // @todo: 3x -> 4x
     if( ! in_array( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
     {
       return;
     }
       // RETURN current filter isn't a tree view
+$this->pObj->dev_var_dump( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield );
 
       // Prepend the first item to class var $rows
     $this->set_firstItem( );
