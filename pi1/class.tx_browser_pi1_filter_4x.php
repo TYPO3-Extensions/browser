@@ -1372,7 +1372,10 @@ class tx_browser_pi1_filter_4x {
 
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
-$this->pObj->dev_var_dump( $uid, $item );
+if( $uid == 0 )
+{
+  $this->pObj->dev_var_dump( $cObj_conf, $item );
+}
 
       // maxItemsTagEndBegin
       // DRS :TODO:
