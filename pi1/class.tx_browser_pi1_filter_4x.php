@@ -1369,6 +1369,7 @@ class tx_browser_pi1_filter_4x {
     }
       // SWITCH first item
       // Get the COA configuration for the value
+$this->pObj->dev_var_dump( $uid, $bool_displayHits );
 
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
