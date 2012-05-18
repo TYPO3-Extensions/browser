@@ -2897,7 +2897,7 @@ class tx_browser_pi1_filter_4x {
     list( $table ) = explode( '.', $this->curr_tableField );
       // Flexform configuration
     $conf_flexform = $this->pObj->objFlexform->sheet_viewList_total_hits;
-$this->pObj->dev_var_dump( $table, $conf_flexform );
+//$this->pObj->dev_var_dump( $table, $conf_flexform );
 
       // SWITCH
     switch( true )
@@ -2913,7 +2913,7 @@ $this->pObj->dev_var_dump( $table, $conf_flexform );
       case( $this->pObj->localTable != $table ) :
       case( $conf_flexform == 'controlled' ) :
       case( isset( $this->pObj->piVars['sword'] ) ):        
-$this->pObj->dev_var_dump( $this->andWhereFilter );
+//$this->pObj->dev_var_dump( $this->andWhereFilter );
         return $this->andWhereFilter;
         break;
       default;
@@ -4735,6 +4735,7 @@ $this->pObj->dev_var_dump( $this->andWhereFilter );
     }
       // SWITCH first item
       // Set display hits flag
+$this->pObj->dev_var_dump( $uid, $bool_displayHits );
 
       // RETURN hit shouldn't displayed
     if( ! $bool_displayHits )
