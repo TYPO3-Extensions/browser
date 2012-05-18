@@ -2897,7 +2897,7 @@ class tx_browser_pi1_filter_4x {
     list( $table ) = explode( '.', $this->curr_tableField );
       // Flexform configuration
     $conf_flexform = $this->pObj->objFlexform->sheet_viewList_total_hits;
-$this->pObj->dev_var_dump( $table, $flexform );
+$this->pObj->dev_var_dump( $table, $conf_flexform );
 
       // SWITCH
     switch( true )
