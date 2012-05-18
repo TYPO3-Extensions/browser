@@ -177,7 +177,7 @@ class tx_browser_pi1_flexform {
 
   //[sheet/view]
     // [string] independent (default) || controlled: Calculate total hits.
-  var $sheet_viewList_total_hits      = null;
+  var $sheet_viewList_total_hits      = 'independent';
     // [boolean] Enable CSV export
   var $sheet_viewList_csvexport       = null;
     // [boolean] Enable CSV export
