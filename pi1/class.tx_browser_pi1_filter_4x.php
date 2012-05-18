@@ -4893,14 +4893,16 @@ class tx_browser_pi1_filter_4x {
       // TRUE : tree view
     if( $bTreeView )
     {
+      $treeParentField = $this->sql_filterFields[$this->curr_tableField]['treeParentField'];
+
         // get lowest uid_parent
       $lowestPid = 9999999;
         // LOOP all rows
       foreach( ( array ) $rows as $row )
       {
-        if( $row[ $this->treeParentField ] < $lowestPid )
+        if( $row[ $treeParentField ] < $lowestPid )
         {
-          $lowestPid = $row[ $this->treeParentField ];
+          $lowestPid = $row[ $treeParentField ];
         }
       }
         // LOOP all rows
@@ -4918,7 +4920,7 @@ class tx_browser_pi1_filter_4x {
       }
       if( $bTreeView )
       {
-        if( $row[ $this->treeParentField ] == $lowestPid )
+        if( $row[ $treeParentField ] == $lowestPid )
         {
           $sum_hits = $sum_hits + $row[ $hitsField ];
         }
@@ -4928,7 +4930,7 @@ class tx_browser_pi1_filter_4x {
 
 if( $table == 'tx_greencars_manufacturer' )
 {
-  $this->pObj->dev_var_dump( $this->curr_tableField, $bTreeView, $lowestPid, $this->treeParentField, $sum_hits );
+  $this->pObj->dev_var_dump( $this->curr_tableField, $bTreeView, $lowestPid, $treeParentField, $sum_hits );
 }
 
       // Set class var $this->hits_sum
