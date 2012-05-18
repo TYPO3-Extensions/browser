@@ -3254,6 +3254,10 @@ class tx_browser_pi1_flexform {
         }
     }
     $this->sheet_viewList_total_hits = $this->pObj->conf['flexform.'][$sheet . '.'][$field];
+    if( empty ( $this->sheet_viewList_total_hits ) )
+    {
+      $this->sheet_viewList_total_hits = 'independent':
+    }
     if ( $this->pObj->b_drs_filter )
     {
       t3lib_div :: devlog('[INFO/FILTER] global sheet_viewList_total_hits is set to ' . $this->sheet_viewList_total_hits, $this->pObj->extKey, 0);
