@@ -3254,6 +3254,7 @@ class tx_browser_pi1_flexform {
         }
     }
     $this->sheet_viewList_total_hits = $this->pObj->conf['flexform.'][$sheet . '.'][$field];
+$this->pObj->dev_var_dump( $this->sheet_viewList_total_hits );
     if( empty ( $this->sheet_viewList_total_hits ) )
     {
       $this->sheet_viewList_total_hits = 'independent';
