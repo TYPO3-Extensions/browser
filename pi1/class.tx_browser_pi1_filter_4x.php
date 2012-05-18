@@ -5040,10 +5040,10 @@ class tx_browser_pi1_filter_4x {
         // SWITCH field
     }
       // LOOP all fields of current filter / tableField
-//if( $table == 'tx_greencars_manufacturer' )
-//{
-//  $this->pObj->dev_var_dump( $table, $firstItem ); 
-//}
+if( $table == 'tx_greencars_manufacturer' )
+{
+  $this->pObj->dev_var_dump( $table, $firstItem, $this->rows ); 
+}
 
       // Add first item to the rows of the current filter
     $this->rows = $firstItem + $this->rows;
@@ -5080,7 +5080,7 @@ class tx_browser_pi1_filter_4x {
       return;
     }
       // RETURN current filter isn't a tree view
-$this->pObj->dev_var_dump( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield );
+//$this->pObj->dev_var_dump( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield );
 
       // Prepend the first item to class var $rows
     $this->set_firstItem( );
