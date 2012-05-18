@@ -3930,11 +3930,11 @@ class tx_browser_pi1_filter_4x {
     switch( $conf_array['first_item'] )
     {
       case( true ):
-//$hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
-//$sum_hits   = $this->hits_sum[$this->curr_tableField];
-//$this->pObj->cObj->data[$hitsField] = $sum_hits;
-//$this->pObj->dev_var_dump( $this->pObj->cObj->data, $this->tmpOneDim );
-// Set hits!        
+$hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+$sum_hits   = $this->hits_sum[$this->curr_tableField];
+$this->pObj->cObj->data[$hitsField] = $sum_hits;
+$this->pObj->dev_var_dump( $this->pObj->cObj->data, $this->tmpOneDim );
+ //Set hits!        
           // Render uid and value of the first item
         $first_item_uid   = $conf_array['first_item.']['option_value'];
         // 120518, dwildt, 2-
@@ -4867,6 +4867,7 @@ class tx_browser_pi1_filter_4x {
 /**
  * sum_hits( ): Count the hits of the current tableField.
  *              Store it in the class var $hits_sum[tableField]
+ *              Workflow depends on default case or treeview case
  *
  * @param	string		$rows   : current rows
  * @return	void
@@ -4890,14 +4891,14 @@ class tx_browser_pi1_filter_4x {
     }
       // Tree view flag
     
-      // TRUE : tree view
+      // Tree view  : get lowest uid_parent
     if( $bTreeView )
     {
+        // Get the field label
       $treeParentField = $this->sql_filterFields[$this->curr_tableField]['treeParentField'];
-
-        // get lowest uid_parent
+        // Set lowest uid_parent 'unlimited'
       $lowestPid = 9999999;
-        // LOOP all rows
+        // LOOP all rows : set lowest pid
       foreach( ( array ) $rows as $row )
       {
         if( $row[ $treeParentField ] < $lowestPid )
@@ -4905,19 +4906,20 @@ class tx_browser_pi1_filter_4x {
           $lowestPid = $row[ $treeParentField ];
         }
       }
-        // LOOP all rows
-        // get lowest uid_parent
+        // LOOP all rows : set lowest pid
     }
-      // TRUE : tree view
+      // Tree view  : get lowest uid_parent
 
-      // LOOP all rows
+      // LOOP all rows  : count hits
     foreach( ( array ) $rows as $row )
     {
-        // Add hits
+        // Default case : count each row
       if( ! $bTreeView )
       {
         $sum_hits = $sum_hits + $row[ $hitsField ];
       }
+        // Default case : count each row
+        // Tree view  case  : count top level rows only
       if( $bTreeView )
       {
         if( $row[ $treeParentField ] == $lowestPid )
@@ -4925,13 +4927,14 @@ class tx_browser_pi1_filter_4x {
           $sum_hits = $sum_hits + $row[ $hitsField ];
         }
       }
+        // Tree view  case  : count top level rows only
     }
-      // LOOP all rows
+      // LOOP all rows  : count hits
 
-if( $table == 'tx_greencars_manufacturer' )
-{
-  $this->pObj->dev_var_dump( $this->curr_tableField, $bTreeView, $lowestPid, $treeParentField, $sum_hits );
-}
+//if( $table == 'tx_greencars_manufacturer' )
+//{
+//  $this->pObj->dev_var_dump( $this->curr_tableField, $bTreeView, $lowestPid, $treeParentField, $sum_hits );
+//}
 
       // Set class var $this->hits_sum
     $this->hits_sum[$this->curr_tableField] = $sum_hits;
