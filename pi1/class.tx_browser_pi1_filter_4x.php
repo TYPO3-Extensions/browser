@@ -5056,10 +5056,10 @@ if( $table == 'tx_greencars_manufacturer' )
         // SWITCH field
     }
       // LOOP all fields of current filter / tableField
-if( $table == 'tx_greencars_manufacturer' )
-{
-  $this->pObj->dev_var_dump( $table, $firstItem, $this->rows ); 
-}
+//if( $table == 'tx_greencars_manufacturer' )
+//{
+//  $this->pObj->dev_var_dump( $table, $firstItem, $this->rows ); 
+//}
 
       // Add first item to the rows of the current filter
     $this->rows = $firstItem + $this->rows;
