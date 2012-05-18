@@ -879,12 +879,13 @@ class tx_browser_pi1_filter_4x {
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
+      // 120518, dwildt, 1+
+    $this->set_firstItem( );
+      
       // Set cObj->data treeview
     $this->cObjData_setTreeview( );
       // Set marker treeview
     $this->markerArray['###TREEVIEW###'] = 1;
-
-    $this->set_firstItem( );
 
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -1387,15 +1388,15 @@ class tx_browser_pi1_filter_4x {
 
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
-  // Get table and field
-list( $table, $field ) = explode( '.', $this->curr_tableField );
-if( $table == 'tx_greencars_manufacturer' )
-{
-  if( $uid == 0 )
-  {
-    $this->pObj->dev_var_dump( $this->pObj->cObj->data, $cObj_conf, $item );
-  }
-}
+//  // Get table and field
+//list( $table, $field ) = explode( '.', $this->curr_tableField );
+//if( $table == 'tx_greencars_manufacturer' )
+//{
+//  if( $uid == 0 )
+//  {
+//    $this->pObj->dev_var_dump( $this->pObj->cObj->data, $cObj_conf, $item );
+//  }
+//}
 
       // maxItemsTagEndBegin
       // DRS :TODO:
@@ -4860,6 +4861,10 @@ if( $table == 'tx_greencars_manufacturer' )
       // Init sum hits
     $sum_hits = 0;
 
+//if( $this->curr_tableField == 'tx_greencars_manufacturer' )
+//{
+//  $this->pObj->dev_var_dump( $rows );
+//}
       // LOOP all rows
     foreach( ( array ) $rows as $row )
     {
