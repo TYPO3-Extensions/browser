@@ -1985,7 +1985,8 @@ class tx_browser_pi1_filter_4x {
 
       // Query for all filter items
     $select   = $this->sql_select( $bool_count );
-    $from     = $table;
+      //$from     = $table;
+    $from     = $this->sql_from( );
     $where    = $this->sql_whereAllItems( );
     $groupBy  = $this->curr_tableField;
     $orderBy  = $this->sql_orderBy( );
