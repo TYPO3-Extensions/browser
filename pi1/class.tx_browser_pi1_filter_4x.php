@@ -1860,8 +1860,8 @@ class tx_browser_pi1_filter_4x {
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
 $this->pObj->dev_var_dump( $this->pObj->objFlexform->sheet_viewList_count_hits );
-if( $this->pObj->objFlexform->sheet_viewList_count_hits )
-{
+//if( $this->pObj->objFlexform->sheet_viewList_count_hits )
+//{
     // 1. step: filter items with one hit at least
     $arr_return = $this->get_rowsWiHits( );
     if( $arr_return['error']['status'] )
@@ -1870,7 +1870,7 @@ if( $this->pObj->objFlexform->sheet_viewList_count_hits )
     }
     $rows = $arr_return['data']['rows'];
       // 1. step: filter items with one hit at least
-}
+//}
 
       // 2. step: all filter items, hits will be taken from $rows
     $arr_return = $this->get_rowsAllItems( $rows );
@@ -1945,6 +1945,8 @@ if( $this->pObj->objFlexform->sheet_viewList_count_hits )
       // Get table and field
     list( $table ) = explode( '.', $this->curr_tableField );
 
+if( $this->pObj->objFlexform->sheet_viewList_count_hits )
+{
       // RETURN display items only, if they have one hit at least
     if( ! $this->ts_getDisplayWithoutAnyHit( ) )
     {
@@ -1955,6 +1957,7 @@ if( $this->pObj->objFlexform->sheet_viewList_count_hits )
       return $arr_return;
     }
       // RETURN display items only, if they have one hit at least
+}
 
       // SWITCH localTable versus foreignTable
     switch( true )
