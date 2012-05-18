@@ -3932,7 +3932,7 @@ class tx_browser_pi1_filter_4x {
 $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
 $sum_hits   = $this->hits_sum[$this->curr_tableField];
 $this->pObj->cObj->data[$hitsField] = $sum_hits;
-$this->pObj->dev_var_dump( $this->pObj->cObj->data );
+$this->pObj->dev_var_dump( $this->pObj->cObj->data, $this->tmpOneDim );
 // Set hits!        
           // Render uid and value of the first item
         $first_item_uid   = $conf_array['first_item.']['option_value'];
@@ -4880,7 +4880,9 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data );
       // Init sum hits
     $sum_hits = 0;
 
-if( $this->curr_tableField == 'tx_greencars_manufacturer' )
+  // Get table and field
+list( $table, $field ) = explode( '.', $this->curr_tableField );
+if( $table == 'tx_greencars_manufacturer' )
 {
   $this->pObj->dev_var_dump( $rows );
 }
