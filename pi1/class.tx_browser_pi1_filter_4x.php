@@ -1391,7 +1391,7 @@ if( $table == 'tx_greencars_manufacturer' )
 {
   if( $uid == 0 )
   {
-    $this->pObj->dev_var_dump( $cObj_conf, $item );
+    $this->pObj->dev_var_dump( $this->pObj->cObj->data, $cObj_conf, $item );
   }
 }
 
@@ -5033,10 +5033,10 @@ if( $table == 'tx_greencars_manufacturer' )
         // SWITCH field
     }
       // LOOP all fields of current filter / tableField
-if( $table == 'tx_greencars_manufacturer' )
-{
-  $this->pObj->dev_var_dump( $table, $firstItem ); 
-}
+//if( $table == 'tx_greencars_manufacturer' )
+//{
+//  $this->pObj->dev_var_dump( $table, $firstItem ); 
+//}
 
       // Add first item to the rows of the current filter
     $this->rows = $firstItem + $this->rows;
