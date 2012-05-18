@@ -2784,7 +2784,6 @@ class tx_browser_pi1_filter_4x {
               $this->sql_whereAnd_fromTS( ) .
               $this->sql_whereAnd_sysLanguage( );
       // Get WHERE statement
-$this->pObj->dev_var_dump( $where );
 
       // RETURN WHERE statement without a WHERE
     return $where;
@@ -2808,6 +2807,7 @@ $this->pObj->dev_var_dump( $where );
               $this->sql_whereAnd_fromTS( );
       // Localise the WHERE statement
     $where =  $this->sql_whereWiHitsLL( $where );
+$this->pObj->dev_var_dump( $where );
 
       // RETURN WHERE statement without a WHERE
     return $where;
