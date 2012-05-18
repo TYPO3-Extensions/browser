@@ -1859,18 +1859,21 @@ class tx_browser_pi1_filter_4x {
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
-$this->pObj->dev_var_dump( $this->pObj->objFlexform->sheet_viewList_count_hits );
-if( $this->pObj->objFlexform->sheet_viewList_count_hits )
-{
-    // 1. step: filter items with one hit at least
-    $arr_return = $this->get_rowsWiHits( );
-    if( $arr_return['error']['status'] )
+//$this->pObj->dev_var_dump( $this->pObj->objFlexform->sheet_viewList_count_hits );
+  
+      // Hits should counted
+    if( $this->pObj->objFlexform->sheet_viewList_count_hits )
     {
-      return $arr_return;
+        // 1. step: filter items with one hit at least
+      $arr_return = $this->get_rowsWiHits( );
+      if( $arr_return['error']['status'] )
+      {
+        return $arr_return;
+      }
+      $rows = $arr_return['data']['rows'];
+        // 1. step: filter items with one hit at least
     }
-    $rows = $arr_return['data']['rows'];
-      // 1. step: filter items with one hit at least
-}
+      // Hits should counted
 
       // 2. step: all filter items, hits will be taken from $rows
     $arr_return = $this->get_rowsAllItems( $rows );
@@ -1945,19 +1948,21 @@ if( $this->pObj->objFlexform->sheet_viewList_count_hits )
       // Get table and field
     list( $table ) = explode( '.', $this->curr_tableField );
 
-if( $this->pObj->objFlexform->sheet_viewList_count_hits )
-{
-      // RETURN display items only, if they have one hit at least
-    if( ! $this->ts_getDisplayWithoutAnyHit( ) )
+      // Hits should counted
+    if( $this->pObj->objFlexform->sheet_viewList_count_hits )
     {
-      $arr_return['data']['rows'] = $rows_wiHits;
-        // Prompt the expired time to devlog
-      $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
-      return $arr_return;
+        // RETURN display items only, if they have one hit at least
+      if( ! $this->ts_getDisplayWithoutAnyHit( ) )
+      {
+        $arr_return['data']['rows'] = $rows_wiHits;
+          // Prompt the expired time to devlog
+        $debugTrailLevel = 1;
+        $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+        return $arr_return;
+      }
+        // RETURN display items only, if they have one hit at least
     }
-      // RETURN display items only, if they have one hit at least
-}
+      // Hits should counted
 
       // SWITCH localTable versus foreignTable
     switch( true )
@@ -2230,6 +2235,7 @@ if( $this->pObj->objFlexform->sheet_viewList_count_hits )
   {
       // Get all rows - get all filter items
     $rows_wiAllItems = $this->sql_resToRows( $res );
+$this->pObj->dev_var_dump( $rows_wiAllItems );
 
       // RETURN all rows are empty
     if( empty ( $rows_wiAllItems ) )
