@@ -4933,7 +4933,7 @@ $this->pObj->cObj->data[$hitsField] = $sum_hits;
 
 //if( $table == 'tx_greencars_manufacturer' )
 //{
-  $this->pObj->dev_var_dump( $rows, $this->curr_tableField, $bTreeView, $lowestPid, $treeParentField, $sum_hits );
+//  $this->pObj->dev_var_dump( $rows, $this->curr_tableField, $bTreeView, $lowestPid, $treeParentField, $sum_hits );
 //}
 
       // Set class var $this->hits_sum
