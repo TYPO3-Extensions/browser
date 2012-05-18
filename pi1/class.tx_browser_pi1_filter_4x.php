@@ -1120,9 +1120,17 @@ class tx_browser_pi1_filter_4x {
         $item = $this->get_filterItemCObj( $conf_name, $conf_array, $uid, $value );
         break;
       case( 3 ):
-      default:
           // stdWrap the current value
         $item = $this->get_filterItemValueStdWrap( $conf_name, $conf_array, $uid, $value );
+        break;
+      default:
+        $prompt = 'Sorry, this filter shouldn\'t occure: case is undefined.<br />
+                  <br />
+                  Method: ' . __METHOD__ . '<br />
+                  Line: ' . __LINE__ . '<br />
+                  <br />
+                  Browser - TYPO3 without PHP';
+        die( $prompt );
         break;
     }
       // DEVELOPMENT: Browser engine 4.x
@@ -1377,10 +1385,10 @@ class tx_browser_pi1_filter_4x {
 
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
-//if( $uid == 0 )
-//{
-//  $this->pObj->dev_var_dump( $cObj_conf, $item );
-//}
+if( $uid == 0 )
+{
+  $this->pObj->dev_var_dump( $cObj_conf, $item );
+}
 
       // maxItemsTagEndBegin
       // DRS :TODO:
@@ -5020,7 +5028,10 @@ class tx_browser_pi1_filter_4x {
         // SWITCH field
     }
       // LOOP all fields of current filter / tableField
-$this->pObj->dev_var_dump( $table, $firstItem );
+if( $table == 'tx_greencars_manufacturer' )
+{
+  $this->pObj->dev_var_dump( $table, $firstItem ); 
+}
 
       // Add first item to the rows of the current filter
     $this->rows = $firstItem + $this->rows;
