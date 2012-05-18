@@ -2612,9 +2612,6 @@ class tx_browser_pi1_filter_4x {
   {
       // Get table and field
     list( $table ) = explode( '.', $this->curr_tableField );
-
-//$this->pObj->dev_var_dump( $this->pObj->objSqlInit->statements );
-
       // Flexform configuration
     $conf_flexform = $this->pObj->objFlexform->sheet_viewList_total_hits;
 
@@ -2900,6 +2897,7 @@ class tx_browser_pi1_filter_4x {
       case( $this->pObj->localTable != $table ) :
       case( $conf_flexform == 'controlled' ) :
       case( isset( $this->pObj->piVars['sword'] ) ):        
+$this->pObj->dev_var_dump( $this->andWhereFilter );
         return $this->andWhereFilter;
         break;
       case( $conf_flexform == 'independent' ) :
