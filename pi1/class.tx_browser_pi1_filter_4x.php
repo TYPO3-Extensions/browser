@@ -1091,6 +1091,10 @@ class tx_browser_pi1_filter_4x {
       // Get TS configuration of the current filter / tableField
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+//if( $uid == 0 )
+//{
+//  $this->pObj->dev_var_dump( $cObj_conf, $item );
+//}
 
       // Make a backup
     $cObjDataBak = $this->pObj->cObj->data;
@@ -3973,7 +3977,7 @@ class tx_browser_pi1_filter_4x {
 
         // Render the value
       $item = $this->get_filterItem( $curr_uid, $value );
-$this->pObj->dev_var_dump( $item );
+//$this->pObj->dev_var_dump( $item );
 
         // CONTINUE: item is empty
       if( empty( $item ) )
