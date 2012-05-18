@@ -3254,7 +3254,7 @@ class tx_browser_pi1_filter_4x {
     $this->pObj->cObj->data['hits'] = $value;
 if( $uid == 0 )
 {
-  $this->pObj->dev_var_dump( $this->rows[$uid], $key, $value );
+  $this->pObj->dev_var_dump( $key, $value, $this->rows );
 }
 
       // Add the field rowNumber with the number of the current row
