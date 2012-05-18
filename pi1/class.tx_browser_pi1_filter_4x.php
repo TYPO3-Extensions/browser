@@ -2892,20 +2892,25 @@ class tx_browser_pi1_filter_4x {
       // Flexform configuration
     $conf_flexform = $this->pObj->objFlexform->sheet_viewList_total_hits;
 
-      // RETURN IF : filters are independent
-    if( $conf_flexform == 'independent' )
+      // SWITCH
+    switch( true )
     {
-      return false;
+      case( $this->pObj->localTable != $table ) :
+      case( $conf_flexform == 'controlled' ) :
+      case( isset( $this->pObj->piVars['sword'] ) ):        
+        return $this->andWhereFilter;
+        break;
+      case( $conf_flexform == 'independent' ) :
+        return false;
+        break;
+      default;
+        $prompt = __METHOD__ . ' (' . __LINE__ . '): undefined value: "' . $conf_flexform . '".';
+        die( $prompt );
+        break;
     }
-      // RETURN IF : filters are independent
+      // SWITCH
 
-      // RETURN IF : filters are controlling themeselves
-    if( $conf_flexform == 'controlled' )
-    {
-      return $this->andWhereFilter;
-    }
-      // RETURN IF : filters are controlling themeselves
-
+    
       // DIE : undefined value
     $prompt = __METHOD__ . ' (' . __LINE__ . '): undefined value: "' . $conf_flexform . '".';
     die( $prompt );
