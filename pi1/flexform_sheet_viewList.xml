@@ -251,7 +251,6 @@
       <total_hits>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.total_hits</label>
-          <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
@@ -277,7 +276,6 @@
       <count_hits>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_viewList.count_hits</label>
-          <onChange>reload</onChange>
           <config>
             <type>select</type>
             <items type="array">
