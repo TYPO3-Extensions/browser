@@ -782,6 +782,7 @@ class tx_browser_pi1_filter_4x {
     $this->set_maxItemsPerHtmlRow( );
 
       // SWITCH current filter is a tree view
+      // @todo: 121019, dwildt: 3x -> 4x
     switch( in_array( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
@@ -4880,19 +4881,54 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data, $this->tmpOneDim );
       // Init sum hits
     $sum_hits = 0;
 
-  // Get table and field
-list( $table, $field ) = explode( '.', $this->curr_tableField );
-if( $table == 'tx_greencars_manufacturer' )
-{
-  $this->pObj->dev_var_dump( $rows );
-}
+      // Tree view flag
+    $bTreeView = false;
+    if( in_array( $this->curr_tableField, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
+    {
+      $bTreeView = true;
+    }
+      // Tree view flag
+    
+      // TRUE : tree view
+    if( $bTreeView )
+    {
+        // get lowest uid_parent
+      $lowestPid = 9999999;
+        // LOOP all rows
+      foreach( ( array ) $rows as $row )
+      {
+        if( $row[ $this->treeParentField ] < $lowestPid )
+        {
+          $lowestPid = $row[ $this->treeParentField ];
+        }
+      }
+        // LOOP all rows
+        // get lowest uid_parent
+    }
+      // TRUE : tree view
+
       // LOOP all rows
     foreach( ( array ) $rows as $row )
     {
         // Add hits
-      $sum_hits = $sum_hits + $row[ $hitsField ];
+      if( ! $bTreeView )
+      {
+        $sum_hits = $sum_hits + $row[ $hitsField ];
+      }
+      if( $bTreeView )
+      {
+        if( $row[ $this->treeParentField ] == $lowestPid )
+        {
+          $sum_hits = $sum_hits + $row[ $hitsField ];
+        }
+      }
     }
       // LOOP all rows
+
+if( $table == 'tx_greencars_manufacturer' )
+{
+  $this->pObj->dev_var_dump( $bTreeView, $sum_hits );
+}
 
       // Set class var $this->hits_sum
     $this->hits_sum[$this->curr_tableField] = $sum_hits;
