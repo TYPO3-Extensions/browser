@@ -1859,7 +1859,9 @@ class tx_browser_pi1_filter_4x {
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
-      // 1. step: filter items with one hit at least
+if( $this->pObj->objFlexform->sheet_viewList_count_hits )
+{
+    // 1. step: filter items with one hit at least
     $arr_return = $this->get_rowsWiHits( );
     if( $arr_return['error']['status'] )
     {
@@ -1867,6 +1869,7 @@ class tx_browser_pi1_filter_4x {
     }
     $rows = $arr_return['data']['rows'];
       // 1. step: filter items with one hit at least
+}
 
       // 2. step: all filter items, hits will be taken from $rows
     $arr_return = $this->get_rowsAllItems( $rows );
