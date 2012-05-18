@@ -320,7 +320,7 @@
       <label index="sheet_viewList.total_hits.independent">Independent on selected filters (recommended)</label>
       <label index="sheet_viewList.total_hits.controlled">Controlled by selected filters</label>
       <label index="sheet_viewList.total_hits.ts">Take the value from TypoScript!</label>
-      <label index="sheet_viewList.count_hits">Filter: count hits</label>
+      <label index="sheet_viewList.count_hits">Filter: count hits (important for performance)</label>
       <label index="sheet_viewList.count_hits.enabled">enabled (default)</label>
       <label index="sheet_viewList.count_hits.disabled">disabled (best performance)</label>
       <label index="sheet_viewList.count_hits.ts">Take the value from TypoScript!</label>
@@ -675,6 +675,10 @@
       <label index="sheet_viewList.total_hits.independent">Unabh<![CDATA[&auml;]]>ngig von gesetzten Filtern (empfohlen)</label>
       <label index="sheet_viewList.total_hits.controlled">Abh<![CDATA[&auml;]]>ngig von gesetzten Filtern</label>
       <label index="sheet_viewList.total_hits.ts">Nimm den Wert aus TypoScript!</label>
+      <label index="sheet_viewList.count_hits">Filter: Treffer zählen (Performancerelevant)</label>
+      <label index="sheet_viewList.count_hits.enabled">Aktiviert (Standard)</label>
+      <label index="sheet_viewList.count_hits.disabled">Deaktiviert (beste Performance)</label>
+      <label index="sheet_viewList.count_hits.ts">Nimm den Wert aus TypoScript!</label>
       <label index="sheet_viewList.csvexport">CSV Export</label>
       <label index="sheet_viewList.csvexport.disabled">Deaktiviert (Standard)</label>
       <label index="sheet_viewList.csvexport.enabled">Aktiviert</label>
