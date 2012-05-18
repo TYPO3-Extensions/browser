@@ -4901,7 +4901,7 @@ $this->pObj->cObj->data[$hitsField] = $sum_hits;
         // LOOP all rows : set lowest pid
       foreach( ( array ) $rows as $row )
       {
-        if( $row[ $treeParentField ] < $lowestPid )
+        if( ( $row[ $treeParentField ] < $lowestPid ) && ( $row[ $treeParentField ] !== null ) )
         {
           $lowestPid = $row[ $treeParentField ];
         }
