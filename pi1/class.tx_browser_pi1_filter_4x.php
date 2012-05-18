@@ -3252,6 +3252,10 @@ class tx_browser_pi1_filter_4x {
     $key    = $this->sql_filterFields[$this->curr_tableField]['hits'];
     $value  = $this->rows[$uid][$key];
     $this->pObj->cObj->data['hits'] = $value;
+if( $uid == 0 )
+{
+  $this->pObj->dev_var_dump( $key, $value );
+}
 
       // Add the field rowNumber with the number of the current row
     $key    = $this->pObj->prefixId . '.rowNumber';
