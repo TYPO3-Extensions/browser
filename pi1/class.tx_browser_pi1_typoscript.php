@@ -229,6 +229,7 @@ class tx_browser_pi1_typoscript
  */
   function fetch_realTables_arrFields( )
   {
+    static $promptDRSEngine4 = true;
 
 
       //////////////////////////////////////////////////////
@@ -325,13 +326,20 @@ class tx_browser_pi1_typoscript
           $str_nice_piVar = $tableField;
         }
           // Do we have a piVar
-//var_dump( __METHOD__, __LINE__, $this->pObj->arr_realTables_arrFields );
         if( $this->pObj->piVars[$str_nice_piVar] )
 //        if( $this->pObj->piVars[$str_nice_piVar] || 1 )
         {
           $arr_tableField[]  = $tableField;
         }
           // DEVELOPMENT: Browser engine 4.x
+          // DRS
+        if( ( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_todo ) && $promptDRSEngine4 )
+        {
+          $prompt = 'Other workflow in 4.x and 3.x!';
+          t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
+          $promptDRSEngine4 = false;
+        }
+          // DRS
         if( $this->pObj->dev_browserEngine >= 4 )
         {
             // IF no pivar (filter isn't set)
@@ -340,29 +348,12 @@ class tx_browser_pi1_typoscript
               // IF current filter isn't set in $arr_tableField
             if( ! isset( $arr_tableField[$tableField] ) )
             {
-                // DRS
-              if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
-              {
-                $prompt = 'Browser engine 4.x: filter ' . $tableField . ' is added to the array.';
-                t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-                $prompt = 'Browser engine 4.x: Please check, weather it is a performance problem.';
-                t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-              }
-                // DRS
                 // Add the current filter (tableField), but filter isn't used
               $arr_tableField[]  = $tableField;
             }
               // IF current filter isn't set in $arr_tableField
           }
             // IF no pivar (filter isn't set)
-        }
-        else
-        {
-          if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql || $this->pObj->b_drs_todo )
-          {
-            $prompt = 'Take care of the other workflow in Browser version >= 4';
-            t3lib_div::devlog( '[WARN/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 2 );
-          }
         }
             // DEVELOPMENT: Browser engine 4.x
       }

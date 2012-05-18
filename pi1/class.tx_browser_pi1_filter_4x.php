@@ -1372,10 +1372,10 @@ class tx_browser_pi1_filter_4x {
 
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
-if( $uid == 0 )
-{
-  $this->pObj->dev_var_dump( $cObj_conf, $item );
-}
+//if( $uid == 0 )
+//{
+//  $this->pObj->dev_var_dump( $cObj_conf, $item );
+//}
 
       // maxItemsTagEndBegin
       // DRS :TODO:
@@ -3892,8 +3892,12 @@ if( $uid == 0 )
       case( true ):
           // Render uid and value of the first item
         $first_item_uid   = $conf_array['first_item.']['option_value'];
-        $tsValue          = $conf_array['first_item.']['value_stdWrap.']['value'];
-        $tsConf           = $conf_array['first_item.']['value_stdWrap.'];
+        // 120518, dwildt, 2-
+//        $tsValue          = $conf_array['first_item.']['value_stdWrap.']['value'];
+//        $tsConf           = $conf_array['first_item.']['value_stdWrap.'];
+        // 120518, dwildt, 2+
+        $tsValue          = $conf_array['first_item.']['cObject'];
+        $tsConf           = $conf_array['first_item.']['cObject..'];
         $first_item_value = $this->pObj->local_cObj->stdWrap( $tsValue, $tsConf );
           // Render uid and value of the first item
         $tmpOneDim  = array( 'uid'   => $first_item_uid   ) +
@@ -4740,7 +4744,6 @@ if( $uid == 0 )
     }
       // SWITCH first item
       // Set display hits flag
-$this->pObj->dev_var_dump( $uid, $bool_displayHits );
 
       // RETURN hit shouldn't displayed
     if( ! $bool_displayHits )
