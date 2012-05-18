@@ -2619,19 +2619,19 @@ class tx_browser_pi1_filter_4x {
       // SWITCH
     switch( true )
     {
-//      case( $this->pObj->localTable != $table ) :
-//      case( $conf_flexform == 'controlled' ) :
-//      case( isset( $this->pObj->piVars['sword'] ) ):        
-//        $from = $this->pObj->objSqlInit->statements['listView']['from'];
-//        break;
-      case( $conf_flexform == 'independent' ) :
-        $from = $table;
-        break;
       case( $this->pObj->localTable != $table ) :
       case( $conf_flexform == 'controlled' ) :
       case( isset( $this->pObj->piVars['sword'] ) ):        
         $from = $this->pObj->objSqlInit->statements['listView']['from'];
         break;
+      case( $conf_flexform == 'independent' ) :
+        $from = $table;
+        break;
+//      case( $this->pObj->localTable != $table ) :
+//      case( $conf_flexform == 'controlled' ) :
+//      case( isset( $this->pObj->piVars['sword'] ) ):        
+//        $from = $this->pObj->objSqlInit->statements['listView']['from'];
+//        break;
       default;
         $prompt = __METHOD__ . ' (' . __LINE__ . '): undefined value: "' . $conf_flexform . '".';
         die( $prompt );
