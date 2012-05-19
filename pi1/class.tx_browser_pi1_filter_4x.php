@@ -645,6 +645,7 @@ class tx_browser_pi1_filter_4x {
     $this->localise( );
 
       // Render the filter rows
+$this->pObj->dev_var_dump( $rows );
     $arr_return = $this->get_filterItems( );
     $items      = $arr_return['data']['items'];
     unset( $arr_return );
@@ -1859,8 +1860,6 @@ class tx_browser_pi1_filter_4x {
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
-//$this->pObj->dev_var_dump( $this->pObj->objFlexform->sheet_viewList_count_hits );
-  
       // Hits should counted
     if( $this->pObj->objFlexform->sheet_viewList_count_hits )
     {
