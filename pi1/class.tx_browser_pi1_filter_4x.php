@@ -3826,7 +3826,7 @@ class tx_browser_pi1_filter_4x {
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Short var
-    $this->count_hits = $this->conf_view['filter.'][$table . '.'][$field . '.'][' count_hits'];
+    $this->count_hits = $this->conf_view['filter.'][$table . '.'][$field . '.']['count_hits'];
     switch( $this->count_hits )
     {
       case( true ):
