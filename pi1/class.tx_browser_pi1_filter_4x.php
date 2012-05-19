@@ -645,7 +645,6 @@ class tx_browser_pi1_filter_4x {
     $this->localise( );
 
       // Render the filter rows
-$this->pObj->dev_var_dump( $rows );
     $arr_return = $this->get_filterItems( );
     $items      = $arr_return['data']['items'];
     unset( $arr_return );
@@ -723,8 +722,10 @@ $this->pObj->dev_var_dump( $rows );
         break;
       case( false ):
       default:
+$this->pObj->dev_var_dump( $this->rows );
         $arr_return = $this->get_filterItemsDefault( );
         $items      = $arr_return['data']['items'];
+$this->pObj->dev_var_dump( $items );
         $arr_return = $this->get_filterItemsWrap( $items );
         break;
     }
@@ -1981,7 +1982,7 @@ $this->pObj->dev_var_dump( $rows );
           // Get SQL ressource for all filter items
           // Get rows
         $rows = $this->sql_resToRows_allItemsWiHits( $res, $rows_wiHits );
-$this->pObj->dev_var_dump( $this->curr_tableField, $rows );
+//$this->pObj->dev_var_dump( $this->curr_tableField, $rows );
         break;
           // foreign table
       case( $table == $this->pObj->localTable ):
@@ -3942,17 +3943,13 @@ $this->pObj->dev_var_dump( $this->curr_tableField, $rows );
     switch( $conf_array['first_item'] )
     {
       case( true ):
-$hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
-$sum_hits   = $this->hits_sum[$this->curr_tableField];
-$this->pObj->cObj->data[$hitsField] = $sum_hits;
-//$this->pObj->dev_var_dump( $this->pObj->cObj->data, $this->tmpOneDim );
- //Set hits!        
+          // Set hits
+        $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+        $sum_hits   = $this->hits_sum[$this->curr_tableField];
+        $this->pObj->cObj->data[$hitsField] = $sum_hits;
+          // Set hits        
           // Render uid and value of the first item
         $first_item_uid   = $conf_array['first_item.']['option_value'];
-        // 120518, dwildt, 2-
-//        $tsValue          = $conf_array['first_item.']['value_stdWrap.']['value'];
-//        $tsConf           = $conf_array['first_item.']['value_stdWrap.'];
-        // 120518, dwildt, 2+
         $tsValue          = $conf_array['first_item.']['cObject'];
         $tsConf           = $conf_array['first_item.']['cObject.'];
         $first_item_value = $this->pObj->local_cObj->stdWrap( $tsValue, $tsConf );
