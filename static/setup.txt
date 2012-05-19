@@ -1449,7 +1449,7 @@ plugin.tx_browser_pi1 {
                 noTrimWrap  = | (|)|
               }
               if {
-                isTrue {
+                xxx_isTrue {
                     // Display with hits only
                   field = hits
                 }
@@ -1577,14 +1577,14 @@ plugin.tx_browser_pi1 {
               30 {
                 if {
                     // Display hits only in case of one hit at least
-                  isTrue = ###HITS###
+                  isTrue = hits
                 }
-                value       = ###HITS###
+                value       = hits
                 noTrimWrap  = | (|)|
               }
-              if {
+              xxx_if {
                   // Display with hits only
-                isTrue = ###HITS###
+                isTrue = hits
               }
               noTrimWrap = |<input###CLASS######STYLE### type="radio" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###> ||
             }
@@ -1753,7 +1753,7 @@ plugin.tx_browser_pi1 {
                 field = hits
                 noTrimWrap  = | (|)|
               }
-              if {
+              xxx_if {
                 isTrue {
                     // Display with hits only
                   field = hits
