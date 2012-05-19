@@ -844,10 +844,9 @@ class tx_browser_pi1_filter_4x {
       $this->row_number++;
     }
       // LOOP rows
-$this->pObj->dev_var_dump( $item );
+//$this->pObj->dev_var_dump( $item );
 
     $items = $this->get_maxItemsWrapBeginEnd( $items );
-$this->pObj->dev_var_dump( $items );
 
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
