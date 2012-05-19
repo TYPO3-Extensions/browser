@@ -1982,6 +1982,7 @@ class tx_browser_pi1_filter_4x {
           // Get SQL ressource for all filter items
           // Get rows
         $rows = $this->sql_resToRows_allItemsWiHits( $res, $rows_wiHits );
+$this->pObj->dev_var_dump( $this->curr_tableField, $rows );
         break;
           // foreign table
       case( $table == $this->pObj->localTable ):
@@ -2235,7 +2236,6 @@ class tx_browser_pi1_filter_4x {
   {
       // Get all rows - get all filter items
     $rows_wiAllItems = $this->sql_resToRows( $res );
-$this->pObj->dev_var_dump( $this->curr_tableField, $rows_wiAllItems );
 
       // RETURN all rows are empty
     if( empty ( $rows_wiAllItems ) )
