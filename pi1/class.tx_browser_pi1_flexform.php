@@ -3227,7 +3227,6 @@ class tx_browser_pi1_flexform {
         }
         break;
       case ( 'ts' ) :
-        // Do nothing;
         if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
         {
           t3lib_div :: devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' isn\'t changed by the flexform.', $this->pObj->extKey, 0);

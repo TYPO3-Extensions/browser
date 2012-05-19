@@ -1,3 +1,11 @@
+3.9.16
+  120519
+  New Feature
+  * #00000: Counting of hits can be disabaled by the flexform
+  Bugfix
+  * #00000: First filter item counts hits
+            First filter item counts hits in the tree view proper
+
 3.9.15
   120514
   New feature

@@ -1169,11 +1169,6 @@ plugin.tx_browser_pi1 {
           // [Boolean] Should be added a default item?
         first_item = 1
         first_item { 
-            // [Boolean] True: hits will counted (default). False: hits won't counted (best performance)
-          count_hits = TEXT
-          count_hits {
-            value = 1
-          }
             // Wrap the first filter item
           cObject = COA
           cObject {
@@ -2848,6 +2843,8 @@ plugin.tx_browser_pi1 {
     viewList {
         // [STRING] independent (default) || controlled: Calculate total hits. Can be overriden while runtime by the flexform value.
       total_hits = independent
+        // [Boolean] True: hits will counted (default). False: hits won't counted (best performance)
+      count_hits = true
         // [BOOLEAN] false (default) || true. Can be overriden while runtime by the flexform value.
       csvexport = false
       csvexport {
