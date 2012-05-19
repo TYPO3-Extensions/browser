@@ -722,7 +722,6 @@ class tx_browser_pi1_filter_4x {
         break;
       case( false ):
       default:
-$this->pObj->dev_var_dump( $this->rows );
         $arr_return = $this->get_filterItemsDefault( );
         $items      = $arr_return['data']['items'];
 $this->pObj->dev_var_dump( $items );
@@ -846,8 +845,10 @@ $this->pObj->dev_var_dump( $items );
       $this->row_number++;
     }
       // LOOP rows
+$this->pObj->dev_var_dump( $items );
 
     $items = $this->get_maxItemsWrapBeginEnd( $items );
+$this->pObj->dev_var_dump( $items );
 
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
