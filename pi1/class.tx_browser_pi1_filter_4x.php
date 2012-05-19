@@ -128,7 +128,7 @@
  * 3541:     private function ts_getAreas( )
  * 3612:     private function ts_getCondition( )
  * 3677:     private function ts_getDisplayHits( )
- * 3708:     private function ts_getDisplayWithoutAnyHit( )
+ * 3708:     private function ts_countHits( )
  *
  *              SECTION: Tree view helper
  * 3776:     private function tree_setOneDim( $uid_parent )
@@ -1799,7 +1799,7 @@ class tx_browser_pi1_filter_4x {
   private function areas_wiHitsOnly( $areas )
   {
       // RETURN all areas
-    if( $this->ts_getDisplayWithoutAnyHit( ) )
+    if( $this->ts_countHits( ) )
     {
       return $areas;
     }
@@ -1861,7 +1861,8 @@ class tx_browser_pi1_filter_4x {
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
       // Hits should counted
-    if( $this->pObj->objFlexform->sheet_viewList_count_hits )
+    if( $this->ts_countHits( ) )
+//    if( $this->pObj->objFlexform->sheet_viewList_count_hits )
     {
         // 1. step: filter items with one hit at least
       $arr_return = $this->get_rowsWiHits( );
@@ -1948,10 +1949,10 @@ class tx_browser_pi1_filter_4x {
     list( $table ) = explode( '.', $this->curr_tableField );
 
       // Hits should counted
-    if( $this->pObj->objFlexform->sheet_viewList_count_hits )
-    {
+//    if( $this->pObj->objFlexform->sheet_viewList_count_hits )
+//    {
         // RETURN display items only, if they have one hit at least
-      if( ! $this->ts_getDisplayWithoutAnyHit( ) )
+      if( ! $this->ts_countHits( ) )
       {
         $arr_return['data']['rows'] = $rows_wiHits;
           // Prompt the expired time to devlog
@@ -1960,7 +1961,7 @@ class tx_browser_pi1_filter_4x {
         return $arr_return;
       }
         // RETURN display items only, if they have one hit at least
-    }
+//    }
       // Hits should counted
 
       // SWITCH localTable versus foreignTable
@@ -3808,46 +3809,36 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * ts_getDisplayWithoutAnyHit( ):  Get the TS configuration for displaying items without hits.
- *                              If current filter is a tree view, return value is true.
+ * ts_countHits( ):  Get the TS configuration for counting hits. Set the class var $count_hits
  *
- * @return	string		$display_without_any_hit : value from TS configuration
+ * @return	boolean		$count_hits : value from TS configuration
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function ts_getDisplayWithoutAnyHit( )
+  private function ts_countHits( )
   {
+    if( $this->count_hits != null )
+    {
+      return $this->count_hits;
+    }
+
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Short var
-    $currFilterWrap = $this->conf_view['filter.'][$table . '.'][$field . '.']['wrap.'];
-
-      // Get TS value
-    $display_without_any_hit = $currFilterWrap['item.']['display_without_any_hit'];
-
-      // RETURN ts value directly: filter isn't a tree view filter
-    if ( ! in_array( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
+    $this->count_hits = $this->conf_view['filter.'][$table . '.'][$field . '.'][' count_hits'];
+    switch( $this->count_hits )
     {
-      return $display_without_any_hit;
+      case( true ):
+        $this->count_hits = true;
+        break;
+      default:
+        $this->count_hits = false;
+        break;
     }
-      // RETURN ts value directly: filter isn't a tree view filter
-
-      // RETURN true: filter is a tree view filter
-      // DRS - Development Reporting System
-    if( $this->pObj->b_drs_filter )
-    {
-      if( $display_without_any_hit == false )
-      {
-        $prompt = 'wrap.item.display_without_any_hit is false. But ' . $this->curr_tableField . ' is displayed in a tree view: display_without_any_hit is set to true!';
-        t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
-      }
-    }
-      // DRS - Development Reporting System
 
       // RETURN
-    return true;
-      // RETURN true: filter is a tree view filter
+    return $this->count_hits;
   }
 
 

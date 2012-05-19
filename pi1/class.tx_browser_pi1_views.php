@@ -1571,6 +1571,7 @@ class tx_browser_pi1_views
       if(!$this->pObj->bool_typo3_43)
       {
         $endTime = $this->pObj->TT->mtime();
+
       }
       t3lib_div::devLog('[INFO/PERFORMANCE] After multisort_mm_children(): '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
     }

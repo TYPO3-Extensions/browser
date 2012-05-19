@@ -1166,6 +1166,8 @@ plugin.tx_browser_pi1 {
         }
           // [String/optional] Name for the piVar. Name must be unique.
         nice_piVar =
+          // [Boolean] 1 (default): Hits are counted. 0: Any hit is counted (best performance!)
+        count_hits = 1
           // [Boolean] Should be added a default item?
         first_item = 1
         first_item { 

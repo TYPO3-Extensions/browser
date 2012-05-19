@@ -3289,7 +3289,34 @@ class tx_browser_pi1_flexform {
     $this->sheet_viewList_count_hits = $this->pObj->conf['flexform.'][$sheet . '.'][$field];
     if ( $this->pObj->b_drs_filter )
     {
-      t3lib_div :: devlog('[INFO/FILTER] global sheet_viewList_count_hits is set to ' . $this->sheet_viewList_count_hits, $this->pObj->extKey, 0);
+      $prompt = 'global sheet_viewList_count_hits is set to ' . $this->sheet_viewList_count_hits;
+      t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
+    }
+
+    switch( $this->sheet_viewList_count_hits ) 
+    {
+      case( false ):
+        if ( $this->pObj->b_drs_warn )
+        {
+          $prompt = 'global sheet_viewList_count_hits isn\'t set.';
+          t3lib_div :: devlog('[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 2);
+          $prompt = 'If you don\'t see any filter item, please check TypoScript properties like: ' .
+                    'filter.table.field.wrap.item.cObject.if.isTrue.field = hits. Remove it!';
+          t3lib_div :: devlog('[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1);
+        }
+        break;
+        break;
+      case( true ):
+      default:
+        if ( $this->pObj->b_drs_warn )
+        {
+          $prompt = 'global sheet_viewList_count_hits is set.';
+          t3lib_div :: devlog('[WARN/PERFORMANCE] ' . $prompt, $this->pObj->extKey, 2);
+          $prompt = 'If you have any problem with performance, please disable the counting of hits ' .
+                    'in the flexform/plugin or in zhe TypoScript.';
+          t3lib_div :: devlog('[HELP/PERFORMANCE] ' . $prompt, $this->pObj->extKey, 1);
+        }
+        break;
     }
       // Field count_hits
 
