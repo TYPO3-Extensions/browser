@@ -1952,7 +1952,7 @@ class tx_browser_pi1_filter_4x {
 //    if( $this->pObj->objFlexform->sheet_viewList_count_hits )
 //    {
         // RETURN display items only, if they have one hit at least
-      if( ! $this->ts_countHits( ) )
+      if( $this->ts_countHits( ) )
       {
         $arr_return['data']['rows'] = $rows_wiHits;
           // Prompt the expired time to devlog
