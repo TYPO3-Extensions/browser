@@ -3637,7 +3637,7 @@ $this->pObj->dev_var_dump( $uid_parent, $this->arr_rowsTablefield );
       $tsPath   = $lastPath;
     }
       // LOOP rows
-
+return;
     if( ! empty ( $this->tmpOneDim ) )
     {
       return;
