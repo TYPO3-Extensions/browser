@@ -113,10 +113,10 @@
  *              SECTION: cObject
  * 3104:     private function cObjData_init( )
  * 3144:     private function cObjData_reset( )
- * 3167:     private function cObjData_setDisplayWoHits( )
- * 3199:     private function cObjData_unsetDisplayWoHits( )
- * 3231:     private function cObjData_setTreeview( )
- * 3258:     private function cObjData_unsetTreeview( )
+ * 3167:     private function cObjData_setDisplayInCaseOfNoCounting( )
+ * 3199:     private function cObjData_unsetFlagDisplayInCaseOfNoCounting( )
+ * 3231:     private function cObjData_setFlagTreeview( )
+ * 3258:     private function cObjData_unsetFlagTreeview( )
  * 3288:     private function cObjData_updateRow( $uid )
  *
  *              SECTION: Localisation
@@ -241,7 +241,8 @@ class tx_browser_pi1_filter_4x {
  * @param	object		The parent object
  * @return	void
  */
-  function __construct($pObj) {
+  function __construct( $pObj ) 
+  {
     $this->pObj = $pObj;
   }
 
@@ -305,7 +306,6 @@ class tx_browser_pi1_filter_4x {
     foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
     {
       foreach( array_keys ( ( array ) $fields ) as $field )
-//      foreach( ( array ) $fields as $field => $confField )
       {
           // CONTINUE : field has an dot
         if( rtrim($field, '.') != $field )
@@ -472,7 +472,6 @@ class tx_browser_pi1_filter_4x {
     foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
     {
       foreach( array_keys ( ( array ) $fields ) as $fieldWiDot )
-//      foreach( ( array ) $fields as $fieldWiDot => $elements )
       {
         if( substr( $fieldWiDot, -1 ) != '.' )
         {
@@ -599,12 +598,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * get_filter( ):  Get the filter of the current tableField.
  *
@@ -665,12 +658,6 @@ class tx_browser_pi1_filter_4x {
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
     return $arr_return;
   }
-
-
-
-
-
-
 
 
 
@@ -746,12 +733,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * get_filterItemsFromRows( ):  Render the given rows of the current tableField.
  *                      It returns the rendered filter as a string.
@@ -814,12 +795,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * get_filterItemsDefault( ): Render the items, if the filter view is the default view.
  *                            Default means: it isn't a tree view.
@@ -856,7 +831,6 @@ class tx_browser_pi1_filter_4x {
       $this->row_number++;
     }
       // LOOP rows
-//$this->pObj->dev_var_dump( $item );
 
     $items = $this->get_maxItemsWrapBeginEnd( $items );
 
@@ -878,12 +852,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * get_filterItemsTree( ):  Render the items, if the filter view is a tree view.
  *                          Items will returned as a string.
@@ -902,7 +870,7 @@ class tx_browser_pi1_filter_4x {
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
       // Set cObj->data treeview
-    $this->cObjData_setTreeview( );
+    $this->cObjData_setFlagTreeview( );
       // Set marker treeview
     $this->markerArray['###TREEVIEW###'] = 1;
 
@@ -955,23 +923,6 @@ class tx_browser_pi1_filter_4x {
     array_multisort($arr_value, $order, $this->arr_rowsTablefield);
       // Order the values
 
-
-//  // Get table and field
-//list( $table, $field ) = explode( '.', $this->curr_tableField );
-//if( $table == 'tx_greencars_manufacturer' )
-//{
-//  $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
-//}
-      // 120518, dwildt, 1+
-//    $this->set_firstItem( );
-//if( $table == 'tx_greencars_manufacturer' )
-//{
-//  if( $uid == 0 )
-//  {
-//    $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
-//  }
-//}
-
     unset( $this->tmpOneDim );
       // Set rows of the current tablefield to a one dimensional array
     $this->tree_setOneDim( $uid_parent );
@@ -988,7 +939,7 @@ class tx_browser_pi1_filter_4x {
     $items = $this->get_filterWrap( $items );
 
       // Unset cObj->data treeview
-    $this->cObjData_unsetTreeview( );
+    $this->cObjData_unsetFlagTreeview( );
       // Unset marker treeview
     unset( $this->markerArray['###TREEVIEW###'] );
 
@@ -1004,12 +955,6 @@ class tx_browser_pi1_filter_4x {
     }
     return $arr_return;
   }
-
-
-
-
-
-
 
 
 
@@ -1116,12 +1061,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * get_filterItem( ): Render the current filter item.
  *
@@ -1139,11 +1078,6 @@ class tx_browser_pi1_filter_4x {
       // Get TS configuration of the current filter / tableField
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-
-//if( $uid == 0 )
-//{
-//  $this->pObj->dev_var_dump( $cObj_conf, $item );
-//}
 
       // Make a backup
     $cObjDataBak = $this->pObj->cObj->data;
@@ -1191,12 +1125,6 @@ class tx_browser_pi1_filter_4x {
 
     return $item;
   }
-
-
-
-
-
-
 
 
 
@@ -1290,12 +1218,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * get_filterItemCObj( ): Render the current filter item.
  *
@@ -1365,11 +1287,11 @@ class tx_browser_pi1_filter_4x {
       // SWITCH first item
       // Get the COA configuration for the value
 
-    $this->cObjData_setDisplayWoHits( );
+    $this->cObjData_setFlagDisplayInCaseOfNoCounting( );
 
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
-    $this->cObjData_unsetDisplayWoHits( );
+    $this->cObjData_unsetFlagDisplayInCaseOfNoCounting( );
 
       // maxItemsTagEndBegin
       // DRS :TODO:
@@ -1387,12 +1309,6 @@ class tx_browser_pi1_filter_4x {
 
     return $item;
   }
-
-
-
-
-
-
 
 
 
@@ -1511,12 +1427,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * get_filterWrap( ): Wraps the items with table.field.wrap
  *
@@ -1572,12 +1482,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * areas_toRows( ): If current filter is with areas, generate the rows.
  *                  Class var $rows will overriden.
@@ -1611,12 +1515,6 @@ class tx_browser_pi1_filter_4x {
 
     return;
   }
-
-
-
-
-
-
 
 
 
@@ -1666,12 +1564,6 @@ class tx_browser_pi1_filter_4x {
       // RETURN rows
     return $rows;
   }
-
-
-
-
-
-
 
 
 
@@ -1737,12 +1629,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * areas_wiHitsOnly( ):  The method removes areas without any hit,
  *                          if should displayed items only, which have one hit at least.
@@ -1798,12 +1684,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * get_rows( ):     Get the rows of the current filter
  *
@@ -1841,12 +1721,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * get_rowsWiHits( ): Get the rows with the items with a hit at least of the current filter.
  *
@@ -1880,12 +1754,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * get_rowsAllItems( ): Get the rows with all items of the current filter.
  *                      If param $rows_wiHits contains rows, the counted
@@ -1906,18 +1774,14 @@ class tx_browser_pi1_filter_4x {
     list( $table ) = explode( '.', $this->curr_tableField );
 
       // Hits should counted
-//    if( $this->pObj->objFlexform->sheet_viewList_count_hits )
     if( $this->ts_countHits( ) )
     {
         // RETURN display items only, if they have one hit at least
-//      if( $this->ts_getDisplayHits( ) )
-//      {
-        $arr_return['data']['rows'] = $rows_wiHits;
-          // Prompt the expired time to devlog
-        $debugTrailLevel = 1;
-        $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
-        return $arr_return;
-//      }
+      $arr_return['data']['rows'] = $rows_wiHits;
+        // Prompt the expired time to devlog
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+      return $arr_return;
         // RETURN display items only, if they have one hit at least
     }
       // Hits should counted
@@ -1940,7 +1804,6 @@ class tx_browser_pi1_filter_4x {
           // Get SQL ressource for all filter items
           // Get rows
         $rows = $this->sql_resToRows_allItemsWiHits( $res, $rows_wiHits );
-//$this->pObj->dev_var_dump( $this->curr_tableField, $rows );
         break;
           // foreign table
       case( $table == $this->pObj->localTable ):
@@ -1970,12 +1833,6 @@ class tx_browser_pi1_filter_4x {
   * SQL ressources
   *
   **********************************************/
-
-
-
-
-
-
 
 
 
@@ -2015,12 +1872,6 @@ class tx_browser_pi1_filter_4x {
 
     return $arr_return;
   }
-
-
-
-
-
-
 
 
 
@@ -2079,10 +1930,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
 /**
  * sql_resWiHits( ):  Get the SQL ressource for a filter with items with hits only.
  *                    Hits will counted.
@@ -2135,11 +1982,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
 /**
  * sql_resToRows( ):  Handle the SQL result, free it. Return rows.
  *
@@ -2168,11 +2010,6 @@ class tx_browser_pi1_filter_4x {
       // RETURN rows
     return $rows;
   }
-
-
-
-
-
 
 
 
@@ -2240,12 +2077,6 @@ class tx_browser_pi1_filter_4x {
   * SQL statements - select
   *
   **********************************************/
-
-
-
-
-
-
 
 
 
@@ -2320,12 +2151,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * sql_select_addLL( ): Returns an addSelect with the localisation fields,
  *                      if there are localisation needs.
@@ -2354,12 +2179,6 @@ class tx_browser_pi1_filter_4x {
       // RETURN addSelect
     return $addSelect;
   }
-
-
-
-
-
-
 
 
 
@@ -2432,12 +2251,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * sql_select_addLL_langOl( ): Returns an addSelect with the localisation fields,
  *                              if there are localisation needs.
@@ -2495,12 +2308,6 @@ class tx_browser_pi1_filter_4x {
       // RETURN addSelect
     return $addSelect;
   }
-
-
-
-
-
-
 
 
 
@@ -2604,12 +2411,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * sql_from( ): Get the FROM statement. Statement depends on current table is
  *              a local table or a foreign table.
@@ -2636,11 +2437,6 @@ class tx_browser_pi1_filter_4x {
       case( $conf_flexform == 'independent' ) :
         $from = $table;
         break;
-//      case( $this->pObj->localTable != $table ) :
-//      case( $conf_flexform == 'controlled' ) :
-//      case( isset( $this->pObj->piVars['sword'] ) ):
-//        $from = $this->pObj->objSqlInit->statements['listView']['from'];
-//        break;
       default;
         $prompt = __METHOD__ . ' (' . __LINE__ . '): undefined value: "' . $conf_flexform . '".';
         die( $prompt );
@@ -2650,12 +2446,6 @@ class tx_browser_pi1_filter_4x {
 
     return $from;
   }
-
-
-
-
-
-
 
 
 
@@ -2674,12 +2464,6 @@ class tx_browser_pi1_filter_4x {
       // RETURN GROUP BY statement without GROUP BY
     return $groupBy;
   }
-
-
-
-
-
-
 
 
 
@@ -2735,12 +2519,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * sql_limit( ): Get the LIMIT statement. It is null by default.
  *
@@ -2770,12 +2548,6 @@ class tx_browser_pi1_filter_4x {
   * SQL statements - where
   *
   **********************************************/
-
-
-
-
-
-
 
 
 
@@ -2867,12 +2639,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * sql_whereAnd_enableFields( ): Get the AND WHERE statement with the enabled fields.
  *
@@ -2906,23 +2672,16 @@ class tx_browser_pi1_filter_4x {
     list( $table ) = explode( '.', $this->curr_tableField );
       // Flexform configuration
     $conf_flexform = $this->pObj->objFlexform->sheet_viewList_total_hits;
-//$this->pObj->dev_var_dump( $table, $conf_flexform );
 
       // SWITCH
     switch( true )
     {
-//      case( $this->pObj->localTable != $table ) :
-//      case( $conf_flexform == 'controlled' ) :
-//      case( isset( $this->pObj->piVars['sword'] ) ):
-//        return $this->andWhereFilter;
-//        break;
       case( $conf_flexform == 'independent' ) :
         return false;
         break;
       case( $this->pObj->localTable != $table ) :
       case( $conf_flexform == 'controlled' ) :
       case( isset( $this->pObj->piVars['sword'] ) ):
-//$this->pObj->dev_var_dump( $this->andWhereFilter );
         return $this->andWhereFilter;
         break;
       default;
@@ -2964,12 +2723,6 @@ class tx_browser_pi1_filter_4x {
       // RETURN AND WHERE statement
     return $andWhere;
   }
-
-
-
-
-
-
 
 
 
@@ -3015,12 +2768,6 @@ class tx_browser_pi1_filter_4x {
       // RETURN AND WHERE statement
     return $andWhere;
   }
-
-
-
-
-
-
 
 
 
@@ -3158,13 +2905,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * cObjData_setDisplayWoHits( ): Add the flag_displayInCaseOfNoCounting value to cObj->data.
+ * cObjData_setFlagDisplayInCaseOfNoCounting( ): Add the flag_displayInCaseOfNoCounting value to cObj->data.
  *
  * @return	void
- * @version 3.9.9
- * @since   3.9.9
+ * @version 3.9.16
+ * @since   3.9.16
  */
-  private function cObjData_setDisplayWoHits( )
+  private function cObjData_setFlagDisplayInCaseOfNoCounting( )
   {
     if( ! $this->ts_getDisplayInCaseOfNoCounting( ) )
     {
@@ -3190,13 +2937,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * cObjData_unsetDisplayWoHits( ): Unset the flag_displayInCaseOfNoCounting field in cObj->data
+ * cObjData_unsetFlagDisplayInCaseOfNoCounting( ): Unset the flag_displayInCaseOfNoCounting field in cObj->data
  *
- * @return	string		$item       : The rendered item
- * @version 3.9.9
- * @since   3.9.9
+ * @return	void
+ * @version 3.9.16
+ * @since   3.9.16
  */
-  private function cObjData_unsetDisplayWoHits( )
+  private function cObjData_unsetFlagDisplayInCaseOfNoCounting( )
   {
     if( ! $this->ts_getDisplayInCaseOfNoCounting( ) )
     {
@@ -3222,13 +2969,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * cObjData_setTreeview( ): Add the flag_treeview value to cObj->data.
+ * cObjData_setFlagTreeview( ): Add the flag_treeview value to cObj->data.
  *
  * @return	void
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function cObjData_setTreeview( )
+  private function cObjData_setFlagTreeview( )
   {
       // Set key and value for treeview field
     $key    = $this->pObj->prefixId . '.flag_treeview';
@@ -3249,13 +2996,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * cObjData_unsetTreeview( ): Unset the flag_treeview field in cObj->data
+ * cObjData_unsetFlagTreeview( ): Unset the flag_treeview field in cObj->data
  *
- * @return	string		$item       : The rendered item
+ * @return	void
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function cObjData_unsetTreeview( )
+  private function cObjData_unsetFlagTreeview( )
   {
       // UNset the treeview field
     $key = $this->pObj->prefixId . '.flag_treeview';
@@ -3316,10 +3063,6 @@ class tx_browser_pi1_filter_4x {
     $key    = $this->sql_filterFields[$this->curr_tableField]['hits'];
     $value  = $this->rows[$uid][$key];
     $this->pObj->cObj->data['hits'] = $value;
-//if( $uid == 0 )
-//{
-//  $this->pObj->dev_var_dump( $key, $value, $this->rows );
-//}
 
       // Add the field rowNumber with the number of the current row
     $key    = $this->pObj->prefixId . '.rowNumber';
@@ -3353,12 +3096,6 @@ class tx_browser_pi1_filter_4x {
   * Localisation
   *
   **********************************************/
-
-
-
-
-
-
 
 
 
@@ -3406,12 +3143,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * localise_langOl( ):  Get the localised value
  *
@@ -3434,12 +3165,6 @@ class tx_browser_pi1_filter_4x {
         break;
     }
   }
-
-
-
-
-
-
 
 
 
@@ -3515,12 +3240,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * localise_langOlWoPrefix( ):  Get the localised value
  *
@@ -3560,12 +3279,6 @@ class tx_browser_pi1_filter_4x {
     }
       // LOOP rows
   }
-
-
-
-
-
-
 
 
 
@@ -3655,12 +3368,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * ts_getAreas( ):  Get areas for the current filter from TS configuration
  *
@@ -3726,12 +3433,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
   /**
  * ts_getCondition( ):  Render the filter condition.
  *
@@ -3791,12 +3492,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * ts_getDisplayHits( ):  Get the TS configuration for displaying hits.
  *
@@ -3825,8 +3520,8 @@ class tx_browser_pi1_filter_4x {
  * ts_getDisplayInCaseOfNoCounting( ):  Get the TS configuration for displayInCaseOfNoCounting
  *
  * @return	string		$display_hits : value from TS configuration
- * @version 3.9.9
- * @since   3.9.9
+ * @version 3.9.16
+ * @since   3.9.16
  */
   private function ts_getDisplayInCaseOfNoCounting( )
   {
@@ -3845,15 +3540,12 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
 /**
  * ts_countHits( ):  Get the TS configuration for counting hits. Set the class var $count_hits
  *
  * @return	boolean		$count_hits : value from TS configuration
- * @version 3.9.9
- * @since   3.9.9
+ * @version 3.9.16
+ * @since   3.9.16
  */
   private function ts_countHits( )
   {
@@ -3898,9 +3590,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
 /**
  * set_treeOneDim( ): Recursive method. It generates a one dimensional array.
  *                    Each array has upto three elements:
@@ -3938,9 +3627,6 @@ class tx_browser_pi1_filter_4x {
     }
       // LOOP rows
   }
-
-
-
 
 
 
@@ -3996,7 +3682,6 @@ class tx_browser_pi1_filter_4x {
     }
       // SWITCH display first item
       // Add first item
-//$this->pObj->dev_var_dump( $tmpOneDim );
       // Move one dimensional array to an iterator
     $tmpArray     = $this->pObj->objTyposcript->oneDim_to_tree( $tmpOneDim );
     $rcrsArrIter  = new RecursiveArrayIterator( $tmpArray );
@@ -4058,14 +3743,12 @@ class tx_browser_pi1_filter_4x {
 
         // Render the value
       $item = $this->get_filterItem( $curr_uid, $value );
-//$this->pObj->dev_var_dump( $item );
 
         // CONTINUE: item is empty
       if( empty( $item ) )
       {
           // DRS
         if( $firstCallDrsTreeview && ( $this->pObj->b_drs_filter || $this->pObj->b_drs_cObjData ) )
-//        if( 1 || $this->pObj->b_drs_filter )
         {
           $prompt = 'No value: [' . $key . '] won\'t displayed! Be aware: this log won\'t displayed never again.';
           t3lib_div :: devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
@@ -4122,9 +3805,6 @@ class tx_browser_pi1_filter_4x {
       }
         // Render the start tag
 
-//        // String result for printing
-//      $str_result =  $str_result . $startTag . $curr_uid . ': ' . $item;
-
         // Result array
       $arr_result[$curr_uid] = $startTag . $item;
 
@@ -4143,8 +3823,6 @@ class tx_browser_pi1_filter_4x {
                               ) .
                               PHP_EOL .
                               $this->htmlSpaceLeft . $indent . '</ul>';
-//    $str_result =             $str_result . $endTag . PHP_EOL .
-//                              $this->htmlSpaceLeft . '</div>';
     $arr_result[$curr_uid] =  $arr_result[$curr_uid] . $endTag  . PHP_EOL .
                               $this->htmlSpaceLeft . '</div>';
       // Render the end tag of the last item
@@ -4168,12 +3846,6 @@ class tx_browser_pi1_filter_4x {
   * Replace marker
   *
   **********************************************/
-
-
-
-
-
-
 
 
 
@@ -4210,12 +3882,6 @@ class tx_browser_pi1_filter_4x {
       // RETURN content
     return $item;
   }
-
-
-
-
-
-
 
 
 
@@ -4298,12 +3964,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * replace_itemStyle( ): Replaces the marker ###STYLE### with the value from TS
  *
@@ -4332,12 +3992,6 @@ class tx_browser_pi1_filter_4x {
       // RETURN content
     return $item;
   }
-
-
-
-
-
-
 
 
 
@@ -4379,12 +4033,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * replace_itemUid( ): Replaces the marker ###UID### with the given uid
  *
@@ -4402,12 +4050,6 @@ class tx_browser_pi1_filter_4x {
       // RETURN content
     return $item;
   }
-
-
-
-
-
-
 
 
 
@@ -4556,12 +4198,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * replace_marker( ): Render the current filter item.
  *
@@ -4600,12 +4236,6 @@ class tx_browser_pi1_filter_4x {
   * Maximum items per HTML row
   *
   **********************************************/
-
-
-
-
-
-
 
 
 
@@ -4667,13 +4297,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
-
 /**
  * set_itemCurrentNumber( ):  Method increases the nummber of handled items.
  *                            Result is stored in the class var $itemsPerHtmlRow.
@@ -4694,13 +4317,6 @@ class tx_browser_pi1_filter_4x {
       // Increase item number
     $this->itemsPerHtmlRow['currItemNumber']++;
   }
-
-
-
-
-
-
-
 
 
 
@@ -4735,13 +4351,6 @@ class tx_browser_pi1_filter_4x {
     $this->itemsPerHtmlRow['currItemNumber']++;
     return $item;
   }
-
-
-
-
-
-
-
 
 
 
@@ -4785,12 +4394,6 @@ class tx_browser_pi1_filter_4x {
   * Hits helper
   *
   **********************************************/
-
-
-
-
-
-
 
 
 
@@ -4898,12 +4501,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * sum_hits( ): Count the hits of the current tableField.
  *              Store it in the class var $hits_sum[tableField]
@@ -4970,11 +4567,6 @@ class tx_browser_pi1_filter_4x {
         // Tree view  case  : count top level rows only
     }
       // LOOP all rows  : count hits
-
-//if( $table == 'tx_greencars_manufacturer' )
-//{
-//  $this->pObj->dev_var_dump( $rows, $this->curr_tableField, $bTreeView, $lowestPid, $treeParentField, $sum_hits );
-//}
 
       // Set class var $this->hits_sum
     $this->hits_sum[$this->curr_tableField] = ( int ) $sum_hits;
@@ -5105,12 +4697,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * set_currFilterIsArea( ): Set the class var $bool_currFilterIsArea
  *
@@ -5137,12 +4723,6 @@ class tx_browser_pi1_filter_4x {
 
     return;
   }
-
-
-
-
-
-
 
 
 
@@ -5207,22 +4787,12 @@ class tx_browser_pi1_filter_4x {
         // SWITCH field
     }
       // LOOP all fields of current filter / tableField
-//if( $table == 'tx_greencars_manufacturer' )
-//{
-//  $this->pObj->dev_var_dump( $table, $firstItem, $this->rows );
-//}
 
       // Add first item to the rows of the current filter
     $this->rows = $firstItem + $this->rows;
 
     return;
   }
-
-
-
-
-
-
 
 
 
@@ -5257,12 +4827,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
 /**
  * set_htmlSpaceLeft( ): Set the left margin for HTML code. Class var $htmlSpaceLeft.
  *
@@ -5287,12 +4851,6 @@ class tx_browser_pi1_filter_4x {
 
     return;
   }
-
-
-
-
-
-
 
 
 
@@ -5379,9 +4937,6 @@ class tx_browser_pi1_filter_4x {
 
     return;
   }
-
-
-
 
 
 
