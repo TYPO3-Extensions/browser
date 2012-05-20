@@ -3731,27 +3731,37 @@ class tx_browser_pi1_filter_4x {
     $bool_firstLoop = true;
     foreach( $iterator as $key => $value )
     {
-        // CONTINUE $key is the uid. Save the uid.
-      if( $key == 'uid' )
+        // SWITCH : $key
+      switch( true )
       {
-        $curr_uid = $value;
-        continue;
+        case( $key == 'uid' ):
+            // CONTINUE $key is the uid. Save the uid.
+          $curr_uid = $value;
+          continue;
+          break;
+        case( $key == 'flag_displayInCaseOfNoCounting' ):
+        case( $key == 'flag_treeview' ):
+            // CONTINUE $key is a flag
+          continue;
+          break;
+        case( $key == 'value' ):
+            // Follow the workflow
+          break;
+        default:
+          if( $this->pObj->b_drs_warn )
+          {
+            $prompt = 'Key ' . $key . ' isn\'t defined. Developer has to maintain the current switch!';
+            t3lib_div :: devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
+          }
+          continue;
+          break;
       }
-        // CONTINUE $key is the uid. Save the uid.
-
+        // SWITCH : $key
+      
       if( $bool_firstLoop )
       {
         $first_item_uid = $curr_uid;
       }
-
-
-        // CONTINUE ERROR $key isn't value
-      if( $key != 'value' )
-      {
-        echo 'ERROR: key != value.' . PHP_EOL . __METHOD__ . ' (Line: ' . __LINE__ . ')' . PHP_EOL;
-        continue;
-      }
-        // CONTINUE ERROR $key isn't value
 
         // Render the value
       $item = $this->get_filterItem( $curr_uid, $value );
@@ -3760,7 +3770,7 @@ class tx_browser_pi1_filter_4x {
       if( empty( $item ) )
       {
           // DRS
-        if( $firstCallDrsTreeview && ( $this->pObj->b_drs_filter || $this->pObj->b_drs_cObjData ) )
+        if( $firstCallDrsTreeview && $this->pObj->b_drs_warn )
         {
           $prompt = 'No value: [' . $key . '] won\'t displayed! Be aware: this log won\'t displayed never again.';
           t3lib_div :: devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
