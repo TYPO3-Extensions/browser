@@ -3607,10 +3607,59 @@ class tx_browser_pi1_filter_4x {
  * @param	integer		$uid_parent : Parent uid of the current record - for recursive calls.
  * @return	void		Result will be allocated to the class var $tmpOneDim
  * @internal        #32223, 120119, dwildt+
- * @version 3.9.9
+ * @version 3.9.16
  * @since   3.9.9
  */
   private function tree_setOneDim( $uid_parent )
+  {
+    switch ( true )
+    {
+      case( count ( $this->arr_rowsTablefield ) == 1 ):
+        $this->tree_setOneDimOneRow( $uid_parent );
+        break;
+      default:
+        $this->tree_setOneDimDefault( $uid_parent );
+        break;
+    }
+  }
+
+
+
+/**
+ * set_treeOneDimOneRow( ): 
+ *                    * [obligate] uid    : uid of the record
+ *                    * [obligate] value  : value of the record
+ *
+ * @param	integer		$uid_parent : Parent uid of the current record - for recursive calls.
+ * @return	void		Result will be allocated to the class var $tmpOneDim
+ * @internal        #32223, 120119, dwildt+
+ * @version 3.9.16
+ * @since   3.9.9
+ */
+  private function tree_setOneDimOneRow( $uid_parent )
+  {
+    $tsPath   = $uid_parent . '.' ;
+    $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
+    $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
+  }
+
+
+
+/**
+ * set_treeOneDimDefault( ): Recursive method. It generates a one dimensional array.
+ *                    Each array has upto three elements:
+ *                    * [obligate] uid    : uid of the record
+ *                    * [obligate] value  : value of the record
+ *                    * [optional] array  : if the record has children ...
+ *                                          It is 0 while starting.
+ *
+ * @param	integer		$uid_parent : Parent uid of the current record - for recursive calls.
+ * @return	void		Result will be allocated to the class var $tmpOneDim
+ * @internal        #32223, 120119, dwildt+
+ * @version 3.9.16
+ * @since   3.9.9
+ */
+  private function tree_setOneDimDefault( $uid_parent )
   {
     static $tsPath = null;
 
@@ -3628,39 +3677,6 @@ class tx_browser_pi1_filter_4x {
       $tsPath   = $tsPath . $key . '.' ;
       $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
       $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
-      $this->tree_setOneDim( $row[$this->uidField] );
-      $tsPath   = $lastPath;
-    }
-      // LOOP rows
-    return;
-
-      // LOOP rows
-    foreach( $this->arr_rowsTablefield as $key => $row )
-    {
-        // CONTINUE current row isn't row with current $uid_parent
-      if( $row[$this->treeParentField] != $uid_parent )
-      {
-$this->pObj->dev_var_dump( $row );
-        continue;
-      }
-        // CONTINUE current row isn't row with current $uid_parent
-
-        // CONTINUE current key is NULL
-      if( $row[$this->uidField] === null )
-      {
-$this->pObj->dev_var_dump( $row );
-        continue;
-      }
-        // CONTINUE current key is NULL
-
-      $lastPath = $tsPath;
-      $tsPath   = $tsPath . $key . '.' ;
-      $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
-      $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
-
-$this->pObj->dev_var_dump( $row, $this->tmpOneDim );
-//exit;
-
       $this->tree_setOneDim( $row[$this->uidField] );
       $tsPath   = $lastPath;
     }
