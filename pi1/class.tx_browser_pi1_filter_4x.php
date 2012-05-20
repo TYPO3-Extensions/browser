@@ -3731,19 +3731,19 @@ class tx_browser_pi1_filter_4x {
     $bool_firstLoop = true;
     foreach( $iterator as $key => $value )
     {
-      $keyParts     = explode( '.', $key );
-      $lastKeyPart  = $keyParts[ count ( $keyParts ) - 1 ];
+//      $keyParts     = explode( '.', $key );
+//      $lastKeyPart  = $keyParts[ count ( $keyParts ) - 1 ];
         // SWITCH : $key
       switch( true )
       {
-//        case( $key == 'uid' ):
-        case( $lastKeyPart == 'uid' ):
+        case( $key == 'uid' ):
+//        case( $lastKeyPart == 'uid' ):
             // CONTINUE $key is the uid. Save the uid.
           $curr_uid = $value;
           continue 2;
           break;
-//        case( $key == 'value' ):
-        case( $lastKeyPart == 'value' ):
+        case( $key == 'value' ):
+//        case( $lastKeyPart == 'value' ):
             // Follow the workflow
           break;
         default:
