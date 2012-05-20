@@ -1173,8 +1173,8 @@ plugin.tx_browser_pi1 {
         first_item { 
             // [Boolean] 1 (default): First item will displayed ever. 0: First item will displayed in case of items only.
           display_wo_items = 1
-            // [Boolean] 1 (default): First item will displayed ever. 0: First item will displayed in case of items only.
-          display_wo_any_hit = 1
+            // [Boolean] 1 (default): If hits aren't counted, the item will displayed (flag_displayInCaseOfNoCounting is set. See cObject). 0: Hit won't displayed, if count_hits is 0.
+          displayInCaseOfNoCounting = 1
             // Wrap the first filter item
           cObject = COA
           cObject {
@@ -1223,6 +1223,8 @@ plugin.tx_browser_pi1 {
           item {
               // [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
             display_without_any_hit = 0
+              // [Boolean] 1 (default): If hits aren't counted, the item will displayed (flag_displayInCaseOfNoCounting is set. See cObject). 0: Hit won't displayed, if count_hits is 0.
+            displayInCaseOfNoCounting = 1
               // [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
             display_hits = 1
             display_hits {
@@ -1319,7 +1321,7 @@ plugin.tx_browser_pi1 {
                     }
                     20 = TEXT
                     20 {
-                      field = tx_browser_pi1.flag_displayWoAnyHit
+                      field = tx_browser_pi1.flag_displayInCaseOfNoCounting
                     }
                     30 = TEXT
                     30 {
@@ -1382,6 +1384,8 @@ plugin.tx_browser_pi1 {
           item {
               // DEPRECATED - please use the cObject! [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
             display_without_any_hit = 0
+              // [Boolean] 1 (default): If hits aren't counted, the item will displayed (flag_displayInCaseOfNoCounting is set. See cObject). 0: Hit won't displayed, if count_hits is 0.
+            displayInCaseOfNoCounting = 1
               // DEPRECATED - please use the cObject! [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
             display_hits = 1
             display_hits {
@@ -1464,7 +1468,7 @@ plugin.tx_browser_pi1 {
                     }
                     20 = TEXT
                     20 {
-                      field = tx_browser_pi1.flag_displayWoAnyHit
+                      field = tx_browser_pi1.flag_displayInCaseOfNoCounting
                     }
                   }
                 }
@@ -1532,6 +1536,8 @@ plugin.tx_browser_pi1 {
           item {
               // DEPRECATED - please use the cObject! [Boolean] 0: Item without any hit will not be displayed. 1: Any item will be displayed.
             display_without_any_hit = 0
+              // [Boolean] 1 (default): If hits aren't counted, the item will displayed (flag_displayInCaseOfNoCounting is set. See cObject). 0: Hit won't displayed, if count_hits is 0.
+            displayInCaseOfNoCounting = 1
               // DEPRECATED - please use the cObject! [Boolean] 1: Items display the number of hits. 0: Items doesn't display any number of hits.
             display_hits = 1
             display_hits {
@@ -1608,7 +1614,7 @@ plugin.tx_browser_pi1 {
                     }
                     20 = TEXT
                     20 {
-                      field = tx_browser_pi1.flag_displayWoAnyHit
+                      field = tx_browser_pi1.flag_displayInCaseOfNoCounting
                     }
                   }
                 }
@@ -1795,7 +1801,7 @@ plugin.tx_browser_pi1 {
                     }
                     20 = TEXT
                     20 {
-                      field = tx_browser_pi1.flag_displayWoAnyHit
+                      field = tx_browser_pi1.flag_displayInCaseOfNoCounting
                     }
                   }
                 }
