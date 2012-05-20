@@ -1319,6 +1319,10 @@ plugin.tx_browser_pi1 {
                     }
                     20 = TEXT
                     20 {
+                      field = tx_browser_pi1.flag_displayWoAnyHit
+                    }
+                    30 = TEXT
+                    30 {
                       field = tx_browser_pi1.flag_treeview
                     }
                   }
@@ -1450,9 +1454,19 @@ plugin.tx_browser_pi1 {
                 noTrimWrap  = | (|)|
               }
               if {
-                xxx_isTrue {
-                    // Display with hits only
-                  field = hits
+                isTrue {
+                    // Display with hits only or in case of a tree view
+                  cObject = COA
+                  cObject {
+                    10 = TEXT
+                    10 {
+                      field = hits
+                    }
+                    20 = TEXT
+                    20 {
+                      field = tx_browser_pi1.flag_displayWoAnyHit
+                    }
+                  }
                 }
               }
               noTrimWrap = |<input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>  ||
@@ -1583,9 +1597,21 @@ plugin.tx_browser_pi1 {
                 value       = hits
                 noTrimWrap  = | (|)|
               }
-              xxx_if {
-                  // Display with hits only
-                isTrue = hits
+              if {
+                isTrue {
+                    // Display with hits only or in case of a tree view
+                  cObject = COA
+                  cObject {
+                    10 = TEXT
+                    10 {
+                      field = hits
+                    }
+                    20 = TEXT
+                    20 {
+                      field = tx_browser_pi1.flag_displayWoAnyHit
+                    }
+                  }
+                }
               }
               noTrimWrap = |<input###CLASS######STYLE### type="radio" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###> ||
             }
@@ -1758,10 +1784,20 @@ plugin.tx_browser_pi1 {
                 field = hits
                 noTrimWrap  = | (|)|
               }
-              xxx_if {
+              if {
                 isTrue {
-                    // Display with hits only
-                  field = hits
+                    // Display with hits only or in case of a tree view
+                  cObject = COA
+                  cObject {
+                    10 = TEXT
+                    10 {
+                      field = hits
+                    }
+                    20 = TEXT
+                    20 {
+                      field = tx_browser_pi1.flag_displayWoAnyHit
+                    }
+                  }
                 }
               }
               wrap = <option###CLASS######STYLE### value="###UID###"###ITEM_SELECTED###>|</option>
