@@ -5078,6 +5078,16 @@ class tx_browser_pi1_filter_4x {
     }
       // RETURN first item shouldn't displayed
 
+      // RETURN first item shouldn't displayed
+    if( ! $conf_array['first_item.']['display_wo_items'] )
+    {
+      if( ( int ) $this->hits_sum[$this->curr_tableField] < 1 )
+      {
+        return;
+      }
+    }
+      // RETURN first item shouldn't displayed
+
       // Get the labels for the fields uid and hits
     $uidField   = $this->sql_filterFields[$this->curr_tableField]['uid'];
     $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];

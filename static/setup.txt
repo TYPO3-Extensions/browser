@@ -1171,6 +1171,8 @@ plugin.tx_browser_pi1 {
           // [Boolean] Should be added a default item?
         first_item = 1
         first_item { 
+            // [Boolean] 1 (default): First item will displayed ever. 0: First item will displayed in case of items only.
+          display_wo_items = 1
             // Wrap the first filter item
           cObject = COA
           cObject {
@@ -1624,6 +1626,8 @@ plugin.tx_browser_pi1 {
           // [Boolean] Should be added a default item?
         first_item = 1
         first_item {
+            // [Boolean] 1 (default): First item will displayed ever. 0: First item will displayed in case of items only.
+          display_wo_items = 1
             // Wrap the first items
           cObject = COA
           cObject {
