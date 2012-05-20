@@ -3638,9 +3638,13 @@ class tx_browser_pi1_filter_4x {
  */
   private function tree_setOneDimOneRow( $uid_parent )
   {
-    $tsPath   = $uid_parent . '.' ;
-    $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
-    $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
+    foreach( $this->arr_rowsTablefield as $key => $row )
+    {
+      $tsPath   = $uid_parent . '.' ;
+      $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
+      $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
+      break;
+    }
   }
 
 
