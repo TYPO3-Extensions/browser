@@ -3634,12 +3634,12 @@ $this->pObj->dev_var_dump( $this->tmpOneDim );
       }
         // CONTINUE current row isn't row with current $uid_parent
 
-//        // CONTINUE current key is NULL
-//      if( $uid_parent == null )
-//      {
-//        continue;
-//      }
-//        // CONTINUE current key is NULL
+        // CONTINUE current key is NULL
+      if( $key == null )
+      {
+        continue;
+      }
+        // CONTINUE current key is NULL
 
       $lastPath = $tsPath;
       $tsPath   = $tsPath . $key . '.' ;
