@@ -2912,6 +2912,8 @@ class tx_browser_pi1_filter_4x {
  */
   private function cObjData_setFlagDisplayInCaseOfNoCounting( )
   {
+    static $bool_DRSprompt = true; 
+
     if( ! $this->ts_getDisplayInCaseOfNoCounting( ) )
     {
       return;
@@ -2925,10 +2927,11 @@ class tx_browser_pi1_filter_4x {
     $this->pObj->cObj->data[ $key ] = $value;
 
       // DRS
-    if( $this->pObj->b_drs_cObjData )
+    if( $this->pObj->b_drs_cObjData && $bool_DRSprompt )
     {
       $prompt = 'cObj->data[ ' . $key . '] = ' . $value;
       t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
+      $bool_DRSprompt = false;
     }
       // DRS
   }
@@ -2944,6 +2947,8 @@ class tx_browser_pi1_filter_4x {
  */
   private function cObjData_unsetFlagDisplayInCaseOfNoCounting( )
   {
+    static $bool_DRSprompt = true; 
+    
     if( ! $this->ts_getDisplayInCaseOfNoCounting( ) )
     {
       return;
@@ -2954,10 +2959,11 @@ class tx_browser_pi1_filter_4x {
     unset( $this->pObj->cObj->data[ $key ] );
 
       // DRS
-    if( $this->pObj->b_drs_cObjData )
+    if( $this->pObj->b_drs_cObjData && $bool_DRSprompt )
     {
       $prompt = 'cObj->data[ ' . $key . '] is unset.';
       t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
+      $bool_DRSprompt = false;
     }
       // DRS
   }
