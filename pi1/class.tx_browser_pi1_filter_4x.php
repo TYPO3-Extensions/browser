@@ -3643,31 +3643,6 @@ class tx_browser_pi1_filter_4x {
       $tsPath   = $lastPath;
     }
       // LOOP rows
-return;
-    if( ! empty ( $this->tmpOneDim ) )
-    {
-      return;
-    }
-    
-      // No result. Try to generate a result.
-      // There is only one row
-    if( count( $this->arr_rowsTablefield ) == 1 )
-    {
-        // LOOP rows
-      foreach( $this->arr_rowsTablefield as $key => $row )
-      {
-        $key      = $uid_parent;
-        $lastPath = $tsPath;
-        $tsPath   = $tsPath . $key . '.' ;
-        $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
-        $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
-        $tsPath   = $lastPath;
-      }
-        // LOOP rows
-      return;
-    }
-      // There is only one row
-    
   }
 
 
