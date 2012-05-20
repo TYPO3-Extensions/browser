@@ -918,7 +918,6 @@ class tx_browser_pi1_filter_4x {
 //      // Order the rows
 //    array_multisort( $arr_value, $order, $this->arr_rowsTablefield );
 //      // Order the values
-$this->pObj->dev_var_dump( $this->arr_rowsTablefield );
 
     unset( $this->tmpOneDim );
       // Parent uid of the root records: 0 of course
@@ -926,7 +925,6 @@ $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
       // Set rows of the current tablefield to a one dimensional array
     $this->tree_setOneDim( $uid_parent );
       // Get the renderd tree. Each element of the returned array contains HTML tags.
-//$this->pObj->dev_var_dump( $this->tmpOneDim );
 
     $arr_tableFields  = $this->tree_getRendered( );
     $items            = implode( null, $arr_tableFields );
@@ -3682,7 +3680,7 @@ $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
         $first_item_uid   = $conf_array['first_item.']['option_value'];
         $tsValue          = $conf_array['first_item.']['cObject'];
         $tsConf           = $conf_array['first_item.']['cObject.'];
-        $first_item_value = $this->pObj->local_cObj->stdWrap( $tsValue, $tsConf );
+        $first_item_value = $this->pObj->cObj->cObjGetSingle( $tsValue, $tsConf );
           // Render uid and value of the first item
         $tmpOneDim  = array( 'uid'   => $first_item_uid   ) +
                       array( 'value' => $first_item_value ) +
