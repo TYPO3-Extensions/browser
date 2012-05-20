@@ -3646,7 +3646,7 @@ $this->pObj->dev_var_dump( $this->tmpOneDim );
       $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
       $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
 $this->pObj->dev_var_dump( $row[$this->uidField], $this->tmpOneDim );
-exit;
+//exit;
       $this->tree_setOneDim( $row[$this->uidField] );
       $tsPath   = $lastPath;
     }
