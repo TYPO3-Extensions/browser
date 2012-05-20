@@ -3625,7 +3625,7 @@ $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
         // CONTINUE current row isn't row with current $uid_parent
 
         // CONTINUE current key is NULL
-      if( $key == null )
+      if( $key === null )
       {
         continue;
       }
