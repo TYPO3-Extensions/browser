@@ -3228,7 +3228,7 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * cObjData_setDisplayWoHits( ): Add the flag_displayWoAnyHit value to cObj->data.
+ * cObjData_setDisplayWoHits( ): Add the flag_displayInCaseOfNoCounting value to cObj->data.
  *
  * @return	void
  * @version 3.9.9
@@ -3236,13 +3236,13 @@ class tx_browser_pi1_filter_4x {
  */
   private function cObjData_setDisplayWoHits( $uid )
   {
-    if( ! $this->ts_getDisplayWoAnyHit( $uid ) )
+    if( ! $this->ts_getDisplayInCaseOfNoCounting( $uid ) )
     {
       return;
     }
     
       // Set key and value for treeview field
-    $key    = $this->pObj->prefixId . '.flag_displayWoAnyHit';
+    $key    = $this->pObj->prefixId . '.flag_displayInCaseOfNoCounting';
     $value  = 1;
 
       // Set treeview field
@@ -3260,7 +3260,7 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * cObjData_unsetDisplayWoHits( ): Unset the flag_displayWoAnyHit field in cObj->data
+ * cObjData_unsetDisplayWoHits( ): Unset the flag_displayInCaseOfNoCounting field in cObj->data
  *
  * @return	string		$item       : The rendered item
  * @version 3.9.9
@@ -3268,13 +3268,13 @@ class tx_browser_pi1_filter_4x {
  */
   private function cObjData_unsetDisplayWoHits( $uid )
   {
-    if( ! $this->ts_getDisplayWoAnyHit( $uid ) )
+    if( ! $this->ts_getDisplayInCaseOfNoCounting( $uid ) )
     {
       return;
     }
     
       // Unset the treeview field
-    $key = $this->pObj->prefixId . '.flag_displayWoAnyHit';
+    $key = $this->pObj->prefixId . '.flag_displayInCaseOfNoCounting';
     unset( $this->pObj->cObj->data[ $key ] );
 
       // DRS
@@ -3892,13 +3892,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * ts_getDisplayWoAnyHit( ):  Get the TS configuration for display_wo_any_hit
+ * ts_getDisplayInCaseOfNoCounting( ):  Get the TS configuration for displayInCaseOfNoCounting
  *
  * @return	string		$display_hits : value from TS configuration
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function ts_getDisplayWoAnyHit( $uid )
+  private function ts_getDisplayInCaseOfNoCounting( $uid )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -3912,16 +3912,16 @@ class tx_browser_pi1_filter_4x {
     switch( true )
     {
       case( $uid == $conf_array['first_item.']['option_value'] ):
-        $displayWoAnyHit = $conf_array['first_item.']['display_wo_any_hit'];
+        $displayInCaseOfNoCounting = $conf_array['first_item.']['displayInCaseOfNoCounting'];
         break;
       default:
-        $displayWoAnyHit = $conf_array['wrap.']['item.']['display_wo_any_hit'];
+        $displayInCaseOfNoCounting = $conf_array['wrap.']['item.']['displayInCaseOfNoCounting'];
         break;
     }
       // SWITCH first item
       // Set display hits flag
       // RETURN TS value
-    return $displayWoAnyHit;
+    return $displayInCaseOfNoCounting;
   }
 
 
