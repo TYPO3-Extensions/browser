@@ -3612,18 +3612,18 @@ $this->pObj->dev_var_dump( $this->tmpOneDim );
   private function tree_setOneDim( $uid_parent )
   {
     static $tsPath = null;
-//    static $firstLoop = true;
-//if( $firstLoop )
-//{
-//  $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
+    static $firstLoop = true;
+if( $firstLoop )
+{
+  $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
 //  if( $this->pObj->b_drs_warn )
 //  {
 //    $prompt = var_export( $this->arr_rowsTablefield, true );
 //    t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
 //  }
-//  $firstLoop = false;
-////  exit;
-//}
+  $firstLoop = false;
+//  exit;
+}
       // LOOP rows
     foreach( $this->arr_rowsTablefield as $key => $row )
     {
