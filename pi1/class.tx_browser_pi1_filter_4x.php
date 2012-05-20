@@ -723,13 +723,11 @@ class tx_browser_pi1_filter_4x {
       case( false ):
       default:
         $arr_return = $this->get_filterItemsDefault( );
-$this->pObj->dev_var_dump( $table, $arr_return );
         if( ! empty ( $arr_return ) )
         {
           $items      = $arr_return['data']['items'];
           $arr_return = $this->get_filterItemsWrap( $items );
         }
-$this->pObj->dev_var_dump( $table, $arr_return );
         break;
     }
       // SWITCH current filter is a tree view
@@ -986,7 +984,15 @@ $this->pObj->dev_var_dump( $table, $arr_return );
     unset( $this->markerArray['###TREEVIEW###'] );
 
       // RETURN
-    $arr_return['data']['items'] = $items;
+    $trimItems = trim ( $items );
+    if( ! empty ( $trimItems ) )
+    {
+      $arr_return['data']['items'] = $items;
+    }
+    else
+    {
+      unset( $arr_return );
+    }
     return $arr_return;
   }
 
@@ -1124,6 +1130,7 @@ $this->pObj->dev_var_dump( $table, $arr_return );
       // Get TS configuration of the current filter / tableField
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
 //if( $uid == 0 )
 //{
 //  $this->pObj->dev_var_dump( $cObj_conf, $item );
@@ -1415,7 +1422,11 @@ $this->pObj->dev_var_dump( $table, $arr_return );
       // SWITCH first item
       // Get the COA configuration for the value
 
+    $this->cObjData_setDisplayWoHits( $uid );
+
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+
+    $this->cObjData_unsetDisplayWoHits( $uid );
 
 //  // Get table and field
 //list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -3217,16 +3228,42 @@ $this->pObj->dev_var_dump( $table, $arr_return );
 
 
 /**
- * cObjData_setTreeview( ): Add the treeview value to cObj->data.
+ * cObjData_setDisplayWoHits( ): Add the flag_displayWoAnyHit value to cObj->data.
  *
  * @return	void
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function cObjData_setTreeview( )
+  private function cObjData_setDisplayWoHits( $uid )
   {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Get TS filter configuration
+    //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // Set display hits flag
+      // SWITCH first item
+    switch( true )
+    {
+      case( $uid == $conf_array['first_item.']['option_value'] ):
+        $displayWoAnyHit = $conf_array['first_item.']['display_wo_any_hit'];
+        break;
+      default:
+        $displayWoAnyHit = $conf_array['wrap.']['item.']['display_wo_any_hit'];
+        break;
+    }
+      // SWITCH first item
+      // Set display hits flag
+
+    if( ! $displayWoAnyHit )
+    {
+      return;
+    }
+    
       // Set key and value for treeview field
-    $key    = $this->pObj->prefixId . '.treeview';
+    $key    = $this->pObj->prefixId . '.flag_displayWoAnyHit';
     $value  = 1;
 
       // Set treeview field
@@ -3244,7 +3281,61 @@ $this->pObj->dev_var_dump( $table, $arr_return );
 
 
 /**
- * cObjData_unsetTreeview( ): Unset the treeview field in cObj->data
+ * cObjData_unsetDisplayWoHits( ): Unset the flag_displayWoAnyHit field in cObj->data
+ *
+ * @return	string		$item       : The rendered item
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function cObjData_unsetDisplayWoHits( )
+  {
+      // UNset the treeview field
+    $key = $this->pObj->prefixId . '.flag_displayWoAnyHit';
+    unset( $this->pObj->cObj->data[ $key ] );
+
+      // DRS
+    if( $this->pObj->b_drs_cObjData )
+    {
+      $prompt = 'cObj->data[ ' . $key . '] is unset.';
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+  }
+
+
+
+
+
+
+/**
+ * cObjData_setTreeview( ): Add the flag_treeview value to cObj->data.
+ *
+ * @return	void
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function cObjData_setTreeview( )
+  {
+      // Set key and value for treeview field
+    $key    = $this->pObj->prefixId . '.flag_treeview';
+    $value  = 1;
+
+      // Set treeview field
+    $this->pObj->cObj->data[ $key ] = $value;
+
+      // DRS
+    if( $this->pObj->b_drs_cObjData )
+    {
+      $prompt = 'cObj->data[ ' . $key . '] = ' . $value;
+      t3lib_div::devlog( '[INFO/COBJ] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+  }
+
+
+
+/**
+ * cObjData_unsetTreeview( ): Unset the flag_treeview field in cObj->data
  *
  * @return	string		$item       : The rendered item
  * @version 3.9.9
@@ -3253,7 +3344,7 @@ $this->pObj->dev_var_dump( $table, $arr_return );
   private function cObjData_unsetTreeview( )
   {
       // UNset the treeview field
-    $key = $this->pObj->prefixId . '.treeview';
+    $key = $this->pObj->prefixId . '.flag_treeview';
     unset( $this->pObj->cObj->data[ $key ] );
 
       // DRS
@@ -3816,6 +3907,27 @@ $this->pObj->dev_var_dump( $table, $arr_return );
 
 
 
+/**
+ * ts_getDisplayWoAnyHit( ):  Get the TS configuration for display_wo_any_hit
+ *
+ * @return	string		$display_hits : value from TS configuration
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function ts_getDisplayWoAnyHit( )
+  {
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+      // Short var
+    $currFilterWrap = $this->conf_view['filter.'][$table . '.'][$field . '.']['wrap.'];
+
+      // Get TS value
+    $display_hits = $currFilterWrap['item.']['display_hits'];
+
+      // RETURN TS value
+    return $display_hits;
+  }
 
 
 
@@ -4045,7 +4157,7 @@ $this->pObj->dev_var_dump( $table, $arr_return );
           t3lib_div :: devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
           $prompt = 'Maybe TS configuration for [' . $key . '] is: display it only with a hit at least.';
           t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
-          $prompt = 'There is a workaround: please take a look in the manual for ' . $this->pObj->prefixId . '.treeview.';
+          $prompt = 'There is a workaround: please take a look in the manual for ' . $this->pObj->prefixId . '.flag_treeview.';
           t3lib_div :: devlog( '[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1 );
           $firstCallDrsTreeview = false;
         }

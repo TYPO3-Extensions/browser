@@ -1317,7 +1317,7 @@ plugin.tx_browser_pi1 {
                     }
                     20 = TEXT
                     20 {
-                      field = tx_browser_pi1.treeview
+                      field = tx_browser_pi1.flag_treeview
                     }
                   }
                 }
