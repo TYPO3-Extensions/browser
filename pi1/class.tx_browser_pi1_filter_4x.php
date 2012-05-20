@@ -881,12 +881,8 @@ class tx_browser_pi1_filter_4x {
     //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
-      // Parent uid of the root records: 0 of course
-    $uid_parent = 0;
-
       // Needed for tree_setOneDim( )
     $this->arr_rowsTablefield = $this->rows;
-
 
       // Get the labels for the fields uid, value and treeParentField
     $this->uidField         = $this->sql_filterFields[$this->curr_tableField]['uid'];
@@ -924,6 +920,8 @@ class tx_browser_pi1_filter_4x {
       // Order the values
 
     unset( $this->tmpOneDim );
+      // Parent uid of the root records: 0 of course
+    $uid_parent = 0;
       // Set rows of the current tablefield to a one dimensional array
     $this->tree_setOneDim( $uid_parent );
       // Get the renderd tree. Each element of the returned array contains HTML tags.
@@ -3612,7 +3610,12 @@ class tx_browser_pi1_filter_4x {
   private function tree_setOneDim( $uid_parent )
   {
     static $tsPath = null;
-
+    static $firstLoop = true;
+if( $firstLoop )
+{
+  $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
+  $firstLoop = false;
+}
       // LOOP rows
     foreach( $this->arr_rowsTablefield as $key => $row )
     {
@@ -3627,6 +3630,7 @@ class tx_browser_pi1_filter_4x {
       $tsPath   = $tsPath . $key . '.' ;
       $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
       $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
+$this->pObj->dev_var_dump( $row[$this->uidField] );
       $this->tree_setOneDim( $row[$this->uidField] );
       $tsPath   = $lastPath;
     }
