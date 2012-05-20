@@ -3616,7 +3616,7 @@ if( $firstLoop )
   $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
   if( $this->pObj->b_drs_warn )
   {
-    $prompt = $this->arr_rowsTablefield;
+    $prompt = var_export( $this->arr_rowsTablefield, true );
     t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
   }
   $firstLoop = false;
