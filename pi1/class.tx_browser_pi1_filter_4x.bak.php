@@ -883,7 +883,6 @@ class tx_browser_pi1_filter_4x {
 
       // Needed for tree_setOneDim( )
     $this->arr_rowsTablefield = $this->rows;
-  unset( $this->arr_rowsTablefield[ null ] );
 
       // Get the labels for the fields uid, value and treeParentField
     $this->uidField         = $this->sql_filterFields[$this->curr_tableField]['uid'];
@@ -901,11 +900,6 @@ class tx_browser_pi1_filter_4x {
     $arr_value = array( );
     foreach ( $this->arr_rowsTablefield as $key => $row )
     {
-//if( $key == null )
-//{
-//  unset( $this->arr_rowsTablefield[ $key ] );
-//  continue;
-//} 
       $arr_value[$key] = $row[$this->valueField];
     }
       // Get the values for ordering
@@ -930,8 +924,8 @@ class tx_browser_pi1_filter_4x {
     $uid_parent = 0;
       // Set rows of the current tablefield to a one dimensional array
 
-$this->pObj->dev_var_dump( $uid_parent, $this->arr_rowsTablefield );
-exit;
+//$this->pObj->dev_var_dump( $uid_parent, $this->arr_rowsTablefield );
+//exit;
 
     $this->tree_setOneDim( $uid_parent );
 //$this->pObj->dev_var_dump( $uid_parent, $this->tmpOneDim );
@@ -3638,6 +3632,39 @@ exit;
       $tsPath   = $tsPath . $key . '.' ;
       $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
       $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
+      $this->tree_setOneDim( $row[$this->uidField] );
+      $tsPath   = $lastPath;
+    }
+      // LOOP rows
+    return; 
+     
+      // LOOP rows
+    foreach( $this->arr_rowsTablefield as $key => $row )
+    {
+        // CONTINUE current row isn't row with current $uid_parent
+      if( $row[$this->treeParentField] != $uid_parent )
+      {
+$this->pObj->dev_var_dump( $row );
+        continue;
+      }
+        // CONTINUE current row isn't row with current $uid_parent
+
+        // CONTINUE current key is NULL
+      if( $row[$this->uidField] === null )
+      {
+$this->pObj->dev_var_dump( $row );
+        continue;
+      }
+        // CONTINUE current key is NULL
+
+      $lastPath = $tsPath;
+      $tsPath   = $tsPath . $key . '.' ;
+      $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
+      $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
+
+$this->pObj->dev_var_dump( $row, $this->tmpOneDim );
+//exit;
+
       $this->tree_setOneDim( $row[$this->uidField] );
       $tsPath   = $lastPath;
     }
