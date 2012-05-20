@@ -916,8 +916,9 @@ class tx_browser_pi1_filter_4x {
       // Set DESC or ASC
 
       // Order the rows
-    array_multisort($arr_value, $order, $this->arr_rowsTablefield);
+    array_multisort( $arr_value, $order, $this->arr_rowsTablefield );
       // Order the values
+$this->pObj->dev_var_dump( $this->arr_rowsTablefield );
 
     unset( $this->tmpOneDim );
       // Parent uid of the root records: 0 of course
