@@ -3637,7 +3637,7 @@ $this->pObj->dev_var_dump( $uid_parent, $this->arr_rowsTablefield );
       $tsPath   = $lastPath;
     }
       // LOOP rows
-    
+return;    
     if( ! empty ( $this->tmpOneDim ) )
     {
       return;
@@ -3655,7 +3655,6 @@ $this->pObj->dev_var_dump( $uid_parent, $this->arr_rowsTablefield );
         $tsPath   = $tsPath . $key . '.' ;
         $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
         $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
-        $this->tree_setOneDim( $row[$this->uidField] );
         $tsPath   = $lastPath;
       }
         // LOOP rows
