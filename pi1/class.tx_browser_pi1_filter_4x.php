@@ -724,8 +724,16 @@ class tx_browser_pi1_filter_4x {
       default:
         $arr_return = $this->get_filterItemsDefault( );
 $this->pObj->dev_var_dump( $table, $arr_return );
-        $items      = $arr_return['data']['items'];
-        $arr_return = $this->get_filterItemsWrap( $items );
+        if( ! empty ( $arr_return['data']['items'] ) )
+        {
+          $items      = $arr_return['data']['items'];
+          $arr_return = $this->get_filterItemsWrap( $items );
+        }
+        else
+        {
+          unset( $arr_return );
+        }
+$this->pObj->dev_var_dump( $table, $arr_return );
         break;
     }
       // SWITCH current filter is a tree view
