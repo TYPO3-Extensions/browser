@@ -1570,8 +1570,8 @@ class tx_browser_pi1_filter_4x {
 /**
  * areas_countHits( ): Count the hits for each area.
  *
- * @param	[type]		$$areas: ...
- * @return	array		$areas : $areas with counted hits
+ * @param	array		$areas  : Area TS configuration
+ * @return	array		$areas  : $areas with counted hits
  * @package array   $areas : rows of the current area
  * @version 3.9.9
  * @since   3.9.9
@@ -1594,7 +1594,6 @@ class tx_browser_pi1_filter_4x {
 
       // LOOP each area
     foreach( array_keys ( ( array ) $areas ) as $areas_uid )
-//    foreach( $areas as $areas_uid => $areas_row )
     {
         // Short var
       $conf_area  = $conf_array['area.'][$area_key . '.']['options.']['fields.'][$areas_uid . '.'];
@@ -1633,8 +1632,8 @@ class tx_browser_pi1_filter_4x {
  * areas_wiHitsOnly( ):  The method removes areas without any hit,
  *                          if should displayed items only, which have one hit at least.
  *
- * @param	[type]		$$areas: ...
- * @return	array		$areas : all rows or rows with one hit at least only
+ * @param	array		$areas  : Area TS configuration
+ * @return	array		$areas  : all rows or rows with one hit at least only
  * @package array   $areas : rows of the current area
  * @version 3.9.9
  * @since   3.9.9
@@ -2884,7 +2883,7 @@ class tx_browser_pi1_filter_4x {
  * cObjData_reset( ): Reset the cObj->data array.
  *                    cObj->data becomes the values from before init.
  *
- * @return	viod
+ * @return	void
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -4941,7 +4940,8 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * updateWizard( ):
+ * updateWizard( ): Checks, if TypoScript of the current view has deprecated properties.
+ *                  It is relevant only, if the update wizard is enabled.
  *
  * @param	integer		$uid        : uid of the current item / row
  * @param	string		$value      : value of the current item / row
