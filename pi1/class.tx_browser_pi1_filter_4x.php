@@ -925,7 +925,7 @@ class tx_browser_pi1_filter_4x {
       // Set rows of the current tablefield to a one dimensional array
     $this->tree_setOneDim( $uid_parent );
       // Get the renderd tree. Each element of the returned array contains HTML tags.
-$this->pObj->dev_var_dump( $this->tmpOneDim );
+//$this->pObj->dev_var_dump( $this->tmpOneDim );
 
     $arr_tableFields  = $this->tree_getRendered( );
     $items            = implode( null, $arr_tableFields );
@@ -3612,18 +3612,7 @@ $this->pObj->dev_var_dump( $this->tmpOneDim );
   private function tree_setOneDim( $uid_parent )
   {
     static $tsPath = null;
-    static $firstLoop = true;
-//if( $firstLoop )
-//{
-//  $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
-////  if( $this->pObj->b_drs_warn )
-////  {
-////    $prompt = var_export( $this->arr_rowsTablefield, true );
-////    t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
-////  }
-//  $firstLoop = false;
-////  exit;
-//}
+
       // LOOP rows
     foreach( $this->arr_rowsTablefield as $key => $row )
     {
@@ -3645,8 +3634,6 @@ $this->pObj->dev_var_dump( $this->tmpOneDim );
       $tsPath   = $tsPath . $key . '.' ;
       $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
       $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
-$this->pObj->dev_var_dump( $row[$this->uidField], $this->tmpOneDim );
-//exit;
       $this->tree_setOneDim( $row[$this->uidField] );
       $tsPath   = $lastPath;
     }
@@ -3698,11 +3685,11 @@ $this->pObj->dev_var_dump( $row[$this->uidField], $this->tmpOneDim );
           // Render uid and value of the first item
         $tmpOneDim  = array( 'uid'   => $first_item_uid   ) +
                       array( 'value' => $first_item_value ) +
-                      $this->tmpOneDim;
+                      array( $this->tmpOneDim );
         break;
       case( false ):
       default:
-        $tmpOneDim  = $this->tmpOneDim;
+        $tmpOneDim  = array( $this->tmpOneDim );
         break;
     }
       // SWITCH display first item
