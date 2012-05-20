@@ -3619,9 +3619,9 @@ class tx_browser_pi1_filter_4x {
     static $tsPath = null;
     static $i = 0;
     
-    if( $i > 10000 )
+    if( $i > 10 )
     {
-$this->pObj->dev_var_dump( '> 10000' );
+$this->pObj->dev_var_dump( '> 10' );
       return;
     }
 
