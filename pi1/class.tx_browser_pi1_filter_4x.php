@@ -3620,7 +3620,7 @@ if( $firstLoop )
     t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
   }
   $firstLoop = false;
-  exit;
+//  exit;
 }
       // LOOP rows
     foreach( $this->arr_rowsTablefield as $key => $row )
@@ -3631,6 +3631,13 @@ if( $firstLoop )
         continue;
       }
         // CONTINUE current row isn't row with current $uid_parent
+
+        // CONTINUE current key is NULL
+      if( $uid_parent == null )
+      {
+        continue;
+      }
+        // CONTINUE current key is NULL
 
       $lastPath = $tsPath;
       $tsPath   = $tsPath . $key . '.' ;
