@@ -3685,11 +3685,11 @@ class tx_browser_pi1_filter_4x {
           // Render uid and value of the first item
         $tmpOneDim  = array( 'uid'   => $first_item_uid   ) +
                       array( 'value' => $first_item_value ) +
-                      array( $this->tmpOneDim );
+                      $this->tmpOneDim;
         break;
       case( false ):
       default:
-        $tmpOneDim  = array( $this->tmpOneDim );
+        $tmpOneDim  = $this->tmpOneDim;
         break;
     }
       // SWITCH display first item
