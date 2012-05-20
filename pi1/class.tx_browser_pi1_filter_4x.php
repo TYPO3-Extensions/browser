@@ -3611,7 +3611,7 @@ class tx_browser_pi1_filter_4x {
   private function tree_setOneDim( $uid_parent )
   {
     static $tsPath = null;
-
+$this->pObj->dev_var_dump( $this->arr_rowsTablefield );
       // LOOP rows
     foreach( $this->arr_rowsTablefield as $key => $row )
     {
