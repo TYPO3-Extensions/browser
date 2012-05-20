@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      3.9.13
+ * @version      3.9.16
  * @since        3.9.9
  */
 
@@ -1201,72 +1201,6 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * set_markerArray( ): Render the current filter item.
- *
- * @param	integer		$uid        : uid of the current item / row
- * @param	string		$value      : value of the current item / row
- * @return	string		$item       : The rendered item
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function set_markerArray( )
-  {
-      // Add mode and view
-    $this->markerArray['###MODE###']  = $this->pObj->piVar_mode;
-    $this->markerArray['###VIEW###']  = $this->pObj->view;
-
-      // Add cObj->data and piVars
-    $this->markerArray = $this->pObj->objMarker->extend_marker_wi_cObjData( $this->markerArray );
-    $this->markerArray = $this->pObj->objMarker->extend_marker_wi_pivars( $this->markerArray );
-  }
-
-
-
-
-
-
-
-
-
-/**
- * set_markerArrayUpdateRow( ): Render the current filter item.
- *
- * @param	integer		$uid        : uid of the current item / row
- * @param	string		$value      : value of the current item / row
- * @return	string		$item       : The rendered item
- * @version 3.9.9
- * @since   3.9.9
- */
-  private function set_markerArrayUpdateRow( $uid )
-  {
-    foreach( $this->rows[$uid] as $key => $value )
-    {
-      $marker                     = '###' . strtoupper( $key ) . '###';
-      $this->markerArray[$marker] = $value;
-    }
-
-    $uidField                   = $this->sql_filterFields[$this->curr_tableField]['uid'];
-    $marker                     = '###UID###';
-    $this->markerArray[$marker] = $this->rows[$uid][$uidField];
-
-    $valueField                 = $this->sql_filterFields[$this->curr_tableField]['value'];
-    $marker                     = '###VALUE###';
-    $this->markerArray[$marker] = $this->rows[$uid][$valueField];
-
-    $hitsField                  = $this->sql_filterFields[$this->curr_tableField]['hits'];
-    $marker                     = '###HITS###';
-    $this->markerArray[$marker] = $this->rows[$uid][$hitsField];
-  }
-
-
-
-
-
-
-
-
-
-/**
  * get_filterItemValueStdWrap( ): Render the current filter item.
  *
  * @param	array		$conf_name      : TS configuration object type of the current filter / tableField
@@ -2055,9 +1989,6 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_resAllItems( )
   {
-      // Get table and field
-    list( $table ) = explode( '.', $this->curr_tableField );
-
       // Don't count hits
     $bool_count = false;
 
@@ -5049,6 +4980,60 @@ class tx_browser_pi1_filter_4x {
     $this->hits_sum[$this->curr_tableField] = ( int ) $sum_hits;
 
     return;
+  }
+  
+  
+  
+/**
+ * set_markerArray( ): Render the current filter item.
+ *
+ * @param	integer		$uid        : uid of the current item / row
+ * @param	string		$value      : value of the current item / row
+ * @return	string		$item       : The rendered item
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function set_markerArray( )
+  {
+      // Add mode and view
+    $this->markerArray['###MODE###']  = $this->pObj->piVar_mode;
+    $this->markerArray['###VIEW###']  = $this->pObj->view;
+
+      // Add cObj->data and piVars
+    $this->markerArray = $this->pObj->objMarker->extend_marker_wi_cObjData( $this->markerArray );
+    $this->markerArray = $this->pObj->objMarker->extend_marker_wi_pivars( $this->markerArray );
+  }
+
+
+
+/**
+ * set_markerArrayUpdateRow( ): Render the current filter item.
+ *
+ * @param	integer		$uid        : uid of the current item / row
+ * @param	string		$value      : value of the current item / row
+ * @return	string		$item       : The rendered item
+ * @version 3.9.9
+ * @since   3.9.9
+ */
+  private function set_markerArrayUpdateRow( $uid )
+  {
+    foreach( $this->rows[$uid] as $key => $value )
+    {
+      $marker                     = '###' . strtoupper( $key ) . '###';
+      $this->markerArray[$marker] = $value;
+    }
+
+    $uidField                   = $this->sql_filterFields[$this->curr_tableField]['uid'];
+    $marker                     = '###UID###';
+    $this->markerArray[$marker] = $this->rows[$uid][$uidField];
+
+    $valueField                 = $this->sql_filterFields[$this->curr_tableField]['value'];
+    $marker                     = '###VALUE###';
+    $this->markerArray[$marker] = $this->rows[$uid][$valueField];
+
+    $hitsField                  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+    $marker                     = '###HITS###';
+    $this->markerArray[$marker] = $this->rows[$uid][$hitsField];
   }
 
 
