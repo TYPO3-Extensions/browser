@@ -894,33 +894,33 @@ class tx_browser_pi1_filter_4x {
 
 
 
-      //////////////////////////////////////////////////////
-      //
-      // Order the values
-
-      // Get the values for ordering
-      // @todo: 121018, dwildt, is multisort needed?
-    $arr_value = array( );
-    foreach ( $this->arr_rowsTablefield as $key => $row )
-    {
-      $arr_value[$key] = $row[$this->valueField];
-    }
-      // Get the values for ordering
-
-      // Set DESC or ASC
-    if ( strtolower( $conf_array['order.']['orderFlag'] ) == 'desc' )
-    {
-      $order = SORT_DESC;
-    }
-    if ( strtolower( $conf_array['order.']['orderFlag'] ) != 'desc' )
-    {
-      $order = SORT_ASC;
-    }
-      // Set DESC or ASC
-
-      // Order the rows
-    array_multisort( $arr_value, $order, $this->arr_rowsTablefield );
-      // Order the values
+//      //////////////////////////////////////////////////////
+//      //
+//      // Order the values
+//
+//      // Get the values for ordering
+//      // @todo: 121018, dwildt, is multisort needed?
+//    $arr_value = array( );
+//    foreach ( $this->arr_rowsTablefield as $key => $row )
+//    {
+//      $arr_value[$key] = $row[$this->valueField];
+//    }
+//      // Get the values for ordering
+//
+//      // Set DESC or ASC
+//    if ( strtolower( $conf_array['order.']['orderFlag'] ) == 'desc' )
+//    {
+//      $order = SORT_DESC;
+//    }
+//    if ( strtolower( $conf_array['order.']['orderFlag'] ) != 'desc' )
+//    {
+//      $order = SORT_ASC;
+//    }
+//      // Set DESC or ASC
+//
+//      // Order the rows
+//    array_multisort( $arr_value, $order, $this->arr_rowsTablefield );
+//      // Order the values
 
     unset( $this->tmpOneDim );
       // Parent uid of the root records: 0 of course
