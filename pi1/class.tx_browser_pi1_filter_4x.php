@@ -5095,7 +5095,7 @@ class tx_browser_pi1_filter_4x {
           $firstItem[$uid][$uidField] = $uid;
           break;
         case( $field == $hitsField ):
-          $firstItem[$uid][$hitsField] = $this->hits_sum[$this->curr_tableField];
+          $firstItem[$uid][$hitsField] = ( int ) $this->hits_sum[$this->curr_tableField];
           break;
         default:
           $firstItem[$uid][$field] = null;
