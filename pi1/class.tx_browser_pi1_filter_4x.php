@@ -3630,7 +3630,7 @@ $this->pObj->dev_var_dump( $row );
         // CONTINUE current row isn't row with current $uid_parent
 
         // CONTINUE current key is NULL
-      if( $key === null )
+      if( $row[$this->uidField] === null )
       {
 $this->pObj->dev_var_dump( $row );
         continue;
@@ -3642,8 +3642,8 @@ $this->pObj->dev_var_dump( $row );
       $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
       $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
 
-$this->pObj->dev_var_dump( $row );
-exit;
+$this->pObj->dev_var_dump( $row, $this->tmpOneDim );
+//exit;
 
       $this->tree_setOneDim( $row[$this->uidField] );
       $tsPath   = $lastPath;
