@@ -3740,7 +3740,7 @@ class tx_browser_pi1_filter_4x {
         case( $lastKeyPart == 'uid' ):
             // CONTINUE $key is the uid. Save the uid.
           $curr_uid = $value;
-          continue;
+          continue 2;
           break;
 //        case( $key == 'value' ):
         case( $lastKeyPart == 'value' ):
@@ -3752,7 +3752,7 @@ class tx_browser_pi1_filter_4x {
             $prompt = 'Key ' . $key . ' isn\'t defined. Developer has to maintain the current switch!';
             t3lib_div :: devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
           }
-          continue;
+          continue 2;
           break;
       }
         // SWITCH : $key
