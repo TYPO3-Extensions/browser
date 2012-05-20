@@ -3637,6 +3637,32 @@ $this->pObj->dev_var_dump( $uid_parent, $this->arr_rowsTablefield );
       $tsPath   = $lastPath;
     }
       // LOOP rows
+    
+    if( ! empty ( $this->tmpOneDim ) )
+    {
+      return;
+    }
+    
+      // No result. Try to generate a result.
+      // There is only one row
+    if( count( $this->arr_rowsTablefield ) == 1 )
+    {
+        // LOOP rows
+      foreach( $this->arr_rowsTablefield as $key => $row )
+      {
+        $key      = $uid_parent;
+        $lastPath = $tsPath;
+        $tsPath   = $tsPath . $key . '.' ;
+        $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
+        $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
+        $this->tree_setOneDim( $row[$this->uidField] );
+        $tsPath   = $lastPath;
+      }
+        // LOOP rows
+      return;
+    }
+      // There is only one row
+    
   }
 
 
