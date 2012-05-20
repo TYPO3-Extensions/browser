@@ -1950,18 +1950,19 @@ class tx_browser_pi1_filter_4x {
 
       // Hits should counted
 //    if( $this->pObj->objFlexform->sheet_viewList_count_hits )
-//    {
+    if( $this->ts_countHits( ) )
+    {
         // RETURN display items only, if they have one hit at least
-      if( $this->ts_countHits( ) )
-      {
+//      if( $this->ts_getDisplayHits( ) )
+//      {
         $arr_return['data']['rows'] = $rows_wiHits;
           // Prompt the expired time to devlog
         $debugTrailLevel = 1;
         $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
         return $arr_return;
-      }
+//      }
         // RETURN display items only, if they have one hit at least
-//    }
+    }
       // Hits should counted
 
       // SWITCH localTable versus foreignTable
@@ -3817,28 +3818,29 @@ class tx_browser_pi1_filter_4x {
  */
   private function ts_countHits( )
   {
-    if( $this->count_hits != null )
-    {
-      return $this->count_hits;
-    }
-
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
+    if( $this->count_hits[$this->curr_tableField] != null )
+    {
+      return $this->count_hits[$this->curr_tableField];
+    }
+
+
       // Short var
-    $this->count_hits = $this->conf_view['filter.'][$table . '.'][$field . '.']['count_hits'];
-    switch( $this->count_hits )
+    $this->count_hits[$this->curr_tableField] = $this->conf_view['filter.'][$table . '.'][$field . '.']['count_hits'];
+    switch( $this->count_hits[$this->curr_tableField] )
     {
       case( true ):
-        $this->count_hits = true;
+        $this->count_hits[$this->curr_tableField] = true;
         break;
       default:
-        $this->count_hits = false;
+        $this->count_hits[$this->curr_tableField] = false;
         break;
     }
 
       // RETURN
-    return $this->count_hits;
+    return $this->count_hits[$this->curr_tableField];
   }
 
 
