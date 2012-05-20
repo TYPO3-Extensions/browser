@@ -857,7 +857,8 @@ $this->pObj->dev_var_dump( $table, $arr_return );
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
-    if( ! empty ( $items ) )
+    $trimItems = trim ( $items );
+    if( ! empty ( $trimItems ) )
     {
       $arr_return['data']['items'] = $items;
     }
