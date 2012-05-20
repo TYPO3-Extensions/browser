@@ -3694,7 +3694,6 @@ class tx_browser_pi1_filter_4x {
       // SWITCH display first item
       // Add first item
       // Move one dimensional array to an iterator
-$this->pObj->dev_var_dump( $tmpOneDim );
     $tmpArray     = $this->pObj->objTyposcript->oneDim_to_tree( $tmpOneDim );
     $rcrsArrIter  = new RecursiveArrayIterator( $tmpArray );
     $iterator     = new RecursiveIteratorIterator( $rcrsArrIter );
