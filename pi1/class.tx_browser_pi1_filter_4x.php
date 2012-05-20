@@ -3236,28 +3236,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function cObjData_setDisplayWoHits( $uid )
   {
-      // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
-
-      // Get TS filter configuration
-    //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-
-      // Set display hits flag
-      // SWITCH first item
-    switch( true )
-    {
-      case( $uid == $conf_array['first_item.']['option_value'] ):
-        $displayWoAnyHit = $conf_array['first_item.']['display_wo_any_hit'];
-        break;
-      default:
-        $displayWoAnyHit = $conf_array['wrap.']['item.']['display_wo_any_hit'];
-        break;
-    }
-      // SWITCH first item
-      // Set display hits flag
-
-    if( ! $displayWoAnyHit )
+    if( ! $this->ts_getDisplayWoAnyHit( $uid ) )
     {
       return;
     }
@@ -3287,9 +3266,14 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function cObjData_unsetDisplayWoHits( )
+  private function cObjData_unsetDisplayWoHits( $uid )
   {
-      // UNset the treeview field
+    if( ! $this->ts_getDisplayWoAnyHit( $uid ) )
+    {
+      return;
+    }
+    
+      // Unset the treeview field
     $key = $this->pObj->prefixId . '.flag_displayWoAnyHit';
     unset( $this->pObj->cObj->data[ $key ] );
 
@@ -3914,19 +3898,30 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function ts_getDisplayWoAnyHit( )
+  private function ts_getDisplayWoAnyHit( $uid )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
-      // Short var
-    $currFilterWrap = $this->conf_view['filter.'][$table . '.'][$field . '.']['wrap.'];
+      // Get TS filter configuration
+    //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
-      // Get TS value
-    $display_hits = $currFilterWrap['item.']['display_hits'];
-
+      // Set display hits flag
+      // SWITCH first item
+    switch( true )
+    {
+      case( $uid == $conf_array['first_item.']['option_value'] ):
+        $displayWoAnyHit = $conf_array['first_item.']['display_wo_any_hit'];
+        break;
+      default:
+        $displayWoAnyHit = $conf_array['wrap.']['item.']['display_wo_any_hit'];
+        break;
+    }
+      // SWITCH first item
+      // Set display hits flag
       // RETURN TS value
-    return $display_hits;
+    return $displayWoAnyHit;
   }
 
 
