@@ -3617,13 +3617,6 @@ class tx_browser_pi1_filter_4x {
   private function tree_setOneDim( $uid_parent )
   {
     static $tsPath = null;
-    static $i = 0;
-    
-    if( $i > 10 )
-    {
-$this->pObj->dev_var_dump( '> 10' );
-      return;
-    }
 
       // LOOP rows
     foreach( $this->arr_rowsTablefield as $key => $row )
@@ -3632,7 +3625,6 @@ $this->pObj->dev_var_dump( '> 10' );
       if( $row[$this->treeParentField] != $uid_parent )
       {
 $this->pObj->dev_var_dump( $row );
-        $i++;
         continue;
       }
         // CONTINUE current row isn't row with current $uid_parent
@@ -3641,7 +3633,6 @@ $this->pObj->dev_var_dump( $row );
       if( $key === null )
       {
 $this->pObj->dev_var_dump( $row );
-        $i++;
         continue;
       }
         // CONTINUE current key is NULL
@@ -3652,7 +3643,7 @@ $this->pObj->dev_var_dump( $row );
       $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
 
 $this->pObj->dev_var_dump( $row );
-
+exit;
 
       $this->tree_setOneDim( $row[$this->uidField] );
       $tsPath   = $lastPath;
