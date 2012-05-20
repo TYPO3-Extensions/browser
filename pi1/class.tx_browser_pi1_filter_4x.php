@@ -3613,17 +3613,17 @@ $this->pObj->dev_var_dump( $this->tmpOneDim );
   {
     static $tsPath = null;
     static $firstLoop = true;
-if( $firstLoop )
-{
-  $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
-//  if( $this->pObj->b_drs_warn )
-//  {
-//    $prompt = var_export( $this->arr_rowsTablefield, true );
-//    t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
-//  }
-  $firstLoop = false;
-//  exit;
-}
+//if( $firstLoop )
+//{
+//  $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
+////  if( $this->pObj->b_drs_warn )
+////  {
+////    $prompt = var_export( $this->arr_rowsTablefield, true );
+////    t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+////  }
+//  $firstLoop = false;
+////  exit;
+//}
       // LOOP rows
     foreach( $this->arr_rowsTablefield as $key => $row )
     {
@@ -3646,11 +3646,7 @@ if( $firstLoop )
       $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
       $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
 $this->pObj->dev_var_dump( $row[$this->uidField], $this->tmpOneDim );
-if( $this->pObj->b_drs_warn )
-{
-  $prompt = $row[$this->uidField];
-  t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
-}
+exit;
       $this->tree_setOneDim( $row[$this->uidField] );
       $tsPath   = $lastPath;
     }
