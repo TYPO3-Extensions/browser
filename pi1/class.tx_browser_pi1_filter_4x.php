@@ -925,6 +925,7 @@ class tx_browser_pi1_filter_4x {
       // Set rows of the current tablefield to a one dimensional array
 
 $this->pObj->dev_var_dump( $uid_parent, $this->arr_rowsTablefield );
+var_dump( __METHOD__, __LINE__, $this->arr_rowsTablefield );
 
     $this->tree_setOneDim( $uid_parent );
       // Get the renderd tree. Each element of the returned array contains HTML tags.
