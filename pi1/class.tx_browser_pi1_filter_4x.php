@@ -724,7 +724,8 @@ class tx_browser_pi1_filter_4x {
       default:
         $arr_return = $this->get_filterItemsDefault( );
 $this->pObj->dev_var_dump( $table, $arr_return );
-        if( ! empty ( trim ( $arr_return['data']['items'] ) ) )
+        $tmpItems = trim ( $arr_return['data']['items'] );
+        if( ! empty ( $tmpItems ) )
         {
           $items      = $arr_return['data']['items'];
           $arr_return = $this->get_filterItemsWrap( $items );
