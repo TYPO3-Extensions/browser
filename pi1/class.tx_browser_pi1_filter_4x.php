@@ -3613,7 +3613,12 @@ class tx_browser_pi1_filter_4x {
     static $firstLoop = true;
 if( $firstLoop )
 {
-  $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
+//  $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
+  if( $this->pObj->b_drs_cObjData )
+  {
+    $prompt = $this->arr_rowsTablefield;
+    t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+  }
   $firstLoop = false;
 }
       // LOOP rows
@@ -3630,7 +3635,12 @@ if( $firstLoop )
       $tsPath   = $tsPath . $key . '.' ;
       $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
       $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
-$this->pObj->dev_var_dump( $row[$this->uidField] );
+if( $this->pObj->b_drs_cObjData )
+{
+  //$this->pObj->dev_var_dump( $row[$this->uidField] );
+  $prompt = $row[$this->uidField];
+  t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+}
       $this->tree_setOneDim( $row[$this->uidField] );
       $tsPath   = $lastPath;
     }
