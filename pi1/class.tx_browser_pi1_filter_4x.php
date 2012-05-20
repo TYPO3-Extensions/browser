@@ -3937,7 +3937,7 @@ class tx_browser_pi1_filter_4x {
       case( true ):
           // Set hits
         $hitsField  = $this->sql_filterFields[$this->curr_tableField]['hits'];
-        $sum_hits   = $this->hits_sum[$this->curr_tableField];
+        $sum_hits   = ( int ) $this->hits_sum[$this->curr_tableField];
         $this->pObj->cObj->data[$hitsField] = $sum_hits;
           // Set hits        
           // Render uid and value of the first item
