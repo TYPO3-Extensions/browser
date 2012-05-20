@@ -3624,6 +3624,26 @@ class tx_browser_pi1_filter_4x {
         // CONTINUE current row isn't row with current $uid_parent
       if( $row[$this->treeParentField] != $uid_parent )
       {
+        continue;
+      }
+        // CONTINUE current row isn't row with current $uid_parent
+
+      $lastPath = $tsPath;
+      $tsPath   = $tsPath . $key . '.' ;
+      $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
+      $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
+      $this->tree_setOneDim( $row[$this->uidField] );
+      $tsPath   = $lastPath;
+    }
+      // LOOP rows
+    return; 
+     
+      // LOOP rows
+    foreach( $this->arr_rowsTablefield as $key => $row )
+    {
+        // CONTINUE current row isn't row with current $uid_parent
+      if( $row[$this->treeParentField] != $uid_parent )
+      {
 $this->pObj->dev_var_dump( $row );
         continue;
       }
