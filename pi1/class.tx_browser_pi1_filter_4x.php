@@ -4938,7 +4938,7 @@ class tx_browser_pi1_filter_4x {
 //}
 
       // Set class var $this->hits_sum
-    $this->hits_sum[$this->curr_tableField] = $sum_hits;
+    $this->hits_sum[$this->curr_tableField] = ( int ) $sum_hits;
 
     return;
   }
