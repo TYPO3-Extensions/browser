@@ -923,6 +923,9 @@ class tx_browser_pi1_filter_4x {
       // Parent uid of the root records: 0 of course
     $uid_parent = 0;
       // Set rows of the current tablefield to a one dimensional array
+
+$this->pObj->dev_var_dump( $uid_parent, $this->arr_rowsTablefield );
+
     $this->tree_setOneDim( $uid_parent );
       // Get the renderd tree. Each element of the returned array contains HTML tags.
 
@@ -3611,7 +3614,7 @@ class tx_browser_pi1_filter_4x {
   private function tree_setOneDim( $uid_parent )
   {
     static $tsPath = null;
-$this->pObj->dev_var_dump( $uid_parent, $this->arr_rowsTablefield );
+
       // LOOP rows
     foreach( $this->arr_rowsTablefield as $key => $row )
     {
