@@ -3711,13 +3711,14 @@ $this->pObj->dev_var_dump( $row, $this->tmpOneDim );
         $first_item_value = $this->pObj->cObj->cObjGetSingle( $tsValue, $tsConf );
           // Render uid and value of the first item
         $tmpOneDim  = array( 'uid'   => $first_item_uid   ) +
-                      array( 'value' => $first_item_value ) +
-                      $this->tmpOneDim;
-//        if( ! empty ( $this->tmpOneDim ) )
-//        {
-//          $tmpOneDim  = $tmpOneDim +
-//                        $this->tmpOneDim;
-//        }
+                      array( 'value' => $first_item_value );
+//                      array( 'value' => $first_item_value ) +
+//                      $this->tmpOneDim;
+        if( ! empty ( $this->tmpOneDim ) )
+        {
+          $tmpOneDim  = $tmpOneDim +
+                        $this->tmpOneDim;
+        }
           // Render uid and value of the first item
         break;
       case( false ):
