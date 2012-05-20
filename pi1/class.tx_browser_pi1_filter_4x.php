@@ -724,15 +724,10 @@ class tx_browser_pi1_filter_4x {
       default:
         $arr_return = $this->get_filterItemsDefault( );
 $this->pObj->dev_var_dump( $table, $arr_return );
-        $tmpItems = trim ( $arr_return['data']['items'] );
-        if( ! empty ( $tmpItems ) )
+        if( ! empty ( $arr_return ) )
         {
           $items      = $arr_return['data']['items'];
           $arr_return = $this->get_filterItemsWrap( $items );
-        }
-        else
-        {
-          unset( $arr_return );
         }
 $this->pObj->dev_var_dump( $table, $arr_return );
         break;
@@ -836,8 +831,8 @@ $this->pObj->dev_var_dump( $table, $arr_return );
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
       // Default return value
-    $item                       = null;
-    $arr_return['data']['item'] = $item;
+    $items                        = null;
+    $arr_return['data']['items']  = $items;
 
       // Add the first item to the rows
     $this->set_firstItem( );
@@ -862,7 +857,14 @@ $this->pObj->dev_var_dump( $table, $arr_return );
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
-    $arr_return['data']['items'] = $items;
+    if( ! empty ( $items ) )
+    {
+      $arr_return['data']['items'] = $items;
+    }
+    else
+    {
+      unset( $arr_return );
+    }
     return $arr_return;
   }
 
