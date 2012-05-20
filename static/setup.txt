@@ -1173,8 +1173,6 @@ plugin.tx_browser_pi1 {
         first_item { 
             // [Boolean] 1 (default): First item will displayed ever. 0: First item will displayed in case of items only.
           display_wo_items = 1
-            // [Boolean] 1 (default): If hits aren't counted, the item will displayed (flag_displayInCaseOfNoCounting is set. See cObject). 0: Item won't displayed, if count_hits is 0.
-          displayInCaseOfNoCounting = 1
             // Wrap the first filter item
           cObject = COA
           cObject {
@@ -1662,8 +1660,6 @@ plugin.tx_browser_pi1 {
         first_item {
             // [Boolean] 1 (default): First item will displayed ever. 0: First item will displayed in case of items only.
           display_wo_items = 1
-            // [Boolean] 1 (default): If hits aren't counted, the item will displayed (flag_displayInCaseOfNoCounting is set. See cObject). 0: Item won't displayed, if count_hits is 0.
-          displayInCaseOfNoCounting = 1
             // Wrap the first items
           cObject = COA
           cObject {

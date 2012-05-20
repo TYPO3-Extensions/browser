@@ -1422,21 +1422,11 @@ class tx_browser_pi1_filter_4x {
       // SWITCH first item
       // Get the COA configuration for the value
 
-    $this->cObjData_setDisplayWoHits( $uid );
+    $this->cObjData_setDisplayWoHits( );
 
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
-    $this->cObjData_unsetDisplayWoHits( $uid );
-
-//  // Get table and field
-//list( $table, $field ) = explode( '.', $this->curr_tableField );
-//if( $table == 'tx_greencars_manufacturer' )
-//{
-//  if( $uid == 0 )
-//  {
-//    $this->pObj->dev_var_dump( $this->pObj->cObj->data, $cObj_conf, $item );
-//  }
-//}
+    $this->cObjData_unsetDisplayWoHits( );
 
       // maxItemsTagEndBegin
       // DRS :TODO:
@@ -3234,9 +3224,9 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function cObjData_setDisplayWoHits( $uid )
+  private function cObjData_setDisplayWoHits( )
   {
-    if( ! $this->ts_getDisplayInCaseOfNoCounting( $uid ) )
+    if( ! $this->ts_getDisplayInCaseOfNoCounting( ) )
     {
       return;
     }
@@ -3266,9 +3256,9 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function cObjData_unsetDisplayWoHits( $uid )
+  private function cObjData_unsetDisplayWoHits( )
   {
-    if( ! $this->ts_getDisplayInCaseOfNoCounting( $uid ) )
+    if( ! $this->ts_getDisplayInCaseOfNoCounting( ) )
     {
       return;
     }
@@ -3898,7 +3888,7 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function ts_getDisplayInCaseOfNoCounting( $uid )
+  private function ts_getDisplayInCaseOfNoCounting( )
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -3907,19 +3897,8 @@ class tx_browser_pi1_filter_4x {
     //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
-      // Set display hits flag
-      // SWITCH first item
-    switch( true )
-    {
-      case( $uid == $conf_array['first_item.']['option_value'] ):
-        $displayInCaseOfNoCounting = $conf_array['first_item.']['displayInCaseOfNoCounting'];
-        break;
-      default:
-        $displayInCaseOfNoCounting = $conf_array['wrap.']['item.']['displayInCaseOfNoCounting'];
-        break;
-    }
-      // SWITCH first item
-      // Set display hits flag
+    $displayInCaseOfNoCounting = $conf_array['wrap.']['item.']['displayInCaseOfNoCounting'];
+
       // RETURN TS value
     return $displayInCaseOfNoCounting;
   }
