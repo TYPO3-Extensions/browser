@@ -3632,6 +3632,7 @@ $this->pObj->dev_var_dump( '> 10000' );
       if( $row[$this->treeParentField] != $uid_parent )
       {
 $this->pObj->dev_var_dump( $row );
+        $i++;
         continue;
       }
         // CONTINUE current row isn't row with current $uid_parent
@@ -3640,6 +3641,7 @@ $this->pObj->dev_var_dump( $row );
       if( $key === null )
       {
 $this->pObj->dev_var_dump( $row );
+        $i++;
         continue;
       }
         // CONTINUE current key is NULL
