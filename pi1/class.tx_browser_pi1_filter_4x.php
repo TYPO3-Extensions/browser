@@ -3610,18 +3610,18 @@ class tx_browser_pi1_filter_4x {
   private function tree_setOneDim( $uid_parent )
   {
     static $tsPath = null;
-    static $firstLoop = true;
-if( $firstLoop )
-{
-  $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
-  if( $this->pObj->b_drs_warn )
-  {
-    $prompt = var_export( $this->arr_rowsTablefield, true );
-    t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
-  }
-  $firstLoop = false;
-//  exit;
-}
+//    static $firstLoop = true;
+//if( $firstLoop )
+//{
+//  $this->pObj->dev_var_dump( $this->arr_rowsTablefield );
+//  if( $this->pObj->b_drs_warn )
+//  {
+//    $prompt = var_export( $this->arr_rowsTablefield, true );
+//    t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+//  }
+//  $firstLoop = false;
+////  exit;
+//}
       // LOOP rows
     foreach( $this->arr_rowsTablefield as $key => $row )
     {
@@ -3643,9 +3643,9 @@ if( $firstLoop )
       $tsPath   = $tsPath . $key . '.' ;
       $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
       $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
+$this->pObj->dev_var_dump( $row[$this->uidField], $this->tmpOneDim );
 if( $this->pObj->b_drs_warn )
 {
-  //$this->pObj->dev_var_dump( $row[$this->uidField] );
   $prompt = $row[$this->uidField];
   t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
 }
