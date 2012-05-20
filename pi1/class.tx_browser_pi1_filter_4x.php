@@ -322,6 +322,7 @@ class tx_browser_pi1_filter_4x {
         $this->pObj->objZz->loadTCA( $table );
 
         $arr_result = $this->get_filter( );
+$this->pObj->dev_var_dump( $table, $arr_result );
         if( $arr_result['error']['status'] )
         {
           $debugTrailLevel = 1;
