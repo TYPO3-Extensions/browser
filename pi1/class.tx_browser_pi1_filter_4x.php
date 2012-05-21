@@ -885,6 +885,8 @@ class tx_browser_pi1_filter_4x {
     $this->arr_rowsTablefield = $this->rows;
     
       // Removes all rows with a null key
+      // @todo: 120521, dwildt  : rows with key null should removed before counting hits!
+      //                          sum of hits can be wrong  
     unset( $this->arr_rowsTablefield[ null ] );
 
       // Get the labels for the fields uid, value and treeParentField
