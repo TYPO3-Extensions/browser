@@ -178,8 +178,6 @@ class tx_browser_pi1_flexform {
   //[sheet/view]
     // [string] independent (default) || controlled: Calculate total hits.
   var $sheet_viewList_total_hits      = 'independent';
-    // [string] enabled (default) || disabled: count hits
-  var $sheet_viewList_count_hits      = true;
     // [boolean] Enable CSV export
   var $sheet_viewList_csvexport       = null;
     // [boolean] Enable CSV export
@@ -3246,79 +3244,6 @@ class tx_browser_pi1_flexform {
       t3lib_div :: devlog('[INFO/FILTER] global sheet_viewList_total_hits is set to ' . $this->sheet_viewList_total_hits, $this->pObj->extKey, 0);
     }
       // Field total_hits
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
-      // Field count_hits
-      // #32654, dwildt, 120127
-
-    $field      = 'count_hits';
-    $count_hits = $this->pObj->pi_getFFvalue($arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF');
-
-    if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
-    {
-      t3lib_div::devlog( '[INFO/FLEXFORM+FILTER] ' . 'count_hits: \'' . $count_hits . '\'', $this->pObj->extKey, 0 );
-    }
-
-    switch ( $count_hits )
-    {
-      case ( 'disabled' ) :
-        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = false;
-        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
-        {
-          t3lib_div::devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' is set to false.', $this->pObj->extKey, 0);
-        }
-        break;
-      case ( 'ts' ) :
-        // Do nothing;
-        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
-        {
-          t3lib_div :: devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' isn\'t changed by the flexform.', $this->pObj->extKey, 0);
-        }
-        break;
-      case ( 'enabled' ) :
-      default :
-        $this->pObj->conf['flexform.'][$sheet . '.'][$field] = true;
-        if ( $this->pObj->b_drs_flexform || $this->pObj->b_drs_filter )
-        {
-          t3lib_div :: devlog('[INFO/FLEXFORM+FILTER] flexform.' . $sheet . '.' . $field . ' is set to true.', $this->pObj->extKey, 0);
-        }
-    }
-    $this->sheet_viewList_count_hits = $this->pObj->conf['flexform.'][$sheet . '.'][$field];
-    if ( $this->pObj->b_drs_filter )
-    {
-      $prompt = 'global sheet_viewList_count_hits is set to ' . $this->sheet_viewList_count_hits;
-      t3lib_div :: devlog('[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0);
-    }
-
-    switch( $this->sheet_viewList_count_hits ) 
-    {
-      case( false ):
-        if ( $this->pObj->b_drs_warn )
-        {
-          $prompt = 'global sheet_viewList_count_hits isn\'t set.';
-          t3lib_div :: devlog('[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 2);
-          $prompt = 'If you don\'t see any filter item, please check TypoScript properties like: ' .
-                    'filter.table.field.wrap.item.cObject.if.isTrue.field = hits. Remove it!';
-          t3lib_div :: devlog('[HELP/FILTER] ' . $prompt, $this->pObj->extKey, 1);
-        }
-        break;
-        break;
-      case( true ):
-      default:
-        if ( $this->pObj->b_drs_warn )
-        {
-          $prompt = 'global sheet_viewList_count_hits is set.';
-          t3lib_div :: devlog('[WARN/PERFORMANCE] ' . $prompt, $this->pObj->extKey, 2);
-          $prompt = 'If you have any problem with performance, please disable the counting of hits ' .
-                    'in the flexform/plugin or in zhe TypoScript.';
-          t3lib_div :: devlog('[HELP/PERFORMANCE] ' . $prompt, $this->pObj->extKey, 1);
-        }
-        break;
-    }
-      // Field count_hits
 
 
 
