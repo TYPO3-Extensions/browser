@@ -1602,6 +1602,7 @@ class tx_browser_pi1_template
     // Keys for special handling
 
     $handleAs         = $this->pObj->arrHandleAs;
+$this->pObj->dev_var_dump( $handleAs );    
     $arrKeyAsDocument = $this->pObj->objZz->getCSVtablefieldsAsArray($handleAs['document']);
     // Keys for special handling
 
