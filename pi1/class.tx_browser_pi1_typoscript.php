@@ -634,6 +634,7 @@ $this->pObj->dev_var_dump( $conf_sql );
       // Set and where
       // group by, order by, where, and where
 
+$this->pObj->dev_var_dump( $conf_sql );
 
 
       //////////////////////////////////////////////////////
