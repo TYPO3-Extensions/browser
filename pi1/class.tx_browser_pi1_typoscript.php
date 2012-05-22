@@ -595,7 +595,7 @@ class tx_browser_pi1_typoscript
         // IF no override
 
     }
-
+$this->pObj->dev_var_dump( $conf_sql );
 
 
       //////////////////////////////////////////////////////

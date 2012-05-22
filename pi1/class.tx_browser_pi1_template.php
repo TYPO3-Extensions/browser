@@ -29,7 +29,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 3.9.13
+ * @version 3.9.18
  * @since 1.0.0
  */
 
@@ -3452,13 +3452,16 @@ class tx_browser_pi1_template
 
 
 
-  /**
+/**
  * Wraps field values in respect to the TypoScript configuration an the handleAs cases
  *
  * @param array   $elements: SQL row
  * @param array   $handleAs: Array with the fieldnames which have a special handling like title, images or documents
  * @param array   $markerArray: Array with the current markers
  * @return  array   $markerArray: Array with the current markers
+ * 
+ * @version 3.9.18
+ * @since 1.0.0
  */
   function render_handleAs($elements, $handleAs, $markerArray)
   {
