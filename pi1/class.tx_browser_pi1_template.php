@@ -1602,7 +1602,6 @@ class tx_browser_pi1_template
     // Keys for special handling
 
     $handleAs         = $this->pObj->arrHandleAs;
-$this->pObj->dev_var_dump( $handleAs );    
     $arrKeyAsDocument = $this->pObj->objZz->getCSVtablefieldsAsArray($handleAs['document']);
     // Keys for special handling
 
@@ -3487,12 +3486,14 @@ $this->pObj->dev_var_dump( $handleAs );
       $bool_nRows = true;
     }
 
+$this->pObj->dev_var_dump( $handleAs );    
     /////////////////////////////////////////
     //
     // Wrap all elements
 
     foreach( ( array ) $elements as $tableField => $value )
     {
+$this->pObj->dev_var_dump( $tableField );    
 
       $b_is_rendered  = false;
 
