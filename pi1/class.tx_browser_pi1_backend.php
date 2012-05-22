@@ -1894,7 +1894,7 @@ class tx_browser_pi1_backend
 var_dump( __METHOD__, __LINE__, t3lib_div::int_from_ver( TYPO3_version ) );
       switch( true )
       {
-        case( $this->pObj->typo3Version < 4005000):
+        case( t3lib_div::int_from_ver( TYPO3_version ) < 4006000):
           $jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
           break;
         default:
