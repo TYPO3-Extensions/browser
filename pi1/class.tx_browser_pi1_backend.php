@@ -1890,8 +1890,7 @@ class tx_browser_pi1_backend
         // 120515, dwildt, 1-
       //$jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
         // 120515, dwildt, 9+
-//$this->pObj->dev_var_dump( $this->pObj->typo3Version );
-var_dump( __METHOD__, __LINE__, t3lib_div::int_from_ver( TYPO3_version ) );
+//var_dump( __METHOD__, __LINE__, t3lib_div::int_from_ver( TYPO3_version ) );
       switch( true )
       {
         case( t3lib_div::int_from_ver( TYPO3_version ) < 4006000):
