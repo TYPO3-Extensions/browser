@@ -613,21 +613,21 @@ $this->pObj->dev_var_dump( $conf_sql );
       // Set default order by
 
       // Concatenate group by and order by
-    if( ! empty ( $conf_sql['groupBy'] ) )
+    if( empty ( $conf_sql['groupBy'] ) )
     {
       $conf_sql['orderBy'] = $conf_sql['groupBy'] . ', ' . $conf_sql['orderBy'];
     }
       // Concatenate group by and order by
 
       // Set where
-    if( ! empty ( $conf_sql['where']) )
+    if( empty ( $conf_sql['where']) )
     {
       $conf_sql['where'] = $this->conf['where'];
     }
       // Set where
 
       // Set and where
-    if( ! empty ( $conf_sql['andWhere']) )
+    if( empty ( $conf_sql['andWhere']) )
     {
       $conf_sql['andWhere'] = $this->conf['andWhere'];
     }
