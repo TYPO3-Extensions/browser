@@ -3455,10 +3455,10 @@ class tx_browser_pi1_template
   /**
  * Wraps field values in respect to the TypoScript configuration an the handleAs cases
  *
- * @param	array		$elements: SQL row
- * @param	array		$handleAs: Array with the fieldnames which have a special handling like title, images or documents
- * @param	array		$markerArray: Array with the current markers
- * @return	array		$markerArray: Array with the current markers
+ * @param array   $elements: SQL row
+ * @param array   $handleAs: Array with the fieldnames which have a special handling like title, images or documents
+ * @param array   $markerArray: Array with the current markers
+ * @return  array   $markerArray: Array with the current markers
  */
   function render_handleAs($elements, $handleAs, $markerArray)
   {
@@ -3486,35 +3486,25 @@ class tx_browser_pi1_template
       $bool_nRows = true;
     }
 
-$this->pObj->dev_var_dump( $handleAs );    
     /////////////////////////////////////////
     //
     // Wrap all elements
 
-    foreach( ( array ) $elements as $tableField => $value )
+    foreach((array) $elements as $tableField => $value)
     {
-$this->pObj->dev_var_dump( $tableField );    
 
       $b_is_rendered  = false;
 
-        /////////////////////////////////////////
-        //
-        // Handle the TITLE
+      /////////////////////////////////////////
+      //
+      // Handle the TITLE
 
-      $bool_title = false;
-      $pos = strpos( $handleAs['title'], $tableField );
-      if( ! $pos === false )
+      if ($displayTitle && $tableField == $handleAs['title'])
       {
-        $bool_title = true;
-      }
-      if( $displayTitle && $bool_title )
-      {
-        if( $this->pObj->b_drs_templating )
+        if ($this->pObj->b_drs_templating)
         {
-          $prompt = $handleAs['title'].' will be handled as the title.';
-          t3lib_div::devlog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
-          $prompt = 'Please configure displaySingle.display.title = 0, if you don\'t want any title handling.';
-          t3lib_div::devLog('[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1);
+          t3lib_div::devlog('[INFO/TEMPLATING] '.$handleAs['title'].' will be handled as the title.', $this->pObj->extKey, 0);
+          t3lib_div::devLog('[HELP/TEMPLATING] Please configure displaySingle.display.title = 0, if you don\'t want any title handling.', $this->pObj->extKey, 1);
         }
         $value                                             = $this->pObj->objWrapper->wrapAndLinkValue($tableField, $value, 0);
         $markerArray['###TITLE###']                        = $value;
@@ -3522,30 +3512,21 @@ $this->pObj->dev_var_dump( $tableField );
 
         $b_is_rendered = true;
       }
-        // Handle the TITLE
+      // Handle the TITLE
 
 
+      /////////////////////////////////////////
+      //
+      // Handle the IMAGE
 
-        /////////////////////////////////////////
-        //
-        // Handle the IMAGE
-
-      $bool_image = false;
-      $pos = strpos( $handleAs['image'], $tableField );
-      if( ! $pos === false )
+      if ($tableField == $handleAs['image'])
       {
-        $bool_title = true;
-      }
-      if( $bool_title )
-      {
-        if( $this->pObj->b_drs_templating )
+        if ($this->pObj->b_drs_templating)
         {
-          $prompt = 'The field \''.$handleAs['image'].'\' will be wrapped as an IMAGE.';
-          t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
-          $prompt = 'The system marker ###IMAGE### will be replaced.';
-          t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/TEMPLATING] The field \''.$handleAs['image'].'\' will be wrapped as an IMAGE.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/TEMPLATING] The system marker ###IMAGE### will be replaced.', $this->pObj->extKey, 0);
         }
-        $tsImage['image']           = $elements[$tableField];
+        $tsImage['image']           = $elements[$handleAs['image']];
         $tsImage['imagecaption']    = $elements[$handleAs['imageCaption']];
         $tsImage['imagealttext']    = $elements[$handleAs['imageAltText']];
         $tsImage['imagetitletext']  = $elements[$handleAs['imageTitleText']];
@@ -3555,28 +3536,28 @@ $this->pObj->dev_var_dump( $tableField );
 
         $b_is_rendered = true;
       }
-        // Handle the IMAGE
+      // Handle the IMAGE
 
 
-        /////////////////////////////////////////
-        //
-        // Handle the DOCUMENT
+      /////////////////////////////////////////
+      //
+      // Handle the DOCUMENT
 
       //:todo: Handle the document
 
 
-        /////////////////////////////////////////
-        //
-        // Process all the rest of the elements
+      /////////////////////////////////////////
+      //
+      // Process all the rest of the elements
 
-      if( ! $b_is_rendered )
+      if (!$b_is_rendered)
       {
         $value        = false;
         list($table, $field)  = explode('.', $tableField);
         // Store the id of the previous element.
-        $int_last_uid = false;
+        $int_last_uid     = false;
 
-          // Loop through all rows
+        // Loop through all rows
         foreach((array) $rows as $lRow => $lElements)
         {
           // Store the current id of the current element.
@@ -3599,9 +3580,9 @@ $this->pObj->dev_var_dump( $tableField );
           }
           $int_last_uid = $int_cur_uid;
         }
-          // Loop through all rows
+        // Loop through all rows
 
-          // Process the TS extensions.browser.wrapAll
+        // Process the TS extensions.browser.wrapAll
         if ($value)
         {
           $conf_wrapHeader  = $this->conf_view[$table.'.'][$field.'.']['extensions.']['browser.']['wrapAll.']['header.'];
@@ -3610,18 +3591,191 @@ $this->pObj->dev_var_dump( $tableField );
           $value            = $this->pObj->objWrapper->general_stdWrap($value, $conf_wrapAll);
           $value            = $lHeader.$value;
         }
-          // Process the TS extensions.browser.wrapAll
+        // Process the TS extensions.browser.wrapAll
 
         $lMarker               = '###'.strtoupper($tableField).'###';
         $markerArray[$lMarker] = $value;
       }
-        // Process all the rest of the elements
+      // Process all the rest of the elements
     }
-      // Wrap all elements
+    // Wrap all elements
 
 
     return $markerArray;
   }
+
+  
+  
+//  /**
+// * Wraps field values in respect to the TypoScript configuration an the handleAs cases
+// *
+// * @param	array		$elements: SQL row
+// * @param	array		$handleAs: Array with the fieldnames which have a special handling like title, images or documents
+// * @param	array		$markerArray: Array with the current markers
+// * @return	array		$markerArray: Array with the current markers
+// */
+//  function render_handleAs($elements, $handleAs, $markerArray)
+//  {
+//
+//    /////////////////////////////////////////
+//    //
+//    // RETURN without elements
+//
+//    if(!is_array($elements))
+//    {
+//      return $markerArray;
+//    }
+//    if(count($elements) < 1)
+//    {
+//      return $markerArray;
+//    }
+//    // RETURN without elements
+//
+//
+//    $displayTitle = $this->pObj->lDisplay['title'];
+//    $rows         = $this->pObj->rows;
+//    $bool_nRows   = false;
+//    if (count($rows) > 1)
+//    {
+//      $bool_nRows = true;
+//    }
+//
+//$this->pObj->dev_var_dump( $handleAs );    
+//    /////////////////////////////////////////
+//    //
+//    // Wrap all elements
+//
+//    foreach( ( array ) $elements as $tableField => $value )
+//    {
+//$this->pObj->dev_var_dump( $tableField );    
+//
+//      $b_is_rendered  = false;
+//
+//        /////////////////////////////////////////
+//        //
+//        // Handle the TITLE
+//
+//      $bool_title = false;
+//      $pos = strpos( $handleAs['title'], $tableField );
+//      if( ! $pos === false )
+//      {
+//        $bool_title = true;
+//      }
+//      if( $displayTitle && $bool_title )
+//      {
+//        if( $this->pObj->b_drs_templating )
+//        {
+//          $prompt = $handleAs['title'].' will be handled as the title.';
+//          t3lib_div::devlog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+//          $prompt = 'Please configure displaySingle.display.title = 0, if you don\'t want any title handling.';
+//          t3lib_div::devLog('[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1);
+//        }
+//        $value                                             = $this->pObj->objWrapper->wrapAndLinkValue($tableField, $value, 0);
+//        $markerArray['###TITLE###']                        = $value;
+//        $markerArray['###'.strtoupper($tableField).'###']  = $value;
+//
+//        $b_is_rendered = true;
+//      }
+//        // Handle the TITLE
+//
+//
+//
+//        /////////////////////////////////////////
+//        //
+//        // Handle the IMAGE
+//
+//      $bool_image = false;
+//      $pos = strpos( $handleAs['image'], $tableField );
+//      if( ! $pos === false )
+//      {
+//        $bool_title = true;
+//      }
+//      if( $bool_title )
+//      {
+//        if( $this->pObj->b_drs_templating )
+//        {
+//          $prompt = 'The field \''.$handleAs['image'].'\' will be wrapped as an IMAGE.';
+//          t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+//          $prompt = 'The system marker ###IMAGE### will be replaced.';
+//          t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
+//        }
+//        $tsImage['image']           = $elements[$tableField];
+//        $tsImage['imagecaption']    = $elements[$handleAs['imageCaption']];
+//        $tsImage['imagealttext']    = $elements[$handleAs['imageAltText']];
+//        $tsImage['imagetitletext']  = $elements[$handleAs['imageTitleText']];
+//        $value                      = $this->pObj->objWrapper->wrapImage($tsImage);
+//        $markerArray['###IMAGE###']                       = $value;
+//        $markerArray['###'.strtoupper($tableField).'###'] = $value;
+//
+//        $b_is_rendered = true;
+//      }
+//        // Handle the IMAGE
+//
+//
+//        /////////////////////////////////////////
+//        //
+//        // Handle the DOCUMENT
+//
+//      //:todo: Handle the document
+//
+//
+//        /////////////////////////////////////////
+//        //
+//        // Process all the rest of the elements
+//
+//      if( ! $b_is_rendered )
+//      {
+//        $value        = false;
+//        list($table, $field)  = explode('.', $tableField);
+//        // Store the id of the previous element.
+//        $int_last_uid = false;
+//
+//          // Loop through all rows
+//        foreach((array) $rows as $lRow => $lElements)
+//        {
+//          // Store the current id of the current element.
+//          $int_cur_uid = $lElements[$table.'.uid'];
+//          if (!$int_cur_uid)
+//          {
+//            // Store -1, if current element has no uid (has no uid field in the SELECT statement)
+//            $int_cur_uid = -1;
+//          }
+//          // Wrap the element and append it, if it has different id
+//          if($int_last_uid != $int_cur_uid)
+//          {
+//            $value = $value.$this->pObj->objWrapper->wrapAndLinkValue($tableField, $lElements[$tableField], 0);
+//          }
+//          // Store the id as id of the previous element.
+//
+//          if($int_last_uid == $int_cur_uid)
+//          {
+//            $value = $this->pObj->objWrapper->wrapAndLinkValue($tableField, $lElements[$tableField], 0);
+//          }
+//          $int_last_uid = $int_cur_uid;
+//        }
+//          // Loop through all rows
+//
+//          // Process the TS extensions.browser.wrapAll
+//        if ($value)
+//        {
+//          $conf_wrapHeader  = $this->conf_view[$table.'.'][$field.'.']['extensions.']['browser.']['wrapAll.']['header.'];
+//          $lHeader          = $this->pObj->objWrapper->general_stdWrap(false, $conf_wrapHeader);
+//          $conf_wrapAll     = $this->conf_view[$table.'.'][$field.'.']['extensions.']['browser.']['wrapAll.']['stdWrap.'];
+//          $value            = $this->pObj->objWrapper->general_stdWrap($value, $conf_wrapAll);
+//          $value            = $lHeader.$value;
+//        }
+//          // Process the TS extensions.browser.wrapAll
+//
+//        $lMarker               = '###'.strtoupper($tableField).'###';
+//        $markerArray[$lMarker] = $value;
+//      }
+//        // Process all the rest of the elements
+//    }
+//      // Wrap all elements
+//
+//
+//    return $markerArray;
+//  }
 
 
 
