@@ -1,3 +1,14 @@
+3.9.18
+  120522
+  Bugfix
+  * #00000: andWhere is ignored
+  * #00000: image in single view is not detected as image
+
+3.9.17
+  120522
+  Bugfix
+  * #00000: Downward compatibility with TYPO3 4.5
+
 3.9.16
   120519
   Bugfix

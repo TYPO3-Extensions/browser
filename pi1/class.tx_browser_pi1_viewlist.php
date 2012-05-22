@@ -1172,6 +1172,7 @@ class tx_browser_pi1_viewlist
     $select   = "DISTINCT " . $tableUid . " AS '" . $tableUid . "'";
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
+var_dump( __METHOD__, __LINE__, $this->pObj->objSqlInit->statements['listView'] );
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereSysLanguage );
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereIdList );
 //$this->pObj->dev_var_dump( $where );

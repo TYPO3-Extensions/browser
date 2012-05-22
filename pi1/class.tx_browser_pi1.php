@@ -60,7 +60,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 3.9.9
+ * @version 3.9.17
  * @since 0.0.1
  */
 
@@ -2175,7 +2175,7 @@ class tx_browser_pi1 extends tslib_pibase {
  *                      and set the global $bool_typo3_43
  *
  * @return	void
- * @version 3.9.8
+ * @version 3.9.17
  * @since   2.0.0
  */
   private function get_typo3version( )
@@ -2192,6 +2192,7 @@ class tx_browser_pi1 extends tslib_pibase {
 
       // Move version to an integer
     $int_version = t3lib_div::int_from_ver( $str_version );
+    $this->typo3Version = $int_version;
 
       // Set the global $bool_typo3_43
     if( $int_version >= 4003000 )

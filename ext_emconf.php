@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'Browser - TYPO3 without PHP. Develop your database 8 times faster! You need one line TypoScript for a view with filters, a search form and a page browser among others. SEO, Search Engine Optimisation, is included. DRS supports the TypoScript configuration. Best documented.',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '3.9.16',
+	'version' => '3.9.18',
 	'dependencies' => 'browser_manual_en',
 	'conflicts' => 0,
 	'priority' => '',
@@ -34,7 +34,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'browser_manual_en' => '3.9.6-0.0.0',
+			'browser_manual_en' => '',
 			'php' => '5.1.0-0.0.0',
 			'typo3' => '4.4.6-0.0.0',
 		),

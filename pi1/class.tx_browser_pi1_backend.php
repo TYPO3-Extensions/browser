@@ -28,7 +28,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    browser
- * @version 3.9.14
+ * @version 3.9.17
  * @since 3.0.0
  */
 
@@ -1865,7 +1865,7 @@ class tx_browser_pi1_backend
  *
  * @param	array		$arr_pluginConf: Current plugin/flexform configuration
  * @return	array		with the uis
- * @version 3.7.0
+ * @version 3.9.17
  * @since 3.7.0
  */
   public function templating_get_jquery_ui($arr_pluginConf)
@@ -1889,9 +1889,17 @@ class tx_browser_pi1_backend
       $jquery_ui_key    = strtolower( substr( $key_jquery_ui, 0, -1 ) );
         // 120515, dwildt, 1-
       //$jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
-        // 120515, dwildt, 1+
-      $jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ][ 0 ][ 'target' ];
-      $jquery_ui_icon   = $arr_jquery_ui['icon'];
+        // 120515, dwildt, 9+
+      switch( true )
+      {
+        case( $this->pObj->typo3Version < 4006000):
+          $jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
+          break;
+        default:
+          $jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ][ 0 ][ 'target' ];
+          break;
+      }
+      $jquery_ui_icon = $arr_jquery_ui['icon'];
 
       $arr_pluginConf['items'][] = array( $jquery_ui_label, $jquery_ui_key, $jquery_ui_icon );
     }
