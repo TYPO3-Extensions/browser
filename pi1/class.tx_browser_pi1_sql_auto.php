@@ -887,7 +887,6 @@ class tx_browser_pi1_sql_auto
  */
   private function whereSearch( )
   {
-
     $mode = $this->pObj->piVar_mode;
 
       // Query with OR and AND
@@ -939,7 +938,7 @@ class tx_browser_pi1_sql_auto
     //
     // andWhere AND and OR
 
-    $arrSearchFields = explode(',', $this->pObj->csvSearch);
+    $arrSearchFields = explode( ',', $this->pObj->csvSearch );
     $int_sword       = 0;
     
 //$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields, $this->pObj->arrConsolidate['addedTableFields'] );

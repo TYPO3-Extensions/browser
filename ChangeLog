@@ -1,3 +1,8 @@
+3.9.19
+  120523
+  Bugfix
+  * #00000: andWhere search -> trim tableFields
+
 3.9.18
   120522
   Bugfix

@@ -28,7 +28,7 @@
 * @author       Dirk Wildt http://wildt.at.die-netzmacher.de
 * @package      TYPO3
 * @subpackage   browser
-* @version      3.9.9
+* @version      3.9.19
    *
 */
 
@@ -525,7 +525,7 @@ class tx_browser_pi1_typoscript
   *
   * @return	array		$conf_sql:
   *
-  * @version  3.9.9
+  * @version  3.9.19
   * @since    3.0.0
   */
   function set_confSql( )
@@ -765,10 +765,13 @@ class tx_browser_pi1_typoscript
 
       // LOOP all tableFields from select
     $arr_tableFields    = explode( ',', $conf_sql['select'] );
+//var_dump( __METHOD__, __LINE__, $arr_tableFields );
 //$this->pObj->dev_var_dump( $arr_tableFields );
 //exit;
     foreach( $arr_tableFields as $tableField )
     {
+        // 3.9.19, dwildt, 1+
+      $tableField = trim( $tableField );
       if( empty ( $tableField ) )
       {
         continue;
