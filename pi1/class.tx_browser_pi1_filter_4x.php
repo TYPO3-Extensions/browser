@@ -1089,7 +1089,7 @@ class tx_browser_pi1_filter_4x {
       $loop[ $this->curr_tableField ]++;
     }
       
-    if( $loop[ $this->curr_tableField ] == 0 )
+    if( $loop[ $this->curr_tableField ] < 2 )
     {
       $debugTrailLevel = 1;
       $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
@@ -1119,13 +1119,13 @@ class tx_browser_pi1_filter_4x {
       case( 4 ):
           // Wrap the current valie by the cObject
         $this->updateWizard( 'filter_cObject' );
-    if( $loop[ $this->curr_tableField ] == 0 )
+    if( $loop[ $this->curr_tableField ] < 2 )
     {
       $debugTrailLevel = 1;
       $this->pObj->timeTracking_log( $debugTrailLevel,  '### 1' );
     }
         $item = $this->get_filterItemCObj( $conf_name, $conf_array, $uid, $value );
-    if( $loop[ $this->curr_tableField ] == 0 )
+    if( $loop[ $this->curr_tableField ] < 2 )
     {
       $debugTrailLevel = 1;
       $this->pObj->timeTracking_log( $debugTrailLevel,  '### 2' );
@@ -1149,7 +1149,7 @@ class tx_browser_pi1_filter_4x {
 
 
     $this->set_itemCurrentNumber( );
-    if( $loop[ $this->curr_tableField ] == 0 )
+    if( $loop[ $this->curr_tableField ] < 2 )
     {
       $debugTrailLevel = 1;
       $this->pObj->timeTracking_log( $debugTrailLevel,  '### 3' );
@@ -1158,7 +1158,7 @@ class tx_browser_pi1_filter_4x {
       // Reset cObj->data
     $this->pObj->cObj->data = $cObjDataBak;
 
-    if( $loop[ $this->curr_tableField ] == 0 )
+    if( $loop[ $this->curr_tableField ] < 2 )
     {
       $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
     }
@@ -1271,7 +1271,25 @@ class tx_browser_pi1_filter_4x {
   private function get_filterItemCObj( $conf_name, $conf_array, $uid, $value )
   {
     static $firstLoop = true;
+    static $loop = array( );
+    
+      // Get table and field
+    list( $table, $field ) = explode( '.', $this->curr_tableField );
 
+    if( ! isset ( $loop[ $this->curr_tableField ] ) )
+    {
+      $loop[ $this->curr_tableField ] = 0;
+    }
+    else
+    {
+      $loop[ $this->curr_tableField ]++;
+    }
+    if( $loop[ $this->curr_tableField ] < 2 )
+    {
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
+    }
+      
       // Item class
     if($conf_name == 'CATEGORY_MENU')
     {
@@ -1328,7 +1346,17 @@ class tx_browser_pi1_filter_4x {
 
     $this->cObjData_setFlagDisplayInCaseOfNoCounting( );
 
+    if( $loop[ $this->curr_tableField ] < 2 )
+    {
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  '### 1' );
+    }
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+    if( $loop[ $this->curr_tableField ] < 2 )
+    {
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  '### 2' );
+    }
 
     $this->cObjData_unsetFlagDisplayInCaseOfNoCounting( );
 
@@ -1346,6 +1374,11 @@ class tx_browser_pi1_filter_4x {
 
     $firstLoop = false;
 
+    if( $loop[ $this->curr_tableField ] < 2 )
+    {
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+    }
     return $item;
   }
 
