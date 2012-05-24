@@ -3681,6 +3681,7 @@ class tx_browser_pi1_filter_4x {
   {
     static $tsPath  = null;
     static $level   = 0;
+    static $loops   = 0;
 
       // Prompt the expired time to devlog
     if( $level == 0 )
@@ -3703,9 +3704,10 @@ class tx_browser_pi1_filter_4x {
       $tsPath   = $tsPath . $key . '.' ;
       $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
       $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
-      $level ++;
+      $level++;
+      $loops++;
       $this->tree_setOneDimDefault( $row[$this->uidField] );
-      $level --;
+      $level--;
       $tsPath   = $lastPath;
     }
       // LOOP rows
@@ -3713,7 +3715,7 @@ class tx_browser_pi1_filter_4x {
       // Prompt the expired time to devlog
     if( $level == 0 )
     {
-      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end ( loops: ' . $loops . ')' );
     }
   }
 
