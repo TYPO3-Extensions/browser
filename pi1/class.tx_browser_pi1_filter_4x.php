@@ -3614,6 +3614,10 @@ class tx_browser_pi1_filter_4x {
  */
   private function tree_setOneDim( $uid_parent )
   {
+      // Prompt the expired time to devlog
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
+
     switch ( true )
     {
       case( count ( $this->arr_rowsTablefield ) == 1 ):
@@ -3623,6 +3627,8 @@ class tx_browser_pi1_filter_4x {
         $this->tree_setOneDimDefault( $uid_parent );
         break;
     }
+
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
   }
 
 
@@ -3717,6 +3723,10 @@ class tx_browser_pi1_filter_4x {
  */
   private function tree_getRendered( )
   {
+      // Prompt the expired time to devlog
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
+
     $arr_result = array( );
 
     static $firstCallDrsTreeview = true;
@@ -3910,6 +3920,8 @@ class tx_browser_pi1_filter_4x {
       // Render the end tag of the last item
 
     $arr_result[$first_item_uid] = $this->htmlSpaceLeft . '<div id="' . $html_id . '">' . $arr_result[$first_item_uid];
+
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
       // RETURN the result
     return $arr_result;
