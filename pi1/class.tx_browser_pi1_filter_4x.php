@@ -1075,8 +1075,25 @@ class tx_browser_pi1_filter_4x {
  */
   private function get_filterItem( $uid, $value )
   {
+    static $loop = array( );
+    
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
+
+    if( ! isset ( $loop[ $this->curr_tableField ] ) )
+    {
+      $loop[ $this->curr_tableField ] = 0;
+    }
+    else
+    {
+      $loop[ $this->curr_tableField ]++;
+    }
+      
+    if( $loop[ $this->curr_tableField ] == 0 )
+    {
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
+    }
 
       // Get TS configuration of the current filter / tableField
     $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
@@ -1126,6 +1143,10 @@ class tx_browser_pi1_filter_4x {
       // Reset cObj->data
     $this->pObj->cObj->data = $cObjDataBak;
 
+    if( $loop[ $this->curr_tableField ] == 0 )
+    {
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+    }
     return $item;
   }
 
@@ -3818,12 +3839,10 @@ class tx_browser_pi1_filter_4x {
       // Initial depth
 
       // LOOP
-    $this->pObj->timeTracking_log( $debugTrailLevel,  'before loop' );
     $bool_firstLoop = true;
     $loops          = 0;
     foreach( $iterator as $key => $value )
     {
-      $this->pObj->timeTracking_log( $debugTrailLevel,  'LOOP #1' );
         // CONTINUE $key is the uid. Save the uid.
       if( $key == 'uid' )
       {
@@ -3847,7 +3866,6 @@ class tx_browser_pi1_filter_4x {
         // CONTINUE ERROR $key isn't value
 
         // Render the value
-      $this->pObj->timeTracking_log( $debugTrailLevel,  'LOOP #2' );
       $item = $this->get_filterItem( $curr_uid, $value );
 
         // CONTINUE: item is empty
@@ -3869,7 +3887,6 @@ class tx_browser_pi1_filter_4x {
       }
         // CONTINUE: item is empty
 
-      $this->pObj->timeTracking_log( $debugTrailLevel,  'LOOP #3' );
       $loops++;
       
         // Vars
@@ -3920,7 +3937,6 @@ class tx_browser_pi1_filter_4x {
 
       $bool_firstLoop = false;
     }
-    $this->pObj->timeTracking_log( $debugTrailLevel,  'after loop (loops: ' . $loops . ')' );
       // LOOP
       // Loop values
 
