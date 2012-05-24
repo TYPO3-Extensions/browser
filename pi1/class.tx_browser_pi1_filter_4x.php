@@ -3785,9 +3785,11 @@ class tx_browser_pi1_filter_4x {
       // SWITCH display first item
       // Add first item
       // Move one dimensional array to an iterator
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'before iterator' );
     $tmpArray     = $this->pObj->objTyposcript->oneDim_to_tree( $tmpOneDim );
     $rcrsArrIter  = new RecursiveArrayIterator( $tmpArray );
     $iterator     = new RecursiveIteratorIterator( $rcrsArrIter );
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'after iterator' );
       // Move one dimensional array to an iterator
 
       // HTML id
@@ -3818,7 +3820,9 @@ class tx_browser_pi1_filter_4x {
       // Initial depth
 
       // LOOP
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'before loop' );
     $bool_firstLoop = true;
+    $loops          = 0;
     foreach( $iterator as $key => $value )
     {
         // CONTINUE $key is the uid. Save the uid.
@@ -3865,6 +3869,8 @@ class tx_browser_pi1_filter_4x {
       }
         // CONTINUE: item is empty
 
+      $loops++;
+      
         // Vars
       $curr_depth = $iterator->getDepth( );
       $indent     = str_repeat( '  ', ( $iterator->getDepth( ) + 1 ) );
@@ -3912,6 +3918,7 @@ class tx_browser_pi1_filter_4x {
 
       $bool_firstLoop = false;
     }
+    $this->pObj->timeTracking_log( $debugTrailLevel,  'after loop (loops: ' . $loops . ')' );
       // LOOP
       // Loop values
 
