@@ -1315,13 +1315,15 @@ class tx_browser_pi1_filter_4x {
         // Item title
       $this->markerArray['###TITLE###']         = $this->replace_itemTitle( '###TITLE###' );
         // Item URL
-      $this->markerArray['###URL###']           = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
-        // Item selected
-      $this->markerArray['###ITEM_SELECTED###'] = $this->replace_itemSelected( $conf_array, $uid, $value, '###ITEM_SELECTED###' );
-
-      $conf_array = $this->replace_marker( $conf_array );
     }
 
+    $this->markerArray['###URL###']           = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
+      // Item selected
+    $this->markerArray['###ITEM_SELECTED###'] = $this->replace_itemSelected( $conf_array, $uid, $value, '###ITEM_SELECTED###' );
+
+    $conf_array = $this->replace_marker( $conf_array );
+
+    
       // Get the COA configuration for the value
       // SWITCH first item
     switch( true )
@@ -1340,12 +1342,6 @@ class tx_browser_pi1_filter_4x {
 
     $this->cObjData_setFlagDisplayInCaseOfNoCounting( );
 
-    if( $loop[ $this->curr_tableField ] < 2 )
-    {
-      $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log( $debugTrailLevel,  '### 1' );
-    }
-    
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
       // 3.9.20: Coded is moved from above
@@ -1357,12 +1353,6 @@ class tx_browser_pi1_filter_4x {
       t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
     }
       // Workaround: remove ###ONCHANGE###
-
-    if( $loop[ $this->curr_tableField ] < 2 )
-    {
-      $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log( $debugTrailLevel,  '### 2' );
-    }
 
     $this->cObjData_unsetFlagDisplayInCaseOfNoCounting( );
 
