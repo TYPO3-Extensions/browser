@@ -3683,7 +3683,7 @@ class tx_browser_pi1_filter_4x {
       $tsPath   = $tsPath . $key . '.' ;
       $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
       $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
-      $this->tree_setOneDim( $row[$this->uidField] );
+      $this->tree_setOneDimDefault( $row[$this->uidField] );
       $tsPath   = $lastPath;
     }
       // LOOP rows
