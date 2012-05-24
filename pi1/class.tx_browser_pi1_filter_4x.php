@@ -1289,8 +1289,8 @@ class tx_browser_pi1_filter_4x {
       $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
     }
       
-    if( $loop[ $this->curr_tableField ] == 0 )
-    {
+//    if( $loop[ $this->curr_tableField ] == 0 )
+//    {
         // Item class
         // Get TS configuration of the current filter / tableField
       $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
@@ -1315,13 +1315,13 @@ class tx_browser_pi1_filter_4x {
         // Item title
       $this->markerArray['###TITLE###']         = $this->replace_itemTitle( '###TITLE###' );
         // Item URL
-    }
+      $this->markerArray['###URL###']           = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
+        // Item selected
+      $this->markerArray['###ITEM_SELECTED###'] = $this->replace_itemSelected( $conf_array, $uid, $value, '###ITEM_SELECTED###' );
 
-    $this->markerArray['###URL###']           = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
-      // Item selected
-    $this->markerArray['###ITEM_SELECTED###'] = $this->replace_itemSelected( $conf_array, $uid, $value, '###ITEM_SELECTED###' );
+      $conf_array = $this->replace_marker( $conf_array );
+//    }
 
-    $conf_array = $this->replace_marker( $conf_array );
 
     
       // Get the COA configuration for the value
