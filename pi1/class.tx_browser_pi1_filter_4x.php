@@ -3785,11 +3785,9 @@ class tx_browser_pi1_filter_4x {
       // SWITCH display first item
       // Add first item
       // Move one dimensional array to an iterator
-    $this->pObj->timeTracking_log( $debugTrailLevel,  'before iterator' );
     $tmpArray     = $this->pObj->objTyposcript->oneDim_to_tree( $tmpOneDim );
     $rcrsArrIter  = new RecursiveArrayIterator( $tmpArray );
     $iterator     = new RecursiveIteratorIterator( $rcrsArrIter );
-    $this->pObj->timeTracking_log( $debugTrailLevel,  'after iterator' );
       // Move one dimensional array to an iterator
 
       // HTML id
@@ -3825,6 +3823,7 @@ class tx_browser_pi1_filter_4x {
     $loops          = 0;
     foreach( $iterator as $key => $value )
     {
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'LOOP #1' );
         // CONTINUE $key is the uid. Save the uid.
       if( $key == 'uid' )
       {
@@ -3848,6 +3847,7 @@ class tx_browser_pi1_filter_4x {
         // CONTINUE ERROR $key isn't value
 
         // Render the value
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'LOOP #2' );
       $item = $this->get_filterItem( $curr_uid, $value );
 
         // CONTINUE: item is empty
@@ -3869,6 +3869,7 @@ class tx_browser_pi1_filter_4x {
       }
         // CONTINUE: item is empty
 
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'LOOP #3' );
       $loops++;
       
         // Vars
@@ -3912,6 +3913,7 @@ class tx_browser_pi1_filter_4x {
           break;
       }
         // Render the start tag
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'LOOP #4' );
 
         // Result array
       $arr_result[$curr_uid] = $startTag . $item;
