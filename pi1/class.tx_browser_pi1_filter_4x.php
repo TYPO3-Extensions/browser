@@ -3930,7 +3930,6 @@ class tx_browser_pi1_filter_4x {
           break;
       }
         // Render the start tag
-      $this->pObj->timeTracking_log( $debugTrailLevel,  'LOOP #4' );
 
         // Result array
       $arr_result[$curr_uid] = $startTag . $item;
