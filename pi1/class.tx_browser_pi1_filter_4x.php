@@ -3679,11 +3679,15 @@ class tx_browser_pi1_filter_4x {
  */
   private function tree_setOneDimDefault( $uid_parent )
   {
-    static $tsPath = null;
+    static $tsPath  = null;
+    static $level   = 0;
 
       // Prompt the expired time to devlog
-    $debugTrailLevel = 1;
-    $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
+    if( $level == 0 )
+    {
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
+    }
 
       // LOOP rows
     foreach( $this->arr_rowsTablefield as $key => $row )
@@ -3699,14 +3703,18 @@ class tx_browser_pi1_filter_4x {
       $tsPath   = $tsPath . $key . '.' ;
       $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
       $this->tmpOneDim[$tsPath . 'value'] = $row[$this->valueField];
+      $level ++;
       $this->tree_setOneDimDefault( $row[$this->uidField] );
+      $level --;
       $tsPath   = $lastPath;
     }
       // LOOP rows
       // 
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
-
+    if( $level == 0 )
+    {
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+    }
   }
 
 
