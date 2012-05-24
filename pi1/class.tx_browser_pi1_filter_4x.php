@@ -1119,17 +1119,17 @@ class tx_browser_pi1_filter_4x {
       case( 4 ):
           // Wrap the current valie by the cObject
         $this->updateWizard( 'filter_cObject' );
-    if( $loop[ $this->curr_tableField ] < 2 )
-    {
-      $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log( $debugTrailLevel,  '### 1' );
-    }
-        $item = $this->get_filterItemCObj( $conf_name, $conf_array, $uid, $value );
-    if( $loop[ $this->curr_tableField ] < 2 )
-    {
-      $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log( $debugTrailLevel,  '### 2' );
-    }
+        if( $loop[ $this->curr_tableField ] < 2 )
+        {
+          $debugTrailLevel = 1;
+          $this->pObj->timeTracking_log( $debugTrailLevel,  '### 1' );
+        }
+        $item = $this->get_filterItemCObj( $uid, $value );
+        if( $loop[ $this->curr_tableField ] < 2 )
+        {
+          $debugTrailLevel = 1;
+          $this->pObj->timeTracking_log( $debugTrailLevel,  '### 2' );
+        }
         break;
       case( 3 ):
           // stdWrap the current value
@@ -1260,18 +1260,17 @@ class tx_browser_pi1_filter_4x {
 /**
  * get_filterItemCObj( ): Render the current filter item.
  *
- * @param	array		$conf_name      : TS configuration object type of the current filter / tableField
- * @param	array		$conf_array     : TS configuration array of the current filter / tableField
  * @param	integer		$uid            : uid of the current item / row
  * @param	string		$value          : value of the current item / row
  * @return	string		$value_stdWrap  : The value stdWrapped
- * @version 3.9.9
+ * @version 3.9.20
  * @since   3.9.9
  */
-  private function get_filterItemCObj( $conf_name, $conf_array, $uid, $value )
+  private function get_filterItemCObj( $uid, $value )
   {
-    static $firstLoop = true;
-    static $loop = array( );
+    static $firstLoop   = true;
+    static $loop        = array( );
+    static $conf_array  = null;
     
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -1290,43 +1289,38 @@ class tx_browser_pi1_filter_4x {
       $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
     }
       
-      // Item class
-    if($conf_name == 'CATEGORY_MENU')
+    if( $loop[ $this->curr_tableField ] == 0 )
     {
-      $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
+        // Item class
+        // Get TS configuration of the current filter / tableField
+      $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+      $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+      if($conf_name == 'CATEGORY_MENU')
+      {
+        $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
+      }
+  //var_dump( __METHOD__, __LINE__, $value, $conf_array );
+        // DRS :TODO:
+      if( $firstLoop && $this->pObj->b_drs_devTodo )
+      {
+        $prompt = 'Check AJAX ###ONCHANGE###';
+        t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // DRS :TODO:
+      $this->markerArray['###CLASS###']         = $this->replace_itemClass( $conf_array, '###CLASS###' );
+        // Item class
+
+        // Item style
+      $this->markerArray['###STYLE###']         = $this->replace_itemStyle( $conf_array, '###STYLE###' );
+        // Item title
+      $this->markerArray['###TITLE###']         = $this->replace_itemTitle( '###TITLE###' );
+        // Item URL
+      $this->markerArray['###URL###']           = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
+        // Item selected
+      $this->markerArray['###ITEM_SELECTED###'] = $this->replace_itemSelected( $conf_array, $uid, $value, '###ITEM_SELECTED###' );
+
+      $conf_array = $this->replace_marker( $conf_array );
     }
-//var_dump( __METHOD__, __LINE__, $value, $conf_array );
-      // DRS :TODO:
-    if( $firstLoop && $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'Check AJAX ###ONCHANGE###';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-    }
-      // DRS :TODO:
-    $this->markerArray['###CLASS###']         = $this->replace_itemClass( $conf_array, '###CLASS###' );
-      // Item class
-
-      // Item style
-    $this->markerArray['###STYLE###']         = $this->replace_itemStyle( $conf_array, '###STYLE###' );
-      // Item title
-    $this->markerArray['###TITLE###']         = $this->replace_itemTitle( '###TITLE###' );
-      // Item URL
-    $this->markerArray['###URL###']           = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
-      // Item selected
-    $this->markerArray['###ITEM_SELECTED###'] = $this->replace_itemSelected( $conf_array, $uid, $value, '###ITEM_SELECTED###' );
-
-      // Workaround: remove ###ONCHANGE###
-    $item = str_replace( ' class=" ###ONCHANGE###"', null, $item );
-    if( $firstLoop && $this->pObj->b_drs_devTodo )
-    {
-      $prompt = 'class=" ###ONCHANGE###" is removed. Check the code!';
-      t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
-    }
-      // Workaround: remove ###ONCHANGE###
-
-
-    $conf_array = $this->replace_marker( $conf_array );
-
 
       // Get the COA configuration for the value
       // SWITCH first item
@@ -1351,7 +1345,19 @@ class tx_browser_pi1_filter_4x {
       $debugTrailLevel = 1;
       $this->pObj->timeTracking_log( $debugTrailLevel,  '### 1' );
     }
+    
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+
+      // 3.9.20: Coded is moved from above
+      // Workaround: remove ###ONCHANGE###
+    $item = str_replace( ' class=" ###ONCHANGE###"', null, $item );
+    if( $firstLoop && $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'class=" ###ONCHANGE###" is removed. Check the code!';
+      t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
+    }
+      // Workaround: remove ###ONCHANGE###
+
     if( $loop[ $this->curr_tableField ] < 2 )
     {
       $debugTrailLevel = 1;
