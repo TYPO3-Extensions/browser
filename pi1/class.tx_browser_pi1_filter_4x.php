@@ -1289,40 +1289,37 @@ class tx_browser_pi1_filter_4x {
       $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
     }
       
-//    if( $loop[ $this->curr_tableField ] == 0 )
-//    {
-        // Item class
-        // Get TS configuration of the current filter / tableField
-      $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-      $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-      if($conf_name == 'CATEGORY_MENU')
-      {
-        $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
-      }
-  //var_dump( __METHOD__, __LINE__, $value, $conf_array );
-        // DRS :TODO:
-      if( $firstLoop && $this->pObj->b_drs_devTodo )
-      {
-        $prompt = 'Check AJAX ###ONCHANGE###';
-        t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-        // DRS :TODO:
-      $this->markerArray['###CLASS###']         = $this->replace_itemClass( $conf_array, '###CLASS###' );
-        // Item class
+      // Item class
+      // Get TS configuration of the current filter / tableField
+    $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    if($conf_name == 'CATEGORY_MENU')
+    {
+      $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
+    }
+//var_dump( __METHOD__, __LINE__, $value, $conf_array );
+      // DRS :TODO:
+    if( $firstLoop && $this->pObj->b_drs_devTodo )
+    {
+      $prompt = 'Check AJAX ###ONCHANGE###';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS :TODO:
+    $this->markerArray['###CLASS###']         = $this->replace_itemClass( $conf_array, '###CLASS###' );
+      // Item class
 
-        // Item style
-      $this->markerArray['###STYLE###']         = $this->replace_itemStyle( $conf_array, '###STYLE###' );
-        // Item title
-      $this->markerArray['###TITLE###']         = $this->replace_itemTitle( '###TITLE###' );
-        // Item URL
-      $this->markerArray['###URL###']           = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
-        // Item selected
-      $this->markerArray['###ITEM_SELECTED###'] = $this->replace_itemSelected( $conf_array, $uid, $value, '###ITEM_SELECTED###' );
+      // Item style
+    $this->markerArray['###STYLE###']         = $this->replace_itemStyle( $conf_array, '###STYLE###' );
+      // Item title
+    $this->markerArray['###TITLE###']         = $this->replace_itemTitle( '###TITLE###' );
+      // Item URL
+    $this->markerArray['###URL###']           = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
+      // Item selected
+    $this->markerArray['###ITEM_SELECTED###'] = $this->replace_itemSelected( $conf_array, $uid, $value, '###ITEM_SELECTED###' );
 
-      $conf_array = $this->replace_marker( $conf_array );
-//    }
-
-
+      // 3.9.20:  Be careful: Method need 10 milliseconds. Can be a 
+      //          performance problem in case of a lot records!
+    //$conf_array = $this->replace_marker( $conf_array );
     
       // Get the COA configuration for the value
       // SWITCH first item
@@ -1344,6 +1341,9 @@ class tx_browser_pi1_filter_4x {
 
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
+      // 3.9.20
+    $item = $this->pObj->cObj->substituteMarkerArray( $item, $this->markerArray );
+    
       // 3.9.20: Coded is moved from above
       // Workaround: remove ###ONCHANGE###
     $item = str_replace( ' class=" ###ONCHANGE###"', null, $item );
@@ -1377,6 +1377,129 @@ class tx_browser_pi1_filter_4x {
     }
     return $item;
   }
+
+
+
+///**
+// * get_filterItemCObj( ): Render the current filter item.
+// *
+// * @param	integer		$uid            : uid of the current item / row
+// * @param	string		$value          : value of the current item / row
+// * @return	string		$value_stdWrap  : The value stdWrapped
+// * @version 3.9.20
+// * @since   3.9.9
+// */
+//  private function get_filterItemCObj( $uid, $value )
+//  {
+//    static $firstLoop   = true;
+//    static $loop        = array( );
+//    static $conf_array  = null;
+//    
+//      // Get table and field
+//    list( $table, $field ) = explode( '.', $this->curr_tableField );
+//
+//    if( ! isset ( $loop[ $this->curr_tableField ] ) )
+//    {
+//      $loop[ $this->curr_tableField ] = 0;
+//    }
+//    else
+//    {
+//      $loop[ $this->curr_tableField ]++;
+//    }
+//    if( $loop[ $this->curr_tableField ] < 2 )
+//    {
+//      $debugTrailLevel = 1;
+//      $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
+//    }
+//      
+////    if( $loop[ $this->curr_tableField ] == 0 )
+////    {
+//        // Item class
+//        // Get TS configuration of the current filter / tableField
+//      $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+//      $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+//      if($conf_name == 'CATEGORY_MENU')
+//      {
+//        $conf_array = $this->pObj->objJss->class_onchange($conf_name, $conf_array, $this->row_number);
+//      }
+//  //var_dump( __METHOD__, __LINE__, $value, $conf_array );
+//        // DRS :TODO:
+//      if( $firstLoop && $this->pObj->b_drs_devTodo )
+//      {
+//        $prompt = 'Check AJAX ###ONCHANGE###';
+//        t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+//      }
+//        // DRS :TODO:
+//      $this->markerArray['###CLASS###']         = $this->replace_itemClass( $conf_array, '###CLASS###' );
+//        // Item class
+//
+//        // Item style
+//      $this->markerArray['###STYLE###']         = $this->replace_itemStyle( $conf_array, '###STYLE###' );
+//        // Item title
+//      $this->markerArray['###TITLE###']         = $this->replace_itemTitle( '###TITLE###' );
+//        // Item URL
+//      $this->markerArray['###URL###']           = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
+//        // Item selected
+//      $this->markerArray['###ITEM_SELECTED###'] = $this->replace_itemSelected( $conf_array, $uid, $value, '###ITEM_SELECTED###' );
+//
+//      $conf_array = $this->replace_marker( $conf_array );
+////    }
+//
+//
+//    
+//      // Get the COA configuration for the value
+//      // SWITCH first item
+//    switch( true )
+//    {
+//      case( $uid == $conf_array['first_item.']['option_value'] ):
+//        $cObj_name = $conf_array['first_item.']['cObject'];
+//        $cObj_conf = $conf_array['first_item.']['cObject.'];
+//        break;
+//      default:
+//        $cObj_name = $conf_array['wrap.']['item.']['cObject'];
+//        $cObj_conf = $conf_array['wrap.']['item.']['cObject.'];
+//        break;
+//    }
+//      // SWITCH first item
+//      // Get the COA configuration for the value
+//
+//    $this->cObjData_setFlagDisplayInCaseOfNoCounting( );
+//
+//    $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+//
+//      // 3.9.20: Coded is moved from above
+//      // Workaround: remove ###ONCHANGE###
+//    $item = str_replace( ' class=" ###ONCHANGE###"', null, $item );
+//    if( $firstLoop && $this->pObj->b_drs_devTodo )
+//    {
+//      $prompt = 'class=" ###ONCHANGE###" is removed. Check the code!';
+//      t3lib_div::devlog( '[WARN/TODO] ' . $prompt, $this->pObj->extKey, 2 );
+//    }
+//      // Workaround: remove ###ONCHANGE###
+//
+//    $this->cObjData_unsetFlagDisplayInCaseOfNoCounting( );
+//
+//      // maxItemsTagEndBegin
+//      // DRS :TODO:
+//    if( $firstLoop && $this->pObj->b_drs_devTodo )
+//    {
+//      $prompt = 'Check maxItemsPerRow!';
+//      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+//    }
+//      // DRS :TODO:
+//    $item = $this->get_maxItemsTagEndBegin( $item );
+//      // maxItemsTagEndBegin
+//
+//
+//    $firstLoop = false;
+//
+//    if( $loop[ $this->curr_tableField ] < 2 )
+//    {
+//      $debugTrailLevel = 1;
+//      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+//    }
+//    return $item;
+//  }
 
 
 
