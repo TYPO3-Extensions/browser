@@ -1119,7 +1119,17 @@ class tx_browser_pi1_filter_4x {
       case( 4 ):
           // Wrap the current valie by the cObject
         $this->updateWizard( 'filter_cObject' );
+    if( $loop[ $this->curr_tableField ] == 0 )
+    {
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  '### 1' );
+    }
         $item = $this->get_filterItemCObj( $conf_name, $conf_array, $uid, $value );
+    if( $loop[ $this->curr_tableField ] == 0 )
+    {
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  '### 2' );
+    }
         break;
       case( 3 ):
           // stdWrap the current value
@@ -1139,6 +1149,11 @@ class tx_browser_pi1_filter_4x {
 
 
     $this->set_itemCurrentNumber( );
+    if( $loop[ $this->curr_tableField ] == 0 )
+    {
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  '### 3' );
+    }
 
       // Reset cObj->data
     $this->pObj->cObj->data = $cObjDataBak;
