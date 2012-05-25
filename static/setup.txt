@@ -1155,7 +1155,7 @@ plugin.tx_browser_pi1 {
           html_id = TEXT
           html_id {
               // treeview (default)
-            value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector}
+            value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
           }
             // [Boolean] Disable the treeview. Enable is recommended. Has an effect only in case of cps_tcatree and a proper TCA configuration.
           enabled = TEXT
@@ -2959,15 +2959,15 @@ plugin.tx_browser_pi1 {
               inline = 0
             }
           }
-          library = EXT:browser/res/js/jquery/tx_browser_pi1_jstree-0.0.1.js
+          library = EXT:browser/res/js/jquery/tx_browser_pi1_jstree-3.9.21.js
           library {
               // [Boolean] 0: link to the script file, 1 (default): include the script inline
             inline = 1
             marker {
                 // Id of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
-              selector = TEXT
-              selector {
-                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector}
+              selector_01 = TEXT
+              selector_01 {
+                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
               }
               theme = TEXT
               theme {
@@ -3038,7 +3038,7 @@ plugin.tx_browser_pi1 {
               // Id of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
             selector = TEXT
             selector {
-              value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector}
+              value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
             }
             theme = TEXT
             theme {
