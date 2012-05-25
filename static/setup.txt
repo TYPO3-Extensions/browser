@@ -2964,9 +2964,29 @@ plugin.tx_browser_pi1 {
               // [Boolean] 0: link to the script file, 1 (default): include the script inline
             inline = 1
             marker {
-                // Id of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+                // Id 1 of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
               selector_01 = TEXT
               selector_01 {
+                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
+              }
+                // Id 1 of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+              selector_01 = TEXT
+              selector_01 {
+                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
+              }
+                // Id 2 of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+              selector_02 = TEXT
+              selector_02 {
+                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
+              }
+                // Id 3 of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+              selector_03 = TEXT
+              selector_03 {
+                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
+              }
+                // Id 4 of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+              selector_04 = TEXT
+              selector_04 {
                 value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
               }
               theme = TEXT
