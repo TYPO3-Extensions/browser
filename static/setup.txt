@@ -2969,25 +2969,25 @@ plugin.tx_browser_pi1 {
               selector_01 {
                 value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
               }
-                // Id 1 of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
-              selector_01 = TEXT
-              selector_01 {
-                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
-              }
-                // Id 2 of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+                // Id 2 of the div-wrap of the 2nd treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
               selector_02 = TEXT
               selector_02 {
-                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
+                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_02}
               }
-                // Id 3 of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+                // Id 3 of the div-wrap of the 3rd treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
               selector_03 = TEXT
               selector_03 {
-                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
+                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_03}
               }
-                // Id 4 of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+                // Id 4 of the div-wrap of the 4th treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
               selector_04 = TEXT
               selector_04 {
-                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
+                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_04}
+              }
+                // Id 5 of the div-wrap of the 5th treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
+              selector_05 = TEXT
+              selector_05 {
+                value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_05}
               }
               theme = TEXT
               theme {
