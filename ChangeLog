@@ -1,7 +1,12 @@
+3.9.22
+  120526
+  Improvement
+  * #00000: optimising five tree views
+
 3.9.21
   120525
   Improvement
-  * #00000: enable more than one treeview by default
+  * #00000: enable more than one tree view by default
 
 3.9.20
   120524
