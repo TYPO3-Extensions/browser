@@ -6,7 +6,7 @@
   </meta>
   <data type="array">
     <languageKey index="default" type="array">
-      <label index="tt_content.list_type_pi1">Browser</label>
+      <label index="tt_content.list_type_pi1">Browser - TYPO3 without PHP</label>
       <label index="tt_content.list_type_pi3">Browser Manuals</label>
       <label index="tt_content.list_type_pi4">Browser (no cache)</label>
       <label index="tt_content.list_type_pi5">+Browser Calendar</label>
@@ -20,7 +20,7 @@
       <label index="wizard.list_type_pi5.desc">Publish your data based on a calendar. Set up your timetables with the Browser Calender user interface. You need both plugins on the same page: Browser and +Browser Calender. Extend the Browser with the Calender in the tab [Extend it!].</label>
     </languageKey>
     <languageKey index="de" type="array">
-      <label index="tt_content.list_type_pi1">Browser</label>
+      <label index="tt_content.list_type_pi1">Browser - TYPO3 ohne PHP</label>
       <label index="tt_content.list_type_pi3">Browser Handb<![CDATA[ü]]>cher</label>
       <label index="tt_content.list_type_pi4">Browser (ohne Cache)</label>
       <label index="tt_content.list_type_pi5">+Browser Kalender</label>
