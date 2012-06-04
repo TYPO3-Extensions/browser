@@ -2284,6 +2284,7 @@ class tx_browser_pi1_template
     {
        // Do we have fields for ordering, which aren't in the SQL result?
       $arrOrderByWoColumns = array_diff($arrOrderByFields, $arrColumns);
+$this->pObj->dev_var_dump( $arrOrderByWoColumns );
       if(is_array($arrOrderByWoColumns))
       {
         foreach((array) $arrOrderByWoColumns as $columnValue)
