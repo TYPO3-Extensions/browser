@@ -304,7 +304,7 @@ $this->pObj->dev_var_dump( 3 );
   {
       // RETURN : index browser isn't enabled
 $this->pObj->dev_var_dump( 'a1' );
-    if( ! isset ( $this->pObj->objNaviIndexBrowser->indexBrowserTab ) )
+    if( empty ( $this->pObj->objNaviIndexBrowser->indexBrowserTab ) )
     {
       $this->sumIsFromIndexBrowser = false;
       return;
