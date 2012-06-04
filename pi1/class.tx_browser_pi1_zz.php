@@ -202,6 +202,7 @@
       // _GET - Allocate piVars from _GET, if they aren't set
 
       // #11579, dwildt, 101219
+$this->pObj->dev_var_dump( $this->pObj->piVars );
     foreach( ( array ) $GLOBALS['_GET'][$this->pObj->prefixId] as $key => $value )
     {
       if( ! isset( $this->pObj->piVars[$key] ) )
