@@ -2285,25 +2285,28 @@ class tx_browser_pi1_template
        // Do we have fields for ordering, which aren't in the SQL result?
       $arrOrderByWoColumns = array_diff($arrOrderByFields, $arrColumns);
 $this->pObj->dev_var_dump( $arrOrderByWoColumns );
-      if(is_array($arrOrderByWoColumns))
+      foreach( ( array ) $arrOrderByWoColumns as $columnValue )
       {
-        foreach((array) $arrOrderByWoColumns as $columnValue)
+          // 3.9.24, 120604, dwildt
+        if( empty ( $columnValue ) )
         {
-          if ($this->pObj->internal['descFlag'])
-          {
-            $b_asc  = 0;
-          }
-          else
-          {
-            $b_asc  = 1;
-          }
-          $field    = trim($columnValue);
-          $fieldLL  = $this->pObj->objZz->getTableFieldLL($field);
-          $sort     = array('sort' => $field.':'.$b_asc);
-          $str_url  = $this->pObj->pi_linkTP_keepPIvars_url($sort, $this->pObj->boolCache);
-          // #10204, dwildt, 101012
-          $arr_orderBox_value_label[$field.':'.$b_asc] = $fieldLL;
+          continue;
         }
+          // 3.9.24, 120604, dwildt
+        if ($this->pObj->internal['descFlag'])
+        {
+          $b_asc  = 0;
+        }
+        else
+        {
+          $b_asc  = 1;
+        }
+        $field    = trim($columnValue);
+        $fieldLL  = $this->pObj->objZz->getTableFieldLL($field);
+        $sort     = array('sort' => $field.':'.$b_asc);
+        $str_url  = $this->pObj->pi_linkTP_keepPIvars_url($sort, $this->pObj->boolCache);
+        // #10204, dwildt, 101012
+        $arr_orderBox_value_label[$field.':'.$b_asc] = $fieldLL;
       }
        // Do we have fields for ordering, which aren't in the SQL result?
        // #8337, 101011, dwildt
