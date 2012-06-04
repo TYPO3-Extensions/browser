@@ -670,8 +670,11 @@ class tx_browser_pi1_template
     {
       $bool_emptyList = $this->pObj->objFlexform->bool_emptyAtStart;
       if($bool_emptyList)
-      {
-        $conf_emptyList = $lDisplayList['emptyListByStart.']['stdWrap.'];
+      {                               
+          // 3.9.24, 120604, dwildt-
+//        $conf_emptyList = $lDisplayList['emptyListByStart.']['stdWrap.'];
+          // 3.9.24, 120604, dwildt+
+        $conf_emptyList = $lDisplayList['display.']['emptyListByStart.']['stdWrap.'];
         if ($this->pObj->b_drs_templating || $this->b_drs_flexform)
         {
           $langKey = $GLOBALS['TSFE']->lang;
@@ -694,7 +697,6 @@ class tx_browser_pi1_template
         // 110829, dwildt-
 //        $markerArray    = $this->pObj->objWrapper->constant_markers();
         $template       = $this->pObj->cObj->substituteMarkerArray($template, $markerArray);
-$this->pObj->dev_var_dump( $template );
         return $template;
       }
       if(!$bool_emptyList)
@@ -793,7 +795,6 @@ $this->pObj->dev_var_dump( $template );
         {
           t3lib_div::devlog('[WARN/TEMPLATING] There isn\'t any row.', $this->pObj->extKey, 2);
         }
-$this->pObj->dev_var_dump( $template );
         return $template;
       }
     }
@@ -1380,8 +1381,6 @@ $this->pObj->dev_var_dump( $template );
       t3lib_div::devLog('[INFO/PERFORMANCE] After generatin template: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
     }
     // DRS - Performance
-
-$this->pObj->dev_var_dump( $template );
 
     return $template;
   }
