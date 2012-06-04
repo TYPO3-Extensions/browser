@@ -184,6 +184,9 @@ class tx_browser_pi1_flexform {
   var $sheet_viewList_rotateviews     = null;
   //[sheet/extend]
 
+  var $handlePiVars = 'forCurrentPluginOnly';
+  // [string] forCurrentPluginOnly || forEachPlugin. Has an effect, if there is more than one plugin
+
   // Vars set by methods in the current class
 
   /**
@@ -402,7 +405,8 @@ class tx_browser_pi1_flexform {
     //
     // RETURN, if we have one plugin on the page only
 
-    if (count($rows) <= 1) {
+    if (count($rows) <= 1)
+    {
       if ($this->pObj->b_drs_flexform) {
         t3lib_div :: devlog('[INFO/FLEXFORM] There is only one plugin on the page. There isn\'t any effect for any piVar.', $this->pObj->extKey, 0);
       }
@@ -415,22 +419,27 @@ class tx_browser_pi1_flexform {
     // RETURN, if plugin want to handle piVars of foreign plugin
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
-    $str_piVars = $this->pObj->pi_getFFvalue($arr_piFlexform, 'piVars', 'sDEF', 'lDEF', 'vDEF');
+    $str_piVars     = $this->pObj->pi_getFFvalue($arr_piFlexform, 'piVars', 'sDEF', 'lDEF', 'vDEF');
     switch ($str_piVars) {
       case ('all') :
-        if ($this->pObj->b_drs_flexform) {
+        $this->handlePiVars = 'forEachPlugin';
+        if ($this->pObj->b_drs_flexform)
+        {
           t3lib_div :: devlog('[INFO/FLEXFORM] Current plugin wants to handle all piVars.', $this->pObj->extKey, 0);
         }
         return;
         break;
       case ('default') :
       case (false) :
-        if ($this->pObj->b_drs_flexform) {
+        $this->handlePiVars = 'forCurrentPluginOnly';
+        if ($this->pObj->b_drs_flexform) 
+        {
           t3lib_div :: devlog('[INFO/FLEXFORM] Current plugin wants to handle only own piVars.', $this->pObj->extKey, 0);
         }
         break;
       default :
-        if ($this->pObj->b_drs_flexform) {
+        if ($this->pObj->b_drs_flexform)
+        {
           t3lib_div :: devlog('[WARN/FLEXFORM] Current plugin has an undefined value in piVars. ' .
           'Definded is: default, all. Current value is: ' . $str_piVars, $this->pObj->extKey, 2);
         }
@@ -491,8 +500,9 @@ class tx_browser_pi1_flexform {
                   please configure in the plugin [General]: handle piVars from foreign plugins!', $this->pObj->extKey, 1);
       }
     }
-    if ($bool_unset_piVars) {
-      unset ($this->pObj->piVars);
+    if( $bool_unset_piVars ) 
+    {
+      unset ( $this->pObj->piVars );
     }
 $this->pObj->dev_var_dump( $this->pObj->piVars );
     // The current plugin isn't the plugin, which is used by the visitor

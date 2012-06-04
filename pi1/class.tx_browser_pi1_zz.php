@@ -203,28 +203,24 @@
 
       // #11579, dwildt, 101219
 $this->pObj->dev_var_dump( $this->pObj->piVars );
-    foreach( ( array ) $GLOBALS['_GET'][$this->pObj->prefixId] as $key => $value )
+    switch( $this->pObj->objFlexform->handlePiVars )
     {
-      if( ! isset( $this->pObj->piVars[$key] ) )
-      {
-// 101219, dwildt, Abschnitt ist nicht getestet
-//        if (get_magic_quotes_gpc())
-//        {
-//          if (ini_get('magic_quotes_sybase'))
-//          {
-//            $this->pObj->piVars[$key] = str_replace("''", "'", $value);
-//          }
-//          if (!ini_get('magic_quotes_sybase'))
-//          {
-//            $this->pObj->piVars[$key] = stripslashes($value);
-//          }
-//        }
-//        if (!get_magic_quotes_gpc())
-//        {
-//          $this->pObj->piVars[$key] = stripslashes($value);
-//        }
-        $this->pObj->piVars[$key] = stripslashes( $value );
-      }
+      case( 'forEachPlugin'):
+        foreach( ( array ) $GLOBALS['_GET'][$this->pObj->prefixId] as $key => $value )
+        {
+          if( ! isset( $this->pObj->piVars[$key] ) )
+          {
+            $this->pObj->piVars[$key] = stripslashes( $value );
+          }
+        }
+        break;
+      case( 'forCurrentPluginOnly' ):
+          // do nothing;
+        break;
+      default:
+        $prompt = 'Switch with undefined value in ' . __METHOD__ . ' at line ' . __LINE__ . '<br />' .
+                  'Sorry, this error should not occured!.<br />' .
+                  'Browser - TYPO3 without PHP.'; 
     }
 $this->pObj->dev_var_dump( $this->pObj->piVars );
       // _GET - Allocate piVars from _GET, if they aren't set
