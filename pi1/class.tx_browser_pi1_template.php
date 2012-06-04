@@ -733,14 +733,14 @@ class tx_browser_pi1_template
       if( ! $this->ignore_empty_rows_rule )
       {
           // 3.9.24, 120604, dwildt, +
-        $cObj_name      = $this->pObj->conf['displayList.']['noItemMessage'];
+        $cObj_name = $this->pObj->conf['displayList.']['noItemMessage'];
         if( $cObj_name == '1' )
         {
           $cObj_name = 'TEXT';
         }
         $cObj_conf      = $this->pObj->conf['displayList.']['noItemMessage.'];
         $noItemMessage  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
-        $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', '', true);
+        $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $noItemMessage, true);
           // 3.9.24, 120604, dwildt, +
         
           // 3.9.24, 120604, dwildt, -
