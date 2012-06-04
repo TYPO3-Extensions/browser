@@ -29,7 +29,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 3.9.18
+ * @version 3.9.24
  * @since 1.0.0
  */
 
@@ -1946,7 +1946,7 @@ class tx_browser_pi1_template
  *
  * @param	string		Template
  * @return	string		Template
- * @version 4.0.0
+ * @version 3.9.24
  * @since 1.0.0
  */
   function tmplTableHead($template)
@@ -2284,15 +2284,14 @@ class tx_browser_pi1_template
     {
        // Do we have fields for ordering, which aren't in the SQL result?
       $arrOrderByWoColumns = array_diff($arrOrderByFields, $arrColumns);
-$this->pObj->dev_var_dump( $arrOrderByWoColumns );
       foreach( ( array ) $arrOrderByWoColumns as $columnValue )
       {
-          // 3.9.24, 120604, dwildt
+          // 3.9.24, 120604, dwildt+
         if( empty ( $columnValue ) )
         {
           continue;
         }
-          // 3.9.24, 120604, dwildt
+          // 3.9.24, 120604, dwildt+
         if ($this->pObj->internal['descFlag'])
         {
           $b_asc  = 0;
@@ -2357,7 +2356,6 @@ $this->pObj->dev_var_dump( $arrOrderByWoColumns );
         $arr_values = array();
       }
         // Loop through the rows of the SQL result
-$this->pObj->dev_var_dump( $arr_values );
       foreach((array) $arr_values as $value => $label)
       {
         $str_counter_element  = $int_counter_element.'.';
