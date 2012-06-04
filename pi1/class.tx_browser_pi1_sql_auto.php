@@ -2357,12 +2357,11 @@ class tx_browser_pi1_sql_auto
 /**
  * get_joinsSetCsv( ) : Relation method: Building the relation part for the where clause
  *
- * @param	[type]		$$arr_return: ...
  * @return	string		TRUE || FALSE or the SQL-where-clause
  * @version   3.9.13
  * @since     2.0.0
  */
-  private function get_joinsSetCsv( $arr_return )
+  private function get_joinsSetCsv( )
   {
     $arr_return = array( );
     $leftJoin   = false;
