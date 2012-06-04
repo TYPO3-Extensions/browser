@@ -5003,7 +5003,7 @@ class tx_browser_pi1_filter_4x {
   {
       // SWITCH current tableField is a filter with areas
       // Set class var $bool_currFilterIsArea
-    switch( in_array( $this->curr_tableField, array_keys( $this->pObj->objCal->arr_area ) ) )
+    switch( in_array( $this->curr_tableField, array_keys( ( array) $this->pObj->objCal->arr_area ) ) )
     {
       case( true ):
         $this->bool_currFilterIsArea = true;

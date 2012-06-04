@@ -8,6 +8,7 @@
   * #00000: multiple plugins: piVars aren't ignored  
   * #00000: Message of empty list at start isn't rendered
   * #00000: Missing argument 1 for tx_browser_pi1_sql_auto::get_joinsSetCsv()
+  * #00000: Missing argument 1 for tx_browser_pi1_sql_auto::get_statements_whereLL()
 
 3.9.23
   120530
