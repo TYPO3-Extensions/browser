@@ -1339,6 +1339,7 @@ class tx_browser_pi1_template
     $markerArray['###CAPTION###'] = $this->pObj->objWrapper->tableCaption('list');
     $subpart        = $this->pObj->cObj->getSubpart($template, '###LISTVIEW###');
     $listview       = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
+$this->pObj->dev_var_dump( $template );
     $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $listview, true);
     unset($markerArray);
       // 110829, dwildt-
