@@ -224,7 +224,6 @@ class tx_browser_pi1_viewlist
           // CASE no csv
     }
     $content = $this->content;
-$this->pObj->dev_var_dump( $this->content );
       // Get template for csv
       // csv export versus list view
       // #29370, 110831, dwildt+
@@ -347,6 +346,7 @@ $this->pObj->dev_var_dump( $this->content );
     }
       // record browser
 
+$this->pObj->dev_var_dump( $this->content, $content );
     $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
     $this->content = $content;
 
