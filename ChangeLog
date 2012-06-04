@@ -1,3 +1,8 @@
+3.9.24
+  120604
+  Improvement
+  * #00000: content_dieIfEmpty with improved error message
+
 3.9.23
   120530
   Improvement

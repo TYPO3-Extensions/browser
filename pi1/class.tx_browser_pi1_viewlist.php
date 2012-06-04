@@ -28,7 +28,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     3.9.13
+ * @version     3.9.24
  * @since       1.0
  */
 
@@ -563,7 +563,7 @@ class tx_browser_pi1_viewlist
  * @param	string		$method:  calling method
  * @param	string		$line:    line of calling method
  * @return	void		...
- * @version 3.9.12
+ * @version 3.9.24
  * @since   3.9.12
  */
   private function content_dieIfEmpty( $marker, $method, $line )
@@ -580,6 +580,7 @@ class tx_browser_pi1_viewlist
           <p>
             English: Current HTML template doesn\'t contain the subpart \'' . $marker . '\' .<br />
             Please take care of a proper template.<br />
+            Possible reason for this error: The static template of the Browser is missing.
           </p>
           <h2>
             DE: Subpart fehlt
@@ -587,6 +588,7 @@ class tx_browser_pi1_viewlist
           <p>
             Deutsch: Dem aktuellen HTML-Template fehlt der Subpart \'' . $marker . '\'.<br />
             Bitte k&uuml;mmere Dich um ein korrektes Template.<br />
+            M&ouml;gliche Ursache f&uuml;r den Fehler: Das Static Template des Browsers ist nicht eingebunden. 
           </p>
           <p>
             ' . $method . ' (' . $line . ')
