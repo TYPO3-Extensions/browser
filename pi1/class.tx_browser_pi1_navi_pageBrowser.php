@@ -303,6 +303,7 @@ $this->pObj->dev_var_dump( 3 );
   private function count_fromIndexBrowser( )
   {
       // RETURN : index browser isn't enabled
+$this->pObj->dev_var_dump( 'a1' );
     if( ! isset ( $this->pObj->objNaviIndexBrowser->indexBrowserTab ) )
     {
       $this->sumIsFromIndexBrowser = false;
@@ -316,6 +317,7 @@ $this->pObj->dev_var_dump( 3 );
     $sumCurrTab = $arrTabs['tabIds'][$tabId]['sum'];
       // Get sum of current tab
 
+$this->pObj->dev_var_dump( 'a2' );
       // Override sum of the page browser
     $this->sum  = $sumCurrTab;
     $this->sumIsFromIndexBrowser = true;
