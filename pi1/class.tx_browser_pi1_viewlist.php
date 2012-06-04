@@ -526,6 +526,7 @@ class tx_browser_pi1_viewlist
     }
       // Set search box and filter
 
+$this->pObj->dev_var_dump( 'a1' );
       // Set index browser
     $arr_return = $this->subpart_setIndexBrowser( );
     if( $arr_return['error']['status'] )
@@ -534,6 +535,7 @@ class tx_browser_pi1_viewlist
     }
       // Set index browser
 
+$this->pObj->dev_var_dump( 'b1' );
       // Set page browser
     $arr_return = $this->subpart_setPageBrowser( );
     if( $arr_return['error']['status'] )
@@ -542,6 +544,7 @@ class tx_browser_pi1_viewlist
     }
       // Set page browser
 
+$this->pObj->dev_var_dump( 'c1' );
       // Set mode selector
     $arr_return = $this->subpart_setModeSelector( );
     if( $arr_return['error']['status'] )
