@@ -630,10 +630,10 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['srce']['typoscript']['code']      = 'displaySingle.noItemMessage';
     $arr_release[$int_v][$int_t]['srce']['value_out_of_date']       = '1';
     $arr_release[$int_v][$int_t]['srce']['new_value']               = 'TEXT';
-    $arr_release[$int_v][$int_t]['expl']['prompt']['default']       = 'Please update your TypoScript: displaySingle.noItemMessage = ' .
-                                                                      '1 to displaySingle.noItemMessage = TEXT';
-    $arr_release[$int_v][$int_t]['expl']['prompt']['de']            = 'Bitte &auml;ndere Dein TypoScript von displaySingle.noItemMessage = ' .
-                                                                      '1 zu displaySingle.noItemMessage = TEXT';
+//    $arr_release[$int_v][$int_t]['expl']['prompt']['default']       = 'Please update your TypoScript: displaySingle.noItemMessage = ' .
+//                                                                      '1 to displaySingle.noItemMessage = TEXT';
+//    $arr_release[$int_v][$int_t]['expl']['prompt']['de']            = 'Bitte &auml;ndere Dein TypoScript von displaySingle.noItemMessage = ' .
+//                                                                      '1 zu displaySingle.noItemMessage = TEXT';
 
     $int_t++;
     $arr_release[$int_v][$int_t]['header']['default']               = 'noItemMessage becomes cObject';
@@ -647,10 +647,10 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['srce']['typoscript']['code']      = 'displayList.noItemMessage';
     $arr_release[$int_v][$int_t]['srce']['value_out_of_date']       = '1';
     $arr_release[$int_v][$int_t]['srce']['new_value']               = 'TEXT';
-    $arr_release[$int_v][$int_t]['expl']['prompt']['default']       = 'Please update your TypoScript: displaySingle.noItemMessage = ' .
-                                                                      '1 to displayList.noItemMessage = TEXT';
-    $arr_release[$int_v][$int_t]['expl']['prompt']['de']            = 'Bitte &auml;ndere Dein TypoScript von displaySingle.noItemMessage = ' .
-                                                                      '1 zu displaySingle.noItemMessage = TEXT';
+//    $arr_release[$int_v][$int_t]['expl']['prompt']['default']       = 'Please update your TypoScript: displaySingle.noItemMessage = ' .
+//                                                                      '1 to displayList.noItemMessage = TEXT';
+//    $arr_release[$int_v][$int_t]['expl']['prompt']['de']            = 'Bitte &auml;ndere Dein TypoScript von displaySingle.noItemMessage = ' .
+//                                                                      '1 zu displaySingle.noItemMessage = TEXT';
 
 
     // Set the Ticket array
