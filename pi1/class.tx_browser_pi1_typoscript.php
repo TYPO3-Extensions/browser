@@ -815,7 +815,8 @@ class tx_browser_pi1_typoscript
       // Set the global array conf_sql
 
     $this->pObj->conf_sql = $conf_sql;
-      // Set the global array conf_sql
+$this->pObj->dev_var_dump( $this->pObj->conf_sql );
+    // Set the global array conf_sql
 
     return $conf_sql;
 
