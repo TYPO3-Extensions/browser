@@ -201,11 +201,11 @@
       //
       // _GET - Allocate piVars from _GET, if they aren't set
 
-      // #11579, dwildt, 101219
-$this->pObj->dev_var_dump( $this->pObj->piVars );
+      // 3.9.24, 120604, dwildt+
     switch( $this->pObj->objFlexform->handlePiVars )
     {
       case( 'forEachPlugin'):
+          // #11579, dwildt, 101219
         foreach( ( array ) $GLOBALS['_GET'][$this->pObj->prefixId] as $key => $value )
         {
           if( ! isset( $this->pObj->piVars[$key] ) )
@@ -222,7 +222,7 @@ $this->pObj->dev_var_dump( $this->pObj->piVars );
                   'Sorry, this error should not occured!.<br />' .
                   'Browser - TYPO3 without PHP.'; 
     }
-$this->pObj->dev_var_dump( $this->pObj->piVars );
+      // 3.9.24, 120604, dwildt+
       // _GET - Allocate piVars from _GET, if they aren't set
 
 

@@ -184,6 +184,7 @@ class tx_browser_pi1_flexform {
   var $sheet_viewList_rotateviews     = null;
   //[sheet/extend]
 
+    // 3.9.24, 120604, dwildt, 1+
   var $handlePiVars = 'forCurrentPluginOnly';
   // [string] forCurrentPluginOnly || forEachPlugin. Has an effect, if there is more than one plugin
 
@@ -422,6 +423,7 @@ class tx_browser_pi1_flexform {
     $str_piVars     = $this->pObj->pi_getFFvalue($arr_piFlexform, 'piVars', 'sDEF', 'lDEF', 'vDEF');
     switch ($str_piVars) {
       case ('all') :
+          // 3.9.24, 120604, dwildt, 1+
         $this->handlePiVars = 'forEachPlugin';
         if ($this->pObj->b_drs_flexform)
         {
@@ -431,6 +433,7 @@ class tx_browser_pi1_flexform {
         break;
       case ('default') :
       case (false) :
+          // 3.9.24, 120604, dwildt, 1+
         $this->handlePiVars = 'forCurrentPluginOnly';
         if ($this->pObj->b_drs_flexform) 
         {
