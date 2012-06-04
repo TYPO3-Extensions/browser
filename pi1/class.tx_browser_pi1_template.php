@@ -2353,6 +2353,7 @@ class tx_browser_pi1_template
         $arr_values = array();
       }
         // Loop through the rows of the SQL result
+$this->pObj->dev_var_dump( $arr_values );
       foreach((array) $arr_values as $value => $label)
       {
         $str_counter_element  = $int_counter_element.'.';
