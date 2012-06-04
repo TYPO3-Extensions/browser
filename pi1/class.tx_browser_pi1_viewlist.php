@@ -518,6 +518,7 @@ class tx_browser_pi1_viewlist
       // Die, if content is empty
     $this->content_dieIfEmpty( $str_marker, __METHOD__, __LINE__ );
 
+$this->pObj->dev_var_dump( 'b2' );
       // Set search box and filter
     $arr_return = $this->subpart_setSearchbox( );
     if( $arr_return['error']['status'] )
