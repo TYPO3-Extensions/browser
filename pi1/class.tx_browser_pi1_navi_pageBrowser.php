@@ -29,7 +29,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     3.9.12
+ * @version     3.9.24
  * @since       3.9.12
  */
 
@@ -260,7 +260,6 @@ $this->pObj->dev_var_dump( 4 );
  */
   private function count( )
   {
-$this->pObj->dev_var_dump( 1 );
       // RETURN : sum is taken from the index browser
     $this->count_fromIndexBrowser( );
     if( $this->sumIsFromIndexBrowser )
@@ -269,7 +268,6 @@ $this->pObj->dev_var_dump( 1 );
     }
       // RETURN : sum is taken from the index browser
 
-$this->pObj->dev_var_dump( 2 );
       // SQL result with sum of records, depending on search word and filter
     $arr_return = $this->count_resSql( );
     if( $arr_return['error']['status'] )
@@ -285,7 +283,6 @@ $this->pObj->dev_var_dump( 2 );
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
       // Set class var
     $this->sum = $row['count'];
-$this->pObj->dev_var_dump( 3 );
 
     return false;
   }
@@ -297,13 +294,15 @@ $this->pObj->dev_var_dump( 3 );
  *                             is enabled, and set the class var sum.
  *
  * @return	void
- * @version 3.9.12
+ * @version 3.9.24
  * @since   3.9.12
  */
   private function count_fromIndexBrowser( )
   {
       // RETURN : index browser isn't enabled
-$this->pObj->dev_var_dump( 'a1' );
+    // 3.9.24, 120604, dwildt, 1-
+    //if( ! isset ( $this->pObj->objNaviIndexBrowser->indexBrowserTab ) )
+    // 3.9.24, 120604, dwildt, 1+
     if( empty ( $this->pObj->objNaviIndexBrowser->indexBrowserTab ) )
     {
       $this->sumIsFromIndexBrowser = false;
@@ -317,7 +316,6 @@ $this->pObj->dev_var_dump( 'a1' );
     $sumCurrTab = $arrTabs['tabIds'][$tabId]['sum'];
       // Get sum of current tab
 
-$this->pObj->dev_var_dump( 'a2' );
       // Override sum of the page browser
     $this->sum  = $sumCurrTab;
     $this->sumIsFromIndexBrowser = true;
