@@ -732,20 +732,33 @@ class tx_browser_pi1_template
       }
       if( ! $this->ignore_empty_rows_rule )
       {
-        if ($this->pObj->conf['displayList.']['noItemMessage'])
+          // 3.9.24, 120604, dwildt, +
+        $cObj_name      = $this->pObj->conf['displayList.']['noItemMessage'];
+        if( $cObj_name == '1' )
         {
-          $noItemMessage = $this->pObj->objWrapper->general_stdWrap('X', $this->pObj->conf['displayList.']['noItemMessage.']);
-          $template = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $noItemMessage, true);
-          if ($this->pObj->b_drs_templating)
-          {
-            t3lib_div::devlog('[INFO/TEMPLATING] Returned Template is the noItemMessage.', $this->pObj->extKey, 0);
-            t3lib_div::devLog('[HELP/TEMPLATING] Change it? Configure '.$this->conf_path.'.displayList.noItemMessage.', $this->pObj->extKey, 1);
-          }
+          $cObj_name = 'TEXT';
         }
-        if (!$this->pObj->conf['displayList.']['noItemMessage'])
-        {
-          $template = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', '', true);
-        }
+        $cObj_conf      = $this->pObj->conf['displayList.']['noItemMessage.'];
+        $noItemMessage  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+        $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', '', true);
+          // 3.9.24, 120604, dwildt, +
+        
+          // 3.9.24, 120604, dwildt, -
+//        if ($this->pObj->conf['displayList.']['noItemMessage'])
+//        {
+//          $noItemMessage = $this->pObj->objWrapper->general_stdWrap('X', $this->pObj->conf['displayList.']['noItemMessage.']);
+//          $template = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $noItemMessage, true);
+//          if ($this->pObj->b_drs_templating)
+//          {
+//            t3lib_div::devlog('[INFO/TEMPLATING] Returned Template is the noItemMessage.', $this->pObj->extKey, 0);
+//            t3lib_div::devLog('[HELP/TEMPLATING] Change it? Configure '.$this->conf_path.'.displayList.noItemMessage.', $this->pObj->extKey, 1);
+//          }
+//        }
+//        if (!$this->pObj->conf['displayList.']['noItemMessage'])
+//        {
+//          $template = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', '', true);
+//        }
+          // 3.9.24, 120604, dwildt, -
           // 110829, dwildt+
         $this->tmpl_marker( );
           // 110829, dwildt-
