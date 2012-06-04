@@ -202,9 +202,9 @@
       // _GET - Allocate piVars from _GET, if they aren't set
 
       // #11579, dwildt, 101219
-    foreach((array) $GLOBALS['_GET'][$this->pObj->prefixId] as $key => $value)
+    foreach( ( array ) $GLOBALS['_GET'][$this->pObj->prefixId] as $key => $value )
     {
-      if(!isset($this->pObj->piVars[$key]))
+      if( ! isset( $this->pObj->piVars[$key] ) )
       {
 // 101219, dwildt, Abschnitt ist nicht getestet
 //        if (get_magic_quotes_gpc())
@@ -222,9 +222,10 @@
 //        {
 //          $this->pObj->piVars[$key] = stripslashes($value);
 //        }
-        $this->pObj->piVars[$key] = stripslashes($value);
+        $this->pObj->piVars[$key] = stripslashes( $value );
       }
     }
+$this->pObj->dev_var_dump( $this->pObj->piVars );
       // _GET - Allocate piVars from _GET, if they aren't set
 
 
@@ -686,7 +687,6 @@
     // Default Index-Browser tab
 
     // Security
-$this->pObj->dev_var_dump( $this->pObj->piVars );
     if (isset($this->pObj->piVars['indexBrowserTab']))
     {
       $this->pObj->piVars['indexBrowserTab'] = $this->secure_piVar($this->pObj->piVars['indexBrowserTab'], 'string');
