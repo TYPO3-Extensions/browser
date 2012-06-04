@@ -683,8 +683,8 @@ class tx_browser_pi1_template
             $langKey = 'default';
           }
           t3lib_div::devLog('[INFO/FLEXFORM + TEMPLATING] It is the first call for the plugin. The SQL result is replaced with a message.', $this->pObj->extKey, 0);
-          t3lib_div::devLog('[HELP/FLEXFORM + TEMPLATING] If you want a SQL result instead of the message, please configure:<br />
-            displayList.display.emptyListByStart = 0<br />
+          t3lib_div::devLog('[HELP/FLEXFORM + TEMPLATING] If you want a SQL result instead of the message, please disable
+            in the Browser flexform tab [list view] field [empty list at start]<br />
             <br />
             If you want another label, please configure:<br />
             _LOCAL_LANG.'.$langKey.'.label_first_visit', $this->pObj->extKey, 1);

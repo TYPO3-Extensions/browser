@@ -1041,6 +1041,7 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function tabs_initFindInSetForCurrentTab( )
   {
+$this->pObj->dev_var_dump( $this->pObj->piVars['indexBrowserTab'] );
       // RETURN : Any tab isn't selected
     if( empty ( $this->pObj->piVars['indexBrowserTab'] ) )
     {

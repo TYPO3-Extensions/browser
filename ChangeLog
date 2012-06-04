@@ -6,6 +6,7 @@
   Bugfixes
   * #00000: pageBrowser counted 0 records, if indexBrowser was disabled
   * #00000: If there are more than one views, the ORDER CLAUSE is taken from view 1  
+  * #00000: Message of empty list at start isn't rendered
 
 3.9.23
   120530
