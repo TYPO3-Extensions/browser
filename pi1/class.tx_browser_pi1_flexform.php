@@ -507,7 +507,6 @@ class tx_browser_pi1_flexform {
     {
       unset ( $this->pObj->piVars );
     }
-$this->pObj->dev_var_dump( $this->pObj->piVars );
     // The current plugin isn't the plugin, which is used by the visitor
     // Remove piVars
 
