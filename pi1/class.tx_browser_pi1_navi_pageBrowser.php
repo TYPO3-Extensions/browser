@@ -136,7 +136,6 @@ class tx_browser_pi1_navi_pageBrowser
  */
   public function get( $content )
   {
-$this->pObj->dev_var_dump( 1 );
     $arr_return = array( );
     
       // Set class var
@@ -148,7 +147,6 @@ $this->pObj->dev_var_dump( 1 );
       $arr_return['data']['content'] = null;
       return $arr_return;
     }
-$this->pObj->dev_var_dump( 2 );
       // RETURN : requierments aren't met
 
       // Set class var sum
@@ -262,6 +260,7 @@ $this->pObj->dev_var_dump( 4 );
  */
   private function count( )
   {
+$this->pObj->dev_var_dump( 1 );
       // RETURN : sum is taken from the index browser
     $this->count_fromIndexBrowser( );
     if( $this->sumIsFromIndexBrowser )
@@ -270,6 +269,7 @@ $this->pObj->dev_var_dump( 4 );
     }
       // RETURN : sum is taken from the index browser
 
+$this->pObj->dev_var_dump( 2 );
       // SQL result with sum of records, depending on search word and filter
     $arr_return = $this->count_resSql( );
     if( $arr_return['error']['status'] )
@@ -285,6 +285,7 @@ $this->pObj->dev_var_dump( 4 );
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
       // Set class var
     $this->sum = $row['count'];
+$this->pObj->dev_var_dump( 3 );
 
     return false;
   }

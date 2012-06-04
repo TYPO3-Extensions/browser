@@ -518,7 +518,6 @@ class tx_browser_pi1_viewlist
       // Die, if content is empty
     $this->content_dieIfEmpty( $str_marker, __METHOD__, __LINE__ );
 
-$this->pObj->dev_var_dump( 'b2' );
       // Set search box and filter
     $arr_return = $this->subpart_setSearchbox( );
     if( $arr_return['error']['status'] )
@@ -527,7 +526,6 @@ $this->pObj->dev_var_dump( 'b2' );
     }
       // Set search box and filter
 
-$this->pObj->dev_var_dump( 'a1' );
       // Set index browser
     $arr_return = $this->subpart_setIndexBrowser( );
     if( $arr_return['error']['status'] )
@@ -536,7 +534,6 @@ $this->pObj->dev_var_dump( 'a1' );
     }
       // Set index browser
 
-$this->pObj->dev_var_dump( 'b1' );
       // Set page browser
     $arr_return = $this->subpart_setPageBrowser( );
     if( $arr_return['error']['status'] )
@@ -545,7 +542,6 @@ $this->pObj->dev_var_dump( 'b1' );
     }
       // Set page browser
 
-$this->pObj->dev_var_dump( 'c1' );
       // Set mode selector
     $arr_return = $this->subpart_setModeSelector( );
     if( $arr_return['error']['status'] )
