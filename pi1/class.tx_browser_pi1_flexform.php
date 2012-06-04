@@ -494,6 +494,7 @@ class tx_browser_pi1_flexform {
     if ($bool_unset_piVars) {
       unset ($this->pObj->piVars);
     }
+$this->pObj->dev_var_dump( $this->pObj->piVars['indexBrowserTab'] );
     // The current plugin isn't the plugin, which is used by the visitor
     // Remove piVars
 

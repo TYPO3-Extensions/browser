@@ -686,6 +686,7 @@
     // Default Index-Browser tab
 
     // Security
+$this->pObj->dev_var_dump( $this->pObj->piVars['indexBrowserTab'] );
     if (isset($this->pObj->piVars['indexBrowserTab']))
     {
       $this->pObj->piVars['indexBrowserTab'] = $this->secure_piVar($this->pObj->piVars['indexBrowserTab'], 'string');
