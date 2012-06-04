@@ -291,7 +291,7 @@ class tx_browser_pi1_viewlist
     }
       // DRS - :TODO:
 
-$this->dev_var_dump( $rows );
+$this->pObj->dev_var_dump( $rows );
     // Delete fields, which were added whily runtime
     $arr_return = $this->pObj->objSqlFun_3x->rows_with_cleaned_up_fields( $rows );
     $rows       = $arr_return['data']['rows'];
@@ -300,7 +300,7 @@ $this->dev_var_dump( $rows );
 
       // DRS - display first row
     $this->zz_drsFirstRow( );
-$this->dev_var_dump( $rows );
+$this->pObj->dev_var_dump( $rows );
 
       // Set the global $arrLinkToSingle
     $this->zz_setGlobalArrLinkToSingle( );
