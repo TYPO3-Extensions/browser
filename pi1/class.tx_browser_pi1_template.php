@@ -694,6 +694,7 @@ class tx_browser_pi1_template
         // 110829, dwildt-
 //        $markerArray    = $this->pObj->objWrapper->constant_markers();
         $template       = $this->pObj->cObj->substituteMarkerArray($template, $markerArray);
+$this->pObj->dev_var_dump( $template );
         return $template;
       }
       if(!$bool_emptyList)
@@ -792,6 +793,7 @@ class tx_browser_pi1_template
         {
           t3lib_div::devlog('[WARN/TEMPLATING] There isn\'t any row.', $this->pObj->extKey, 2);
         }
+$this->pObj->dev_var_dump( $template );
         return $template;
       }
     }
@@ -1339,7 +1341,6 @@ class tx_browser_pi1_template
     $markerArray['###CAPTION###'] = $this->pObj->objWrapper->tableCaption('list');
     $subpart        = $this->pObj->cObj->getSubpart($template, '###LISTVIEW###');
     $listview       = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
-$this->pObj->dev_var_dump( $template );
     $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $listview, true);
     unset($markerArray);
       // 110829, dwildt-
@@ -1380,6 +1381,7 @@ $this->pObj->dev_var_dump( $template );
     }
     // DRS - Performance
 
+$this->pObj->dev_var_dump( $template );
 
     return $template;
   }
