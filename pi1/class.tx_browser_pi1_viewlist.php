@@ -1784,7 +1784,7 @@ $this->pObj->dev_var_dump( $rows );
 
     reset( $this->pObj->rows );
     $firstKey   = key( $this->pObj->rows );
-    $firstRow   = $rows[$firstKey];
+    $firstRow   = $this->pObj->rows[$firstKey];
 
     $prompt = 'Result of the first row: ' . PHP_EOL;
     $prompt = $prompt . var_export( $firstRow, true );
