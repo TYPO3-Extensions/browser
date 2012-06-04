@@ -291,7 +291,6 @@ class tx_browser_pi1_viewlist
     }
       // DRS - :TODO:
 
-$this->pObj->dev_var_dump( $rows );
     // Delete fields, which were added whily runtime
     $arr_return = $this->pObj->objSqlFun_3x->rows_with_cleaned_up_fields( $rows );
     $rows       = $arr_return['data']['rows'];
@@ -300,7 +299,6 @@ $this->pObj->dev_var_dump( $rows );
 
       // DRS - display first row
     $this->zz_drsFirstRow( );
-$this->pObj->dev_var_dump( $rows );
 
       // Set the global $arrLinkToSingle
     $this->zz_setGlobalArrLinkToSingle( );
@@ -316,8 +314,8 @@ $this->pObj->dev_var_dump( $rows );
     $bool_success = $arr_result['success'];
     if( $bool_success )
     {
-      $rows         = $arr_result['rows'];
-      $content     = $arr_result['template'];
+      $rows     = $arr_result['rows'];
+      $content  = $arr_result['template'];
       $this->pObj->objTemplate->ignore_empty_rows_rule = true;
       if ($this->pObj->b_drs_cal || $this->pObj->b_drs_templating)
       {
@@ -350,6 +348,7 @@ $this->pObj->dev_var_dump( $rows );
 
     $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
     $this->content = $content;
+$this->pObj->dev_var_dump( $content, $rows, $this->content );
 
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
