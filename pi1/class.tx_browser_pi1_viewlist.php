@@ -349,6 +349,7 @@ class tx_browser_pi1_viewlist
 $this->pObj->dev_var_dump( $this->content, $content );
     $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
     $this->content = $content;
+$this->pObj->dev_var_dump( $this->content );
 
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
