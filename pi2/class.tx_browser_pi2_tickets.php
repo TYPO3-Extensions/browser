@@ -618,6 +618,53 @@ class tx_browser_pi2_tickets
     $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'navigation.a-z_Browser';
     $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'navigation.indexBrowser';
 
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'TypoScript array navigation.a-z_Browser is moved';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'The TypoScript array is moved to another position since version %version%. Please move it to the new position.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'TypoScript Array navigation.a-z_Browser ist verschoben';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Das TypoScript Array hat seit Version %version% einen anderen Ort. Bitte verschiebe das Array an die neue Position.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'moved_array';
+    $arr_release[$int_v][$int_t]['version']                         = '3.9.9';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['path']      = 'displaySingle.noItemMessage';
+    $arr_release[$int_v][$int_t]['dest']['typoscript']['path']      = 'navigation.indexBrowser';
+
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'noItemMessage becomes cObject';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'This property has changed in version %version%.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'noItemMessage wird cObject';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft hat sich in Version %version% ge&auml;ndert.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'value_is_out_of_date';
+    $arr_release[$int_v][$int_t]['version']                         = '3.9.24';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['code']      = 'displaySingle.noItemMessage';
+    $arr_release[$int_v][$int_t]['srce']['value_out_of_date']       = '1';
+    $arr_release[$int_v][$int_t]['srce']['new_value']               = 'TEXT';
+    $arr_release[$int_v][$int_t]['expl']['prompt']['default']       = 'Please update your TypoScript: displaySingle.noItemMessage = ' .
+                                                                      '1 to displaySingle.noItemMessage = TEXT';
+    $arr_release[$int_v][$int_t]['expl']['prompt']['de']            = 'Bitte &auml;ndere Dein TypoScript von displaySingle.noItemMessage = ' .
+                                                                      '1 zu displaySingle.noItemMessage = TEXT';
+
+    $int_t++;
+    $arr_release[$int_v][$int_t]['header']['default']               = 'noItemMessage becomes cObject';
+    $arr_release[$int_v][$int_t]['prompt']['default']               = 'This property has changed in version %version%.';
+    $arr_release[$int_v][$int_t]['header']['de']                    = 'noItemMessage wird cObject';
+    $arr_release[$int_v][$int_t]['prompt']['de']                    = 'Die Eigenschaft hat sich in Version %version% ge&auml;ndert.';
+    $arr_release[$int_v][$int_t]['status']                          = PI2_STATUS_ERROR;
+    $arr_release[$int_v][$int_t]['todo']                            = PI2_TODO_UPDATE_MUST;
+    $arr_release[$int_v][$int_t]['function']                        = 'value_is_out_of_date';
+    $arr_release[$int_v][$int_t]['version']                         = '3.9.24';
+    $arr_release[$int_v][$int_t]['srce']['typoscript']['code']      = 'displayList.noItemMessage';
+    $arr_release[$int_v][$int_t]['srce']['value_out_of_date']       = '1';
+    $arr_release[$int_v][$int_t]['srce']['new_value']               = 'TEXT';
+    $arr_release[$int_v][$int_t]['expl']['prompt']['default']       = 'Please update your TypoScript: displaySingle.noItemMessage = ' .
+                                                                      '1 to displayList.noItemMessage = TEXT';
+    $arr_release[$int_v][$int_t]['expl']['prompt']['de']            = 'Bitte &auml;ndere Dein TypoScript von displaySingle.noItemMessage = ' .
+                                                                      '1 zu displaySingle.noItemMessage = TEXT';
+
+
     // Set the Ticket array
 
 

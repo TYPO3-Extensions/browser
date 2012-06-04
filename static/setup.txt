@@ -852,8 +852,8 @@ plugin.tx_browser_pi1 {
       // [Boolean] If first image is for the preview, but there is no further image, preview image will displayed in the single view
     forceFirstImageIsPreview  = 0
 
-      // [Boolean, stdWrap] Display the no-item-message, if SQL query will return an empty result
-    noItemMessage = 1
+      // Displays the no-item-message, if SQL query will return an empty result
+    noItemMessage = TEXT
     noItemMessage {
       data = LLL:EXT:browser/pi1/locallang.xml:phrase_norecord
       wrap = <p style="padding:2em 0;">|</p>
@@ -2315,8 +2315,8 @@ plugin.tx_browser_pi1 {
       firstImageIsPreview       >
       forceFirstImageIsPreview  >
     }
-      // [Boolean, stdWrap] Display the no-item-message, if SQL query will return an empty result
-    noItemMessage = 1
+      // Displays the no-item-message, if SQL query will return an empty result
+    noItemMessage = TEXT
     noItemMessage {
       data = LLL:EXT:browser/pi1/locallang.xml:phrase_norecord
       wrap = <p style="padding:2em 0;">|</p>

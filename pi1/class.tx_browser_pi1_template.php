@@ -596,6 +596,20 @@ class tx_browser_pi1_template
  */
   function tmplListview($template, $rows)
   {
+      ///////////////////////////////////////////////////////////
+      //
+      // Get the local or the global displayList array
+
+    $lDisplayList = $this->conf_view['displayList.'];
+    if (!is_array($lDisplayList))
+    {
+      $lDisplayList = $this->pObj->conf['displayList.'];
+    }
+    $this->lDisplayList = $lDisplayList;
+      // Get the local or the global displayList array
+
+
+
 
       ////////////////////////////////////////////////////////
       //
@@ -657,7 +671,7 @@ class tx_browser_pi1_template
       $bool_emptyList = $this->pObj->objFlexform->bool_emptyAtStart;
       if($bool_emptyList)
       {
-        $conf_emptyList = $this->pObj->lDisplay['emptyListByStart.']['stdWrap.'];
+        $conf_emptyList = $lDisplayList['emptyListByStart.']['stdWrap.'];
         if ($this->pObj->b_drs_templating || $this->b_drs_flexform)
         {
           $langKey = $GLOBALS['TSFE']->lang;
@@ -721,6 +735,7 @@ class tx_browser_pi1_template
 
     // 110823, dwildt
     // if (count($rows) == 0 || !is_array($rows))
+    $this->updateWizard( 'displayList.noItemMessage', $lDisplayList );
     if ( empty ( $rows ) )
     {
       if( $this->ignore_empty_rows_rule )
@@ -732,16 +747,16 @@ class tx_browser_pi1_template
       }
       if( ! $this->ignore_empty_rows_rule )
       {
-          // 3.9.24, 120604, dwildt, +
-        $cObj_name = $this->pObj->conf['displayList.']['noItemMessage'];
+          // #37731, 120604, dwildt, +
+        $cObj_name = $lDisplayList['noItemMessage'];
         if( $cObj_name == '1' )
         {
           $cObj_name = 'TEXT';
         }
-        $cObj_conf      = $this->pObj->conf['displayList.']['noItemMessage.'];
+        $cObj_conf      = $lDisplayList['noItemMessage.'];
         $noItemMessage  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
         $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $noItemMessage, true);
-          // 3.9.24, 120604, dwildt, +
+          // #37731, 120604, dwildt, +
         
           // 3.9.24, 120604, dwildt, -
 //        if ($this->pObj->conf['displayList.']['noItemMessage'])
@@ -781,20 +796,6 @@ class tx_browser_pi1_template
       }
     }
       // RETURN: Without rows no listview table
-
-
-
-      //////////////////////////////////////////////////////////////////
-      //
-      // Get the local or the global displayList array
-
-    $lDisplayList = $this->conf_view['displayList.'];
-    if (!is_array($lDisplayList))
-    {
-      $lDisplayList = $this->pObj->conf['displayList.'];
-    }
-    $this->lDisplayList = $lDisplayList;
-      // Get the local or the global displaySingle or displayList array
 
 
 
@@ -1497,6 +1498,7 @@ class tx_browser_pi1_template
     //
     // RETURN: We don't have any row
 
+    $this->updateWizard( 'displaySingle.noItemMessage', $lDisplaySingle );
     if (count($elements) == 0 || !is_array($elements))
     {
       // We don't have a result
@@ -1505,15 +1507,28 @@ class tx_browser_pi1_template
         t3lib_div::devlog('[INFO/SQL+TEMPLATING] We don\'t have any row!', $this->pObj->extKey, 0);
       }
       $template = $this->pObj->cObj->substituteSubpart($template, '###SINGLEVIEW###', '', true);
-      if ($lDisplaySingle['noItemMessage'])
+
+        // #37731, 120604, dwildt, +
+      $cObj_name = $lDisplaySingle['noItemMessage'];
+      if( $cObj_name == '1' )
       {
-        $template = $this->pObj->objWrapper->general_stdWrap('', $lDisplaySingle['noItemMessage.']);
-        if ($this->pObj->b_drs_templating)
-        {
-          t3lib_div::devlog('[INFO/TEMPLATING] Returned Template is the noItemMessage.', $this->pObj->extKey, 0);
-          t3lib_div::devLog('[HELP/TEMPLATING] Change it? Configure '.$this->conf_path.'.displayList.noItemMessage.', $this->pObj->extKey, 1);
-        }
+        $cObj_name = 'TEXT';
       }
+      $cObj_conf      = $lDisplaySingle['displayList.']['noItemMessage.'];
+      $noItemMessage  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+      $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $noItemMessage, true);
+        // #37731, 120604, dwildt, +
+        // #37731, 120604, dwildt, -
+//      if ($lDisplaySingle['noItemMessage'])
+//      {
+//        $template = $this->pObj->objWrapper->general_stdWrap('', $lDisplaySingle['noItemMessage.']);
+//        if ($this->pObj->b_drs_templating)
+//        {
+//          t3lib_div::devlog('[INFO/TEMPLATING] Returned Template is the noItemMessage.', $this->pObj->extKey, 0);
+//          t3lib_div::devLog('[HELP/TEMPLATING] Change it? Configure '.$this->conf_path.'.displayList.noItemMessage.', $this->pObj->extKey, 1);
+//        }
+//      }
+        // #37731, 120604, dwildt, -
         // 110829, dwildt+
       $this->tmpl_marker( );
       $markerArray = $this->markerArray;
@@ -3835,6 +3850,64 @@ class tx_browser_pi1_template
         $_procObj = & t3lib_div :: getUserObj($_classRef);
         $_procObj->BR_TemplateElementsTransformedHook($this);
       }
+    }
+  }
+
+
+
+/**
+ * updateWizard( ): Checks, if TypoScript of the current view has deprecated properties.
+ *                  It is relevant only, if the update wizard is enabled.
+ *
+ * @param	integer		$uid        : uid of the current item / row
+ * @param	string		$value      : value of the current item / row
+ * @return	string		$item       : The rendered item
+ * @version 3.9.24
+ * @since   3.9.24
+ */
+  private function updateWizard( $check, $lDisplayList )
+  {
+    if( ! $this->pObj->arr_extConf['updateWizardEnable'] )
+    {
+      return;
+    }
+      // Current IP has access
+    if( ! $this->pObj->bool_accessByIP )
+    {
+      return;
+    }
+
+    switch( $check )
+    {
+      case( 'displaySingle.noItemMessage' ):
+      case( 'displayList.noItemMessage' ):
+        if( $lDisplayList['noItemMessage'] == '1' )
+        {
+          $prompt_01 = '
+            Deprecated: ' . $check . ' = 1<br />
+            Please use: <br />
+            ' . $check . ' = TEXT<br />
+            ';
+        }
+        if( $prompt_01 )
+        {
+          echo '
+            <div style="border:1em solid red;padding:2em;background:white;">
+              <h1>TYPO3 Browser Update Wizard</h1>
+            ';
+          if( $prompt_01 )
+          {
+            echo '
+                <p>
+                  ' . $prompt_01 . '
+                </p>
+              ';
+          }
+          echo '
+            </div>
+            ';
+        }
+        break;
     }
   }
 
