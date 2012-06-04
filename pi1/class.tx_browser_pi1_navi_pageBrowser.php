@@ -136,6 +136,7 @@ class tx_browser_pi1_navi_pageBrowser
  */
   public function get( $content )
   {
+$this->pObj->dev_var_dump( 1 );
     $arr_return = array( );
     
       // Set class var
@@ -147,6 +148,7 @@ class tx_browser_pi1_navi_pageBrowser
       $arr_return['data']['content'] = null;
       return $arr_return;
     }
+$this->pObj->dev_var_dump( 2 );
       // RETURN : requierments aren't met
 
       // Set class var sum
@@ -158,6 +160,7 @@ class tx_browser_pi1_navi_pageBrowser
       $arr_return['data']['content'] = null;
       return $arr_return;
     }
+$this->pObj->dev_var_dump( 3 );
       // RETURN : there isn't any record.
 
       // Backup $GLOBALS['TSFE']->id
@@ -201,6 +204,7 @@ class tx_browser_pi1_navi_pageBrowser
 
       // RETURN the content
     $arr_return['data']['content'] = $pageBrowser;
+$this->pObj->dev_var_dump( 4 );
     return $arr_return;
   }
 
