@@ -30,7 +30,7 @@
  * @package     TYPO3
  * @subpackage  browser
  *
- * @version     3.9.12
+ * @version     3.9.24
  * @since       3.9.12
  */
 
@@ -855,20 +855,19 @@ class tx_browser_pi1_sql_auto
 /**
  * get_statements_whereLL( ) : ...
  *
- * @param	[type]		$$where: ...
  * @return	string		FALSE or the SQL-where-clause
- * @version 3.9.13
+ * @version 3.9.24
  * @since   3.9.12
  */
-  private function get_statements_whereLL( $where )
+  private function get_statements_whereLL( )
   {
     $whereLL = $this->pObj->objLocalise->localisationFields_where( $this->pObj->localTable );
     if ( $whereLL )
     {
-      $where = $where . " AND " . $whereLL;
+      $whereLL = " AND " . $whereLL;
     }
 
-    return $where;
+    return $whereLL;
 
   }
 
