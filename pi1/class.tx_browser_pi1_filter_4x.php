@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      3.9.16
+ * @version      3.9.24
  * @since        3.9.9
  */
 
@@ -4996,14 +4996,21 @@ class tx_browser_pi1_filter_4x {
  * set_currFilterIsArea( ): Set the class var $bool_currFilterIsArea
  *
  * @return	void
- * @version 3.9.9
+ * @version 3.9.24
  * @since   3.9.9
  */
   private function set_currFilterIsArea( )
   {
+      // 3.9.24, 120604, dwildt+
+    if( empty ( $this->pObj->objCal->arr_area ) )
+    {
+      $this->bool_currFilterIsArea = false;
+      return;
+    }
+      // 3.9.24, 120604, dwildt+
       // SWITCH current tableField is a filter with areas
       // Set class var $bool_currFilterIsArea
-    switch( in_array( $this->curr_tableField, array_keys( ( array) $this->pObj->objCal->arr_area ) ) )
+    switch( in_array( $this->curr_tableField, array_keys( $this->pObj->objCal->arr_area ) ) )
     {
       case( true ):
         $this->bool_currFilterIsArea = true;
