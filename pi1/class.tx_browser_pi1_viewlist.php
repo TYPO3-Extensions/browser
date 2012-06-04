@@ -178,7 +178,6 @@ class tx_browser_pi1_viewlist
 
       // Get HTML content
     $this->content = $this->pObj->str_template_raw;
-$this->pObj->dev_var_dump( $this->content );
 
       // Set SQL query parts in general and statements for rows
     $arr_return = $this->pObj->objSqlInit->init( );
@@ -225,6 +224,7 @@ $this->pObj->dev_var_dump( $this->content );
           // CASE no csv
     }
     $content = $this->content;
+$this->pObj->dev_var_dump( $this->content );
       // Get template for csv
       // csv export versus list view
       // #29370, 110831, dwildt+
