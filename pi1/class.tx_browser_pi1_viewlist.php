@@ -178,6 +178,7 @@ class tx_browser_pi1_viewlist
 
       // Get HTML content
     $this->content = $this->pObj->str_template_raw;
+$this->pObj->dev_var_dump( $this->content );
 
       // Set SQL query parts in general and statements for rows
     $arr_return = $this->pObj->objSqlInit->init( );
@@ -348,7 +349,6 @@ class tx_browser_pi1_viewlist
 
     $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
     $this->content = $content;
-$this->pObj->dev_var_dump( $content, $rows, $this->content );
 
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
