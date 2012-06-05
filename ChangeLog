@@ -1,3 +1,8 @@
+3.9.26
+  120605
+  Bugfixes
+  * #00000: flexform values for jQuery UI missed in some cases
+
 3.9.25
   120605
   Bugfixes
