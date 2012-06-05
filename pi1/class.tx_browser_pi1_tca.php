@@ -28,7 +28,7 @@
 * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
 * @package    TYPO3
 * @subpackage  browser
-* @version    3.9.6
+* @version    3.9.26
 */
 
   /**
@@ -790,17 +790,25 @@ if( $tableField == 'tt_news.image' )
  *                  value will wrapped with content_stdWrap
  *
  * @return	void
- * @version 3.9.6
+ * @version 3.9.26
  * @since   3.9.6
  */
   private function handleAsImage( )
   {
       // RETURN tableField isn't content of handleAs['image']
-    $pos = strpos( $this->arrHandleAs['image'] , $this->tableField );
-    if( $pos === false )
+      // 3.9.26, 120506, dwildt+
+    if( $this->arrHandleAs['image'] != $this->tableField )
     {
       return;
     }
+      // 3.9.26, 120506, dwildt+
+      // 3.9.26, 120506, dwildt-
+//    $pos = strpos( $this->arrHandleAs['image'] , $this->tableField );
+//    if( $pos === false )
+//    {
+//      return;
+//    }
+      // 3.9.26, 120506, dwildt-
       // RETURN tableField isn't content of handleAs['image']
 
       // DRS - Development Reporting System
@@ -888,7 +896,7 @@ if( $tableField == 'tt_news.image' )
  *                  value will wrapped with content_stdWrap
  *
  * @return	void
- * @version 3.9.6
+ * @version 3.9.26
  * @since   3.9.6
  */
   private function handleAsImagecaption( )
@@ -947,17 +955,25 @@ if( $this->tableField == 'tt_news.image' )
  *                  value will wrapped with content_stdWrap
  *
  * @return	void
- * @version 3.9.6
+ * @version 3.9.26
  * @since   3.9.6
  */
   private function handleAsDocument( )
   {
       // RETURN tableField isn't content of handleAs['document']
-    $pos = strpos( $this->arrHandleAs['document'] , $this->tableField );
-    if( $pos === false )
+      // 3.9.26, 120506, dwildt+
+    if( $this->arrHandleAs['document'] != $this->tableField )
     {
       return;
     }
+      // 3.9.26, 120506, dwildt+
+      // 3.9.26, 120506, dwildt-
+//    $pos = strpos( $this->arrHandleAs['document'] , $this->tableField );
+//    if( $pos === false )
+//    {
+//      return;
+//    }
+      // RETURN tableField isn't content of handleAs['document']
       // RETURN tableField isn't content of handleAs['document']
 
       // DRS - Development Reporting System
@@ -993,17 +1009,25 @@ if( $this->tableField == 'tt_news.image' )
  *                  value will wrapped with content_stdWrap
  *
  * @return	void
- * @version 3.9.6
+ * @version 3.9.26
  * @since   3.9.6
  */
   private function handleAsImagealttext( )
   {
       // RETURN tableField isn't content of handleAs['ImageAltText']
-    $pos = strpos( $this->arrHandleAs['ImageAltText'] , $this->tableField );
-    if( $pos === false )
+      // 3.9.26, 120506, dwildt+
+    if( $this->arrHandleAs['ImageAltText'] != $this->tableField )
     {
       return;
     }
+      // 3.9.26, 120506, dwildt+
+      // 3.9.26, 120506, dwildt-
+//    $pos = strpos( $this->arrHandleAs['ImageAltText'] , $this->tableField );
+//    if( $pos === false )
+//    {
+//      return;
+//    }
+      // RETURN tableField isn't content of handleAs['ImageAltText']
       // RETURN tableField isn't content of handleAs['ImageAltText']
 
       // DRS - Development Reporting System
@@ -1040,17 +1064,25 @@ if( $this->tableField == 'tt_news.image' )
  *                  value will wrapped with content_stdWrap
  *
  * @return	void
- * @version 3.9.6
+ * @version 3.9.26
  * @since   3.9.6
  */
   private function handleAsImagetitletext( )
   {
       // RETURN tableField isn't content of handleAs['ImageTitleText']
-    $pos = strpos( $this->arrHandleAs['ImageTitleText'] , $this->tableField );
-    if( $pos === false )
+      // 3.9.26, 120506, dwildt+
+    if( $this->arrHandleAs['ImageTitleText'] != $this->tableField )
     {
       return;
     }
+      // 3.9.26, 120506, dwildt+
+      // 3.9.26, 120506, dwildt-
+//    $pos = strpos( $this->arrHandleAs['ImageTitleText'] , $this->tableField );
+//    if( $pos === false )
+//    {
+//      return;
+//    }
+      // 3.9.26, 120506, dwildt-
       // RETURN tableField isn't content of handleAs['ImageTitleText']
 
       // DRS - Development Reporting System
@@ -1087,17 +1119,25 @@ if( $this->tableField == 'tt_news.image' )
  *                  value will wrapped with content_stdWrap
  *
  * @return	void
- * @version 3.9.6
+ * @version 3.9.26
  * @since   3.9.6
  */
   private function handleAsText( )
   {
       // RETURN tableField isn't content of handleAs['text']
-    $pos = strpos( $this->arrHandleAs['text'] , $this->tableField );
-    if( $pos === false )
+      // 3.9.26, 120506, dwildt+
+    if( $this->arrHandleAs['text'] != $this->tableField )
     {
       return;
     }
+      // 3.9.26, 120506, dwildt+
+      // 3.9.26, 120506, dwildt-
+//    $pos = strpos( $this->arrHandleAs['text'] , $this->tableField );
+//    if( $pos === false )
+//    {
+//      return;
+//    }
+      // 3.9.26, 120506, dwildt-
       // RETURN tableField isn't content of handleAs['text']
 
       // DRS - Development Reporting System
@@ -1159,22 +1199,25 @@ if( $this->tableField == 'tt_news.image' )
  *                        value will wrapped with content_stdWrap
  *
  * @return	void
- * @version 3.9.6
+ * @version 3.9.26
  * @since   3.9.6
  */
   private function handleAsTimestamp(  )
   {
-//$pos = strpos( '91.23.174.97' , t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//if (!($pos === false))
-//{
-//  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $this->arrHandleAs['timestamp'] , $this->tableField );
-//}
       // RETURN tableField isn't content of handleAs['timestamp']
-    $pos = strpos( $this->arrHandleAs['timestamp'] , $this->tableField );
-    if( $pos === false )
+      // 3.9.26, 120506, dwildt+
+    if( $this->arrHandleAs['timestamp'] != $this->tableField )
     {
       return;
     }
+      // 3.9.26, 120506, dwildt+
+      // 3.9.26, 120506, dwildt-
+//    $pos = strpos( $this->arrHandleAs['timestamp'] , $this->tableField );
+//    if( $pos === false )
+//    {
+//      return;
+//    }
+      // 3.9.26, 120506, dwildt-
       // RETURN tableField isn't content of handleAs['timestamp']
 
       // DRS - Development Reporting System
@@ -1255,17 +1298,25 @@ if( $this->tableField == 'tt_news.image' )
  *                  value will wrapped with content_stdWrap
  *
  * @return	void
- * @version 3.9.6
+ * @version 3.9.26
  * @since   3.9.6
  */
   private function handleAsYYYYMMDD( )
   {
       // RETURN tableField isn't content of handleAs['YYYY-MM-DD']
-    $pos = strpos( $this->arrHandleAs['YYYY-MM-DD'] , $this->tableField );
-    if( $pos === false )
+      // 3.9.26, 120506, dwildt+
+    if( $this->arrHandleAs['YYYY-MM-DD'] != $this->tableField )
     {
       return;
     }
+      // 3.9.26, 120506, dwildt+
+      // 3.9.26, 120506, dwildt-
+//    $pos = strpos( $this->arrHandleAs['YYYY-MM-DD'] , $this->tableField );
+//    if( $pos === false )
+//    {
+//      return;
+//    }
+      // 3.9.26, 120506, dwildt-
       // RETURN tableField isn't content of handleAs['YYYY-MM-DD']
 
       // DRS - Development Reporting System
