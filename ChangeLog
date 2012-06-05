@@ -1,3 +1,10 @@
+3.9.25
+  120605
+  Bugfixes
+  * #00000: indexBrowser ignored the TS andWhere
+  * #00000: pageBrowser ignored the TS andWhere
+  * #00000: pageBrowser ignored localisation in some cases
+
 3.9.24
   120604
   Improvement

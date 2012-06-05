@@ -29,7 +29,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     3.9.13
+ * @version     3.9.25
  * @since       3.9.9
  */
 
@@ -1985,13 +1985,15 @@ class tx_browser_pi1_navi_indexBrowser
  *
  * @param	string		$table  : The current from table
  * @return	string		$from   : FROM statement without a from
- * @version 3.9.12
+ * @version 3.9.25
  * @since   3.9.12
  */
   private function sqlStatement_from( $table )
   {
     switch( true )
     {
+        // 3.9.25, 120506, dwildt+
+      case( ! empty ( $this->pObj->conf_sql['andWhere'] ) ):
       case( ! $this->pObj->objSqlAut->b_left_join ) :
       case( isset( $this->pObj->piVars['sword'] ) ):
       case( $this->pObj->objFltr4x->init_aFilterIsSelected( ) ):
@@ -2013,43 +2015,59 @@ class tx_browser_pi1_navi_indexBrowser
  * @param	string		$table              : The current from table
  * @param	string		$andWhereFindInSet  : FIND IN SET
  * @return	string		$where            : WHERE statement without a WHERE
- * @version 3.9.12
+ * @version 3.9.25
  * @since   3.9.12
  */
   private function sqlStatement_where( $table, $andWhereFindInSet )
   {
     switch( true )
     {
+        // 3.9.25, 120506, dwildt+
+      case( ! empty ( $this->pObj->conf_sql['andWhere'] ) ):
       case( ! $this->pObj->objSqlAut->b_left_join ) :
       case( isset( $this->pObj->piVars['sword'] ) ):
       case( $this->pObj->objFltr4x->init_aFilterIsSelected( ) ):
         $where  = $this->pObj->objSqlInit->statements['listView']['where'];
-//$this->pObj->dev_var_dump( $this->pObj->objSqlInit->statements['listView']['where'] );
         $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
         $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
-//$this->pObj->dev_var_dump( $llWhere );
-        if( $llWhere )
-        {
-          $where  = $where . " AND " . $llWhere;
-        }
-        $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
+          // 3.9.25, 120605, dwildt+
+        $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $llWhere );
+          // 3.9.25, 120605, dwildt-
+//        if( $llWhere )
+//        {
+//          $where  = $where . " AND " . $llWhere;
+//        }
+//        $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
+          // 3.9.25, 120605, dwildt+
+        $andWhere = $this->pObj->objFltr4x->andWhereFilter;
+        $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
         break;
       default:
+          // 3.9.25, 120605: dwildt+
+        $where    = $this->pObj->cObj->enableFields( $table );
+        $andWhere = $this->pObj->objSqlFun->get_andWherePid( $table );
+        $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
+        $andWhere = $this->pObj->objLocalise3x->localisationFields_where( $table );
+        $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
+        $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereFindInSet );
+          // 3.9.25, 120605: dwildt+
+          // 3.9.25, 120605: dwildt-
           // 120421, dwildt, 1+
-        $where  = "1";
-        $andEnableFields = $this->pObj->cObj->enableFields( $table );
-        $where  = $where . $andEnableFields;
-        $where  = $where . $this->pObj->objSqlFun->get_andWherePid( $table );
-        $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
-        if( empty ( $where ) )
-        {
-          $where = "1";
-        }
-        $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
-        if( $llWhere )
-        {
-          $where  = $where . " AND " . $llWhere;
-        }
+//        $where  = "1";
+//        $andEnableFields = $this->pObj->cObj->enableFields( $table );
+//        $where  = $where . $andEnableFields;
+//        $where  = $where . $this->pObj->objSqlFun->get_andWherePid( $table );
+//        $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
+//        if( empty ( $where ) )
+//        {
+//          $where = "1";
+//        }
+//        $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
+//        if( $llWhere )
+//        {
+//          $where  = $where . " AND " . $llWhere;
+//        }
+          // 3.9.25, 120605: dwildt-
         break;
     }
 

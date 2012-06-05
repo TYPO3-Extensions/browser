@@ -30,7 +30,7 @@
  *
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *
- * @version   3.9.12
+ * @version   3.9.25
  * @since     3.9.9
  *
  * @package     TYPO3
@@ -954,7 +954,7 @@ class tx_browser_pi1_sql_functions
   * @param    string    $param_1  : first param
   * @param    string    $param_2  : second param
   * @return   string	Pramams cocatenated with AND
-  * @version  3.1.13
+  * @version  3.1.25
   * @since    3.1.13
   */
   public function zz_concatenateWithAnd( $param_1, $param_2 )
@@ -962,6 +962,12 @@ class tx_browser_pi1_sql_functions
       // RETURN $param_2
     if( empty ( $param_1 ) )
     {
+        // 3.9.25, 120605, dwildt+
+      if( substr( $param_2, 0, 4) == 'AND ' )
+      {
+        $param_2 = substr( $param_2, 4 );
+      }
+        // 3.9.25, 120605, dwildt+
       return $param_2;
     }
       // RETURN $param_2
@@ -969,6 +975,12 @@ class tx_browser_pi1_sql_functions
       // RETURN $param_1
     if( empty ( $param_2 ) )
     {
+        // 3.9.25, 120605, dwildt+
+      if( substr( $param_1, 0, 4) == 'AND ' )
+      {
+        $param_1 = substr( $param_1, 4 );
+      }
+        // 3.9.25, 120605, dwildt+
       return $param_1;
     }
       // RETURN $param_1
@@ -991,6 +1003,14 @@ class tx_browser_pi1_sql_functions
 
       // RETURN $param_1 AND $param_2
     $param_1 = $param_1 . " AND " . $param_2;
+      // Cut the 'AND ' of the beginning of param_1
+      // 3.9.25, 120605, dwildt+
+    if( substr( $param_1, 0, 4) == 'AND ' )
+    {
+      $param_1 = substr( $param_1, 4 );
+    }
+      // 3.9.25, 120605, dwildt+
+      // Cut the 'AND ' of the beginning of param_1
     return $param_1;
   }
 
