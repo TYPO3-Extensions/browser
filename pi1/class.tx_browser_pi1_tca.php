@@ -835,7 +835,7 @@ class tx_browser_pi1_tca
     }
       // DRS - Development Reporting System
 
-$this->pObj->dev_var_dump( $this->arrHandleAs, $this->elements[$this->arrHandleAs['imageCaption']] );
+//$this->pObj->dev_var_dump( $this->arrHandleAs, $this->elements[$this->arrHandleAs['imageCaption']] );
       // Image caption
       // 3.9.26, 120506, dwildt+
     $csv_imageCaption = $this->elements[$this->arrHandleAs['imageCaption']];
@@ -871,6 +871,7 @@ $this->pObj->dev_var_dump( $this->arrHandleAs, $this->elements[$this->arrHandleA
 //  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $this->elements, $this->tableField, $tsImage );
 //
 //}
+$this->pObj->dev_var_dump( $tsImage );
     $this->value                = $this->pObj->objWrapper->wrapImage( $tsImage );
 
     return;
