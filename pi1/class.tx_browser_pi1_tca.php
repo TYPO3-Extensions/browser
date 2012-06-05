@@ -753,10 +753,30 @@ if( $tableField == 'tt_news.image' )
   $this->pObj->dev_var_dump( $this->boolSubstitute );
 }
     $this->handleAsImagecaption( );
+if( $tableField == 'tt_news.image' )
+{
+  $this->pObj->dev_var_dump( $this->boolSubstitute );
+}
     $this->handleAsImagealttext( );
+if( $tableField == 'tt_news.image' )
+{
+  $this->pObj->dev_var_dump( $this->boolSubstitute );
+}
     $this->handleAsImagetitletext( );
+if( $tableField == 'tt_news.image' )
+{
+  $this->pObj->dev_var_dump( $this->boolSubstitute );
+}
     $this->handleAsText( );
+if( $tableField == 'tt_news.image' )
+{
+  $this->pObj->dev_var_dump( $this->boolSubstitute );
+}
     $this->handleAsTimestamp( );
+if( $tableField == 'tt_news.image' )
+{
+  $this->pObj->dev_var_dump( $this->boolSubstitute );
+}
     $this->handleAsYYYYMMDD( );
 if( $tableField == 'tt_news.image' )
 {
