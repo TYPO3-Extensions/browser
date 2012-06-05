@@ -1884,13 +1884,13 @@ class tx_browser_pi1_backend
     $arr_jquery_uis = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['templating.']['jquery_ui.'];
 
       // Loop: jquery_ui
+var_dump( __METHOD__, __LINE__, t3lib_div::int_from_ver( TYPO3_version ), $this->locallang );
     foreach( ( array ) $arr_jquery_uis as $key_jquery_ui => $arr_jquery_ui )
     {
       $jquery_ui_key    = strtolower( substr( $key_jquery_ui, 0, -1 ) );
         // 120515, dwildt, 1-
       //$jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
         // 120515, dwildt, 9+
-var_dump( __METHOD__, __LINE__, t3lib_div::int_from_ver( TYPO3_version ), $this->locallang[ $arr_jquery_ui['label'] ] );
       switch( true )
       {
         case( t3lib_div::int_from_ver( TYPO3_version ) < 4006000):
