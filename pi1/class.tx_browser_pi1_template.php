@@ -1802,8 +1802,8 @@ class tx_browser_pi1_template
     // Is the system marker ###TEXT### defined?
 
       // 3.9.26, 120506, dwildt-
-//    if( $b_marker_image )
-//    {
+    if( $b_marker_image )
+    {
         // DRS - Development Reporting System
       if( $handleAs['image'] ) 
       {
@@ -1881,7 +1881,7 @@ unset($elements[$handleAs['imageTitleText']]);
     }
       // 3.9.26, 120506, dwildt, 1+
     }
-//    }
+    }
 
     if($b_marker_text)
     {
