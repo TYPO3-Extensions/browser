@@ -2913,7 +2913,7 @@ $this->pObj->dev_var_dump( $elements['tt_news.image'] );
       $bool_dontColorSwords = $arr_result['data']['dontColorSwords'];
       $maxColumns           = $arr_result['data']['maxColumns'];
       $boolSubstitute       = $arr_result['data']['boolSubstitute'];
-if( $tableField == 'tt_news.image' )
+if( $key == 'tt_news.image' )
 {
   $this->pObj->dev_var_dump( $key, $value, $boolSubstitute );
 }
