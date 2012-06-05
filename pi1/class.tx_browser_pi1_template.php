@@ -3144,7 +3144,7 @@ $this->pObj->dev_var_dump( $this->_elementsTransformed, $this->_elementsBoolSubs
           $markerArray['###VALUE###'] = $value;
           $bool_defaultTemplate = true;
           $markerArray['###SOCIALMEDIA_BOOKMARKS###'] = $this->pObj->objSocialmedia->get_htmlBookmarks($elements, $key, $bool_defaultTemplate);
-$this->pObj->dev_var_dump( $markerArray );
+$this->pObj->dev_var_dump( $markerArray['###VALUE###'] );
           $htmlRow  .= $this->pObj->cObj->substituteMarkerArray($htmlSubpart, $markerArray);
         }
         if($this->view == 'single' && !$bool_design_default)
@@ -3152,7 +3152,6 @@ $this->pObj->dev_var_dump( $markerArray );
           $markerArray['###'.strtoupper($key).'###']  = $value;
           $bool_defaultTemplate = false;
           $markerArray['###SOCIALMEDIA_BOOKMARKS###'] = $this->pObj->objSocialmedia->get_htmlBookmarks($elements, $key, $bool_defaultTemplate);
-$this->pObj->dev_var_dump( $markerArray );
           $htmlRow  = $this->pObj->cObj->substituteMarkerArray($htmlSubpart, $markerArray);
         }
         $i_count_cell++;
