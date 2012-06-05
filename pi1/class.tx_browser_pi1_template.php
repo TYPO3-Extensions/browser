@@ -2624,7 +2624,7 @@ unset($elements[$handleAs['imageTitleText']]);
  */
   function tmplRows($elements, $subpart, $template)
   {
-$this->pObj->dev_var_dump( $elements );
+$this->pObj->dev_var_dump( $elements['tt_news.image'] );
     
     static $bool_firstLoop = true;
     
@@ -2915,7 +2915,7 @@ $this->pObj->dev_var_dump( $elements );
       $boolSubstitute       = $arr_result['data']['boolSubstitute'];
 if( $tableField == 'tt_news.image' )
 {
-  $this->pObj->dev_var_dump( $key, $boolSubstitute );
+  $this->pObj->dev_var_dump( $key, $value, $boolSubstitute );
 }
         // 120129, dwildt+
 //if( $key == 'tx_org_downloads.documents' )
