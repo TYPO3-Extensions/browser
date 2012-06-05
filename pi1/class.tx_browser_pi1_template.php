@@ -1757,11 +1757,11 @@ class tx_browser_pi1_template
     // Building the body title
 
 
-    /////////////////////////////////////
-    //
-    // Building the body content
+      /////////////////////////////////////
+      //
+      // Building the body content
 
-    // Is the system marker ###IMAGE### defined?
+      // Is the system marker ###IMAGE### defined?
     $i_pos = strpos($template, '###IMAGE###');
     if ($i_pos === false)
     {
@@ -1779,29 +1779,9 @@ class tx_browser_pi1_template
         t3lib_div::devlog('[INFO/TEMPLATING] The system marker ###IMAGE### is used in the HTML-template.', $this->pObj->extKey, 0);
       }
     }
-    // Is the system marker ###IMAGE### defined?
+      // Is the system marker ###IMAGE### defined?
 
-    // Is the system marker ###TEXT### defined?
-    $i_pos = strpos($template, '###TEXT###');
-    if ($i_pos === false)
-    {
-      $b_marker_text = false;
-      if ($this->pObj->b_drs_templating)
-      {
-        t3lib_div::devlog('[INFO/TEMPLATING] The system marker ###TEXT### isn\'t used in the HTML-template.', $this->pObj->extKey, 0);
-      }
-    }
-    else
-    {
-      $b_marker_text = true;
-      if ($this->pObj->b_drs_templating)
-      {
-        t3lib_div::devlog('[INFO/TEMPLATING] The system marker ###TEXT### is used in the HTML-template.', $this->pObj->extKey, 0);
-      }
-    }
-    // Is the system marker ###TEXT### defined?
-
-      // 3.9.26, 120506, dwildt-
+      // $b_marker_image
     if( $b_marker_image )
     {
         // DRS - Development Reporting System
@@ -1822,67 +1802,64 @@ class tx_browser_pi1_template
         }
       }
         // DRS - Development Reporting System
-      // 3.9.26, 120506, dwildt, 2+
-//    if( $handleAs['image'] ) 
-//    {
-      // image
+        // image
       $tsImage['image']           = $elements[$handleAs['image']];
       $bool_dontColorSwords = $arr_TCAitems['image.']['dontColorSwords'];
       if (!$bool_dontColorSwords)
       {
         $value = $this->pObj->objZz->color_swords($handleAs['image'], $value);
       }
-      // image
-      // imageCaption
+        // image
+        // imageCaption
       $tsImage['imagecaption']    = $elements[$handleAs['imageCaption']];
       $bool_dontColorSwords = $arr_TCAitems['imageCaption.']['dontColorSwords'];
       if (!$bool_dontColorSwords)
       {
         $value = $this->pObj->objZz->color_swords($handleAs['imageCaption'], $value);
       }
-      // imageCaption
-      // imageAltText
+        // imageCaption
+        // imageAltText
       $tsImage['imagealttext']    = $elements[$handleAs['imageAltText']];
       $bool_dontColorSwords = $arr_TCAitems['imageAltText.']['dontColorSwords'];
       if (!$bool_dontColorSwords)
       {
         $value = $this->pObj->objZz->color_swords($handleAs['imageAltText'], $value);
       }
-      // imageAltText
-      // imageTitleText
+        // imageAltText
+        // imageTitleText
       $tsImage['imagetitletext']  = $elements[$handleAs['imageTitleText']];
       $bool_dontColorSwords = $arr_TCAitems['imageTitleText.']['dontColorSwords'];
       if (!$bool_dontColorSwords)
       {
         $value = $this->pObj->objZz->color_swords($handleAs['imageTitleText'], $value);
       }
-      // imageTitleText
-//$markerArray['###IMAGE###'] = $this->pObj->objWrapper->wrapImage($tsImage);
-      // 3.9.26, 120506, dwildt, 2+
-//      $markerArray['###' . strtoupper( $handleAs['image'] ) . '###'] = $markerArray['###IMAGE###'];
-//$value                      = $this->pObj->objWrapper->wrapImage($tsImage);
-//$value = str_replace( '###IMAGE_COUNT###', '1', $value );
-////$this->pObj->dev_var_dump( $tsImage, $value );
-//$markerArray['###IMAGE###']                       = $value;
-////$markerArray['###'.strtoupper($handleAs['image']).'###'] = $value;
-//$elements[$handleAs['image']] = $value;
-////unset($handleAs['image']);
-//unset($elements[$handleAs['imageCaption']]);
-//unset($elements[$handleAs['imageAltText']]);
-//unset($elements[$handleAs['imageTitleText']]);
-//$this->pObj->dev_var_dump( $markerArray, $elements );
-      // 3.9.26, 120506, dwildt, 2+
-//    if( $b_marker_image )
-//    {
+        // imageTitleText
       unset($elements[$handleAs['image']]);
       unset($elements[$handleAs['imageCaption']]);
       unset($elements[$handleAs['imageAltText']]);
       unset($elements[$handleAs['imageTitleText']]);
-//      // 3.9.26, 120506, dwildt, 1+
-//    }
-//      // 3.9.26, 120506, dwildt, 1+
-//    }
     }
+      // $b_marker_image
+
+      // Is the system marker ###TEXT### defined?
+    $i_pos = strpos($template, '###TEXT###');
+    if ($i_pos === false)
+    {
+      $b_marker_text = false;
+      if ($this->pObj->b_drs_templating)
+      {
+        t3lib_div::devlog('[INFO/TEMPLATING] The system marker ###TEXT### isn\'t used in the HTML-template.', $this->pObj->extKey, 0);
+      }
+    }
+    else
+    {
+      $b_marker_text = true;
+      if ($this->pObj->b_drs_templating)
+      {
+        t3lib_div::devlog('[INFO/TEMPLATING] The system marker ###TEXT### is used in the HTML-template.', $this->pObj->extKey, 0);
+      }
+    }
+      // Is the system marker ###TEXT### defined?
 
     if($b_marker_text)
     {
@@ -2625,7 +2602,6 @@ class tx_browser_pi1_template
  */
   function tmplRows($elements, $subpart, $template)
   {
-$this->pObj->dev_var_dump( $elements['tt_news.image'] );
     
     static $bool_firstLoop = true;
     
@@ -2851,7 +2827,6 @@ $this->pObj->dev_var_dump( $elements['tt_news.image'] );
       // #12723, mbless, 110310
 
       // LOOP elements
-//$this->pObj->dev_var_dump( $elements );
     foreach( ( array ) $elements as $key => $value )
     {
       $boolSubstitute       = true;
