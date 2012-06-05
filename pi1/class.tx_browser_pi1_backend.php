@@ -1884,7 +1884,7 @@ class tx_browser_pi1_backend
     $arr_jquery_uis = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['templating.']['jquery_ui.'];
 
       // Loop: jquery_ui
-var_dump( __METHOD__, __LINE__, t3lib_div::int_from_ver( TYPO3_version ), $this->locallang );
+//var_dump( __METHOD__, __LINE__, t3lib_div::int_from_ver( TYPO3_version ), $this->locallang );
     foreach( ( array ) $arr_jquery_uis as $key_jquery_ui => $arr_jquery_ui )
     {
       $jquery_ui_key    = strtolower( substr( $key_jquery_ui, 0, -1 ) );
@@ -1960,8 +1960,12 @@ var_dump( __METHOD__, __LINE__, t3lib_div::int_from_ver( TYPO3_version ), $this-
     $setGlobal              = 0;
     $mergeLocalOntoDefault  = 0;
     $LOCAL_LANG             = $GLOBALS['LANG']->includeLLFile( $fileRef, $setGlobal, $mergeLocalOntoDefault );
-var_dump( __METHOD__, __LINE__, $LOCAL_LANG, $lang );
+//var_dump( __METHOD__, __LINE__, $LOCAL_LANG, $lang );
     $this->locallang        = $LOCAL_LANG[$lang];
+    if( empty ( $this->locallang ) )
+    {
+      $this->locallang = $LOCAL_LANG[ 'default' ];
+    }
       // 111126, dwildt+
   }
 
