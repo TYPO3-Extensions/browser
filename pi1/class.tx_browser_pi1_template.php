@@ -2622,6 +2622,7 @@ unset($elements[$handleAs['imageTitleText']]);
  */
   function tmplRows($elements, $subpart, $template)
   {
+$this->pObj->dev_var_dump( $elements );
     static $bool_firstLoop = true;
     
       // Get the global $arrHandleAs array
@@ -2946,7 +2947,6 @@ if( $tableField == 'tt_news.image' )
         // First field is UID and we have a list view
 
         // Remove fields, which shouldn't displayed
-//$this->pObj->dev_var_dump( $this->arr_rmFields );
       if( in_array( $key, ( array ) $this->arr_rmFields ) )
       {
         if( $this->pObj->boolFirstRow && $this->pObj->b_drs_templating )
@@ -3076,7 +3076,6 @@ if( $tableField == 'tt_news.image' )
     $addedTableFields = $this->pObj->arrConsolidate['addedTableFields'];
       // #28562: 110830, dwildt+
 
-$this->pObj->dev_var_dump( $this->_elementsTransformed, $this->_elementsBoolSubstitute );
     foreach ($this->_elementsTransformed as $key => $value)
     {
 
