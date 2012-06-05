@@ -842,7 +842,7 @@ $this->pObj->dev_var_dump( $this->arrHandleAs, $this->elements );
       // 3.9.26, 120506, dwildt-
 //    $csv_imageCaption = $this->arrHandleAs['imageCaption'];
     $arr_imageCaption = $this->pObj->objZz->getCSVasArray( $csv_imageCaption );
-    $imageCaption     = $arrValues[ ( $this->imagesPerRow - 1 ) ];
+    $imageCaption     = $arr_imageCaption[ ( $this->imagesPerRow - 1 ) ];
 
       // Image alt text
       // 3.9.26, 120506, dwildt+
@@ -850,7 +850,7 @@ $this->pObj->dev_var_dump( $this->arrHandleAs, $this->elements );
       // 3.9.26, 120506, dwildt-
 //    $csv_imageAltText = $this->arrHandleAs['imageAltText'];
     $arr_imageAltText = $this->pObj->objZz->getCSVasArray( $csv_imageAltText );
-    $imageAltText     = $arrValues[ ( $this->imagesPerRow - 1 ) ];
+    $imageAltText     = $arr_imageAltText[ ( $this->imagesPerRow - 1 ) ];
 
       // Image title text
       // 3.9.26, 120506, dwildt+
@@ -858,7 +858,7 @@ $this->pObj->dev_var_dump( $this->arrHandleAs, $this->elements );
       // 3.9.26, 120506, dwildt-
 //    $csv_imageTitleText = $this->arrHandleAs['imageTitleText'];
     $arr_imageTitleText = $this->pObj->objZz->getCSVasArray( $csv_imageTitleText );
-    $imageTitleText     = $arrValues[ ( $this->imagesPerRow - 1 ) ];
+    $imageTitleText     = $arr_imageTitleText[ ( $this->imagesPerRow - 1 ) ];
 
       // Wrap image
     $tsImage['image']           = $this->elements[$this->tableField];
