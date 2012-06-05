@@ -748,6 +748,10 @@ if( $tableField == 'tt_news.image' )
 
     $this->handleAsDocument( );
     $this->handleAsImage( );
+if( $tableField == 'tt_news.image' )
+{
+  $this->pObj->dev_var_dump( $this->boolSubstitute );
+}
     $this->handleAsImagecaption( );
     $this->handleAsImagealttext( );
     $this->handleAsImagetitletext( );
@@ -788,7 +792,6 @@ if( $tableField == 'tt_news.image' )
   private function handleAsImage( )
   {
       // RETURN tableField isn't content of handleAs['image']
-$this->pObj->dev_var_dump( 'a1' );
     $pos = strpos( $this->arrHandleAs['image'] , $this->tableField );
     if( $pos === false )
     {
@@ -796,7 +799,6 @@ $this->pObj->dev_var_dump( 'a1' );
     }
       // RETURN tableField isn't content of handleAs['image']
 
-$this->pObj->dev_var_dump( 'a2' );
       // DRS - Development Reporting System
     if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
     {
