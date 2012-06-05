@@ -687,10 +687,9 @@ class tx_browser_pi1_tca
 
 
 
-  /**
- * handleAs( ): handle the given value as TEXT, if tableField is oart of
- *                  the global $this->pObj->arrHandleAs['text'].
- *                  value will wrapped with content_stdWrap
+/**
+ * handleAs( ): ...
+ * 
  * @param   $tableField           : current tableField (sytax table.field)
  * @param   $value                : value of the current table.field
  * @param   $lDisplayView         : local or global display_view configuration
@@ -706,6 +705,8 @@ class tx_browser_pi1_tca
  */
   function handleAs( $tableField, $value, $lDisplayView, $bool_drs_handleCase, $bool_dontColorSwords, $elements, $maxColumns, $boolSubstitute )
   {
+    $arr_return = array( );
+    
       // Set globals
     $this->tableField           = $tableField;
     $this->value                = $value;
@@ -716,6 +717,10 @@ class tx_browser_pi1_tca
     $this->maxColumns           = $maxColumns;
     $this->boolSubstitute       = $boolSubstitute;
     $this->arrHandleAs          = $this->pObj->arrHandleAs;
+if( $tableField == 'tt_news.image' )
+{
+  $this->pObj->dev_var_dump( $this->boolSubstitute );
+}
       // Set globals
 
       // Set default return array
@@ -749,6 +754,10 @@ class tx_browser_pi1_tca
     $this->handleAsText( );
     $this->handleAsTimestamp( );
     $this->handleAsYYYYMMDD( );
+if( $tableField == 'tt_news.image' )
+{
+  $this->pObj->dev_var_dump( $this->boolSubstitute );
+}
 
     $arr_return['data']['value']            = $this->value;
     $arr_return['data']['drs_handleCase']   = $this->bool_drs_handleCase;
@@ -768,7 +777,7 @@ class tx_browser_pi1_tca
 
 
   /**
- * handleAsImage( ): handle the given value as TEXT, if tableField is oart of
+ * handleAsImage( ): handle the given value as IMAGE, if tableField is part of
  *                  the global $this->pObj->arrHandleAs['image'].
  *                  value will wrapped with content_stdWrap
  *
@@ -779,6 +788,7 @@ class tx_browser_pi1_tca
   private function handleAsImage( )
   {
       // RETURN tableField isn't content of handleAs['image']
+$this->pObj->dev_var_dump( 'a1' );
     $pos = strpos( $this->arrHandleAs['image'] , $this->tableField );
     if( $pos === false )
     {
@@ -786,6 +796,7 @@ class tx_browser_pi1_tca
     }
       // RETURN tableField isn't content of handleAs['image']
 
+$this->pObj->dev_var_dump( 'a2' );
       // DRS - Development Reporting System
     if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
     {
