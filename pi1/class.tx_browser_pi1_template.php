@@ -1860,7 +1860,7 @@ class tx_browser_pi1_template
       $markerArray['###IMAGE###'] = $this->pObj->objWrapper->wrapImage($tsImage);
       // 3.9.26, 120506, dwildt, 1+
       $markerArray['###' . strtoupper( $handleAs['image'] ) . '###'] = $markerArray['###IMAGE###'];
-
+$this->pOb->dev_var_dump( $markerArray );
       // 3.9.26, 120506, dwildt, 2+
     if( $b_marker_image )
     {
