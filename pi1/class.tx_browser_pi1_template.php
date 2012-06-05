@@ -3072,7 +3072,7 @@ unset($elements[$handleAs['imageTitleText']]);
     $addedTableFields = $this->pObj->arrConsolidate['addedTableFields'];
       // #28562: 110830, dwildt+
 
-$this->pObj->dev_var_dump( $this->_elementsTransformed, $addedTableFields, $this->arr_rmFields );
+$this->pObj->dev_var_dump( $this->_elementsTransformed, $this->_elementsBoolSubstitute );
     foreach ($this->_elementsTransformed as $key => $value)
     {
 
