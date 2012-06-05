@@ -1857,11 +1857,17 @@ class tx_browser_pi1_template
         $value = $this->pObj->objZz->color_swords($handleAs['imageTitleText'], $value);
       }
       // imageTitleText
-      $markerArray['###IMAGE###'] = $this->pObj->objWrapper->wrapImage($tsImage);
+//$markerArray['###IMAGE###'] = $this->pObj->objWrapper->wrapImage($tsImage);
       // 3.9.26, 120506, dwildt, 2+
 //      $markerArray['###' . strtoupper( $handleAs['image'] ) . '###'] = $markerArray['###IMAGE###'];
-      $elements[$handleAs['image']] = $markerArray['###IMAGE###'];
-$this->pObj->dev_var_dump( $markerArray );
+$value                      = $this->pObj->objWrapper->wrapImage($tsImage);
+$markerArray['###IMAGE###']                       = $value;
+$markerArray['###'.strtoupper($handleAs['image']).'###'] = $value;
+$elements[$handleAs['image']] = $value;
+unset($elements[$handleAs['imageCaption']]);
+unset($elements[$handleAs['imageAltText']]);
+unset($elements[$handleAs['imageTitleText']]);
+$this->pObj->dev_var_dump( $markerArray, $elements );
       // 3.9.26, 120506, dwildt, 2+
     if( $b_marker_image )
     {
