@@ -1861,8 +1861,9 @@ class tx_browser_pi1_template
       // 3.9.26, 120506, dwildt, 2+
 //      $markerArray['###' . strtoupper( $handleAs['image'] ) . '###'] = $markerArray['###IMAGE###'];
 $value                      = $this->pObj->objWrapper->wrapImage($tsImage);
+$this->pObj->dev_var_dump( $tsImage, $value );
 $markerArray['###IMAGE###']                       = $value;
-$markerArray['###'.strtoupper($handleAs['image']).'###'] = $value;
+//$markerArray['###'.strtoupper($handleAs['image']).'###'] = $value;
 $elements[$handleAs['image']] = $value;
 unset($elements[$handleAs['imageCaption']]);
 unset($elements[$handleAs['imageAltText']]);
@@ -2622,7 +2623,6 @@ unset($elements[$handleAs['imageTitleText']]);
  */
   function tmplRows($elements, $subpart, $template)
   {
-$this->pObj->dev_var_dump( $elements );
     static $bool_firstLoop = true;
     
       // Get the global $arrHandleAs array
@@ -3143,7 +3143,6 @@ if( $tableField == 'tt_news.image' )
           $markerArray['###VALUE###'] = $value;
           $bool_defaultTemplate = true;
           $markerArray['###SOCIALMEDIA_BOOKMARKS###'] = $this->pObj->objSocialmedia->get_htmlBookmarks($elements, $key, $bool_defaultTemplate);
-$this->pObj->dev_var_dump( $markerArray['###VALUE###'] );
           $htmlRow  .= $this->pObj->cObj->substituteMarkerArray($htmlSubpart, $markerArray);
         }
         if($this->view == 'single' && !$bool_design_default)
