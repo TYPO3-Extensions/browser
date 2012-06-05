@@ -1890,10 +1890,10 @@ class tx_browser_pi1_backend
         // 120515, dwildt, 1-
       //$jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
         // 120515, dwildt, 9+
-//var_dump( __METHOD__, __LINE__, t3lib_div::int_from_ver( TYPO3_version ) );
+var_dump( __METHOD__, __LINE__, t3lib_div::int_from_ver( TYPO3_version ), $this->locallang[ $arr_jquery_ui['label'] ] );
       switch( true )
       {
-        case( t3lib_div::int_from_ver( TYPO3_version ) < 4007000):
+        case( t3lib_div::int_from_ver( TYPO3_version ) < 4006000):
           $jquery_ui_label  = $this->locallang[ $arr_jquery_ui['label'] ];
           break;
         default:
