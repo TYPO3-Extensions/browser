@@ -1866,7 +1866,7 @@ $value = str_replace( '###IMAGE_COUNT###', '1', $value );
 $markerArray['###IMAGE###']                       = $value;
 //$markerArray['###'.strtoupper($handleAs['image']).'###'] = $value;
 $elements[$handleAs['image']] = $value;
-unset($elements[$handleAs['image']]);
+unset($handleAs['image']);
 unset($elements[$handleAs['imageCaption']]);
 unset($elements[$handleAs['imageAltText']]);
 unset($elements[$handleAs['imageTitleText']]);
