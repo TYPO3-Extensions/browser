@@ -1956,11 +1956,11 @@ var_dump( __METHOD__, __LINE__, t3lib_div::int_from_ver( TYPO3_version ), $this-
       // 120515, dwildt, 1-
 //    $fileRef                = 'EXT:browser/pi1/locallang_flexform.xml';
       // 120515, dwildt, 1+
-    $fileRef                = 'EXT:browser/pi1/flexform_locallang.php';
+    $fileRef                = 'EXT:browser/pi1/locallang_flexform.xml';
     $setGlobal              = 0;
     $mergeLocalOntoDefault  = 0;
     $LOCAL_LANG             = $GLOBALS['LANG']->includeLLFile( $fileRef, $setGlobal, $mergeLocalOntoDefault );
-var_dump( __METHOD__, __LINE__, $LOCAL_LANG );
+var_dump( __METHOD__, __LINE__, $LOCAL_LANG, $lang );
     $this->locallang        = $LOCAL_LANG[$lang];
       // 111126, dwildt+
   }
