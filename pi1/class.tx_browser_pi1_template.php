@@ -1823,8 +1823,8 @@ class tx_browser_pi1_template
       }
         // DRS - Development Reporting System
       // 3.9.26, 120506, dwildt, 2+
-    if( $handleAs['image'] ) 
-    {
+//    if( $handleAs['image'] ) 
+//    {
       // image
       $tsImage['image']           = $elements[$handleAs['image']];
       $bool_dontColorSwords = $arr_TCAitems['image.']['dontColorSwords'];
@@ -1860,28 +1860,28 @@ class tx_browser_pi1_template
 //$markerArray['###IMAGE###'] = $this->pObj->objWrapper->wrapImage($tsImage);
       // 3.9.26, 120506, dwildt, 2+
 //      $markerArray['###' . strtoupper( $handleAs['image'] ) . '###'] = $markerArray['###IMAGE###'];
-$value                      = $this->pObj->objWrapper->wrapImage($tsImage);
-$value = str_replace( '###IMAGE_COUNT###', '1', $value );
-//$this->pObj->dev_var_dump( $tsImage, $value );
-$markerArray['###IMAGE###']                       = $value;
-//$markerArray['###'.strtoupper($handleAs['image']).'###'] = $value;
-$elements[$handleAs['image']] = $value;
-//unset($handleAs['image']);
-unset($elements[$handleAs['imageCaption']]);
-unset($elements[$handleAs['imageAltText']]);
-unset($elements[$handleAs['imageTitleText']]);
+//$value                      = $this->pObj->objWrapper->wrapImage($tsImage);
+//$value = str_replace( '###IMAGE_COUNT###', '1', $value );
+////$this->pObj->dev_var_dump( $tsImage, $value );
+//$markerArray['###IMAGE###']                       = $value;
+////$markerArray['###'.strtoupper($handleAs['image']).'###'] = $value;
+//$elements[$handleAs['image']] = $value;
+////unset($handleAs['image']);
+//unset($elements[$handleAs['imageCaption']]);
+//unset($elements[$handleAs['imageAltText']]);
+//unset($elements[$handleAs['imageTitleText']]);
 //$this->pObj->dev_var_dump( $markerArray, $elements );
       // 3.9.26, 120506, dwildt, 2+
-    if( $b_marker_image )
-    {
+//    if( $b_marker_image )
+//    {
       unset($elements[$handleAs['image']]);
       unset($elements[$handleAs['imageCaption']]);
       unset($elements[$handleAs['imageAltText']]);
       unset($elements[$handleAs['imageTitleText']]);
-      // 3.9.26, 120506, dwildt, 1+
-    }
-      // 3.9.26, 120506, dwildt, 1+
-    }
+//      // 3.9.26, 120506, dwildt, 1+
+//    }
+//      // 3.9.26, 120506, dwildt, 1+
+//    }
     }
 
     if($b_marker_text)
