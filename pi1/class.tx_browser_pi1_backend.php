@@ -1960,6 +1960,7 @@ var_dump( __METHOD__, __LINE__, t3lib_div::int_from_ver( TYPO3_version ), $this-
     $setGlobal              = 0;
     $mergeLocalOntoDefault  = 0;
     $LOCAL_LANG             = $GLOBALS['LANG']->includeLLFile( $fileRef, $setGlobal, $mergeLocalOntoDefault );
+var_dump( __METHOD__, __LINE__, $LOCAL_LANG );
     $this->locallang        = $LOCAL_LANG[$lang];
       // 111126, dwildt+
   }
