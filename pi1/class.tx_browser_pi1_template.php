@@ -1861,7 +1861,8 @@ class tx_browser_pi1_template
       // 3.9.26, 120506, dwildt, 2+
 //      $markerArray['###' . strtoupper( $handleAs['image'] ) . '###'] = $markerArray['###IMAGE###'];
 $value                      = $this->pObj->objWrapper->wrapImage($tsImage);
-$this->pObj->dev_var_dump( $tsImage, $value );
+$value = str_replace( '###IMAGE_COUNT###', '1', $value );
+//$this->pObj->dev_var_dump( $tsImage, $value );
 $markerArray['###IMAGE###']                       = $value;
 //$markerArray['###'.strtoupper($handleAs['image']).'###'] = $value;
 $elements[$handleAs['image']] = $value;
@@ -2623,6 +2624,8 @@ unset($elements[$handleAs['imageTitleText']]);
  */
   function tmplRows($elements, $subpart, $template)
   {
+$this->pObj->dev_var_dump( $elements );
+    
     static $bool_firstLoop = true;
     
       // Get the global $arrHandleAs array
