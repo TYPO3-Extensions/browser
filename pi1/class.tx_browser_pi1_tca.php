@@ -835,7 +835,7 @@ class tx_browser_pi1_tca
     }
       // DRS - Development Reporting System
 
-//$this->pObj->dev_var_dump( $this->arrHandleAs, $this->elements[$this->arrHandleAs['imageCaption']] );
+$this->pObj->dev_var_dump( $this->arrHandleAs, $this->elements );
       // Image caption
       // 3.9.26, 120506, dwildt+
     $csv_imageCaption = $this->elements[$this->arrHandleAs['imageCaption']];
