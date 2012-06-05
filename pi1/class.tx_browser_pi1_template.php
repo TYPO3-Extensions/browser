@@ -2891,7 +2891,7 @@ class tx_browser_pi1_template
       $boolSubstitute       = $arr_result['data']['boolSubstitute'];
 if( $key == 'tt_news.image' )
 {
-  $this->pObj->dev_var_dump( $key, $value, $boolSubstitute );
+  $this->pObj->dev_var_dump( $value );
 }
         // 120129, dwildt+
 //if( $key == 'tx_org_downloads.documents' )

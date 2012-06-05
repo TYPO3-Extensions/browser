@@ -835,6 +835,7 @@ class tx_browser_pi1_tca
     }
       // DRS - Development Reporting System
 
+$this->pObj->dev_var_dump( $this->arrHandleAs );
       // Image caption
     $csv_imageCaption = $this->arrHandleAs['imageCaption'];
     $arr_imageCaption = $this->pObj->objZz->getCSVasArray( $csv_imageCaption );
