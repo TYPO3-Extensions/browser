@@ -717,10 +717,6 @@ class tx_browser_pi1_tca
     $this->maxColumns           = $maxColumns;
     $this->boolSubstitute       = $boolSubstitute;
     $this->arrHandleAs          = $this->pObj->arrHandleAs;
-if( $tableField == 'tt_news.image' )
-{
-  $this->pObj->dev_var_dump( $this->boolSubstitute );
-}
       // Set globals
 
       // Set default return array
@@ -748,24 +744,12 @@ if( $tableField == 'tt_news.image' )
 
     $this->handleAsDocument( );
     $this->handleAsImage( );
-if( $tableField == 'tt_news.image' )
-{
-  $this->pObj->dev_var_dump( $this->boolSubstitute );
-}
     $this->handleAsImagecaption( );
-if( $tableField == 'tt_news.image' )
-{
-  $this->pObj->dev_var_dump( $this->boolSubstitute );
-}
     $this->handleAsImagealttext( );
     $this->handleAsImagetitletext( );
     $this->handleAsText( );
     $this->handleAsTimestamp( );
     $this->handleAsYYYYMMDD( );
-if( $tableField == 'tt_news.image' )
-{
-  $this->pObj->dev_var_dump( $this->boolSubstitute );
-}
 
     $arr_return['data']['value']            = $this->value;
     $arr_return['data']['drs_handleCase']   = $this->bool_drs_handleCase;
@@ -902,10 +886,6 @@ if( $tableField == 'tt_news.image' )
   private function handleAsImagecaption( )
   {
       // RETURN tableField isn't content of handleAs['imageCaption']
-if( $this->tableField == 'tt_news.image' )
-{
-  $this->pObj->dev_var_dump( $this->arrHandleAs['imageCaption'] , $this->tableField, strpos( $this->arrHandleAs['imageCaption'] , $this->tableField ) );
-}
       // 3.9.26, 120506, dwildt+
     if( $this->arrHandleAs['imageCaption'] != $this->tableField )
     {
