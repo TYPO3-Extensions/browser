@@ -2909,6 +2909,7 @@ unset($elements[$handleAs['imageTitleText']]);
       $bool_dontColorSwords = $arr_result['data']['dontColorSwords'];
       $maxColumns           = $arr_result['data']['maxColumns'];
       $boolSubstitute       = $arr_result['data']['boolSubstitute'];
+$this->pObj->dev_var_dump( $key, $boolSubstitute );
         // 120129, dwildt+
 //if( $key == 'tx_org_downloads.documents' )
 //{
