@@ -1801,17 +1801,19 @@ class tx_browser_pi1_template
     }
     // Is the system marker ###TEXT### defined?
 
-    if($b_marker_image)
-    {
-      if($handleAs['image'])
+      // 3.9.26, 120506, dwildt-
+//    if( $b_marker_image )
+//    {
+        // DRS - Development Reporting System
+      if( $handleAs['image'] ) 
       {
-        if ($this->pObj->b_drs_templating)
+        if( $this->pObj->b_drs_templating )
         {
           t3lib_div::devlog('[INFO/TEMPLATING] The field \''.$handleAs['image'].'\' will be wrapped as an IMAGE.', $this->pObj->extKey, 0);
           t3lib_div::devlog('[INFO/TEMPLATING] The system marker ###IMAGE### will be replaced.', $this->pObj->extKey, 0);
         }
       }
-      if(!$handleAs['image'])
+      if( ! $handleAs['image'] )
       {
         if ($this->pObj->b_drs_templating)
         {
@@ -1819,6 +1821,10 @@ class tx_browser_pi1_template
           t3lib_div::devlog('[INFO/TEMPLATING] The system marker ###IMAGE### will be deleted.', $this->pObj->extKey, 0);
         }
       }
+        // DRS - Development Reporting System
+      // 3.9.26, 120506, dwildt, 2+
+    if( $handleAs['image'] ) 
+    {
       // image
       $tsImage['image']           = $elements[$handleAs['image']];
       $bool_dontColorSwords = $arr_TCAitems['image.']['dontColorSwords'];
@@ -1853,11 +1859,18 @@ class tx_browser_pi1_template
       // imageTitleText
       $markerArray['###IMAGE###'] = $this->pObj->objWrapper->wrapImage($tsImage);
 
+      // 3.9.26, 120506, dwildt, 2+
+    if( $b_marker_image )
+    {
       unset($elements[$handleAs['image']]);
       unset($elements[$handleAs['imageCaption']]);
       unset($elements[$handleAs['imageAltText']]);
       unset($elements[$handleAs['imageTitleText']]);
+      // 3.9.26, 120506, dwildt, 1+
     }
+      // 3.9.26, 120506, dwildt, 1+
+    }
+//    }
 
     if($b_marker_text)
     {
