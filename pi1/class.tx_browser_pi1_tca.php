@@ -898,11 +898,19 @@ if( $this->tableField == 'tt_news.image' )
 {
   $this->pObj->dev_var_dump( $this->arrHandleAs['imageCaption'] , $this->tableField, strpos( $this->arrHandleAs['imageCaption'] , $this->tableField ) );
 }
-    $pos = strpos( $this->arrHandleAs['imageCaption'] , $this->tableField );
-    if( $pos === false )
+      // 3.9.26, 120506, dwildt+
+    if( $this->arrHandleAs['imageCaption'] != $this->tableField )
     {
       return;
     }
+      // 3.9.26, 120506, dwildt+
+      // 3.9.26, 120506, dwildt-
+//    $pos = strpos( $this->arrHandleAs['imageCaption'] , $this->tableField );
+//    if( $pos === false )
+//    {
+//      return;
+//    }
+      // 3.9.26, 120506, dwildt-
       // RETURN tableField isn't content of handleAs['imageCaption']
 
       // DRS - Development Reporting System
