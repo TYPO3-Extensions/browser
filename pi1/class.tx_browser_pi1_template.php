@@ -1867,7 +1867,7 @@ $elements[$handleAs['image']] = $value;
 unset($elements[$handleAs['imageCaption']]);
 unset($elements[$handleAs['imageAltText']]);
 unset($elements[$handleAs['imageTitleText']]);
-$this->pObj->dev_var_dump( $markerArray, $elements );
+//$this->pObj->dev_var_dump( $markerArray, $elements );
       // 3.9.26, 120506, dwildt, 2+
     if( $b_marker_image )
     {
@@ -2846,6 +2846,7 @@ $this->pObj->dev_var_dump( $markerArray, $elements );
       // #12723, mbless, 110310
 
       // LOOP elements
+$this->pObj->dev_var_dump( $elements );
     foreach( ( array ) $elements as $key => $value )
     {
       $boolSubstitute       = true;
