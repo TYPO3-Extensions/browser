@@ -2619,6 +2619,8 @@ class tx_browser_pi1_filter_4x {
       // SWITCH
     switch( true )
     {
+        // 3.9.25, 120506, dwildt+
+      case( ! empty ( $this->pObj->conf_sql['andWhere'] ) ):
       case( $this->pObj->localTable != $table ) :
       case( $conf_flexform == 'controlled' ) :
       case( isset( $this->pObj->piVars['sword'] ) ):
