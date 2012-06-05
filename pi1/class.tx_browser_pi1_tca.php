@@ -910,6 +910,10 @@ if( $tableField == 'tt_news.image' )
   private function handleAsImagecaption( )
   {
       // RETURN tableField isn't content of handleAs['imageCaption']
+if( $tableField == 'tt_news.image' )
+{
+  $this->pObj->dev_var_dump( $this->arrHandleAs['imageCaption'] , $this->tableField );
+}
     $pos = strpos( $this->arrHandleAs['imageCaption'] , $this->tableField );
     if( $pos === false )
     {
