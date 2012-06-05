@@ -758,25 +758,9 @@ if( $tableField == 'tt_news.image' )
   $this->pObj->dev_var_dump( $this->boolSubstitute );
 }
     $this->handleAsImagealttext( );
-if( $tableField == 'tt_news.image' )
-{
-  $this->pObj->dev_var_dump( $this->boolSubstitute );
-}
     $this->handleAsImagetitletext( );
-if( $tableField == 'tt_news.image' )
-{
-  $this->pObj->dev_var_dump( $this->boolSubstitute );
-}
     $this->handleAsText( );
-if( $tableField == 'tt_news.image' )
-{
-  $this->pObj->dev_var_dump( $this->boolSubstitute );
-}
     $this->handleAsTimestamp( );
-if( $tableField == 'tt_news.image' )
-{
-  $this->pObj->dev_var_dump( $this->boolSubstitute );
-}
     $this->handleAsYYYYMMDD( );
 if( $tableField == 'tt_news.image' )
 {
@@ -910,7 +894,7 @@ if( $tableField == 'tt_news.image' )
   private function handleAsImagecaption( )
   {
       // RETURN tableField isn't content of handleAs['imageCaption']
-if( $tableField == 'tt_news.image' )
+if( $this->tableField == 'tt_news.image' )
 {
   $this->pObj->dev_var_dump( $this->arrHandleAs['imageCaption'] , $this->tableField );
 }
