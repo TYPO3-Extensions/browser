@@ -2858,7 +2858,14 @@ class tx_browser_pi1_template
       
       if( $handleAs['image'] )
       {
-        
+        switch( true )
+        {
+          case( $key == $handleAs['imageCaption'] ):
+          case( $key == $handleAs['imageAltText'] ):
+          case( $key == $handleAs['imageTitleText'] ):
+            continue 2;
+            break;
+        }
       }
 
 
