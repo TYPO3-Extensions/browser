@@ -36,10 +36,10 @@ $EM_CONF[$_EXTKEY] = array(
 		'depends' => array(
 			'browser_manual_en' => '',
 			'php' => '5.1.0-0.0.0',
-			'typo3' => '4.4.6-0.0.0',
+			'typo3' => '4.7.1-4.5.0',
 		),
 		'conflicts' => array(
-			'0' => 'be_tablefilter',
+			'be_tablefilter' => '',
 		),
 		'suggests' => array(
 		),
