@@ -874,7 +874,7 @@ class tx_browser_pi1_tca
 //  var_dump( __METHOD__ . ' (line: ' . __LINE__ . ')',  $this->elements, $this->tableField, $tsImage );
 //
 //}
-$this->pObj->dev_var_dump( $tsImage );
+//$this->pObj->dev_var_dump( $tsImage );
     $this->value                = $this->pObj->objWrapper->wrapImage( $tsImage );
 
     return;
