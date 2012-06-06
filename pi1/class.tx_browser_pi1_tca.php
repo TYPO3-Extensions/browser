@@ -842,7 +842,7 @@ $this->pObj->dev_var_dump( $this->arrHandleAs, $this->elements );
       // 3.9.26, 120506, dwildt-
 //    $csv_imageCaption = $this->arrHandleAs['imageCaption'];
 //    $arr_imageCaption = $this->pObj->objZz->getCSVasArray( $csv_imageCaption );
-    $arr_imageCaption = explode( PHP_EOL, $csv_imageCaption );
+    $arr_imageCaption = explode( "\l\n", $csv_imageCaption );
     $imageCaption     = $arr_imageCaption[ ( $this->imagesPerRow - 1 ) ];
 
       // Image alt text
