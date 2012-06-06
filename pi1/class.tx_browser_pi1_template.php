@@ -2855,6 +2855,11 @@ class tx_browser_pi1_template
         }
       }
         // Handle empty values?
+      
+      if( $handleAs['image'] )
+      {
+        
+      }
 
 
         // 120129, dwildt+
@@ -2891,7 +2896,7 @@ class tx_browser_pi1_template
       $boolSubstitute       = $arr_result['data']['boolSubstitute'];
 if( $key == 'tt_news.image' )
 {
-  $this->pObj->dev_var_dump( $value );
+  $this->pObj->dev_var_dump( $handleAs, $value );
 }
         // 120129, dwildt+
 //if( $key == 'tx_org_downloads.documents' )

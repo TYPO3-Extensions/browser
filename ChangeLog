@@ -2,6 +2,7 @@
   120605
   Bugfixes
   * #00000: flexform values for jQuery UI missed in some cases
+  * #00000: single view doesn't detect images proper
 
 3.9.25
   120605

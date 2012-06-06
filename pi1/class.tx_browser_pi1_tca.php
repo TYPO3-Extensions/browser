@@ -835,11 +835,10 @@ class tx_browser_pi1_tca
     }
       // DRS - Development Reporting System
 
-$this->pObj->dev_var_dump( $this->arrHandleAs, $this->elements );
+//$this->pObj->dev_var_dump( $this->arrHandleAs, $this->elements );
       // Image caption
       // 3.9.26, 120506, dwildt+
     $csv_imageCaption = $this->elements[$this->arrHandleAs['imageCaption']];
-    unset( $this->elements[$this->arrHandleAs['imageCaption']] );
       // 3.9.26, 120506, dwildt-
 //    $csv_imageCaption = $this->arrHandleAs['imageCaption'];
 //    $arr_imageCaption = $this->pObj->objZz->getCSVasArray( $csv_imageCaption );
@@ -849,7 +848,6 @@ $this->pObj->dev_var_dump( $this->arrHandleAs, $this->elements );
       // Image alt text
       // 3.9.26, 120506, dwildt+
     $csv_imageAltText = $this->elements[$this->arrHandleAs['imageAltText']];
-    unset( $this->elements[$this->arrHandleAs['imageAltText']] );
       // 3.9.26, 120506, dwildt-
 //    $csv_imageAltText = $this->arrHandleAs['imageAltText'];
     $arr_imageAltText = $this->pObj->objZz->getCSVasArray( $csv_imageAltText );
@@ -859,7 +857,6 @@ $this->pObj->dev_var_dump( $this->arrHandleAs, $this->elements );
       // Image title text
       // 3.9.26, 120506, dwildt+
     $csv_imageTitleText = $this->elements[$this->arrHandleAs['imageTitleText']];
-    unset( $this->elements[$this->arrHandleAs['imageTitleText']] );
       // 3.9.26, 120506, dwildt-
 //    $csv_imageTitleText = $this->arrHandleAs['imageTitleText'];
 //    $arr_imageTitleText = $this->pObj->objZz->getCSVasArray( $csv_imageTitleText );
