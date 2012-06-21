@@ -1,0 +1,2 @@
+lat	lon	title	description	icon	iconSize	iconOffset
+48.9459301	9.6075669	Title One	Description one<br>Second line.<br><br>(click again to close)<img src="http://www.oxkape.de/pics/l.png" />	./img/test2.png	14,14	0,0
