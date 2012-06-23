@@ -410,6 +410,9 @@ plugin.tx_browser_pi1 {
         map = TEXT
         map {
           value (
+            <style type="text/css">
+              .oxTextLayer{border:1px solid green;border-radius:6px;background:#fff;width:200px;overflow:hidden;position:absolute;padding:6px;box-shadow:3px 3px 3px #3d3d3d;}
+            </style>
             <form id="filter">
               <input type="checkbox" name="cat1" value="1" checked />cat1
               <input type="checkbox" name="cat2" value="1" checked />cat2
