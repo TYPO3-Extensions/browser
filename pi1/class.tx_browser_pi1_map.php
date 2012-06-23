@@ -562,7 +562,7 @@ class tx_browser_pi1_map
 //    $markerArray['###DIV_MAP###']           = $this->marker_divMap( );
 //    $markerArray['###SCRIPT_RENDERMAP###']  = $this->marker_jssRenderMap( );
 //    $markerArray['###SCRIPT_FILTER###']     = $this->marker_jssFilter( );
-$this->pObj->dev_var_dump( $markerArray );
+//$this->pObj->dev_var_dump( $markerArray );
     $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
       // Substitute marker
 
