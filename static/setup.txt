@@ -387,20 +387,20 @@ plugin.tx_browser_pi1 {
             inline = 0
           }
             // [STRING] Path to openStreetMap script
-          openStreetMap = EXT:browser/res/js/map/lib/OpenStreetMap/OpenStreetMap.js
+          openStreetMap = EXT:browser/res/js/map/lib/OpenStreetMap/OpenStreetMap_0.0.1.js
           openStreetMap {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
           }
         }
           // [STRING] Path to map configuration script
-        config = EXT:browser/res/js/map/oxMapConfig.js
+        config = EXT:browser/res/js/map/oxMapConfig_0.0.1.js
         config {
             // [Boolean] 0 (default): link to the script file, 1: include the script inline
           inline = 0
         }
           // [STRING] Path to map rendering script
-        render = EXT:browser/res/js/map/oxRenderMap.js
+        render = EXT:browser/res/js/map/oxRenderMap_0.0.1.js
         render {
             // [Boolean] 0 (default): link to the script file, 1: include the script inline
           inline = 0
@@ -468,7 +468,7 @@ plugin.tx_browser_pi1 {
         }
         jss_renderMap = TEXT
         jss_renderMap {
-          value = <script src="typo3conf/ext/browser/res/js/map/oxRenderMap.js"></script>
+          value = <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.1.js"></script>
         }
       }
     }

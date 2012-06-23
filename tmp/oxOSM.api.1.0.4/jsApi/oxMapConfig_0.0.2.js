@@ -4,6 +4,7 @@
  *  author:    o'xkape, Mike Kunert <warum@oxkape.de>
  *  copyright: o'xkape <http://www.webkartografie.de> by <http://www.oxkape.de>
  *  date: 2012-02-20
+ *  version: 0.0.2
  *  
  * */
 
