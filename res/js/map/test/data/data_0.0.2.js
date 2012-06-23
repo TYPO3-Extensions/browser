@@ -1,6 +1,6 @@
 var rawdata = {
 'cat1': {
-    'icon': ['./img/test1.png', 14, 14,           0, 0],
+    'icon': ['typo3conf/ext/browser/res/js/map/test/img/test1.png', 14, 14,           0, 0],
     'data': {
         'point1': {
             'coors': [9.6175669,  48.9659301],
@@ -13,7 +13,7 @@ var rawdata = {
     }
 },
 'cat2': {
-    'icon': ['./img/test2.png', 14, 14, 0, 0],
+    'icon': ['typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0],
     'data': {
         'point3': {
             'coors': [9.538, 48.89],
