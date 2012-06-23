@@ -548,7 +548,7 @@ class tx_browser_pi1_map
       //
       // Add javascripts to the HTML header
 
-    $this->jss_setHeader( );
+//    $this->jss_setHeader( );
       // Add javascripts to the HTML header
 
 

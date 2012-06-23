@@ -415,6 +415,8 @@ plugin.tx_browser_pi1 {
               <input type="checkbox" name="cat2" value="1" checked />cat2
             </form>
             <div id="oxMapArea" style="width:600px;height:400px;border:1px solid"></div>
+            <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers/OpenLayers_0.0.2.js"></script>
+            <script src="typo3conf/ext/browser/res/js/map/lib/OpenStreetMap/OpenStreetMap_0.0.2.js"></script>
             <script src="typo3conf/ext/browser/res/js/map/test/data/data_0.0.2.js"></script>
             <script src="typo3conf/ext/browser/res/js/map/oxMapConfig_0.0.2.js"></script>
             <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.2.js"></script>
