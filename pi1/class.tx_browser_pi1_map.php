@@ -557,7 +557,7 @@ class tx_browser_pi1_map
       //
       // Substitute marker
 
-    $markerArray['###MAP###']               = $this->marker_map( );
+    $markerArray['###MAP_22###']               = $this->marker_map( );
 //    $markerArray['###FORM_FILTER###']       = $this->marker_formFilter( );
 //    $markerArray['###DIV_MAP###']           = $this->marker_divMap( );
 //    $markerArray['###SCRIPT_RENDERMAP###']  = $this->marker_jssRenderMap( );
