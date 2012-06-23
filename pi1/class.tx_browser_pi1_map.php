@@ -608,6 +608,19 @@ class tx_browser_pi1_map
     $cObj_name  = $this->confMap['marker.']['map'];
     $cObj_conf  = $this->confMap['marker.']['map.'];
     $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+    
+      // DRS - Development Reporting System
+    if ($this->b_drs_error)
+    {
+      if( empty( $content ) )
+      {
+        $prompt = 'Content is empty. Probably this is a bug.';
+        t3lib_div::devLog('[WARN/DRS] ' . $prompt, $this->extKey, 3);
+        $prompt = 'Please check marker.map';
+        t3lib_div::devLog('[HELP/DRS] ABORTED', $this->extKey, 1);
+      }
+    }
+      // DRS - Development Reporting System
 
     return $content;
   }
@@ -795,13 +808,13 @@ class tx_browser_pi1_map
     $this->pObj->objJss->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
       // Include openStreetMap
 
-      // Include config
-    $name         = $name_prefix . 'config';
-    $path         = $this->confMap['javascripts.']['config'];
-    $bool_inline  = $this->confMap['javascripts.']['config.']['inline'];
-    $path_tsConf  = 'javascripts.lib.config';
-    $this->pObj->objJss->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-      // Include config
+//      // Include config
+//    $name         = $name_prefix . 'config';
+//    $path         = $this->confMap['javascripts.']['config'];
+//    $bool_inline  = $this->confMap['javascripts.']['config.']['inline'];
+//    $path_tsConf  = 'javascripts.lib.config';
+//    $this->pObj->objJss->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
+//      // Include config
   }
 
 
