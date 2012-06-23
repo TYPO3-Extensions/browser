@@ -381,26 +381,26 @@ plugin.tx_browser_pi1 {
       javascripts {
         lib {
             // [STRING] Path to openLayers script
-          openLayers = EXT:browser/res/js/map/lib/OpenLayers/OpenLayers.js
+          openLayers = EXT:browser/res/js/map/lib/OpenLayers/OpenLayers_0.0.2.js
           openLayers {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
           }
             // [STRING] Path to openStreetMap script
-          openStreetMap = EXT:browser/res/js/map/lib/OpenStreetMap/OpenStreetMap_0.0.1.js
+          openStreetMap = EXT:browser/res/js/map/lib/OpenStreetMap/OpenStreetMap_0.0.2.js
           openStreetMap {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
           }
         }
           // [STRING] Path to map configuration script
-        config = EXT:browser/res/js/map/oxMapConfig_0.0.1.js
+        config = EXT:browser/res/js/map/oxMapConfig_0.0.2.js
         config {
             // [Boolean] 0 (default): link to the script file, 1: include the script inline
           inline = 0
         }
           // [STRING] Path to map rendering script
-        render = EXT:browser/res/js/map/oxRenderMap_0.0.1.js
+        render = EXT:browser/res/js/map/oxRenderMap_0.0.2.js
         render {
             // [Boolean] 0 (default): link to the script file, 1: include the script inline
           inline = 0
