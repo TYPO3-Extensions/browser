@@ -419,6 +419,10 @@ plugin.tx_browser_pi1 {
             </form>
             <div id="oxMapArea" style="width:600px;height:400px;border:1px solid"></div>
             <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers/OpenLayers_0.0.2.js"></script>
+            <script type="text/javascript">
+                // Be aware of the trailing slash!
+              OpenLayers.ImgPath = "/typo3conf/ext/browser/res/js/map/lib/OpenLayers/img/";
+            </script>
             <script src="typo3conf/ext/browser/res/js/map/lib/OpenStreetMap/OpenStreetMap_0.0.2.js"></script>
             <script src="typo3conf/ext/browser/res/js/map/test/data/data_0.0.2.js"></script>
             <script src="typo3conf/ext/browser/res/js/map/oxMapConfig_0.0.2.js"></script>
