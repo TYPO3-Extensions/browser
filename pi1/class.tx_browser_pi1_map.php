@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 3.9.8
+* @version 4.1.0
 * @since 3.9.6
 */
 
@@ -557,10 +557,11 @@ class tx_browser_pi1_map
       //
       // Substitute marker
 
-    $markerArray['###FORM_FILTER###']       = $this->marker_formFilter( );
-    $markerArray['###DIV_MAP###']           = $this->marker_divMap( );
-    $markerArray['###SCRIPT_RENDERMAP###']  = $this->marker_jssRenderMap( );
-    $markerArray['###SCRIPT_FILTER###']     = $this->marker_jssFilter( );
+    $markerArray['###MAP###']               = $this->marker_map( );
+//    $markerArray['###FORM_FILTER###']       = $this->marker_formFilter( );
+//    $markerArray['###DIV_MAP###']           = $this->marker_divMap( );
+//    $markerArray['###SCRIPT_RENDERMAP###']  = $this->marker_jssRenderMap( );
+//    $markerArray['###SCRIPT_FILTER###']     = $this->marker_jssFilter( );
     $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
       // Substitute marker
 
@@ -587,6 +588,29 @@ class tx_browser_pi1_map
   * Marker
   *
   **********************************************/
+
+
+
+
+
+
+
+
+  /**
+ * marker_map( ): get the content for the current marker
+ *
+ * @return	string		$content: current content
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function marker_map( )
+  {
+    $cObj_name  = $this->confMap['marker.']['map'];
+    $cObj_conf  = $this->confMap['marker.']['map.'];
+    $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+
+    return $content;
+  }
 
 
 

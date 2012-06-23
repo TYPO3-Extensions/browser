@@ -21,10 +21,10 @@ var oxMapConfig = {
                       icon:	['typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0],		//	icon -> url, width, height, offsetX, offsetY
                       data:	[9.5382032,48.9899851],  			//	coordinates for standalone marker
                       //,9.6075669,48.9459301,
-                      url:	'typo3conf/ext/browser/res/js/map/test/text.txt'			//	url for infolayer data
+                      url:	'typo3conf/ext/browser/res/js/map/test/data/text_0.0.1.txt'			//	url for infolayer data
                     },
                     'cat2': {                             //	marker with infolayer only
-                      url:	'typo3conf/ext/browser/res/js/map/test/text2.txt'
+                      url:	'typo3conf/ext/browser/res/js/map/test/data/text2_0.0.1.txt'
                     }
                   }
 };
