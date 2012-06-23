@@ -409,47 +409,49 @@ plugin.tx_browser_pi1 {
       marker {
         map = TEXT
         map {
-          <form id="filter">
-            <input type="checkbox" name="cat1" value="1" checked />cat1
-            <input type="checkbox" name="cat2" value="1" checked />cat2
-          </form>
-          <div id="oxMapArea" style="width:600px;height:400px;border:1px solid"></div>
-          <script src="typo3conf/ext/browser/res/js/map/test/data/data_0.0.2.js"></script>
-          <script src="typo3conf/ext/browser/res/js/map/oxMapConfig_0.0.2.js"></script>
-          <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.2.js"></script>
-          <script>
-            var filter = document.getElementsByTagName('input');
-            for(var a=filter.length;a--;)
-              filter[a].onchange = function(){
-                startFilter(this,this.name,this.value);
-              };
+          value (
+            <form id="filter">
+              <input type="checkbox" name="cat1" value="1" checked />cat1
+              <input type="checkbox" name="cat2" value="1" checked />cat2
+            </form>
+            <div id="oxMapArea" style="width:600px;height:400px;border:1px solid"></div>
+            <script src="typo3conf/ext/browser/res/js/map/test/data/data_0.0.2.js"></script>
+            <script src="typo3conf/ext/browser/res/js/map/oxMapConfig_0.0.2.js"></script>
+            <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.2.js"></script>
+            <script>
+              var filter = document.getElementsByTagName('input');
+              for(var a=filter.length;a--;)
+                filter[a].onchange = function(){
+                  startFilter(this,this.name,this.value);
+                };
 
-            function startFilter(element,name,value){
-              switchTo = value == 1 ? false : true; 
-              element.value = switchTo == false ? 0 : 1;
+              function startFilter(element,name,value){
+                switchTo = value == 1 ? false : true; 
+                element.value = switchTo == false ? 0 : 1;
 
-            /*  Beispielfilteranwendung
-             * 
-             *  Das Beispiel liest den Wert einer Checkbox aus und übergibt an die map.filterLayer-Methode Name und Sichtbarkeit
+              /*  Beispielfilteranwendung
+              * 
+              *  Das Beispiel liest den Wert einer Checkbox aus und übergibt an die map.filterLayer-Methode Name und Sichtbarkeit
 
-                map                                               map-Object als Instance des oxMapRender-Konstruktors -> wird 
-                                                                  durch Einbettung der oxAPI oxRenderMap.js erzeugt;
-                filterLayer   filter-Methode
-                @param	name  STRING            Layer-Name        --> es wird zwischen Markern ohne und mit Informationlayer 
-                                                                      unterschieden
-                                                                      - einfache Markername bestehen aus dem Kategorienamen   
-                                                                        --> 'cat1'
-                                                                      - Infolayernamen betehen aus Kategoriename und Suffix 'Info'  
-                                                                        --> 'cat1Info'
-                                                                      um alle Layer zu schließen, muss die Methode so oft wiederholt
-                                                                      werden, bis alle Kategorienamen erfasst wurden
-                switchTo      BOOLEAN | FLOAT   Sichtbarkeitswert --> true | false entspricht sichtbar bzw. unsichtbar
-                                                                      Zahl zwischen 0 uns 1 definiert Transparenzgrad 
-             */
-              map.filterLayer(name,switchTo);
-              map.filterLayer(name+'Info',switchTo);
-            }
-          </script>
+                  map                                               map-Object als Instance des oxMapRender-Konstruktors -> wird 
+                                                                    durch Einbettung der oxAPI oxRenderMap.js erzeugt;
+                  filterLayer   filter-Methode
+                  @param	name  STRING            Layer-Name        --> es wird zwischen Markern ohne und mit Informationlayer 
+                                                                        unterschieden
+                                                                        - einfache Markername bestehen aus dem Kategorienamen   
+                                                                          --> 'cat1'
+                                                                        - Infolayernamen betehen aus Kategoriename und Suffix 'Info'  
+                                                                          --> 'cat1Info'
+                                                                        um alle Layer zu schließen, muss die Methode so oft wiederholt
+                                                                        werden, bis alle Kategorienamen erfasst wurden
+                  switchTo      BOOLEAN | FLOAT   Sichtbarkeitswert --> true | false entspricht sichtbar bzw. unsichtbar
+                                                                        Zahl zwischen 0 uns 1 definiert Transparenzgrad 
+              */
+                map.filterLayer(name,switchTo);
+                map.filterLayer(name+'Info',switchTo);
+              }
+            </script>
+)
         }
         div_map = TEXT
         div_map {
