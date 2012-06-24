@@ -523,7 +523,7 @@ plugin.tx_browser_pi1 {
               <script>
                   // Be aware of the trailing slash!
                 OpenLayers.ImgPath = "/typo3conf/ext/browser/res/js/map/lib/OpenLayers/img/";
-                var markerData = {"cat1":{"icon":["./img/test1.png",14,14,0,0],"data":{"point1":{"coors":[9.6175669,48.9659301],"desc":"Punk1<br>Neue Box und der Inhalt geht über mehrere Zeilen"},"point2":{"coors":[9.555442525,48.933978799]}}},"cat2":{"icon":["./img/test2.png",14,14,0,0],"data":{"point3":{"coors":[9.538,48.89],"desc":"Punkt3<br>rote Sigantur"},"point4":{"coors":[9.6075669,48.9459301],"desc":"Punkt4<br>rote Sigantur"}}}}
+                var markerData = {"cat1":{"icon":["typo3conf/ext/browser/res/js/map/test/img/test1.png",14,14,0,0],"data":{"point1":{"coors":[9.6175669,48.9659301],"desc":"Punk1<br>Neue Box und der Inhalt geht über mehrere Zeilen"},"point2":{"coors":[9.555442525,48.933978799]}}},"cat2":{"icon":["typo3conf/ext/browser/res/js/map/test/img/test2.png",14,14,0,0],"data":{"point3":{"coors":[9.538,48.89],"desc":"Punkt3<br>rote Sigantur"},"point4":{"coors":[9.6075669,48.9459301],"desc":"Punkt4<br>rote Sigantur"}}}}
               </script>
               <script src="typo3conf/ext/browser/res/js/map/oxMapConfig_0.0.2.js"></script>
               <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.2.js"></script>
