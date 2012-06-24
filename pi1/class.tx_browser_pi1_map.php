@@ -47,8 +47,8 @@
  *
  *              SECTION: Init
  *  189:     private function init(  )
- *  308:     private function init_marker( $template )
- *  393:     private function render_map( $pObj_template )
+ *  308:     private function initMainMarker( $template )
+ *  393:     private function renderMap( $pObj_template )
  *
  *              SECTION: Marker
  *  553:     private function marker_divMap( )
@@ -57,7 +57,7 @@
  *  622:     private function marker_jssRenderMap( )
  *
  *              SECTION: CSS
- *  660:     private function css_setHeader( )
+ *  660:     private function cssSetHtmlHeader( )
  *
  *              SECTION: JavaScripts
  *  702:     private function jss_setHeader( )
@@ -152,10 +152,10 @@ class tx_browser_pi1_map
 
 
       // set the map marker (in case template is without the marker)
-    $template = $this->init_marker( $template );
+    $template = $this->initMainMarker( $template );
 
       // render the map
-    $template = $this->render_map( $template );
+    $template = $this->renderMap( $template );
 
       // RETURN the template
     return $template;
@@ -345,14 +345,14 @@ class tx_browser_pi1_map
 
 
   /**
- * init_marker( ): Set the marker ###MAP###, if the current template hasn't any map-marker
+ * initMainMarker( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
  * @param	string		$template: Current HTML template
  * @return	array		$template: Template with map marker
  * @version 3.9.6
  * @since   3.9.6
  */
-  private function init_marker( $template )
+  private function initMainMarker( $template )
   {
       // map marker
     $str_mapMarker = '###MAP###';
@@ -435,14 +435,14 @@ class tx_browser_pi1_map
 
 
   /**
- * render_map( ): Set the marker ###MAP###, if the current template hasn't any map-marker
+ * renderMap( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
  * @param	string		$pObj_template: current HTML template of the parent object
  * @return	array		$pObj_template: parent object template with map marker
  * @version 3.9.6
  * @since   3.9.6
  */
-  private function render_map( $pObj_template )
+  private function renderMap( $pObj_template )
   {
       // map marker
     $str_mapMarker = '###MAP###';
@@ -539,7 +539,7 @@ class tx_browser_pi1_map
       //
       // Add css to the HTML header
 
-    $this->css_setHeader( );
+    $this->cssSetHtmlHeader( );
       // Add css to the HTML header
 
 
@@ -557,12 +557,14 @@ class tx_browser_pi1_map
       //
       // Substitute marker
 
-    $markerArray['###MAP_22###']               = $this->marker_map( );
+//    $markerArray['###MAP_22###']               = $this->marker_map( );
 //    $markerArray['###FORM_FILTER###']       = $this->marker_formFilter( );
 //    $markerArray['###DIV_MAP###']           = $this->marker_divMap( );
 //    $markerArray['###SCRIPT_RENDERMAP###']  = $this->marker_jssRenderMap( );
 //    $markerArray['###SCRIPT_FILTER###']     = $this->marker_jssFilter( );
 //$this->pObj->dev_var_dump( $markerArray );
+    $markerArray  = $this->renderMapSystemMarker( $map_template );
+    $markerArray  = $markerArray + $this->renderMapDynamicMarker( $map_template );
     $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
       // Substitute marker
 
@@ -574,6 +576,104 @@ class tx_browser_pi1_map
 
       // RETURN the template
     return $pObj_template;
+  }
+
+
+
+  /**
+ * renderMapSystemMarker( ):
+ *
+ * @return	array
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function renderMapSystemMarker( $map_template )
+  {
+    $markerArray = array( );
+    
+    $systemMarker = array( 'filter_form', 'filter_jss');
+    
+    foreach( $systemMarker as $marker )
+    {
+      $hashKeyMarker  = '###' . strtoupper( $marker ) . '###';
+      $pos = strpos( $map_template, $hashKeyMarker );
+      if( ( $pos === false ) )
+      {
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = $hashKeyMarker . ' isn\'t part of the map HTML template. It won\'t rendered!';
+          t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2);
+        }
+        continue;
+      }
+      if( ! ( $pos === false ) )
+      {
+        $cObj_name      = $this->confMap['marker.']['systemMarker.'][$marker];
+        $cObj_conf      = $this->confMap['marker.']['systemMarker.'][$marker . '.'];
+        $content        = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+        if( empty ( $content ) )
+        {
+          if( $this->pObj->b_drs_map )
+          {
+            $prompt = 'marker.systemMarker.' . $marker . ' is empty. Probably this is an error!';
+            t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
+          }
+        }
+        $markerArray[ $hashKeyMarker ] = $content;
+      }
+    }
+    
+    return $markerArray;
+  }
+
+
+
+  /**
+ * renderMapDynamicMarker( $map_template ):
+ *
+ * @return	array
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function renderMapDynamicMarker( $map_template )
+  {
+    $markerArray = array( );
+    
+    foreach( $this->confMap['marker.']['dynamicMarker.'] as $marker => $conf )
+    {
+      if( substr( $marker, -1, 1 ) == '.' )
+      {
+        continue;
+      }
+      
+      $hashKeyMarker = '###' . strtoupper( $marker ) . '###';
+      
+      $pos = strpos( $map_template, $hashKeyMarker );
+      if( ( $pos === false ) )
+      {
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = $hashKeyMarker . ' isn\'t part of the map HTML template. It won\'t rendered!';
+          t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+        }
+        continue;
+      }
+
+      $cObj_name  = $this->confMap['marker.']['dynamicMarker.'][$marker];
+      $cObj_conf  = $this->confMap['marker.']['dynamicMarker.'][$marker . '.'];
+      $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+      if( empty ( $content ) )
+      {
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'marker.dynamicMarker.' . $marker . ' is empty. Probably this is an error!';
+          t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
+        }
+      }
+      $markerArray[ $hashKeyMarker ] = $content;
+    }
+    
+    return $markerArray;
   }
 
 
@@ -741,13 +841,13 @@ class tx_browser_pi1_map
 
 
   /**
- * css_setHeader( ): Include CSS for openStreetMap
+ * cssSetHtmlHeader( ): Include CSS for openStreetMap
  *
  * @return	void
  * @version 3.9.6
  * @since   3.9.6
  */
-  private function css_setHeader( )
+  private function cssSetHtmlHeader( )
   {
     $name_prefix = 'css_';
 
