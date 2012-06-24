@@ -557,15 +557,14 @@ class tx_browser_pi1_map
       //
       // Substitute marker
 
-//    $markerArray['###MAP_22###']               = $this->marker_map( );
-//    $markerArray['###FORM_FILTER###']       = $this->marker_formFilter( );
-//    $markerArray['###DIV_MAP###']           = $this->marker_divMap( );
-//    $markerArray['###SCRIPT_RENDERMAP###']  = $this->marker_jssRenderMap( );
-//    $markerArray['###SCRIPT_FILTER###']     = $this->marker_jssFilter( );
-//$this->pObj->dev_var_dump( $markerArray );
+      // System marker
     $markerArray  = $this->renderMapSystemMarker( $map_template );
+      // Dynamic marker
     $markerArray  = $markerArray + $this->renderMapDynamicMarker( $map_template );
     $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
+    
+    $map_template = $this->renderMapVariables( $map_template );
+    
       // Substitute marker
 
 
@@ -576,6 +575,23 @@ class tx_browser_pi1_map
 
       // RETURN the template
     return $pObj_template;
+  }
+
+
+
+  /**
+ * renderMapVariables( ):
+ *
+ * @return	array
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function renderMapVariables( $map_template )
+  {
+    $data = '{"cat1":{"icon":["typo3conf/ext/browser/res/js/map/test/img/test1.png",14,14,0,0],"data":{"point1":{"coors":[9.6175669,48.9659301],"desc":"Punk1<br>Neue Box und der Inhalt geht über mehrere Zeilen"},"point2":{"coors":[9.555442525,48.933978799]}}},"cat2":{"icon":["typo3conf/ext/browser/res/js/map/test/img/test2.png",14,14,0,0],"data":{"point3":{"coors":[9.538,48.89],"desc":"Punkt3<br>rote Sigantur"},"point4":{"coors":[9.6075669,48.9459301],"desc":"Punkt4<br>rote Sigantur"}}}}';
+    $map_template = str_replace( '###DATA###', $data, $map_template );
+    
+    return $map_template;
   }
 
 
