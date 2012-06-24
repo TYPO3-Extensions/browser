@@ -519,10 +519,12 @@ plugin.tx_browser_pi1 {
           map_jss {
             value (
               <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers/OpenLayers_0.0.2.js"></script>
+              <script src="typo3conf/ext/browser/res/js/map/lib/OpenStreetMap/OpenStreetMap_0.0.2.js"></script>
               <script>
                   // Be aware of the trailing slash!
                 OpenLayers.ImgPath = "/typo3conf/ext/browser/res/js/map/lib/OpenLayers/img/";
               </script>
+              <script src="typo3conf/ext/browser/res/js/map/oxMapConfig_0.0.2.js"></script>
               <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.2.js"></script>
 )
           }
