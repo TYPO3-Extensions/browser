@@ -555,17 +555,35 @@ class tx_browser_pi1_map
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Substitute marker
+      // Substitute marker HTML
 
       // System marker
-    $markerArray  = $this->renderMapSystemMarker( $map_template );
+    $markerArray  = $this->renderMapHtmlSystemMarker( $map_template );
       // Dynamic marker
-    $markerArray  = $markerArray + $this->renderMapDynamicMarker( $map_template );
+    $markerArray  = $markerArray + $this->renderMapHtmlDynamicMarker( $map_template );
+      // Replace marker in the map HTML template
     $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
+      // Substitute marker HTML
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Substitute marker JSS
+
+      // System marker
+    //$markerArray  = $this->renderMapHtmlSystemMarker( $map_template );
+      // Dynamic marker
+    $markerArray  = $markerArray + $this->renderMapJssDynamicMarker( $map_template );
+      // Replace marker in the map HTML template
+    $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
+      // Substitute marker HTML
     
+    
+    
+      // Add data
     $map_template = $this->renderMapVariables( $map_template );
     
-      // Substitute marker
 
 
 
@@ -597,13 +615,13 @@ class tx_browser_pi1_map
 
 
   /**
- * renderMapSystemMarker( ):
+ * renderMapHtmlSystemMarker( ):
  *
  * @return	array
  * @version 4.1.0
  * @since   4.1.0
  */
-  private function renderMapSystemMarker( $map_template )
+  private function renderMapHtmlSystemMarker( $map_template )
   {
     $markerArray = array( );
     
@@ -624,14 +642,14 @@ class tx_browser_pi1_map
       }
       if( ! ( $pos === false ) )
       {
-        $cObj_name      = $this->confMap['marker.']['systemMarker.'][$marker];
-        $cObj_conf      = $this->confMap['marker.']['systemMarker.'][$marker . '.'];
+        $cObj_name      = $this->confMap['marker.']['html.']['systemMarker.'][$marker];
+        $cObj_conf      = $this->confMap['marker.']['html.']['systemMarker.'][$marker . '.'];
         $content        = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
         if( empty ( $content ) )
         {
           if( $this->pObj->b_drs_map )
           {
-            $prompt = 'marker.systemMarker.' . $marker . ' is empty. Probably this is an error!';
+            $prompt = 'marker.html.systemMarker.' . $marker . ' is empty. Probably this is an error!';
             t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
           }
         }
@@ -645,17 +663,17 @@ class tx_browser_pi1_map
 
 
   /**
- * renderMapDynamicMarker( $map_template ):
+ * renderMapHtmlDynamicMarker( $map_template ):
  *
  * @return	array
  * @version 4.1.0
  * @since   4.1.0
  */
-  private function renderMapDynamicMarker( $map_template )
+  private function renderMapHtmlDynamicMarker( $map_template )
   {
     $markerArray = array( );
     
-    foreach( $this->confMap['marker.']['dynamicMarker.'] as $marker => $conf )
+    foreach( $this->confMap['marker.']['html.']['dynamicMarker.'] as $marker => $conf )
     {
       if( substr( $marker, -1, 1 ) == '.' )
       {
@@ -675,14 +693,64 @@ class tx_browser_pi1_map
         continue;
       }
 
-      $cObj_name  = $this->confMap['marker.']['dynamicMarker.'][$marker];
-      $cObj_conf  = $this->confMap['marker.']['dynamicMarker.'][$marker . '.'];
+      $cObj_name  = $this->confMap['marker.']['html.']['dynamicMarker.'][$marker];
+      $cObj_conf  = $this->confMap['marker.']['html.']['dynamicMarker.'][$marker . '.'];
       $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
       if( empty ( $content ) )
       {
         if( $this->pObj->b_drs_map )
         {
-          $prompt = 'marker.dynamicMarker.' . $marker . ' is empty. Probably this is an error!';
+          $prompt = 'marker.html.dynamicMarker.' . $marker . ' is empty. Probably this is an error!';
+          t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
+        }
+      }
+      $markerArray[ $hashKeyMarker ] = $content;
+    }
+    
+    return $markerArray;
+  }
+
+
+
+  /**
+ * renderMapJssDynamicMarker( $map_template ):
+ *
+ * @return	array
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function renderMapJssDynamicMarker( $map_template )
+  {
+    $markerArray = array( );
+    
+    foreach( $this->confMap['marker.']['jss.']['dynamicMarker.'] as $marker => $conf )
+    {
+      if( substr( $marker, -1, 1 ) == '.' )
+      {
+        continue;
+      }
+      
+      $hashKeyMarker = '###' . strtoupper( $marker ) . '###';
+      
+      $pos = strpos( $map_template, $hashKeyMarker );
+      if( ( $pos === false ) )
+      {
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = $hashKeyMarker . ' isn\'t part of the map HTML template. It won\'t rendered!';
+          t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+        }
+        continue;
+      }
+
+      $cObj_name  = $this->confMap['marker.']['jss.']['dynamicMarker.'][$marker];
+      $cObj_conf  = $this->confMap['marker.']['jss.']['dynamicMarker.'][$marker . '.'];
+      $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+      if( empty ( $content ) )
+      {
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'marker.jss.dynamicMarker.' . $marker . ' is empty. Probably this is an error!';
           t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
         }
       }
@@ -738,98 +806,6 @@ class tx_browser_pi1_map
       }
     }
       // DRS - Development Reporting System
-
-    return $content;
-  }
-
-
-
-
-
-
-
-
-  /**
- * marker_divMap( ): get the content for the current marker
- *
- * @return	string		$content: current content
- * @version 3.9.6
- * @since   3.9.6
- */
-  private function marker_divMap( )
-  {
-    $cObj_name  = $this->confMap['marker.']['div_map'];
-    $cObj_conf  = $this->confMap['marker.']['div_map.'];
-    $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
-
-    return $content;
-  }
-
-
-
-
-
-
-
-
-  /**
- * marker_formFilter( ): get the content for the current marker
- *
- * @return	string		$content: current content
- * @version 3.9.6
- * @since   3.9.6
- */
-  private function marker_formFilter( )
-  {
-    $cObj_name  = $this->confMap['marker.']['form_filter'];
-    $cObj_conf  = $this->confMap['marker.']['form_filter.'];
-    $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
-
-    return $content;
-  }
-
-
-
-
-
-
-
-
-  /**
- * marker_jssFilter( ): get the content for the current marker
- *
- * @return	string		$content: current content
- * @version 3.9.6
- * @since   3.9.6
- */
-  private function marker_jssFilter( )
-  {
-    $cObj_name  = $this->confMap['marker.']['jss_filter'];
-    $cObj_conf  = $this->confMap['marker.']['jss_filter.'];
-    $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
-
-    return $content;
-  }
-
-
-
-
-
-
-
-
-  /**
- * marker_jssRenderMap( ): get the content for the current marker
- *
- * @return	string		$content: current content
- * @version 3.9.6
- * @since   3.9.6
- */
-  private function marker_jssRenderMap( )
-  {
-    $cObj_name  = $this->confMap['marker.']['jss_renderMap'];
-    $cObj_conf  = $this->confMap['marker.']['jss_renderMap.'];
-    $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
 
     return $content;
   }
