@@ -16,7 +16,7 @@ var oxMapRender = function(){
         if(!oConfig)                                                                                //  needs map configuration like oxMapConfig.js
             return false;                                                                           //  otherwise it can't render any map
 
-        oConfig.Marker = rawdata;
+        oConfig.Marker = markerData;
 
         var aAllowedWMS = [ 'OSM' ],                                                                //  list of allowed WMS like OpenStreetMap
             sWms = null,

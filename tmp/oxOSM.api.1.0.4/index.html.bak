@@ -6,7 +6,6 @@
   <style type="text/css">
     .oxTextLayer{border:1px solid green;border-radius:6px;background:#fff;width:200px;overflow:hidden;position:absolute;padding:6px;box-shadow:3px 3px 3px #3d3d3d;}
   </style>
-  <base_XXX href="http://typo3-organiser.de/" />
 </head>
 
 <body>
@@ -21,10 +20,13 @@
   <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
   <script src="jsApi/lib/OpenLayers/OpenLayers_0.0.2.js"></script>
   <script src="jsApi/lib/OpenStreetMap/OpenStreetMap_0.0.2.js"></script>
-  <script>
-      // Be aware of the trailing slash!
-    OpenLayers.ImgPath = "/typo3conf/ext/browser/res/js/map/lib/OpenLayers/img/";
-    var markerData = {"cat1":{"icon":["./img/test1.png",14,14,0,0],"data":{"point1":{"coors":[9.6175669,48.9659301],"desc":"Punk1<br>Neue Box und der Inhalt geht über mehrere Zeilen"},"point2":{"coors":[9.555442525,48.933978799]}}},"cat2":{"icon":["./img/test2.png",14,14,0,0],"data":{"point3":{"coors":[9.538,48.89],"desc":"Punkt3<br>rote Sigantur"},"point4":{"coors":[9.6075669,48.9459301],"desc":"Punkt4<br>rote Sigantur"}}}}
+  <script src="dataInfoBox/data.js"></script>
+  <script type="text/javascript">
+    // 120623, dwildt+
+    // tell OpenLayers where the control images are
+    // remember the trailing slash
+    OpenLayers.ImgPath = "/typo3conf/ext/browser/tmp/oxOSM.api.1.0.4/jsApi/lib/OpenLayers/img/";
+    // 120623, dwildt+
   </script>
   <script src="jsApi/oxMapConfig_0.0.2.js"></script>
   <script src="jsApi/oxRenderMap_0.0.2.js"></script>
