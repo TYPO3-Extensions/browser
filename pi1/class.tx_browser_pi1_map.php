@@ -754,6 +754,7 @@ class tx_browser_pi1_map
           t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
         }
       }
+      $content = "'" . $content . ".";
       $markerArray[ $hashKeyMarker ] = $content;
     }
     
