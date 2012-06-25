@@ -286,7 +286,7 @@ plugin.tx_browser_pi1 {
         file = EXT:browser/res/html/map/default.tmpl
       }
       configuration {
-        setMapCenter {
+        centerCoordinates {
             // [STRING] auto (recommended) || ts. auto: center will calculated. ts: center will taken from TypoScript 
           mode          = auto
             // [STRING] marker for the center in the HTML code. Example: OSMConfigCenter
