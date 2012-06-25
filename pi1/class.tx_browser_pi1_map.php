@@ -610,6 +610,7 @@ class tx_browser_pi1_map
  */
   private function renderMapData( $map_template )
   {
+var_dump( __METHOD__, __LINE__, $this->pObj->rows ); 
     
     $series = null;
     
