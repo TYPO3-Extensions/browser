@@ -626,7 +626,7 @@ class tx_browser_pi1_map
                                         'point2' => array
                                                     (
                                                       'coors' => array( 9.555442525, 48.933978799 ),
-                                                      'desc'  => 'Punkt2<br />Neue Box und der Inhalt geht &uuml;ber mehrere Zeilen'
+                                                      'desc'  => '<h1>Punkt2<h1><p>Mit HTML Tags umklammert.</p>'
                                                     )
                                       )
                           ),
