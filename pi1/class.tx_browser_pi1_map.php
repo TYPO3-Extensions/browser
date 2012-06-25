@@ -68,7 +68,15 @@
  */
 class tx_browser_pi1_map
 {
+    // [OBJECT] parent object
+  var $pObj = null;
 
+    // [ARRAY] TypoScript configuration array of the current view
+  var $conf_view  = null;
+    // [INTEGER] Id of the single view
+  var $singlePid  = null;
+
+    
     // [BOOLEAN] Is map enabled? Will set by init( ) while runtime
   var $enabled      = null;
     // [ARRAY] TypoScript configuration array. Will set by init( ) while runtime
@@ -546,15 +554,6 @@ class tx_browser_pi1_map
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Add javascripts to the HTML header
-
-//    $this->jss_setHeader( );
-      // Add javascripts to the HTML header
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
       // Substitute marker HTML
 
       // System marker
@@ -614,6 +613,72 @@ class tx_browser_pi1_map
 
 
 
+
+
+
+
+
+
+  /***********************************************
+  *
+  * Marker
+  *
+  **********************************************/
+
+
+
+  /**
+ * renderMapHtmlDynamicMarker( $map_template ):
+ *
+ * @return	array
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function renderMapHtmlDynamicMarker( $map_template )
+  {
+    $dummy = null;
+    $markerArray = array( );
+    
+    foreach( $this->confMap['marker.']['html.']['dynamicMarker.'] as $marker => $conf )
+    {
+      $dummy = $conf;
+      if( substr( $marker, -1, 1 ) == '.' )
+      {
+        continue;
+      }
+      
+      $hashKeyMarker = '###' . strtoupper( $marker ) . '###';
+      
+      $pos = strpos( $map_template, $hashKeyMarker );
+      if( ( $pos === false ) )
+      {
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = $hashKeyMarker . ' isn\'t part of the map HTML template. It won\'t rendered!';
+          t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+        }
+        continue;
+      }
+
+      $cObj_name  = $this->confMap['marker.']['html.']['dynamicMarker.'][$marker];
+      $cObj_conf  = $this->confMap['marker.']['html.']['dynamicMarker.'][$marker . '.'];
+      $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+      if( empty ( $content ) )
+      {
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'marker.html.dynamicMarker.' . $marker . ' is empty. Probably this is an error!';
+          t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
+        }
+      }
+      $markerArray[ $hashKeyMarker ] = $content;
+    }
+    
+    return $markerArray;
+  }
+
+
+
   /**
  * renderMapHtmlSystemMarker( ):
  *
@@ -663,56 +728,6 @@ class tx_browser_pi1_map
 
 
   /**
- * renderMapHtmlDynamicMarker( $map_template ):
- *
- * @return	array
- * @version 4.1.0
- * @since   4.1.0
- */
-  private function renderMapHtmlDynamicMarker( $map_template )
-  {
-    $markerArray = array( );
-    
-    foreach( $this->confMap['marker.']['html.']['dynamicMarker.'] as $marker => $conf )
-    {
-      if( substr( $marker, -1, 1 ) == '.' )
-      {
-        continue;
-      }
-      
-      $hashKeyMarker = '###' . strtoupper( $marker ) . '###';
-      
-      $pos = strpos( $map_template, $hashKeyMarker );
-      if( ( $pos === false ) )
-      {
-        if( $this->pObj->b_drs_map )
-        {
-          $prompt = $hashKeyMarker . ' isn\'t part of the map HTML template. It won\'t rendered!';
-          t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
-        }
-        continue;
-      }
-
-      $cObj_name  = $this->confMap['marker.']['html.']['dynamicMarker.'][$marker];
-      $cObj_conf  = $this->confMap['marker.']['html.']['dynamicMarker.'][$marker . '.'];
-      $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
-      if( empty ( $content ) )
-      {
-        if( $this->pObj->b_drs_map )
-        {
-          $prompt = 'marker.html.dynamicMarker.' . $marker . ' is empty. Probably this is an error!';
-          t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
-        }
-      }
-      $markerArray[ $hashKeyMarker ] = $content;
-    }
-    
-    return $markerArray;
-  }
-
-
-
-  /**
  * renderMapJssDynamicMarker( $map_template ):
  *
  * @return	array
@@ -721,10 +736,12 @@ class tx_browser_pi1_map
  */
   private function renderMapJssDynamicMarker( $map_template )
   {
+    $dummy = null;
     $markerArray = array( );
     
     foreach( $this->confMap['marker.']['jss.']['dynamicMarker.'] as $marker => $conf )
     {
+      $dummy = $conf;
       if( substr( $marker, -1, 1 ) == '.' )
       {
         continue;
@@ -770,65 +787,9 @@ class tx_browser_pi1_map
 
   /***********************************************
   *
-  * Marker
-  *
-  **********************************************/
-
-
-
-
-
-
-
-
-  /**
- * marker_map( ): get the content for the current marker
- *
- * @return	string		$content: current content
- * @version 4.1.0
- * @since   4.1.0
- */
-  private function marker_map( )
-  {
-    $cObj_name  = $this->confMap['marker.']['map'];
-    $cObj_conf  = $this->confMap['marker.']['map.'];
-    $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
-    
-      // DRS - Development Reporting System
-    if ($this->b_drs_error)
-    {
-      if( empty( $content ) )
-      {
-        $prompt = 'Content is empty. Probably this is a bug.';
-        t3lib_div::devLog('[WARN/DRS] ' . $prompt, $this->extKey, 3);
-        $prompt = 'Please check marker.map';
-        t3lib_div::devLog('[HELP/DRS] ABORTED', $this->extKey, 1);
-      }
-    }
-      // DRS - Development Reporting System
-
-    return $content;
-  }
-
-
-
-
-
-
-
-
-
-  /***********************************************
-  *
   * CSS
   *
   **********************************************/
-
-
-
-
-
-
 
 
 
@@ -851,69 +812,6 @@ class tx_browser_pi1_map
     $this->pObj->objJss->addFile($path, false, $name, $path_tsConf, 'css', $bool_inline);
       // Include openStreetMap
   }
-
-
-
-
-
-
-
-
-
-  /***********************************************
-  *
-  * JavaScripts
-  *
-  **********************************************/
-
-
-
-
-
-
-
-
-
-  /**
- * jss_setHeader( ): Include JSS for openStreetMap
- *
- * @return	void
- * @version 3.9.6
- * @since   3.9.6
- */
-  private function jss_setHeader( )
-  {
-    $name_prefix = 'jss_';
-
-      // Include openLayers
-    $name         = $name_prefix . 'openLayers';
-    $path         = $this->confMap['javascripts.']['lib.']['openLayers'];
-    $bool_inline  = $this->confMap['javascripts.']['lib.']['openLayers.']['inline'];
-    $path_tsConf  = 'javascripts.lib.openLayers';
-    $this->pObj->objJss->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-      // Include openLayers
-
-      // Include openStreetMap
-    $name         = $name_prefix . 'openStreetMap';
-    $path         = $this->confMap['javascripts.']['lib.']['openStreetMap'];
-    $bool_inline  = $this->confMap['javascripts.']['lib.']['openStreetMap.']['inline'];
-    $path_tsConf  = 'javascripts.lib.openStreetMap';
-    $this->pObj->objJss->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-      // Include openStreetMap
-
-//      // Include config
-//    $name         = $name_prefix . 'config';
-//    $path         = $this->confMap['javascripts.']['config'];
-//    $bool_inline  = $this->confMap['javascripts.']['config.']['inline'];
-//    $path_tsConf  = 'javascripts.lib.config';
-//    $this->pObj->objJss->addFile($path, false, $name, $path_tsConf, 'jss', $bool_inline);
-//      // Include config
-  }
-
-
-
-
-
 
 
 
