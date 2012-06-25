@@ -39,26 +39,28 @@
  *
  *
  *
- *   67: class tx_browser_pi1_map
- *  101:     function __construct($pObj)
+ *   69: class tx_browser_pi1_map
+ *  103:     function __construct($pObj)
  *
- *              SECTION: Map
- *  136:     public function get_map( $template )
- *  185:     public function set_typeNum( )
+ *              SECTION: Main
+ *  132:     public function get_map( $template )
  *
  *              SECTION: Init
- *  220:     private function init(  )
- *  361:     private function initMainMarker( $template )
- *  451:     private function renderMap( $pObj_template )
- *  605:     private function renderMapVariables( $map_template )
+ *  189:     private function init(  )
+ *  330:     private function initMainMarker( $template )
+ *  414:     public function set_typeNum( )
  *
- *              SECTION: Marker
- *  637:     private function renderMapHtmlDynamicMarker( $map_template )
- *  690:     private function renderMapHtmlSystemMarker( $map_template )
- *  739:     private function renderMapJssDynamicMarker( $map_template )
+ *              SECTION: Map rendering
+ *  444:     private function renderMap( $pObj_template )
+ *  598:     private function renderMapData( $map_template )
+ *
+ *              SECTION: Map rendering marker
+ *  630:     private function renderMapHtmlDynamicMarker( $map_template )
+ *  683:     private function renderMapHtmlSystemMarker( $map_template )
+ *  732:     private function renderMapJssDynamicMarker( $map_template )
  *
  *              SECTION: CSS
- *  805:     private function cssSetHtmlHeader( )
+ *  798:     private function cssSetHtmlHeader( )
  *
  * TOTAL FUNCTIONS: 11
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -570,7 +572,7 @@ class tx_browser_pi1_map
 
 
       // Add data
-    $map_template = $this->renderMapVariables( $map_template );
+    $map_template = $this->renderMapData( $map_template );
 
 
 
@@ -585,17 +587,71 @@ class tx_browser_pi1_map
 
 
 
+
+
+
+
+
+
+  /***********************************************
+  *
+  * Map rendering data
+  *
+  **********************************************/
+
+
+
   /**
- * renderMapVariables( ):
+ * renderMapData( ):
  *
  * @param    [type]        $$map_template: ...
  * @return    array
  * @version 4.1.0
  * @since   4.1.0
  */
-  private function renderMapVariables( $map_template )
+  private function renderMapData( $map_template )
   {
-    $data = '{"cat1":{"icon":["typo3conf/ext/browser/res/js/map/test/img/test1.png",14,14,0,0],"data":{"point1":{"coors":[9.6175669,48.9659301],"desc":"Punk1<br>Neue Box und der Inhalt geht über mehrere Zeilen"},"point2":{"coors":[9.555442525,48.933978799]}}},"cat2":{"icon":["typo3conf/ext/browser/res/js/map/test/img/test2.png",14,14,0,0],"data":{"point3":{"coors":[9.538,48.89],"desc":"Punkt3<br>rote Sigantur"},"point4":{"coors":[9.6075669,48.9459301],"desc":"Punkt4<br>rote Sigantur"}}}}';
+    $series = array
+              (
+		'cat1' => array
+                          (
+                            'icon' => array(  './img/test1.png', 14, 14, 0, 0 ),
+                            'data' => array
+                                      (
+                                        'point1' => array
+                                                    (
+                                                      'coors' => array( 9.6175669, 48.9659301 ),
+                                                      'desc'  => 'Punkt1<br />Neue Box und der Inhalt geht &uuml;ber mehrere Zeilen'
+                                                    ),
+                                        'point2' => array
+                                                    (
+                                                      'coors' => array( 9.555442525, 48.933978799 ),
+                                                      'desc'  => 'Punkt2<br />Neue Box und der Inhalt geht &uuml;ber mehrere Zeilen'
+                                                    )
+                                      )
+                          ),
+		'cat2' => array
+                          (
+                            'icon' => array( './img/test1.png', 14, 14, 0, 0),
+                            'data' => array
+                                      (
+                                        'point3' => array
+                                                    (
+                                                      'coors' => array( 9.538, 48.89 ),
+                                                      'desc'  => 'Punkt3<br />A: rote Sigantur'
+                                                    ),
+                                        'point4' => array
+                                                    (
+                                                      'coors' => array( 9.6075669, 48.9459301 ),
+                                                      'desc'  => 'Punkt4<br />B: rote Sigantur'
+                                                    )
+                                      )
+                          )
+              );
+
+//var_dump( __METHOD__, __LINE__, json_encode( $series ) ); 
+
+    $data = json_encode( $series );
     $map_template = str_replace( "'###DATA###'", $data, $map_template );
 
     return $map_template;
