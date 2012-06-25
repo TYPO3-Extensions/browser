@@ -665,7 +665,7 @@ class tx_browser_pi1_map
     $data = json_encode( $series );
     $map_template = str_replace( "'###DATA###'", $data, $map_template );
 
-    var_dump( __METHOD__, __LINE__, Path_typo3, PATH_typo3 );
+    var_dump( __METHOD__, __LINE__, PATH_site, TYPO3_mainDir, PATH_typo3, get_defined_constants( ) );
     require_once('../lib/class.tx_browser_map.php');
     $objLibMap = new tx_browser_map( );
 
