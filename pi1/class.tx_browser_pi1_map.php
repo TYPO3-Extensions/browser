@@ -618,7 +618,15 @@ var_dump( __METHOD__, __LINE__, $this->pObj->rows );
     $catImg['cat1'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test1.png', 14, 14, 0, 0 );
     $catImg['cat2'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0 );
 
-    $rows = array
+    foreach( $this->pObj->rows as $dbKey => $dbRow )
+    {
+      $row['main.longitude']  = $dbRow['tx_org_headquarters.mail_lon']; 
+      $row['main.latitude']   = $dbRow['tx_org_headquarters.mail_lat']; 
+      $row['main.short']      = $dbRow['tx_org_headquarters.title']; 
+      $row['category.title']  = 'cat1'; 
+      $rows[] = $row;
+    }
+    $XXX_rows = array
     (
       0 => array
       (
