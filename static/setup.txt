@@ -285,6 +285,14 @@ plugin.tx_browser_pi1 {
           // [STRING] Path to the map HTML template
         file = EXT:browser/res/html/map/default.tmpl
       }
+      configuration {
+        setMapCenter {
+            // [String] auto (recommended) || ts. auto: center will calculated. ts: center will taken from TypoScript 
+          mode          = auto
+            // [String] marker for the center in the HTML code. Example: OSMConfigCenter
+          dynamicMarker = OSMConfigCenter
+        }
+      }
       marker {
         html {
           systemMarker {
