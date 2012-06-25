@@ -652,7 +652,7 @@ class tx_browser_pi1_map
     
     foreach( $rows as $key => $row )
     {
-      if( isset( $series[$row['category.title']]['icon'] ) )
+      if( ! isset( $series[$row['category.title']]['icon'] ) )
       {
         $series[$row['category.title']]['icon'] = $catImg[$row['category.title']];
       }
