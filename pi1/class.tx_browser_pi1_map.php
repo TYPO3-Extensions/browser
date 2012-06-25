@@ -603,8 +603,8 @@ class tx_browser_pi1_map
   /**
  * renderMapData( ):
  *
- * @param    [type]        $$map_template: ...
- * @return    array
+ * @param    string        $map_template: ...
+ * @return    string
  * @version 4.1.0
  * @since   4.1.0
  */
@@ -663,33 +663,92 @@ class tx_browser_pi1_map
 
     $data = json_encode( $series );
     $map_template = str_replace( "'###DATA###'", $data, $map_template );
+    
+      // Set center coordinates
+    $map_template = $this->renderMapDataCenterCoor( $map_template, $coordinates );
 
-    switch( $this->confMap['configuration.']['setMapCenter.']['mode'] )
+    return $map_template;
+  }
+
+
+
+  /**
+ * renderMapDataCenterCoor( ):
+ *
+ * @param    string        $map_template: ...
+ * @return    string
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function renderMapDataCenterCoor( $map_template, $coordinates )
+  {
+      // Get the mode
+    $mode = $this->confMap['configuration.']['centerCoordinates.']['mode'];
+    
+      // SWITCH mode
+    switch( $mode )
     {
       case( 'auto' ):
-        require_once( PATH_typo3conf . 'ext/browser/lib/class.tx_browser_map.php');
-        $objLibMap = new tx_browser_map( );
-        $sumCoor = count( $coordinates );
-        $curCoor = $sumCoor;
-        for( $sumCoor; $curCoor--; )
-        {
-          $objLibMap->fillBoundList( explode( ',' , $coordinates[ $curCoor ] ), $curCoor );
-        }
-        $centerCoor = implode( ',', $objLibMap->centerCoor( ) );
-        $centerCoor = '[' . $centerCoor . ']';
-        $marker     = $this->confMap['configuration.']['setMapCenter.']['dynamicMarker'];
-        $marker     = "'###" . strtoupper( $marker ). "###'";
-        $map_template = str_replace( $marker, $centerCoor, $map_template );
-        //var_dump( __METHOD__, __LINE__, $objLibMap->centerCoor( ) );
-        break;
       case( 'ts' ):
-          // Do nothing
+          // Follow the workflow
         break;
       default:
-        die( __METHOD__ . ' (line: ' . __LINE__ . ')' );
+          // DRS
+        if( $this->pObj->b_drs_error )
+        {
+          $prompt = 'configuration.centerCoordinates.mode is undefined: ' . $mode . '. But is has to be auto or ts!';
+          t3lib_div :: devLog( '[ERROR/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+        }
+          // DRS
+          // RETURN: there is an error!
+        return $map_template;
         break;
     }
+      // SWITCH mode
 
+      // RETURN: center coordinates should not calculated
+    if( $mode == 'ts' )
+    {
+        // DRS
+      if( $this->pObj->b_drs_error )
+      {
+        $prompt = 'configuration.centerCoordinates.mode is: ' . $mode . '. Coordinates won\'t calculated.';
+        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+      }
+        // DRS
+      return $map_template;
+    }
+      // RETURN: center coordinates should not calculated
+    
+      // Require map library
+    require_once( PATH_typo3conf . 'ext/browser/lib/class.tx_browser_map.php');
+      // Create object
+    $objLibMap = new tx_browser_map( );
+      
+      // Get sum of coordinates
+    $sumCoor = count( $coordinates );
+    $curCoor = $sumCoor;
+      // FOR all coordinates
+    for( $sumCoor; $curCoor--; )
+    {
+      $objLibMap->fillBoundList( explode( ',' , $coordinates[ $curCoor ] ), $curCoor );
+    }
+      // FOR all coordinates
+
+      // Get center coordinates
+    $centerCoor = implode( ',', $objLibMap->centerCoor( ) );
+    $centerCoor = '[' . $centerCoor . ']';
+      // Get center coordinates
+
+      // Get the marker
+    $marker     = $this->confMap['configuration.']['centerCoordinates.']['dynamicMarker'];
+    $marker     = "'###" . strtoupper( $marker ). "###'";
+      // Get the marker
+
+      // Set center coordinates
+    $map_template = str_replace( $marker, $centerCoor, $map_template );
+
+      // RETURN the handled template
     return $map_template;
   }
 
