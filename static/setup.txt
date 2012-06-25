@@ -418,7 +418,6 @@ plugin.tx_browser_pi1 {
             OSMConfigZoom {
                 // [ARRAY] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
               value = 10
-              value = 2
             }
           }
         }
