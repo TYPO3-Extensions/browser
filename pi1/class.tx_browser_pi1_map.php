@@ -651,7 +651,7 @@ class tx_browser_pi1_map
       $series2[$row['category.title']]['data'][$key]['coors']  = array( $row['main.longitude'], $row['main.latitude'] );
       $series2[$row['category.title']]['data'][$key]['desc']   = $row['main.short'];
     }
-var_dump( __METHOD__, __LINE__, $series2, json_encode( $series2 ) ); 
+//var_dump( __METHOD__, __LINE__, $series2, json_encode( $series2 ) ); 
     $series = array
     (
       'cat1' => array
@@ -692,7 +692,7 @@ var_dump( __METHOD__, __LINE__, $series2, json_encode( $series2 ) );
 
 //var_dump( __METHOD__, __LINE__, json_encode( $series ) ); 
 
-    $data = json_encode( $series );
+    $data = json_encode( $series2 );
     $map_template = str_replace( "'###DATA###'", $data, $map_template );
 
     return $map_template;
