@@ -395,7 +395,7 @@ plugin.tx_browser_pi1 {
             MapZoomLevels = TEXT
             MapZoomLevels {
                 // [STRING] customized zoom levels
-              value = 10
+              value = 4
             }
               // Map marker standalone mode
             MapMarker = TEXT
@@ -424,8 +424,8 @@ plugin.tx_browser_pi1 {
               // Map zoom level
             OSMConfigZoom = TEXT
             OSMConfigZoom {
-                // [INTEGER] Value from 1 to 21. Example: 10
-              value = 10
+                // [INTEGER] Value from 0 to 21. Example: 4
+              value = 4
             }
           }
         }
