@@ -279,7 +279,7 @@ plugin.tx_browser_pi1 {
           // [STRING] Path to the map CSS file
         css = EXT:browser/res/html/map/default.css
         css {
-            // [Boolean] 0 (default): link to the css file, 1: include the css inline
+            // [BOOLEAN] 0 (default): link to the css file, 1: include the css inline
           inline = 0
         }
           // [STRING] Path to the map HTML template
@@ -287,9 +287,9 @@ plugin.tx_browser_pi1 {
       }
       configuration {
         setMapCenter {
-            // [String] auto (recommended) || ts. auto: center will calculated. ts: center will taken from TypoScript 
+            // [STRING] auto (recommended) || ts. auto: center will calculated. ts: center will taken from TypoScript 
           mode          = auto
-            // [String] marker for the center in the HTML code. Example: OSMConfigCenter
+            // [STRING] marker for the center in the HTML code. Example: OSMConfigCenter
           dynamicMarker = OSMConfigCenter
         }
       }
@@ -418,13 +418,13 @@ plugin.tx_browser_pi1 {
               // Center of the map
             OSMConfigCenter = TEXT
             OSMConfigCenter {
-                // [ARRAY] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
-              value = [ 9.57778345, 48.92796505 ]
+                // [ARRAY] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X. 
+              value = 
             }
               // Map zoom level
             OSMConfigZoom = TEXT
             OSMConfigZoom {
-                // [ARRAY] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
+                // [INTEGER] Value from 1 to 21. Example: 10
               value = 10
             }
           }
