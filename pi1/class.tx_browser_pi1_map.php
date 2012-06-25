@@ -710,7 +710,7 @@ class tx_browser_pi1_map
     if( $mode == 'ts' )
     {
         // DRS
-      if( $this->pObj->b_drs_error )
+      if( $this->pObj->b_drs_map )
       {
         $prompt = 'configuration.centerCoordinates.mode is: ' . $mode . '. Coordinates won\'t calculated.';
         t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
@@ -740,6 +740,14 @@ class tx_browser_pi1_map
     $centerCoor = '[' . $centerCoor . ']';
       // Get center coordinates
 
+      // DRS
+    if( $this->pObj->b_drs_map )
+    {
+      $prompt = 'configuration.centerCoordinates.mode is: ' . $mode . '. Calculated coordinates are ' . $centerCoor;
+      t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+    }
+      // DRS
+      
       // Get the marker
     $marker     = $this->confMap['configuration.']['centerCoordinates.']['dynamicMarker'];
     $marker     = "'###" . strtoupper( $marker ). "###'";
