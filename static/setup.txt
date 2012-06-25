@@ -418,8 +418,8 @@ plugin.tx_browser_pi1 {
               // Center of the map
             OSMConfigCenter = TEXT
             OSMConfigCenter {
-                // [ARRAY] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X. 
-              value = 
+                // [ARRAY] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X. Example: [9.15,50.1725] <- Center of European Union
+              value = [9.15,50.1725]
             }
               // Map zoom level
             OSMConfigZoom = TEXT
