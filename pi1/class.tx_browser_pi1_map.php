@@ -665,18 +665,30 @@ class tx_browser_pi1_map
     $data = json_encode( $series );
     $map_template = str_replace( "'###DATA###'", $data, $map_template );
 
-    require_once( PATH_typo3conf . 'ext/browser/lib/class.tx_browser_map.php');
-    $objLibMap = new tx_browser_map( );
-
-//    $coordinates = array( '9.6175669,48.9659301', '9.555442525,48.933978799', '9.538,48.89', '9.6075669,48.9459301' );
-    $sumCoor = count( $coordinates );
-    $curCoor = $sumCoor;
-    for( $sumCoor; $curCoor--; )
+    switch( $this->confMap['configuration.']['setMapCenter.']['mode'] )
     {
-      $objLibMap->fillBoundList( explode( ',' , $coordinates[ $curCoor ] ), $curCoor );
+      case( 'auto' ):
+        require_once( PATH_typo3conf . 'ext/browser/lib/class.tx_browser_map.php');
+        $objLibMap = new tx_browser_map( );
+        $sumCoor = count( $coordinates );
+        $curCoor = $sumCoor;
+        for( $sumCoor; $curCoor--; )
+        {
+          $objLibMap->fillBoundList( explode( ',' , $coordinates[ $curCoor ] ), $curCoor );
+        }
+        $centerCoor = $objLibMap->centerCoor( );
+        $marker     = $this->confMap['configuration.']['setMapCenter.']['dynamicMarker'];
+        $marker     = "'###" . strtoupper( $marker ). "###'";
+        $map_template = str_replace( $marker, $centerCoor, $map_template );
+        //var_dump( __METHOD__, __LINE__, $objLibMap->centerCoor( ) );
+        break;
+      case( 'ts' ):
+          // Do nothing
+        break;
+      default:
+        die( __METHOD__ . ' (line: ' . __LINE__ . ')' );
+        break;
     }
-
-    var_dump( __METHOD__, __LINE__, $objLibMap->centerCoor( ) );
 
     return $map_template;
   }
