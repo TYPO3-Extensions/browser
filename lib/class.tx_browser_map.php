@@ -68,7 +68,7 @@ class tx_browser_map
       $this->e = $coordinates;
       $this->s = $coordinates;
       $this->w = $coordinates;
-      var_dump( __METHOD__, __LINE__, $this->n, $this->e, $this->s, $this->w );
+      //var_dump( __METHOD__, __LINE__, $this->n, $this->e, $this->s, $this->w );
       return;			
     }
 
@@ -80,7 +80,7 @@ class tx_browser_map
       $this->s = $coordinates;
     if( abs( $this->w[0] ) > abs( $coordinates[0] ) )
       $this->w = $coordinates;
-    var_dump( __METHOD__, __LINE__, $this->n, $this->e, $this->s, $this->w );
+    //var_dump( __METHOD__, __LINE__, $this->n, $this->e, $this->s, $this->w );
   }
 
   public function centerCoor( )
