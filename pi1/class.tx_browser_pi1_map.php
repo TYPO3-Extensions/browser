@@ -676,6 +676,7 @@ class tx_browser_pi1_map
           $objLibMap->fillBoundList( explode( ',' , $coordinates[ $curCoor ] ), $curCoor );
         }
         $centerCoor = implode( ',', $objLibMap->centerCoor( ) );
+        $centerCoor = '[' . $centerCoor . ']';
         $marker     = $this->confMap['configuration.']['setMapCenter.']['dynamicMarker'];
         $marker     = "'###" . strtoupper( $marker ). "###'";
         $map_template = str_replace( $marker, $centerCoor, $map_template );
