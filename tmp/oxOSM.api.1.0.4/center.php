@@ -51,11 +51,11 @@ class SetFocus
 
 $oxMapCenter = new SetFocus( );
 
-$coordinates = array( '9.5382032,48.89', '9.6075669,48.9659301', '9.5382032,48.9899851', '9.538,48.89' );
+$coordinates = array( '9.6175669,48.9659301', '9.555442525,48.933978799', '9.538,48.89', '9.6075669,48.9459301' );
 for( $a = count( $coordinates ); $a--; )
-        $oxMapCenter->fillBoundList( explode( ',' , $coordinates[$a] ), $a );
+  $oxMapCenter->fillBoundList( explode( ',' , $coordinates[$a] ), $a );
 
-var_dump( $oxMapCenter->centerCoor( ) );
+var_dump( __METHOD__, __LINE__, $oxMapCenter->centerCoor( ) );
 
 ?>
   
