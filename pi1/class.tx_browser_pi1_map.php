@@ -615,7 +615,7 @@ class tx_browser_pi1_map
               (
 		'cat1' => array
                           (
-                            'icon' => array(  './img/test1.png', 14, 14, 0, 0 ),
+                            'icon' => array(  'typo3conf/ext/browser/res/js/map/test/img/test1.png', 14, 14, 0, 0 ),
                             'data' => array
                                       (
                                         'point1' => array
@@ -632,7 +632,7 @@ class tx_browser_pi1_map
                           ),
 		'cat2' => array
                           (
-                            'icon' => array( './img/test1.png', 14, 14, 0, 0),
+                            'icon' => array( 'typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0),
                             'data' => array
                                       (
                                         'point3' => array
