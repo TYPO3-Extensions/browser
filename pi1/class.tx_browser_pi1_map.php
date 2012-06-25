@@ -611,6 +611,13 @@ class tx_browser_pi1_map
  */
   private function renderMapData( $map_template )
   {
+    $series = null;
+    
+    
+    $catImg = array( );
+    $catImg['cat1'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test1.png', 14, 14, 0, 0 );
+    $catImg['cat2'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0 );
+
     $rows = array
     (
       0 => array
@@ -643,56 +650,18 @@ class tx_browser_pi1_map
       )
     );
     
-    $img['cat1'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test1.png', 14, 14, 0, 0 );
-    $img['cat2'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0 );
     foreach( $rows as $key => $row )
     {
-      $series2[$row['category.title']]['icon'] = $img[$row['category.title']];
-      $series2[$row['category.title']]['data'][$key]['coors']  = array( $row['main.longitude'], $row['main.latitude'] );
-      $series2[$row['category.title']]['data'][$key]['desc']   = $row['main.short'];
+      if( isset( $series[$row['category.title']]['icon'] ) )
+      {
+        $series[$row['category.title']]['icon'] = $catImg[$row['category.title']];
+      }
+      $series[$row['category.title']]['data'][$key]['coors']  = array( $row['main.longitude'], $row['main.latitude'] );
+      $series[$row['category.title']]['data'][$key]['desc']   = $row['main.short'];
     }
-//var_dump( __METHOD__, __LINE__, $series2, json_encode( $series2 ) ); 
-    $series = array
-    (
-      'cat1' => array
-      (
-        'icon' => array(  'typo3conf/ext/browser/res/js/map/test/img/test1.png', 14, 14, 0, 0 ),
-        'data' => array
-        (
-          'point1' => array
-          (
-            'coors' => array( 9.6175669, 48.9659301 ),
-            'desc'  => 'Punkt1<br />Neue Box und der Inhalt geht &uuml;ber mehrere Zeilen'
-          ),
-          'point2' => array
-          (
-            'coors' => array( 9.555442525, 48.933978799 ),
-            'desc'  => '<h1>Punkt2</h1><p>Mit HTML Tags umklammert.</p>'
-          )
-        )
-      ),
-      'cat2' => array
-      (
-        'icon' => array( 'typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0),
-        'data' => array
-        (
-          'point3' => array
-          (
-            'coors' => array( 9.538, 48.89 ),
-            'desc'  => 'Punkt3<br />A: rote Sigantur'
-          ),
-          'point4' => array
-          (
-            'coors' => array( 9.6075669, 48.9459301 ),
-            'desc'  => 'Punkt4<br />B: rote Sigantur'
-          )
-        )
-      )
-    );
+//var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) ); 
 
-//var_dump( __METHOD__, __LINE__, json_encode( $series ) ); 
-
-    $data = json_encode( $series2 );
+    $data = json_encode( $series );
     $map_template = str_replace( "'###DATA###'", $data, $map_template );
 
     return $map_template;
