@@ -611,8 +611,8 @@ class tx_browser_pi1_map
  */
   private function renderMapData( $map_template )
   {
-    $series = null;
     
+    $series = null;
     
     $catImg = array( );
     $catImg['cat1'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test1.png', 14, 14, 0, 0 );
@@ -658,11 +658,25 @@ class tx_browser_pi1_map
       }
       $series[$row['category.title']]['data'][$key]['coors']  = array( $row['main.longitude'], $row['main.latitude'] );
       $series[$row['category.title']]['data'][$key]['desc']   = $row['main.short'];
+      $coordinates[] = $row['main.longitude'] . ',' . $row['main.latitude'];
     }
 //var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) ); 
 
     $data = json_encode( $series );
     $map_template = str_replace( "'###DATA###'", $data, $map_template );
+
+    require_once('../lib/class.tx_browser_map.php');
+    $objLibMap = new tx_browser_map( );
+
+//    $coordinates = array( '9.6175669,48.9659301', '9.555442525,48.933978799', '9.538,48.89', '9.6075669,48.9459301' );
+    $sumCoor = count( $coordinates );
+    $curCoor = $sumCoor;
+    for( $sumCoor; $curCoor--; )
+    {
+      $objLibMap->fillBoundList( explode( ',' , $coordinates[ $curCoor ] ), $curCoor );
+    }
+
+    var_dump( __METHOD__, __LINE__, $objLibMap->centerCoor( ) );
 
     return $map_template;
   }

@@ -43,7 +43,7 @@ require_once(PATH_site . 'typo3/sysext/css_styled_content/pi1/class.tx_cssstyled
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
 * @subpackage    browser
-* @version 3.9.8
+* @version 4.1.0
 * @since 3.6.4
 */
 
@@ -1104,9 +1104,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/lib/class.tx_browser_typoscript.php'])
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/lib/class.tx_browser_cssstyledcontent.php'])
 {
-  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/lib/class.tx_browser_typoscript.php']);
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/lib/class.tx_browser_cssstyledcontent.php']);
 }
 
 ?>
