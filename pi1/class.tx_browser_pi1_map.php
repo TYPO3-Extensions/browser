@@ -39,28 +39,26 @@
  *
  *
  *
- *   69: class tx_browser_pi1_map
- *   91:     function __construct($pObj)
+ *   67: class tx_browser_pi1_map
+ *  101:     function __construct($pObj)
  *
  *              SECTION: Map
- *  126:     public function get_map( $template )
+ *  136:     public function get_map( $template )
+ *  185:     public function set_typeNum( )
  *
  *              SECTION: Init
- *  189:     private function init(  )
- *  308:     private function initMainMarker( $template )
- *  393:     private function renderMap( $pObj_template )
+ *  220:     private function init(  )
+ *  361:     private function initMainMarker( $template )
+ *  451:     private function renderMap( $pObj_template )
+ *  605:     private function renderMapVariables( $map_template )
  *
  *              SECTION: Marker
- *  553:     private function marker_divMap( )
- *  576:     private function marker_formFilter( )
- *  599:     private function marker_jssFilter( )
- *  622:     private function marker_jssRenderMap( )
+ *  637:     private function renderMapHtmlDynamicMarker( $map_template )
+ *  690:     private function renderMapHtmlSystemMarker( $map_template )
+ *  739:     private function renderMapJssDynamicMarker( $map_template )
  *
  *              SECTION: CSS
- *  660:     private function cssSetHtmlHeader( )
- *
- *              SECTION: JavaScripts
- *  702:     private function jss_setHeader( )
+ *  805:     private function cssSetHtmlHeader( )
  *
  * TOTAL FUNCTIONS: 11
  * (This index is automatically created/updated by the extension "extdeveval")
@@ -76,7 +74,7 @@ class tx_browser_pi1_map
     // [INTEGER] Id of the single view
   var $singlePid  = null;
 
-    
+
     // [BOOLEAN] Is map enabled? Will set by init( ) while runtime
   var $enabled      = null;
     // [ARRAY] TypoScript configuration array. Will set by init( ) while runtime
@@ -97,8 +95,8 @@ class tx_browser_pi1_map
   /**
  * Constructor. The method initiate the parent object
  *
- * @param	object		The parent object
- * @return	void
+ * @param    object        The parent object
+ * @return    void
  */
   function __construct($pObj)
   {
@@ -115,23 +113,17 @@ class tx_browser_pi1_map
 
   /***********************************************
   *
-  * Map
+  * Main
   *
   **********************************************/
-
-
-
-
-
-
 
 
 
   /**
  * get_map( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
- * @param	string		$template: Current HTML template
- * @return	array		$template: Template with map marker
+ * @param    string        $template: Current HTML template
+ * @return    array        $template: Template with map marker
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -177,27 +169,6 @@ class tx_browser_pi1_map
 
 
 
-  /**
- * set_typeNum( ):
- *
- * @return	void
- * @version 3.9.8
- * @since   3.9.8
- */
-  public function set_typeNum( )
-  {
-      // init the map
-    $this->init( );
-  }
-
-
-
-
-
-
-
-
-
   /***********************************************
   *
   * Init
@@ -206,16 +177,10 @@ class tx_browser_pi1_map
 
 
 
-
-
-
-
-
-
   /**
  * init(): The method sets the globals $enabled and $confMap
  *
- * @return	void
+ * @return    void
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -319,7 +284,7 @@ class tx_browser_pi1_map
     }
       // Check the proper typeNum
 
-    
+
 
 
 
@@ -355,8 +320,8 @@ class tx_browser_pi1_map
   /**
  * initMainMarker( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
- * @param	string		$template: Current HTML template
- * @return	array		$template: Template with map marker
+ * @param    string        $template: Current HTML template
+ * @return    array        $template: Template with map marker
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -437,16 +402,40 @@ class tx_browser_pi1_map
 
 
 
+  /**
+ * set_typeNum( ):
+ *
+ * @return    void
+ * @version 3.9.8
+ * @since   3.9.8
+ */
+  public function set_typeNum( )
+  {
+      // init the map
+    $this->init( );
+  }
 
 
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * Map rendering
+  *
+  **********************************************/
 
 
 
   /**
  * renderMap( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
- * @param	string		$pObj_template: current HTML template of the parent object
- * @return	array		$pObj_template: parent object template with map marker
+ * @param    string        $pObj_template: current HTML template of the parent object
+ * @return    array        $pObj_template: parent object template with map marker
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -577,12 +566,12 @@ class tx_browser_pi1_map
       // Replace marker in the map HTML template
     $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
       // Substitute marker HTML
-    
-    
-    
+
+
+
       // Add data
     $map_template = $this->renderMapVariables( $map_template );
-    
+
 
 
 
@@ -599,7 +588,8 @@ class tx_browser_pi1_map
   /**
  * renderMapVariables( ):
  *
- * @return	array
+ * @param    [type]        $$map_template: ...
+ * @return    array
  * @version 4.1.0
  * @since   4.1.0
  */
@@ -607,7 +597,7 @@ class tx_browser_pi1_map
   {
     $data = '{"cat1":{"icon":["typo3conf/ext/browser/res/js/map/test/img/test1.png",14,14,0,0],"data":{"point1":{"coors":[9.6175669,48.9659301],"desc":"Punk1<br>Neue Box und der Inhalt geht über mehrere Zeilen"},"point2":{"coors":[9.555442525,48.933978799]}}},"cat2":{"icon":["typo3conf/ext/browser/res/js/map/test/img/test2.png",14,14,0,0],"data":{"point3":{"coors":[9.538,48.89],"desc":"Punkt3<br>rote Sigantur"},"point4":{"coors":[9.6075669,48.9459301],"desc":"Punkt4<br>rote Sigantur"}}}}';
     $map_template = str_replace( "'###DATA###'", $data, $map_template );
-    
+
     return $map_template;
   }
 
@@ -621,7 +611,7 @@ class tx_browser_pi1_map
 
   /***********************************************
   *
-  * Marker
+  * Map rendering marker
   *
   **********************************************/
 
@@ -630,7 +620,8 @@ class tx_browser_pi1_map
   /**
  * renderMapHtmlDynamicMarker( $map_template ):
  *
- * @return	array
+ * @param    [type]        $$map_template: ...
+ * @return    array
  * @version 4.1.0
  * @since   4.1.0
  */
@@ -638,7 +629,7 @@ class tx_browser_pi1_map
   {
     $dummy = null;
     $markerArray = array( );
-    
+
     foreach( $this->confMap['marker.']['html.']['dynamicMarker.'] as $marker => $conf )
     {
       $dummy = $conf;
@@ -646,9 +637,9 @@ class tx_browser_pi1_map
       {
         continue;
       }
-      
+
       $hashKeyMarker = '###' . strtoupper( $marker ) . '###';
-      
+
       $pos = strpos( $map_template, $hashKeyMarker );
       if( ( $pos === false ) )
       {
@@ -673,7 +664,7 @@ class tx_browser_pi1_map
       }
       $markerArray[ $hashKeyMarker ] = $content;
     }
-    
+
     return $markerArray;
   }
 
@@ -682,16 +673,17 @@ class tx_browser_pi1_map
   /**
  * renderMapHtmlSystemMarker( ):
  *
- * @return	array
+ * @param    [type]        $$map_template: ...
+ * @return    array
  * @version 4.1.0
  * @since   4.1.0
  */
   private function renderMapHtmlSystemMarker( $map_template )
   {
     $markerArray = array( );
-    
+
     $systemMarker = array( 'filter_form', 'filter_jss');
-    
+
     foreach( $systemMarker as $marker )
     {
       $hashKeyMarker  = '###' . strtoupper( $marker ) . '###';
@@ -721,7 +713,7 @@ class tx_browser_pi1_map
         $markerArray[ $hashKeyMarker ] = $content;
       }
     }
-    
+
     return $markerArray;
   }
 
@@ -730,7 +722,8 @@ class tx_browser_pi1_map
   /**
  * renderMapJssDynamicMarker( $map_template ):
  *
- * @return	array
+ * @param    [type]        $$map_template: ...
+ * @return    array
  * @version 4.1.0
  * @since   4.1.0
  */
@@ -738,7 +731,7 @@ class tx_browser_pi1_map
   {
     $dummy = null;
     $markerArray = array( );
-    
+
     foreach( $this->confMap['marker.']['jss.']['dynamicMarker.'] as $marker => $conf )
     {
       $dummy = $conf;
@@ -746,9 +739,9 @@ class tx_browser_pi1_map
       {
         continue;
       }
-      
+
       $hashKeyMarker = '###' . strtoupper( $marker ) . '###';
-      
+
       $pos = strpos( $map_template, $hashKeyMarker );
       if( ( $pos === false ) )
       {
@@ -773,7 +766,7 @@ class tx_browser_pi1_map
       }
       $markerArray[ "'" . $hashKeyMarker . "'" ] = $content;
     }
-    
+
     return $markerArray;
   }
 
@@ -796,7 +789,7 @@ class tx_browser_pi1_map
   /**
  * cssSetHtmlHeader( ): Include CSS for openStreetMap
  *
- * @return	void
+ * @return    void
  * @version 3.9.6
  * @since   3.9.6
  */
