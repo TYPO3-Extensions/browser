@@ -46,7 +46,9 @@ if (!defined('PATH_typo3'))
       <br />
       Please check your TYPO3 installation.</div>';
   }
-  define('Path_typo3', PATH_site.TYPO3_mainDir);
+  //define('Path_typo3', PATH_site.TYPO3_mainDir);
+  // dwildt, 120625
+  define('PATH_typo3', PATH_site.TYPO3_mainDir);
 }
 // TYPO3 Downwards Compatibility
 
