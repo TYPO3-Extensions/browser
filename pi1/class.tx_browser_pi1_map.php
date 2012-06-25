@@ -557,6 +557,11 @@ class tx_browser_pi1_map
 
 
 
+      // Add data
+    $map_template = $this->renderMapData( $map_template );
+
+    
+
       //////////////////////////////////////////////////////////////////////
       //
       // Substitute marker JSS
@@ -568,12 +573,6 @@ class tx_browser_pi1_map
       // Replace marker in the map HTML template
     $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
       // Substitute marker HTML
-
-
-
-      // Add data
-    $map_template = $this->renderMapData( $map_template );
-
 
 
 
