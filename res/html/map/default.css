@@ -8,7 +8,11 @@
   padding-bottom:1em;
   text-align:center;
 }
-
+.tx-browser-pi1 .olControlAttribution {
+  background-color:white;
+  bottom:0px;
+  right:0px;
+}
 .tx-browser-pi1 .olMap {
   margin: auto !important;
 }
