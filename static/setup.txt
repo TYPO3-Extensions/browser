@@ -288,6 +288,7 @@ plugin.tx_browser_pi1 {
       marker {
         html {
           systemMarker {
+              // Category filter
             filter_form = TEXT
             filter_form {
               value (
@@ -297,6 +298,7 @@ plugin.tx_browser_pi1 {
                 </form>
 )
             }
+              // Javascript for the category filter
             filter_jss = TEXT
             filter_jss {
               value (
@@ -336,10 +338,12 @@ plugin.tx_browser_pi1 {
             }
           }
           dynamicMarker {
+              // HTML div tag for the map
             map_html = TEXT
             map_html {
               value = <div id="oxMapArea" class="oxMapArea"></div>
             }
+              // Javascript for the map
             map_jss = TEXT
             map_jss {
               value (
@@ -373,45 +377,48 @@ plugin.tx_browser_pi1 {
         }
         jss {
           dynamicMarker {
+              // Map controlling tools
             MapControls = TEXT
             MapControls {
                 // [ARRAY] customized control types
               value = ['Navigation', 'PanZoomBar']
             }
+              // Map zoom level
             MapZoomLevels = TEXT
             MapZoomLevels {
                 // [STRING] customized zoom levels
               value = 10
             }
+              // Map marker standalone mode
             MapMarker = TEXT
             MapMarker {
                 // [Boolean] standalone marker is allowed
               value = true
             }
+              // Map marker infolayer mode
             MapMarkerInfo = TEXT
             MapMarkerInfo {
                 // [BOOLEAN] marker with infolayer is allowed
               value = true
             }
+              // Map marker event type
             MapMarkerEvent = TEXT
             MapMarkerEvent {
                 // [STRING] customized marker events
               value = 'click'
             }
+              // Center of the map
             OSMConfigCenter = TEXT
             OSMConfigCenter {
                 // [ARRAY] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
               value = [ 9.555442525, 48.933978799 ]
             }
-            OSMConfigCenter = TEXT
-            OSMConfigCenter {
-                // [ARRAY] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
-              value = [ 9.555442525, 48.933978799 ]
-            }
+              // Map zoom level
             OSMConfigZoom = TEXT
             OSMConfigZoom {
                 // [ARRAY] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
               value = 10
+              value = 2
             }
           }
         }
