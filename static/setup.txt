@@ -411,7 +411,7 @@ plugin.tx_browser_pi1 {
             OSMConfigCenter = TEXT
             OSMConfigCenter {
                 // [ARRAY] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
-              value = [ 9.555442525, 48.933978799 ]
+              value = [ 9.57778345, 48.92796505 ]
             }
               // Map zoom level
             OSMConfigZoom = TEXT
