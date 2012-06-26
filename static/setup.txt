@@ -311,7 +311,7 @@ plugin.tx_browser_pi1 {
             filter_jss {
               value (
                 <script>
-                <!--
+                /* <![CDATA[ */
                   var filter = document.getElementsByTagName( 'input' );
                   for(var a=filter.length; a-- ; )
                   filter[a].onchange = function( )
@@ -340,7 +340,7 @@ plugin.tx_browser_pi1 {
                     map.filterLayer( name, switchTo );
                     map.filterLayer( name + 'Info', switchTo );
                   }
-                //-->
+                /* ]]> */
                 </script>
 )
             }
@@ -358,6 +358,7 @@ plugin.tx_browser_pi1 {
                 <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers/OpenLayers_0.0.2.js"></script>
                 <script src="typo3conf/ext/browser/res/js/map/lib/OpenStreetMap/OpenStreetMap_0.0.2.js"></script>
                 <script>
+                /* <![CDATA[ */
                     // Be aware of the trailing slash!
                   OpenLayers.ImgPath = "/typo3conf/ext/browser/res/js/map/lib/OpenLayers/img/";
                   var markerData = '###DATA###';
@@ -377,6 +378,7 @@ plugin.tx_browser_pi1 {
                       zoom:    '###OSMCONFIGZOOM###'            //    integer (0 - 16) set zoom level
                     }
                   };
+                /* ]]> */
                 </script>
                 <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.2.js"></script>
 )
