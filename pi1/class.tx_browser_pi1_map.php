@@ -612,7 +612,9 @@ class tx_browser_pi1_map
   private function renderMapData( $map_template )
   {
 //var_dump( __METHOD__, __LINE__, $this->pObj->rows ); 
-    $rows = array( );
+    $rows         = array( );
+    $longitudes   = array( );
+    $latitudes    = array( );
     $dontHandle00 = $this->confMap['configuration.']['00Coordinates.']['dontHandle'];
     
     $series = null;
@@ -631,12 +633,21 @@ class tx_browser_pi1_map
           continue 2;
       }
       $row['main.longitude']  = ( double ) $dbRow['tx_leglisbid_company.lon']; 
+      $longitudes[]           = ( double ) $dbRow['tx_leglisbid_company.lon']; 
       $row['main.latitude']   = ( double ) $dbRow['tx_leglisbid_company.lat']; 
+      $latitudes[]            = ( double ) $dbRow['tx_leglisbid_company.lon']; 
       $row['main.short']      = '<a href="http://die-netzmacher.de">' . $dbRow['tx_leglisbid_company.adr_name1'] . '</a>'; 
       //$row['main.short']      = $dbRow['tx_org_headquarters.title']; 
       $row['category.title']  = 'cat1'; 
       $rows[] = $row;
     }
+    
+    $distances[]  = ( max( $longitudes ) - min( $longitudes ) ) * 2;
+    $distances[]  = ( max( $latitudes ) - min( $latitudes ) );
+    $maxDistance  = max( $distances );
+    $quotient     = 360 / $maxDistance;
+    $zoomLevel    = ( int ) ( log( $quotient ) / log( 2 ) );
+var_dump( __METHOD__, __LINE__, $zoomLevel );
     
     foreach( ( array ) $rows as $key => $row )
     {
