@@ -647,7 +647,7 @@ class tx_browser_pi1_map
     $maxDistance  = max( $distances );
     $quotient     = 360 / $maxDistance;
     $zoomLevel    = ( int ) ( log( $quotient ) / log( 2 ) );
-var_dump( __METHOD__, __LINE__, $zoomLevel );
+var_dump( __METHOD__, __LINE__, $longitudes, $latitudes, $maxDistance, $quotient, $zoomLevel );
     
     foreach( ( array ) $rows as $key => $row )
     {
