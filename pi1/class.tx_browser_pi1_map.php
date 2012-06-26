@@ -635,27 +635,40 @@ class tx_browser_pi1_map
       $row['main.longitude']  = ( double ) $dbRow['tx_leglisbid_company.lon']; 
       $longitudes[]           = ( double ) $dbRow['tx_leglisbid_company.lon']; 
       $row['main.latitude']   = ( double ) $dbRow['tx_leglisbid_company.lat']; 
-      $latitudes[]            = ( double ) $dbRow['tx_leglisbid_company.lon']; 
+      $latitudes[]            = ( double ) $dbRow['tx_leglisbid_company.lat']; 
       $row['main.short']      = '<a href="http://die-netzmacher.de">' . $dbRow['tx_leglisbid_company.adr_name1'] . '</a>'; 
       //$row['main.short']      = $dbRow['tx_org_headquarters.title']; 
       $row['category.title']  = 'cat1'; 
       $rows[] = $row;
     }
     
+      // Calculate the zoom level
+      // Get max distance longitude (longitudes are from -90° to 90°). 0° is the equator
     $distances[]  = ( max( $longitudes ) - min( $longitudes ) ) * 2;
+      // Get max distance latitude (latidudes are from -180° to 180°). 0° is Greenwich
     $distances[]  = ( max( $latitudes ) - min( $latitudes ) );
+      // Get max distance
     $maxDistance  = max( $distances );
-    $quotient     = 360 / $maxDistance;
     switch( true )
     {
+      case( empty ( $longitudes ) ):
+      case( empty ( $latitudes ) ):
+          // No map markers
+        $zoomLevel = 1;
+        break;
       case( $maxDistance == 0 ):
+          // One map marker
         $zoomLevel = 18;
         break;
       default:
+          // Get the quotient. Example: 360 / 5.625 = 64
+        $quotient  = 360 / $maxDistance;
+          // Example: ( int ) log( 64 ) / log( 2 ) = 6
         $zoomLevel = ( int ) ( log( $quotient ) / log( 2 ) );
         break;
     }
 var_dump( __METHOD__, __LINE__, $longitudes, $latitudes, $maxDistance, $quotient, $zoomLevel );
+      // Calculate the zoom level
     
     foreach( ( array ) $rows as $key => $row )
     {
