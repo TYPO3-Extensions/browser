@@ -298,6 +298,13 @@ plugin.tx_browser_pi1 {
         }
       }
       marker {
+        database {
+          popup = TEXT
+          popup {
+              // [STRING] table.field. Example: tx_org_headquarters.title
+            field = 
+          }
+        }
         html {
           systemMarker {
               // Category filter

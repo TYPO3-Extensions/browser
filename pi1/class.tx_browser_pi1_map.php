@@ -152,7 +152,22 @@ class tx_browser_pi1_map
       // RETURN: map isn't enabled
 
 
+      // DRS
+    if( $this->pObj->b_drs_warn )
+    {
+      $prompt = 'The map module uses a JSON array. If you get any unexpected result, ' .
+                'please remove config.xhtml_cleaning and/or page.config.xhtml_cleaning ' .
+                'in your TypoScript configuration of the current page.';
+      t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2);
+      $prompt = 'The map module causes some conflicts with AJAX. PLease disable AJAX in the ' .
+                'plugin/flecform of the browser.';
+      t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2);
+    }
+      // DRS
 
+      
+      
+      
       // set the map marker (in case template is without the marker)
     $template = $this->initMainMarker( $template );
 
@@ -623,7 +638,9 @@ class tx_browser_pi1_map
     $catImg['cat1'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test1.png', 14, 14, 0, 0 );
     $catImg['cat2'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0 );
 
-    foreach( $this->pObj->rows as $dbKey => $dbRow )
+
+
+    foreach( $this->pObj->rows as $dbRow )
     {
       switch( true )
       {
@@ -632,14 +649,31 @@ class tx_browser_pi1_map
         case( $dontHandle00 && ( ( $dbRow['tx_leglisbid_company.lon'] + $dbRow['tx_leglisbid_company.lat'] ) == 0 ) ):
           continue 2;
       }
+        // Add each element of the row to cObj->data
+      foreach( ( array ) $dbRow as $key => $value )
+      {
+        $this->pObj->cObj->data[ $key ] = $value;
+      }
+        // Add each element of the row to cObj->data
       $row['main.longitude']  = ( double ) $dbRow['tx_leglisbid_company.lon']; 
       $longitudes[]           = ( double ) $dbRow['tx_leglisbid_company.lon']; 
       $row['main.latitude']   = ( double ) $dbRow['tx_leglisbid_company.lat']; 
       $latitudes[]            = ( double ) $dbRow['tx_leglisbid_company.lat']; 
       $row['main.short']      = '<a href="http://die-netzmacher.de">' . $dbRow['tx_leglisbid_company.adr_name1'] . '</a>'; 
       //$row['main.short']      = $dbRow['tx_org_headquarters.title']; 
+      
+        $coa_name = $conf_marker[$str_marker];
+        $coa_conf = $conf_marker[$str_marker . '.'];
+        $value    = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+
       $row['category.title']  = 'cat1'; 
       $rows[] = $row;
+        // Remove each element of the row from cObj->data
+      foreach( ( array ) $dbRow as $key => $value )
+      {
+        unset( $this->pObj->cObj->data[ $key ] );
+      }
+        // Remove each element of the row from cObj->data
     }
     
       // Calculate the zoom level
