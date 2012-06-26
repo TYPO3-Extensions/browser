@@ -1140,6 +1140,7 @@ class tx_browser_pi1 extends tslib_pibase {
     $debugTrailLevel = 1;
     $this->timeTracking_log( $debugTrailLevel,  'after $this->objMap->get_map( )' );
       // Get the map
+$this->dev_var_dump( $str_template_completed );
 
 
 
@@ -1170,7 +1171,6 @@ class tx_browser_pi1 extends tslib_pibase {
       // AJAX: return the result (HTML string) without wrapInBaseClass
 
 
-$this->dev_var_dump( $str_template_completed );
 
       // 12367, dwildt, 110310
     switch( $this->objFlexform->bool_wrapInBaseClass )
