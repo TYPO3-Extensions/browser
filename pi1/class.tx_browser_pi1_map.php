@@ -662,9 +662,10 @@ class tx_browser_pi1_map
       $row['main.short']      = '<a href="http://die-netzmacher.de">' . $dbRow['tx_leglisbid_company.adr_name1'] . '</a>'; 
       //$row['main.short']      = $dbRow['tx_org_headquarters.title']; 
       
-        $coa_name = $conf_marker[$str_marker];
-        $coa_conf = $conf_marker[$str_marker . '.'];
-        $value    = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+
+        $coa_name = $this->confMap['marker.']['database.']['popup'];
+        $coa_conf = $this->confMap['marker.']['database.']['popup.'];
+        $row['main.short']    = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
 
       $row['category.title']  = 'cat1'; 
       $rows[] = $row;
