@@ -621,8 +621,8 @@ class tx_browser_pi1_map
 
     foreach( $this->pObj->rows as $dbKey => $dbRow )
     {
-      $row['main.longitude']  = $dbRow['tx_org_headquarters.mail_lon']; 
-      $row['main.latitude']   = $dbRow['tx_org_headquarters.mail_lat']; 
+      $row['main.longitude']  = $dbRow['tx_leglisbid_company.lon']; 
+      $row['main.latitude']   = $dbRow['tx_leglisbid_company.lat']; 
       $row['main.short']      = '<a href="http://die-netzmacher.de">' . $dbRow['tx_org_headquarters.title'] . '</a>'; 
       //$row['main.short']      = $dbRow['tx_org_headquarters.title']; 
       $row['category.title']  = 'cat1'; 

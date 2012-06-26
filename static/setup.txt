@@ -329,12 +329,12 @@ plugin.tx_browser_pi1 {
                         map           map-Object              als Instance des oxMapRender-Konstruktors -> wird durch Einbettung der oxAPI
                                                               oxRenderMap.js erzeugt;
                         filterLayer		filter-Methode
-                          @param	name      STRING            Layer-Name -->	es wird zwischen Markern ohne und mit Informationlayer unterschieden
+                          @param  name      STRING            Layer-Name --> es wird zwischen Markern ohne und mit Informationlayer unterschieden
                                                               - einfache Markername bestehen aus dem Kategorienamen   --> 'cat1'
                                                               - Infolayernamen betehen aus Kategoriename und Suffix 'Info'  --> 'cat1Info'
                                                               um alle Layer zu schließen, muss die Methode so oft wiederholt werden,
                                                               bis alle Kategorienamen erfasst wurden
-                          @param  switchTo	BOOLEAN | FLOAT   Sichtbarkeitswert -->	true | false entspricht sichtbar bzw. unsichtbar
+                          @param  switchTo  BOOLEAN | FLOAT   Sichtbarkeitswert -->	true | false entspricht sichtbar bzw. unsichtbar
                                                               Zahl zwischen 0 und 1 definiert Transparenzgrad
                     */
                     map.filterLayer( name, switchTo );
