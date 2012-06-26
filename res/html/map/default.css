@@ -29,4 +29,5 @@
   position:absolute;
   padding:6px;
   box-shadow:3px 3px 3px #3d3d3d;
+  z-index:99;
 }

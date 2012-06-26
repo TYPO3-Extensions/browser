@@ -664,11 +664,16 @@ class tx_browser_pi1_map
           // Get the quotient. Example: 360 / 5.625 = 64
         $quotient  = 360 / $maxDistance;
           // Example: ( int ) log( 64 ) / log( 2 ) = 6
-        $zoomLevel = ( ( int ) ( log( $quotient ) / log( 2 ) ) ) + 1;
+        $zoomLevel = ( ( int ) ( log( $quotient ) / log( 2 ) ) ) + 2;
+        if( $zoomLevel > 18 )
+        {
+          $zoomLevel = 18;
+        }
         break;
     }
-var_dump( __METHOD__, __LINE__, $longitudes, max( $longitudes ), min( $longitudes ),
-         $latitudes, max( $latitudes ), min( $latitudes ), $maxDistance, $quotient, $zoomLevel );
+//var_dump( __METHOD__, __LINE__, $longitudes, max( $longitudes ), min( $longitudes ),
+//         $latitudes, max( $latitudes ), min( $latitudes ), $maxDistance, $quotient, $zoomLevel );
+var_dump( __METHOD__, __LINE__, $zoomLevel );
       // Calculate the zoom level
     
     foreach( ( array ) $rows as $key => $row )
