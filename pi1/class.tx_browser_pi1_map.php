@@ -646,7 +646,7 @@ class tx_browser_pi1_map
       // Get max distance longitude (longitudes are from -90° to 90°). 0° is the equator
     $distances[]  = ( max( $longitudes ) - min( $longitudes ) ) * 2;
       // Get max distance latitude (latidudes are from -180° to 180°). 0° is Greenwich
-    $distances[]  = ( max( $latitudes ) - min( $latitudes ) );
+    $distances[]  = max( $latitudes ) - min( $latitudes );
       // Get max distance
     $maxDistance  = max( $distances );
     switch( true )
@@ -667,7 +667,8 @@ class tx_browser_pi1_map
         $zoomLevel = ( int ) ( log( $quotient ) / log( 2 ) );
         break;
     }
-var_dump( __METHOD__, __LINE__, $longitudes, $latitudes, $maxDistance, $quotient, $zoomLevel );
+var_dump( __METHOD__, __LINE__, $longitudes, max( $longitudes ), min( $longitudes ),
+         $latitudes, max( $latitudes ), min( $latitudes ), $maxDistance, $quotient, $zoomLevel );
       // Calculate the zoom level
     
     foreach( ( array ) $rows as $key => $row )
