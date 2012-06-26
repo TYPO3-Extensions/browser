@@ -646,7 +646,15 @@ class tx_browser_pi1_map
     $distances[]  = ( max( $latitudes ) - min( $latitudes ) );
     $maxDistance  = max( $distances );
     $quotient     = 360 / $maxDistance;
-    $zoomLevel    = ( int ) ( log( $quotient ) / log( 2 ) );
+    switch( true )
+    {
+      case( $maxDistance == 0 ):
+        $zoomLevel = 18;
+        break;
+      default:
+        $zoomLevel = ( int ) ( log( $quotient ) / log( 2 ) );
+        break;
+    }
 var_dump( __METHOD__, __LINE__, $longitudes, $latitudes, $maxDistance, $quotient, $zoomLevel );
     
     foreach( ( array ) $rows as $key => $row )
