@@ -612,6 +612,8 @@ class tx_browser_pi1_map
   private function renderMapData( $map_template )
   {
 //var_dump( __METHOD__, __LINE__, $this->pObj->rows ); 
+    $rows = array( );
+    $dontHandle00 = $this->confMap['configuration.']['00Coordinates.']['dontHandle'];
     
     $series = null;
     
@@ -621,46 +623,22 @@ class tx_browser_pi1_map
 
     foreach( $this->pObj->rows as $dbKey => $dbRow )
     {
-      $row['main.longitude']  = $dbRow['tx_leglisbid_company.lon']; 
-      $row['main.latitude']   = $dbRow['tx_leglisbid_company.lat']; 
-      $row['main.short']      = '<a href="http://die-netzmacher.de">' . $dbRow['tx_org_headquarters.title'] . '</a>'; 
+      switch( true )
+      {
+        case( $dbRow['tx_leglisbid_company.lon'] . $dbRow['tx_leglisbid_company.lat'] == '' ):
+          continue 2;
+        case( $dontHandle00 && ( ( $dbRow['tx_leglisbid_company.lon'] + $dbRow['tx_leglisbid_company.lat'] ) == 0 ) ):
+          continue 2;
+      }
+      $row['main.longitude']  = ( double ) $dbRow['tx_leglisbid_company.lon']; 
+      $row['main.latitude']   = ( double ) $dbRow['tx_leglisbid_company.lat']; 
+      $row['main.short']      = '<a href="http://die-netzmacher.de">' . $dbRow['tx_leglisbid_company.adr_name1'] . '</a>'; 
       //$row['main.short']      = $dbRow['tx_org_headquarters.title']; 
       $row['category.title']  = 'cat1'; 
       $rows[] = $row;
     }
-    $XXX_rows = array
-    (
-      0 => array
-      (
-        'main.longitude'  => '9.6175669', 
-        'main.latitude'   => '48.9659301',
-        'main.short'      => 'Punkt1<br />Neue Box und der Inhalt geht &uuml;ber mehrere Zeilen',
-        'category.title'  => 'cat1'
-      ),
-      1 => array
-      (
-        'main.longitude'  => '9.555442525', 
-        'main.latitude'   => '48.933978799',
-        'main.short'      => '<h1>Punkt2</h1><p>Mit HTML Tags umklammert.</p>',
-        'category.title'  => 'cat1'
-      ),
-      2 => array
-      (
-        'main.longitude'  => '9.538', 
-        'main.latitude'   => '48.89',
-        'main.short'      => 'Punkt3<br />A: rote Signatur',
-        'category.title'  => 'cat2'
-      ),
-      3 => array
-      (
-        'main.longitude'  => '9.6075669', 
-        'main.latitude'   => '48.9459301',
-        'main.short'      => 'Punkt4<br />B: rote Signatur',
-        'category.title'  => 'cat2'
-      )
-    );
     
-    foreach( $rows as $key => $row )
+    foreach( ( array ) $rows as $key => $row )
     {
       if( ! isset( $series[$row['category.title']]['icon'] ) )
       {

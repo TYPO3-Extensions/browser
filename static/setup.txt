@@ -292,6 +292,10 @@ plugin.tx_browser_pi1 {
             // [STRING] marker for the center in the HTML code. Example: OSMConfigCenter
           dynamicMarker = OSMConfigCenter
         }
+        00Coordinates {
+            // [BOOLEAN] true (recommended) || false: If a coordinate is 0,0, it won't handled and won't displayed
+          dontHandle = true  
+        }
       }
       marker {
         html {
