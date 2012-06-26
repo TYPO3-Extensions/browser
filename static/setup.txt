@@ -316,7 +316,7 @@ plugin.tx_browser_pi1 {
               value (
                 <script>
                 /* <![CDATA[ */
-                  var filter = document.getElementsByTagName( 'input' );
+                  var filter = document.getElementsById( 'filter' );
                   for(var a=filter.length; a-- ; )
                   filter[a].onchange = function( )
                   {
