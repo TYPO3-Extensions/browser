@@ -1140,7 +1140,7 @@ class tx_browser_pi1 extends tslib_pibase {
     $debugTrailLevel = 1;
     $this->timeTracking_log( $debugTrailLevel,  'after $this->objMap->get_map( )' );
       // Get the map
-$this->dev_var_dump( $str_template_completed );
+//$this->dev_var_dump( $str_template_completed );
 
 
 

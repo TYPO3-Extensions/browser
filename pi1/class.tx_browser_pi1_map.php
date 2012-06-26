@@ -159,7 +159,7 @@ class tx_browser_pi1_map
       // render the map
     $template = $this->renderMap( $template );
 
-$this->pObj->dev_var_dump( $template );
+//var_dump( $template );
       // RETURN the template
     return $template;
   }
