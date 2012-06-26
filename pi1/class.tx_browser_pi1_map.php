@@ -709,40 +709,6 @@ class tx_browser_pi1_map
     }
       // FOREACH rows
     
-      // Calculate the zoom level
-      // Get max distance longitude (longitudes are from -90° to 90°). 0° is the equator
-    $distances[]  = ( max( $longitudes ) - min( $longitudes ) ) * 2;
-      // Get max distance latitude (latidudes are from -180° to 180°). 0° is Greenwich
-    $distances[]  = max( $latitudes ) - min( $latitudes );
-      // Get max distance
-    $maxDistance  = max( $distances );
-    switch( true )
-    {
-      case( empty ( $longitudes ) ):
-      case( empty ( $latitudes ) ):
-          // No map markers
-        $zoomLevel = 1;
-        break;
-      case( $maxDistance == 0 ):
-          // One map marker
-        $zoomLevel = 18;
-        break;
-      default:
-          // Get the quotient. Example: 360 / 5.625 = 64
-        $quotient  = 360 / $maxDistance;
-          // Example: ( int ) log( 64 ) / log( 2 ) = 6
-        $zoomLevel = ( ( int ) ( log( $quotient ) / log( 2 ) ) ) + 2;
-        if( $zoomLevel > 18 )
-        {
-          $zoomLevel = 18;
-        }
-        break;
-    }
-//var_dump( __METHOD__, __LINE__, $longitudes, max( $longitudes ), min( $longitudes ),
-//         $latitudes, max( $latitudes ), min( $latitudes ), $maxDistance, $quotient, $zoomLevel );
-var_dump( __METHOD__, __LINE__, $zoomLevel );
-      // Calculate the zoom level
-    
       // FOREACH map marker
     foreach( ( array ) $mapMarkers as $key => $mapMarker )
     {
@@ -766,7 +732,9 @@ var_dump( __METHOD__, __LINE__, $zoomLevel );
     $map_template = str_replace( "'###DATA###'", $data, $map_template );
     
       // Set center coordinates
-    $map_template = $this->renderMapDataCenterCoor( $map_template, $coordinates );
+    $map_template = $this->renderMapAutoCenterCoor( $map_template, $coordinates );
+      // Set zoom level
+    $map_template = $this->renderMapAutoZoomLevel( $map_template, $longitudes, $latitudes );
 
     return $map_template;
   }
@@ -774,14 +742,14 @@ var_dump( __METHOD__, __LINE__, $zoomLevel );
 
 
   /**
- * renderMapDataCenterCoor( ):
+ * renderMapAutoCenterCoor( ):
  *
  * @param    string        $map_template: ...
  * @return    string
  * @version 4.1.0
  * @since   4.1.0
  */
-  private function renderMapDataCenterCoor( $map_template, $coordinates )
+  private function renderMapAutoCenterCoor( $map_template, $coordinates )
   {
       // Get the mode
     $mode = $this->confMap['configuration.']['centerCoordinates.']['mode'];
@@ -856,6 +824,110 @@ var_dump( __METHOD__, __LINE__, $zoomLevel );
 
       // Set center coordinates
     $map_template = str_replace( $marker, $centerCoor, $map_template );
+
+      // RETURN the handled template
+    return $map_template;
+  }
+
+
+
+  /**
+ * renderMapAutoZoomLevel( ):
+ *
+ * @param    string        $map_template: ...
+ * @return    string
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function renderMapAutoZoomLevel( $map_template, $longitudes, $latitudes )
+  {
+      // Get the mode
+    $mode = $this->confMap['configuration.']['zoomLevel.']['mode'];
+    
+      // SWITCH mode
+    switch( $mode )
+    {
+      case( 'auto' ):
+      case( 'ts' ):
+          // Follow the workflow
+        break;
+      default:
+          // DRS
+        if( $this->pObj->b_drs_error )
+        {
+          $prompt = 'configuration.zoomLevel.mode is undefined: ' . $mode . '. But is has to be auto or ts!';
+          t3lib_div :: devLog( '[ERROR/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+        }
+          // DRS
+          // RETURN: there is an error!
+        return $map_template;
+        break;
+    }
+      // SWITCH mode
+
+      // RETURN: center coordinates should not calculated
+    if( $mode == 'ts' )
+    {
+        // DRS
+      if( $this->pObj->b_drs_map )
+      {
+        $prompt = 'configuration.zoomLevel.mode is: ' . $mode . '. Zoom level won\'t calculated.';
+        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+      }
+        // DRS
+      return $map_template;
+    }
+      // RETURN: center coordinates should not calculated
+    
+      // Calculate the zoom level
+      // Get max distance longitude (longitudes are from -90° to 90°). 0° is the equator
+    $distances[]  = ( max( $longitudes ) - min( $longitudes ) ) * 2;
+      // Get max distance latitude (latidudes are from -180° to 180°). 0° is Greenwich
+    $distances[]  = max( $latitudes ) - min( $latitudes );
+      // Get max distance
+    $maxDistance  = max( $distances );
+    switch( true )
+    {
+      case( empty ( $longitudes ) ):
+      case( empty ( $latitudes ) ):
+          // No map markers
+        $zoomLevel = 1;
+        break;
+      case( $maxDistance == 0 ):
+          // One map marker
+        $zoomLevel = 18;
+        break;
+      default:
+          // Get the quotient. Example: 360 / 5.625 = 64
+        $quotient  = 360 / $maxDistance;
+          // Example: ( int ) log( 64 ) / log( 2 ) = 6
+        $zoomLevel = ( ( int ) ( log( $quotient ) / log( 2 ) ) ) + 2;
+        if( $zoomLevel > 18 )
+        {
+          $zoomLevel = 18;
+        }
+        break;
+    }
+//var_dump( __METHOD__, __LINE__, $longitudes, max( $longitudes ), min( $longitudes ),
+//         $latitudes, max( $latitudes ), min( $latitudes ), $maxDistance, $quotient, $zoomLevel );
+//var_dump( __METHOD__, __LINE__, $zoomLevel );
+      // Calculate the zoom level
+
+      // DRS
+    if( $this->pObj->b_drs_map )
+    {
+      $prompt = 'configuration.zoomLevel.mode is: ' . $mode . '. Calculated zoom level is ' . $zoomLevel;
+      t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+    }
+      // DRS
+      
+      // Get the marker
+    $marker     = $this->confMap['configuration.']['zoomLevel.']['dynamicMarker'];
+    $marker     = "'###" . strtoupper( $marker ). "###'";
+      // Get the marker
+
+      // Set center coordinates
+    $map_template = str_replace( $marker, $zoomLevel, $map_template );
 
       // RETURN the handled template
     return $map_template;

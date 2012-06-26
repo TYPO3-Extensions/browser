@@ -296,6 +296,12 @@ plugin.tx_browser_pi1 {
             // [BOOLEAN] true (recommended) || false: If a coordinate is 0,0, it won't handled and won't displayed
           dontHandle = true  
         }
+        zoomLevel {
+            // [STRING] auto (recommended) || ts. auto: zoom level will calculated. ts: zoom level will taken from TypoScript 
+          mode          = auto
+            // [STRING] marker for the center in the HTML code. Example: OSMConfigZoom
+          dynamicMarker = OSMConfigZoom
+        }
       }
       marker {
         html {
