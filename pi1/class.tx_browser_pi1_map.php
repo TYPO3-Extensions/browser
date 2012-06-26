@@ -627,7 +627,7 @@ class tx_browser_pi1_map
   private function renderMapData( $map_template )
   {
 //var_dump( __METHOD__, __LINE__, $this->pObj->rows ); 
-    $rows         = array( );
+    $mapMarkers   = array( );
     $longitudes   = array( );
     $latitudes    = array( );
     $dontHandle00 = $this->confMap['configuration.']['00Coordinates.']['dontHandle'];
@@ -640,42 +640,74 @@ class tx_browser_pi1_map
 
 
 
-    foreach( $this->pObj->rows as $dbRow )
+      // FOREACH rows
+    foreach( $this->pObj->rows as $row )
     {
-      switch( true )
-      {
-        case( $dbRow['tx_leglisbid_company.lon'] . $dbRow['tx_leglisbid_company.lat'] == '' ):
-          continue 2;
-        case( $dontHandle00 && ( ( $dbRow['tx_leglisbid_company.lon'] + $dbRow['tx_leglisbid_company.lat'] ) == 0 ) ):
-          continue 2;
-      }
-        // Add each element of the row to cObj->data
-      foreach( ( array ) $dbRow as $key => $value )
+        // Add the current row to cObj->data
+      foreach( ( array ) $row as $key => $value )
       {
         $this->pObj->cObj->data[ $key ] = $value;
       }
-        // Add each element of the row to cObj->data
-      $row['main.longitude']  = ( double ) $dbRow['tx_leglisbid_company.lon']; 
-      $longitudes[]           = ( double ) $dbRow['tx_leglisbid_company.lon']; 
-      $row['main.latitude']   = ( double ) $dbRow['tx_leglisbid_company.lat']; 
-      $latitudes[]            = ( double ) $dbRow['tx_leglisbid_company.lat']; 
-      $row['main.short']      = '<a href="http://die-netzmacher.de">' . $dbRow['tx_leglisbid_company.adr_name1'] . '</a>'; 
-      //$row['main.short']      = $dbRow['tx_org_headquarters.title']; 
+        // Add the current row to cObj->data
       
+        // Get the longitude
+      $coa_name               = $this->confMap['marker.']['mapMarker.']['longitude'];
+      $coa_conf               = $this->confMap['marker.']['mapMarker.']['longitude.'];
+      $mapMarker['longitude'] = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+        // Get the longitude
 
-        $coa_name = $this->confMap['marker.']['database.']['popup'];
-        $coa_conf = $this->confMap['marker.']['database.']['popup.'];
-        $row['main.short']    = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
+        // Get the latitude
+      $coa_name               = $this->confMap['marker.']['mapMarker.']['latitude'];
+      $coa_conf               = $this->confMap['marker.']['mapMarker.']['latitude.'];
+      $mapMarker['latitude']  = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+        // Get the latitude
 
-      $row['category.title']  = 'cat1'; 
-      $rows[] = $row;
-        // Remove each element of the row from cObj->data
-      foreach( ( array ) $dbRow as $key => $value )
+        // SWITCH logitude and latitude
+      switch( true )
+      {
+        case( $mapMarker['longitude'] . $mapMarker['latitude'] == '' ):
+            // CONTINUE: longituda and latitude are empty
+          continue 2;
+          break;
+        case( $dontHandle00 && $mapMarker['longitude'] == 0 && $mapMarker['latitude'] == 0 ):
+            // CONTINUE: longituda and latitude are 0 and 0,0 shouldn't handled
+          continue 2;
+          break;
+      }
+        // SWITCH logitude and latitude
+      
+        // Get the desc
+      $coa_name           = $this->confMap['marker.']['mapMarker.']['description'];
+      $coa_conf           = $this->confMap['marker.']['mapMarker.']['description.'];
+      $mapMarker['desc']  = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+      if( empty ( $mapMarker['desc'] ) )
+      {
+        $mapMarker['desc'] = 'Please take care of a proper configuration<br />
+                              of the TypoScript property marker.mapMarker.description!';
+      }
+        // Get the desc
+
+        // Get the categories
+      $coa_name         = $this->confMap['marker.']['mapMarker.']['categories'];
+      $coa_conf         = $this->confMap['marker.']['mapMarker.']['categories.'];
+      $mapMarker['cat'] = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+        // Get the categories
+
+        // Save each mapMarker
+      $mapMarkers[] = $mapMarker;
+        // Save each longitude
+      $longitudes[] = ( double ) $mapMarker['longitude']; 
+        // Save each latitude
+      $latitudes[]  = ( double ) $mapMarker['latitude']; 
+
+        // Remove the current row from cObj->data
+      foreach( ( array ) $row as $key => $value )
       {
         unset( $this->pObj->cObj->data[ $key ] );
       }
-        // Remove each element of the row from cObj->data
+        // Remove the current row from cObj->data
     }
+      // FOREACH rows
     
       // Calculate the zoom level
       // Get max distance longitude (longitudes are from -90° to 90°). 0° is the equator
@@ -711,16 +743,23 @@ class tx_browser_pi1_map
 var_dump( __METHOD__, __LINE__, $zoomLevel );
       // Calculate the zoom level
     
-    foreach( ( array ) $rows as $key => $row )
+      // FOREACH map marker
+    foreach( ( array ) $mapMarkers as $key => $mapMarker )
     {
-      if( ! isset( $series[$row['category.title']]['icon'] ) )
+        // Set category icon
+      if( ! isset( $series[$mapMarker['cat']]['icon'] ) )
       {
-        $series[$row['category.title']]['icon'] = $catImg[$row['category.title']];
+        $series[$mapMarker['cat']]['icon'] = $catImg[$mapMarker['cat']];
       }
-      $series[$row['category.title']]['data'][$key]['coors']  = array( $row['main.longitude'], $row['main.latitude'] );
-      $series[$row['category.title']]['data'][$key]['desc']   = $row['main.short'];
-      $coordinates[] = $row['main.longitude'] . ',' . $row['main.latitude'];
+        // Set category icon
+        // Set coordinates
+      $series[$mapMarker['cat']]['data'][$key]['coors']  = array( $mapMarker['longitude'], $mapMarker['latitude'] );
+      $coordinates[] = $mapMarker['longitude'] . ',' . $mapMarker['latitude'];
+        // Set coordinates
+        // Set description
+      $series[$mapMarker['cat']]['data'][$key]['desc']   = $mapMarker['desc'];
     }
+      // FOREACH map marker
 //var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) ); 
 
     $data = json_encode( $series );

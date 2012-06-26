@@ -298,13 +298,6 @@ plugin.tx_browser_pi1 {
         }
       }
       marker {
-        database {
-          popup = TEXT
-          popup {
-              // [STRING] table.field. Example: tx_org_headquarters.title
-            field = 
-          }
-        }
         html {
           systemMarker {
               // Category filter
@@ -440,6 +433,28 @@ plugin.tx_browser_pi1 {
                 // [INTEGER] Value from 0 to 18. Example: 4
               value = 4
             }
+          }
+        }
+        mapMarker {
+          categories = TEXT
+          categories {
+              // [STRING] table.field. Example: tx_org_category.title
+            field = 
+          }
+          latitude = TEXT
+          latitude {
+              // [STRING] table.field. Example: tx_org_headquarters.mail_lat
+            field = 
+          }
+          longitude = TEXT
+          longitude {
+              // [STRING] table.field. Example: tx_org_headquarters.mail_lon
+            field = 
+          }
+          description = TEXT
+          description {
+              // [STRING] table.field. Example: tx_org_headquarters.title
+            field = 
           }
         }
       }
