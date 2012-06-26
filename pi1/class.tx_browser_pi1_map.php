@@ -610,7 +610,7 @@ class tx_browser_pi1_map
  */
   private function renderMapData( $map_template )
   {
-var_dump( __METHOD__, __LINE__, $this->pObj->rows ); 
+//var_dump( __METHOD__, __LINE__, $this->pObj->rows ); 
     
     $series = null;
     
@@ -622,7 +622,7 @@ var_dump( __METHOD__, __LINE__, $this->pObj->rows );
     {
       $row['main.longitude']  = $dbRow['tx_org_headquarters.mail_lon']; 
       $row['main.latitude']   = $dbRow['tx_org_headquarters.mail_lat']; 
-      $row['main.short']      = '<a href=\"http://die-netzmacher.de\">' . $dbRow['tx_org_headquarters.title'] . '</a>'; 
+      $row['main.short']      = '<a href="http://die-netzmacher.de">' . $dbRow['tx_org_headquarters.title'] . '</a>'; 
       //$row['main.short']      = $dbRow['tx_org_headquarters.title']; 
       $row['category.title']  = 'cat1'; 
       $rows[] = $row;
