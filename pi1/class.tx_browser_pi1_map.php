@@ -576,10 +576,10 @@ class tx_browser_pi1_map
 
 
 
-//var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $markerArray, $map_template );
       // Replace the map marker in the template of the parent object
     $pObj_template = str_replace( $str_mapMarker, $map_template, $pObj_template );
 
+var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $map_template, $pObj_template );
       // RETURN the template
     return $pObj_template;
   }
