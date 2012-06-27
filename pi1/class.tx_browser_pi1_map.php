@@ -566,7 +566,8 @@ class tx_browser_pi1_map
 
       // Add data
     $map_template = $this->renderMapMarkerVariablesSystem( $map_template );
-    $map_template = $this->renderMapMarkerVariablesDynamic( $map_template );
+    $markerArray  = $this->renderMapMarkerVariablesDynamic( $map_template );
+    $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
 
     
 
