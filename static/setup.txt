@@ -484,7 +484,7 @@ plugin.tx_browser_pi1 {
           }
         }
         variables {
-          css {
+          dynamic {
             map_height = TEXT
             map_height {
                 // [PIXEL] Default: 400px
@@ -496,7 +496,7 @@ plugin.tx_browser_pi1 {
               value = 600px;
             }
           }
-          jss {
+          system {
             categories = TEXT
             categories {
                 // [STRING] table.field. Example: tx_org_category.title
