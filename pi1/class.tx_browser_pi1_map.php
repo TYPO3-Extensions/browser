@@ -52,12 +52,12 @@
  *
  *              SECTION: Map rendering
  *  444:     private function renderMap( $pObj_template )
- *  598:     private function renderMapData( $map_template )
+ *  598:     private function renderMapMarkerVariablesSystem( $map_template )
  *
  *              SECTION: Map rendering marker
  *  630:     private function renderMapMarkerSnippetsHtmlDynamic( $map_template )
  *  683:     private function renderMapMarkerSnippetsHtmlSystem( $map_template )
- *  732:     private function renderMapMarkerSnippetsJss( $map_template )
+ *  732:     private function renderMapMarkerSnippetsJssDynamic( $map_template )
  *
  *              SECTION: CSS
  *  798:     private function cssSetHtmlHeader( )
@@ -574,7 +574,7 @@ class tx_browser_pi1_map
 
 
       // Add data
-    $map_template = $this->renderMapData( $map_template );
+    $map_template = $this->renderMapMarkerVariablesSystem( $map_template );
 
     
 
@@ -585,7 +585,7 @@ class tx_browser_pi1_map
       // System marker
     //$markerArray  = $this->renderMapMarkerSnippetsHtmlSystem( $map_template );
       // Dynamic marker
-    $markerArray  = $markerArray + $this->renderMapMarkerSnippetsJss( $map_template );
+    $markerArray  = $markerArray + $this->renderMapMarkerSnippetsJssDynamic( $map_template );
       // Replace marker in the map HTML template
     $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
       // Substitute marker HTML
@@ -617,14 +617,14 @@ class tx_browser_pi1_map
 
 
   /**
- * renderMapData( ):
+ * renderMapMarkerVariablesSystem( ):
  *
  * @param    string        $map_template: ...
  * @return    string
  * @version 4.1.0
  * @since   4.1.0
  */
-  private function renderMapData( $map_template )
+  private function renderMapMarkerVariablesSystem( $map_template )
   {
 //var_dump( __METHOD__, __LINE__, $this->pObj->rows ); 
     $mapMarkers   = array( );
@@ -651,14 +651,14 @@ class tx_browser_pi1_map
         // Add the current row to cObj->data
       
         // Get the longitude
-      $coa_name               = $this->confMap['marker.']['mapMarker.']['longitude'];
-      $coa_conf               = $this->confMap['marker.']['mapMarker.']['longitude.'];
+      $coa_name               = $this->confMap['marker.']['variables.']['system.']['longitude'];
+      $coa_conf               = $this->confMap['marker.']['variables.']['system.']['longitude.'];
       $mapMarker['longitude'] = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
         // Get the longitude
 
         // Get the latitude
-      $coa_name               = $this->confMap['marker.']['mapMarker.']['latitude'];
-      $coa_conf               = $this->confMap['marker.']['mapMarker.']['latitude.'];
+      $coa_name               = $this->confMap['marker.']['variables.']['system.']['latitude'];
+      $coa_conf               = $this->confMap['marker.']['variables.']['system.']['latitude.'];
       $mapMarker['latitude']  = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
         // Get the latitude
 
@@ -677,8 +677,8 @@ class tx_browser_pi1_map
         // SWITCH logitude and latitude
       
         // Get the desc
-      $coa_name           = $this->confMap['marker.']['mapMarker.']['description'];
-      $coa_conf           = $this->confMap['marker.']['mapMarker.']['description.'];
+      $coa_name           = $this->confMap['marker.']['variables.']['system.']['description'];
+      $coa_conf           = $this->confMap['marker.']['variables.']['system.']['description.'];
       $mapMarker['desc']  = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
       if( empty ( $mapMarker['desc'] ) )
       {
@@ -688,8 +688,8 @@ class tx_browser_pi1_map
         // Get the desc
 
         // Get the categories
-      $coa_name         = $this->confMap['marker.']['mapMarker.']['categories'];
-      $coa_conf         = $this->confMap['marker.']['mapMarker.']['categories.'];
+      $coa_name         = $this->confMap['marker.']['variables.']['system.']['categories'];
+      $coa_conf         = $this->confMap['marker.']['variables.']['system.']['categories.'];
       $mapMarker['cat'] = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
         // Get the categories
 
@@ -1053,19 +1053,19 @@ class tx_browser_pi1_map
 
 
   /**
- * renderMapMarkerSnippetsJss( $map_template ):
+ * renderMapMarkerSnippetsJssDynamic( $map_template ):
  *
  * @param    [type]        $$map_template: ...
  * @return    array
  * @version 4.1.0
  * @since   4.1.0
  */
-  private function renderMapMarkerSnippetsJss( $map_template )
+  private function renderMapMarkerSnippetsJssDynamic( $map_template )
   {
     $dummy = null;
     $markerArray = array( );
 
-    foreach( $this->confMap['marker.']['jss.'] as $marker => $conf )
+    foreach( $this->confMap['marker.']['jss.']['dynamic.'] as $marker => $conf )
     {
       $dummy = $conf;
       if( substr( $marker, -1, 1 ) == '.' )
