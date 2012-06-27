@@ -314,7 +314,7 @@ plugin.tx_browser_pi1 {
               20 = TEXT
               20 {
                 value = 0
-                wrap  = ,|
+                wrap  = ,|,
               }
                 // Parameter
               30 = COA
