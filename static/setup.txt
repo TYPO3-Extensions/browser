@@ -304,96 +304,138 @@ plugin.tx_browser_pi1 {
         }
       }
       marker {
-        html {
-          systemMarker {
-              // Category filter
-            filter_form = TEXT
-            filter_form {
-              value (
-                <form id="filter">
-                  <input class="oxMapFilter" type="checkbox" name="cat1" value="1" checked />cat1
-                  <input class="oxMapFilter" type="checkbox" name="cat2" value="1" checked />cat2
-                </form>
-)
-            }
-            filter_form >
-              // Javascript for the category filter
-            filter_jss = TEXT
-            filter_jss {
-              value (
-                <script>
-                /* <![CDATA[ */
-                  var filter = $( "input.oxMapFilter" );
-                  for(var a=filter.length; a-- ; )
-                  filter[a].onchange = function( )
-                  {
-                    startFilter( this, this.name, this.value );
-                  };
-                  function startFilter( element, name, value )
-                  {
-                    switchTo = value == 1 ? false : true;
-                    element.value = switchTo == false ? 0 : 1;
+        snippets {
+          html {
+            systemMarker {
+                // Category filter
+              filter_form = TEXT
+              filter_form {
+                value (
+                  <form id="filter">
+                    <input class="oxMapFilter" type="checkbox" name="cat1" value="1" checked />cat1
+                    <input class="oxMapFilter" type="checkbox" name="cat2" value="1" checked />cat2
+                  </form>
+  )
+              }
+              filter_form >
+                // Javascript for the category filter
+              filter_jss = TEXT
+              filter_jss {
+                value (
+                  <script>
+                  /* <![CDATA[ */
+                    var filter = $( "input.oxMapFilter" );
+                    for(var a=filter.length; a-- ; )
+                    filter[a].onchange = function( )
+                    {
+                      startFilter( this, this.name, this.value );
+                    };
+                    function startFilter( element, name, value )
+                    {
+                      switchTo = value == 1 ? false : true;
+                      element.value = switchTo == false ? 0 : 1;
 
-                    /*	Beispielfilteranwendung
-                    *
-                    *	Das Beispiel liest den Wert einer Checkbox aus und ubergibt an die map.filterLayer-Methode Name und Sichtbarkeit
-                        map           map-Object              als Instance des oxMapRender-Konstruktors -> wird durch Einbettung der oxAPI
-                                                              oxRenderMap.js erzeugt;
-                        filterLayer		filter-Methode
-                          @param  name      STRING            Layer-Name --> es wird zwischen Markern ohne und mit Informationlayer unterschieden
-                                                              - einfache Markername bestehen aus dem Kategorienamen   --> 'cat1'
-                                                              - Infolayernamen betehen aus Kategoriename und Suffix 'Info'  --> 'cat1Info'
-                                                              um alle Layer zu schließen, muss die Methode so oft wiederholt werden,
-                                                              bis alle Kategorienamen erfasst wurden
-                          @param  switchTo  BOOLEAN | FLOAT   Sichtbarkeitswert -->	true | false entspricht sichtbar bzw. unsichtbar
-                                                              Zahl zwischen 0 und 1 definiert Transparenzgrad
-                    */
-                    map.filterLayer( name, switchTo );
-                    map.filterLayer( name + 'Info', switchTo );
-                  }
-                /* ]]> */
-                </script>
-)
-            }
-            filter_jss >
-          }
-          dynamicMarker {
-              // HTML div tag for the map
-            map_html = TEXT
-            map_html {
-              value = <div id="oxMapArea" class="oxMapArea"></div>
-            }
-              // Javascript for the map
-            map_jss = TEXT
-            map_jss {
-              value (
-                <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers/OpenLayers_0.0.2.js"></script>
-                <script src="typo3conf/ext/browser/res/js/map/lib/OpenStreetMap/OpenStreetMap_0.0.2.js"></script>
-                <script>
-                /* <![CDATA[ */
-                    // Be aware of the trailing slash!
-                  OpenLayers.ImgPath = "/typo3conf/ext/browser/res/js/map/lib/OpenLayers/img/";
-                  var markerData = '###DATA###';
-                  var oxMapConfig = {
-                    MapId:          'oxMapArea',                //    HTML map viewport id
-                    MapControls:    '###MAPCONTROLS###',        //    customized control types
-                    MapZoomLevels:  '###MAPZOOMLEVELS###',      //    customized zoom levels
-                    MapMarker:      '###MAPMARKER###',          //    standalone marker is allowed
-                    MapMarkerInfo:  '###MAPMARKERINFO###',      //    marker with infolayer is allowed
-                    MapMarkerEvent: '###MAPMARKEREVENT###',     //    click | hover | on (for drawing one point only)
-
-                    OSM:            true,                       //    WMS type OSM
-                    OSMConfig:      {
-                      type:    'Mapnik',                        //    Mapnik
-                      name:    'OpenStreetMap (Mapnik)',        //    OpenStreetMap (Mapnik)
-                      center:  '###OSMCONFIGCENTER###',         //    setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
-                      zoom:    '###OSMCONFIGZOOM###'            //    integer (0 - 16) set zoom level
+                      /*	Beispielfilteranwendung
+                      *
+                      *	Das Beispiel liest den Wert einer Checkbox aus und ubergibt an die map.filterLayer-Methode Name und Sichtbarkeit
+                          map           map-Object              als Instance des oxMapRender-Konstruktors -> wird durch Einbettung der oxAPI
+                                                                oxRenderMap.js erzeugt;
+                          filterLayer		filter-Methode
+                            @param  name      STRING            Layer-Name --> es wird zwischen Markern ohne und mit Informationlayer unterschieden
+                                                                - einfache Markername bestehen aus dem Kategorienamen   --> 'cat1'
+                                                                - Infolayernamen betehen aus Kategoriename und Suffix 'Info'  --> 'cat1Info'
+                                                                um alle Layer zu schließen, muss die Methode so oft wiederholt werden,
+                                                                bis alle Kategorienamen erfasst wurden
+                            @param  switchTo  BOOLEAN | FLOAT   Sichtbarkeitswert -->	true | false entspricht sichtbar bzw. unsichtbar
+                                                                Zahl zwischen 0 und 1 definiert Transparenzgrad
+                      */
+                      map.filterLayer( name, switchTo );
+                      map.filterLayer( name + 'Info', switchTo );
                     }
-                  };
-                /* ]]> */
-                </script>
-                <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.2.js"></script>
-)
+                  /* ]]> */
+                  </script>
+  )
+              }
+              filter_jss >
+            }
+            dynamicMarker {
+              map_css = TEXT
+              map_css {
+                value (
+                  <style type="text/css">
+                    .tx-browser-pi1 .mapview {
+                      margin-top:1em;
+                    }
+                    .tx-browser-pi1 .mapview-content {
+                      padding:1em;
+                    }
+                    .tx-browser-pi1 .mapview-content form {
+                      padding-bottom:1em;
+                      text-align:center;
+                    }
+                    .tx-browser-pi1 .olControlAttribution {
+                      background-color:white;
+                      bottom:0px;
+                      right:0px;
+                    }
+                    .tx-browser-pi1 .olMap {
+                      margin: auto !important;
+                    }
+                    .tx-browser-pi1 .oxMapArea {
+                      width:600px;
+                      height:400px;
+                    }
+                    .tx-browser-pi1 .oxTextLayer {
+                      border:1px solid green;
+                      border-radius:6px;
+                      background:#fff;
+                      width:200px;
+                      overflow:hidden;
+                      position:absolute;
+                      padding:6px;
+                      box-shadow:3px 3px 3px #3d3d3d;
+                      z-index:99;
+                    }
+                  </style>
+  )
+              }
+                // HTML div tag for the map
+              map_html = TEXT
+              map_html {
+                value = <div id="oxMapArea" class="oxMapArea"></div>
+              }
+                // Javascript for the map
+              map_jss = TEXT
+              map_jss {
+                value (
+                  <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers/OpenLayers_0.0.2.js"></script>
+                  <script src="typo3conf/ext/browser/res/js/map/lib/OpenStreetMap/OpenStreetMap_0.0.2.js"></script>
+                  <script>
+                  /* <![CDATA[ */
+                      // Be aware of the trailing slash!
+                    OpenLayers.ImgPath = "/typo3conf/ext/browser/res/js/map/lib/OpenLayers/img/";
+                    var markerData = '###DATA###';
+                    var oxMapConfig = {
+                      MapId:          'oxMapArea',                //    HTML map viewport id
+                      MapControls:    '###MAPCONTROLS###',        //    customized control types
+                      MapZoomLevels:  '###MAPZOOMLEVELS###',      //    customized zoom levels
+                      MapMarker:      '###MAPMARKER###',          //    standalone marker is allowed
+                      MapMarkerInfo:  '###MAPMARKERINFO###',      //    marker with infolayer is allowed
+                      MapMarkerEvent: '###MAPMARKEREVENT###',     //    click | hover | on (for drawing one point only)
+
+                      OSM:            true,                       //    WMS type OSM
+                      OSMConfig:      {
+                        type:    'Mapnik',                        //    Mapnik
+                        name:    'OpenStreetMap (Mapnik)',        //    OpenStreetMap (Mapnik)
+                        center:  '###OSMCONFIGCENTER###',         //    setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
+                        zoom:    '###OSMCONFIGZOOM###'            //    integer (0 - 16) set zoom level
+                      }
+                    };
+                  /* ]]> */
+                  </script>
+                  <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.2.js"></script>
+  )
+              }
             }
           }
         }
@@ -443,26 +485,55 @@ plugin.tx_browser_pi1 {
             }
           }
         }
-        mapMarker {
-          categories = TEXT
-          categories {
-              // [STRING] table.field. Example: tx_org_category.title
-            field = 
+        variables {
+          css {
+            map_height = TEXT
+            map_height {
+                // [PIXEL] Default: 400px
+              value = 400px;
+            }
+            map_width = TEXT
+            map_width {
+                // [PIXEL] Default: 600px
+              value = 600px;
+            }
+            latitude = TEXT
+            latitude {
+                // [STRING] table.field. Example: tx_org_headquarters.mail_lat
+              field = 
+            }
+            longitude = TEXT
+            longitude {
+                // [STRING] table.field. Example: tx_org_headquarters.mail_lon
+              field = 
+            }
+            description = TEXT
+            description {
+                // [STRING] table.field. Example: tx_org_headquarters.title
+              field = 
+            }
           }
-          latitude = TEXT
-          latitude {
-              // [STRING] table.field. Example: tx_org_headquarters.mail_lat
-            field = 
-          }
-          longitude = TEXT
-          longitude {
-              // [STRING] table.field. Example: tx_org_headquarters.mail_lon
-            field = 
-          }
-          description = TEXT
-          description {
-              // [STRING] table.field. Example: tx_org_headquarters.title
-            field = 
+          jss {
+            categories = TEXT
+            categories {
+                // [STRING] table.field. Example: tx_org_category.title
+              field = 
+            }
+            latitude = TEXT
+            latitude {
+                // [STRING] table.field. Example: tx_org_headquarters.mail_lat
+              field = 
+            }
+            longitude = TEXT
+            longitude {
+                // [STRING] table.field. Example: tx_org_headquarters.mail_lon
+              field = 
+            }
+            description = TEXT
+            description {
+                // [STRING] table.field. Example: tx_org_headquarters.title
+              field = 
+            }
           }
         }
       }
