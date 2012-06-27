@@ -1086,14 +1086,14 @@ class tx_browser_pi1_map
         continue;
       }
 
-      $cObj_name  = $this->confMap['marker.']['jss.']['dynamicMarker.'][$marker];
-      $cObj_conf  = $this->confMap['marker.']['jss.']['dynamicMarker.'][$marker . '.'];
+      $cObj_name  = $this->confMap['marker.']['snippets.']['jss.']['dynamic.'][$marker];
+      $cObj_conf  = $this->confMap['marker.']['snippets.']['jss.']['dynamic.'][$marker . '.'];
       $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
       if( empty ( $content ) )
       {
         if( $this->pObj->b_drs_map )
         {
-          $prompt = 'marker.jss.dynamicMarker.' . $marker . ' is empty. Probably this is an error!';
+          $prompt = 'marker.snippets.jss.dynamic.' . $marker . ' is empty. Probably this is an error!';
           t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
         }
       }
