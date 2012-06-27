@@ -306,7 +306,7 @@ plugin.tx_browser_pi1 {
       marker {
         snippets {
           html {
-            systemMarker {
+            system {
                 // Category filter
               filter_form = TEXT
               filter_form {
@@ -358,7 +358,7 @@ plugin.tx_browser_pi1 {
               }
               filter_jss >
             }
-            dynamicMarker {
+            dynamic {
               map_css = TEXT
               map_css {
                 value (
@@ -439,49 +439,47 @@ plugin.tx_browser_pi1 {
             }
           }
           jss {
-            dynamicMarker {
-                // Map controlling tools
-              MapControls = TEXT
-              MapControls {
-                  // [ARRAY] customized control types
-                value = ['Navigation', 'PanZoomBar']
-              }
-                // Map zoom level
-              MapZoomLevels = TEXT
-              MapZoomLevels {
-                  // [INTEGER] Value from 0 to 18. Example: 4
-                value = 4
-              }
-                // Map marker standalone mode
-              MapMarker = TEXT
-              MapMarker {
-                  // [Boolean] standalone marker is allowed
-                value = true
-              }
-                // Map marker infolayer mode
-              MapMarkerInfo = TEXT
-              MapMarkerInfo {
-                  // [BOOLEAN] marker with infolayer is allowed
-                value = true
-              }
-                // Map marker event type
-              MapMarkerEvent = TEXT
-              MapMarkerEvent {
-                  // [STRING] customized marker events
-                value = 'click'
-              }
-                // Center of the map
-              OSMConfigCenter = TEXT
-              OSMConfigCenter {
-                  // [ARRAY] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X. Example: [9.15,50.1725] <- Center of European Union
-                value = [9.15,50.1725]
-              }
-                // Map zoom level
-              OSMConfigZoom = TEXT
-              OSMConfigZoom {
-                  // [INTEGER] Value from 0 to 18. Example: 4
-                value = 4
-              }
+              // Map controlling tools
+            MapControls = TEXT
+            MapControls {
+                // [ARRAY] customized control types
+              value = ['Navigation', 'PanZoomBar']
+            }
+              // Map zoom level
+            MapZoomLevels = TEXT
+            MapZoomLevels {
+                // [INTEGER] Value from 0 to 18. Example: 4
+              value = 4
+            }
+              // Map marker standalone mode
+            MapMarker = TEXT
+            MapMarker {
+                // [Boolean] standalone marker is allowed
+              value = true
+            }
+              // Map marker infolayer mode
+            MapMarkerInfo = TEXT
+            MapMarkerInfo {
+                // [BOOLEAN] marker with infolayer is allowed
+              value = true
+            }
+              // Map marker event type
+            MapMarkerEvent = TEXT
+            MapMarkerEvent {
+                // [STRING] customized marker events
+              value = 'click'
+            }
+              // Center of the map
+            OSMConfigCenter = TEXT
+            OSMConfigCenter {
+                // [ARRAY] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X. Example: [9.15,50.1725] <- Center of European Union
+              value = [9.15,50.1725]
+            }
+              // Map zoom level
+            OSMConfigZoom = TEXT
+            OSMConfigZoom {
+                // [INTEGER] Value from 0 to 18. Example: 4
+              value = 4
             }
           }
         }
@@ -496,21 +494,6 @@ plugin.tx_browser_pi1 {
             map_width {
                 // [PIXEL] Default: 600px
               value = 600px;
-            }
-            latitude = TEXT
-            latitude {
-                // [STRING] table.field. Example: tx_org_headquarters.mail_lat
-              field = 
-            }
-            longitude = TEXT
-            longitude {
-                // [STRING] table.field. Example: tx_org_headquarters.mail_lon
-              field = 
-            }
-            description = TEXT
-            description {
-                // [STRING] table.field. Example: tx_org_headquarters.title
-              field = 
             }
           }
           jss {
