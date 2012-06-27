@@ -316,6 +316,7 @@ plugin.tx_browser_pi1 {
                 </form>
 )
             }
+            filter_form >
               // Javascript for the category filter
             filter_jss = TEXT
             filter_jss {
@@ -354,6 +355,7 @@ plugin.tx_browser_pi1 {
                 </script>
 )
             }
+            filter_jss >
           }
           dynamicMarker {
               // HTML div tag for the map
