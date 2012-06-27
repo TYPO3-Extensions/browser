@@ -566,6 +566,7 @@ class tx_browser_pi1_map
 
       // Add data
     $map_template = $this->renderMapMarkerVariablesSystem( $map_template );
+    $map_template = $this->renderMapMarkerVariablesDynamic( $map_template );
 
     
 
@@ -604,6 +605,59 @@ class tx_browser_pi1_map
   * Map rendering data
   *
   **********************************************/
+
+
+
+  /**
+ * renderMapMarkerVariablesDynamic( ):
+ *
+ * @param    [type]        $$map_template: ...
+ * @return    array
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function renderMapMarkerVariablesDynamic( $map_template )
+  {
+    $dummy = null;
+    $markerArray = array( );
+
+    foreach( $this->confMap['marker.']['variables.']['dynamic.'] as $marker => $conf )
+    {
+      $dummy = $conf;
+      if( substr( $marker, -1, 1 ) == '.' )
+      {
+        continue;
+      }
+
+      $hashKeyMarker = '###' . strtoupper( $marker ) . '###';
+
+      $pos = strpos( $map_template, $hashKeyMarker );
+      if( ( $pos === false ) )
+      {
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = $hashKeyMarker . ' isn\'t part of the map HTML template. It won\'t rendered!';
+          t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+        }
+        continue;
+      }
+
+      $cObj_name  = $this->confMap['marker.']['variables.']['dynamic.'][$marker];
+      $cObj_conf  = $this->confMap['marker.']['variables.']['dynamic.'][$marker . '.'];
+      $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+      if( empty ( $content ) )
+      {
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'marker.variables.dynamic.' . $marker . ' is empty. Probably this is an error!';
+          t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
+        }
+      }
+      $markerArray[ $hashKeyMarker ] = $content;
+    }
+
+    return $markerArray;
+  }
 
 
 
