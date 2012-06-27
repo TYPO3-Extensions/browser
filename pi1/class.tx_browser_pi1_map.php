@@ -552,15 +552,6 @@ class tx_browser_pi1_map
 
       //////////////////////////////////////////////////////////////////////
       //
-      // Add css to the HTML header
-
-    $this->cssSetHtmlHeader( );
-      // Add css to the HTML header
-
-
-
-      //////////////////////////////////////////////////////////////////////
-      //
       // Substitute marker HTML
 
       // System marker
@@ -1101,42 +1092,6 @@ class tx_browser_pi1_map
     }
 
     return $markerArray;
-  }
-
-
-
-
-
-
-
-
-
-  /***********************************************
-  *
-  * CSS
-  *
-  **********************************************/
-
-
-
-  /**
- * cssSetHtmlHeader( ): Include CSS for openStreetMap
- *
- * @return    void
- * @version 3.9.6
- * @since   3.9.6
- */
-  private function cssSetHtmlHeader( )
-  {
-    $name_prefix = 'css_';
-
-      // Include openStreetMap
-    $name         = $name_prefix . 'openStreetMap';
-    $path         = $this->confMap['template.']['css'];
-    $bool_inline  = $this->confMap['template.']['css']['inline'];
-    $path_tsConf  = 'template.css';
-    $this->pObj->objJss->addFile($path, false, $name, $path_tsConf, 'css', $bool_inline);
-      // Include openStreetMap
   }
 
 

@@ -276,12 +276,6 @@ plugin.tx_browser_pi1 {
         value = 0
       }
       template {
-          // [STRING] Path to the map CSS file
-        css = EXT:browser/res/html/map/default.css
-        css {
-            // [BOOLEAN] 0 (default): link to the css file, 1: include the css inline
-          inline = 0
-        }
           // [STRING] Path to the map HTML template
         file = EXT:browser/res/html/map/default.tmpl
       }
@@ -330,8 +324,8 @@ plugin.tx_browser_pi1 {
                       margin: auto !important;
                     }
                     .tx-browser-pi1 .oxMapArea {
-                      width:600px;
-                      height:400px;
+                      height:###CSS_MAPHEIGHT###;
+                      width:###CSS_MAPWIDTH###;
                     }
                     .tx-browser-pi1 .oxTextLayer {
                       border:1px solid green;
@@ -487,13 +481,13 @@ plugin.tx_browser_pi1 {
         }
         variables {
           dynamic {
-            map_height = TEXT
-            map_height {
+            css_mapHeight = TEXT
+            css_mapHeight {
                 // [PIXEL] Default: 400px
               value = 400px;
             }
-            map_width = TEXT
-            map_width {
+            css_mapWidth = TEXT
+            css_mapWidth {
                 // [PIXEL] Default: 600px
               value = 600px;
             }
