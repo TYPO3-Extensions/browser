@@ -654,6 +654,8 @@ class tx_browser_pi1_map
       $coa_name               = $this->confMap['marker.']['variables.']['system.']['longitude'];
       $coa_conf               = $this->confMap['marker.']['variables.']['system.']['longitude.'];
       $mapMarker['longitude'] = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+var_dump( __METHOD__, __LINE__, $this->confMap['marker.']['variables.']['system.'], $mapMarker ); 
+die( );
         // Get the longitude
 
         // Get the latitude
