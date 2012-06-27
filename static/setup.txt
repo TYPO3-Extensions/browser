@@ -299,64 +299,66 @@ plugin.tx_browser_pi1 {
       }
       marker {
         addToCData {
-            // typolink parameter
-          mapLinkToSingle = COA
-          mapLinkToSingle {
-              // URL: page id, page type, parameters
-            10 = COA
-            10 {
-                // Page uid
-              10 = TEXT
+          system {
+              // typolink parameter
+            mapLinkToSingle = COA
+            mapLinkToSingle {
+                // URL: page id, page type, parameters
+              10 = COA
               10 {
-                data = page:uid
-              }
-                // Page type
-              20 = TEXT
-              20 {
-                value = 0
-                wrap  = ,|,
-              }
-                // Parameter
-              30 = COA
-              30 {
-                  // &tx_browser_pi1[showuid]=
+                  // Page uid
                 10 = TEXT
                 10 {
-                  if {
-                    isTrue {
-                      field = 
+                  data = page:uid
+                }
+                  // Page type
+                20 = TEXT
+                20 {
+                  value = 0
+                  wrap  = ,|,
+                }
+                  // Parameter
+                30 = COA
+                30 {
+                    // &tx_browser_pi1[showuid]=
+                  10 = TEXT
+                  10 {
+                    if {
+                      isTrue {
+                        field = 
+                      }
                     }
+                    field = 
+                    wrap  = &tx_browser_pi1[showUid]=|
                   }
-                  field = 
-                  wrap  = &tx_browser_pi1[showuid]=|
                 }
               }
-            }
-              // target
-            20 = TEXT
-            20 {
-                // [STRING] - (default). Examples: -, _self, _blank, _top
-              value = -
-              noTrimWrap = | | |
-            }
-              // class
-            30 = TEXT
-            30 {
-                // [STRING] - (default)
-              value = -
-              noTrimWrap = | | |
-            }
-              // title
-            40 = TEXT
-            40 {
-              if {
-                isTrue {
-                  field =
-                }
+                // target
+              20 = TEXT
+              20 {
+                  // [STRING] - (default). Examples: -, _self, _blank, _top
+                value = -
+                noTrimWrap = | | |
               }
-                // [STRING]
-              field =
-              wrap  = "|"
+                // class
+              30 = TEXT
+              30 {
+                  // [STRING] - (default)
+                value = -
+                noTrimWrap = | | |
+              }
+                // title
+              40 = TEXT
+              40 {
+                if {
+                  isTrue {
+                    field =
+                  }
+                }
+                  // [STRING]
+                field =
+                wrap  = "|"
+              }
             }
           }
         }
