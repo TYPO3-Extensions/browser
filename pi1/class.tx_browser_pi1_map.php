@@ -451,32 +451,89 @@ class tx_browser_pi1_map
 
 
   /**
- * cObjDataAdd( ):
+ * cObjDataAddRow( ):
  *
  * @param    array
  * @return    void
  * @version 4.1.0
  * @since   4.1.0
  */
-  private function cObjDataAdd( $row )
+  private function cObjDataAddRow( $row )
   {
     foreach( ( array ) $row as $key => $value )
     {
       $this->pObj->cObj->data[ $key ] = $value;
+    }
+    var_dump( __METHOD__, __LINE__, $this->pObj->cObj->data );
+  }
+
+
+
+  /**
+ * cObjDataAddMarker( ):
+ *
+ * @return    void
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function cObjDataAddMarker( )
+  {
+    foreach( $this->confMap['marker.']['addToCData.'] as $marker => $conf )
+    {
+      $dummy = $conf;
+      if( substr( $marker, -1, 1 ) == '.' )
+      {
+        continue;
+      }
+
+      $cObj_name  = $this->confMap['marker.']['addToCData.'][$marker];
+      $cObj_conf  = $this->confMap['marker.']['addToCData.'][$marker . '.'];
+      $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+      if( empty ( $content ) )
+      {
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'marker.addToCData.' . $marker . ' is empty. Probably this is an error!';
+          t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
+        }
+      }
+      $this->pObj->cObj->data[ $marker ] = $content;
     }
   }
 
 
 
   /**
- * cObjDataRemove( ):
+ * cObjDataRemoveMarker( ):
+ *
+ * @return    void
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function cObjDataRemoveMarker( )
+  {
+    foreach( $this->confMap['marker.']['addToCData.'] as $marker => $conf )
+    {
+      if( substr( $marker, -1, 1 ) == '.' )
+      {
+        continue;
+      }
+
+      unset( $this->pObj->cObj->data[ $marker ] );
+    }
+  }
+
+
+
+  /**
+ * cObjDataRemoveRow( ):
  *
  * @param    array
  * @return    void
  * @version 4.1.0
  * @since   4.1.0
  */
-  private function cObjDataRemove( $row )
+  private function cObjDataRemoveRow( $row )
   {
     foreach( ( array ) $row as $key => $value )
     {
@@ -600,7 +657,8 @@ class tx_browser_pi1_map
       // RETURN: no subpart marker
 
 
-
+    $this->cObjDataAddMarker( );
+    
       //////////////////////////////////////////////////////////////////////
       //
       // Substitute marker HTML
@@ -638,6 +696,8 @@ class tx_browser_pi1_map
 
       // Replace the map marker in the template of the parent object
     $pObj_template = str_replace( $str_mapMarker, $map_template, $pObj_template );
+
+    $this->cObjDataRemoveMarker( );
 
 //var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $map_template, $pObj_template );
       // RETURN the template
@@ -817,7 +877,7 @@ class tx_browser_pi1_map
     foreach( $this->pObj->rows as $row )
     {
         // Add the current row to cObj->data
-      $this->cObjDataAdd( $row );
+      $this->cObjDataAddRow( $row );
       
         // Get the longitude
       $mapMarker['lon'] = $this->renderMapMarkerVariablesSystemItem( 'longitude' );
@@ -858,7 +918,7 @@ class tx_browser_pi1_map
       $lats[]  = ( double ) $mapMarker['lat']; 
 
         // Remove the current row from cObj->data
-      $this->cObjDataRemove( $row );
+      $this->cObjDataRemoveRow( $row );
     }
       // FOREACH row
     
