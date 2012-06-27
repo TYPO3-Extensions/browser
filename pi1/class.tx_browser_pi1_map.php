@@ -724,47 +724,23 @@ class tx_browser_pi1_map
   private function renderMapMarkerVariablesSystem( $map_template )
   {
 //var_dump( __METHOD__, __LINE__, $this->pObj->rows ); 
-    $arr_result = array( );
+    $arr_return = array( );
     $mapMarkers = array( );
     
-    $series = null;
-    
-      // Get rendered points (map marker)
+      // Get rendered points (map marker), lats and lons
     $arr_return = $this->renderMapMarkerPoints( );
     $mapMarkers = $arr_return['data']['mapMarkers'];
     $lats       = $arr_return['data']['lats'];
     $lons       = $arr_return['data']['lons'];
-      // Get rendered points (map marker)
+      // Get rendered points (map marker), lats and lons
     
+      // Get points (map marker) as JSON array and coordinates
     $arr_return   = $this->renderMapMarkerPointsToJSON( $mapMarkers );
     $jsonData     = $arr_return['data']['jsonData'];
     $coordinates  = $arr_return['data']['coordinates'];
+      // Get points (map marker) as JSON array and coordinates
     
-//    $catImg = array( );
-//    $catImg['cat1'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test1.png', 14, 14, 0, 0 );
-//    $catImg['cat2'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0 );
-//
-//      // FOREACH map marker
-//    foreach( ( array ) $mapMarkers as $key => $mapMarker )
-//    {
-//        // Set category icon
-//      if( ! isset( $series[$mapMarker['cat']]['icon'] ) )
-//      {
-//        $series[$mapMarker['cat']]['icon'] = $catImg[$mapMarker['cat']];
-//      }
-//        // Set category icon
-//        // Set coordinates
-//      $series[$mapMarker['cat']]['data'][$key]['coors']  = array( $mapMarker['lon'], $mapMarker['lat'] );
-//      $coordinates[] = $mapMarker['lon'] . ',' . $mapMarker['lat'];
-//        // Set coordinates
-//        // Set description
-//      $series[$mapMarker['cat']]['data'][$key]['desc']   = $mapMarker['desc'];
-//    }
-//      // FOREACH map marker
-////var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) ); 
-//
-//    $data = json_encode( $series );
-
+      // Add JSON array
     $map_template = str_replace( "'###JSONDATA###'", $jsonData, $map_template );
     
       // Set center coordinates
@@ -788,6 +764,7 @@ class tx_browser_pi1_map
   private function renderMapMarkerPointsToJSON( $mapMarkers )
   {
     $arr_return   = array( );
+    $series       = null;
     $coordinates  = array( );
     $catImg       = array( );
 
