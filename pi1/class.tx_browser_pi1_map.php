@@ -787,7 +787,7 @@ class tx_browser_pi1_map
 //    }
 //      // FOREACH row
     
-    $arr_result = $this->renderMapMarkerPoints( );
+    $arr_return = $this->renderMapMarkerPoints( );
     $mapMarkers = $arr_return['data']['mapMarkers'];
     $lats       = $arr_return['data']['lats'];
     $lons       = $arr_return['data']['lons'];
