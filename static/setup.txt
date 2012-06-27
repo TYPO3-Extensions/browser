@@ -438,50 +438,50 @@ plugin.tx_browser_pi1 {
               }
             }
           }
-        }
-        jss {
-          dynamicMarker {
-              // Map controlling tools
-            MapControls = TEXT
-            MapControls {
-                // [ARRAY] customized control types
-              value = ['Navigation', 'PanZoomBar']
-            }
-              // Map zoom level
-            MapZoomLevels = TEXT
-            MapZoomLevels {
-                // [INTEGER] Value from 0 to 18. Example: 4
-              value = 4
-            }
-              // Map marker standalone mode
-            MapMarker = TEXT
-            MapMarker {
-                // [Boolean] standalone marker is allowed
-              value = true
-            }
-              // Map marker infolayer mode
-            MapMarkerInfo = TEXT
-            MapMarkerInfo {
-                // [BOOLEAN] marker with infolayer is allowed
-              value = true
-            }
-              // Map marker event type
-            MapMarkerEvent = TEXT
-            MapMarkerEvent {
-                // [STRING] customized marker events
-              value = 'click'
-            }
-              // Center of the map
-            OSMConfigCenter = TEXT
-            OSMConfigCenter {
-                // [ARRAY] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X. Example: [9.15,50.1725] <- Center of European Union
-              value = [9.15,50.1725]
-            }
-              // Map zoom level
-            OSMConfigZoom = TEXT
-            OSMConfigZoom {
-                // [INTEGER] Value from 0 to 18. Example: 4
-              value = 4
+          jss {
+            dynamicMarker {
+                // Map controlling tools
+              MapControls = TEXT
+              MapControls {
+                  // [ARRAY] customized control types
+                value = ['Navigation', 'PanZoomBar']
+              }
+                // Map zoom level
+              MapZoomLevels = TEXT
+              MapZoomLevels {
+                  // [INTEGER] Value from 0 to 18. Example: 4
+                value = 4
+              }
+                // Map marker standalone mode
+              MapMarker = TEXT
+              MapMarker {
+                  // [Boolean] standalone marker is allowed
+                value = true
+              }
+                // Map marker infolayer mode
+              MapMarkerInfo = TEXT
+              MapMarkerInfo {
+                  // [BOOLEAN] marker with infolayer is allowed
+                value = true
+              }
+                // Map marker event type
+              MapMarkerEvent = TEXT
+              MapMarkerEvent {
+                  // [STRING] customized marker events
+                value = 'click'
+              }
+                // Center of the map
+              OSMConfigCenter = TEXT
+              OSMConfigCenter {
+                  // [ARRAY] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X. Example: [9.15,50.1725] <- Center of European Union
+                value = [9.15,50.1725]
+              }
+                // Map zoom level
+              OSMConfigZoom = TEXT
+              OSMConfigZoom {
+                  // [INTEGER] Value from 0 to 18. Example: 4
+                value = 4
+              }
             }
           }
         }
