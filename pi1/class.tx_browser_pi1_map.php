@@ -1065,7 +1065,7 @@ class tx_browser_pi1_map
     $dummy = null;
     $markerArray = array( );
 
-    foreach( $this->confMap['marker.']['jss.']['dynamic.'] as $marker => $conf )
+    foreach( $this->confMap['marker.']['snippets.']['jss.']['dynamic.'] as $marker => $conf )
     {
       $dummy = $conf;
       if( substr( $marker, -1, 1 ) == '.' )
