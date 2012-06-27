@@ -324,10 +324,10 @@ plugin.tx_browser_pi1 {
                 10 {
                   if {
                     isTrue {
-                      field = uid
+                      field = 
                     }
                   }
-                  field = uid
+                  field = 
                   wrap  = &tx_browser_pi1[showuid]=|
                 }
               }
