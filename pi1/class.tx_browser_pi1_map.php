@@ -432,6 +432,57 @@ class tx_browser_pi1_map
       // init the map
     $this->init( );
   }
+      
+
+
+
+
+
+
+
+
+
+  /***********************************************
+  *
+  * cObject
+  *
+  **********************************************/
+
+
+
+  /**
+ * cObjDataAdd( ):
+ *
+ * @param    array
+ * @return    void
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function cObjDataAdd( $row )
+  {
+    foreach( ( array ) $row as $key => $value )
+    {
+      $this->pObj->cObj->data[ $key ] = $value;
+    }
+  }
+
+
+
+  /**
+ * cObjDataRemove( ):
+ *
+ * @param    array
+ * @return    void
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function cObjDataRemove( $row )
+  {
+    foreach( ( array ) $row as $key => $value )
+    {
+      unset( $this->pObj->cObj->data[ $key ] );
+    }
+  }
 
 
 
@@ -673,10 +724,8 @@ class tx_browser_pi1_map
   private function renderMapMarkerVariablesSystem( $map_template )
   {
 //var_dump( __METHOD__, __LINE__, $this->pObj->rows ); 
-    $mapMarkers   = array( );
-    $longitudes   = array( );
-    $latitudes    = array( );
-    $dontHandle00 = $this->confMap['configuration.']['00Coordinates.']['dontHandle'];
+    $arr_result = array( );
+    $mapMarkers = array( );
     
     $series = null;
     
@@ -686,74 +735,63 @@ class tx_browser_pi1_map
 
 
 
-      // FOREACH rows
-    foreach( $this->pObj->rows as $row )
-    {
-        // Add the current row to cObj->data
-      foreach( ( array ) $row as $key => $value )
-      {
-        $this->pObj->cObj->data[ $key ] = $value;
-      }
-        // Add the current row to cObj->data
-      
-        // Get the longitude
-      $coa_name               = $this->confMap['marker.']['variables.']['system.']['longitude'];
-      $coa_conf               = $this->confMap['marker.']['variables.']['system.']['longitude.'];
-      $mapMarker['longitude'] = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
-        // Get the longitude
-
-        // Get the latitude
-      $coa_name               = $this->confMap['marker.']['variables.']['system.']['latitude'];
-      $coa_conf               = $this->confMap['marker.']['variables.']['system.']['latitude.'];
-      $mapMarker['latitude']  = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
-        // Get the latitude
-
-        // SWITCH logitude and latitude
-      switch( true )
-      {
-        case( $mapMarker['longitude'] . $mapMarker['latitude'] == '' ):
-            // CONTINUE: longituda and latitude are empty
-          continue 2;
-          break;
-        case( $dontHandle00 && $mapMarker['longitude'] == 0 && $mapMarker['latitude'] == 0 ):
-            // CONTINUE: longituda and latitude are 0 and 0,0 shouldn't handled
-          continue 2;
-          break;
-      }
-        // SWITCH logitude and latitude
-      
-        // Get the desc
-      $coa_name           = $this->confMap['marker.']['variables.']['system.']['description'];
-      $coa_conf           = $this->confMap['marker.']['variables.']['system.']['description.'];
-      $mapMarker['desc']  = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
-      if( empty ( $mapMarker['desc'] ) )
-      {
-        $mapMarker['desc'] = 'Please take care of a proper configuration<br />
-                              of the TypoScript property marker.mapMarker.description!';
-      }
-        // Get the desc
-
-        // Get the categories
-      $coa_name         = $this->confMap['marker.']['variables.']['system.']['categories'];
-      $coa_conf         = $this->confMap['marker.']['variables.']['system.']['categories.'];
-      $mapMarker['cat'] = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
-        // Get the categories
-
-        // Save each mapMarker
-      $mapMarkers[] = $mapMarker;
-        // Save each longitude
-      $longitudes[] = ( double ) $mapMarker['longitude']; 
-        // Save each latitude
-      $latitudes[]  = ( double ) $mapMarker['latitude']; 
-
-        // Remove the current row from cObj->data
-      foreach( ( array ) $row as $key => $value )
-      {
-        unset( $this->pObj->cObj->data[ $key ] );
-      }
-        // Remove the current row from cObj->data
-    }
-      // FOREACH rows
+//    $lons         = array( );
+//    $lats         = array( );
+//    $dontHandle00 = $this->confMap['configuration.']['00Coordinates.']['dontHandle'];
+//      // FOREACH row
+//    foreach( $this->pObj->rows as $row )
+//    {
+//        // Add the current row to cObj->data
+//      $this->cObjDataAdd( $row );
+//      
+//        // Get the longitude
+//      $mapMarker['lon'] = $this->renderMapMarkerVariablesSystemItem( 'longitude' );
+//        // Get the latitude
+//      $mapMarker['lat'] = $this->renderMapMarkerVariablesSystemItem( 'latitude' );
+//
+//        // SWITCH logitude and latitude
+//      switch( true )
+//      {
+//        case( $mapMarker['lon'] . $mapMarker['lat'] == '' ):
+//            // CONTINUE: longituda and latitude are empty
+//          continue 2;
+//          break;
+//        case( $dontHandle00 && $mapMarker['lon'] == 0 && $mapMarker['lat'] == 0 ):
+//            // CONTINUE: longituda and latitude are 0 and 0,0 shouldn't handled
+//          continue 2;
+//          break;
+//      }
+//        // SWITCH logitude and latitude
+//      
+//        // Get the desc
+//      $mapMarker['desc']  = $this->renderMapMarkerVariablesSystemItem( 'description' );
+//      if( empty ( $mapMarker['desc'] ) )
+//      {
+//        $mapMarker['desc'] = 'Please take care of a proper configuration<br />
+//                              of the TypoScript property marker.mapMarker.description!';
+//      }
+//        // Get the desc
+//
+//        // Get the categories
+//      $mapMarker['cat'] = $this->renderMapMarkerVariablesSystemItem( 'categories' );
+//
+//        // Save each mapMarker
+//      $mapMarkers[] = $mapMarker;
+//        // Save each longitude
+//      $lons[] = ( double ) $mapMarker['lon']; 
+//        // Save each latitude
+//      $lats[]  = ( double ) $mapMarker['lat']; 
+//
+//        // Remove the current row from cObj->data
+//      $this->cObjDataRemove( $row );
+//    }
+//      // FOREACH row
+    
+    $arr_result = $this->renderMapMarkerPoints( );
+    $mapMarkers = $arr_return['data']['mapMarkers'];
+    $lats       = $arr_return['data']['lats'];
+    $lons       = $arr_return['data']['lons'];
+    
     
       // FOREACH map marker
     foreach( ( array ) $mapMarkers as $key => $mapMarker )
@@ -765,8 +803,8 @@ class tx_browser_pi1_map
       }
         // Set category icon
         // Set coordinates
-      $series[$mapMarker['cat']]['data'][$key]['coors']  = array( $mapMarker['longitude'], $mapMarker['latitude'] );
-      $coordinates[] = $mapMarker['longitude'] . ',' . $mapMarker['latitude'];
+      $series[$mapMarker['cat']]['data'][$key]['coors']  = array( $mapMarker['lon'], $mapMarker['lat'] );
+      $coordinates[] = $mapMarker['lon'] . ',' . $mapMarker['lat'];
         // Set coordinates
         // Set description
       $series[$mapMarker['cat']]['data'][$key]['desc']   = $mapMarker['desc'];
@@ -780,9 +818,99 @@ class tx_browser_pi1_map
       // Set center coordinates
     $map_template = $this->renderMapAutoCenterCoor( $map_template, $coordinates );
       // Set zoom level
-    $map_template = $this->renderMapAutoZoomLevel( $map_template, $longitudes, $latitudes );
+    $map_template = $this->renderMapAutoZoomLevel( $map_template, $lons, $lats );
 
     return $map_template;
+  }
+
+
+
+  /**
+ * renderMapMarkerPoints( ): Points are map markers. 
+ *
+ * @return    array
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function renderMapMarkerPoints( )
+  {
+    $arr_return   = array( );
+    $lons         = array( );
+    $lats         = array( );
+    $dontHandle00 = $this->confMap['configuration.']['00Coordinates.']['dontHandle'];
+
+      // FOREACH row
+    foreach( $this->pObj->rows as $row )
+    {
+        // Add the current row to cObj->data
+      $this->cObjDataAdd( $row );
+      
+        // Get the longitude
+      $mapMarker['lon'] = $this->renderMapMarkerVariablesSystemItem( 'longitude' );
+        // Get the latitude
+      $mapMarker['lat'] = $this->renderMapMarkerVariablesSystemItem( 'latitude' );
+
+        // SWITCH logitude and latitude
+      switch( true )
+      {
+        case( $mapMarker['lon'] . $mapMarker['lat'] == '' ):
+            // CONTINUE: longituda and latitude are empty
+          continue 2;
+          break;
+        case( $dontHandle00 && $mapMarker['lon'] == 0 && $mapMarker['lat'] == 0 ):
+            // CONTINUE: longituda and latitude are 0 and 0,0 shouldn't handled
+          continue 2;
+          break;
+      }
+        // SWITCH logitude and latitude
+      
+        // Get the desc
+      $mapMarker['desc']  = $this->renderMapMarkerVariablesSystemItem( 'description' );
+      if( empty ( $mapMarker['desc'] ) )
+      {
+        $mapMarker['desc'] = 'Please take care of a proper configuration<br />
+                              of the TypoScript property marker.mapMarker.description!';
+      }
+        // Get the desc
+
+        // Get the categories
+      $mapMarker['cat'] = $this->renderMapMarkerVariablesSystemItem( 'categories' );
+
+        // Save each mapMarker
+      $mapMarkers[] = $mapMarker;
+        // Save each longitude
+      $lons[] = ( double ) $mapMarker['lon']; 
+        // Save each latitude
+      $lats[]  = ( double ) $mapMarker['lat']; 
+
+        // Remove the current row from cObj->data
+      $this->cObjDataRemove( $row );
+    }
+      // FOREACH row
+    
+    $arr_return['data']['mapMarkers'] = $mapMarkers;
+    $arr_return['data']['lats']       = $lats;
+    $arr_return['data']['lons']       = $lons;
+    return $arr_return;
+  }
+
+
+
+  /**
+ * renderMapMarkerVariablesSystemItem( ):
+ *
+ * @param    string        $map_template: ...
+ * @return    string
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function renderMapMarkerVariablesSystemItem( $item )
+  {
+    $coa_name = $this->confMap['marker.']['variables.']['system.'][$item];
+    $coa_conf = $this->confMap['marker.']['variables.']['system.'][$item . '.'];
+    $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+    
+    return $value;
   }
 
 
