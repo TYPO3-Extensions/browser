@@ -464,7 +464,6 @@ class tx_browser_pi1_map
     {
       $this->pObj->cObj->data[ $key ] = $value;
     }
-    var_dump( __METHOD__, __LINE__, $this->pObj->cObj->data );
   }
 
 
@@ -499,6 +498,7 @@ class tx_browser_pi1_map
       }
       $this->pObj->cObj->data[ $marker ] = $content;
     }
+    var_dump( __METHOD__, __LINE__, $this->confMap['marker.']['addToCData.'], $this->pObj->cObj->data );
   }
 
 
