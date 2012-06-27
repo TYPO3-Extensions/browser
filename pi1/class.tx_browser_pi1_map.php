@@ -559,6 +559,8 @@ class tx_browser_pi1_map
     {
       unset( $this->pObj->cObj->data[ $key ] );
     }
+
+    $this->cObjDataRemoveMarker( );
   }
 
 
@@ -677,8 +679,6 @@ class tx_browser_pi1_map
       // RETURN: no subpart marker
 
 
-    $this->cObjDataAddMarker( );
-    
       //////////////////////////////////////////////////////////////////////
       //
       // Substitute marker HTML
@@ -716,8 +716,6 @@ class tx_browser_pi1_map
 
       // Replace the map marker in the template of the parent object
     $pObj_template = str_replace( $str_mapMarker, $map_template, $pObj_template );
-
-    $this->cObjDataRemoveMarker( );
 
 //var_dump( __METHOD__ . ' (' . __LINE__ . '): ', $map_template, $pObj_template );
       // RETURN the template
@@ -898,6 +896,8 @@ class tx_browser_pi1_map
     {
         // Add the current row to cObj->data
       $this->cObjDataAddRow( $row );
+
+      $this->cObjDataAddMarker( );
       
         // Get the longitude
       $mapMarker['lon'] = $this->renderMapMarkerVariablesSystemItem( 'longitude' );
