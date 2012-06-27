@@ -460,11 +460,24 @@ class tx_browser_pi1_map
  */
   private function cObjDataAddRow( $row )
   {
+    static $first_loop = true;
+    
     foreach( ( array ) $row as $key => $value )
     {
       $this->pObj->cObj->data[ $key ] = $value;
     }
-    var_dump( __METHOD__, __LINE__, $this->pObj->cObj->data );
+    
+    if( $first_loop )
+    {
+      if( $this->pObj->b_drs_map )
+      {
+        $prompt = 'This fields are added to cObject: ' . implode( ',', array_keys( $row ) );
+        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+        $prompt = 'I.e: you can use the content in TypoScript with: field = ' . key( $row );
+        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+      }
+      $first_loop = false;
+    }
   }
 
 
