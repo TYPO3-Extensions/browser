@@ -964,6 +964,59 @@ class tx_browser_pi1_map
 
 
   /**
+ * renderMapHtmlMarker( $map_template, $tsProperty ):
+ *
+ * @param    [type]        $$map_template: ...
+ * @return    array
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function renderMapHtmlMarker( $map_template, $tsProperty )
+  {
+    $dummy = null;
+    $markerArray = array( );
+
+    foreach( $this->confMap['marker.']['html.'][$tsProperty . '.'] as $marker => $conf )
+    {
+      $dummy = $conf;
+      if( substr( $marker, -1, 1 ) == '.' )
+      {
+        continue;
+      }
+
+      $hashKeyMarker = '###' . strtoupper( $marker ) . '###';
+
+      $pos = strpos( $map_template, $hashKeyMarker );
+      if( ( $pos === false ) )
+      {
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = $hashKeyMarker . ' isn\'t part of the map HTML template. It won\'t rendered!';
+          t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+        }
+        continue;
+      }
+
+      $cObj_name  = $this->confMap['marker.']['html.'][$tsProperty . '.'][$marker];
+      $cObj_conf  = $this->confMap['marker.']['html.'][$tsProperty . '.'][$marker . '.'];
+      $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+      if( empty ( $content ) )
+      {
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'marker.html.' . $tsProperty . '.' . $marker . ' is empty. Probably this is an error!';
+          t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
+        }
+      }
+      $markerArray[ $hashKeyMarker ] = $content;
+    }
+
+    return $markerArray;
+  }
+
+
+
+  /**
  * renderMapHtmlDynamicMarker( $map_template ):
  *
  * @param    [type]        $$map_template: ...
@@ -973,6 +1026,9 @@ class tx_browser_pi1_map
  */
   private function renderMapHtmlDynamicMarker( $map_template )
   {
+    $tsProperty = 'dynamicMarker';
+    return $this->renderMapHtmlMarker( $map_template, $tsProperty );
+    
     $dummy = null;
     $markerArray = array( );
 
@@ -1026,6 +1082,9 @@ class tx_browser_pi1_map
  */
   private function renderMapHtmlSystemMarker( $map_template )
   {
+    $tsProperty = 'systemMarker';
+    return $this->renderMapHtmlMarker( $map_template, $tsProperty );
+
     $markerArray = array( );
 
     $systemMarker = array( 'filter_form', 'filter_jss');
