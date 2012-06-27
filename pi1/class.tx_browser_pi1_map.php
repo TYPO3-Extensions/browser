@@ -464,6 +464,7 @@ class tx_browser_pi1_map
     {
       $this->pObj->cObj->data[ $key ] = $value;
     }
+    var_dump( __METHOD__, __LINE__, $this->pObj->cObj->data );
   }
 
 
@@ -488,17 +489,23 @@ class tx_browser_pi1_map
       $cObj_name  = $this->confMap['marker.']['addToCData.'][$marker];
       $cObj_conf  = $this->confMap['marker.']['addToCData.'][$marker . '.'];
       $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
-      if( empty ( $content ) )
+      if( $this->pObj->b_drs_map )
       {
-        if( $this->pObj->b_drs_map )
+        if( empty ( $content ) )
         {
           $prompt = 'marker.addToCData.' . $marker . ' is empty. Probably this is an error!';
-          t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
+          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+        }
+        else
+        {
+          $prompt = 'Added to cObject: ' . $content;
+          t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+          $prompt = 'You can use the content in TypoScript with: field = ' . $marker;
+          t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
         }
       }
       $this->pObj->cObj->data[ $marker ] = $content;
     }
-    var_dump( __METHOD__, __LINE__, $this->confMap['marker.']['addToCData.'], $this->pObj->cObj->data );
   }
 
 
