@@ -729,70 +729,71 @@ class tx_browser_pi1_map
     
     $series = null;
     
-    $catImg = array( );
-    $catImg['cat1'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test1.png', 14, 14, 0, 0 );
-    $catImg['cat2'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0 );
-
-
-
-//    $lons         = array( );
-//    $lats         = array( );
-//    $dontHandle00 = $this->confMap['configuration.']['00Coordinates.']['dontHandle'];
-//      // FOREACH row
-//    foreach( $this->pObj->rows as $row )
-//    {
-//        // Add the current row to cObj->data
-//      $this->cObjDataAdd( $row );
-//      
-//        // Get the longitude
-//      $mapMarker['lon'] = $this->renderMapMarkerVariablesSystemItem( 'longitude' );
-//        // Get the latitude
-//      $mapMarker['lat'] = $this->renderMapMarkerVariablesSystemItem( 'latitude' );
-//
-//        // SWITCH logitude and latitude
-//      switch( true )
-//      {
-//        case( $mapMarker['lon'] . $mapMarker['lat'] == '' ):
-//            // CONTINUE: longituda and latitude are empty
-//          continue 2;
-//          break;
-//        case( $dontHandle00 && $mapMarker['lon'] == 0 && $mapMarker['lat'] == 0 ):
-//            // CONTINUE: longituda and latitude are 0 and 0,0 shouldn't handled
-//          continue 2;
-//          break;
-//      }
-//        // SWITCH logitude and latitude
-//      
-//        // Get the desc
-//      $mapMarker['desc']  = $this->renderMapMarkerVariablesSystemItem( 'description' );
-//      if( empty ( $mapMarker['desc'] ) )
-//      {
-//        $mapMarker['desc'] = 'Please take care of a proper configuration<br />
-//                              of the TypoScript property marker.mapMarker.description!';
-//      }
-//        // Get the desc
-//
-//        // Get the categories
-//      $mapMarker['cat'] = $this->renderMapMarkerVariablesSystemItem( 'categories' );
-//
-//        // Save each mapMarker
-//      $mapMarkers[] = $mapMarker;
-//        // Save each longitude
-//      $lons[] = ( double ) $mapMarker['lon']; 
-//        // Save each latitude
-//      $lats[]  = ( double ) $mapMarker['lat']; 
-//
-//        // Remove the current row from cObj->data
-//      $this->cObjDataRemove( $row );
-//    }
-//      // FOREACH row
-    
+      // Get rendered points (map marker)
     $arr_return = $this->renderMapMarkerPoints( );
     $mapMarkers = $arr_return['data']['mapMarkers'];
     $lats       = $arr_return['data']['lats'];
     $lons       = $arr_return['data']['lons'];
+      // Get rendered points (map marker)
     
+    $arr_return   = $this->renderMapMarkerPointsToJSON( $mapMarkers );
+    $jsonData     = $arr_return['data']['jsonData'];
+    $coordinates  = $arr_return['data']['coordinates'];
     
+//    $catImg = array( );
+//    $catImg['cat1'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test1.png', 14, 14, 0, 0 );
+//    $catImg['cat2'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0 );
+//
+//      // FOREACH map marker
+//    foreach( ( array ) $mapMarkers as $key => $mapMarker )
+//    {
+//        // Set category icon
+//      if( ! isset( $series[$mapMarker['cat']]['icon'] ) )
+//      {
+//        $series[$mapMarker['cat']]['icon'] = $catImg[$mapMarker['cat']];
+//      }
+//        // Set category icon
+//        // Set coordinates
+//      $series[$mapMarker['cat']]['data'][$key]['coors']  = array( $mapMarker['lon'], $mapMarker['lat'] );
+//      $coordinates[] = $mapMarker['lon'] . ',' . $mapMarker['lat'];
+//        // Set coordinates
+//        // Set description
+//      $series[$mapMarker['cat']]['data'][$key]['desc']   = $mapMarker['desc'];
+//    }
+//      // FOREACH map marker
+////var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) ); 
+//
+//    $data = json_encode( $series );
+
+    $map_template = str_replace( "'###JSONDATA###'", $jsonData, $map_template );
+    
+      // Set center coordinates
+    $map_template = $this->renderMapAutoCenterCoor( $map_template, $coordinates );
+      // Set zoom level
+    $map_template = $this->renderMapAutoZoomLevel( $map_template, $lons, $lats );
+
+    return $map_template;
+  }
+
+
+
+  /**
+ * renderMapMarkerPointsToJSON( ):
+ *
+ * @param    array        
+ * @return    string    $jsonData
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function renderMapMarkerPointsToJSON( $mapMarkers )
+  {
+    $arr_return   = array( );
+    $coordinates  = array( );
+    $catImg       = array( );
+
+    $catImg['cat1'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test1.png', 14, 14, 0, 0 );
+    $catImg['cat2'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0 );
+
       // FOREACH map marker
     foreach( ( array ) $mapMarkers as $key => $mapMarker )
     {
@@ -812,15 +813,11 @@ class tx_browser_pi1_map
       // FOREACH map marker
 //var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) ); 
 
-    $data = json_encode( $series );
-    $map_template = str_replace( "'###DATA###'", $data, $map_template );
+    $jsonData = json_encode( $series );
     
-      // Set center coordinates
-    $map_template = $this->renderMapAutoCenterCoor( $map_template, $coordinates );
-      // Set zoom level
-    $map_template = $this->renderMapAutoZoomLevel( $map_template, $lons, $lats );
-
-    return $map_template;
+    $arr_return['data']['jsonData']     = $jsonData;
+    $arr_return['data']['coordinates']  = $coordinates;
+    return $arr_return;
   }
 
 
