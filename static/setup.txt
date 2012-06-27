@@ -311,8 +311,8 @@ plugin.tx_browser_pi1 {
             filter_form {
               value (
                 <form id="filter">
-                  <input type="checkbox" name="cat1" value="1" checked />cat1
-                  <input type="checkbox" name="cat2" value="1" checked />cat2
+                  <input class=".oxMapFilter" type="checkbox" name="cat1" value="1" checked />cat1
+                  <input class=".oxMapFilter" type="checkbox" name="cat2" value="1" checked />cat2
                 </form>
 )
             }
@@ -322,7 +322,7 @@ plugin.tx_browser_pi1 {
               value (
                 <script>
                 /* <![CDATA[ */
-                  var filter = document.getElementsById( 'filter' );
+                  var filter = $( "input.oxMapFilter" );
                   for(var a=filter.length; a-- ; )
                   filter[a].onchange = function( )
                   {
