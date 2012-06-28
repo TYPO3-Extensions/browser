@@ -315,7 +315,7 @@ plugin.tx_browser_pi1 {
                 20 = TEXT
                 20 {
                   value = 0
-                  wrap  = ,|,
+                  wrap  = ,|
                 }
                   // Parameter
                 30 = COA
@@ -329,7 +329,7 @@ plugin.tx_browser_pi1 {
                       }
                     }
                     field = 
-                    wrap  = &tx_browser_pi1[showUid]=|
+                    wrap  = ,&tx_browser_pi1[showUid]=|
                   }
                 }
               }
