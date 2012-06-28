@@ -494,7 +494,7 @@ class tx_browser_pi1_map
  */
   private function cObjDataAddMarker( )
   {
-    foreach( $this->confMap['marker.']['addToCData.'] as $marker => $conf )
+    foreach( $this->confMap['marker.']['addToCData.']['system.'] as $marker => $conf )
     {
       $dummy = $conf;
       if( substr( $marker, -1, 1 ) == '.' )
@@ -502,8 +502,8 @@ class tx_browser_pi1_map
         continue;
       }
 
-      $cObj_name  = $this->confMap['marker.']['addToCData.'][$marker];
-      $cObj_conf  = $this->confMap['marker.']['addToCData.'][$marker . '.'];
+      $cObj_name  = $this->confMap['marker.']['addToCData.']['system.'][$marker];
+      $cObj_conf  = $this->confMap['marker.']['addToCData.']['system.'][$marker . '.'];
       $content    = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
       if( $this->pObj->b_drs_map )
       {
@@ -535,7 +535,7 @@ class tx_browser_pi1_map
  */
   private function cObjDataRemoveMarker( )
   {
-    foreach( $this->confMap['marker.']['addToCData.'] as $marker => $conf )
+    foreach( $this->confMap['marker.']['addToCData.']['system.'] as $marker => $conf )
     {
       if( substr( $marker, -1, 1 ) == '.' )
       {
