@@ -320,7 +320,7 @@ plugin.tx_browser_pi1 {
                   // Parameter
                 30 = COA
                 30 {
-                    // &tx_browser_pi1[showuid]=
+                    // ,&tx_browser_pi1[showuid]=
                   10 = TEXT
                   10 {
                     if {

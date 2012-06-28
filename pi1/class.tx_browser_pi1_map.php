@@ -478,6 +478,9 @@ class tx_browser_pi1_map
       }
       $first_loop = false;
     }
+
+    $this->cObjDataAddMarker( );
+    
   }
 
 
