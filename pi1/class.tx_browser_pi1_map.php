@@ -938,20 +938,20 @@ var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) );
 
         // Add the icon x-offset
       $value = $this->confMap['configuration.']['categories.'][$catKey . '.']['offsetX'];
-      if( empty( $value ) )
+      if( $value == null )
       {
         die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
       }
-      $arrIcon[] = $value;
+      $arrIcon[] = ( int ) $value;
         // Add the icon x-offset
 
         // Add the icon y-offset
       $value = $this->confMap['configuration.']['categories.'][$catKey . '.']['offsetY'];
-      if( empty( $value ) )
+      if( $value == null )
       {
         die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
       }
-      $arrIcon[] = $value;
+      $arrIcon[] = ( int ) $value;
         // Add the icon y-offset
 
       $catIcons[$catKey] = implode( ', ', $arrIcon );      
