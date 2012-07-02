@@ -296,7 +296,7 @@ plugin.tx_browser_pi1 {
               // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/black.png
             pathToIcon = TEXT
             pathToIcon {
-              value = EXT:browser/res/js/map/categories/icons/black.png
+              value = EXT:browser/res/js/map/icons/categories/black.png
             }
               // [INTEGER] x-offset of the icon in Pixel
             offsetX = 0
@@ -322,7 +322,7 @@ plugin.tx_browser_pi1 {
               // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/blue.png
             pathToIcon = TEXT
             pathToIcon {
-              value = EXT:browser/res/js/map/categories/icons/blue.png
+              value = EXT:browser/res/js/map/icons/categories/blue.png
             }
               // [INTEGER] x-offset of the icon in Pixel
             offsetX = 0
@@ -348,7 +348,7 @@ plugin.tx_browser_pi1 {
               // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/bluedark.png
             pathToIcon = TEXT
             pathToIcon {
-              value = EXT:browser/res/js/map/categories/icons/bluedark.png
+              value = EXT:browser/res/js/map/icons/categories/bluedark.png
             }
               // [INTEGER] x-offset of the icon in Pixel
             offsetX = 0
@@ -374,7 +374,7 @@ plugin.tx_browser_pi1 {
               // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/green.png
             pathToIcon = TEXT
             pathToIcon {
-              value = EXT:browser/res/js/map/categories/icons/green.png
+              value = EXT:browser/res/js/map/icons/categories/green.png
             }
               // [INTEGER] x-offset of the icon in Pixel
             offsetX = 0
@@ -400,7 +400,7 @@ plugin.tx_browser_pi1 {
               // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/greendark.png
             pathToIcon = TEXT
             pathToIcon {
-              value = EXT:browser/res/js/map/categories/icons/greendark.png
+              value = EXT:browser/res/js/map/icons/categories/greendark.png
             }
               // [INTEGER] x-offset of the icon in Pixel
             offsetX = 0
@@ -426,7 +426,7 @@ plugin.tx_browser_pi1 {
               // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/orange.png
             pathToIcon = TEXT
             pathToIcon {
-              value = EXT:browser/res/js/map/categories/icons/orange.png
+              value = EXT:browser/res/js/map/icons/categories/orange.png
             }
               // [INTEGER] x-offset of the icon in Pixel
             offsetX = 0
@@ -452,7 +452,7 @@ plugin.tx_browser_pi1 {
               // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/pink.png
             pathToIcon = TEXT
             pathToIcon {
-              value = EXT:browser/res/js/map/categories/icons/pink.png
+              value = EXT:browser/res/js/map/icons/categories/pink.png
             }
               // [INTEGER] x-offset of the icon in Pixel
             offsetX = 0
@@ -478,7 +478,7 @@ plugin.tx_browser_pi1 {
               // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/purple.png
             pathToIcon = TEXT
             pathToIcon {
-              value = EXT:browser/res/js/map/categories/icons/purple.png
+              value = EXT:browser/res/js/map/icons/categories/purple.png
             }
               // [INTEGER] x-offset of the icon in Pixel
             offsetX = 0
@@ -504,7 +504,7 @@ plugin.tx_browser_pi1 {
               // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/red.png
             pathToIcon = TEXT
             pathToIcon {
-              value = EXT:browser/res/js/map/categories/icons/red.png
+              value = EXT:browser/res/js/map/icons/categories/red.png
             }
               // [INTEGER] x-offset of the icon in Pixel
             offsetX = 0
@@ -530,7 +530,7 @@ plugin.tx_browser_pi1 {
               // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/reddark.png
             pathToIcon = TEXT
             pathToIcon {
-              value = EXT:browser/res/js/map/categories/icons/reddark.png
+              value = EXT:browser/res/js/map/icons/categories/reddark.png
             }
               // [INTEGER] x-offset of the icon in Pixel
             offsetX = 0
@@ -556,7 +556,7 @@ plugin.tx_browser_pi1 {
               // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/white.png
             pathToIcon = TEXT
             pathToIcon {
-              value = EXT:browser/res/js/map/categories/icons/white.png
+              value = EXT:browser/res/js/map/icons/categories/white.png
             }
               // [INTEGER] x-offset of the icon in Pixel
             offsetX = 0
@@ -582,7 +582,7 @@ plugin.tx_browser_pi1 {
               // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/yellow.png
             pathToIcon = TEXT
             pathToIcon {
-              value = EXT:browser/res/js/map/categories/icons/yellow.png
+              value = EXT:browser/res/js/map/icons/categories/yellow.png
             }
               // [INTEGER] x-offset of the icon in Pixel
             offsetX = 0
