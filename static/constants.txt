@@ -80,6 +80,15 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Navigation/;       type=string;  label= Record Browser: uid name (default: showUid)
   recordBrowser.uidName = showUid
 
+  # cat=Browser - Page Objects//100;       type=int+;    label= AJAX page object: Type number (typenum) of the AJAX page object. Default: 28562
+  typeNum.ajaxPageObj = 28562
+  # cat=Browser - Page Objects//101;       type=int+;    label= CSV page object: Type number (typenum) of the CSV page object. Default: 29370
+  typeNum.csvPageObj = 29370
+  # cat=Browser - Page Objects//102;       type=int+;    label= Download page object: Type number (typenum) of the page object for downloads. Default: 31230
+  typeNum.downloadPageObj = 31230
+  # cat=Browser - Page Objects//103;       type=int+;    label= Page object for map category markers: Type number (typenum) of the map page object. Default: 32654
+  typeNum.mapPageObj = 32654
+
   # cat=Browser - Relation Buildung/enable; type=boolean; label= SQL Relation Building Automatically: Try to build relations automatically? TRUE is recommended.
   autoSQLrelConfig = 1
   # cat=Browser - Relation Buildung/enable; type=boolean; label= SQL Relation Building Oneway Only: Use only relations from the local table to the foreign table? TRUE is recommended.
@@ -98,14 +107,5 @@ plugin.tx_browser_pi1 {
 
   # cat=Browser - Time Format//;       type=string;  label= Format for strftime
   strftime = %a, %d.%b.%y %H:%M
-
-  # cat=Browser - Page Objects//;       type=int+;    label= AJAX page object: Type number (typenum) of the AJAX page object. Default: 28562
-  typeNum.ajaxPageObj = 28562
-  # cat=Browser - Page Objects//;       type=int+;    label= CSV page object: Type number (typenum) of the CSV page object. Default: 29370
-  typeNum.csvPageObj = 29370
-  # cat=Browser - Page Objects//;       type=int+;    label= Download page object: Type number (typenum) of the page object for downloads. Default: 31230
-  typeNum.downloadPageObj = 31230
-  # cat=Browser - Page Objects//;       type=int+;    label= Page object for map category markers: Type number (typenum) of the map page object. Default: 32654
-  typeNum.mapPageObj = 32654
 
 }
