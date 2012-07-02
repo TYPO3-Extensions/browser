@@ -904,10 +904,10 @@ var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) );
       unset( $arrIcon );
       
         // Set the path
-var_dump( __METHOD__, __LINE__, $catKey, $this->confMap['configuration.']['categories.'] );
       $coa_name = $this->confMap['configuration.']['categories.'][$catKey . '.']['pathToIcon'];
       $coa_conf = $this->confMap['configuration.']['categories.'][$catKey . '.']['pathToIcon.'];
       $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+var_dump( __METHOD__, __LINE__, $catKey, $coa_name, $coa_conf, $value, $this->confMap['configuration.']['categories.'] );
       if( empty ( $value ) )
       {
         die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
