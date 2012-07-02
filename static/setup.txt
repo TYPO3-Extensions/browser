@@ -870,6 +870,7 @@ plugin.tx_browser_pi1 {
           system {
               // [STRING] category label in the filter
             category = TEXT
+            category [
               value = red
               lang {
                 de = Rot
