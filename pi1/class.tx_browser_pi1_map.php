@@ -960,7 +960,8 @@ class tx_browser_pi1_map
       $arrIcon[] = ( int ) $value;
         // Add the icon y-offset
 
-      $catIcons[$catKey] = '[' . implode( ', ', $arrIcon ) . ']';      
+//      $catIcons[$catKey] = '[' . implode( ', ', $arrIcon ) . ']';      
+      $catIcons[$catKey] = $arrIcon;      
       
     }
 
