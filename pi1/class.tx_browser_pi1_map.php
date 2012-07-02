@@ -915,6 +915,10 @@ var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) );
       }
         // absolute path
       $pathAbsolute = t3lib_div::getFileAbsFileName( $value );
+      if( ! file_exists( $pathAbsolute ) )
+      {
+        die( 'File doesn\'t exist: ' . $pathAbsolute . ' at ' . __METHOD__ . ' (line ' . __LINE__ . ')' );
+      }
         // relative path
       $pathRelative = preg_replace('%' . PATH_site . '%', '', $pathAbsolute );
       $arrIcon[] = "'" . $pathRelative . "'";
