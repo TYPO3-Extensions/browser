@@ -904,6 +904,7 @@ var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) );
       unset( $arrIcon );
       
         // Set the path
+var_dump( __METHOD__, __LINE__, $catKey, $this->confMap['configuration.']['categories.'] );
       $coa_name = $this->confMap['configuration.']['categories.'][$catKey . '.']['pathToIcon'];
       $coa_conf = $this->confMap['configuration.']['categories.'][$catKey . '.']['pathToIcon.'];
       $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
