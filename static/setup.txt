@@ -639,10 +639,10 @@ plugin.tx_browser_pi1 {
                   10 {
                     if {
                       isTrue {
-                        field = 
+                        field = {$plugin.tx_browser_pi1.map.field.linktoSingle}
                       }
                     }
-                    field = 
+                    field = {$plugin.tx_browser_pi1.map.field.linktoSingle}
                     wrap  = ,&tx_browser_pi1[showUid]=|
                   }
                 }
@@ -889,19 +889,19 @@ plugin.tx_browser_pi1 {
             latitude = TEXT
             latitude {
                 // [STRING] table.field. Example: tx_org_headquarters.mail_lat
-              field = 
+              field = {$plugin.tx_browser_pi1.map.field.latitude}
             }
               // [NUMBER] longitude
             longitude = TEXT
             longitude {
                 // [STRING] table.field. Example: tx_org_headquarters.mail_lon
-              field = 
+              field = {$plugin.tx_browser_pi1.map.field.longitude}
             }
               // [STRING] content in the popup
             description = TEXT
             description {
                 // [STRING] table.field. Example: tx_org_headquarters.title
-              field = 
+              field = {$plugin.tx_browser_pi1.map.field.description}
             }
           }
         }
