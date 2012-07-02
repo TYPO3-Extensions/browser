@@ -879,6 +879,7 @@ plugin.tx_browser_pi1 {
             }
               // [INTEGR] key of the category icon from navigation.map.configuration.categories
             iconKey = TEXT
+            iconKey {
               value = 10
             }
               // [NUMBER] latitude
