@@ -917,7 +917,7 @@ var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) );
       $pathAbsolute = t3lib_div::getFileAbsFileName( $value );
         // relative path
       $pathRelative = preg_replace('%' . PATH_site . '%', '', $pathAbsolute );
-      $arrIcon[] = $pathRelative;
+      $arrIcon[] = "'" . $pathRelative . "'";
         // Set the path
         
         // Add the icon width
