@@ -847,10 +847,12 @@ class tx_browser_pi1_map
     $arr_return   = array( );
     $series       = null;
     $coordinates  = array( );
-    $catImg       = array( );
 
-    $catImg['cat1'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test1.png', 14, 14, 0, 0 );
-    $catImg['cat2'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0 );
+    $catIcons     = $this->renderMapMarkerCategoryIcons( );
+    
+//    $catIcons       = array( );
+//    $catIcons['cat1'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test1.png', 14, 14, 0, 0 );
+//    $catIcons['cat2'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0 );
 
       // FOREACH map marker
     foreach( ( array ) $mapMarkers as $key => $mapMarker )
@@ -858,7 +860,7 @@ class tx_browser_pi1_map
         // Set category icon
       if( ! isset( $series[$mapMarker['cat']]['icon'] ) )
       {
-        $series[$mapMarker['cat']]['icon'] = $catImg[$mapMarker['cat']];
+        $series[$mapMarker['cat']]['icon'] = $catIcons[$mapMarker['iconKey']];
       }
         // Set category icon
         // Set coordinates
@@ -869,7 +871,7 @@ class tx_browser_pi1_map
       $series[$mapMarker['cat']]['data'][$key]['desc']   = $mapMarker['desc'];
     }
       // FOREACH map marker
-//var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) ); 
+var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) ); 
 
     $jsonData = json_encode( $series );
     
@@ -878,6 +880,88 @@ class tx_browser_pi1_map
     return $arr_return;
   }
 
+
+
+  /**
+ * renderMapMarkerCategoryIcons( ):
+ *
+ * @param    array        
+ * @return    string    $jsonData
+ * @version 4.1.0
+ * @since   4.1.0
+ */
+  private function renderMapMarkerCategoryIcons( )
+  {
+    $arrIcon = array( );
+    
+    foreach( array_keys( $this->confMap['configuration.']['categories.'] ) as $catKey )
+    {
+      if( substr( $key, -1 ) == '.' )
+      {
+        continue;
+      }
+      
+      unset( $arrIcon );
+      
+        // Set the path
+      $coa_name = $this->confMap['configuration.']['categories.'][$catKey . '.']['pathToIcon'];
+      $coa_conf = $this->confMap['configuration.']['categories.'][$catKey . '.']['pathToIcon.'];
+      $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+      if( empty ( $value ) )
+      {
+        die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
+      }
+        // absolute path
+      $pathAbsolute = t3lib_div::getFileAbsFileName( $value );
+        // relative path
+      $pathRelative = preg_replace('%' . PATH_site . '%', '', $pathAbsolute );
+      $arrIcon[] = $pathRelative;
+        // Set the path
+        
+        // Add the icon width
+      $value = $this->confMap['configuration.']['categories.'][$catKey . '.']['width'];
+      if( empty( $value ) )
+      {
+        die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
+      }
+      $arrIcon[] = $value;
+        // Add the icon width
+
+        // Add the icon height
+      $value = $this->confMap['configuration.']['categories.'][$catKey . '.']['height'];
+      if( empty( $value ) )
+      {
+        die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
+      }
+      $arrIcon[] = $value;
+        // Add the icon height
+
+        // Add the icon x-offset
+      $value = $this->confMap['configuration.']['categories.'][$catKey . '.']['offsetX'];
+      if( empty( $value ) )
+      {
+        die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
+      }
+      $arrIcon[] = $value;
+        // Add the icon x-offset
+
+        // Add the icon y-offset
+      $value = $this->confMap['configuration.']['categories.'][$catKey . '.']['offsetY'];
+      if( empty( $value ) )
+      {
+        die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
+      }
+      $arrIcon[] = $value;
+        // Add the icon y-offset
+
+      $catIcons[$catKey] = implode( ', ', $arrIcon );      
+      
+    }
+
+var_dump( __METHOD__, __LINE__, $catIcons );
+    return $catIcons;
+  }
+  
 
 
   /**
@@ -930,8 +1014,11 @@ class tx_browser_pi1_map
       }
         // Get the desc
 
-        // Get the categories
-      $mapMarker['cat'] = $this->renderMapMarkerVariablesSystemItem( 'categories' );
+        // Get the category
+      $mapMarker['cat'] = $this->renderMapMarkerVariablesSystemItem( 'category' );
+
+        // Get the iconKey
+      $mapMarker['iconKey'] = $this->renderMapMarkerVariablesSystemItem( 'iconKey' );
 
         // Save each mapMarker
       $mapMarkers[] = $mapMarker;
@@ -963,10 +1050,20 @@ class tx_browser_pi1_map
  */
   private function renderMapMarkerVariablesSystemItem( $item )
   {
-    $coa_name = $this->confMap['marker.']['variables.']['system.'][$item];
-    $coa_conf = $this->confMap['marker.']['variables.']['system.'][$item . '.'];
-    $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+    switch( true )
+    {
+//      case( $item = 'categories.label' ):
+//        $coa_name = $this->confMap['marker.']['variables.']['system.']['categories.']['label'];
+//        $coa_conf = $this->confMap['marker.']['variables.']['system.']['categories.']['label.'];
+//        break;
+      default:
+        $coa_name = $this->confMap['marker.']['variables.']['system.'][$item];
+        $coa_conf = $this->confMap['marker.']['variables.']['system.'][$item . '.'];
+        break;
+    }
     
+    $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+
     return $value;
   }
 
