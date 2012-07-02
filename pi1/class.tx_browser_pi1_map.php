@@ -896,7 +896,7 @@ var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) );
     
     foreach( array_keys( $this->confMap['configuration.']['categories.'] ) as $catKey )
     {
-      if( substr( $key, -1 ) == '.' )
+      if( substr( $catKey, -1 ) == '.' )
       {
         continue;
       }
@@ -908,7 +908,7 @@ var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) );
       $coa_conf = $this->confMap['configuration.']['categories.'][$catKey . '.']['pathToIcon.'];
       $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
 //var_dump( __METHOD__, __LINE__, $catKey, $coa_name, $coa_conf, $value, $this->confMap['configuration.']['categories.'] );
-var_dump( __METHOD__, __LINE__, $catKey, $value );
+//var_dump( __METHOD__, __LINE__, $catKey, $value );
       if( empty ( $value ) )
       {
         die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
