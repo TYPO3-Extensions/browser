@@ -1026,6 +1026,7 @@ class tx_browser_pi1_map
 
         // Get the iconKey
       $mapMarker['iconKey'] = $this->renderMapMarkerVariablesSystemItem( 'iconKey' );
+var_dump( __METHOD__, __LINE__, $mapMarker['iconKey'] );
 
         // Save each mapMarker
       $mapMarkers[] = $mapMarker;
