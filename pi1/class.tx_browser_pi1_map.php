@@ -871,7 +871,7 @@ class tx_browser_pi1_map
       $series[$mapMarker['cat']]['data'][$key]['desc']   = $mapMarker['desc'];
     }
       // FOREACH map marker
-var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) ); 
+//var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) ); 
 
     $jsonData = json_encode( $series );
     
@@ -964,7 +964,7 @@ var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) );
       
     }
 
-var_dump( __METHOD__, __LINE__, $catIcons );
+//var_dump( __METHOD__, __LINE__, $catIcons );
     return $catIcons;
   }
   
