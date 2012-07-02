@@ -303,9 +303,9 @@ plugin.tx_browser_pi1 {
               // [INTEGER] y-offset of the icon in Pixel
             offsetY = 0
               // [INTEGER] height of the icon in Pixel
-            height = 14, 14
+            height = 14
               // [INTEGER] width of the icon in Pixel
-            width = 14, 14
+            width = 14
           }
             // Label for a clear view only and without any effect
           20 = blue
@@ -329,9 +329,9 @@ plugin.tx_browser_pi1 {
               // [INTEGER] y-offset of the icon in Pixel
             offsetY = 0
               // [INTEGER] height of the icon in Pixel
-            height = 14, 14
+            height = 14
               // [INTEGER] width of the icon in Pixel
-            width = 14, 14
+            width = 14
           }
             // Label for a clear view only and without any effect
           30 = bluedark
@@ -355,9 +355,9 @@ plugin.tx_browser_pi1 {
               // [INTEGER] y-offset of the icon in Pixel
             offsetY = 0
               // [INTEGER] height of the icon in Pixel
-            height = 14, 14
+            height = 14
               // [INTEGER] width of the icon in Pixel
-            width = 14, 14
+            width = 14
           }
             // Label for a clear view only and without any effect
           40 = green
@@ -381,9 +381,9 @@ plugin.tx_browser_pi1 {
               // [INTEGER] y-offset of the icon in Pixel
             offsetY = 0
               // [INTEGER] height of the icon in Pixel
-            height = 14, 14
+            height = 14
               // [INTEGER] width of the icon in Pixel
-            width = 14, 14
+            width = 14
           }
             // Label for a clear view only and without any effect
           50 = greendark
@@ -407,9 +407,9 @@ plugin.tx_browser_pi1 {
               // [INTEGER] y-offset of the icon in Pixel
             offsetY = 0
               // [INTEGER] height of the icon in Pixel
-            height = 14, 14
+            height = 14
               // [INTEGER] width of the icon in Pixel
-            width = 14, 14
+            width = 14
           }
             // Label for a clear view only and without any effect
           60 = orange
@@ -433,9 +433,9 @@ plugin.tx_browser_pi1 {
               // [INTEGER] y-offset of the icon in Pixel
             offsetY = 0
               // [INTEGER] height of the icon in Pixel
-            height = 14, 14
+            height = 14
               // [INTEGER] width of the icon in Pixel
-            width = 14, 14
+            width = 14
           }
             // Label for a clear view only and without any effect
           70 = pink
@@ -459,9 +459,9 @@ plugin.tx_browser_pi1 {
               // [INTEGER] y-offset of the icon in Pixel
             offsetY = 0
               // [INTEGER] height of the icon in Pixel
-            height = 14, 14
+            height = 14
               // [INTEGER] width of the icon in Pixel
-            width = 14, 14
+            width = 14
           }
             // Label for a clear view only and without any effect
           80 = purple
@@ -485,9 +485,9 @@ plugin.tx_browser_pi1 {
               // [INTEGER] y-offset of the icon in Pixel
             offsetY = 0
               // [INTEGER] height of the icon in Pixel
-            height = 14, 14
+            height = 14
               // [INTEGER] width of the icon in Pixel
-            width = 14, 14
+            width = 14
           }
             // Label for a clear view only and without any effect
           90 = red
@@ -511,9 +511,9 @@ plugin.tx_browser_pi1 {
               // [INTEGER] y-offset of the icon in Pixel
             offsetY = 0
               // [INTEGER] height of the icon in Pixel
-            height = 14, 14
+            height = 14
               // [INTEGER] width of the icon in Pixel
-            width = 14, 14
+            width = 14
           }
             // Label for a clear view only and without any effect
           100 = reddark
@@ -537,9 +537,9 @@ plugin.tx_browser_pi1 {
               // [INTEGER] y-offset of the icon in Pixel
             offsetY = 0
               // [INTEGER] height of the icon in Pixel
-            height = 14, 14
+            height = 14
               // [INTEGER] width of the icon in Pixel
-            width = 14, 14
+            width = 14
           }
             // Label for a clear view only and without any effect
           110 = white
@@ -563,9 +563,9 @@ plugin.tx_browser_pi1 {
               // [INTEGER] y-offset of the icon in Pixel
             offsetY = 0
               // [INTEGER] height of the icon in Pixel
-            height = 14, 14
+            height = 14
               // [INTEGER] width of the icon in Pixel
-            width = 14, 14
+            width = 14
           }
             // Label for a clear view only and without any effect
           120 = yellow
@@ -589,9 +589,9 @@ plugin.tx_browser_pi1 {
               // [INTEGER] y-offset of the icon in Pixel
             offsetY = 0
               // [INTEGER] height of the icon in Pixel
-            height = 14, 14
+            height = 14
               // [INTEGER] width of the icon in Pixel
-            width = 14, 14
+            width = 14
           }
         }
         centerCoordinates {
