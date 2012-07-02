@@ -921,7 +921,7 @@ class tx_browser_pi1_map
       }
         // relative path
       $pathRelative = preg_replace('%' . PATH_site . '%', '', $pathAbsolute );
-      $arrIcon[] = "'" . $pathRelative . "'";
+      $arrIcon[] = $pathRelative;
         // Set the path
         
         // Add the icon width
@@ -930,7 +930,7 @@ class tx_browser_pi1_map
       {
         die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
       }
-      $arrIcon[] = $value;
+      $arrIcon[] = ( int ) $value;
         // Add the icon width
 
         // Add the icon height
@@ -939,7 +939,7 @@ class tx_browser_pi1_map
       {
         die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
       }
-      $arrIcon[] = $value;
+      $arrIcon[] = ( int ) $value;
         // Add the icon height
 
         // Add the icon x-offset
