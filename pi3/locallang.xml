@@ -36,6 +36,8 @@
       <label index="tutorials.browser_tut_labeling_en.description">Labeling and field properties.</label>
       <label index="tutorials.browser_tut_localisation_en.title">Browser Tutorial Localisation</label>
       <label index="tutorials.browser_tut_localisation_en.description">Proper localisation design for your database.</label>
+      <label index="tutorials.browser_tut_map_en.title">Browser Tutorial Map [Under construction, from version 4.1]</label>
+      <label index="tutorials.browser_tut_map_en.description">Publish your data with OpenStreetMap!</label>
       <label index="tutorials.browser_tut_marker_en.title">Browser Tutorial Marker</label>
       <label index="tutorials.browser_tut_marker_en.description">Database marker, constant marker, browser system marker, piVars marker, TYPO3 GLOBALS Marker</label>
       <label index="tutorials.browser_tut_navigation_en.title">Browser Tutorial Navigation</label>
@@ -101,6 +103,8 @@
       <label index="tutorials.browser_tut_labeling_en.description">Felder bezeichnen und Eigenschaften <![CDATA[&auml;]]>ndern.</label>
       <label index="tutorials.browser_tut_localisation_en.title">Browser Tutorial Localisation - Sprachen</label>
       <label index="tutorials.browser_tut_localisation_en.description">Wie funktioniert Lokalisierung. Wie sollte eine Datenbank aufgebaut sein, damit diese f<![CDATA[&uuml;]]>r verschiedene Sprachen verwendbar ist?</label>
+      <label index="tutorials.browser_tut_map_en.title">Browser Tutorial Map [Baustelle, ab Version 4.1]</label>
+      <label index="tutorials.browser_tut_map_en.description">Ver<![CDATA[&ouml;]]>ffentliche Deine Daten mit OpenStreetMap.</label>
       <label index="tutorials.browser_tut_marker_en.title">Browser Tutorial Marker</label>
       <label index="tutorials.browser_tut_marker_en.description">Datenbank Marker, Konstanten, Browser-System-Marker, Marker f<![CDATA[&uuml;]]>r Parameter der aktuellen URL und alle Werte aus dem TYPO3-GLOBALS-Array.</label>
       <label index="tutorials.browser_tut_navigation_en.title">Browser Tutorial Navigation</label>

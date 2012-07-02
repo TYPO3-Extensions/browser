@@ -398,9 +398,30 @@ plugin.tx_browser_pi3 {
         }
       }
     }
-      // browser_tut_marker_en
+      // browser_tut_map_en
     1180 < plugin.tx_browser_pi3.template
     1180 {
+      10 {
+        11 {
+          typolink {
+            parameter   = typo3conf/ext/browser_tut_map_en/doc/manual.pdf
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_map_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_map_en.description
+        }
+      }
+    }
+      // browser_tut_marker_en
+    1181 < plugin.tx_browser_pi3.template
+    1181 {
       10 {
         11 {
           typolink {
@@ -420,8 +441,8 @@ plugin.tx_browser_pi3 {
       }
     }
       // browser_tut_navigation_en
-    1181 < plugin.tx_browser_pi3.template
-    1181 {
+    1182 < plugin.tx_browser_pi3.template
+    1182 {
       10 {
         11 {
           typolink {
