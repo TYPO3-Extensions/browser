@@ -119,6 +119,7 @@ class tx_browser_pi1_navi_modeSelector
   */
   public function get( $content )
   {
+    $arr_return = null;
 
       // RETURN : there is one mode only
     if( count ( $this->pObj->arrModeItems ) <= 1 )
@@ -155,6 +156,7 @@ class tx_browser_pi1_navi_modeSelector
   */
   public function get_tabs( $content )
   {
+    $arr_return = null;
     $arrModes   = $this->pObj->arrModeItems;
 
       // Will return the content
@@ -279,7 +281,7 @@ class tx_browser_pi1_navi_modeSelector
       $langKey = 'default';
     }
 
-    foreach( (array) $this->conf['views.'][$this->view . '.'] as $keyView => $arrView )
+    foreach( array_keys( (array) $this->conf['views.'][$this->view . '.'] ) as $keyView )
     {
       // We don't need the typoscript array dot
       $mode                       = substr( $keyView, 0, strlen( $keyView ) - 1 );
@@ -319,8 +321,9 @@ class tx_browser_pi1_navi_modeSelector
   public function tmplModeSelector($arr_data)
   {
 
-    $template   = $arr_data['template'];
-    $arr_items  = $arr_data['arrModeItems'];
+    $template     = $arr_data['template'];
+    $arr_items    = $arr_data['arrModeItems'];
+    $markerArray  = null;
 
 
 
@@ -346,7 +349,6 @@ class tx_browser_pi1_navi_modeSelector
     reset($arr_items);
     $i_max_counter  = count($arr_items);
     $i_counter      = 0;
-    $arrTabs        = array();
     while (list($str_item_key, $str_item_value) = each($arr_items))
     {
       $tabClass         = ($i_counter < ($i_max_counter - 1)) ? 'tab-'.$i_counter : 'tab-'.$i_counter.' last';
