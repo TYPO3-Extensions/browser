@@ -930,6 +930,7 @@ $this->pObj->dev_var_dump( $arr_return );
       // Get all ids
     $withIds = array( );
     $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $withIds );
+$this->pObj->dev_var_dump( $arr_return );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
