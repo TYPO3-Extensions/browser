@@ -2151,6 +2151,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // [Array] The current TypoScript configuration array
     $this->objViewlist->conf      = $this->conf;
       // [Integer] The current mode (from modeselector)
+var_dump( __METHOD__, __LINE__, $this->piVar_mode );
     $this->objViewlist->mode      = $this->piVar_mode;
       // [String] 'list' or 'single': The current view
     $this->objViewlist->view      = $this->view;
