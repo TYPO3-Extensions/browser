@@ -335,7 +335,7 @@ class tx_browser_pi1_navi_pageBrowser
       // #38611, 120703, dwildt+
       // SWITCH $int_localisation_mode
     $curr_int_localisation_mode = null;
-    switch( $this->int_localisation_mode )
+    switch( $this->pObj->objLocalise->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
