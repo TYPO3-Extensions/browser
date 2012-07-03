@@ -624,7 +624,7 @@ class tx_browser_pi1_navi_recordbrowser
   * @version 3.7.0
   * @since 3.7.0
   */
-  public function recordbrowser_set_session_data($rows)
+  public function recordbrowser_set_session_data( $rows )
   {
       // Uid of the current plugin
     $tt_content_uid = $this->pObj->cObj->data['uid'];
@@ -664,7 +664,7 @@ class tx_browser_pi1_navi_recordbrowser
       //
       // RETURN rows are empty
 
-    if(empty($rows))
+    if( empty( $rows) )
     {
         // Get the tx_browser_pi1 session array
       $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);

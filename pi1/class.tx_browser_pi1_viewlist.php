@@ -685,7 +685,7 @@ var_dump( __METHOD__, __LINE__ );
  *
  * @param	array		$res  : current SQL result
  * @return	void
- * @version 3.9.12
+ * @version 4.1.2
  * @since   3.9.12
  */
   private function rows_fromSqlRes( $res )
@@ -710,6 +710,8 @@ var_dump( __METHOD__, __LINE__ );
         break;
     }
       // SWITCH case aliases
+    
+    unset( $arr_table_realnames );
 
       // SQL Free Result
     $GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
@@ -731,7 +733,7 @@ var_dump( __METHOD__, __LINE__ );
  *
  * @param	array		$res  : current SQL result
  * @return	array		$rows : the rows
- * @version 3.9.12
+ * @version 4.1.2
  * @since   3.9.12
  */
   private function rows_getCaseAliases( $res )
@@ -743,7 +745,7 @@ var_dump( __METHOD__, __LINE__ );
     $i_row = 0;
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
-      foreach( $row as $str_tablealias_field => $value )
+      foreach( array_keys( $row ) as $str_tablealias_field )
       {
         $arr_tablealias_field = explode( '.', $str_tablealias_field ); // table_1.sv_name
         $str_tablealias       = $arr_tablealias_field[0];              // table_1
@@ -1252,7 +1254,59 @@ var_dump( __METHOD__, __LINE__ );
 
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+    
+      // RETURN record browser isn't enabled
+    if( ! ( $this->pObj->conf['navigation.']['record_browser'] == 1 ) )
+    {
+      if ( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+      {
+        $value = $this->pObj->conf['navigation.']['record_browser'];
+        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] navigation.record_browser is \'' . $value . '\' '.
+          'Record browser doesn\'t cause any SQL query (best performance).', $this->pObj->extKey, 0);
+      }
+      return $arr_return;
+    }
+      // RETURN record browser isn't enabled
 
+      // Get query without any limit
+    $limit  = null;
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+      // Get query
+
+      // Execute query
+    $promptOptimise   = 'Maintain the performance? Disable the record browser of the single view.';
+    $debugTrailLevel  = 1;
+    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
+      // Execute query
+
+      // Error management
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+      // Error management
+
+      // Get the SQL result
+    $res = $arr_return['data']['res'];
+
+      // Get the ids
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+      $arr_return2['data']['idsOfHitsWoCurrTranslation'][] = $row[$tableUid];
+    }
+      // Get the ids
+var_dump( __METHOD__, __LINE__, $arr_return2 );
+      // Free SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+    
     return $arr_return;
   }
 
