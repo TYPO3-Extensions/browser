@@ -1297,7 +1297,7 @@ var_dump( __METHOD__, __LINE__ );
       // Error management
 
       // Get the SQL result
-    $res = $arr_return2['data']['res'];
+    $res = $arr_return['unlimited']['data']['res'];
 
       // Get the ids
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
