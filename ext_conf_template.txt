@@ -37,7 +37,7 @@ updateWizardEnable = 0
   # cat=Update Wizard/enable;              type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptCurrIP]; label=Your current IP
 currentIP = 0
 
-  # cat=Update Wizard/enable;              type=string; label= Update Wizard Allowed IPs: comma seperated list of IPs, which will shown the report.
+  # cat=Update Wizard/enable;              type=string; label= Update Wizard Allowed IPs: comma seperated list of IPs, which will shown the report. Example: 127.0.0.1, 127.0.0.2, 83.123.4.85
 updateWizardAllowedIPs = 127.0.0.1, 127.0.0.2
 
   # cat=Update Wizard/others;             type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
