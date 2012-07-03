@@ -327,11 +327,39 @@ class tx_browser_pi1_navi_pageBrowser
  *                  Result depends on search word and filter.
  *
  * @return	array		$arr_return : SQL ressource or an error message in case of on arror
- * @version 3.9.12
+ * @version 4.1.2
  * @since   3.9.12
  */
   private function count_resSql( )
   {
+      // #38611, 120703, dwildt+
+      // SWITCH $int_localisation_mode
+    $curr_int_localisation_mode = null;
+    switch( $this->int_localisation_mode )
+    {
+      case( PI1_DEFAULT_LANGUAGE ):
+      case( PI1_DEFAULT_LANGUAGE_ONLY ):
+          // Follow the workflow
+        break;
+      case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
+        if( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
+        {
+          $prompt = 'Localisation mode is PI1_SELECTED_OR_DEFAULT_LANGUAGE and will set to PI1_DEFAULT_LANGUAGE temporarily.';
+          t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+          // Store current localisation mode
+        $curr_int_localisation_mode = $this->pObj->objLocalise->int_localisation_mode;
+          // Set all to default language
+        $this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
+        break;
+      default:
+          // DIE
+        $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
+        break;
+    }
+      // SWITCH $int_localisation_mode
+      // #38611, 120703, dwildt+
+    
       // Get current table.field of the index browser
     $tableField     = $this->pObj->arrLocalTable['uid'];
     list( $table )  = explode( '.', $tableField );
@@ -355,6 +383,20 @@ class tx_browser_pi1_navi_pageBrowser
                     $limit
                   );
 
+      // #38611, 120703, dwildt+
+      // SWITCH $int_localisation_mode
+    if( $curr_int_localisation_mode != null )
+    {
+      if( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
+      {
+        $prompt = 'Localisation mode is reseted';
+        t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+    }
+      // SWITCH $int_localisation_mode
+      // #38611, 120703, dwildt+
+    
     return $arr_return;
   }
 
@@ -407,7 +449,7 @@ class tx_browser_pi1_navi_pageBrowser
  * @param	string		$table              : The current from table
  * @param	string		$andWhereFindInSet  : FIND IN SET
  * @return	string		$where            : WHERE statement without a WHERE
- * @version 3.9.25
+ * @version 4.1.2
  * @since   3.9.12
  */
   private function sqlStatement_where( $table )
@@ -425,7 +467,7 @@ class tx_browser_pi1_navi_pageBrowser
           // 3.9.25, 120605, dwildt+
         $andWhere = $this->pObj->objLocalise->localisationFields_where( $table );
         $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
-$this->pObj->dev_var_dump( $where );
+//$this->pObj->dev_var_dump( $where );
         break;
       default:
           // 3.9.25, 120605: dwildt+
@@ -434,9 +476,11 @@ $this->pObj->dev_var_dump( $where );
         $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
         $andWhere = $this->pObj->objLocalise->localisationFields_where( $table );
         $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
-$this->pObj->dev_var_dump( $where );
+//$this->pObj->dev_var_dump( $where );
         break;
     }
+          // 3.9.25, 120605, dwildt+
+        $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $llWhere );
 
     return $where;
   }

@@ -2047,7 +2047,10 @@ class tx_browser_pi1_navi_indexBrowser
         $where    = $this->pObj->cObj->enableFields( $table );
         $andWhere = $this->pObj->objSqlFun->get_andWherePid( $table );
         $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
-        $andWhere = $this->pObj->objLocalise3x->localisationFields_where( $table );
+          // 120703, dwildt, 1-
+        //$andWhere = $this->pObj->objLocalise3x->localisationFields_where( $table );
+          // 120703, dwildt, 1+
+        $andWhere = $this->pObj->objLocalise->localisationFields_where( $table );
         $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
         $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereFindInSet );
           // 3.9.25, 120605: dwildt+
