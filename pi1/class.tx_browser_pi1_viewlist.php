@@ -946,7 +946,7 @@ var_dump( __METHOD__, __LINE__ );
     {
       return $arr_return;
     }
-    $idsOfDefaultLanguageRows   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+    $idsOfDefaultLanguageRows   = $arr_return['limited']['data']['idsOfHitsWoCurrTranslation'];
       // Get ids of records of default language, which match the rules
 
       // Get ids of the translation records of the matched default records
@@ -1341,7 +1341,7 @@ var_dump( __METHOD__, __LINE__ );
     {
       return $arr_return;
     }
-    $idsOfRowsDefaultLanguage = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+    $idsOfRowsDefaultLanguage = $arr_return['limited']['data']['idsOfHitsWoCurrTranslation'];
       // Get ids of records of default language
 
     if( empty ( $idsOfRowsDefaultLanguage ) )
