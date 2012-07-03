@@ -663,12 +663,15 @@ class tx_browser_pi1_navi_recordbrowser
     switch( true )
     {
       case( ! empty( $idsForRecordBrowser ) ):
+var_dump( __METHOD__, __LINE__, $idsForRecordBrowser );
         $this->recordbrowser_set_session_dataByIds( $idsForRecordBrowser );
         break;
       case( ! empty( $rows ) ):
+var_dump( __METHOD__, __LINE__, $rows );
         $this->recordbrowser_set_session_dataRows( $rows );
         break;
       default:
+var_dump( __METHOD__, __LINE__, $rows, $idsForRecordBrowser );
           // Get the tx_browser_pi1 session array
         $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey( $str_data_space, $this->pObj->prefixId );
           // Empty the array with the uids of all rows

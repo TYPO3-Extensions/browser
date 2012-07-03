@@ -243,7 +243,7 @@ class tx_browser_pi1_viewlist
       //  #38612, 120703, dwildt, 1-
     //$res = $arr_return['data']['res'];
       //  #38612, 120703, dwildt+
-$this->pObj->dev_var_dump( 'Consolidate code!', $arr_return );
+//$this->pObj->dev_var_dump( 'Consolidate code!', $arr_return );
     if( isset( $arr_return['data']['res'] ) )
     {
       $res = $arr_return['data']['res'];
