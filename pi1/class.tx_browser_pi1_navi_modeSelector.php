@@ -43,13 +43,13 @@
  *
  *              SECTION: Main
  *  120:     public function get( $content )
- *  156:     public function get_tabs( $content )
+ *  157:     public function get_tabs( $content )
  *
  *              SECTION: Init
- *  247:     public function prepaireModeSelector()
+ *  249:     public function prepaireModeSelector()
  *
  *              SECTION: Templating
- *  319:     public function tmplModeSelector($arr_data)
+ *  321:     public function tmplModeSelector($arr_data)
  *
  * TOTAL FUNCTIONS: 5
  * (This index is automatically created/updated by the extension "extdeveval")
