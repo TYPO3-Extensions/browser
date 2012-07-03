@@ -1721,7 +1721,7 @@ class tx_browser_pi1_views
     // HTML mode selector
     $arr_data['template']     = $template;
     $arr_data['arrModeItems'] = $this->pObj->arrModeItems;
-    $template = $this->pObj->objNavi_3x->tmplModeSelector($arr_data);
+    $template = $this->pObj->objNaviModeSelector->tmplModeSelector($arr_data);
     unset($arr_data);
       // Building the template
 

@@ -735,7 +735,7 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // Prepaire modeSelector
 
-    $arr_result = $this->objNavi_3x->prepaireModeSelector( );
+    $arr_result = $this->objNaviModeSelector->prepaireModeSelector( );
     if( $arr_result['error']['status'] )
     {
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
