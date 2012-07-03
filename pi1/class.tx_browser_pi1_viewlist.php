@@ -240,9 +240,10 @@ class tx_browser_pi1_viewlist
       return $content;
     }
     
-      // 120703, dwildt, 1-
-    $res = $arr_return['data']['res'];
-      // 120703, dwildt+
+      //  #38612, 120703, dwildt, 1-
+    //$res = $arr_return['data']['res'];
+      //  #38612, 120703, dwildt+
+$this->pObj->dev_var_dump( 'Consolidate code!' );
     if( isset( $arr_return['data']['res'] ) )
     {
       $res = $arr_return['data']['res'];
@@ -254,7 +255,7 @@ class tx_browser_pi1_viewlist
 //var_dump( __METHOD__, __LINE__, $arr_return );
 //var_dump( __METHOD__, __LINE__, $idsForRecordBrowser );
     }
-      // 120703, dwildt+
+      //  #38612, 120703, dwildt+
   
       // Building SQL query and get the SQL result
 
@@ -333,6 +334,7 @@ class tx_browser_pi1_viewlist
       {
         t3lib_div::devLog('[WARN/TEMPLATING/CAL/UI]: +Browser Calendar set ignore_empty_rows_rule to true!', $this->pObj->extKey, 2);
       }
+        // #38612, 120703, dwildt+
       if( $this->pObj->conf['navigation.']['record_browser'] == 1 )
       {
         if ( $this->pObj->b_drs_warn )
@@ -343,6 +345,7 @@ class tx_browser_pi1_viewlist
           t3lib_div::devlog( '[WARN/CAL+RECORDBROWSER] ' . $prompt , $this->pObj->extKey, 2);
         }
       }
+        // #38612, 120703, dwildt+
     }
     $this->pObj->rows = $rows;
       // Prompt the expired time to devlog
@@ -356,9 +359,9 @@ class tx_browser_pi1_viewlist
       //
       // record browser
     
-      // 120703, dwildt, 1-
+      //  #38612, 120703, dwildt, 1-
 //    $arr_result = $this->pObj->objNaviRecordBrowser->recordbrowser_set_session_data_3x( $rows );
-      // 120703, dwildt, 1+
+      //  #38612, 120703, dwildt, 1+
     $arr_result = $this->pObj->objNaviRecordBrowser->recordbrowser_set_session_data( $idsForRecordBrowser );
     if ($arr_result['error']['status'])
     {
@@ -845,6 +848,7 @@ var_dump( __METHOD__, __LINE__ );
         $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
         break;
     }
+$this->pObj->dev_var_dump( $arr_return );
 
     return $arr_return;
   }
@@ -870,6 +874,7 @@ var_dump( __METHOD__, __LINE__ );
     }
     $idsWiCurrTranslationLimited    = $arr_return['limited']['data']['idsWiCurrTranslation'];
     $idsOfTranslationRowsLimited    = $arr_return['limited']['data']['idsOfTranslationRows'];
+      // #38612, 120703, dwildt, 2+
     $idsWiCurrTranslationUnlimited  = $arr_return['unlimited']['data']['idsWiCurrTranslation'];
     $idsOfTranslationRowsUnlimited  = $arr_return['unlimited']['data']['idsOfTranslationRows'];
       // Get ids of records, which match the rules and have a translation for the current language
@@ -885,6 +890,7 @@ var_dump( __METHOD__, __LINE__ );
         return $arr_return;
       }
       $idsOfDefaultLanguageRowsLimited    = $arr_return['limited']['data']['idsOfHitsWoCurrTranslation'];
+        // #38612, 120703, dwildt, 1+
       $idsOfDefaultLanguageRowsUnlimited  = $arr_return['unlimited']['data']['idsOfHitsWoCurrTranslation'];
         // Get ids of records of default language, which match the rules but haven't any translation
 
@@ -1141,6 +1147,7 @@ var_dump( __METHOD__, __LINE__ );
       //
       // RETURN record browser isn't enabled
     
+      // #38612, 120703, dwildt+
     if( ! ( $this->pObj->conf['navigation.']['record_browser'] == 1 ) )
     {
       if ( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
@@ -1159,6 +1166,7 @@ var_dump( __METHOD__, __LINE__ );
       //
       // Workflow for recordbrowser
     
+      // #38612, 120703, dwildt+
       // Get query without any limit
     $limit  = null;
     $query  = $GLOBALS['TYPO3_DB']->SELECTquery
@@ -1357,6 +1365,7 @@ var_dump( __METHOD__, __LINE__ );
       //
       // RETURN record browser isn't enabled
     
+      // #38612, 120703, dwildt+
     if( ! ( $this->pObj->conf['navigation.']['record_browser'] == 1 ) )
     {
       if ( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
@@ -1375,6 +1384,7 @@ var_dump( __METHOD__, __LINE__ );
       //
       // Workflow for recordbrowser
     
+      // #38612, 120703, dwildt+
       // Get query without any limit
     $limit  = null;
     $query  = $GLOBALS['TYPO3_DB']->SELECTquery
@@ -1445,6 +1455,7 @@ var_dump( __METHOD__, __LINE__ );
     }
 
       // Get rows for the list view
+      // #38612, 120703, dwildt-/+
     $arr_return['limited'] = $this->rows_sqlRowsbyIds( $idsOfRowsDefaultLanguageLimited );
 
     return $arr_return;
