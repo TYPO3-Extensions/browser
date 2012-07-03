@@ -243,7 +243,7 @@ class tx_browser_pi1_viewlist
       //  #38612, 120703, dwildt, 1-
     //$res = $arr_return['data']['res'];
       //  #38612, 120703, dwildt+
-$this->pObj->dev_var_dump( 'Consolidate code!' );
+$this->pObj->dev_var_dump( 'Consolidate code!', $arr_return );
     if( isset( $arr_return['data']['res'] ) )
     {
       $res = $arr_return['data']['res'];
@@ -874,9 +874,6 @@ $this->pObj->dev_var_dump( $arr_return );
     }
     $idsWiCurrTranslationLimited    = $arr_return['data']['idsWiCurrTranslation'];
     $idsOfTranslationRowsLimited    = $arr_return['data']['idsOfTranslationRows'];
-      // #38612, 120703, dwildt, 2+
-    $idsWiCurrTranslationUnlimited  = $arr_return['unlimited']['data']['idsWiCurrTranslation'];
-    $idsOfTranslationRowsUnlimited  = $arr_return['unlimited']['data']['idsOfTranslationRows'];
       // Get ids of records, which match the rules and have a translation for the current language
 
     $idsOfDefaultLanguageRowsLimited = array( );
@@ -890,8 +887,6 @@ $this->pObj->dev_var_dump( $arr_return );
         return $arr_return;
       }
       $idsOfDefaultLanguageRowsLimited    = $arr_return['data']['idsOfHitsWoCurrTranslation'];
-        // #38612, 120703, dwildt, 1+
-      $idsOfDefaultLanguageRowsUnlimited  = $arr_return['unlimited']['data']['idsOfHitsWoCurrTranslation'];
         // Get ids of records of default language, which match the rules but haven't any translation
 
       if( empty ( $idsOfDefaultLanguageRowsLimited ) )
