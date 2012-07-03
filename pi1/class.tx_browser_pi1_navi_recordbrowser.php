@@ -797,7 +797,6 @@ class tx_browser_pi1_navi_recordbrowser
                   '#' . count( $ids ) . ' uids.';
         t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
       }
-var_dump( __METHOD__, __LINE__ );
       return;
     }
       // No session: set global array
@@ -820,7 +819,7 @@ var_dump( __METHOD__, __LINE__ );
     }
       // Set the session array
 
-var_dump( __METHOD__, __LINE__ );
+var_dump( __METHOD__, __LINE__, $ids );
     return;
   }
 
