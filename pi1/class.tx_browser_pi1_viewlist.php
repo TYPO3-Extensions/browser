@@ -257,7 +257,7 @@ class tx_browser_pi1_viewlist
     }
     else
     {
-      $res = $arr_return['limit']['data']['res'];
+      $res = $arr_return['limited']['data']['res'];
     }
       // 120703, dwildt+
   
