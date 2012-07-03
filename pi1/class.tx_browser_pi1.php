@@ -1731,6 +1731,10 @@ class tx_browser_pi1 extends tslib_pibase {
     require_once('class.tx_browser_pi1_navi_pageBrowser.php');
     $this->objNaviPageBrowser = new tx_browser_pi1_navi_pageBrowser( $this );
 
+      // Class methods for the recordbrowser
+    require_once('class.tx_browser_pi1_navi_recordbrowser.php');
+    $this->objNaviRecordBrowser = new tx_browser_pi1_navi_recordbrowser( $this );
+
       // Class with localisation methods version 3.x
     require_once('class.tx_browser_pi1_localisation_3x.php');
     $this->objLocalise3x = new tx_browser_pi1_localisation_3x( $this );

@@ -1,3 +1,14 @@
+4.1.2
+  120703
+  Improvement
+  * #00000: Record browser got an own class. See class.tx_browser_navi_recordbrowser.php
+  * #00000: Record browser respects all items of the listview and not only the displayed one
+
+4.1.1
+  120702
+  Improvement
+  * #00000: Extension Manager. Effected file: ext_conf_template.txt
+
 4.1.0
   120623
   New Feature

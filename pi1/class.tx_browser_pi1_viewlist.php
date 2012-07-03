@@ -425,9 +425,11 @@ class tx_browser_pi1_viewlist
     switch( true )
     {
       case( empty( $mode ) ):
+var_dump( __METHOD__, __LINE__ );
         $bool_noView = true;
         break;
       case( ! is_array( $this->conf_view ) ):
+var_dump( __METHOD__, __LINE__ );
         $bool_noView = true;
         break;
     }
