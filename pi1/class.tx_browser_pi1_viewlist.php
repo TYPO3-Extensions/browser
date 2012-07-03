@@ -338,7 +338,7 @@ class tx_browser_pi1_viewlist
       //
       // record browser
 
-    $arr_result = $this->pObj->objNavi_3x->recordbrowser_set_session_data( $rows );
+    $arr_result = $this->pObj->objNaviRecordBrowser->recordbrowser_set_session_data( $rows );
     if ($arr_result['error']['status'])
     {
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];

@@ -1785,7 +1785,7 @@ class tx_browser_pi1_views
       //
       // Record Browser
 
-    $template = $this->pObj->objNavi_3x->recordbrowser_get($template);
+    $template = $this->pObj->objNaviRecordBrowser->recordbrowser_get($template);
       // Record Browser
 
 
