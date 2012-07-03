@@ -432,7 +432,7 @@ class tx_browser_pi1_navi_pageBrowser
         $where    = $this->pObj->cObj->enableFields( $table );
         $andWhere = $this->pObj->objSqlFun->get_andWherePid( $table );
         $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
-        $andWhere = $this->pObj->objLocalise3x->localisationFields_where( $table );
+        $andWhere = $this->pObj->objLocalise->localisationFields_where( $table );
         $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
 //$this->pObj->dev_var_dump( $where );
           // 3.9.25, 120605: dwildt+
