@@ -620,11 +620,11 @@ class tx_browser_pi1_navi_recordbrowser
   *                                 * Feature: #27041
   *
   * @param	array		$rows: $idsForRecordBrowser
-  * @return	array		$arr_return: false in case of success, otherwise array with an error message
+  * @return	void
   * @version 4.1.2
   * @since 4.1.2
   */
-  public function recordbrowser_set_session_data( $idsForRecordBrowser )
+  public function recordbrowser_set_session_data( $rows, $idsForRecordBrowser )
   {
       // Uid of the current plugin
     $tt_content_uid = $this->pObj->cObj->data['uid'];
@@ -643,7 +643,7 @@ class tx_browser_pi1_navi_recordbrowser
         t3lib_div::devlog('[INFO/SESSION+TEMPLATING] navigation.record_browser is \'' . $value . '\' '.
           'Record browser won\'t be handled (best performance).', $this->pObj->extKey, 0);
       }
-      return false;
+      return;
     }
       // RETURN record browser isn't enabled
 
@@ -659,121 +659,170 @@ class tx_browser_pi1_navi_recordbrowser
       // Set status of the session management
 
 
-
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // RETURN rows are empty
-
-    if( empty( $idsForRecordBrowser) )
+    
+    switch( true )
     {
-        // Get the tx_browser_pi1 session array
-      $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey( $str_data_space, $this->pObj->prefixId );
-        // Empty the array with the uids of all rows
-      $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = array( );
-        // Set the tx_browser_pi1 session array
-      $GLOBALS['TSFE']->fe_user->setKey( $str_data_space, $this->pObj->prefixId, $arr_browser_session );
-      if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
-      {
-        $prompt = 'Rows are empty. Session array [' . $this->pObj->prefixId . '][mode-' . $this->mode . ']' . 
-                  '[uids_of_all_rows] will be empty.';
-        t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
-      }
-      return false;
+      case( ! empty( $idsForRecordBrowser ) ):
+        $this->recordbrowser_set_session_dataByIds( $idsForRecordBrowser );
+        break;
+      case( ! empty( $rows ) ):
+        $this->recordbrowser_set_session_dataRows( $rows );
+        break;
+      default:
+          // Get the tx_browser_pi1 session array
+        $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey( $str_data_space, $this->pObj->prefixId );
+          // Empty the array with the uids of all rows
+        $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = array( );
+          // Set the tx_browser_pi1 session array
+        $GLOBALS['TSFE']->fe_user->setKey( $str_data_space, $this->pObj->prefixId, $arr_browser_session );
+        if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+        {
+          $prompt = 'Rows are empty. Session array [' . $this->pObj->prefixId . '][mode-' . $this->mode . ']' . 
+                    '[uids_of_all_rows] will be empty.';
+          t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
+        }
+        break;
     }
-      // RETURN rows are empty
-
-
-
-//      //////////////////////////////////////////////////////////////////////////
-//      //
-//      // Get table.field for uid of the local table
-//
-//    $key_for_uid = $this->pObj->arrLocalTable['uid'];
-//
-//      // RETURN uid table.field isn't any key
-//    $key = key( $rows );
-//    if( ! isset( $rows[$key][$key_for_uid] ) )
-//    {
-//      $arr_return['error']['status'] = true;
-//      $arr_return['error']['header'] = '<h1 style="color:red">Error Record Browser</h1>';
-//      $arr_return['error']['prompt'] = '<p style="color:red">Key is missing in $rows. Key is ' . $key_for_uid . '</p>';
-//      $arr_return['error']['prompt'] = $arr_return['error']['prompt'] . '<p>' . __METHOD__ . ' (' . __LINE__ . ')</p>';
-//      if ( $this->pObj->b_drs_error )
-//      {
-//        t3lib_div::devlog('[INFO/ERROR] table.field for uid of the local table is not a key.' . $this->mode . '][uids_of_all_rows] will be empty.',  $this->pObj->extKey, 0);
-//      }
-//      return $arr_return;
-//    }
-//      // RETURN uid table.field isn't any key
-//      // Get table.field for uid of the local table
-
-
-
-//      //////////////////////////////////////////////////////////////////////////
-//      //
-//      // LOOP rows: set the array with uids
-//
-//    $arr_uid = array( );
-//    foreach( (array) $rows as $row => $elements )
-//    {
-//      $arr_uid[] = $elements[$key_for_uid];
-//    }
-//    //echo '<pre>' . var_export($arr_uid, true) . '</pre>';
-//      // LOOP rows: set the array with uids
-
-
-
-    $arr_uid = $idsForRecordBrowser;
-
     
+    return;
     
-      //////////////////////////////////////////////////////////////////////////
-      //
+  }
+
+
+
+/**
+  * recordbrowser_set_session_dataByIds: Set session data for the record browser.
+  *                                 * We need the record browser in the single view.
+  *                                 * This method must be called, before the page browser
+  *                                   changes the rows array (before limiting).
+  *                                 * Feature: #27041
+  *
+  * @param	array		$rows: $idsForRecordBrowser
+  * @return	void
+  * @version 4.1.2
+  * @since 4.1.2
+  */
+  private function recordbrowser_set_session_dataByIds( $idsForRecordBrowser )
+  {
+    $this->recordbrowser_set_session_execute( $idsForRecordBrowser );
+
+    return;
+  }
+
+
+
+/**
+  * recordbrowser_set_session_dataByIds: Set session data for the record browser.
+  *                                 * We need the record browser in the single view.
+  *                                 * This method must be called, before the page browser
+  *                                   changes the rows array (before limiting).
+  *                                 * Feature: #27041
+  *
+  * @param	array		$rows: $idsForRecordBrowser
+  * @return	void
+  * @version 4.1.2
+  * @since 4.1.2
+  */
+  private function recordbrowser_set_session_execute( $ids )
+  {
       // No session: set global array
-
     $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = array( );
     if( ! $this->pObj->objSession->bool_session_enabled )
     {
-      $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $arr_uid;
+      $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $ids;
       if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
       {
-        t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] No session (less performance): ' .
-          'global array uids_of_all_rows is set with ' .
-          '#' . count( $arr_uid ) . ' uids.',  $this->pObj->extKey, 0 );
+        $prompt = 'No session (less performance): global array uids_of_all_rows is set with ' . 
+                  '#' . count( $ids ) . ' uids.';
+        t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
       }
-      return false;
+      return;
     }
       // No session: set global array
 
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
       // Get the name of the session data space
-
     $str_data_space = $this->pObj->objSession->getNameOfDataSpace( );
-      // Get the name of the session data space
 
-
-
-      //////////////////////////////////////////////////////////////////////////
-      //
       // Set the session array
-
       // Get the tx_browser_pi1 session array
     $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey( $str_data_space, $this->pObj->prefixId );
       // Overwrite the array with the uids of all rows
-    $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $arr_uid;
+    $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $ids;
       // Set the tx_browser_pi1 session array
     $GLOBALS['TSFE']->fe_user->setKey( $str_data_space, $this->pObj->prefixId, $arr_browser_session );
     if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
     {
-      t3lib_div::devlog('[INFO/TEMPLATING] Session array [' . $str_data_space . '][' . $this->pObj->prefixId . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
-        '#' . count($arr_uid) . ' uids.',  $this->pObj->extKey, 0);
+      $prompt = 'Session array [' . $str_data_space . '][' . $this->pObj->prefixId . ']' .
+                '[mode-' . $this->mode . '][uids_of_all_rows] is set with #' . count($ids) . ' uids.';
+      t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
     }
       // Set the session array
 
-    return false;
+    return;
+  }
+
+
+
+
+
+
+
+
+
+ /**
+  * recordbrowser_set_session_dataRows: Set session data for the record browser.
+  *                                 * We need the record browser in the single view.
+  *                                 * This method must be called, before the page browser
+  *                                   changes the rows array (before limiting).
+  *                                 * Feature: #27041
+  *
+  * @param	array		$rows: $idsForRecordBrowser
+  * @return	array		$arr_return: false in case of success, otherwise array with an error message
+  * @version 4.1.2
+  * @since 4.1.2
+  */
+  private function recordbrowser_set_session_dataRows( $rows )
+  {
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Get table.field for uid of the local table
+
+    $key_for_uid = $this->pObj->arrLocalTable['uid'];
+
+      // RETURN uid table.field isn't any key
+    $key = key( $rows );
+    if( ! isset( $rows[$key][$key_for_uid] ) )
+    {
+      $arr_return['error']['status'] = true;
+      $arr_return['error']['header'] = '<h1 style="color:red">Error Record Browser</h1>';
+      $arr_return['error']['prompt'] = '<p style="color:red">Key is missing in $rows. Key is ' . $key_for_uid . '</p>';
+      $arr_return['error']['prompt'] = $arr_return['error']['prompt'] . '<p>' . __METHOD__ . ' (' . __LINE__ . ')</p>';
+      if ( $this->pObj->b_drs_error )
+      {
+        t3lib_div::devlog('[INFO/ERROR] table.field for uid of the local table is not a key.' . $this->mode . '][uids_of_all_rows] will be empty.',  $this->pObj->extKey, 0);
+      }
+      return $arr_return;
+    }
+      // RETURN uid table.field isn't any key
+      // Get table.field for uid of the local table
+
+
+
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // LOOP rows: set the array with uids
+
+    $arr_uid = array( );
+    foreach( (array) $rows as $row => $elements )
+    {
+      $arr_uid[] = $elements[$key_for_uid];
+    }
+    //echo '<pre>' . var_export($arr_uid, true) . '</pre>';
+      // LOOP rows: set the array with uids
+
+    $this->recordbrowser_set_session_execute( $arr_uid );
+
+    return;
   }
 
 

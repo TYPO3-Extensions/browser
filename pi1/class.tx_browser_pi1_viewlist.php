@@ -247,6 +247,7 @@ $this->pObj->dev_var_dump( 'Consolidate code!', $arr_return );
     if( isset( $arr_return['data']['res'] ) )
     {
       $res = $arr_return['data']['res'];
+      $idsForRecordBrowser = null;
     }
     else
     {
@@ -362,7 +363,7 @@ $this->pObj->dev_var_dump( 'Consolidate code!', $arr_return );
       //  #38612, 120703, dwildt, 1-
 //    $arr_result = $this->pObj->objNaviRecordBrowser->recordbrowser_set_session_data_3x( $rows );
       //  #38612, 120703, dwildt, 1+
-    $arr_result = $this->pObj->objNaviRecordBrowser->recordbrowser_set_session_data( $idsForRecordBrowser );
+    $arr_result = $this->pObj->objNaviRecordBrowser->recordbrowser_set_session_data( $rows, $idsForRecordBrowser );
     if ($arr_result['error']['status'])
     {
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
