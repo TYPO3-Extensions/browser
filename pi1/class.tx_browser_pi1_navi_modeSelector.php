@@ -38,14 +38,20 @@
  *
  *
  *
- *   52: class tx_browser_pi1_navi_modeSelector
- *   87:     public function __construct($parentObj)
+ *   58: class tx_browser_pi1_navi_modeSelector
+ *   93:     public function __construct($parentObj)
  *
  *              SECTION: Main
- *  117:     public function get( $content )
- *  153:     public function get_tabs( $content )
+ *  120:     public function get( $content )
+ *  156:     public function get_tabs( $content )
  *
- * TOTAL FUNCTIONS: 3
+ *              SECTION: Init
+ *  247:     public function prepaireModeSelector()
+ *
+ *              SECTION: Templating
+ *  319:     public function tmplModeSelector($arr_data)
+ *
+ * TOTAL FUNCTIONS: 5
  * (This index is automatically created/updated by the extension "extdeveval")
  *
  */
