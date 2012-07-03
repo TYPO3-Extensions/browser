@@ -252,7 +252,7 @@ class tx_browser_pi1_viewlist
       $res = $arr_return['limited']['data']['res'];
       $idsForRecordBrowser = $arr_return['unlimited']['data']['idsOfHitsWoCurrTranslation'];
 //var_dump( __METHOD__, __LINE__, $arr_return );
-var_dump( __METHOD__, __LINE__, $idsForRecordBrowser );
+//var_dump( __METHOD__, __LINE__, $idsForRecordBrowser );
     }
       // 120703, dwildt+
   
@@ -332,6 +332,16 @@ var_dump( __METHOD__, __LINE__, $idsForRecordBrowser );
       if ($this->pObj->b_drs_warn)
       {
         t3lib_div::devLog('[WARN/TEMPLATING/CAL/UI]: +Browser Calendar set ignore_empty_rows_rule to true!', $this->pObj->extKey, 2);
+      }
+      if( $this->pObj->conf['navigation.']['record_browser'] == 1 )
+      {
+        if ( $this->pObj->b_drs_warn )
+        {
+          $prompt = 'Record browser isn\'t supported from version 4.1.2';
+          t3lib_div::devlog( '[WARN/CAL+RECORDBROWSER] ' . $prompt , $this->pObj->extKey, 3);
+          $prompt = 'Rows must converted. PHP snippet must coded by the TYPO3-Browser-Team!';
+          t3lib_div::devlog( '[WARN/CAL+RECORDBROWSER] ' . $prompt , $this->pObj->extKey, 2);
+        }
       }
     }
     $this->pObj->rows = $rows;
@@ -845,7 +855,7 @@ var_dump( __METHOD__, __LINE__ );
   * rows_sqlIdsOfRowsWiTranslationOnly( ) : Get the ids of default or translated rows
   *
   * @return	array		$arr_return: Contains the ids
-  * @version 3.9.13
+  * @version 4.1.2
   * @since   3.9.13
   */
   private function rows_sqlIdsOfRowsWiTranslationOnly( )
@@ -858,12 +868,14 @@ var_dump( __METHOD__, __LINE__ );
     {
       return $arr_return;
     }
-    $idsWiCurrTranslation = $arr_return['data']['idsWiCurrTranslation'];
-    $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
+    $idsWiCurrTranslationLimited    = $arr_return['limited']['data']['idsWiCurrTranslation'];
+    $idsOfTranslationRowsLimited    = $arr_return['limited']['data']['idsOfTranslationRows'];
+    $idsWiCurrTranslationUnlimited  = $arr_return['unlimited']['data']['idsWiCurrTranslation'];
+    $idsOfTranslationRowsUnlimited  = $arr_return['unlimited']['data']['idsOfTranslationRows'];
       // Get ids of records, which match the rules and have a translation for the current language
 
-    $idsOfDefaultLanguageRows = array( );
-    if( empty ( $idsOfTranslationRows ) )
+    $idsOfDefaultLanguageRowsLimited = array( );
+    if( empty ( $idsOfTranslationRowsLimited ) )
     {
         // Get ids of records of default language, which match the rules but haven't any translation
       $withAllIds = array( );
@@ -872,24 +884,27 @@ var_dump( __METHOD__, __LINE__ );
       {
         return $arr_return;
       }
-      $idsOfDefaultLanguageRows   = $arr_return['limited']['data']['idsOfHitsWoCurrTranslation'];
+      $idsOfDefaultLanguageRowsLimited    = $arr_return['limited']['data']['idsOfHitsWoCurrTranslation'];
+      $idsOfDefaultLanguageRowsUnlimited  = $arr_return['unlimited']['data']['idsOfHitsWoCurrTranslation'];
         // Get ids of records of default language, which match the rules but haven't any translation
 
-      if( empty ( $idsOfDefaultLanguageRows ) )
+      if( empty ( $idsOfDefaultLanguageRowsLimited ) )
       {
         return $arr_return;
       }
     }
-    
+
+      // List view
       // Merge all ids
     $withIds = array_merge(
-                ( array ) $idsWiCurrTranslation,
-                ( array ) $idsOfTranslationRows,
-                ( array ) $idsOfDefaultLanguageRows
+                ( array ) $idsWiCurrTranslationLimited,
+                ( array ) $idsOfTranslationRowsLimited,
+                ( array ) $idsOfDefaultLanguageRowsLimited
               );
 
       // Get rows for the list view
-    $arr_return = $this->rows_sqlRowsbyIds( $withIds );
+    $arr_return['limited'] = $this->rows_sqlRowsbyIds( $withIds );
+      // List view
 
     return $arr_return;
   }
@@ -990,7 +1005,7 @@ var_dump( __METHOD__, __LINE__ );
  *
  * @param	[type]		$$withIds: ...
  * @return	array		$arr_return: Array with two elements with the ids
- * @version 3.9.13
+ * @version 4.1.2
  * @since   3.9.13
  */
   private function rows_sqlIdsOfRowsWiTranslation( $withIds )
@@ -1097,29 +1112,96 @@ var_dump( __METHOD__, __LINE__ );
     $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                         'Don\'t use the query in a localised context.';
     $debugTrailLevel  = 1;
-    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
+    $arr_return['limited'] = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
       // Execute
 
       // Error management
-    if( $arr_return['error']['status'] )
+    if( $arr_return['limited']['error']['status'] )
     {
-      return $arr_return;
+      return $arr_return['error'] = $arr_return['limited']['error'];
     }
       // Error management
 
       // Get ids of rows with translated records and ids of translated records
-    $res = $arr_return['data']['res'];
+    $res = $arr_return['limited']['data']['res'];
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
-      $arr_return['data']['idsWiCurrTranslation'][] = $row[$tableL10nParent];
-      $arr_return['data']['idsOfTranslationRows'][] = $row[$tableUid];
+      $arr_return['limited']['data']['idsWiCurrTranslation'][] = $row[$tableL10nParent];
+      $arr_return['limited']['data']['idsOfTranslationRows'][] = $row[$tableUid];
     }
       // Get ids of rows with translated records and ids of translated records
 
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
+
+    
+    
+      //////////////////////////////////////////////////
+      //
+      // RETURN record browser isn't enabled
+    
+    if( ! ( $this->pObj->conf['navigation.']['record_browser'] == 1 ) )
+    {
+      if ( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+      {
+        $value = $this->pObj->conf['navigation.']['record_browser'];
+        t3lib_div::devlog('[INFO/SQL+RECORDBROWSER] navigation.record_browser is \'' . $value . '\' '.
+          'Record browser doesn\'t cause any SQL query (best performance).', $this->pObj->extKey, 0);
+      }
+      return $arr_return;
+    }
+      // RETURN record browser isn't enabled
+
+
+    
+      //////////////////////////////////////////////////
+      //
+      // Workflow for recordbrowser
+    
+      // Get query without any limit
+    $limit  = null;
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+      // Get query
+
+      // Execute query
+    $promptOptimise           = 'Maintain the performance? Disable the record browser of the single view.';
+    $debugTrailLevel          = 1;
+    $arr_return['unlimited']  = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
+      // Execute query
+
+      // Error management
+    if( $arr_return['unlimited']['error']['status'] )
+    {
+      $arr_return['error'] = $arr_return['unlimited']['error'];
+      return $arr_return;
+    }
+      // Error management
+
+      // Get the SQL result
+    $res = $arr_return['unlimited']['data']['res'];
+
+      // Get the ids
+    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+    {
+      $arr_return['unlimited']['data']['idsWiCurrTranslation'][] = $row[$tableL10nParent];
+      $arr_return['unlimited']['data']['idsOfTranslationRows'][] = $row[$tableUid];
+    }
+      // Get the ids
+
+      // Free SQL result
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+    
     return $arr_return;
+      // Workflow for recordbrowser
 
   }
 
@@ -1280,7 +1362,7 @@ var_dump( __METHOD__, __LINE__ );
       if ( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
       {
         $value = $this->pObj->conf['navigation.']['record_browser'];
-        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] navigation.record_browser is \'' . $value . '\' '.
+        t3lib_div::devlog('[INFO/SQL+RECORDBROWSER] navigation.record_browser is \'' . $value . '\' '.
           'Record browser doesn\'t cause any SQL query (best performance).', $this->pObj->extKey, 0);
       }
       return $arr_return;
@@ -1343,7 +1425,7 @@ var_dump( __METHOD__, __LINE__ );
  * rows_sqlLanguageDefault( ): Building the SQL query, returns the SQL result.
  *
  * @return	array		$arr_return: Contains the SQL res or an error message
- * @version 3.9.13
+ * @version 4.1.2
  * @since   3.9.13
  */
   private function rows_sqlLanguageDefault( )
