@@ -819,7 +819,7 @@ class tx_browser_pi1_navi_recordbrowser
     }
       // Set the session array
 
-var_dump( __METHOD__, __LINE__, $ids );
+var_dump( __METHOD__, __LINE__, $ids, $arr_browser_session );
     return;
   }
 
