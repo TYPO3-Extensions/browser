@@ -247,7 +247,20 @@ class tx_browser_pi1_viewlist
       $content = $arr_return['error']['header'] . $arr_return['error']['prompt'];
       return $content;
     }
+    
+      // 120703, dwildt, 1-
     $res = $arr_return['data']['res'];
+      // 120703, dwildt+
+    if( isset( $arr_return['data']['res'] ) )
+    {
+      $res = $arr_return['data']['res'];
+    }
+    else
+    {
+      $res = $arr_return['limit']['data']['res'];
+    }
+      // 120703, dwildt+
+  
       // Building SQL query and get the SQL result
 
       // Set rows
@@ -813,8 +826,8 @@ var_dump( __METHOD__, __LINE__ );
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
         $arr_return = $this->rows_sqlLanguageDefault( );
-var_dump( __METHOD__, __LINE__, $arr_return );
-        $arr_return = $arr_return['limited'];
+//var_dump( __METHOD__, __LINE__, $arr_return );
+//        $arr_return = $arr_return['limited'];
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
         $arr_return = $this->rows_sqlLanguageFirstDefaultOrFirstTranslated( );
