@@ -859,12 +859,12 @@ var_dump( __METHOD__, __LINE__ );
       {
         return $arr_return;
       }
-      $idsOfDefaultLanguageRows   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
+      $idsOfDefaultLanguageRows   = $arr_return['limited']['data']['idsOfHitsWoCurrTranslation'];
         // Get ids of records of default language, which match the rules but haven't any translation
 
       if( empty ( $idsOfDefaultLanguageRows ) )
       {
-        return $arr_return;
+        return $arr_return['limited'];
       }
     }
     
@@ -1255,8 +1255,13 @@ var_dump( __METHOD__, __LINE__ );
 
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
+
     
+    
+      //////////////////////////////////////////////////
+      //
       // RETURN record browser isn't enabled
+    
     if( ! ( $this->pObj->conf['navigation.']['record_browser'] == 1 ) )
     {
       if ( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
@@ -1269,6 +1274,12 @@ var_dump( __METHOD__, __LINE__ );
     }
       // RETURN record browser isn't enabled
 
+
+    
+      //////////////////////////////////////////////////
+      //
+      // Workflow for recordbrowser
+    
       // Get query without any limit
     $limit  = null;
     $query  = $GLOBALS['TYPO3_DB']->SELECTquery
@@ -1305,11 +1316,12 @@ var_dump( __METHOD__, __LINE__ );
       $arr_return['unlimited']['data']['idsOfHitsWoCurrTranslation'][] = $row[$tableUid];
     }
       // Get the ids
-var_dump( __METHOD__, __LINE__, $arr_return );
+
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
     
     return $arr_return;
+      // Workflow for recordbrowser
   }
 
 
