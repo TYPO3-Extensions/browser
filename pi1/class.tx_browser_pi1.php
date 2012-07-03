@@ -735,7 +735,7 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // Prepaire modeSelector
 
-    $arr_result = $this->objNavi->prepaireModeSelector( );
+    $arr_result = $this->objNavi_3x->prepaireModeSelector( );
     if( $arr_result['error']['status'] )
     {
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
@@ -1717,7 +1717,7 @@ class tx_browser_pi1 extends tslib_pibase {
 
       // Class 3.x with methods for the modeSelector, the pageBrowser and the index browser
     require_once('class.tx_browser_pi1_navi_3x.php');
-    $this->objNavi = new tx_browser_pi1_navi_3x( $this );
+    $this->objNavi_3x = new tx_browser_pi1_navi_3x( $this );
 
       // Class with methods for the index browser
     require_once('class.tx_browser_pi1_navi_indexBrowser.php');
@@ -1910,15 +1910,15 @@ class tx_browser_pi1 extends tslib_pibase {
       // class.tx_browser_pi1_navi.php
 
       // [Array] The current TypoScript configuration array
-    $this->objNavi->conf      = $this->conf;
+    $this->objNavi_3x->conf      = $this->conf;
       // [Integer] The current mode (from modeselector)
-    $this->objNavi->mode      = $this->piVar_mode;
+    $this->objNavi_3x->mode      = $this->piVar_mode;
       // [String] 'list' or 'single': The current view
-    $this->objNavi->view      = $this->view;
+    $this->objNavi_3x->view      = $this->view;
       // [Array] The TypoScript configuration array of the current view
-    $this->objNavi->conf_view = $conf_view;
+    $this->objNavi_3x->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
-    $this->objNavi->conf_path = $conf_path;
+    $this->objNavi_3x->conf_path = $conf_path;
 
 
 
@@ -1970,6 +1970,23 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->objNaviPageBrowser->conf_view = $conf_view;
       // [String] TypoScript path to the current view. I.e. views.single.1
     $this->objNaviPageBrowser->conf_path = $conf_path;
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // class.tx_browser_pi1_navi_recordbrowser.php
+
+      // [Array] The current TypoScript configuration array
+    $this->objNaviRecordBrowser->conf      = $this->conf;
+      // [Integer] The current mode (from modeselector)
+    $this->objNaviRecordBrowser->mode      = $this->piVar_mode;
+      // [String] 'list' or 'single': The current view
+    $this->objNaviRecordBrowser->view      = $this->view;
+      // [Array] The TypoScript configuration array of the current view
+    $this->objNaviRecordBrowser->conf_view = $conf_view;
+      // [String] TypoScript path to the current view. I.e. views.single.1
+    $this->objNaviRecordBrowser->conf_path = $conf_path;
 
 
 

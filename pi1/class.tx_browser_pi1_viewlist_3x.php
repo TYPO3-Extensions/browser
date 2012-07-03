@@ -876,7 +876,7 @@ class tx_browser_pi1_viewlist_3x
       // 110801, dwildt
     //$arr_data['rows']           = $rows;
     $arr_data['rows']           = $this->pObj->rows;
-    $arr_result = $this->pObj->objNavi->indexBrowser( $arr_data );
+    $arr_result = $this->pObj->objNavi_3x->indexBrowser( $arr_data );
     if ($arr_result['error']['status'])
     {
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
@@ -891,7 +891,7 @@ class tx_browser_pi1_viewlist_3x
     $this->pObj->rows = $rows;
     unset($arr_result);
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 1,  'after $this->pObj->objNavi->indexBrowser( )' );
+    $this->pObj->timeTracking_log( 1,  'after $this->pObj->objNavi_3x->indexBrowser( )' );
       // HTML index browser
 
 
@@ -900,14 +900,14 @@ class tx_browser_pi1_viewlist_3x
       //
       // record browser
 
-    $arr_result = $this->pObj->objNavi->recordbrowser_set_session_data( $rows );
+    $arr_result = $this->pObj->objNavi_3x->recordbrowser_set_session_data( $rows );
     if ($arr_result['error']['status'])
     {
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
       return $this->pObj->pi_wrapInBaseClass( $prompt );
     }
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 1,  'after $this->pObj->objNavi->recordbrowser_set_session_data( )' );
+    $this->pObj->timeTracking_log( 1,  'after $this->pObj->objNavi_3x->recordbrowser_set_session_data( )' );
       // record browser
 
 
@@ -921,7 +921,7 @@ class tx_browser_pi1_viewlist_3x
     $arr_data['template']   = $template;
     $arr_data['rows']       = $rows;
 
-    $arr_result = $this->pObj->objNavi->tmplPageBrowser( $arr_data );
+    $arr_result = $this->pObj->objNavi_3x->tmplPageBrowser( $arr_data );
     unset($arr_data);
     $template         = $arr_result['data']['template'];
     $rows             = $arr_result['data']['rows'];
@@ -929,16 +929,16 @@ class tx_browser_pi1_viewlist_3x
     $this->pObj->rows = $rows;
     unset($arr_result);
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 1,  'after $this->pObj->objNavi->tmplPageBrowser( )' );
+    $this->pObj->timeTracking_log( 1,  'after $this->pObj->objNavi_3x->tmplPageBrowser( )' );
       // HTML page browser
 
       // HTML mode selector
     $arr_data['template']     = $template;
     $arr_data['arrModeItems'] = $this->pObj->arrModeItems;
-    $template = $this->pObj->objNavi->tmplModeSelector( $arr_data );
+    $template = $this->pObj->objNavi_3x->tmplModeSelector( $arr_data );
     unset($arr_data);
       // Prompt the expired time to devlog
-    $this->pObj->timeTracking_log( 1,  'after $this->pObj->objNavi->tmplModeSelector( )' );
+    $this->pObj->timeTracking_log( 1,  'after $this->pObj->objNavi_3x->tmplModeSelector( )' );
       // HTML mode selector
       // Building the template
 
