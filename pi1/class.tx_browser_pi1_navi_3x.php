@@ -1892,7 +1892,7 @@ class tx_browser_pi1_navi_3x
  /**
   * recordbrowser_callListView: Call the listView. It is needed for the record browser in the single view,
   *                             if there isn't any information about all available records.
-  *                             The method allocates the global array $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] and
+  *                             The method allocates the global array $this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'] and
   *                             returns it.
   *                             The method will be called in two cases:
   *                             * Session management is disabled
@@ -1929,7 +1929,7 @@ class tx_browser_pi1_navi_3x
     $curr_view        = $this->pObj->view;
       // Set view to list
     $this->pObj->view = 'list';
-      // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows']
+      // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows']
       // #33892, 120214, dwildt-
     //$dummy = $this->pObj->objViews->listView($this->pObj->str_template_raw);
       // #33892, 120214, dwildt+
@@ -1983,6 +1983,7 @@ class tx_browser_pi1_navi_3x
     $singlePid      = (int) $this->pObj->piVars['showUid'];
       // Uid of the current plugin
     $tt_content_uid = $this->pObj->cObj->data['uid'];
+    $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
 
 
 
@@ -2019,7 +2020,7 @@ class tx_browser_pi1_navi_3x
     $bool_display_without_result = $conf_record_browser['display.']['withoutResult'];
     if(!$bool_display_without_result)
     {
-      if(empty($this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows']))
+      if(empty($this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows']))
       {
         if ($this->pObj->b_drs_templating)
         {
@@ -2037,7 +2038,7 @@ class tx_browser_pi1_navi_3x
       //
       // Get first, current and last positions and the position array
 
-    $uids_of_all_rows = $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'];
+    $uids_of_all_rows = $this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'];
       // Position array: the position (0, 1, ... , n) will be the value, the uid of the record will be the key
     $pos_of_all_rows  = array_flip($uids_of_all_rows);
 
@@ -2308,6 +2309,7 @@ class tx_browser_pi1_navi_3x
   {
       // Uid of the current plugin
     $tt_content_uid = $this->pObj->cObj->data['uid'];
+    $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
 
 
 
@@ -2349,7 +2351,7 @@ class tx_browser_pi1_navi_3x
         // Get the tx_browser_pi1 session array
       $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
         // Empty the array with the uids of all rows
-      $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = array();
+      $arr_browser_session[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'] = array();
         // Set the tx_browser_pi1 session array
       $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_browser_session);
       if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
@@ -2405,10 +2407,10 @@ class tx_browser_pi1_navi_3x
       //
       // No session: set global array
 
-    $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = array( );
+    $this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'] = array( );
     if( ! $this->pObj->objSession->bool_session_enabled )
     {
-      $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $arr_uid;
+      $this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'] = $arr_uid;
       if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
       {
         t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] No session (less performance): ' .
@@ -2437,7 +2439,7 @@ class tx_browser_pi1_navi_3x
       // Get the tx_browser_pi1 session array
     $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey( $str_data_space, $this->pObj->prefixId );
       // Overwrite the array with the uids of all rows
-    $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $arr_uid;
+    $arr_browser_session[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'] = $arr_uid;
       // Set the tx_browser_pi1 session array
     $GLOBALS['TSFE']->fe_user->setKey( $str_data_space, $this->pObj->prefixId, $arr_browser_session );
     if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )

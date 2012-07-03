@@ -248,6 +248,7 @@ class tx_browser_pi1_session
 
       // Uid of the current plugin
     $tt_content_uid = $this->pObj->cObj->data['uid'];
+    $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
 
 
 
@@ -263,7 +264,7 @@ class tx_browser_pi1_session
           'Be aware of less performance!', $this->pObj->extKey, 2);
         t3lib_div::devlog('[HELP/PERFORMANCE+SESSION] Enable session for better performance!', $this->pObj->extKey, 1);
       }
-        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows']
+        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows']
       $this->pObj->objNav->recordbrowser_callListView();
 // dwildt, 111107
       return;
@@ -307,7 +308,7 @@ class tx_browser_pi1_session
       //
       // DRS - Development Reporting System
 
-    if( empty( $arr_session_browser[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] ) )
+    if( empty( $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'] ) )
     {
       if ($this->pObj->b_drs_warn)
       {
@@ -316,13 +317,13 @@ class tx_browser_pi1_session
           $this->pObj->extKey, 2);
       }
     }
-    if( ! empty( $arr_session_browser[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] ) )
+    if( ! empty( $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'] ) )
     {
       if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
       {
         t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session array [' . $str_data_space . ']' .
           '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][cache][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
-          '#' . count($arr_session_browser[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
+          '#' . count($arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
       }
     }
       // DRS - Development Reporting System
@@ -333,12 +334,12 @@ class tx_browser_pi1_session
       //
       // Session data is not set: set tx_browser_pi1['uids_of_all_rows'] !
 
-    if( ! isset( $arr_session_browser[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] ) )
+    if( ! isset( $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'] ) )
     {
-        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows']
+        // listView will set $this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows']
       $this->pObj->objNaviRecordBrowser->recordbrowser_callListView( );
         // Set the session array uids_of_all_rows
-      $arr_session_browser[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'];
+      $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'] = $this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'];
         // Write session data tx_browser_pi1
       $GLOBALS['TSFE']->fe_user->setKey($str_data_space, $this->pObj->prefixId, $arr_session_browser);
         // DRS - Development Reporting System
@@ -346,11 +347,11 @@ class tx_browser_pi1_session
       {
         t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session array [' . $str_data_space . ']' .
           '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][cache][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
-          '#' . count($this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
+          '#' . count($this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
       }
 // dwildt, 111107
 //          // Get uids of all records
-//        $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $arr_session_browser[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'];
+//        $this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'] = $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'];
     }
       // Session data is not set: set tx_browser_pi1['uids_of_all_rows'] !
 
@@ -360,7 +361,7 @@ class tx_browser_pi1_session
       //
       // Set the global $this->pObj->uids_of_all_rows
 
-    $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $arr_session_browser[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'];
+    $this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'] = $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'];
     return;
       // Set the global $this->pObj->uids_of_all_rows
   }
