@@ -872,8 +872,8 @@ $this->pObj->dev_var_dump( $arr_return );
     {
       return $arr_return;
     }
-    $idsWiCurrTranslationLimited    = $arr_return['limited']['data']['idsWiCurrTranslation'];
-    $idsOfTranslationRowsLimited    = $arr_return['limited']['data']['idsOfTranslationRows'];
+    $idsWiCurrTranslationLimited    = $arr_return['data']['idsWiCurrTranslation'];
+    $idsOfTranslationRowsLimited    = $arr_return['data']['idsOfTranslationRows'];
       // #38612, 120703, dwildt, 2+
     $idsWiCurrTranslationUnlimited  = $arr_return['unlimited']['data']['idsWiCurrTranslation'];
     $idsOfTranslationRowsUnlimited  = $arr_return['unlimited']['data']['idsOfTranslationRows'];
@@ -889,7 +889,7 @@ $this->pObj->dev_var_dump( $arr_return );
       {
         return $arr_return;
       }
-      $idsOfDefaultLanguageRowsLimited    = $arr_return['limited']['data']['idsOfHitsWoCurrTranslation'];
+      $idsOfDefaultLanguageRowsLimited    = $arr_return['data']['idsOfHitsWoCurrTranslation'];
         // #38612, 120703, dwildt, 1+
       $idsOfDefaultLanguageRowsUnlimited  = $arr_return['unlimited']['data']['idsOfHitsWoCurrTranslation'];
         // Get ids of records of default language, which match the rules but haven't any translation
@@ -909,7 +909,7 @@ $this->pObj->dev_var_dump( $arr_return );
               );
 
       // Get rows for the list view
-    $arr_return['limited'] = $this->rows_sqlRowsbyIds( $withIds );
+    $arr_return = $this->rows_sqlRowsbyIds( $withIds );
       // List view
 
     return $arr_return;
@@ -935,8 +935,8 @@ $this->pObj->dev_var_dump( $arr_return );
     {
       return $arr_return;
     }
-    $withoutIds           = $arr_return['limited']['data']['idsWiCurrTranslation'];
-    $idsOfTranslationRows = $arr_return['limited']['data']['idsOfTranslationRows'];
+    $withoutIds           = $arr_return['data']['idsWiCurrTranslation'];
+    $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
       // Get ids of records, which match the rules and have a translation for the current language
 
       // Get ids of records of default language, which match the rules but haven't any translation
@@ -945,7 +945,7 @@ $this->pObj->dev_var_dump( $arr_return );
     {
       return $arr_return;
     }
-    $idsOfDefaultLanguageRows   = $arr_return['limited']['data']['idsOfHitsWoCurrTranslation'];
+    $idsOfDefaultLanguageRows   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
       // Get ids of records of default language, which match the rules but haven't any translation
 
       // Merge all ids
@@ -981,7 +981,7 @@ $this->pObj->dev_var_dump( $arr_return );
     {
       return $arr_return;
     }
-    $idsOfDefaultLanguageRows   = $arr_return['limited']['data']['idsOfHitsWoCurrTranslation'];
+    $idsOfDefaultLanguageRows   = $arr_return['data']['idsOfHitsWoCurrTranslation'];
       // Get ids of records of default language, which match the rules
 
       // Get ids of the translation records of the matched default records
@@ -1119,22 +1119,22 @@ $this->pObj->dev_var_dump( $arr_return );
     $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                         'Don\'t use the query in a localised context.';
     $debugTrailLevel  = 1;
-    $arr_return['limited'] = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
+    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
       // Execute
 
       // Error management
-    if( $arr_return['limited']['error']['status'] )
+    if( $arr_return['error']['status'] )
     {
-      return $arr_return['error'] = $arr_return['limited']['error'];
+      return $arr_return;
     }
       // Error management
 
       // Get ids of rows with translated records and ids of translated records
-    $res = $arr_return['limited']['data']['res'];
+    $res = $arr_return['data']['res'];
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
-      $arr_return['limited']['data']['idsWiCurrTranslation'][] = $row[$tableL10nParent];
-      $arr_return['limited']['data']['idsOfTranslationRows'][] = $row[$tableUid];
+      $arr_return['data']['idsWiCurrTranslation'][] = $row[$tableL10nParent];
+      $arr_return['data']['idsOfTranslationRows'][] = $row[$tableUid];
     }
       // Get ids of rows with translated records and ids of translated records
 
