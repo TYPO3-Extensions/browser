@@ -864,7 +864,7 @@ var_dump( __METHOD__, __LINE__ );
 
       if( empty ( $idsOfDefaultLanguageRows ) )
       {
-        return $arr_return['limited'];
+        return $arr_return;
       }
     }
     
@@ -1119,7 +1119,7 @@ var_dump( __METHOD__, __LINE__ );
   *
   * @param	array		$withoutIds : Ids of rows, which have a translated record
   * @return	array		$arr_return : Contains the ids of rows
-  * @version 3.9.13
+  * @version 4.1.2
   * @since   3.9.13
   */
   private function rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds )
