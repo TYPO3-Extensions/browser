@@ -484,11 +484,13 @@
       // +++ This snippet is corresponding with the mode snippet in tx_brwoser_pi1_config::prepare_piVars() !!!
 
       // Security
+var_dump( __METHOD__, __LINE__, $this->pObj->piVars['mode'], $this->pObj->piVar_mode );
     if ( isset( $this->pObj->piVars['mode'] ) )
     {
       $this->pObj->piVars['mode'] = $this->secure_piVar( $this->pObj->piVars['mode'], 'integer' );
     }
       // Security
+var_dump( __METHOD__, __LINE__, $this->pObj->piVars['mode'], $this->pObj->piVar_mode );
 
       // Set the global piVar_mode
     if ( ! isset($this->pObj->piVars['mode'] ) )
@@ -500,14 +502,17 @@
         $firstKeyWoDot 		= substr( $firstKeyWiDot, 0, strlen($firstKeyWiDot ) - 1 );
         $this->pObj->piVar_mode = $firstKeyWoDot;
       }
+var_dump( __METHOD__, __LINE__, $this->pObj->piVars['mode'], $this->pObj->piVar_mode );
       if ( ! is_array( $this->pObj->conf['views.'][$viewWiDot] ) )
       {
         $this->pObj->piVar_mode = $this->pObj->piVars['mode'];
       }
+var_dump( __METHOD__, __LINE__, $this->pObj->piVars['mode'], $this->pObj->piVar_mode );
     }
     else
     {
       $this->pObj->piVar_mode = $this->pObj->piVars['mode'];
+var_dump( __METHOD__, __LINE__, $this->pObj->piVars['mode'], $this->pObj->piVar_mode );
     }
       // Set the global piVar_mode
 
