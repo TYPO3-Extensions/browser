@@ -935,8 +935,8 @@ $this->pObj->dev_var_dump( $arr_return );
     {
       return $arr_return;
     }
-    $withoutIds           = $arr_return['data']['idsWiCurrTranslation'];
-    $idsOfTranslationRows = $arr_return['data']['idsOfTranslationRows'];
+    $withoutIds           = $arr_return['limited']['data']['idsWiCurrTranslation'];
+    $idsOfTranslationRows = $arr_return['limited']['data']['idsOfTranslationRows'];
       // Get ids of records, which match the rules and have a translation for the current language
 
       // Get ids of records of default language, which match the rules but haven't any translation
@@ -1222,14 +1222,35 @@ $this->pObj->dev_var_dump( $arr_return );
   *                                       ignored
   *
   * @param	array		$withoutIds : Ids of rows, which have a translated record
+  * @param	boolean		$limited    : true: query gets a limit
   * @return	array		$arr_return : Contains the ids of rows
   * @version 4.1.2
   * @since   3.9.13
   */
-  private function rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds )
+  private function rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds, $limited=true )
   {
-    $arr_return = array( );
+    $arr_return = null;
 
+      // #38612, 120703, dwildt+
+    if( $limited == false )
+    {
+        // RETURN record browser isn't enabled
+      if( ! ( $this->pObj->conf['navigation.']['record_browser'] == 1 ) )
+      {
+          // DRS
+        if ( $this->pObj->b_drs_session || $this->pObj->b_drs_browser )
+        {
+          $value = $this->pObj->conf['navigation.']['record_browser'];
+          t3lib_div::devlog('[INFO/SQL+RECORDBROWSER] navigation.record_browser is \'' . $value . '\' '.
+            'Record browser doesn\'t cause any SQL query (best performance).', $this->pObj->extKey, 0);
+        }
+        return $arr_return;
+          // DRS
+      }
+        // RETURN record browser isn't enabled
+    }
+      // #38612, 120703, dwildt+
+    
       // SWITCH $int_localisation_mode
     switch( $this->pObj->objLocalise->int_localisation_mode )
     {
@@ -1302,22 +1323,31 @@ $this->pObj->dev_var_dump( $arr_return );
       // #9917: Selecting a random sample from a set of rows
     $orderBy  = $this->pObj->objSqlInit->statements['listView']['orderBy'];
 
-      // LIMIT  : reduce amount of rows by amount of translated rows
-    $limit  = $this->conf_view['limit'];
-    list( $start, $results_at_a_time ) = explode( ',', $limit );
-    $results_at_a_time = ( int ) $results_at_a_time - count ( $withoutIds );
-    if( $results_at_a_time < 0 )
+    switch( $limited )
     {
-      $prompt = 'Sorry, this error shouldn\'t occurred: Amount of displayed rows is \'' . $results_at_a_time . '\'.<br />
-                <br />
-                Method: ' . __METHOD__ . '<br />
-                Line: ' . __LINE__ . '<br />
-                <br />
-                TYPO3 Browser';
-      echo $prompt;
+      case( false ):
+        $limit  = null;
+        break;
+      case( true ):
+      default:
+          // LIMIT  : reduce amount of rows by amount of translated rows
+        $limit  = $this->conf_view['limit'];
+        list( $start, $results_at_a_time ) = explode( ',', $limit );
+        $results_at_a_time = ( int ) $results_at_a_time - count ( $withoutIds );
+        if( $results_at_a_time < 0 )
+        {
+          $prompt = 'Sorry, this error shouldn\'t occurred: Amount of displayed rows is \'' . $results_at_a_time . '\'.<br />
+                    <br />
+                    Method: ' . __METHOD__ . '<br />
+                    Line: ' . __LINE__ . '<br />
+                    <br />
+                    TYPO3 Browser';
+          echo $prompt;
+        }
+        $limit  = ( int ) $start . "," . $results_at_a_time;
+          // LIMIT  : reduce amount of rows by amount of translated rows
+        break;
     }
-    $limit  = ( int ) $start . "," . $results_at_a_time;
-      // LIMIT  : reduce amount of rows by amount of translated rows
       // SQL query array
 
       // Get query
@@ -1336,98 +1366,30 @@ $this->pObj->dev_var_dump( $arr_return );
     $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                         'Don\'t use the query in a localised context.';
     $debugTrailLevel  = 1;
-    $arr_return['limited'] = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
+    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
       // Execute query
 
       // Error management
-    if( $arr_return['limited']['error']['status'] )
+    if( $arr_return['error']['status'] )
     {
-      $arr_return['error'] = $arr_return['limited']['error'];
       return $arr_return;
     }
       // Error management
 
       // Get the SQL result
-    $res = $arr_return['limited']['data']['res'];
+    $res = $arr_return['data']['res'];
 
       // Get the ids
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
-      $arr_return['limited']['data']['idsOfHitsWoCurrTranslation'][] = $row[$tableUid];
+      $arr_return['data']['idsOfHitsWoCurrTranslation'][] = $row[$tableUid];
     }
       // Get the ids
 
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
-    
-    
-      //////////////////////////////////////////////////
-      //
-      // RETURN record browser isn't enabled
-    
-      // #38612, 120703, dwildt+
-    if( ! ( $this->pObj->conf['navigation.']['record_browser'] == 1 ) )
-    {
-      if ( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
-      {
-        $value = $this->pObj->conf['navigation.']['record_browser'];
-        t3lib_div::devlog('[INFO/SQL+RECORDBROWSER] navigation.record_browser is \'' . $value . '\' '.
-          'Record browser doesn\'t cause any SQL query (best performance).', $this->pObj->extKey, 0);
-      }
-      return $arr_return;
-    }
-      // RETURN record browser isn't enabled
-
-
-    
-      //////////////////////////////////////////////////
-      //
-      // Workflow for recordbrowser
-    
-      // #38612, 120703, dwildt+
-      // Get query without any limit
-    $limit  = null;
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-      // Get query
-
-      // Execute query
-    $promptOptimise           = 'Maintain the performance? Disable the record browser of the single view.';
-    $debugTrailLevel          = 1;
-    $arr_return['unlimited']  = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
-      // Execute query
-
-      // Error management
-    if( $arr_return['unlimited']['error']['status'] )
-    {
-      $arr_return['error'] = $arr_return['unlimited']['error'];
-      return $arr_return;
-    }
-      // Error management
-
-      // Get the SQL result
-    $res = $arr_return['unlimited']['data']['res'];
-
-      // Get the ids
-    while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
-    {
-      $arr_return['unlimited']['data']['idsOfHitsWoCurrTranslation'][] = $row[$tableUid];
-    }
-      // Get the ids
-
-      // Free SQL result
-    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
-    
     return $arr_return;
-      // Workflow for recordbrowser
   }
 
 
@@ -1441,10 +1403,17 @@ $this->pObj->dev_var_dump( $arr_return );
  */
   private function rows_sqlLanguageDefault( )
   {
+    $arr_return = array( );
     $withoutIds = array( );
-    $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds );
-    if( $arr_return['error']['status'] )
+    
+    $limited                  = false;
+    $arr_return['unlimited']  = $this->rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds, $limited );
+
+    $limited                = true;
+    $arr_return['limited']  = $this->rows_sqlIdsOfRowsWiDefaultLanguage( $withoutIds, $limited );
+    if( $arr_return['limited']['error']['status'] )
     {
+      $arr_return['error'] = $arr_return['limited']['error'];
       return $arr_return;
     }
     $idsOfRowsDefaultLanguageLimited = $arr_return['limited']['data']['idsOfHitsWoCurrTranslation'];
