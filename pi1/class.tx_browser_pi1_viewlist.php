@@ -1232,23 +1232,24 @@ var_dump( __METHOD__, __LINE__ );
     $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
                         'Don\'t use the query in a localised context.';
     $debugTrailLevel  = 1;
-    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
+    $arr_return['limited'] = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
       // Execute query
 
       // Error management
-    if( $arr_return['error']['status'] )
+    if( $arr_return['limited']['error']['status'] )
     {
+      $arr_return['error'] = $arr_return['limited']['error'];
       return $arr_return;
     }
       // Error management
 
       // Get the SQL result
-    $res = $arr_return['data']['res'];
+    $res = $arr_return['limited']['data']['res'];
 
       // Get the ids
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
-      $arr_return['data']['idsOfHitsWoCurrTranslation'][] = $row[$tableUid];
+      $arr_return['limited']['data']['idsOfHitsWoCurrTranslation'][] = $row[$tableUid];
     }
       // Get the ids
 
@@ -1282,15 +1283,16 @@ var_dump( __METHOD__, __LINE__ );
       // Get query
 
       // Execute query
-    $promptOptimise   = 'Maintain the performance? Disable the record browser of the single view.';
-    $debugTrailLevel  = 1;
-    $arr_return2 = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
+    $promptOptimise           = 'Maintain the performance? Disable the record browser of the single view.';
+    $debugTrailLevel          = 1;
+    $arr_return['unlimited']  = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
       // Execute query
 
       // Error management
-    if( $arr_return2['error']['status'] )
+    if( $arr_return['unlimited']['error']['status'] )
     {
-      return $arr_return2;
+      $arr_return['error'] = $arr_return['unlimited']['error'];
+      return $arr_return;
     }
       // Error management
 
@@ -1300,10 +1302,10 @@ var_dump( __METHOD__, __LINE__ );
       // Get the ids
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
     {
-      $arr_return2['data']['idsOfHitsWoCurrTranslation'][] = $row[$tableUid];
+      $arr_return['unlimited']['data']['idsOfHitsWoCurrTranslation'][] = $row[$tableUid];
     }
       // Get the ids
-var_dump( __METHOD__, __LINE__, $arr_return2 );
+var_dump( __METHOD__, __LINE__, $arr_return );
       // Free SQL result
     $GLOBALS['TYPO3_DB']->sql_free_result( $res );
     
