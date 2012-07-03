@@ -425,7 +425,7 @@ class tx_browser_pi1_navi_pageBrowser
           // 3.9.25, 120605, dwildt+
         $andWhere = $this->pObj->objLocalise->localisationFields_where( $table );
         $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
-//$this->pObj->dev_var_dump( $where );
+$this->pObj->dev_var_dump( $where );
         break;
       default:
           // 3.9.25, 120605: dwildt+
@@ -434,26 +434,7 @@ class tx_browser_pi1_navi_pageBrowser
         $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
         $andWhere = $this->pObj->objLocalise->localisationFields_where( $table );
         $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
-//$this->pObj->dev_var_dump( $where );
-          // 3.9.25, 120605: dwildt+
-          // 3.9.25, 120605: dwildt-
-//        $andEnableFields = $this->pObj->cObj->enableFields( $table );
-//        if( $andEnableFields )
-//        {
-//          $where = "1";
-//        }
-//        $where  = $where . $andEnableFields;
-//        $where  = $where . $this->pObj->objSqlFun->get_andWherePid( $table );
-//        if( empty ( $where ) )
-//        {
-//          $where = "1";
-//        }
-//        $llWhere  = $this->pObj->objLocalise3x->localisationFields_where( $table );
-//        if( $llWhere )
-//        {
-//          $where  = $where . " AND " . $llWhere;
-//        }
-          // 3.9.25, 120605: dwildt-
+$this->pObj->dev_var_dump( $where );
         break;
     }
 
