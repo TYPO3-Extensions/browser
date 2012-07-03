@@ -1476,16 +1476,19 @@ $this->pObj->dev_var_dump( $arr_return );
     {
       case( $this->zz_indexBrowserIsLocalised( ) ):
         $arr_return = $this->rows_sqlIdsOfRowsWiTranslationOnly( );
+$this->pObj->dev_var_dump( $arr_return );
         break;
       case( $this->zz_orderByValueIsLocalised( ) ):
           // First value of ORDER BY is localised
         $arr_return = $this->rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( );
+$this->pObj->dev_var_dump( $arr_return );
         break;
           // First value of ORDER BY is localised
       case( ! $this->zz_orderByValueIsLocalised( ) ):
       default:
           // First value of ORDER BY isn't localised
         $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( );
+$this->pObj->dev_var_dump( $arr_return );
         break;
           // First value of ORDER BY isn't localised
     }
