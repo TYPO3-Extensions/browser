@@ -786,6 +786,9 @@ class tx_browser_pi1_navi_recordbrowser
   */
   private function recordbrowser_set_session_execute( $ids )
   {
+      // Uid of the current plugin
+    $tt_content_uid = $this->pObj->cObj->data['uid'];
+
       // No session: set global array
     $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = array( );
     if( ! $this->pObj->objSession->bool_session_enabled )
