@@ -663,15 +663,15 @@ class tx_browser_pi1_navi_recordbrowser
     switch( true )
     {
       case( ! empty( $idsForRecordBrowser ) ):
-var_dump( __METHOD__, __LINE__, $idsForRecordBrowser );
+//var_dump( __METHOD__, __LINE__, $idsForRecordBrowser );
         $this->recordbrowser_set_session_dataByIds( $idsForRecordBrowser );
         break;
       case( ! empty( $rows ) ):
-var_dump( __METHOD__, __LINE__, $rows );
+//var_dump( __METHOD__, __LINE__, $rows );
         $this->recordbrowser_set_session_dataRows( $rows );
         break;
       default:
-var_dump( __METHOD__, __LINE__, $rows, $idsForRecordBrowser );
+//var_dump( __METHOD__, __LINE__, $rows, $idsForRecordBrowser );
           // Get the tx_browser_pi1 session array
         $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey( $str_data_space, $this->pObj->prefixId );
           // Empty the array with the uids of all rows
@@ -715,64 +715,6 @@ var_dump( __METHOD__, __LINE__, $rows, $idsForRecordBrowser );
 
 
 /**
-  * recordbrowser_set_session_dataByIds: Set session data for the record browser.
-  *                                 * We need the record browser in the single view.
-  *                                 * This method must be called, before the page browser
-  *                                   changes the rows array (before limiting).
-  *                                 * Feature: #27041
-  *
-  * @param	array		$rows: $idsForRecordBrowser
-  * @return	void
-  * @version 4.1.2
-  * @since 4.1.2
-  */
-  private function recordbrowser_set_session_execute( $ids )
-  {
-      // No session: set global array
-    $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = array( );
-    if( ! $this->pObj->objSession->bool_session_enabled )
-    {
-      $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $ids;
-      if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
-      {
-        $prompt = 'No session (less performance): global array uids_of_all_rows is set with ' . 
-                  '#' . count( $ids ) . ' uids.';
-        t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
-      }
-      return;
-    }
-      // No session: set global array
-
-      // Get the name of the session data space
-    $str_data_space = $this->pObj->objSession->getNameOfDataSpace( );
-
-      // Set the session array
-      // Get the tx_browser_pi1 session array
-    $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey( $str_data_space, $this->pObj->prefixId );
-      // Overwrite the array with the uids of all rows
-    $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $ids;
-      // Set the tx_browser_pi1 session array
-    $GLOBALS['TSFE']->fe_user->setKey( $str_data_space, $this->pObj->prefixId, $arr_browser_session );
-    if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
-    {
-      $prompt = 'Session array [' . $str_data_space . '][' . $this->pObj->prefixId . ']' .
-                '[mode-' . $this->mode . '][uids_of_all_rows] is set with #' . count($ids) . ' uids.';
-      t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
-    }
-      // Set the session array
-
-    return;
-  }
-
-
-
-
-
-
-
-
-
- /**
   * recordbrowser_set_session_dataRows: Set session data for the record browser.
   *                                 * We need the record browser in the single view.
   *                                 * This method must be called, before the page browser
@@ -825,6 +767,60 @@ var_dump( __METHOD__, __LINE__, $rows, $idsForRecordBrowser );
 
     $this->recordbrowser_set_session_execute( $arr_uid );
 
+    return;
+  }
+
+
+
+/**
+  * recordbrowser_set_session_dataByIds: Set session data for the record browser.
+  *                                 * We need the record browser in the single view.
+  *                                 * This method must be called, before the page browser
+  *                                   changes the rows array (before limiting).
+  *                                 * Feature: #27041
+  *
+  * @param	array		$rows: $idsForRecordBrowser
+  * @return	void
+  * @version 4.1.2
+  * @since 4.1.2
+  */
+  private function recordbrowser_set_session_execute( $ids )
+  {
+      // No session: set global array
+    $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = array( );
+    if( ! $this->pObj->objSession->bool_session_enabled )
+    {
+      $this->pObj->uids_of_all_rows[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $ids;
+      if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+      {
+        $prompt = 'No session (less performance): global array uids_of_all_rows is set with ' . 
+                  '#' . count( $ids ) . ' uids.';
+        t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
+      }
+var_dump( __METHOD__, __LINE__ );
+      return;
+    }
+      // No session: set global array
+
+      // Get the name of the session data space
+    $str_data_space = $this->pObj->objSession->getNameOfDataSpace( );
+
+      // Set the session array
+      // Get the tx_browser_pi1 session array
+    $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey( $str_data_space, $this->pObj->prefixId );
+      // Overwrite the array with the uids of all rows
+    $arr_browser_session[$tt_content_uid]['cache']['mode-' . $this->mode]['uids_of_all_rows'] = $ids;
+      // Set the tx_browser_pi1 session array
+    $GLOBALS['TSFE']->fe_user->setKey( $str_data_space, $this->pObj->prefixId, $arr_browser_session );
+    if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+    {
+      $prompt = 'Session array [' . $str_data_space . '][' . $this->pObj->prefixId . ']' .
+                '[mode-' . $this->mode . '][uids_of_all_rows] is set with #' . count($ids) . ' uids.';
+      t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
+    }
+      // Set the session array
+
+var_dump( __METHOD__, __LINE__ );
     return;
   }
 

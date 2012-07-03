@@ -849,7 +849,7 @@ var_dump( __METHOD__, __LINE__ );
         $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
         break;
     }
-$this->pObj->dev_var_dump( $arr_return );
+//$this->pObj->dev_var_dump( $arr_return );
 
     return $arr_return;
   }
@@ -926,7 +926,7 @@ $this->pObj->dev_var_dump( $arr_return );
       // Get all ids
     $withIds = array( );
     $arr_return = $this->rows_sqlIdsOfRowsWiTranslation( $withIds );
-$this->pObj->dev_var_dump( $arr_return );
+//$this->pObj->dev_var_dump( $arr_return );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
@@ -1442,19 +1442,19 @@ $this->pObj->dev_var_dump( $arr_return );
     {
       case( $this->zz_indexBrowserIsLocalised( ) ):
         $arr_return = $this->rows_sqlIdsOfRowsWiTranslationOnly( );
-$this->pObj->dev_var_dump( $arr_return );
+//$this->pObj->dev_var_dump( $arr_return );
         break;
       case( $this->zz_orderByValueIsLocalised( ) ):
           // First value of ORDER BY is localised
         $arr_return = $this->rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( );
-$this->pObj->dev_var_dump( $arr_return );
+//$this->pObj->dev_var_dump( $arr_return );
         break;
           // First value of ORDER BY is localised
       case( ! $this->zz_orderByValueIsLocalised( ) ):
       default:
           // First value of ORDER BY isn't localised
         $arr_return = $this->rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( );
-$this->pObj->dev_var_dump( $arr_return );
+//$this->pObj->dev_var_dump( $arr_return );
         break;
           // First value of ORDER BY isn't localised
     }
