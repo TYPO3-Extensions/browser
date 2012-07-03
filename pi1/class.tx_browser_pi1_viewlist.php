@@ -1284,18 +1284,18 @@ var_dump( __METHOD__, __LINE__ );
       // Execute query
     $promptOptimise   = 'Maintain the performance? Disable the record browser of the single view.';
     $debugTrailLevel  = 1;
-    $arr_return = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
+    $arr_return2 = $this->pObj->objSqlFun->sql_query( $query, $promptOptimise, $debugTrailLevel );
       // Execute query
 
       // Error management
-    if( $arr_return['error']['status'] )
+    if( $arr_return2['error']['status'] )
     {
-      return $arr_return;
+      return $arr_return2;
     }
       // Error management
 
       // Get the SQL result
-    $res = $arr_return['data']['res'];
+    $res = $arr_return2['data']['res'];
 
       // Get the ids
     while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
