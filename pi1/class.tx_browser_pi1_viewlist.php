@@ -229,14 +229,6 @@ class tx_browser_pi1_viewlist
       // #29370, 110831, dwildt+
 
 
-//var_dump( __METHOD__, __LINE__,
-//	$this->pObj->arrConsolidate['addedTableFields'],
-//	$this->pObj->objSqlAut->statementTables,
-//	$this->pObj->objSqlInit->statements,
-//	$this->pObj->objFltr4x->andWhereFilter
-//);
-//var_dump( __METHOD__, __LINE__, $this->pObj->objSqlAut->arr_relations_mm_simple );
-
       // Building SQL query and get the SQL result
     $arr_return = $this->rows_sql( );
     if( $arr_return['error']['status'] )
@@ -257,6 +249,7 @@ class tx_browser_pi1_viewlist
     }
     else
     {
+var_dump( __METHOD__, __LINE__, $arr_return );
       $res = $arr_return['limited']['data']['res'];
     }
       // 120703, dwildt+
