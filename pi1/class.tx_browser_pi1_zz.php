@@ -493,6 +493,7 @@
       // Set the global piVar_mode
     if ( ! isset($this->pObj->piVars['mode'] ) )
     {
+var_dump( __METHOD__, __LINE__, $viewWiDot, $this->pObj->conf['views.'] );
 var_dump( __METHOD__, __LINE__, $viewWiDot, $this->pObj->conf['views.'][$viewWiDot] );
       if ( is_array( $this->pObj->conf['views.'][$viewWiDot] ) )
       {
