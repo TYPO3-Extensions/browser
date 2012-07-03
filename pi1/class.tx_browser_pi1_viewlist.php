@@ -249,8 +249,10 @@ class tx_browser_pi1_viewlist
     }
     else
     {
-var_dump( __METHOD__, __LINE__, $arr_return );
       $res = $arr_return['limited']['data']['res'];
+      $idsForRecordBrowser = $arr_return['unlimited']['data']['idsOfHitsWoCurrTranslation'];
+//var_dump( __METHOD__, __LINE__, $arr_return );
+var_dump( __METHOD__, __LINE__, $idsForRecordBrowser );
     }
       // 120703, dwildt+
   
