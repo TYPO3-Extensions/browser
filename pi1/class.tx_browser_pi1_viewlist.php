@@ -345,8 +345,11 @@ var_dump( __METHOD__, __LINE__, $idsForRecordBrowser );
       /////////////////////////////////////
       //
       // record browser
-
-    $arr_result = $this->pObj->objNaviRecordBrowser->recordbrowser_set_session_data( $rows );
+    
+      // 120703, dwildt, 1-
+//    $arr_result = $this->pObj->objNaviRecordBrowser->recordbrowser_set_session_data_3x( $rows );
+      // 120703, dwildt, 1+
+    $arr_result = $this->pObj->objNaviRecordBrowser->recordbrowser_set_session_data( $idsForRecordBrowser );
     if ($arr_result['error']['status'])
     {
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
