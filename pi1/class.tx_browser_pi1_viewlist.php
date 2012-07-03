@@ -813,6 +813,7 @@ var_dump( __METHOD__, __LINE__ );
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
         $arr_return = $this->rows_sqlLanguageDefault( );
+        $arr_return = $arr_return['limited'];
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
         $arr_return = $this->rows_sqlLanguageFirstDefaultOrFirstTranslated( );
@@ -1341,17 +1342,43 @@ var_dump( __METHOD__, __LINE__ );
     {
       return $arr_return;
     }
-    $idsOfRowsDefaultLanguage = $arr_return['limited']['data']['idsOfHitsWoCurrTranslation'];
+    $idsOfRowsDefaultLanguageLimited = $arr_return['limited']['data']['idsOfHitsWoCurrTranslation'];
       // Get ids of records of default language
 
-    if( empty ( $idsOfRowsDefaultLanguage ) )
+    if( empty ( $idsOfRowsDefaultLanguageLimited ) )
     {
       return $arr_return;
     }
 
       // Get rows for the list view
-    $arr_return = $this->rows_sqlRowsbyIds( $idsOfRowsDefaultLanguage );
+    $arr_return['limited'] = $this->rows_sqlRowsbyIds( $idsOfRowsDefaultLanguageLimited );
 
+
+        
+      //////////////////////////////////////////////////
+      //
+      // RETURN record browser isn't enabled
+    
+    if( ! ( $this->pObj->conf['navigation.']['record_browser'] == 1 ) )
+    {
+      if ( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+      {
+        $value = $this->pObj->conf['navigation.']['record_browser'];
+        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] navigation.record_browser is \'' . $value . '\' '.
+          'Record browser doesn\'t cause any SQL query (best performance).', $this->pObj->extKey, 0);
+      }
+      return $arr_return;
+    }
+      // RETURN record browser isn't enabled
+    return $arr_return;
+
+
+    
+      //////////////////////////////////////////////////
+      //
+      // Workflow for recordbrowser
+    
+      // Get query without any limit
     return $arr_return;
   }
 
