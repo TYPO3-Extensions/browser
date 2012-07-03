@@ -3,6 +3,7 @@
   Improvement
   * #00000: Record browser got an own class. See class.tx_browser_navi_recordbrowser.php
   * #38612: Record browser respects all items of the listview and not only the displayed one
+  * #00000: Session management of the record browser differs languages
   * #00000: navi class moved to navi_3x class
   Bugfix
   * #38611: Pagebrowser is confused in localisation mode
