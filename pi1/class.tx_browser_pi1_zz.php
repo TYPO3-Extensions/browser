@@ -523,6 +523,7 @@
     }
       // Unset mode, if we have only one view
       // Unset mode, if we have only one view or if mode is empty
+var_dump( __METHOD__, __LINE__, $this->pObj->piVar_mode );
 
 
       //////////////////////////////////////
