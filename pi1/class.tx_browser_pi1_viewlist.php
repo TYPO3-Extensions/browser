@@ -854,7 +854,7 @@ var_dump( __METHOD__, __LINE__ );
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
         $arr_return = $this->rows_sqlLanguageDefault( );
-var_dump( __METHOD__, __LINE__ );
+//var_dump( __METHOD__, __LINE__ );
 //        $arr_return = $arr_return['limited'];
         break;
       case( PI1_SELECTED_OR_DEFAULT_LANGUAGE ):
