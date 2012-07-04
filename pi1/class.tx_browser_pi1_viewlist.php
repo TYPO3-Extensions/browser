@@ -832,11 +832,25 @@ var_dump( __METHOD__, __LINE__ );
       t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
     }
       // DRS
+    
+      // 120704, freemedia case, dwildt
+    $curr_int_localisation_mode = null;
+    if( $this->pObj->conf['navigation.']['record_browser.']['special.']['listViewWithDefaultLanguage'] ) 
+    {
+      if( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
+      {
+        $prompt = 'navigation.record_browser.special.listViewWithDefaultLanguage is true and will set PI1_DEFAULT_LANGUAGE temporarily.';
+        t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+        // Store current localisation mode
+      $curr_int_localisation_mode = $this->pObj->objLocalise->int_localisation_mode;
+        // Set all to default language
+      $this->pObj->objLocalise->int_localisation_mode = PI1_DEFAULT_LANGUAGE;
+    }
+      // 120704, freemedia case, dwildt
 
-var_dump( __METHOD__, __LINE__, $this->pObj->conf['navigation.']['record_browser.'] );
     switch( $this->pObj->objLocalise->int_localisation_mode )
     {
-      case( $this->pObj->conf['navigation.']['record_browser.']['special.']['listViewWithDefaultLanguage'] ):
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
         $arr_return = $this->rows_sqlLanguageDefault( );
@@ -851,6 +865,19 @@ var_dump( __METHOD__, __LINE__ );
         $this->pObj->objLocalise->zz_promptLLdie( __METHOD__, __LINE__ );
         break;
     }
+
+      // 120704, freemedia dwildt
+    if( $curr_int_localisation_mode != null )
+    {
+      if( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
+      {
+        $prompt = 'Localisation mode is reseted';
+        t3lib_div::devlog( '[INFO/LOCALISATION+NAVI] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      $this->pObj->objLocalise->int_localisation_mode = $curr_int_localisation_mode;
+    }
+      // 120704, freemedia dwildt
+    
 //$this->pObj->dev_var_dump( $arr_return );
 
     return $arr_return;
