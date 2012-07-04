@@ -1,3 +1,10 @@
+4.1.3
+  120703
+  Improvement
+  * #00000: Code is cleaned up in class.tx_browser_pi1_views.php
+  * #38612: Record browser is able to overwrite sys_lsysanguage_overlay temporarily (freemedia case)
+            Effected file: static/setup.txt
+
 4.1.2
   120703
   Improvement
