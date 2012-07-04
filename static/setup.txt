@@ -1146,7 +1146,7 @@ plugin.tx_browser_pi1 {
         current < .icons
       }
       special {
-          [BOOLEAN] 0 (recommended) || 1: Overwrites sys_language_overlay temporarily (freemedia case)
+          // [BOOLEAN] 0 (recommended) || 1: Overwrites sys_lsysanguage_overlay temporarily (freemedia case)
         listViewWithDefaultLanguage = 0
       }
     }
