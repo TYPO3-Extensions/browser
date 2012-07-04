@@ -833,6 +833,7 @@ var_dump( __METHOD__, __LINE__ );
     }
       // DRS
 
+var_dump( __METHOD__, __LINE__, $this->pObj->conf['navigation.']['record_browser.'] );
     switch( $this->pObj->objLocalise->int_localisation_mode )
     {
       case( $this->pObj->conf['navigation.']['record_browser.']['special.']['listViewWithDefaultLanguage'] ):
