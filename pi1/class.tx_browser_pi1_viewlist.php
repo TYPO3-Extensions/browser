@@ -835,7 +835,7 @@ var_dump( __METHOD__, __LINE__ );
 
     switch( $this->pObj->objLocalise->int_localisation_mode )
     {
-      case( $this->pObj->conf['navigation.']['record_browser']['special.']['listViewWithDefaultLanguage'] ):
+      case( $this->pObj->conf['navigation.']['record_browser.']['special.']['listViewWithDefaultLanguage'] ):
       case( PI1_DEFAULT_LANGUAGE ):
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
         $arr_return = $this->rows_sqlLanguageDefault( );
