@@ -1,3 +1,8 @@
+4.1.4
+  120710
+  Bugfix
+  * #00000: Array error in lib/class.tx_browser_befilter_hooks.php::getDBlistQuery
+
 4.1.3
   120703
   Improvement

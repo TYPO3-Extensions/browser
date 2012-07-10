@@ -77,7 +77,11 @@ class tx_browser_befilter_hooks implements t3lib_localRecordListGetTableHook {
     $this->initLibrary();
       // 0.2.0, 110815, dwildt +
 
-    if(array_key_exists('filter', $GLOBALS['TCA'][$table]['ctrl']) && ($parentObject->table==$table)) {
+      // 120710, dwildt, 1-
+    //if( array_key_exists( 'filter', $GLOBALS['TCA'][$table]['ctrl'] ) && ( $parentObject->table == $table ) )
+      // 120710, dwildt, 1+
+    if( array_key_exists( 'filter', ( array ) $GLOBALS['TCA'][$table]['ctrl'] ) && ( $parentObject->table == $table ) )
+    {
       $posts = t3lib_div::_POST($this->extension);
       if(isset($posts)) {
         $GLOBALS["BE_USER"]->setAndSaveSessionData($table."_filterciteria", $posts);
