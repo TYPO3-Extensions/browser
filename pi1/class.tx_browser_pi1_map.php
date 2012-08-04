@@ -462,7 +462,7 @@ class tx_browser_pi1_map
       $arrInputs[ ] = $tab . '<input class="oxMapFilter" type="checkbox" name="' . $category . '" value="1" checked="checked" />' . $category;
     }
     
-    $inputs = implode( PHP_EOL . $arrInputs );
+    $inputs = implode( PHP_EOL , $arrInputs );
     $inputs = trim ( $inputs );
 var_dump( __METHOD__, __LINE__, $this->arrCategories, $arrInputs, $inputs );    
     return $inputs;
