@@ -1187,11 +1187,11 @@ class tx_browser_pi1_map
         {
           case( $mapMarker['lon'] . $mapMarker['lat'] == '' ):
               // CONTINUE: longituda and latitude are empty
-            continue 2;
+            continue 3;
             break;
           case( $dontHandle00 && $mapMarker['lon'] == 0 && $mapMarker['lat'] == 0 ):
               // CONTINUE: longituda and latitude are 0 and 0,0 shouldn't handled
-            continue 2;
+            continue 3;
             break;
         }
           // SWITCH logitude and latitude
@@ -1227,6 +1227,7 @@ class tx_browser_pi1_map
     $arr_return['data']['mapMarkers'] = $mapMarkers;
     $arr_return['data']['lats']       = $lats;
     $arr_return['data']['lons']       = $lons;
+var_dump( __METHOD__, __LINE__, $arr_return );    
     return $arr_return;
   }
 
