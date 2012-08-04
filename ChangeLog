@@ -1,4 +1,7 @@
 4.1.4
+  120804
+  Improvement
+  * #00000: static/contstants.txt
   120710
   Bugfix
   * #00000: Array error in lib/class.tx_browser_befilter_hooks.php::getDBlistQuery
