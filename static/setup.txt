@@ -509,6 +509,8 @@ plugin.tx_browser_pi1 {
           mode          = auto
             // [STRING] marker for the center in the HTML code. Example: OSMConfigZoom
           dynamicMarker = OSMConfigZoom
+            / [INTEGER] Maximum zoom level
+          max           = 18
         }
       }
       marker {

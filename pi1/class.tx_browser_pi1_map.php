@@ -1199,8 +1199,16 @@ class tx_browser_pi1_map
     $catField = $this->confMap['configuration.']['categories.']['field'];
     foreach( $this->pObj->rows as $row )
     {
+      if( isset( $row[ $catField ] ) )
+      {
+        $categories = explode( $this->catDevider, $row[ $catField ] );
+      }
+      else
+      {
+        $categories = array( '10' => 'dummy' );
+      }
+
         // FOREACH category
-      $categories =  explode( $this->catDevider, $row[ $catField ] );
       foreach( $categories as $category )
       {
           // Add the current row to cObj->data
@@ -1428,6 +1436,8 @@ class tx_browser_pi1_map
     $distances[]  = max( $latitudes ) - min( $latitudes );
       // Get max distance
     $maxDistance  = max( $distances );
+      // Get the maximum zoom level
+    $maxZoomLevel = $this->confMap['configuration.']['zoomLevel.']['max'];
     switch( true )
     {
       case( empty ( $longitudes ) ):
@@ -1437,7 +1447,7 @@ class tx_browser_pi1_map
         break;
       case( $maxDistance == 0 ):
           // One map marker
-        $zoomLevel = 18;
+        $zoomLevel = $maxZoomLevel;
         break;
       default:
           // Get the quotient. Example: 360 / 5.625 = 64
@@ -1464,9 +1474,9 @@ class tx_browser_pi1_map
 //        break;
 //    }
 
-    if( $zoomLevel > 18 )
+    if( $zoomLevel > $maxZoomLevel )
     {
-      $zoomLevel = 18;
+      $zoomLevel = $maxZoomLevel;
     }
 
       // DRS
