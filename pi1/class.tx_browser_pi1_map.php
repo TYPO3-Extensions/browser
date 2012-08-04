@@ -1475,18 +1475,18 @@ class tx_browser_pi1_map
 //var_dump( __METHOD__, __LINE__, $zoomLevel );
       // Calculate the zoom level
 
-//    switch( true )
-//    {
-//      case( $zoomLevel < 6 ):
-//        $zoomLevel = $zoomLevel + 1;
-//        break;
-//      case( $zoomLevel < 12 ):
-//        $zoomLevel = $zoomLevel + 2;
-//        break;
-//      case( $zoomLevel < 18 ):
-//        $zoomLevel = $zoomLevel + 3;
-//        break;
-//    }
+    switch( true )
+    {
+      case( $zoomLevel < 6 ):
+        $zoomLevel = $zoomLevel + 1;
+        break;
+      case( $zoomLevel < 12 ):
+        $zoomLevel = $zoomLevel + 2;
+        break;
+      case( $zoomLevel < 18 ):
+        $zoomLevel = $zoomLevel + 3;
+        break;
+    }
 
     if( $zoomLevel > $maxZoomLevel )
     {
