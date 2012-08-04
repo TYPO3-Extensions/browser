@@ -1481,7 +1481,7 @@ class tx_browser_pi1_map
         $this->boolMoreThanOneCategory = false;
         return $this->boolMoreThanOneCategory;
       }
-      $categories = $row[ $category ];
+      $categories[ ] = $row[ $category ];
     }
     
     $categories = array_unique( $categories );
