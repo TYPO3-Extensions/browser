@@ -1165,7 +1165,7 @@ class tx_browser_pi1_map
     $arrCategoriesFlipped = array_flip( $this->arrCategories );
 
       // FOREACH row
-    $catField = $this->renderMapMarkerVariablesSystemItem( 'category' );
+    //$catField = $this->renderMapMarkerVariablesSystemItem( 'category' );
     $catField = $this->confMap['configuration.']['categories.']['field'];
     foreach( $this->pObj->rows as $row )
     {
@@ -1208,7 +1208,8 @@ class tx_browser_pi1_map
 
           // Get the category
           // Get the iconKey
-        $mapMarker['iconKey'] = $arrCategoriesFlipped[ $catValue ];
+        //$mapMarker['iconKey'] = $arrCategoriesFlipped[ $catValue ];
+        $mapMarker['iconKey'] = $catKey;
 
           // Save each mapMarker
         $mapMarkers[] = $mapMarker;
