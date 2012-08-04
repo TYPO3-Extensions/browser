@@ -896,7 +896,7 @@ class tx_browser_pi1_map
     $catIcons = null;
     $arrIcon  = array( );
     
-    foreach( array_keys( $this->confMap['configuration.']['categories.'] ) as $catKey )
+    foreach( array_keys( $this->confMap['configuration.']['categories.']['colours.'] ) as $catKey )
     {
       if( substr( $catKey, -1 ) == '.' )
       {
@@ -906,10 +906,10 @@ class tx_browser_pi1_map
       unset( $arrIcon );
       
         // Set the path
-      $coa_name = $this->confMap['configuration.']['categories.'][$catKey . '.']['pathToIcon'];
-      $coa_conf = $this->confMap['configuration.']['categories.'][$catKey . '.']['pathToIcon.'];
+      $coa_name = $this->confMap['configuration.']['categories.']['colours.'][$catKey . '.']['pathToIcon'];
+      $coa_conf = $this->confMap['configuration.']['categories.']['colours.'][$catKey . '.']['pathToIcon.'];
       $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
-//var_dump( __METHOD__, __LINE__, $catKey, $coa_name, $coa_conf, $value, $this->confMap['configuration.']['categories.'] );
+//var_dump( __METHOD__, __LINE__, $catKey, $coa_name, $coa_conf, $value, $this->confMap['configuration.']['categories.']['colours.'] );
 //var_dump( __METHOD__, __LINE__, $catKey, $value );
       if( empty ( $value ) )
       {
@@ -927,7 +927,7 @@ class tx_browser_pi1_map
         // Set the path
         
         // Add the icon width
-      $value = $this->confMap['configuration.']['categories.'][$catKey . '.']['width'];
+      $value = $this->confMap['configuration.']['categories.']['colours.'][$catKey . '.']['width'];
       if( empty( $value ) )
       {
         die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
@@ -936,7 +936,7 @@ class tx_browser_pi1_map
         // Add the icon width
 
         // Add the icon height
-      $value = $this->confMap['configuration.']['categories.'][$catKey . '.']['height'];
+      $value = $this->confMap['configuration.']['categories.']['colours.'][$catKey . '.']['height'];
       if( empty( $value ) )
       {
         die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
@@ -945,7 +945,7 @@ class tx_browser_pi1_map
         // Add the icon height
 
         // Add the icon x-offset
-      $value = $this->confMap['configuration.']['categories.'][$catKey . '.']['offsetX'];
+      $value = $this->confMap['configuration.']['categories.']['colours.'][$catKey . '.']['offsetX'];
       if( $value == null )
       {
         die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
@@ -954,7 +954,7 @@ class tx_browser_pi1_map
         // Add the icon x-offset
 
         // Add the icon y-offset
-      $value = $this->confMap['configuration.']['categories.'][$catKey . '.']['offsetY'];
+      $value = $this->confMap['configuration.']['categories.']['colours.'][$catKey . '.']['offsetY'];
       if( $value == null )
       {
         die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
@@ -1452,6 +1452,51 @@ class tx_browser_pi1_map
 
 
   /**
+ * zz_getCategories( ):
+ *
+ * @param    [type]        $$map_template: ...
+ * @return    array
+ * @version 4.1.4
+ * @since   4.1.4
+ */
+  private function zz_getCategories( )
+  {
+      // RETURN : method is called twice at least
+    if( $this->arrCategories != null )
+    {
+      return $this->arrCategories;
+    }
+      // RETURN : method is called twice at least
+    
+      // Get the label for the category field
+    $category = $this->confMap['configuration.']['categories.']['field'];
+
+    foreach( $this->pObj->rows as $row )
+    {
+      if( ! isset( $row[ $category ] ) )
+      {
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'current rows doesn\'t contain the field "' . $category . '"';
+          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
+        }
+        $this->arrCategories = array( );
+        return $this->arrCategories;
+      }
+      $categories[ ] = $row[ $category ];
+    }
+    
+    $categories = array_unique( $categories );
+    asort(  $categories, SORT_STRING );
+
+var_dump( __METHOD__, __LINE__, $categories ); 
+    $this->boolMoreThanOneCategory = false;
+    return $this->boolMoreThanOneCategory;
+  }
+
+
+
+  /**
  * zz_moreThanOneCategory( ):
  *
  * @param    [type]        $$map_template: ...
@@ -1461,11 +1506,13 @@ class tx_browser_pi1_map
  */
   private function zz_moreThanOneCategory( )
   {
+      // RETURN : method is called twice at least
     if( $this->boolMoreThanOneCategory != null )
     {
       return $this->boolMoreThanOneCategory;
     }
-
+      // RETURN : method is called twice at least
+      
       // Get the label for the category field
     $category = $this->confMap['fields.']['category'];
 

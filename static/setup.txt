@@ -281,318 +281,324 @@ plugin.tx_browser_pi1 {
       }
       configuration {
         categories {
-            // Label for a clear view only and without any effect
-          10 = black
-          10 {
-              // [STRING] category label in the filter form
-            label = TEXT
-            label {
-              value = black
-              lang {
-                de = Rot
-                en = black
+          colours {
+              // Label for a clear view only and without any effect
+            10 = black
+            10 {
+                // [STRING] category label in the filter form
+              label = TEXT
+              label {
+                value = black
+                lang {
+                  de = Rot
+                  en = black
+                }
               }
-            }
-              // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/black.png
-            pathToIcon = TEXT
-            pathToIcon {
-              value = EXT:browser/res/js/map/icons/categories/black.png
-            }
-              // [INTEGER] x-offset of the icon in Pixel
-            offsetX = 0
-              // [INTEGER] y-offset of the icon in Pixel
-            offsetY = 0
-              // [INTEGER] height of the icon in Pixel
-            height = 14
-              // [INTEGER] width of the icon in Pixel
-            width = 14
-          }
-            // Label for a clear view only and without any effect
-          20 = blue
-          20 {
-              // [STRING] category label in the filter form
-            label = TEXT
-            label {
-              value = blue
-              lang {
-                de = Rot
-                en = blue
+                // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/black.png
+              pathToIcon = TEXT
+              pathToIcon {
+                value = EXT:browser/res/js/map/icons/categories/black.png
               }
+                // [INTEGER] x-offset of the icon in Pixel
+              offsetX = 0
+                // [INTEGER] y-offset of the icon in Pixel
+              offsetY = 0
+                // [INTEGER] height of the icon in Pixel
+              height = 14
+                // [INTEGER] width of the icon in Pixel
+              width = 14
             }
-              // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/blue.png
-            pathToIcon = TEXT
-            pathToIcon {
-              value = EXT:browser/res/js/map/icons/categories/blue.png
-            }
-              // [INTEGER] x-offset of the icon in Pixel
-            offsetX = 0
-              // [INTEGER] y-offset of the icon in Pixel
-            offsetY = 0
-              // [INTEGER] height of the icon in Pixel
-            height = 14
-              // [INTEGER] width of the icon in Pixel
-            width = 14
-          }
-            // Label for a clear view only and without any effect
-          30 = bluedark
-          30 {
-              // [STRING] category label in the filter form
-            label = TEXT
-            label {
-              value = bluedark
-              lang {
-                de = Rot
-                en = bluedark
+              // Label for a clear view only and without any effect
+            20 = blue
+            20 {
+                // [STRING] category label in the filter form
+              label = TEXT
+              label {
+                value = blue
+                lang {
+                  de = Rot
+                  en = blue
+                }
               }
-            }
-              // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/bluedark.png
-            pathToIcon = TEXT
-            pathToIcon {
-              value = EXT:browser/res/js/map/icons/categories/bluedark.png
-            }
-              // [INTEGER] x-offset of the icon in Pixel
-            offsetX = 0
-              // [INTEGER] y-offset of the icon in Pixel
-            offsetY = 0
-              // [INTEGER] height of the icon in Pixel
-            height = 14
-              // [INTEGER] width of the icon in Pixel
-            width = 14
-          }
-            // Label for a clear view only and without any effect
-          40 = green
-          40 {
-              // [STRING] category label in the filter form
-            label = TEXT
-            label {
-              value = green
-              lang {
-                de = Rot
-                en = green
+                // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/blue.png
+              pathToIcon = TEXT
+              pathToIcon {
+                value = EXT:browser/res/js/map/icons/categories/blue.png
               }
+                // [INTEGER] x-offset of the icon in Pixel
+              offsetX = 0
+                // [INTEGER] y-offset of the icon in Pixel
+              offsetY = 0
+                // [INTEGER] height of the icon in Pixel
+              height = 14
+                // [INTEGER] width of the icon in Pixel
+              width = 14
             }
-              // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/green.png
-            pathToIcon = TEXT
-            pathToIcon {
-              value = EXT:browser/res/js/map/icons/categories/green.png
-            }
-              // [INTEGER] x-offset of the icon in Pixel
-            offsetX = 0
-              // [INTEGER] y-offset of the icon in Pixel
-            offsetY = 0
-              // [INTEGER] height of the icon in Pixel
-            height = 14
-              // [INTEGER] width of the icon in Pixel
-            width = 14
-          }
-            // Label for a clear view only and without any effect
-          50 = greendark
-          50 {
-              // [STRING] category label in the filter form
-            label = TEXT
-            label {
-              value = greendark
-              lang {
-                de = Rot
-                en = greendark
+              // Label for a clear view only and without any effect
+            30 = bluedark
+            30 {
+                // [STRING] category label in the filter form
+              label = TEXT
+              label {
+                value = bluedark
+                lang {
+                  de = Rot
+                  en = bluedark
+                }
               }
-            }
-              // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/greendark.png
-            pathToIcon = TEXT
-            pathToIcon {
-              value = EXT:browser/res/js/map/icons/categories/greendark.png
-            }
-              // [INTEGER] x-offset of the icon in Pixel
-            offsetX = 0
-              // [INTEGER] y-offset of the icon in Pixel
-            offsetY = 0
-              // [INTEGER] height of the icon in Pixel
-            height = 14
-              // [INTEGER] width of the icon in Pixel
-            width = 14
-          }
-            // Label for a clear view only and without any effect
-          60 = orange
-          60 {
-              // [STRING] category label in the filter form
-            label = TEXT
-            label {
-              value = orange
-              lang {
-                de = Rot
-                en = orange
+                // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/bluedark.png
+              pathToIcon = TEXT
+              pathToIcon {
+                value = EXT:browser/res/js/map/icons/categories/bluedark.png
               }
+                // [INTEGER] x-offset of the icon in Pixel
+              offsetX = 0
+                // [INTEGER] y-offset of the icon in Pixel
+              offsetY = 0
+                // [INTEGER] height of the icon in Pixel
+              height = 14
+                // [INTEGER] width of the icon in Pixel
+              width = 14
             }
-              // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/orange.png
-            pathToIcon = TEXT
-            pathToIcon {
-              value = EXT:browser/res/js/map/icons/categories/orange.png
-            }
-              // [INTEGER] x-offset of the icon in Pixel
-            offsetX = 0
-              // [INTEGER] y-offset of the icon in Pixel
-            offsetY = 0
-              // [INTEGER] height of the icon in Pixel
-            height = 14
-              // [INTEGER] width of the icon in Pixel
-            width = 14
-          }
-            // Label for a clear view only and without any effect
-          70 = pink
-          70 {
-              // [STRING] category label in the filter form
-            label = TEXT
-            label {
-              value = pink
-              lang {
-                de = Rot
-                en = pink
+              // Label for a clear view only and without any effect
+            40 = green
+            40 {
+                // [STRING] category label in the filter form
+              label = TEXT
+              label {
+                value = green
+                lang {
+                  de = Rot
+                  en = green
+                }
               }
-            }
-              // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/pink.png
-            pathToIcon = TEXT
-            pathToIcon {
-              value = EXT:browser/res/js/map/icons/categories/pink.png
-            }
-              // [INTEGER] x-offset of the icon in Pixel
-            offsetX = 0
-              // [INTEGER] y-offset of the icon in Pixel
-            offsetY = 0
-              // [INTEGER] height of the icon in Pixel
-            height = 14
-              // [INTEGER] width of the icon in Pixel
-            width = 14
-          }
-            // Label for a clear view only and without any effect
-          80 = purple
-          80 {
-              // [STRING] category label in the filter form
-            label = TEXT
-            label {
-              value = purple
-              lang {
-                de = Rot
-                en = purple
+                // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/green.png
+              pathToIcon = TEXT
+              pathToIcon {
+                value = EXT:browser/res/js/map/icons/categories/green.png
               }
+                // [INTEGER] x-offset of the icon in Pixel
+              offsetX = 0
+                // [INTEGER] y-offset of the icon in Pixel
+              offsetY = 0
+                // [INTEGER] height of the icon in Pixel
+              height = 14
+                // [INTEGER] width of the icon in Pixel
+              width = 14
             }
-              // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/purple.png
-            pathToIcon = TEXT
-            pathToIcon {
-              value = EXT:browser/res/js/map/icons/categories/purple.png
-            }
-              // [INTEGER] x-offset of the icon in Pixel
-            offsetX = 0
-              // [INTEGER] y-offset of the icon in Pixel
-            offsetY = 0
-              // [INTEGER] height of the icon in Pixel
-            height = 14
-              // [INTEGER] width of the icon in Pixel
-            width = 14
-          }
-            // Label for a clear view only and without any effect
-          90 = red
-          90 {
-              // [STRING] category label in the filter form
-            label = TEXT
-            label {
-              value = red
-              lang {
-                de = Rot
-                en = red
+              // Label for a clear view only and without any effect
+            50 = greendark
+            50 {
+                // [STRING] category label in the filter form
+              label = TEXT
+              label {
+                value = greendark
+                lang {
+                  de = Rot
+                  en = greendark
+                }
               }
-            }
-              // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/red.png
-            pathToIcon = TEXT
-            pathToIcon {
-              value = EXT:browser/res/js/map/icons/categories/red.png
-            }
-              // [INTEGER] x-offset of the icon in Pixel
-            offsetX = 0
-              // [INTEGER] y-offset of the icon in Pixel
-            offsetY = 0
-              // [INTEGER] height of the icon in Pixel
-            height = 14
-              // [INTEGER] width of the icon in Pixel
-            width = 14
-          }
-            // Label for a clear view only and without any effect
-          100 = reddark
-          100 {
-              // [STRING] category label in the filter form
-            label = TEXT
-            label {
-              value = reddark
-              lang {
-                de = Rot
-                en = reddark
+                // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/greendark.png
+              pathToIcon = TEXT
+              pathToIcon {
+                value = EXT:browser/res/js/map/icons/categories/greendark.png
               }
+                // [INTEGER] x-offset of the icon in Pixel
+              offsetX = 0
+                // [INTEGER] y-offset of the icon in Pixel
+              offsetY = 0
+                // [INTEGER] height of the icon in Pixel
+              height = 14
+                // [INTEGER] width of the icon in Pixel
+              width = 14
             }
-              // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/reddark.png
-            pathToIcon = TEXT
-            pathToIcon {
-              value = EXT:browser/res/js/map/icons/categories/reddark.png
-            }
-              // [INTEGER] x-offset of the icon in Pixel
-            offsetX = 0
-              // [INTEGER] y-offset of the icon in Pixel
-            offsetY = 0
-              // [INTEGER] height of the icon in Pixel
-            height = 14
-              // [INTEGER] width of the icon in Pixel
-            width = 14
-          }
-            // Label for a clear view only and without any effect
-          110 = white
-          110 {
-              // [STRING] category label in the filter form
-            label = TEXT
-            label {
-              value = white
-              lang {
-                de = Rot
-                en = white
+              // Label for a clear view only and without any effect
+            60 = orange
+            60 {
+                // [STRING] category label in the filter form
+              label = TEXT
+              label {
+                value = orange
+                lang {
+                  de = Rot
+                  en = orange
+                }
               }
-            }
-              // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/white.png
-            pathToIcon = TEXT
-            pathToIcon {
-              value = EXT:browser/res/js/map/icons/categories/white.png
-            }
-              // [INTEGER] x-offset of the icon in Pixel
-            offsetX = 0
-              // [INTEGER] y-offset of the icon in Pixel
-            offsetY = 0
-              // [INTEGER] height of the icon in Pixel
-            height = 14
-              // [INTEGER] width of the icon in Pixel
-            width = 14
-          }
-            // Label for a clear view only and without any effect
-          120 = yellow
-          120 {
-              // [STRING] category label in the filter form 
-            label = TEXT
-            label {
-              value = yellow
-              lang {
-                de = Rot
-                en = yellow
+                // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/orange.png
+              pathToIcon = TEXT
+              pathToIcon {
+                value = EXT:browser/res/js/map/icons/categories/orange.png
               }
+                // [INTEGER] x-offset of the icon in Pixel
+              offsetX = 0
+                // [INTEGER] y-offset of the icon in Pixel
+              offsetY = 0
+                // [INTEGER] height of the icon in Pixel
+              height = 14
+                // [INTEGER] width of the icon in Pixel
+              width = 14
             }
-              // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/yellow.png
-            pathToIcon = TEXT
-            pathToIcon {
-              value = EXT:browser/res/js/map/icons/categories/yellow.png
+              // Label for a clear view only and without any effect
+            70 = pink
+            70 {
+                // [STRING] category label in the filter form
+              label = TEXT
+              label {
+                value = pink
+                lang {
+                  de = Rot
+                  en = pink
+                }
+              }
+                // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/pink.png
+              pathToIcon = TEXT
+              pathToIcon {
+                value = EXT:browser/res/js/map/icons/categories/pink.png
+              }
+                // [INTEGER] x-offset of the icon in Pixel
+              offsetX = 0
+                // [INTEGER] y-offset of the icon in Pixel
+              offsetY = 0
+                // [INTEGER] height of the icon in Pixel
+              height = 14
+                // [INTEGER] width of the icon in Pixel
+              width = 14
             }
-              // [INTEGER] x-offset of the icon in Pixel
-            offsetX = 0
-              // [INTEGER] y-offset of the icon in Pixel
-            offsetY = 0
-              // [INTEGER] height of the icon in Pixel
-            height = 14
-              // [INTEGER] width of the icon in Pixel
-            width = 14
+              // Label for a clear view only and without any effect
+            80 = purple
+            80 {
+                // [STRING] category label in the filter form
+              label = TEXT
+              label {
+                value = purple
+                lang {
+                  de = Rot
+                  en = purple
+                }
+              }
+                // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/purple.png
+              pathToIcon = TEXT
+              pathToIcon {
+                value = EXT:browser/res/js/map/icons/categories/purple.png
+              }
+                // [INTEGER] x-offset of the icon in Pixel
+              offsetX = 0
+                // [INTEGER] y-offset of the icon in Pixel
+              offsetY = 0
+                // [INTEGER] height of the icon in Pixel
+              height = 14
+                // [INTEGER] width of the icon in Pixel
+              width = 14
+            }
+              // Label for a clear view only and without any effect
+            90 = red
+            90 {
+                // [STRING] category label in the filter form
+              label = TEXT
+              label {
+                value = red
+                lang {
+                  de = Rot
+                  en = red
+                }
+              }
+                // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/red.png
+              pathToIcon = TEXT
+              pathToIcon {
+                value = EXT:browser/res/js/map/icons/categories/red.png
+              }
+                // [INTEGER] x-offset of the icon in Pixel
+              offsetX = 0
+                // [INTEGER] y-offset of the icon in Pixel
+              offsetY = 0
+                // [INTEGER] height of the icon in Pixel
+              height = 14
+                // [INTEGER] width of the icon in Pixel
+              width = 14
+            }
+              // Label for a clear view only and without any effect
+            100 = reddark
+            100 {
+                // [STRING] category label in the filter form
+              label = TEXT
+              label {
+                value = reddark
+                lang {
+                  de = Rot
+                  en = reddark
+                }
+              }
+                // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/reddark.png
+              pathToIcon = TEXT
+              pathToIcon {
+                value = EXT:browser/res/js/map/icons/categories/reddark.png
+              }
+                // [INTEGER] x-offset of the icon in Pixel
+              offsetX = 0
+                // [INTEGER] y-offset of the icon in Pixel
+              offsetY = 0
+                // [INTEGER] height of the icon in Pixel
+              height = 14
+                // [INTEGER] width of the icon in Pixel
+              width = 14
+            }
+              // Label for a clear view only and without any effect
+            110 = white
+            110 {
+                // [STRING] category label in the filter form
+              label = TEXT
+              label {
+                value = white
+                lang {
+                  de = Rot
+                  en = white
+                }
+              }
+                // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/white.png
+              pathToIcon = TEXT
+              pathToIcon {
+                value = EXT:browser/res/js/map/icons/categories/white.png
+              }
+                // [INTEGER] x-offset of the icon in Pixel
+              offsetX = 0
+                // [INTEGER] y-offset of the icon in Pixel
+              offsetY = 0
+                // [INTEGER] height of the icon in Pixel
+              height = 14
+                // [INTEGER] width of the icon in Pixel
+              width = 14
+            }
+              // Label for a clear view only and without any effect
+            120 = yellow
+            120 {
+                // [STRING] category label in the filter form 
+              label = TEXT
+              label {
+                value = yellow
+                lang {
+                  de = Rot
+                  en = yellow
+                }
+              }
+                // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/yellow.png
+              pathToIcon = TEXT
+              pathToIcon {
+                value = EXT:browser/res/js/map/icons/categories/yellow.png
+              }
+                // [INTEGER] x-offset of the icon in Pixel
+              offsetX = 0
+                // [INTEGER] y-offset of the icon in Pixel
+              offsetY = 0
+                // [INTEGER] height of the icon in Pixel
+              height = 14
+                // [INTEGER] width of the icon in Pixel
+              width = 14
+            }
           }
+            // [STRING] table.field with the categories. Example: tx_org_headquarterscat.title
+          field = {$plugin.tx_browser_pi1.map.field.category}
+            // [STRING]  SORT_REGULAR, SORT_NUMERIC, SORT_STRING or SORT_LOCALE_STRING 
+          orderBy = SORT_STRING
         }
         centerCoordinates {
             // [STRING] auto (recommended) || ts. auto: center will calculated. ts: center will taken from TypoScript 
@@ -610,11 +616,6 @@ plugin.tx_browser_pi1 {
             // [STRING] marker for the center in the HTML code. Example: OSMConfigZoom
           dynamicMarker = OSMConfigZoom
         }
-      }
-      fields {
-          // [STRING] table.field with the categories. Example: tx_org_headquarterscat.title
-        category = {$plugin.tx_browser_pi1.map.field.category}
-
       }
       marker {
         addToCData {
