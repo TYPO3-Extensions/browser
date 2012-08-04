@@ -1472,7 +1472,7 @@ class tx_browser_pi1_map
     
       // Get the label for the category field
     $category = $this->confMap['configuration.']['categories.']['field'];
-var_dump( __METHOD__, __LINE__, $this->confMap['configuration.']['categories.'] ); 
+var_dump( __METHOD__, __LINE__, $this->confMap['configuration.']['categories.']['field'], $category ); 
 
     foreach( $this->pObj->rows as $row )
     {
@@ -1486,7 +1486,8 @@ var_dump( __METHOD__, __LINE__, $this->confMap['configuration.']['categories.'] 
         $this->arrCategories = array( );
         return $this->arrCategories;
       }
-      list( $firstCategory ) = implode( ',', $row[ $category ] );
+      list( $firstCategory ) = explode( ',', $row[ $category ] );
+var_dump( __METHOD__, __LINE__, $firstCategory ); 
       $categories[ ] = $firstCategory;
     }
     
