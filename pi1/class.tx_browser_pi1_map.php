@@ -456,13 +456,6 @@ class tx_browser_pi1_map
  */
   private function categoriesFormInputs( )
   {
-      // RETURN : method is called twice at least
-    if( $this->arrCategories != null )
-    {
-      return $this->arrCategories;
-    }
-      // RETURN : method is called twice at least
-    
     $tab = '                    ';
     foreach( $this->arrCategories as $category )
     {
