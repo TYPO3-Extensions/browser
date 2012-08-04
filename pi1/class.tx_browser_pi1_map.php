@@ -477,7 +477,15 @@ class tx_browser_pi1_map
     $tab = '                    ';
     foreach( $this->arrCategories as $category )
     {
-      $arrInputs[ ] = $tab . '<input class="oxMapFilter" type="checkbox" name="' . $category . '" value="1" checked="checked" />' . $category;
+        // Set the path
+      $coa_name = $this->confMap['configuration.']['categories.']['colours.'][$catKey . '.']['pathToIcon'];
+      $coa_conf = $this->confMap['configuration.']['categories.']['colours.'][$catKey . '.']['pathToIcon.'];
+      $path     = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+
+      $cObj_name  = 'IMAGE';
+      $cObj_conf  = array( 'file' => $path );
+      $img        = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+      $arrInputs[ ] = $tab . '<input class="oxMapFilter" type="checkbox" name="' . $category . '" value="1" checked="checked" />' . $category . ' ' . $img;
     }
     
     $inputs = implode( PHP_EOL , $arrInputs );
