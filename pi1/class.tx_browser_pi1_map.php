@@ -1147,6 +1147,7 @@ class tx_browser_pi1_map
     $lons         = array( );
     $lats         = array( );
     $dontHandle00 = $this->confMap['configuration.']['00Coordinates.']['dontHandle'];
+    $arrCategoriesFlipped = array_flip( $this->arrCategories );
 
       // FOREACH row
     foreach( $this->pObj->rows as $row )
@@ -1186,10 +1187,10 @@ class tx_browser_pi1_map
 
         // Get the category
       $mapMarker['cat'] = $this->renderMapMarkerVariablesSystemItem( 'category' );
-var_dump( __METHOD__, __LINE__, $mapMarker['cat'] );
-
+//var_dump( __METHOD__, __LINE__, $mapMarker['cat'] );
         // Get the iconKey
-      $mapMarker['iconKey'] = $this->renderMapMarkerVariablesSystemItem( 'iconKey' );
+//      $mapMarker['iconKey'] = $this->renderMapMarkerVariablesSystemItem( 'iconKey' );
+      $mapMarker['iconKey'] = $arrCategoriesFlipped[ $mapMarker['cat'] ];
 //var_dump( __METHOD__, __LINE__, $mapMarker['iconKey'] );
 
         // Save each mapMarker
