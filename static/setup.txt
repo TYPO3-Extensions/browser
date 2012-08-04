@@ -763,7 +763,7 @@ plugin.tx_browser_pi1 {
               filter_form {
                 value (
                   <form id="filter">
-                    <input class="oxMapFilter" type="checkbox" name="cat1" value="1" checked="checked" />cat1
+                    <input class="oxMapFilter" type="checkbox" name="Rot" value="1" checked="checked" />Rot
                     <input class="oxMapFilter" type="checkbox" name="cat2" value="1" checked="checked" />cat2
                   </form>
   )
