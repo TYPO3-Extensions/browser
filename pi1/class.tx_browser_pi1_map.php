@@ -1206,6 +1206,7 @@ class tx_browser_pi1_map
       else
       {
         $categories = array( '10' => 'dummy' );
+        $arrCategoriesFlipped = array( 'dummy' => '10' );
       }
 
         // FOREACH category
