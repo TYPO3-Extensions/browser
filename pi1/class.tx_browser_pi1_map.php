@@ -817,6 +817,7 @@ class tx_browser_pi1_map
     
       // Get points (map marker) as JSON array and coordinates
     $arr_return   = $this->renderMapMarkerPointsToJSON( $mapMarkers );
+var_dump( __METHOD__, __LINE__, $arr_return ); 
     $jsonData     = $arr_return['data']['jsonData'];
     $coordinates  = $arr_return['data']['coordinates'];
       // Get points (map marker) as JSON array and coordinates
@@ -965,7 +966,7 @@ class tx_browser_pi1_map
       
     }
 
-var_dump( __METHOD__, __LINE__, $catIcons );
+//var_dump( __METHOD__, __LINE__, $catIcons );
     return $catIcons;
   }
   
