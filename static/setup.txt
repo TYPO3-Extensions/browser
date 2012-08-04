@@ -611,6 +611,11 @@ plugin.tx_browser_pi1 {
           dynamicMarker = OSMConfigZoom
         }
       }
+      fields {
+          // [STRING] table.field with the categories. Example: tx_org_headquarterscat.title
+        category = {$plugin.tx_browser_pi1.map.field.category}
+
+      }
       marker {
         addToCData {
           system {
