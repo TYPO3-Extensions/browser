@@ -1490,6 +1490,7 @@ class tx_browser_pi1_map
     }
     
     $categories = array_unique( $categories );
+var_dump( __METHOD__, __LINE__, $categories ); 
 
     $orderBy = $this->confMap['configuration.']['categories.']['orderBy'];
     switch( $orderBy )
