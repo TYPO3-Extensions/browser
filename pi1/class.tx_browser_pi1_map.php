@@ -85,6 +85,8 @@ class tx_browser_pi1_map
   var $int_typeNum  = null;
     // [String] Name of the current typeNum
   var $str_typeNum  = null;
+    // [ARRAY] Contains the categories of the current records
+  var $arrCategories = null;
     // [BOOLEAN] true, if there are more than one category
   var $boolMoreThanOneCategory = null;
 
@@ -1483,15 +1485,40 @@ class tx_browser_pi1_map
         $this->arrCategories = array( );
         return $this->arrCategories;
       }
-      $categories[ ] = $row[ $category ];
+      list( $firstCategory ) = implode( ',', $row[ $category ] );
+      $categories[ ] = $firstCategory;
     }
     
     $categories = array_unique( $categories );
-    asort(  $categories, SORT_STRING );
 
-var_dump( __METHOD__, __LINE__, $categories ); 
-    $this->boolMoreThanOneCategory = false;
-    return $this->boolMoreThanOneCategory;
+    $orderBy = $this->confMap['configuration.']['categories.']['orderBy'];
+    switch( $orderBy )
+    {
+      case( 'SORT_REGULAR' ):
+        asort( $categories, SORT_REGULAR );
+        break;
+      case( 'SORT_NUMERIC' ):
+        asort( $categories, SORT_NUMERIC );
+        break;
+      case( 'SORT_STRING' ):
+        asort( $categories, SORT_STRING );
+        break;
+      case( 'SORT_LOCALE_STRING' ):
+        asort( $categories, SORT_LOCALE_STRING );
+        break;
+      default:
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'configuration.categories.orderBy has an unproper value: "' . $orderBy . '"';
+          t3lib_div :: devLog( '[ERROR/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+          $prompt = 'categories will ordered by SORT_REGULAR!';
+          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
+        }
+        asort( $categories, SORT_REGULAR );
+        break;
+    }
+    $this->arrCategories = $categories; 
+    return $this->arrCategories;
   }
 
 
