@@ -446,8 +446,11 @@ class tx_browser_pi1_map
   * Categories
   *
   **********************************************/
+  
+  
+  
   /**
- * categoriesGet( ):
+ * categoriesFormInputs( ):
  *
  * @param    [type]        $$map_template: ...
  * @return    array
@@ -464,7 +467,6 @@ class tx_browser_pi1_map
     
     $inputs = implode( PHP_EOL , $arrInputs );
     $inputs = trim ( $inputs );
-var_dump( __METHOD__, __LINE__, $this->arrCategories, $arrInputs, $inputs );    
     return $inputs;
   }
 
@@ -490,6 +492,7 @@ var_dump( __METHOD__, __LINE__, $this->arrCategories, $arrInputs, $inputs );
       // Get the label for the category field
     $category = $this->confMap['configuration.']['categories.']['field'];
 
+      // Get categories from the rows
     foreach( $this->pObj->rows as $row )
     {
       if( ! isset( $row[ $category ] ) )
@@ -505,9 +508,12 @@ var_dump( __METHOD__, __LINE__, $this->arrCategories, $arrInputs, $inputs );
       list( $firstCategory ) = explode( ',', $row[ $category ] );
       $categories[ ] = $firstCategory;
     }
+      // Get categories from the rows
     
+      // Remove non unique categories
     $categories = array_unique( $categories );
 
+      // Order the categories
     $orderBy = $this->confMap['configuration.']['categories.']['orderBy'];
     switch( $orderBy )
     {
@@ -534,6 +540,9 @@ var_dump( __METHOD__, __LINE__, $this->arrCategories, $arrInputs, $inputs );
         asort( $categories, SORT_REGULAR );
         break;
     }
+      // Order the categories
+
+var_dump( __METHOD__, __LINE__, $categories );
     $this->arrCategories = $categories; 
     return $this->arrCategories;
   }
