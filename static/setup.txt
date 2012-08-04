@@ -776,11 +776,6 @@ plugin.tx_browser_pi1 {
                 // [STRING] table.field. Example: tx_org_headquarterscat.title
               field = {$plugin.tx_browser_pi1.map.field.category}
             }
-              // [INTEGR] key of the category icon from navigation.map.configuration.categories
-            iconKey = TEXT
-            iconKey {
-              value = 10
-            }
               // [NUMBER] latitude
             latitude = TEXT
             latitude {
