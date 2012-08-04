@@ -1207,6 +1207,8 @@ class tx_browser_pi1_map
           // Get the desc
 
           // Get the category
+        //$mapMarker['cat']     = $this->renderMapMarkerVariablesSystemItem( 'category' );
+        $mapMarker['cat']     = $catValue;
           // Get the iconKey
         $mapMarker['iconKey'] = $arrCategoriesFlipped[ $catValue ];
 
