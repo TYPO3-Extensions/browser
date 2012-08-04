@@ -475,11 +475,11 @@ class tx_browser_pi1_map
   private function categoriesFormInputs( )
   {
     $tab = '                    ';
-    foreach( $this->arrCategories as $category )
+    foreach( $this->arrCategories as $key => $category )
     {
         // Set the path
-      $coa_name = $this->confMap['configuration.']['categories.']['colours.'][$catKey . '.']['pathToIcon'];
-      $coa_conf = $this->confMap['configuration.']['categories.']['colours.'][$catKey . '.']['pathToIcon.'];
+      $coa_name = $this->confMap['configuration.']['categories.']['colours.'][$key . '.']['pathToIcon'];
+      $coa_conf = $this->confMap['configuration.']['categories.']['colours.'][$key . '.']['pathToIcon.'];
       $path     = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
 var_dump( __METHOD__, __LINE__, $coa_name, $coa_conf, $path );
       $cObj_name  = 'IMAGE';
