@@ -1465,9 +1465,11 @@ class tx_browser_pi1_map
     {
       return $this->boolMoreThanOneCategory;
     }
-    
+
     $category = $this->renderMapMarkerVariablesSystemItem( 'category' );
-var_dump( __METHOD__, __LINE__, $this->pObj->rows, $category ); 
+    $iconKey  = $this->renderMapMarkerVariablesSystemItem( 'iconKey' );
+
+var_dump( __METHOD__, __LINE__, $this->pObj->rows, $category, $iconKey ); 
     foreach( $this->pObj->rows as $row )
     {
 var_dump( __METHOD__, __LINE__, $row[ $category ] ); 
