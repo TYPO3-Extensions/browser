@@ -85,7 +85,8 @@ class tx_browser_pi1_map
   var $int_typeNum  = null;
     // [String] Name of the current typeNum
   var $str_typeNum  = null;
-
+    // [BOOLEAN] true, if there are more than one category
+  var $boolMoreThanOneCategory = null;
 
 
 
@@ -1382,6 +1383,10 @@ class tx_browser_pi1_map
   private function renderMapMarkerSnippetsHtmlCategories( $map_template )
   {
     // Do we have more than one category?
+    if( ! $this->zz_moreThanOneCategory( ) )
+    {
+      return;
+    }
     
     $tsProperty   = 'categories';
     $markerArray  =  $this->renderMapMarkerSnippetsHtml( $map_template, $tsProperty );
@@ -1442,6 +1447,37 @@ class tx_browser_pi1_map
     return $markerArray;
   }
 
+
+
+
+
+
+  /***********************************************
+  *
+  * Helper
+  *
+  **********************************************/
+
+
+
+  /**
+ * zz_moreThanOneCategory( ):
+ *
+ * @param    [type]        $$map_template: ...
+ * @return    array
+ * @version 4.1.4
+ * @since   4.1.4
+ */
+  private function zz_moreThanOneCategory( )
+  {
+    if( $this->boolMoreThanOneCategory != null )
+    {
+      return $this->boolMoreThanOneCategory;
+    }
+    
+    $this->boolMoreThanOneCategory = false;
+    return $this->boolMoreThanOneCategory;
+  }
 
 
 }
