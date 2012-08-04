@@ -965,7 +965,7 @@ class tx_browser_pi1_map
       
     }
 
-//var_dump( __METHOD__, __LINE__, $catIcons );
+var_dump( __METHOD__, __LINE__, $catIcons );
     return $catIcons;
   }
   
