@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 4.1.0
+* @version 4.1.4
 * @since 3.9.6
 */
 
@@ -335,7 +335,7 @@ class tx_browser_pi1_map
 
 
   /**
- * initCatDevider( ):
+ * initCatDevider( ): Init the class var $this->catDevider - the category devider.
  *
  * @return    void
  * @version 4.1.4
@@ -465,21 +465,26 @@ class tx_browser_pi1_map
   
   
   /**
- * categoriesFormInputs( ):
+ * categoriesFormInputs( ): Returns the input fields for the category form
  *
- * @param    [type]        $$map_template: ...
- * @return    array
+ * @return    string
  * @version 4.1.4
  * @since   4.1.4
  */
   private function categoriesFormInputs( )
   {
+      // Default space in HTML code
     $tab = '                    ';
+
+      // FOREACH category
     foreach( $this->arrCategories as $key => $category )
     {
+        // Get the draft for an input field
       $input = $this->confMap['configuration.']['categories.']['form_input'];
+        // replace the catgeroy marker
       $input = str_replace( '###CAT###', $category, $input );
 
+        // IF draft for an input field contains ###IMG###, render an image
       $pos = strpos( $input, '###IMG###' );
       if( ! ( $pos === false ) )
       {
@@ -497,22 +502,26 @@ class tx_browser_pi1_map
 
         $input = str_replace( '###IMG###', $img, $input );
       }
+        // IF draft for an input field contains ###IMG###, render an image
 
       $arrInputs[ ] = $tab . $input;
     }
+      // FOREACH category
     
+      // Move array of input fields to a string
     $inputs = implode( PHP_EOL , $arrInputs );
     $inputs = trim ( $inputs );
+    
+      // RETURN input fields
     return $inputs;
   }
 
 
 
   /**
- * categoriesGet( ):
+ * categoriesGet( ): Get the categories from the current rows. And set it in $this->arrCategories.
  *
- * @param    [type]        $$map_template: ...
- * @return    array
+ * @return    array   $this->arrCategories
  * @version 4.1.4
  * @since   4.1.4
  */
@@ -603,10 +612,10 @@ class tx_browser_pi1_map
 
 
   /**
- * categoriesMoreThanOne( ):
+ * categoriesMoreThanOne( ) : Set the class var $this->boolMoreThanOneCategory. It will be true, if there 
+   *                          are two categories at least
  *
- * @param    [type]        $$map_template: ...
- * @return    array
+ * @return    boolean   $this->boolMoreThanOneCategory: true, if there are two categories at least
  * @version 4.1.4
  * @since   4.1.4
  */
