@@ -481,10 +481,11 @@ class tx_browser_pi1_map
       $coa_name = $this->confMap['configuration.']['categories.']['colours.'][$catKey . '.']['pathToIcon'];
       $coa_conf = $this->confMap['configuration.']['categories.']['colours.'][$catKey . '.']['pathToIcon.'];
       $path     = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
-
+var_dump( __METHOD__, __LINE__, $coa_name, $coa_conf, $path );
       $cObj_name  = 'IMAGE';
       $cObj_conf  = array( 'file' => $path );
       $img        = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+var_dump( __METHOD__, __LINE__, $coa_name, $coa_conf, $img );
       $arrInputs[ ] = $tab . '<input class="oxMapFilter" type="checkbox" name="' . $category . '" value="1" checked="checked" />' . $category . ' ' . $img;
     }
     
