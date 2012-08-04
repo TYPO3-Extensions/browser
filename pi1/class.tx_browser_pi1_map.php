@@ -435,11 +435,158 @@ class tx_browser_pi1_map
       // init the map
     $this->init( );
   }
+
+
+
+
+
+
+  /***********************************************
+  *
+  * Categories
+  *
+  **********************************************/
+  /**
+ * categoriesGet( ):
+ *
+ * @param    [type]        $$map_template: ...
+ * @return    array
+ * @version 4.1.4
+ * @since   4.1.4
+ */
+  private function categoriesFormInputs( )
+  {
+      // RETURN : method is called twice at least
+    if( $this->arrCategories != null )
+    {
+      return $this->arrCategories;
+    }
+      // RETURN : method is called twice at least
+    
+    $tab = '                    ';
+    foreach( $this->arrCategories as $category )
+    {
+      $arrInputs = $tab . '<input class="oxMapFilter" type="checkbox" name="' . $category . '" value="1" checked="checked" />' . $category;
+    }
+    
+    $inputs = implode( PHP_EOL . $arrInputs );
+    $inputs = trim ( $inputs );
+    
+    return $inputs;
+  }
+
+
+
+  /**
+ * categoriesGet( ):
+ *
+ * @param    [type]        $$map_template: ...
+ * @return    array
+ * @version 4.1.4
+ * @since   4.1.4
+ */
+  private function categoriesGet( )
+  {
+      // RETURN : method is called twice at least
+    if( $this->arrCategories != null )
+    {
+      return $this->arrCategories;
+    }
+      // RETURN : method is called twice at least
+    
+      // Get the label for the category field
+    $category = $this->confMap['configuration.']['categories.']['field'];
+
+    foreach( $this->pObj->rows as $row )
+    {
+      if( ! isset( $row[ $category ] ) )
+      {
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'current rows doesn\'t contain the field "' . $category . '"';
+          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
+        }
+        $this->arrCategories = array( );
+        return $this->arrCategories;
+      }
+      list( $firstCategory ) = explode( ',', $row[ $category ] );
+      $categories[ ] = $firstCategory;
+    }
+    
+    $categories = array_unique( $categories );
+
+    $orderBy = $this->confMap['configuration.']['categories.']['orderBy'];
+    switch( $orderBy )
+    {
+      case( 'SORT_REGULAR' ):
+        asort( $categories, SORT_REGULAR );
+        break;
+      case( 'SORT_NUMERIC' ):
+        asort( $categories, SORT_NUMERIC );
+        break;
+      case( 'SORT_STRING' ):
+        asort( $categories, SORT_STRING );
+        break;
+      case( 'SORT_LOCALE_STRING' ):
+        asort( $categories, SORT_LOCALE_STRING );
+        break;
+      default:
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'configuration.categories.orderBy has an unproper value: "' . $orderBy . '"';
+          t3lib_div :: devLog( '[ERROR/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+          $prompt = 'categories will ordered by SORT_REGULAR!';
+          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
+        }
+        asort( $categories, SORT_REGULAR );
+        break;
+    }
+    $this->arrCategories = $categories; 
+    return $this->arrCategories;
+  }
+
+
+
+  /**
+ * categoriesMoreThanOne( ):
+ *
+ * @param    [type]        $$map_template: ...
+ * @return    array
+ * @version 4.1.4
+ * @since   4.1.4
+ */
+  private function categoriesMoreThanOne( )
+  {
+      // RETURN : method is called twice at least
+    if( $this->boolMoreThanOneCategory != null )
+    {
+      return $this->boolMoreThanOneCategory;
+    }
+      // RETURN : method is called twice at least
       
+    $categories = $this->categoriesGet( );
 
-
-
-
+    if( count ( $categories ) > 1 )
+    {
+      $this->boolMoreThanOneCategory = true;
+      if( $this->pObj->b_drs_map )
+      {
+        $prompt = 'There is more than one category.';
+        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+      }
+    }
+    else
+    {
+      $this->boolMoreThanOneCategory = false;
+      if( $this->pObj->b_drs_map )
+      {
+        $prompt = 'There isn\'t more than one category.';
+        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+      }
+    }
+    return $this->boolMoreThanOneCategory;
+  }
+      
 
 
 
@@ -1376,7 +1523,7 @@ class tx_browser_pi1_map
   {
     $markerArray = array( );
     
-    if( ! $this->zz_moreThanOneCategory( ) )
+    if( ! $this->categoriesMoreThanOne( ) )
     {
       if( $this->pObj->b_drs_map )
       {
@@ -1389,9 +1536,7 @@ class tx_browser_pi1_map
     $tsProperty   = 'categories';
     $markerArray  =  $this->renderMapMarkerSnippetsHtml( $map_template, $tsProperty );
     
-    $inputs = '<input class="oxMapFilter" type="checkbox" name="Rot" value="1" checked="checked" />Rot
-                    <input class="oxMapFilter" type="checkbox" name="cat2" value="1" checked="checked" />cat2
-';
+    $inputs = $this->categoriesFormInputs( );
     $markerArray[ '###FILTER_FORM###' ] = str_replace('###INPUTS###', $inputs, $markerArray[ '###FILTER_FORM###' ] );
 
     return $markerArray;
@@ -1448,129 +1593,6 @@ class tx_browser_pi1_map
     }
 
     return $markerArray;
-  }
-
-
-
-
-
-
-  /***********************************************
-  *
-  * Helper
-  *
-  **********************************************/
-
-
-
-  /**
- * zz_getCategories( ):
- *
- * @param    [type]        $$map_template: ...
- * @return    array
- * @version 4.1.4
- * @since   4.1.4
- */
-  private function zz_getCategories( )
-  {
-      // RETURN : method is called twice at least
-    if( $this->arrCategories != null )
-    {
-      return $this->arrCategories;
-    }
-      // RETURN : method is called twice at least
-    
-      // Get the label for the category field
-    $category = $this->confMap['configuration.']['categories.']['field'];
-
-    foreach( $this->pObj->rows as $row )
-    {
-      if( ! isset( $row[ $category ] ) )
-      {
-        if( $this->pObj->b_drs_map )
-        {
-          $prompt = 'current rows doesn\'t contain the field "' . $category . '"';
-          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
-        }
-        $this->arrCategories = array( );
-        return $this->arrCategories;
-      }
-      list( $firstCategory ) = explode( ',', $row[ $category ] );
-      $categories[ ] = $firstCategory;
-    }
-    
-    $categories = array_unique( $categories );
-
-    $orderBy = $this->confMap['configuration.']['categories.']['orderBy'];
-    switch( $orderBy )
-    {
-      case( 'SORT_REGULAR' ):
-        asort( $categories, SORT_REGULAR );
-        break;
-      case( 'SORT_NUMERIC' ):
-        asort( $categories, SORT_NUMERIC );
-        break;
-      case( 'SORT_STRING' ):
-        asort( $categories, SORT_STRING );
-        break;
-      case( 'SORT_LOCALE_STRING' ):
-        asort( $categories, SORT_LOCALE_STRING );
-        break;
-      default:
-        if( $this->pObj->b_drs_map )
-        {
-          $prompt = 'configuration.categories.orderBy has an unproper value: "' . $orderBy . '"';
-          t3lib_div :: devLog( '[ERROR/MAP] ' . $prompt , $this->pObj->extKey, 3 );
-          $prompt = 'categories will ordered by SORT_REGULAR!';
-          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
-        }
-        asort( $categories, SORT_REGULAR );
-        break;
-    }
-    $this->arrCategories = $categories; 
-    return $this->arrCategories;
-  }
-
-
-
-  /**
- * zz_moreThanOneCategory( ):
- *
- * @param    [type]        $$map_template: ...
- * @return    array
- * @version 4.1.4
- * @since   4.1.4
- */
-  private function zz_moreThanOneCategory( )
-  {
-      // RETURN : method is called twice at least
-    if( $this->boolMoreThanOneCategory != null )
-    {
-      return $this->boolMoreThanOneCategory;
-    }
-      // RETURN : method is called twice at least
-      
-    $categories = $this->zz_getCategories( );
-
-    if( count ( $categories ) > 1 )
-    {
-      $this->boolMoreThanOneCategory = true;
-      if( $this->pObj->b_drs_map )
-      {
-        $prompt = 'There is more than one category.';
-        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
-      }
-    }
-    else
-    {
-      $this->boolMoreThanOneCategory = false;
-      if( $this->pObj->b_drs_map )
-      {
-        $prompt = 'There isn\'t more than one category.';
-        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
-      }
-    }
-    return $this->boolMoreThanOneCategory;
   }
   
 
