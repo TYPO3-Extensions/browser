@@ -471,7 +471,7 @@ class tx_browser_pi1_map
     
     $inputs = implode( PHP_EOL . $arrInputs );
     $inputs = trim ( $inputs );
-    
+var_dump( __METHOD__, __LINE__, $inputs );    
     return $inputs;
   }
 
