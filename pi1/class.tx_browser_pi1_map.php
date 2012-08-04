@@ -1055,23 +1055,13 @@ class tx_browser_pi1_map
  *
  * @param    string        $map_template: ...
  * @return    string
- * @version 4.1.0
+ * @version 4.1.4
  * @since   4.1.0
  */
   private function renderMapMarkerVariablesSystemItem( $item )
   {
-    switch( true )
-    {
-//      case( $item = 'categories.label' ):
-//        $coa_name = $this->confMap['marker.']['variables.']['system.']['categories.']['label'];
-//        $coa_conf = $this->confMap['marker.']['variables.']['system.']['categories.']['label.'];
-//        break;
-      default:
-        $coa_name = $this->confMap['marker.']['variables.']['system.'][$item];
-        $coa_conf = $this->confMap['marker.']['variables.']['system.'][$item . '.'];
-        break;
-    }
-    
+    $coa_name = $this->confMap['marker.']['variables.']['system.'][$item];
+    $coa_conf = $this->confMap['marker.']['variables.']['system.'][$item . '.'];
     $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
 
     return $value;
@@ -1476,7 +1466,27 @@ class tx_browser_pi1_map
       return $this->boolMoreThanOneCategory;
     }
     
-var_dump( __METHOD__, __LINE__, $this->pObj->rows ); 
+    $category = $this->renderMapMarkerVariablesSystemItem( 'category' );
+    foreach( $rows as $row )
+    {
+ var_dump( __METHOD__, __LINE__, $row[ $category ] ); 
+    }
+    if( $this->pObj->b_drs_map )
+    {
+      if( empty ( $content ) )
+      {
+        $prompt = 'marker.addToCData.' . $marker . ' is empty. Probably this is an error!';
+        t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+      }
+      else
+      {
+        $prompt = 'Added to cObject: ' . $content;
+        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+        $prompt = 'You can use the content in TypoScript with: field = ' . $marker;
+        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+      }
+    }
+
     $this->boolMoreThanOneCategory = false;
     return $this->boolMoreThanOneCategory;
   }
