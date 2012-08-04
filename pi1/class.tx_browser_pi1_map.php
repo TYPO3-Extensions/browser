@@ -543,17 +543,24 @@ class tx_browser_pi1_map
       // Order the categories
 
       // Set the keys
+    $maxItem = count( $categories );
+    $counter = 0;
     foreach( array_keys( $this->confMap['configuration.']['categories.']['colours.'] ) as $catKey )
     {
       if( substr( $catKey, -1 ) == '.' )
       {
         continue;
       }
-      //$catWiKey[ $catKey ] = 
+      $catWiKey[ $catKey ] = $categories[ $counter ];
+      $counter++;
+      if( $counter >= $maxItem )
+      {
+        break;
+      }
     }
       // Set the keys
     
-var_dump( __METHOD__, __LINE__, $categories );
+var_dump( __METHOD__, __LINE__, $categories, $catWiKey );
     $this->arrCategories = $categories; 
     return $this->arrCategories;
   }
