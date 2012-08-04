@@ -689,7 +689,7 @@ class tx_browser_pi1_map
       // System marker
     $markerArray  = $this->renderMapMarkerSnippetsHtmlCategories( $map_template );
       // Dynamic marker
-    $markerArray  = $markerArray + ( array ) $this->renderMapMarkerSnippetsHtmlDynamic( $map_template );
+    $markerArray  = $markerArray + $this->renderMapMarkerSnippetsHtmlDynamic( $map_template );
       // Replace marker in the map HTML template
     $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
       // Substitute marker HTML
@@ -1382,10 +1382,12 @@ class tx_browser_pi1_map
  */
   private function renderMapMarkerSnippetsHtmlCategories( $map_template )
   {
+    $markerArray = array( );
+    
     // Do we have more than one category?
     if( ! $this->zz_moreThanOneCategory( ) )
     {
-      return;
+      return $markerArray;
     }
     
     $tsProperty   = 'categories';
