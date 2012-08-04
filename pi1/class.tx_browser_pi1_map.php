@@ -689,7 +689,7 @@ class tx_browser_pi1_map
       // System marker
     $markerArray  = $this->renderMapMarkerSnippetsHtmlCategories( $map_template );
       // Dynamic marker
-    $markerArray  = $markerArray + $this->renderMapMarkerSnippetsHtmlDynamic( $map_template );
+    $markerArray  = $markerArray + ( array ) $this->renderMapMarkerSnippetsHtmlDynamic( $map_template );
       // Replace marker in the map HTML template
     $map_template = $this->pObj->cObj->substituteMarkerArray( $map_template, $markerArray );
       // Substitute marker HTML
