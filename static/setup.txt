@@ -761,12 +761,12 @@ plugin.tx_browser_pi1 {
             css_mapHeight = TEXT
             css_mapHeight {
                 // [PIXEL] Default: 400px
-              value = 400px;
+              value = {$plugin.tx_browser_pi1.map.field.height}px;
             }
             css_mapWidth = TEXT
             css_mapWidth {
                 // [PIXEL] Default: 600px
-              value = 600px;
+              value = {$plugin.tx_browser_pi1.map.field.width}px;
             }
           }
           system {

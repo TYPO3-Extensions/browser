@@ -78,6 +78,10 @@ plugin.tx_browser_pi1 {
   map.field.description = 
   # cat=Browser - Map//104;            type=string;  label= table.field with the category: Example: tx_org_headquarterscat.title
   map.field.category = 
+  # cat=Browser - Map/dims/201;        type=integer;  label= Map height: Height of the map (in pixel)
+  map.height = 400
+  # cat=Browser - Map/dims/202;        type=integer;  label= Map width: Width of the map (in pixel)
+  map.width = 600
 
   # cat=Browser - Navigation/;       type=string;  label= Record Browser: uid name (default: showUid)
   recordBrowser.uidName = showUid
