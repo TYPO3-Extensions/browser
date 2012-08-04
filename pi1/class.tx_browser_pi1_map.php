@@ -1192,7 +1192,21 @@ class tx_browser_pi1_map
     $lons         = array( );
     $lats         = array( );
     $dontHandle00 = $this->confMap['configuration.']['00Coordinates.']['dontHandle'];
-    $arrCategoriesFlipped = array_flip( $this->arrCategories );
+
+    if( $this->boolMoreThanOneCategory )
+    {
+      $arrCategoriesFlipped = array_flip( $this->arrCategories );
+    }
+    else
+    {
+      foreach( array_keys( $this->confMap['configuration.']['categories.']['colours.'] ) as $key )
+      {
+        $firstColourKey = $key;
+        break;
+      }
+      $arrCategoriesFlipped = array( 'dummy' => $firstColourKey );
+    }
+      
 
       // FOREACH row
     //$catField = $this->renderMapMarkerVariablesSystemItem( 'category' );
@@ -1205,8 +1219,7 @@ class tx_browser_pi1_map
       }
       else
       {
-        $categories = array( '10' => 'dummy' );
-        $arrCategoriesFlipped = array( 'dummy' => '10' );
+        $categories = array( $firstColourKey => 'dummy' );
       }
 
         // FOREACH category
