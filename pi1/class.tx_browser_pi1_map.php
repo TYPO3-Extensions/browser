@@ -490,23 +490,25 @@ class tx_browser_pi1_map
       // RETURN : method is called twice at least
     
       // Get the label for the category field
-    $category = $this->confMap['configuration.']['categories.']['field'];
+    $key = $this->confMap['configuration.']['categories.']['field'];
 
       // Get categories from the rows
+    $categories = array( );
     foreach( $this->pObj->rows as $row )
     {
-      if( ! isset( $row[ $category ] ) )
+      if( ! isset( $row[ $key ] ) )
       {
         if( $this->pObj->b_drs_map )
         {
-          $prompt = 'current rows doesn\'t contain the field "' . $category . '"';
+          $prompt = 'current rows doesn\'t contain the field "' . $key . '"';
           t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
         }
         $this->arrCategories = array( );
         return $this->arrCategories;
       }
-      list( $firstCategory ) = explode( ',', $row[ $category ] );
-      $categories[ ] = $firstCategory;
+//      list( $firstCategory ) = explode( ',', $row[ $key ] );
+//      $categories[ ] = $firstCategory;
+      $categories = $categories + explode( ',', $row[ $key ] );
     }
       // Get categories from the rows
     
@@ -1187,11 +1189,8 @@ class tx_browser_pi1_map
 
         // Get the category
       $mapMarker['cat'] = $this->renderMapMarkerVariablesSystemItem( 'category' );
-//var_dump( __METHOD__, __LINE__, $mapMarker['cat'] );
         // Get the iconKey
-//      $mapMarker['iconKey'] = $this->renderMapMarkerVariablesSystemItem( 'iconKey' );
       $mapMarker['iconKey'] = $arrCategoriesFlipped[ $mapMarker['cat'] ];
-//var_dump( __METHOD__, __LINE__, $mapMarker['iconKey'] );
 
         // Save each mapMarker
       $mapMarkers[] = $mapMarker;
