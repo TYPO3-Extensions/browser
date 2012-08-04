@@ -74,7 +74,7 @@ plugin.tx_browser_pi1 {
   map.field.latitude = 
   # cat=Browser - Map//102;            type=string;  label= table.field with the longitude: Example: tx_org_headquarters.longitude
   map.field.longitude = 
-  # cat=Browser - Map//103;            type=string;  label= table.field with the content for the popup: Example: tx_org_headquarters.short
+  # cat=Browser - Map//103;            type=string;  label= table.field with the content: table.field with the content for the popup. Example: tx_org_headquarters.short
   map.field.description = 
 
   # cat=Browser - Navigation/;       type=string;  label= Record Browser: uid name (default: showUid)
