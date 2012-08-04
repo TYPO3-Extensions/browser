@@ -1166,9 +1166,10 @@ class tx_browser_pi1_map
 
       // FOREACH row
     $catField = $this->renderMapMarkerVariablesSystemItem( 'category' );
+    $catField = $this->confMap['configuration.']['categories.']['field'];
     foreach( $this->pObj->rows as $row )
     {
-        //FOREACH category
+        // FOREACH category
       $categories =  explode( $this->catDevider, $row[ $catField ] );
       foreach( $categories as $catKey => $catValue )
       {
@@ -1220,7 +1221,7 @@ class tx_browser_pi1_map
         $this->cObjDataRemoveRow( $row );
         
       }
-        //FOREACH category
+        // FOREACH category
     }
       // FOREACH row
     
