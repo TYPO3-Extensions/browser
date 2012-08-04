@@ -477,22 +477,27 @@ class tx_browser_pi1_map
     $tab = '                    ';
     foreach( $this->arrCategories as $key => $category )
     {
-        // Set the path
-      $coa_name = $this->confMap['configuration.']['categories.']['colours.'][$key . '.']['pathToIcon'];
-      $coa_conf = $this->confMap['configuration.']['categories.']['colours.'][$key . '.']['pathToIcon.'];
-      $path     = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
-        // Set the path
-
-        // Render the image
-      $cObj_name  = 'IMAGE';
-      $cObj_conf  = array( 'file' => $path );
-      $img        = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
-        // Render the image
-
       $input = $this->confMap['configuration.']['categories.']['form_input'];
       $input = str_replace( '###CAT###', $category, $input );
-      $input = str_replace( '###IMG###', $img, $input );
-//      $arrInputs[ ] = $tab . '<input class="oxMapFilter" type="checkbox" name="' . $category . '" value="1" checked="checked" />' . $category . ' ' . $img;
+
+      $pos = strpos( $input, '###IMG###' );
+      if( ! ( $pos === false ) )
+      {
+          // Set the path
+        $coa_name = $this->confMap['configuration.']['categories.']['colours.'][$key . '.']['pathToIcon'];
+        $coa_conf = $this->confMap['configuration.']['categories.']['colours.'][$key . '.']['pathToIcon.'];
+        $path     = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+          // Set the path
+
+          // Render the image
+        $cObj_name  = 'IMAGE';
+        $cObj_conf  = array( 'file' => $path );
+        $img        = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+          // Render the image
+
+        $input = str_replace( '###IMG###', $img, $input );
+      }
+
       $arrInputs[ ] = $tab . $input;
     }
     
