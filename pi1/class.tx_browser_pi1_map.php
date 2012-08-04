@@ -1467,7 +1467,7 @@ class tx_browser_pi1_map
     }
     
     $category = $this->renderMapMarkerVariablesSystemItem( 'category' );
-    foreach( $rows as $row )
+    foreach( $this->pObj->rows as $row )
     {
  var_dump( __METHOD__, __LINE__, $row[ $category ] ); 
     }
