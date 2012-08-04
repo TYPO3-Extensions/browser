@@ -1186,6 +1186,7 @@ class tx_browser_pi1_map
 
         // Get the category
       $mapMarker['cat'] = $this->renderMapMarkerVariablesSystemItem( 'category' );
+var_dump( __METHOD__, __LINE__, $mapMarker['cat'] );
 
         // Get the iconKey
       $mapMarker['iconKey'] = $this->renderMapMarkerVariablesSystemItem( 'iconKey' );
