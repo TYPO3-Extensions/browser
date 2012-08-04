@@ -508,6 +508,7 @@ class tx_browser_pi1_map
       }
 //      list( $firstCategory ) = explode( ',', $row[ $key ] );
 //      $categories[ ] = $firstCategory;
+var_dump( __METHOD__, __LINE__, $row[ $key ] );
       $categories = $categories + explode( ',', $row[ $key ] );
     }
       // Get categories from the rows
