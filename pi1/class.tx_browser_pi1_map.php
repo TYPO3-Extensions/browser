@@ -1485,6 +1485,7 @@ class tx_browser_pi1_map
     }
     
     $categories = array_unique( $categories, SORT_STRING );
+    asort(  $categories, SORT_STRING );
 
 var_dump( __METHOD__, __LINE__, $categories ); 
     $this->boolMoreThanOneCategory = false;
