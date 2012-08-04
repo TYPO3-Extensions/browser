@@ -459,12 +459,12 @@ class tx_browser_pi1_map
     $tab = '                    ';
     foreach( $this->arrCategories as $category )
     {
-      $arrInputs = $tab . '<input class="oxMapFilter" type="checkbox" name="' . $category . '" value="1" checked="checked" />' . $category;
+      $arrInputs[ ] = $tab . '<input class="oxMapFilter" type="checkbox" name="' . $category . '" value="1" checked="checked" />' . $category;
     }
     
     $inputs = implode( PHP_EOL . $arrInputs );
     $inputs = trim ( $inputs );
-var_dump( __METHOD__, __LINE__, $inputs );    
+var_dump( __METHOD__, __LINE__, $this->arrCategories, $inputs );    
     return $inputs;
   }
 
