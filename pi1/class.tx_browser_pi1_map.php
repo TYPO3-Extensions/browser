@@ -1446,9 +1446,9 @@ class tx_browser_pi1_map
         $zoomLevel = ( int ) ( log( $quotient ) / log( 2 ) );
         break;
     }
-//var_dump( __METHOD__, __LINE__, $longitudes, max( $longitudes ), min( $longitudes ),
-//         $latitudes, max( $latitudes ), min( $latitudes ), $maxDistance, $quotient, $zoomLevel );
-//var_dump( __METHOD__, __LINE__, $zoomLevel );
+var_dump( __METHOD__, __LINE__, $longitudes, max( $longitudes ), min( $longitudes ),
+         $latitudes, max( $latitudes ), min( $latitudes ), $maxDistance, $quotient, $zoomLevel );
+var_dump( __METHOD__, __LINE__, $zoomLevel );
       // Calculate the zoom level
 
     switch( true )
