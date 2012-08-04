@@ -1446,23 +1446,23 @@ class tx_browser_pi1_map
         $zoomLevel = ( int ) ( log( $quotient ) / log( 2 ) );
         break;
     }
-var_dump( __METHOD__, __LINE__, $longitudes, max( $longitudes ), min( $longitudes ),
-         $latitudes, max( $latitudes ), min( $latitudes ), $distances, $maxDistance, $quotient, $zoomLevel );
+//var_dump( __METHOD__, __LINE__, $longitudes, max( $longitudes ), min( $longitudes ),
+//         $latitudes, max( $latitudes ), min( $latitudes ), $distances, $maxDistance, $quotient, $zoomLevel );
 //var_dump( __METHOD__, __LINE__, $zoomLevel );
       // Calculate the zoom level
 
-    switch( true )
-    {
-      case( $zoomLevel < 6 ):
-        $zoomLevel = $zoomLevel + 1;
-        break;
-      case( $zoomLevel < 12 ):
-        $zoomLevel = $zoomLevel + 2;
-        break;
-      case( $zoomLevel < 18 ):
-        $zoomLevel = $zoomLevel + 3;
-        break;
-    }
+//    switch( true )
+//    {
+//      case( $zoomLevel < 6 ):
+//        $zoomLevel = $zoomLevel + 1;
+//        break;
+//      case( $zoomLevel < 12 ):
+//        $zoomLevel = $zoomLevel + 2;
+//        break;
+//      case( $zoomLevel < 18 ):
+//        $zoomLevel = $zoomLevel + 3;
+//        break;
+//    }
 
     if( $zoomLevel > 18 )
     {
