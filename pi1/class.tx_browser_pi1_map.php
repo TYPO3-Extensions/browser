@@ -1447,8 +1447,8 @@ class tx_browser_pi1_map
         break;
     }
 var_dump( __METHOD__, __LINE__, $longitudes, max( $longitudes ), min( $longitudes ),
-         $latitudes, max( $latitudes ), min( $latitudes ), $maxDistance, $quotient, $zoomLevel );
-var_dump( __METHOD__, __LINE__, $zoomLevel );
+         $latitudes, max( $latitudes ), min( $latitudes ), $distances, $maxDistance, $quotient, $zoomLevel );
+//var_dump( __METHOD__, __LINE__, $zoomLevel );
       // Calculate the zoom level
 
     switch( true )
