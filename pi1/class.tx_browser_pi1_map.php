@@ -492,6 +492,10 @@ class tx_browser_pi1_map
       // Get the label for the category field
     $key = $this->confMap['configuration.']['categories.']['field'];
 
+    $this->pObj->objTyposcript->set_confSqlDevider();
+    $str_devider = $this->pObj->objTyposcript->str_sqlDeviderDisplay.$this->pObj->objTyposcript->str_sqlDeviderWorkflow;
+var_dump( __METHOD__, __LINE__, $str_devider );
+
       // Get categories from the rows
     $categories = array( );
     foreach( $this->pObj->rows as $row )
@@ -508,7 +512,7 @@ class tx_browser_pi1_map
       }
 //      list( $firstCategory ) = explode( ',', $row[ $key ] );
 //      $categories[ ] = $firstCategory;
-var_dump( __METHOD__, __LINE__, $row[ $key ], explode( ',', $row[ $key ] ) );
+var_dump( __METHOD__, __LINE__, explode( ',', $row[ $key ] ) );
       $categories = $categories + explode( ',', $row[ $key ] );
     }
       // Get categories from the rows
