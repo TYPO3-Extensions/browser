@@ -489,6 +489,8 @@ plugin.tx_browser_pi1 {
           }
             // [STRING] table.field with the categories. Example: tx_org_headquarterscat.title
           field = {$plugin.tx_browser_pi1.map.field.category}
+            // [STRING/HTML] Draft for an input field of the category form
+          form_input = <input class="oxMapFilter" type="checkbox" name="###CAT###" value="1" checked="checked" />###CAT### ###IMG###
             // [STRING]  SORT_REGULAR, SORT_NUMERIC, SORT_STRING or SORT_LOCALE_STRING 
           orderBy = SORT_STRING
         }
