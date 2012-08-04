@@ -1378,6 +1378,11 @@ class tx_browser_pi1_map
     
     if( ! $this->zz_moreThanOneCategory( ) )
     {
+      if( $this->pObj->b_drs_map )
+      {
+        $prompt = 'There isn\'t more than one category. Any form with categories will rendered.';
+        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+      }
       return $markerArray;
     }
     
@@ -1472,7 +1477,6 @@ class tx_browser_pi1_map
     
       // Get the label for the category field
     $category = $this->confMap['configuration.']['categories.']['field'];
-var_dump( __METHOD__, __LINE__, $this->confMap['configuration.']['categories.']['field'], $category ); 
 
     foreach( $this->pObj->rows as $row )
     {
@@ -1487,12 +1491,10 @@ var_dump( __METHOD__, __LINE__, $this->confMap['configuration.']['categories.'][
         return $this->arrCategories;
       }
       list( $firstCategory ) = explode( ',', $row[ $category ] );
-var_dump( __METHOD__, __LINE__, $firstCategory ); 
       $categories[ ] = $firstCategory;
     }
     
     $categories = array_unique( $categories );
-var_dump( __METHOD__, __LINE__, $categories, $category, $this->pObj->rows ); 
 
     $orderBy = $this->confMap['configuration.']['categories.']['orderBy'];
     switch( $orderBy )
@@ -1545,10 +1547,27 @@ var_dump( __METHOD__, __LINE__, $categories, $category, $this->pObj->rows );
       
     $categories = $this->zz_getCategories( );
 
-var_dump( __METHOD__, __LINE__, $categories ); 
-    $this->boolMoreThanOneCategory = false;
+    if( count ( $categories ) > 1 )
+    {
+      $this->boolMoreThanOneCategory = true;
+      if( $this->pObj->b_drs_map )
+      {
+        $prompt = 'There is more than one category.';
+        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+      }
+    }
+    else
+    {
+      $this->boolMoreThanOneCategory = false;
+      if( $this->pObj->b_drs_map )
+      {
+        $prompt = 'There isn\'t more than one category.';
+        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+      }
+    }
     return $this->boolMoreThanOneCategory;
   }
+  
 
 
 }
