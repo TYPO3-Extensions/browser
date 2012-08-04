@@ -678,6 +678,56 @@ plugin.tx_browser_pi1 {
         }
         snippets {
           html {
+            categories {
+                // Category filter
+              filter_form = TEXT
+              filter_form {
+                value (
+                  <form id="filter">
+                    <input class="oxMapFilter" type="checkbox" name="Rot" value="1" checked="checked" />Rot
+                    <input class="oxMapFilter" type="checkbox" name="cat2" value="1" checked="checked" />cat2
+                  </form>
+  )
+              }
+                // Javascript for the category filter
+              filter_jss = TEXT
+              filter_jss {
+                value (
+                  <script>
+                  /* <![CDATA[ */
+                    var filter = $( "input.oxMapFilter" );
+                    for(var a=filter.length; a-- ; )
+                    filter[a].onchange = function( )
+                    {
+                      startFilter( this, this.name, this.value );
+                    };
+                    function startFilter( element, name, value )
+                    {
+                      switchTo = value == 1 ? false : true;
+                      element.value = switchTo == false ? 0 : 1;
+
+                      /*	Beispielfilteranwendung
+                      *
+                      *	Das Beispiel liest den Wert einer Checkbox aus und ubergibt an die map.filterLayer-Methode Name und Sichtbarkeit
+                          map           map-Object              als Instance des oxMapRender-Konstruktors -> wird durch Einbettung der oxAPI
+                                                                oxRenderMap.js erzeugt;
+                          filterLayer		filter-Methode
+                            @param  name      STRING            Layer-Name --> es wird zwischen Markern ohne und mit Informationlayer unterschieden
+                                                                - einfache Markername bestehen aus dem Kategorienamen   --> 'cat1'
+                                                                - Infolayernamen betehen aus Kategoriename und Suffix 'Info'  --> 'cat1Info'
+                                                                um alle Layer zu schließen, muss die Methode so oft wiederholt werden,
+                                                                bis alle Kategorienamen erfasst wurden
+                            @param  switchTo  BOOLEAN | FLOAT   Sichtbarkeitswert -->	true | false entspricht sichtbar bzw. unsichtbar
+                                                                Zahl zwischen 0 und 1 definiert Transparenzgrad
+                      */
+                      map.filterLayer( name, switchTo );
+                      map.filterLayer( name + 'Info', switchTo );
+                    }
+                  /* ]]> */
+                  </script>
+  )
+              }
+            }
             dynamic {
               map_css = TEXT
               map_css {
@@ -757,58 +807,6 @@ plugin.tx_browser_pi1 {
   )
               }
             }
-            system {
-                // Category filter
-              filter_form = TEXT
-              filter_form {
-                value (
-                  <form id="filter">
-                    <input class="oxMapFilter" type="checkbox" name="Rot" value="1" checked="checked" />Rot
-                    <input class="oxMapFilter" type="checkbox" name="cat2" value="1" checked="checked" />cat2
-                  </form>
-  )
-              }
-              //filter_form >
-                // Javascript for the category filter
-              filter_jss = TEXT
-              filter_jss {
-                value (
-                  <script>
-                  /* <![CDATA[ */
-                    var filter = $( "input.oxMapFilter" );
-                    for(var a=filter.length; a-- ; )
-                    filter[a].onchange = function( )
-                    {
-                      startFilter( this, this.name, this.value );
-                    };
-                    function startFilter( element, name, value )
-                    {
-                      switchTo = value == 1 ? false : true;
-                      element.value = switchTo == false ? 0 : 1;
-
-                      /*	Beispielfilteranwendung
-                      *
-                      *	Das Beispiel liest den Wert einer Checkbox aus und ubergibt an die map.filterLayer-Methode Name und Sichtbarkeit
-                          map           map-Object              als Instance des oxMapRender-Konstruktors -> wird durch Einbettung der oxAPI
-                                                                oxRenderMap.js erzeugt;
-                          filterLayer		filter-Methode
-                            @param  name      STRING            Layer-Name --> es wird zwischen Markern ohne und mit Informationlayer unterschieden
-                                                                - einfache Markername bestehen aus dem Kategorienamen   --> 'cat1'
-                                                                - Infolayernamen betehen aus Kategoriename und Suffix 'Info'  --> 'cat1Info'
-                                                                um alle Layer zu schließen, muss die Methode so oft wiederholt werden,
-                                                                bis alle Kategorienamen erfasst wurden
-                            @param  switchTo  BOOLEAN | FLOAT   Sichtbarkeitswert -->	true | false entspricht sichtbar bzw. unsichtbar
-                                                                Zahl zwischen 0 und 1 definiert Transparenzgrad
-                      */
-                      map.filterLayer( name, switchTo );
-                      map.filterLayer( name + 'Info', switchTo );
-                    }
-                  /* ]]> */
-                  </script>
-  )
-              }
-              //filter_jss >
-            }
           }
           jss {
             dynamic {
@@ -874,11 +872,8 @@ plugin.tx_browser_pi1 {
               // [STRING] category label in the filter
             category = TEXT
             category {
-              value = red
-              lang {
-                de = Rot
-                en = red
-              }
+                // [STRING] table.field. Example: tx_org_headquarterscat.title
+              field = {$plugin.tx_browser_pi1.map.field.category}
             }
               // [INTEGR] key of the category icon from navigation.map.configuration.categories
             iconKey = TEXT

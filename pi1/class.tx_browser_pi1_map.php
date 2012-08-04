@@ -56,7 +56,7 @@
  *
  *              SECTION: Map rendering marker
  *  630:     private function renderMapMarkerSnippetsHtmlDynamic( $map_template )
- *  683:     private function renderMapMarkerSnippetsHtmlSystem( $map_template )
+ *  683:     private function renderMapMarkerSnippetsHtmlCategories( $map_template )
  *  732:     private function renderMapMarkerSnippetsJssDynamic( $map_template )
  *
  *              SECTION: CSS
@@ -494,9 +494,8 @@ class tx_browser_pi1_map
  */
   private function cObjDataAddMarker( )
   {
-    foreach( $this->confMap['marker.']['addToCData.']['system.'] as $marker => $conf )
+    foreach( array_keys( $this->confMap['marker.']['addToCData.']['system.'] ) as $marker )
     {
-      $dummy = $conf;
       if( substr( $marker, -1, 1 ) == '.' )
       {
         continue;
@@ -535,7 +534,7 @@ class tx_browser_pi1_map
  */
   private function cObjDataRemoveMarker( )
   {
-    foreach( $this->confMap['marker.']['addToCData.']['system.'] as $marker => $conf )
+    foreach( array_keys( $this->confMap['marker.']['addToCData.']['system.'] ) as $marker )
     {
       if( substr( $marker, -1, 1 ) == '.' )
       {
@@ -558,7 +557,7 @@ class tx_browser_pi1_map
  */
   private function cObjDataRemoveRow( $row )
   {
-    foreach( ( array ) $row as $key => $value )
+    foreach( array_keys( ( array ) $row ) as $key )
     {
       unset( $this->pObj->cObj->data[ $key ] );
     }
@@ -687,7 +686,7 @@ class tx_browser_pi1_map
       // Substitute marker HTML
 
       // System marker
-    $markerArray  = $this->renderMapMarkerSnippetsHtmlSystem( $map_template );
+    $markerArray  = $this->renderMapMarkerSnippetsHtmlCategories( $map_template );
       // Dynamic marker
     $markerArray  = $markerArray + $this->renderMapMarkerSnippetsHtmlDynamic( $map_template );
       // Replace marker in the map HTML template
@@ -708,7 +707,7 @@ class tx_browser_pi1_map
       // Substitute marker JSS
 
       // System marker
-    //$markerArray  = $this->renderMapMarkerSnippetsHtmlSystem( $map_template );
+    //$markerArray  = $this->renderMapMarkerSnippetsHtmlCategories( $map_template );
       // Dynamic marker
     $markerArray  = $markerArray + $this->renderMapMarkerSnippetsJssDynamic( $map_template );
       // Replace marker in the map HTML template
@@ -817,7 +816,7 @@ class tx_browser_pi1_map
     
       // Get points (map marker) as JSON array and coordinates
     $arr_return   = $this->renderMapMarkerPointsToJSON( $mapMarkers );
-var_dump( __METHOD__, __LINE__, $arr_return ); 
+//var_dump( __METHOD__, __LINE__, $arr_return ); 
     $jsonData     = $arr_return['data']['jsonData'];
     $coordinates  = $arr_return['data']['coordinates'];
       // Get points (map marker) as JSON array and coordinates
@@ -893,7 +892,8 @@ var_dump( __METHOD__, __LINE__, $arr_return );
  */
   private function renderMapMarkerCategoryIcons( )
   {
-    $arrIcon = array( );
+    $catIcons = null;
+    $arrIcon  = array( );
     
     foreach( array_keys( $this->confMap['configuration.']['categories.'] ) as $catKey )
     {
@@ -1372,16 +1372,18 @@ var_dump( __METHOD__, __LINE__, $arr_return );
 
 
   /**
- * renderMapMarkerSnippetsHtmlSystem( ):
+ * renderMapMarkerSnippetsHtmlCategories( ):
  *
  * @param    [type]        $$map_template: ...
  * @return    array
- * @version 4.1.0
+ * @version 4.1.4
  * @since   4.1.0
  */
-  private function renderMapMarkerSnippetsHtmlSystem( $map_template )
+  private function renderMapMarkerSnippetsHtmlCategories( $map_template )
   {
-    $tsProperty   = 'system';
+    // Do we have more than one category?
+    
+    $tsProperty   = 'categories';
     $markerArray  =  $this->renderMapMarkerSnippetsHtml( $map_template, $tsProperty );
 
     return $markerArray;
