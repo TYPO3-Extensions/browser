@@ -1171,7 +1171,7 @@ class tx_browser_pi1_map
     {
         // FOREACH category
       $categories =  explode( $this->catDevider, $row[ $catField ] );
-      foreach( $categories as $catKey => $catValue )
+      foreach( $categories as $category )
       {
           // Add the current row to cObj->data
         $this->cObjDataAddRow( $row );
@@ -1207,10 +1207,9 @@ class tx_browser_pi1_map
           // Get the desc
 
           // Get the category
-        //$mapMarker['cat']     = $this->renderMapMarkerVariablesSystemItem( 'category' );
-        $mapMarker['cat']     = $catValue;
+        $mapMarker['cat']     = $category;
           // Get the iconKey
-        $mapMarker['iconKey'] = $arrCategoriesFlipped[ $catValue ];
+        $mapMarker['iconKey'] = $arrCategoriesFlipped[ $category ];
 
           // Save each mapMarker
         $mapMarkers[] = $mapMarker;
@@ -1230,7 +1229,6 @@ class tx_browser_pi1_map
     $arr_return['data']['mapMarkers'] = $mapMarkers;
     $arr_return['data']['lats']       = $lats;
     $arr_return['data']['lons']       = $lons;
-var_dump( __METHOD__, __LINE__, $arr_return );    
     return $arr_return;
   }
 
