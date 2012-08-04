@@ -542,7 +542,7 @@ class tx_browser_pi1_map
     }
       // Order the categories
 
-      // Set the keys
+      // Set the keys: keys should correspondend with keys of the item colours
     $maxItem = count( $categories );
     $counter = 0;
     foreach( array_keys( $this->confMap['configuration.']['categories.']['colours.'] ) as $catKey )
@@ -558,10 +558,9 @@ class tx_browser_pi1_map
         break;
       }
     }
-      // Set the keys
+      // Set the keys: keys should correspondend with keys of the item colours
     
-var_dump( __METHOD__, __LINE__, $categories, $catWiKey );
-    $this->arrCategories = $categories; 
+    $this->arrCategories = $catWiKey; 
     return $this->arrCategories;
   }
 
@@ -1020,10 +1019,6 @@ var_dump( __METHOD__, __LINE__, $categories, $catWiKey );
 
     $catIcons     = $this->renderMapMarkerCategoryIcons( );
     
-//    $catIcons       = array( );
-//    $catIcons['cat1'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test1.png', 14, 14, 0, 0 );
-//    $catIcons['cat2'] = array( 'typo3conf/ext/browser/res/js/map/test/img/test2.png', 14, 14, 0, 0 );
-
       // FOREACH map marker
     foreach( ( array ) $mapMarkers as $key => $mapMarker )
     {
@@ -1041,7 +1036,6 @@ var_dump( __METHOD__, __LINE__, $categories, $catWiKey );
       $series[$mapMarker['cat']]['data'][$key]['desc']   = $mapMarker['desc'];
     }
       // FOREACH map marker
-//var_dump( __METHOD__, __LINE__, $series, json_encode( $series ) ); 
 
     $jsonData = json_encode( $series );
     
@@ -1078,8 +1072,6 @@ var_dump( __METHOD__, __LINE__, $categories, $catWiKey );
       $coa_name = $this->confMap['configuration.']['categories.']['colours.'][$catKey . '.']['pathToIcon'];
       $coa_conf = $this->confMap['configuration.']['categories.']['colours.'][$catKey . '.']['pathToIcon.'];
       $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
-//var_dump( __METHOD__, __LINE__, $catKey, $coa_name, $coa_conf, $value, $this->confMap['configuration.']['categories.']['colours.'] );
-//var_dump( __METHOD__, __LINE__, $catKey, $value );
       if( empty ( $value ) )
       {
         die( 'Unexpeted error in ' . __METHOD__ . ' (line ' . __LINE__ . '): TypoScript property is empty.' );
