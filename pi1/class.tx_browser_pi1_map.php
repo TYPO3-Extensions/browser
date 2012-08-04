@@ -512,10 +512,11 @@ var_dump( __METHOD__, __LINE__, $str_devider );
       }
 //      list( $firstCategory ) = explode( ',', $row[ $key ] );
 //      $categories[ ] = $firstCategory;
-var_dump( __METHOD__, __LINE__, explode( ',', $row[ $key ] ) );
-      $categories = $categories + explode( ',', $row[ $key ] );
+      $categories = $categories + explode( $str_devider, $row[ $key ] );
+var_dump( __METHOD__, __LINE__, explode( $str_devider, $row[ $key ] ) );
     }
       // Get categories from the rows
+var_dump( __METHOD__, __LINE__, $categories );
     
       // Remove non unique categories
     $categories = array_unique( $categories );
