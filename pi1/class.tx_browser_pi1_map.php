@@ -1384,7 +1384,6 @@ class tx_browser_pi1_map
   {
     $markerArray = array( );
     
-    // Do we have more than one category?
     if( ! $this->zz_moreThanOneCategory( ) )
     {
       return $markerArray;
@@ -1477,6 +1476,7 @@ class tx_browser_pi1_map
       return $this->boolMoreThanOneCategory;
     }
     
+var_dump( __METHOD__, __LINE__, $this->pObj->rows ); 
     $this->boolMoreThanOneCategory = false;
     return $this->boolMoreThanOneCategory;
   }
