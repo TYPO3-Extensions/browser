@@ -285,15 +285,6 @@ plugin.tx_browser_pi1 {
               // Label for a clear view only and without any effect
             10 = black
             10 {
-                // [STRING] category label in the filter form
-              label = TEXT
-              label {
-                value = black
-                lang {
-                  de = Rot
-                  en = black
-                }
-              }
                 // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/black.png
               pathToIcon = TEXT
               pathToIcon {
@@ -311,15 +302,6 @@ plugin.tx_browser_pi1 {
               // Label for a clear view only and without any effect
             20 = blue
             20 {
-                // [STRING] category label in the filter form
-              label = TEXT
-              label {
-                value = blue
-                lang {
-                  de = Rot
-                  en = blue
-                }
-              }
                 // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/blue.png
               pathToIcon = TEXT
               pathToIcon {
@@ -337,15 +319,6 @@ plugin.tx_browser_pi1 {
               // Label for a clear view only and without any effect
             30 = bluedark
             30 {
-                // [STRING] category label in the filter form
-              label = TEXT
-              label {
-                value = bluedark
-                lang {
-                  de = Rot
-                  en = bluedark
-                }
-              }
                 // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/bluedark.png
               pathToIcon = TEXT
               pathToIcon {
@@ -363,15 +336,6 @@ plugin.tx_browser_pi1 {
               // Label for a clear view only and without any effect
             40 = green
             40 {
-                // [STRING] category label in the filter form
-              label = TEXT
-              label {
-                value = green
-                lang {
-                  de = Rot
-                  en = green
-                }
-              }
                 // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/green.png
               pathToIcon = TEXT
               pathToIcon {
@@ -389,15 +353,6 @@ plugin.tx_browser_pi1 {
               // Label for a clear view only and without any effect
             50 = greendark
             50 {
-                // [STRING] category label in the filter form
-              label = TEXT
-              label {
-                value = greendark
-                lang {
-                  de = Rot
-                  en = greendark
-                }
-              }
                 // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/greendark.png
               pathToIcon = TEXT
               pathToIcon {
@@ -415,15 +370,6 @@ plugin.tx_browser_pi1 {
               // Label for a clear view only and without any effect
             60 = orange
             60 {
-                // [STRING] category label in the filter form
-              label = TEXT
-              label {
-                value = orange
-                lang {
-                  de = Rot
-                  en = orange
-                }
-              }
                 // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/orange.png
               pathToIcon = TEXT
               pathToIcon {
@@ -441,15 +387,6 @@ plugin.tx_browser_pi1 {
               // Label for a clear view only and without any effect
             70 = pink
             70 {
-                // [STRING] category label in the filter form
-              label = TEXT
-              label {
-                value = pink
-                lang {
-                  de = Rot
-                  en = pink
-                }
-              }
                 // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/pink.png
               pathToIcon = TEXT
               pathToIcon {
@@ -467,15 +404,6 @@ plugin.tx_browser_pi1 {
               // Label for a clear view only and without any effect
             80 = purple
             80 {
-                // [STRING] category label in the filter form
-              label = TEXT
-              label {
-                value = purple
-                lang {
-                  de = Rot
-                  en = purple
-                }
-              }
                 // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/purple.png
               pathToIcon = TEXT
               pathToIcon {
@@ -493,15 +421,6 @@ plugin.tx_browser_pi1 {
               // Label for a clear view only and without any effect
             90 = red
             90 {
-                // [STRING] category label in the filter form
-              label = TEXT
-              label {
-                value = red
-                lang {
-                  de = Rot
-                  en = red
-                }
-              }
                 // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/red.png
               pathToIcon = TEXT
               pathToIcon {
@@ -519,15 +438,6 @@ plugin.tx_browser_pi1 {
               // Label for a clear view only and without any effect
             100 = reddark
             100 {
-                // [STRING] category label in the filter form
-              label = TEXT
-              label {
-                value = reddark
-                lang {
-                  de = Rot
-                  en = reddark
-                }
-              }
                 // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/reddark.png
               pathToIcon = TEXT
               pathToIcon {
@@ -545,15 +455,6 @@ plugin.tx_browser_pi1 {
               // Label for a clear view only and without any effect
             110 = white
             110 {
-                // [STRING] category label in the filter form
-              label = TEXT
-              label {
-                value = white
-                lang {
-                  de = Rot
-                  en = white
-                }
-              }
                 // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/white.png
               pathToIcon = TEXT
               pathToIcon {
@@ -571,15 +472,6 @@ plugin.tx_browser_pi1 {
               // Label for a clear view only and without any effect
             120 = yellow
             120 {
-                // [STRING] category label in the filter form 
-              label = TEXT
-              label {
-                value = yellow
-                lang {
-                  de = Rot
-                  en = yellow
-                }
-              }
                 // [STRING] path to the icon. Example: EXT:browser/res/js/map/icons/categories/yellow.png
               pathToIcon = TEXT
               pathToIcon {
@@ -690,8 +582,7 @@ plugin.tx_browser_pi1 {
               filter_form {
                 value (
                   <form id="filter">
-                    <input class="oxMapFilter" type="checkbox" name="Rot" value="1" checked="checked" />Rot
-                    <input class="oxMapFilter" type="checkbox" name="cat2" value="1" checked="checked" />cat2
+                    ###INPUTS###
                   </form>
   )
               }

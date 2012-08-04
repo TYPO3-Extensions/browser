@@ -1388,6 +1388,11 @@ class tx_browser_pi1_map
     
     $tsProperty   = 'categories';
     $markerArray  =  $this->renderMapMarkerSnippetsHtml( $map_template, $tsProperty );
+    
+    $inputs = '<input class="oxMapFilter" type="checkbox" name="Rot" value="1" checked="checked" />Rot
+                    <input class="oxMapFilter" type="checkbox" name="cat2" value="1" checked="checked" />cat2
+';
+    $markerArray[ '###FILTER_FORM###' ] = str_replace('###INPUTS###', $inputs, $markerArray[ '###FILTER_FORM###' ] );
 
     return $markerArray;
   }
