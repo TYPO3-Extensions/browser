@@ -512,7 +512,7 @@ var_dump( __METHOD__, __LINE__, $str_devider );
       }
 //      list( $firstCategory ) = explode( ',', $row[ $key ] );
 //      $categories[ ] = $firstCategory;
-      $categories = $categories + explode( $str_devider, $row[ $key ] );
+      $categories =  array_merge( $categories, explode( $str_devider, $row[ $key ] ) );
 var_dump( __METHOD__, __LINE__, explode( $str_devider, $row[ $key ] ) );
     }
       // Get categories from the rows
