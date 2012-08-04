@@ -89,6 +89,8 @@ class tx_browser_pi1_map
   var $arrCategories = null;
     // [BOOLEAN] true, if there are more than one category
   var $boolMoreThanOneCategory = null;
+    // [STRING] Devider of categories. Example: ', ;|;'
+  var $catDevider = null;
 
 
 
@@ -202,7 +204,7 @@ class tx_browser_pi1_map
  * init(): The method sets the globals $enabled and $confMap
  *
  * @return    void
- * @version 3.9.6
+ * @version 4.1.4
  * @since   3.9.6
  */
   private function init(  )
@@ -305,9 +307,8 @@ class tx_browser_pi1_map
     }
       // Check the proper typeNum
 
-
-
-
+      // Init the devider for the categories
+    $this->initCatDevider( );
 
       ///////////////////////////////////////////////////////////////
       //
@@ -331,6 +332,20 @@ class tx_browser_pi1_map
     return;
   }
 
+
+
+  /**
+ * initCatDevider( ):
+ *
+ * @return    void
+ * @version 4.1.4
+ * @since   4.1.4
+ */
+  private function initCatDevider( )
+  {
+    $this->pObj->objTyposcript->set_confSqlDevider();
+    $this->catDevider = $this->pObj->objTyposcript->str_sqlDeviderDisplay.$this->pObj->objTyposcript->str_sqlDeviderWorkflow;
+  }
 
 
 
@@ -492,10 +507,6 @@ class tx_browser_pi1_map
       // Get the label for the category field
     $key = $this->confMap['configuration.']['categories.']['field'];
 
-    $this->pObj->objTyposcript->set_confSqlDevider();
-    $str_devider = $this->pObj->objTyposcript->str_sqlDeviderDisplay.$this->pObj->objTyposcript->str_sqlDeviderWorkflow;
-var_dump( __METHOD__, __LINE__, $str_devider );
-
       // Get categories from the rows
     $categories = array( );
     foreach( $this->pObj->rows as $row )
@@ -510,13 +521,9 @@ var_dump( __METHOD__, __LINE__, $str_devider );
         $this->arrCategories = array( );
         return $this->arrCategories;
       }
-//      list( $firstCategory ) = explode( ',', $row[ $key ] );
-//      $categories[ ] = $firstCategory;
-      $categories =  array_merge( $categories, explode( $str_devider, $row[ $key ] ) );
-var_dump( __METHOD__, __LINE__, explode( $str_devider, $row[ $key ] ) );
+      $categories =  array_merge( $categories, explode( $this->catDevider, $row[ $key ] ) );
     }
       // Get categories from the rows
-var_dump( __METHOD__, __LINE__, $categories );
     
       // Remove non unique categories
     $categories = array_unique( $categories );
@@ -1158,55 +1165,62 @@ var_dump( __METHOD__, __LINE__, $categories );
     $arrCategoriesFlipped = array_flip( $this->arrCategories );
 
       // FOREACH row
+    $catField = $this->renderMapMarkerVariablesSystemItem( 'category' );
     foreach( $this->pObj->rows as $row )
     {
-        // Add the current row to cObj->data
-      $this->cObjDataAddRow( $row );
-
-      $this->cObjDataAddMarker( );
-      
-        // Get the longitude
-      $mapMarker['lon'] = $this->renderMapMarkerVariablesSystemItem( 'longitude' );
-        // Get the latitude
-      $mapMarker['lat'] = $this->renderMapMarkerVariablesSystemItem( 'latitude' );
-
-        // SWITCH logitude and latitude
-      switch( true )
+        //FOREACH category
+      $categories =  explode( $this->catDevider, $row[ $catField ] );
+      foreach( $categories as $catKey => $catValue )
       {
-        case( $mapMarker['lon'] . $mapMarker['lat'] == '' ):
-            // CONTINUE: longituda and latitude are empty
-          continue 2;
-          break;
-        case( $dontHandle00 && $mapMarker['lon'] == 0 && $mapMarker['lat'] == 0 ):
-            // CONTINUE: longituda and latitude are 0 and 0,0 shouldn't handled
-          continue 2;
-          break;
+          // Add the current row to cObj->data
+        $this->cObjDataAddRow( $row );
+
+        $this->cObjDataAddMarker( );
+
+          // Get the longitude
+        $mapMarker['lon'] = $this->renderMapMarkerVariablesSystemItem( 'longitude' );
+          // Get the latitude
+        $mapMarker['lat'] = $this->renderMapMarkerVariablesSystemItem( 'latitude' );
+
+          // SWITCH logitude and latitude
+        switch( true )
+        {
+          case( $mapMarker['lon'] . $mapMarker['lat'] == '' ):
+              // CONTINUE: longituda and latitude are empty
+            continue 2;
+            break;
+          case( $dontHandle00 && $mapMarker['lon'] == 0 && $mapMarker['lat'] == 0 ):
+              // CONTINUE: longituda and latitude are 0 and 0,0 shouldn't handled
+            continue 2;
+            break;
+        }
+          // SWITCH logitude and latitude
+
+          // Get the desc
+        $mapMarker['desc']  = $this->renderMapMarkerVariablesSystemItem( 'description' );
+        if( empty ( $mapMarker['desc'] ) )
+        {
+          $mapMarker['desc'] = 'Please take care of a proper configuration<br />
+                                of the TypoScript property marker.mapMarker.description!';
+        }
+          // Get the desc
+
+          // Get the category
+          // Get the iconKey
+        $mapMarker['iconKey'] = $arrCategoriesFlipped[ $mapMarker['cat'] ];
+
+          // Save each mapMarker
+        $mapMarkers[] = $mapMarker;
+          // Save each longitude
+        $lons[] = ( double ) $mapMarker['lon']; 
+          // Save each latitude
+        $lats[]  = ( double ) $mapMarker['lat']; 
+
+          // Remove the current row from cObj->data
+        $this->cObjDataRemoveRow( $row );
+        
       }
-        // SWITCH logitude and latitude
-      
-        // Get the desc
-      $mapMarker['desc']  = $this->renderMapMarkerVariablesSystemItem( 'description' );
-      if( empty ( $mapMarker['desc'] ) )
-      {
-        $mapMarker['desc'] = 'Please take care of a proper configuration<br />
-                              of the TypoScript property marker.mapMarker.description!';
-      }
-        // Get the desc
-
-        // Get the category
-      $mapMarker['cat'] = $this->renderMapMarkerVariablesSystemItem( 'category' );
-        // Get the iconKey
-      $mapMarker['iconKey'] = $arrCategoriesFlipped[ $mapMarker['cat'] ];
-
-        // Save each mapMarker
-      $mapMarkers[] = $mapMarker;
-        // Save each longitude
-      $lons[] = ( double ) $mapMarker['lon']; 
-        // Save each latitude
-      $lats[]  = ( double ) $mapMarker['lat']; 
-
-        // Remove the current row from cObj->data
-      $this->cObjDataRemoveRow( $row );
+        //FOREACH category
     }
       // FOREACH row
     
