@@ -1513,26 +1513,7 @@ var_dump( __METHOD__, __LINE__, $categories );
     }
       // RETURN : method is called twice at least
       
-      // Get the label for the category field
-    $category = $this->confMap['fields.']['category'];
-
-    foreach( $this->pObj->rows as $row )
-    {
-      if( ! isset( $row[ $category ] ) )
-      {
-        if( $this->pObj->b_drs_map )
-        {
-          $prompt = 'current rows doesn\'t contain the field "' . $category . '"';
-          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
-        }
-        $this->boolMoreThanOneCategory = false;
-        return $this->boolMoreThanOneCategory;
-      }
-      $categories[ ] = $row[ $category ];
-    }
-    
-    $categories = array_unique( $categories, SORT_STRING );
-    asort(  $categories, SORT_STRING );
+    $categories = $this->zz_getCategories( );
 
 var_dump( __METHOD__, __LINE__, $categories ); 
     $this->boolMoreThanOneCategory = false;
