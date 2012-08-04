@@ -1466,31 +1466,27 @@ class tx_browser_pi1_map
       return $this->boolMoreThanOneCategory;
     }
 
+      // Get the label for the category field
     $category = $this->confMap['fields.']['category'];
 
-    $iconKey  = $this->renderMapMarkerVariablesSystemItem( 'iconKey' );
-
-var_dump( __METHOD__, __LINE__, $this->pObj->rows, $category, $iconKey ); 
     foreach( $this->pObj->rows as $row )
     {
-var_dump( __METHOD__, __LINE__, $row[ $category ] ); 
-    }
-    if( $this->pObj->b_drs_map )
-    {
-      if( empty ( $content ) )
+      if( ! isset( $row[ $category ] ) )
       {
-        $prompt = 'marker.addToCData.' . $marker . ' is empty. Probably this is an error!';
-        t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'current rows doesn\'t contain the field "' . $category . '"';
+          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
+        }
+        $this->boolMoreThanOneCategory = false;
+        return $this->boolMoreThanOneCategory;
       }
-      else
-      {
-        $prompt = 'Added to cObject: ' . $content;
-        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
-        $prompt = 'You can use the content in TypoScript with: field = ' . $marker;
-        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
-      }
+      $categories = $row[ $category ];
     }
+    
+    $categories = array_unique( $categories );
 
+var_dump( __METHOD__, __LINE__, $categories ); 
     $this->boolMoreThanOneCategory = false;
     return $this->boolMoreThanOneCategory;
   }
