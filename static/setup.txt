@@ -569,12 +569,12 @@ plugin.tx_browser_pi1 {
           dontHandle = true  
         }
         zoomLevel {
-            // [STRING] auto (recommended) || ts. auto: zoom level will calculated. ts: zoom level will taken from TypoScript 
-          mode          = auto
+            // [STRING] auto (recommended) || fixed. auto: zoom level will calculated. fixed: zoom level will taken from map.marker.snippets.jss.dynamic.MapZoomLevels and map.marker.snippets.jss.dynamic.OSMConfigZoom 
+          mode          = {$plugin.tx_browser_pi1.map.zoomLevel.mode}
             // [STRING] marker for the center in the HTML code. Example: OSMConfigZoom
           dynamicMarker = OSMConfigZoom
             / [INTEGER] Maximum zoom level
-          max           = 18
+          max           = {$plugin.tx_browser_pi1.map.zoomLevel.max}
         }
       }
       marker {
@@ -785,7 +785,7 @@ plugin.tx_browser_pi1 {
               MapZoomLevels = TEXT
               MapZoomLevels {
                   // [INTEGER] Value from 0 to 18. Example: 4
-                value = 4
+                value = {$plugin.tx_browser_pi1.map.zoomLevel.fixed}
               }
                 // Map marker standalone mode
               MapMarker = TEXT
@@ -815,7 +815,7 @@ plugin.tx_browser_pi1 {
               OSMConfigZoom = TEXT
               OSMConfigZoom {
                   // [INTEGER] Value from 0 to 18. Example: 4
-                value = 4
+                value = {$plugin.tx_browser_pi1.map.zoomLevel.fixed}
               }
             }
           }

@@ -492,7 +492,7 @@ class tx_browser_pi1_map
         $cObj_name = $this->confMap['configuration.']['categories.']['colours.']['legend.'][$key];
         $cObj_conf = $this->confMap['configuration.']['categories.']['colours.']['legend.'][$key . '.'];
         $img        = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
-var_dump( __METHOD__, __LINE__, $key, $cObj_name, $cObj_conf, $img );
+//var_dump( __METHOD__, __LINE__, $key, $cObj_name, $cObj_conf, $img );
         // Render the image
 
         $input = str_replace( '###IMG###', $img, $input );
@@ -1418,7 +1418,7 @@ var_dump( __METHOD__, __LINE__, $key, $cObj_name, $cObj_conf, $img );
     switch( $mode )
     {
       case( 'auto' ):
-      case( 'ts' ):
+      case( 'fixed' ):
           // Follow the workflow
         break;
       default:
@@ -1436,7 +1436,7 @@ var_dump( __METHOD__, __LINE__, $key, $cObj_name, $cObj_conf, $img );
       // SWITCH mode
 
       // RETURN: center coordinates should not calculated
-    if( $mode == 'ts' )
+    if( $mode == 'fixed' )
     {
         // DRS
       if( $this->pObj->b_drs_map )
