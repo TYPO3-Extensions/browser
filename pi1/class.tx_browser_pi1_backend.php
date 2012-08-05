@@ -28,7 +28,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    browser
- * @version 3.9.17
+ * @version 4.1.5
  * @since 3.0.0
  */
 
@@ -109,13 +109,11 @@ class tx_browser_pi1_backend
  *
  * Tab [evaluate]
  *
- * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
- * @param	array		$obj_TCEform:     Current TCE form object
  * @return	string		$str_prompt: HTML prompt
- * @version 4.0.0
+ * @version 4.1.5
  * @since 4.0.0
  */
-  public function evaluate_externalLinks($arr_pluginConf, $obj_TCEform)
+  public function evaluate_externalLinks( )
   {
       //.message-notice
       //.message-information
@@ -135,15 +133,7 @@ class tx_browser_pi1_backend
 
 
 
-
-
-
-
-
-
-
-
-  /**
+/**
  * evaluate_plugin: Evaluates the plugin, flexform, TypoScript
  *                  Returns a HTML report
  *
@@ -152,13 +142,13 @@ class tx_browser_pi1_backend
  * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
  * @param	array		$obj_TCEform:     Current TCE form object
  * @return	string		$str_prompt: HTML prompt
- * @version 4.0.0
+ * @version 4.1.5
  * @since 4.0.0
  */
-  public function evaluate_plugin($arr_pluginConf, $obj_TCEform)
+  public function evaluate_plugin( $arr_pluginConf )
   {
       // Require classes, init page id, page object and TypoScript object
-    $bool_success = $this->init($arr_pluginConf);
+    $bool_success = $this->init( $arr_pluginConf );
 
       // RETURN error with init()
     if(!$bool_success)
@@ -356,73 +346,21 @@ class tx_browser_pi1_backend
     }
       // AJAX is enabled. AJAX page object II
 
-      // RETURN There isn't any CSV page object
-      // Is CSV export enabled?
-    $bool_CSVenabled  = false;
-    $arr_xml          = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
-    $csvexport        = $arr_xml['data']['viewList']['lDEF']['csvexport']['vDEF'];
-
-    switch ( $csvexport )
+      // RETURN : There isn't any CSV page object
+    $str_prompt = $this->evaluate_pluginCsvObject( $arr_pluginConf );
+    if( $str_prompt )
     {
-      case ( 'enabled' ) :
-        $bool_CSVenabled = true;
-        break;
-      case ('ts') :
-        $bool_CSVenabled = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['viewList.']['csvexport.']['stdWrap.']['value'];
-        break;
-      case ( 'disabled' ) :
-      default :
-        $bool_CSVenabled = false;
-        break;
+      return $str_prompt . $str_prompt_info_tutorialAndForum;
     }
-      // Is CSV export enabled?
+      // RETURN : There isn't any CSV page object
 
-      // CSV export is enabled.
-    if( $bool_CSVenabled )
+      // RETURN : There isn't any map page object
+    $str_prompt = $this->evaluate_pluginMapObject( $arr_pluginConf );
+    if( $str_prompt )
     {
-        // RETURN there isn't any default typeNum of CSV export page object
-      if( ! isset ($this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['export.']['csv.']['page.']['typeNum']))
-      {
-        $str_prompt = '
-          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_CSV_defaultTypeNum') . '
-            </div>
-          </div>
-          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_CSV_defaultTypeNum') . '
-            </div>
-          </div>
-          ';
-        return $str_prompt . $str_prompt_info_tutorialAndForum;
-      }
-        // RETURN there isn't any default typeNum of CSV export page object
-
-        // RETURN there is no CSV export page object
-      $CSV_defaultTypeNum    = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['export.']['csv.']['page.']['typeNum'];
-      $CSV_nameOfPageObject  = $this->obj_TypoScript->setup['types.'][$CSV_defaultTypeNum];
-        // There is no CSV export page object
-      if( empty( $CSV_nameOfPageObject ) )
-      {
-        $str_prompt = '
-          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_CSVpageObject') . '
-            </div>
-          </div>
-          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_CSVpageObject') . '
-            </div>
-          </div>
-          ';
-        $str_prompt = str_replace( '%typeNum%', $CSV_defaultTypeNum, $str_prompt);
-        return $str_prompt . $str_prompt_info_tutorialAndForum;
-      }
-        // RETURN there is no CSV export page object
+      return $str_prompt . $str_prompt_info_tutorialAndForum;
     }
-      // CSV export is enabled.
+      // RETURN : There isn't any map page object
 
       // Evaluation result: default message in case of success
     $str_prompt = '
@@ -456,13 +394,169 @@ class tx_browser_pi1_backend
 
 
 
+/**
+ * evaluate_pluginCsvObject : Evaluates the CSV object, if CSV is enabled:
+ *                            * typeNum
+ *                            * csv pageObject
+ *                  Returns a HTML report
+ *
+ * Tab [evaluate]
+ *
+ * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
+ * @return	string		$str_prompt: HTML prompt
+ * @version 4.1.5
+ * @since 4.0.0
+ */
+  public function evaluate_pluginCsvObject( $arr_pluginConf )
+  {
+      // Is CSV export enabled?
+    $bool_CSVenabled  = false;
+    $arr_xml          = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
+    $csvexport        = $arr_xml['data']['viewList']['lDEF']['csvexport']['vDEF'];
+
+    switch ( $csvexport )
+    {
+      case ( 'enabled' ) :
+        $bool_CSVenabled = true;
+        break;
+      case ('ts') :
+        $bool_CSVenabled = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['viewList.']['csvexport.']['stdWrap.']['value'];
+        break;
+      case ( 'disabled' ) :
+      default :
+        $bool_CSVenabled = false;
+        break;
+    }
+      // Is CSV export enabled?
+
+      // RETURN : CSV export isn't enabled
+    if( ! $bool_CSVenabled )
+    {
+      return;
+    }
+      // RETURN : CSV export isn't enabled
+      
+      // CSV export is enabled.
+      // RETURN : there isn't any default typeNum of CSV export page object
+    if( ! isset ($this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['export.']['csv.']['page.']['typeNum']))
+    {
+      $str_prompt = '
+        <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_CSV_defaultTypeNum') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_CSV_defaultTypeNum') . '
+          </div>
+        </div>
+        ';
+      return $str_prompt;
+    }
+      // RETURN : there isn't any default typeNum of CSV export page object
+
+      // RETURN : there is no CSV export page object
+    $CSV_defaultTypeNum    = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['export.']['csv.']['page.']['typeNum'];
+    $CSV_nameOfPageObject  = $this->obj_TypoScript->setup['types.'][$CSV_defaultTypeNum];
+      // There is no CSV export page object
+    if( empty( $CSV_nameOfPageObject ) )
+    {
+      $str_prompt = '
+        <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_CSVpageObject') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_CSVpageObject') . '
+          </div>
+        </div>
+        ';
+      $str_prompt = str_replace( '%typeNum%', $CSV_defaultTypeNum, $str_prompt);
+      return $str_prompt;
+    }
+      // RETURN : there is no CSV export page object
+      // CSV export is enabled.
+  }
 
 
 
+/**
+ * evaluate_pluginMapObject : Evaluates the CSV object, if CSV is enabled:
+ *                            * typeNum
+ *                            * csv pageObject
+ *                  Returns a HTML report
+ *
+ * Tab [evaluate]
+ *
+ * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
+ * @return	string		$str_prompt: HTML prompt
+ * @version 4.1.5
+ * @since 4.0.0
+ */
+  public function evaluate_pluginMapObject( $arr_pluginConf )
+  {
+      // RETURN : map isn't enabled
+    $this->confMap  = $this->pObj->conf['navigation.']['map.'];
+    $cObj_name      = $this->confMap['enabled'];
+    $cObj_conf      = $this->confMap['enabled.'];
+    $this->enabled  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+    if( ! $this->enabled )
+    {
+      return;
+    }
+      // RETURN : map isn't enabled
+    
+      // Map is enabled.
+      // RETURN : there isn't any default typeNum of CSV export page object
+    if( ! isset ($this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['export.']['map.']['page.']['typeNum']))
+    {
+      $str_prompt = '
+        <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_map_defaultTypeNum') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_map_defaultTypeNum') . '
+          </div>
+        </div>
+        ';
+      return $str_prompt;
+    }
+      // RETURN : there isn't any default typeNum of CSV export page object
+
+      // RETURN : there is no CSV export page object
+    $map_defaultTypeNum    = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['export.']['map.']['page.']['typeNum'];
+    $map_nameOfPageObject  = $this->obj_TypoScript->setup['types.'][$map_defaultTypeNum];
+      // There is no map page object
+    if( empty( $map_nameOfPageObject ) )
+    {
+      $str_prompt = '
+        <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_mapPageObject') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_mapPageObject') . '
+          </div>
+        </div>
+        ';
+      $str_prompt = str_replace( '%typeNum%', $CSV_defaultTypeNum, $str_prompt);
+      return $str_prompt;
+    }
+      // RETURN : there is no map page object
+      // Map is enabled.
+  }
 
 
 
-  /**
+/**
  * extend_cal_ui: Renders a TCE form select box with calendar plugins.
  *                Three cases will be handled:
  *                1. There isn't any calendar plugin available:
@@ -477,10 +571,10 @@ class tx_browser_pi1_backend
  * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
  * @param	array		$obj_TCEform:     Current TCE form object
  * @return	string		$str_prompt: HTML prompt or HTML prompt and TCE select form with calendar plugins
- * @version 4.0.0
+ * @version 4.1.5
  * @since 4.0.0
  */
-  public function extend_cal_ui($arr_pluginConf, $obj_TCEform)
+  public function extend_cal_ui( $arr_pluginConf )
   {
       //.message-notice
       //.message-information
@@ -523,7 +617,7 @@ class tx_browser_pi1_backend
       //
       // SQL query: Execute it. Allocate items with values from the SQL result
 
-    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($select_fields,$from_table,$where_clause,$groupBy='',$orderBy='',$limit='');
+    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery( $select_fields, $from_table, $where_clause );
 
       // The default first item
     $value          = 0;
@@ -690,7 +784,7 @@ class tx_browser_pi1_backend
  * @version 4.0.0
  * @since 4.0.0
  */
-  public function extend_cal_view($arr_pluginConf, $obj_TCEform)
+  public function extend_cal_view( $arr_pluginConf )
   {
       //.message-notice
       //.message-information
@@ -779,7 +873,7 @@ class tx_browser_pi1_backend
 
       // LOOP views
     $bool_selected  = false;
-    foreach( $arr_views_csv as $key => $arr_view)
+    foreach( $arr_views_csv as $arr_view)
     {
       list( $value ) = explode('|', $arr_view);
 
@@ -952,10 +1046,10 @@ class tx_browser_pi1_backend
  * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
  * @param	array		$obj_TCEform:     Current TCE form object
  * @return	string		$str_prompt: HTML prompt or HTML prompt and TCE select form with calendar plugins
- * @version 4.0.0
+ * @version 4.1.5
  * @since 4.0.0
  */
-  public function extend_cal_field_start($arr_pluginConf, $obj_TCEform)
+  public function extend_cal_field_start( $arr_pluginConf )
   {
       //.message-notice
       //.message-information
@@ -998,7 +1092,7 @@ class tx_browser_pi1_backend
       // RETURN there isn't any view selected
 
       // Get current view
-    $arr_xml  = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
+    $arr_xml  = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
       // Bugfix     #29732, uherrmann, 110913
     $str_view = (is_array($arr_xml)) ? $arr_xml['data']['extend']['lDEF']['cal_view']['vDEF'] : '';
       // Get current view
@@ -1078,6 +1172,7 @@ class tx_browser_pi1_backend
           $bool_timestamp = true;
           break;
       }
+      unset( $eval );
       if( !$bool_timestamp )
       {
         continue;
@@ -1239,10 +1334,10 @@ class tx_browser_pi1_backend
  * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
  * @param	array		$obj_TCEform:     Current TCE form object
  * @return	string		$str_prompt: HTML prompt or HTML prompt and TCE select form with calendar plugins
- * @version 4.0.0
+ * @version 4.1.5
  * @since 4.0.0
  */
-  public function extend_cal_field_end($arr_pluginConf, $obj_TCEform)
+  public function extend_cal_field_end( $arr_pluginConf )
   {
       //.message-notice
       //.message-information
@@ -1366,6 +1461,7 @@ class tx_browser_pi1_backend
           $bool_timestamp = true;
           break;
       }
+      unset( $eval );
       if( !$bool_timestamp )
       {
         continue;
@@ -1517,7 +1613,7 @@ class tx_browser_pi1_backend
  *
  * @param	array		$arr_pluginConf: Current plugin/flexform configuration
  * @return	array		with the names of the views list
- * @version 3.6.1
+ * @version 4.1.5
  * @since 3.6.1
  */
   public function sDef_getArrViewsList($arr_pluginConf)
@@ -1535,7 +1631,7 @@ class tx_browser_pi1_backend
       // Get Flexform
 
     $arr_views  = array();
-    $arr_xml    = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
+    $arr_xml    = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
       // Get Flexform
 
 
@@ -1576,9 +1672,10 @@ class tx_browser_pi1_backend
       if (is_array($arr_extensions) && count($arr_extensions))
       {
           // Loop through all extensions and templates
-        foreach((array) $arr_extensions as $extensionWiDot => $arr_templates)
+        //foreach((array) $arr_extensions as $extensionWiDot => $arr_templates)
+        foreach((array) $arr_extensions as $arr_templates)
         {
-          $extension = substr($extensionWiDot, 0, strlen($extensionWiDot) - 1);
+          //$extension = substr($extensionWiDot, 0, strlen($extensionWiDot) - 1);
           foreach((array) $arr_templates as $arr_template)
           {
             if($arr_template['file'] == $str_pathToTmplFile)
@@ -1609,7 +1706,7 @@ class tx_browser_pi1_backend
 
       // #11981, 110106, dwildt
       // Remove any value, keep arrays
-    foreach((array) $arr_listviews as $key => $view)
+    foreach( array_keys( (array) $arr_listviews ) as $key )
     {
       if(substr($key, -1, 1) != '.')
       {
@@ -1619,6 +1716,7 @@ class tx_browser_pi1_backend
       // #11981, 110106, dwildt
 
       // Loop through all listviews
+    $arr_sort = array( );
     if (is_array($arr_listviews) && count($arr_listviews))
     {
       foreach((array) $arr_listviews as $key_listview => $arr_listview)
@@ -1650,9 +1748,9 @@ class tx_browser_pi1_backend
       // Loop through all listviews
 
       // Order listviews
-    if(!empty($arr_pluginConf['items']))
+    if( ! empty( $arr_pluginConf['items'] ) )
     {
-      array_multisort($arr_sort, $arr_pluginConf['items']);
+      array_multisort( $arr_sort, $arr_pluginConf['items'] );
     }
       // Order listviews
 
@@ -1681,7 +1779,7 @@ class tx_browser_pi1_backend
  *
  * @param	array		$arr_pluginConf: Current plugin/flexform configuration
  * @return	array		with the bookmarks
- * @version 3.6.1
+ * @version 4.1.5
  * @since 3.6.1
  */
   public function socialmedia_getArrBookmarks($arr_pluginConf)
@@ -1697,6 +1795,7 @@ class tx_browser_pi1_backend
     $arr_bookmarks = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['flexform.']['socialmedia.']['socialbookmarks.']['bookmarks.']['items.'];
 
       // Loop: bookmarks
+    $arr_sort = array( );
     if (is_array($arr_bookmarks) && count($arr_bookmarks))
     {
       foreach((array) $arr_bookmarks as $key_bookmark => $arr_bookmark)
@@ -1719,7 +1818,7 @@ class tx_browser_pi1_backend
       // Order bookmarks
     if(!empty($arr_pluginConf['items']))
     {
-      array_multisort($arr_sort, $arr_pluginConf['items']);
+      array_multisort( $arr_sort, $arr_pluginConf['items'] );
     }
       // Order bookmarks
 
@@ -2031,7 +2130,7 @@ class tx_browser_pi1_backend
  * @since 3.4.5
  * @version 3.4.5
  */
-  private function init_pageObj($arr_pluginConf)
+  private function init_pageObj( )
   {
     if(!empty($this->obj_page))
     {
