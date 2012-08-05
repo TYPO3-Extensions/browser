@@ -2502,7 +2502,7 @@ plugin.tx_browser_pi1 {
         }
       }
       map {
-          // Content for the pop up with description and a link to the single view
+          // Content for the pop up with description. It contains a description and a link to the single view.
         descriptionWiLinkToSingle = COA
         descriptionWiLinkToSingle {
           10 = TEXT
