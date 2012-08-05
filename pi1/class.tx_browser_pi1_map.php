@@ -1285,17 +1285,21 @@ class tx_browser_pi1_map
       $prompt = 'If you have an unexpected effect in your map, please check the JSON array from above!';
       t3lib_div :: devLog( '[HELP/MAP] ' . $prompt , $this->pObj->extKey, 1 );
     }
-    if( $mapMarkers == null )
+    switch( true )
     {
-      if( $this->pObj->b_drs_error )
-      {
-        $prompt = 'JSON array is null.';
-        t3lib_div :: devLog( '[ERROR/MAP] ' . $prompt , $this->pObj->extKey, 3 );
-        $prompt = 'You will get an empty map!';
-        t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
-        $prompt = 'Please check the TYPOScript Constant Editor > Category [BROWSER - MAP].';
-        t3lib_div :: devLog( '[HELP/MAP] ' . $prompt , $this->pObj->extKey, 1 );
-      }
+      case( $mapMarkers == null ):
+      case( ! is_array( $mapMarkers ) ):
+      case( ( is_array( $mapMarkers ) ) && ( count( $mapMarkers ) < 1 ) ):
+        if( $this->pObj->b_drs_error )
+        {
+          $prompt = 'JSON array is null.';
+          t3lib_div :: devLog( '[ERROR/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+          $prompt = 'You will get an empty map!';
+          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
+          $prompt = 'Please check the TypoScript Constant Editor > Category [BROWSER - MAP].';
+          t3lib_div :: devLog( '[HELP/MAP] ' . $prompt , $this->pObj->extKey, 1 );
+        }
+        break;
     }
     $arr_return['data']['mapMarkers'] = $mapMarkers;
     $arr_return['data']['lats']       = $lats;
