@@ -2501,6 +2501,24 @@ plugin.tx_browser_pi1 {
           }
         }
       }
+      map {
+          // Content for the pop up with description and a link to the single view
+        descriptionWiLinkToSingle = COA
+        descriptionWiLinkToSingle {
+          10 = TEXT
+          10 {
+            field = {$plugin.tx_browser_pi1.map.field.description}
+            noTrimWrap = || |
+          }
+          20 = TEXT
+          20 {
+            value = Mehr &raquo;
+            typolink {
+              parameter.data = field:mapLinkToSingle
+            }
+          }
+        }
+      }
       modules {
         download {
           thumbnails {
