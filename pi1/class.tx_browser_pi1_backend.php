@@ -703,6 +703,26 @@ class tx_browser_pi1_backend
     }
       // RETURN ERROR prompt  : there is no map page object
       
+      // RETURN ERROR : AJAX I is enabled
+    if( $this->boolAjaxI )
+    {
+      $str_prompt = '
+        <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.mapAjaxIConflict') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.mapAjaxIConflict') . '
+          </div>
+        </div>
+        ';
+      $str_prompt = str_replace( '%typeNum%', $map_defaultTypeNum, $str_prompt);
+      return $str_prompt;
+    }
+      // RETURN ERROR : AJAX I is enabled
+      
       // RETURN ERROR : Record browser is enabled
     if( $this->boolRecordBrowser )
     {
