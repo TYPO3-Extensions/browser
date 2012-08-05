@@ -1208,9 +1208,16 @@ class tx_browser_pi1_map
     $catField = $this->confMap['configuration.']['categories.']['field'];
     foreach( $this->pObj->rows as $row )
     {
-      if( isset( $row[ $catField ] ) )
+      if( $this->boolMoreThanOneCategory )
       {
-        $categories = explode( $this->catDevider, $row[ $catField ] );
+        if( isset( $row[ $catField ] ) )
+        {
+          $categories = explode( $this->catDevider, $row[ $catField ] );
+        }
+        else
+        {
+          $categories = array( $keys[ 0 ] => 'dummy' );
+        }
       }
       else
       {
