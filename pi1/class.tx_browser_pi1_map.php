@@ -1201,6 +1201,7 @@ class tx_browser_pi1_map
       
 
       // FOREACH row
+    $mapMarkers = null;
     $catField = $this->confMap['configuration.']['categories.']['field'];
     foreach( $this->pObj->rows as $row )
     {
@@ -1279,11 +1280,22 @@ class tx_browser_pi1_map
 //var_dump( __METHOD__, __LINE__, $mapMarkers );    
     if( $this->pObj->b_drs_map )
     {
-      $prompt = 'JSON array: ' . t3lib_div::view_array( $mapMarkers );
       $prompt = 'JSON array: ' . var_export( $mapMarkers, true);
       t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
       $prompt = 'If you have an unexpected effect in your map, please check the JSON array from above!';
       t3lib_div :: devLog( '[HELP/MAP] ' . $prompt , $this->pObj->extKey, 1 );
+    }
+    if( $mapMarkers == null )
+    {
+      if( $this->pObj->b_drs_error )
+      {
+        $prompt = 'JSON array is null.';
+        t3lib_div :: devLog( '[ERROR/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+        $prompt = 'You will get an empty map!';
+        t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
+        $prompt = 'Please check the TYPOScript Constant Editor > Category [BROWSER - MAP].';
+        t3lib_div :: devLog( '[HELP/MAP] ' . $prompt , $this->pObj->extKey, 1 );
+      }
     }
     $arr_return['data']['mapMarkers'] = $mapMarkers;
     $arr_return['data']['lats']       = $lats;
