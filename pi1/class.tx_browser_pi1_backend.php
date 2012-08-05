@@ -79,7 +79,9 @@ class tx_browser_pi1_backend
   var $locallang = null;
 
   var $maxWidth = '600px';
-    // [BOOLEAN] true: AJAX is enabled; false: AJAX is disbaled
+    // [BOOLEAN] true: AJAX I (AJAX for lost and/or single view is enabled; false: AJAX is disbaled
+  var $boolAjaxI = null;
+    // [BOOLEAN] true: AJAX II (the record browser) is enabled; false: AJAX II is disbaled
   var $boolRecordBrowser = null;
 
 
@@ -584,6 +586,7 @@ class tx_browser_pi1_backend
  */
   public function evaluate_pluginInit( $arr_pluginConf )
   {
+    $this->evaluate_pluginInitAjaxI( $arr_pluginConf );
     $this->evaluate_pluginInitRecordBrowser( $arr_pluginConf );
 
   }
@@ -591,22 +594,52 @@ class tx_browser_pi1_backend
 
 
 /**
- * evaluate_pluginInitRecordBrowser( ): Evaluates the plugin, flexform, TypoScript
- *                  Returns a HTML report
- *
- * Tab [evaluate]
+ * evaluate_pluginInitAjaxI( ): Init the class var $boolAjaxI
  *
  * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
- * @param	array		$obj_TCEform:     Current TCE form object
- * @return	string		$str_prompt: HTML prompt
+ * @return	void
+ * @version 4.1.5
+ * @since 4.1.5
+ */
+  public function evaluate_pluginInitAjaxI( $arr_pluginConf )
+  {
+
+    $this->boolRecordBrowser = false;
+    //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
+    $arr_xml = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
+    var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
+return;
+    $record_browser = $arr_xml['data']['viewSingle']['lDEF']['record_browser']['vDEF'];
+
+    //var_dump(__METHOD__, __LINE__, '$record_browser', $record_browser);
+    switch ($record_browser)
+    {
+      case ('disabled') :
+        $this->boolRecordBrowser = false;
+        break;
+      case ('by_flexform') :
+        $this->boolRecordBrowser = true;
+        break;
+      case ('ts') :
+      default :
+        $this->boolRecordBrowser = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
+        break;
+    }
+  }
+
+
+
+/**
+ * evaluate_pluginInitRecordBrowser( ): Init the class var $boolRecordBrowser
+ *
+ * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
+ * @return	void
  * @version 4.1.5
  * @since 4.1.5
  */
   public function evaluate_pluginInitRecordBrowser( $arr_pluginConf )
   {
 
-      // RETURN There isn't any AJAX page object
-      // Is AJAX enabled? AJAX page object II
     $this->boolRecordBrowser = false;
     //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
     $arr_xml = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
@@ -627,7 +660,6 @@ class tx_browser_pi1_backend
         $this->boolRecordBrowser = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
         break;
     }
-      // Is AJAX enabled? AJAX page object II
 
   }
 
