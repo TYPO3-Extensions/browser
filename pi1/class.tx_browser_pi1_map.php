@@ -1282,8 +1282,6 @@ class tx_browser_pi1_map
     {
       $prompt = 'JSON array: ' . var_export( $mapMarkers, true);
       t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
-      $prompt = 'If you have an unexpected effect in your map, please check the JSON array from above!';
-      t3lib_div :: devLog( '[HELP/MAP] ' . $prompt , $this->pObj->extKey, 1 );
     }
     switch( true )
     {
@@ -1305,6 +1303,8 @@ class tx_browser_pi1_map
         {
           $prompt = 'JSON array seem\'s to be proper.';
           t3lib_div :: devLog( '[OK/MAP] ' . $prompt , $this->pObj->extKey, -1 );
+          $prompt = 'If you have an unexpected effect in your map, please check the JSON array from above!';
+          t3lib_div :: devLog( '[HELP/MAP] ' . $prompt , $this->pObj->extKey, 1 );
         }
         break;
     }
