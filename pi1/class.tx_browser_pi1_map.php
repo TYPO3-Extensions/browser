@@ -1199,17 +1199,12 @@ class tx_browser_pi1_map
     }
     else
     {
-      foreach( array_keys( $this->confMap['configuration.']['categories.']['colours.'] ) as $key )
-      {
-        $firstColourKey = $key;
-        break;
-      }
-      $arrCategoriesFlipped = array( 'dummy' => $firstColourKey );
+      $keys = array_keys( $this->confMap['configuration.']['categories.']['colours.'] );
+      $arrCategoriesFlipped = array( 'dummy' => $keys[ 0 ] );
     }
       
 
       // FOREACH row
-    //$catField = $this->renderMapMarkerVariablesSystemItem( 'category' );
     $catField = $this->confMap['configuration.']['categories.']['field'];
     foreach( $this->pObj->rows as $row )
     {
@@ -1219,7 +1214,7 @@ class tx_browser_pi1_map
       }
       else
       {
-        $categories = array( $firstColourKey => 'dummy' );
+        $categories = array( $keys[ 0 ] => 'dummy' );
       }
 
         // FOREACH category
@@ -1277,7 +1272,8 @@ class tx_browser_pi1_map
         // FOREACH category
     }
       // FOREACH row
-    
+
+var_dump( __METHOD__, __LINE__, $mapMarkers );    
     $arr_return['data']['mapMarkers'] = $mapMarkers;
     $arr_return['data']['lats']       = $lats;
     $arr_return['data']['lons']       = $lons;
