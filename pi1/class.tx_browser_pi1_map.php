@@ -282,9 +282,10 @@ class tx_browser_pi1_map
       //
       // Set the global $enabled
 
-    $cObj_name      = $this->confMap['enabled'];
-    $cObj_conf      = $this->confMap['enabled.'];
-    $this->enabled  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+//    $cObj_name      = $this->confMap['enabled'];
+//    $cObj_conf      = $this->confMap['enabled.'];
+//    $this->enabled  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
+    $this->enabled = $this->confMap['enabled'];
       // Set the global $enabled
 
 

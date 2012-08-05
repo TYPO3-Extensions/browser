@@ -269,12 +269,8 @@ plugin.tx_browser_pi1 {
     }
 
     map {
-        // cObj: Enable the map
-      enabled = TEXT
-      enabled {
-          // [BOOLEAN] 0 (default), 1
-        value = {$plugin.tx_browser_pi1.map.enabled}
-      }
+        // [BOOLEAN] 0 (default), 1
+      enabled  = {$plugin.tx_browser_pi1.map.enabled}
       template {
           // [STRING] Path to the map HTML template
         file = EXT:browser/res/html/map/default.tmpl
