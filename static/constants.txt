@@ -78,15 +78,15 @@ plugin.tx_browser_pi1 {
   map.field.description = 
   # cat=Browser - Map//104;             type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
   map.field.category = 
-  # cat=Browser - Map/dims/201;         type=int+;   label= Map height: Height of the map (in pixel)
+  # cat=Browser - Map//201;         type=int+;   label= Map height: Height of the map (in pixel)
   map.height = 400
-  # cat=Browser - Map/dims/202;         type=int+;   label= Map width: Width of the map (in pixel)
+  # cat=Browser - Map//202;         type=int+;   label= Map width: Width of the map (in pixel)
   map.width = 600
   # cat=Browser - Map//301;             type=options[auto,fixed];  label= Zoom level mode:Auto: An optimal zoom level will calculated. Fixed: Zoom level will taken from the field "Fixed zoom level" below.
   map.zoomLevel.mode = auto
-  # cat=Browser - Map/dims/302;             type=int+;  label= Fixed zoom level: The fixed zoom level. Value from 1 to 18. Value has an effect only, if zoom level mode is "fixed". Default: 4
+  # cat=Browser - Map//302;             type=int+;  label= Fixed zoom level: The fixed zoom level. Value from 1 to 18. Value has an effect only, if zoom level mode is "fixed". Default: 4
   map.zoomLevel.fixed = 4
-  # cat=Browser - Map/dims/303;             type=int+;  label= Maximum zoom level: The maximum zoom level. Maximum value has an effect only, if zoom level mode is "auto".  Default: 18
+  # cat=Browser - Map//303;             type=int+;  label= Maximum zoom level: The maximum zoom level. Maximum value has an effect only, if zoom level mode is "auto".  Default: 18
   map.zoomLevel.max = 18
   # cat=Browser - Map//401;             type=string;    label= Path to legend icons: Path to the directory, which contains the images for the form legend (with ending slash!). Default: EXT:browser/res/js/map/icons/legend/ 
   map.pathToLegend = EXT:browser/res/js/map/icons/legend/
