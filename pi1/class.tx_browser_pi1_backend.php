@@ -80,7 +80,7 @@ class tx_browser_pi1_backend
 
   var $maxWidth = '600px';
     // [BOOLEAN] true: AJAX is enabled; false: AJAX is disbaled
-  var $boolAJAXenabled = null;
+  var $boolRecordBrowser = null;
 
 
 
@@ -190,6 +190,15 @@ class tx_browser_pi1_backend
       </div>
       ';
       // General information
+    
+    
+    
+      ///////////////////////////////////////////////////////////////////////////////
+      //
+      // Init
+
+    $this->evaluate_pluginInit( $arr_pluginConf );
+      // Init
 
 
 
@@ -276,7 +285,7 @@ class tx_browser_pi1_backend
 
       // RETURN There isn't any AJAX page object
       // Is AJAX enabled? AJAX page object II
-    $this->boolAJAXenabled = false;
+    $this->boolRecordBrowser = false;
     //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
     $arr_xml = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
     //var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
@@ -286,21 +295,21 @@ class tx_browser_pi1_backend
     switch ($record_browser)
     {
       case ('disabled') :
-        $this->boolAJAXenabled = false;
+        $this->boolRecordBrowser = false;
         break;
       case ('by_flexform') :
-        $this->boolAJAXenabled = true;
+        $this->boolRecordBrowser = true;
         break;
       case ('ts') :
       default :
-        $this->boolAJAXenabled = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
+        $this->boolRecordBrowser = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
         break;
     }
       // Is AJAX enabled? AJAX page object II
 
       // AJAX is enabled. AJAX page object II
-    //var_dump(__METHOD__, __LINE__, '$this->boolAJAXenabled', $this->boolAJAXenabled);
-    if( $this->boolAJAXenabled )
+    //var_dump(__METHOD__, __LINE__, '$this->boolRecordBrowser', $this->boolRecordBrowser);
+    if( $this->boolRecordBrowser )
     {
         // RETURN there isn't any default typeNum of AJAX page object
       //var_dump(__METHOD__, __LINE__, $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum']);
@@ -348,6 +357,14 @@ class tx_browser_pi1_backend
     }
       // AJAX is enabled. AJAX page object II
 
+      // RETURN : AJAX page object II isn't proper
+    $str_prompt = $this->evaluate_pluginAjaxPageObjectII( $arr_pluginConf );
+    if( $str_prompt )
+    {
+      return $str_prompt . $str_prompt_info_tutorialAndForum;
+    }
+      // RETURN : AJAX page object II isn't proper
+
       // RETURN : There isn't any CSV page object
     $str_prompt = $this->evaluate_pluginCsvObject( $arr_pluginConf );
     if( $str_prompt )
@@ -357,7 +374,7 @@ class tx_browser_pi1_backend
       // RETURN : There isn't any CSV page object
 
       // RETURN : There isn't any map page object
-    $str_prompt = $this->evaluate_pluginMapObject( $arr_pluginConf );
+    $str_prompt = $this->evaluate_pluginMapObject( );
     if( $str_prompt )
     {
       return $str_prompt . $str_prompt_info_tutorialAndForum;
@@ -392,6 +409,74 @@ class tx_browser_pi1_backend
 
       // Check the plugin
     return $str_prompt . $str_prompt_info_tutorialAndForum;
+  }
+
+
+
+/**
+ * evaluate_pluginAjaxPageObjectII( ) : Evaluates the AJAX page object II.
+ *                                      It is neede in case of an enabled record browser.
+ *                                      Method returns an HTML report in case of an error.
+ *
+ * Tab [evaluate]
+ *
+ * @return	string		$str_prompt: HTML prompt
+ * @version 4.1.5
+ * @since 4.1.5
+ */
+  public function evaluate_pluginAjaxPageObjectII( )
+  {
+      // RETURN OK  : No record browser, no AJAX page object II is needed
+    if( ! $this->boolRecordBrowser )
+    {
+      return;
+    }
+      // RETURN OK  : No record browser, no AJAX page object II is needed
+    
+      // RETURN ERROR prompt  : there isn't any default typeNum of AJAX page object II
+    if( !isset ($this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum']))
+    {
+      $str_prompt = '
+        <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum') . '
+          </div>
+        </div>
+        ';
+      return $str_prompt;
+    }
+      // RETURN ERROR prompt  : there isn't any default typeNum of AJAX page object II
+
+      // RETURN ERROR prompt  : there isn't any AJAX page object II
+    $AJAX_defaultTypeNum    = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum'];
+    $AJAX_nameOfPageObject  = $this->obj_TypoScript->setup['types.'][$AJAX_defaultTypeNum];
+      // There is no AJAX page object
+    //var_dump(__METHOD__, __LINE__, '$AJAX_nameOfPageObject', $AJAX_nameOfPageObject);
+    if( empty( $AJAX_nameOfPageObject ) )
+    {
+      $str_prompt = '
+        <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_AJAXpageObject') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_AJAXpageObject') . '
+          </div>
+        </div>
+        ';
+      $str_prompt = str_replace( '%typeNum%', $AJAX_defaultTypeNum, $str_prompt);
+      return $str_prompt;
+    }
+      // RETURN ERROR prompt  : there isn't any AJAX page object II
+      // AJAX is enabled. AJAX page object II
+
   }
 
 
@@ -486,6 +571,69 @@ class tx_browser_pi1_backend
 
 
 /**
+ * evaluate_pluginInit( ): Evaluates the plugin, flexform, TypoScript
+ *                  Returns a HTML report
+ *
+ * Tab [evaluate]
+ *
+ * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
+ * @param	array		$obj_TCEform:     Current TCE form object
+ * @return	string		$str_prompt: HTML prompt
+ * @version 4.1.5
+ * @since 4.1.5
+ */
+  public function evaluate_pluginInit( $arr_pluginConf )
+  {
+    $this->evaluate_pluginInitRecordBrowser( $arr_pluginConf );
+
+  }
+
+
+
+/**
+ * evaluate_pluginInitRecordBrowser( ): Evaluates the plugin, flexform, TypoScript
+ *                  Returns a HTML report
+ *
+ * Tab [evaluate]
+ *
+ * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
+ * @param	array		$obj_TCEform:     Current TCE form object
+ * @return	string		$str_prompt: HTML prompt
+ * @version 4.1.5
+ * @since 4.1.5
+ */
+  public function evaluate_pluginInitRecordBrowser( $arr_pluginConf )
+  {
+
+      // RETURN There isn't any AJAX page object
+      // Is AJAX enabled? AJAX page object II
+    $this->boolRecordBrowser = false;
+    //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
+    $arr_xml = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
+    //var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
+    $record_browser = $arr_xml['data']['viewSingle']['lDEF']['record_browser']['vDEF'];
+
+    //var_dump(__METHOD__, __LINE__, '$record_browser', $record_browser);
+    switch ($record_browser)
+    {
+      case ('disabled') :
+        $this->boolRecordBrowser = false;
+        break;
+      case ('by_flexform') :
+        $this->boolRecordBrowser = true;
+        break;
+      case ('ts') :
+      default :
+        $this->boolRecordBrowser = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
+        break;
+    }
+      // Is AJAX enabled? AJAX page object II
+
+  }
+
+  
+
+/**
  * evaluate_pluginMapObject : Evaluates the CSV object, if CSV is enabled:
  *                            * typeNum
  *                            * csv pageObject
@@ -551,30 +699,29 @@ class tx_browser_pi1_backend
     }
       // RETURN ERROR prompt  : there is no map page object
       
-      // RETURN OK : AJAX is disabled
-    if( ! $this->boolAJAXenabled )
+      // RETURN ERROR : Record browser is enabled
+    if( $this->boolRecordBrowser )
     {
-      return;
+      $str_prompt = '
+        <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.mapAjaxConflict') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.mapAjaxConflict') . '
+          </div>
+        </div>
+        ';
+      $str_prompt = str_replace( '%typeNum%', $map_defaultTypeNum, $str_prompt);
+      return $str_prompt;
     }
-      // RETURN OK : AJAX is disabled
-      
-      // RETURN ERROR : AJAX is enabled
-    $str_prompt = '
-      <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
-        <div class="message-body">
-          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.mapAjaxConflict') . '
-        </div>
-      </div>
-      <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-        <div class="message-body">
-          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.mapAjaxConflict') . '
-        </div>
-      </div>
-      ';
-    $str_prompt = str_replace( '%typeNum%', $map_defaultTypeNum, $str_prompt);
-    return $str_prompt;
-      // RETURN ERROR : AJAX is enabled
+      // RETURN ERROR : Record browser is enabled
       // Map is enabled.
+
+      // RETURN OK;
+    return;
   }
 
 
