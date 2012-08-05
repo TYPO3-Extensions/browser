@@ -544,7 +544,7 @@ class tx_browser_pi1_backend
           </div>
         </div>
         ';
-      $str_prompt = str_replace( '%typeNum%', $CSV_defaultTypeNum, $str_prompt);
+      $str_prompt = str_replace( '%typeNum%', $map_defaultTypeNum, $str_prompt);
       return $str_prompt;
     }
       // RETURN : there is no map page object
