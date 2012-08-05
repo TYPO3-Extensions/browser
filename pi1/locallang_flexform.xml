@@ -49,8 +49,8 @@
       <label index="sheet_evaluate.plugin.error.no_ts_template">Bug: There isn't any TypoScript configuration for this plugin.</label>
       <label index="sheet_evaluate.plugin.error.no_view">Bug: There isn't any view configured.</label>
       <label index="sheet_evaluate.plugin.error.saved_never">Bug: This plugin isn't saved never.</label>
-      <label index="sheet_evaluate.plugin.info.mapAjaxIConflict">Please disable AJAX or OpenStreetMap.</label>
-      <label index="sheet_evaluate.plugin.info.mapAjaxIIConflict">Please disable the record browser or OpenStreetMap.</label>
+      <label index="sheet_evaluate.plugin.info.mapAjaxIConflict">Please disable AJAX (see tab "jQuery <![CDATA[&]]> AJAX" or OpenStreetMap (see TypoScript constant editor).</label>
+      <label index="sheet_evaluate.plugin.info.mapAjaxIIConflict">Please disable the record browser (see tab "Single View") or OpenStreetMap (see TypoScript constant editor).</label>
       <label index="sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum">Fix it: Configure javascript.ajax.jQuery.default.typeNum</label>
       <label index="sheet_evaluate.plugin.info.no_AJAXpageObject">Fix it? The Browser has a template. Copy it. Code f.e.: browser_ajax <![CDATA[<]]> plugin.tx_browser_pi1.javascript.ajax.jQuery.default. The typeNum has to be %typeNum%. Alternate: don't use AJAX.</label>
       <label index="sheet_evaluate.plugin.info.no_CSV_defaultTypeNum">Fix it: Configure export.csv.page.typeNum</label>
@@ -412,7 +412,8 @@
       <label index="sheet_evaluate.plugin.error.no_ts_template">Fehler: Es gibt keine TypoScript-Konfiguration f<![CDATA[&uuml;]]>r dieses Plugin.</label>
       <label index="sheet_evaluate.plugin.error.no_view">Fehler: Es ist keine View konfiguriert.</label>
       <label index="sheet_evaluate.plugin.error.saved_never">Fehler: Dieses Plugin ist noch nie gespeichert worden.</label>
-      <label index="sheet_evaluate.plugin.info.mapAjaxIIConflict">Bitte deaktiviere den Record Browser oder OpenStreetMap.</label>
+      <label index="sheet_evaluate.plugin.info.mapAjaxIConflict">Bitte deaktiviere AJAX (siehe Register "jQuery <![CDATA[&]]> AJAX") oder OpenStreetMap (siehe TypoScript Konstanten Editor).</label>
+      <label index="sheet_evaluate.plugin.info.mapAjaxIIConflict">Bitte deaktiviere den Record Browser (siehe Register "Detailansicht") oder OpenStreetMap (siehe TypoScript Konstanten Editor).</label>
       <label index="sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum">Fehler beheben: konfiguriere javascript.ajax.jQuery.default.typeNum</label>
       <label index="sheet_evaluate.plugin.info.no_AJAXpageObject">Fehler beheben? Der Browser hat ein Template. Kopiere es. Code z.B.: browser_ajax <![CDATA[<]]> plugin.tx_browser_pi1.javascript.ajax.jQuery.default. Der typeNum muss %typeNum% lauten. Alternative: verzichte auf AJAX.</label>
       <label index="sheet_evaluate.plugin.info.no_CSV_defaultTypeNum">Fehler beheben: konfiguriere export.csv.page.typeNum</label>
