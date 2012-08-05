@@ -498,6 +498,7 @@ class tx_browser_pi1_backend
  */
   public function evaluate_pluginMapObject( $arr_pluginConf )
   {
+    return;
       // RETURN : map isn't enabled
     $this->confMap  = $this->pObj->conf['navigation.']['map.'];
     $cObj_name      = $this->confMap['enabled'];
