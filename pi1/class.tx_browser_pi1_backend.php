@@ -705,12 +705,12 @@ class tx_browser_pi1_backend
       $str_prompt = '
         <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.mapAjaxConflict') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.mapAjaxIIConflict') . '
           </div>
         </div>
         <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
           <div class="message-body">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.mapAjaxConflict') . '
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.mapAjaxIIConflict') . '
           </div>
         </div>
         ';
