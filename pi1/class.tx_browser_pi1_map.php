@@ -1300,6 +1300,13 @@ class tx_browser_pi1_map
           t3lib_div :: devLog( '[HELP/MAP] ' . $prompt , $this->pObj->extKey, 1 );
         }
         break;
+      default:
+        if( $this->pObj->b_drs_map )
+        {
+          $prompt = 'JSON array seem\'s to be proper.';
+          t3lib_div :: devLog( '[OK/MAP] ' . $prompt , $this->pObj->extKey, -1 );
+        }
+        break;
     }
     $arr_return['data']['mapMarkers'] = $mapMarkers;
     $arr_return['data']['lats']       = $lats;
