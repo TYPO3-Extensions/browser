@@ -500,7 +500,6 @@ class tx_browser_pi1_backend
   {
      // RETURN : map isn't enabled
     $this->confMap  = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['map.'];
-    $this->enabled  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
     if( ! $this->confMap['enabled'] )
     {
       return;
