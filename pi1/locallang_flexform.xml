@@ -52,7 +52,7 @@
       <label index="sheet_evaluate.plugin.info.no_CSV_defaultTypeNum">Fix it: Configure export.csv.page.typeNum</label>
       <label index="sheet_evaluate.plugin.info.no_CSVpageObject">Fix it? The Browser has a template. Copy it. Code f.e.: browser_csv <![CDATA[<]]> plugin.tx_browser_pi1.export.csv.page. The typeNum has to be %typeNum%. Alternate: don't use the CSV export.</label>
       <label index="sheet_evaluate.plugin.info.no_map_defaultTypeNum">Fix it: Configure export.map.page.typeNum</label>
-      <label index="sheet_evaluate.plugin.info.no_mapPageObject">Fix it? The Browser has a template. Copy it. Code f.e.: browser_csv <![CDATA[<]]> plugin.tx_browser_pi1.export.map.page. The typeNum has to be %typeNum%. Alternate: don't use the CSV export.</label>
+      <label index="sheet_evaluate.plugin.info.no_mapPageObject">Fix it? The Browser has a template. Copy it. Code f.e.: browser_map <![CDATA[<]]> plugin.tx_browser_pi1.export.map.page. The typeNum has to be %typeNum%. Alternate: don't use OpenStreetMap.</label>
       <label index="sheet_evaluate.plugin.info.no_record_storage_pid">Fix it? Configure the general storage pid. See tab [Behaviour] field [Record Storage Page]. Bear in mind to set more than one pid, if your data are stored in more than one folder.</label>
       <label index="sheet_evaluate.plugin.info.no_ts_template">Fix it: include the Static Template "Browser"!</label>
       <label index="sheet_evaluate.plugin.info.no_view">Fix it: configure your TypoScript like plugin.tx_browser_pi1.views.list.1 { ... }</label>
