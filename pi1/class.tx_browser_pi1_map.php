@@ -1284,7 +1284,7 @@ class tx_browser_pi1_map
     if( $this->pObj->b_drs_map )
     {
       $prompt = 'JSON array: ' . t3lib_div::view_array( $mapMarkers );
-      $prompt = 'JSON array: ' . $mapMarkers;
+      $prompt = 'JSON array: ' . var_export( $mapMarkers, true);
       t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
       $prompt = 'If you have an unexpected effect in your map, please check the JSON array from above!';
       t3lib_div :: devLog( '[HELP/MAP] ' . $prompt , $this->pObj->extKey, 1 );
