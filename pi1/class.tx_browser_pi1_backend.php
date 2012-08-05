@@ -193,14 +193,22 @@ class tx_browser_pi1_backend
       ';
       // General information
     
+      $str_prompt_inCaseOfAnError = '
+        <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.warn.fixThisBug') . '
+          </div>
+        </div>
+        ';
     
     
-      ///////////////////////////////////////////////////////////////////////////////
-      //
-      // Init
-
-    $this->evaluate_pluginInit( $arr_pluginConf );
-      // Init
+      // RETURN : Init isn't proper
+    $str_prompt = $this->evaluate_pluginInit( $arr_pluginConf );
+    if( $str_prompt )
+    {
+      return $str_prompt;
+    }
+      // RETURN : Init isn't proper
 
 
 
@@ -284,80 +292,6 @@ class tx_browser_pi1_backend
       return $str_prompt . $str_prompt_info_tutorialAndForum;
     }
       // RETURN There isn't any record storage page
-
-      // RETURN There isn't any AJAX page object
-      // Is AJAX enabled? AJAX page object II
-    $this->boolRecordBrowser = false;
-    //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
-    $arr_xml = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
-    //var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
-    $record_browser = $arr_xml['data']['viewSingle']['lDEF']['record_browser']['vDEF'];
-
-    //var_dump(__METHOD__, __LINE__, '$record_browser', $record_browser);
-    switch ($record_browser)
-    {
-      case ('disabled') :
-        $this->boolRecordBrowser = false;
-        break;
-      case ('by_flexform') :
-        $this->boolRecordBrowser = true;
-        break;
-      case ('ts') :
-      default :
-        $this->boolRecordBrowser = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
-        break;
-    }
-      // Is AJAX enabled? AJAX page object II
-
-      // AJAX is enabled. AJAX page object II
-    //var_dump(__METHOD__, __LINE__, '$this->boolRecordBrowser', $this->boolRecordBrowser);
-    if( $this->boolRecordBrowser )
-    {
-        // RETURN there isn't any default typeNum of AJAX page object
-      //var_dump(__METHOD__, __LINE__, $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum']);
-      if( !isset ($this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum']))
-      {
-        $str_prompt = '
-          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum') . '
-            </div>
-          </div>
-          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum') . '
-            </div>
-          </div>
-          ';
-        return $str_prompt . $str_prompt_info_tutorialAndForum;
-      }
-        // RETURN there isn't any default typeNum of AJAX page object
-
-        // RETURN there is no AJAX page object
-      $AJAX_defaultTypeNum    = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum'];
-      $AJAX_nameOfPageObject  = $this->obj_TypoScript->setup['types.'][$AJAX_defaultTypeNum];
-        // There is no AJAX page object
-      //var_dump(__METHOD__, __LINE__, '$AJAX_nameOfPageObject', $AJAX_nameOfPageObject);
-      if( empty( $AJAX_nameOfPageObject ) )
-      {
-        $str_prompt = '
-          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_AJAXpageObject') . '
-            </div>
-          </div>
-          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_AJAXpageObject') . '
-            </div>
-          </div>
-          ';
-        $str_prompt = str_replace( '%typeNum%', $AJAX_defaultTypeNum, $str_prompt);
-        return $str_prompt . $str_prompt_info_tutorialAndForum;
-      }
-        // RETURN there is no AJAX page object
-    }
-      // AJAX is enabled. AJAX page object II
 
       // RETURN : AJAX page object II isn't proper
     $str_prompt = $this->evaluate_pluginAjaxPageObjectII( $arr_pluginConf );
@@ -586,9 +520,19 @@ class tx_browser_pi1_backend
  */
   public function evaluate_pluginInit( $arr_pluginConf )
   {
-    $this->evaluate_pluginInitAjaxI( $arr_pluginConf );
-    $this->evaluate_pluginInitRecordBrowser( $arr_pluginConf );
+    $prompt = $this->evaluate_pluginInitAjaxI( $arr_pluginConf );
+    if( $prompt )
+    {
+      return $prompt;
+    }
+    
+    $prompt = $this->evaluate_pluginInitRecordBrowser( $arr_pluginConf );
+    if( $prompt )
+    {
+      return $prompt;
+    }
 
+    return;
   }
 
 
@@ -597,33 +541,45 @@ class tx_browser_pi1_backend
  * evaluate_pluginInitAjaxI( ): Init the class var $boolAjaxI
  *
  * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
- * @return	void
+ * @return	string
  * @version 4.1.5
  * @since 4.1.5
  */
   public function evaluate_pluginInitAjaxI( $arr_pluginConf )
   {
 
-    $this->boolRecordBrowser = false;
+    $this->boolAjaxI = false;
     //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
     $arr_xml = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
-    var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
-return;
-    $record_browser = $arr_xml['data']['viewSingle']['lDEF']['record_browser']['vDEF'];
+    //var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
+    $ajaxI = $arr_xml['data']['javascript']['lDEF']['mode']['vDEF'];
 
-    //var_dump(__METHOD__, __LINE__, '$record_browser', $record_browser);
-    switch ($record_browser)
+    //var_dump(__METHOD__, __LINE__, '$ajaxI', $ajaxI);
+    switch ($ajaxI)
     {
+      case ('list_and_single') :
+      case ('list_only') :
+        $this->boolAjaxI = true;
+        return;
+        break;
       case ('disabled') :
-        $this->boolRecordBrowser = false;
+        $this->boolAjaxI = false;
+        return;
         break;
-      case ('by_flexform') :
-        $this->boolRecordBrowser = true;
-        break;
-      case ('ts') :
       default :
-        $this->boolRecordBrowser = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
-        break;
+        $str_prompt = '
+          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              BUG at ' . __METHOD__ . ' (line ' . __LINE__ . '): value in switch is undefined: "' . $ajaxI . '".
+            </div>
+          </div>
+          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              The Browser team has to take care for a proper code!
+            </div>
+          </div>
+          ';
+        return $str_prompt;
     }
   }
 
@@ -633,7 +589,7 @@ return;
  * evaluate_pluginInitRecordBrowser( ): Init the class var $boolRecordBrowser
  *
  * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
- * @return	void
+ * @return	string
  * @version 4.1.5
  * @since 4.1.5
  */
@@ -651,14 +607,30 @@ return;
     {
       case ('disabled') :
         $this->boolRecordBrowser = false;
+        return;
         break;
       case ('by_flexform') :
         $this->boolRecordBrowser = true;
+        return;
         break;
       case ('ts') :
-      default :
         $this->boolRecordBrowser = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
+        return;
         break;
+      default :
+        $str_prompt = '
+          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              BUG at ' . __METHOD__ . ' (line ' . __LINE__ . '): value in switch is undefined: "' . $record_browser . '".
+            </div>
+          </div>
+          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              The Browser team has to take care for a proper code!
+            </div>
+          </div>
+          ';
+        return $str_prompt;
     }
 
   }
