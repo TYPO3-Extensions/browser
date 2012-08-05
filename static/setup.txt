@@ -291,57 +291,57 @@ plugin.tx_browser_pi1 {
                 // bluedark
               20 = IMAGE
               20 {
-                file = {$plugin.tx_browser_pi1.map.pathToPoints}bluedark.png
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}bluedark.png
               }
                 // greendark
               30 = IMAGE
               30 {
-                file = {$plugin.tx_browser_pi1.map.pathToPoints}greendark.png
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}greendark.png
               }
                 // purple
               40 = IMAGE
               40 {
-                file = {$plugin.tx_browser_pi1.map.pathToPoints}purple.png
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}purple.png
               }
                 // orange
               50 = IMAGE
               50 {
-                file = {$plugin.tx_browser_pi1.map.pathToPoints}orange.png
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}orange.png
               }
                 // red
               60 = IMAGE
               60 {
-                file = {$plugin.tx_browser_pi1.map.pathToPoints}red.png
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}red.png
               }
                 // blue
               70 = IMAGE
               70 {
-                file = {$plugin.tx_browser_pi1.map.pathToPoints}blue.png
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}blue.png
               }
                 // green
               80 = IMAGE
               80 {
-                file = {$plugin.tx_browser_pi1.map.pathToPoints}green.png
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}green.png
               }
                 // pink
               90 = IMAGE
               90 {
-                file = {$plugin.tx_browser_pi1.map.pathToPoints}pink.png
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}pink.png
               }
                 // yellow
               100 = IMAGE
               100 {
-                file = {$plugin.tx_browser_pi1.map.pathToPoints}yellow.png
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}yellow.png
               }
                 // black
               110 = IMAGE
               110 {
-                file = {$plugin.tx_browser_pi1.map.pathToPoints}black.png
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}black.png
               }
                 // white
               120 = IMAGE
               120 {
-                file = {$plugin.tx_browser_pi1.map.pathToPoints}white.png
+                file = {$plugin.tx_browser_pi1.map.pathToLegend}white.png
               }
             }
             points {
