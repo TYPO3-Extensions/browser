@@ -68,7 +68,7 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Localisation/;       type=int+;    label= IT:Id of the sys_language record for the Italien language.
   typeNum.sys_language_it = 0
 
-  # cat=Browser - Map//101;             type=boolean;   label= Enable the map:Please enable the map. Without enabling no map will rendered. 
+  # cat=Browser - Map//101;             type=boolean;   label= Enable the map:Please enable the map. Without enabling any map won't rendered. 
   map.enabled = 0 
   # cat=Browser - Map//102;             type=string;    label= table.field with record uid: Example: tx_org_headquarters.uid
   map.field.linktoSingle = 
