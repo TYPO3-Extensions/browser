@@ -2505,14 +2505,20 @@ plugin.tx_browser_pi1 {
           // Content for the pop up with description. It contains a description and a link to the single view.
         descriptionWiLinkToSingle = COA
         descriptionWiLinkToSingle {
+            // Description
           10 = TEXT
           10 {
             field = {$plugin.tx_browser_pi1.map.field.description}
             noTrimWrap = || |
           }
+            // Link to the single view
           20 = TEXT
           20 {
-            value = Mehr &raquo;
+            value = In detail &raquo;
+            lang {
+              de = Mehr Informationen &raquo;
+              en = In detail &raquo;
+            }
             typolink {
               parameter.data = field:mapLinkToSingle
             }
