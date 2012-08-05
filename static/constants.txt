@@ -68,15 +68,17 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Localisation/;       type=int+;    label= IT:Id of the sys_language record for the Italien language.
   typeNum.sys_language_it = 0
 
-  # cat=Browser - Map//100;             type=string;    label= table.field with record uid: Example: tx_org_headquarters.uid
+  # cat=Browser - Map//101;             type=boolean;   label= Enable the map:Please enable the map. Without enabling no map will rendered. 
+  map.enabled = 0 
+  # cat=Browser - Map//102;             type=string;    label= table.field with record uid: Example: tx_org_headquarters.uid
   map.field.linktoSingle = 
-  # cat=Browser - Map//101;             type=string;    label= table.field with the latitude: Example: tx_org_headquarters.latitude
+  # cat=Browser - Map//103;             type=string;    label= table.field with the latitude: Example: tx_org_headquarters.latitude
   map.field.latitude = 
-  # cat=Browser - Map//102;             type=string;    label= table.field with the longitude: Example: tx_org_headquarters.longitude
+  # cat=Browser - Map//104;             type=string;    label= table.field with the longitude: Example: tx_org_headquarters.longitude
   map.field.longitude = 
-  # cat=Browser - Map//103;             type=string;    label= table.field with the content: table.field with the content for the popup. Example: tx_org_headquarters.short
+  # cat=Browser - Map//105;             type=string;    label= table.field with the content: table.field with the content for the popup. Example: tx_org_headquarters.short
   map.field.description = 
-  # cat=Browser - Map//104;             type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
+  # cat=Browser - Map//106;             type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
   map.field.category = 
   # cat=Browser - Map//201;         type=int+;   label= Map height: Height of the map (in pixel)
   map.height = 400
