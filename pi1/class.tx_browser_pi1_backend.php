@@ -79,6 +79,8 @@ class tx_browser_pi1_backend
   var $locallang = null;
 
   var $maxWidth = '600px';
+    // [BOOLEAN] true: AJAX is enabled; false: AJAX is disbaled
+  var $boolAJAXenabled = null;
 
 
 
@@ -274,9 +276,9 @@ class tx_browser_pi1_backend
 
       // RETURN There isn't any AJAX page object
       // Is AJAX enabled? AJAX page object II
-    $bool_AJAXenabled = false;
+    $this->boolAJAXenabled = false;
     //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
-    $arr_xml = t3lib_div::xml2array($arr_pluginConf['row']['pi_flexform'],$NSprefix='',$reportDocTag=false);
+    $arr_xml = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
     //var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
     $record_browser = $arr_xml['data']['viewSingle']['lDEF']['record_browser']['vDEF'];
 
@@ -284,21 +286,21 @@ class tx_browser_pi1_backend
     switch ($record_browser)
     {
       case ('disabled') :
-        $bool_AJAXenabled = false;
+        $this->boolAJAXenabled = false;
         break;
       case ('by_flexform') :
-        $bool_AJAXenabled = true;
+        $this->boolAJAXenabled = true;
         break;
       case ('ts') :
       default :
-        $bool_AJAXenabled = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
+        $this->boolAJAXenabled = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
         break;
     }
       // Is AJAX enabled? AJAX page object II
 
       // AJAX is enabled. AJAX page object II
-    //var_dump(__METHOD__, __LINE__, '$bool_AJAXenabled', $bool_AJAXenabled);
-    if( $bool_AJAXenabled )
+    //var_dump(__METHOD__, __LINE__, '$this->boolAJAXenabled', $this->boolAJAXenabled);
+    if( $this->boolAJAXenabled )
     {
         // RETURN there isn't any default typeNum of AJAX page object
       //var_dump(__METHOD__, __LINE__, $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['javascript.']['ajax.']['jQuery.']['default.']['typeNum']);
@@ -496,18 +498,18 @@ class tx_browser_pi1_backend
  * @version 4.1.5
  * @since 4.0.0
  */
-  public function evaluate_pluginMapObject( $arr_pluginConf )
+  public function evaluate_pluginMapObject( )
   {
-     // RETURN : map isn't enabled
+      // RETURN OK  : map isn't enabled
     $this->confMap  = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['map.'];
     if( ! $this->confMap['enabled'] )
     {
       return;
     }
-      // RETURN : map isn't enabled
+      // RETURN OK  : map isn't enabled
     
       // Map is enabled.
-      // RETURN : there isn't any default typeNum of CSV export page object
+      // RETURN ERROR prompt  : there isn't any default typeNum of CSV export page object
     if( ! isset ($this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['export.']['map.']['page.']['typeNum']))
     {
       $str_prompt = '
@@ -524,9 +526,9 @@ class tx_browser_pi1_backend
         ';
       return $str_prompt;
     }
-      // RETURN : there isn't any default typeNum of CSV export page object
+      // RETURN ERROR prompt  : there isn't any default typeNum of CSV export page object
 
-      // RETURN : there is no CSV export page object
+      // RETURN ERROR prompt  : there is no CSV export page object
     $map_defaultTypeNum    = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['export.']['map.']['page.']['typeNum'];
     $map_nameOfPageObject  = $this->obj_TypoScript->setup['types.'][$map_defaultTypeNum];
       // There is no map page object
@@ -547,7 +549,31 @@ class tx_browser_pi1_backend
       $str_prompt = str_replace( '%typeNum%', $map_defaultTypeNum, $str_prompt);
       return $str_prompt;
     }
-      // RETURN : there is no map page object
+      // RETURN ERROR prompt  : there is no map page object
+      
+      // RETURN OK : AJAX is disabled
+    if( ! $this->boolAJAXenabled )
+    {
+      return;
+    }
+      // RETURN OK : AJAX is disabled
+      
+      // RETURN ERROR : AJAX is enabled
+    $str_prompt = '
+      <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+        <div class="message-body">
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.mapAjaxConflict') . '
+        </div>
+      </div>
+      <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+        <div class="message-body">
+          ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.mapAjaxConflict') . '
+        </div>
+      </div>
+      ';
+    $str_prompt = str_replace( '%typeNum%', $map_defaultTypeNum, $str_prompt);
+    return $str_prompt;
+      // RETURN ERROR : AJAX is enabled
       // Map is enabled.
   }
 

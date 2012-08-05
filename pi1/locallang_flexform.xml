@@ -38,6 +38,7 @@
       <label index="sheet_evaluate.handle_marker.0">Remove marker, which weren't replaced</label>
       <label index="sheet_evaluate.handle_marker.1">Don't remove any marker (Debugging)</label>
       <label index="sheet_evaluate.plugin.drs.warn">The DRS - Development Reporting System - is enabled. This costs performance and is a security risk for any operative sytem. You can disable the DRS in the extension manager. Status: %status%.</label>
+      <label index="sheet_evaluate.plugin.error.mapAjaxConflict">Bug: You like to use OpenStreetMap. And you have enabled AJAX. But there is a conflict of the map and AJAX unfortunately.</label>
       <label index="sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum">Bug: You like to use AJAX. But there isn't any default typeNum for the AJAX page object.</label>
       <label index="sheet_evaluate.plugin.error.no_AJAXpageObject">Bug: You like to use AJAX, but there isn't any AJAX page object.</label>
       <label index="sheet_evaluate.plugin.error.no_CSV_defaultTypeNum">Bug: You like to use CSV export. But there isn't any default typeNum for the CSV export page object.</label>
@@ -47,6 +48,7 @@
       <label index="sheet_evaluate.plugin.error.no_ts_template">Bug: There isn't any TypoScript configuration for this plugin.</label>
       <label index="sheet_evaluate.plugin.error.no_view">Bug: There isn't any view configured.</label>
       <label index="sheet_evaluate.plugin.error.saved_never">Bug: This plugin isn't saved never.</label>
+      <label index="sheet_evaluate.plugin.info.mapAjaxConflict">Please disable AJAX or OpenStreetMap.</label>
       <label index="sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum">Fix it: Configure javascript.ajax.jQuery.default.typeNum</label>
       <label index="sheet_evaluate.plugin.info.no_AJAXpageObject">Fix it? The Browser has a template. Copy it. Code f.e.: browser_ajax <![CDATA[<]]> plugin.tx_browser_pi1.javascript.ajax.jQuery.default. The typeNum has to be %typeNum%. Alternate: don't use AJAX.</label>
       <label index="sheet_evaluate.plugin.info.no_CSV_defaultTypeNum">Fix it: Configure export.csv.page.typeNum</label>
@@ -396,6 +398,7 @@
       <label index="sheet_evaluate.handle_marker.0">Nicht ersetzte Marker entfernen</label>
       <label index="sheet_evaluate.handle_marker.1">Nicht ersetzte Marker anzeigen (Debugging)</label>
       <label index="sheet_evaluate.plugin.drs.warn">Das DRS - Development Reporting System - ist aktiviert. Das kostet Performance und ist ein Sicherheitsrisiko f<![CDATA[&uuml;]]>r jedes operative Sytem. Du kannst das DRS im Extension Manager abschalten. Status: %status%.</label>
+      <label index="sheet_evaluate.plugin.error.mapAjaxConflict">FEHLER: Du m<![CDATA[&ouml;]]>chtest OpenStreetMap und AJAX gleichzeitig verwenden. Zwischen beiden gibt es aber leider einen Konflikt.</label>
       <label index="sheet_evaluate.plugin.error.no_AJAX_defaultTypeNum">Fehler: Du m<![CDATA[&ouml;]]>chtest AJAX verwenden. Es fehlt aber die typeNum f<![CDATA[&uuml;]]>r das AJAX Page Objekt.</label>
       <label index="sheet_evaluate.plugin.error.no_AJAXpageObject">Fehler: Du m<![CDATA[&ouml;]]>chtest AJAX verwenden. Es fehlt aber das AJAX Page Objekt.</label>
       <label index="sheet_evaluate.plugin.error.no_CSV_defaultTypeNum">Fehler: Du m<![CDATA[&ouml;]]>chtest den CSV-Export verwenden. Es fehlt aber die typeNum f<![CDATA[&uuml;]]>r das CSV-Export Page Objekt.</label>
@@ -405,6 +408,7 @@
       <label index="sheet_evaluate.plugin.error.no_ts_template">Fehler: Es gibt keine TypoScript-Konfiguration f<![CDATA[&uuml;]]>r dieses Plugin.</label>
       <label index="sheet_evaluate.plugin.error.no_view">Fehler: Es ist keine View konfiguriert.</label>
       <label index="sheet_evaluate.plugin.error.saved_never">Fehler: Dieses Plugin ist noch nie gespeichert worden.</label>
+      <label index="sheet_evaluate.plugin.info.mapAjaxConflict">Bitte deaktive AJAX oder OpenStreetMap.</label>
       <label index="sheet_evaluate.plugin.info.no_AJAX_defaultTypeNum">Fehler beheben: konfiguriere javascript.ajax.jQuery.default.typeNum</label>
       <label index="sheet_evaluate.plugin.info.no_AJAXpageObject">Fehler beheben? Der Browser hat ein Template. Kopiere es. Code z.B.: browser_ajax <![CDATA[<]]> plugin.tx_browser_pi1.javascript.ajax.jQuery.default. Der typeNum muss %typeNum% lauten. Alternative: verzichte auf AJAX.</label>
       <label index="sheet_evaluate.plugin.info.no_CSV_defaultTypeNum">Fehler beheben: konfiguriere export.csv.page.typeNum</label>
