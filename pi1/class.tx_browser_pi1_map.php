@@ -1280,7 +1280,7 @@ class tx_browser_pi1_map
     }
       // FOREACH row
 
-var_dump( __METHOD__, __LINE__, $mapMarkers );    
+//var_dump( __METHOD__, __LINE__, $mapMarkers );    
     $arr_return['data']['mapMarkers'] = $mapMarkers;
     $arr_return['data']['lats']       = $lats;
     $arr_return['data']['lons']       = $lons;
