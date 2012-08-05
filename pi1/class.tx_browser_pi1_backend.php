@@ -206,7 +206,7 @@ class tx_browser_pi1_backend
     $str_prompt = $this->evaluate_pluginInit( $arr_pluginConf );
     if( $str_prompt )
     {
-      return $str_prompt;
+      return $str_prompt . $str_prompt_inCaseOfAnError;
     }
       // RETURN : Init isn't proper
 
@@ -232,7 +232,7 @@ class tx_browser_pi1_backend
           </div>
         </div>
         ';
-      return $str_prompt;
+      return $str_prompt . $str_prompt_inCaseOfAnError;
     }
       // RETURN plugin isn't never saved
 
@@ -251,7 +251,7 @@ class tx_browser_pi1_backend
           </div>
         </div>
         ';
-      return $str_prompt . $str_prompt_info_tutorialAndForum;
+      return $str_prompt . $str_prompt_inCaseOfAnError . $str_prompt_info_tutorialAndForum;
     }
       // RETURN TypoScript static template isn't included
 
@@ -270,7 +270,7 @@ class tx_browser_pi1_backend
           </div>
         </div>
         ';
-      return $str_prompt . $str_prompt_info_tutorialAndForum;
+      return $str_prompt . $str_prompt_inCaseOfAnError . $str_prompt_info_tutorialAndForum;
     }
       // RETURN There isn't any view configured
 
@@ -289,7 +289,7 @@ class tx_browser_pi1_backend
           </div>
         </div>
         ';
-      return $str_prompt . $str_prompt_info_tutorialAndForum;
+      return $str_prompt . $str_prompt_inCaseOfAnError . $str_prompt_info_tutorialAndForum;
     }
       // RETURN There isn't any record storage page
 
@@ -297,7 +297,7 @@ class tx_browser_pi1_backend
     $str_prompt = $this->evaluate_pluginAjaxPageObjectII( $arr_pluginConf );
     if( $str_prompt )
     {
-      return $str_prompt . $str_prompt_info_tutorialAndForum;
+      return $str_prompt . $str_prompt_inCaseOfAnError . $str_prompt_info_tutorialAndForum;
     }
       // RETURN : AJAX page object II isn't proper
 
@@ -305,7 +305,7 @@ class tx_browser_pi1_backend
     $str_prompt = $this->evaluate_pluginCsvObject( $arr_pluginConf );
     if( $str_prompt )
     {
-      return $str_prompt . $str_prompt_info_tutorialAndForum;
+      return $str_prompt . $str_prompt_inCaseOfAnError . $str_prompt_info_tutorialAndForum;
     }
       // RETURN : There isn't any CSV page object
 
@@ -313,7 +313,7 @@ class tx_browser_pi1_backend
     $str_prompt = $this->evaluate_pluginMapObject( );
     if( $str_prompt )
     {
-      return $str_prompt . $str_prompt_info_tutorialAndForum;
+      return $str_prompt . $str_prompt_inCaseOfAnError . $str_prompt_info_tutorialAndForum;
     }
       // RETURN : There isn't any map page object
 
