@@ -1281,6 +1281,13 @@ class tx_browser_pi1_map
       // FOREACH row
 
 //var_dump( __METHOD__, __LINE__, $mapMarkers );    
+    if( $this->pObj->b_drs_map )
+    {
+      $prompt = 'JSON array: ' . t3lib_div::view_array( $mapMarkers );
+      t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+      $prompt = 'If you have an unexpected effect in your map, please check the JSON array from above!';
+      t3lib_div :: devLog( '[HELP/MAP] ' . $prompt , $this->pObj->extKey, 1 );
+    }
     $arr_return['data']['mapMarkers'] = $mapMarkers;
     $arr_return['data']['lats']       = $lats;
     $arr_return['data']['lons']       = $lons;
