@@ -574,6 +574,8 @@ plugin.tx_browser_pi1 {
         }
       }
       marker {
+          // Each item will be a part of the current record while runtime. You can create your own item in the system section
+        addToCData =
         addToCData {
           system {
               // typolink parameter
@@ -638,6 +640,8 @@ plugin.tx_browser_pi1 {
             }
           }
         }
+          // HTML code snippets and JSS code snippets. The properties correspondents with the markers of the HTML marker map
+        snippets =
         snippets {
           html {
             categories {
@@ -816,6 +820,8 @@ plugin.tx_browser_pi1 {
             }
           }
         }
+          // Values, which will set while runtime.
+        variables =
         variables {
           dynamic {
             css_mapHeight = TEXT
