@@ -91,6 +91,41 @@
         <p style="font-weight:bold;padding:1em 0;">
           The TYPO3-Browser project is sponsored by:
         </p>
+        <a href="http://www.dreigorillas.de/"
+          alt="Drei Gorillas, Bonn/Germany, sponsers the TYPO3-Browser project"
+          title="Drei Gorillas, Bonn/Germany, sponsers the TYPO3-Browser project"
+          target="_blank">
+          <img src="../../../../typo3conf/ext/browser/lib/icons/drei-gorillas_20130930.jpg"
+            width="120"
+            height="90"
+            alt="Drei Gorillas, Bonn/Germany, sponsers the TYPO3-Browser project" /></a>
+        &nbsp;&nbsp;
+        <a href="http://r-system.de/"
+          alt="r-system, Hannover/Germany, sponsers the TYPO3-Browser project"
+          title="r-system, Hannover/Germany, sponsers the TYPO3-Browser project"
+          target="_blank">
+          <img src="../../../../typo3conf/ext/browser/lib/icons/r-sytem.de_20130930.jpg"
+            width="120"
+            height="90"
+            alt="r-system, Hannover/Germany, sponsers the TYPO3-Browser project" /></a>
+        &nbsp;&nbsp;
+        <a href="http://lieska.net/"
+          alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsers the TYPO3-Browser project"
+          title="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsers the TYPO3-Browser project"
+          target="_blank">
+          <img src="../../../../typo3conf/ext/browser/lib/icons/Lieska_Tuotanto_Oy_130501_01.jpg"
+            width="120"
+            height="90"
+            alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsers the TYPO3-Browser project" /></a>
+        &nbsp;&nbsp;
+        <a href="http://freemedia.ch/"
+          alt="Freemedia Medien & Verlag, Bern/Switzerland, sponsers the TYPO3-Browser project"
+          title="Freemedia Medien & Verlag, Bern/Switzerland, sponsers the TYPO3-Browser project"
+          target="_blank">
+          <img src="../../../../typo3conf/ext/browser/lib/icons/freemedia.ch.20130301.gif"
+            width="120"
+            height="90"
+            alt="Freemedia Medien & Verlag, Bern/Switzerland, sponsers the TYPO3-Browser project" /></a>
         <p style="padding:0 0 1em 0;">
           You like to subsidise the TYPO3-Browser project?
           <a href="http://typo3-browser.de/en/sponsoring/"
@@ -100,38 +135,6 @@
             target="_blank">
             Further information</a>.
         </p>
-        <a href="http://www.dreigorillas.de/"
-          alt="Drei Gorillas, Bonn/Germany, sponsers the TYPO3-Browser project"
-          title="Drei Gorillas, Bonn/Germany, sponsers the TYPO3-Browser project"
-          target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/drei-gorillas_20130930.jpg"
-            width="120"
-            height="90"
-            alt="Drei Gorillas, Bonn/Germany, sponsers the TYPO3-Browser project" /></a>
-        <a href="http://r-system.de/"
-          alt="r-system, Hannover/Germany, sponsers the TYPO3-Browser project"
-          title="r-system, Hannover/Germany, sponsers the TYPO3-Browser project"
-          target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/r-sytem.de_20130930.jpg"
-            width="120"
-            height="90"
-            alt="r-system, Hannover/Germany, sponsers the TYPO3-Browser project" /></a>
-        <a href="http://lieska.net/"
-          alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsers the TYPO3-Browser project"
-          title="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsers the TYPO3-Browser project"
-          target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/Lieska_Tuotanto_Oy_130501_01.jpg"
-            width="120"
-            height="90"
-            alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsers the TYPO3-Browser project" /></a>
-        <a href="http://freemedia.ch/"
-          alt="Freemedia Medien & Verlag, Bern/Switzerland, sponsers the TYPO3-Browser project"
-          title="Freemedia Medien & Verlag, Bern/Switzerland, sponsers the TYPO3-Browser project"
-          target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/freemedia.ch.20130301.gif"
-            width="120"
-            height="90"
-            alt="Freemedia Medien & Verlag, Bern/Switzerland, sponsers the TYPO3-Browser project" /></a>
         <a href="http://typo3-browser.de/en/sponsoring/"
           alt="Your logo with your URL. 120 x 90 pixel."
           title="Your logo with your URL. 120 x 90 pixel."
@@ -227,6 +230,41 @@
         <p style="font-weight:bold;padding:1em 0;">
           Der Browser - TYPO3 ohne PHP - wird gesponsert von:
         </p>
+        <a href="http://www.dreigorillas.de/"
+          alt="Drei Gorillas, Bonn/Germany, sponsert das TYPO3-Browser-Projekt"
+          title="Drei Gorillas, Bonn/Germany, sponsert das TYPO3-Browser-Projekt"
+          target="_blank">
+          <img src="../../../../typo3conf/ext/browser/lib/icons/drei-gorillas_20130930.jpg"
+            width="120"
+            height="90"
+            alt="Drei Gorillas, Bonn/Germany, sponsert das TYPO3-Browser-Projekt" /></a>
+        &nbsp;&nbsp;
+        <a href="http://r-system.de/"
+          alt="r-system, Hannover/Germany, sponsert das TYPO3-Browser-Projekt"
+          title="r-system, Hannover/Germany, sponsert das TYPO3-Browser-Projekt"
+          target="_blank">
+          <img src="../../../../typo3conf/ext/browser/lib/icons/r-sytem.de_20130930.jpg"
+            width="120"
+            height="90"
+            alt="r-system, Hannover/Germany, sponsert das TYPO3-Browser-Projekt" /></a>
+        &nbsp;&nbsp;
+        <a href="http://lieska.net/"
+          alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsert das TYPO3-Browser-Projekt"
+          title="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsert das TYPO3-Browser-Projekt"
+          target="_blank">
+          <img src="../../../../typo3conf/ext/browser/lib/icons/Lieska_Tuotanto_Oy_130501_01.jpg"
+            width="120"
+            height="90"
+            alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsert das TYPO3-Browser-Projekt" /></a>
+        &nbsp;&nbsp;
+        <a href="http://freemedia.ch/"
+          alt="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt"
+          title="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt"
+          target="_blank">
+          <img src="../../../../typo3conf/ext/browser/lib/icons/freemedia.ch.20130301.gif"
+            width="120"
+            height="90"
+            alt="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt" /></a>
         <p style="padding:0 0 1em 0;">
           Du m&ouml;chtest das TYPO3-Browser-Projekt finanziell unterst&uuml;tzen?
           <a href="http://typo3-browser.de/sponsoring/" 
@@ -236,38 +274,6 @@
             target="_blank">
             Mehr Informationen</a>.
         </p>
-        <a href="http://www.dreigorillas.de/"
-          alt="Drei Gorillas, Bonn/Germany, sponsert das TYPO3-Browser-Projekt"
-          title="Drei Gorillas, Bonn/Germany, sponsert das TYPO3-Browser-Projekt"
-          target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/drei-gorillas_20130930.jpg"
-            width="120"
-            height="90"
-            alt="Drei Gorillas, Bonn/Germany, sponsert das TYPO3-Browser-Projekt" /></a>
-        <a href="http://r-system.de/"
-          alt="r-system, Hannover/Germany, sponsert das TYPO3-Browser-Projekt"
-          title="r-system, Hannover/Germany, sponsert das TYPO3-Browser-Projekt"
-          target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/r-sytem.de_20130930.jpg"
-            width="120"
-            height="90"
-            alt="r-system, Hannover/Germany, sponsert das TYPO3-Browser-Projekt" /></a>
-        <a href="http://lieska.net/"
-          alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsert das TYPO3-Browser-Projekt"
-          title="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsert das TYPO3-Browser-Projekt"
-          target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/Lieska_Tuotanto_Oy_130501_01.jpg"
-            width="120"
-            height="90"
-            alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsert das TYPO3-Browser-Projekt" /></a>
-        <a href="http://freemedia.ch/"
-          alt="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt"
-          title="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt"
-          target="_blank">
-          <img src="../../../../typo3conf/ext/browser/lib/icons/freemedia.ch.20130301.gif"
-            width="120"
-            height="90"
-            alt="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt" /></a>
         <a href="http://typo3-browser.de/sponsoring/" 
           alt="Dein Logo mit Deiner URL. 120 x 90 Pixel."
           title="Dein Logo mit Deiner URL. 120 x 90 Pixel."
