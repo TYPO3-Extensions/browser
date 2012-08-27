@@ -1311,8 +1311,7 @@ class tx_browser_pi1_filter_4x {
     $this->markerArray['###TITLE###']         = $this->replace_itemTitle( '###TITLE###' );
     $this->markerArray['###URL###']           = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
     $this->markerArray['###ITEM_SELECTED###'] = $this->replace_itemSelected( $conf_array, $uid, $value, '###ITEM_SELECTED###' );
-    #$this->markerArray['###TABLE.FIELD###']   = $table . '[' . $field . ']';
-    // 4.1.7
+      // 4.1.7, dwildt, 1+
     $this->markerArray['###TABLE.FIELD###']   = $this->nicePiVar['key_piVar'];
 
       // 3.9.20:  Be careful: Method need 10 milliseconds. Can be a 
@@ -1342,13 +1341,13 @@ class tx_browser_pi1_filter_4x {
       // 3.9.20
       // 3.9.20:  Be careful: Method need 10 milliseconds. Can be a 
       //          performance problem in case of a lot records!
+      
       // SWITCH $conf_name
       // Set values
     switch( $conf_name )
     {
       case( 'CHECKBOX' ) :
       case( 'RADIOBUTTONS' ) :
-var_dump( __METHOD__, __LINE__, $item, $this->markerArray );
         break;
       case( 'CATEGORY_MENU' ) :
       case( 'SELECTBOX' ) :
@@ -1356,6 +1355,7 @@ var_dump( __METHOD__, __LINE__, $item, $this->markerArray );
         // Do nothing
         break;
     }
+var_dump( __METHOD__, __LINE__, $item, $this->markerArray['hits'] );
       // SWITCH $conf_name
 
     $item = $this->pObj->cObj->substituteMarkerArray( $item, $this->markerArray );
