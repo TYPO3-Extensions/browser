@@ -642,10 +642,6 @@ class tx_browser_pi1_filter_4x {
 
       // Set class var $rows
     $this->rows = $rows;
-if( $this->curr_tableField == 'tx_greencars_engine.title' )
-{
-  $this->pObj->dev_var_dump( $this->rows );
-}
 
       // Localise the rows
     $this->localise( );
@@ -1914,6 +1910,10 @@ if( $this->curr_tableField == 'tx_greencars_engine.title' )
       // 2. step: all filter items, hits will be taken from $rows
     $arr_return = $this->get_rowsAllItems( $rows );
       // 2. step: all filter items, hits will be taken from $rows
+if( $this->curr_tableField == 'tx_greencars_engine.title' )
+{
+  $this->pObj->dev_var_dump( $arr_return );
+}
 
     return $arr_return;
   }
