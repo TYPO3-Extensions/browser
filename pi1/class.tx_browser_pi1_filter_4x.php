@@ -4643,10 +4643,10 @@ class tx_browser_pi1_filter_4x {
     }
       // RETURN maxItemsPerHtmlRow is false
 
-//if( $this->curr_tableField == 'tx_greencars_engine.title' )
-//{
-//  $this->pObj->dev_var_dump( $item );
-//}
+if( $this->curr_tableField == 'tx_greencars_engine.title' )
+{
+  $this->pObj->dev_var_dump( $this->itemsPerHtmlRow, $this->rows );
+}
     $maxItemsPerHtmlRow = $this->itemsPerHtmlRow['maxItemsPerHtmlRow'];
     $currItemNumber     = $this->itemsPerHtmlRow['currItemNumber'];
     if ( $currItemNumber >= ( $maxItemsPerHtmlRow - 1 ) )
