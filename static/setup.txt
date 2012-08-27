@@ -1827,6 +1827,7 @@ plugin.tx_browser_pi1 {
                 field = value
                 htmlSpecialChars  = 1
                 crop              = 60 | ... | 1
+                noTrimWrap = |<input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>  ||
               }
                 // Value in case of no value
               21 = TEXT
@@ -1838,6 +1839,7 @@ plugin.tx_browser_pi1 {
                   negate  = 1
                 }
                 data = LLL:EXT:browser/pi1/locallang.xml:label_checkbox_noValue
+                noTrimWrap = |<input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>  ||
               }
                 // Hits
               30 = TEXT
@@ -1867,7 +1869,6 @@ plugin.tx_browser_pi1 {
                   }
                 }
               }
-              noTrimWrap = |<input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>  ||
             }
 
           }
