@@ -2,6 +2,14 @@
   120827
   Bugfixes
   * #00000: Plugin check: Fatal error, if plugin wasn't never saved
+  * #00000: Checkbox without input-tag
+            Effected file: static/setup.txt
+  * #00000: Checkbox
+            * items without proper line breaks
+            * items without a name
+            * items without hits
+            Effected file: 
+
   Improvements
   * #00000: Plugin check: record storage page and access to root level records
 

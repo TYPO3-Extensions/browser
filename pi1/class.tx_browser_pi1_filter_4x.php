@@ -875,11 +875,11 @@ class tx_browser_pi1_filter_4x {
     $this->markerArray['###TREEVIEW###'] = 1;
 
       // Get table and field
-    list( $table, $field ) = explode( '.', $this->curr_tableField );
+    //list( $table, $field ) = explode( '.', $this->curr_tableField );
 
       // Get TS filter configuration
     //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    //$conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
       // Needed for tree_setOneDim( )
     $this->arr_rowsTablefield = $this->rows;
@@ -1342,6 +1342,24 @@ class tx_browser_pi1_filter_4x {
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
       // 3.9.20
+      // 3.9.20:  Be careful: Method need 10 milliseconds. Can be a 
+      //          performance problem in case of a lot records!
+      // SWITCH $conf_name
+      // Set values
+    switch( $conf_name )
+    {
+      case( 'CHECKBOX' ) :
+      case( 'RADIOBUTTONS' ) :
+var_dump( __METHOD__, __LINE__, $item, $this->markerArray );
+        break;
+      case( 'CATEGORY_MENU' ) :
+      case( 'SELECTBOX' ) :
+      default :
+        // Do nothing
+        break;
+    }
+      // SWITCH $conf_name
+
     $item = $this->pObj->cObj->substituteMarkerArray( $item, $this->markerArray );
     
       // 3.9.20: Coded is moved from above
@@ -2003,6 +2021,7 @@ class tx_browser_pi1_filter_4x {
         break;
           // local table
     }
+    unset( $table );
       // SWITCH localTable versus foreignTable
 
       // RETURN rows
@@ -2881,6 +2900,7 @@ class tx_browser_pi1_filter_4x {
         die( $prompt );
         break;
     }
+    unset( $table );
       // SWITCH
 
 
@@ -3831,7 +3851,7 @@ class tx_browser_pi1_filter_4x {
  * @param	integer		$uid_parent : Parent uid of the current record - for recursive calls.
  * @return	void		Result will be allocated to the class var $tmpOneDim
  * @internal        #32223, 120119, dwildt+
- * @version 3.9.16
+ * @version 4.1.7
  * @since   3.9.9
  */
   private function tree_setOneDimOneRow( $uid_parent )
@@ -3840,7 +3860,7 @@ class tx_browser_pi1_filter_4x {
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
-    foreach( $this->arr_rowsTablefield as $key => $row )
+    foreach( $this->arr_rowsTablefield as $row )
     {
       $tsPath   = $uid_parent . '.' ;
       $this->tmpOneDim[$tsPath . 'uid']   = $row[$this->uidField];
@@ -4793,6 +4813,7 @@ class tx_browser_pi1_filter_4x {
     }
       // SWITCH behind flag
 
+    unset( $uid );
     return $value;
   }
 
