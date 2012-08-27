@@ -1014,7 +1014,6 @@ class tx_browser_pi1_filter_4x {
       case ( 'CATEGORY_MENU' ) :
       case ( 'RADIOBUTTONS' ) :
       default :
-var_dump( __METHOD__, __LINE__, $conf_name, $conf_array['wrap.']['object'] );
         $size      = null;
         $multiple  = null;
         break;
@@ -1339,6 +1338,10 @@ var_dump( __METHOD__, __LINE__, $conf_name, $conf_array['wrap.']['object'] );
       // Get the COA configuration for the value
 
     $this->cObjData_setFlagDisplayInCaseOfNoCounting( );
+if( $this->curr_tableField == 'tx_greencars_engine.title' )
+{
+  var_dump( __METHOD__, __LINE__, $cObj_conf );
+}
 
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
