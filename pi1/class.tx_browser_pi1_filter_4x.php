@@ -1914,13 +1914,13 @@ class tx_browser_pi1_filter_4x {
         return $arr_return;
       }
       $rows = $arr_return['data']['rows'];
-$this->pObj->dev_var_dump( $arr_return );
         // 1. step: filter items with one hit at least
     }
       // Hits should counted
 
       // 2. step: all filter items, hits will be taken from $rows
     $arr_return = $this->get_rowsAllItems( $rows );
+$this->pObj->dev_var_dump( $arr_return );
       // 2. step: all filter items, hits will be taken from $rows
 
     return $arr_return;
