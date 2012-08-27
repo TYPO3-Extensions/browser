@@ -113,7 +113,7 @@ class tx_browser_pi1_backend
  *
  * Tab [evaluate]
  *
- * @return	string		$str_prompt: HTML prompt
+ * @return    string        $str_prompt: HTML prompt
  * @version 4.1.5
  * @since 4.0.0
  */
@@ -143,9 +143,9 @@ class tx_browser_pi1_backend
  *
  * Tab [evaluate]
  *
- * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
- * @param	array		$obj_TCEform:     Current TCE form object
- * @return	string		$str_prompt: HTML prompt
+ * @param    array        $arr_pluginConf:  Current plugin/flexform configuration
+ * @param    array        $obj_TCEform:     Current TCE form object
+ * @return    string        $str_prompt: HTML prompt
  * @version 4.1.5
  * @since 4.0.0
  */
@@ -356,7 +356,7 @@ class tx_browser_pi1_backend
  *
  * Tab [evaluate]
  *
- * @return	string		$str_prompt: HTML prompt
+ * @return    string        $str_prompt: HTML prompt
  * @version 4.1.5
  * @since 4.1.5
  */
@@ -425,13 +425,21 @@ class tx_browser_pi1_backend
  *
  * Tab [evaluate]
  *
- * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
- * @return	string		$str_prompt: HTML prompt
+ * @param    array        $arr_pluginConf:  Current plugin/flexform configuration
+ * @return    string        $str_prompt: HTML prompt
  * @version 4.1.5
  * @since 4.0.0
  */
   public function evaluate_pluginCsvObject( $arr_pluginConf )
   {
+      // 4.1.7, dwildt, 5+
+      // RETURN: plugin isn't never saved
+    if( ! $arr_pluginConf['row']['pi_flexform'] )
+    {
+      return;
+    }
+      // 4.1.7, dwildt, 5+
+    
       // Is CSV export enabled?
     $bool_CSVenabled  = false;
     $arr_xml          = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
@@ -512,9 +520,9 @@ class tx_browser_pi1_backend
  *
  * Tab [evaluate]
  *
- * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
- * @param	array		$obj_TCEform:     Current TCE form object
- * @return	string		$str_prompt: HTML prompt
+ * @param    array        $arr_pluginConf:  Current plugin/flexform configuration
+ * @param    array        $obj_TCEform:     Current TCE form object
+ * @return    string        $str_prompt: HTML prompt
  * @version 4.1.5
  * @since 4.1.5
  */
@@ -540,15 +548,24 @@ class tx_browser_pi1_backend
 /**
  * evaluate_pluginInitAjaxI( ): Init the class var $boolAjaxI
  *
- * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
- * @return	string
- * @version 4.1.5
+ * @param    array        $arr_pluginConf:  Current plugin/flexform configuration
+ * @return    string
+ * @version 4.1.7
  * @since 4.1.5
  */
   public function evaluate_pluginInitAjaxI( $arr_pluginConf )
   {
 
     $this->boolAjaxI = false;
+    
+      // 4.1.7, dwildt, 5+
+      // RETURN: plugin isn't never saved
+    if( ! $arr_pluginConf['row']['pi_flexform'] )
+    {
+      return;
+    }
+      // 4.1.7, dwildt, 5+
+    
     //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
     $arr_xml = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
     //var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
@@ -588,8 +605,8 @@ class tx_browser_pi1_backend
 /**
  * evaluate_pluginInitRecordBrowser( ): Init the class var $boolRecordBrowser
  *
- * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
- * @return	string
+ * @param    array        $arr_pluginConf:  Current plugin/flexform configuration
+ * @return    string
  * @version 4.1.5
  * @since 4.1.5
  */
@@ -597,6 +614,15 @@ class tx_browser_pi1_backend
   {
 
     $this->boolRecordBrowser = false;
+
+      // 4.1.7, dwildt, 5+
+      // RETURN: plugin isn't never saved
+    if( ! $arr_pluginConf['row']['pi_flexform'] )
+    {
+      return;
+    }
+      // 4.1.7, dwildt, 5+
+    
     //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
     $arr_xml = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
     //var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
@@ -645,8 +671,8 @@ class tx_browser_pi1_backend
  *
  * Tab [evaluate]
  *
- * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
- * @return	string		$str_prompt: HTML prompt
+ * @param    array        $arr_pluginConf:  Current plugin/flexform configuration
+ * @return    string        $str_prompt: HTML prompt
  * @version 4.1.5
  * @since 4.0.0
  */
@@ -762,9 +788,9 @@ class tx_browser_pi1_backend
  *
  * Tab [extend]
  *
- * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
- * @param	array		$obj_TCEform:     Current TCE form object
- * @return	string		$str_prompt: HTML prompt or HTML prompt and TCE select form with calendar plugins
+ * @param    array        $arr_pluginConf:  Current plugin/flexform configuration
+ * @param    array        $obj_TCEform:     Current TCE form object
+ * @return    string        $str_prompt: HTML prompt or HTML prompt and TCE select form with calendar plugins
  * @version 4.1.5
  * @since 4.0.0
  */
@@ -972,9 +998,9 @@ class tx_browser_pi1_backend
  *
  * Tab [extend]
  *
- * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
- * @param	array		$obj_TCEform:     Current TCE form object
- * @return	string		$str_prompt: HTML prompt or HTML prompt and TCE select form with calendar plugins
+ * @param    array        $arr_pluginConf:  Current plugin/flexform configuration
+ * @param    array        $obj_TCEform:     Current TCE form object
+ * @return    string        $str_prompt: HTML prompt or HTML prompt and TCE select form with calendar plugins
  * @version 4.0.0
  * @since 4.0.0
  */
@@ -1237,9 +1263,9 @@ class tx_browser_pi1_backend
  *
  * Tab [extend]
  *
- * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
- * @param	array		$obj_TCEform:     Current TCE form object
- * @return	string		$str_prompt: HTML prompt or HTML prompt and TCE select form with calendar plugins
+ * @param    array        $arr_pluginConf:  Current plugin/flexform configuration
+ * @param    array        $obj_TCEform:     Current TCE form object
+ * @return    string        $str_prompt: HTML prompt or HTML prompt and TCE select form with calendar plugins
  * @version 4.1.5
  * @since 4.0.0
  */
@@ -1525,9 +1551,9 @@ class tx_browser_pi1_backend
  *
  * Tab [extend]
  *
- * @param	array		$arr_pluginConf:  Current plugin/flexform configuration
- * @param	array		$obj_TCEform:     Current TCE form object
- * @return	string		$str_prompt: HTML prompt or HTML prompt and TCE select form with calendar plugins
+ * @param    array        $arr_pluginConf:  Current plugin/flexform configuration
+ * @param    array        $obj_TCEform:     Current TCE form object
+ * @return    string        $str_prompt: HTML prompt or HTML prompt and TCE select form with calendar plugins
  * @version 4.1.5
  * @since 4.0.0
  */
@@ -1805,8 +1831,8 @@ class tx_browser_pi1_backend
  * sDef_getArrViewsList: Get data query (and andWhere) for all list views of the current plugin.
  * Tab [General/sDEF]
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	array		with the names of the views list
+ * @param    array        $arr_pluginConf: Current plugin/flexform configuration
+ * @return    array        with the names of the views list
  * @version 4.1.5
  * @since 3.6.1
  */
@@ -1971,8 +1997,8 @@ class tx_browser_pi1_backend
   /**
  * socialmedia_getArrBookmarks: Get bookmarks for flexform. Tab [Socialmedia]
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	array		with the bookmarks
+ * @param    array        $arr_pluginConf: Current plugin/flexform configuration
+ * @return    array        with the bookmarks
  * @version 4.1.5
  * @since 3.6.1
  */
@@ -2033,8 +2059,8 @@ class tx_browser_pi1_backend
  * templating_getArrDataQuery: Get data query (and andWhere) for all list views of the current plugin.
  * Tab [Templating]
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	array		with the bookmarks
+ * @param    array        $arr_pluginConf: Current plugin/flexform configuration
+ * @return    array        with the bookmarks
  * @version 3.6.1
  * @since 3.6.1
  */
@@ -2098,8 +2124,8 @@ class tx_browser_pi1_backend
  * templating_getExtensionTemplates: Get templates from the browser and third party extensions
  * Tab [Templating]
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	array		$arr_pluginConf: Extended with the templates
+ * @param    array        $arr_pluginConf: Current plugin/flexform configuration
+ * @return    array        $arr_pluginConf: Extended with the templates
  * @version 3.6.1
  * @since 3.6.1
  */
@@ -2156,8 +2182,8 @@ class tx_browser_pi1_backend
  * templating_get_jquery_ui: Get the list of jquery uis for the flexform. Tab [Templating]
  *                            * Feature #28562
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	array		with the uis
+ * @param    array        $arr_pluginConf: Current plugin/flexform configuration
+ * @return    array        with the uis
  * @version 3.9.17
  * @since 3.7.0
  */
@@ -2231,7 +2257,7 @@ class tx_browser_pi1_backend
   /**
  * getLL(): Get the locallang for class use out of an XML file
  *
- * @return	array		Array of the locallang data
+ * @return    array        Array of the locallang data
  * @version 3.9.14
  * @since 3.0.0
  */
@@ -2277,8 +2303,8 @@ class tx_browser_pi1_backend
   /**
  * init(): Initiate this class.
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	boolean		TRUE: success. FALSE: error.
+ * @param    array        $arr_pluginConf: Current plugin/flexform configuration
+ * @return    boolean        TRUE: success. FALSE: error.
  * @since 3.4.5
  * @version 3.4.5
  */
@@ -2319,8 +2345,8 @@ class tx_browser_pi1_backend
   /**
  * init_pageObj(): Initiate an page object.
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	boolean		FALSE
+ * @param    array        $arr_pluginConf: Current plugin/flexform configuration
+ * @return    boolean        FALSE
  * @since 3.4.5
  * @version 3.4.5
  */
@@ -2351,8 +2377,8 @@ class tx_browser_pi1_backend
   /**
  * init_pageUid(): Initiate the page uid.
  *
- * @param	array		$arr_pluginConf: Current plugin/flexform configuration
- * @return	boolean		FALSE
+ * @param    array        $arr_pluginConf: Current plugin/flexform configuration
+ * @return    boolean        FALSE
  * @since 3.4.5
  * @version 3.4.5
  */
@@ -2401,8 +2427,8 @@ class tx_browser_pi1_backend
   /**
  * init_tsObj(): Initiate the TypoScript of the current page.
  *
- * @param	array		$arr_rows_of_all_pages_inRootLine: Agregate the TypoScript of all pages in the rootline
- * @return	boolean		FALSE
+ * @param    array        $arr_rows_of_all_pages_inRootLine: Agregate the TypoScript of all pages in the rootline
+ * @return    boolean        FALSE
  * @since 3.4.5
  * @version 3.4.5
  */

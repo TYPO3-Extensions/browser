@@ -1,3 +1,8 @@
+4.1.7
+  120827
+  Bugfixes
+  * #00000: Plugin-Check: Fatal error, if plugin wasn't never saved
+
 4.1.6
   120822
   Update
