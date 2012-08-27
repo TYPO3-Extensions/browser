@@ -4595,7 +4595,8 @@ class tx_browser_pi1_filter_4x {
     $this->itemsPerHtmlRow['rowEnd']              = $rowEnd;
     $this->itemsPerHtmlRow['noItemValue']         = $noItemValue;
     $this->itemsPerHtmlRow['currRowNumber']       = 0;
-    $this->itemsPerHtmlRow['currItemNumberInRow']      = 0;
+    $this->itemsPerHtmlRow['currItemNumberAbsolute'] = 0;
+    $this->itemsPerHtmlRow['currItemNumberInRow'] = 0;
 
     return;
   }
@@ -4620,6 +4621,7 @@ class tx_browser_pi1_filter_4x {
       // RETURN maxItemsPerHtmlRow is false
 
       // Increase item number
+    $this->itemsPerHtmlRow['currItemNumberAbsolute']++;
     $this->itemsPerHtmlRow['currItemNumberInRow']++;
   }
 
@@ -4647,8 +4649,15 @@ if( $this->curr_tableField == 'tx_greencars_engine.title' )
 {
   $this->pObj->dev_var_dump( $this->itemsPerHtmlRow, $this->rows );
 }
-    $maxItemsPerHtmlRow = $this->itemsPerHtmlRow['maxItemsPerHtmlRow'];
-    $currItemNumber     = $this->itemsPerHtmlRow['currItemNumberInRow'];
+    $maxItemsPerHtmlRow     = $this->itemsPerHtmlRow['maxItemsPerHtmlRow'];
+    $currItemNumber         = $this->itemsPerHtmlRow['currItemNumberInRow'];
+    $currItemNumberAbsolute = $this->itemsPerHtmlRow['currItemNumberAbsolute'];
+
+    if ( $currItemNumberAbsolute >= count( $this->rows ) )
+    {
+      return $item;
+    }
+
     if ( $currItemNumber >= ( $maxItemsPerHtmlRow - 1 ) )
     {
       $item         = $item . PHP_EOL .
