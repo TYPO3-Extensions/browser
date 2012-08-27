@@ -1305,17 +1305,13 @@ class tx_browser_pi1_filter_4x {
       t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS :TODO:
+    
     $this->markerArray['###CLASS###']         = $this->replace_itemClass( $conf_array, '###CLASS###' );
-      // Item class
-
-      // Item style
     $this->markerArray['###STYLE###']         = $this->replace_itemStyle( $conf_array, '###STYLE###' );
-      // Item title
     $this->markerArray['###TITLE###']         = $this->replace_itemTitle( '###TITLE###' );
-      // Item URL
     $this->markerArray['###URL###']           = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
-      // Item selected
     $this->markerArray['###ITEM_SELECTED###'] = $this->replace_itemSelected( $conf_array, $uid, $value, '###ITEM_SELECTED###' );
+    $this->markerArray['###TABLE.FIELD###']   = '###' . strtoupper( $this->curr_tableField ) . '###';
 
       // 3.9.20:  Be careful: Method need 10 milliseconds. Can be a 
       //          performance problem in case of a lot records!
