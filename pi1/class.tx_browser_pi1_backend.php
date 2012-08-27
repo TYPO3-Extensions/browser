@@ -297,25 +297,14 @@ class tx_browser_pi1_backend
     }
       // RETURN : There isn't any map page object
 
-      // RETURN There isn't any record storage page
-    if( empty ( $arr_pluginConf['row']['pages'] ) )
+      // RETURN : There isn't any record storage page and any permission on root level
+    $str_prompt = $this->evaluate_pluginRecordStoragePage( $arr_pluginConf );
+    if( $str_prompt )
     {
-      $str_prompt = $str_prompt . '
-        <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
-          <div class="message-body">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.warn.no_record_storage_pid') . '
-          </div>
-        </div>
-        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-          <div class="message-body">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_record_storage_pid') . '
-          </div>
-        </div>
-        ';
-      return $str_prompt . $str_prompt_info_tutorialAndForum;
+      return $str_prompt . $str_prompt_inCaseOfAnError . $str_prompt_info_tutorialAndForum;
     }
-      // RETURN There isn't any record storage page
-    
+      // RETURN : There isn't any record storage page and any permission on root level
+
       // Evaluation result: default message in case of success
     $str_prompt = '
       <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
@@ -772,6 +761,89 @@ class tx_browser_pi1_backend
       // RETURN OK;
     return;
   }
+
+
+
+/**
+ * evaluate_pluginRecordStoragePage( ): 
+ *
+ * @param    array        $arr_pluginConf:  Current plugin/flexform configuration
+ * @return    string
+ * @version 4.1.5
+ * @since 4.1.5
+ */
+  public function evaluate_pluginRecordStoragePage( $arr_pluginConf )
+  {
+      // 4.1.7, dwildt, 5+
+      // RETURN: plugin isn't never saved
+    if( ! $arr_pluginConf['row']['pi_flexform'] )
+    {
+      return;
+    }
+      // 4.1.7, dwildt, 5+
+    
+      // RETURN : Record storage page is configured
+    if( ! empty ( $arr_pluginConf['row']['pages'] ) )
+    {
+      return;
+      
+    }
+      // RETURN : Record storage page is configured
+
+    //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
+    $arr_xml = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
+    var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
+    $record_browser = $arr_xml['data']['viewSingle']['lDEF']['record_browser']['vDEF'];
+
+    return;
+    
+      $str_prompt = '
+        <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.warn.no_record_storage_pid') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_record_storage_pid') . '
+          </div>
+        </div>
+        ';
+      return $str_prompt . $str_prompt_inCaseOfAnError . $str_prompt_info_tutorialAndForum;
+
+    //var_dump(__METHOD__, __LINE__, '$record_browser', $record_browser);
+    switch ($record_browser)
+    {
+      case ('disabled') :
+        $this->boolRecordBrowser = false;
+        return;
+        break;
+      case ('by_flexform') :
+        $this->boolRecordBrowser = true;
+        return;
+        break;
+      case ('ts') :
+        $this->boolRecordBrowser = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
+        return;
+        break;
+      default :
+        $str_prompt = '
+          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              BUG at ' . __METHOD__ . ' (line ' . __LINE__ . '): value in switch is undefined: "' . $record_browser . '".
+            </div>
+          </div>
+          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              The Browser team has to take care for a proper code!
+            </div>
+          </div>
+          ';
+        return $str_prompt;
+    }
+
+  }
+    
 
 
 
