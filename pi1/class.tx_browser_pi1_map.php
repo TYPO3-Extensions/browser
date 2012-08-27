@@ -102,8 +102,8 @@ class tx_browser_pi1_map
   /**
  * Constructor. The method initiate the parent object
  *
- * @param    object        The parent object
- * @return    void
+ * @param	object		The parent object
+ * @return	void
  */
   function __construct($pObj)
   {
@@ -129,8 +129,8 @@ class tx_browser_pi1_map
   /**
  * get_map( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
- * @param    string        $template: Current HTML template
- * @return    array        $template: Template with map marker
+ * @param	string		$template: Current HTML template
+ * @return	array		$template: Template with map marker
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -203,7 +203,7 @@ class tx_browser_pi1_map
   /**
  * init(): The method sets the globals $enabled and $confMap
  *
- * @return    void
+ * @return	void
  * @version 4.1.4
  * @since   3.9.6
  */
@@ -357,8 +357,8 @@ class tx_browser_pi1_map
   /**
  * initMainMarker( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
- * @param    string        $template: Current HTML template
- * @return    array        $template: Template with map marker
+ * @param	string		$template: Current HTML template
+ * @return	array		$template: Template with map marker
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -442,7 +442,7 @@ class tx_browser_pi1_map
   /**
  * set_typeNum( ):
  *
- * @return    void
+ * @return	void
  * @version 3.9.8
  * @since   3.9.8
  */
@@ -794,8 +794,8 @@ class tx_browser_pi1_map
   /**
  * renderMap( ): Set the marker ###MAP###, if the current template hasn't any map-marker
  *
- * @param    string        $pObj_template: current HTML template of the parent object
- * @return    array        $pObj_template: parent object template with map marker
+ * @param	string		$pObj_template: current HTML template of the parent object
+ * @return	array		$pObj_template: parent object template with map marker
  * @version 3.9.6
  * @since   3.9.6
  */
@@ -1313,6 +1313,7 @@ class tx_browser_pi1_map
     $arr_return['data']['lons']       = $lons;
     return $arr_return;
   }
+//var_dump( __METHOD__, __LINE__, json_encode( $series ) ); 
 
 
 
@@ -1615,8 +1616,8 @@ class tx_browser_pi1_map
   /**
  * renderMapMarkerSnippetsHtmlDynamic( $map_template ):
  *
- * @param    [type]        $$map_template: ...
- * @return    array
+ * @param	[type]		$$map_template: ...
+ * @return	array
  * @version 4.1.0
  * @since   4.1.0
  */
@@ -1633,8 +1634,8 @@ class tx_browser_pi1_map
   /**
  * renderMapMarkerSnippetsHtmlCategories( ):
  *
- * @param    [type]        $$map_template: ...
- * @return    array
+ * @param	[type]		$$map_template: ...
+ * @return	array
  * @version 4.1.4
  * @since   4.1.0
  */
@@ -1666,8 +1667,8 @@ class tx_browser_pi1_map
   /**
  * renderMapMarkerSnippetsJssDynamic( $map_template ):
  *
- * @param    [type]        $$map_template: ...
- * @return    array
+ * @param	[type]		$$map_template: ...
+ * @return	array
  * @version 4.1.0
  * @since   4.1.0
  */

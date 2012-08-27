@@ -404,9 +404,9 @@ class tx_browser_pi1 extends tslib_pibase {
   /**
  * main( ): Main method of your PlugIn
  *
- * @param	string		$content: The content of the PlugIn
- * @param	array		$conf: The PlugIn Configuration
- * @return	string		The content that should be displayed on the website
+ * @param    string        $content: The content of the PlugIn
+ * @param    array        $conf: The PlugIn Configuration
+ * @return    string        The content that should be displayed on the website
  * @version 3.9.8
  * @since   0.0.1
  */
@@ -1213,8 +1213,8 @@ class tx_browser_pi1 extends tslib_pibase {
  *
  * $param   integer   $level      : integer
  *
- * @param	[type]		$$level: ...
- * @return	array		$arr_return : with elements class, method, line and prompt
+ * @param    [type]        $$level: ...
+ * @return    array        $arr_return : with elements class, method, line and prompt
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1251,7 +1251,7 @@ class tx_browser_pi1 extends tslib_pibase {
  /**
   * Set the booleans for Warnings, Errors and DRS - Development Reporting System
   *
-  * @return	void
+  * @return    void
   * @version  3.9.14
   * @since    2.0.0
   */
@@ -1588,8 +1588,8 @@ class tx_browser_pi1 extends tslib_pibase {
  * dev_var_dump( ): var_dump the given content in the frontend
  *                  condition: current IP must be an element in the list of allowed IPs
  *
- * @param	mixed		$content : String or array for prompting in the frontend
- * @return	void
+ * @param    mixed        $content : String or array for prompting in the frontend
+ * @return    void
  * @version 3.9.11
  * @since   3.9.9
  */
@@ -1662,7 +1662,7 @@ class tx_browser_pi1 extends tslib_pibase {
   /**
  * Init the helper classes
  *
- * @return	void
+ * @return    void
  */
   private function require_classes()
   {
@@ -1833,7 +1833,7 @@ class tx_browser_pi1 extends tslib_pibase {
  * init_classVars( ): Set variables in the helper classes.
  *                    Start a script on some helper classes.
  *
- * @return	void
+ * @return    void
  * @version 3.9.9
  * @since   1.0.0
  */
@@ -2198,7 +2198,7 @@ class tx_browser_pi1 extends tslib_pibase {
  * get_typo3version( ): Get the current TYPO3 version, move it to an integer
  *                      and set the global $bool_typo3_43
  *
- * @return	void
+ * @return    void
  * @version 3.9.17
  * @since   2.0.0
  */
@@ -2241,7 +2241,7 @@ class tx_browser_pi1 extends tslib_pibase {
   /**
  * init_accessByIP( ):  Set the global $bool_accessByIP.
  *
- * @return	void
+ * @return    void
  * @version 3.9.8
  * @since   2.0.0
  */
@@ -2303,7 +2303,7 @@ class tx_browser_pi1 extends tslib_pibase {
  * timeTracking_init( ):  Init the timetracking object.
  *                        Set the global $startTime.
  *
- * @return	void
+ * @return    void
  * @version 3.9.8
  * @since   0.0.1
  */
@@ -2338,10 +2338,10 @@ class tx_browser_pi1 extends tslib_pibase {
  /**
   * timeTracking_log( ): Prompts a message in devLog with current run time in miliseconds
   *
-  * @param	integer		$debugTrailLevel  : level for the debug trail
-  * @param	string		$line             : current line in calling method
-  * @param	string		$prompt           : The prompt for devlog.
-  * @return	void
+  * @param    integer        $debugTrailLevel  : level for the debug trail
+  * @param    string        $line             : current line in calling method
+  * @param    string        $prompt           : The prompt for devlog.
+  * @return    void
   * @version 3.9.8
   * @since   0.0.1
   */
@@ -2408,9 +2408,9 @@ class tx_browser_pi1 extends tslib_pibase {
   * timeTracking_prompt( ):  Method checks, wether previous prompt was a
   *                          warning or an error. If yes the given prompt will loged by devLog
   *
-  * @param	integer		$debugTrailLevel  : level for the debug trail
-  * @param	string		$prompt: The prompt for devlog.
-  * @return	void
+  * @param    integer        $debugTrailLevel  : level for the debug trail
+  * @param    string        $prompt: The prompt for devlog.
+  * @return    void
   * @version 3.9.8
   * @since   3.9.8
   */
@@ -2455,7 +2455,7 @@ class tx_browser_pi1 extends tslib_pibase {
  * getTemplate( ):  Get (HTML) the content of the $template.
  *                  Handles error.
  *
- * @return	array		With element template
+ * @return    array        With element template
  * @version 3.9.8
  * @since   1.0.0
  */
