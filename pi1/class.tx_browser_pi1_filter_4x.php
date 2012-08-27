@@ -821,6 +821,8 @@ class tx_browser_pi1_filter_4x {
 
       // LOOP rows
     $this->row_number = 0;
+$this->pObj->dev_var_dump( $this->rows );
+    
     foreach( ( array ) $this->rows as $uid => $row )
     {
       $key    = $this->sql_filterFields[$this->curr_tableField]['value'];
@@ -1920,7 +1922,6 @@ class tx_browser_pi1_filter_4x {
 
       // 2. step: all filter items, hits will be taken from $rows
     $arr_return = $this->get_rowsAllItems( $rows );
-$this->pObj->dev_var_dump( $arr_return );
       // 2. step: all filter items, hits will be taken from $rows
 
     return $arr_return;
