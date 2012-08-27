@@ -821,7 +821,6 @@ class tx_browser_pi1_filter_4x {
 
       // LOOP rows
     $this->row_number = 0;
-$this->pObj->dev_var_dump( $this->rows );
     
     foreach( ( array ) $this->rows as $uid => $row )
     {
@@ -3280,6 +3279,7 @@ $this->pObj->dev_var_dump( $this->rows );
       // Add the field hits with the hits of the filter item
     $key    = $this->sql_filterFields[$this->curr_tableField]['hits'];
     $value  = $this->rows[$uid][$key];
+$this->pObj->dev_var_dump( $this->rows[$uid][$key] );
     $this->pObj->cObj->data['hits'] = $value;
 
       // Add the field rowNumber with the number of the current row
