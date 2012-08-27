@@ -1312,7 +1312,7 @@ class tx_browser_pi1_filter_4x {
     $this->markerArray['###TITLE###']         = $this->replace_itemTitle( '###TITLE###' );
     $this->markerArray['###URL###']           = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
     $this->markerArray['###ITEM_SELECTED###'] = $this->replace_itemSelected( $conf_array, $uid, $value, '###ITEM_SELECTED###' );
-      // 4.1.7, dwildt, 1+
+      // 4.1.7, 1+
     $this->markerArray['###TABLE.FIELD###']   = $this->nicePiVar['key_piVar'];
 
       // 3.9.20:  Be careful: Method need 10 milliseconds. Can be a 
@@ -4651,8 +4651,10 @@ class tx_browser_pi1_filter_4x {
       $this->itemsPerHtmlRow['currRowNumber']++;
       $str_evenOdd  = $this->itemsPerHtmlRow['currRowNumber'] % 2 ? 'odd' : 'even';
       $item         = str_replace( '###EVEN_ODD###', $str_evenOdd, $item );
+        // 4.1.7, 1+
+      $this->itemsPerHtmlRow['currItemNumber'] = 0;
     }
-      // 4.1.7, dwildt, 1-
+      // 4.1.7, 1-
     //$this->itemsPerHtmlRow['currItemNumber']++;
 
 if( $this->curr_tableField == 'tx_greencars_engine.title' )
@@ -4669,7 +4671,7 @@ if( $this->curr_tableField == 'tx_greencars_engine.title' )
  *
  * @param	string		$items : current items
  * @return	string		$items : current items wrapped
- * @version 3.9.9
+ * @version 4.1.7
  * @since   3.9.9
  */
   private function get_maxItemsWrapBeginEnd( $items )
