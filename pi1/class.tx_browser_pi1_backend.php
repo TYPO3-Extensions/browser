@@ -146,7 +146,7 @@ class tx_browser_pi1_backend
  * @param    array        $arr_pluginConf:  Current plugin/flexform configuration
  * @param    array        $obj_TCEform:     Current TCE form object
  * @return    string        $str_prompt: HTML prompt
- * @version 4.1.5
+ * @version 4.1.7
  * @since 4.0.0
  */
   public function evaluate_plugin( $arr_pluginConf )
@@ -200,15 +200,6 @@ class tx_browser_pi1_backend
           </div>
         </div>
         ';
-    
-    
-      // RETURN : Init isn't proper
-    $str_prompt = $this->evaluate_pluginInit( $arr_pluginConf );
-    if( $str_prompt )
-    {
-      return $str_prompt . $str_prompt_inCaseOfAnError;
-    }
-      // RETURN : Init isn't proper
 
 
 
@@ -274,25 +265,14 @@ class tx_browser_pi1_backend
     }
       // RETURN There isn't any view configured
 
-      // RETURN There isn't any record storage page
-    if( empty ( $arr_pluginConf['row']['pages'] ) )
+      // RETURN : Init isn't proper
+    $str_prompt = $this->evaluate_pluginInit( $arr_pluginConf );
+    if( $str_prompt )
     {
-      $str_prompt = '
-        <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
-          <div class="message-body">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.warn.no_record_storage_pid') . '
-          </div>
-        </div>
-        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-          <div class="message-body">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_record_storage_pid') . '
-          </div>
-        </div>
-        ';
-      return $str_prompt . $str_prompt_inCaseOfAnError . $str_prompt_info_tutorialAndForum;
+      return $str_prompt . $str_prompt_inCaseOfAnError;
     }
-      // RETURN There isn't any record storage page
-
+      // RETURN : Init isn't proper
+      
       // RETURN : AJAX page object II isn't proper
     $str_prompt = $this->evaluate_pluginAjaxPageObjectII( $arr_pluginConf );
     if( $str_prompt )
@@ -317,6 +297,25 @@ class tx_browser_pi1_backend
     }
       // RETURN : There isn't any map page object
 
+      // RETURN There isn't any record storage page
+    if( empty ( $arr_pluginConf['row']['pages'] ) )
+    {
+      $str_prompt = $str_prompt . '
+        <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.warn.no_record_storage_pid') . '
+          </div>
+        </div>
+        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+          <div class="message-body">
+            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_record_storage_pid') . '
+          </div>
+        </div>
+        ';
+      return $str_prompt . $str_prompt_info_tutorialAndForum;
+    }
+      // RETURN There isn't any record storage page
+    
       // Evaluation result: default message in case of success
     $str_prompt = '
       <div class="typo3-message message-ok" style="max-width:' . $this->maxWidth . ';">
