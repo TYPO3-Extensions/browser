@@ -1338,12 +1338,12 @@ class tx_browser_pi1_filter_4x {
       // Get the COA configuration for the value
 
     $this->cObjData_setFlagDisplayInCaseOfNoCounting( );
-if( $this->curr_tableField == 'tx_greencars_engine.title' )
-{
-  var_dump( __METHOD__, __LINE__, $cObj_conf );
-}
 
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+if( $this->curr_tableField == 'tx_greencars_engine.title' )
+{
+  var_dump( __METHOD__, __LINE__, $cObj_conf, $item );
+}
 
       // 3.9.20
     $item = $this->pObj->cObj->substituteMarkerArray( $item, $this->markerArray );
