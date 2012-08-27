@@ -1903,10 +1903,6 @@ if( $this->curr_tableField == 'tx_greencars_engine.title' )
         return $arr_return;
       }
       $rows = $arr_return['data']['rows'];
-if( $this->curr_tableField == 'tx_greencars_engine.title' )
-{
-  $this->pObj->dev_var_dump( $arr_return );
-}
         // 1. step: filter items with one hit at least
     }
       // Hits should counted
@@ -1914,10 +1910,10 @@ if( $this->curr_tableField == 'tx_greencars_engine.title' )
       // 2. step: all filter items, hits will be taken from $rows
     $arr_return = $this->get_rowsAllItems( $rows );
       // 2. step: all filter items, hits will be taken from $rows
-if( $this->curr_tableField == 'tx_greencars_engine.title' )
-{
-  $this->pObj->dev_var_dump( $arr_return );
-}
+//if( $this->curr_tableField == 'tx_greencars_engine.title' )
+//{
+//  $this->pObj->dev_var_dump( $arr_return );
+//}
 
     return $arr_return;
   }
@@ -4634,7 +4630,7 @@ if( $this->curr_tableField == 'tx_greencars_engine.title' )
 
 
 /**
- * get_maxItemsTagEndBegin( ):  Get the tag for end the current row  and begin
+ * get_maxItemsTagEndBegin( ):  Get the tag for end the current row and begin
  *                              a new row.
  *
  * @param	string		$item : current item
@@ -4644,9 +4640,11 @@ if( $this->curr_tableField == 'tx_greencars_engine.title' )
  */
   private function get_maxItemsTagEndBegin( $item )
   {
+$this->pObj->dev_var_dump( '1' );
       // RETURN maxItemsPerHtmlRow is false
     if ( $this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false )
     {
+$this->pObj->dev_var_dump( '2' );
       return $item;
     }
       // RETURN maxItemsPerHtmlRow is false
