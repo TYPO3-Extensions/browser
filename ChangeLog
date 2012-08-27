@@ -4,11 +4,13 @@
   * #00000: Plugin check: Fatal error, if plugin wasn't never saved
   * #00000: Checkbox without input-tag
             Effected file: static/setup.txt
-  * #00000: Checkbox
+  * #00000: Checkbox and radiobuttons
             * items without proper line breaks
             * items without a name
             * items without hits
-            Effected file: 
+            Effected files:
+            * pi1/class.tx_browser_pi1_filter_4x.php
+            * static/setup.txt 
 
   Improvements
   * #00000: Plugin check: record storage page and access to root level records
