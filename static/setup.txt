@@ -1817,6 +1817,12 @@ plugin.tx_browser_pi1 {
             cObject = COA
             cObject {
                 // Value in case of a value
+              10 = TEXT
+              10 {
+                value       = <input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>
+                noTrimWrap  = | ||
+              }
+                // Value in case of a value
               20 = TEXT
               20 {
                 if {
@@ -1867,7 +1873,6 @@ plugin.tx_browser_pi1 {
                   }
                 }
               }
-              noTrimWrap = |<input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>  ||
             }
           }
             // [Integer] Maximum items per row. 0: unlimited
