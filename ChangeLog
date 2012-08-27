@@ -1,7 +1,9 @@
 4.1.7
   120827
   Bugfixes
-  * #00000: Plugin-Check: Fatal error, if plugin wasn't never saved
+  * #00000: Plugin check: Fatal error, if plugin wasn't never saved
+  Improvements
+  * #00000: Plugin check: record storage page and access to root level records
 
 4.1.6
   120822
