@@ -4687,6 +4687,9 @@ if( $this->curr_tableField == 'tx_greencars_engine.title' )
                   $this->itemsPerHtmlRow['rowEnd'] . PHP_EOL;
       // Wrap $items
 
+      // 4.1.7, 1+
+    $items  = str_replace( '###EVEN_ODD###', 'even', $items );
+
       // RETURN content
     return $items;
   }
