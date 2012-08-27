@@ -2008,7 +2008,7 @@ plugin.tx_browser_pi1 {
                     // Display hits only in case of one hit at least
                   isTrue = hits
                 }
-                value       = hits
+                field       = hits
                 noTrimWrap  = | (|)|
               }
               if {
