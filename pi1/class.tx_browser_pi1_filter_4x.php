@@ -4642,6 +4642,10 @@ class tx_browser_pi1_filter_4x {
     }
       // RETURN maxItemsPerHtmlRow is false
 
+if( $this->curr_tableField == 'tx_greencars_engine.title' )
+{
+  $this->pObj->dev_var_dump( $item );
+}
     $maxItemsPerHtmlRow = $this->itemsPerHtmlRow['maxItemsPerHtmlRow'];
     $currItemNumber     = $this->itemsPerHtmlRow['currItemNumber'];
     if ( $currItemNumber >= ( $maxItemsPerHtmlRow - 1 ) )
@@ -4657,10 +4661,10 @@ class tx_browser_pi1_filter_4x {
       // 4.1.7, 1-
     //$this->itemsPerHtmlRow['currItemNumber']++;
 
-if( $this->curr_tableField == 'tx_greencars_engine.title' )
-{
-  $this->pObj->dev_var_dump( $this->itemsPerHtmlRow, $item );
-}
+//if( $this->curr_tableField == 'tx_greencars_engine.title' )
+//{
+//  $this->pObj->dev_var_dump( $this->itemsPerHtmlRow, $item );
+//}
     return $item;
   }
 
