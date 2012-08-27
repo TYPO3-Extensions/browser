@@ -4653,7 +4653,7 @@ if( $this->curr_tableField == 'tx_greencars_engine.title' )
     $currItemNumber         = $this->itemsPerHtmlRow['currItemNumberInRow'];
     $currItemNumberAbsolute = $this->itemsPerHtmlRow['currItemNumberAbsolute'];
 
-    if ( $currItemNumberAbsolute >= count( $this->rows ) )
+    if ( $currItemNumberAbsolute >= ( count( $this->rows ) -1 ) )
     {
       return $item;
     }
