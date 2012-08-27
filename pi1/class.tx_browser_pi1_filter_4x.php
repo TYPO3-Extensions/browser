@@ -1355,7 +1355,7 @@ class tx_browser_pi1_filter_4x {
         // Do nothing
         break;
     }
-var_dump( __METHOD__, __LINE__, $item, $this->markerArray );
+var_dump( __METHOD__, __LINE__, $item, $this->markerArray['###HITS###'] );
       // SWITCH $conf_name
 
     $item = $this->pObj->cObj->substituteMarkerArray( $item, $this->markerArray );
