@@ -1335,6 +1335,19 @@ class tx_browser_pi1_filter_4x {
       // SWITCH first item
       // Get the COA configuration for the value
 
+    switch( $conf_name )
+    {
+      case( 'CHECKBOX' ) :
+      case( 'RADIOBUTTONS' ) :
+$this->pObj->dev_var_dump( $this->pObj->cObj->data['hits'] );
+//$this->pObj->dev_var_dump( $cObj_name, $cObj_conf, $this->pObj->cObj->data['hits'], $item );
+        break;
+      case( 'CATEGORY_MENU' ) :
+      case( 'SELECTBOX' ) :
+      default :
+        // Do nothing
+        break;
+    }
     $this->cObjData_setFlagDisplayInCaseOfNoCounting( );
 
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
@@ -1349,7 +1362,8 @@ class tx_browser_pi1_filter_4x {
     {
       case( 'CHECKBOX' ) :
       case( 'RADIOBUTTONS' ) :
-$this->pObj->dev_var_dump( $cObj_name, $cObj_conf, $this->pObj->cObj->data['hits'], $item );
+$this->pObj->dev_var_dump( $this->pObj->cObj->data['hits'] );
+//$this->pObj->dev_var_dump( $cObj_name, $cObj_conf, $this->pObj->cObj->data['hits'], $item );
         break;
       case( 'CATEGORY_MENU' ) :
       case( 'SELECTBOX' ) :
