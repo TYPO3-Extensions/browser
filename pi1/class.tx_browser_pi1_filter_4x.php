@@ -1105,7 +1105,7 @@ class tx_browser_pi1_filter_4x {
     $this->cObjData_updateRow( $uid );
 
     $this->set_markerArrayUpdateRow( $uid );
-var_dump( __METHOD__, __LINE__, $this->sql_filterFields );
+var_dump( __METHOD__, __LINE__, $this->pObj->cObj->data );
 
       // IF first_item, set the first item tree view
     if( $uid == $conf_array['first_item.']['option_value'] )
@@ -1118,7 +1118,7 @@ var_dump( __METHOD__, __LINE__, $this->sql_filterFields );
     switch( $this->pObj->dev_browserEngine )
     {
       case( 4 ):
-          // Wrap the current valie by the cObject
+          // Wrap the current value by the cObject
         $this->updateWizard( 'filter_cObject' );
         if( $loop[ $this->curr_tableField ] < 2 )
         {
