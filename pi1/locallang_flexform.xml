@@ -46,6 +46,7 @@
       <label index="sheet_evaluate.plugin.error.no_CSVpageObject">Bug: You like to use CSV export, but there isn't any CSV export page object.</label>
       <label index="sheet_evaluate.plugin.error.no_map_defaultTypeNum">Bug: You like to use OpenStreetMap. But there isn't any default typeNum for the map-page-object.</label>
       <label index="sheet_evaluate.plugin.error.no_mapPageObject">Bug: You like to use OpenStreetMap. But there isn't any map-page-object.</label>
+      <label index="sheet_evaluate.plugin.error.no_record_storage_pid">Error: There isn't any record storage pid configured and records on root level aren't allowed. You won't see any data in the frontend.</label>
       <label index="sheet_evaluate.plugin.error.no_ts_template">Bug: There isn't any TypoScript configuration for this plugin.</label>
       <label index="sheet_evaluate.plugin.error.no_view">Bug: There isn't any view configured.</label>
       <label index="sheet_evaluate.plugin.error.saved_never">Bug: This plugin isn't saved never.</label>
@@ -57,7 +58,7 @@
       <label index="sheet_evaluate.plugin.info.no_CSVpageObject">Fix it? The Browser has a template. Copy it. Code f.e.: browser_csv <![CDATA[<]]> plugin.tx_browser_pi1.export.csv.page. The typeNum has to be %typeNum%. Alternate: don't use the CSV export.</label>
       <label index="sheet_evaluate.plugin.info.no_map_defaultTypeNum">Fix it: Configure export.map.page.typeNum</label>
       <label index="sheet_evaluate.plugin.info.no_mapPageObject">Fix it? The Browser has a template. Copy it. Code f.e.: browser_map <![CDATA[<]]> plugin.tx_browser_pi1.export.map.page. The typeNum has to be %typeNum%. Alternate: don't use OpenStreetMap.</label>
-      <label index="sheet_evaluate.plugin.info.no_record_storage_pid">Fix it? Configure the general storage pid. See tab [Behaviour] field [Record Storage Page]. Bear in mind to set more than one pid, if your data are stored in more than one folder.</label>
+      <label index="sheet_evaluate.plugin.info.no_record_storage_pid">Fix it? Configure the general storage pid or allow the access to records on the top level. See tab [Behaviour] field [Record Storage Page] or register [General] <![CDATA[>]]> Relations Configuration: Configured <![CDATA[>]]> Relations: Records without Pid: enabled. Bear in mind to set more than one pid, if your data are stored in more than one folder.</label>
       <label index="sheet_evaluate.plugin.info.no_ts_template">Fix it: include the Static Template "Browser"!</label>
       <label index="sheet_evaluate.plugin.info.no_view">Fix it: configure your TypoScript like plugin.tx_browser_pi1.views.list.1 { ... }</label>
       <label index="sheet_evaluate.plugin.info.drs">If you get an unexpected result nevertheless, please check with the TYPO3 Browser Update Assistent, if your plugin and if your TypoScript is up-to-date. You enable the Update Assistent in the extension manager.</label>
@@ -66,7 +67,6 @@
       <label index="sheet_evaluate.plugin.info.tutorialAndForum">If you have any question about the Browser, please refer to the online manual <![CDATA[<a href="http://typo3.org/extensions/repository/view/browser/current/" target="_blank">Browser</a>]]>. If you need interactive help, please post your question in the <![CDATA[<a href="http://typo3-browser-forum.de/" target="_blank">TYPO3 Browser Forum</a>]]>. Posts are welcome in English and German.</label>
       <label index="sheet_evaluate.plugin.ok">Congratulations! Your configuration is checked. Everything seems ok!</label>
       <label index="sheet_evaluate.plugin.warn.fixThisBug">Warning: You have to fix this bug! Only then the plugin check will check other bugs.</label>
-      <label index="sheet_evaluate.plugin.warn.no_record_storage_pid">Warning: There isn't any record storage pid configured. Propably the missing pid is the reason, if you don't get any result in the frontend.</label>
       <label index="sheet_extend">Extend it!</label>
       <label index="sheet_extend.cal_field_end">Calendar 4. step: field date end</label>
       <label index="sheet_extend.cal_field_end.error">Missing requirement: no fields are available.</label>
@@ -409,6 +409,7 @@
       <label index="sheet_evaluate.plugin.error.no_CSVpageObject">Fehler: Du m<![CDATA[&ouml;]]>chtest den CSV-Export verwenden. Es fehlt aber das CSV-Export Page Objekt.</label>
       <label index="sheet_evaluate.plugin.error.no_map_defaultTypeNum">Fehler: Du m<![CDATA[&ouml;]]>chtest OpenStreetMap verwenden. Es fehlt aber die typeNum f<![CDATA[&uuml;]]>r das Map-Page-Objekt.</label>
       <label index="sheet_evaluate.plugin.error.no_mapPageObject">Fehler: Du m<![CDATA[&ouml;]]>chtest OpenStreetMap verwenden. Es fehlt aber das Map-Page-Objekt.</label>
+      <label index="sheet_evaluate.plugin.error.no_record_storage_pid">Fehler: Es gibt keinen Eintrag im Feld [Datensatzsammlung] und der Zugriff auf Daten ohne Seiten-ID ist auch nicht erlaubt. Du wirst im Frontend keine Daten sehen.</label>
       <label index="sheet_evaluate.plugin.error.no_ts_template">Fehler: Es gibt keine TypoScript-Konfiguration f<![CDATA[&uuml;]]>r dieses Plugin.</label>
       <label index="sheet_evaluate.plugin.error.no_view">Fehler: Es ist keine View konfiguriert.</label>
       <label index="sheet_evaluate.plugin.error.saved_never">Fehler: Dieses Plugin ist noch nie gespeichert worden.</label>
@@ -420,7 +421,7 @@
       <label index="sheet_evaluate.plugin.info.no_CSVpageObject">Fehler beheben? Der Browser hat ein Template. Kopiere es. Code z.B.: browser_csv <![CDATA[<]]> plugin.tx_browser_pi1.export.csv.page. Der typeNum muss %typeNum% lauten. Alternative: verzichte auf den CSV-Export.</label>
       <label index="sheet_evaluate.plugin.info.no_map_defaultTypeNum">Fehler beheben: konfiguriere export.map.page.typeNum</label>
       <label index="sheet_evaluate.plugin.info.no_mapPageObject">Fehler beheben? Der Browser hat ein Template. Kopiere es. Code z.B.: browser_map <![CDATA[<]]> plugin.tx_browser_pi1.export.map.page. Der typeNum muss %typeNum% lauten. Alternative: verzichte auf den CSV-Export.</label>
-      <label index="sheet_evaluate.plugin.info.no_record_storage_pid">Fehler beheben? Konfigure das Feld [Datensatzsammlung]. Siehe Reiter [Verhalten] Feld [Datensatzsammlung]. Denk' d'ran: Wenn Du Deine Daten in mehr als einem Ordner speicherst, musst Du auch diese Ordner angeben.</label>
+      <label index="sheet_evaluate.plugin.info.no_record_storage_pid">Fehler beheben? Konfigure das Feld [Datensatzsammlung] oder den Zugriff auf Daten ohne Pid. Siehe Reiter [Verhalten] Feld [Datensatzsammlung]. Oder Reiter [Allgemein] <![CDATA[>]]> Relations Konfiguration: Konfiguriert <![CDATA[>]]> Relations: Records ohne Pid: aktiviert. Denk' d'ran: Wenn Du Deine Daten in mehr als einem Ordner speicherst, musst Du auch diese Ordner angeben.</label>
       <label index="sheet_evaluate.plugin.info.no_ts_template">Fehler beheben: binde das Static Template "Browser" ein!</label>
       <label index="sheet_evaluate.plugin.info.no_view">Fehler beheben: konfiguriere Dein TypoScript etwa so: plugin.tx_browser_pi1.views.list.1 { ... }</label>
       <label index="sheet_evaluate.plugin.info.drs">Wenn Du trotzdem ein unerwartetes Ergebnis bekommst, check mit dem TYPO3-Browser-Update-Assistenten, ob Dein Plugin und Dein TypoScript aktuell sind. Du aktivierst den Update-Assistenten im Extension Manager.</label>
@@ -429,7 +430,6 @@
       <label index="sheet_evaluate.plugin.info.tutorialAndForum">Wenn Du eine Frage zum Browser hast, wirf einen Blick in das Online-Handbuch <![CDATA[<a href="http://typo3.org/extensions/repository/view/browser/current/" target="_blank">Browser</a>]]>. Wenn Du interaktive Hilfe ben<![CDATA[&ouml;]]>tigst, ver<![CDATA[&ouml;]]>ffentliche Dein Anliegen im <![CDATA[<a href="http://typo3-browser-forum.de/" target="_blank">TYPO3 Browser Forum</a>]]>. Beitr<![CDATA[&auml;]]>ge in Englisch und Deutsch sind willkommen.</label>
       <label index="sheet_evaluate.plugin.ok">Gl<![CDATA[&uuml;]]>ckwunsch! Deine Konfiguration ist gechecked. Es scheint alles in Ordnung zu sein!</label>
       <label index="sheet_evaluate.plugin.warn.fixThisBug">Warnung: Du musst den fehler beheben! Nur dann pr<![CDATA[&uuml;]]>ft der Plugin-Check weitere Fehler.</label>
-      <label index="sheet_evaluate.plugin.warn.no_record_storage_pid">Warnung: Es gibt keinen Eintrag im Feld [Datensatzsammlung]. Wenn Du im Frontend eine leere Liste bekommst, ist die fehlende Pid h<![CDATA[&ouml;]]>chstwahrscheinlich der Grund daf<![CDATA[&uuml;]]>r.</label>
       <label index="sheet_extend">Erweitern!</label>
       <label index="sheet_extend.cal_field_end">Kalender 4. Schritt: Feld Termin Ende</label>
       <label index="sheet_extend.cal_field_end.error">Voraussetzung nicht erf<![CDATA[&uuml;]]>llt: es ist kein Feld verf<![CDATA[&uuml;]]>gbar.</label>

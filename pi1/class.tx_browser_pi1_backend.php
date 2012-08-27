@@ -792,45 +792,39 @@ class tx_browser_pi1_backend
 
     //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
     $arr_xml = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
-    var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
-    $record_browser = $arr_xml['data']['viewSingle']['lDEF']['record_browser']['vDEF'];
+    //var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
+    $root = $arr_xml['data']['sDEF']['lDEF']['root']['vDEF'];
 
-    return;
-    
-      $str_prompt = '
-        <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
-          <div class="message-body">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.warn.no_record_storage_pid') . '
-          </div>
-        </div>
-        <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-          <div class="message-body">
-            ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_record_storage_pid') . '
-          </div>
-        </div>
-        ';
-      return $str_prompt . $str_prompt_inCaseOfAnError . $str_prompt_info_tutorialAndForum;
+    return $str_prompt . $str_prompt_inCaseOfAnError . $str_prompt_info_tutorialAndForum;
 
-    //var_dump(__METHOD__, __LINE__, '$record_browser', $record_browser);
-    switch ($record_browser)
+    var_dump(__METHOD__, __LINE__, '$root', $root);
+    switch( $root )
     {
-      case ('disabled') :
-        $this->boolRecordBrowser = false;
+      case ( true ) :
+          // RETURN : Record storage page isn't configured, but root level is enabled
         return;
         break;
-      case ('by_flexform') :
-        $this->boolRecordBrowser = true;
-        return;
-        break;
-      case ('ts') :
-        $this->boolRecordBrowser = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
-        return;
+      case ( false ) :
+          // RETURN : Record storage page isn't configured and root level isn't enabled
+        $str_prompt = '
+          <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_record_storage_pid') . '
+            </div>
+          </div>
+          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+            <div class="message-body">
+              ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.info.no_record_storage_pid') . '
+            </div>
+          </div>
+          ';
+        return $str_prompt;
         break;
       default :
         $str_prompt = '
           <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
             <div class="message-body">
-              BUG at ' . __METHOD__ . ' (line ' . __LINE__ . '): value in switch is undefined: "' . $record_browser . '".
+              BUG at ' . __METHOD__ . ' (line ' . __LINE__ . '): value in switch is undefined: "' . $root . '".
             </div>
           </div>
           <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
