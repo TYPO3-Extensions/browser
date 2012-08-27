@@ -1105,6 +1105,7 @@ class tx_browser_pi1_filter_4x {
     $this->cObjData_updateRow( $uid );
 
     $this->set_markerArrayUpdateRow( $uid );
+var_dump( __METHOD__, __LINE__, $this->sql_filterFields );
 
       // IF first_item, set the first item tree view
     if( $uid == $conf_array['first_item.']['option_value'] )
