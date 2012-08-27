@@ -769,19 +769,11 @@ class tx_browser_pi1_backend
  *
  * @param    array        $arr_pluginConf:  Current plugin/flexform configuration
  * @return    string
- * @version 4.1.5
- * @since 4.1.5
+ * @version 4.1.7
+ * @since 4.1.7
  */
   public function evaluate_pluginRecordStoragePage( $arr_pluginConf )
   {
-      // 4.1.7, dwildt, 5+
-      // RETURN: plugin isn't never saved
-    if( ! $arr_pluginConf['row']['pi_flexform'] )
-    {
-      return;
-    }
-      // 4.1.7, dwildt, 5+
-    
       // RETURN : Record storage page is configured
     if( ! empty ( $arr_pluginConf['row']['pages'] ) )
     {
@@ -790,12 +782,16 @@ class tx_browser_pi1_backend
     }
       // RETURN : Record storage page is configured
 
+      // RETURN: plugin isn't never saved
+    if( ! $arr_pluginConf['row']['pi_flexform'] )
+    {
+      return;
+    }
+    
     //var_dump(__METHOD__, __LINE__, $arr_pluginConf['row']['pi_flexform']);
     $arr_xml = t3lib_div::xml2array( $arr_pluginConf['row']['pi_flexform'] );
     //var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
     $root = $arr_xml['data']['sDEF']['lDEF']['root']['vDEF'];
-
-    return $str_prompt . $str_prompt_inCaseOfAnError . $str_prompt_info_tutorialAndForum;
 
     var_dump(__METHOD__, __LINE__, '$root', $root);
     switch( $root )
