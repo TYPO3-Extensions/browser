@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      3.9.24
+ * @version      4.1.7
  * @since        3.9.9
  */
 
@@ -642,6 +642,10 @@ class tx_browser_pi1_filter_4x {
 
       // Set class var $rows
     $this->rows = $rows;
+if( $this->curr_tableField == 'tx_greencars_engine.title' )
+{
+  $this->pObj->dev_var_dump( $this->rows );
+}
 
       // Localise the rows
     $this->localise( );
@@ -3268,7 +3272,7 @@ if( $this->curr_tableField == 'tx_greencars_engine.title' )
     $key    = $this->sql_filterFields[$this->curr_tableField]['hits'];
     $value  = $this->rows[$uid][$key];
     $this->pObj->cObj->data['hits'] = $value;
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['hits'] );
+//$this->pObj->dev_var_dump( $this->pObj->cObj->data['hits'] );
 
       // Add the field rowNumber with the number of the current row
     $key    = $this->pObj->prefixId . '.rowNumber';
