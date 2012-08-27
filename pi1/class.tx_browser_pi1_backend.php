@@ -793,7 +793,6 @@ class tx_browser_pi1_backend
     //var_dump(__METHOD__, __LINE__, '$arr_xml', $arr_xml);
     $root = $arr_xml['data']['sDEF']['lDEF']['root']['vDEF'];
 
-    var_dump(__METHOD__, __LINE__, '$root', $root);
     switch( $root )
     {
       case ( true ) :
@@ -803,7 +802,7 @@ class tx_browser_pi1_backend
       case ( false ) :
           // RETURN : Record storage page isn't configured and root level isn't enabled
         $str_prompt = '
-          <div class="typo3-message message-warning" style="max-width:' . $this->maxWidth . ';">
+          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
             <div class="message-body">
               ' . $GLOBALS['LANG']->sL('LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.plugin.error.no_record_storage_pid') . '
             </div>
