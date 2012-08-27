@@ -4652,7 +4652,7 @@ class tx_browser_pi1_filter_4x {
       $str_evenOdd  = $this->itemsPerHtmlRow['currRowNumber'] % 2 ? 'odd' : 'even';
       $item         = str_replace( '###EVEN_ODD###', $str_evenOdd, $item );
         // 4.1.7, 1+
-      $this->itemsPerHtmlRow['currItemNumber'] = 0;
+      $this->itemsPerHtmlRow['currItemNumber'] = -1;
     }
       // 4.1.7, 1-
     //$this->itemsPerHtmlRow['currItemNumber']++;
