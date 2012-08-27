@@ -1337,8 +1337,6 @@ class tx_browser_pi1_filter_4x {
 
     $this->cObjData_setFlagDisplayInCaseOfNoCounting( );
 
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['hits'] );
-
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
       // 3.9.20
@@ -1351,6 +1349,7 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['hits'] );
     {
       case( 'CHECKBOX' ) :
       case( 'RADIOBUTTONS' ) :
+$this->pObj->dev_var_dump( $cObj_name, $cObj_conf, $this->pObj->cObj->data['hits'], $item );
         break;
       case( 'CATEGORY_MENU' ) :
       case( 'SELECTBOX' ) :
