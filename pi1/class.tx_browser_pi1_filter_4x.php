@@ -1335,45 +1335,18 @@ class tx_browser_pi1_filter_4x {
       // SWITCH first item
       // Get the COA configuration for the value
 
-    switch( $conf_name )
-    {
-      case( 'CHECKBOX' ) :
-      case( 'RADIOBUTTONS' ) :
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['hits'] );
-//$this->pObj->dev_var_dump( $cObj_name, $cObj_conf, $this->pObj->cObj->data['hits'], $item );
-        break;
-      case( 'CATEGORY_MENU' ) :
-      case( 'SELECTBOX' ) :
-      default :
-        // Do nothing
-        break;
-    }
+if( $this->curr_tableField == 'tx_greencars_engine.title' )
+{
+  $this->pObj->dev_var_dump( $this->pObj->cObj->data['hits'] );
+}
+
     $this->cObjData_setFlagDisplayInCaseOfNoCounting( );
 
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 
       // 3.9.20
       // 3.9.20:  Be careful: Method need 10 milliseconds. Can be a 
-      //          performance problem in case of a lot records!
-      
-      // SWITCH $conf_name
-      // Set values
-    switch( $conf_name )
-    {
-      case( 'CHECKBOX' ) :
-      case( 'RADIOBUTTONS' ) :
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['hits'] );
-//$this->pObj->dev_var_dump( $cObj_name, $cObj_conf, $this->pObj->cObj->data['hits'], $item );
-        break;
-      case( 'CATEGORY_MENU' ) :
-      case( 'SELECTBOX' ) :
-      default :
-        // Do nothing
-        break;
-    }
-//var_dump( __METHOD__, __LINE__, $item, $this->markerArray['###HITS###'] );
-      // SWITCH $conf_name
-
+      //          performance problem in case of a lot records!     
     $item = $this->pObj->cObj->substituteMarkerArray( $item, $this->markerArray );
     
       // 3.9.20: Coded is moved from above
