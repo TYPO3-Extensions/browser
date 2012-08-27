@@ -1335,11 +1335,6 @@ class tx_browser_pi1_filter_4x {
       // SWITCH first item
       // Get the COA configuration for the value
 
-if( $this->curr_tableField == 'tx_greencars_engine.title' )
-{
-  $this->pObj->dev_var_dump( $this->pObj->cObj->data['hits'] );
-}
-
     $this->cObjData_setFlagDisplayInCaseOfNoCounting( );
 
     $item  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
@@ -4640,15 +4635,17 @@ if( $this->curr_tableField == 'tx_greencars_engine.title' )
  */
   private function get_maxItemsTagEndBegin( $item )
   {
-$this->pObj->dev_var_dump( '1' );
       // RETURN maxItemsPerHtmlRow is false
     if ( $this->itemsPerHtmlRow['maxItemsPerHtmlRow'] === false )
     {
-$this->pObj->dev_var_dump( '2' );
       return $item;
     }
       // RETURN maxItemsPerHtmlRow is false
 
+if( $this->curr_tableField == 'tx_greencars_engine.title' )
+{
+  $this->pObj->dev_var_dump( $maxItemsPerHtmlRow, $currItemNumber );
+}
     $maxItemsPerHtmlRow = $this->itemsPerHtmlRow['maxItemsPerHtmlRow'];
     $currItemNumber     = $this->itemsPerHtmlRow['currItemNumber'];
     if ( $currItemNumber >= ( $maxItemsPerHtmlRow - 1 ) )
