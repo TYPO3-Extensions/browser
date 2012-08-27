@@ -1903,6 +1903,10 @@ if( $this->curr_tableField == 'tx_greencars_engine.title' )
         return $arr_return;
       }
       $rows = $arr_return['data']['rows'];
+if( $this->curr_tableField == 'tx_greencars_engine.title' )
+{
+  $this->pObj->dev_var_dump( $arr_return );
+}
         // 1. step: filter items with one hit at least
     }
       // Hits should counted
