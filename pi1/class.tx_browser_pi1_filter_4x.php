@@ -1215,6 +1215,7 @@ class tx_browser_pi1_filter_4x {
       t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS :TODO:
+
     $item = $this->get_maxItemsTagEndBegin( $item );
 
       // Item class
@@ -4642,15 +4643,16 @@ class tx_browser_pi1_filter_4x {
     }
       // RETURN maxItemsPerHtmlRow is false
 
-if( $this->curr_tableField == 'tx_greencars_engine.title' )
-{
-  $this->pObj->dev_var_dump( $item );
-}
+//if( $this->curr_tableField == 'tx_greencars_engine.title' )
+//{
+//  $this->pObj->dev_var_dump( $item );
+//}
     $maxItemsPerHtmlRow = $this->itemsPerHtmlRow['maxItemsPerHtmlRow'];
     $currItemNumber     = $this->itemsPerHtmlRow['currItemNumber'];
     if ( $currItemNumber >= ( $maxItemsPerHtmlRow - 1 ) )
     {
-      $item         = $item . $this->itemsPerHtmlRow['rowEnd'] . PHP_EOL .
+      $item         = $item . PHP_EOL .
+                      $this->htmlSpaceLeft . $this->itemsPerHtmlRow['rowEnd'] . PHP_EOL .
                       $this->htmlSpaceLeft . $this->itemsPerHtmlRow['rowBegin'];
       $this->itemsPerHtmlRow['currRowNumber']++;
       $str_evenOdd  = $this->itemsPerHtmlRow['currRowNumber'] % 2 ? 'odd' : 'even';
@@ -4688,9 +4690,9 @@ if( $this->curr_tableField == 'tx_greencars_engine.title' )
       // RETURN maxItemsPerHtmlRow is false
 
       // Wrap $items
-    $items  = $this->itemsPerHtmlRow['rowBegin'] . PHP_EOL .
-                  $items .
-                  $this->itemsPerHtmlRow['rowEnd'] . PHP_EOL;
+    $items  = $this->htmlSpaceLeft . $this->itemsPerHtmlRow['rowBegin'] . PHP_EOL .
+              $items . PHP_EOL .
+              $this->htmlSpaceLeft . $this->itemsPerHtmlRow['rowEnd'] . PHP_EOL;
       // Wrap $items
 
       // 4.1.7, 1+
