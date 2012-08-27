@@ -4656,7 +4656,8 @@ if( $this->curr_tableField == 'tx_greencars_engine.title' )
       $str_evenOdd  = $this->itemsPerHtmlRow['currRowNumber'] % 2 ? 'odd' : 'even';
       $item         = str_replace( '###EVEN_ODD###', $str_evenOdd, $item );
     }
-    $this->itemsPerHtmlRow['currItemNumber']++;
+      // 4.1.7, dwildt, 1-
+    //$this->itemsPerHtmlRow['currItemNumber']++;
     return $item;
   }
 
