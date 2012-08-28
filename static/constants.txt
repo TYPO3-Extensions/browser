@@ -80,6 +80,8 @@ plugin.tx_browser_pi1 {
   map.field.description = 
   # cat=Browser - Map//106;             type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
   map.field.category = 
+  # cat=Browser - Map//107;             type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
+  map.field.categoryIcon = 
   # cat=Browser - Map//201;         type=int+;   label= Map height: Height of the map (in pixel)
   map.height = 400
   # cat=Browser - Map//202;         type=int+;   label= Map width: Width of the map (in pixel)

@@ -1,5 +1,13 @@
 4.1.7
   120827
+  New Feature
+  * #00000: Enable OSM (map) to process category icons delivered by the database
+            Effected files:
+            * pi1/class.tx_browser_pi1_map.php
+            * static/contstants.txt
+            * static/setup.txt
+  Improvements
+  * #00000: Plugin check: record storage page and access to root level records
   Bugfixes
   * #00000: Plugin check: Fatal error, if plugin wasn't never saved
   * #40354: Checkbox without input-tag
@@ -11,9 +19,6 @@
             Effected files:
             * pi1/class.tx_browser_pi1_filter_4x.php
             * static/setup.txt 
-
-  Improvements
-  * #00000: Plugin check: record storage page and access to root level records
 
 4.1.6
   120822

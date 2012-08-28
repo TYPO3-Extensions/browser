@@ -582,11 +582,11 @@ class tx_browser_pi1_wrapper
 
       // COA default type
       // Is there a COA array in the TypoScript setup?
-    if(is_array($conf['views.'][$viewWiDot][$mode.'.'][$table.'.'][$field.'.']))
+    if( is_array( $conf['views.'][$viewWiDot][$mode.'.'][$table.'.'][$field.'.'] ) )
     {
-        // Get the COA type, set it to 'TEXT', if there isn't a value
+        // Get the COA type, set it to 'TEXT', if there isn't any value
       $lCObjType = $conf['views.'][$viewWiDot][$mode.'.'][$table.'.'][$field];
-      if (!$lCObjType)
+      if ( ! $lCObjType )
       {
         $lCObjType = 'TEXT';
       }
@@ -602,7 +602,7 @@ class tx_browser_pi1_wrapper
 
     $lAutoconf = $conf_view['autoconfig.'];
     $view_path = $viewWiDot.$mode;
-    if (!is_array($lAutoconf))
+    if( ! is_array( $lAutoconf ) )
     {
       if ($bool_firsttime)
       {
