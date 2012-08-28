@@ -1278,7 +1278,7 @@ class tx_browser_pi1_map
     $mapMarkers = null;
     $catField       = $this->confMap['configuration.']['categories.']['fields.']['category'];
     $catIconsField  = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
-$this->pObj->dev_var_dump( $this->pObj->rows, $catField, $catIconsField );    
+//$this->pObj->dev_var_dump( $this->pObj->rows, $catField, $catIconsField );    
     foreach( $this->pObj->rows as $row )
     {
       if( $this->boolMoreThanOneCategory )
@@ -1300,7 +1300,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows, $catField, $catIconsField );
       {
         $categories = array( $keys[ 0 ] => 'dummy' );
       }
-$this->pObj->dev_var_dump( $categories, $categoryIcons );    
+$this->pObj->dev_var_dump( $this->boolMoreThanOneCategory, $categories, $categoryIcons );    
 
         // FOREACH category
       foreach( $categories as $key => $category )
