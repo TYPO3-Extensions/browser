@@ -1313,7 +1313,7 @@ class tx_browser_pi1_filter_4x {
     $this->markerArray['###TITLE###']         = $this->replace_itemTitle( '###TITLE###' );
     $this->markerArray['###URL###']           = $this->replace_itemUrl( $conf_array, $uid, '###URL###' );
     $this->markerArray['###ITEM_SELECTED###'] = $this->replace_itemSelected( $conf_array, $uid, $value, '###ITEM_SELECTED###' );
-      // 4.1.7, 1+
+      // #40354, #40354, 4.1.7, 1+
     $this->markerArray['###TABLE.FIELD###']   = $this->nicePiVar['key_piVar'];
 
       // 3.9.20:  Be careful: Method need 10 milliseconds. Can be a 
@@ -4595,7 +4595,7 @@ class tx_browser_pi1_filter_4x {
     $this->itemsPerHtmlRow['rowEnd']              = $rowEnd;
     $this->itemsPerHtmlRow['noItemValue']         = $noItemValue;
     $this->itemsPerHtmlRow['currRowNumber']       = 0;
-      // 4.1.7, 1+
+      // #40354, #40354, 4.1.7, 1+
     $this->itemsPerHtmlRow['currItemNumberAbsolute'] = 0;
     $this->itemsPerHtmlRow['currItemNumberInRow'] = 0;
 
@@ -4622,7 +4622,7 @@ class tx_browser_pi1_filter_4x {
       // RETURN maxItemsPerHtmlRow is false
 
       // Increase item number
-      // 4.1.7, 1+
+      // #40354, #40354, 4.1.7, 1+
     $this->itemsPerHtmlRow['currItemNumberAbsolute']++;
     $this->itemsPerHtmlRow['currItemNumberInRow']++;
   }
@@ -4653,15 +4653,15 @@ class tx_browser_pi1_filter_4x {
 //}
     $maxItemsPerHtmlRow     = $this->itemsPerHtmlRow['maxItemsPerHtmlRow'];
     $currItemNumber         = $this->itemsPerHtmlRow['currItemNumberInRow'];
-      // 4.1.7, 1+
+      // #40354, 4.1.7, 1+
     $currItemNumberAbsolute = $this->itemsPerHtmlRow['currItemNumberAbsolute'];
 
-      // 4.1.7, 4+
+      // #40354, 4.1.7, 4+
     if ( $currItemNumberAbsolute >= ( count( $this->rows ) -1 ) )
     {
       return $item;
     }
-      // 4.1.7, 4+
+      // #40354, 4.1.7, 4+
 
     if ( $currItemNumber >= ( $maxItemsPerHtmlRow - 1 ) )
     {
@@ -4671,10 +4671,10 @@ class tx_browser_pi1_filter_4x {
       $this->itemsPerHtmlRow['currRowNumber']++;
       $str_evenOdd  = $this->itemsPerHtmlRow['currRowNumber'] % 2 ? 'odd' : 'even';
       $item         = str_replace( '###EVEN_ODD###', $str_evenOdd, $item );
-        // 4.1.7, 1+
+        // #40354, 4.1.7, 1+
       $this->itemsPerHtmlRow['currItemNumberInRow'] = -1;
     }
-      // 4.1.7, 1-
+      // #40354, 4.1.7, 1-
     //$this->itemsPerHtmlRow['currItemNumberInRow']++;
 
 //if( $this->curr_tableField == 'tx_greencars_engine.title' )
@@ -4709,7 +4709,7 @@ class tx_browser_pi1_filter_4x {
               $this->htmlSpaceLeft . $this->itemsPerHtmlRow['rowEnd'] . PHP_EOL;
       // Wrap $items
 
-      // 4.1.7, 1+
+      // #40354, 4.1.7, 1+
     $items  = str_replace( '###EVEN_ODD###', 'even', $items );
 
       // RETURN content

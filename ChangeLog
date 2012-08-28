@@ -2,9 +2,9 @@
   120827
   Bugfixes
   * #00000: Plugin check: Fatal error, if plugin wasn't never saved
-  * #00000: Checkbox without input-tag
+  * #40354: Checkbox without input-tag
             Effected file: static/setup.txt
-  * #00000: Checkbox and radiobuttons
+  * #40354: Checkbox and radiobuttons
             * items without proper line breaks
             * items without a name
             * items without hits
