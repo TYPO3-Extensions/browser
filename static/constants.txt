@@ -83,7 +83,7 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Map//107;             type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
   map.field.categoryIcon = 
   # cat=Browser - Map//108;             type=string;    label= Icons directory: Path to the directory with the category icons (with ending slash). Example: uploads/tx_org/ Default: uploads/media/
-  map.path.categoryIcon = 
+  map.path.categoryIcon = uploads/media/ 
   # cat=Browser - Map//201;         type=int+;   label= Map height: Height of the map (in pixel)
   map.height = 400
   # cat=Browser - Map//202;         type=int+;   label= Map width: Width of the map (in pixel)
