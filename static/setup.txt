@@ -850,7 +850,7 @@ plugin.tx_browser_pi1 {
                 import = {$plugin.tx_browser_pi1.map.path.categoryIcon}
                   // [STRING] table.field. Example: tx_org_headquarterscat.icons
                 field = {$plugin.tx_browser_pi1.map.field.categoryIcon}
-                  // [INTEGER] Position of the image in the image list. 1st position: 0. 2nd position: 1. 3rd position: 2. ...
+                  // [INTEGER] Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ...
                 listNum = {$plugin.tx_browser_pi1.map.position.categoryIconLegend}
               }
             }
@@ -862,7 +862,7 @@ plugin.tx_browser_pi1 {
                 import = {$plugin.tx_browser_pi1.map.path.categoryIcon}
                   // [STRING] table.field. Example: tx_org_headquarterscat.icons
                 field = {$plugin.tx_browser_pi1.map.field.categoryIcon}
-                  // [INTEGER] Position of the image in the image list. 1st position: 0. 2nd position: 1. 3rd position: 2. ...
+                  // [INTEGER] Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ...
                 listNum = {$plugin.tx_browser_pi1.map.position.categoryIconMap}
               }
             }
