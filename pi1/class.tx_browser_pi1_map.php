@@ -756,7 +756,7 @@ class tx_browser_pi1_map
       {
         if( empty ( $value ) )
         {
-          $prompt = 'marker.addToCData.' . $key . ' is empty. Probably this is an error!';
+          $prompt = $key . ' is empty. Probably this is an error!';
           t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3 );
         }
         else
@@ -1300,6 +1300,7 @@ $this->pObj->dev_var_dump( $this->pObj->rows, $catField, $catIconsField );
       {
         $categories = array( $keys[ 0 ] => 'dummy' );
       }
+$this->pObj->dev_var_dump( $categories, $categoryIcons );    
 
         // FOREACH category
       foreach( $categories as $key => $category )
