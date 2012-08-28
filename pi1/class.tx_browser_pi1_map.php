@@ -1076,8 +1076,8 @@ class tx_browser_pi1_map
           $series[$mapMarker['cat']]['icon'][] = $mapMarker['catIconMap'];
           $series[$mapMarker['cat']]['icon'][] = $width;
           $series[$mapMarker['cat']]['icon'][] = $height;
-          $series[$mapMarker['cat']]['icon'][] = 0;
-          $series[$mapMarker['cat']]['icon'][] = 0;
+          $series[$mapMarker['cat']]['icon'][] = $this->confMap['configuration.']['categories.']['offset.']['x'];
+          $series[$mapMarker['cat']]['icon'][] = $this->confMap['configuration.']['categories.']['offset.']['y'];
         }
           // Database category has its own icon
         else
