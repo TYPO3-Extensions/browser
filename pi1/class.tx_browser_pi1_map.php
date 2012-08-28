@@ -1060,6 +1060,8 @@ class tx_browser_pi1_map
 
       // Category icons in case of database categories without own icons
     $catIcons = $this->renderMapMarkerCategoryIcons( );
+      // Path to the root
+    $rootPath = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
     
       // FOREACH map marker
     foreach( ( array ) $mapMarkers as $key => $mapMarker )
@@ -1070,9 +1072,10 @@ class tx_browser_pi1_map
           // Database category has its own icon
         if( isset( $mapMarker['catIconMap'] ) )
         {
+          list( $width, $height ) = getimagesize( $rootPath . $mapMarker['catIconMap'] );
           $series[$mapMarker['cat']]['icon'][] = $mapMarker['catIconMap'];
-          $series[$mapMarker['cat']]['icon'][] = 14;
-          $series[$mapMarker['cat']]['icon'][] = 56;
+          $series[$mapMarker['cat']]['icon'][] = $width;
+          $series[$mapMarker['cat']]['icon'][] = $height;
           $series[$mapMarker['cat']]['icon'][] = 0;
           $series[$mapMarker['cat']]['icon'][] = 0;
         }
