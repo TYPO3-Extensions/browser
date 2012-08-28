@@ -1066,7 +1066,18 @@ class tx_browser_pi1_map
         // Set category icon
       if( ! isset( $series[$mapMarker['cat']]['icon'] ) )
       {
-        $series[$mapMarker['cat']]['icon'] = $catIcons[$mapMarker['iconKey']];
+        if( isset( $mapMarker['catIconMap'] ) )
+        {
+          $series[$mapMarker['cat']]['icon'][] = $mapMarker['catIconMap'];
+          $series[$mapMarker['cat']]['icon'][] = 14;
+          $series[$mapMarker['cat']]['icon'][] = 14;
+          $series[$mapMarker['cat']]['icon'][] = 0;
+          $series[$mapMarker['cat']]['icon'][] = 0;
+        }
+        else
+        {
+          $series[$mapMarker['cat']]['icon'] = $catIcons[$mapMarker['iconKey']];
+        }
       }
         // Set category icon
         // Set coordinates
@@ -1334,10 +1345,6 @@ class tx_browser_pi1_map
     $coa_name = $this->confMap['marker.']['variables.']['system.'][$item];
     $coa_conf = $this->confMap['marker.']['variables.']['system.'][$item . '.'];
     $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
-//if( $item == 'categoryIconLegend' )
-//{
-//  $this->pObj->dev_var_dump( $coa_name, $coa_conf, $value, $this->pObj->cObj->data );
-//}
     return $value;
   }
 
