@@ -1049,7 +1049,7 @@ class tx_browser_pi1_map
  *
  * @param    array        
  * @return    string    $jsonData
- * @version 4.1.0
+ * @version 4.1.7
  * @since   4.1.0
  */
   private function renderMapMarkerPointsToJSON( $mapMarkers )
@@ -1300,7 +1300,7 @@ class tx_browser_pi1_map
     unset( $dontHandle00 );
       // FOREACH row
 
-//var_dump( __METHOD__, __LINE__, $mapMarkers );    
+$this->pObj->dev_var_dump( $mapMarkers );    
     if( $this->pObj->b_drs_map )
     {
       $prompt = 'JSON array: ' . var_export( $mapMarkers, true);
