@@ -1283,6 +1283,7 @@ class tx_browser_pi1_map
     {
       if( $this->boolMoreThanOneCategory )
       {
+          // Get categories
         if( isset( $row[ $catField ] ) )
         {
           $categories = explode( $this->catDevider, $row[ $catField ] );
@@ -1291,10 +1292,13 @@ class tx_browser_pi1_map
         {
           $categories = array( $keys[ 0 ] => 'dummy' );
         }
+          // Get categories
+          // Get category icons
         if( isset( $row[ $catIconsField ] ) )
         {
           $categoryIcons = explode( $this->catDevider, $row[ $catIconsField ] );
         }
+          // Get category icons
       }
       else
       {
