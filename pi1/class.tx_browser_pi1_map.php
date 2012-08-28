@@ -1221,6 +1221,7 @@ class tx_browser_pi1_map
       // FOREACH row
     $mapMarkers = null;
     $catField = $this->confMap['configuration.']['categories.']['field'];
+$this->pObj->dev_var_dump( $this->pObj->rows );    
     foreach( $this->pObj->rows as $row )
     {
       if( $this->boolMoreThanOneCategory )
