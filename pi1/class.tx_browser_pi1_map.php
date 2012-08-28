@@ -531,7 +531,7 @@ class tx_browser_pi1_map
       // RETURN : method is called twice at least
     
       // Get the label for the category field
-    $key = $this->confMap['configuration.']['categories.']['field'];
+    $key = $this->confMap['configuration.']['categories.']['fields.']['category']
 
       // Get categories from the rows
     $categories = array( );
