@@ -723,7 +723,7 @@ class tx_browser_pi1_map
         }
         else
         {
-          $prompt = 'Added to cObject: ' . $content;
+          $prompt = 'Added to cObject[' . $marker . ']: ' . $content;
           t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
           $prompt = 'You can use the content in TypoScript with: field = ' . $marker;
           t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
@@ -761,7 +761,7 @@ class tx_browser_pi1_map
         }
         else
         {
-          $prompt = 'Added to cObject: ' . $value;
+          $prompt = 'Added to cObject[' . $key . ']: ' . $value;
           t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
           $prompt = 'You can use the content in TypoScript with: field = ' . $key;
           t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
