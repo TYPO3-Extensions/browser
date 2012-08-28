@@ -555,8 +555,14 @@ plugin.tx_browser_pi1 {
               // [INTEGER] y-offset of the icon in pixel
             y = 0
           }
-            // [STRING] table.field with the categories. Example: tx_org_headquarterscat.title
-          field = {$plugin.tx_browser_pi1.map.field.category}
+            // Labels of category fields
+          fields = 
+          fields {
+              // [STRING] table.field with the category labels. Example: tx_org_headquarterscat.title
+            category = {$plugin.tx_browser_pi1.map.field.category}
+              // [STRING] table.field with the category icons. Example: tx_org_headquarterscat.icons
+            categoryIcon = {$plugin.tx_browser_pi1.map.field.categoryIcon}
+          }
             // [STRING/HTML] Draft for an input field of the category form
           form_input = <input class="oxMapFilter" type="checkbox" name="###CAT###" value="1" checked="checked" />###CAT### ###IMG###
             // [STRING]  SORT_REGULAR, SORT_NUMERIC, SORT_STRING or SORT_LOCALE_STRING 

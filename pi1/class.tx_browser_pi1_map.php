@@ -736,6 +736,62 @@ class tx_browser_pi1_map
 
 
   /**
+ * cObjDataAddArray( ):
+ *
+ * @param     array   $keyValue : array with key value pairs
+ * @return    void
+ * @version 4.1.7
+ * @since   4.1.7
+ */
+  private function cObjDataAddArray( $keyValue )
+  {
+    foreach( $keyValue as $key => $value )
+    {
+      if( empty( $key ) )
+      {
+        continue;
+      }
+
+      if( $this->pObj->b_drs_map )
+      {
+        if( empty ( $value ) )
+        {
+          $prompt = 'marker.addToCData.' . $key . ' is empty. Probably this is an error!';
+          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+        }
+        else
+        {
+          $prompt = 'Added to cObject: ' . $value;
+          t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+          $prompt = 'You can use the content in TypoScript with: field = ' . $key;
+          t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+        }
+      }
+      $this->pObj->cObj->data[ $key ] = $value;
+    }
+  }
+
+
+
+  /**
+ * cObjDataRemoveArray( ):
+ *
+ * @param     array   $keyValue : array with key value pairs
+ * @return    void
+ * @version 4.1.7
+ * @since   4.1.7
+ */
+  private function cObjDataRemoveArray( $keyValue )
+  {
+    foreach( array_keys( $keyValue ) as $key )
+    {
+      unset( $this->pObj->cObj->data[ $key ] );
+    }
+  }
+
+
+
+  /**
  * cObjDataRemoveMarker( ):
  *
  * @return    void
@@ -1220,7 +1276,8 @@ class tx_browser_pi1_map
 
       // FOREACH row
     $mapMarkers = null;
-    $catField = $this->confMap['configuration.']['categories.']['field'];
+    $catField       = $this->confMap['configuration.']['categories.']['fields.']['category'];
+    $catIconsField  = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
 $this->pObj->dev_var_dump( $this->pObj->rows );    
     foreach( $this->pObj->rows as $row )
     {
@@ -1234,6 +1291,10 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
         {
           $categories = array( $keys[ 0 ] => 'dummy' );
         }
+        if( isset( $row[ $catIconsField ] ) )
+        {
+          $categoryIcons = explode( $this->catDevider, $row[ $catIconsField ] );
+        }
       }
       else
       {
@@ -1241,12 +1302,13 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
       }
 
         // FOREACH category
-      foreach( $categories as $category )
+      foreach( $categories as $key => $category )
       {
           // Add the current row to cObj->data
         $this->cObjDataAddRow( $row );
 
         $this->cObjDataAddMarker( );
+        $this->cObjDataAddArray( array( $catIconsField => $categoryIcons[$key] ) );
 
           // Get the longitude
         $mapMarker['lon'] = $this->renderMapMarkerVariablesSystemItem( 'longitude' );
@@ -1277,10 +1339,10 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
           // Get the desc
 
           // Get the category label
-        $mapMarker['cat']     = $category;
+        $mapMarker['cat'] = $category;
           // 4.1.7, 3+
           // Get the category icon(s)
-        $mapMarker['catIconLegend'] = $this->renderMapMarkerVariablesSystemItem( 'categoryIconLegend' );
+        //$mapMarker['catIconLegend'] = $this->renderMapMarkerVariablesSystemItem( 'categoryIconLegend' );
         $mapMarker['catIconMap']    = $this->renderMapMarkerVariablesSystemItem( 'categoryIconMap' );
           // Get the iconKey
         $mapMarker['iconKey'] = $arrCategoriesFlipped[ $category ];
@@ -1294,6 +1356,8 @@ $this->pObj->dev_var_dump( $this->pObj->rows );
 
           // Remove the current row from cObj->data
         $this->cObjDataRemoveRow( $row );
+        $this->cObjDataRemoveMarker( );
+        $this->cObjDataRemoveArray( array( $catIconsField => $categoryIcons[$key] ) );
         
       }
         // FOREACH category
