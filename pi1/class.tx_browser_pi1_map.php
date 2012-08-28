@@ -1058,7 +1058,8 @@ class tx_browser_pi1_map
     $series       = null;
     $coordinates  = array( );
 
-    $catIcons     = $this->renderMapMarkerCategoryIcons( );
+      // Category icons in case of database categories without own icons
+    $catIcons = $this->renderMapMarkerCategoryIcons( );
     
       // FOREACH map marker
     foreach( ( array ) $mapMarkers as $key => $mapMarker )
@@ -1066,18 +1067,22 @@ class tx_browser_pi1_map
         // Set category icon
       if( ! isset( $series[$mapMarker['cat']]['icon'] ) )
       {
+          // Database category has its own icon
         if( isset( $mapMarker['catIconMap'] ) )
         {
           $series[$mapMarker['cat']]['icon'][] = $mapMarker['catIconMap'];
           $series[$mapMarker['cat']]['icon'][] = 14;
-          $series[$mapMarker['cat']]['icon'][] = 14;
+          $series[$mapMarker['cat']]['icon'][] = 56;
           $series[$mapMarker['cat']]['icon'][] = 0;
           $series[$mapMarker['cat']]['icon'][] = 0;
         }
+          // Database category has its own icon
         else
+          // Database categories without own icons
         {
           $series[$mapMarker['cat']]['icon'] = $catIcons[$mapMarker['iconKey']];
         }
+          // Database categories without own icons
       }
         // Set category icon
         // Set coordinates
