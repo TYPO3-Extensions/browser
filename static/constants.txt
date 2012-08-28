@@ -84,9 +84,9 @@ plugin.tx_browser_pi1 {
   map.field.categoryIcon = 
   # cat=Browser - Map//108;             type=string;    label= Icons directory: Path to the directory with the category icons (with ending slash). Example: uploads/tx_org/ Default: uploads/media/
   map.path.categoryIcon = uploads/media/ 
-  # cat=Browser - Map//109;             type=string;    label= Position of legend icon: Position of the image in the image list. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
+  # cat=Browser - Map//109;             type=string;    label= Position of legend icon: Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
   map.position.categoryIconLegend = 0 
-  # cat=Browser - Map//110;             type=string;    label= Position of map icon: Position of the image in the image list. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
+  # cat=Browser - Map//110;             type=string;    label= Position of map icon: Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
   map.position.categoryIconMap = 0 
   # cat=Browser - Map//201;         type=int+;   label= Map height: Height of the map (in pixel)
   map.height = 400
