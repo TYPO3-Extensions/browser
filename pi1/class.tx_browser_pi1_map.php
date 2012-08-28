@@ -1336,7 +1336,7 @@ class tx_browser_pi1_map
     $value    = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
 if( $item == 'categoryIconLegend' )
 {
-  $this->pObj->dev_var_dump( $coa_name, $coa_conf, $value );
+  $this->pObj->dev_var_dump( $coa_name, $coa_conf, $value, $this->pObj->cObj->data );
 }
     return $value;
   }
