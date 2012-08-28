@@ -1303,6 +1303,10 @@ class tx_browser_pi1_map
       else
       {
         $categories = array( $keys[ 0 ] => 'dummy' );
+        if( isset( $row[ $catIconsField ] ) )
+        {
+          list( $categoryIcons[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catIconsField ] );
+        }
       }
 $this->pObj->dev_var_dump( $this->boolMoreThanOneCategory, $categories, $categoryIcons );    
 
