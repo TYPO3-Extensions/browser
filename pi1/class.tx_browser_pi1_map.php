@@ -1088,13 +1088,12 @@ class tx_browser_pi1_map
 
 
   /**
- * renderMapMarkerCategoryIcons( ):
- *
- * @param    array        
- * @return    string    $jsonData
- * @version 4.1.0
- * @since   4.1.0
- */
+   * renderMapMarkerCategoryIcons( ):  Render category icons by TypoScript default icons.
+   *
+   * @return    array    $catIcons  : Array with category icons and icons data like offset and size
+   * @version 4.1.0
+   * @since   4.1.0
+   */
   private function renderMapMarkerCategoryIcons( )
   {
     $catIcons = null;
@@ -1179,8 +1178,8 @@ class tx_browser_pi1_map
  * renderMapMarkerPoints( ): Points are map markers. 
  *
  * @return    array
- * @version 4.1.0
- * @since   4.1.0
+ * @version 4.1.7
+ * @since   4.1.7
  */
   private function renderMapMarkerPoints( )
   {
@@ -1257,8 +1256,12 @@ class tx_browser_pi1_map
         }
           // Get the desc
 
-          // Get the category
+          // Get the category label
         $mapMarker['cat']     = $category;
+          // 4.1.7, 3+
+          // Get the category icon(s)
+        $mapMarker['catIconLegend'] = $this->renderMapMarkerVariablesSystemItem( 'categoryIconLegend' );
+        $mapMarker['catIconMap']    = $this->renderMapMarkerVariablesSystemItem( 'categoryIconMap' );
           // Get the iconKey
         $mapMarker['iconKey'] = $arrCategoriesFlipped[ $category ];
 
@@ -1275,6 +1278,7 @@ class tx_browser_pi1_map
       }
         // FOREACH category
     }
+    unset( $dontHandle00 );
       // FOREACH row
 
 //var_dump( __METHOD__, __LINE__, $mapMarkers );    
