@@ -842,6 +842,18 @@ plugin.tx_browser_pi1 {
                 // [STRING] table.field. Example: tx_org_headquarterscat.title
               field = {$plugin.tx_browser_pi1.map.field.category}
             }
+              // [IMAGE] category label in the filter
+            categoryIcon = IMAGE
+            categoryIccon {
+              file {
+                  // [STRING] Path to the icon folder (with ending slash). Example: uploads/tx_org/ Default: uploads/media/
+                import = {$plugin.tx_browser_pi1.map.path.categoryIcon}
+                  // [STRING] table.field. Example: tx_org_headquarterscat.icons
+                field = {$plugin.tx_browser_pi1.map.field.categoryIcon}
+                  // [INTEGER] Position of the image in the image list. 0 = 1st position. 1 = 2nd position.
+                listNum = 0
+              }
+            }
               // [NUMBER] latitude
             latitude = TEXT
             latitude {
