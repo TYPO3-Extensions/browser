@@ -349,13 +349,13 @@ plugin.tx_browser_pi1 {
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}reddark.png
                 }
-                  // [INTEGER] x-offset of the icon in Pixel
+                  // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
-                  // [INTEGER] y-offset of the icon in Pixel
+                  // [INTEGER] y-offset of the icon in pixel
                 offsetY = 0
-                  // [INTEGER] height of the icon in Pixel
+                  // [INTEGER] height of the icon in pixel
                 height = 14
-                  // [INTEGER] width of the icon in Pixel
+                  // [INTEGER] width of the icon in pixel
                 width = 14
               }
                 // Label for a clear view only and without any effect
@@ -366,13 +366,13 @@ plugin.tx_browser_pi1 {
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}bluedark.png
                 }
-                  // [INTEGER] x-offset of the icon in Pixel
+                  // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
-                  // [INTEGER] y-offset of the icon in Pixel
+                  // [INTEGER] y-offset of the icon in pixel
                 offsetY = 0
-                  // [INTEGER] height of the icon in Pixel
+                  // [INTEGER] height of the icon in pixel
                 height = 14
-                  // [INTEGER] width of the icon in Pixel
+                  // [INTEGER] width of the icon in pixel
                 width = 14
               }
                 // Label for a clear view only and without any effect
@@ -383,13 +383,13 @@ plugin.tx_browser_pi1 {
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}greendark.png
                 }
-                  // [INTEGER] x-offset of the icon in Pixel
+                  // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
-                  // [INTEGER] y-offset of the icon in Pixel
+                  // [INTEGER] y-offset of the icon in pixel
                 offsetY = 0
-                  // [INTEGER] height of the icon in Pixel
+                  // [INTEGER] height of the icon in pixel
                 height = 14
-                  // [INTEGER] width of the icon in Pixel
+                  // [INTEGER] width of the icon in pixel
                 width = 14
               }
                 // Label for a clear view only and without any effect
@@ -400,13 +400,13 @@ plugin.tx_browser_pi1 {
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}purple.png
                 }
-                  // [INTEGER] x-offset of the icon in Pixel
+                  // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
-                  // [INTEGER] y-offset of the icon in Pixel
+                  // [INTEGER] y-offset of the icon in pixel
                 offsetY = 0
-                  // [INTEGER] height of the icon in Pixel
+                  // [INTEGER] height of the icon in pixel
                 height = 14
-                  // [INTEGER] width of the icon in Pixel
+                  // [INTEGER] width of the icon in pixel
                 width = 14
               }
                 // Label for a clear view only and without any effect
@@ -417,13 +417,13 @@ plugin.tx_browser_pi1 {
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}orange.png
                 }
-                  // [INTEGER] x-offset of the icon in Pixel
+                  // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
-                  // [INTEGER] y-offset of the icon in Pixel
+                  // [INTEGER] y-offset of the icon in pixel
                 offsetY = 0
-                  // [INTEGER] height of the icon in Pixel
+                  // [INTEGER] height of the icon in pixel
                 height = 14
-                  // [INTEGER] width of the icon in Pixel
+                  // [INTEGER] width of the icon in pixel
                 width = 14
               }
                 // Label for a clear view only and without any effect
@@ -434,13 +434,13 @@ plugin.tx_browser_pi1 {
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}red.png
                 }
-                  // [INTEGER] x-offset of the icon in Pixel
+                  // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
-                  // [INTEGER] y-offset of the icon in Pixel
+                  // [INTEGER] y-offset of the icon in pixel
                 offsetY = 0
-                  // [INTEGER] height of the icon in Pixel
+                  // [INTEGER] height of the icon in pixel
                 height = 14
-                  // [INTEGER] width of the icon in Pixel
+                  // [INTEGER] width of the icon in pixel
                 width = 14
               }
                 // Label for a clear view only and without any effect
@@ -451,13 +451,13 @@ plugin.tx_browser_pi1 {
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}blue.png
                 }
-                  // [INTEGER] x-offset of the icon in Pixel
+                  // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
-                  // [INTEGER] y-offset of the icon in Pixel
+                  // [INTEGER] y-offset of the icon in pixel
                 offsetY = 0
-                  // [INTEGER] height of the icon in Pixel
+                  // [INTEGER] height of the icon in pixel
                 height = 14
-                  // [INTEGER] width of the icon in Pixel
+                  // [INTEGER] width of the icon in pixel
                 width = 14
               }
                 // Label for a clear view only and without any effect
@@ -468,13 +468,13 @@ plugin.tx_browser_pi1 {
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}green.png
                 }
-                  // [INTEGER] x-offset of the icon in Pixel
+                  // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
-                  // [INTEGER] y-offset of the icon in Pixel
+                  // [INTEGER] y-offset of the icon in pixel
                 offsetY = 0
-                  // [INTEGER] height of the icon in Pixel
+                  // [INTEGER] height of the icon in pixel
                 height = 14
-                  // [INTEGER] width of the icon in Pixel
+                  // [INTEGER] width of the icon in pixel
                 width = 14
               }
                 // Label for a clear view only and without any effect
@@ -485,13 +485,13 @@ plugin.tx_browser_pi1 {
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}pink.png
                 }
-                  // [INTEGER] x-offset of the icon in Pixel
+                  // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
-                  // [INTEGER] y-offset of the icon in Pixel
+                  // [INTEGER] y-offset of the icon in pixel
                 offsetY = 0
-                  // [INTEGER] height of the icon in Pixel
+                  // [INTEGER] height of the icon in pixel
                 height = 14
-                  // [INTEGER] width of the icon in Pixel
+                  // [INTEGER] width of the icon in pixel
                 width = 14
               }
                 // Label for a clear view only and without any effect
@@ -502,13 +502,13 @@ plugin.tx_browser_pi1 {
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}yellow.png
                 }
-                  // [INTEGER] x-offset of the icon in Pixel
+                  // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
-                  // [INTEGER] y-offset of the icon in Pixel
+                  // [INTEGER] y-offset of the icon in pixel
                 offsetY = 0
-                  // [INTEGER] height of the icon in Pixel
+                  // [INTEGER] height of the icon in pixel
                 height = 14
-                  // [INTEGER] width of the icon in Pixel
+                  // [INTEGER] width of the icon in pixel
                 width = 14
               }
                 // Label for a clear view only and without any effect
@@ -519,13 +519,13 @@ plugin.tx_browser_pi1 {
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}black.png
                 }
-                  // [INTEGER] x-offset of the icon in Pixel
+                  // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
-                  // [INTEGER] y-offset of the icon in Pixel
+                  // [INTEGER] y-offset of the icon in pixel
                 offsetY = 0
-                  // [INTEGER] height of the icon in Pixel
+                  // [INTEGER] height of the icon in pixel
                 height = 14
-                  // [INTEGER] width of the icon in Pixel
+                  // [INTEGER] width of the icon in pixel
                 width = 14
               }
                 // Label for a clear view only and without any effect
@@ -536,16 +536,24 @@ plugin.tx_browser_pi1 {
                 pathToIcon {
                   value = {$plugin.tx_browser_pi1.map.pathToPoints}white.png
                 }
-                  // [INTEGER] x-offset of the icon in Pixel
+                  // [INTEGER] x-offset of the icon in pixel
                 offsetX = 0
-                  // [INTEGER] y-offset of the icon in Pixel
+                  // [INTEGER] y-offset of the icon in pixel
                 offsetY = 0
-                  // [INTEGER] height of the icon in Pixel
+                  // [INTEGER] height of the icon in pixel
                 height = 14
-                  // [INTEGER] width of the icon in Pixel
+                  // [INTEGER] width of the icon in pixel
                 width = 14
               }
             }
+          }
+            // Offset for categiry icons, which will delivered by the database categories
+          offset =
+          offset {
+              // [INTEGER] x-offset of the icon in pixel
+            x = 0
+              // [INTEGER] y-offset of the icon in pixel
+            y = 0
           }
             // [STRING] table.field with the categories. Example: tx_org_headquarterscat.title
           field = {$plugin.tx_browser_pi1.map.field.category}
