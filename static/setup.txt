@@ -2572,6 +2572,12 @@ plugin.tx_browser_pi1 {
             field = {$plugin.tx_browser_pi1.map.field.description}
             noTrimWrap = || |
           }
+            // Categories
+          11 = TEXT
+          11 {
+            field = {$plugin.tx_browser_pi1.map.field.category}
+            noTrimWrap = || |
+          }
             // Link to the single view
           20 = TEXT
           20 {
