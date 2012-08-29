@@ -617,7 +617,7 @@ class tx_browser_pi1_map
         continue;
       }
       $catLabels[ $catKey ] = $categoryLabels[ $counter ];
-      $catIcons[ $catKey ]  = $categoryIcons[ $counter ];
+      $catIcons[ $catKey ]  = $categoryIcons[ $categoryLabels[ $counter ] ];
       $counter++;
       if( $counter >= $maxItem )
       {
@@ -628,7 +628,6 @@ class tx_browser_pi1_map
     
     $this->arrCategories['labels']  = $catLabels; 
     $this->arrCategories['icons']   = $catIcons;
-    // hallo
 $this->pObj->dev_var_dump( $this->arrCategories );    
     return $this->arrCategories;
   }
