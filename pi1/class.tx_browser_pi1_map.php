@@ -515,7 +515,7 @@ class tx_browser_pi1_map
 
 
   /**
- * categoriesGet( ): Get the categories from the current rows. And set it in $this->arrCategories.
+ * categoriesGet( ): Get the category labels from the current rows. And set it in $this->arrCategories.
  *
  * @return    array   $this->arrCategories
  * @version 4.1.4
@@ -602,6 +602,7 @@ class tx_browser_pi1_map
       // Set the keys: keys should correspondend with keys of the item colours
     
     $this->arrCategories = $catWiKey; 
+$this->pObj->dev_var_dump( $this->arrCategories );    
     return $this->arrCategories;
   }
 
@@ -1351,7 +1352,6 @@ class tx_browser_pi1_map
         $mapMarker['cat'] = $category;
           // 4.1.7, 3+
           // Get the category icon(s)
-        //$mapMarker['catIconLegend'] = $this->renderMapMarkerVariablesSystemItem( 'categoryIconLegend' );
         $mapMarker['catIconMap'] = $this->renderMapMarkerVariablesSystemItem( 'categoryIconMap' );
           // Get the iconKey
         $mapMarker['iconKey'] = $arrCategoriesFlipped[ $category ];
@@ -1374,7 +1374,7 @@ class tx_browser_pi1_map
     unset( $dontHandle00 );
       // FOREACH row
 
-$this->pObj->dev_var_dump( $mapMarkers );    
+//$this->pObj->dev_var_dump( $mapMarkers );    
     if( $this->pObj->b_drs_map )
     {
       $prompt = 'JSON array: ' . var_export( $mapMarkers, true);
