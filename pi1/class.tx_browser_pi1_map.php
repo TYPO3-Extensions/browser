@@ -474,27 +474,43 @@ class tx_browser_pi1_map
  */
   private function categoriesFormInputs( )
   {
+      // Get the field name of the field with the category icon
+    $catIconsField = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+
       // Default space in HTML code
     $tab = '                    ';
 
-      // FOREACH category
-    foreach( $this->arrCategories['labels'] as $key => $category )
+      // FOREACH category label
+    foreach( $this->arrCategories['labels'] as $labelKey => $labelValue )
     {
         // Get the draft for an input field
       $input = $this->confMap['configuration.']['categories.']['form_input'];
         // replace the catgeroy marker
-      $input = str_replace( '###CAT###', $category, $input );
+      $input = str_replace( '###CAT###', $labelValue, $input );
 
         // IF draft for an input field contains ###IMG###, render an image
       $pos = strpos( $input, '###IMG###' );
       if( ! ( $pos === false ) )
       {
+          // SWITCH : Render the image
+        switch( true )
+        {
+          case( is_array( $this->arrCategories[ 'labels' ] ) ):
+              // 4.1.7, dwildt, +
+            $this->cObjDataAddArray( array( $catIconsField => $this->arrCategories[ 'labels' ][ $labelValue ] ) );
+            $img = $this->renderMapMarkerVariablesSystemItem( 'categoryIconMap' );
+            $this->cObjDataRemoveArray( array( $catIconsField => $this->arrCategories[ 'labels' ][ $labelValue ] ) );
+              // 4.1.7, dwildt, +
+            break;
+          default:
           // Render the image
-        $cObj_name = $this->confMap['configuration.']['categories.']['colours.']['legend.'][$key];
-        $cObj_conf = $this->confMap['configuration.']['categories.']['colours.']['legend.'][$key . '.'];
-        $img       = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
-//var_dump( __METHOD__, __LINE__, $key, $cObj_name, $cObj_conf, $img );
-        // Render the image
+            $cObj_name = $this->confMap['configuration.']['categories.']['colours.']['legend.'][$labelKey];
+            $cObj_conf = $this->confMap['configuration.']['categories.']['colours.']['legend.'][$labelKey . '.'];
+            $img       = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+//var_dump( __METHOD__, __LINE__, $labelKey, $cObj_name, $cObj_conf, $img );
+            break;
+        }
+          // SWITCH : Render the image
 
         $input = str_replace( '###IMG###', $img, $input );
       }
@@ -502,7 +518,7 @@ class tx_browser_pi1_map
 
       $arrInputs[ ] = $tab . $input;
     }
-      // FOREACH category
+      // FOREACH category label
     
       // Move array of input fields to a string
     $inputs = implode( PHP_EOL , $arrInputs );
@@ -1377,7 +1393,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
           // Get the category label
         $mapMarker['cat'] = $category;
           // 4.1.7, 3+
-          // Get the category icon(s)
+          // Get the category icon
         $mapMarker['catIconMap'] = $this->renderMapMarkerVariablesSystemItem( 'categoryIconMap' );
           // Get the iconKey
         $mapMarker['iconKey'] = $arrCategoriesFlipped[ $category ];
