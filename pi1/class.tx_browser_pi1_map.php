@@ -604,7 +604,7 @@ class tx_browser_pi1_map
     }
       // Set the keys: keys should correspondend with keys of the item colours
     
-    $this->arrCategories['label'] = $catLabel; 
+    $this->arrCategories['labels'] = $catLabel; 
 $this->pObj->dev_var_dump( $this->arrCategories );    
     return $this->arrCategories;
   }
