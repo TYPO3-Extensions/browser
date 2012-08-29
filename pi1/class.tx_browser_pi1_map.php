@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 4.1.4
+* @version 4.1.7
 * @since 3.9.6
 */
 
@@ -662,17 +662,18 @@ $this->pObj->dev_var_dump( $this->arrCategories );
    *                          are two categories at least
  *
  * @return    boolean   $this->boolMoreThanOneCategory: true, if there are two categories at least
- * @version 4.1.4
+ * @version 4.1.7
  * @since   4.1.4
  */
   private function categoriesMoreThanOne( )
   {
-      // RETURN : method is called twice at least
-    if( $this->boolMoreThanOneCategory != null )
-    {
-      return $this->boolMoreThanOneCategory;
-    }
-      // RETURN : method is called twice at least
+      // 4.1.7, dwildt, 6-
+//      // RETURN : method is called twice at least
+//    if( $this->boolMoreThanOneCategory != null )
+//    {
+//      return $this->boolMoreThanOneCategory;
+//    }
+//      // RETURN : method is called twice at least
       
     $categories = $this->categoriesGet( );
 
