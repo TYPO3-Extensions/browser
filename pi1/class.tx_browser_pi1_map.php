@@ -1344,7 +1344,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
         }
           // Get categories
           // Get category icons
-        if( isset( $row[ $catIconsField ] ) )
+        if( isset( $this->arrCategories['icons'] ) )
         {
           $categoryIcons = explode( $this->catDevider, $row[ $catIconsField ] );
         }
@@ -1353,7 +1353,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
       else
       {
         $categories = array( $keys[ 0 ] => 'dummy' );
-        if( isset( $row[ $catIconsField ] ) )
+        if( isset( $this->arrCategories['icons'] ) )
         {
           list( $categoryIcons[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catIconsField ] );
         }
@@ -1367,7 +1367,10 @@ $this->pObj->dev_var_dump( $this->arrCategories );
         $this->cObjDataAddRow( $row );
 
         $this->cObjDataAddMarker( );
-        $this->cObjDataAddArray( array( $catIconsField => $categoryIcons[$key] ) );
+        if( isset( $this->arrCategories['icons'] ) )
+        {
+          $this->cObjDataAddArray( array( $catIconsField => $categoryIcons[$key] ) );
+        }
 
           // Get the longitude
         $mapMarker['lon'] = $this->renderMapMarkerVariablesSystemItem( 'longitude' );
@@ -1401,7 +1404,10 @@ $this->pObj->dev_var_dump( $this->arrCategories );
         $mapMarker['cat'] = $category;
           // 4.1.7, 3+
           // Get the category icon
-        $mapMarker['catIconMap'] = $this->renderMapMarkerVariablesSystemItem( 'categoryIconMap' );
+        if( isset( $this->arrCategories['icons'] ) )
+        {
+          $mapMarker['catIconMap'] = $this->renderMapMarkerVariablesSystemItem( 'categoryIconMap' );
+        }
           // Get the iconKey
         $mapMarker['iconKey'] = $arrCategoriesFlipped[ $category ];
 
