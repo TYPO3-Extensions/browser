@@ -523,8 +523,10 @@ class tx_browser_pi1_map
  */
   private function categoriesGet( )
   {
-      // Array for category labels
-    $catLabel = null;
+      // Local array for category labels
+    $catLabels = null;
+      // Local array for category icons
+    $catIcons = null;
     
       // RETURN : method is called twice at least
     if( $this->arrCategories != null )
@@ -533,45 +535,59 @@ class tx_browser_pi1_map
     }
       // RETURN : method is called twice at least
     
-      // Get the label for the category field
-    $key = $this->confMap['configuration.']['categories.']['fields.']['category'];
+      // Get the field name of the field with the category label
+    $fieldForLabel = $this->confMap['configuration.']['categories.']['fields.']['category'];
+      // Get the field name of the field with the category icon
+    $fieldForIcon = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
 
       // Get categories from the rows
-    $categories = array( );
+    $categoryLabels = array( );
+      // FOREACH row
     foreach( $this->pObj->rows as $row )
     {
-      if( ! isset( $row[ $key ] ) )
+        // RETURN : field for category label is missing
+      if( ! isset( $row[ $fieldForLabel ] ) )
       {
         if( $this->pObj->b_drs_map )
         {
-          $prompt = 'current rows doesn\'t contain the field "' . $key . '"';
+          $prompt = 'current rows doesn\'t contain the field "' . $fieldForLabel . '"';
           t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
         }
         $this->arrCategories = array( );
         return $this->arrCategories;
       }
-      $categories =  array_merge( $categories, explode( $this->catDevider, $row[ $key ] ) );
+        // RETURN : field for category label is missing
+        // 4.1.7, dwildt, 1-
+      //$categoryLabels =  array_merge( $categoryLabels, explode( $this->catDevider, $row[ $fieldForLabel ] ) );
+        // 4.1.7, dwildt, 10+
+      $catLabelsOfCurrRow = explode( $this->catDevider, $row[ $fieldForLabel ] );
+      foreach( $catLabelsOfCurrRow as $labelKey => $labelValue )
+      {
+        $categoryLabels[] = $labelValue;
+      }
+        // 4.1.7, dwildt, 10+
     }
+      // FOREACH row
       // Get categories from the rows
     
       // Remove non unique categories
-    $categories = array_unique( $categories );
+    $categoryLabels = array_unique( $categoryLabels );
 
       // Order the categories
     $orderBy = $this->confMap['configuration.']['categories.']['orderBy'];
     switch( $orderBy )
     {
       case( 'SORT_REGULAR' ):
-        sort( $categories, SORT_REGULAR );
+        sort( $categoryLabels, SORT_REGULAR );
         break;
       case( 'SORT_NUMERIC' ):
-        sort( $categories, SORT_NUMERIC );
+        sort( $categoryLabels, SORT_NUMERIC );
         break;
       case( 'SORT_STRING' ):
-        sort( $categories, SORT_STRING );
+        sort( $categoryLabels, SORT_STRING );
         break;
       case( 'SORT_LOCALE_STRING' ):
-        sort( $categories, SORT_LOCALE_STRING );
+        sort( $categoryLabels, SORT_LOCALE_STRING );
         break;
       default:
         if( $this->pObj->b_drs_map )
@@ -581,13 +597,13 @@ class tx_browser_pi1_map
           $prompt = 'categories will ordered by SORT_REGULAR!';
           t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
         }
-        sort( $categories, SORT_REGULAR );
+        sort( $categoryLabels, SORT_REGULAR );
         break;
     }
       // Order the categories
 
       // Set the keys: keys should correspondend with keys of the item colours
-    $maxItem = count( $categories );
+    $maxItem = count( $categoryLabels );
     $counter = 0;
     foreach( array_keys( $this->confMap['configuration.']['categories.']['colours.']['points.'] ) as $catKey )
     {
@@ -595,7 +611,7 @@ class tx_browser_pi1_map
       {
         continue;
       }
-      $catLabel[ $catKey ] = $categories[ $counter ];
+      $catLabels[ $catKey ] = $categoryLabels[ $counter ];
       $counter++;
       if( $counter >= $maxItem )
       {
@@ -604,7 +620,7 @@ class tx_browser_pi1_map
     }
       // Set the keys: keys should correspondend with keys of the item colours
     
-    $this->arrCategories['labels'] = $catLabel; 
+    $this->arrCategories['labels'] = $catLabels; 
 $this->pObj->dev_var_dump( $this->arrCategories );    
     return $this->arrCategories;
   }
