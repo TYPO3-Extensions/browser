@@ -644,7 +644,10 @@ $this->pObj->dev_var_dump( $catIconsField, $this->pObj->cObj->data[ $catIconsFie
       // Set the keys: keys should correspondend with keys of the item colours
     
     $this->arrCategories['labels']  = $catLabels; 
-    $this->arrCategories['icons']   = $catIcons;
+    if( ! empty( $catIcons ) )
+    {
+      $this->arrCategories['icons']   = $catIcons;
+    }
 $this->pObj->dev_var_dump( $this->arrCategories );    
     return $this->arrCategories;
   }
