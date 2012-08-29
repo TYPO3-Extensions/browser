@@ -478,7 +478,7 @@ class tx_browser_pi1_map
     $tab = '                    ';
 
       // FOREACH category
-    foreach( $this->arrCategories as $key => $category )
+    foreach( $this->arrCategories['labels'] as $key => $category )
     {
         // Get the draft for an input field
       $input = $this->confMap['configuration.']['categories.']['form_input'];
@@ -492,7 +492,7 @@ class tx_browser_pi1_map
           // Render the image
         $cObj_name = $this->confMap['configuration.']['categories.']['colours.']['legend.'][$key];
         $cObj_conf = $this->confMap['configuration.']['categories.']['colours.']['legend.'][$key . '.'];
-        $img        = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+        $img       = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
 //var_dump( __METHOD__, __LINE__, $key, $cObj_name, $cObj_conf, $img );
         // Render the image
 
@@ -518,11 +518,14 @@ class tx_browser_pi1_map
  * categoriesGet( ): Get the category labels from the current rows. And set it in $this->arrCategories.
  *
  * @return    array   $this->arrCategories
- * @version 4.1.4
+ * @version 4.1.7
  * @since   4.1.4
  */
   private function categoriesGet( )
   {
+      // Array for category labels
+    $catLabel = null;
+    
       // RETURN : method is called twice at least
     if( $this->arrCategories != null )
     {
@@ -592,7 +595,7 @@ class tx_browser_pi1_map
       {
         continue;
       }
-      $catWiKey[ $catKey ] = $categories[ $counter ];
+      $catLabel[ $catKey ] = $categories[ $counter ];
       $counter++;
       if( $counter >= $maxItem )
       {
@@ -601,7 +604,7 @@ class tx_browser_pi1_map
     }
       // Set the keys: keys should correspondend with keys of the item colours
     
-    $this->arrCategories = $catWiKey; 
+    $this->arrCategories['label'] = $catLabel; 
 $this->pObj->dev_var_dump( $this->arrCategories );    
     return $this->arrCategories;
   }
@@ -627,7 +630,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
       
     $categories = $this->categoriesGet( );
 
-    if( count ( $categories ) > 1 )
+    if( count ( $categories['labels'] ) > 1 )
     {
       $this->boolMoreThanOneCategory = true;
       if( $this->pObj->b_drs_map )
@@ -1266,7 +1269,7 @@ $this->pObj->dev_var_dump( $this->arrCategories );
 
     if( $this->boolMoreThanOneCategory )
     {
-      $arrCategoriesFlipped = array_flip( $this->arrCategories );
+      $arrCategoriesFlipped = array_flip( $this->arrCategories['labels'] );
     }
     else
     {
