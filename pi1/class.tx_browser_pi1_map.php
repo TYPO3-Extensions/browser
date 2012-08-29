@@ -540,6 +540,8 @@ $this->pObj->dev_var_dump( $catIconsField, $this->pObj->cObj->data[ $catIconsFie
  */
   private function categoriesGet( )
   {
+$this->pObj->dev_var_dump( 'categoriesGet' );    
+    
       // RETURN : method is called twice at least
     if( $this->arrCategories != null )
     {
@@ -651,7 +653,7 @@ $this->pObj->dev_var_dump( $catIconsField, $this->pObj->cObj->data[ $catIconsFie
     {
       $this->arrCategories['icons']   = $catIcons;
     }
-$this->pObj->dev_var_dump( $this->arrCategories );    
+//$this->pObj->dev_var_dump( $this->arrCategories );    
     return $this->arrCategories;
   }
 
@@ -667,7 +669,6 @@ $this->pObj->dev_var_dump( $this->arrCategories );
  */
   private function categoriesMoreThanOne( )
   {
-$this->pObj->dev_var_dump( 'categoriesMoreThanOne' );    
 
       // RETURN : method is called twice at least
     if( $this->boolMoreThanOneCategory != null )
@@ -1360,7 +1361,6 @@ $this->pObj->dev_var_dump( 'categoriesMoreThanOne' );
           list( $categoryIcons[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catIconsField ] );
         }
       }
-$this->pObj->dev_var_dump( $this->arrCategories, $this->boolMoreThanOneCategory, $categories, $categoryIcons );    
 
         // FOREACH category
       foreach( $categories as $key => $category )
