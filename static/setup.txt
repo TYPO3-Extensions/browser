@@ -2571,14 +2571,14 @@ plugin.tx_browser_pi1 {
           10 {
             required    = 1
             field       = {$plugin.tx_browser_pi1.map.field.description}
-            noTrimWrap  = || |<br />
+            noTrimWrap  = || <br />|
           }
             // Categories
           20 = TEXT
           20 {
             required    = 1
             field       = {$plugin.tx_browser_pi1.map.field.category}
-            noTrimWrap  = |(|) |<br />
+            noTrimWrap  = |(|) <br />|
           }
             // Link to the single view
           30 = TEXT
