@@ -1308,7 +1308,7 @@ class tx_browser_pi1_map
           list( $categoryIcons[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catIconsField ] );
         }
       }
-$this->pObj->dev_var_dump( $this->boolMoreThanOneCategory, $categories, $categoryIcons );    
+//$this->pObj->dev_var_dump( $this->boolMoreThanOneCategory, $categories, $categoryIcons );    
 
         // FOREACH category
       foreach( $categories as $key => $category )
