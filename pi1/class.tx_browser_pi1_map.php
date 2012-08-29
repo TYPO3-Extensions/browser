@@ -540,8 +540,6 @@ $this->pObj->dev_var_dump( $catIconsField, $this->pObj->cObj->data[ $catIconsFie
  */
   private function categoriesGet( )
   {
-$this->pObj->dev_var_dump( 'categoriesGet' );    
-    
       // RETURN : method is called twice at least
     if( $this->arrCategories != null )
     {
