@@ -856,22 +856,18 @@ plugin.tx_browser_pi1 {
                 // [STRING] table.field. Example: tx_org_headquarterscat.title
               field = {$plugin.tx_browser_pi1.map.field.category}
             }
-              // [STRING] path to the category icon for the legend
-            categoryIconLegend = COA
+              // Returns the icon as an HTML image tag
+            categoryIconLegend = IMAGE
             categoryIconLegend {
-                // Directory
-              10 = TEXT
-              10 {
+              file {
                   // [STRING] Path to the directory with the category icons (with ending slash). Example: uploads/tx_org/ Default: uploads/media/
-                value = {$plugin.tx_browser_pi1.map.path.categoryIcon}
-              }
-                // File
-              20 = TEXT
-              20 {
-                  // [STRING] table.field. Example: tx_org_headquarterscat.icons
-                field = {$plugin.tx_browser_pi1.map.field.categoryIcon}
-                  // [INTEGER] Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ...
-                stdWrap.listNum = {$plugin.tx_browser_pi1.map.position.categoryIconLegend}
+                import = {$plugin.tx_browser_pi1.map.path.categoryIcon}
+                import {
+                    // [STRING] table.field. Example: tx_org_headquarterscat.icons
+                  field = {$plugin.tx_browser_pi1.map.field.categoryIcon}
+                    // [INTEGER] Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ...
+                  listNum = {$plugin.tx_browser_pi1.map.position.categoryIconLegend}
+                }
               }
             }
               // [STRING] path to the category icon for the map
