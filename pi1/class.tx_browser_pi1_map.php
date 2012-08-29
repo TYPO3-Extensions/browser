@@ -540,11 +540,6 @@ $this->pObj->dev_var_dump( $catIconsField, $this->pObj->cObj->data[ $catIconsFie
  */
   private function categoriesGet( )
   {
-      // Local array for category labels
-    $catLabels = null;
-      // Local array for category icons
-    $catIcons = null;
-    
       // RETURN : method is called twice at least
     if( $this->arrCategories != null )
     {
@@ -552,6 +547,11 @@ $this->pObj->dev_var_dump( $catIconsField, $this->pObj->cObj->data[ $catIconsFie
     }
       // RETURN : method is called twice at least
     
+      // Local array for category labels
+    $catLabels = null;
+      // Local array for category icons
+    $catIcons = null;
+
       // Get the field name of the field with the category label
     $fieldForLabel = $this->confMap['configuration.']['categories.']['fields.']['category'];
       // Get the field name of the field with the category icon
@@ -667,13 +667,14 @@ $this->pObj->dev_var_dump( $this->arrCategories );
  */
   private function categoriesMoreThanOne( )
   {
-      // 4.1.7, dwildt, 6-
-//      // RETURN : method is called twice at least
-//    if( $this->boolMoreThanOneCategory != null )
-//    {
-//      return $this->boolMoreThanOneCategory;
-//    }
-//      // RETURN : method is called twice at least
+$this->pObj->dev_var_dump( 'categoriesMoreThanOne' );    
+
+      // RETURN : method is called twice at least
+    if( $this->boolMoreThanOneCategory != null )
+    {
+      return $this->boolMoreThanOneCategory;
+    }
+      // RETURN : method is called twice at least
       
     $categories = $this->categoriesGet( );
 
