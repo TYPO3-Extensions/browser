@@ -2569,18 +2569,20 @@ plugin.tx_browser_pi1 {
             // Description
           10 = TEXT
           10 {
-            field = {$plugin.tx_browser_pi1.map.field.description}
-            noTrimWrap = || |
+            required    = 1
+            field       = {$plugin.tx_browser_pi1.map.field.description}
+            noTrimWrap  = || |<br />
           }
             // Categories
-          11 = TEXT
-          11 {
-            field = {$plugin.tx_browser_pi1.map.field.category}
-            noTrimWrap = || |
-          }
-            // Link to the single view
           20 = TEXT
           20 {
+            required    = 1
+            field       = {$plugin.tx_browser_pi1.map.field.category}
+            noTrimWrap  = |(|) |<br />
+          }
+            // Link to the single view
+          30 = TEXT
+          30 {
             value = In detail &raquo;
             lang {
               de = Mehr Informationen &raquo;
