@@ -634,7 +634,10 @@ $this->pObj->dev_var_dump( $catIconsField, $this->pObj->cObj->data[ $catIconsFie
         continue;
       }
       $catLabels[ $catKey ] = $categoryLabels[ $counter ];
-      $catIcons[ $catKey ]  = $categoryIcons[ $categoryLabels[ $counter ] ];
+      if( isset( $row[ $fieldForIcon ] ) )
+      {
+        $catIcons[ $catKey ]  = $categoryIcons[ $categoryLabels[ $counter ] ];
+      }
       $counter++;
       if( $counter >= $maxItem )
       {
@@ -644,7 +647,7 @@ $this->pObj->dev_var_dump( $catIconsField, $this->pObj->cObj->data[ $catIconsFie
       // Set the keys: keys should correspondend with keys of the item colours
     
     $this->arrCategories['labels']  = $catLabels; 
-    if( ! empty( $catIcons ) )
+    if( isset( $row[ $fieldForIcon ] ) )
     {
       $this->arrCategories['icons']   = $catIcons;
     }
