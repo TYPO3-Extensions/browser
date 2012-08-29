@@ -564,16 +564,21 @@ class tx_browser_pi1_map
       foreach( $catLabelsOfCurrRow as $labelKey => $labelValue )
       {
         $categoryLabels[] = $labelValue;
+        if( isset( $row[ $fieldForIcon ] ) )
+        {
+          $catIconsOfCurrRow            = explode( $this->catDevider, $row[ $fieldForIcon ] );
+          $categoryIcons[ $labelValue ] = $catIconsOfCurrRow[ $labelKey ];
+        }
       }
         // 4.1.7, dwildt, 10+
     }
       // FOREACH row
       // Get categories from the rows
     
-      // Remove non unique categories
+      // Remove non unique category labels
     $categoryLabels = array_unique( $categoryLabels );
 
-      // Order the categories
+      // Order the category labels
     $orderBy = $this->confMap['configuration.']['categories.']['orderBy'];
     switch( $orderBy )
     {
@@ -600,7 +605,7 @@ class tx_browser_pi1_map
         sort( $categoryLabels, SORT_REGULAR );
         break;
     }
-      // Order the categories
+      // Order the category labels
 
       // Set the keys: keys should correspondend with keys of the item colours
     $maxItem = count( $categoryLabels );
@@ -612,6 +617,7 @@ class tx_browser_pi1_map
         continue;
       }
       $catLabels[ $catKey ] = $categoryLabels[ $counter ];
+      $catIcons[ $catKey ]  = $categoryIcons[ $counter ];
       $counter++;
       if( $counter >= $maxItem )
       {
@@ -620,7 +626,9 @@ class tx_browser_pi1_map
     }
       // Set the keys: keys should correspondend with keys of the item colours
     
-    $this->arrCategories['labels'] = $catLabels; 
+    $this->arrCategories['labels']  = $catLabels; 
+    $this->arrCategories['icons']   = $catIcons;
+    // hallo
 $this->pObj->dev_var_dump( $this->arrCategories );    
     return $this->arrCategories;
   }
