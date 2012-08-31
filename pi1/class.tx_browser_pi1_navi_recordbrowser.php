@@ -689,7 +689,7 @@ class tx_browser_pi1_navi_recordbrowser
     }
       // SWITCH : ids for record browser
 
-$this->pObj->dev_var_dump( $this->pObj->piVars );
+$this->pObj->dev_var_dump( $this->pObj->piVars,  serialize( $this->pObj->piVars ) );
     
     return;
   }
