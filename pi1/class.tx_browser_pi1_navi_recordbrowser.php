@@ -260,7 +260,7 @@ class tx_browser_pi1_navi_recordbrowser
       // Move the piVars to an query string
     $piVarsAsParmas = '&' . http_build_query( $piVars );
 
-    return $button;
+    return $piVarsAsParmas;
   }
 
 
