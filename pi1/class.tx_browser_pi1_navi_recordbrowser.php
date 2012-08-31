@@ -283,17 +283,11 @@ class tx_browser_pi1_navi_recordbrowser
 
 
 
-
-
-
-
-
-
  /**
   * recordbrowser_rendering: Render the record browser (HTML code)
   *
   * @return	string		$record_browser: HTML code
-  * @version  3.7.0
+  * @version  4.1.8
   * @since    3.7.0
   */
   private function recordbrowser_rendering()
@@ -302,7 +296,6 @@ class tx_browser_pi1_navi_recordbrowser
     $arr_buttons    = array();
     $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
     
-
       // Uid of the current record
     $singlePid      = (int) $this->pObj->piVars['showUid'];
       // Uid of the current plugin
@@ -315,7 +308,7 @@ class tx_browser_pi1_navi_recordbrowser
       // RETURN record_browser should not be displayed
 
     $bool_record_browser = $this->conf['navigation.']['record_browser'];
-    if(!$bool_record_browser)
+    if( ! $bool_record_browser )
     {
       if ($this->pObj->b_drs_templating)
       {
@@ -465,22 +458,7 @@ class tx_browser_pi1_navi_recordbrowser
       //
       // Set the button curr
 
-    $button = null;
-      // Get uid of the record
-    $marker['###RECORD_UID###']       = $singlePid;
-      // Get position of the record
-    $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
-
-      // Get button configuration
-    $button_name = $conf_record_browser['buttons.']['current.']['curr'];
-    $button_conf = $conf_record_browser['buttons.']['current.']['curr.'];
-
-      // Set and replace markers
-    $button_conf = $this->pObj->objMarker->substitute_marker($button_conf, $marker);
-
-      // Set button
-    $button = $this->pObj->cObj->cObjGetSingle($button_name, $button_conf);
-
+    $button = $this->recordbrowser_rendering_button_current( $pos_of_all_rows );
     if(!empty($button))
     {
       $arr_buttons[] = $button;
@@ -606,6 +584,43 @@ class tx_browser_pi1_navi_recordbrowser
 
       // RETURN the record browser
     return $record_browser;
+  }
+
+
+
+ /**
+  * recordbrowser_rendering_button_current  : Render the current button / home button
+  *
+  * @param      array           $pos_of_all_rows  : Array with the position of each row
+  * @return	string		$button           : HTML code
+  * @version  4.1.8
+  * @since    4.1.8
+  */
+  private function recordbrowser_rendering_button_current( $pos_of_all_rows )
+  {
+    $button = null;
+    
+      // Uid of the current record
+    $singlePid = (int) $this->pObj->piVars['showUid'];
+      // Get record_browser configuration
+    $conf_record_browser = $this->conf['navigation.']['record_browser.'];
+    
+      // Get uid of the record
+    $marker['###RECORD_UID###']       = $singlePid;
+      // Get position of the record
+    $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
+
+      // Get button configuration
+    $button_name = $conf_record_browser['buttons.']['current.']['curr'];
+    $button_conf = $conf_record_browser['buttons.']['current.']['curr.'];
+
+      // Set and replace markers
+    $button_conf = $this->pObj->objMarker->substitute_marker( $button_conf, $marker );
+
+      // Set button
+    $button = $this->pObj->cObj->cObjGetSingle($button_name, $button_conf);
+
+    return $button;
   }
 
 
