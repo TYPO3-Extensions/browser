@@ -990,9 +990,8 @@ plugin.tx_browser_pi1 {
             value = &lt;
           }
             // Current button of the record browser
-          curr = COA
-          curr.10 < .first
-          curr.10 {
+          curr < .first
+          curr {
             value = &Oslash;
             typolink {
               parameter = {page:uid}
@@ -1019,7 +1018,7 @@ plugin.tx_browser_pi1 {
           prev {
             value = <span class="ui-icon ui-icon-seek-prev" style="float: left;margin: 0 4px;"></span>
           }
-          curr.10 {
+          curr {
             value = <span class="ui-icon ui-icon-home" style="float: left;margin: 0 4px;"></span>
           }
           next {
@@ -1037,7 +1036,7 @@ plugin.tx_browser_pi1 {
           prev {
             value = ###RECORD_POSITION###
           }
-          curr.10 {
+          curr {
             value = ###RECORD_POSITION###
           }
           next {
@@ -1063,7 +1062,7 @@ plugin.tx_browser_pi1 {
               en = previous
             }
           }
-          curr.10 {
+          curr {
             value   = current
             lang {
               de = Aktuell
