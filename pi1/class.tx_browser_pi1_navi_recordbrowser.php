@@ -234,7 +234,7 @@ class tx_browser_pi1_navi_recordbrowser
       // RETURN : there isn't any session
 
       // Get the name of the session data space
-    $str_data_space = $this->getNameOfDataSpace( );
+    $str_data_space = $this->pObj->objSession->getNameOfDataSpace( );
       // Get tx_browser-pi1 session data
     $arr_session_browser = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
 
