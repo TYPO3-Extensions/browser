@@ -793,9 +793,9 @@
     }
     // DRS - Development Reporting System
 
-// 4.1.8
-$this->pObj->objNaviRecordBrowser->mode = ( int ) $this->pObj->piVar_mode; 
-$this->pObj->dev_var_dump( $this->pObj->objNaviRecordBrowser->recordbrowser_get_piVars_as_params( ) );
+//// 4.1.8
+//$this->pObj->objNaviRecordBrowser->mode = ( int ) $this->pObj->piVar_mode; 
+//$this->pObj->dev_var_dump( $this->pObj->objNaviRecordBrowser->recordbrowser_get_piVars_as_params( ) );
 
   }
 
