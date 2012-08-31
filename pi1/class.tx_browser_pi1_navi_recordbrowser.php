@@ -657,7 +657,7 @@ class tx_browser_pi1_navi_recordbrowser
     $str_data_space = $this->pObj->objSession->getNameOfDataSpace( );
       // Set status of the session management
 
-$this->pObj->dev_var_dump( $idsForRecordBrowser, $rows );
+//$this->pObj->dev_var_dump( $idsForRecordBrowser, $rows );
       // SWITCH : ids for record browser
     switch( true )
     {
@@ -830,8 +830,8 @@ $this->pObj->dev_var_dump( $idsForRecordBrowser, $rows );
 
 
  /**
-  * recordbrowser_set_session_piVars : Store serialized piVars in the session
-  *                                 * Feature: #40495
+  * recordbrowser_set_session_piVars :  Store serialized piVars in the session
+  *                                     * Feature: #40495
   *
   * @return	void
   * @version 4.1.8
@@ -846,27 +846,47 @@ $this->pObj->dev_var_dump( $idsForRecordBrowser, $rows );
       // Get the name of the session data space
     $str_data_space = $this->pObj->objSession->getNameOfDataSpace( );
 
-      // Set the session array
       // Get the tx_browser_pi1 session array
     $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey( $str_data_space, $this->pObj->prefixId );
-      // Set serialzed piVars
+
+      // piVars without showUid
     $piVars = $this->pObj->piVars;
     unset( $piVars['showUid'] );
-    $sPiVars = serialize( $piVars );
-$this->pObj->dev_var_dump( $sPiVars );
-    $arr_browser_session[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['sPiVars'] = $sPiVars;
-      // Set the tx_browser_pi1 session array
-    $GLOBALS['TSFE']->fe_user->setKey( $str_data_space, $this->pObj->prefixId, $arr_browser_session );
-    if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+      // piVars without showUid
+    
+      // SWITCH : piVars
+    switch( true )
     {
-      $prompt = 'Session array [' . $str_data_space . '][' . $this->pObj->prefixId . ']' .
-                '[mode-' . $this->mode . '][sPiVars] is set to ' . $sPiVars . '.';
-      t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
+      case( ! empty( $piVars ) ):
+          // Store serialized piVars as sPiVars session variable
+        $sPiVars = serialize( $piVars );
+$this->pObj->dev_var_dump( $sPiVars );
+        $arr_browser_session[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['sPiVars'] = $sPiVars;
+          // Set the tx_browser_pi1 session array
+        $GLOBALS['TSFE']->fe_user->setKey( $str_data_space, $this->pObj->prefixId, $arr_browser_session );
+        if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+        {
+          $prompt = 'Session array [' . $str_data_space . '][' . $this->pObj->prefixId . ']' .
+                    '[mode-' . $this->mode . '][sPiVars] is set to ' . $sPiVars . '.';
+          t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
+        }
+        break;
+          // Store serialized piVars as sPiVars session variable
+      case( empty( $piVars ) ):
+      default:
+          // DRS only
+        if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+        {
+          $prompt = 'Session array [' . $str_data_space . '][' . $this->pObj->prefixId . ']' .
+                    '[mode-' . $this->mode . '][sPiVars] isn\'t set: piVars are empty';
+          t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
+        }
+        break;
+          // DRS only
     }
-      // Set the session array
+      // SWITCH : piVars
 
     return;
-
   }
 
 
