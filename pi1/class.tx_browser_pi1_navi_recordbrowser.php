@@ -249,17 +249,6 @@ class tx_browser_pi1_navi_recordbrowser
     }
       // RETURN : marker PIVARS_FOR_LISTVIEW shouldn't rendered
 
-      // DRS
-    if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
-    {
-      $prompt = 'navigation.record_browser.enable.pivars_for_listview is true. Marker ###PIVARS_FOR_LISTVIEW### won\'t rendered.';
-      t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
-      $prompt = 'BE AWARE: Don\'t cache the single view!';
-      t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 2 );
-    }
-      // DRS
-
-        
       // Get the name of the session data space
     $str_data_space = $this->pObj->objSession->getNameOfDataSpace( );
       // Get tx_browser-pi1 session data
@@ -282,7 +271,8 @@ class tx_browser_pi1_navi_recordbrowser
     
       // Get the serialized piVars
     $sPiVars  = $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['sPiVars'];
-      // DRS
+
+    // DRS
     if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
     {
       t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session array [' . $str_data_space . ']' .
@@ -290,11 +280,23 @@ class tx_browser_pi1_navi_recordbrowser
         $this->pObj->extKey, 0);
     }
       // DRS
+      
       // Get it unserialized
     $piVars   = unserialize( $sPiVars );
     $httpQuery[$this->pObj->prefixId] = $piVars;
       // Move the piVars to an query string
     $piVarsForListView = '&' . http_build_query( $httpQuery );
+
+      // DRS
+    if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+    {
+      $prompt = 'navigation.record_browser.enable.pivars_for_listview is true. ' . 
+                'Marker ###PIVARS_FOR_LISTVIEW### will replaced with ' . $piVarsForListView;
+      t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
+      $prompt = 'BE AWARE: Don\'t cache the single view!';
+      t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 2 );
+    }
+      // DRS
 
     return $piVarsForListView;
   }
