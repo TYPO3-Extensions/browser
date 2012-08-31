@@ -791,7 +791,7 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // Set the global $localTable
 
-    list( $this->localTable, $field ) = explode( '.', $this->arrLocalTable['uid'] );
+    list( $this->localTable ) = explode( '.', $this->arrLocalTable['uid'] );
       // Set the global $localTable
 
 
@@ -1220,6 +1220,8 @@ class tx_browser_pi1 extends tslib_pibase {
  */
   public function drs_debugTrail( $level = 1 )
   {
+    $arr_return = null; 
+    
       // Get the debug trail
     $debugTrail_str = t3lib_utility_Debug::debugTrail( );
 
@@ -1235,6 +1237,7 @@ class tx_browser_pi1 extends tslib_pibase {
       // Get line
     $classMethodLine = $debugTrail_arr[ count( $debugTrail_arr) - ( $level + 1 )];
     list( $dummy, $line ) = explode ( '#', $classMethodLine );
+    unset( $dummy );
       // Get line
 
       // RETURN content
@@ -1641,6 +1644,8 @@ class tx_browser_pi1 extends tslib_pibase {
         // Prompt the content
       echo $prompt;
     }
+    
+    unset( $content );
 
   }
 
@@ -2468,6 +2473,7 @@ class tx_browser_pi1 extends tslib_pibase {
     $mode       = $this->piVar_mode;
     $viewWiDot  = $view.'.';
 
+    $arr_return = array( );
     $arr_return['error']['status']  = false;
     $arr_return['data']['template'] = false;
 
