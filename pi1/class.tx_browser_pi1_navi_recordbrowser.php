@@ -219,19 +219,19 @@ class tx_browser_pi1_navi_recordbrowser
       // Current language
     $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
     
-      // RETURN : there isn't any session
-    if( ! $this->pObj->objSession->bool_session_enabled )
-    {
-        // DRS
-      if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
-      {
-        $prompt = 'No session: no piVars from the list view.';
-        t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
-      }
-        // DRS
-      return $piVarsAsParmas;
-    }
-      // RETURN : there isn't any session
+//      // RETURN : there isn't any session
+//    if( ! $this->pObj->objSession->bool_session_enabled )
+//    {
+//        // DRS
+//      if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+//      {
+//        $prompt = 'No session: no piVars from the list view.';
+//        t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
+//      }
+//        // DRS
+//      return $piVarsAsParmas;
+//    }
+//      // RETURN : there isn't any session
 
       // Get the name of the session data space
     $str_data_space = $this->pObj->objSession->getNameOfDataSpace( );
