@@ -1162,6 +1162,10 @@ plugin.tx_browser_pi1 {
         }
         current < .icons
       }
+      enable {
+          // [BOOLEAN] 0 (recommended) || 1: marker PIVARS_FOR_LISTVIEW will replece with piVar params (http query). BE AWARE: Don't cache the single view in this case! 
+        pivars_for_listview = 0
+      }
       special {
           // [BOOLEAN] 0 (recommended) || 1: Overwrites sys_lsysanguage_overlay temporarily (freemedia case)
         listViewWithDefaultLanguage = 0
