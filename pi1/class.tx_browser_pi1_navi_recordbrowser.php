@@ -242,9 +242,9 @@ class tx_browser_pi1_navi_recordbrowser
     if( empty( $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['sPiVars'] ) )
     {
         // DRS
-      if ($this->pObj->b_drs_warn)
+      if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
       {
-        t3lib_div::devlog('[INFO] Session array [' . $str_data_space . ']' .
+        t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session array [' . $str_data_space . ']' .
           '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][cache][mode-' . $this->mode . '][sPiVars] is empty!',
           $this->pObj->extKey, 0);
       }
@@ -255,6 +255,14 @@ class tx_browser_pi1_navi_recordbrowser
     
       // Get the serialized piVars
     $sPiVars  = $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['sPiVars'];
+      // DRS
+    if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+    {
+      t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session array [' . $str_data_space . ']' .
+        '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][cache][mode-' . $this->mode . '][sPiVars] is:' . $sPiVars,
+        $this->pObj->extKey, 0);
+    }
+      // DRS
       // Get it unserialized
     $piVars   = unserialize( $sPiVars );
       // Move the piVars to an query string
