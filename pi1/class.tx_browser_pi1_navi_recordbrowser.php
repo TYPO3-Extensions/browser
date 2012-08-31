@@ -29,7 +29,7 @@
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage    browser
- * @version       4.1.7
+ * @version       4.1.8
  * @since 4.1.2
  */
 
@@ -610,12 +610,6 @@ class tx_browser_pi1_navi_recordbrowser
 
 
 
-
-
-
-
-
-
  /**
   * recordbrowser_set_session_data: Set session data for the record browser.
   *                                 * We need the record browser in the single view.
@@ -625,7 +619,7 @@ class tx_browser_pi1_navi_recordbrowser
   *
   * @param	array		$rows: $idsForRecordBrowser
   * @return	void
-  * @version 4.1.7
+  * @version 4.1.8
   * @since 4.1.2
   */
   public function recordbrowser_set_session_data( $rows, $idsForRecordBrowser )
@@ -689,9 +683,7 @@ class tx_browser_pi1_navi_recordbrowser
     }
       // SWITCH : ids for record browser
 
-$piVars = $this->pObj->piVars;
-unset( $piVars['showUid'] );
-$this->pObj->dev_var_dump( $piVars,  serialize( $piVars ) );
+    $this->recordbrowser_set_session_piVars( );
     
     return;
   }
@@ -830,15 +822,50 @@ $this->pObj->dev_var_dump( $piVars,  serialize( $piVars ) );
     }
       // Set the session array
 
-//var_dump( __METHOD__, __LINE__, $tt_content_uid, $ids, $arr_browser_session );
     return;
   }
 
 
 
+ /**
+  * recordbrowser_set_session_piVars : Store serialized piVars in the session
+  *                                 * Feature: #40495
+  *
+  * @return	void
+  * @version 4.1.8
+  * @since 4.1.8
+  */
+  private function recordbrowser_set_session_piVars( )
+  {
+      // Uid of the current plugin
+    $tt_content_uid = $this->pObj->cObj->data['uid'];
+      // Current language
+    $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
+      // Get the name of the session data space
+    $str_data_space = $this->pObj->objSession->getNameOfDataSpace( );
 
+      // Set the session array
+      // Get the tx_browser_pi1 session array
+    $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey( $str_data_space, $this->pObj->prefixId );
+      // Set serialzed piVars
+    $sPiVars = serialize( $piVars );
+    $arr_browser_session[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['sPiVars'] = $sPiVars;
+      // Set the tx_browser_pi1 session array
+    $GLOBALS['TSFE']->fe_user->setKey( $str_data_space, $this->pObj->prefixId, $arr_browser_session );
+    if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+    {
+      $prompt = 'Session array [' . $str_data_space . '][' . $this->pObj->prefixId . ']' .
+                '[mode-' . $this->mode . '][sPiVars] is set to ' . $sPiVars . '.';
+      t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
+    }
+      // Set the session array
+$piVars = $this->pObj->piVars;
+unset( $piVars['showUid'] );
+$this->pObj->dev_var_dump( $piVars,  serialize( $piVars ) );
 
+    return;
 
+  }
 
 
 
