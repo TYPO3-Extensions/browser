@@ -990,7 +990,7 @@ plugin.tx_browser_pi1 {
             value = &lt;
           }
             // Current button of the record browser
-          curr = COA_INT
+          curr = COA
           curr.10 < .first
           curr.10 {
             value = &Oslash;
