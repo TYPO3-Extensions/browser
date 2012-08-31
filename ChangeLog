@@ -3,6 +3,10 @@
   New Feature
   * #40495: Record browser links back to the list view depending on the last configuration
             Thanks to http://freemedia.ch for sponsorship
+            Effected files:
+            * pi1/class.tx_browser_pi1_navi_recordbrowser.php
+            * pi1/class.tx_browser_pi1_session.php
+            * static/setup.txt 
 
 4.1.7
   120827

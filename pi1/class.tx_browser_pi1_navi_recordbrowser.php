@@ -253,9 +253,12 @@ class tx_browser_pi1_navi_recordbrowser
     }
       // RETURN : sPiVars is empty
     
+      // Get the serialized piVars
     $sPiVars  = $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['sPiVars'];
+      // Get it unserialized
     $piVars   = unserialize( $sPiVars );
-$this->pObj->dev_var_dump( http_build_query( $piVars ) );
+      // Move the piVars to an query string
+    $piVarsAsParmas = '&' . http_build_query( $piVars );
 
     return $button;
   }

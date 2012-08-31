@@ -996,7 +996,7 @@ plugin.tx_browser_pi1 {
             value = &Oslash;
             typolink {
               parameter = {page:uid}
-              additionalParams = &L={GP:L}
+              additionalParams = &L={GP:L}###PIVARS_FOR_LISTVIEW###
             }
             //noTrimWrap  = |<li class="ui-state-default ui-corner-all c###TT_CONTENT.UID###-record-browser"> | </li>|
           }
@@ -1051,23 +1051,38 @@ plugin.tx_browser_pi1 {
         text {
           first {
             value   = first
-            lang.de = Erster
+            lang {
+              de = Erster
+              en = first
+            }
           }
           prev {
             value   = previous
-            lang.de = Vorheriger
+            lang {
+              de = Vorheriger
+              en = previous
+            }
           }
           curr {
             value   = current
-            lang.de = Aktuell
+            lang {
+              de = Aktuell
+              en = current
+            }
           }
           next {
             value   = next
-            lang.de = N&auml;chster
+            lang {
+              de = N&auml;chster
+              en = next
+            }
           }
           last {
             value   = last
-            lang.de = Letzter
+            lang {
+              de = Letzter
+              en = last
+            }
           }
         }
         current < .icons
