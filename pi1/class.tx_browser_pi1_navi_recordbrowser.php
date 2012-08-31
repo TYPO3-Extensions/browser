@@ -203,9 +203,62 @@ class tx_browser_pi1_navi_recordbrowser
 
 
 
+ /**
+  * recordbrowser_get_piVars_as_params  : Render the current button / home button
+  *
+  * @return	string		$piVarsAsParmas           : HTML code
+  * @version  4.1.8
+  * @since    4.1.8
+  */
+  private function recordbrowser_get_piVars_as_params( )
+  {
+      // Return value
+    $piVarsAsParmas = null;
+      // Uid of the current plugin
+    $tt_content_uid = $this->pObj->cObj->data['uid'];
+      // Current language
+    $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
+    
+      // RETURN : there isn't any session
+    if( ! $this->pObj->objSession->bool_session_enabled )
+    {
+        // DRS
+      if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+      {
+        $prompt = 'No session: no piVars from the list view.';
+        t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
+      }
+        // DRS
+      return $piVarsAsParmas;
+    }
+      // RETURN : there isn't any session
 
+      // Get the name of the session data space
+    $str_data_space = $this->getNameOfDataSpace( );
+      // Get tx_browser-pi1 session data
+    $arr_session_browser = $GLOBALS['TSFE']->fe_user->getKey($str_data_space, $this->pObj->prefixId);
 
+      // RETURN : sPiVars is empty
+    if( empty( $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['sPiVars'] ) )
+    {
+        // DRS
+      if ($this->pObj->b_drs_warn)
+      {
+        t3lib_div::devlog('[INFO] Session array [' . $str_data_space . ']' .
+          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][cache][mode-' . $this->mode . '][sPiVars] is empty!',
+          $this->pObj->extKey, 0);
+      }
+        // DRS
+      return $piVarsAsParmas;
+    }
+      // RETURN : sPiVars is empty
+    
+    $sPiVars  = $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['sPiVars'];
+    $piVars   = unserialize( $sPiVars );
+$this->pObj->dev_var_dump( $piVars );
 
+    return $button;
+  }
 
 
 
@@ -606,9 +659,10 @@ class tx_browser_pi1_navi_recordbrowser
     $conf_record_browser = $this->conf['navigation.']['record_browser.'];
     
       // Get uid of the record
-    $marker['###RECORD_UID###']       = $singlePid;
+    $marker['###RECORD_UID###']           = $singlePid;
       // Get position of the record
-    $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
+    $marker['###RECORD_POSITION###']      = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
+    $marker['###PIVARS_FOR_LISTVIEW###']  = $this->recordbrowser_get_piVars_as_params( );   
 
       // Get button configuration
     $button_name = $conf_record_browser['buttons.']['current.']['curr'];
