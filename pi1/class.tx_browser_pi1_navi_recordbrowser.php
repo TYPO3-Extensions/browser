@@ -255,7 +255,7 @@ class tx_browser_pi1_navi_recordbrowser
     
     $sPiVars  = $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['sPiVars'];
     $piVars   = unserialize( $sPiVars );
-$this->pObj->dev_var_dump( $piVars );
+$this->pObj->dev_var_dump( http_build_query( $piVars ) );
 
     return $button;
   }
