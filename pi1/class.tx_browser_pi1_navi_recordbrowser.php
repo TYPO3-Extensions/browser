@@ -204,35 +204,62 @@ class tx_browser_pi1_navi_recordbrowser
 
 
  /**
-  * recordbrowser_get_piVars_as_params  : Render the current button / home button
+  * recordbrowser_get_piVarsForListview  :  Get the piVars of the last visited list view from the session array.
+  *                                         Render it as an http query.
+  *                                         * Feature: #40495
   *
-  * @return	string		$piVarsAsParmas           : HTML code
+  * @return	string		$piVarsForListView  : http query
   * @version  4.1.8
   * @since    4.1.8
   */
-  public function recordbrowser_get_piVars_as_params( )
+  private function recordbrowser_get_piVarsForListview( )
   {
       // Return value
-    $piVarsAsParmas = null;
+    $piVarsForListView = null;
       // Uid of the current plugin
     $tt_content_uid = $this->pObj->cObj->data['uid'];
       // Current language
     $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
     
-//      // RETURN : there isn't any session
-//    if( ! $this->pObj->objSession->bool_session_enabled )
-//    {
-//        // DRS
-//      if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
-//      {
-//        $prompt = 'No session: no piVars from the list view.';
-//        t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
-//      }
-//        // DRS
-//      return $piVarsAsParmas;
-//    }
-//      // RETURN : there isn't any session
+      // RETURN : there isn't any session
+    if( ! $this->pObj->objSession->bool_session_enabled )
+    {
+        // DRS
+      if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+      {
+        $prompt = 'No session: no piVars from the list view.';
+        t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
+      }
+        // DRS
+      return $piVarsForListView;
+    }
+      // RETURN : there isn't any session
 
+      // RETURN : marker PIVARS_FOR_LISTVIEW shouldn't rendered
+    if( ! $this->pObj->conf['navigation.']['record_browser.']['enable.']['pivars_for_listview'] )
+    {
+        // DRS
+      if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+      {
+        $prompt = 'navigation.record_browser.enable.pivars_for_listview is false. Marker ###PIVARS_FOR_LISTVIEW### won\'t rendered.';
+        t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
+      }
+        // DRS
+      return $piVarsForListView;
+    }
+      // RETURN : marker PIVARS_FOR_LISTVIEW shouldn't rendered
+
+      // DRS
+    if( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
+    {
+      $prompt = 'navigation.record_browser.enable.pivars_for_listview is true. Marker ###PIVARS_FOR_LISTVIEW### won\'t rendered.';
+      t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
+      $prompt = 'BE AWARE: Don\'t cache the single view!';
+      t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 2 );
+    }
+      // DRS
+
+        
       // Get the name of the session data space
     $str_data_space = $this->pObj->objSession->getNameOfDataSpace( );
       // Get tx_browser-pi1 session data
@@ -249,7 +276,7 @@ class tx_browser_pi1_navi_recordbrowser
           $this->pObj->extKey, 0);
       }
         // DRS
-      return $piVarsAsParmas;
+      return $piVarsForListView;
     }
       // RETURN : sPiVars is empty
     
@@ -266,11 +293,10 @@ class tx_browser_pi1_navi_recordbrowser
       // Get it unserialized
     $piVars   = unserialize( $sPiVars );
     $httpQuery[$this->pObj->prefixId] = $piVars;
-//    return $piVars;
       // Move the piVars to an query string
-    $piVarsAsParmas = '&' . http_build_query( $httpQuery );
+    $piVarsForListView = '&' . http_build_query( $httpQuery );
 
-    return $piVarsAsParmas;
+    return $piVarsForListView;
   }
 
 
@@ -675,7 +701,7 @@ class tx_browser_pi1_navi_recordbrowser
     $marker['###RECORD_UID###']           = $singlePid;
       // Get position of the record
     $marker['###RECORD_POSITION###']      = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
-    $marker['###PIVARS_FOR_LISTVIEW###']  = $this->recordbrowser_get_piVars_as_params( );   
+    $marker['###PIVARS_FOR_LISTVIEW###']  = $this->recordbrowser_get_piVarsForListview( );   
 //    $marker['###PIVARS_FOR_LISTVIEW###']  = null;   
 
       // Get button configuration
