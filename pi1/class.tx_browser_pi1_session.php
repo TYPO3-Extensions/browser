@@ -322,7 +322,7 @@ class tx_browser_pi1_session
       if ($this->pObj->b_drs_session || $this->pObj->b_drs_templating)
       {
         t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session array [' . $str_data_space . ']' .
-          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][cache][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
+          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][cache][' . $lang . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
           '#' . count($arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
       }
     }
@@ -346,7 +346,7 @@ class tx_browser_pi1_session
       if ( $this->pObj->b_drs_session || $this->pObj->b_drs_templating )
       {
         t3lib_div::devlog('[INFO/SESSION+TEMPLATING] Session array [' . $str_data_space . ']' .
-          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][cache][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
+          '[' . $this->pObj->prefixId . '][' . $tt_content_uid . '][cache][' . $lang . '][mode-' . $this->mode . '][uids_of_all_rows] is set with ' .
           '#' . count($this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows']) . ' uids.',  $this->pObj->extKey, 0);
       }
 // dwildt, 111107
