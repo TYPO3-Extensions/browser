@@ -265,7 +265,7 @@ class tx_browser_pi1_navi_recordbrowser
       // DRS
       // Get it unserialized
     $piVars   = unserialize( $sPiVars );
-    $httpQuery[$this->pObj->$prefixId] = $piVars;
+    $httpQuery[$this->pObj->prefixId] = $piVars;
 //    return $piVars;
       // Move the piVars to an query string
     $piVarsAsParmas = '&' . http_build_query( $httpQuery );
