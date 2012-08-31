@@ -354,7 +354,7 @@ class tx_browser_pi1_session
 //        $this->pObj->uids_of_all_rows[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'] = $arr_session_browser[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['uids_of_all_rows'];
     }
       // Session data is not set: set tx_browser_pi1['uids_of_all_rows'] !
-$this->pObj->dev_var_dump( $arr_session_browser, t3lib_BEfunc::implodeTSParams( $arr_session_browser ) );
+//$this->pObj->dev_var_dump( $arr_session_browser, t3lib_BEfunc::implodeTSParams( $arr_session_browser ) );
 
 
 

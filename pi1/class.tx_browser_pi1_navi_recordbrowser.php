@@ -29,7 +29,7 @@
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage    browser
- * @version       4.1.2
+ * @version       4.1.7
  * @since 4.1.2
  */
 
@@ -219,7 +219,7 @@ class tx_browser_pi1_navi_recordbrowser
   *                             * Single view is called without calling the list view before
   *
   * @return	void
-  * @version  3.7.0
+  * @version  4.1.8
   * @since    3.7.0
   */
   public function recordbrowser_callListView()
@@ -254,6 +254,8 @@ class tx_browser_pi1_navi_recordbrowser
     //$dummy = $this->pObj->objViews->listView($this->pObj->str_template_raw);
       // #33892, 120214, dwildt+
     $dummy = $this->pObj->objViewlist_3x->main($this->pObj->str_template_raw);
+      // 4.1.8, dwildt, 1+
+    unset( $dummy );
       // Restore current values
     $this->pObj->rows = $curr_rows;
     $this->pObj->view = $curr_view;
@@ -623,7 +625,7 @@ class tx_browser_pi1_navi_recordbrowser
   *
   * @param	array		$rows: $idsForRecordBrowser
   * @return	void
-  * @version 4.1.2
+  * @version 4.1.7
   * @since 4.1.2
   */
   public function recordbrowser_set_session_data( $rows, $idsForRecordBrowser )
@@ -661,20 +663,16 @@ class tx_browser_pi1_navi_recordbrowser
     $str_data_space = $this->pObj->objSession->getNameOfDataSpace( );
       // Set status of the session management
 
-
-    
+      // SWITCH : ids for record browser
     switch( true )
     {
       case( ! empty( $idsForRecordBrowser ) ):
-//var_dump( __METHOD__, __LINE__, $idsForRecordBrowser );
         $this->recordbrowser_set_session_dataByIds( $idsForRecordBrowser );
         break;
       case( ! empty( $rows ) ):
-//var_dump( __METHOD__, __LINE__, $rows );
         $this->recordbrowser_set_session_dataRows( $rows );
         break;
       default:
-//var_dump( __METHOD__, __LINE__, $rows, $idsForRecordBrowser );
           // Get the tx_browser_pi1 session array
         $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey( $str_data_space, $this->pObj->prefixId );
           // Empty the array with the uids of all rows
@@ -689,9 +687,11 @@ class tx_browser_pi1_navi_recordbrowser
         }
         break;
     }
+      // SWITCH : ids for record browser
+
+$this->pObj->dev_var_dump( $this->pObj->piVars );
     
     return;
-    
   }
 
 
@@ -731,6 +731,8 @@ class tx_browser_pi1_navi_recordbrowser
   */
   private function recordbrowser_set_session_dataRows( $rows )
   {
+    $arr_return = null;
+    
       //////////////////////////////////////////////////////////////////////////
       //
       // Get table.field for uid of the local table
@@ -761,7 +763,7 @@ class tx_browser_pi1_navi_recordbrowser
       // LOOP rows: set the array with uids
 
     $arr_uid = array( );
-    foreach( (array) $rows as $row => $elements )
+    foreach( (array) $rows as $elements )
     {
       $arr_uid[] = $elements[$key_for_uid];
     }
@@ -852,6 +854,8 @@ class tx_browser_pi1_navi_recordbrowser
   */
   public function recordbrowser_set_session_data_3x( $rows )
   {
+    $arr_return = null;
+    
       // Uid of the current plugin
     $tt_content_uid = $this->pObj->cObj->data['uid'];
     $lang           = ( int ) $GLOBALS['TSFE']->sys_language_content;
@@ -939,7 +943,7 @@ class tx_browser_pi1_navi_recordbrowser
       // LOOP rows: set the array with uids
 
     $arr_uid = array( );
-    foreach( (array) $rows as $row => $elements )
+    foreach( (array) $rows as $elements )
     {
       $arr_uid[] = $elements[$key_for_uid];
     }
