@@ -850,8 +850,9 @@ $this->pObj->dev_var_dump( $idsForRecordBrowser, $rows );
       // Get the tx_browser_pi1 session array
     $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey( $str_data_space, $this->pObj->prefixId );
       // Set serialzed piVars
-    $sPiVars = serialize( $this->pObj->piVars );
-    unset( $sPiVars['showUid'] );
+    $piVars = $this->pObj->piVars;
+    unset( $piVars['showUid'] );
+    $sPiVars = serialize( $piVars );
 $this->pObj->dev_var_dump( $sPiVars );
     $arr_browser_session[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['sPiVars'] = $sPiVars;
       // Set the tx_browser_pi1 session array
