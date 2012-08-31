@@ -943,7 +943,6 @@ class tx_browser_pi1_navi_recordbrowser
       case( ! empty( $piVars ) ):
           // Store serialized piVars as sPiVars session variable
         $sPiVars = serialize( $piVars );
-$this->pObj->dev_var_dump( $sPiVars );
         $arr_browser_session[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['sPiVars'] = $sPiVars;
           // Set the tx_browser_pi1 session array
         $GLOBALS['TSFE']->fe_user->setKey( $str_data_space, $this->pObj->prefixId, $arr_browser_session );
