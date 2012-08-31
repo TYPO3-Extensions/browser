@@ -210,7 +210,7 @@ class tx_browser_pi1_navi_recordbrowser
   * @version  4.1.8
   * @since    4.1.8
   */
-  private function recordbrowser_get_piVars_as_params( )
+  public function recordbrowser_get_piVars_as_params( )
   {
       // Return value
     $piVarsAsParmas = null;
@@ -673,7 +673,8 @@ class tx_browser_pi1_navi_recordbrowser
     $marker['###RECORD_UID###']           = $singlePid;
       // Get position of the record
     $marker['###RECORD_POSITION###']      = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
-    $marker['###PIVARS_FOR_LISTVIEW###']  = $this->recordbrowser_get_piVars_as_params( );   
+//    $marker['###PIVARS_FOR_LISTVIEW###']  = $this->recordbrowser_get_piVars_as_params( );   
+    $marker['###PIVARS_FOR_LISTVIEW###']  = null;   
 
       // Get button configuration
     $button_name = $conf_record_browser['buttons.']['current.']['curr'];

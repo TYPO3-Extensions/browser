@@ -195,6 +195,8 @@
     }
       // DRS message?
 
+// 4.1.8
+$this->pObj->dev_var_dump( $this->pObj->objNaviRecordBrowser->recordbrowser_get_piVars_as_params( ) );
 
 
       ////////////////////////////////////////////////////////////////////////////
