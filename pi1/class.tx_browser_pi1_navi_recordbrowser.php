@@ -657,6 +657,7 @@ class tx_browser_pi1_navi_recordbrowser
     $str_data_space = $this->pObj->objSession->getNameOfDataSpace( );
       // Set status of the session management
 
+$this->pObj->dev_var_dump( $idsForRecordBrowser, $rows );
       // SWITCH : ids for record browser
     switch( true )
     {
@@ -683,6 +684,7 @@ class tx_browser_pi1_navi_recordbrowser
     }
       // SWITCH : ids for record browser
 
+      // Store the current piVars in the session
     $this->recordbrowser_set_session_piVars( );
     
     return;
@@ -849,6 +851,8 @@ class tx_browser_pi1_navi_recordbrowser
     $arr_browser_session  = $GLOBALS['TSFE']->fe_user->getKey( $str_data_space, $this->pObj->prefixId );
       // Set serialzed piVars
     $sPiVars = serialize( $this->pObj->piVars );
+    unset( $sPiVars['showUid'] );
+$this->pObj->dev_var_dump( $sPiVars );
     $arr_browser_session[$tt_content_uid]['cache'][$lang]['mode-' . $this->mode]['sPiVars'] = $sPiVars;
       // Set the tx_browser_pi1 session array
     $GLOBALS['TSFE']->fe_user->setKey( $str_data_space, $this->pObj->prefixId, $arr_browser_session );
@@ -859,9 +863,6 @@ class tx_browser_pi1_navi_recordbrowser
       t3lib_div::devlog( '[INFO/SESSION+TEMPLATING] ' . $prompt,  $this->pObj->extKey, 0 );
     }
       // Set the session array
-$piVars = $this->pObj->piVars;
-unset( $piVars['showUid'] );
-$this->pObj->dev_var_dump( $piVars,  serialize( $piVars ) );
 
     return;
 
