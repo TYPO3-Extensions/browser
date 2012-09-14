@@ -29,7 +29,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 3.9.24
+ * @version 4.1.9
  * @since 1.0.0
  */
 
@@ -591,7 +591,7 @@ class tx_browser_pi1_template
  * @param	string		A HTML template with the TYPO3 subparts and markers
  * @param	array		Array with the records of the SQL result
  * @return	void
- * @version 4.0.0
+ * @version 4.1.9
  * @since 1.0.0
  */
   function tmplListview($template, $rows)
@@ -675,7 +675,7 @@ class tx_browser_pi1_template
 //        $conf_emptyList = $lDisplayList['emptyListByStart.']['stdWrap.'];
           // 3.9.24, 120604, dwildt+
         $conf_emptyList = $lDisplayList['display.']['emptyListByStart.']['stdWrap.'];
-        if ($this->pObj->b_drs_templating || $this->b_drs_flexform)
+        if ($this->pObj->b_drs_templating || $this->pObj->b_drs_flexform)
         {
           $langKey = $GLOBALS['TSFE']->lang;
           if ($langKey == 'en')
