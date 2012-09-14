@@ -424,6 +424,7 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->piVars );
       }
         // piVars['plugin'] is a system piVar and it is independent of the visiting times
         // If there are more than max_piVars, it isn't the first visit
+$this->pObj->dev_var_dump( count( $this->pObj->piVars ), $int_max_piVars );
       if( count( $this->pObj->piVars ) > $int_max_piVars )
       {
         $this->pObj->boolFirstVisit = false;
