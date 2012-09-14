@@ -410,7 +410,7 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->piVars );
         // #13006, dwildt, 110310
         // Don't take care about showUid, if it is empty
         // #28878, 110810, dwildt
-$this->pObj->dev_var_dump( empty( $this->pObj->piVars['showUid'] ) );
+$this->pObj->dev_var_dump( isset( $this->pObj->piVars['showUid'] ), empty( $this->pObj->piVars['showUid'] ) );
       if( isset( $this->pObj->piVars['showUid'] ) && empty( $this->pObj->piVars['showUid'] ) )
       //if(empty($this->pObj->piVars['showUid'])) 
       {
