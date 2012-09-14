@@ -403,17 +403,15 @@
 
     $this->pObj->boolFirstVisit = true;
     $int_max_piVars = 0;
-  // 4.1.9
-$this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->piVars );
     if( is_array( $this->pObj->piVars ) )
     {
         // #13006, dwildt, 110310
         // Don't take care about showUid, if it is empty
         // #28878, 110810, dwildt
-        // 120915, dwildt, 1-
+        // #40937, 120915, dwildt, 1-
       //if( isset( $this->pObj->piVars['showUid'] ) && empty( $this->pObj->piVars['showUid'] ) )
-        // 120915, dwildt, 1+
-$this->pObj->dev_var_dump( array_key_exists( 'showUid', $this->pObj->piVars ), empty( $this->pObj->piVars['showUid'] ) );
+        // #40937, 120915, dwildt, 1+
+        //$this->pObj->dev_var_dump( array_key_exists( 'showUid', $this->pObj->piVars ), empty( $this->pObj->piVars['showUid'] ) );
       if( array_key_exists( 'showUid', $this->pObj->piVars ) && empty( $this->pObj->piVars['showUid'] ) )
       {
         $int_max_piVars++;
@@ -427,7 +425,6 @@ $this->pObj->dev_var_dump( array_key_exists( 'showUid', $this->pObj->piVars ), e
       }
         // piVars['plugin'] is a system piVar and it is independent of the visiting times
         // If there are more than max_piVars, it isn't the first visit
-$this->pObj->dev_var_dump( count( $this->pObj->piVars ), $int_max_piVars );
       if( count( $this->pObj->piVars ) > $int_max_piVars )
       {
         $this->pObj->boolFirstVisit = false;
@@ -435,8 +432,6 @@ $this->pObj->dev_var_dump( count( $this->pObj->piVars ), $int_max_piVars );
         // If there are mor than max_piVars, it isn't the first visit
     }
       // Set the global boolFirstVisit
-  // 4.1.9
-$this->pObj->dev_var_dump( $this->pObj->boolFirstVisit );
 
 
 
