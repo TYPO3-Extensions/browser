@@ -157,14 +157,13 @@ class tx_browser_pi1_template
  *
  * @param	string		$template: The current template part
  * @return	string		$template: The HTML template part
- * @version 3.9.9
+ * @version 4.1.9
  * @since 1.0.0
  */
   function tmplSearchBox( $template )
   {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
-    $cObj = $this->pObj->cObj;
 
     $view       = $this->pObj->view;
     $viewWiDot  = $view.'.';
@@ -256,7 +255,9 @@ class tx_browser_pi1_template
       // #11580, dwildt, 101219
       // Remove the filter fields temporarily
 
-    $str_action = $this->pObj->pi_linkTP_keepPIvars_url($this->pObj->piVars, $this->pObj->boolCache,$clearAnyway=0,$altPageId=0);
+    $clearAnyway  = 0;
+    $altPageId    = 0;
+    $str_action   = $this->pObj->pi_linkTP_keepPIvars_url($this->pObj->piVars, $this->pObj->boolCache,$clearAnyway, $altPageId);
 
       // Recover piVars
       // #9495, fsander
@@ -398,6 +399,8 @@ class tx_browser_pi1_template
  * Building the result phrase for the search form.
  *
  * @return	string		Rendered rusult phrase
+ * @version   4.1.9
+ * @since     2.0.0
  */
   function resultphrase()
   {
@@ -427,7 +430,6 @@ class tx_browser_pi1_template
 
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
-    $cObj = $this->pObj->cObj;
 
     $view       = $this->pObj->view;
     $viewWiDot  = $view.'.';
@@ -436,8 +438,10 @@ class tx_browser_pi1_template
     $conf_phrase     = $lSearchform['resultPhrase.'];
     $conf_searchFor  = $lSearchform['resultPhrase.']['searchFor.'];
     $str_searchFor   = $this->pObj->objWrapper->general_stdWrap($conf_searchFor['value'], $conf_searchFor);
-    $conf_and        = $lSearchform['resultPhrase.']['searchFor.']['and.'];
-    $str_and         = $this->pObj->objWrapper->general_stdWrap($conf_and['value'], $conf_and);
+      // 120915, dwildt, 1-
+    //$conf_and        = $lSearchform['resultPhrase.']['searchFor.']['and.'];
+      // 120915, dwildt, 1-
+    //$str_and         = $this->pObj->objWrapper->general_stdWrap($conf_and['value'], $conf_and);
 
     $conf_minLen     = $lSearchform['resultPhrase.'];
     $bool_wrapSwords = $this->pObj->objFlexform->bool_searchForm_wiColoredSwords;
@@ -463,8 +467,10 @@ class tx_browser_pi1_template
 
 
     // Char for Wildcard
-    $chr_wildcard = $this->pObj->str_searchWildcardCharManual;
-    $arr_colored  = array();
+    $chr_wildcard     = $this->pObj->str_searchWildcardCharManual;
+    $arr_colored      = array();
+      // 120915, dwildt, 1+
+    $arrWrappedSwords = null;
     foreach((array) $this->pObj->arr_resultphrase['arr_marker'] as $key => $value)
     {
       $value = stripslashes($value);
@@ -515,7 +521,7 @@ class tx_browser_pi1_template
       }
     }
     $str_swords = $this->pObj->arr_resultphrase['str_mask'];
-    foreach((array) $arrWrappedSwords as $key => $value)
+    foreach( ( array ) $arrWrappedSwords as $key => $value )
     {
       $str_swords = str_replace($key, $value, $str_swords);
     }
@@ -880,8 +886,10 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
       //
       // Keys for special handling
 
-    $handleAs         = $this->pObj->arrHandleAs;
-    $arrKeyAsDocument = $this->pObj->objZz->getCSVtablefieldsAsArray($handleAs['document']);
+      // 120915, dwildt, 1-
+    //$handleAs         = $this->pObj->arrHandleAs;
+      // 120915, dwildt, 1-
+    //$arrKeyAsDocument = $this->pObj->objZz->getCSVtablefieldsAsArray($handleAs['document']);
       // Keys for special handling
 
 
@@ -977,7 +985,8 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
       $row              = $rows[$firstKey];
       $max_elements     = 0;
       $addedTableFields = $this->pObj->arrConsolidate['addedTableFields'];
-      foreach( $row as $key => $value)
+        // 120915, dwildt, 1
+      foreach( array_keys( $row) as $key )
       {
         if ( in_array( $key, (array) $addedTableFields ) )
         {
@@ -1088,6 +1097,8 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
           // ###LISTBODYITEM###: bodyRows
         $c++;
       }
+        // 120915, dwildt, 1+
+      unset( $max_tr );
         // elements
 
 
@@ -1636,7 +1647,8 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
     // Keys for special handling
 
     $handleAs         = $this->pObj->arrHandleAs;
-    $arrKeyAsDocument = $this->pObj->objZz->getCSVtablefieldsAsArray($handleAs['document']);
+      // 120915, dwildt, 1-
+    //$arrKeyAsDocument = $this->pObj->objZz->getCSVtablefieldsAsArray($handleAs['document']);
     // Keys for special handling
 
 
@@ -1987,6 +1999,8 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
     $csvOrderBy = str_ireplace(' desc', '', $csvOrderBy);
     $csvOrderBy = str_ireplace(' asc',  '', $csvOrderBy);
     $arr_tableFields = explode(',', $csvOrderBy);
+      // 120915, dwildt, 1+
+    $arrOrderByFields  = null;
     foreach ($arr_tableFields as $tableField)
     {
       $arrOrderByFields[] = trim($tableField);
@@ -2153,6 +2167,8 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
     foreach( ( array ) $arrColumns as $columnValue )
     {
       list( $table, $field ) = explode( '.', trim( $columnValue ) );
+        // 120915, dwildt, 1+
+      unset( $table );
       $field    = trim( $columnValue );
       $fieldLL  = $this->pObj->objZz->getTableFieldLL( $field );
         // Order the list
@@ -2252,6 +2268,8 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
       $bool_first = false;
       $counter_th++;
     }
+      // 120915, dwildt, 1+
+    unset( $max_th );
       // Loop: All columns / keys of first record
 
       // Remove last devider in case of csv export
@@ -2364,7 +2382,8 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
         // Loop through the rows of the SQL result
       foreach((array) $arr_values as $value => $label)
       {
-        $str_counter_element  = $int_counter_element.'.';
+          // 120915, dwildt, 1-
+        //$str_counter_element  = $int_counter_element.'.';
         $conf_item            = $arr_ts['wrap.']['item'];
         // Wrap the item class
         if($b_asc)
@@ -2391,6 +2410,9 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
           {
             list($value_field, $value_order) = explode(':', $value);
             list($piVar_field, $piVar_order) = explode(':', $arr_piVar['sort']);
+              // 120915, dwildt, 2+
+            unset( $value_order );
+            unset( $piVar_order );
 //$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 //if (!($pos === false)) var_dump('template 1971', $value_field == $piVar_field);
             if($value_field == $piVar_field)
@@ -2495,6 +2517,8 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
 //        $cHash_md5  = $this->pObj->objZz->get_cHash($str_param);
 //        $str_hidden = $str_hidden."\n".$str_space_left.'<input type="hidden" name="cHash" value="'.$cHash_md5.'">';
 //      }
+        // 120915, dwildt, 1+
+      unset( $str_param );
 
       $arr_marker_option['###HIDDEN###'] = $str_hidden;
         // Form action (URL without any parameter)
@@ -2519,7 +2543,8 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
         // We need jQuery. Load
         // name has to correspondend with similar code in tx_browser_pi1.php
       $name                 = 'jQuery';
-      $bool_success_jQuery  = $this->pObj->objJss->load_jQuery();
+        // 120915, dwildt, 1-
+      //$bool_success_jQuery  = $this->pObj->objJss->load_jQuery();
 
       if ($this->pObj->objFlexform->bool_ajax_enabled)
       {
@@ -2664,7 +2689,8 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
     }
       // Get the local or gloabl autoconfig array- #9879
 
-    $arr_TCAitems = $lAutoconf['autoDiscover.']['items.'];
+      // 120915, dwildt, 1-
+    //$arr_TCAitems = $lAutoconf['autoDiscover.']['items.'];
       // Get the TCA properties from the TypoScript
     $bool_dontColorSwords = false;
       // Should swords get an HTML wrap in results?
@@ -2708,7 +2734,8 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
       // SQL manual mode: Display uid only, if it isn't the first element
 
       // We want the prompt of a missing single view only once
-    $boolMissingSingleView = true;
+      // 120915, dwildt, 1-
+    //$boolMissingSingleView = true;
 
     $this->pObj->boolFirstElement = true;
 
@@ -2835,7 +2862,8 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
     {
       $boolSubstitute       = true;
       $bool_dontColorSwords = false;
-      list($table, $field)  = explode('.', $key);
+        // 120915, dwildt, 1-
+      //list($table, $field)  = explode('.', $key);
 
         // Handle empty values?
       if( $bool_dontHandleEmptyValues )
@@ -3171,6 +3199,8 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
         // #36704, dwildt, 120429, 1-
       //$i_count_element++;
     }
+      // dwildt, 120915, 1+
+    unset( $max_td );
       // Loop through all elements
 
       // #12723, mbless, 110310
@@ -3434,7 +3464,6 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
 
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
-    $cObj = $this->pObj->cObj;
 
     $view       = $this->pObj->view;
     $viewWiDot  = $view.'.';
@@ -3617,7 +3646,10 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform
         $int_last_uid     = false;
 
         // Loop through all rows
-        foreach((array) $rows as $lRow => $lElements)
+          // 120915, dwildt, 1-
+        //foreach( ( array ) $rows as $lRow => $lElements )
+          // 120915, dwildt, 1+
+        foreach( ( array ) $rows as $lElements )
         {
           // Store the current id of the current element.
           $int_cur_uid = $lElements[$table.'.uid'];
