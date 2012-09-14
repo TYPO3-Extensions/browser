@@ -666,7 +666,11 @@ class tx_browser_pi1_template
       //
       // First time on the site?
 
-    if($this->pObj->boolFirstVisit)
+
+  // 4.1.9
+$this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->objFlexform->bool_emptyAtStart );
+
+    if( $this->pObj->boolFirstVisit )
     {
       $bool_emptyList = $this->pObj->objFlexform->bool_emptyAtStart;
       if($bool_emptyList)
