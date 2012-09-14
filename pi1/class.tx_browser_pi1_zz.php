@@ -404,7 +404,7 @@
     $this->pObj->boolFirstVisit = true;
     $int_max_piVars = 0;
   // 4.1.9
-$this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, is_array( $this->pObj->piVars ), $this->pObj->piVars );
+$this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, $this->pObj->piVars );
     if( is_array( $this->pObj->piVars ) )
     {
         // #13006, dwildt, 110310
@@ -431,6 +431,8 @@ $this->pObj->dev_var_dump( $this->pObj->boolFirstVisit, is_array( $this->pObj->p
         // If there are mor than max_piVars, it isn't the first visit
     }
       // Set the global boolFirstVisit
+  // 4.1.9
+$this->pObj->dev_var_dump( $this->pObj->boolFirstVisit );
 
 
 
