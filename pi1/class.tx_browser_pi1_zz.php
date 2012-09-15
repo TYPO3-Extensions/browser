@@ -28,7 +28,7 @@
  * @author      Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package     TYPO3
  * @subpackage  browser
- * @version     3.9.13
+ * @version     4.1.9
  * @since       1.0.0
  */
 
@@ -172,11 +172,12 @@
 
 
 
-  /**
+/**
  * Prepaire piVars. Allocates values to $this->piVars and $this->pi_isOnlyFields
  *
  * @return	void
- * @version 3.9.13
+ * @version   4.1.9
+ * @since     1.0.0 
  */
   function prepairePiVars()
   {
@@ -408,9 +409,9 @@
         // #13006, dwildt, 110310
         // Don't take care about showUid, if it is empty
         // #28878, 110810, dwildt
-        // #40937, 120915, dwildt, 1-
+        // #40937, 4.1.9, 120915, dwildt, 1-
       //if( isset( $this->pObj->piVars['showUid'] ) && empty( $this->pObj->piVars['showUid'] ) )
-        // #40937, 120915, dwildt, 1+
+        // #40937, 4.1.9, 120915, dwildt, 1+
         //$this->pObj->dev_var_dump( array_key_exists( 'showUid', $this->pObj->piVars ), empty( $this->pObj->piVars['showUid'] ) );
       if( array_key_exists( 'showUid', $this->pObj->piVars ) && empty( $this->pObj->piVars['showUid'] ) )
       {
@@ -822,17 +823,22 @@
  * @param	array		$filterConf: TypoScript filter configuration array
  * @return	array		The modified piVars Array (without filters now)
  * @author    Frank Sander
- * @version   3.4.2
+ * @version   4.1.9
  * @internal  Suggestion #9495
  */
   function removeFiltersFromPiVars($inputPiVars, $filterConf)
   {
+    $arr_tableFilter = null; 
+    
     // Get the filter fields
     if(is_array($filterConf) && is_array($inputPiVars))
     {
       foreach((array) $filterConf as $tableWiDot => $arrFields)
       {
-        foreach((array) $arrFields as $fieldWiWoDot => $dummy)
+          // 120915,dwildt, 1-
+        //foreach( ( array ) $arrFields as $fieldWiWoDot => $dummy)
+          // 120915,dwildt, 1+
+        foreach( array_keys( ( array ) $arrFields ) as $fieldWiWoDot )
         {
          if(substr($fieldWiWoDot, -1) != '.')
          {
@@ -844,7 +850,7 @@
     // Get the filter fields
 
     // Remove the filter fields temporarily
-    if(is_array($arr_tableFilter))
+    if( is_array( $arr_tableFilter ) )
     {
       $outputPiVars = array_diff_key($inputPiVars, array_flip($arr_tableFilter));
     }
@@ -904,6 +910,7 @@
     $pageBrowserPointerLabel = $this->conf['navigation.']['pageBrowser.']['pointer'];
 
     $arr_rmPiVars = false;
+    $arr_noPiVars = array( );
     $arr_noPiVars['indexBrowserTab']        = ! $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_indexBrowserTab;
     $arr_noPiVars['mode']                   = ! $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_mode;
     $arr_noPiVars[$pageBrowserPointerLabel] = ! $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_pointer;
@@ -1029,10 +1036,13 @@
       //
       // Remove filter piVars
 
-      $arr_prompt = null;
+      $arr_rmPiVars = array( );
       foreach((array) $conf_view['filter.'] as $tableWiDot => $arr_fields)
       {
-        foreach((array) $arr_fields as $fieldWiDot => $arr_field)
+          // 120915, dwildt, 1-
+        //foreach( ( array ) $arr_fields as $fieldWiDot => $arr_field )
+          // 120915, dwildt, 1+
+        foreach( array_keys( ( array ) $arr_fields ) as $fieldWiDot )
         {
           if(substr($fieldWiDot, -1) == '.')
           {
@@ -1056,7 +1066,7 @@
 
       if ($this->pObj->b_drs_templating)
       {
-        if (!empty($arr_rmPiVars))
+        if ( ! empty( $arr_rmPiVars ) )
         {
           $str_prompt = implode('], piVars[', array_keys($arr_rmPiVars));
           $str_prompt = 'piVars['.$str_prompt.']';
@@ -1355,6 +1365,7 @@
  */
   function getCSVasArray($csvValues)
   {
+    $arrCSV = null;
     $tmpArrCSV = explode(',', $csvValues);
     foreach((array) $tmpArrCSV as $valueCSV) {
       $arrCSV[] = $this->cleanUp_lfCr_doubleSpace($valueCSV);
@@ -1371,12 +1382,15 @@
  */
   function getCSVtablefieldsAsArray($csvTableFields)
   {
-    $tmpArrCSV = explode(',', $csvTableFields);
-    foreach((array) $tmpArrCSV as $valueCSV) {
+    $arrCSV     = null;
+    $tmpArrCSV  = explode(',', $csvTableFields);
+    foreach( ( array ) $tmpArrCSV as $valueCSV )
+    {
       list($table, $field) = explode('.', trim($csvTableFields));
       $tableField = $table.'.'.$field;
       $arrCSV[] = $this->cleanUp_lfCr_doubleSpace($tableField);
     }
+    unset( $valueCSV );
     return $arrCSV;
   }
 
@@ -1421,7 +1435,6 @@
     $view = $this->pObj->view;
     $mode = $this->pObj->piVar_mode;
 
-    $viewWiDot      = $view.'.';
     $str_tsStrftime = '';
 
     if ($conf['views.'][$view.'.'][$mode.'.']['format.']['strftime'] != '')
@@ -1751,10 +1764,6 @@
  */
   function children_tsconf_recurs($key, $arr_multi_dimensional, $str_devider)
   {
-    $conf = $this->pObj->conf;
-
-
-
     ////////////////////////////////////////////////
     //
     // Security: recursionGuard
@@ -1979,10 +1988,10 @@
  */
   function search_values($str_sword_phrase)
   {
+    $arr_return           = array( );
     $conf_sword           = $this->arr_advanced_securitySword;
     $lSearchform          = $this->conf['displayList.']['display.']['searchform.'];
     $int_minLen           = $conf_sword['minLenWord'];
-    $csv_swordAddSlashes  = $conf_sword['addSlashes.']['csvChars'];
       // Example phrase: Helmut und Schmidt und Bundeskanzler nicht Entertainer "Helmut Kohl"
 
 
@@ -2021,8 +2030,9 @@
       // Get words for the SQL operators AND, OR and NOT
 
     $conf_and = $lSearchform['and.'];
+    $arr_sql_operator = array( );
     $arr_sql_operator['and']  = $this->pObj->objWrapper->general_stdWrap($conf_and['value'], $conf_and);
-    if(!$arr_sql_operator['and'])
+    if( ! $arr_sql_operator['and'] )
     {
       $arr_sql_operator['and'] = 'and';
     }
@@ -2421,13 +2431,14 @@
  * @param	string		$value: Content. Maybe with or maybe without a value like the sword.
  * @return	string		$value: Wrapped swords. Depending on TypoScript configuration.
  */
-  function color_swords($tableField, $value)
+  function color_swords( $tableField, $value)
   {
     /**
      * This method correspondends with tx_browser_pi1_template::resultphrase()
      */
-
-    $view = $this->pObj->view;
+    
+      // 120915, dwildt, 1+
+    unset( $tableField );
 
       // There isn't any sword. RETURN.
     if (!is_array($this->pObj->arr_swordPhrasesTableField))
@@ -2447,7 +2458,8 @@
     }
     // Value is an email. RETURN
 
-    $lSearchform = $this->pObj->lDisplay['searchform.'];
+      // 120915, dwildt, 1-
+    //$lSearchform = $this->pObj->lDisplay['searchform.'];
 
       // Don't display any wrapped swords. RETURN.
       //if (!$lSearchform['wrapSwordInResults'])
@@ -2837,6 +2849,7 @@
  */
   function char_single_multi_byte($str_char)
   {
+    $arr_utf8 = null;
 
     // We don't have multi-byte chars in the MySQL database only.
     // It's possible, that files in PHP stored multi-byte chars too.
