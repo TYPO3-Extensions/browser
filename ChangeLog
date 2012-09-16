@@ -1,14 +1,18 @@
-4.1.10
+4.1.11
   120916
   New Feature
-  * #00000: Register [general] of the plugin / flexform got the field "my comment"
-  * #40959: Multiple plugins: class.tx_browser_pi1_flexform.php didn't process multiple-plugin-feature,
-            if plugins weren't positioned on the same page
+  * #40959: Multiple plugins: Flexform [General] got the new property:
+            Views: If plugin is included by a foreign page, ...
+            If "add tx_browser_pi1[plugin]", the plugin will ignore piVars of other plugins of the current page.
             Effected files:
             * pi1
               * class.tx_browser_pi1_flexform
               * flexform_sheet_sDEF.xml
               * locallang_flexform.xml
+4.1.10
+  120916
+  New Feature
+  * #00000: Register [General] of the plugin / flexform got the field "my comment"
   Bugfix
   * #40958: Multiple plugins: if you are using multiple plugins but any filter, piVars are missing in the URL.
   * #40960: Multiple Plugins: Record Browser doesn't use piVars[plugin] in links to the single view

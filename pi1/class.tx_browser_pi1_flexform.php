@@ -413,7 +413,7 @@ class tx_browser_pi1_flexform {
         $bool_addPiVarsPlugin = false;
         if( $this->pObj->b_drs_flexform )
         {
-          $prompt = 'Current is included by the current page and not by a foreign page. ' . 
+          $prompt = 'Current plugin is included by the current page and not by a foreign page. ' . 
                     'piVarsPlugin is set to false.';
           t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0 );
         }
