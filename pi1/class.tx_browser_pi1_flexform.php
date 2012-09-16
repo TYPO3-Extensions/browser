@@ -404,18 +404,18 @@ class tx_browser_pi1_flexform {
 
     // #40959 4.1.10, 120916, dwildt, -
 $this->pObj->dev_var_dump( $this->pObj->cObj->data['pid'] );    
-//    //////////////////////////////////////////////////////////////////////
-//    //
-//    // RETURN, if we have one plugin on the page only
-//
-//    if (count($rows) <= 1)
-//    {
-//      if ($this->pObj->b_drs_flexform) {
-//        t3lib_div :: devlog('[INFO/FLEXFORM] There is only one plugin on the page. There isn\'t any effect for any piVar.', $this->pObj->extKey, 0);
-//      }
-//      return;
-//    }
-//    // RETURN, if we have one plugin on the page only
+    //////////////////////////////////////////////////////////////////////
+    //
+    // RETURN, if we have one plugin on the page only
+
+    if (count($rows) <= 1)
+    {
+      if ($this->pObj->b_drs_flexform) {
+        t3lib_div :: devlog('[INFO/FLEXFORM] There is only one plugin on the page. There isn\'t any effect for any piVar.', $this->pObj->extKey, 0);
+      }
+      return;
+    }
+    // RETURN, if we have one plugin on the page only
     // #40959 4.1.10, 120916, dwildt, -
 
     //////////////////////////////////////////////////////////////////////
