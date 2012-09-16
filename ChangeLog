@@ -10,7 +10,9 @@
             Effected files:
             * pi1/class.tx_browser_pi1_navi_recordbrowser.php
             * static/setup.txt
-  * #00000: * SearchForm dosn't handle 
+  * #00000: * SearchForm: remove hiddden field for plugin
+            Effected files:
+            * res/sample/tt_news/default.tmpl
 
 4.1.9
   120915
