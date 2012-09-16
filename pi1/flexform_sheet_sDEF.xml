@@ -141,12 +141,12 @@
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.piVars.ignore</numIndex>
-                <numIndex index="1">ignore</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.piVars.pluginThis</numIndex>
+                <numIndex index="1">default</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.piVars.add</numIndex>
-                <numIndex index="1">add</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.piVars.pluginAll</numIndex>
+                <numIndex index="1">all</numIndex>
               </numIndex>
             </items>
             <default>default</default>
@@ -163,12 +163,12 @@
             <type>select</type>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.piVarsPlugin.pluginThis</numIndex>
-                <numIndex index="1">default</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.piVarsPlugin.ignore</numIndex>
+                <numIndex index="1">ignore</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.piVarsPlugin.pluginAll</numIndex>
-                <numIndex index="1">all</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.piVarsPlugin.add</numIndex>
+                <numIndex index="1">add</numIndex>
               </numIndex>
             </items>
             <default>default</default>
