@@ -402,13 +402,49 @@ class tx_browser_pi1_flexform {
     //var_dump($rows);
     // Consolidate the Rows in case of Localisation
 
+      // #40959 4.1.10, 120916, dwildt, +
+      // field piVarsPlugin
+    $arr_piFlexform   = $this->pObj->cObj->data['pi_flexform'];
+    $str_piVarsPlugin = $this->pObj->pi_getFFvalue( $arr_piFlexform, 'piVarsPlugin', 'sDEF', 'lDEF', 'vDEF' );
+    $bool_addPiVarsPlugin = false;
+    switch( $str_piVarsPlugin )
+    {
+      case( 'add' ) :
+        $bool_addPiVarsPlugin = true;
+        if( $this->pObj->b_drs_flexform )
+        {
+          $prompt = 'Current plugin wants an added piVars[plugin], if it is called by a foreign page.';
+          t3lib_div :: devlog( '[INFO/FLEXFORM] ', $this->pObj->extKey, 0 );
+        }
+        break;
+      case ('ignore') :
+      case ( null ) :
+      case ( false ) :
+        $bool_addPiVarsPlugin = false;
+        if( $this->pObj->b_drs_flexform )
+        {
+          $prompt = 'Current plugin doesn\'t want any added piVars[plugin], if it is called by a foreign page.';
+          t3lib_div :: devlog( '[INFO/FLEXFORM] ', $this->pObj->extKey, 0 );
+        }
+        break;
+      default :
+        if ($this->pObj->b_drs_warn)
+        {
+          $prompt = 'Current plugin has an undefined value in piVarsPlugin. ' .
+                    'Definded is: add, ignore. Current value is: ' . $str_piVarsPlugin;
+          t3lib_div :: devlog( '[WARN/FLEXFORM] ' . $prompt, $this->pObj->extKey, 3);
+        }
+    }
+      // field piVarsPlugin
+      // #40959 4.1.10, 120916, dwildt, +
+
     //////////////////////////////////////////////////////////////////////
     //
     // RETURN, if we have one plugin on the page only
 
-    if (count($rows) <= 1)
+    if( count( $rows ) <= 1 && ! $bool_addPiVarsPlugin )
     {
-        // #40959 4.1.10, 120916, dwildt, -
+        // #40959 4.1.10, 120916, dwildt, +
         // DRS
       if( $this->pObj->b_drs_warn ) 
       {
@@ -423,7 +459,7 @@ class tx_browser_pi1_flexform {
         }
       }
         // DRS
-        // #40959 4.1.10, 120916, dwildt, -
+        // #40959 4.1.10, 120916, dwildt, +
 
       if ($this->pObj->b_drs_flexform)
       {
