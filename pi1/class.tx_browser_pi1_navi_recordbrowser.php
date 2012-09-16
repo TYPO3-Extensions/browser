@@ -283,6 +283,16 @@ class tx_browser_pi1_navi_recordbrowser
       
       // Get it unserialized
     $piVars   = unserialize( $sPiVars );
+      // #40960, 120916, dwildt, +
+      // Unset piVars, which shouldn't rendered 
+    $csvRmPiVars  = $this->pObj->conf['navigation.']['record_browser.']['enable.']['pivars_for_singleview.']['csvDontRenderPiVars'];
+    $csvArray     = $this->pObj->objZz->getCSVasArray( $csvRmPiVars );
+    foreach( ( array) $csvArray as $piVarKey )
+    {
+      unset( $piVars[$piVarKey] );
+    }
+      // Unset piVars, which shouldn't rendered 
+      // #40960, 120916, dwildt, +
     $httpQuery[$this->pObj->prefixId] = $piVars;
       // Move the piVars to an query string
     $piVarsForListView = '&' . http_build_query( $httpQuery );
@@ -383,14 +393,14 @@ class tx_browser_pi1_navi_recordbrowser
       
       // Get it unserialized
     $piVars   = unserialize( $sPiVars );
-      // Unset piVars, which shouldN#t rendered 
+      // Unset piVars, which shouldn't rendered 
     $csvRmPiVars  = $this->pObj->conf['navigation.']['record_browser.']['enable.']['pivars_for_singleview.']['csvDontRenderPiVars'];
     $csvArray     = $this->pObj->objZz->getCSVasArray( $csvRmPiVars );
     foreach( ( array) $csvArray as $piVarKey )
     {
       unset( $piVars[$piVarKey] );
     }
-      // Unset piVars, which shouldN#t rendered 
+      // Unset piVars, which shouldn't rendered 
     
     $httpQuery[$this->pObj->prefixId] = $piVars;
       // Move the piVars to an query string

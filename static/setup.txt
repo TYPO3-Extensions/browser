@@ -1167,13 +1167,13 @@ plugin.tx_browser_pi1 {
         pivars_for_listview = 0
         pivars_for_listview {
             // [STRING] Comma seperated list of piVars, which shouldn't rendered. Example: sword, pointer
-          csvDontRenderPiVars = sword
+          csvDontRenderPiVars = 
         }
           // [BOOLEAN] 0 (recommended) || 1: marker PIVARS_FOR_SINGLEVIEW will replece with piVar params (http query). BE AWARE: Don't cache the single view in this case! 
         pivars_for_singleview = 0
         pivars_for_singleview {
             // [STRING] Comma seperated list of piVars, which shouldn't rendered. Example: sword, pointer
-          csvDontRenderPiVars = sword
+          csvDontRenderPiVars = 
         }
       }
       special {
