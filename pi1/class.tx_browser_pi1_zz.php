@@ -921,20 +921,21 @@
       // Do we have an array with piVar keys?
     foreach( ( array ) $arr_noPiVars as $key => $value )
     {
-      if ($value && isset($this->pObj->piVars[$key]))
+      if( $value && isset( $this->pObj->piVars[$key] ) )
       {
         $arr_rmPiVars[$key] = $value;
       }
     }
     // Do we have an array with piVar keys?
+$this->pObj->dev_var_dump( $arr_rmPiVars );
 
     // We have an array with piVar keys, which shouldn't displayed?
-    if (is_array($arr_rmPiVars))
+    if( is_array( $arr_rmPiVars ) )
     {
       $this->tmp_piVars = $this->pObj->piVars;
-      foreach ($arr_rmPiVars as $key => $value)
+      foreach( $arr_rmPiVars as $key => $value )
       {
-        unset($this->pObj->piVars[$key]);
+        unset( $this->pObj->piVars[$key] );
       }
     }
     // We have an array with piVar keys, which shouldn't displayed?
