@@ -415,7 +415,7 @@ class tx_browser_pi1_flexform {
       {
         if( $this->pObj->cObj->data['pid'] != ( string ) $GLOBALS['TSFE']->id )
         {
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['pid'], ( string ) $GLOBALS['TSFE']->id );    
+//$this->pObj->dev_var_dump( $this->pObj->cObj->data['pid'], ( string ) $GLOBALS['TSFE']->id );    
           $prompt = 'The current plugin ' . $this->pObj->cObj->data['header'] . ' (uid: ' . $this->pObj->cObj->data['uid'] . ') ' .
                     'is not part of the current page (uid ' . $GLOBALS['TSFE']->id . ') but of the page with the uid ' . $this->pObj->cObj->data['pid'] . '. ' .
                     'This will cause trouble in case of multiple plugins!';
