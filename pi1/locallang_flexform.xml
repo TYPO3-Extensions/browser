@@ -156,7 +156,7 @@
       <label index="sheet_sDEF.piVars">Views: piVars (parameters in the URL) from foreign plugins:</label>
       <label index="sheet_sDEF.piVars.pluginThis">Ignore it (default)</label>
       <label index="sheet_sDEF.piVars.pluginAll">Handle it</label>
-      <label index="sheet_sDEF.piVarsPlugin">Views: If plugin is called by a foreign page</label>
+      <label index="sheet_sDEF.piVarsPlugin">Views: If plugin is called by a foreign page ...</label>
       <label index="sheet_sDEF.piVarsPlugin.ignore">don't add tx_browser_pi1[plugin] (default)</label>
       <label index="sheet_sDEF.piVarsPlugin.add">add tx_browser_pi1[plugin]</label>
       <label index="sheet_sDEF.controlling.enabled">Control the plugin: by URL parameters</label>
@@ -522,6 +522,9 @@
       <label index="sheet_sDEF.piVars">Views: piVars (Parameter in der URL) fremder Plugins</label>
       <label index="sheet_sDEF.piVars.pluginThis">Ignorieren (Standard)</label>
       <label index="sheet_sDEF.piVars.pluginAll">Verarbeiten</label>
+      <label index="sheet_sDEF.piVarsPlugin">Views: Wenn das Plugin von einer fremden Seite eingebunden wird, ...</label>
+      <label index="sheet_sDEF.piVarsPlugin.ignore">f<![CDATA[&uuml;]]>ge tx_browser_pi1[plugin] nicht hinzu (standard)</label>
+      <label index="sheet_sDEF.piVarsPlugin.add">f<![CDATA[&uuml;]]>ge tx_browser_pi1[plugin] hinzu</label>
       <label index="sheet_sDEF.controlling.enabled">Plugin-Steuerung: mit URL-Parametern</label>
       <label index="sheet_sDEF.controlling.enabled.no">Deaktiviert (Standard)</label>
       <label index="sheet_sDEF.controlling.enabled.yes">Aktiviert</label>
