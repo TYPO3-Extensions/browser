@@ -285,7 +285,7 @@ class tx_browser_pi1_navi_recordbrowser
     $piVars   = unserialize( $sPiVars );
       // #40960, 120916, dwildt, +
       // Unset piVars, which shouldn't rendered 
-    $csvRmPiVars  = $this->pObj->conf['navigation.']['record_browser.']['enable.']['pivars_for_singleview.']['csvDontRenderPiVars'];
+    $csvRmPiVars  = $this->pObj->conf['navigation.']['record_browser.']['enable.']['pivars_for_listview.']['csvDontRenderPiVars'];
     $csvArray     = $this->pObj->objZz->getCSVasArray( $csvRmPiVars );
     foreach( ( array) $csvArray as $piVarKey )
     {
