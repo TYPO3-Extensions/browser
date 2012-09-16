@@ -195,7 +195,7 @@ class tx_browser_pi1_template
     $pageBrowserPointerLabel = $this->conf['navigation.']['pageBrowser.']['pointer'];
     $arr_removePiVars = array('sword', 'sort', $pageBrowserPointerLabel);
         // #11576, dwildt, 101219
-$this->pObj->dev_var_dump( $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin, $this->pObj->piVars );
+//$this->pObj->dev_var_dump( $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin, $this->pObj->piVars );
     if( ! $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin )
     {
       $arr_removePiVars[] = 'plugin';

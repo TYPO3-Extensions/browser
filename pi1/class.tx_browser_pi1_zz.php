@@ -927,7 +927,10 @@
       }
     }
     // Do we have an array with piVar keys?
-//$this->pObj->dev_var_dump( $arr_rmPiVars );
+if( $bool_firsttime )
+{
+  $this->pObj->dev_var_dump( $this->pObj->piVars );  
+}
 
     // We have an array with piVar keys, which shouldn't displayed?
     if( is_array( $arr_rmPiVars ) )
@@ -971,6 +974,10 @@
           Temporarily removed: '.$str_prompt.'.', $this->pObj->extKey, 0);
       }
     }
+if( $bool_firsttime )
+{
+  $this->pObj->dev_var_dump( $this->pObj->piVars );  
+}
     $bool_firsttime = false;
     // DRS - Development Reporting System
 
