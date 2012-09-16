@@ -414,7 +414,7 @@ class tx_browser_pi1_flexform {
         if( $this->pObj->b_drs_flexform )
         {
           $prompt = 'Current plugin wants an added piVars[plugin], if it is called by a foreign page.';
-          t3lib_div :: devlog( '[INFO/FLEXFORM] ', $this->pObj->extKey, 0 );
+          t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0 );
         }
         break;
       case ('ignore') :
@@ -424,7 +424,7 @@ class tx_browser_pi1_flexform {
         if( $this->pObj->b_drs_flexform )
         {
           $prompt = 'Current plugin doesn\'t want any added piVars[plugin], if it is called by a foreign page.';
-          t3lib_div :: devlog( '[INFO/FLEXFORM] ', $this->pObj->extKey, 0 );
+          t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0 );
         }
         break;
       default :
