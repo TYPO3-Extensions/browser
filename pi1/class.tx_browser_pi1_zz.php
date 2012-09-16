@@ -823,11 +823,12 @@
  * @param	array		$filterConf: TypoScript filter configuration array
  * @return	array		The modified piVars Array (without filters now)
  * @author    Frank Sander
- * @version   4.1.9
+ * @version   4.1.10
  * @internal  Suggestion #9495
  */
   function removeFiltersFromPiVars( $inputPiVars, $filterConf )
   {
+      // For development prompts only
     static $bool_firsttime = true;
 
 if( $bool_firsttime )
@@ -836,9 +837,26 @@ if( $bool_firsttime )
 }
     $arr_tableFilter = null; 
     
-      // Get the filter fields
-    if( is_array( $filterConf ) && is_array( $inputPiVars ) )
+      // 4.1.10, 120916, dwildt, +
+      // SWITCH : RETURN if there aren't piVars or if any filter filter isn't set
+    switch( true )
     {
+      case( empty( $inputPiVars ) ):
+      case( empty( $filterConf ) ):
+        $bool_firsttime = false;
+        return $inputPiVars;
+        break;
+      default:
+          // Follow the workflow
+        break;
+    }
+      // SWITCH : RETURN if there aren't piVars or if any filter filter isn't set
+      // 4.1.10, 120916, dwildt, +
+    
+      // Get the filter fields
+      // 4.1.10, 120916, dwildt, 2-
+//    if( is_array( $filterConf ) && is_array( $inputPiVars ) )
+//    {
       foreach( (array) $filterConf as $tableWiDot => $arrFields )
       {
           // 120915,dwildt, 1-
@@ -852,7 +870,8 @@ if( $bool_firsttime )
          }
         }
       }
-    }
+      // 4.1.10, 120916, dwildt, 1-
+//    }
       // Get the filter fields
 
       // Remove the filter fields temporarily
