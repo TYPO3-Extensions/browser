@@ -826,14 +826,20 @@
  * @version   4.1.9
  * @internal  Suggestion #9495
  */
-  function removeFiltersFromPiVars($inputPiVars, $filterConf)
+  function removeFiltersFromPiVars( $inputPiVars, $filterConf )
   {
+    static $bool_firsttime = true;
+
+if( $bool_firsttime )
+{
+  $this->pObj->dev_var_dump( $inputPiVars, $filterConf );  
+}
     $arr_tableFilter = null; 
     
-    // Get the filter fields
-    if(is_array($filterConf) && is_array($inputPiVars))
+      // Get the filter fields
+    if( is_array( $filterConf ) && is_array( $inputPiVars ) )
     {
-      foreach((array) $filterConf as $tableWiDot => $arrFields)
+      foreach( (array) $filterConf as $tableWiDot => $arrFields )
       {
           // 120915,dwildt, 1-
         //foreach( ( array ) $arrFields as $fieldWiWoDot => $dummy)
@@ -847,22 +853,24 @@
         }
       }
     }
-    // Get the filter fields
+      // Get the filter fields
 
-    // Remove the filter fields temporarily
+      // Remove the filter fields temporarily
     if( is_array( $arr_tableFilter ) )
     {
-      $outputPiVars = array_diff_key($inputPiVars, array_flip($arr_tableFilter));
+      $outputPiVars = array_diff_key( $inputPiVars, array_flip( $arr_tableFilter ) );
     }
-    // Remove the filter fields temporarily
+      // Remove the filter fields temporarily
 
-    // RETURN false in case of any piVar
-    if(count($outputPiVars) == 0)
+      // RETURN false in case of any piVar
+    if( count( $outputPiVars ) == 0 )
     {
-      return (false);
+      $bool_firsttime = false;
+      return false;
     }
-    // RETURN false in case of any piVar
+      // RETURN false in case of any piVar
 
+    $bool_firsttime = false;
     return $outputPiVars;
   }
 
@@ -927,10 +935,6 @@
       }
     }
     // Do we have an array with piVar keys?
-if( $bool_firsttime )
-{
-  $this->pObj->dev_var_dump( $this->pObj->piVars );  
-}
 
     // We have an array with piVar keys, which shouldn't displayed?
     if( is_array( $arr_rmPiVars ) )
@@ -954,9 +958,9 @@ if( $bool_firsttime )
     // Remove the filter fields temporarily, if not denied
     // #9495, fsander
 
-    if (!$keepFilters)
+    if( ! $keepFilters )
     {
-      $this->pObj->piVars = $this->pObj->objZz->removeFiltersFromPiVars($this->pObj->piVars, $conf_view['filter.']);
+      $this->pObj->piVars = $this->pObj->objZz->removeFiltersFromPiVars( $this->pObj->piVars, $conf_view['filter.'] );
     }
     // Remove the filter fields temporarily, if not denied
 if( $bool_firsttime )
