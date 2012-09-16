@@ -498,7 +498,7 @@ class tx_browser_pi1_map
           case( is_array( $this->arrCategories[ 'icons' ] ) ):
               // 4.1.7, dwildt, +
             $this->cObjDataAddArray( array( $catIconsField => $this->arrCategories[ 'icons' ][ $labelKey ] ) );
-$this->pObj->dev_var_dump( $catIconsField, $this->pObj->cObj->data[ $catIconsField ] );
+//$this->pObj->dev_var_dump( $catIconsField, $this->pObj->cObj->data[ $catIconsField ] );
             $img = $this->renderMapMarkerVariablesSystemItem( 'categoryIconLegend' );
             $this->cObjDataRemoveArray( array( $catIconsField => $this->arrCategories[ 'icons' ][ $labelKey ] ) );
               // 4.1.7, dwildt, +

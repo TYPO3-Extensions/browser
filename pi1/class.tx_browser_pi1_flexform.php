@@ -410,12 +410,10 @@ class tx_browser_pi1_flexform {
     {
         // #40959 4.1.10, 120916, dwildt, -
         // DRS
-//$this->pObj->dev_var_dump( $this->pObj->b_drs_warn, $this->pObj->cObj->data['pid'], ( string ) $GLOBALS['TSFE']->id, $this->pObj->cObj->data['pid'] != ( string ) $GLOBALS['TSFE']->id );    
       if( $this->pObj->b_drs_warn ) 
       {
         if( $this->pObj->cObj->data['pid'] != ( string ) $GLOBALS['TSFE']->id )
         {
-//$this->pObj->dev_var_dump( $this->pObj->cObj->data['pid'], ( string ) $GLOBALS['TSFE']->id );    
           $prompt = 'The current plugin ' . $this->pObj->cObj->data['header'] . ' (uid: ' . $this->pObj->cObj->data['uid'] . ') ' .
                     'is not part of the current page (uid ' . $GLOBALS['TSFE']->id . ') but of the page with the uid ' . $this->pObj->cObj->data['pid'] . '. ' .
                     'This will cause trouble in case of multiple plugins!';
