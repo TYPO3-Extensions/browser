@@ -171,7 +171,7 @@
                 <numIndex index="1">add</numIndex>
               </numIndex>
             </items>
-            <default>default</default>
+            <default>ignore</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>
