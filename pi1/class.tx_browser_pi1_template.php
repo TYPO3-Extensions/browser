@@ -324,7 +324,7 @@ class tx_browser_pi1_template
         }
       }
       $markerArray['###HIDDEN###']  = $str_hidden;
-
+$this->pObj->dev_var_dump( $markerArray['###HIDDEN###'] );
 
     $subpart    = $this->pObj->cObj->getSubpart($template, '###SEARCHFORM###');
     // 3.5.0: We need the subpartmarker for the filter again
