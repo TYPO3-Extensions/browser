@@ -139,6 +139,7 @@
       <label index="sheet_javascript.list_on_single.1">list view (collapsed) and single view</label>
       <label index="sheet_javascript.list_on_single.2">single view only</label>
       <label index="sheet_sDEF">General</label>
+      <label index="sheet_sDEF.myComment">My comment</label>
       <label index="sheet_sDEF.views">Views</label>
       <label index="sheet_sDEF.views.all">Default</label>
       <label index="sheet_sDEF.views.selected">Configured</label>
@@ -501,6 +502,7 @@
       <label index="sheet_javascript.list_on_single.1">Liste (aufklappbar) und Einzelansicht</label>
       <label index="sheet_javascript.list_on_single.2">Ohne Listenansicht</label>
       <label index="sheet_sDEF">Allgemein</label>
+      <label index="sheet_sDEF.myComment">Mein Kommentar</label>
       <label index="sheet_sDEF.views">Views</label>
       <label index="sheet_sDEF.views.all">Standard</label>
       <label index="sheet_sDEF.views.selected">Konfiguriert</label>

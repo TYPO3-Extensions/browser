@@ -6,6 +6,17 @@
     </TCEforms>
     <type>array</type>
     <el>
+      <myComment>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.myComment</label>
+          <config>
+            <type>text</type>
+            <cols>40</cols>
+            <rows>5</rows>
+            <wrap>virtual</wrap>
+          </config>
+        </TCEforms>
+      </myComment>
       <views>
         <TCEforms>
           <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.views</label>
