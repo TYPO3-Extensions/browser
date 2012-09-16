@@ -1,7 +1,10 @@
 4.1.10
   120916
   New Feature
-  * #00000: Register [general] of the plugin / flexform got the field "my comment" 
+  * #00000: Register [general] of the plugin / flexform got the field "my comment"
+  Bugfix
+  * #00000: Multiple Plugins: class.tx_browser_pi1_flexform.php didn't process multiple-plugin-feature,
+            if plugins weren't positioned on the same page
 
 4.1.9
   120915

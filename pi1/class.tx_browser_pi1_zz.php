@@ -958,7 +958,7 @@
     //
     // DRS - Development Reporting System
 
-    if ($this->pObj->b_drs_templating && $bool_firsttime)
+    if( $this->pObj->b_drs_templating && $bool_firsttime )
     {
       if (is_array($arr_rmPiVars))
       {

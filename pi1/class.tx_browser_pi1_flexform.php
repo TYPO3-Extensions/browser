@@ -402,18 +402,19 @@ class tx_browser_pi1_flexform {
     //var_dump($rows);
     // Consolidate the Rows in case of Localisation
 
-    //////////////////////////////////////////////////////////////////////
-    //
-    // RETURN, if we have one plugin on the page only
-
-    if (count($rows) <= 1)
-    {
-      if ($this->pObj->b_drs_flexform) {
-        t3lib_div :: devlog('[INFO/FLEXFORM] There is only one plugin on the page. There isn\'t any effect for any piVar.', $this->pObj->extKey, 0);
-      }
-      return;
-    }
-    // RETURN, if we have one plugin on the page only
+// //4.1.10, 120916, dwildt: Bug, if plugins are positioned on different pages and included by TypoScript.
+//    //////////////////////////////////////////////////////////////////////
+//    //
+//    // RETURN, if we have one plugin on the page only
+//
+//    if (count($rows) <= 1)
+//    {
+//      if ($this->pObj->b_drs_flexform) {
+//        t3lib_div :: devlog('[INFO/FLEXFORM] There is only one plugin on the page. There isn\'t any effect for any piVar.', $this->pObj->extKey, 0);
+//      }
+//      return;
+//    }
+//    // RETURN, if we have one plugin on the page only
 
     //////////////////////////////////////////////////////////////////////
     //
