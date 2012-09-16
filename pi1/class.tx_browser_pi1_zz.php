@@ -927,7 +927,7 @@
       }
     }
     // Do we have an array with piVar keys?
-$this->pObj->dev_var_dump( $arr_rmPiVars );
+//$this->pObj->dev_var_dump( $arr_rmPiVars );
 
     // We have an array with piVar keys, which shouldn't displayed?
     if( is_array( $arr_rmPiVars ) )
