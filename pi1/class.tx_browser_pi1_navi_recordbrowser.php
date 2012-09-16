@@ -965,6 +965,20 @@ class tx_browser_pi1_navi_recordbrowser
     unset( $piVars['showUid'] );
       // piVars without showUid
     
+      // #40959, 120916, dwildt, +
+      // Catch the uid of the plugin in case of multiple plugins
+    $bool_rmPiVarPlugin = false;
+    if( $this->pObj->objFlexform->bool_linkToSingle_wi_piVar_plugin )
+    {
+      if( ! isset( $this->pObj->piVars['plugin'] ) )
+      {
+        $bool_rmPiVarPlugin = true;
+        $this->pObj->piVars['plugin'] = $tt_content_uid;
+      }
+    }
+      // Catch the uid of the plugin in case of multiple plugins
+      // #40959, 120916, dwildt, +
+    
       // SWITCH : piVars
     switch( true )
     {
@@ -996,6 +1010,15 @@ class tx_browser_pi1_navi_recordbrowser
     }
       // SWITCH : piVars
 
+      // #40959, 120916, dwildt, +
+      // Remove piVars['plugin'], if it was set by this method (see above)
+    if( $bool_rmPiVarPlugin )
+    {
+      unset( $this->pObj->piVars['plugin'] );
+    }
+      // Remove piVars['plugin'], if it was set by this method (see above)
+      // #40959, 120916, dwildt, +
+    
     return;
   }
 

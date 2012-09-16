@@ -463,7 +463,7 @@ class tx_browser_pi1_flexform {
 
     // Allocates uids
     $uid_plugin_selected = $this->pObj->cObj->data['uid'];
-    $uid_plugin_current = $this->pObj->piVars['plugin'];
+    $uid_plugin_current  = $this->pObj->piVars['plugin'];
     // Allocates uids
     // We have more than one plugin on the page
 
@@ -473,8 +473,10 @@ class tx_browser_pi1_flexform {
 
     // The current plugin isn't the plugin, which is used by the visitor
     $bool_unset_piVars = false;
-    if ($uid_plugin_current) {
-      if ($uid_plugin_selected != $uid_plugin_current) {
+    if( $uid_plugin_current ) 
+    {
+      if( $uid_plugin_selected != $uid_plugin_current )
+      {
         $bool_unset_piVars = true;
         if ($this->pObj->b_drs_flexform) {
           t3lib_div :: devlog('[INFO/FLEXFORM] The visitor hasn\'t selected the current plugin.<br />
@@ -483,8 +485,10 @@ class tx_browser_pi1_flexform {
                       All piVars for the current plugin are removed!', $this->pObj->extKey, 0);
         }
       }
-      if ($uid_plugin_selected == $uid_plugin_current) {
-        if ($this->pObj->b_drs_flexform) {
+      if( $uid_plugin_selected == $uid_plugin_current )
+      {
+        if( $this->pObj->b_drs_flexform )
+        {
           t3lib_div :: devlog('[INFO/FLEXFORM] The visitor has selected the current plugin.<br />
                       Id of the current plugin: ' . $uid_plugin_current . '<br />
                       Id of the selected plugin: ' . $uid_plugin_selected . '<br />
@@ -492,7 +496,8 @@ class tx_browser_pi1_flexform {
         }
       }
     }
-    if (!$uid_plugin_current) {
+    if( ! $uid_plugin_current )
+    {
       $bool_unset_piVars = true;
       if ($this->pObj->b_drs_flexform) {
         $csv_piVars_keys = implode(', ', array_keys($this->pObj->piVars));
