@@ -63,7 +63,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    browser
- * @version 3.9.6
+ * @version 4.1.10
  * @since   2.0.0
  */
 class tx_browser_pi1_flexform {
@@ -216,7 +216,7 @@ class tx_browser_pi1_flexform {
  *          Allocates values to TypoScript.
  *
  * @return	void
- * @version 3.7.0
+ * @version 4.1.10
  */
   function main()
   {
@@ -1036,7 +1036,8 @@ class tx_browser_pi1_flexform {
     // Default configuration
 
     // Configured by user
-    if ($str_realUrl_select == 'configured') {
+    if ( $str_realUrl_select == 'configured' )
+    {
       $int_realUrl = $this->pObj->pi_getFFvalue($arr_piFlexform, 'realUrl', 'advanced', 'lDEF', 'vDEF');
 
       $this->bool_linkToSingle_wi_piVar_indexBrowserTab = (($int_realUrl & 1) == 1);
@@ -1045,16 +1046,19 @@ class tx_browser_pi1_flexform {
       $this->bool_linkToSingle_wi_piVar_plugin = (($int_realUrl & 8) == 8);
       $this->bool_linkToSingle_wi_piVar_sort = (($int_realUrl & 16) == 16);
 
-      if ($this->pObj->b_drs_flexform) {
-        t3lib_div :: devlog('[INFO/FLEXFORM] advanced/realUrl<br />
-                  int_realUrl: \'' . $int_realUrl . '\'<br />
-                  linkToSingle_wi_piVar_indexBrowserTab: \'' . $this->bool_linkToSingle_wi_piVar_indexBrowserTab . '\'<br />
-                  linkToSingle_wi_piVar_mode: \'' . $this->bool_linkToSingle_wi_piVar_mode . '\'<br />
-                  linkToSingle_wi_piVar_pointer: \'' . $this->bool_linkToSingle_wi_piVar_pointer . '\'<br />
-                  linkToSingle_wi_piVar_plugin: \'' . $this->bool_linkToSingle_wi_piVar_plugin . '\'<br />
-                  bool_linkToSingle_wi_piVar_sort: \'' . $this->bool_linkToSingle_wi_piVar_sort . '\'', $this->pObj->extKey, 0);
-      }
     }
+      // DRS
+    if ($this->pObj->b_drs_flexform)
+    {
+      t3lib_div :: devlog('[INFO/FLEXFORM] advanced/realUrl<br />
+                int_realUrl: \'' . $int_realUrl . '\'<br />
+                bool_linkToSingle_wi_piVar_indexBrowserTab: \'' . $this->bool_linkToSingle_wi_piVar_indexBrowserTab . '\'<br />
+                bool_linkToSingle_wi_piVar_mode: \'' . $this->bool_linkToSingle_wi_piVar_mode . '\'<br />
+                bool_linkToSingle_wi_piVar_pointer: \'' . $this->bool_linkToSingle_wi_piVar_pointer . '\'<br />
+                bool_linkToSingle_wi_piVar_plugin: \'' . $this->bool_linkToSingle_wi_piVar_plugin . '\'<br />
+                bool_linkToSingle_wi_piVar_sort: \'' . $this->bool_linkToSingle_wi_piVar_sort . '\'', $this->pObj->extKey, 0);
+    }
+      // DRS
     // Field searchForm
 
     return;
