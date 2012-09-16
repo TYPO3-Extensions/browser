@@ -297,33 +297,34 @@ class tx_browser_pi1_template
     $markerArray['###POINTER###']       = $this->pObj->prefixId.'[pointer]';
       // 110110, cweiske, #11886
     $markerArray['###FLEXFORM###']      = $this->pObj->piVars['plugin'];
+      // 120916, dwildt, 1+
+    $markerArray['###PLUGIN###']        = $this->pObj->piVars['plugin'];
     $markerArray['###MODE###']          = $this->pObj->piVar_mode;
     $markerArray['###VIEW###']          = $this->pObj->view;
     $markerArray['###RESULTPHRASE###']  = $this->resultphrase();
 
-// TEST, 120123, dwildt+
-      $str_hidden = null;
-      foreach( ( array ) $this->pObj->piVars as $key => $values )
+    $str_hidden = null;
+    foreach( ( array ) $this->pObj->piVars as $key => $values )
+    {
+      $piVar_key = $this->pObj->prefixId.'['.$key.']';
+      if( is_array( $values ) )
       {
-        $piVar_key = $this->pObj->prefixId.'['.$key.']';
-        if( is_array( $values ) )
+        foreach( ( array ) $values as $value )
         {
-          foreach( ( array ) $values as $value )
+          if( $value != null )
           {
-            if( $value != null )
-            {
-              $str_hidden = $str_hidden . PHP_EOL .
-                            $str_space_left . '<input type="hidden" name="' . $piVar_key . '" value="' . $value . '">';
-            }
+            $str_hidden = $str_hidden . PHP_EOL .
+                          $str_space_left . '<input type="hidden" name="' . $piVar_key . '" value="' . $value . '">';
           }
         }
-        if( ! is_array( $values ) && ! ( $values == null ) )
-        {
-          $str_hidden = $str_hidden . PHP_EOL .
-                        $str_space_left . '<input type="hidden" name="' . $piVar_key . '" value="' . $values . '">';
-        }
       }
-      $markerArray['###HIDDEN###']  = $str_hidden;
+      if( ! is_array( $values ) && ! ( $values == null ) )
+      {
+        $str_hidden = $str_hidden . PHP_EOL .
+                      $str_space_left . '<input type="hidden" name="' . $piVar_key . '" value="' . $values . '">';
+      }
+    }
+    $markerArray['###HIDDEN###']  = $str_hidden;
 $this->pObj->dev_var_dump( $markerArray['###HIDDEN###'] );
 
     $subpart    = $this->pObj->cObj->getSubpart($template, '###SEARCHFORM###');
