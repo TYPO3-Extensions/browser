@@ -403,7 +403,7 @@ class tx_browser_pi1_flexform {
     // Consolidate the Rows in case of Localisation
 
     // #40959 4.1.10, 120916, dwildt, -
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['pid'] );    
+$this->pObj->dev_var_dump( $this->pObj->cObj->data['pid'], $GLOBALS['TSFE']->id );    
     //////////////////////////////////////////////////////////////////////
     //
     // RETURN, if we have one plugin on the page only
