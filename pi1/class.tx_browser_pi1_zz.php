@@ -28,7 +28,7 @@
  * @author      Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package     TYPO3
  * @subpackage  browser
- * @version     4.1.9
+ * @version     4.1.10
  * @since       1.0.0
  */
 
@@ -831,13 +831,13 @@
       // For development prompts only
     static $bool_firsttime = true;
 
-if( $bool_firsttime )
-{
-  $this->pObj->dev_var_dump( $inputPiVars, $filterConf );  
-}
+//if( $bool_firsttime )
+//{
+//  $this->pObj->dev_var_dump( $inputPiVars, $filterConf );  
+//}
     $arr_tableFilter = null; 
     
-      // 4.1.10, 120916, dwildt, +
+      // #40958, 4.1.10, 120916, dwildt, +
       // SWITCH : RETURN if there aren't piVars or if any filter filter isn't set
     switch( true )
     {
@@ -851,26 +851,26 @@ if( $bool_firsttime )
         break;
     }
       // SWITCH : RETURN if there aren't piVars or if any filter filter isn't set
-      // 4.1.10, 120916, dwildt, +
+      // #40958, 4.1.10, 120916, dwildt, +
     
       // Get the filter fields
-      // 4.1.10, 120916, dwildt, 2-
+      // #40958, 4.1.10, 120916, dwildt, 2-
 //    if( is_array( $filterConf ) && is_array( $inputPiVars ) )
 //    {
-      foreach( (array) $filterConf as $tableWiDot => $arrFields )
+    foreach( (array) $filterConf as $tableWiDot => $arrFields )
+    {
+        // 120915,dwildt, 1-
+      //foreach( ( array ) $arrFields as $fieldWiWoDot => $dummy)
+        // 120915,dwildt, 1+
+      foreach( array_keys( ( array ) $arrFields ) as $fieldWiWoDot )
       {
-          // 120915,dwildt, 1-
-        //foreach( ( array ) $arrFields as $fieldWiWoDot => $dummy)
-          // 120915,dwildt, 1+
-        foreach( array_keys( ( array ) $arrFields ) as $fieldWiWoDot )
+        if(substr($fieldWiWoDot, -1) != '.')
         {
-         if(substr($fieldWiWoDot, -1) != '.')
-         {
-           $arr_tableFilter[] = $tableWiDot.$fieldWiWoDot;
-         }
+          $arr_tableFilter[] = $tableWiDot.$fieldWiWoDot;
         }
       }
-      // 4.1.10, 120916, dwildt, 1-
+    }
+      // #40958, 4.1.10, 120916, dwildt, 1-
 //    }
       // Get the filter fields
 

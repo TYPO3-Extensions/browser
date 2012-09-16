@@ -402,7 +402,7 @@ class tx_browser_pi1_flexform {
     //var_dump($rows);
     // Consolidate the Rows in case of Localisation
 
-// //4.1.10, 120916, dwildt: Bug, if plugins are positioned on different pages and included by TypoScript.
+    // #40959 4.1.10, 120916, dwildt, -
 //    //////////////////////////////////////////////////////////////////////
 //    //
 //    // RETURN, if we have one plugin on the page only
@@ -415,6 +415,7 @@ class tx_browser_pi1_flexform {
 //      return;
 //    }
 //    // RETURN, if we have one plugin on the page only
+    // #40959 4.1.10, 120916, dwildt, -
 
     //////////////////////////////////////////////////////////////////////
     //
