@@ -977,7 +977,7 @@ plugin.tx_browser_pi1 {
               parameter {
                 insertData = 1
               }
-              additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.recordBrowser.uidName}]=###RECORD_UID###&L={GP:L}
+              additionalParams  = &tx_browser_pi1[{$plugin.tx_browser_pi1.recordBrowser.uidName}]=###RECORD_UID###&L={GP:L}###PIVARS_FOR_SINGLEVIEW###
               additionalParams {
                 insertData = 1
               }

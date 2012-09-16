@@ -569,9 +569,11 @@ class tx_browser_pi1_navi_recordbrowser
     if($pos_of_curr_row <= ($pos_of_last_row - 1))
     {
         // Get uid of the record
-      $marker['###RECORD_UID###']       = $uids_of_all_rows[$pos_of_curr_row + 1];
+      $marker['###RECORD_UID###']             = $uids_of_all_rows[$pos_of_curr_row + 1];
         // Get position of the record
-      $marker['###RECORD_POSITION###']  = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
+      $marker['###RECORD_POSITION###']        = $pos_of_all_rows[$marker['###RECORD_UID###']] + 1;
+        // #40960, 120916, dwildt, 1+
+      $marker['###PIVARS_FOR_SINGLEVIEW###']  = $this->recordbrowser_get_piVarsForListview( );   
 
         // Get button configuration
       $button_name = $conf_record_browser['buttons.']['current.']['next'];

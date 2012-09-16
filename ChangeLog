@@ -6,7 +6,10 @@
   * #40959: Multiple plugins: class.tx_browser_pi1_flexform.php didn't process multiple-plugin-feature,
             if plugins weren't positioned on the same page
   * #40958: Multiple plugins: if you are using multiple plugins but any filter, piVars are missing in the URL.
-
+  * #40960: Multiple Plugins: Record Browser doesn't use piVars[plugin] in links to the single view
+            Effected files:
+            * pi1/class.tx_browser_pi1_navi_recordbrowser.php
+            * static/setup.txt
 
 4.1.9
   120915
