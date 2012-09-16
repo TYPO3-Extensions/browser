@@ -966,10 +966,10 @@
     }
     // We have an array with piVar keys, which shouldn't displayed?
 
-if( $bool_firsttime )
-{
-  $this->pObj->dev_var_dump( $this->pObj->piVars );  
-}
+//if( $bool_firsttime )
+//{
+//  $this->pObj->dev_var_dump( $this->pObj->piVars );  
+//}
 
 
     ///////////////////////////////////////////////////////////
@@ -982,10 +982,10 @@ if( $bool_firsttime )
       $this->pObj->piVars = $this->pObj->objZz->removeFiltersFromPiVars( $this->pObj->piVars, $conf_view['filter.'] );
     }
     // Remove the filter fields temporarily, if not denied
-if( $bool_firsttime )
-{
-  $this->pObj->dev_var_dump( $this->pObj->piVars );  
-}
+//if( $bool_firsttime )
+//{
+//  $this->pObj->dev_var_dump( $this->pObj->piVars );  
+//}
 
 
 
