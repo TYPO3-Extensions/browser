@@ -1514,8 +1514,12 @@ class tx_browser_pi1_navi_indexBrowser
         break;
       case( false ) :
       default:
-        $uid      = "UPPER ( " . $tableUid . " )";
-        $initial  = "UPPER ( " . $tableField . " )";
+          // #41051, 120918, dwildt, 2-
+//        $uid      = "UPPER ( " . $tableUid . " )";
+//        $initial  = "UPPER ( " . $tableField . " )";
+          // #41051, 120918, dwildt, 2+
+        $uid      = "upper ( " . $tableUid . " )";
+        $initial  = "upper ( " . $tableField . " )";
         break;
     }
 
@@ -2313,8 +2317,12 @@ class tx_browser_pi1_navi_indexBrowser
         break;
       case( false ) :
       default:
-        $uid      = "UPPER ( " . $tableUid . " )";
-        $initial  = "UPPER ( " . $tableField . " )";
+          // #41051, 120918, dwildt, 2-
+//        $uid      = "UPPER ( " . $tableUid . " )";
+//        $initial  = "UPPER ( " . $tableField . " )";
+          // #41051, 120918, dwildt, 2+
+        $uid      = "upper ( " . $tableUid . " )";
+        $initial  = "upper ( " . $tableField . " )";
         break;
     }
 

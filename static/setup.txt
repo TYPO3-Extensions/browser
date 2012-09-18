@@ -547,7 +547,7 @@ plugin.tx_browser_pi1 {
               }
             }
           }
-            // Offset for categiry icons, which will delivered by the database categories
+            // Offset for category icons, which will delivered by the database categories
           offset =
           offset {
               // [INTEGER] x-offset of the icon in pixel

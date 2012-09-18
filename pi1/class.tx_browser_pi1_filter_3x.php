@@ -448,10 +448,10 @@ class tx_browser_pi1_filter_3x {
   private function filter_fetch_rows( )
   {
       // LOOP rows
-    foreach( $this->rows_wo_limit as $key => $row)
+    foreach( ( array ) $this->rows_wo_limit as $key => $row)
     {
         // LOOP conditions
-      foreach( $this->arr_filter_condition as $tableField => $condition )
+      foreach( ( array ) $this->arr_filter_condition as $tableField => $condition )
       {
         switch( key( $condition ) )
         {
