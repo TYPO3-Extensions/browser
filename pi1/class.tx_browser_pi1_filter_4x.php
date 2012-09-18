@@ -4945,7 +4945,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function set_markerArrayUpdateRow( $uid )
   {
-    foreach( $this->rows[$uid] as $key => $value )
+    foreach( ( array ) $this->rows[$uid] as $key => $value )
     {
       $marker                     = '###' . strtoupper( $key ) . '###';
       $this->markerArray[$marker] = $value;

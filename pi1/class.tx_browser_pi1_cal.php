@@ -2416,7 +2416,7 @@ class tx_browser_pi1_cal
       $arr_values_new[$key] = $value;
 
         // Recalculate hits
-      foreach ($arr_values as $keyValue => $valueValue)
+      foreach( ( array ) $arr_values as $keyValue => $valueValue )
       {
 //var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
           // Default value: from

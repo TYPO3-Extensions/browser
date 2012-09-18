@@ -901,7 +901,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // LOOP linkVars: remove 'L'
 
       // Set linkVars without 'L'
-    $str_linkVarsWoL = implode( '&', $arr_linkVarsWoL );
+    $str_linkVarsWoL = implode( '&', ( array ) $arr_linkVarsWoL );
     if( ! empty( $str_linkVarsWoL ) )
     {
       $str_linkVarsWoL = '&' . $str_linkVarsWoL;

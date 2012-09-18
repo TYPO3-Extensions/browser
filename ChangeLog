@@ -7,7 +7,14 @@
             * static/downgrade/3.9.0/setup.txt
   Bugfix
   * #41051: UPPER causes bugs in some SQL engines. Solution UPPER -> upper
-  * #00000: Invalid argument supplied for foreach() in pi1/class.tx_browser_pi1_filter_3x.php line 454
+  * #00000: Invalid argument supplied for foreach() in 
+            * lib
+              * class.tx_browser_cssstyledcontent.php line 904
+            * pi1
+              * class.tx_browser_pi1_cal.php line 2419
+              * class.tx_browser_pi1_filter_3x.php line 454
+              * class.tx_browser_pi1_filter_4x.php line 4948
+              * class.tx_browser_pi1_localisation_3x.php line 863
 
 4.1.12
   120918
