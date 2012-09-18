@@ -502,7 +502,7 @@ class tx_browser_pi1_javascript
  * @since 3.5.0
  * @version 3.6.5
  */
-  function load_jQuery()
+  function load_jQuery( )
   {
       // name has to correspondend with similar code in tx_browser_pi1_template.php
     $name = 'jQuery';
