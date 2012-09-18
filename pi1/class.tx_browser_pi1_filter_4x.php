@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      4.1.7
+ * @version      4.1.12
  * @since        3.9.9
  */
 
@@ -4940,7 +4940,7 @@ class tx_browser_pi1_filter_4x {
  * @param	integer		$uid        : uid of the current item / row
  * @param	string		$value      : value of the current item / row
  * @return	string		$item       : The rendered item
- * @version 3.9.9
+ * @version 4.1.12
  * @since   3.9.9
  */
   private function set_markerArrayUpdateRow( $uid )
@@ -4951,16 +4951,31 @@ class tx_browser_pi1_filter_4x {
       $this->markerArray[$marker] = $value;
     }
 
-    $uidField                   = $this->sql_filterFields[$this->curr_tableField]['uid'];
-    $marker                     = '###UID###';
-    $this->markerArray[$marker] = $this->rows[$uid][$uidField];
-
-    $valueField                 = $this->sql_filterFields[$this->curr_tableField]['value'];
     $marker                     = '###VALUE###';
+    $valueField                 = $this->sql_filterFields[$this->curr_tableField]['value'];
     $this->markerArray[$marker] = $this->rows[$uid][$valueField];
 
-    $hitsField                  = $this->sql_filterFields[$this->curr_tableField]['hits'];
+    $marker                     = '###UID###';
+    $uidField                   = $this->sql_filterFields[$this->curr_tableField]['uid'];
+      // #11401, 120918, dwildt, +
+      // SWITCH : Value of uid depends on localtable or foreigntable
+    list( $table ) = explode( '.', $uidField );
+    switch( $table )
+    {
+      case( $this->pObj->localTable ):
+          // Localtable: ###UID### will replaced by the value
+        $this->markerArray[$marker] = $this->rows[$uid][$valueField];
+        break;
+      default:
+          // Foreigntable: ###UID### will replaced by the uid
+        $this->markerArray[$marker] = $this->rows[$uid][$uidField];
+        break;
+    }
+      // SWITCH : Value of uid depends on localtable or foreigntable
+      // #11401, 120918, dwildt, +
+
     $marker                     = '###HITS###';
+    $hitsField                  = $this->sql_filterFields[$this->curr_tableField]['hits'];
     $this->markerArray[$marker] = $this->rows[$uid][$hitsField];
   }
 

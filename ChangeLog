@@ -1,3 +1,8 @@
+4.1.12
+  120918
+  Bugfix
+  * #11401: Filter: ###UID### replacement depends on localtable or foreigntable
+
 4.1.11
   120916
   New Feature
