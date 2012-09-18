@@ -291,7 +291,7 @@ plugin.tx_browser_pi1 {
           icon = IMAGE
           icon {
               // [STRING] path to the image file
-            file = EXT:browser/res/js/map/lib/OpenLayers/img/marker.png
+            file = EXT:browser/res/js/map/lib/OpenLayers_2.10.0/img/marker.png
           }
             // category label
           label = TEXT
@@ -381,7 +381,7 @@ plugin.tx_browser_pi1 {
       javascripts {
         lib {
             // [STRING] Path to openLayers script
-          openLayers = EXT:browser/res/js/map/lib/OpenLayers/OpenLayers.js
+          openLayers = EXT:browser/res/js/map/lib/OpenLayers_2.10.0/OpenLayers.js
           openLayers {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0

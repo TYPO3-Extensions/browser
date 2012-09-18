@@ -1,5 +1,10 @@
 4.1.13
   120918
+  Feature
+  * #00000: Update OpenLayers from 1.x to 2.10
+            Effected file:
+            * static/setup.txt
+            * static/downgrade/3.9.0/setup.txt
   Bugfix
   * #41051: UPPER causes bugs in some SQL engines. Solution UPPER -> upper
   * #00000: Invalid argument supplied for foreach() in pi1/class.tx_browser_pi1_filter_3x.php line 454
