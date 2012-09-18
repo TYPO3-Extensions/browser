@@ -103,6 +103,9 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Map//402;             type=string;    label= Path to point icons: Path to the directory, which contains the images for points in the map (with ending slash!). Default: EXT:browser/res/js/map/icons/points/ 
   map.pathToPoints = EXT:browser/res/js/map/icons/points/
 
+  # cat=Browser - Map Custom image layer//101;  type=string;    label= Path to custom JSS file: Path to the JSS file with the WMS type Custom Image Layer. Example: fileadmin/typo3-browser/openStreetMap/custom/my_custom.jss
+  mapWiCustomLayer.path =  
+
   # cat=Browser - Navigation/;       type=string;  label= Record Browser: uid name (default: showUid)
   recordBrowser.uidName = showUid
 

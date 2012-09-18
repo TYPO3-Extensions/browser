@@ -1,10 +1,14 @@
 4.1.13
   120918
-  Feature
+  New Features
   * #00000: Update OpenLayers from 1.x to 2.10
-            Effected file:
+            Effected files:
             * static/setup.txt
             * static/downgrade/3.9.0/setup.txt
+  Development
+  * #41057: Open Street Map with custom image layer; first part
+            Effected file:
+            * static/constants.txt
   Bugfix
   * #41051: UPPER causes bugs in some SQL engines. Solution UPPER -> upper
   * #00000: Invalid argument supplied for foreach() in 
@@ -64,7 +68,7 @@
 4.1.7
   120827
   New Feature
-  * #00000: Enable OSM (map) to process category icons delivered by the database
+  * #41055: Enable OSM (map) to process category icons delivered by the database
             Effected files:
             * pi1/class.tx_browser_pi1_map.php
             * static/contstants.txt
