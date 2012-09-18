@@ -757,12 +757,12 @@ plugin.tx_browser_pi1 {
               map_jss = TEXT
               map_jss {
                 value (
-                  <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers/OpenLayers_0.0.2.js"></script>
+                  <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.10.0/OpenLayers.js"></script>
                   <script src="typo3conf/ext/browser/res/js/map/lib/OpenStreetMap/OpenStreetMap_0.0.2.js"></script>
                   <script>
                   /* <![CDATA[ */
                       // Be aware of the trailing slash!
-                    OpenLayers.ImgPath = "/typo3conf/ext/browser/res/js/map/lib/OpenLayers/img/";
+                    OpenLayers.ImgPath = "/typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.10.0/img/";
                     var markerData = '###JSONDATA###';
                     var oxMapConfig = {
                       MapId:          'oxMapArea',                //    HTML map viewport id
