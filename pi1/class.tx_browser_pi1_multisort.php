@@ -163,7 +163,7 @@ class tx_browser_pi1_multisort
       return;
     }
       // RETURN if there isn't any orderBy array
-$this->pObj->dev_var_dump( $rows, $arrOrderByWoAscDesc );
+//$this->pObj->dev_var_dump( $rows, $arrOrderByWoAscDesc );
 
 
       /////////////////////////////////////////////////////////////////
