@@ -1,14 +1,18 @@
 4.1.13
   120918
-  New Features
+  New Feature
+  * #41057: Open Street Map with custom image layer;
+            Effected files:
+            * pi1
+              * class.tx_browser_pi1_map.php
+            * static
+              * constants.txt
+              * setup.txt
+  Improvement
   * #00000: Update OpenLayers from 1.x to 2.10
             Effected files:
             * static/setup.txt
             * static/downgrade/3.9.0/setup.txt
-  Development
-  * #41057: Open Street Map with custom image layer; first part
-            Effected file:
-            * static/constants.txt
   Bugfix
   * #41051: UPPER causes bugs in some SQL engines. Solution UPPER -> upper
   * #00000: Invalid argument supplied for foreach() in 
