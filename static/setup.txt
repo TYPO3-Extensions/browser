@@ -100,6 +100,8 @@ plugin.tx_browser_pi1 {
     pid = pid
   }
 
+    // indexBrowser (A-Z), map, modeSelector, pageBrowser, record_browser
+  navigation =
   navigation {
     indexBrowser {
       display {
