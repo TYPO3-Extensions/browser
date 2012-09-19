@@ -1204,9 +1204,15 @@ class tx_browser_pi1_map
 
         // #41057, 120919, dwildt, +
         // Set url
-      $series[$mapMarker['cat']]['data'][$key]['url']     = $mapMarker['url'];
+      if( ! empty ( $mapMarker['url'] ) )
+      {
+        $series[$mapMarker['cat']]['data'][$key]['url'] = $mapMarker['url'];
+      }
         // Set number
-      $series[$mapMarker['cat']]['data'][$key]['number']  = $mapMarker['number'];
+      if( ! empty ( $mapMarker['number'] ) )
+      {
+        $series[$mapMarker['cat']]['data'][$key]['number'] = $mapMarker['number'];
+      }
         // #41057, 120919, dwildt, +
     }
       // FOREACH map marker
@@ -1409,22 +1415,20 @@ class tx_browser_pi1_map
 
           // #41057, 120919, dwildt, +
           // Get the url
-        $mapMarker['url']  = $this->renderMapMarkerVariablesSystemItem( 'url' );
-        if( empty ( $mapMarker['url'] ) )
+        $url  = $this->renderMapMarkerVariablesSystemItem( 'url' );
+        if( ! empty ( $url ) )
         {
-          $mapMarker['url'] = 'Please take care of a proper configuration<br />
-                                of the TypoScript property marker.mapMarker.url!';
+          $mapMarker['url'] = $url;
         }
           // Get the url
           // #41057, 120919, dwildt, +
 
           // #41057, 120919, dwildt, +
           // Get the number
-        $mapMarker['number']  = $this->renderMapMarkerVariablesSystemItem( 'number' );
-        if( empty ( $mapMarker['number'] ) )
+        $number  = $this->renderMapMarkerVariablesSystemItem( 'number' );
+        if( ! empty ( $number ) )
         {
-          $mapMarker['number'] = 'Please take care of a proper configuration<br />
-                                of the TypoScript property marker.mapMarker.number!';
+          $mapMarker['number'] = $number;
         }
           // Get the number
           // #41057, 120919, dwildt, +
