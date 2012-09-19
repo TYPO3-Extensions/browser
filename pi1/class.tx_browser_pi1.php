@@ -62,7 +62,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 3.9.17
+ * @version 4.1.13
  * @since 0.0.1
  */
 
@@ -2347,7 +2347,7 @@ class tx_browser_pi1 extends tslib_pibase {
   * @param    string        $line             : current line in calling method
   * @param    string        $prompt           : The prompt for devlog.
   * @return    void
-  * @version 3.9.8
+  * @version 4.1.13
   * @since   0.0.1
   */
   public function timeTracking_log( $debugTrailLevel, $prompt )
@@ -2389,9 +2389,9 @@ class tx_browser_pi1 extends tslib_pibase {
         $prompt = 'Previous process needs more than 10 sec';
         t3lib_div::devLog('[WARN/PERFORMANCE] ' . $prompt, $this->extKey, 3 );
         break;
-      case( ( $endTime - $this->tt_prevEndTime ) >= 1000 ):
+      case( ( $endTime - $this->tt_prevEndTime ) >= 250 ):
         $this->tt_prevPrompt = 2;
-        $prompt = 'Previous process needs more than 1 sec';
+        $prompt = 'Previous process needs more than 250 milliseconds';
         t3lib_div::devLog('[WARN/PERFORMANCE] ' . $prompt, $this->extKey, 2 );
         break;
       default:
