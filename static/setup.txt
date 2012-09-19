@@ -920,7 +920,7 @@ plugin.tx_browser_pi1 {
             number = TEXT
             number {
                 // [STRING] table.field. Example: tx_org_headquarters.title
-              field = {$plugin.tx_browser_pi1.map.field.description}
+              field = {$plugin.tx_browser_pi1.map.field.number}
             }
           }
         }

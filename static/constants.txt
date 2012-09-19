@@ -78,15 +78,17 @@ plugin.tx_browser_pi1 {
   map.field.longitude = 
   # cat=Browser - Map//105;             type=string;    label= table.field with the content: table.field with the content for the popup. Example: tx_org_headquarters.short
   map.field.description = 
-  # cat=Browser - Map//106;             type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
+  # cat=Browser - Map//106;             type=string;    label= table.field with the number: Example: tx_org_headquarters.uid
+  map.field.number = 
+  # cat=Browser - Map//107;             type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
   map.field.category = 
-  # cat=Browser - Map//107;             type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
+  # cat=Browser - Map//108;             type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
   map.field.categoryIcon = 
-  # cat=Browser - Map//108;             type=string;    label= Icons directory: Path to the directory with the category icons (with ending slash). Example: uploads/tx_org/ Default: uploads/media/
+  # cat=Browser - Map//109;             type=string;    label= Icons directory: Path to the directory with the category icons (with ending slash). Example: uploads/tx_org/ Default: uploads/media/
   map.path.categoryIcon = uploads/media/ 
-  # cat=Browser - Map//109;             type=string;    label= Position of legend icon: Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
+  # cat=Browser - Map//110;             type=string;    label= Position of legend icon: Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
   map.position.categoryIconLegend = 0 
-  # cat=Browser - Map//110;             type=string;    label= Position of map icon: Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
+  # cat=Browser - Map//111;             type=string;    label= Position of map icon: Position of the icon in the list of icons in the database. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
   map.position.categoryIconMap = 0 
   # cat=Browser - Map//201;         type=int+;   label= Map height: Height of the map (in pixel)
   map.height = 400
