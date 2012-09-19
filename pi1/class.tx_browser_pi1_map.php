@@ -1196,11 +1196,18 @@ class tx_browser_pi1_map
       }
         // Set category icon
         // Set coordinates
-      $series[$mapMarker['cat']]['data'][$key]['coors']  = array( $mapMarker['lon'], $mapMarker['lat'] );
+      $series[$mapMarker['cat']]['data'][$key]['coors']   = array( $mapMarker['lon'], $mapMarker['lat'] );
       $coordinates[] = $mapMarker['lon'] . ',' . $mapMarker['lat'];
         // Set coordinates
         // Set description
-      $series[$mapMarker['cat']]['data'][$key]['desc']   = $mapMarker['desc'];
+      $series[$mapMarker['cat']]['data'][$key]['desc']    = $mapMarker['desc'];
+
+        // #41057, 120919, dwildt, +
+        // Set url
+      $series[$mapMarker['cat']]['data'][$key]['url']     = $mapMarker['url'];
+        // Set number
+      $series[$mapMarker['cat']]['data'][$key]['number']  = $mapMarker['number'];
+        // #41057, 120919, dwildt, +
     }
       // FOREACH map marker
 
