@@ -1102,8 +1102,8 @@ class tx_browser_pi1_filter_3x {
           $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
         }
       }
-      $str_andWhere = implode(' OR ', $arr_orValues);
-      if(!empty($str_andWhere))
+      $str_andWhere = implode(' OR ', ( array) $arr_orValues );
+      if( ! empty( $str_andWhere ) )
       {
         $str_andWhere = ' (' . $str_andWhere . ')';
       }
