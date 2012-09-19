@@ -4044,7 +4044,10 @@ class tx_browser_pi1_filter_4x {
 
         // Render the value
 //$this->pObj->dev_var_dump( $value );
-      $item = $this->get_filterItem( $curr_uid, $value );
+      //$item = $this->get_filterItem( $curr_uid, $value );
+      $item = '<a href="leglis-bid/?tx_browser_pi1%5Btx_leglisbasis_sector.brc_text%5D=1657&cHash=579a339049d1ca24815eadf0cd53371d">
+                Baugewerbe (132)
+              </a>';
 //$this->pObj->dev_var_dump( $item );
 
         // CONTINUE: item is empty
