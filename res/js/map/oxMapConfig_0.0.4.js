@@ -38,8 +38,7 @@ var oxMapConfig = {
                                 h: 715    
                                 },
                             png:{                                      //    by default PNG image or for browser, that don't support SVG
-                                0: 'img/ABmap.png',
-                                1: 'img/ABmap.png'
+                                0: 'img/ABmap.png'
                             },
                             /*
                             svg: {                                     //    modern browser support SVG, better image quality in maps !!
@@ -48,5 +47,5 @@ var oxMapConfig = {
                             */
                             numZoomLevels: 3
                             }
-                    },
+                    }
 };

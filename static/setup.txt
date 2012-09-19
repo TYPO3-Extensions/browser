@@ -908,6 +908,18 @@ plugin.tx_browser_pi1 {
                 // [STRING] table.field. Example: tx_org_headquarters.title
               field = {$plugin.tx_browser_pi1.map.field.description}
             }
+              // [STRING] URL of the point (has an effect in hoover mode only!)
+            url = TEXT
+            url {
+                // [STRING] table.field. Example: tx_org_headquarters.title
+              value = http://google.de
+            }
+              // [STRING] number of the point (has an effect ...
+            number = TEXT
+            number {
+                // [STRING] table.field. Example: tx_org_headquarters.title
+              value = 12
+            }
           }
         }
       }

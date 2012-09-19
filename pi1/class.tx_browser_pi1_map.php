@@ -1304,7 +1304,7 @@ class tx_browser_pi1_map
  * renderMapMarkerPoints( ): Points are map markers. 
  *
  * @return    array
- * @version 4.1.7
+ * @version 4.1.13
  * @since   4.1.7
  */
   private function renderMapMarkerPoints( )
@@ -1399,6 +1399,28 @@ class tx_browser_pi1_map
                                 of the TypoScript property marker.mapMarker.description!';
         }
           // Get the desc
+
+          // #41057, 120919, dwildt, +
+          // Get the url
+        $mapMarker['url']  = $this->renderMapMarkerVariablesSystemItem( 'url' );
+        if( empty ( $mapMarker['url'] ) )
+        {
+          $mapMarker['url'] = 'Please take care of a proper configuration<br />
+                                of the TypoScript property marker.mapMarker.url!';
+        }
+          // Get the url
+          // #41057, 120919, dwildt, +
+
+          // #41057, 120919, dwildt, +
+          // Get the number
+        $mapMarker['number']  = $this->renderMapMarkerVariablesSystemItem( 'number' );
+        if( empty ( $mapMarker['number'] ) )
+        {
+          $mapMarker['number'] = 'Please take care of a proper configuration<br />
+                                of the TypoScript property marker.mapMarker.number!';
+        }
+          // Get the number
+          // #41057, 120919, dwildt, +
 
           // Get the category label
         $mapMarker['cat'] = $category;
