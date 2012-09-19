@@ -28,7 +28,7 @@
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *
 * @since    3.4.4
-* @version  3.6.3
+* @version  4.1.13
 *
 * @package    TYPO3
 * @subpackage  browser
@@ -98,7 +98,7 @@ class tx_browser_pi1_multisort
    *
    * @param	array		&$array: Reference to the array with the rows
    * @return	void
-   * @version 3.9.12
+   * @version 4.1.13
    */
   function multisort_rows( )
   {
@@ -132,63 +132,66 @@ class tx_browser_pi1_multisort
 
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // RETURN if there isn't any row
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN if there isn't any row
 
-    if(!is_array($rows))
+    if( ! is_array( $rows ) )
     {
-      if ($this->pObj->b_drs_sql)
+      if( $this->pObj->b_drs_sql )
       {
-        t3lib_div::devlog('[INFO/SQL] Abort multisort_rows(). There isn\'t any row.', $this->pObj->extKey, 0);
+        $prompt = 'Abort multisort_rows(). There isn\'t any row.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return;
     }
-    // RETURN if there isn't any row
+      // RETURN if there isn't any row
 
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // RETURN if there isn't any orderBy array
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN if there isn't any orderBy array
 
-    if(!is_array($arrOrderByWoAscDesc))
+    if( ! is_array( $arrOrderByWoAscDesc ) )
     {
       if ($this->pObj->b_drs_sql)
       {
-        t3lib_div::devlog('[INFO/SQL] Abort multisort_rows(). There is no orderBy clause.', $this->pObj->extKey, 0);
+        $prompt = 'Abort multisort_rows(). There is no orderBy clause.';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return;
     }
-    // RETURN if there isn't any orderBy array
+      // RETURN if there isn't any orderBy array
+$this->pObj->dev_var_dump( $rows, $arrOrderByWoAscDesc );
 
 
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN if we have synonyms
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // RETURN if we have synonyms
-
-    if($b_synonym)
+    if( $b_synonym )
     {
-      if ($this->pObj->b_drs_sql)
+      if( $this->pObj->b_drs_sql )
       {
-        t3lib_div::devlog('[INFO/SQL] Abort multisort_rows(). No ORDER BY here - we have synonyms!', $this->pObj->extKey, 0);
+        $prompt = 'Abort multisort_rows(). Abort multisort_rows(). No ORDER BY here - we have synonyms!';
+        t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return;
     }
-    // RETURN if we have synonyms
+      // RETURN if we have synonyms
 
 
 
-    /////////////////////////////////////////////////////////////////
-    //
-    // Remove keys, which aren't existing
+      /////////////////////////////////////////////////////////////////
+      //
+      // Remove keys, which aren't existing
 
-    reset($rows);
-    $firstKey             = key($rows);
-    $arr_rmKeys           = array_diff($arrOrderByWoAscDesc, array_keys($rows[$firstKey]));
-    $arrOrderByWoAscDesc  = array_flip($arrOrderByWoAscDesc);
-    foreach((array) $arr_rmKeys as $key)
+    reset( $rows );
+    $firstKey             = key( $rows );
+    $arr_rmKeys           = array_diff( $arrOrderByWoAscDesc, array_keys($rows[$firstKey] ) );
+    $arrOrderByWoAscDesc  = array_flip( $arrOrderByWoAscDesc );
+    foreach( ( array ) $arr_rmKeys as $key )
     {
       unset($arrOrderByWoAscDesc[$key]);
       if ($this->pObj->b_drs_error)
@@ -199,7 +202,7 @@ class tx_browser_pi1_multisort
       }
     }
     $arrOrderByWoAscDesc = array_flip($arrOrderByWoAscDesc);
-    // Remove keys, which aren't existing
+      // Remove keys, which aren't existing
 
 
 
