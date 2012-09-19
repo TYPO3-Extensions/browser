@@ -566,7 +566,7 @@ plugin.tx_browser_pi1 {
             categoryIcon = {$plugin.tx_browser_pi1.map.field.categoryIcon}
           }
             // [STRING/HTML] Draft for an input field of the category form
-          form_input = <input class="oxMapFilter" type="checkbox" name="###CAT###" value="1" checked="checked" />###CAT### ###IMG###
+          form_input = <input class="oxMapFilter" type="checkbox" name="###CAT###" value="1" checked="checked" />###IMG### ###CAT### 
             // [STRING]  SORT_REGULAR, SORT_NUMERIC, SORT_STRING or SORT_LOCALE_STRING 
           orderBy = SORT_STRING
         }
