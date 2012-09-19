@@ -4043,9 +4043,9 @@ class tx_browser_pi1_filter_4x {
         // CONTINUE ERROR $key isn't value
 
         // Render the value
-$this->pObj->dev_var_dump( $value );
-      $item = $this->get_filterItem( $curr_uid, $value );
-$this->pObj->dev_var_dump( $item );
+//$this->pObj->dev_var_dump( $value );
+//      $item = $this->get_filterItem( $curr_uid, $value );
+//$this->pObj->dev_var_dump( $item );
 
         // CONTINUE: item is empty
       if( empty( $item ) )
