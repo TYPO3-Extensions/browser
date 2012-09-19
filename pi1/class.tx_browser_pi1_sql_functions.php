@@ -30,7 +30,7 @@
  *
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *
- * @version   3.9.25
+ * @version   4.1.13
  * @since     3.9.9
  *
  * @package     TYPO3
@@ -431,7 +431,7 @@ class tx_browser_pi1_sql_functions
    * @param     string  $iMilliseconds  : ...
    * @param     string  $promptHelp     : ...
    * @return	void
-   * @version 3.9.13
+   * @version 4.1.13
    * @since   3.9.13
    */
   private function prompt_performance( $iMilliseconds, $promptHelp )
@@ -451,12 +451,19 @@ class tx_browser_pi1_sql_functions
       // SWITCH : limit for milliseconds
     switch( true )
     {
-      case( $iMilliseconds < 500 ):
-        $prompt = 'Query needs less than a half second ' . $sMilliseconds . '.';
+      case( $iMilliseconds < 250 ):
+        $prompt = 'Query needs less than 250 milliseconds ' . $sMilliseconds . '.';
         t3lib_div::devlog( '[OK/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, -1 );
+        break;
+      case( $iMilliseconds >= 250 && $iMilliseconds < 500 ):
+        $prompt = 'Query needs more than 250 milliseconds ' . $sMilliseconds . '.';
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
+        t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
         break;
       case( $iMilliseconds >= 500 && $iMilliseconds < 5000 ):
         $prompt = 'Query needs more than a half second ' . $sMilliseconds . '.';
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
+        t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
         t3lib_div::devlog( '[WARN/PERFROMANCE] ' . $prompt ,  $this->pObj->extKey, 2 );
         t3lib_div::devlog( '[HELP/PERFROMANCE] ' . $promptHelp ,  $this->pObj->extKey, 1 );
         break;
