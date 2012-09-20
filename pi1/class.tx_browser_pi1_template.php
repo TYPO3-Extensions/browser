@@ -3064,7 +3064,7 @@ class tx_browser_pi1_template
         // Bugfix, 3.3.7, 100617, dwildt
       $this->pObj->elements = $elements;
 
-$GLOBALS['TSFE']->register[$this->pObj->extKey.'_positionColumn'] = 123;
+$GLOBALS['TSFE']->register[$this->pObj->extKey.'_numElement'] = $i_count_element;
       $value = $this->pObj->objWrapper->wrapAndLinkValue($key, $value, $elements[$uidField]);
 
       // DRS - Performance
