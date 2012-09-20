@@ -3064,6 +3064,7 @@ class tx_browser_pi1_template
         // Bugfix, 3.3.7, 100617, dwildt
       $this->pObj->elements = $elements;
 
+$GLOBALS['TSFE']->register[$this->pObj->extKey.'_positionColumn'] = 123;
       $value = $this->pObj->objWrapper->wrapAndLinkValue($key, $value, $elements[$uidField]);
 
       // DRS - Performance
@@ -3104,7 +3105,7 @@ class tx_browser_pi1_template
     {
         // 4.1.13, 120920, dwildt, 1+
       $GLOBALS['TSFE']->register[$this->pObj->extKey.'_positionColumn'] = $counter_td;
-$this->pObj->dev_var_dump( $this->pObj->extKey.'_positionColumn', $GLOBALS['TSFE']->register[$this->pObj->extKey.'_positionColumn']);
+//$this->pObj->dev_var_dump( $this->pObj->extKey.'_positionColumn', $GLOBALS['TSFE']->register[$this->pObj->extKey.'_positionColumn']);
       $boolSubstitute = $this->_elementsBoolSubstitute[$key];
         // #12723, mbless, 110310
 
