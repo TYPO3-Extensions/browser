@@ -1,6 +1,6 @@
 4.1.13
   120918
-  New Feature
+  New Features
   * #41057: Open Street Map with custom image layer;
             Effected files:
             * pi1
@@ -8,6 +8,11 @@
             * static
               * constants.txt
               * setup.txt
+  * #41129: Registers for rows and columns, first, last, even and odd
+            Effected files:
+            * pi1
+              * class.tx_browser_pi1_template.php
+
   Improvement
   * #00000: Update OpenLayers from 1.x to 2.10
             Effected files:

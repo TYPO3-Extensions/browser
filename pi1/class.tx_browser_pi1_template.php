@@ -47,7 +47,7 @@
  *  602:     function tmplListview($template, $rows)
  * 1377:     function tmplSingleview($template, $rows)
  * 1903:     function tmplTableHead($template)
- * 2549:     function tmplRows($elements, $subpart, $template)
+ * 2549:     function tmplRow($elements, $subpart, $template)
  * 3349:     private function tmpl_marker( )
  * 3379:     private function tmpl_rmFields( )
  *
@@ -1037,20 +1037,6 @@ class tx_browser_pi1_template
         }
           // In case of the first group and a new group
 
-          // ###LISTBODYITEM###: bodyRows
-        $this->pObj->elements = $elements;
-        $htmlRows     = $this->tmplRows($elements, '###LISTBODYITEM###', $template);
-
-          // #29370, 110831, dwildt+
-          // Remove last devider in case of csv export
-        if( $this->pObj->objExport->str_typeNum == 'csv' )
-        {
-          $htmlRows = rtrim( $htmlRows, $this->pObj->objExport->csv_devider );
-        }
-
-        $listBodyRow  = $this->pObj->cObj->getSubpart($template, '###LISTBODY###');
-        $listBodyRow  = $this->pObj->cObj->substituteSubpart($listBodyRow, '###LISTBODYITEM###', $htmlRows, true);
-
           // #28562: 110830, dwildt+
         $markerArray['###TR_COUNTER###']  = $counter_tr;
         switch(true)
@@ -1068,6 +1054,20 @@ class tx_browser_pi1_template
         $markerArray['###TR_EVEN_OR_ODD###']  = $counter_tr%2 ? $this->oddClassRows : null;
         $counter_tr++;
           // #28562: 110830, dwildt+
+
+          // ###LISTBODYITEM###: bodyRows
+        $this->pObj->elements = $elements;
+        $htmlRows     = $this->tmplRow($elements, '###LISTBODYITEM###', $template);
+
+          // #29370, 110831, dwildt+
+          // Remove last devider in case of csv export
+        if( $this->pObj->objExport->str_typeNum == 'csv' )
+        {
+          $htmlRows = rtrim( $htmlRows, $this->pObj->objExport->csv_devider );
+        }
+
+        $listBodyRow  = $this->pObj->cObj->getSubpart($template, '###LISTBODY###');
+        $listBodyRow  = $this->pObj->cObj->substituteSubpart($listBodyRow, '###LISTBODYITEM###', $htmlRows, true);
 
           // Suggestion #8856,  dwildt, 100812
           // Bugfix     #10762, dwildt, 101201
@@ -1230,7 +1230,7 @@ class tx_browser_pi1_template
 
         $this->pObj->elements    = $elements;
         $this->pObj->rows[$row]  = $rows[$row];
-        $tmpl_row                = $this->tmplRows($elements, '###LISTBODYITEM###', $template); //:todo: Performance
+        $tmpl_row                = $this->tmplRow($elements, '###LISTBODYITEM###', $template); //:todo: Performance
 
           // Remove last devider in case of csv export
           // #29370, 110831, dwildt+
@@ -1664,7 +1664,7 @@ class tx_browser_pi1_template
     //
     // Should swords get an HTML wrap in results?
 
-    // Get the local or gloabl autoconfig array - #9879
+    // Get the local or global autoconfig array - #9879
     $lAutoconf = $this->conf_view['autoconfig.'];
     if (!is_array($lAutoconf))
     {
@@ -1675,7 +1675,7 @@ class tx_browser_pi1_template
       }
       $lAutoconf = $this->pObj->conf['autoconfig.'];
     }
-    // Get the local or gloabl autoconfig array- #9879
+    // Get the local or global autoconfig array- #9879
     $arr_TCAitems = $lAutoconf['autoDiscover.']['items.'];
     // Get the TCA properties from the TypoScript
     $bool_dontColorSwords = false;
@@ -1905,7 +1905,7 @@ class tx_browser_pi1_template
     //
     // Substitute some markers
 
-    $htmlRows   = $this->tmplRows($elements, '###SINGLEBODYROW###', $template);
+    $htmlRows   = $this->tmplRow($elements, '###SINGLEBODYROW###', $template);
     $singleBody = $this->pObj->cObj->getSubpart($template, '###SINGLEBODY###');
     $singleBody = $this->pObj->cObj->substituteSubpart($singleBody, '###SINGLEBODYROW###', $htmlRows, true);
     $template   = $this->pObj->cObj->substituteSubpart($template, '###SINGLEBODY###', $singleBody, true);
@@ -2627,13 +2627,12 @@ class tx_browser_pi1_template
  * @param	string		The subpart marker, which is the template for a row
  * @param	string		Template
  * @return	string		FALSE || HTML string
- * @version 3.9.6
+ * @version 4.1.13
  * @since 1.0.0
  */
-  function tmplRows($elements, $subpart, $template)
+  private function tmplRow($elements, $subpart, $template)
   {
-    
-    static $bool_firstLoop = true;
+    static $bool_firstLoop  = true;
     
       // Get the global $arrHandleAs array
     $handleAs                   = $this->pObj->arrHandleAs;
@@ -2642,41 +2641,23 @@ class tx_browser_pi1_template
     //var_dump('template 2218', $bool_dontHandleEmptyValues);
 
 
-
-      //////////////////////////////////////////////////////////////////
-      //
-      // Handle empty values?
-
-      // 110111, dwildt, #11603
-    if($bool_dontHandleEmptyValues)
+      // IF don't handle empty rows ...
+    if( $bool_dontHandleEmptyValues )
     {
-      $str_elements = implode('', $elements);
-        // RETURN: All elements are empty, the current row is empty
-        // #29186, 110823, dwildt
-      //if(empty($str_elements))
-      if($str_elements == null )
+        // 4.1.13, 120920, dwildt
+        // RETURN if row is empty
+      if( $this->tmplRowIsEmpty( $elements ) )
       {
-        if ($this->pObj->b_drs_templating)
-        {
-          t3lib_div::devLog('[INFO/TEMPLATING] Row is empty. RETURN false.', $this->pObj->extKey, 0);
-          t3lib_div::devLog('[HELP/TEMPLATING] If empty rows should handled, please configure the plugin/flexform [list] field emptyValues.dontHandle = 0.', $this->pObj->extKey, 1);
-        }
-        $htmlRow = false;
-        return $htmlRow;
-        // RETURN: All elements are empty, the current row is empty
+        return false;
       }
+        // RETURN if row is empty
     }
-      // Handle empty values?
+      // IF don't handle empty rows ...
 
-
-
-      //////////////////////////////////////////////////////////////////
-      //
-      // Should swords get an HTML wrap in results?
-
-      // Get the local or gloabl autoconfig array - #9879
+      // Get the local or global autoconfig array - #9879
+      // 120920, :TODO:, $lAutoconf shouldn't allocated for each row!
     $lAutoconf = $this->conf_view['autoconfig.'];
-    if (!is_array($lAutoconf))
+    if( ! is_array( $lAutoconf ) )
     {
       if( $bool_firstLoop )
       {
@@ -2688,134 +2669,39 @@ class tx_browser_pi1_template
       }
       $lAutoconf = $this->pObj->conf['autoconfig.'];
     }
-      // Get the local or gloabl autoconfig array- #9879
+      // 120920, :TODO:, $lAutoconf shouldn't allocated for each row!
+      // Get the local or global autoconfig array- #9879
 
-      // 120915, dwildt, 1-
+      // 120915, dwildt, 1- (is not used in current method!)
     //$arr_TCAitems = $lAutoconf['autoDiscover.']['items.'];
-      // Get the TCA properties from the TypoScript
-    $bool_dontColorSwords = false;
-      // Should swords get an HTML wrap in results?
 
-
-
-      //////////////////////////////////////////////////////////////////
-      //
       // Get the local or the global displaySingle or displayList array
-
+      // 120920, :TODO:, $lDisplayType shouldn't allocated for each row!
     $lDisplayType = $this->pObj->lDisplayType;
     $lDisplayView = $this->conf_view[$lDisplayType];
     if (!is_array($lDisplayView))
     {
       $lDisplayView = $this->pObj->conf[$lDisplayType];
     }
-      // Get the local or the global displaySingle or displayList array
-
-
-
-      // We need it for the class property 'last'
-    $maxColumns = count($elements) - 1;
+      // 120920, :TODO:, $lDisplayType shouldn't allocated for each row!
 
       // Get the uid field
     $uidField = $this->pObj->arrLocalTable['uid'];
-
-      // SQL manual mode: Display uid only, if it isn't the first element
-    $extraUidField  = false;
-    if ($this->pObj->b_sql_manual)
-    {
-      if ($uidField != '')
-      {
-        $extraUidField = true;
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-        {
-          t3lib_div::devLog('[INFO/TEMPLATING] SQL manual mode:<br />
-           If '.$uidField.' will be the first field in the row, it will deleted.', $this->pObj->extKey, 0);
-        }
-      }
-    }
-      // SQL manual mode: Display uid only, if it isn't the first element
+      // 120920, :TODO:, $bool_extraUidField shouldn't allocated for each row!
+      // Is needed an extra uid field ?
+    $bool_extraUidField = $this->tmplRowIsExtraUidField( $uidField );
 
       // We want the prompt of a missing single view only once
-      // 120915, dwildt, 1-
+      // 120915, dwildt, 1- (is nit used in the current method)
     //$boolMissingSingleView = true;
 
     $this->pObj->boolFirstElement = true;
 
-    $i_count_element  = 0;
-      // Counts the elements of the row
-    $i_count_cell   = 0;
-      // Counts the printed cells like <td>
-
-
-
-      //////////////////////////////////////////////////////////////////
-      //
       // Default Design
+      // 120920, :TODO:, $bool_design_default shouldn't allocated for each row!
+    $bool_design_default = $this->tmplRowIsDefaultDesign( $template );
 
-    $bool_design_default   = true;
-      // List view with default design
-    if($this->pObj->view == 'list')
-    {
-      $tmpl_element = $this->pObj->cObj->getSubpart($template, '###LISTBODYITEM###');
-      $pos = strpos($tmpl_element, '###ITEM###');
-      if ($pos === false)
-      {
-        $bool_design_default = false;
-          // DRS - Development Reporting System
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-        {
-          t3lib_div::devLog('[INFO/TEMPLATING] ###LISTBODYITEM### without ###ITEM###<br />
-           The Browser process an individual design with TABLE.FIELD markers.', $this->pObj->extKey, 0);
-        }
-          // DRS - Development Reporting System
-      }
-      if (!($pos === false))
-      {
-          // DRS - Development Reporting System
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-        {
-          t3lib_div::devLog('[INFO/TEMPLATING] ###LISTBODYITEM### contains ###ITEM###<br />
-           The Browser process the default design with rows.', $this->pObj->extKey, 0);
-        }
-          // DRS - Development Reporting System
-      }
-    }
-      // List view with default design
-      // Single view with default design
-    if($this->pObj->view == 'single')
-    {
-      $tmpl_element = $this->pObj->cObj->getSubpart($template, '###SINGLEBODYROW###');
-      $pos = strpos($tmpl_element, '###VALUE###');
-      if ($pos === false)
-      {
-        $bool_design_default = false;
-          // DRS - Development Reporting System
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-        {
-          t3lib_div::devLog('[INFO/TEMPLATING] ###SINGLEBODYROW### without ###VALUE###<br />
-           The Browser process an individual design with TABLE.FIELD markers.', $this->pObj->extKey, 0);
-        }
-          // DRS - Development Reporting System
-      }
-      if (!($pos === false))
-      {
-          // DRS - Development Reporting System
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
-        {
-          t3lib_div::devLog('[INFO/TEMPLATING] ###SINGLEBODYROW### contains ###VALUE###<br />
-           The Browser process the default design with rows.', $this->pObj->extKey, 0);
-        }
-          // DRS - Development Reporting System
-      }
-    }
-      // Single view with default design
-      // Default Design
-
-
-
-      //////////////////////////////////////////////////////////////////
-      //
       // DRS - Performance
-
     if ($this->pObj->boolFirstRow)
     {
       if ($this->pObj->b_drs_perform) {
@@ -2838,8 +2724,17 @@ class tx_browser_pi1_template
       //
       // Loop through all elements
 
+      // Is needed for the class property 'last'
+    $maxColumns           = count( $elements ) - 1;
+      // Counts the elements of the row
+    $i_count_element      = 0;
+      // Counts the printed cells like <td>
+    $i_count_cell         = 0;
+      // Counter. 120920, dwildt: seem's to be without any effect
     $c                    = 0;
+      // Content of the current HTML row
     $htmlRow              = false;
+      // DRS flag
     $bool_drs_handleCase  = false;
 
       // 110829, dwildt-
@@ -2866,29 +2761,14 @@ class tx_browser_pi1_template
         // 120915, dwildt, 1-
       //list($table, $field)  = explode('.', $key);
 
-        // Handle empty values?
-      if( $bool_dontHandleEmptyValues )
+        // CONTINUE: field for single view is empty
+      if( $this->tmplRowFieldOfSingleViewIsEmpty( ) )
       {
-        if( $this->pObj->view == 'single' )
-        {
-            // #29186, 110823, dwildt
-          //if(empty($value))
-          if( $value == null )
-          {
-            if ( $this->pObj->b_drs_templating )
-            {
-              $prompt =  $key . ' is empty. It won\'t handled!';
-              t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
-              $prompt = 'If empty values should handled, please configure the plugin/flexform [list] ' .
-                        'field emptyValues.dontHandle = 0.';
-              t3lib_div::devLog('[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1);
-            }
-            continue;
-          }
-        }
+        continue;
       }
-        // Handle empty values?
+        // CONTINUE: field for single view is empty
       
+        // CONTINUE: field is part of an image object
       if( $handleAs['image'] )
       {
         switch( true )
@@ -2900,6 +2780,7 @@ class tx_browser_pi1_template
             break;
         }
       }
+        // CONTINUE: field is part of an image object
 
 
         // 120129, dwildt+
@@ -2957,15 +2838,16 @@ class tx_browser_pi1_template
 //}
 
         // First field is UID and we have a list view
-      if ($extraUidField && $i_count_element == 0 && $this->view == 'list')
+      if ($bool_extraUidField && $i_count_element == 0 && $this->view == 'list')
       {
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+        if( $this->pObj->boolFirstRow && $this->pObj->b_drs_templating )
         {
           $bool_drs_handleCase = true;
-          t3lib_div::devLog('[INFO/TEMPLATING] '.$key.' is removed, because it is the first value in the row and it is the uid of the local table record.', $this->pObj->extKey, 0);
+          $prompt = $key . ' is removed, because it is the first value in the row and ' . 
+                    'it is the uid of the local table record.';
+          t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
         }
-        $bool_drs_handleCase = true;
-        $maxColumns--;
+        $maxColumns     = $maxColumns - 1;
         $boolSubstitute = false;
       }
         // First field is UID and we have a list view
@@ -2979,7 +2861,7 @@ class tx_browser_pi1_template
           $prompt = $key . ' is in the list of fields, which shouldn\'t displayed.';
           t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
         }
-        $maxColumns--;
+        $maxColumns     = $maxColumns - 1;
         $boolSubstitute = false;
       }
         // Remove fields, which shouldn't displayed
@@ -3005,7 +2887,7 @@ class tx_browser_pi1_template
 
         // Remove fields, which where added because of missing uid and pid
       $addedTableFields = $this->pObj->arrConsolidate['addedTableFields'];
-      if ( in_array( $key, ( array ) $addedTableFields ) )
+      if( in_array( $key, ( array ) $addedTableFields ) )
       {
         if( $this->pObj->boolFirstRow && $this->pObj->b_drs_templating )
         {
@@ -3013,7 +2895,7 @@ class tx_browser_pi1_template
           $prompt = $key.' is in the uid/pid list of the consolidation array. It shouldn\'t displayed.';
           t3lib_div::devLog('[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0);
         }
-        $maxColumns--;
+        $maxColumns     = $maxColumns - 1;
         $boolSubstitute = false;
       }
         // Remove fields, which where added because of missing uid and pid
@@ -3064,7 +2946,8 @@ class tx_browser_pi1_template
         // Bugfix, 3.3.7, 100617, dwildt
       $this->pObj->elements = $elements;
 
-$GLOBALS['TSFE']->register[$this->pObj->extKey.'_numElement'] = $i_count_element;
+        // #41129, 120920, dwildt, 1+
+      $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numColumn'] = $i_count_element;
       $value = $this->pObj->objWrapper->wrapAndLinkValue($key, $value, $elements[$uidField]);
 
       // DRS - Performance
@@ -3103,9 +2986,6 @@ $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numElement'] = $i_count_element
 
     foreach ($this->_elementsTransformed as $key => $value)
     {
-        // 4.1.13, 120920, dwildt, 1+
-      $GLOBALS['TSFE']->register[$this->pObj->extKey.'_positionColumn'] = $counter_td;
-//$this->pObj->dev_var_dump( $this->pObj->extKey.'_positionColumn', $GLOBALS['TSFE']->register[$this->pObj->extKey.'_positionColumn']);
       $boolSubstitute = $this->_elementsBoolSubstitute[$key];
         // #12723, mbless, 110310
 
@@ -3205,8 +3085,6 @@ $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numElement'] = $i_count_element
     }
       // dwildt, 120915, 1+
     unset( $max_td );
-        // 4.1.13, 120920, dwildt, 1+
-    $GLOBALS['TSFE']->register[$this->pObj->extKey.'_positionColumn'] = null;
       // Loop through all elements
 
       // #12723, mbless, 110310
@@ -3249,6 +3127,218 @@ $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numElement'] = $i_count_element
     $bool_firstLoop = false;
     
     return $htmlRow;
+  }
+
+  
+  
+  /**
+ * tmplRowFieldOfSingleViewIsEmpty( )  :  Returns true, if current view is the single view 
+ *                                        and current field is empty
+ *
+ * @param	boolean 	$bool_dontHandleEmptyValues : Don't handle empty values
+ * @param	string		$value                      : current value
+ * @return	boolean 	true, if current view is the single view and current field is empty
+ * @version 4.1.13
+ * @since 1.0.0
+ */
+  private function tmplRowFieldOfSingleViewIsEmpty( $bool_dontHandleEmptyValues, $value )
+  {
+      // RETURN false : empty values should handled
+    if( ! $bool_dontHandleEmptyValues )
+    {
+      return false;
+    }
+      // RETURN false : empty values should handled
+    
+      // RETURN false : current view isn't the single view
+    if( $this->pObj->view != 'single' )
+    {
+      return false;
+    }
+      // RETURN false : current view isn't the single view
+    
+      // RETURN false : current value isn't empty
+    if( $value != null )
+    {
+      return false;
+    }
+      // RETURN false : current value isn't empty
+
+      // DRS
+    if( $this->pObj->b_drs_templating )
+    {
+      $prompt =  $key . ' is empty. It won\'t handled!';
+      t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+      $prompt = 'If empty values should handled, please configure the plugin/flexform [list] ' .
+                'field emptyValues.dontHandle = 0.';
+      t3lib_div::devLog( '[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1 );
+    }
+      // DRS
+
+      // RETURN true: current view is the single view and current field is empty
+    return true;
+  }
+
+  
+
+  /**
+ * tmplRowIsExtraUidField( )  : Returns true, if an extra uid field is needed
+ *
+ * @param	string		$uidField : label of the uid field
+ * @return	boolean 	true, if an extra uid field is needed
+ * @version 4.1.13
+ * @since 1.0.0
+ */
+  private function tmplRowIsExtraUidField( $uidField )
+  {
+      // RETURN false, if sql manual mode is off
+    if( ! $this->pObj->b_sql_manual )
+    {
+      return false; 
+    }
+      // RETURN false, if sql manual mode is off
+        
+      // RETURN false, if current uidField is empty 
+    if( empty ( $uidField ) )
+    {
+      return false;
+    }
+      // RETURN false, if current uidField is empty 
+    
+      // DRS
+    if( $this->pObj->boolFirstRow && $this->pObj->b_drs_templating )
+    {
+      $prompt = 'SQL manual mode: If ' . $uidField . ' will be the first field in the row, it will deleted.';
+      t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+
+      // RETURN true
+    return true;
+  }
+
+  
+  
+  /**
+ * tmplRowIsDefaultDesign( )  : Checks, if ...
+ *
+ * @param	string		$template : The SQL row (elements)
+ * @return	boolean 	true, if row is empty, false, if not.
+ * @version 4.1.13
+ * @since 1.0.0
+ */
+  private function tmplRowIsDefaultDesign( $template )
+  {
+      // Default return value
+    $isDefaultDesign = true;
+    
+      // SWITCH view  : get defined marker
+    switch( $this->pObj->view )
+    {
+      case( 'list' ):
+        $tmpl_element = $this->pObj->cObj->getSubpart( $template, '###LISTBODYITEM###' );
+        $pos          = strpos( $tmpl_element, '###ITEM###' );
+        break;
+      case( 'single' ):
+        $tmpl_element = $this->pObj->cObj->getSubpart( $template, '###SINGLEBODYROW###' );
+        $pos          = strpos( $tmpl_element, '###VALUE###' );
+        break;
+      default:
+        die( __METHOD__ . ' (line: ' . __LINE__ . '): Undefined value in switch!' );
+        break;
+    }
+      // SWITCH view  : get defined marker
+    
+      // IF there isn't any defined marker ...
+    if( $pos === false )
+    {
+      $isDefaultDesign = false;
+    }
+      // IF there isn't any defined marker ...
+    
+      // RETURN result, if DRS is off
+    if( ! ( $this->pObj->boolFirstRow && $this->pObj->b_drs_templating ) )
+    {
+      return $isDefaultDesign;
+    }
+      // RETURN result, if DRS is off
+
+      // SWITCH view  : DRS
+    switch( $this->pObj->view )
+    {
+      case( 'list' ):
+        switch( $isDefaultDesign )
+        {
+          case( false ):
+            $prompt = '###LISTBODYITEM### without ###ITEM###. ' .
+                      'The Browser process an individual design with TABLE.FIELD markers.';
+            t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+            break;
+          case( true ):
+          default:
+            $prompt = '###LISTBODYITEM### contains ###ITEM###. ' .
+                      'The Browser process the default design with rows.';
+            t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+            break;
+        }
+        break;
+      case( 'single' ):
+        switch( $isDefaultDesign )
+        {
+          case( false ):
+            $prompt = '###SINGLEBODYROW### without ###VALUE###. ' .
+                      'The Browser process an individual design with TABLE.FIELD markers.';
+            t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+            break;
+          case( true ):
+          default:
+            $prompt = '###SINGLEBODYROW### contains ###VALUE###. ' .
+                      'The Browser process the default design with rows.';
+            t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+            break;
+        }
+        break;
+      default:
+        die( __METHOD__ . ' (line: ' . __LINE__ . '): Undefined value in switch!' );
+        break;
+    }
+      // SWITCH view  : DRS
+    
+      // RETURN result
+    return $isDefaultDesign;
+  }
+
+
+
+  /**
+ * tmplRowIsEmpty( )  : Checks, if row is empty. If it is, it returns true.
+ *
+ * @param	array		The SQL row (elements)
+ * @return	boolean 	true, if row is empty, false, if not.
+ * @version 4.1.13
+ * @since 1.0.0
+ */
+  private function tmplRowIsEmpty( $elements )
+  {
+    $str_elements = implode( '', $elements );
+
+      // SWITCH : $str_elements 
+    switch( $str_elements )
+    {
+      case( null ):
+        if( $this->pObj->b_drs_templating )
+        {
+          $prompt = 'Row is empty. RETURN false.';
+          t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+          $prompt = 'If empty rows should handled, please configure the plugin/flexform [list] field emptyValues.dontHandle = 0.'; 
+          t3lib_div::devLog( '[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1 );
+        }
+        return true;
+        break;
+      default:
+        break;
+    }
+    return false;
   }
 
 
