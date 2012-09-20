@@ -2961,9 +2961,21 @@ class tx_browser_pi1_template
         // Bugfix, 3.3.7, 100617, dwildt
       $this->pObj->elements = $elements;
 
-        // #41129, 120920, dwildt, 1+
-//$this->pObj->dev_var_dump( $this->pObj->extKey.'_positionColumn', $GLOBALS['TSFE']->register[$this->pObj->extKey.'_positionColumn']);
+        // #41129, 120920, dwildt, 12+
       $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numColumn'] = $i_count_element;
+      $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numColumnFirst'] = null;
+      if( $i_count_element == 0 )
+      {
+        $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numColumnFirst'] = true;
+      }
+      $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numColumnLast'] = null;
+      if( $i_count_element == $maxColumns )
+      {
+        $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numColumnLast'] = true;
+      }
+      $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numColumnOdd'] = $i_count_element%2 ? true : false;
+        // #41129, 120920, dwildt, 12+
+
       $value = $this->pObj->objWrapper->wrapAndLinkValue($key, $value, $elements[$uidField]);
 
       // DRS - Performance

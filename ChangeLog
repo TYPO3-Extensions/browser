@@ -9,9 +9,16 @@
               * constants.txt
               * setup.txt
   * #41129: Registers for rows and columns, first, last, even and odd
+            * browser_numColumn
+            * browser_numColumnFirst
+            * browser_numColumnLast
+            * browser_numColumnOdd
+            * browser_numRow
+            * browser_numRowFirst
+            * browser_numRowLast
+            * browser_numRowOdd
             Effected files:
-            * pi1
-              * class.tx_browser_pi1_template.php
+            * pi1/class.tx_browser_pi1_template.php
 
   Improvement
   * #00000: Update OpenLayers from 1.x to 2.10
