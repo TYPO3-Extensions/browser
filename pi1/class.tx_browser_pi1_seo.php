@@ -90,7 +90,8 @@ class tx_browser_pi1_seo
  * @param	array		the single record
  * @return	void
  */
-  function seo($elements) {
+  function seo( $elements )
+  {
 
     switch($this->pObj->view) {
       case('single'):
