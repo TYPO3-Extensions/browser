@@ -1039,12 +1039,21 @@ class tx_browser_pi1_template
 
           // #28562: 110830, dwildt+
         $markerArray['###TR_COUNTER###']  = $counter_tr;
+//$this->pObj->dev_var_dump( $this->pObj->extKey.'_positionColumn', $GLOBALS['TSFE']->register[$this->pObj->extKey.'_positionColumn']);
+          // #41129, 120920, dwildt, 3+
+        $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numRow']       = $counter_tr;
+        $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numRowFirst']  = false;
+        $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numRowLast']   = false;
         switch(true)
         {
           case( $counter_tr == 0 ):
+              // #41129, 120920, dwildt, 1+
+            $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numRowFirst'] = true;
             $markerArray['###TR_FIRST_LAST###'] = 'first';
             break;
           case( $counter_tr >=  $max_tr ):
+              // #41129, 120920, dwildt, 1+
+            $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numRowLast'] = true;
             $markerArray['###TR_FIRST_LAST###'] = 'last';
             break;
           default:
@@ -1052,12 +1061,18 @@ class tx_browser_pi1_template
             break;
         }
         $markerArray['###TR_EVEN_OR_ODD###']  = $counter_tr%2 ? $this->oddClassRows : null;
+          // #41129, 120920, dwildt, 1+
+        $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numRowOdd'] = $counter_tr%2 ? true : false;
         $counter_tr++;
           // #28562: 110830, dwildt+
 
           // ###LISTBODYITEM###: bodyRows
         $this->pObj->elements = $elements;
-        $htmlRows     = $this->tmplRow($elements, '###LISTBODYITEM###', $template);
+          // Get the rendered the HTML row
+        $htmlRows = $this->tmplRow($elements, '###LISTBODYITEM###', $template);
+
+          // #41129, 120920, dwildt, 1+
+        $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numRowOdd'] = null;
 
           // #29370, 110831, dwildt+
           // Remove last devider in case of csv export
@@ -2947,6 +2962,7 @@ class tx_browser_pi1_template
       $this->pObj->elements = $elements;
 
         // #41129, 120920, dwildt, 1+
+//$this->pObj->dev_var_dump( $this->pObj->extKey.'_positionColumn', $GLOBALS['TSFE']->register[$this->pObj->extKey.'_positionColumn']);
       $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numColumn'] = $i_count_element;
       $value = $this->pObj->objWrapper->wrapAndLinkValue($key, $value, $elements[$uidField]);
 
@@ -2975,6 +2991,10 @@ class tx_browser_pi1_template
       $i_count_element++;
     }
       // LOOP elements
+
+        // #41129, 120920, dwildt, 1+
+//$this->pObj->dev_var_dump( $this->pObj->extKey.'_positionColumn', $GLOBALS['TSFE']->register[$this->pObj->extKey.'_positionColumn']);
+    $GLOBALS['TSFE']->register[$this->pObj->extKey.'_numColumn'] = null;
 
     $this->hook_template_elements_transformed();
 
