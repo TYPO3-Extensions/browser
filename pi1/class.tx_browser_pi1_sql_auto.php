@@ -2744,8 +2744,8 @@ class tx_browser_pi1_sql_auto
  */
   private function init_class_statementTablesByFilter( )
   {
-    $arrFilter  = array_keys( $this->conf_view['filter.'] );
-    $csvFilter  = implode( ', ', $arrFilter );
+    $arrFilter  = array_keys( ( array ) $this->conf_view['filter.'] );
+    $csvFilter  = implode( ', ', ( array ) $arrFilter );
     $this->init_class_statementTables( 'filter', $csvFilter );
   }
 
