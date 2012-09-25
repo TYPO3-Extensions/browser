@@ -4977,11 +4977,6 @@ class tx_browser_pi1_filter_4x {
         {
           $this->markerArray[$marker] = $this->rows[$uid][$uidField];
         }
-          // Overwrite in case of the curretn filter is an area and type is 'interval'
-        if( $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] == 'interval' )
-        {
-          $this->markerArray[$marker] = $this->rows[$uid][$uidField];
-        }
           // #41372, 4.1.15, 120925, dwildt
         break;
       default:
