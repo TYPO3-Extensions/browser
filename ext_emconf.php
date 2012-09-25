@@ -3,7 +3,7 @@
 ########################################################################
 # Extension Manager/Repository config file for ext "browser".
 #
-# Auto generated 06-06-2012 15:25
+# Auto generated 19-09-2012 21:25
 #
 # Manual updates:
 # Only the data in the array - everything else is removed by next

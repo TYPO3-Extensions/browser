@@ -193,8 +193,8 @@ class tx_browser_pi1_flexform {
   /**
  * Constructor. The method initiate the parent object
  *
- * @param	object		The parent object
- * @return	void
+ * @param    object        The parent object
+ * @return    void
  */
   function __construct($parentObj) {
     // Set the Parent Object
@@ -215,7 +215,7 @@ class tx_browser_pi1_flexform {
  *          Process each sheet.
  *          Allocates values to TypoScript.
  *
- * @return	void
+ * @return    void
  * @version 4.1.10
  */
   function main()
@@ -336,7 +336,7 @@ class tx_browser_pi1_flexform {
  * If there is, the piVars[plugin] with the uid of the current plugin is added to the piVars.
  * If the visitor of the page hasn't selected the current plugin, all piVars will be removed.
  *
- * @return	void
+ * @return    void
  */
   function prepare_piVars() {
 
@@ -597,7 +597,7 @@ class tx_browser_pi1_flexform {
  * Set the class var mode. It is the current mode/view.
  * The code is corresponding with the mode snippet in tx_brwoser_pi1_zz::prepairePiVars() !!!
  *
- * @return	void
+ * @return    void
  */
   function prepare_mode() {
 
@@ -649,7 +649,7 @@ class tx_browser_pi1_flexform {
  * If the current plugin has views selected, only the selected views are available for the plugin.
  * The method removes "unavailable" views from the TypoScript.
  *
- * @return	void
+ * @return    void
  */
   function sheet_sDEF_views() {
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
@@ -979,7 +979,7 @@ class tx_browser_pi1_flexform {
   /**
  * The Sheet advanced has properties for the performance
  *
- * @return	void
+ * @return    void
  */
   function sheet_advanced() {
 
@@ -1136,7 +1136,7 @@ class tx_browser_pi1_flexform {
   /**
  * Sheet evaluate: Configuration for evaluation
  *
- * @return	void
+ * @return    void
  * @version 4.0.0
  * @since   4.0.0
  */
@@ -1195,7 +1195,7 @@ class tx_browser_pi1_flexform {
  *                New in version 4.0
  *                Available extension only: Browser Calendar UI
  *
- * @return	void
+ * @return    void
  * @version 4.0.0
  * @since   4.0.0
  */
@@ -1276,7 +1276,7 @@ class tx_browser_pi1_flexform {
  * sheet_javascript(): If the current plugin has views selected, only the selected views are available for the plugin.
  * The method removes "unavailable" views from the TypoScript.
  *
- * @return	void
+ * @return    void
  * @version 3.7.0
  * @since 3.5.0
  */
@@ -1578,7 +1578,7 @@ class tx_browser_pi1_flexform {
  * If the current plugin has views selected, only the selected views are available for the plugin.
  * The method removes "unavailable" views from the TypoScript.
  *
- * @return	void
+ * @return    void
  * @since 2.x.x
  * @version 3.4.4
  */
@@ -2221,7 +2221,7 @@ class tx_browser_pi1_flexform {
   /**
  * The sheet socialmedia administrates bookmarks.
  *
- * @return	void
+ * @return    void
  */
   function sheet_socialmedia() {
 
@@ -2283,7 +2283,7 @@ class tx_browser_pi1_flexform {
  * If the current plugin has views selected, only the selected views are available for the plugin.
  * The method removes "unavailable" views from the TypoScript.
  *
- * @return	void
+ * @return    void
  * @since   3.0.1
  * @version 3.4.4
  */
@@ -2350,7 +2350,7 @@ class tx_browser_pi1_flexform {
  * If the current plugin has views selected, only the selected views are available for the plugin.
  * The method removes "unavailable" views from the TypoScript.
  *
- * @return	void
+ * @return    void
  * @version 3.6.2
  */
   function sheet_templating()
@@ -2615,7 +2615,7 @@ class tx_browser_pi1_flexform {
  * If the current plugin has views selected, only the selected views are available for the plugin.
  * The method removes "unavailable" views from the TypoScript.
  *
- * @return	void
+ * @return    void
  * @version 4.0.0
  */
   function sheet_viewList( )
@@ -3450,7 +3450,7 @@ class tx_browser_pi1_flexform {
  * If the current plugin has views selected, only the selected views are available for the plugin.
  * The method removes "unavailable" views from the TypoScript.
  *
- * @return	void
+ * @return    void
  * @since 3.7.0
  * @version 3.7.3
  */
@@ -3750,3 +3750,4 @@ if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser
   include_once ($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_flexform.php']);
 }
 ?>
+
