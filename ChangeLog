@@ -1,3 +1,8 @@
+4.1.15
+  120925
+  Improvement
+  * #41372: Filter areas: strings aren't supported proper
+
 4.1.14
   120924
   Improvement

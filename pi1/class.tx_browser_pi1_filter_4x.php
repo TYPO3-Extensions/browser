@@ -1273,7 +1273,8 @@ class tx_browser_pi1_filter_4x {
     static $firstLoop   = true;
     static $loop        = array( );
     static $conf_array  = null;
-    
+
+//$this->pObj->dev_var_dump( $uid, $this->markerArray['###UID###'] );
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
@@ -4970,6 +4971,13 @@ class tx_browser_pi1_filter_4x {
       case( $this->pObj->localTable ):
           // Localtable: ###UID### will replaced by the value
         $this->markerArray[$marker] = $this->rows[$uid][$valueField];
+          // #41372, 4.1.15, 120925, dwildt
+          // Overwrite in case of the curretn filter is an area and type is 'strings'
+        if( $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] == 'strings' )
+        {
+          $this->markerArray[$marker] = $this->rows[$uid][$uidField];
+        }
+          // #41372, 4.1.15, 120925, dwildt
         break;
       default:
           // Foreigntable: ###UID### will replaced by the uid
