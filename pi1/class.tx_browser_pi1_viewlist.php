@@ -1025,7 +1025,6 @@ var_dump( __METHOD__, __LINE__ );
               );
 
       // Get rows for the list view
-$this->pObj->dev_var_dump( $withIds );    
     $arr_return = $this->rows_sqlRowsbyIds( $withIds );
 
     return $arr_return;
@@ -1506,6 +1505,7 @@ $this->pObj->dev_var_dump( $withIds );
  */
   private function rows_sqlRowsbyIds( $withIds )
   {
+$this->pObj->dev_var_dump( $withIds );    
 
       // SQL query array
     $select = $this->pObj->objSqlInit->statements['listView']['select'];
