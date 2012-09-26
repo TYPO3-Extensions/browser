@@ -1334,6 +1334,7 @@ $this->pObj->dev_var_dump( $conf_array['first_item.']['option_value'],
       case( $uid == $conf_array['first_item.']['option_value'] ):
         $cObj_name = $conf_array['first_item.']['cObject'];
         $cObj_conf = $conf_array['first_item.']['cObject.'];
+$this->pObj->dev_var_dump( $cObj_name, $cObj_conf ); 
         break;
       default:
         $cObj_name = $conf_array['wrap.']['item.']['cObject'];
