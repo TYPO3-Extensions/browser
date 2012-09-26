@@ -1275,7 +1275,7 @@ class tx_browser_pi1_filter_4x {
     static $conf_array  = null;
 
 //$this->pObj->dev_var_dump( $uid, $this->markerArray['###UID###'] );
-$this->pObj->dev_var_dump( $uid, $value );
+//$this->pObj->dev_var_dump( $uid, $value );
 
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
@@ -1325,7 +1325,7 @@ $this->pObj->dev_var_dump( $uid, $value );
     
       // Get the COA configuration for the value
       // SWITCH first item
-$this->pObj->dev_var_dump( $conf_array['first_item.']['option_value'], 
+//$this->pObj->dev_var_dump( $conf_array['first_item.']['option_value'], 
         $uid == $conf_array['first_item.']['option_value'],
         ( string ) $uid == $conf_array['first_item.']['option_value'] 
         );
@@ -1352,7 +1352,10 @@ $this->pObj->dev_var_dump( $cObj_name, $cObj_conf );
       // 3.9.20:  Be careful: Method need 10 milliseconds. Can be a 
       //          performance problem in case of a lot records!     
     $item = $this->pObj->cObj->substituteMarkerArray( $item, $this->markerArray );
-    
+if( $uid == 0 )
+{
+  $this->pObj->dev_var_dump( $item ); 
+}
       // 3.9.20: Coded is moved from above
       // Workaround: remove ###ONCHANGE###
     $item = str_replace( ' class=" ###ONCHANGE###"', null, $item );
