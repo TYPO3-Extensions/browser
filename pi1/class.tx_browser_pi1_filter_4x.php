@@ -682,19 +682,20 @@ class tx_browser_pi1_filter_4x {
       // Set rows, if current filter is with areas
     $this->areas_toRows( );
 
-      // RETURN rows are empty
-    if( empty ( $this->rows) )
-    {
-        // DRS
-      if( $this->pObj->b_drs_warn )
-      {
-        $prompt = 'Rows are empty. Filter: ' . $this->curr_tableField . '.';
-        t3lib_div::devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
-      }
-        // DRS
-      return $arr_return;
-    }
-      // RETURN rows are empty
+// 120927, dwildt
+//      // RETURN rows are empty
+//    if( empty ( $this->rows) )
+//    {
+//        // DRS
+//      if( $this->pObj->b_drs_warn )
+//      {
+//        $prompt = 'Rows are empty. Filter: ' . $this->curr_tableField . '.';
+//        t3lib_div::devlog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
+//      }
+//        // DRS
+//      return $arr_return;
+//    }
+//      // RETURN rows are empty
 
 
       // Get table and field
