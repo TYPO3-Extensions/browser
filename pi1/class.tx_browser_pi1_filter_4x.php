@@ -1326,9 +1326,9 @@ class tx_browser_pi1_filter_4x {
       // Get the COA configuration for the value
       // SWITCH first item
 //$this->pObj->dev_var_dump( $conf_array['first_item.']['option_value'], 
-        $uid == $conf_array['first_item.']['option_value'],
-        ( string ) $uid == $conf_array['first_item.']['option_value'] 
-        );
+//        $uid == $conf_array['first_item.']['option_value'],
+//        ( string ) $uid == $conf_array['first_item.']['option_value'] 
+//        );
     switch( true )
     {
       case( $uid == $conf_array['first_item.']['option_value'] ):
