@@ -1499,13 +1499,19 @@ var_dump( __METHOD__, __LINE__ );
  *
  * @param	string		$withIds     : Ids of the rows for the lost view
  * @return	array		$arr_return : Contains the SQL res or an error message
- * @version 3.9.13
+ * @version 4.1.16
  * @since   3.9.13
  * @todo    120506, dwildt: filterIsSelected
  */
   private function rows_sqlRowsbyIds( $withIds )
   {
 $this->pObj->dev_var_dump( $withIds );    
+      // 120927, dwildt, +
+    if( empty ( $withIds ) )
+    {
+      return false;
+    }
+      // 120927, dwildt, +
 
       // SQL query array
     $select = $this->pObj->objSqlInit->statements['listView']['select'];
