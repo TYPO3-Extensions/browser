@@ -1,3 +1,8 @@
+4.1.16
+  120927
+  Bugfix
+  * #00000: Filter areas: If any filter is matched in localised context, alls records were displayed 
+
 4.1.15
   120925
   Improvement

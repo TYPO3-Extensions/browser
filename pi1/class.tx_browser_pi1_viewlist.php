@@ -1505,7 +1505,7 @@ var_dump( __METHOD__, __LINE__ );
  */
   private function rows_sqlRowsbyIds( $withIds )
   {
-$this->pObj->dev_var_dump( $withIds );    
+//$this->pObj->dev_var_dump( $withIds );    
       // 120927, dwildt, +
     if( empty ( $withIds ) )
     {
