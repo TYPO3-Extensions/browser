@@ -1025,6 +1025,7 @@ var_dump( __METHOD__, __LINE__ );
               );
 
       // Get rows for the list view
+$this->pObj->dev_var_dump( $withIds );    
     $arr_return = $this->rows_sqlRowsbyIds( $withIds );
 
     return $arr_return;
