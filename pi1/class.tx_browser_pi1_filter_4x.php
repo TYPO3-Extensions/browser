@@ -832,6 +832,7 @@ class tx_browser_pi1_filter_4x {
       $this->row_number++;
     }
       // LOOP rows
+$this->pObj->dev_var_dump( $items ); 
 
     $items = $this->get_maxItemsWrapBeginEnd( $items );
 
@@ -1352,10 +1353,7 @@ $this->pObj->dev_var_dump( $cObj_name, $cObj_conf );
       // 3.9.20:  Be careful: Method need 10 milliseconds. Can be a 
       //          performance problem in case of a lot records!     
     $item = $this->pObj->cObj->substituteMarkerArray( $item, $this->markerArray );
-if( $uid == 0 )
-{
-  $this->pObj->dev_var_dump( $item ); 
-}
+
       // 3.9.20: Coded is moved from above
       // Workaround: remove ###ONCHANGE###
     $item = str_replace( ' class=" ###ONCHANGE###"', null, $item );
@@ -1387,6 +1385,10 @@ if( $uid == 0 )
       $debugTrailLevel = 1;
       $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
     }
+if( $uid == 0 )
+{
+  $this->pObj->dev_var_dump( $item ); 
+}
     return $item;
   }
 
