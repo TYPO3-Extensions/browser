@@ -1325,7 +1325,7 @@ $this->pObj->dev_var_dump( $uid, $value );
     
       // Get the COA configuration for the value
       // SWITCH first item
-$this->pObj->dev_var_dump( $conf_array['first_item.']['option_value'] );
+$this->pObj->dev_var_dump( $conf_array['first_item.']['option_value'], $uid == $conf_array['first_item.']['option_value'] );
     switch( true )
     {
       case( $uid == $conf_array['first_item.']['option_value'] ):
