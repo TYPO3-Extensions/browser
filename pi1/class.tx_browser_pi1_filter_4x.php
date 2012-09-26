@@ -1276,6 +1276,7 @@ class tx_browser_pi1_filter_4x {
 
 //$this->pObj->dev_var_dump( $uid, $this->markerArray['###UID###'] );
 $this->pObj->dev_var_dump( $uid, $value );
+die( 12345678 );
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
 
