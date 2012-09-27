@@ -1438,8 +1438,13 @@ class tx_browser_pi1_map
           // Get the number
           // #41057, 120919, dwildt, +
 
+          // 4.1.17, 120927, dwildt, 2-
+//          // Get the category label
+//        $mapMarker['cat'] = $category;
+          // 4.1.17, 120927, dwildt, 3+
           // Get the category label
-        $mapMarker['cat'] = $category;
+        $categoryWoSpc    = str_replace( ' ', null, $$category );
+        $mapMarker['cat'] = $categoryWoSpc;
           // 4.1.7, 3+
           // Get the category icon
         if( isset( $this->arrCategories['icons'] ) )
