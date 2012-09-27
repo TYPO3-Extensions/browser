@@ -1,7 +1,8 @@
 4.1.16
   120927
   Bugfix
-  * #00000: Filter areas: If any filter is matched in localised context, alls records were displayed 
+  * #00000: Filter areas: If any filter is matched in localised context, alls records were displayed
+  * #00000: Filter weren't displayed in case of any record doesn't matched 
 
 4.1.15
   120925
