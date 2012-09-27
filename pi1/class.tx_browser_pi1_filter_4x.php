@@ -682,7 +682,7 @@ class tx_browser_pi1_filter_4x {
       // Set rows, if current filter is with areas
     $this->areas_toRows( );
 
-// 120927, dwildt
+// 4.1.16, 120927, dwildt, -
 //      // RETURN rows are empty
 //    if( empty ( $this->rows) )
 //    {
@@ -696,6 +696,7 @@ class tx_browser_pi1_filter_4x {
 //      return $arr_return;
 //    }
 //      // RETURN rows are empty
+// 4.1.16, 120927, dwildt, -
 
 
       // Get table and field
@@ -833,7 +834,6 @@ class tx_browser_pi1_filter_4x {
       $this->row_number++;
     }
       // LOOP rows
-$this->pObj->dev_var_dump( $items ); 
 
     $items = $this->get_maxItemsWrapBeginEnd( $items );
 
@@ -1327,16 +1327,11 @@ $this->pObj->dev_var_dump( $items );
     
       // Get the COA configuration for the value
       // SWITCH first item
-//$this->pObj->dev_var_dump( $conf_array['first_item.']['option_value'], 
-//        $uid == $conf_array['first_item.']['option_value'],
-//        ( string ) $uid == $conf_array['first_item.']['option_value'] 
-//        );
     switch( true )
     {
       case( $uid == $conf_array['first_item.']['option_value'] ):
         $cObj_name = $conf_array['first_item.']['cObject'];
         $cObj_conf = $conf_array['first_item.']['cObject.'];
-$this->pObj->dev_var_dump( $cObj_name, $cObj_conf ); 
         break;
       default:
         $cObj_name = $conf_array['wrap.']['item.']['cObject'];
@@ -1386,10 +1381,6 @@ $this->pObj->dev_var_dump( $cObj_name, $cObj_conf );
       $debugTrailLevel = 1;
       $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
     }
-if( $uid == 0 )
-{
-  $this->pObj->dev_var_dump( $item ); 
-}
     return $item;
   }
 
