@@ -489,7 +489,7 @@ class tx_browser_pi1_map
       $input = str_replace( '###CAT###', $labelValue, $input );
         // 4.1.17, 120927, dwildt
         // replace the catgeroy marker
-      $labelValueWoSpc = str_replace( ' ', '_', $labelValue );
+      $labelValueWoSpc = str_replace( ' ', null, $labelValue );
       $input = str_replace( '###CAT_WO_SPC###', $labelValueWoSpc, $input );
         // 4.1.17, 120927, dwildt
 
