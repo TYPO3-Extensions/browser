@@ -1504,6 +1504,7 @@ class tx_browser_pi1_map
         break;
     }
     $arr_return['data']['mapMarkers'] = $mapMarkers;
+$this->pObj->dev_var_dump( $mapMarkers );    
     $arr_return['data']['lats']       = $lats;
     $arr_return['data']['lons']       = $lons;
     return $arr_return;
