@@ -469,7 +469,7 @@ class tx_browser_pi1_map
  * categoriesFormInputs( ): Returns the input fields for the category form
  *
  * @return    string
- * @version 4.1.4
+ * @version 4.1.17
  * @since   4.1.4
  */
   private function categoriesFormInputs( )
@@ -487,6 +487,11 @@ class tx_browser_pi1_map
       $input = $this->confMap['configuration.']['categories.']['form_input'];
         // replace the catgeroy marker
       $input = str_replace( '###CAT###', $labelValue, $input );
+        // 4.1.17, 120927, dwildt
+        // replace the catgeroy marker
+      $labelValueWoSpc = str_replace( ' ', '_', $labelValue );
+      $input = str_replace( '###CAT_WO_SPC###', $labelValueWoSpc, $input );
+        // 4.1.17, 120927, dwildt
 
         // IF draft for an input field contains ###IMG###, render an image
       $pos = strpos( $input, '###IMG###' );

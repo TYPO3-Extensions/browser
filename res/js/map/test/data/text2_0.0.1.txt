@@ -1,3 +1,0 @@
-lat	lon	title	description	icon	iconSize	iconOffset
-48.9659301	9.6175669	Title One	Description one<br>Second line.<br><br>(click again to close)	typo3conf/ext/browser/res/js/map/test/img/test1.png	14,14	0,-24
-48.89	9.538	Title Two	Description two	typo3conf/ext/browser/res/js/map/test/img/test1.png	14,14	-8,-8
