@@ -6,7 +6,7 @@
  * Version 3.9.21
  *
  * jquery.jstree-x.x.x.js is needed:
- *   http://docs.jquery.com/Plugins/tstree
+ *   http://docs.jquery.com/Plugins/jstree
  *
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
