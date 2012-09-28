@@ -2758,7 +2758,7 @@ plugin.tx_browser_pi1 {
       }
       plugins {
         jstree {
-          plugin = EXT:browser/res/js/jquery/plugins/jquery.jstree/jquery.jstree.js
+          plugin = EXT:browser/res/js/jquery/plugins/jquery.jstree/jquery.jstree_1.0-rc3.js
           plugin {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
