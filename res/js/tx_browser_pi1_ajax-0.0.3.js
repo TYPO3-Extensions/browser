@@ -42,7 +42,7 @@ function initFirebug() {
 function setFocusTo(obj, pObj) {
 // sets focus to changed objects for screen readers (for accessibility)
   if (!pObj.hasClass('nofocus')) {
-    $('[tabindex=-1').removeAttr('tabindex');
+    $('[tabindex=-1]').removeAttr('tabindex');
     obj.attr('tabindex', -1);
     obj.focus();
   }
