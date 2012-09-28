@@ -3,6 +3,11 @@
   Improvement
   * #00000: t3jquery.txt for supporting the configuration of t3jquery
   * #00000: jsTree: non used files and folders are removed
+  * #00000: jQuery 1.8.x is checked with success
+  * #00000: res/js/jquery
+              tx_browser_pi1_jstree-3.9.21.js is moved to tx_browser_pi1_jstree-4.1.18.js
+  Bugfix
+  * #00000: res/js/tx_browser_pi1_ajax-0.0.4.js            
 
 4.1.17
   120927
