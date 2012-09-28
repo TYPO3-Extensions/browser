@@ -23,8 +23,8 @@ $( document ).ready( function( )
     $("###SELECTOR_01###").jstree({
       "themes" : {
         "theme" : "###THEME_01###",
-        "dots"  : false,
-        "icons" : false
+        "dots"  : ###DOTS_01##,
+        "icons" : ###ICONS_01###
       },
       "plugins" : ["themes", "html_data", "cookies"]
     });
@@ -34,8 +34,8 @@ $( document ).ready( function( )
     $("###SELECTOR_02###").jstree({
       "themes" : {
         "theme" : "###THEME_02###",
-        "dots"  : true,
-        "icons" : true
+        "dots"  : ###DOTS_02##,
+        "icons" : ###ICONS_02###
       },
       "plugins" : ["themes", "html_data", "cookies"]
     });
@@ -45,8 +45,8 @@ $( document ).ready( function( )
     $("###SELECTOR_03###").jstree({
       "themes" : {
         "theme" : "###THEME_03###",
-        "dots"  : true,
-        "icons" : true
+        "dots"  : ###DOTS_03##,
+        "icons" : ###ICONS_03###
       },
       "plugins" : ["themes", "html_data", "cookies"]
     });
@@ -56,8 +56,8 @@ $( document ).ready( function( )
     $("###SELECTOR_04###").jstree({
       "themes" : {
         "theme" : "###THEME_04###",
-        "dots"  : true,
-        "icons" : true
+        "dots"  : ###DOTS_04##,
+        "icons" : ###ICONS_04###
       },
       "plugins" : ["themes", "html_data", "cookies"]
     });
@@ -67,8 +67,8 @@ $( document ).ready( function( )
     $("###SELECTOR_05###").jstree({
       "themes" : {
         "theme" : "###THEME_05###",
-        "dots"  : true,
-        "icons" : true
+        "dots"  : ###DOTS_05##,
+        "icons" : ###ICONS_05###
       },
       "plugins" : ["themes", "html_data", "cookies"]
     });

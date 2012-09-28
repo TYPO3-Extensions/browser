@@ -3526,26 +3526,91 @@ plugin.tx_browser_pi1 {
               selector_05 {
                 value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_05}
               }
+                // Dots for selector 1
+              dots_01 = TEXT
+              dots_01 {
+                  // [Boolean] true: set dots; false: don't set dots
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.dots}
+              }
+                // Dots for selector 2
+              dots_02 = TEXT
+              dots_02 {
+                  // [Boolean] true: set dots; false: don't set dots
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.dots}
+              }
+                // Dots for selector 3
+              dots_03 = TEXT
+              dots_03 {
+                  // [Boolean] true: set dots; false: don't set dots
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.dots}
+              }
+                // Dots for selector 4
+              dots_04 = TEXT
+              dots_04 {
+                  // [Boolean] true: set dots; false: don't set dots
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.dots}
+              }
+                // Dots for selector 5
+              dots_05 = TEXT
+              dots_05 {
+                  // [Boolean] true: set dots; false: don't set dots
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.dots}
+              }
+                // Theme for selector 1
+              icons_01 = TEXT
+              icons_01 {
+                  // [Boolean] true: set icons; false: don't set icons
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.icons}
+              }
+                // Icons for selector 2
+              icons_02 = TEXT
+              icons_02 {
+                  // [Boolean] true: set icons; false: don't set icons
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.icons}
+              }
+                // Icons for selector 3
+              icons_03 = TEXT
+              icons_03 {
+                  // [Boolean] true: set icons; false: don't set icons
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.icons}
+              }
+                // Icons for selector 4
+              icons_04 = TEXT
+              icons_04 {
+                  // [Boolean] true: set icons; false: don't set icons
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.icons}
+              }
+                // Icons for selector 5
+              icons_05 = TEXT
+              icons_05 {
+                  // [Boolean] true: set icons; false: don't set icons
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.icons}
+              }
+                // Theme for selector 1
               theme_01 = TEXT
               theme_01 {
                   // [String] supported are: apple, classic, default, default-rtl
                 value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
               }
+                // Theme for selector 2
               theme_02 = TEXT
               theme_02 {
                   // [String] supported are: apple, classic, default, default-rtl
                 value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
               }
+                // Theme for selector 3
               theme_03 = TEXT
               theme_03 {
                   // [String] supported are: apple, classic, default, default-rtl
                 value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
               }
+                // Theme for selector 4
               theme_04 = TEXT
               theme_04 {
                   // [String] supported are: apple, classic, default, default-rtl
                 value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
               }
+                // Theme for selector 5
               theme_05 = TEXT
               theme_05 {
                   // [String] supported are: apple, classic, default, default-rtl
