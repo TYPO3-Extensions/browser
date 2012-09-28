@@ -2862,7 +2862,7 @@ plugin.tx_browser_pi1 {
     }
     ajax {
         // [STRING] Path to Javascript file with ajax methods
-      file    = EXT:browser/res/js/tx_browser_pi1_ajax-0.0.3.js
+      file    = EXT:browser/res/js/tx_browser_pi1_ajax-0.0.4.js
       file {
           // [Boolean] 0 (default): link to the script file, 1: include the script inline
         inline = 0

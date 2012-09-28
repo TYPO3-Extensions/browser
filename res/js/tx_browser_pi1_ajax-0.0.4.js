@@ -8,8 +8,8 @@
  *
  * for more info visit http://typo3-browser-forum.de/
  * 
- * status: 24 Jan 2012
- * version: 0.0.3
+ * status: 29 Sept 2012
+ * version: 0.0.4
  *
  */
  
