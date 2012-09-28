@@ -3468,7 +3468,11 @@ plugin.tx_browser_pi1 {
     }
   }
 
+    // jQuery, ajax, general
+  javascript =
   javascript {
+      // library, plugins, ui, cleanup
+    jquery =
     jquery {
         // [STRING] Path to jQuery library
       library = EXT:browser/res/js/jquery/jquery-1.6.2.min.js
@@ -3476,6 +3480,8 @@ plugin.tx_browser_pi1 {
           // [Boolean] 0 (default): link to the script file, 1: include the script inline
         inline = 0
       }
+        // jstree, t3browser
+      plugins =
       plugins {
         jstree {
           plugin = EXT:browser/res/js/jquery/plugins/jquery.jstree/jquery.jstree.js
