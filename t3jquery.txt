@@ -1,0 +1,16 @@
+
+  // res/js/tx_browser_pi1.js
+  // res/js/tx_browser_pi1_ajax-0.0.3.js
+  // res/js/jquery/plugins/jquery.jstree/jquery.jstree.js
+  // res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.2.js
+  // res/js/jquery/tx_browser_pi1-0.0.3.cleanup.js
+  // res/js/jquery/tx_browser_pi1-0.0.3.js
+  // res/js/jquery/tx_browser_pi1_jstree-0.0.1.js
+  // res/js/jquery/tx_browser_pi1_jstree-3.9.21.js
+  // res/js/jquery/tx_browser_pi1-0.0.3.cleanup.js
+  // res/js/map/oxRenderMap_0.0.7.js
+  // res/js/map/lib/OpenLayers/OpenLayers_0.0.2.js
+  // res/js/map/lib/OpenLayers_2.10.0/OpenLayers.js
+
+script=res/js/tx_browser_pi1.js,res/js/tx_browser_pi1_ajax-0.0.3.js,res/js/jquery/plugins/jquery.jstree/jquery.jstree.js,res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.2.js,res/js/jquery/tx_browser_pi1-0.0.3.cleanup.js,res/js/jquery/tx_browser_pi1-0.0.3.js,res/js/jquery/tx_browser_pi1_jstree-0.0.1.js,res/js/jquery/tx_browser_pi1_jstree-3.9.21.js,res/js/jquery/tx_browser_pi1-0.0.3.cleanup.js,res/js/map/oxRenderMap_0.0.7.js,res/js/map/lib/OpenLayers/OpenLayers_0.0.2.js,res/js/map/lib/OpenLayers_2.10.0/OpenLayers.js
+components=
