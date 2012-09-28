@@ -3484,7 +3484,7 @@ plugin.tx_browser_pi1 {
       plugins =
       plugins {
         jstree {
-          plugin = EXT:browser/res/js/jquery/plugins/jquery.jstree/jquery.jstree_1.0-rc3_bugfix_0.0.1.js
+          plugin = EXT:browser/res/js/jquery/plugins/jquery.jstree/jquery.jstree_1.0-rc3.js
           plugin {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
@@ -3496,7 +3496,7 @@ plugin.tx_browser_pi1 {
               inline = 0
             }
           }
-          library = EXT:browser/res/js/jquery/tx_browser_pi1_jstree-3.9.21.js
+          library = EXT:browser/res/js/jquery/tx_browser_pi1_jstree-4.1.18.js
           library {
               // [Boolean] 0: link to the script file, 1 (default): include the script inline
             inline = 1
@@ -3526,8 +3526,28 @@ plugin.tx_browser_pi1 {
               selector_05 {
                 value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_05}
               }
-              theme = TEXT
-              theme {
+              theme_01 = TEXT
+              theme_01 {
+                  // [String] supported are: apple, classic, default, default-rtl
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
+              }
+              theme_02 = TEXT
+              theme_02 {
+                  // [String] supported are: apple, classic, default, default-rtl
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
+              }
+              theme_03 = TEXT
+              theme_03 {
+                  // [String] supported are: apple, classic, default, default-rtl
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
+              }
+              theme_04 = TEXT
+              theme_04 {
+                  // [String] supported are: apple, classic, default, default-rtl
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
+              }
+              theme_05 = TEXT
+              theme_05 {
                   // [String] supported are: apple, classic, default, default-rtl
                 value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
               }
