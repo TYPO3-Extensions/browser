@@ -23,55 +23,55 @@ $( document ).ready( function( )
     $("###SELECTOR_01###").jstree({
       "themes" : {
         "theme" : "###THEME_01###",
+        "dots"  : false,
+        "icons" : false
+      },
+      "plugins" : ["themes", "html_data", "cookies"]
+    });
+  }
+  if( $( "###SELECTOR_02###" ).length )
+  {
+    $("###SELECTOR_02###").jstree({
+      "themes" : {
+        "theme" : "###THEME_02###",
         "dots"  : true,
         "icons" : true
       },
       "plugins" : ["themes", "html_data", "cookies"]
     });
   }
-//  if( $( "###SELECTOR_02###" ).length )
-//  {
-//    $("###SELECTOR_02###").jstree({
-//      "themes" : {
-//        "theme" : "###THEME_02###",
-//        "dots"  : true,
-//        "icons" : true
-//      },
-//      "plugins" : ["themes", "html_data", "cookies"]
-//    });
-//  }
-//  if( $( "###SELECTOR_03###" ).length )
-//  {
-//    $("###SELECTOR_03###").jstree({
-//      "themes" : {
-//        "theme" : "###THEME_03###",
-//        "dots"  : true,
-//        "icons" : true
-//      },
-//      "plugins" : ["themes", "html_data", "cookies"]
-//    });
-//  }
-//  if( $( "###SELECTOR_04###" ).length )
-//  {
-//    $("###SELECTOR_04###").jstree({
-//      "themes" : {
-//        "theme" : "###THEME_04###",
-//        "dots"  : true,
-//        "icons" : true
-//      },
-//      "plugins" : ["themes", "html_data", "cookies"]
-//    });
-//  }
-//  if( $( "###SELECTOR_05###" ).length )
-//  {
-//    $("###SELECTOR_05###").jstree({
-//      "themes" : {
-//        "theme" : "###THEME_05###",
-//        "dots"  : true,
-//        "icons" : true
-//      },
-//      "plugins" : ["themes", "html_data", "cookies"]
-//    });
-//  }
+  if( $( "###SELECTOR_03###" ).length )
+  {
+    $("###SELECTOR_03###").jstree({
+      "themes" : {
+        "theme" : "###THEME_03###",
+        "dots"  : true,
+        "icons" : true
+      },
+      "plugins" : ["themes", "html_data", "cookies"]
+    });
+  }
+  if( $( "###SELECTOR_04###" ).length )
+  {
+    $("###SELECTOR_04###").jstree({
+      "themes" : {
+        "theme" : "###THEME_04###",
+        "dots"  : true,
+        "icons" : true
+      },
+      "plugins" : ["themes", "html_data", "cookies"]
+    });
+  }
+  if( $( "###SELECTOR_05###" ).length )
+  {
+    $("###SELECTOR_05###").jstree({
+      "themes" : {
+        "theme" : "###THEME_05###",
+        "dots"  : true,
+        "icons" : true
+      },
+      "plugins" : ["themes", "html_data", "cookies"]
+    });
+  }
 
 });
