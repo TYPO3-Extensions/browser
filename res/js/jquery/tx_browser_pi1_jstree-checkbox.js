@@ -3,14 +3,7 @@
  * Copyright (c) 2012 Dirk Wildt
  * http://wildt.at.die-netzmacher.de/
  *
- * Version 4.1.18
- *
- * jquery.jstree-x.x.x.js is needed:
- *   http://docs.jquery.com/Plugins/jstree
- *
- * Dual licensed under the MIT and GPL licenses:
- *   http://www.opensource.org/licenses/mit-license.php
- *   http://www.gnu.org/licenses/gpl.html
+ * Version 4.1.19
  */
 
 
@@ -26,7 +19,7 @@ $( document ).ready( function( )
         "dots"  : ###DOTS_01###,
         "icons" : ###ICONS_01###
       },
-      "plugins" : ["themes", "html_data", "checkbox", "sort", "ui", "cookies"]
+      "plugins" : ["themes", "html_data", "checkbox", "sort", "ui"]
     });
   }
 });
