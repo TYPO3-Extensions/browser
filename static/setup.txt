@@ -3468,7 +3468,7 @@ plugin.tx_browser_pi1 {
     }
   }
 
-    // jQuery, ajax, general
+    // jQuery, jQuery plugins, ajax, general
   javascript =
   javascript {
       // library, plugins, ui, cleanup
