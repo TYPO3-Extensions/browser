@@ -138,20 +138,24 @@ plugin.tx_browser_pi1 {
         tx_dam {
           title = COA
           title {
+              // tx_dam.title
             10 = TEXT
             10 {
               value = <h2>###TX_DAM.TITLE###</h2>
             }
+              // tx_dam.description
             11 = TEXT
             11 {
               value = <p>Beschreibung: ###TX_DAM.DESCRIPTION###</p>
             }
+              // tx_dam.date_mod
             12 = TEXT
             12 {
               value       = ###TX_DAM.DATE_MOD###
               strftime    = %d. %b %Y
               noTrimWrap  = |<p>&Auml;nderungsdatum: |</p>|
             }
+              // tx_dam.file_size
             13 = TEXT
             13 {
               value = ###TX_DAM.FILE_SIZE###
@@ -161,15 +165,18 @@ plugin.tx_browser_pi1 {
               }
               noTrimWrap = |<p>Gr&ouml;sse: |</p>|
             }
+              // tx_dam_cat.title
             14 = TEXT
             14 {
               value = <p>Kategorie: ###TX_DAM_CAT.TITLE###</p>
             }
             20 < plugin.tx_browser_pi1.displayList.master_templates.modules.download.thumbnails.withDownloadLink
+              // tx_dam.caption
             30 = TEXT
             30 {
               value = <p>###TX_DAM.CAPTION###</p>
             }
+              // CSS clear both
             90 = TEXT
             90 {
               value = <div style="clear:both;font-size:0;line-height:0;">&nbsp;</div>
