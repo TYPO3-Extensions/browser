@@ -454,7 +454,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $filePathConf = $this->cObj->stdWrap($conf['fields.']['from_path'], $conf['fields.']['from_path.']);
     if ( ! empty( $filePathConf ) )
     {
-var_dump( __METHOD__, __LINE__, $this->cObj );
         // #37165, 120517, dwildt
       if( $table != 'tx_dam' )
       {
