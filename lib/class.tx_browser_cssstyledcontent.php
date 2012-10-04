@@ -457,11 +457,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // #37165, 120517, dwildt
       if( $table != 'tx_dam' )
       {
+var_dump( __METHOD__, __LINE__, $this->cObj );
         $fileList   = $this->cObj->filelist($filePathConf);
       }
       if( $table == 'tx_dam' )
       {
-var_dump( __METHOD__, __LINE__, $this->cObj );
           // Get the list of files from the field
         $fileList = trim($this->cObj->stdWrap($conf['fields.']['files'], $conf['fields.']['files.']));
       }
