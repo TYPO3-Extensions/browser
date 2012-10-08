@@ -1697,7 +1697,7 @@ class tx_browser_pi1 extends tslib_pibase {
 
       // Class with realurl methods
     require_once('class.tx_browser_pi1_filter_3x.php');
-    $this->oblFltr3x = new tx_browser_pi1_filter_3x( $this );
+    $this->objFltr3x = new tx_browser_pi1_filter_3x( $this );
 
       // Class with filter methods
     require_once('class.tx_browser_pi1_filter_4x.php');

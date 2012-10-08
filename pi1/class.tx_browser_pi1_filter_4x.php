@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      4.1.12
+ * @version      4.1.20
  * @since        3.9.9
  */
 
@@ -225,6 +225,11 @@ class tx_browser_pi1_filter_4x {
 
     // [Boolean] If a filter is selected by the visitor, this boolean will be true.
   var $aFilterIsSelected = null;
+  
+    // #41754, dwildt, 2+
+    // [array] Tables with a treeParentField field
+  var $arr_tablesWiTreeparentfield  = array( );
+  
 
 
 
@@ -386,13 +391,13 @@ class tx_browser_pi1_filter_4x {
       // DRS :TODO:
     if( $this->pObj->b_drs_devTodo )
     {
-      $prompt = 'Integrate $this->pObj->oblFltr3x->arr_conf_tableFields!';
+      $prompt = 'Integrate $this->pObj->objFltr3x->arr_conf_tableFields!';
       t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-      $prompt = 'Integrate $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield!';
+      $prompt = 'Integrate $this->pObj->objFltr3x->arr_tablesWiTreeparentfield!';
       t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // DRS :TODO:
-    $this->pObj->oblFltr3x->get_tableFields( );
+    $this->pObj->objFltr3x->get_tableFields( );
       // Set class var $arr_conf_tableFields
 
       // Init localisation
@@ -430,7 +435,7 @@ class tx_browser_pi1_filter_4x {
       return $this->andWhereFilter;
     }
 
-    $arrAndWhere = $this->pObj->oblFltr3x->andWhere_filter( );
+    $arrAndWhere = $this->pObj->objFltr3x->andWhere_filter( );
     $strAndWhere = implode(" AND ", ( array ) $arrAndWhere );
 
     if( empty( $strAndWhere ) )
@@ -666,7 +671,7 @@ class tx_browser_pi1_filter_4x {
  *                      It returns the rendered filter as a string.
  *
  * @return	array		$arr_return : $arr_return['data']['items']
- * @version 3.9.9
+ * @version 4.1.21
  * @since   3.9.9
  */
   private function get_filterItems( )
@@ -712,8 +717,11 @@ class tx_browser_pi1_filter_4x {
     $this->set_maxItemsPerHtmlRow( );
 
       // SWITCH current filter is a tree view
-      // @todo: 120518, objFltr4x instead of 3x
-    switch( in_array( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
+      // #41754, dwildt, 2-
+//      // @todo: 120518, objFltr4x instead of 3x
+//    switch( in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
+      // #41754, dwildt, 1+
+    switch( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
         $arr_return = $this->get_filterItemsTree( );
@@ -740,7 +748,7 @@ class tx_browser_pi1_filter_4x {
  *                      It returns the rendered filter as a string.
  *
  * @return	array		$arr_return : $arr_return['data']['items']
- * @version 3.9.9
+ * @version 4.1.21
  * @since   3.9.9
  */
   private function get_filterItemsFromRows( )
@@ -777,8 +785,11 @@ class tx_browser_pi1_filter_4x {
     $this->set_maxItemsPerHtmlRow( );
 
       // SWITCH current filter is a tree view
-      // @todo: 121019, dwildt: 3x -> 4x
-    switch( in_array( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
+      // #41754, dwildt, 2-
+//      // @todo: 121019, dwildt: 3x -> 4x
+//    switch( in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
+      // #41754, dwildt, 1+
+    switch( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
         $arr_return = $this->get_filterItemsTree( );
@@ -2518,7 +2529,7 @@ class tx_browser_pi1_filter_4x {
  *
  * @return	string		$addSelect  : the addSelect with the treeParentField
  * @internal #32223, 120119
- * @version 3.9.9
+ * @version 4.1.21
  * @since   3.9.9
  */
   private function sql_select_addTreeview( )
@@ -2582,8 +2593,12 @@ class tx_browser_pi1_filter_4x {
       // Add $tableTreeParentField to the class var array
     $this->sql_filterFields[$this->curr_tableField]['treeParentField']  = $tableTreeParentField;
 
+      // #41754, dwildt, 2-
+//      // Add table to arr_tablesWiTreeparentfield
+//    $this->pObj->objFltr3x->arr_tablesWiTreeparentfield[] = $table;
+      // #41754, dwildt, 2+
       // Add table to arr_tablesWiTreeparentfield
-    $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield[] = $table;
+    $this->arr_tablesWiTreeparentfield[] = $table;
 
       // DRS
     if( $this->pObj->b_drs_filter )
@@ -4854,7 +4869,7 @@ class tx_browser_pi1_filter_4x {
  *
  * @param	string		$rows   : current rows
  * @return	void
- * @version 3.9.9
+ * @version 4.1.21
  * @since   3.0.0
  */
   private function sum_hits( $rows )
@@ -4868,7 +4883,10 @@ class tx_browser_pi1_filter_4x {
       // Tree view flag
     $bTreeView = false;
     list( $table ) = explode( '.', $this->curr_tableField );
-    if( in_array( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
+      // #41754, dwildt, 1-
+//    if( in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
+      // #41754, dwildt, 1+
+    if( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
     {
       $bTreeView = true;
     }
@@ -5177,7 +5195,7 @@ class tx_browser_pi1_filter_4x {
  *                            If firstItem shouldn't displayed, nothing will happen.
  *
  * @return	void
- * @version 3.9.9
+ * @version 4.1.21
  * @since   3.9.9
  */
   private function set_firstItemTreeView( )
@@ -5186,13 +5204,15 @@ class tx_browser_pi1_filter_4x {
     list( $table ) = explode( '.', $this->curr_tableField );
 
       // RETURN current filter isn't a tree view
-      // @todo: 3x -> 4x
-    if( ! in_array( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield ) )
+      // #41754, dwildt, 2-
+//      // @todo: 3x -> 4x
+//    if( ! in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
+      // #41754, dwildt, 1+
+    if( ! in_array( $table, $this->arr_tablesWiTreeparentfield ) )
     {
       return;
     }
       // RETURN current filter isn't a tree view
-//$this->pObj->dev_var_dump( $table, $this->pObj->oblFltr3x->arr_tablesWiTreeparentfield );
 
       // Prepend the first item to class var $rows
     $this->set_firstItem( );

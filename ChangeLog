@@ -1,7 +1,12 @@
+4.1.21
+  New Feature
+  * #41753: Treeview as checkbox
+  Improvement
+  * #41754: Filter: optimise performance
+
 4.1.20
   121008
-  Tests
-  * #00000: Possible new feature: Integration for extensions, which are using DAM
+  Improvement
   * #00000: oxRenderMap 0.0.9
 
 4.1.19
