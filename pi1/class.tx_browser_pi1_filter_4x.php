@@ -6155,6 +6155,7 @@ $this->pObj->dev_var_dump( $this->pObj->piVars[$strNicePiVar] );
 
     $arr_return['data']['key_piVar']  = $key_piVar;
     $arr_return['data']['arr_piVar']  = $arr_piVar;
+$this->pObj->dev_var_dump( $arr_piVar );
     $arr_return['data']['nice_piVar'] = $strNicePiVar; // Bugfix #7159, 100429
 
     return $arr_return;
