@@ -228,8 +228,12 @@ class tx_browser_pi1_filter_4x {
     // [Boolean] If a filter is selected by the visitor, this boolean will be true.
   var $aFilterIsSelected = null;
   
+    // [Array] all filter tableFields 
+  var $arr_tsFilterTableFields = null;
+    // [Array] 
+  var $arr_filter_condition = null;
     // #41776, dwildt, 2+
-    // [array] Tables with a treeParentField field
+    // [Array] Tables with a treeParentField field
   var $arr_tablesWiTreeparentfield  = array( );
   
 
@@ -351,7 +355,7 @@ class tx_browser_pi1_filter_4x {
       // LOOP each filter
 
       // Reset some vars
-    $this->reset( );
+    $this->init_reset( );
 
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
@@ -433,9 +437,9 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * init_andWhereFilter( ): Returns the and where statement
+ * init_andWhereFilter( ): Set and returns the SQL andWhere statement
  *
- * @return	void
+ * @return	string    $this->andWhereFilter : the SQL andWhere statement
  * @version 4.1.21
  * @since   3.9.12
  */
@@ -465,7 +469,7 @@ class tx_browser_pi1_filter_4x {
       // Init area
 
       // LOOP: filter tableFields
-    foreach( $this->arr_conf_tableFields as $tableField )
+    foreach( $this->arr_tsFilterTableFields as $tableField )
     {
       list ($table, $field) = explode('.', $tableField);
       $str_andWhere         = null;
@@ -970,7 +974,7 @@ class tx_browser_pi1_filter_4x {
   {
 
       // LOOP : each filter (table.field)
-    foreach( ( array ) $this->arr_conf_tableFields as $tableField )
+    foreach( ( array ) $this->arr_tsFilterTableFields as $tableField )
     {
       list( $table ) = explode( '.', $tableField );
       $tableUid = $table . '.uid';
@@ -1009,7 +1013,7 @@ class tx_browser_pi1_filter_4x {
   private function init_consolidationAndSelect_setTsSelect( )
   {
       // LOOP : each filter (table.field)
-    foreach( ( array ) $this->arr_conf_tableFields as $tableField )
+    foreach( ( array ) $this->arr_tsFilterTableFields as $tableField )
     {
         // IF : $conf_sql['select'] doesn't contain the current tableField
       if( strpos( $this->pObj->conf_sql['select'], $tableField ) === false )
@@ -1097,19 +1101,19 @@ class tx_browser_pi1_filter_4x {
       while( current( $arrFields ) )
       {
         $field = key( $arrFields );
-          // IF : add field without a dot to $arr_conf_tableFields
+          // IF : add field without a dot to $arr_tsFilterTableFields
         if( substr( $field, -1 ) != '.' )
         {
-          $this->arr_conf_tableFields[] = trim( $tables ) . $field;
+          $this->arr_tsFilterTableFields[] = trim( $tables ) . $field;
         }
-          // IF : add field without a dot to $arr_conf_tableFields
+          // IF : add field without a dot to $arr_tsFilterTableFields
         next( $arrFields );
       }
     }
       // LOOP : all table.field
 
       // RETURN : true, there is one table.field at least
-    if( is_array( $this->arr_conf_tableFields ) )
+    if( is_array( $this->arr_tsFilterTableFields ) )
     {
       return true;
     }
@@ -1182,13 +1186,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * reset( ):  Reset some vars
+ * init_reset( ):  Reset some vars
  *
  * @return	void
  * @version 3.9.9
  * @since   3.9.9
  */
-  private function reset( )
+  private function init_reset( )
   {
       // Reset cObj->data
     $this->cObjData_reset( );
