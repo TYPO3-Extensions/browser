@@ -2738,7 +2738,7 @@ $this->pObj->dev_var_dump( $query );
     $this->sql_filterFields[$this->curr_tableField]['value']  = $this->curr_tableField;
 
       // Query for all filter items
-    $select   = "100 AS 'hits', " . 
+    $select   = "0 AS 'hits', " . 
                 $tableField . " AS '" . $tableField . "', " .
                 $tableUid . " AS '" . $tableUid . "' ";
     $from     = $table;
