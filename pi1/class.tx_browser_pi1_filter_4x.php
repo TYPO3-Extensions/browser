@@ -2741,21 +2741,22 @@ class tx_browser_pi1_filter_4x {
     $select   = "0 AS 'hits', " . 
                 $tableField . " AS '" . $tableField . "', " .
                 $tableUid . " AS '" . $tableUid . "' ";
+    $select   = $select . $this->sql_select_addTreeview( );
     $from     = $table;
     $where    = '';
     $groupBy  = $tableField . ", " . $tableUid;
     $orderBy  = $tableField . ", " . $tableUid;
     $limit    = null;
 
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
+//    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+//              (
+//                $select,
+//                $from,
+//                $where,
+//                $groupBy,
+//                $orderBy,
+//                $limit
+//              );
 //echo $query;
 //$this->pObj->dev_var_dump( $query );
 
