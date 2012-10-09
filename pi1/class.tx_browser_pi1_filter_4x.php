@@ -2653,7 +2653,7 @@ class tx_browser_pi1_filter_4x {
       // SWITCH : filter without any relation versus filter with relation
     switch( true )
     {
-      case( true ):
+      case( false ):
         $arr_return = $this->sql_resAllItemsFilterWoRelation( );
         break;
       case( true ):
