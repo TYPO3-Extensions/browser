@@ -2688,16 +2688,16 @@ class tx_browser_pi1_filter_4x {
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
 
-//    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-//              (
-//                $select,
-//                $from,
-//                $where,
-//                $groupBy,
-//                $orderBy,
-//                $limit
-//              );
-//$this->pObj->dev_var_dump( $query );
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+$this->pObj->dev_var_dump( $query );
 
       // Execute query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
