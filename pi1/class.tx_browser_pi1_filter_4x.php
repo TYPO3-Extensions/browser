@@ -4233,6 +4233,7 @@ class tx_browser_pi1_filter_4x {
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
+$this->pObj->dev_var_dump( $this->hits_sum[$this->curr_tableField] );
 
       // Get TS configuration of the current filter / tableField
     //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
