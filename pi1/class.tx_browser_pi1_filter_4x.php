@@ -2748,6 +2748,7 @@ class tx_browser_pi1_filter_4x {
                 $orderBy,
                 $limit
               );
+echo $query;
 $this->pObj->dev_var_dump( $query );
 
       // Execute query
