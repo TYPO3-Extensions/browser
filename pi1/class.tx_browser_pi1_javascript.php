@@ -955,7 +955,10 @@ class tx_browser_pi1_javascript
       // jquery_plugins_jstree
 
       // There are tables with a treeparentfield
-    if ( count( $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) >= 1 )
+      // #41776, dwildt, 1-
+    //if ( count( $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) >= 1 )
+      // #41776, dwildt, 1+
+    if ( ! empty( $this->pObj->objFltr4x->arr_tablesWiTreeparentfield ) )
     {
       $name         = 'jquery_plugins_jstree_plugin';
       $path         = $this->pObj->conf['javascript.']['jquery.']['plugins.']['jstree.']['plugin'];

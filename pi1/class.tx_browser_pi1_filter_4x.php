@@ -195,6 +195,8 @@ class tx_browser_pi1_filter_4x {
 
     // [Boolean] true: don't localise the current SQL query, false: localise it
   var $bool_dontLocalise      = null;
+    // [Boolean] true: there is a ts filter array with tableFields
+  var $bool_isFilter          = null;
     // [Array] Back up of cObject data
   var $cObjDataBak            = null;
     // [Integer] number of the localisation mode
@@ -226,7 +228,7 @@ class tx_browser_pi1_filter_4x {
     // [Boolean] If a filter is selected by the visitor, this boolean will be true.
   var $aFilterIsSelected = null;
   
-    // #41754, dwildt, 2+
+    // #41776, dwildt, 2+
     // [array] Tables with a treeParentField field
   var $arr_tablesWiTreeparentfield  = array( );
   
@@ -382,23 +384,32 @@ class tx_browser_pi1_filter_4x {
  *          * cObj->data
  *
  * @return	void
- * @version 3.9.9
+ * @version 4.1.21
  * @since   3.9.9
  */
   private function init( )
   {
-      // Set class var $arr_conf_tableFields
-      // DRS :TODO:
-    if( $this->pObj->b_drs_devTodo )
+      // #41776, dwildt, 1-
+//    $this->pObj->objFltr3x->get_tableFields( );
+      
+    $this->init_boolIsFilter( );
+      // RETURN: if there isn't any filter array
+    if( ! $this->init_consolidationAndSelect_isFilterArray( ) )
     {
-      $prompt = 'Integrate $this->pObj->objFltr3x->arr_conf_tableFields!';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
-      $prompt = 'Integrate $this->pObj->objFltr3x->arr_tablesWiTreeparentfield!';
-      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 0 );
+      return;
     }
-      // DRS :TODO:
-    $this->pObj->objFltr3x->get_tableFields( );
-      // Set class var $arr_conf_tableFields
+      // RETURN: if there isn't any filter array
+
+      // RETURN: if there isn't any table.field configured
+    if( ! $this->init_consolidationAndSelect_isTableFields( ) )
+    {
+      return;
+    }
+      // RETURN: if there isn't any table.field configured
+
+      // #41776, dwildt, 2+
+      // Set the array consolidation and the ts property SELECT
+    $this->init_consolidationAndSelect( );
 
       // Init localisation
     $this->init_localisation( );
@@ -435,7 +446,10 @@ class tx_browser_pi1_filter_4x {
       return $this->andWhereFilter;
     }
 
-    $arrAndWhere = $this->pObj->objFltr3x->andWhere_filter( );
+      // #41776, dwildt, 1-
+//    $arrAndWhere = $this->pObj->objFltr3x->andWhere_filter( );
+      // #41776, dwildt, 1+
+    $arrAndWhere = $this->andWhere_filter( );
     $strAndWhere = implode(" AND ", ( array ) $arrAndWhere );
 
     if( empty( $strAndWhere ) )
@@ -445,6 +459,382 @@ class tx_browser_pi1_filter_4x {
     }
 
     $this->andWhereFilter = " AND ". $strAndWhere;
+  }
+
+
+
+
+/**
+ * andWhere_filter: Generate the andWhere statement, if it is needed.
+ *                  Init area.
+ *
+ * @return	array		arr_andWhereFilter: NULL if there isn' any filter
+ * @internal  It was andWhere_filter in 3.x
+ * @version 4.1.21
+ * @since   4.1.21
+ */
+  private function andWhere_filter( )
+  {
+    $arr_andWhereFilter = null;
+
+    $conf       = $this->pObj->conf;
+    $conf_view  = $this->pObj->conf_view;
+
+      // RETURN : there isn't any filter
+    if( $this->bool_isFilter )
+    {
+      return false;
+    }
+      // RETURN : there isn't any filter
+
+      // Init area
+    $this->pObj->objCal->area_init( );
+    $conf       = $this->pObj->conf;
+    $conf_view  = $conf['views.'][$viewWiDot][$mode . '.'];
+      // Init area
+
+      // LOOP: filter tableFields
+    foreach( $this->arr_conf_tableFields as $tableField )
+    {
+      list ($table, $field) = explode('.', $tableField);
+      $str_andWhere         = null;
+
+        // Get nice_piVar
+      $arr_result   = $this->zz_getNicePiVar( $tableField );
+      $arr_piVar    = $arr_result['data']['arr_piVar'];
+      unset ($arr_result);
+        // Get nice_piVar
+
+        // CONTINUE : There isn't any piVar
+      if ( empty( $arr_piVar ) )
+      {
+        continue;
+      }
+        // CONTINUE : There isn't any piVar
+
+        // SWITCH : manual mode versus auto mode
+      switch( true )
+      {
+        case( $this->pObj->b_sql_manual ):
+            // SQL manual mode
+          $str_andWhere = $this->andWhere_manualMode( $arr_piVar, $tableField, $conf_view );
+          break;
+            // SQL manual mode
+        case( ! $this->pObj->b_sql_manual ):
+        default:
+            // SQL auto mode
+            // SWITCH : local table versus foreign table
+          switch( true )
+          {
+            case( $table == $this->pObj->localTable ):
+              $str_andWhere = $this->andWhere_localTable( $arr_piVar, $tableField);
+              break;
+            case( $table != $this->pObj->localTable ):
+            default:
+              $str_andWhere = $this->andWhere_foreignTable( $arr_piVar, $tableField);
+              break;
+          }
+            // SWITCH : local table versus foreign table
+          break;
+            // SQL auto mode
+      }
+        // SWITCH : manual mode versus auto mode
+
+      if( ! empty( $str_andWhere ) )
+      {
+        $arr_andWhereFilter[$table . '.' . $field] = $str_andWhere;
+      }
+        // Build the andWhere statement
+    }
+      // LOOP: filter tableFields
+
+
+      // DRS
+    if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
+    {
+      if( is_array( $arr_andWhereFilter ) )
+      {
+        $prompt = 'andWhere statement: ' . implode( ' AND ', $arr_andWhereFilter );
+        t3lib_div :: devlog( '[INFO/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+    }
+      // DRS
+
+    return $arr_andWhereFilter;
+
+  }
+
+
+
+
+
+
+
+
+
+  /**
+ * andWhere_localTable: Generate the andWhere statement for a field from the localtable.
+ *                      If there is an area, it will be handled
+ *
+ *                        Method is enhanced with a php array for allocate conditions
+ *
+ * @param	string		$conf_name: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
+ * @param	array		$conf_array: The TypoScript configuration of the SELECTBOX
+ * @param	array		$arr_piVar   Current piVars
+ * @param	string		$tableField   Current table.field
+ * @return	array		arr_andWhereFilter: NULL if there isn' any filter
+ * @internal              #30912: Filter: count items with no relation to category:
+ * @version 3.6.0
+ */
+  function andWhere_localTable($arr_piVar, $tableField)
+  {
+    $str_andWhere = null;
+    
+    list ($table, $field) = explode('.', $tableField);
+    $conf_name            = $conf_view['filter.'][$table . '.'][$field];
+    $conf_array           = $conf_view['filter.'][$table . '.'][$field . '.'];
+    
+    
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Handle area filter
+
+    if(is_array($this->pObj->objCal->arr_area[$tableField]))
+    {
+      foreach ($arr_piVar as $str_piVar)
+      {
+          // 13920, 110319, dwildt
+          // Move url value to tsKey
+        $str_piVar      = $this->pObj->objCal->area_get_tsKey_from_urlPeriod($tableField, $str_piVar);
+
+        $arr_item       = null;
+        $str_key        = $this->pObj->objCal->arr_area[$tableField]['key']; // I.e strings
+        $arr_currField  = $conf_array['area.'][$str_key . '.']['options.']['fields.'][$str_piVar . '.'];
+
+        $from       = $arr_currField['valueFrom_stdWrap.']['value'];
+        $from_conf  = $arr_currField['valueFrom_stdWrap.'];
+        $from_conf  = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
+        $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
+        if( ! empty( $from ) )
+        {
+          $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
+            // #30912, 120127, dwildt+
+          $this->arr_filter_condition[$tableField]['from'] = mysql_real_escape_string( $from );
+        }
+
+        $to         = $arr_currField['valueTo_stdWrap.']['value'];
+        $to_conf    = $arr_currField['valueTo_stdWrap.'];
+        $to_conf    = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
+        $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+        if( ! empty( $to ) )
+        {
+          $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
+            // #30912, 120127, dwildt+
+          $this->arr_filter_condition[$tableField]['to'] = mysql_real_escape_string( $to );
+        }
+
+        if( is_array( $arr_item ) )
+        {
+          $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
+        }
+      }
+      $str_andWhere = implode(' OR ', ( array) $arr_orValues );
+      if( ! empty( $str_andWhere ) )
+      {
+        $str_andWhere = ' (' . $str_andWhere . ')';
+      }
+    }
+      // Handle area filter
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Handle without area filter
+
+    if( ! is_array( $this->pObj->objCal->arr_area[$tableField] ) )
+    {
+      foreach ($arr_piVar as $str_value)
+      {
+        $arr_orValues[] = $tableField . " LIKE '" . mysql_real_escape_string( $str_value ) . "'";
+          // #30912, 120127, dwildt+
+          // #30912, 120202, dwildt+
+        $strtolower_value = "'" . mb_strtolower( mysql_real_escape_string( $str_value ) ) . "'";
+        $this->arr_filter_condition[$tableField]['like'][] = $strtolower_value;
+      }
+      $str_andWhere = implode( ' OR ', $arr_orValues );
+      if( ! empty( $str_andWhere ) )
+      {
+        $str_andWhere = ' (' . $str_andWhere . ')';
+      }
+    }
+      // Handle without area filter
+
+    return $str_andWhere;
+  }
+
+
+
+
+/**
+ * andWhere_manualMode: 
+ *
+ * @return	array		arr_andWhereFilter: NULL if there isn' any filter
+ * @version 4.1.21
+ * @since   4.1.21
+ */
+  private function andWhere_manualMode( $arr_piVar, $tableField, $conf_view )
+  {
+    list( $table ) = explode( '.', $tableField );
+
+      // List of record uids
+    $csvUids = implode( ', ', $arr_piVar );
+    
+      // Get table alias
+    $arrTableAliases  = $conf_view['aliases.']['tables.'];
+    $arrTableAliases  = array_flip( $arrTableAliases );
+    $strTableAlias    = $arrTableAliases[ $table ];
+      // Get table alias
+    
+    if( $strTableAlias )
+    {
+      $strAndWhere = $strTableAlias . '.uid IN (' . $csvUids . ')' . PHP_EOL;
+      return $strAndWhere;
+    }
+
+      // DRS
+    $prompt = 'There is no alias for table \'' . $table . '\'';
+    t3lib_div :: devlog( '[ERROR/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 3 );
+    $prompt = 'Browser is in SQL manual mode.';
+    t3lib_div :: devlog( '[INFO/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 0 );
+    $prompt = 'Please configure aliases.tables of this view.';
+    t3lib_div :: devlog( '[HELP/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 1 );
+      // DRS
+    
+    echo '<h1>ERROR</h1>
+      <h2>There is no table alias</h2>
+      <p>Please see the logs in the DRS - Development Reporting System.</p>
+      <p>Method ' . __METHOD__ . '</p>
+      <p>Line ' . __LINE__ . ' </p>
+      <p><br /></p>
+      <p>This is a message of the Browser - TYPO3 without PHP.</p>
+      ';
+    exit;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /**
+ * andWhere_foreignTable: Generate the andWhere statement for a field from a foreign table.
+ *                        If there is an area, it will be handled
+ *
+ *                        Method is enhanced with a php array for allocate conditions
+ *
+ * @param	string		$conf_name: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
+ * @param	array		$conf_array: The TypoScript configuration of the SELECTBOX
+ * @param	array		$arr_piVar   Current piVars
+ * @param	string		$tableField   Current table.field
+ * @return	array		arr_andWhereFilter: NULL if there isn' any filter
+ * @internal              #30912: Filter: count items with no relation to category:
+ * @version 3.9.6
+ * @since   3.6.0
+ */
+  function andWhere_foreignTable($arr_piVar, $tableField)
+  {
+    $str_andWhere = null;
+
+    list ($table, $field) = explode('.', $tableField);
+    $conf_name            = $conf_view['filter.'][$table . '.'][$field];
+    $conf_array           = $conf_view['filter.'][$table . '.'][$field . '.'];
+    
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Handle area filter
+
+    if(is_array($this->pObj->objCal->arr_area[$tableField]))
+    {
+      foreach ($arr_piVar as $str_piVar)
+      {
+          // 13920, 110319, dwildt
+          // Move url value to tsKey
+        $str_piVar      = $this->pObj->objCal->area_get_tsKey_from_urlPeriod($tableField, $str_piVar);
+
+        $arr_item       = null;
+        $str_key        = $this->pObj->objCal->arr_area[$tableField]['key']; // I.e strings
+        $arr_currField  = $conf_array['area.'][$str_key . '.']['options.']['fields.'][$str_piVar . '.'];
+
+        $from       = $arr_currField['valueFrom_stdWrap.']['value'];
+        $from_conf  = $arr_currField['valueFrom_stdWrap.'];
+        $from_conf  = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
+        $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
+        if( ! empty( $from ) )
+        {
+          $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
+            // #30912, 120127, dwildt+
+          $this->arr_filter_condition[$tableField]['from'] = mysql_real_escape_string( $from );
+        }
+
+        $to         = $arr_currField['valueTo_stdWrap.']['value'];
+        $to_conf    = $arr_currField['valueTo_stdWrap.'];
+        $to_conf    = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
+        $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+        if( ! empty( $to ) )
+        {
+          $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
+            // #30912, 120127, dwildt+
+          $this->arr_filter_condition[$tableField]['to'] = mysql_real_escape_string( $to );
+        }
+
+        if( is_array( $arr_item ) )
+        {
+          $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
+        }
+      }
+      $str_andWhere = implode(' OR ', $arr_orValues);
+      if(empty($str_andWhere))
+      {
+        $str_andWhere = ' (' . $str_andWhere . ')';
+      }
+    }
+      // Handle area filter
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Handle without area filter
+
+    if( ! is_array( $this->pObj->objCal->arr_area[$tableField] ) )
+    {
+      $str_uidList = implode(', ', $arr_piVar);
+      $str_andWhere = $table . ".uid IN (" . $str_uidList . ")\n";
+        // #30912, 120127, dwildt+
+      $this->arr_filter_condition[$table . '.uid']['uid_in_list'] = $arr_piVar;
+    }
+      // Handle without area filter
+
+    return $str_andWhere;
   }
 
 
@@ -496,6 +886,43 @@ class tx_browser_pi1_filter_4x {
     return $this->aFilterIsSelected;
   }
 
+  
+  
+/**
+ * init_boolIsFilter( ): 
+ * 
+ * @return	void
+ * @version 4.1.21
+ * @since   4.1.21
+ */
+  private function init_boolIsFilter( )
+  {
+      // RETURN : $this->bool_isFilter was set before
+    if( ! ( $this->bool_isFilter === null ) )
+    {
+      return $this->bool_isFilter;
+    }
+      // RETURN : $this->bool_isFilter was set before
+    
+    $this->bool_isFilter = true;
+    
+      // FALSE: if there isn't any filter array
+    if( ! $this->init_consolidationAndSelect_isFilterArray( ) )
+    {
+      $this->bool_isFilter = false;
+    }
+      // FALSE: if there isn't any filter array
+
+      // FALSE: if there isn't any table.field configured
+    if( ! $this->init_consolidationAndSelect_isTableFields( ) )
+    {
+      $this->bool_isFilter = false;
+    }
+      // FALSE: if there isn't any table.field configured
+
+    return $this->bool_isFilter;
+  }
+
 
 
 /**
@@ -518,6 +945,204 @@ class tx_browser_pi1_filter_4x {
       // Reinit class vars $conf and $conf_view
 
     return;
+  }
+
+
+
+/**
+ * init_consolidationAndSelect(): Set the array consolidation and the ts property SELECT
+ *
+ * @return	void
+ * @internal  It was get_tableFields( ) in version 3.x
+ * @version 4.1.21
+ * @since   4.1.21
+ */
+  private function init_consolidationAndSelect( )
+  {
+      // RETURN : there isn't any filter
+    if( ! $this->bool_isFilter )
+    {
+      return;
+    }
+      // RETURN : there isn't any filter
+      
+      // Add tableUids to the consolidation array
+    $this->init_consolidationAndSelect_setArrayConsolidation( );
+
+      // Add tableFields to the ts property SELECT 
+    $this->init_consolidationAndSelect_setTsSelect( );
+
+  }
+
+
+
+/**
+ * init_consolidationAndSelect_setArrayConsolidation( ): Adds tableUid to the consolidation array
+ *
+ * @return	void
+ * @internal  #41776
+ * @version 4.1.21
+ * @since   4.1.21
+ */
+  private function init_consolidationAndSelect_setArrayConsolidation( )
+  {
+
+      // LOOP : each filter (table.field)
+    foreach( ( array ) $this->arr_conf_tableFields as $tableField )
+    {
+      list( $table ) = explode( '.', $tableField );
+      $tableUid = $table . '.uid';
+      
+        // CONTINUE : $arrConsolidation contains the current tableUid
+      if( in_array( $tableUid, ( array ) $this->pObj->arrConsolidate['addedTableFields'] ) )
+      {
+        continue;
+      }
+        // CONTINUE : $arrConsolidation contains the current tableUid
+      
+        // Add current tableUid
+      $this->pObj->arrConsolidate['addedTableFields'][] = $tableUid;
+
+        // DRS
+      if( $this->pObj->b_drs_filter )
+      {
+        t3lib_div :: devlog('[INFO/FILTER] Table ' . $tableUid . ' is added to arrConsolidate[addedTableFields].', $this->pObj->extKey, 0);
+      }
+        // DRS
+    }
+      // LOOP : each filter (table.field)
+
+  }
+
+
+
+/**
+ * init_consolidationAndSelect_setTsSelect( ): Add tableFields to the ts property SELECT
+ *
+ * @return	void
+ * @internal  #41776
+ * @version 4.1.21
+ * @since   4.1.21
+ */
+  private function init_consolidationAndSelect_setTsSelect( )
+  {
+      // LOOP : each filter (table.field)
+    foreach( ( array ) $this->arr_conf_tableFields as $tableField )
+    {
+        // IF : $conf_sql['select'] doesn't contain the current tableField
+      if( strpos( $this->pObj->conf_sql['select'], $tableField ) === false )
+      {
+          // Add tableField to ts property SELECT
+        $csvStatement = ', ' . $tableField . ' AS \'' . $tableField . '\'';
+        $this->pObj->conf_sql['select'] = $this->pObj->conf_sql['select'] . ', ' . $csvStatement;
+          // Add tableField to ts property SELECT
+          // DRS
+        if( $this->pObj->b_drs_filter )
+        {
+          $prompt = $table . '.' . $field . ' is added to $this->pObj->conf_sql[select].';
+          t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+          // DRS
+      }
+        // IF : $conf_sql['select'] doesn't contain the current tableField
+        // IF : $csvSelectWoFunc doesn't contain the current tableField
+      if( strpos( $this->pObj->csvSelectWoFunc, $tableField ) === false )
+      {
+        $this->pObj->csvSelectWoFunc = $this->pObj->csvSelectWoFunc . ', ' . $tableField;
+          // DRS
+        if( $this->pObj->b_drs_filter )
+        {
+          $prompt = $tableField . ' is added to $this->pObj->csvSelectWoFunc.';
+          t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+          // DRS
+      }
+        // IF : $csvSelectWoFunc doesn't contain the current tableField
+    }
+      // LOOP : each filter (table.field)
+ 
+  }
+
+
+
+/**
+ * init_consolidationAndSelect_isFilterArray(): Returns false, if there isn't any filter array
+ *
+ * @return	boolean		true: there is a filter array. false: there isn't
+ * @internal  #41776
+ * @version 4.1.21
+ * @since   4.1.21
+ */
+  private function init_consolidationAndSelect_isFilterArray( )
+  {
+      // RETURN: true, there is a filter array
+    if( is_array( $this->conf_view['filter.'] ) )
+    {
+      return true;
+    }
+      // RETURN: true, there is a filter array
+    
+      // DRS
+    if( $this->pObj->b_drs_filter )
+    {
+      $prompt = $viewWiDot . $mode . ' . filters isn\'t an array. There isn\'t any filter for processing.';
+      t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+    
+      // RETURN: true, there is a filter array
+    return false;
+  }
+
+
+
+/**
+ * init_consolidationAndSelect_isTableFields(): Returns false, if there isn't any configured table.field
+ *
+ * @return	boolean		true: there is a table.field configured. false: there isn't
+ * @internal  #41776
+ * @version 4.1.21
+ * @since   4.1.21
+ */
+  private function init_consolidationAndSelect_isTableFields( )
+  {
+      // LOOP : all table.field
+    foreach( ( array ) $this->conf_view['filter.'] as $tables => $arrFields )
+    {
+        // #41776, dwildt, 1-
+//      while( $value = current( $arrFields ) )
+        // #41776, dwildt, 1+
+      while( current( $arrFields ) )
+      {
+        $field = key( $arrFields );
+          // IF : add field without a dot to $arr_conf_tableFields
+        if( substr( $field, -1 ) != '.' )
+        {
+          $this->arr_conf_tableFields[] = trim( $tables ) . $field;
+        }
+          // IF : add field without a dot to $arr_conf_tableFields
+        next( $arrFields );
+      }
+    }
+      // LOOP : all table.field
+
+      // RETURN : true, there is one table.field at least
+    if( is_array( $this->arr_conf_tableFields ) )
+    {
+      return true;
+    }
+      // RETURN : true, there is one table.field at least
+    
+      // DRS
+    if( $this->pObj->b_drs_error )
+    {
+      $prompt = $viewWiDot . $mode . '.filters hasn\'t any table.field syntax.';
+      t3lib_div :: devlog( '[ERROR/FILTER] ' . $prompt, $this->pObj->extKey, 3 );
+    }
+      // DRS
+    
+      // RETURN : false, there is any table.field
+    return false;
   }
 
 
@@ -717,10 +1342,10 @@ class tx_browser_pi1_filter_4x {
     $this->set_maxItemsPerHtmlRow( );
 
       // SWITCH current filter is a tree view
-      // #41754, dwildt, 2-
+      // #41776, dwildt, 2-
 //      // @todo: 120518, objFltr4x instead of 3x
 //    switch( in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
-      // #41754, dwildt, 1+
+      // #41776, dwildt, 1+
     switch( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
@@ -785,10 +1410,10 @@ class tx_browser_pi1_filter_4x {
     $this->set_maxItemsPerHtmlRow( );
 
       // SWITCH current filter is a tree view
-      // #41754, dwildt, 2-
+      // #41776, dwildt, 2-
 //      // @todo: 121019, dwildt: 3x -> 4x
 //    switch( in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
-      // #41754, dwildt, 1+
+      // #41776, dwildt, 1+
     switch( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
     {
       case( true ):
@@ -2593,10 +3218,10 @@ class tx_browser_pi1_filter_4x {
       // Add $tableTreeParentField to the class var array
     $this->sql_filterFields[$this->curr_tableField]['treeParentField']  = $tableTreeParentField;
 
-      // #41754, dwildt, 2-
+      // #41776, dwildt, 2-
 //      // Add table to arr_tablesWiTreeparentfield
-    $this->pObj->objFltr3x->arr_tablesWiTreeparentfield[] = $table;
-      // #41754, dwildt, 2+
+//    $this->pObj->objFltr3x->arr_tablesWiTreeparentfield[] = $table;
+      // #41776, dwildt, 2+
       // Add table to arr_tablesWiTreeparentfield
     $this->arr_tablesWiTreeparentfield[] = $table;
 
@@ -4883,9 +5508,9 @@ class tx_browser_pi1_filter_4x {
       // Tree view flag
     $bTreeView = false;
     list( $table ) = explode( '.', $this->curr_tableField );
-      // #41754, dwildt, 1-
+      // #41776, dwildt, 1-
 //    if( in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
-      // #41754, dwildt, 1+
+      // #41776, dwildt, 1+
     if( in_array( $table, $this->arr_tablesWiTreeparentfield ) )
     {
       $bTreeView = true;
@@ -5063,7 +5688,7 @@ class tx_browser_pi1_filter_4x {
     }
       // RETURN false : HTML marker isn't a part of the current HTML subpart
 
-      // RETURN true : HTML marker is a part of the current HTML subpart
+      // RETURN: true : HTML marker is a part of the current HTML subpart
     return true;
   }
 
@@ -5204,10 +5829,10 @@ class tx_browser_pi1_filter_4x {
     list( $table ) = explode( '.', $this->curr_tableField );
 
       // RETURN current filter isn't a tree view
-      // #41754, dwildt, 2-
+      // #41776, dwildt, 2-
 //      // @todo: 3x -> 4x
 //    if( ! in_array( $table, $this->pObj->objFltr3x->arr_tablesWiTreeparentfield ) )
-      // #41754, dwildt, 1+
+      // #41776, dwildt, 1+
     if( ! in_array( $table, $this->arr_tablesWiTreeparentfield ) )
     {
       return;
@@ -5446,6 +6071,89 @@ class tx_browser_pi1_filter_4x {
         }
         break;
     }
+  }
+
+  /**
+ * zz_getNicePiVar( ): Returns an array with key_piVar, arr_piVar and nice_piVar
+ *
+ * @param	string		$tableField: The current table.field from the ts filter array
+ * @return	array		Data array with the selectbox at least
+ */
+  private function zz_getNicePiVar( $tableField )
+  {
+    $arr_return = null;
+    
+    list ($table, $field) = explode('.', $tableField);
+    $conf_name            = $conf_view['filter.'][$table . '.'][$field];
+    $conf_array           = $conf_view['filter.'][$table . '.'][$field . '.'];
+    
+      // SWITCH : set default $strNicePiVar
+    switch( $conf_array['nice_piVar'] )
+    {
+      case( true ):
+        $strNicePiVar = $conf_array['nice_piVar'];
+        break;
+      case( false ):
+      default:
+        $strNicePiVar = $tableField;
+        break;
+    }
+      // SWITCH : set default $strNicePiVar
+
+      // SWITCH : set multiple
+    switch( $conf_name )
+    {
+      case ('CHECKBOX') :
+        $bool_multiple = true;
+        break;
+      case ('CATEGORY_MENU') :
+      case ('RADIOBUTTONS') :
+        $bool_multiple = false;
+        break;
+      case ('SELECTBOX') :
+        $bool_multiple = $conf_array['multiple'];
+        break;
+      default :
+        $bool_multiple = false;
+        if ($this->pObj->b_drs_error)
+        {
+          $prompt = 'multiple - undefined value in switch: \'' . $conf_name . '\'';
+          t3lib_div :: devlog( '[ERROR/FILTER] ' . $prompt, $this->pObj->extKey, 3 );
+          $prompt = 'multiple becomes false.';
+          t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 3 );
+        }
+    }
+      // SWITCH : set multiple
+
+      // SWITCH : set piVar depending on multiple
+    switch( $bool_multiple )
+    {
+      case( false ):
+        $key_piVar    = $this->pObj->prefixId . '[' . $strNicePiVar . ']';
+        $arr_piVar[0] = $this->pObj->piVars[$strNicePiVar];
+        break;
+      case( true ):
+      default:
+        $key_piVar = $this->pObj->prefixId . '[' . $strNicePiVar . '][]';
+        $arr_piVar = $this->pObj->piVars[$strNicePiVar];
+    }
+      // SWITCH : set piVar depending on multiple
+
+      // LOOP : each piVar
+    foreach( ( array ) $arr_piVar as $key => $value ) 
+    {
+      if( ! $value )
+      {
+        unset( $arr_piVar[$key] );
+      }
+    }
+      // LOOP : each piVar
+
+    $arr_return['data']['key_piVar']  = $key_piVar;
+    $arr_return['data']['arr_piVar']  = $arr_piVar;
+    $arr_return['data']['nice_piVar'] = $strNicePiVar; // Bugfix #7159, 100429
+
+    return $arr_return;
   }
 
 
