@@ -2503,6 +2503,7 @@ class tx_browser_pi1_filter_4x {
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
+$this->pObj->dev_var_dump( $this->count_hits[$this->curr_tableField], $this->ts_countHits( ) );
       // IF : hits should counted
     if( $this->ts_countHits( ) )
     {
@@ -2574,7 +2575,6 @@ class tx_browser_pi1_filter_4x {
 
       // Get table and field
     list( $table ) = explode( '.', $this->curr_tableField );
-
       // IF : hits should counted
     if( $this->ts_countHits( ) )
     {
@@ -3370,8 +3370,6 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_whereAllItems( )
   {
-    $this->pObj->dev_var_dump( $this->sql_whereAnd_Filter( ) );
-
     $where  = '1 ' .
               $this->sql_whereAnd_pidList( ) .
               $this->sql_whereAnd_enableFields( ) .
