@@ -2656,7 +2656,7 @@ class tx_browser_pi1_filter_4x {
     {
       case( $this->curr_tableField == 'tx_leglisbasis_county.krs_name' ):
       case( $this->curr_tableField == 'tx_leglisbasis_cluster.brc_text' ):
-      case( $this->curr_tableField == 'tx_leglisbasis_clustergroup.brg_txt' ):
+      case( $this->curr_tableField == 'tx_leglisbasis_clustergroup.brg_text' ):
       case( $this->curr_tableField == 'tx_leglisbasis_sector.brc_listtext' ):
         $arr_return = $this->sql_resAllItemsFilterWoRelation( );
         break;
@@ -2701,7 +2701,7 @@ class tx_browser_pi1_filter_4x {
                 $orderBy,
                 $limit
               );
-$this->pObj->dev_var_dump( $query );
+//$this->pObj->dev_var_dump( $query );
 
       // Execute query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
