@@ -5809,7 +5809,7 @@ $this->pObj->dev_var_dump( $query );
  *                    If firstItem shouldn't displayed, nothing will happen.
  *
  * @return	void
- * @version 3.9.9
+ * @version 4.1.21
  * @since   3.9.9
  */
   private function set_firstItem( )
@@ -5866,7 +5866,7 @@ $this->pObj->dev_var_dump( $query );
       // LOOP all fields of current filter / tableField
 
       // Add first item to the rows of the current filter
-    $this->rows = $firstItem + $this->rows;
+    $this->rows = ( array) $firstItem + ( array ) $this->rows;
 
     return;
   }
