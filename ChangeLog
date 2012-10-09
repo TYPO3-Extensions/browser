@@ -10,6 +10,8 @@
               * class.tx_browser_pi1_filter_4x.php
               * class.tx_browser_pi1_filter_4x.php
               * class.tx_browser_pi1_template.php
+  Bugfix
+  * #41811: Filter areas: first item doesn't count hits
 
 4.1.20
   121008

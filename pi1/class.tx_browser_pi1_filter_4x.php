@@ -4233,7 +4233,9 @@ class tx_browser_pi1_filter_4x {
   {
       // Get table and field
     list( $table, $field ) = explode( '.', $this->curr_tableField );
-$this->pObj->dev_var_dump( $this->hits_sum[$this->curr_tableField] );
+    
+      // #41811, dwildt, 1+
+    $currHitsSum = $this->hits_sum[$this->curr_tableField];
 
       // Get TS configuration of the current filter / tableField
     //$conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
@@ -4268,6 +4270,9 @@ $this->pObj->dev_var_dump( $this->hits_sum[$this->curr_tableField] );
     $areas = $arr_result['data']['values'];
     unset ($arr_result);
       // Get areas from TS
+
+      // #41811, dwildt, 1+
+    $this->hits_sum[$this->curr_tableField] = $currHitsSum;
 
       // DRS
     if( $this->pObj->b_drs_cal || $this->pObj->b_drs_filter )
