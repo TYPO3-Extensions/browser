@@ -6129,6 +6129,7 @@ class tx_browser_pi1_filter_4x {
       // SWITCH : set multiple
 
       // SWITCH : set piVar depending on multiple
+$this->pObj->dev_var_dump( $this->pObj->piVars[$strNicePiVar] );
     switch( $bool_multiple )
     {
       case( false ):
@@ -6154,7 +6155,6 @@ class tx_browser_pi1_filter_4x {
 
     $arr_return['data']['key_piVar']  = $key_piVar;
     $arr_return['data']['arr_piVar']  = $arr_piVar;
-$this->pObj->dev_var_dump( $arr_piVar  );
     $arr_return['data']['nice_piVar'] = $strNicePiVar; // Bugfix #7159, 100429
 
     return $arr_return;
