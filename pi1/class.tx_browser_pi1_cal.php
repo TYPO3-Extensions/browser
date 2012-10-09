@@ -2387,10 +2387,8 @@ class tx_browser_pi1_cal
       // Wrap items, recalculate hits
 
     $arr_fields = $arr_ts['area.'][$str_case . '.']['options.']['fields.'];
-$this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')', $table, $arr_values, $arr_fields );
     foreach( ( array) $arr_fields as $keyWiDot => $arr_string )
     {
-$this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
       $key        = rtrim($keyWiDot, '.');
 
         // Wrap item from
@@ -2416,7 +2414,6 @@ $this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
         // Recalculate hits
       foreach( ( array ) $arr_values as $keyValue => $valueValue )
       {
-$this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
           // Default value: from
         $currFrom = $from;
           // Default value: to
@@ -2438,9 +2435,9 @@ $this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
           {
             $arr_hits[$key] = 0;
           }
-$prompt_01 = $tableField . ' ' . $keyValue . ' >= ' . $currFrom . ' && ' . $keyValue . ' < ' . $currTo;
-$prompt_02 = date( 'c', $keyValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $keyValue ) . ' < ' . date( 'c', $currTo );
-$this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01, $prompt_02 );
+//$prompt_01 = $tableField . ' ' . $keyValue . ' >= ' . $currFrom . ' && ' . $keyValue . ' < ' . $currTo;
+//$prompt_02 = date( 'c', $keyValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $keyValue ) . ' < ' . date( 'c', $currTo );
+//$this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01, $prompt_02 );
             // Default value: hits
             // 120202, dwildt-
 //          if ($keyValue >= $currFrom && $keyValue <= $currTo)
@@ -2479,9 +2476,9 @@ $this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01, $promp
           {
             $arr_hits[$key] = 0;
           }
-$prompt_01 = $tableField . ' ' . $valueValue . ' >= ' . $currFrom . ' && ' . $valueValue . ' < ' . $currTo;
-$prompt_02 = date( 'c', $valueValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $valueValue ) . ' < ' . date( 'c', $currTo );
-$this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01, $prompt_02 );
+//$prompt_01 = $tableField . ' ' . $valueValue . ' >= ' . $currFrom . ' && ' . $valueValue . ' < ' . $currTo;
+//$prompt_02 = date( 'c', $valueValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $valueValue ) . ' < ' . date( 'c', $currTo );
+//$this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01, $prompt_02 );
             // Default value: hits
             // 120202, dwildt-
 //          if ($valueValue >= $currFrom && $valueValue <= $currTo)
@@ -2510,7 +2507,6 @@ $this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01, $promp
       // #41776, dwildt, 2+
     unset($this->pObj->objFltr4x->hits_sum[$tableField]);
     $this->pObj->objFltr4x->hits_sum[$tableField] = $arr_hits;
-$this->pObj->dev_var_dump( $arr_hits );
       // Set the global arr_hits
 
       // RETURN the result
