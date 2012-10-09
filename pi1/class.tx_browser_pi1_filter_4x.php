@@ -2503,7 +2503,7 @@ class tx_browser_pi1_filter_4x {
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
-$this->pObj->dev_var_dump( $this->count_hits[$this->curr_tableField], $this->ts_countHits( ) );
+$this->pObj->dev_var_dump( $this->curr_tableField, $this->ts_countHits( ), $this->count_hits[$this->curr_tableField] );
       // IF : hits should counted
     if( $this->ts_countHits( ) )
     {
