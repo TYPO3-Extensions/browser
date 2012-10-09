@@ -6152,7 +6152,7 @@ class tx_browser_pi1_filter_4x {
     $arr_return['data']['key_piVar']  = $key_piVar;
     $arr_return['data']['arr_piVar']  = $arr_piVar;
     $arr_return['data']['nice_piVar'] = $strNicePiVar; // Bugfix #7159, 100429
-
+$this->dev_var_dump( $arr_return );
     return $arr_return;
   }
 
