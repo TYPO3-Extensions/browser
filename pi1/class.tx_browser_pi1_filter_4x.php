@@ -2643,17 +2643,45 @@ class tx_browser_pi1_filter_4x {
  *                      Hits won't counted.
  *
  * @return	array		$arr_return : Array with the SQL ressource or an error message
- * @version 3.9.9
+ * @version 4.1.21
  * @since   3.9.9
  */
   private function sql_resAllItems( )
+  {
+    $arr_return = null;
+    
+      // SWITCH : filter without any relation versus filter with relation
+    switch( true )
+    {
+      case( true ):
+        $arr_return = $this->sql_resAllItemsFilterWoRelation( );
+        break;
+      case( true ):
+      default:
+        $arr_return = $this->sql_resAllItemsFilterWiRelation( );
+        break;
+    }
+
+    return $arr_return;
+  }
+
+
+
+/**
+ * sql_resAllItemsFilterWiRelation( ):  Get the SQL ressource for a filter with all items.
+ *                      Hits won't counted.
+ *
+ * @return	array		$arr_return : Array with the SQL ressource or an error message
+ * @version 4.1.21
+ * @since   3.9.9
+ */
+  private function sql_resAllItemsFilterWiRelation( )
   {
       // Don't count hits
     $bool_count = false;
 
       // Query for all filter items
     $select   = $this->sql_select( $bool_count );
-      //$from     = $table;
     $from     = $this->sql_from( );
     $where    = $this->sql_whereAllItems( );
     $groupBy  = $this->curr_tableField;
@@ -2670,6 +2698,56 @@ class tx_browser_pi1_filter_4x {
 //                $limit
 //              );
 //$this->pObj->dev_var_dump( $query );
+
+      // Execute query
+    $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
+                  (
+                    $select,
+                    $from,
+                    $where,
+                    $groupBy,
+                    $orderBy,
+                    $limit
+                  );
+      // Execute query
+
+    return $arr_return;
+  }
+
+
+
+/**
+ * sql_resAllItemsFilterWoRelation( ):
+ *
+ * @return	array		$arr_return : Array with the SQL ressource or an error message
+ * @version 4.1.21
+ * @since   4.1.21
+ */
+  private function sql_resAllItemsFilterWoRelation( )
+  {
+    list( $table ) = explode( '.', $this->curr_tableField );
+    $tableField = $this->curr_tableField;
+    $tableUid   = $table . '.uid';
+
+      // Query for all filter items
+    $select   = $tableField . " AS '" . $tableField . "', " .
+                $tableUid . " AS '" . $tableUid . "' ";
+    $from     = $table;
+    $where    = '';
+    $groupBy  = $tableField . ", " . $tableUid;
+    $orderBy  = $tableField . ", " . $tableUid;
+    $limit    = null;
+
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+$this->pObj->dev_var_dump( $query );
 
       // Execute query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
@@ -3262,7 +3340,6 @@ class tx_browser_pi1_filter_4x {
         break;
     }
       // SWITCH
-$this->pObj->dev_var_dump( $from, $this->pObj->objSqlInit->statements['listView'] );
 
     return $from;
   }
