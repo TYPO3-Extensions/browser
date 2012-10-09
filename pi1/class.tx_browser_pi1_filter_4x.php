@@ -831,12 +831,12 @@ class tx_browser_pi1_filter_4x {
     if( ! is_array( $this->pObj->objCal->arr_area[$tableField] ) )
     {
       $str_uidList = implode(', ', $arr_piVar);
-      $str_andWhere = $table . ".uid IN (" . $str_uidList . ")\n";
+$this->pObj->dev_var_dump( $str_uidList, $arr_piVar );
+      $str_andWhere = $table . '.uid IN (' . $str_uidList . ')' . PHP_EOL;
         // #30912, 120127, dwildt+
       $this->arr_filter_condition[$table . '.uid']['uid_in_list'] = $arr_piVar;
     }
       // Handle without area filter
-$this->pObj->dev_var_dump( $str_andWhere );
 
     return $str_andWhere;
   }
