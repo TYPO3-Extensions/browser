@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 3.9.3
+* @version 4.1.21
 * @since 3.6.0
 */
 
@@ -2370,21 +2370,15 @@ class tx_browser_pi1_cal
  * @param	array		$arr_values: The values for the current filter
  * @param	string		$tableField: The current table.field
  * @return	array		Array with the updated values
- * @version 3.6.0
+ * @version 4.1.21
  * @since 3.6.0
  */
   private function area_set_hits($arr_ts, $arr_values, $tableField)
   {
-
-//var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
-
-    list ($table, $field) = explode('.', $tableField);
-    $str_case             = $this->arr_area[$tableField]['key'];
-
-
-
-//    $pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if (!($pos === false)) var_dump('cal 674', $str_case);
+    $arr_values_new = null;
+    
+    list ( $table ) = explode('.', $tableField);
+    $str_case       = $this->arr_area[$tableField]['key'];
 
 
 
@@ -2395,7 +2389,6 @@ class tx_browser_pi1_cal
     $arr_fields = $arr_ts['area.'][$str_case . '.']['options.']['fields.'];
     foreach( $arr_fields as $keyWiDot => $arr_string )
     {
-//var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
       $key        = rtrim($keyWiDot, '.');
 
         // Wrap item from
@@ -2421,7 +2414,6 @@ class tx_browser_pi1_cal
         // Recalculate hits
       foreach( ( array ) $arr_values as $keyValue => $valueValue )
       {
-//var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
           // Default value: from
         $currFrom = $from;
           // Default value: to
@@ -2456,7 +2448,10 @@ class tx_browser_pi1_cal
             // Line has to correspondend with similar code some lines below and code in filter::filter_fetch_rows()
           if ($keyValue >= $currFrom && $keyValue < $currTo)
           {
-            $arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFltr3x->arr_hits[$tableField][$keyValue];
+              // #41776: dwildt, 1-
+            //$arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFltr3x->arr_hits[$tableField][$keyValue];
+              // #41776: dwildt, 1+
+            $arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFltr4x->hits_sum[$tableField][$keyValue];
           }
         }
           // Current table is the local table
@@ -2497,7 +2492,10 @@ class tx_browser_pi1_cal
             // Line has to correspondend with similar code some lines above and code in filter::filter_fetch_rows()
           if( $valueValue >= $currFrom && $valueValue < $currTo )
           {
-            $arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFltr3x->arr_hits[$tableField][$keyValue];
+              // #41776: dwildt, 1-
+            //$arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFltr3x->arr_hits[$tableField][$keyValue];
+              // #41776: dwildt, 1+
+            $arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFltr4x->hits_sum[$tableField][$keyValue];
           }
         }
           // Current table is a foreign table
@@ -2509,8 +2507,12 @@ class tx_browser_pi1_cal
 
 
       // Set the global arr_hits
-    unset($this->pObj->objFltr3x->arr_hits[$tableField]);
-    $this->pObj->objFltr3x->arr_hits[$tableField] = $arr_hits;
+      // #41776, dwildt, 2-
+    //unset($this->pObj->objFltr3x->arr_hits[$tableField]);
+    //$this->pObj->objFltr3x->arr_hits[$tableField] = $arr_hits;
+      // #41776, dwildt, 2+
+    unset($this->pObj->objFltr4x->hits_sum[$tableField]);
+    $this->pObj->objFltr4x->hits_sum[$tableField] = $arr_hits;
       // Set the global arr_hits
 
       // RETURN the result

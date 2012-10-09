@@ -6081,16 +6081,18 @@ class tx_browser_pi1_filter_4x {
  *
  * @param	string		$tableField: The current table.field from the ts filter array
  * @return	array		Data array with the selectbox at least
+ * @version 4.1.21
+ * @since   2.x
  */
   private function zz_getNicePiVar( $tableField )
   {
+    $arr_piVar  = null;
     $arr_return = null;
     
     list ($table, $field) = explode( '.', $tableField );
     $conf_name            = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array           = $this->conf_view['filter.'][$table . '.'][$field . '.'];
     
-$this->pObj->dev_var_dump( $tableField, $conf_name, $conf_array['multiple'] );
       // SWITCH : set default $strNicePiVar
     switch( $conf_array['nice_piVar'] )
     {
@@ -6135,13 +6137,11 @@ $this->pObj->dev_var_dump( $tableField, $conf_name, $conf_array['multiple'] );
       case( false ):
         $key_piVar    = $this->pObj->prefixId . '[' . $strNicePiVar . ']';
         $arr_piVar[0] = $this->pObj->piVars[$strNicePiVar];
-$this->pObj->dev_var_dump( $this->pObj->piVars[$strNicePiVar], $arr_piVar );
         break;
       case( true ):
       default:
         $key_piVar = $this->pObj->prefixId . '[' . $strNicePiVar . '][]';
         $arr_piVar = $this->pObj->piVars[$strNicePiVar];
-$this->pObj->dev_var_dump( $this->pObj->piVars[$strNicePiVar], $arr_piVar );
     }
       // SWITCH : set piVar depending on multiple
 
