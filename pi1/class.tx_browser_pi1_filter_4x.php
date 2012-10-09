@@ -441,12 +441,14 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_andWhereFilter( )
   {
-$this->pObj->dev_var_dump( 'test 2' );
+$this->pObj->dev_var_dump( __LINE__ );
 
     if( ! ( $this->andWhereFilter == null ) )
     {
       return $this->andWhereFilter;
     }
+
+$this->pObj->dev_var_dump( __LINE__ );
 
       // #41776, dwildt, 1-
 //    $arrAndWhere = $this->pObj->objFltr3x->andWhere_filter( );
@@ -454,11 +456,15 @@ $this->pObj->dev_var_dump( 'test 2' );
     $arrAndWhere = $this->andWhere_filter( );
     $strAndWhere = implode(" AND ", ( array ) $arrAndWhere );
 
+$this->pObj->dev_var_dump( __LINE__ );
+
     if( empty( $strAndWhere ) )
     {
       $this->andWhereFilter = false;
       return;
     }
+
+$this->pObj->dev_var_dump( __LINE__ );
 
     $this->andWhereFilter = " AND ". $strAndWhere;
   }
