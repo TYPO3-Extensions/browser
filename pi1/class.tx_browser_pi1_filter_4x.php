@@ -2503,7 +2503,6 @@ class tx_browser_pi1_filter_4x {
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
-//$this->pObj->dev_var_dump( $this->curr_tableField, $this->ts_countHits( ), $this->count_hits[$this->curr_tableField] );
       // IF : hits should counted
     if( $this->ts_countHits( ) )
     {
@@ -2660,6 +2659,17 @@ class tx_browser_pi1_filter_4x {
     $groupBy  = $this->curr_tableField;
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
+
+//    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+//              (
+//                $select,
+//                $from,
+//                $where,
+//                $groupBy,
+//                $orderBy,
+//                $limit
+//              );
+//$this->pObj->dev_var_dump( $query );
 
       // Execute query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
@@ -3252,6 +3262,7 @@ class tx_browser_pi1_filter_4x {
         break;
     }
       // SWITCH
+$this->pObj->dev_var_dump( $from, $this->pObj->objSqlInit->statements['listView'] );
 
     return $from;
   }
@@ -4390,7 +4401,6 @@ class tx_browser_pi1_filter_4x {
         $this->count_hits[$this->curr_tableField] = false;
         break;
     }
-$this->pObj->dev_var_dump( $this->curr_tableField, $count_hits, $this->count_hits[$this->curr_tableField] );
 
       // RETURN
     return $this->count_hits[$this->curr_tableField];
