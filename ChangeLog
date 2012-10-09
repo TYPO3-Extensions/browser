@@ -1,4 +1,6 @@
 4.1.21
+  ToDo
+  * #41814: Filter: local table isn't proper, if hits aren't displayed
   New Feature
   * #41753: Treeview as checkbox
   Improvement

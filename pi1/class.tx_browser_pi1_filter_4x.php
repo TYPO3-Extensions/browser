@@ -2610,7 +2610,15 @@ class tx_browser_pi1_filter_4x {
       case( $table == $this->pObj->localTable ):
       default:
           // local table
-// :TODO: 121010, dwildt: im Fall von nicht zählen keine Treffer!        
+  // DRS :TODO:
+if( $this->pObj->b_drs_devTodo )
+{
+  // :TODO: 121010, dwildt: im Fall von nicht zählen keine Treffer!        
+  // Bug #41814 Filter: local table isn't proper, if hits aren't displayed
+  $prompt = 'Bug #41814 Filter: local table isn\'t proper, if hits aren\'t displayed';
+  t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 3 );
+}
+  // DRS :TODO:
         $rows = $rows_wiHits;
         break;
           // local table
