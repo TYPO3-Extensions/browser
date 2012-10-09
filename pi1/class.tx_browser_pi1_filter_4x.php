@@ -393,6 +393,7 @@ class tx_browser_pi1_filter_4x {
 //    $this->pObj->objFltr3x->get_tableFields( );
       
     $this->init_boolIsFilter( );
+
       // RETURN: if there isn't any filter array
     if( ! $this->init_consolidationAndSelect_isFilterArray( ) )
     {
@@ -435,11 +436,12 @@ class tx_browser_pi1_filter_4x {
  * init_andWhereFilter( ):
  *
  * @return	void
- * @version 3.9.12
+ * @version 4.1.21
  * @since   3.9.12
  */
   private function init_andWhereFilter( )
   {
+$this->dev_var_dump( 'test 2' );
 
     if( ! ( $this->andWhereFilter === null ) )
     {
