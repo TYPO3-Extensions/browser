@@ -493,6 +493,7 @@ class tx_browser_pi1_filter_4x {
     $conf_view  = $conf['views.'][$viewWiDot][$mode . '.'];
       // Init area
 
+$this->dev_var_dump( 'test 1' );
       // LOOP: filter tableFields
     foreach( $this->arr_conf_tableFields as $tableField )
     {
@@ -500,6 +501,7 @@ class tx_browser_pi1_filter_4x {
       $str_andWhere         = null;
 
         // Get nice_piVar
+$this->dev_var_dump( $tableField );
       $arr_result   = $this->zz_getNicePiVar( $tableField );
       $arr_piVar    = $arr_result['data']['arr_piVar'];
       unset ($arr_result);
