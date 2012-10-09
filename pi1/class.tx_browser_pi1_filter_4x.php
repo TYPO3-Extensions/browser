@@ -2503,7 +2503,7 @@ class tx_browser_pi1_filter_4x {
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
-$this->pObj->dev_var_dump( $this->curr_tableField, $this->ts_countHits( ), $this->count_hits[$this->curr_tableField] );
+//$this->pObj->dev_var_dump( $this->curr_tableField, $this->ts_countHits( ), $this->count_hits[$this->curr_tableField] );
       // IF : hits should counted
     if( $this->ts_countHits( ) )
     {
@@ -4365,7 +4365,7 @@ $this->pObj->dev_var_dump( $this->curr_tableField, $this->ts_countHits( ), $this
  * ts_countHits( ):  Get the TS configuration for counting hits. Set the class var $count_hits
  *
  * @return	boolean		$count_hits : value from TS configuration
- * @version 3.9.16
+ * @version 4.2.21
  * @since   3.9.16
  */
   private function ts_countHits( )
@@ -4380,8 +4380,8 @@ $this->pObj->dev_var_dump( $this->curr_tableField, $this->ts_countHits( ), $this
 
 
       // Short var
-    $this->count_hits[$this->curr_tableField] = $this->conf_view['filter.'][$table . '.'][$field . '.']['count_hits'];
-    switch( $this->count_hits[$this->curr_tableField] )
+    $count_hits = $this->conf_view['filter.'][$table . '.'][$field . '.']['count_hits'];
+    switch( $count_hits )
     {
       case( true ):
         $this->count_hits[$this->curr_tableField] = true;
@@ -4390,6 +4390,7 @@ $this->pObj->dev_var_dump( $this->curr_tableField, $this->ts_countHits( ), $this
         $this->count_hits[$this->curr_tableField] = false;
         break;
     }
+$this->pObj->dev_var_dump( $this->curr_tableField, $count_hits, $this->count_hits[$this->curr_tableField] );
 
       // RETURN
     return $this->count_hits[$this->curr_tableField];
