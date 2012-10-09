@@ -4,6 +4,12 @@
   Improvement
   * #41754: Filter: optimise performance
   * #41776: Make filter 4.x independent of filter 3.x
+            Effected files:
+            * pi1
+              * class.tx_browser_pi1_cal.php
+              * class.tx_browser_pi1_filter_4x.php
+              * class.tx_browser_pi1_filter_4x.php
+              * class.tx_browser_pi1_template.php
 
 4.1.20
   121008

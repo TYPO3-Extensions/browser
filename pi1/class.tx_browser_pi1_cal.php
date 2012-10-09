@@ -2061,7 +2061,7 @@ class tx_browser_pi1_cal
  * area_init: Check configuration and init class var arr_area
  *
  * @return	void
- * @version 3.6.0
+ * @version 4.1.21
  * @since 3.6.0
  * @link  http://forge.typo3.org/issues/11402  TYPO3-Browser: Filter for area
  */

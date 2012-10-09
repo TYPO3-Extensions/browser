@@ -589,7 +589,7 @@ class tx_browser_pi1_filter_4x {
  * @internal              #30912: Filter: count items with no relation to category:
  * @version 3.6.0
  */
-  function andWhere_localTable($arr_piVar, $tableField)
+  private function andWhere_localTable($arr_piVar, $tableField)
   {
     $str_andWhere = null;
     
@@ -761,7 +761,7 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.6
  * @since   3.6.0
  */
-  function andWhere_foreignTable( $arr_piVar, $tableField )
+  private function andWhere_foreignTable( $arr_piVar, $tableField )
   {
     $str_andWhere = null;
 
@@ -6084,14 +6084,26 @@ class tx_browser_pi1_filter_4x {
  * @version 4.1.21
  * @since   2.x
  */
-  private function zz_getNicePiVar( $tableField )
+  function zz_getNicePiVar( $tableField )
   {
     $arr_piVar  = null;
     $arr_return = null;
     
     list ($table, $field) = explode( '.', $tableField );
-    $conf_name            = $this->conf_view['filter.'][$table . '.'][$field];
-    $conf_array           = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    
+      // SWITCH : default $tableField versus 'oderBy'
+    switch( $tableField )
+    {
+      case( 'orderBy' ):
+        $conf_name  = $this->pObj->objTemplate->lDisplayList['selectBox_orderBy.']['selectbox'];
+        $conf_array = $this->pObj->objTemplate->lDisplayList['selectBox_orderBy.']['selectbox.'];
+        break;
+      default:
+        $conf_name  = $this->conf_view['filter.'][$table . '.'][$field];
+        $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+        break;
+    }
+      // SWITCH : default $tableField versus 'oderBy'
     
       // SWITCH : set default $strNicePiVar
     switch( $conf_array['nice_piVar'] )

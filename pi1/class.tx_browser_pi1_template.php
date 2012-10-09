@@ -2363,7 +2363,10 @@ class tx_browser_pi1_template
 //      #10204, dwildt, 101012
 //      $arr_orderBox_value_label[$field.':'.$b_asc] = $fieldLL;
 
-      $arr_result       = $this->pObj->objFltr3x->items_order_and_addFirst($arr_ts, $arr_orderBox_value_label, $conf_tableField);
+        // #41776, dwildt, 1-
+      // $arr_result       = $this->pObj->objFltr3x->items_order_and_addFirst($arr_ts, $arr_orderBox_value_label, $conf_tableField);
+        // #41776, dwildt, 1+
+      $arr_result       = $this->items_order_and_addFirst($arr_ts, $arr_orderBox_value_label, $conf_tableField);
       $arr_values       = $arr_result['data']['values'];
 
       unset($arr_result);
@@ -2375,7 +2378,10 @@ class tx_browser_pi1_template
         // Process nice_piVar
 
         // #8337, 101011, dwildt
-      $arr_result     = $this->pObj->objFltr3x->get_nice_piVar($obj_ts, $arr_ts, 'orderBy');
+        // #41776, dwildt, 1-
+      //$arr_result     = $this->pObj->objFltr3x->get_nice_piVar($obj_ts, $arr_ts, 'orderBy');
+        // #41776, dwildt, 1+
+      $arr_result     = $this->pObj->objFltr4x->get_nice_piVar( 'orderBy' );
       $key_piVar      = $arr_result['data']['key_piVar'];
       $arr_piVar      = $arr_result['data']['arr_piVar'];
       $str_nice_piVar = $arr_result['data']['nice_piVar'];
@@ -4097,6 +4103,264 @@ class tx_browser_pi1_template
         }
         break;
     }
+  }
+
+/**
+ * Order the items, add the first item and wrap all items
+ *
+ * @param	array		$arr_ts: The TypoScript configuration of the object
+ * @param	array		$arr_values: The values for the object
+ * @param	string		$tableField: The current table.field from the ts filter array
+ * @return	array		Return the processed items
+ * @internal  Method is moved from class.tx_browser_pi1_filter_3x to here
+ * @version 4.1.21
+ * @since   2.x 
+ */
+  private function items_order_and_addFirst($arr_ts, $arr_values, $tableField) {
+
+    $arr_new_values = null;
+    $arr_return     = null;
+    
+    $mode = $this->pObj->piVar_mode;
+    $view = $this->pObj->view;
+
+    $viewWiDot = $view . '.';
+
+    $conf_view_path = 'views.' . $viewWiDot . $mode . '.filter.';
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // Order the values and save the order!
+
+    // #11407: Ordering filter items hasn't any effect
+    $arr_values = $this->orderValues($arr_values, $tableField);
+    // Order the values and save the order!
+
+
+
+    /////////////////////////////////////////////////////////////////
+    //
+    // Handle the first_item
+
+    if ($arr_ts['first_item'])
+
+    {
+      $bool_handle = true;
+
+      // :todo: 101019, dwildt: Next section seems to have an unproper effect
+      //      $bool_display_without_any_hit = $arr_ts['first_item.']['display_without_any_hit'];
+        // #41776, dwildt, 1-
+      //$int_hits = $this->arr_hits[$tableField]['sum'];
+        // #41776, dwildt, 1+
+      $int_hits = $this->pObj->objFltr4x->sum_hits[$tableField];
+      //
+      //      // There is no hit
+      //      if($int_hits < 1)
+      //      {
+      //        $bool_handle = false;
+      //        $int_hits  = 0;
+      //      }
+      //      // There is no hit
+
+      // Wrap the first item and prepaire it for adding
+      //if($bool_handle || $bool_display_without_any_hit)
+      if ($bool_handle) {
+        // Wrap the item
+        $value = $this->pObj->local_cObj->stdWrap($arr_ts['first_item.']['stdWrap.']['value'], $arr_ts['first_item.']['stdWrap.']);
+
+        // Wrap the hits and add it to the item
+        $bool_display_hits = $arr_ts['first_item.']['display_hits'];
+        if ($bool_display_hits) {
+          $conf_hits = $arr_ts['first_item.']['display_hits.']['stdWrap.'];
+          $str_hits = $this->pObj->objWrapper->general_stdWrap($int_hits, $conf_hits);
+          $bool_behindItem = $arr_ts['first_item.']['display_hits.']['behindItem'];
+          if ($bool_behindItem)
+          {
+            $value = $value . $str_hits;
+          }
+          if (!$bool_behindItem)
+          {
+            $value = $str_hits . $value;
+          }
+        }
+          // Wrap the hits and add it to the item
+
+          // Prepaire item for adding
+          // dwildt, 101211, #11401
+        //$arr_new_values[0] = $value;
+        $arr_new_values[$arr_ts['first_item.']['option_value']] = $value;
+        if ($this->pObj->b_drs_filter)
+        {
+          t3lib_div :: devLog('[INFO/FILTER] \'' . $value . '\' is added as the first item.', $this->pObj->extKey, 0);
+          t3lib_div :: devLog('[HELP/FILTER] If you don\'t want a default item, please configure ' . $conf_view_path . $tableField . '.first_item.', $this->pObj->extKey, 1);
+        }
+          // Prepaire item for adding
+      }
+        // Wrap the first item and prepaire it for adding
+    }
+      // Handle the first_item
+//if (t3lib_div :: getIndpEnv('REMOTE_ADDR') == '84.184.226.247')
+//  var_dump('filter 1399', $arr_values, $arr_new_values);
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Order the values and save the order!
+
+      // #11407: Ordering filter items hasn't any effect
+//    if (is_array($arr_new_values))
+//    {
+//      $arr_values = $this->orderValues($arr_values, $tableField);
+//      if (count($arr_values) > 0) {
+//        // Order the values
+//        foreach ($arr_values as $uid => $value)
+//        {
+//          $arr_new_values[$uid] = $value;
+//        }
+//        unset ($arr_values);
+//        $arr_values = $arr_new_values;
+//        unset ($arr_new_values);
+//      }
+//    }
+      // #11407: Ordering filter items hasn't any effect
+      // Order the values and save the order!
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // Add the first_item
+      // #11407: Ordering filter items hasn't any effect
+
+    if (is_array($arr_new_values))
+    {
+      if (count($arr_values) > 0)
+      {
+        foreach ($arr_values as $uid => $value)
+        {
+          $arr_new_values[$uid] = $value;
+        }
+      }
+      unset ($arr_values);
+      $arr_values = $arr_new_values;
+      unset ($arr_new_values);
+    }
+      // Add the first_item
+      // #11407: Ordering filter items hasn't any effect
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // stdWrap all items but the first item
+
+    if (count($arr_values) > 0)
+    {
+      foreach ($arr_values as $key => $value)
+      {
+        if ($key != $arr_ts['first_item.']['option_value'])
+        {
+          if(is_array($this->pObj->objCal->arr_area[$tableField]))
+          {
+            // Do noting. Items were wrapped.
+          }
+          if(!is_array($this->pObj->objCal->arr_area[$tableField]))
+          {
+            $tsConf = $arr_ts['wrap.']['item.']['stdWrap.'];
+            $value  = $this->pObj->local_cObj->stdWrap($value, $tsConf);
+//var_dump(__METHOD__ . ' (' . __LINE__ . ')', $value);
+          }
+        }
+        $arr_values[$key] = $value;
+      }
+    }
+      // stdWrap all items but the first item
+
+
+
+    $arr_return['data']['values'] = $arr_values;
+    return $arr_return;
+  }
+
+  
+  
+/**
+ * Order the values by uid or value and ASC or DESC
+ *
+ * @param	array		$arr_values: Array with the values for ordering
+ * @param	string		$conf_tableField: table and field in table.field syntax
+ * @return	array		Array with ordered values
+ * @internal  Method is moved from class.tx_browser_pi1_filter_3x to here
+ * @version 4.1.21
+ * @since   2.x
+ */
+  private function orderValues( $arr_values, $conf_tableField )
+  {
+    $conf = $this->pObj->conf;
+    $mode = $this->pObj->piVar_mode;
+    $view = $this->pObj->view;
+
+    $viewWiDot = $view . '.';
+
+    $conf_view = $conf['views.'][$viewWiDot][$mode . '.'];
+    $conf_view_path = 'views.' . $viewWiDot . $mode . '.filter.';
+
+
+
+      /////////////////////////////////////////////////////////////////
+      //
+      // RETURN there aren't values for ordering
+
+    if ( ! is_array( $arr_values ) )
+    {
+      return $arr_values;
+    }
+    if ( count( $arr_values ) < 1 )
+    {
+      return $arr_values;
+    }
+      // RETURN there aren't values for ordering
+
+
+
+    list ($table, $field) = explode('.', $conf_tableField);
+    $arr_ts = $conf_view['filter.'][$table . '.'][$field . '.'];
+
+    if ( $arr_ts['order.']['field'] == 'uid' )
+    {
+      $arr_values = array_flip( $arr_values );
+      if ( $this->pObj->b_drs_filter )
+      {
+        t3lib_div :: devLog('[INFO/FILTER] Values are ordered by uid.', $this->pObj->extKey, 0);
+        t3lib_div :: devLog('[HELP/FILTER] If you want order values by there values, please configure ' . $conf_view_path . $conf_tableField . '.order.field.', $this->pObj->extKey, 1);
+      }
+    }
+
+    if ( strtolower( $arr_ts['order.']['orderFlag'] ) == 'desc' )
+    {
+      arsort( $arr_values );
+      if ( $this->pObj->b_drs_filter )
+      {
+        t3lib_div :: devLog('[INFO/FILTER] Values are ordered descending.', $this->pObj->extKey, 0);
+        t3lib_div :: devLog('[HELP/FILTER] If you want to order ascending, please configure ' . $conf_view_path . $conf_tableField . '.order.orderFlag = ASC.', $this->pObj->extKey, 1);
+      }
+    }
+    else
+    {
+      asort( $arr_values );
+      if ( $this->pObj->b_drs_filter )
+      {
+        t3lib_div :: devLog('[INFO/FILTER] Values are ordered ascending.', $this->pObj->extKey, 0);
+        t3lib_div :: devLog('[HELP/FILTER] If you want to order descending, please configure ' . $conf_view_path . $conf_tableField . '.order.orderFlag = DESC.', $this->pObj->extKey, 1);
+      }
+    }
+    if ($arr_ts['order.']['field'] == ('uid'))
+    {
+      $arr_values = array_flip($arr_values);
+    }
+
+    return $arr_values;
   }
 
 
