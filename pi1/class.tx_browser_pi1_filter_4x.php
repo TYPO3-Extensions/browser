@@ -2595,7 +2595,7 @@ class tx_browser_pi1_filter_4x {
 
       // #41754, dwildt, 2-
 //      // Add table to arr_tablesWiTreeparentfield
-//    $this->pObj->objFltr3x->arr_tablesWiTreeparentfield[] = $table;
+    $this->pObj->objFltr3x->arr_tablesWiTreeparentfield[] = $table;
       // #41754, dwildt, 2+
       // Add table to arr_tablesWiTreeparentfield
     $this->arr_tablesWiTreeparentfield[] = $table;
