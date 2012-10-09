@@ -441,14 +441,13 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_andWhereFilter( )
   {
-$this->pObj->dev_var_dump( __LINE__ );
 
+      // RETURN : $this->andWhereFilter was set before
     if( ! ( $this->andWhereFilter === null ) )
     {
       return $this->andWhereFilter;
     }
-
-$this->pObj->dev_var_dump( __LINE__ );
+      // RETURN : $this->andWhereFilter was set before
 
       // #41776, dwildt, 1-
 //    $arrAndWhere = $this->pObj->objFltr3x->andWhere_filter( );
@@ -456,15 +455,11 @@ $this->pObj->dev_var_dump( __LINE__ );
     $arrAndWhere = $this->andWhere_filter( );
     $strAndWhere = implode(" AND ", ( array ) $arrAndWhere );
 
-$this->pObj->dev_var_dump( __LINE__ );
-
     if( empty( $strAndWhere ) )
     {
       $this->andWhereFilter = false;
       return;
     }
-
-$this->pObj->dev_var_dump( __LINE__ );
 
     $this->andWhereFilter = " AND ". $strAndWhere;
   }
@@ -501,7 +496,6 @@ $this->pObj->dev_var_dump( __LINE__ );
     $conf_view  = $conf['views.'][$viewWiDot][$mode . '.'];
       // Init area
 
-$this->pObj->dev_var_dump( 'test 1' );
       // LOOP: filter tableFields
     foreach( $this->arr_conf_tableFields as $tableField )
     {
@@ -509,7 +503,6 @@ $this->pObj->dev_var_dump( 'test 1' );
       $str_andWhere         = null;
 
         // Get nice_piVar
-$this->pObj->dev_var_dump( $tableField );
       $arr_result   = $this->zz_getNicePiVar( $tableField );
       $arr_piVar    = $arr_result['data']['arr_piVar'];
       unset ($arr_result);
@@ -843,6 +836,7 @@ $this->pObj->dev_var_dump( $tableField );
       $this->arr_filter_condition[$table . '.uid']['uid_in_list'] = $arr_piVar;
     }
       // Handle without area filter
+$this->pObj->dev_var_dump( $str_andWhere );
 
     return $str_andWhere;
   }
@@ -6162,7 +6156,7 @@ $this->pObj->dev_var_dump( $tableField );
     $arr_return['data']['key_piVar']  = $key_piVar;
     $arr_return['data']['arr_piVar']  = $arr_piVar;
     $arr_return['data']['nice_piVar'] = $strNicePiVar; // Bugfix #7159, 100429
-$this->pObj->dev_var_dump( $arr_return );
+
     return $arr_return;
   }
 
