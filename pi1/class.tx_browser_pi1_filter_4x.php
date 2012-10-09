@@ -2494,7 +2494,7 @@ class tx_browser_pi1_filter_4x {
  * get_rows( ):     Get the rows of the current filter
  *
  * @return	array		$arr_return : Array with the rows or an error message
- * @version 3.9.9
+ * @version 4.1.21
  * @since   3.9.9
  */
   private function get_rows( )
@@ -2503,9 +2503,8 @@ class tx_browser_pi1_filter_4x {
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'begin' );
 
-      // Hits should counted
+      // IF : hits should counted
     if( $this->ts_countHits( ) )
-//    if( $this->pObj->objFlexform->sheet_viewList_count_hits )
     {
         // 1. step: filter items with one hit at least
       $arr_return = $this->get_rowsWiHits( );
@@ -2516,15 +2515,10 @@ class tx_browser_pi1_filter_4x {
       $rows = $arr_return['data']['rows'];
         // 1. step: filter items with one hit at least
     }
-      // Hits should counted
+      // IF : hits should counted
 
       // 2. step: all filter items, hits will be taken from $rows
     $arr_return = $this->get_rowsAllItems( $rows );
-      // 2. step: all filter items, hits will be taken from $rows
-//if( $this->curr_tableField == 'tx_greencars_engine.title' )
-//{
-//  $this->pObj->dev_var_dump( $arr_return );
-//}
 
     return $arr_return;
   }
@@ -2569,8 +2563,6 @@ class tx_browser_pi1_filter_4x {
  *                      If param $rows_wiHits contains rows, the counted
  *                      hits will taken over in rows with all items.
  *
- *                                      which have one hit at least
- *
  * @param	array		$rows_wiHits  : Rows with items of the current filter,
  * @return	array		$arr_return   : Array with the rows or an error message
  * @version 3.9.9
@@ -2583,7 +2575,7 @@ class tx_browser_pi1_filter_4x {
       // Get table and field
     list( $table ) = explode( '.', $this->curr_tableField );
 
-      // Hits should counted
+      // IF : hits should counted
     if( $this->ts_countHits( ) )
     {
         // RETURN display items only, if they have one hit at least
@@ -2594,9 +2586,9 @@ class tx_browser_pi1_filter_4x {
       return $arr_return;
         // RETURN display items only, if they have one hit at least
     }
-      // Hits should counted
+      // IF : hits should counted
 
-      // SWITCH localTable versus foreignTable
+      // SWITCH : localTable versus foreignTable
     switch( true )
     {
       case( $table != $this->pObj->localTable ):
@@ -2624,7 +2616,7 @@ class tx_browser_pi1_filter_4x {
           // local table
     }
     unset( $table );
-      // SWITCH localTable versus foreignTable
+      // SWITCH : localTable versus foreignTable
 
       // RETURN rows
     $arr_return['data']['rows'] = $rows;
@@ -3378,7 +3370,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_whereAllItems( )
   {
-//    $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields );
+    $this->pObj->dev_var_dump( $this->sql_whereAnd_Filter( ) );
 
     $where  = '1 ' .
               $this->sql_whereAnd_pidList( ) .
@@ -3490,7 +3482,7 @@ class tx_browser_pi1_filter_4x {
       // Flexform configuration
     $conf_flexform = $this->pObj->objFlexform->sheet_viewList_total_hits;
 
-      // SWITCH
+      // SWITCH : idependent versus controlled among others
     switch( true )
     {
       case( $conf_flexform == 'independent' ) :
@@ -3507,7 +3499,7 @@ class tx_browser_pi1_filter_4x {
         break;
     }
     unset( $table );
-      // SWITCH
+      // SWITCH : idependent versus controlled among others
 
 
       // DIE : undefined value
