@@ -2730,7 +2730,8 @@ class tx_browser_pi1_filter_4x {
     $tableUid   = $table . '.uid';
 
       // Query for all filter items
-    $select   = $tableField . " AS '" . $tableField . "', " .
+    $select   = "0 AS 'hits', " . 
+                $tableField . " AS '" . $tableField . "', " .
                 $tableUid . " AS '" . $tableUid . "' ";
     $from     = $table;
     $where    = '';
