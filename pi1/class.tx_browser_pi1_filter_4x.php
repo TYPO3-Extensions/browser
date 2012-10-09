@@ -594,8 +594,8 @@ class tx_browser_pi1_filter_4x {
     $str_andWhere = null;
     
     list ($table, $field) = explode('.', $tableField);
-    $conf_name            = $conf_view['filter.'][$table . '.'][$field];
-    $conf_array           = $conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_name            = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array           = $this->conf_view['filter.'][$table . '.'][$field . '.'];
     
     
 
@@ -766,8 +766,8 @@ class tx_browser_pi1_filter_4x {
     $str_andWhere = null;
 
     list ($table, $field) = explode('.', $tableField);
-    $conf_name            = $conf_view['filter.'][$table . '.'][$field];
-    $conf_array           = $conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_name            = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array           = $this->conf_view['filter.'][$table . '.'][$field . '.'];
     
 
 
@@ -6087,8 +6087,8 @@ class tx_browser_pi1_filter_4x {
     $arr_return = null;
     
     list ($table, $field) = explode( '.', $tableField );
-    $conf_name            = $conf_view['filter.'][$table . '.'][$field];
-    $conf_array           = $conf_view['filter.'][$table . '.'][$field . '.'];
+    $conf_name            = $this->conf_view['filter.'][$table . '.'][$field];
+    $conf_array           = $this->conf_view['filter.'][$table . '.'][$field . '.'];
     
 $this->pObj->dev_var_dump( $tableField, $conf_name, $conf_array['multiple'] );
       // SWITCH : set default $strNicePiVar
