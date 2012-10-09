@@ -2381,7 +2381,7 @@ class tx_browser_pi1_template
         // #41776, dwildt, 1-
       //$arr_result     = $this->pObj->objFltr3x->get_nice_piVar($obj_ts, $arr_ts, 'orderBy');
         // #41776, dwildt, 1+
-      $arr_result     = $this->pObj->objFltr4x->get_nice_piVar( 'orderBy' );
+      $arr_result     = $this->pObj->objFltr4x->zz_getNicePiVar( 'orderBy' );
       $key_piVar      = $arr_result['data']['key_piVar'];
       $arr_piVar      = $arr_result['data']['arr_piVar'];
       $str_nice_piVar = $arr_result['data']['nice_piVar'];

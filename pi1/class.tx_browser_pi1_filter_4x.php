@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      4.1.20
+ * @version      4.1.21
  * @since        3.9.9
  */
 
