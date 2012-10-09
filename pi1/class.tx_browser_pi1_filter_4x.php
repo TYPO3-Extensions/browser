@@ -2610,6 +2610,7 @@ class tx_browser_pi1_filter_4x {
       case( $table == $this->pObj->localTable ):
       default:
           // local table
+// :TODO: 121010, dwildt: im Fall von nicht zählen keine Treffer!        
         $rows = $rows_wiHits;
         break;
           // local table
@@ -2751,7 +2752,7 @@ $this->pObj->dev_var_dump( $query );
                 $orderBy,
                 $limit
               );
-echo $query;
+//echo $query;
 $this->pObj->dev_var_dump( $query );
 
       // Execute query
@@ -2924,6 +2925,7 @@ $this->pObj->dev_var_dump( $query );
   {
       // Get all rows - get all filter items
     $rows_wiAllItems = $this->sql_resToRows( $res );
+$this->pObj->dev_var_dump( $rows_wiAllItems );
 
       // RETURN all rows are empty
     if( empty ( $rows_wiAllItems ) )
