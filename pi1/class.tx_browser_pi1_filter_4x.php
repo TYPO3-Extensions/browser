@@ -433,7 +433,7 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * init_andWhereFilter( ):
+ * init_andWhereFilter( ): Returns the and where statement
  *
  * @return	void
  * @version 4.1.21
@@ -441,7 +441,6 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_andWhereFilter( )
   {
-
       // RETURN : $this->andWhereFilter was set before
     if( ! ( $this->andWhereFilter === null ) )
     {
@@ -449,46 +448,15 @@ class tx_browser_pi1_filter_4x {
     }
       // RETURN : $this->andWhereFilter was set before
 
-      // #41776, dwildt, 1-
-//    $arrAndWhere = $this->pObj->objFltr3x->andWhere_filter( );
-      // #41776, dwildt, 1+
-    $arrAndWhere = $this->andWhere_filter( );
-    $strAndWhere = implode(" AND ", ( array ) $arrAndWhere );
-
-    if( empty( $strAndWhere ) )
-    {
-      $this->andWhereFilter = false;
-      return;
-    }
-
-    $this->andWhereFilter = " AND ". $strAndWhere;
-  }
-
-
-
-
-/**
- * andWhere_filter: Generate the andWhere statement, if it is needed.
- *                  Init area.
- *
- * @return	array		arr_andWhereFilter: NULL if there isn' any filter
- * @internal  It was andWhere_filter in 3.x
- * @version 4.1.21
- * @since   4.1.21
- */
-  private function andWhere_filter( )
-  {
-    $arr_andWhereFilter = null;
-
-    $conf       = $this->pObj->conf;
-    $conf_view  = $this->pObj->conf_view;
-
       // RETURN : there isn't any filter
     if( ! $this->bool_isFilter )
     {
-      return false;
+      $this->andWhereFilter = false;
+      return $this->andWhereFilter;
     }
       // RETURN : there isn't any filter
+
+    $arr_andWhereFilter = null;
 
       // Init area
     $this->pObj->objCal->area_init( );
@@ -520,7 +488,7 @@ class tx_browser_pi1_filter_4x {
       {
         case( $this->pObj->b_sql_manual ):
             // SQL manual mode
-          $str_andWhere = $this->andWhere_manualMode( $arr_piVar, $tableField, $conf_view );
+          $str_andWhere = $this->init_andWhereFilter_manualMode( $arr_piVar, $tableField, $conf_view );
           break;
             // SQL manual mode
         case( ! $this->pObj->b_sql_manual ):
@@ -530,11 +498,11 @@ class tx_browser_pi1_filter_4x {
           switch( true )
           {
             case( $table == $this->pObj->localTable ):
-              $str_andWhere = $this->andWhere_localTable( $arr_piVar, $tableField);
+              $str_andWhere = $this->init_andWhereFilter_localTable( $arr_piVar, $tableField);
               break;
             case( $table != $this->pObj->localTable ):
             default:
-              $str_andWhere = $this->andWhere_foreignTable( $arr_piVar, $tableField);
+              $str_andWhere = $this->init_andWhereFilter_foreignTable( $arr_piVar, $tableField);
               break;
           }
             // SWITCH : local table versus foreign table
@@ -551,20 +519,31 @@ class tx_browser_pi1_filter_4x {
     }
       // LOOP: filter tableFields
 
+      // andWhere statement
+    $strAndWhere = implode(" AND ", ( array ) $arrAndWhere );
+
+      // RETURN : there isn't any andWhere statement
+    if( empty( $strAndWhere ) )
+    {
+      $this->andWhereFilter = false;
+      return $this->andWhereFilter;
+    }
+      // RETURN : there isn't any andWhere statement
+
+    $this->andWhereFilter = " AND ". $strAndWhere;
 
       // DRS
     if( $this->pObj->b_drs_filter || $this->pObj->b_drs_sql )
     {
       if( is_array( $arr_andWhereFilter ) )
       {
-        $prompt = 'andWhere statement: ' . implode( ' AND ', $arr_andWhereFilter );
+        $prompt = 'andWhere statement: ' . $this->andWhereFilter;
         t3lib_div :: devlog( '[INFO/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 0 );
       }
     }
       // DRS
 
-    return $arr_andWhereFilter;
-
+    return $this->andWhereFilter;
   }
 
 
@@ -576,7 +555,7 @@ class tx_browser_pi1_filter_4x {
 
 
   /**
- * andWhere_localTable: Generate the andWhere statement for a field from the localtable.
+ * init_andWhereFilter_localTable: Generate the andWhere statement for a field from the localtable.
  *                      If there is an area, it will be handled
  *
  *                        Method is enhanced with a php array for allocate conditions
@@ -589,7 +568,7 @@ class tx_browser_pi1_filter_4x {
  * @internal              #30912: Filter: count items with no relation to category:
  * @version 3.6.0
  */
-  private function andWhere_localTable($arr_piVar, $tableField)
+  private function init_andWhereFilter_localTable($arr_piVar, $tableField)
   {
     $str_andWhere = null;
     
@@ -683,13 +662,13 @@ class tx_browser_pi1_filter_4x {
 
 
 /**
- * andWhere_manualMode: 
+ * init_andWhereFilter_manualMode: 
  *
  * @return	array		arr_andWhereFilter: NULL if there isn' any filter
  * @version 4.1.21
  * @since   4.1.21
  */
-  private function andWhere_manualMode( $arr_piVar, $tableField, $conf_view )
+  private function init_andWhereFilter_manualMode( $arr_piVar, $tableField, $conf_view )
   {
     list( $table ) = explode( '.', $tableField );
 
@@ -747,7 +726,7 @@ class tx_browser_pi1_filter_4x {
 
 
   /**
- * andWhere_foreignTable: Generate the andWhere statement for a field from a foreign table.
+ * init_andWhereFilter_foreignTable: Generate the andWhere statement for a field from a foreign table.
  *                        If there is an area, it will be handled
  *
  *                        Method is enhanced with a php array for allocate conditions
@@ -761,7 +740,7 @@ class tx_browser_pi1_filter_4x {
  * @version 3.9.6
  * @since   3.6.0
  */
-  private function andWhere_foreignTable( $arr_piVar, $tableField )
+  private function init_andWhereFilter_foreignTable( $arr_piVar, $tableField )
   {
     $str_andWhere = null;
 
