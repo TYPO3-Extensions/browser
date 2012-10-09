@@ -441,7 +441,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_andWhereFilter( )
   {
-$this->dev_var_dump( 'test 2' );
+$this->pObj->dev_var_dump( 'test 2' );
 
     if( ! ( $this->andWhereFilter === null ) )
     {
@@ -495,7 +495,7 @@ $this->dev_var_dump( 'test 2' );
     $conf_view  = $conf['views.'][$viewWiDot][$mode . '.'];
       // Init area
 
-$this->dev_var_dump( 'test 1' );
+$this->pObj->dev_var_dump( 'test 1' );
       // LOOP: filter tableFields
     foreach( $this->arr_conf_tableFields as $tableField )
     {
@@ -503,7 +503,7 @@ $this->dev_var_dump( 'test 1' );
       $str_andWhere         = null;
 
         // Get nice_piVar
-$this->dev_var_dump( $tableField );
+$this->pObj->dev_var_dump( $tableField );
       $arr_result   = $this->zz_getNicePiVar( $tableField );
       $arr_piVar    = $arr_result['data']['arr_piVar'];
       unset ($arr_result);
@@ -6156,7 +6156,7 @@ $this->dev_var_dump( $tableField );
     $arr_return['data']['key_piVar']  = $key_piVar;
     $arr_return['data']['arr_piVar']  = $arr_piVar;
     $arr_return['data']['nice_piVar'] = $strNicePiVar; // Bugfix #7159, 100429
-$this->dev_var_dump( $arr_return );
+$this->pObj->dev_var_dump( $arr_return );
     return $arr_return;
   }
 
