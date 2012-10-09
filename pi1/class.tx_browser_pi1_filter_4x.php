@@ -2649,15 +2649,18 @@ class tx_browser_pi1_filter_4x {
   private function sql_resAllItems( )
   {
     $arr_return = null;
+$this->pObj->dev_var_dump( 'X' );
     
       // SWITCH : filter without any relation versus filter with relation
     switch( true )
     {
       case( $this->curr_tableField == 'tx_leglisbasis_county.krs_name' ):
+$this->pObj->dev_var_dump( 'X' );
         $arr_return = $this->sql_resAllItemsFilterWoRelation( );
         break;
       case( true ):
       default:
+$this->pObj->dev_var_dump( 'X' );
         $arr_return = $this->sql_resAllItemsFilterWiRelation( );
         break;
     }
