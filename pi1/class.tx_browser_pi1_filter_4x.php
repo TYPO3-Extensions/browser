@@ -2929,7 +2929,7 @@ $this->pObj->dev_var_dump( $query );
   {
       // Get all rows - get all filter items
     $rows_wiAllItems = $this->sql_resToRows( $res );
-$this->pObj->dev_var_dump( $rows_wiAllItems );
+//$this->pObj->dev_var_dump( $rows_wiAllItems );
 
       // RETURN all rows are empty
     if( empty ( $rows_wiAllItems ) )
