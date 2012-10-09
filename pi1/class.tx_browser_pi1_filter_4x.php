@@ -6129,17 +6129,18 @@ class tx_browser_pi1_filter_4x {
       // SWITCH : set multiple
 
       // SWITCH : set piVar depending on multiple
-$this->pObj->dev_var_dump( $this->pObj->piVars[$strNicePiVar] );
     switch( $bool_multiple )
     {
       case( false ):
         $key_piVar    = $this->pObj->prefixId . '[' . $strNicePiVar . ']';
         $arr_piVar[0] = $this->pObj->piVars[$strNicePiVar];
+$this->pObj->dev_var_dump( $this->pObj->piVars[$strNicePiVar], $arr_piVar );
         break;
       case( true ):
       default:
         $key_piVar = $this->pObj->prefixId . '[' . $strNicePiVar . '][]';
         $arr_piVar = $this->pObj->piVars[$strNicePiVar];
+$this->pObj->dev_var_dump( $this->pObj->piVars[$strNicePiVar], $arr_piVar );
     }
       // SWITCH : set piVar depending on multiple
 
@@ -6155,7 +6156,6 @@ $this->pObj->dev_var_dump( $this->pObj->piVars[$strNicePiVar] );
 
     $arr_return['data']['key_piVar']  = $key_piVar;
     $arr_return['data']['arr_piVar']  = $arr_piVar;
-$this->pObj->dev_var_dump( $arr_piVar );
     $arr_return['data']['nice_piVar'] = $strNicePiVar; // Bugfix #7159, 100429
 
     return $arr_return;
