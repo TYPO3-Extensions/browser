@@ -443,7 +443,7 @@ class tx_browser_pi1_filter_4x {
   {
 $this->pObj->dev_var_dump( 'test 2' );
 
-    if( ! ( $this->andWhereFilter === null ) )
+    if( ! ( $this->andWhereFilter == null ) )
     {
       return $this->andWhereFilter;
     }
