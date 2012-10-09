@@ -2390,6 +2390,7 @@ class tx_browser_pi1_cal
 $this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')', $table, $arr_fields );
     foreach( ( array) $arr_fields as $keyWiDot => $arr_string )
     {
+$this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
       $key        = rtrim($keyWiDot, '.');
 
         // Wrap item from
@@ -2415,6 +2416,7 @@ $this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')', $table, $arr_field
         // Recalculate hits
       foreach( ( array ) $arr_values as $keyValue => $valueValue )
       {
+$this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')' );
           // Default value: from
         $currFrom = $from;
           // Default value: to
