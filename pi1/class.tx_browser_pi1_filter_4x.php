@@ -443,7 +443,7 @@ class tx_browser_pi1_filter_4x {
   {
 $this->pObj->dev_var_dump( __LINE__ );
 
-    if( ! ( $this->andWhereFilter == null ) )
+    if( ! ( $this->andWhereFilter === null ) )
     {
       return $this->andWhereFilter;
     }
@@ -489,7 +489,7 @@ $this->pObj->dev_var_dump( __LINE__ );
     $conf_view  = $this->pObj->conf_view;
 
       // RETURN : there isn't any filter
-    if( $this->bool_isFilter )
+    if( ! $this->bool_isFilter )
     {
       return false;
     }
