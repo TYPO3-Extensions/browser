@@ -2513,6 +2513,7 @@ class tx_browser_pi1_cal
       // #41776, dwildt, 2+
     unset($this->pObj->objFltr4x->hits_sum[$tableField]);
     $this->pObj->objFltr4x->hits_sum[$tableField] = $arr_hits;
+$this->pObj->dev_var_dump( $this->pObj->objFltr4x->hits_sum[$tableField], $arr_hits );
       // Set the global arr_hits
 
       // RETURN the result
