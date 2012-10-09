@@ -2733,6 +2733,10 @@ $this->pObj->dev_var_dump( $query );
     $tableField = $this->curr_tableField;
     $tableUid   = $table . '.uid';
 
+    $this->sql_filterFields[$this->curr_tableField]['hits']   = 'hits';
+    $this->sql_filterFields[$this->curr_tableField]['uid']    = $table . '.uid';
+    $this->sql_filterFields[$this->curr_tableField]['value']  = $this->curr_tableField;
+
       // Query for all filter items
     $select   = "100 AS 'hits', " . 
                 $tableField . " AS '" . $tableField . "', " .
