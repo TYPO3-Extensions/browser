@@ -564,32 +564,24 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
-  /**
+/**
  * init_andWhereFilter_localTable: Generate the andWhere statement for a field from the localtable.
  *                      If there is an area, it will be handled
  *
  *                        Method is enhanced with a php array for allocate conditions
  *
- * @param	string		$conf_name: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
- * @param	array		$conf_array: The TypoScript configuration of the SELECTBOX
  * @param	array		$arr_piVar   Current piVars
  * @param	string		$tableField   Current table.field
  * @return	array		arr_andWhereFilter: NULL if there isn' any filter
  * @internal              #30912: Filter: count items with no relation to category:
- * @version 3.6.0
+ * @version 4.1.21
+ * @since   2.x
  */
   private function init_andWhereFilter_localTable($arr_piVar, $tableField)
   {
     $str_andWhere = null;
 
     list ($table, $field) = explode('.', $tableField);
-    $conf_name            = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array           = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
 
@@ -728,35 +720,17 @@ class tx_browser_pi1_filter_4x {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   /**
  * init_andWhereFilter_foreignTable: Generate the andWhere statement for a field from a foreign table.
  *                        If there is an area, it will be handled
  *
  *                        Method is enhanced with a php array for allocate conditions
  *
- * @param	string		$conf_name: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX
- * @param	array		$conf_array: The TypoScript configuration of the SELECTBOX
  * @param	array		$arr_piVar   Current piVars
  * @param	string		$tableField   Current table.field
  * @return	array		arr_andWhereFilter: NULL if there isn' any filter
  * @internal              #30912: Filter: count items with no relation to category:
- * @version 3.9.6
+ * @version 4.1.21
  * @since   3.6.0
  */
   private function init_andWhereFilter_foreignTable( $arr_piVar, $tableField )
@@ -764,7 +738,6 @@ class tx_browser_pi1_filter_4x {
     $str_andWhere = null;
 
     list ($table, $field) = explode('.', $tableField);
-    $conf_name            = $this->conf_view['filter.'][$table . '.'][$field];
     $conf_array           = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
 
