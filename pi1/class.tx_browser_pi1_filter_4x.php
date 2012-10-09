@@ -5808,7 +5808,7 @@ class tx_browser_pi1_filter_4x {
         // SWITCH field
     }
       // LOOP all fields of current filter / tableField
-$this->pObj->dev_var_dump( $firstItem );
+$this->pObj->dev_var_dump( $firstItem, $this->hits_sum[$this->curr_tableField] );
       // Add first item to the rows of the current filter
     $this->rows = $firstItem + $this->rows;
 
