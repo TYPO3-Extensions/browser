@@ -2653,7 +2653,7 @@ class tx_browser_pi1_filter_4x {
       // SWITCH : filter without any relation versus filter with relation
     switch( true )
     {
-      case( false ):
+      case( $this->curr_tableField == 'tx_leglisbasis_county.krs_name' ):
         $arr_return = $this->sql_resAllItemsFilterWoRelation( );
         break;
       case( true ):
