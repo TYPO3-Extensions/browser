@@ -2572,7 +2572,6 @@ class tx_browser_pi1_filter_4x {
       // SWITCH : localTable versus foreignTable
     switch( true )
     {
-      case( $table == $this->pObj->localTable ):
       case( $table != $this->pObj->localTable ):
           // foreign table
           // Get SQL ressource for all filter items
@@ -2602,10 +2601,24 @@ if( $this->pObj->b_drs_warn )
   t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 3 );
 }
   // DRS :TODO:
+          // foreign table
+          // Get SQL ressource for all filter items
         $arr_return = $this->sql_resAllItems( );
-$this->pObj->dev_var_dump( $arr_return );
-        $rows = $rows_wiHits;
+        if( $arr_return['error']['status'] )
+        {
+          $debugTrailLevel = 1;
+          $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+          return $arr_return;
+        }
+        $res = $arr_return['data']['res'];
+        unset( $arr_return );
+          // Get SQL ressource for all filter items
+          // Get rows
+        $rows = $this->sql_resToRows_allItemsWiHits( $res, $rows_wiHits );
+$this->pObj->dev_var_dump( $rows );
+//        $rows = $rows_wiHits;
         break;
+          // foreign table
           // local table
     }
     unset( $table );
