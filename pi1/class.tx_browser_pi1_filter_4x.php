@@ -2430,7 +2430,7 @@ class tx_browser_pi1_filter_4x {
   {
 $this->pObj->dev_var_dump( $areas, $this->ts_countHits( ) );
       // RETURN all areas
-    if( $this->ts_countHits( ) )
+    if( ! $this->ts_countHits( ) )
     {
       return $areas;
     }
