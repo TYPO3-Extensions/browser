@@ -713,6 +713,7 @@ class tx_browser_pi1_sql_auto
       //////////////////////////////////////////////////////////////////////////
       //
       // Is there an andWhere statement from the filter class?
+$this->pObj->dev_var_dump( 'X' );
     if ( is_array( $this->pObj->arr_andWhereFilter ) )
     {
       $str_andFilter  = implode( " AND ", $this->pObj->arr_andWhereFilter );
