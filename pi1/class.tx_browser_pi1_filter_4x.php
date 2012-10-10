@@ -2292,11 +2292,14 @@ class tx_browser_pi1_filter_4x {
       // Convert areas to rows
     $rows   = $this->areas_toRowsConverter( $areas );
     $this->rowsFromAreaWoHits = $rows;
+$this->pObj->dev_var_dump( $rows );
 
       // Count the hits for each area row
     $rows = $this->areas_countHits( $rows );
+$this->pObj->dev_var_dump( $rows );
       // Remove area rows without hits, if it's needed
     $rows = $this->areas_wiHitsOnly( $rows );
+$this->pObj->dev_var_dump( $rows );
 
       // Override class var rows
     $this->rows = $rows;
@@ -2619,7 +2622,6 @@ if( $this->pObj->b_drs_warn )
           // Get SQL ressource for all filter items
           // Get rows
         $rows = $this->sql_resToRows_allItemsWiHits( $res, $rows_wiHits );
-$this->pObj->dev_var_dump( $rows );
 //        $rows = $rows_wiHits;
         break;
           // foreign table
@@ -2764,16 +2766,16 @@ $this->pObj->dev_var_dump( $rows );
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
 
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-$this->pObj->dev_var_dump( $query );
+//    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+//              (
+//                $select,
+//                $from,
+//                $where,
+//                $groupBy,
+//                $orderBy,
+//                $limit
+//              );
+//$this->pObj->dev_var_dump( $query );
 
       // Execute query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
@@ -2810,7 +2812,7 @@ $this->pObj->dev_var_dump( $query );
     $this->sql_filterFields[$this->curr_tableField]['value']  = $this->curr_tableField;
 
       // Query for all filter items
-    $select   = "1 AS 'hits', " . 
+    $select   = "0 AS 'hits', " . 
                 $tableField . " AS '" . $tableField . "', " .
                 $tableUid . " AS '" . $tableUid . "' ";
     $select   = $select . $this->sql_select_addTreeview( );
