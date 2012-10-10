@@ -1000,7 +1000,6 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_consolidationAndSelect_setTsSelect( )
   {
-$this->pObj->dev_var_dump( $this->arr_tsFilterTableFields, $this->pObj->conf_sql['select'] );    
       // LOOP : each filter (table.field)
     foreach( ( array ) $this->arr_tsFilterTableFields as $tableField )
     {
@@ -3594,11 +3593,13 @@ if( $this->pObj->b_drs_devTodo )
     switch( true )
     {
       case( $conf_flexform == 'independent' ) :
+$this->pObj->dev_var_dump( $conf_flexform );    
         return false;
         break;
       case( $this->pObj->localTable != $table ) :
       case( $conf_flexform == 'controlled' ) :
       case( isset( $this->pObj->piVars['sword'] ) ):
+$this->pObj->dev_var_dump( $conf_flexform, $this->andWhereFilter);    
         return $this->andWhereFilter;
         break;
       default;
