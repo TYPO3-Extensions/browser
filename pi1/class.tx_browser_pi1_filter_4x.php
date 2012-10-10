@@ -2428,7 +2428,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function areas_wiHitsOnly( $areas )
   {
-$this->pObj->dev_var_dump( $areas, $this->ts_countHits( ) );
+//$this->pObj->dev_var_dump( $areas, $this->ts_countHits( ) );
       // RETURN all areas
       // #41814: 121010, dwildt, 1-
 //    if( $this->ts_countHits( ) )
@@ -2566,10 +2566,10 @@ $this->pObj->dev_var_dump( $areas, $this->ts_countHits( ) );
       // RETURN IF : hits should counted
     if( $this->ts_countHits( ) )
     {
-if($table == $this->pObj->localTable )
-{
-  $this->pObj->dev_var_dump( $rows_wiHits );
-}
+//if($table == $this->pObj->localTable )
+//{
+//  $this->pObj->dev_var_dump( $rows_wiHits );
+//}
       $arr_return['data']['rows'] = $rows_wiHits;
         // Prompt the expired time to devlog
       $debugTrailLevel = 1;
