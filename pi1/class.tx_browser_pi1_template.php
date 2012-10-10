@@ -722,22 +722,9 @@ class tx_browser_pi1_template
 
 
 
-      ////////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After \'First time?\': '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-    }
-        // DRS - Performance
+      // Prompt the expired time to devlog
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'After \'First time?\'' );
 
 
 
@@ -1148,23 +1135,9 @@ class tx_browser_pi1_template
 
 
 
-      ////////////////////////////////////////////////////////////////////////
-      //
-      // DRS - Performance
-
-    if ( $this->pObj->b_drs_perform )
-    {
-      if( $this->pObj->bool_typo3_43 )
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime( );
-      }
-      if( ! $this->pObj->bool_typo3_43 )
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After some initials: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-    }
-      // DRS - Performance
+      // Prompt the expired time to devlog
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'After some initials' );
 
 
 
@@ -1337,30 +1310,10 @@ class tx_browser_pi1_template
       $this->pObj->rows = $rows;
         // ###LISTBODY### Content
 
-
-
-        ////////////////////////////////////////////////////////////////////////
-        //
-        // DRS - Performance
-
         // Prompt the expired time to devlog
       $debugTrailLevel = 1;
       $this->pObj->timeTracking_log( $debugTrailLevel, 'After rows with individual design' );
-        // Extension pi5: +Browser Calendar
 
-      if ($this->pObj->b_drs_perform)
-      {
-        if($this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->getDifferenceToStarttime();
-        }
-        if(!$this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->mtime();
-        }
-        t3lib_div::devLog('[INFO/PERFORMANCE] After rows with individual design: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-      }
-        // DRS - Performance
     }
       // Without ###ITEM### but with table.field marker
 
@@ -1399,22 +1352,9 @@ class tx_browser_pi1_template
 
 
 
-    ////////////////////////////////////////////////////////////////////////
-    //
-    // DRS - Performance
-
-    if ($this->pObj->b_drs_perform) {
-      if($this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->getDifferenceToStarttime();
-      }
-      if(!$this->pObj->bool_typo3_43)
-      {
-        $endTime = $this->pObj->TT->mtime();
-      }
-      t3lib_div::devLog('[INFO/PERFORMANCE] After generatin template: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-    }
-    // DRS - Performance
+      // Prompt the expired time to devlog
+    $debugTrailLevel = 1;
+    $this->pObj->timeTracking_log( $debugTrailLevel, 'After generating template' );
 
     return $template;
   }
@@ -2730,17 +2670,9 @@ class tx_browser_pi1_template
       // DRS - Performance
     if ($this->pObj->boolFirstRow)
     {
-      if ($this->pObj->b_drs_perform) {
-        if($this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->getDifferenceToStarttime();
-        }
-        if(!$this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->mtime();
-        }
-        t3lib_div::devLog('[INFO/PERFORMANCE] Before elements loop (first row): '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-      }
+        // Prompt the expired time to devlog
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'Before elements loop (first row)' );
     }
       // DRS - Performance
 
@@ -2895,19 +2827,9 @@ class tx_browser_pi1_template
         // DRS - Performance
       if( $this->pObj->boolFirstRow && ( $i_count_element == 0 ) )
       {
-        if( $this->pObj->b_drs_perform )
-        {
-          if( $this->pObj->bool_typo3_43 )
-          {
-            $endTime = $this->pObj->TT->getDifferenceToStarttime( );
-          }
-          if( ! $this->pObj->bool_typo3_43 )
-          {
-            $endTime = $this->pObj->TT->mtime( );
-          }
-          $prompt = 'After removing fields 1: '. ($endTime - $this->pObj->tt_startTime).' ms';
-          t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt, $this->pObj->extKey, 0);
-        }
+          // Prompt the expired time to devlog
+        $debugTrailLevel = 1;
+        $this->pObj->timeTracking_log( $debugTrailLevel, 'After removing fields 1' );
       }
         // DRS - Performance
 
@@ -2929,19 +2851,9 @@ class tx_browser_pi1_template
         // DRS - Performance
       if( $this->pObj->boolFirstRow && ( $i_count_element == 0 ) )
       {
-        if( $this->pObj->b_drs_perform )
-        {
-          if( $this->pObj->bool_typo3_43 )
-          {
-            $endTime = $this->pObj->TT->getDifferenceToStarttime( );
-          }
-          if( ! $this->pObj->bool_typo3_43 )
-          {
-            $endTime = $this->pObj->TT->mtime( );
-          }
-          $prompt = 'After removing fields 2: '. ($endTime - $this->pObj->tt_startTime).' ms';
-          t3lib_div::devLog('[INFO/PERFORMANCE] ' . $prompt, $this->pObj->extKey, 0);
-        }
+          // Prompt the expired time to devlog
+        $debugTrailLevel = 1;
+        $this->pObj->timeTracking_log( $debugTrailLevel, 'After removing fields 2' );
       }
         // DRS - Performance
 
@@ -2992,17 +2904,9 @@ class tx_browser_pi1_template
       // DRS - Performance
       if ($this->pObj->boolFirstRow && $i_count_element == 0)
       {
-        if ($this->pObj->b_drs_perform) {
-          if($this->pObj->bool_typo3_43)
-          {
-            $endTime = $this->pObj->TT->getDifferenceToStarttime();
-          }
-          if(!$this->pObj->bool_typo3_43)
-          {
-            $endTime = $this->pObj->TT->mtime();
-          }
-          t3lib_div::devLog('[INFO/PERFORMANCE] After wrap and link value: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-        }
+          // Prompt the expired time to devlog
+        $debugTrailLevel = 1;
+        $this->pObj->timeTracking_log( $debugTrailLevel, 'After wrap and link value' );
       }
         // DRS - Performance
 
@@ -3109,17 +3013,9 @@ class tx_browser_pi1_template
         // DRS - Performance
       if ($this->pObj->boolFirstRow && $i_count_element == 0)
       {
-        if ($this->pObj->b_drs_perform) {
-          if($this->pObj->bool_typo3_43)
-          {
-            $endTime = $this->pObj->TT->getDifferenceToStarttime();
-          }
-          if(!$this->pObj->bool_typo3_43)
-          {
-            $endTime = $this->pObj->TT->mtime();
-          }
-          t3lib_div::devLog('[INFO/PERFORMANCE] After substitute marker: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-        }
+          // Prompt the expired time to devlog
+        $debugTrailLevel = 1;
+        $this->pObj->timeTracking_log( $debugTrailLevel, 'After substitute marker' );
       }
         // DRS - Performance
 
@@ -3143,17 +3039,9 @@ class tx_browser_pi1_template
 
     if ($this->pObj->boolFirstRow)
     {
-      if ($this->pObj->b_drs_perform) {
-        if($this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->getDifferenceToStarttime();
-        }
-        if(!$this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->mtime();
-        }
-        t3lib_div::devLog('[INFO/PERFORMANCE] After elements loop (first row): '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-      }
+        // Prompt the expired time to devlog
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'After elements loop (first row)' );
     }
       // DRS - Performance
 
