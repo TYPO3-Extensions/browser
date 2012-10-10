@@ -2410,7 +2410,10 @@ $this->pObj->dev_var_dump( $arr_fields );
       $value_conf = $this->pObj->objZz->substitute_t3globals_recurs($value_conf);
       $value      = $this->pObj->local_cObj->stdWrap($value, $value_conf);
 
-      $arr_values_new[$key] = $value;
+        // #41814: 121010, dwildt, 1-
+//      $arr_values_new[$key] = $value;
+        // #41814: 121010, dwildt, 1+
+      $arr_values[$key] = $value;
 
         // Recalculate hits
       foreach( ( array ) $arr_values as $keyValue => $valueValue )
@@ -2511,7 +2514,10 @@ $this->pObj->dev_var_dump( $prompt_01, $prompt_02 );
       // Set the global arr_hits
 
       // RETURN the result
-    return $arr_values_new;
+      // #41814: 121010, dwildt, 1-
+//    return $arr_values_new;
+      // #41814: 121010, dwildt, 1+
+    return $arr_values;
   }
 
 
