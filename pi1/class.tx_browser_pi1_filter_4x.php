@@ -536,7 +536,8 @@ class tx_browser_pi1_filter_4x {
       // LOOP: filter tableFields
 
       // andWhere statement
-    $strAndWhere = implode(" AND ", ( array ) $arrAndWhere );
+    $strAndWhere = implode(" AND ", ( array ) $arr_andWhereFilter );
+$this->pObj->dev_var_dump( $strAndWhere );    
 
       // RETURN : there isn't any andWhere statement
     if( empty( $strAndWhere ) )
@@ -1034,7 +1035,6 @@ class tx_browser_pi1_filter_4x {
         // IF : $csvSelectWoFunc doesn't contain the current tableField
     }
       // LOOP : each filter (table.field)
-$this->pObj->dev_var_dump( $this->pObj->conf_sql['select'] );    
 
   }
 
@@ -3593,13 +3593,11 @@ if( $this->pObj->b_drs_devTodo )
     switch( true )
     {
       case( $conf_flexform == 'independent' ) :
-$this->pObj->dev_var_dump( $conf_flexform );    
         return false;
         break;
       case( $this->pObj->localTable != $table ) :
       case( $conf_flexform == 'controlled' ) :
       case( isset( $this->pObj->piVars['sword'] ) ):
-$this->pObj->dev_var_dump( $conf_flexform, $this->andWhereFilter);    
         return $this->andWhereFilter;
         break;
       default;
