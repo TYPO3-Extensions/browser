@@ -2361,7 +2361,7 @@ class tx_browser_pi1_filter_4x {
  * @param	array		$areas  : Area TS configuration
  * @return	array		$areas  : $areas with counted hits
  * @package array   $areas : rows of the current area
- * @version 3.9.9
+ * @version 4.1.21
  * @since   3.9.9
  */
   private function areas_countHits( $areas )
@@ -2442,7 +2442,6 @@ class tx_browser_pi1_filter_4x {
  */
   private function areas_wiHitsOnly( $areas )
   {
-//$this->pObj->dev_var_dump( $areas, $this->ts_countHits( ) );
       // RETURN all areas
       // #41814: 121010, dwildt, 1-
 //    if( $this->ts_countHits( ) )
@@ -2592,7 +2591,27 @@ class tx_browser_pi1_filter_4x {
     }
       // RETURN IF : hits should counted
 
-      // SWITCH : localTable versus foreignTable
+          // foreign table
+          // Get SQL ressource for all filter items
+        $arr_return = $this->sql_resAllItems( );
+        if( $arr_return['error']['status'] )
+        {
+          $debugTrailLevel = 1;
+          $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+          return $arr_return;
+        }
+        $res = $arr_return['data']['res'];
+        unset( $arr_return );
+          // Get SQL ressource for all filter items
+          // Get rows
+        $rows = $this->sql_resToRows_allItemsWiHits( $res, $rows_wiHits );
+
+      // RETURN rows
+    $arr_return['data']['rows'] = $rows;
+    return $arr_return;
+
+
+    // SWITCH : localTable versus foreignTable
     switch( true )
     {
       case( $table != $this->pObj->localTable ):
