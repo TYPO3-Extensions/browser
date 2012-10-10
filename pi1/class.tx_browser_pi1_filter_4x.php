@@ -1000,6 +1000,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_consolidationAndSelect_setTsSelect( )
   {
+$this->pObj->dev_var_dump( $this->arr_tsFilterTableFields, $this->pObj->conf_sql['select'] );    
       // LOOP : each filter (table.field)
     foreach( ( array ) $this->arr_tsFilterTableFields as $tableField )
     {
@@ -1034,6 +1035,7 @@ class tx_browser_pi1_filter_4x {
         // IF : $csvSelectWoFunc doesn't contain the current tableField
     }
       // LOOP : each filter (table.field)
+$this->pObj->dev_var_dump( $this->pObj->conf_sql['select'] );    
 
   }
 
