@@ -14,7 +14,7 @@ $( document ).ready( function( )
   if( $( "###SELECTOR_01###" ).length )
   {
     $("###SELECTOR_01###").jstree({
-      "themesXX" : {
+      "themes" : {
         "theme" : "###THEME_01###",
         "dots"  : ###DOTS_01###,
         "icons" : ###ICONS_01###
