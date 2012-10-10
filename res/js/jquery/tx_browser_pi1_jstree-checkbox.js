@@ -19,6 +19,9 @@ $( document ).ready( function( )
         "dots"  : ###DOTS_01###,
         "icons" : ###ICONS_01###
       },
+      "checkbox" : {
+        "real_checkboxes" : 1
+      },
       "plugins" : ["themes", "html_data", "checkbox", "sort", "ui", "cookies"]
     });
   }
