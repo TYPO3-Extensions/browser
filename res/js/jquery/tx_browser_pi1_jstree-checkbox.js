@@ -8,9 +8,9 @@
 
 
 
-$(function () {
   $( document ).ready( function( )
   {
+$(function () {
 
     if( $( "###SELECTOR_01###" ).length )
     {
@@ -30,5 +30,5 @@ $(function () {
         alert(data.rslt.obj.attr("id"));
       })
     }
-  });
 }
+  });
