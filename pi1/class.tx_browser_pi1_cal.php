@@ -2387,7 +2387,7 @@ class tx_browser_pi1_cal
       // Wrap items, recalculate hits
 
     $arr_fields = $arr_ts['area.'][$str_case . '.']['options.']['fields.'];
-$this->pObj->dev_var_dump( $arr_fields );
+$this->pObj->dev_var_dump( $arr_values );
     foreach( ( array) $arr_fields as $keyWiDot => $arr_string )
     {
       $key        = rtrim($keyWiDot, '.');
@@ -2410,10 +2410,7 @@ $this->pObj->dev_var_dump( $arr_fields );
       $value_conf = $this->pObj->objZz->substitute_t3globals_recurs($value_conf);
       $value      = $this->pObj->local_cObj->stdWrap($value, $value_conf);
 
-        // #41814: 121010, dwildt, 1-
-//      $arr_values_new[$key] = $value;
-        // #41814: 121010, dwildt, 1+
-      $arr_values[$key] = $value;
+      $arr_values_new[$key] = $value;
 
         // Recalculate hits
       foreach( ( array ) $arr_values as $keyValue => $valueValue )
@@ -2439,15 +2436,15 @@ $this->pObj->dev_var_dump( $arr_fields );
           {
             $arr_hits[$key] = 0;
           }
-$prompt_01 = $tableField . ' ' . $keyValue . ' >= ' . $currFrom . ' && ' . $keyValue . ' <= ' . $currTo;
-$prompt_02 = date( 'c', $keyValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $keyValue ) . ' <= ' . date( 'c', $currTo );
+$prompt_01 = $tableField . ' ' . $keyValue . ' >= ' . $currFrom . ' && ' . $keyValue . ' < ' . $currTo;
+$prompt_02 = date( 'c', $keyValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $keyValue ) . ' < ' . date( 'c', $currTo );
 $this->pObj->dev_var_dump( $prompt_01, $prompt_02 );
             // Default value: hits
             // 120202, dwildt-
 //          if ($keyValue >= $currFrom && $keyValue <= $currTo)
             // 120202, dwildt+
             // Line has to correspondend with similar code some lines below and code in filter::filter_fetch_rows()
-          if ($keyValue >= $currFrom && $keyValue <= $currTo)
+          if ($keyValue >= $currFrom && $keyValue < $currTo)
           {
               // #41776: dwildt, 1-
             //$arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFltr3x->arr_hits[$tableField][$keyValue];
@@ -2480,15 +2477,15 @@ $this->pObj->dev_var_dump( $prompt_01, $prompt_02 );
           {
             $arr_hits[$key] = 0;
           }
-//$prompt_01 = $tableField . ' ' . $valueValue . ' >= ' . $currFrom . ' && ' . $valueValue . ' <= ' . $currTo;
-//$prompt_02 = date( 'c', $valueValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $valueValue ) . ' <= ' . date( 'c', $currTo );
+//$prompt_01 = $tableField . ' ' . $valueValue . ' >= ' . $currFrom . ' && ' . $valueValue . ' < ' . $currTo;
+//$prompt_02 = date( 'c', $valueValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $valueValue ) . ' < ' . date( 'c', $currTo );
 //$this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01, $prompt_02 );
             // Default value: hits
             // 120202, dwildt-
 //          if ($valueValue >= $currFrom && $valueValue <= $currTo)
             // 120202, dwildt+
             // Line has to correspondend with similar code some lines above and code in filter::filter_fetch_rows()
-          if( $valueValue >= $currFrom && $valueValue <= $currTo )
+          if( $valueValue >= $currFrom && $valueValue < $currTo )
           {
               // #41776: dwildt, 1-
             //$arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFltr3x->arr_hits[$tableField][$keyValue];
@@ -2514,10 +2511,7 @@ $this->pObj->dev_var_dump( $prompt_01, $prompt_02 );
       // Set the global arr_hits
 
       // RETURN the result
-      // #41814: 121010, dwildt, 1-
-//    return $arr_values_new;
-      // #41814: 121010, dwildt, 1+
-    return $arr_values;
+    return $arr_values_new;
   }
 
 
