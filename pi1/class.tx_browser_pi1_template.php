@@ -2600,6 +2600,15 @@ class tx_browser_pi1_template
   {
     static $bool_firstLoop  = true;
     
+      // DRS - Performance
+    if ($this->pObj->boolFirstRow)
+    {
+        // Prompt the expired time to devlog
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'begin (for the first row only)' );
+    }
+      // DRS - Performance
+      
       // Get the global $arrHandleAs array
     $handleAs                   = $this->pObj->arrHandleAs;
       // [Boolean] Shouldn't empty values handled?
@@ -2667,14 +2676,6 @@ class tx_browser_pi1_template
       // 120920, :TODO:, $bool_design_default shouldn't allocated for each row!
     $bool_design_default = $this->tmplRowIsDefaultDesign( $template );
 
-      // DRS - Performance
-    if ($this->pObj->boolFirstRow)
-    {
-        // Prompt the expired time to devlog
-      $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log( $debugTrailLevel, 'Before elements loop (first row)' );
-    }
-      // DRS - Performance
 
 
 
@@ -3033,17 +3034,15 @@ class tx_browser_pi1_template
 
 
 
-      //////////////////////////////////////////////////////////////////
-      //
       // DRS - Performance
-
     if ($this->pObj->boolFirstRow)
     {
         // Prompt the expired time to devlog
       $debugTrailLevel = 1;
-      $this->pObj->timeTracking_log( $debugTrailLevel, 'After elements loop (first row)' );
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'end (for the first row only)' );
     }
       // DRS - Performance
+      
 
 
 
