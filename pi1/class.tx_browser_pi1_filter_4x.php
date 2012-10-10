@@ -933,6 +933,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_consolidationAndSelect( )
   {
+$this->pObj->dev_var_dump( 'X' );    
       // RETURN : there isn't any filter
     if( ! $this->bool_isFilter )
     {
@@ -945,6 +946,7 @@ class tx_browser_pi1_filter_4x {
 
       // Add tableFields to the ts property SELECT
     $this->init_consolidationAndSelect_setTsSelect( );
+$this->pObj->dev_var_dump( 'Y' );    
 
   }
 
