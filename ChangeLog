@@ -5,7 +5,9 @@
   * #41754: Filter: optimise performance
             * #41754.01: $arr_andWhereFilter isn't never allocated
             * #41754.02: init_aFilterIsSelected (boolean) is moved to get_selectedFilters (array)
-            * #41754.03: new method sql_resAllItemsFilterWoRelation( )
+            * #41754.03: SQL optimisation: new method sql_resAllItemsFilterWoRelation( )
+            * #41754.04: PHP optimisation: 
+            BE AWARE: It isn't tested in localised context
   * #41776: Make filter 4.x independent of filter 3.x
             Effected files:
             * pi1

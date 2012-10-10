@@ -2762,6 +2762,7 @@ class tx_browser_pi1_filter_4x {
  * sql_resAllItemsFilterWoRelation( ):
  *
  * @return	array		$arr_return : Array with the SQL ressource or an error message
+ * @internal  #41754.03
  * @version 4.1.21
  * @since   4.1.21
  */
@@ -2792,16 +2793,16 @@ class tx_browser_pi1_filter_4x {
     $orderBy  = $tableField;
     $limit    = null;
 
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-$this->pObj->dev_var_dump( $query );
+//    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+//              (
+//                $select,
+//                $from,
+//                $where,
+//                $groupBy,
+//                $orderBy,
+//                $limit
+//              );
+//$this->pObj->dev_var_dump( $query );
 
       // Execute query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
@@ -5722,11 +5723,12 @@ $this->pObj->dev_var_dump( $query );
  */
   private function set_markerArrayUpdateRow( $uid )
   {
-    foreach( ( array ) $this->rows[$uid] as $key => $value )
-    {
-      $marker                     = '###' . strtoupper( $key ) . '###';
-      $this->markerArray[$marker] = $value;
-    }
+      // #41754.04
+//    foreach( ( array ) $this->rows[$uid] as $key => $value )
+//    {
+//      $marker                     = '###' . strtoupper( $key ) . '###';
+//      $this->markerArray[$marker] = $value;
+//    }
 
     $marker                     = '###VALUE###';
     $valueField                 = $this->sql_filterFields[$this->curr_tableField]['value'];
@@ -5743,7 +5745,7 @@ $this->pObj->dev_var_dump( $query );
           // Localtable: ###UID### will replaced by the value
         $this->markerArray[$marker] = $this->rows[$uid][$valueField];
           // #41372, 4.1.15, 120925, dwildt
-          // Overwrite in case of the curretn filter is an area and type is 'strings'
+          // Overwrite in case of the current filter is an area and type is 'strings'
         if( $this->pObj->objCal->arr_area[$this->curr_tableField]['key'] == 'strings' )
         {
           $this->markerArray[$marker] = $this->rows[$uid][$uidField];
