@@ -410,14 +410,12 @@ class tx_browser_pi1_filter_4x {
 
     $this->init_boolIsFilter( );
 
-$this->pObj->dev_var_dump( 'A' );    
       // RETURN: if there isn't any filter array
     if( ! $this->init_consolidationAndSelect_isFilterArray( ) )
     {
       return;
     }
       // RETURN: if there isn't any filter array
-$this->pObj->dev_var_dump( 'B' );    
 
       // RETURN: if there isn't any table.field configured
     if( ! $this->init_consolidationAndSelect_isTableFields( ) )
@@ -425,7 +423,6 @@ $this->pObj->dev_var_dump( 'B' );
       return;
     }
       // RETURN: if there isn't any table.field configured
-$this->pObj->dev_var_dump( 'C' );    
 
       // #41776, dwildt, 2+
       // Set the array consolidation and the ts property SELECT
@@ -936,7 +933,6 @@ $this->pObj->dev_var_dump( 'C' );
  */
   private function init_consolidationAndSelect( )
   {
-$this->pObj->dev_var_dump( 'X' );    
       // RETURN : there isn't any filter
     if( ! $this->bool_isFilter )
     {
@@ -949,7 +945,6 @@ $this->pObj->dev_var_dump( 'X' );
 
       // Add tableFields to the ts property SELECT
     $this->init_consolidationAndSelect_setTsSelect( );
-$this->pObj->dev_var_dump( 'Y' );    
 
   }
 
