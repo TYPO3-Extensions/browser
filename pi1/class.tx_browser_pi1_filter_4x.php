@@ -2292,14 +2292,11 @@ class tx_browser_pi1_filter_4x {
       // Convert areas to rows
     $rows   = $this->areas_toRowsConverter( $areas );
     $this->rowsFromAreaWoHits = $rows;
-$this->pObj->dev_var_dump( $rows );
 
       // Count the hits for each area row
     $rows = $this->areas_countHits( $rows );
-$this->pObj->dev_var_dump( $rows );
       // Remove area rows without hits, if it's needed
     $rows = $this->areas_wiHitsOnly( $rows );
-$this->pObj->dev_var_dump( $rows );
 
       // Override class var rows
     $this->rows = $rows;
@@ -2431,12 +2428,14 @@ $this->pObj->dev_var_dump( $rows );
  */
   private function areas_wiHitsOnly( $areas )
   {
+$this->pObj->dev_var_dump( $areas, $this->ts_countHits( ) );
       // RETURN all areas
     if( $this->ts_countHits( ) )
     {
       return $areas;
     }
       // RETURN all areas
+
 
       // Get label for the field hits
     $hitsField = $this->sql_filterFields[$this->curr_tableField]['hits'];
