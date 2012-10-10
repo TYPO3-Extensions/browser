@@ -21,7 +21,7 @@ $( document ).ready( function( )
       },
       "checkbox" : {
         "real_checkboxes"       : true,
-        "real_checkboxes_names" : "dirk"
+        "real_checkboxes_names" : function (n) { return [( "check_" + n[0].id ), 1]; }
       },
       "plugins" : ["themes", "html_data", "checkbox", "sort", "ui", "cookies"]
     });
