@@ -2380,7 +2380,6 @@ class tx_browser_pi1_cal
     list ( $table ) = explode('.', $tableField);
     $str_case       = $this->arr_area[$tableField]['key'];
 
-$this->pObj->dev_var_dump( 'X' );
 
 
       /////////////////////////////////////////////////////////////////
@@ -2388,6 +2387,7 @@ $this->pObj->dev_var_dump( 'X' );
       // Wrap items, recalculate hits
 
     $arr_fields = $arr_ts['area.'][$str_case . '.']['options.']['fields.'];
+$this->pObj->dev_var_dump( $arr_fields );
     foreach( ( array) $arr_fields as $keyWiDot => $arr_string )
     {
       $key        = rtrim($keyWiDot, '.');
