@@ -20,10 +20,13 @@ $( document ).ready( function( )
         "icons" : ###ICONS_01###
       },
       "checkbox" : {
-        "real_checkboxes"       : true,
-        "real_checkboxes_names" : function (n) { return [( "check_" + n[0].id ), 1]; }
+        "real_checkboxes" : true
       },
       "plugins" : ["themes", "html_data", "checkbox", "sort", "ui", "cookies"]
-    });
+    })
+    .bind("select_node.jstree", function (event, data) { 
+      // `data.rslt.obj` is the jquery extended node that was clicked
+      alert(data.rslt.obj.attr("id"));
+    })
   }
 });
