@@ -2381,17 +2381,18 @@ class tx_browser_pi1 extends tslib_pibase {
               $debugTrail['prompt'] . ': ' . $prompt;
     t3lib_div::devLog( $prompt, $this->extKey, 0 );
 
-
+    $timeOfPrevProcess = $endTime - $this->tt_prevEndTime;
+    
     switch( true )
     {
-      case( ( $endTime - $this->tt_prevEndTime ) >= 10000 ):
+      case( $timeOfPrevProcess >= 10000 ):
         $this->tt_prevPrompt = 3;
-        $prompt = 'Previous process needs more than 10 sec';
+        $prompt = 'Previous process needs more than 10 sec (' . $timeOfPrevProcess / 1000 . ' sec)';
         t3lib_div::devLog('[WARN/PERFORMANCE] ' . $prompt, $this->extKey, 3 );
         break;
-      case( ( $endTime - $this->tt_prevEndTime ) >= 250 ):
+      case( $timeOfPrevProcess >= 250 ):
         $this->tt_prevPrompt = 2;
-        $prompt = 'Previous process needs more than 250 milliseconds';
+        $prompt = 'Previous process needs more than 0.25 sec (' . $timeOfPrevProcess / 1000 . ' sec)';
         t3lib_div::devLog('[WARN/PERFORMANCE] ' . $prompt, $this->extKey, 2 );
         break;
       default:
