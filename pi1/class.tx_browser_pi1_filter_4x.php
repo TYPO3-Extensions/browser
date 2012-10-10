@@ -2559,7 +2559,6 @@ class tx_browser_pi1_filter_4x {
       // SWITCH : localTable versus foreignTable
     switch( true )
     {
-      case( $table == $this->pObj->localTable ):
       case( $table != $this->pObj->localTable ):
           // foreign table
           // Get SQL ressource for all filter items
@@ -2581,7 +2580,7 @@ class tx_browser_pi1_filter_4x {
       default:
           // local table
   // DRS :TODO:
-if( $this->pObj->b_drs_devTodo )
+if( $this->pObj->b_drs_warn )
 {
   // :TODO: 121010, dwildt: im Fall von nicht zählen keine Treffer!        
   // Bug #41814 Filter: local table isn't proper, if hits aren't displayed
@@ -2693,21 +2692,15 @@ if( $this->pObj->b_drs_devTodo )
     {
       case(  $this->ts_countHits( ) ):
       case(  in_array( $this->curr_tableField, $this->get_selectedFilters( ) ) ):
-$this->pObj->dev_var_dump( 
-                      $this->curr_tableField . ': with relations.', 
-                      $this->count_hits[$this->curr_tableField], 
-                      in_array( $this->curr_tableField, $this->get_selectedFilters( ) )
-                    );
+//$this->pObj->dev_var_dump( 
+//                      $this->curr_tableField . ': with relations.', 
+//                      $this->count_hits[$this->curr_tableField], 
+//                      in_array( $this->curr_tableField, $this->get_selectedFilters( ) )
+//                    );
         $arr_return = $this->sql_resAllItemsFilterWiRelation( );
         break;
-//      case( $this->curr_tableField == 'tx_leglisbasis_county.krs_name' ):
-//      case( $this->curr_tableField == 'tx_leglisbasis_cluster.brc_text' ):
-//      case( $this->curr_tableField == 'tx_leglisbasis_clustergroup.brg_text' ):
-//      case( $this->curr_tableField == 'tx_leglisbasis_sector.brc_listtext' ):
-//        $arr_return = $this->sql_resAllItemsFilterWoRelation( );
-//        break;
       default:
-$this->pObj->dev_var_dump( $this->curr_tableField . ': without relations.' );
+//$this->pObj->dev_var_dump( $this->curr_tableField . ': without relations.' );
         $arr_return = $this->sql_resAllItemsFilterWoRelation( );
         break;
     }
@@ -2899,6 +2892,17 @@ $this->pObj->dev_var_dump( $this->curr_tableField . ': without relations.' );
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
 
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+$this->pObj->dev_var_dump( $query );
+    
       // Execute query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
                   (
