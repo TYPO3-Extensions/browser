@@ -511,6 +511,7 @@ class tx_browser_pi1_filter_4x {
         default:
             // SQL auto mode
             // SWITCH : local table versus foreign table
+$this->pObj->dev_var_dump( $table, $this->pObj->localTable );
           switch( true )
           {
             case( $table == $this->pObj->localTable ):
