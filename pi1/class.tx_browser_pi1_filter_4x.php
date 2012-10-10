@@ -2561,6 +2561,10 @@ class tx_browser_pi1_filter_4x {
       // RETURN IF : hits should counted
     if( $this->ts_countHits( ) )
     {
+if($table == $this->pObj->localTable )
+{
+  $this->pObj->dev_var_dump( $rows_wiHits );
+}
       $arr_return['data']['rows'] = $rows_wiHits;
         // Prompt the expired time to devlog
       $debugTrailLevel = 1;
