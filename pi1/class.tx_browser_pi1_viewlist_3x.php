@@ -225,112 +225,116 @@ class tx_browser_pi1_viewlist_3x
       // User selected a non default language
     if( $this->pObj->objLocalise3x->int_localisation_mode >= 3 )
     {
-        // User selected a filter
-      if( ! empty( $this->pObj->arr_andWhereFilter ) )
-      {
-        if( ( ! $this->bool_union ) && ( ! $this->pObj->b_sql_manual ) )
-        {
-          $arr_where = null;
-          list( $table, $field ) = explode( '.', $this->pObj->arrLocalTable['uid'] );
-            // Get the field names for sys_language_content and for l10n_parent
-          $arr_localise['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
-          $arr_localise['pid_field']  = $GLOBALS['TCA'][$table]['ctrl'][' '];
-            // Get the field names for sys_language_content and for l10n_parent
-
-            // 13505, 110302, dwildt
-          $where = null;
-          if( $arr_localise['id_field'] && $arr_localise['pid_field'] )
-          {
-            while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
-            {
-              $uid          = $row[$table . '.' . $field];
-              $arr_where[]  = '(' . $table . '.' . $field . ' = ' . $uid .
-                              ' OR ' . $table . '.' . $arr_localise['pid_field'] . ' = '. $uid . ')';
-                                // 13573, 110303, dwildt
-            }
-            $where    = implode( ' OR ', $arr_where );
-            $where    = '(' . $where . ')';
-            $andWhere = $this->pObj->objLocalise3x->localisationFields_where( $table );
-              // 13505, 110302, dwildt
-            if( ! $andWhere )
-            {
-              $andWhere = 1;
-            }
-            $where = $where . ' AND ' . $andWhere;
-            $query = $GLOBALS['TYPO3_DB']->SELECTquery
-                                            (
-                                              $select,
-                                              $from,
-                                              $where,
-                                              $groupBy="",
-                                              $orderBy,
-                                              $limit="",
-                                              $uidIndexField=""
-                                            );
-              // Prompt the expired time to devlog
-            $this->pObj->timeTracking_log( 1,  'before $GLOBALS[TYPO3_DB]->sql_query( )' );
-            $tt_start = $this->pObj->tt_prevEndTime;
-              // Prompt the expired time to devlog
-
-              // Execute
-            $res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
-            $error = $GLOBALS['TYPO3_DB']->sql_error( );
-              // Execute
-
-              // Prompt the expired time to devlog
-            $this->pObj->timeTracking_log( 1, 'after $GLOBALS[TYPO3_DB]->sql_query( )' );
-            $this->pObj->timeTracking_prompt( 1, $query );
-            $tt_end = $this->pObj->tt_prevEndTime;
-              // Prompt the expired time to devlog
-
-              // Error management
-            if( $error ) {
-              $this->pObj->objSqlFun_3x->query = $query;
-              $this->pObj->objSqlFun_3x->error = $error;
-              $arr_result = $this->pObj->objSqlFun_3x->prompt_error( );
-              if( $arr_result['error']['status'] )
-              {
-                $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
-                return $template;
-              }
-            }
-              // Error management
-
-              // DRS - Development Reporting System
-            if( $this->pObj->b_drs_sql )
-            {
-              $prompt = 'Bugfix #9024 - Next query for localisation consolidation:';
-              t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
-              t3lib_div::devlog( '[OK/SQL] ' . $query,  $this->pObj->extKey, -1 );
-              $prompt = 'Be aware of the multi-byte notation, if you want to use the query in your SQL shell or in phpMyAdmin.';
-              t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
-            }
-              // DRS - Development Reporting System
-          }
-
-        }
-        if( $this->bool_union )
-        {
-          if( $this->pObj->b_drs_error )
-          {
-            $prompt = 'User has selected a non default language. User has selected a filter too. ' .
-                      'And we have a query with UNIONs. It isn\'t possible to display localised records ' .
-                      'proper! We are sorry!';
-            t3lib_div::devlog( '[ERROR/FILTER] ' . $prompt,  $this->pObj->extKey, 3 );
-          }
-        }
-        if( $this->pObj->b_sql_manual )
-        {
-          if( $this->pObj->b_drs_error )
-          {
-            $prompt = 'User has selected a non default language. User has selected a filter too. ' .
-                      'And we have a query with UNIONs. And we have a manual generated query. ' .
-                      'It isn\'t possible to display localised records proper!';
-            t3lib_div::devlog( '[ERROR/FILTER] ' . $prompt,  $this->pObj->extKey, 3 );
-          }
-        }
-      }
-        // User selected a filter
+// #41754, 1210101, dwildt, -
+// $this->pObj->arr_andWhereFilter isn't never allocated
+//        // User selected a filter
+//      if( ! empty( $this->pObj->arr_andWhereFilter ) )
+//      {
+//        if( ( ! $this->bool_union ) && ( ! $this->pObj->b_sql_manual ) )
+//        {
+//          $arr_where = null;
+//          list( $table, $field ) = explode( '.', $this->pObj->arrLocalTable['uid'] );
+//            // Get the field names for sys_language_content and for l10n_parent
+//          $arr_localise['id_field']   = $GLOBALS['TCA'][$table]['ctrl']['languageField'];
+//          $arr_localise['pid_field']  = $GLOBALS['TCA'][$table]['ctrl'][' '];
+//            // Get the field names for sys_language_content and for l10n_parent
+//
+//            // 13505, 110302, dwildt
+//          $where = null;
+//          if( $arr_localise['id_field'] && $arr_localise['pid_field'] )
+//          {
+//            while( $row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc( $res ) )
+//            {
+//              $uid          = $row[$table . '.' . $field];
+//              $arr_where[]  = '(' . $table . '.' . $field . ' = ' . $uid .
+//                              ' OR ' . $table . '.' . $arr_localise['pid_field'] . ' = '. $uid . ')';
+//                                // 13573, 110303, dwildt
+//            }
+//            $where    = implode( ' OR ', $arr_where );
+//            $where    = '(' . $where . ')';
+//            $andWhere = $this->pObj->objLocalise3x->localisationFields_where( $table );
+//              // 13505, 110302, dwildt
+//            if( ! $andWhere )
+//            {
+//              $andWhere = 1;
+//            }
+//            $where = $where . ' AND ' . $andWhere;
+//            $query = $GLOBALS['TYPO3_DB']->SELECTquery
+//                                            (
+//                                              $select,
+//                                              $from,
+//                                              $where,
+//                                              $groupBy="",
+//                                              $orderBy,
+//                                              $limit="",
+//                                              $uidIndexField=""
+//                                            );
+//              // Prompt the expired time to devlog
+//            $this->pObj->timeTracking_log( 1,  'before $GLOBALS[TYPO3_DB]->sql_query( )' );
+//            $tt_start = $this->pObj->tt_prevEndTime;
+//              // Prompt the expired time to devlog
+//
+//              // Execute
+//            $res   = $GLOBALS['TYPO3_DB']->sql_query( $query );
+//            $error = $GLOBALS['TYPO3_DB']->sql_error( );
+//              // Execute
+//
+//              // Prompt the expired time to devlog
+//            $this->pObj->timeTracking_log( 1, 'after $GLOBALS[TYPO3_DB]->sql_query( )' );
+//            $this->pObj->timeTracking_prompt( 1, $query );
+//            $tt_end = $this->pObj->tt_prevEndTime;
+//              // Prompt the expired time to devlog
+//
+//              // Error management
+//            if( $error ) {
+//              $this->pObj->objSqlFun_3x->query = $query;
+//              $this->pObj->objSqlFun_3x->error = $error;
+//              $arr_result = $this->pObj->objSqlFun_3x->prompt_error( );
+//              if( $arr_result['error']['status'] )
+//              {
+//                $template = $arr_result['error']['header'] . $arr_result['error']['prompt'];
+//                return $template;
+//              }
+//            }
+//              // Error management
+//
+//              // DRS - Development Reporting System
+//            if( $this->pObj->b_drs_sql )
+//            {
+//              $prompt = 'Bugfix #9024 - Next query for localisation consolidation:';
+//              t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
+//              t3lib_div::devlog( '[OK/SQL] ' . $query,  $this->pObj->extKey, -1 );
+//              $prompt = 'Be aware of the multi-byte notation, if you want to use the query in your SQL shell or in phpMyAdmin.';
+//              t3lib_div::devlog( '[HELP/SQL] ' . $prompt, $this->pObj->extKey, 1 );
+//            }
+//              // DRS - Development Reporting System
+//          }
+//
+//        }
+//        if( $this->bool_union )
+//        {
+//          if( $this->pObj->b_drs_error )
+//          {
+//            $prompt = 'User has selected a non default language. User has selected a filter too. ' .
+//                      'And we have a query with UNIONs. It isn\'t possible to display localised records ' .
+//                      'proper! We are sorry!';
+//            t3lib_div::devlog( '[ERROR/FILTER] ' . $prompt,  $this->pObj->extKey, 3 );
+//          }
+//        }
+//        if( $this->pObj->b_sql_manual )
+//        {
+//          if( $this->pObj->b_drs_error )
+//          {
+//            $prompt = 'User has selected a non default language. User has selected a filter too. ' .
+//                      'And we have a query with UNIONs. And we have a manual generated query. ' .
+//                      'It isn\'t possible to display localised records proper!';
+//            t3lib_div::devlog( '[ERROR/FILTER] ' . $prompt,  $this->pObj->extKey, 3 );
+//          }
+//        }
+//      }
+//        // User selected a filter
+// #41754, 1210101, dwildt, -
+// $this->pObj->arr_andWhereFilter isn't never allocated
     }
       // User selected a non default language
 
