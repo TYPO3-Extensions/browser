@@ -2380,6 +2380,7 @@ class tx_browser_pi1_cal
     list ( $table ) = explode('.', $tableField);
     $str_case       = $this->arr_area[$tableField]['key'];
 
+$this->pObj->dev_var_dump( 'X' );
 
 
       /////////////////////////////////////////////////////////////////
@@ -2437,7 +2438,7 @@ class tx_browser_pi1_cal
           }
 $prompt_01 = $tableField . ' ' . $keyValue . ' >= ' . $currFrom . ' && ' . $keyValue . ' < ' . $currTo;
 $prompt_02 = date( 'c', $keyValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $keyValue ) . ' < ' . date( 'c', $currTo );
-$this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01, $prompt_02 );
+$this->pObj->dev_var_dump( $prompt_01, $prompt_02 );
             // Default value: hits
             // 120202, dwildt-
 //          if ($keyValue >= $currFrom && $keyValue <= $currTo)
