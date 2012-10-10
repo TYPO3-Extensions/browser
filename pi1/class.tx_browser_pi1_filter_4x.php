@@ -2573,16 +2573,9 @@ class tx_browser_pi1_filter_4x {
   {
     $arr_return = array( );
 
-      // Get table and field
-    list( $table ) = explode( '.', $this->curr_tableField );
-
       // RETURN IF : hits should counted
     if( $this->ts_countHits( ) )
     {
-//if($table == $this->pObj->localTable )
-//{
-//  $this->pObj->dev_var_dump( $rows_wiHits );
-//}
       $arr_return['data']['rows'] = $rows_wiHits;
         // Prompt the expired time to devlog
       $debugTrailLevel = 1;
@@ -2591,79 +2584,20 @@ class tx_browser_pi1_filter_4x {
     }
       // RETURN IF : hits should counted
 
-          // foreign table
-          // Get SQL ressource for all filter items
-        $arr_return = $this->sql_resAllItems( );
-        if( $arr_return['error']['status'] )
-        {
-          $debugTrailLevel = 1;
-          $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
-          return $arr_return;
-        }
-        $res = $arr_return['data']['res'];
-        unset( $arr_return );
-          // Get SQL ressource for all filter items
-          // Get rows
-        $rows = $this->sql_resToRows_allItemsWiHits( $res, $rows_wiHits );
-
-      // RETURN rows
-    $arr_return['data']['rows'] = $rows;
-    return $arr_return;
-
-
-    // SWITCH : localTable versus foreignTable
-    switch( true )
+      // Get SQL ressource for all filter items
+    $arr_return = $this->sql_resAllItems( );
+    if( $arr_return['error']['status'] )
     {
-      case( $table != $this->pObj->localTable ):
-          // foreign table
-          // Get SQL ressource for all filter items
-        $arr_return = $this->sql_resAllItems( );
-        if( $arr_return['error']['status'] )
-        {
-          $debugTrailLevel = 1;
-          $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
-          return $arr_return;
-        }
-        $res = $arr_return['data']['res'];
-        unset( $arr_return );
-          // Get SQL ressource for all filter items
-          // Get rows
-        $rows = $this->sql_resToRows_allItemsWiHits( $res, $rows_wiHits );
-        break;
-          // foreign table
-      case( $table == $this->pObj->localTable ):
-      default:
-          // local table
-  // DRS :TODO:
-if( $this->pObj->b_drs_warn )
-{
-  // :TODO: 121010, dwildt: im Fall von nicht zählen keine Treffer!        
-  // Bug #41814 Filter: local table isn't proper, if hits aren't displayed
-  $prompt = 'Bug #41814 Filter: local table isn\'t proper, if hits aren\'t displayed';
-  t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 3 );
-}
-  // DRS :TODO:
-          // foreign table
-          // Get SQL ressource for all filter items
-        $arr_return = $this->sql_resAllItems( );
-        if( $arr_return['error']['status'] )
-        {
-          $debugTrailLevel = 1;
-          $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
-          return $arr_return;
-        }
-        $res = $arr_return['data']['res'];
-        unset( $arr_return );
-          // Get SQL ressource for all filter items
-          // Get rows
-        $rows = $this->sql_resToRows_allItemsWiHits( $res, $rows_wiHits );
-//        $rows = $rows_wiHits;
-        break;
-          // foreign table
-          // local table
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
+      return $arr_return;
     }
-    unset( $table );
-      // SWITCH : localTable versus foreignTable
+    $res = $arr_return['data']['res'];
+    unset( $arr_return );
+      // Get SQL ressource for all filter items
+      
+      // Get rows
+    $rows = $this->sql_resToRows_allItemsWiHits( $res, $rows_wiHits );
 
       // RETURN rows
     $arr_return['data']['rows'] = $rows;
