@@ -20,7 +20,7 @@ $( document ).ready( function( )
         "icons" : ###ICONS_01###
       },
       "checkbox" : {
-        "real_checkboxes" : 1
+        "real_checkboxes" : true
       },
       "plugins" : ["themes", "html_data", "checkbox", "sort", "ui", "cookies"]
     });
