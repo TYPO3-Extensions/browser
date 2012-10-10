@@ -564,162 +564,6 @@ class tx_browser_pi1_filter_4x {
 
 
 
-/**
- * init_andWhereFilter_localTable: Generate the andWhere statement for a field from the localtable.
- *                      If there is an area, it will be handled
- *
- *                        Method is enhanced with a php array for allocate conditions
- *
- * @param	array		$arr_piVar   Current piVars
- * @param	string		$tableField   Current table.field
- * @return	array		arr_andWhereFilter: NULL if there isn' any filter
- * @internal              #30912: Filter: count items with no relation to category:
- * @version 4.1.21
- * @since   2.x
- */
-  private function init_andWhereFilter_localTable($arr_piVar, $tableField)
-  {
-    $str_andWhere = null;
-
-    list ($table, $field) = explode('.', $tableField);
-    $conf_array           = $this->conf_view['filter.'][$table . '.'][$field . '.'];
-
-
-
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Handle area filter
-
-    if(is_array($this->pObj->objCal->arr_area[$tableField]))
-    {
-      foreach ($arr_piVar as $str_piVar)
-      {
-          // 13920, 110319, dwildt
-          // Move url value to tsKey
-        $str_piVar      = $this->pObj->objCal->area_get_tsKey_from_urlPeriod($tableField, $str_piVar);
-
-        $arr_item       = null;
-        $str_key        = $this->pObj->objCal->arr_area[$tableField]['key']; // I.e strings
-        $arr_currField  = $conf_array['area.'][$str_key . '.']['options.']['fields.'][$str_piVar . '.'];
-
-        $from       = $arr_currField['valueFrom_stdWrap.']['value'];
-        $from_conf  = $arr_currField['valueFrom_stdWrap.'];
-        $from_conf  = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
-        $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
-        if( ! empty( $from ) )
-        {
-          $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
-            // #30912, 120127, dwildt+
-          $this->arr_filter_condition[$tableField]['from'] = mysql_real_escape_string( $from );
-        }
-
-        $to         = $arr_currField['valueTo_stdWrap.']['value'];
-        $to_conf    = $arr_currField['valueTo_stdWrap.'];
-        $to_conf    = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
-        $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
-        if( ! empty( $to ) )
-        {
-          $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
-            // #30912, 120127, dwildt+
-          $this->arr_filter_condition[$tableField]['to'] = mysql_real_escape_string( $to );
-        }
-
-        if( is_array( $arr_item ) )
-        {
-          $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
-        }
-      }
-      $str_andWhere = implode(' OR ', ( array) $arr_orValues );
-      if( ! empty( $str_andWhere ) )
-      {
-        $str_andWhere = ' (' . $str_andWhere . ')';
-      }
-    }
-      // Handle area filter
-
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Handle without area filter
-
-    if( ! is_array( $this->pObj->objCal->arr_area[$tableField] ) )
-    {
-      foreach ($arr_piVar as $str_value)
-      {
-        $arr_orValues[] = $tableField . " LIKE '" . mysql_real_escape_string( $str_value ) . "'";
-          // #30912, 120127, dwildt+
-          // #30912, 120202, dwildt+
-        $strtolower_value = "'" . mb_strtolower( mysql_real_escape_string( $str_value ) ) . "'";
-        $this->arr_filter_condition[$tableField]['like'][] = $strtolower_value;
-      }
-      $str_andWhere = implode( ' OR ', $arr_orValues );
-      if( ! empty( $str_andWhere ) )
-      {
-        $str_andWhere = ' (' . $str_andWhere . ')';
-      }
-    }
-      // Handle without area filter
-
-    return $str_andWhere;
-  }
-
-
-
-
-/**
- * init_andWhereFilter_manualMode:
- *
- * @param	[type]		$$arr_piVar: ...
- * @param	[type]		$tableField: ...
- * @param	[type]		$conf_view: ...
- * @return	array		arr_andWhereFilter: NULL if there isn' any filter
- * @version 4.1.21
- * @since   4.1.21
- */
-  private function init_andWhereFilter_manualMode( $arr_piVar, $tableField, $conf_view )
-  {
-    list( $table ) = explode( '.', $tableField );
-
-      // List of record uids
-    $csvUids = implode( ', ', $arr_piVar );
-
-      // Get table alias
-    $arrTableAliases  = $conf_view['aliases.']['tables.'];
-    $arrTableAliases  = array_flip( $arrTableAliases );
-    $strTableAlias    = $arrTableAliases[ $table ];
-      // Get table alias
-
-    if( $strTableAlias )
-    {
-      $strAndWhere = $strTableAlias . '.uid IN (' . $csvUids . ')' . PHP_EOL;
-      return $strAndWhere;
-    }
-
-      // DRS
-    $prompt = 'There is no alias for table \'' . $table . '\'';
-    t3lib_div :: devlog( '[ERROR/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 3 );
-    $prompt = 'Browser is in SQL manual mode.';
-    t3lib_div :: devlog( '[INFO/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 0 );
-    $prompt = 'Please configure aliases.tables of this view.';
-    t3lib_div :: devlog( '[HELP/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 1 );
-      // DRS
-
-    echo '<h1>ERROR</h1>
-      <h2>There is no table alias</h2>
-      <p>Please see the logs in the DRS - Development Reporting System.</p>
-      <p>Method ' . __METHOD__ . '</p>
-      <p>Line ' . __LINE__ . ' </p>
-      <p><br /></p>
-      <p>This is a message of the Browser - TYPO3 without PHP.</p>
-      ';
-    exit;
-  }
-
-
-
   /**
  * init_andWhereFilter_foreignTable: Generate the andWhere statement for a field from a foreign table.
  *                        If there is an area, it will be handled
@@ -819,13 +663,182 @@ class tx_browser_pi1_filter_4x {
       // LOOP : each piVar
     
     $str_andWhere = implode(' OR ', $arr_orValues);
-    if( empty( $str_andWhere ) )
+    if( ! empty( $str_andWhere ) )
     {
       $str_andWhere = ' (' . $str_andWhere . ')';
     }
-      // Handle area filter
 
     return $str_andWhere;
+  }
+
+
+
+/**
+ * init_andWhereFilter_localTable: Generate the andWhere statement for a field from the localtable.
+ *                      If there is an area, it will be handled
+ *
+ *                        Method is enhanced with a php array for allocate conditions
+ *
+ * @param	array		$arr_piVar   Current piVars
+ * @param	string		$tableField   Current table.field
+ * @return	array		arr_andWhereFilter: NULL if there isn' any filter
+ * @internal              #30912: Filter: count items with no relation to category:
+ * @version 4.1.21
+ * @since   2.x
+ */
+  private function init_andWhereFilter_localTable($arr_piVar, $tableField)
+  {
+    $str_andWhere = null;
+
+      // SWITCH  : area filter versus default filter
+    switch( true )
+    {
+      case( is_array( $this->pObj->objCal->arr_area[$tableField] ) ):
+          // Handle area filter
+        $str_andWhere = $this->init_andWhereFilter_localTableArea( $arr_piVar, $tableField );
+        break;
+      default:
+          // Handle default filter (without area)
+        foreach( $arr_piVar as $str_value )
+        {
+          $arr_orValues[] = $tableField . " LIKE '" . mysql_real_escape_string( $str_value ) . "'";
+            // #30912, 120127, dwildt+
+            // #30912, 120202, dwildt+
+          $strtolower_value = "'" . mb_strtolower( mysql_real_escape_string( $str_value ) ) . "'";
+          $this->arr_filter_condition[$tableField]['like'][] = $strtolower_value;
+        }
+        $str_andWhere = implode( ' OR ', $arr_orValues );
+        if( ! empty( $str_andWhere ) )
+        {
+          $str_andWhere = ' (' . $str_andWhere . ')';
+        }
+        break;
+    }
+      // SWITCH  : area filter versus default filter
+
+    return $str_andWhere;
+
+
+  }
+
+
+
+/**
+ * init_andWhereFilter_localTableArea( )
+ *
+ * @param	array		$arr_piVar   Current piVars
+ * @param	string		$tableField   Current table.field
+ * @return	array		arr_andWhereFilter: NULL if there isn' any filter
+ * @internal              #30912: Filter: count items with no relation to category:
+ * @version 4.1.21
+ * @since   2.x
+ */
+  private function init_andWhereFilter_localTableArea( $arr_piVar, $tableField )
+  {
+    $str_andWhere = null;
+
+    list ($table, $field) = explode('.', $tableField);
+    $conf_array           = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // LOOP : each piVar
+    foreach ( $arr_piVar as $str_piVar )
+    {
+        // 13920, 110319, dwildt
+        // Move url value to tsKey
+      $str_piVar      = $this->pObj->objCal->area_get_tsKey_from_urlPeriod($tableField, $str_piVar);
+
+      $arr_item       = null;
+      $str_key        = $this->pObj->objCal->arr_area[$tableField]['key']; // I.e strings
+      $arr_currField  = $conf_array['area.'][$str_key . '.']['options.']['fields.'][$str_piVar . '.'];
+
+      $from       = $arr_currField['valueFrom_stdWrap.']['value'];
+      $from_conf  = $arr_currField['valueFrom_stdWrap.'];
+      $from_conf  = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
+      $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
+      if( ! empty( $from ) )
+      {
+        $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
+          // #30912, 120127, dwildt+
+        $this->arr_filter_condition[$tableField]['from'] = mysql_real_escape_string( $from );
+      }
+
+      $to         = $arr_currField['valueTo_stdWrap.']['value'];
+      $to_conf    = $arr_currField['valueTo_stdWrap.'];
+      $to_conf    = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
+      $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+      if( ! empty( $to ) )
+      {
+        $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
+          // #30912, 120127, dwildt+
+        $this->arr_filter_condition[$tableField]['to'] = mysql_real_escape_string( $to );
+      }
+
+      if( is_array( $arr_item ) )
+      {
+        $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
+      }
+    }
+      // LOOP : each piVar
+    
+    $str_andWhere = implode(' OR ', ( array) $arr_orValues );
+    if( ! empty( $str_andWhere ) )
+    {
+      $str_andWhere = ' (' . $str_andWhere . ')';
+    }
+
+    return $str_andWhere;
+  }
+
+
+
+
+/**
+ * init_andWhereFilter_manualMode:
+ *
+ * @param	[type]		$$arr_piVar: ...
+ * @param	[type]		$tableField: ...
+ * @param	[type]		$conf_view: ...
+ * @return	array		arr_andWhereFilter: NULL if there isn' any filter
+ * @version 4.1.21
+ * @since   4.1.21
+ */
+  private function init_andWhereFilter_manualMode( $arr_piVar, $tableField, $conf_view )
+  {
+    list( $table ) = explode( '.', $tableField );
+
+      // List of record uids
+    $csvUids = implode( ', ', $arr_piVar );
+
+      // Get table alias
+    $arrTableAliases  = $conf_view['aliases.']['tables.'];
+    $arrTableAliases  = array_flip( $arrTableAliases );
+    $strTableAlias    = $arrTableAliases[ $table ];
+      // Get table alias
+
+    if( $strTableAlias )
+    {
+      $strAndWhere = $strTableAlias . '.uid IN (' . $csvUids . ')' . PHP_EOL;
+      return $strAndWhere;
+    }
+
+      // DRS
+    $prompt = 'There is no alias for table \'' . $table . '\'';
+    t3lib_div :: devlog( '[ERROR/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 3 );
+    $prompt = 'Browser is in SQL manual mode.';
+    t3lib_div :: devlog( '[INFO/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 0 );
+    $prompt = 'Please configure aliases.tables of this view.';
+    t3lib_div :: devlog( '[HELP/FILTER+SQL] ' . $prompt, $this->pObj->extKey, 1 );
+      // DRS
+
+    echo '<h1>ERROR</h1>
+      <h2>There is no table alias</h2>
+      <p>Please see the logs in the DRS - Development Reporting System.</p>
+      <p>Method ' . __METHOD__ . '</p>
+      <p>Line ' . __LINE__ . ' </p>
+      <p><br /></p>
+      <p>This is a message of the Browser - TYPO3 without PHP.</p>
+      ';
+    exit;
   }
 
 
