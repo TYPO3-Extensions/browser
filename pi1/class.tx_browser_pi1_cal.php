@@ -2387,7 +2387,7 @@ class tx_browser_pi1_cal
       // Wrap items, recalculate hits
 
     $arr_fields = $arr_ts['area.'][$str_case . '.']['options.']['fields.'];
-$this->pObj->dev_var_dump( $arr_values );
+
     foreach( ( array) $arr_fields as $keyWiDot => $arr_string )
     {
       $key        = rtrim($keyWiDot, '.');
@@ -2436,9 +2436,9 @@ $this->pObj->dev_var_dump( $arr_values );
           {
             $arr_hits[$key] = 0;
           }
-$prompt_01 = $tableField . ' ' . $keyValue . ' >= ' . $currFrom . ' && ' . $keyValue . ' < ' . $currTo;
-$prompt_02 = date( 'c', $keyValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $keyValue ) . ' < ' . date( 'c', $currTo );
-$this->pObj->dev_var_dump( $prompt_01, $prompt_02 );
+//$prompt_01 = $tableField . ' ' . $keyValue . ' >= ' . $currFrom . ' && ' . $keyValue . ' < ' . $currTo;
+//$prompt_02 = date( 'c', $keyValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $keyValue ) . ' < ' . date( 'c', $currTo );
+//$this->pObj->dev_var_dump( $prompt_01, $prompt_02 );
             // Default value: hits
             // 120202, dwildt-
 //          if ($keyValue >= $currFrom && $keyValue <= $currTo)

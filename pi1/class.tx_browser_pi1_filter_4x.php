@@ -2391,11 +2391,25 @@ class tx_browser_pi1_filter_4x {
       $from_conf  = $conf_area['valueFrom_stdWrap.'];
       $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
 
+        // #41814, dwildt, +
+      if( empty( $from ) )
+      {
+        $from = $value;
+      }
+        // #41814, dwildt, +
+        
         // Get to
       $to         = $conf_area['valueTo_stdWrap.']['value'];
       $to_conf    = $conf_area['valueTo_stdWrap.'];
       $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
 
+        // #41814, dwildt, +
+      if( empty( $to ) )
+      {
+        $to = $value;
+      }
+        // #41814, dwildt, +
+        
         // LOOP rows
       foreach( $this->rows as $rows_uid => $rows_row )
       {
