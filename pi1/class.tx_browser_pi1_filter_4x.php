@@ -2530,6 +2530,8 @@ class tx_browser_pi1_filter_4x {
  * get_rowsAllItems( ): Get the rows with all items of the current filter.
  *                      If param $rows_wiHits contains rows, the counted
  *                      hits will taken over in rows with all items.
+ *                      BE AWARE  : method is handled only, if matches of the
+ *                                  items of current filter shouldn't counted.
  *
  * @param	array		$rows_wiHits  : Rows with items of the current filter,
  * @return	array		$arr_return   : Array with the rows or an error message
@@ -2542,22 +2544,22 @@ class tx_browser_pi1_filter_4x {
 
       // Get table and field
     list( $table ) = explode( '.', $this->curr_tableField );
-      // IF : hits should counted
+
+      // RETURN IF : hits should counted
     if( $this->ts_countHits( ) )
     {
-        // RETURN display items only, if they have one hit at least
       $arr_return['data']['rows'] = $rows_wiHits;
         // Prompt the expired time to devlog
       $debugTrailLevel = 1;
       $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
       return $arr_return;
-        // RETURN display items only, if they have one hit at least
     }
-      // IF : hits should counted
+      // RETURN IF : hits should counted
 
       // SWITCH : localTable versus foreignTable
     switch( true )
     {
+      case( $table == $this->pObj->localTable ):
       case( $table != $this->pObj->localTable ):
           // foreign table
           // Get SQL ressource for all filter items
@@ -2689,7 +2691,7 @@ if( $this->pObj->b_drs_devTodo )
       // SWITCH : filter without any relation versus filter with relation
     switch( true )
     {
-      case(  $this->count_hits[$this->curr_tableField] ):
+      case(  $this->ts_countHits( ) ):
       case(  in_array( $this->curr_tableField, $this->get_selectedFilters( ) ) ):
 $this->pObj->dev_var_dump( 
                       $this->curr_tableField . ': with relations.', 
