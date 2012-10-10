@@ -2559,6 +2559,7 @@ class tx_browser_pi1_filter_4x {
       // SWITCH : localTable versus foreignTable
     switch( true )
     {
+      case( $table == $this->pObj->localTable ):
       case( $table != $this->pObj->localTable ):
           // foreign table
           // Get SQL ressource for all filter items
@@ -2785,8 +2786,10 @@ $this->pObj->dev_var_dump( $arr_return );
     $select   = $select . $this->sql_select_addTreeview( );
     $from     = $table;
     $where    = '';
-    $groupBy  = $tableField . ", " . $tableUid;
-    $orderBy  = $tableField . ", " . $tableUid;
+//    $groupBy  = $tableField . ", " . $tableUid;
+//    $orderBy  = $tableField . ", " . $tableUid;
+    $groupBy  = $tableField;
+    $orderBy  = $tableField;
     $limit    = null;
 
 //    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
