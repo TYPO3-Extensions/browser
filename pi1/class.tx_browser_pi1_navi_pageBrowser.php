@@ -430,7 +430,7 @@ class tx_browser_pi1_navi_pageBrowser
         // 3.9.25, 120506, dwildt+
       case( ! empty ( $this->pObj->conf_sql['andWhere'] ) ):
       case( isset( $this->pObj->piVars['sword'] ) ):
-      case( $this->pObj->objFltr4x->init_aFilterIsSelected( ) ):
+      case( $this->pObj->objFltr4x->get_selectedFilters( ) ):
         $from = $this->pObj->objSqlInit->statements['listView']['from'];
         break;
       default:
@@ -459,7 +459,7 @@ class tx_browser_pi1_navi_pageBrowser
         // 3.9.25, 120506, dwildt+
       case( ! empty ( $this->pObj->conf_sql['andWhere'] ) ):
       case( isset( $this->pObj->piVars['sword'] ) ):
-      case( $this->pObj->objFltr4x->init_aFilterIsSelected( ) ):
+      case( $this->pObj->objFltr4x->get_selectedFilters( ) ):
         $where    = $this->pObj->objSqlInit->statements['listView']['where'];
         $andWhere = $this->pObj->objFltr4x->andWhereFilter;
           // 3.9.25, 120605: dwildt

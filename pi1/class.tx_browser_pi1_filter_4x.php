@@ -52,7 +52,7 @@
  *  580:     private function init_andWhereFilter_localTable($arr_piVar, $tableField)
  *  682:     private function init_andWhereFilter_manualMode( $arr_piVar, $tableField, $conf_view )
  *  736:     private function init_andWhereFilter_foreignTable( $arr_piVar, $tableField )
- *  824:     public function init_aFilterIsSelected( )
+ *  824:     public function get_selectedFilters( )
  *  872:     private function init_boolIsFilter( )
  *  910:     private function init_calendarArea( )
  *  934:     private function init_consolidationAndSelect( )
@@ -237,8 +237,8 @@ class tx_browser_pi1_filter_4x {
     // [Array] Array with elements maxItemsPerHtmlRow, rowBegin, rowEnd, noItemValue
   var $itemsPerHtmlRow = null;
 
-    // [Boolean] If a filter is selected by the visitor, this boolean will be true.
-  var $aFilterIsSelected = null;
+    // [Array] Array with selected filters
+  var $arr_selectedFilters = null;
 
     // [Array] all filter tableFields
   var $arr_tsFilterTableFields = null;
@@ -737,76 +737,24 @@ class tx_browser_pi1_filter_4x {
   {
     $str_andWhere = null;
 
-    list ($table, $field) = explode('.', $tableField);
-    $conf_array           = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+    list( $table ) = explode( '.', $tableField );
 
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Handle area filter
-
-    if(is_array($this->pObj->objCal->arr_area[$tableField]))
+      // SWITCH  : area filter versus default filter
+    switch( true )
     {
-      foreach ($arr_piVar as $str_piVar)
-      {
-          // 13920, 110319, dwildt
-          // Move url value to tsKey
-        $str_piVar      = $this->pObj->objCal->area_get_tsKey_from_urlPeriod($tableField, $str_piVar);
-
-        $arr_item       = null;
-        $str_key        = $this->pObj->objCal->arr_area[$tableField]['key']; // I.e strings
-        $arr_currField  = $conf_array['area.'][$str_key . '.']['options.']['fields.'][$str_piVar . '.'];
-
-        $from       = $arr_currField['valueFrom_stdWrap.']['value'];
-        $from_conf  = $arr_currField['valueFrom_stdWrap.'];
-        $from_conf  = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
-        $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
-        if( ! empty( $from ) )
-        {
-          $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
-            // #30912, 120127, dwildt+
-          $this->arr_filter_condition[$tableField]['from'] = mysql_real_escape_string( $from );
-        }
-
-        $to         = $arr_currField['valueTo_stdWrap.']['value'];
-        $to_conf    = $arr_currField['valueTo_stdWrap.'];
-        $to_conf    = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
-        $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
-        if( ! empty( $to ) )
-        {
-          $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
-            // #30912, 120127, dwildt+
-          $this->arr_filter_condition[$tableField]['to'] = mysql_real_escape_string( $to );
-        }
-
-        if( is_array( $arr_item ) )
-        {
-          $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
-        }
-      }
-      $str_andWhere = implode(' OR ', $arr_orValues);
-      if(empty($str_andWhere))
-      {
-        $str_andWhere = ' (' . $str_andWhere . ')';
-      }
+      case( is_array( $this->pObj->objCal->arr_area[$tableField] ) ):
+          // Handle area filter
+        $str_andWhere = $this->init_andWhereFilter_foreignTableArea( $arr_piVar, $tableField );
+        break;
+      default:
+          // Handle default filter (without area)
+        $str_uidList  = implode(', ', $arr_piVar);
+        $str_andWhere = $table . '.uid IN (' . $str_uidList . ')' . PHP_EOL;
+          // #30912, 120127, dwildt+
+        $this->arr_filter_condition[$table . '.uid']['uid_in_list'] = $arr_piVar;
+        break;
     }
-      // Handle area filter
-
-
-
-      /////////////////////////////////////////////////////////////////
-      //
-      // Handle without area filter
-
-    if( ! is_array( $this->pObj->objCal->arr_area[$tableField] ) )
-    {
-      $str_uidList  = implode(', ', $arr_piVar);
-      $str_andWhere = $table . '.uid IN (' . $str_uidList . ')' . PHP_EOL;
-        // #30912, 120127, dwildt+
-      $this->arr_filter_condition[$table . '.uid']['uid_in_list'] = $arr_piVar;
-    }
-      // Handle without area filter
+      // SWITCH  : area filter versus default filter
 
     return $str_andWhere;
   }
@@ -814,50 +762,70 @@ class tx_browser_pi1_filter_4x {
 
 
   /**
- * init_aFilterIsSelected( ): Sets the class var $aFilterIsSelected. The boolaen
- *                            is true, if a filter is an element of the piVars.
+ * init_andWhereFilter_foreignTableArea: 
  *
- * @return	boolean		$aFilterIsSelected: true, if a filter is slected
- * @version 3.9.12
- * @since   3.9.12
+ * @param	array		$arr_piVar   Current piVars
+ * @param	string		$tableField   Current table.field
+ * @return	array		arr_andWhereFilter: NULL if there isn' any filter
+ * @internal              #30912: Filter: count items with no relation to category:
+ * @version 4.1.21
+ * @since   3.6.0
  */
-  public function init_aFilterIsSelected( )
+  private function init_andWhereFilter_foreignTableArea( $arr_piVar, $tableField )
   {
-      // RETURN : var is initialised
-    if( ! $this->aFilterIsSelected === null )
-    {
-      return $this->aFilterIsSelected;
-    }
-      // RETURN : var is initialised
+    $str_andWhere = null;
 
-      // RETURN : no piVars, set var to false
-    if( empty( $this->pObj->piVars ) )
-    {
-      $this->aFilterIsSelected = false;
-      return $this->aFilterIsSelected;
-    }
-      // RETURN : no piVars, set var to false
+    list ($table, $field) = explode('.', $tableField);
+    $conf_array           = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
-    foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
+      // LOOP : each piVar
+    foreach( ( array ) $arr_piVar as $str_piVar )
     {
-      foreach( array_keys ( ( array ) $fields ) as $fieldWiDot )
+        // 13920, 110319, dwildt
+        // Move url value to tsKey
+      $str_piVar      = $this->pObj->objCal->area_get_tsKey_from_urlPeriod($tableField, $str_piVar);
+
+      $arr_item       = null;
+      $str_key        = $this->pObj->objCal->arr_area[$tableField]['key']; // I.e strings
+      $arr_currField  = $conf_array['area.'][$str_key . '.']['options.']['fields.'][$str_piVar . '.'];
+
+      $from       = $arr_currField['valueFrom_stdWrap.']['value'];
+      $from_conf  = $arr_currField['valueFrom_stdWrap.'];
+      $from_conf  = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
+      $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
+      if( ! empty( $from ) )
       {
-        if( substr( $fieldWiDot, -1 ) != '.' )
-        {
-          continue;
-        }
-        $field      = substr($fieldWiDot, 0, -1);
-        $tableField = $tableWiDot . $field;
-        if( isset( $this->pObj->piVars[$tableField] ) )
-        {
-          $this->aFilterIsSelected = true;
-          return $this->aFilterIsSelected;
-        }
+        $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
+          // #30912, 120127, dwildt+
+        $this->arr_filter_condition[$tableField]['from'] = mysql_real_escape_string( $from );
+      }
+
+      $to         = $arr_currField['valueTo_stdWrap.']['value'];
+      $to_conf    = $arr_currField['valueTo_stdWrap.'];
+      $to_conf    = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
+      $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+      if( ! empty( $to ) )
+      {
+        $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
+          // #30912, 120127, dwildt+
+        $this->arr_filter_condition[$tableField]['to'] = mysql_real_escape_string( $to );
+      }
+
+      if( is_array( $arr_item ) )
+      {
+        $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
       }
     }
+      // LOOP : each piVar
+    
+    $str_andWhere = implode(' OR ', $arr_orValues);
+    if( empty( $str_andWhere ) )
+    {
+      $str_andWhere = ' (' . $str_andWhere . ')';
+    }
+      // Handle area filter
 
-    $this->aFilterIsSelected = false;
-    return $this->aFilterIsSelected;
+    return $str_andWhere;
   }
 
 
@@ -2633,6 +2601,65 @@ if( $this->pObj->b_drs_devTodo )
 
 
 
+/**
+ * get_selectedFilters( ) : Sets the class var $arr_selectedFilters. The $tableField
+ *                          of afilter is added to $arr_selectedFilters, if the filter
+ *                          is an element of the piVars.
+ *
+ * @return	array       $arr_selectedFilters: contains $tableFields of selected filters
+ * @version 4.1.21
+ * @since   3.9.12
+ */
+  public function get_selectedFilters( )
+  {
+      // RETURN : var is initialised
+    if( ! $this->arr_selectedFilters === null )
+    {
+      return $this->arr_selectedFilters;
+    }
+      // RETURN : var is initialised
+
+      // RETURN : no piVars, set var to false
+    if( empty( $this->pObj->piVars ) )
+    {
+      $this->arr_selectedFilters = false;
+      return $this->arr_selectedFilters;
+    }
+      // RETURN : no piVars, set var to false
+
+      // Set default
+    $this->arr_selectedFilters = false;
+
+      // LOOP : each filter table
+    foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
+    {
+        // LOOP : each filter field
+      foreach( array_keys ( ( array ) $fields ) as $fieldWiDot )
+      {
+        if( substr( $fieldWiDot, -1 ) != '.' )
+        {
+          continue;
+        }
+        $field      = substr($fieldWiDot, 0, -1);
+        $tableField = $tableWiDot . $field;
+        if( isset( $this->pObj->piVars[$tableField] ) )
+        {
+            // #41754, 121010, dwildt, 2-
+//          $this->arr_selectedFilters = true;
+//          return $this->arr_selectedFilters;
+            // #41754, 121010, dwildt, 1+
+          $this->arr_selectedFilters[] = $tableField;
+        }
+      }
+        // LOOP : each filter field
+    }
+      // LOOP : each filter table
+
+    return $this->arr_selectedFilters;
+  }
+
+
+
 
 
 
@@ -2662,15 +2689,24 @@ if( $this->pObj->b_drs_devTodo )
       // SWITCH : filter without any relation versus filter with relation
     switch( true )
     {
-      case( $this->curr_tableField == 'tx_leglisbasis_county.krs_name' ):
-      case( $this->curr_tableField == 'tx_leglisbasis_cluster.brc_text' ):
-      case( $this->curr_tableField == 'tx_leglisbasis_clustergroup.brg_text' ):
-      case( $this->curr_tableField == 'tx_leglisbasis_sector.brc_listtext' ):
-        $arr_return = $this->sql_resAllItemsFilterWoRelation( );
-        break;
-      case( true ):
-      default:
+      case(  $this->count_hits[$this->curr_tableField] ):
+      case(  in_array( $this->curr_tableField, $this->get_selectedFilters( ) ) ):
+$this->dev_var_dump( 
+                      $this->curr_tableField . ': with relations.', 
+                      $this->count_hits[$this->curr_tableField], 
+                      in_array( $this->curr_tableField, $this->get_selectedFilters( ) )
+                    );
         $arr_return = $this->sql_resAllItemsFilterWiRelation( );
+        break;
+//      case( $this->curr_tableField == 'tx_leglisbasis_county.krs_name' ):
+//      case( $this->curr_tableField == 'tx_leglisbasis_cluster.brc_text' ):
+//      case( $this->curr_tableField == 'tx_leglisbasis_clustergroup.brg_text' ):
+//      case( $this->curr_tableField == 'tx_leglisbasis_sector.brc_listtext' ):
+//        $arr_return = $this->sql_resAllItemsFilterWoRelation( );
+//        break;
+      default:
+$this->dev_var_dump( $this->curr_tableField . ': without relations.' );
+        $arr_return = $this->sql_resAllItemsFilterWoRelation( );
         break;
     }
 

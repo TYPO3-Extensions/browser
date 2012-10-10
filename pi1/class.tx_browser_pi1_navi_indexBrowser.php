@@ -456,7 +456,7 @@ class tx_browser_pi1_navi_indexBrowser
           // RETURN : nothing to do
         return false;
         break;
-      case( $this->pObj->objFltr4x->init_aFilterIsSelected( ) ):
+      case( $this->pObj->objFltr4x->get_selectedFilters( ) ):
         if( $this->pObj->b_drs_localise || $this->pObj->b_drs_navi )
         {
           $prompt = 'Index browser doesn\'t need any localisation consolidation. A filter is selected.';
@@ -2000,7 +2000,7 @@ class tx_browser_pi1_navi_indexBrowser
       case( ! empty ( $this->pObj->conf_sql['andWhere'] ) ):
       case( ! $this->pObj->objSqlAut->b_left_join ) :
       case( isset( $this->pObj->piVars['sword'] ) ):
-      case( $this->pObj->objFltr4x->init_aFilterIsSelected( ) ):
+      case( $this->pObj->objFltr4x->get_selectedFilters( ) ):
         $from = $this->pObj->objSqlInit->statements['listView']['from'];
         break;
       default:
@@ -2030,7 +2030,7 @@ class tx_browser_pi1_navi_indexBrowser
       case( ! empty ( $this->pObj->conf_sql['andWhere'] ) ):
       case( ! $this->pObj->objSqlAut->b_left_join ) :
       case( isset( $this->pObj->piVars['sword'] ) ):
-      case( $this->pObj->objFltr4x->init_aFilterIsSelected( ) ):
+      case( $this->pObj->objFltr4x->get_selectedFilters( ) ):
         $where  = $this->pObj->objSqlInit->statements['listView']['where'];
         $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
         $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );

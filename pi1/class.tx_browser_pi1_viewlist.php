@@ -1109,7 +1109,7 @@ var_dump( __METHOD__, __LINE__ );
       $andWhere = $tableL10nParent . " IN (" . $withIdList . ")";
     }
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
-    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
+    if( $this->pObj->objFltr4x->get_selectedFilters( ) )
     {
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
     }
@@ -1332,7 +1332,7 @@ var_dump( __METHOD__, __LINE__ );
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereSysLanguage );
     $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhereIdList );
 //$this->pObj->dev_var_dump( $where );
-    if( $this->pObj->objFltr4x->init_aFilterIsSelected( ) )
+    if( $this->pObj->objFltr4x->get_selectedFilters( ) )
     {
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
     }
