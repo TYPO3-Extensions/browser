@@ -2439,15 +2439,15 @@ $this->pObj->dev_var_dump( $arr_fields );
           {
             $arr_hits[$key] = 0;
           }
-$prompt_01 = $tableField . ' ' . $keyValue . ' >= ' . $currFrom . ' && ' . $keyValue . ' < ' . $currTo;
-$prompt_02 = date( 'c', $keyValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $keyValue ) . ' < ' . date( 'c', $currTo );
+$prompt_01 = $tableField . ' ' . $keyValue . ' >= ' . $currFrom . ' && ' . $keyValue . ' <= ' . $currTo;
+$prompt_02 = date( 'c', $keyValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $keyValue ) . ' <= ' . date( 'c', $currTo );
 $this->pObj->dev_var_dump( $prompt_01, $prompt_02 );
             // Default value: hits
             // 120202, dwildt-
 //          if ($keyValue >= $currFrom && $keyValue <= $currTo)
             // 120202, dwildt+
             // Line has to correspondend with similar code some lines below and code in filter::filter_fetch_rows()
-          if ($keyValue >= $currFrom && $keyValue < $currTo)
+          if ($keyValue >= $currFrom && $keyValue <= $currTo)
           {
               // #41776: dwildt, 1-
             //$arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFltr3x->arr_hits[$tableField][$keyValue];
@@ -2480,15 +2480,15 @@ $this->pObj->dev_var_dump( $prompt_01, $prompt_02 );
           {
             $arr_hits[$key] = 0;
           }
-//$prompt_01 = $tableField . ' ' . $valueValue . ' >= ' . $currFrom . ' && ' . $valueValue . ' < ' . $currTo;
-//$prompt_02 = date( 'c', $valueValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $valueValue ) . ' < ' . date( 'c', $currTo );
+//$prompt_01 = $tableField . ' ' . $valueValue . ' >= ' . $currFrom . ' && ' . $valueValue . ' <= ' . $currTo;
+//$prompt_02 = date( 'c', $valueValue ) . ' >= ' . date( 'c', $currFrom ) . ' && ' . date( 'c', $valueValue ) . ' <= ' . date( 'c', $currTo );
 //$this->pObj->dev_var_dump(__METHOD__ . ' (' . __LINE__ . ')', $prompt_01, $prompt_02 );
             // Default value: hits
             // 120202, dwildt-
 //          if ($valueValue >= $currFrom && $valueValue <= $currTo)
             // 120202, dwildt+
             // Line has to correspondend with similar code some lines above and code in filter::filter_fetch_rows()
-          if( $valueValue >= $currFrom && $valueValue < $currTo )
+          if( $valueValue >= $currFrom && $valueValue <= $currTo )
           {
               // #41776: dwildt, 1-
             //$arr_hits[$key] = $arr_hits[$key] + $this->pObj->objFltr3x->arr_hits[$tableField][$keyValue];
