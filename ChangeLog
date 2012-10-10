@@ -4,6 +4,8 @@
   Improvement
   * #41754: Filter: optimise performance
             * #41754.01: $arr_andWhereFilter isn't never allocated
+            * #41754.02: init_aFilterIsSelected (boolean) is moved to get_selectedFilters (array)
+            * #41754.03: new method sql_resAllItemsFilterWoRelation( )
   * #41776: Make filter 4.x independent of filter 3.x
             Effected files:
             * pi1
@@ -13,7 +15,7 @@
               * class.tx_browser_pi1_template.php
   Bugfix
   * #41814: Filter: local table isn't proper, if hits aren't displayed
-  * #41811: Filter areas: first item doesn't count hits
+  * #41811: Filter areas: last item  doesn't count hits
 
 4.1.20
   121008

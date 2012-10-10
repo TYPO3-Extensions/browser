@@ -2649,10 +2649,10 @@ class tx_browser_pi1_filter_4x {
         $tableField = $tableWiDot . $field;
         if( isset( $this->pObj->piVars[$tableField] ) )
         {
-            // #41754, 121010, dwildt, 2-
+            // #41754.02, 121010, dwildt, 2-
 //          $this->arr_selectedFilters = true;
 //          return $this->arr_selectedFilters;
-            // #41754, 121010, dwildt, 1+
+            // #41754.02, 121010, dwildt, 1+
           $this->arr_selectedFilters[] = $tableField;
         }
       }
@@ -2696,15 +2696,10 @@ class tx_browser_pi1_filter_4x {
     {
       case(  $this->ts_countHits( ) ):
       case(  in_array( $this->curr_tableField, $this->get_selectedFilters( ) ) ):
-//$this->pObj->dev_var_dump( 
-//                      $this->curr_tableField . ': with relations.', 
-//                      $this->count_hits[$this->curr_tableField], 
-//                      in_array( $this->curr_tableField, $this->get_selectedFilters( ) )
-//                    );
         $arr_return = $this->sql_resAllItemsFilterWiRelation( );
         break;
       default:
-//$this->pObj->dev_var_dump( $this->curr_tableField . ': without relations.' );
+          // #41754.03, 121010
         $arr_return = $this->sql_resAllItemsFilterWoRelation( );
         break;
     }
@@ -2775,7 +2770,7 @@ class tx_browser_pi1_filter_4x {
     list( $table ) = explode( '.', $this->curr_tableField );
     $tableField = $this->curr_tableField;
     $tableUid   = $table . '.uid';
-
+    
     $this->sql_filterFields[$this->curr_tableField]['hits']   = 'hits';
     $this->sql_filterFields[$this->curr_tableField]['uid']    = $table . '.uid';
     $this->sql_filterFields[$this->curr_tableField]['value']  = $this->curr_tableField;
@@ -2786,23 +2781,27 @@ class tx_browser_pi1_filter_4x {
                 $tableUid . " AS '" . $tableUid . "' ";
     $select   = $select . $this->sql_select_addTreeview( );
     $from     = $table;
-    $where    = '';
-//    $groupBy  = $tableField . ", " . $tableUid;
-//    $orderBy  = $tableField . ", " . $tableUid;
+    $where    = '1 ' .
+                $this->sql_whereAnd_pidList( ) .
+                $this->sql_whereAnd_enableFields( ) .
+                //$this->sql_whereAnd_Filter( ) .
+                $this->sql_whereAnd_fromTS( ) .
+                $this->sql_whereAnd_sysLanguage( );
+
     $groupBy  = $tableField;
     $orderBy  = $tableField;
     $limit    = null;
 
-//    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-//              (
-//                $select,
-//                $from,
-//                $where,
-//                $groupBy,
-//                $orderBy,
-//                $limit
-//              );
-//$this->pObj->dev_var_dump( $query );
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+$this->pObj->dev_var_dump( $query );
 
       // Execute query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
@@ -3517,7 +3516,7 @@ class tx_browser_pi1_filter_4x {
 
 /**
  * sql_whereAllItems( ):  Get the WHERE statement for all items.
- *                        All items means: idependent of any hit.
+ *                        All items means: independent of any hit.
  *
  * @return	string		$where : WHERE statement without WHERE
  * @version 3.9.9
@@ -3635,7 +3634,7 @@ class tx_browser_pi1_filter_4x {
       // Flexform configuration
     $conf_flexform = $this->pObj->objFlexform->sheet_viewList_total_hits;
 
-      // SWITCH : idependent versus controlled among others
+      // SWITCH : independent versus controlled among others
     switch( true )
     {
       case( $conf_flexform == 'independent' ) :
@@ -3652,7 +3651,7 @@ class tx_browser_pi1_filter_4x {
         break;
     }
     unset( $table );
-      // SWITCH : idependent versus controlled among others
+      // SWITCH : independent versus controlled among others
 
 
       // DIE : undefined value
