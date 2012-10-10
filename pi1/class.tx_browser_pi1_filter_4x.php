@@ -2805,16 +2805,16 @@ $this->pObj->dev_var_dump( $arr_return );
     $orderBy  = $tableField;
     $limit    = null;
 
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-$this->pObj->dev_var_dump( $query );
+//    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+//              (
+//                $select,
+//                $from,
+//                $where,
+//                $groupBy,
+//                $orderBy,
+//                $limit
+//              );
+//$this->pObj->dev_var_dump( $query );
 
       // Execute query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
@@ -2909,16 +2909,16 @@ $this->pObj->dev_var_dump( $query );
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
 
-//    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-//              (
-//                $select,
-//                $from,
-//                $where,
-//                $groupBy,
-//                $orderBy,
-//                $limit
-//              );
-//$this->pObj->dev_var_dump( $query );
+    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+              (
+                $select,
+                $from,
+                $where,
+                $groupBy,
+                $orderBy,
+                $limit
+              );
+$this->pObj->dev_var_dump( $query );
     
       // Execute query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
