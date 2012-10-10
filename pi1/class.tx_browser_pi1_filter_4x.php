@@ -2810,7 +2810,7 @@ $this->pObj->dev_var_dump( $query );
     $this->sql_filterFields[$this->curr_tableField]['value']  = $this->curr_tableField;
 
       // Query for all filter items
-    $select   = "0 AS 'hits', " . 
+    $select   = "1 AS 'hits', " . 
                 $tableField . " AS '" . $tableField . "', " .
                 $tableUid . " AS '" . $tableUid . "' ";
     $select   = $select . $this->sql_select_addTreeview( );
