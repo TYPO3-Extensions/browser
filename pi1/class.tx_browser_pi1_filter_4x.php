@@ -2588,6 +2588,8 @@ if( $this->pObj->b_drs_warn )
   t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->pObj->extKey, 3 );
 }
   // DRS :TODO:
+        $arr_return = $this->sql_resAllItems( );
+$this->pObj->dev_var_dump( $arr_return );
         $rows = $rows_wiHits;
         break;
           // local table
