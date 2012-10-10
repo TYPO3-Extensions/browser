@@ -1343,6 +1343,11 @@ class tx_browser_pi1_template
         //
         // DRS - Performance
 
+        // Prompt the expired time to devlog
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'After rows with individual design' );
+        // Extension pi5: +Browser Calendar
+
       if ($this->pObj->b_drs_perform)
       {
         if($this->pObj->bool_typo3_43)
