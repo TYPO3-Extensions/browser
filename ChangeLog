@@ -1,6 +1,4 @@
 4.1.21
-  ToDo
-  * #41814: Filter: local table isn't proper, if hits aren't displayed
   New Feature
   * #41753: Treeview as checkbox
   Improvement
@@ -14,6 +12,7 @@
               * class.tx_browser_pi1_filter_4x.php
               * class.tx_browser_pi1_template.php
   Bugfix
+  * #41814: Filter: local table isn't proper, if hits aren't displayed
   * #41811: Filter areas: first item doesn't count hits
 
 4.1.20
