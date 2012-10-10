@@ -2695,7 +2695,7 @@ class tx_browser_pi1_filter_4x {
     switch( true )
     {
       case(  $this->ts_countHits( ) ):
-      case(  in_array( $this->curr_tableField, $this->get_selectedFilters( ) ) ):
+//      case(  in_array( $this->curr_tableField, $this->get_selectedFilters( ) ) ):
         $arr_return = $this->sql_resAllItemsFilterWiRelation( );
         break;
       default:
