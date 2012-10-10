@@ -30,7 +30,7 @@
  * @package     TYPO3
  * @subpackage  browser
  *
- * @version     3.9.24
+ * @version     4.1.21
  * @since       3.9.12
  */
 
@@ -715,7 +715,8 @@ class tx_browser_pi1_sql_auto
       // Is there an andWhere statement from the filter class?
     if ( is_array( $this->pObj->arr_andWhereFilter ) )
     {
-      $str_andFilter  = implode(" AND ", $this->pObj->arr_andWhereFilter);
+      $str_andFilter  = implode( " AND ", $this->pObj->arr_andWhereFilter );
+$this->pObj->dev_var_dump( $str_andFilter );
       $whereClause    = $whereClause." AND ".$str_andFilter;
     }
       // Is there an andWhere statement from the filter class?
@@ -1502,7 +1503,7 @@ class tx_browser_pi1_sql_auto
             break;
           case( false ):
           default:
-            $this->init_class_relationsSingle( $table, $columnsKey, $foreignTable);
+            $this->init_class_relationsSingle( $table, $columnsKey, $foreignTable, $config);
             break;
         }
           // SWITCH mm or single
@@ -1588,11 +1589,11 @@ class tx_browser_pi1_sql_auto
  * @param	string		$columnsKey   : current column name from TCA
  * @param	string		$foreignTable : current foreign table from TCA
  * @return	void
- * @version 3.9.12
+ * @version 4.1.21
  * @since   3.9.12
- * @todo    120404, dwildt: Initialise $boolSelfReference, initialise $config
+ * @todo    120404, dwildt: Initialise $boolSelfReference
  */
-  private function init_class_relationsSingle( $table, $columnsKey, $foreignTable)
+  private function init_class_relationsSingle( $table, $columnsKey, $foreignTable, $config )
   {
     if( isset ( $this->arr_relations_mm_simple['simple'][$table][$columnsKey] ) )
     {
@@ -1620,7 +1621,10 @@ class tx_browser_pi1_sql_auto
       // RETURN IF : Don't process simple relations automatically
 
       // Foreign table is the local table, but self references aren't allowed
-    if( $this->pObj->localTable == $foreignTable &&  ! $boolSelfReference )
+      // 121010, dwildt, 1-
+    //if( $this->pObj->localTable == $foreignTable &&  ! $boolSelfReference )
+      // 121010, dwildt, 1+
+    if( $this->pObj->localTable == $foreignTable )
     {
         // DRS
       if( $this->pObj->b_drs_tca )
