@@ -691,6 +691,7 @@ class tx_browser_pi1_filter_4x {
     $str_andWhere = null;
 
       // SWITCH  : area filter versus default filter
+$this->pObj->dev_var_dump( $tableField, is_array( $this->pObj->objCal->arr_area[$tableField] ) );
     switch( true )
     {
       case( is_array( $this->pObj->objCal->arr_area[$tableField] ) ):
@@ -2910,16 +2911,16 @@ $this->pObj->dev_var_dump( $arr_return );
     $orderBy  = $this->sql_orderBy( );
     $limit    = $this->sql_limit( );
 
-    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
-              (
-                $select,
-                $from,
-                $where,
-                $groupBy,
-                $orderBy,
-                $limit
-              );
-$this->pObj->dev_var_dump( $query );
+//    $query  = $GLOBALS['TYPO3_DB']->SELECTquery
+//              (
+//                $select,
+//                $from,
+//                $where,
+//                $groupBy,
+//                $orderBy,
+//                $limit
+//              );
+//$this->pObj->dev_var_dump( $query );
     
       // Execute query
     $arr_return = $this->pObj->objSqlFun->exec_SELECTquery
