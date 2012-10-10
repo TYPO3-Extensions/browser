@@ -2691,7 +2691,7 @@ if( $this->pObj->b_drs_devTodo )
     {
       case(  $this->count_hits[$this->curr_tableField] ):
       case(  in_array( $this->curr_tableField, $this->get_selectedFilters( ) ) ):
-$this->dev_var_dump( 
+$this->pObj->dev_var_dump( 
                       $this->curr_tableField . ': with relations.', 
                       $this->count_hits[$this->curr_tableField], 
                       in_array( $this->curr_tableField, $this->get_selectedFilters( ) )
@@ -2705,7 +2705,7 @@ $this->dev_var_dump(
 //        $arr_return = $this->sql_resAllItemsFilterWoRelation( );
 //        break;
       default:
-$this->dev_var_dump( $this->curr_tableField . ': without relations.' );
+$this->pObj->dev_var_dump( $this->curr_tableField . ': without relations.' );
         $arr_return = $this->sql_resAllItemsFilterWoRelation( );
         break;
     }
