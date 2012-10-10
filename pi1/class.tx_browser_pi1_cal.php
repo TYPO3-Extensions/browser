@@ -2077,7 +2077,7 @@ class tx_browser_pi1_cal
       // #41776, dwildt, 1-
 //    foreach ($this->pObj->objFltr3x->arr_conf_tableFields as $tableField)
       // #41776, dwildt, 1+
-    foreach ($this->pObj->objFltr4x->arr_conf_tableFields as $tableField)
+    foreach ($this->pObj->objFltr4x->arr_tsFilterTableFields as $tableField)
     {
       list ($table, $field) = explode('.', $tableField);
       $arr_ts = $conf_view['filter.'][$table . '.'][$field . '.'];
