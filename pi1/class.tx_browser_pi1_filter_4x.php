@@ -1941,7 +1941,7 @@ class tx_browser_pi1_filter_4x {
       //          performance problem in case of a lot records!
     $item = $this->pObj->cObj->substituteMarkerArray( $item, $this->markerArray );
 
-      // 3.9.20: Coded is moved from above
+      // 3.9.20: Code is moved from above
       // Workaround: remove ###ONCHANGE###
     $item = str_replace( ' class=" ###ONCHANGE###"', null, $item );
     if( $firstLoop && $this->pObj->b_drs_devTodo )
@@ -5723,12 +5723,12 @@ class tx_browser_pi1_filter_4x {
  */
   private function set_markerArrayUpdateRow( $uid )
   {
-      // #41754.04
-//    foreach( ( array ) $this->rows[$uid] as $key => $value )
-//    {
-//      $marker                     = '###' . strtoupper( $key ) . '###';
-//      $this->markerArray[$marker] = $value;
-//    }
+      // #41754.04, 121010: this foreach seems to be proper in context with performance
+    foreach( ( array ) $this->rows[$uid] as $key => $value )
+    {
+      $marker                     = '###' . strtoupper( $key ) . '###';
+      $this->markerArray[$marker] = $value;
+    }
 
     $marker                     = '###VALUE###';
     $valueField                 = $this->sql_filterFields[$this->curr_tableField]['value'];
