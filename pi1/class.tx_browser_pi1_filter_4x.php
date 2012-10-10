@@ -537,7 +537,6 @@ class tx_browser_pi1_filter_4x {
 
       // andWhere statement
     $strAndWhere = implode(" AND ", ( array ) $arr_andWhereFilter );
-$this->pObj->dev_var_dump( $strAndWhere );    
 
       // RETURN : there isn't any andWhere statement
     if( empty( $strAndWhere ) )

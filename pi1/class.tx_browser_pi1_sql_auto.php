@@ -710,20 +710,20 @@ class tx_browser_pi1_sql_auto
 //      // Add localisation fields
 
 
-// #41754, 1210101, dwildt, -
+// #41754.01, 1210101, dwildt, -
 // $this->pObj->arr_andWhereFilter isn't never allocated
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Is there an andWhere statement from the filter class?
-//$this->pObj->dev_var_dump( 'X' );
-    if ( is_array( $this->pObj->arr_andWhereFilter ) )
-    {
-      $str_andFilter  = implode( " AND ", $this->pObj->arr_andWhereFilter );
-//$this->pObj->dev_var_dump( $str_andFilter );
-      $whereClause    = $whereClause." AND ".$str_andFilter;
-    }
-      // Is there an andWhere statement from the filter class?
-// #41754, 1210101, dwildt, -
+//      //////////////////////////////////////////////////////////////////////////
+//      //
+//      // Is there an andWhere statement from the filter class?
+////$this->pObj->dev_var_dump( 'X' );
+//    if ( is_array( $this->pObj->arr_andWhereFilter ) )
+//    {
+//      $str_andFilter  = implode( " AND ", $this->pObj->arr_andWhereFilter );
+////$this->pObj->dev_var_dump( $str_andFilter );
+//      $whereClause    = $whereClause." AND ".$str_andFilter;
+//    }
+//      // Is there an andWhere statement from the filter class?
+// #41754.01, 1210101, dwildt, -
 
 
 

@@ -5,6 +5,7 @@
   * #41753: Treeview as checkbox
   Improvement
   * #41754: Filter: optimise performance
+            * #41754.01: $arr_andWhereFilter isn't never allocated
   * #41776: Make filter 4.x independent of filter 3.x
             Effected files:
             * pi1
