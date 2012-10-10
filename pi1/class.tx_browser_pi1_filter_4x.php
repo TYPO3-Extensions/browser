@@ -2430,6 +2430,9 @@ class tx_browser_pi1_filter_4x {
   {
 $this->pObj->dev_var_dump( $areas, $this->ts_countHits( ) );
       // RETURN all areas
+      // #41814: 121010, dwildt, 1-
+//    if( $this->ts_countHits( ) )
+      // #41814: 121010, dwildt, 1+
     if( ! $this->ts_countHits( ) )
     {
       return $areas;
