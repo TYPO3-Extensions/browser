@@ -21,6 +21,9 @@ $( document ).ready( function( )
       "checkbox" : {
         "real_checkboxes" : true
       },
+      "ui"  : {
+        "theme_name"  : "checkbox"
+      }
       "plugins" : ["themes", "html_data", "checkbox", "sort", "ui", "cookies"]
     })
     .bind("select_node.jstree", function (event, data) { 
