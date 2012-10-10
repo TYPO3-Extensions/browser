@@ -19,7 +19,7 @@ $( document ).ready( function( )
         "dots"  : ###DOTS_01###,
         "icons" : ###ICONS_01###
       },
-      "plugins" : ["themes", "html_data", "checkbox", "sort", "ui"]
+      "plugins" : ["themes", "html_data", "checkbox", "sort", "ui", "cookies"]
     });
   }
 });
