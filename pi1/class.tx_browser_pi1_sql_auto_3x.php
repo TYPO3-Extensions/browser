@@ -1669,15 +1669,15 @@ class tx_browser_pi1_sql_auto_3x
 
 // #41754, 1210101, dwildt, -
 // $this->pObj->arr_andWhereFilter isn't never allocated
-//      //////////////////////////////////////////////////////////////////////////
-//      //
-//      // Is there a andWhere statement from the filter class?
-//    if ( is_array( $this->pObj->arr_andWhereFilter ) )
-//    {
-//      $str_andFilter  = implode(" AND ", $this->pObj->arr_andWhereFilter);
-//      $whereClause    = $whereClause." AND ".$str_andFilter;
-//    }
-//      // Is there a andWhere statement from the filter class?
+      //////////////////////////////////////////////////////////////////////////
+      //
+      // Is there a andWhere statement from the filter class?
+    if ( is_array( $this->pObj->arr_andWhereFilter ) )
+    {
+      $str_andFilter  = implode(" AND ", $this->pObj->arr_andWhereFilter);
+      $whereClause    = $whereClause." AND ".$str_andFilter;
+    }
+      // Is there a andWhere statement from the filter class?
 // #41754, 1210101, dwildt, -
 
 

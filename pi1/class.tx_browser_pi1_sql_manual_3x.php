@@ -243,17 +243,17 @@
 
 // #41754, 1210101, dwildt, -
 // $this->pObj->arr_andWhereFilter isn't never allocated
-//      /////////////////////////////////////////////////
-//      //
-//      // Is there a andWhere statement from the filter class?
-//      if (is_array($this->pObj->arr_andWhereFilter))
-//      {
-//        foreach((array) $this->pObj->arr_andWhereFilter as $tableField => $str_andWhere)
-//        {
-//          $str_where .= $str_andWhere;
-//        }
-//      }
-//      // Is there a andWhere statement from the filter class?
+      /////////////////////////////////////////////////
+      //
+      // Is there a andWhere statement from the filter class?
+      if (is_array($this->pObj->arr_andWhereFilter))
+      {
+        foreach((array) $this->pObj->arr_andWhereFilter as $tableField => $str_andWhere)
+        {
+          $str_where .= $str_andWhere;
+        }
+      }
+      // Is there a andWhere statement from the filter class?
 // #41754, 1210101, dwildt, -
 
 
@@ -296,67 +296,67 @@
       $str_joins_filter  = '';
 // #41754, 1210101, dwildt, -
 // $this->pObj->arr_andWhereFilter isn't never allocated
-//      if (is_array($this->pObj->arr_andWhereFilter))
-//      {
-//        foreach((array) $this->pObj->arr_andWhereFilter as $tableField => $str_andWhere)
-//        {
-//          list($table, $field) = explode('.', $tableField);
-//          $arr_joins_filter = $conf_view['filter.'][$table.'.'][$field.'.']['joins.'];
-////array(2) {
-////  ["0."]=>
-////  array(4) {
-////    ["type"]=>
-////    string(9) "LEFT JOIN"
-////    ["table"]=>
-////    string(41) "tx_bzdstaffdirectory_persons_locations_mm"
-////    ["alias"]=>
-////    string(17) "persons_locations"
-////    ["on"]=>
-////    string(41) "persons.uid = persons_locations.uid_local"
-////  }
-////  ["1."]=>
-////  array(4) {
-////    ["type"]=>
-////    string(9) "LEFT JOIN"
-////    ["table"]=>
-////    string(30) "tx_bzdstaffdirectory_locations"
-////    ["alias"]=>
-////    string(9) "locations"
-////    ["on"]=>
-////    string(83) "locations.uid = persons_locations.uid_foreign AND locations.pid IN (###PID_LIST###)"
-////  }
-////}
-//          if (is_array($arr_joins_filter))
-//          {
-//            if ($this->pObj->b_drs_sql)
-//            {
-//              t3lib_div::devlog('[INFO/SQL] There are '.count ($arr_joins_filter).' joins.', $this->pObj->extKey, 0);
-//            }
-//            foreach ($arr_joins_filter as $arr_join)
-//            {
-//              $str_enable_fields = '';
-//              if (is_array($GLOBALS['TCA'][$arr_join['table']]))    // I.e.: tx_civserv_organisation_or_structure_mm
-//              {
-//                // Table is in the registered in the TCA array
-//                $str_enable_fields  = $this->pObj->cObj->enableFields($arr_join['table']);
-//                $str_enable_fields  = str_replace($arr_join['table'], $arr_join['alias'], $str_enable_fields);
-//              }
-//              $str_joins_filter   .= "
-//                ".$arr_join['type']." ".$arr_join['table']." AS `".$arr_join['alias']."`
-//                ON (
-//                      ".$arr_join['on']." ".$str_enable_fields."
-//                   ) ";
-//              // LEFT JOIN tx_civserv_organisation_or_structure_mm AS ###table_mm###
-//              // ON (
-//              //       ###table_1###.uid = ###table_mm###.uid_local
-//              // )
-//            }
-//          }
-////var_dump($str_joins_filter);
-////exit;
-//        }
-//      }
-//      // Is there a andWhere statement from the filter class?
+      if (is_array($this->pObj->arr_andWhereFilter))
+      {
+        foreach((array) $this->pObj->arr_andWhereFilter as $tableField => $str_andWhere)
+        {
+          list($table, $field) = explode('.', $tableField);
+          $arr_joins_filter = $conf_view['filter.'][$table.'.'][$field.'.']['joins.'];
+//array(2) {
+//  ["0."]=>
+//  array(4) {
+//    ["type"]=>
+//    string(9) "LEFT JOIN"
+//    ["table"]=>
+//    string(41) "tx_bzdstaffdirectory_persons_locations_mm"
+//    ["alias"]=>
+//    string(17) "persons_locations"
+//    ["on"]=>
+//    string(41) "persons.uid = persons_locations.uid_local"
+//  }
+//  ["1."]=>
+//  array(4) {
+//    ["type"]=>
+//    string(9) "LEFT JOIN"
+//    ["table"]=>
+//    string(30) "tx_bzdstaffdirectory_locations"
+//    ["alias"]=>
+//    string(9) "locations"
+//    ["on"]=>
+//    string(83) "locations.uid = persons_locations.uid_foreign AND locations.pid IN (###PID_LIST###)"
+//  }
+//}
+          if (is_array($arr_joins_filter))
+          {
+            if ($this->pObj->b_drs_sql)
+            {
+              t3lib_div::devlog('[INFO/SQL] There are '.count ($arr_joins_filter).' joins.', $this->pObj->extKey, 0);
+            }
+            foreach ($arr_joins_filter as $arr_join)
+            {
+              $str_enable_fields = '';
+              if (is_array($GLOBALS['TCA'][$arr_join['table']]))    // I.e.: tx_civserv_organisation_or_structure_mm
+              {
+                // Table is in the registered in the TCA array
+                $str_enable_fields  = $this->pObj->cObj->enableFields($arr_join['table']);
+                $str_enable_fields  = str_replace($arr_join['table'], $arr_join['alias'], $str_enable_fields);
+              }
+              $str_joins_filter   .= "
+                ".$arr_join['type']." ".$arr_join['table']." AS `".$arr_join['alias']."`
+                ON (
+                      ".$arr_join['on']." ".$str_enable_fields."
+                   ) ";
+              // LEFT JOIN tx_civserv_organisation_or_structure_mm AS ###table_mm###
+              // ON (
+              //       ###table_1###.uid = ###table_mm###.uid_local
+              // )
+            }
+          }
+//var_dump($str_joins_filter);
+//exit;
+        }
+      }
+      // Is there a andWhere statement from the filter class?
 // #41754, 1210101, dwildt, -
 
 
