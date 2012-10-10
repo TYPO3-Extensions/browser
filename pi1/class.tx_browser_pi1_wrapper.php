@@ -545,17 +545,9 @@ class tx_browser_pi1_wrapper
 
     if ($bool_firsttime)
     {
-      if ($this->pObj->b_drs_perform) {
-        if($this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->getDifferenceToStarttime();
-        }
-        if(!$this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->mtime();
-        }
-        t3lib_div::devLog('[INFO/PERFORMANCE] After prepaire link process: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-      }
+        // Prompt the expired time to devlog
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'After prepaire link process' );
     }
       // DRS - Performance
 
@@ -672,17 +664,9 @@ class tx_browser_pi1_wrapper
 
     if ($bool_firsttime)
     {
-      if ($this->pObj->b_drs_perform) {
-        if($this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->getDifferenceToStarttime();
-        }
-        if(!$this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->mtime();
-        }
-        t3lib_div::devLog('[INFO/PERFORMANCE] After COA process: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-      }
+        // Prompt the expired time to devlog
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'After COA process' );
     }
       // DRS - Performance
 
@@ -845,17 +829,9 @@ class tx_browser_pi1_wrapper
 
     if ($bool_firsttime)
     {
-      if ($this->pObj->b_drs_perform) {
-        if($this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->getDifferenceToStarttime();
-        }
-        if(!$this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->mtime();
-        }
-        t3lib_div::devLog('[INFO/PERFORMANCE] After process management: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-      }
+        // Prompt the expired time to devlog
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'After process management' );
     }
       // DRS - Performance
 
@@ -892,17 +868,9 @@ class tx_browser_pi1_wrapper
 
     if ($bool_firsttime)
     {
-      if ($this->pObj->b_drs_perform) {
-        if($this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->getDifferenceToStarttime();
-        }
-        if(!$this->pObj->bool_typo3_43)
-        {
-          $endTime = $this->pObj->TT->mtime();
-        }
-        t3lib_div::devLog('[INFO/PERFORMANCE] After general stdWrap: '. ($endTime - $this->pObj->tt_startTime).' ms', $this->pObj->extKey, 0);
-      }
+        // Prompt the expired time to devlog
+      $debugTrailLevel = 1;
+      $this->pObj->timeTracking_log( $debugTrailLevel, 'After general stdWrap' );
     }
       // DRS - Performance
 
