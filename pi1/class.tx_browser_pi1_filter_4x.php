@@ -6278,6 +6278,8 @@ $this->pObj->dev_var_dump( $arr_piVar, $str_uidList );
       default:
         $key_piVar = $this->pObj->prefixId . '[' . $strNicePiVar . '][]';
         $arr_piVar = $this->pObj->piVars[$strNicePiVar];
+$this->pObj->dev_var_dump( $strNicePiVar, $arr_piVar );
+        
     }
       // SWITCH : set piVar depending on multiple
 
