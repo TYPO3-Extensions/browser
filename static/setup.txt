@@ -1649,8 +1649,6 @@ plugin.tx_browser_pi1 {
               // treeview (default)
             value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
           }
-            // [STRING] MUST (!) be the table.field of the current filter. Example: tx_greencars_manufacturer.title 
-          tableField = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.tablefield_01}
         }
           // [String/optional] Name for the piVar. Name must be unique.
         nice_piVar =
