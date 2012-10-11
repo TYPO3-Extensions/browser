@@ -115,14 +115,14 @@ function generateHiddenFieldsForTree( treeId, tableField )
       // Append an input field with the record uid
       if( recordUid )
       {
-        $( "form" ).append('<input type="hidden" name="' + tableField + '" value="' + recordUid + '" />');
+        $( ".tx_browser_pi1 .searchbox form" ).append('<input type="hidden" name="' + tableField + '" value="' + recordUid + '" />');
       }
     });
   }
 
 }
 $( function ( ) {
-  $( "form" ).submit( function ( )
+  $( ".tx_browser_pi1 .searchbox form" ).submit( function ( )
   {
     generateHiddenFieldsForTree( "###SELECTOR_01###", "tx_browser_pi1[tx_greencars_manufacturer.title][]" );
     generateHiddenFieldsForTree( "###SELECTOR_02###", "tx_browser_pi1[tx_greencars_manufacturer.title][]" );
