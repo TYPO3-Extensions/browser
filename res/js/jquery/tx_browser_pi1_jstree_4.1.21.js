@@ -103,7 +103,6 @@ function generateHiddenFieldsForTree( treeId, tableField )
     // RETURN : there isn't any treeId
   if( ! $( treeId ).length )
   {
-    alert( prompt );
     return;
   }
 
@@ -117,6 +116,7 @@ function generateHiddenFieldsForTree( treeId, tableField )
   
   var checked_ids = [];
   var name = "tx_browser_pi1[" + tableField + "][]"; 
+  alert( treeId + ": " + name );
 
     // Append an input field for each selected <li>-item to the current form
   $( treeId ).jstree( "get_checked" , null, true ).each(function( )
@@ -129,7 +129,7 @@ function generateHiddenFieldsForTree( treeId, tableField )
     // Append an input field with the record uid
     if( recordUid )
     {
-      $( ".searchbox > form" ).append('<input type="hidden" name="' + tableField + '" value="' + recordUid + '" />');
+      $( ".searchbox > form" ).append('<input type="hidden" name="' + name + '" value="' + recordUid + '" />');
     }
   });
 
