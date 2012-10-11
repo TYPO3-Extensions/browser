@@ -13,7 +13,7 @@ $( document ).ready( function( )
   if( $( "###SELECTOR_01###" ).length )
   {
     $("###SELECTOR_01###").jstree({
-      "plugins" : ["themes", "html_data", "checkbox", "sort", "ui", "cookies"]
+      "plugins" : ["themes", "html_data", "checkbox", "ui", "cookies"]
     })
     .bind("select_node.jstree", function (event, data) { 
       // `data.rslt.obj` is the jquery extended node that was clicked
