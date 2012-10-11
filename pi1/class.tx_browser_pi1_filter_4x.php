@@ -6250,7 +6250,14 @@ class tx_browser_pi1_filter_4x {
         $arr_piVar[0] = $this->pObj->piVars[$strNicePiVar];
         if( is_array( $arr_piVar[0] ) )
         {
-          die ( __METHOD__ . '::' . __LINE__ );
+          $prompt = '<h1>FATAL ERROR</h1>
+            <h2>piVar[' . $strNicePiVar . '] is an array</h2>
+            <p>piVar has to be a string or an integer.</p>
+            <p>Sorry, this error doesn\'t occure.</p>
+            <p>Method ' . __METHOD__ . ' (line ' . __LINE__ . ')</p>
+            <p>Browser - TYPO3 without PHP</p>
+            ';
+          die ( $prompt );
         }
 //$this->pObj->dev_var_dump( $tableField, $conf_name, $conf_array, $strNicePiVar, $arr_piVar );
         break;
