@@ -6274,13 +6274,13 @@ class tx_browser_pi1_filter_4x {
       case( false ):
         $key_piVar    = $this->pObj->prefixId . '[' . $strNicePiVar . ']';
         $arr_piVar[0] = $this->pObj->piVars[$strNicePiVar];
-$this->pObj->dev_var_dump( $tableField, $conf_name, $conf_array, $strNicePiVar, $arr_piVar );
+//$this->pObj->dev_var_dump( $tableField, $conf_name, $conf_array, $strNicePiVar, $arr_piVar );
         break;
       case( true ):
       default:
         $key_piVar = $this->pObj->prefixId . '[' . $strNicePiVar . '][]';
         $arr_piVar = $this->pObj->piVars[$strNicePiVar];
-$this->pObj->dev_var_dump( $tableField, $conf_name, $conf_array, $strNicePiVar, $arr_piVar );
+//$this->pObj->dev_var_dump( $tableField, $conf_name, $conf_array, $strNicePiVar, $arr_piVar );
         break;
     }
       // SWITCH : set piVar depending on multiple
