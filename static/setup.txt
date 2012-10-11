@@ -1840,6 +1840,20 @@ plugin.tx_browser_pi1 {
             // True (default)
           value = 1
         }
+        treeview {
+            // [String] HTML id of the treeview.
+          html_id = TEXT
+          html_id {
+              // treeview (default)
+            value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
+          }
+            // [Boolean] Disable the treeview. Enable is recommended. Has an effect only in case of cps_tcatree and a proper TCA configuration.
+          enabled = TEXT
+          enabled {
+              // True (default)
+            value = 1
+          }
+        }
           // [String/optional] Name for the piVar. Name must be unique.
         nice_piVar =
           // [Boolean] 1 (default): Hits are counted. 0: Any hit is counted (best performance!)

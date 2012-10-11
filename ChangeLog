@@ -3,6 +3,7 @@
   * #41753: Treeview as checkbox
   Improvement
   * #41754: Filter: optimise performance
+            CHECKBOX is enabled for treeviews
             * #41754.01:  $arr_andWhereFilter isn't never allocated
             * #41754.02:  init_aFilterIsSelected (boolean) is moved to get_selectedFilters (array)
             * #41754.03:  SQL optimisation: new method sql_resAllItemsFilterWoRelation( )
@@ -11,6 +12,7 @@
                           * pi1
                             * class.tx_browser_pi1_template.php
                             * class.tx_browser_pi1_wrapper.php
+                          * res/setup.txt
             BE AWARE: It isn't tested in localised context
   * #41776: Make filter 4.x independent of filter 3.x
             Effected files:
