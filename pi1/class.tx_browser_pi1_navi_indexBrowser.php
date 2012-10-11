@@ -2044,7 +2044,7 @@ class tx_browser_pi1_navi_indexBrowser
 //        $where  = $where . $this->pObj->objFltr4x->andWhereFilter;
           // 3.9.25, 120605, dwildt+
         $andWhere = $this->pObj->objFltr4x->andWhereFilter;
-$this->pObj->dev_var_dump( $andWhere );
+//$this->pObj->dev_var_dump( $andWhere );
         $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $andWhere );
         break;
       default:
