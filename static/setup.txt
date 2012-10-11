@@ -2322,7 +2322,7 @@ plugin.tx_browser_pi1 {
           // [BOOLEAN] You have to allocate one of the areas of the master template. Tutorial: http://typo3.org/extensions/repository/view/browser_tut_search_en/current/
         area = 0
       }
-      treeview < CATEGORY_MENU
+      treeview < .category_menu
       treeview = TREEVIEW
       areas {
         sample_currency = 1
