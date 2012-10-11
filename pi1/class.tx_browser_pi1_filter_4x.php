@@ -6253,9 +6253,12 @@ class tx_browser_pi1_filter_4x {
           $prompt = '<h1>FATAL ERROR</h1>
             <h2>tx_browser_pi1[' . $strNicePiVar . '][] is an array</h2>
             <p>But piVar has to be a string or an integer.</p>
-            <p>Sorry, this error doesn\'t occure.</p>
-            <p>Method ' . __METHOD__ . ' (line ' . __LINE__ . ')</p>
-            <p>Browser - TYPO3 without PHP</p>
+            <p>Sorry, this error shouldn\'t occured.</p>
+            <p></p>
+            <p>
+              Browser - TYPO3 without PHP<br />
+              Method ' . __METHOD__ . ' (line ' . __LINE__ . ')
+            </p>
             ';
           die ( $prompt );
         }
