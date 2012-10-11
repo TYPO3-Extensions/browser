@@ -31,4 +31,21 @@ $( document ).ready( function( )
       alert(data.rslt.obj.attr("id"));
     })
   }
+  
+  $( function ( ) {
+    $( "form" ).submit( function ( )
+    {
+      alert( "HALLO" );
+      generateHiddenFieldsForTree( "###SELECTOR_01###" ); 
+    });
+  }
 });
+
+function generateHiddenFieldsForTree( treeId ) 
+{
+  $.tree.plugins.checkbox.get_checked( $.tree.reference( "#" + treeId ) ).each( function ( )
+  {
+    var checkedId = this.id;
+    $("<input>").attr("type", "hidden").attr("name", checkedId).val("on").appendTo("#" + treeId);
+  });
+}
