@@ -6248,6 +6248,10 @@ class tx_browser_pi1_filter_4x {
       case( false ):
         $key_piVar    = $this->pObj->prefixId . '[' . $strNicePiVar . ']';
         $arr_piVar[0] = $this->pObj->piVars[$strNicePiVar];
+        if( is_array( $arr_piVar[0] ) )
+        {
+          die ( __METHOD__ . '::' . __LINE__ );
+        }
 //$this->pObj->dev_var_dump( $tableField, $conf_name, $conf_array, $strNicePiVar, $arr_piVar );
         break;
       case( true ):
