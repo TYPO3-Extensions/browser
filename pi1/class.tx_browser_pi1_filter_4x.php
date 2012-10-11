@@ -489,6 +489,7 @@ class tx_browser_pi1_filter_4x {
         // Get nice_piVar
       $arr_result   = $this->zz_getNicePiVar( $tableField );
       $arr_piVar    = $arr_result['data']['arr_piVar'];
+$this->pObj->dev_var_dump( $tableField, $arr_piVar );
       unset ($arr_result);
         // Get nice_piVar
 
@@ -6273,6 +6274,7 @@ $this->pObj->dev_var_dump( $arr_piVar, $str_uidList );
       case( false ):
         $key_piVar    = $this->pObj->prefixId . '[' . $strNicePiVar . ']';
         $arr_piVar[0] = $this->pObj->piVars[$strNicePiVar];
+$this->pObj->dev_var_dump( $strNicePiVar, $arr_piVar );
         break;
       case( true ):
       default:
