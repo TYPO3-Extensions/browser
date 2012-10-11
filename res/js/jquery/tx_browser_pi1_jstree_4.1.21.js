@@ -104,7 +104,7 @@ function generateHiddenFieldsForTree( )
   var name  = "tx_browser_pi1[tx_greencars_manufacturer.title][]";
 
     // Append an input field for each selected <li>-item to the current form
-  $( "#tx_greencars_manufacturer_title" ).jstree( "get_checked" , null, true ).each(function( )
+  $( "###SELECTOR_01###" ).jstree( "get_checked" , null, true ).each(function( )
   {
       // Get current record uid
     var thisId         = this.id;
