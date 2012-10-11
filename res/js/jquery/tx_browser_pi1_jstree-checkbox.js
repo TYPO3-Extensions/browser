@@ -48,4 +48,4 @@ $( function ( ) {
     alert( "HALLO" );
     generateHiddenFieldsForTree( "###SELECTOR_01###" ); 
   });
-}
+});
