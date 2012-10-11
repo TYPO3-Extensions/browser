@@ -1527,7 +1527,6 @@ class tx_browser_pi1_navi_indexBrowser
     $select = "COUNT( DISTINCT " . $uid . " ) AS 'count', LEFT ( " . $initial . ", 1 ) AS 'initial'";
     $from   = $this->sqlStatement_from( $table );
     $where  = $this->sqlStatement_where( $table, $strFindInSet );
-$this->pObj->dev_var_dump( $table, $strFindInSet, $where );
     $groupBy  = "LEFT ( " . $initial . ", 1 )";
     $orderBy  = "LEFT ( " . $initial . ", 1 )";
     $limit    = null;
