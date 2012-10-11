@@ -1464,6 +1464,7 @@ class tx_browser_pi1_navi_indexBrowser
     {
       $strFindInSet = "NOT (" . $strFindInSet . ")";
     }
+$this->pObj->dev_var_dump( $arrfindInSet, $strFindInSet );    
       // Build FIND IN SET
 
 
