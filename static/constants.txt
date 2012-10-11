@@ -44,22 +44,26 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Image Dimensions/dims;   type=int+;    label= List image pop-up max height: Max height for an image displayed in an extra pop-up window
   listPopupMaxH = 500
 
-  # cat=Browser - jQuery//100;       type=options[apple,classic,default,default-rtl];  label= jQuery.plugin.jstree theme: Name of the theme of tree views
-  jQuery.plugin.jstree.theme    = apple
-  # cat=Browser - jQuery//201;       type=string;  label= jQuery.plugin.jstree selector 1: HTML id of div tag which contains a tree view
-  jQuery.plugin.jstree.selector_01 = tx-browser-pi1-jstree-01
-  # cat=Browser - jQuery//202;       type=string;  label= jQuery.plugin.jstree selector 2: HTML id of div tag which contains a tree view
-  jQuery.plugin.jstree.selector_02 = tx-browser-pi1-jstree-02
-  # cat=Browser - jQuery//203;       type=string;  label= jQuery.plugin.jstree selector 3: HTML id of div tag which contains a tree view
-  jQuery.plugin.jstree.selector_03 = tx-browser-pi1-jstree-03
-  # cat=Browser - jQuery//204;       type=string;  label= jQuery.plugin.jstree selector 4: HTML id of div tag which contains a tree view
-  jQuery.plugin.jstree.selector_04 = tx-browser-pi1-jstree-04
-  # cat=Browser - jQuery//205;       type=string;  label= jQuery.plugin.jstree selector 5: HTML id of div tag which contains a tree view
-  jQuery.plugin.jstree.selector_05 = tx-browser-pi1-jstree-05
-  # cat=Browser - jQuery//300;       type=boolean;  label= jQuery.plugin.jstree dots: Use dots.
-  jQuery.plugin.jstree.dots    = 1
-  # cat=Browser - jQuery//400;       type=boolean;  label= jQuery.plugin.jstree icons: Uuse icons
-  jQuery.plugin.jstree.icons    = 1
+  # cat=Browser - jQuery_jstree//100;   type=options[apple,classic,default,default-rtl];  label= Theme: Name of the theme of tree views
+  jQuery.plugin.jstree.theme            = apple
+  # cat=Browser - jQuery_jstree//101;   type=string;  label= Path to themes: Path to the folder, which contains the themes (with ending slash)
+  jQuery.plugin.jstree.pathToTheme      = res/js/jquery/plugins/jquery.jstree/themes/
+  # cat=Browser - jQuery_jstree//102;   type=options[category_menu,checkbox];  label= Plugins: category_menu: contains plugins for a category menu. checkbox: contains plugins for a checkbox.
+  jQuery.plugin.jstree.plugins          = checkbox
+  # cat=Browser - jQuery_jstree//201;   type=string;  label= Selector 1: HTML id of div tag which contains a tree view
+  jQuery.plugin.jstree.selector_01      = tx-browser-pi1-jstree-01
+  # cat=Browser - jQuery_jstree//202;   type=string;  label= Selector 2: HTML id of div tag which contains a tree view
+  jQuery.plugin.jstree.selector_02      = tx-browser-pi1-jstree-02
+  # cat=Browser - jQuery_jstree//203;   type=string;  label= Selector 3: HTML id of div tag which contains a tree view
+  jQuery.plugin.jstree.selector_03      = tx-browser-pi1-jstree-03
+  # cat=Browser - jQuery_jstree//204;   type=string;  label= Selector 4: HTML id of div tag which contains a tree view
+  jQuery.plugin.jstree.selector_04      = tx-browser-pi1-jstree-04
+  # cat=Browser - jQuery_jstree//205;   type=string;  label= Selector 5: HTML id of div tag which contains a tree view
+  jQuery.plugin.jstree.selector_05      = tx-browser-pi1-jstree-05
+  # cat=Browser - jQuery_jstree//300;   type=boolean;  label= Dots: Use dots.
+  jQuery.plugin.jstree.dots             = 1
+  # cat=Browser - jQuery_jstree//400;  type=boolean;  label= Icons: Use icons
+  jQuery.plugin.jstree.icons            = 1
 
   # cat=Browser - Localisation/;       type=int+;    label= EN:Id of the sys_language record for the English language.
   typeNum.sys_language_en = 0

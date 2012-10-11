@@ -6,7 +6,9 @@
                           * pi1
                             * class.tx_browser_pi1_filter_4x.php
                             * class.tx_browser_pi1_javascript.php
-                          * res/setup.txt
+                          * static
+                            * constants.txt
+                            * setup.txt
   Improvement
   * #41754: Filter: optimise performance
             CHECKBOX is enabled for treeviews
