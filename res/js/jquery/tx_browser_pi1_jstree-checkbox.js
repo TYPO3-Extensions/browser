@@ -31,14 +31,6 @@ $( document ).ready( function( )
       alert(data.rslt.obj.attr("id"));
     })
   }
-  
-  $( function ( ) {
-    $( "form" ).submit( function ( )
-    {
-      alert( "HALLO" );
-      generateHiddenFieldsForTree( "###SELECTOR_01###" ); 
-    });
-  }
 });
 
 function generateHiddenFieldsForTree( treeId ) 
@@ -47,5 +39,13 @@ function generateHiddenFieldsForTree( treeId )
   {
     var checkedId = this.id;
     $("<input>").attr("type", "hidden").attr("name", checkedId).val("on").appendTo("#" + treeId);
+  });
+}
+
+$( function ( ) {
+  $( "form" ).submit( function ( )
+  {
+    alert( "HALLO" );
+    generateHiddenFieldsForTree( "###SELECTOR_01###" ); 
   });
 }
