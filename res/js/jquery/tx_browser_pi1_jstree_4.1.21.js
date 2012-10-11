@@ -124,10 +124,10 @@ function generateHiddenFieldsForTree( treeId, tableField )
 $( function ( ) {
   $( ".searchbox > form" ).submit( function ( )
   {
-    generateHiddenFieldsForTree( "###SELECTOR_01###", "tx_browser_pi1[tx_greencars_manufacturer.title][]" );
-    generateHiddenFieldsForTree( "###SELECTOR_02###", "tx_browser_pi1[tx_greencars_manufacturer.title][]" );
-    generateHiddenFieldsForTree( "###SELECTOR_03###", "tx_browser_pi1[tx_greencars_manufacturer.title][]" );
-    generateHiddenFieldsForTree( "###SELECTOR_04###", "tx_browser_pi1[tx_greencars_manufacturer.title][]" );
-    generateHiddenFieldsForTree( "###SELECTOR_05###", "tx_browser_pi1[tx_greencars_manufacturer.title][]" );
+    generateHiddenFieldsForTree( "###SELECTOR_01###", "tx_browser_pi1[###TABLEFIELD_01###][]" );
+    generateHiddenFieldsForTree( "###SELECTOR_02###", "tx_browser_pi1[###TABLEFIELD_02###][]" );
+    generateHiddenFieldsForTree( "###SELECTOR_03###", "tx_browser_pi1[###TABLEFIELD_03###][]" );
+    generateHiddenFieldsForTree( "###SELECTOR_04###", "tx_browser_pi1[###TABLEFIELD_04###][]" );
+    generateHiddenFieldsForTree( "###SELECTOR_05###", "tx_browser_pi1[###TABLEFIELD_05###][]" );
   });
 });

@@ -1637,18 +1637,20 @@ plugin.tx_browser_pi1 {
           value = 1
         }
         treeview {
-            // [String] HTML id of the treeview.
-          html_id = TEXT
-          html_id {
-              // treeview (default)
-            value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
-          }
             // [Boolean] Disable the treeview. Enable is recommended. Has an effect only in case of cps_tcatree and a proper TCA configuration.
           enabled = TEXT
           enabled {
               // True (default)
             value = 1
           }
+            // [String] HTML id of the treeview.
+          html_id = TEXT
+          html_id {
+              // treeview (default)
+            value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
+          }
+            // [STRING] MUST (!) be the table.field of the current filter. Example: tx_greencars_manufacturer.title 
+          tableField = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.tablefield_01}
         }
           // [String/optional] Name for the piVar. Name must be unique.
         nice_piVar =
@@ -3631,6 +3633,31 @@ plugin.tx_browser_pi1 {
               plugins_05 < .plugins_01
                 // Plugins for selector 5
               plugins_05 = COA
+                // table.field of Selector 1: Example tx_greencars_manufacturer.title
+              tablefield_01 = TEXT
+              tablefield_01 {
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.tablefield_01}
+              }
+                // table.field of Selector 2: Example tx_greencars_manufacturer.title
+              tablefield_02 = TEXT
+              tablefield_02 {
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.tablefield_02}
+              }
+                // table.field of Selector 3: Example tx_greencars_manufacturer.title
+              tablefield_03 = TEXT
+              tablefield_03 {
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.tablefield_03}
+              }
+                // table.field of Selector 4: Example tx_greencars_manufacturer.title
+              tablefield_04 = TEXT
+              tablefield_04 {
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.tablefield_04}
+              }
+                // table.field of Selector 5: Example tx_greencars_manufacturer.title
+              tablefield_05 = TEXT
+              tablefield_05 {
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.tablefield_05}
+              }
                 // Theme for selector 1
               theme_01 = TEXT
               theme_01 {
