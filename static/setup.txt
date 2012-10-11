@@ -3691,6 +3691,8 @@ plugin.tx_browser_pi1 {
               value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
             }
           }
+          marker >
+          marker < plugin.tx_browser_pi1.javascript.jquery.plugins.jstree.library.marker
         }
       }
     }
