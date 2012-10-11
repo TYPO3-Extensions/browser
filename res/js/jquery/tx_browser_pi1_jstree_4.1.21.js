@@ -28,7 +28,7 @@ $( document ).ready( function( )
   if( $( "###SELECTOR_01###" ).length )
   {
     $("###SELECTOR_01###").jstree({
-      "checkbox"	: {
+      "checkbox" : {
         "override_ui" : true
       },
       "themes" : {
@@ -42,6 +42,9 @@ $( document ).ready( function( )
   if( $( "###SELECTOR_02###" ).length )
   {
     $("###SELECTOR_02###").jstree({
+      "checkbox" : {
+        "override_ui" : true
+      },
       "themes" : {
         "theme" : "###THEME_02###",
         "dots"  : ###DOTS_02###,
@@ -53,6 +56,9 @@ $( document ).ready( function( )
   if( $( "###SELECTOR_03###" ).length )
   {
     $("###SELECTOR_03###").jstree({
+      "checkbox" : {
+        "override_ui" : true
+      },
       "themes" : {
         "theme" : "###THEME_03###",
         "dots"  : ###DOTS_03###,
@@ -64,6 +70,9 @@ $( document ).ready( function( )
   if( $( "###SELECTOR_04###" ).length )
   {
     $("###SELECTOR_04###").jstree({
+      "checkbox" : {
+        "override_ui" : true
+      },
       "themes" : {
         "theme" : "###THEME_04###",
         "dots"  : ###DOTS_04###,
@@ -75,6 +84,9 @@ $( document ).ready( function( )
   if( $( "###SELECTOR_05###" ).length )
   {
     $("###SELECTOR_05###").jstree({
+      "checkbox" : {
+        "override_ui" : true
+      },
       "themes" : {
         "theme" : "###THEME_05###",
         "dots"  : ###DOTS_05###,
