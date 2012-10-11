@@ -1,6 +1,12 @@
 4.1.21
   New Feature
   * #41753: Treeview as checkbox
+            * #41753.01:  New COA TREEVIEW
+                          Effected files
+                          * pi1
+                            * class.tx_browser_pi1_filter_4x.php
+                            * class.tx_browser_pi1_javascript.php
+                          * res/setup.txt
   Improvement
   * #41754: Filter: optimise performance
             CHECKBOX is enabled for treeviews
@@ -12,7 +18,6 @@
                           * pi1
                             * class.tx_browser_pi1_template.php
                             * class.tx_browser_pi1_wrapper.php
-                          * res/setup.txt
             BE AWARE: It isn't tested in localised context
   * #41776: Make filter 4.x independent of filter 3.x
             Effected files:

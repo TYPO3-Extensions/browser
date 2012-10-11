@@ -129,7 +129,7 @@ class tx_browser_pi1_javascript
  * @param	integer		$number_of_items: The number of items
  * @param	string		$str_order: asc or desc
  * @return	string		Returns the wrapped item
- * @since 3.5.0
+ * @since 4.1.21
  * @version 3.5.0
  */
   function class_onchange($obj_ts, $arr_ts, $number_of_items)
@@ -143,6 +143,8 @@ class tx_browser_pi1_javascript
     switch($obj_ts)
     {
       case ('CATEGORY_MENU') :
+        // #41753.01, 121010, dwildt, 1+
+      case ('TREEVIEW') :   
         $conf_object = $arr_ts['wrap.']['item.']['class'];
 //$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 //if (!($pos === false)) var_dump('jss 138', $conf_object);
@@ -155,11 +157,20 @@ class tx_browser_pi1_javascript
         $conf_object = $arr_ts['wrap.']['object'];
         break;
       default :
-        if ($this->pObj->b_drs_error)
+        if ( $this->pObj->b_drs_error )
         {
-          t3lib_div :: devlog('[ERROR/JSS] class_onchange - undefined value in switch: \'' . $obj_ts . '\'', $this->pObj->extKey, 3);
-          t3lib_div :: devlog('[INFO/JSS] class_onchange won\'t be handled.', $this->pObj->extKey, 3);
+          $prompt = 'class_onchange - undefined value in switch: \'';
+          t3lib_div :: devlog( '[ERROR/JSS] ' . $prompt . $obj_ts . '\'', $this->pObj->extKey, 3 );
+          $prompt = 'class_onchange won\'t be handled.';
+          t3lib_div :: devlog( '[INFO/JSS] ' . $prompt , $this->pObj->extKey, 3 );
         }
+        echo '<h1>Undefined value</h1>
+          <h2>' . $obj_ts . ' is not defined</h2>
+          <p>Method ' . __METHOD__ . ' (line: ' . __LINE__ . ')</p>  
+          <p>Sorry, this error shouldn\'t occured!</p>  
+          <p>Browser - TYPO3 without PHP</p>  
+          ';
+        exit;
     }
       // Get HTML part with AJAX onchange class
 
@@ -220,6 +231,8 @@ class tx_browser_pi1_javascript
       switch($obj_ts)
       {
         case ('CATEGORY_MENU') :
+          // #41753.01, 121010, dwildt, 1+
+        case ('TREEVIEW') :   
           $arr_ts['wrap.']['item.']['class'] = $conf_object;
 //$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 //if (!($pos === false)) var_dump('jss 215', $arr_ts['wrap.']['item.']['class']);
@@ -250,6 +263,8 @@ class tx_browser_pi1_javascript
     switch($obj_ts)
     {
       case('CATEGORY_MENU'):
+        // #41753.01, 121010, dwildt, 1+
+      case ('TREEVIEW') :   
         $conf_object = str_replace($marker_onchange, $class_onchange, $conf_object);
         break;
       case('CHECKBOX'):
@@ -331,6 +346,8 @@ class tx_browser_pi1_javascript
     switch($obj_ts)
     {
       case ('CATEGORY_MENU') :
+        // #41753.01, 121010, dwildt, 1+
+      case ('TREEVIEW') :   
         $arr_ts['wrap.']['item.']['class'] = $conf_object;
 //$pos = strpos($this->pObj->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
 //if (!($pos === false)) var_dump('jss 326', $arr_ts['wrap.']['item.']['class']);

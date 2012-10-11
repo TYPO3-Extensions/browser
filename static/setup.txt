@@ -2323,7 +2323,7 @@ plugin.tx_browser_pi1 {
         area = 0
       }
       treeview < .category_menu
-        // Master template for a treeview (checkbox format)
+        // Master template for a treeview in checkbox format. It is based on CATEGORY_MENU and not on CHECKBOX!
       treeview = TREEVIEW
       areas {
         sample_currency = 1
