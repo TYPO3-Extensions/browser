@@ -100,25 +100,37 @@ $( document ).ready( function( )
 
 function generateHiddenFieldsForTree( treeId, tableField ) 
 {
+    // RETURN : there isn't any treeId
+  if( ! $( treeId ).length )
+  {
+    return;
+  }
+
+    // RETURN : table.field isn't configured proper
+  if( ! tableField )
+  {
+    var prompt = "table.field is missing for " + treeId + ". Please take care of a proper TypoScript. Look for i.e: {$plugin.tx_browser_pi1.jQuery.plugin.jstree.tablefield_01}" ;
+    alert( prompt );
+    return;
+  }
+  
   var checked_ids = [];
+  var name = "tx_browser_pi1[" + tableField + "][]"; 
 
     // Append an input field for each selected <li>-item to the current form
-  if( $( treeId ).length )
-  {  
-    $( treeId ).jstree( "get_checked" , null, true ).each(function( )
-    {
-        // Get current record uid
-      var thisId         = this.id;
-      var thisIdSplitted = thisId.split( "_" );
-      var recordUid      = thisIdSplitted[ thisIdSplitted.length - 1 ];
+  $( treeId ).jstree( "get_checked" , null, true ).each(function( )
+  {
+      // Get current record uid
+    var thisId         = this.id;
+    var thisIdSplitted = thisId.split( "_" );
+    var recordUid      = thisIdSplitted[ thisIdSplitted.length - 1 ];
 
-      // Append an input field with the record uid
-      if( recordUid )
-      {
-        $( ".searchbox > form" ).append('<input type="hidden" name="' + tableField + '" value="' + recordUid + '" />');
-      }
-    });
-  }
+    // Append an input field with the record uid
+    if( recordUid )
+    {
+      $( ".searchbox > form" ).append('<input type="hidden" name="' + tableField + '" value="' + recordUid + '" />');
+    }
+  });
 
 }
 $( function ( ) {
