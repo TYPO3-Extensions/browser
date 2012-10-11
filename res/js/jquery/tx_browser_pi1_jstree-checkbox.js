@@ -18,7 +18,7 @@ $( document ).ready( function( )
         "dots"  : ###DOTS_01###,
         "icons" : ###ICONS_01###
       },
-      "plugins" : ["themes", "html_data", "checkbox", "sort", "ui", "cookies"]
+      "plugins" : ["themes", "html_data", "checkbox", "sort", "ui"]
     })
     .bind("select_node.jstree", function (event, data) { 
       // `data.rslt.obj` is the jquery extended node that was clicked
