@@ -103,6 +103,7 @@ function generateHiddenFieldsForTree( treeId, tableField )
     // RETURN : there isn't any treeId
   if( ! $( treeId ).length )
   {
+    alert( prompt );
     return;
   }
 
@@ -136,10 +137,10 @@ function generateHiddenFieldsForTree( treeId, tableField )
 $( function ( ) {
   $( ".searchbox > form" ).submit( function ( )
   {
-    generateHiddenFieldsForTree( "###SELECTOR_01###", "tx_browser_pi1[###TABLEFIELD_01###][]" );
-    generateHiddenFieldsForTree( "###SELECTOR_02###", "tx_browser_pi1[###TABLEFIELD_02###][]" );
-    generateHiddenFieldsForTree( "###SELECTOR_03###", "tx_browser_pi1[###TABLEFIELD_03###][]" );
-    generateHiddenFieldsForTree( "###SELECTOR_04###", "tx_browser_pi1[###TABLEFIELD_04###][]" );
-    generateHiddenFieldsForTree( "###SELECTOR_05###", "tx_browser_pi1[###TABLEFIELD_05###][]" );
+    generateHiddenFieldsForTree( "###SELECTOR_01###", "###TABLEFIELD_01###" );
+    generateHiddenFieldsForTree( "###SELECTOR_02###", "###TABLEFIELD_02###" );
+    generateHiddenFieldsForTree( "###SELECTOR_03###", "###TABLEFIELD_03###" );
+    generateHiddenFieldsForTree( "###SELECTOR_04###", "###TABLEFIELD_04###" );
+    generateHiddenFieldsForTree( "###SELECTOR_05###", "###TABLEFIELD_05###" );
   });
 });
