@@ -2034,6 +2034,7 @@ $this->pObj->dev_var_dump( $table, $strFindInSet, $where );
       case( $this->pObj->objFltr4x->get_selectedFilters( ) ):
         $where  = $this->pObj->objSqlInit->statements['listView']['where'];
         $where  = $this->sqlStatement_whereAndFindInSet( $where, $andWhereFindInSet );
+$this->pObj->dev_var_dump( $where, $andWhereFindInSet, $where );
         $llWhere  = $this->pObj->objLocalise->localisationFields_where( $table );
           // 3.9.25, 120605, dwildt+
         $where    = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $llWhere );
