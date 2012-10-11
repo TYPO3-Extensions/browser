@@ -30,13 +30,13 @@ function generateHiddenFieldsForTree( )
      // Append an input field with the record uid
     if( recordUid )
     {
-      $( form ).append('<input type="hidden" name="' + name + '" value="' + recordUid + '" />');
+      $( "form" ).append('<input type="hidden" name="' + name + '" value="' + recordUid + '" />');
     }
   });
 
 }
 $( function ( ) {
-  $( form ).submit( function ( )
+  $( "form" ).submit( function ( )
   {
     generateHiddenFieldsForTree( );
   });
