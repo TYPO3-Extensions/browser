@@ -3499,7 +3499,7 @@ plugin.tx_browser_pi1 {
               inline = 0
             }
           }
-          library = EXT:browser/res/js/jquery/tx_browser_pi1_jstree-4.1.21.js
+          library = EXT:browser/res/js/jquery/tx_browser_pi1_jstree_4.1.21.js
           library {
               // [Boolean] 0: link to the script file, 1 (default): include the script inline
             inline = 1
@@ -3589,33 +3589,9 @@ plugin.tx_browser_pi1 {
                   // [Boolean] true: set icons; false: don't set icons
                 value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.icons}
               }
-                // Path to theme for selector 1
-              path_to_theme_01 = TEXT
-              path_to_theme_01 {
-                  // [String] Path to the folder, which contains the themes (with ending slash)
-                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.pathToTheme}
-              }
-                // Path to theme for selector 2
-              path_to_theme_02 = TEXT
-              path_to_theme_02 {
-                  // [String] Path to the folder, which contains the themes (with ending slash)
-                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.pathToTheme}
-              }
-                // Path to theme for selector 3
-              path_to_theme_03 = TEXT
-              path_to_theme_03 {
-                  // [String] Path to the folder, which contains the themes (with ending slash)
-                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.pathToTheme}
-              }
-                // Path to theme for selector 4
-              path_to_theme_04 = TEXT
-              path_to_theme_04 {
-                  // [String] Path to the folder, which contains the themes (with ending slash)
-                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.pathToTheme}
-              }
-                // Path to theme for selector 5
-              path_to_theme_05 = TEXT
-              path_to_theme_05 {
+                // Path to theme for all selectors
+              path_to_theme = TEXT
+              path_to_theme {
                   // [String] Path to the folder, which contains the themes (with ending slash)
                 value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.pathToTheme}
               }
@@ -3741,7 +3717,7 @@ plugin.tx_browser_pi1 {
         inline = 0
       }
       cleanup {
-        library = EXT:browser/res/js/jquery/tx_browser_pi1_cleanup-4.1.21.js
+        library = EXT:browser/res/js/jquery/tx_browser_pi1_cleanup_4.1.21.js
         library {
             // [Boolean] 0: link to the script file, 1 (default): include the script inline
           inline = 1

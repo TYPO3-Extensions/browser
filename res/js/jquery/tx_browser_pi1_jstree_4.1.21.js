@@ -17,22 +17,26 @@
  *
  * BE AWARE
  * - Any changing must handled in both 
- *   - tx_browser_pi1_jstree-x.x.x.js
- *   - tx_browser_pi1-x.x.x.cleanup.js
+ *   - tx_browser_pi1_jstree_x.x.x.js
+ *   - tx_browser_pi1_cleanup_x.x.x.js
  */
 
 $( document ).ready( function( )
 {
 
+  $.jstree._themes = "###PATH_TO_THEMES###";
   if( $( "###SELECTOR_01###" ).length )
   {
     $("###SELECTOR_01###").jstree({
+      "checkbox"	: {
+        "override_ui" : true
+      },
       "themes" : {
         "theme" : "###THEME_01###",
         "dots"  : ###DOTS_01###,
         "icons" : ###ICONS_01###
       },
-      "plugins" : ["themes", "html_data", "cookies"]
+      "plugins" : [ ###PLUGINS_01### ]
     });
   }
   if( $( "###SELECTOR_02###" ).length )
@@ -43,7 +47,7 @@ $( document ).ready( function( )
         "dots"  : ###DOTS_02###,
         "icons" : ###ICONS_02###
       },
-      "plugins" : ["themes", "html_data", "cookies"]
+      "plugins" : [ ###PLUGINS_02### ]
     });
   }
   if( $( "###SELECTOR_03###" ).length )
@@ -54,7 +58,7 @@ $( document ).ready( function( )
         "dots"  : ###DOTS_03###,
         "icons" : ###ICONS_03###
       },
-      "plugins" : ["themes", "html_data", "cookies"]
+      "plugins" : [ ###PLUGINS_03### ]
     });
   }
   if( $( "###SELECTOR_04###" ).length )
@@ -65,7 +69,7 @@ $( document ).ready( function( )
         "dots"  : ###DOTS_04###,
         "icons" : ###ICONS_04###
       },
-      "plugins" : ["themes", "html_data", "cookies"]
+      "plugins" : [ ###PLUGINS_04### ]
     });
   }
   if( $( "###SELECTOR_05###" ).length )
@@ -76,7 +80,7 @@ $( document ).ready( function( )
         "dots"  : ###DOTS_05###,
         "icons" : ###ICONS_05###
       },
-      "plugins" : ["themes", "html_data", "cookies"]
+      "plugins" : [ ###PLUGINS_05### ]
     });
   }
 
