@@ -3590,8 +3590,8 @@ plugin.tx_browser_pi1 {
                 value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.icons}
               }
                 // Path to theme for all selectors
-              path_to_theme = TEXT
-              path_to_theme {
+              path_to_themes = TEXT
+              path_to_themes {
                   // [String] Path to the folder, which contains the themes (with ending slash)
                 value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.pathToTheme}
               }
