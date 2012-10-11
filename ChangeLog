@@ -6,6 +6,9 @@
                           * pi1
                             * class.tx_browser_pi1_filter_4x.php
                             * class.tx_browser_pi1_javascript.php
+                          * res/js/jquery
+                            * tx_browser_pi1_cleanup_x.x.x.js
+                            * tx_browser_pi1_jstree_x.x.x.js
                           * static
                             * constants.txt
                             * setup.txt

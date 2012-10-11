@@ -42,15 +42,25 @@ function cleanup_afterAJAXrequest( )
     // jQuery plugin jstree
 
   try {
+    $.jstree._themes = "###PATH_TO_THEMES###";
+  }
+  catch( err )
+  {
+    // jQuery plugin jstree isn't included. Don't worry!
+  }
+  try {
     if( $( "###SELECTOR_01###" ).length )
     {
       $("###SELECTOR_01###").jstree({
+        "checkbox" : {
+          "override_ui" : true
+        },
         "themes" : {
           "theme" : "###THEME_01###",
           "dots"  : ###DOTS_01###,
           "icons" : ###ICONS_01###
         },
-        "plugins" : ["themes", "html_data", "cookies"]
+        "plugins" : [ ###PLUGINS_01### ]
       });
     }
   }
@@ -62,12 +72,15 @@ function cleanup_afterAJAXrequest( )
     if( $( "###SELECTOR_02###" ).length )
     {
       $("###SELECTOR_02###").jstree({
+        "checkbox" : {
+          "override_ui" : true
+        },
         "themes" : {
           "theme" : "###THEME_02###",
           "dots"  : ###DOTS_02###,
           "icons" : ###ICONS_02###
         },
-        "plugins" : ["themes", "html_data", "cookies"]
+        "plugins" : [ ###PLUGINS_02### ]
       });
     }
   }
@@ -79,12 +92,15 @@ function cleanup_afterAJAXrequest( )
     if( $( "###SELECTOR_03###" ).length )
     {
       $("###SELECTOR_03###").jstree({
+        "checkbox" : {
+          "override_ui" : true
+        },
         "themes" : {
           "theme" : "###THEME_03###",
           "dots"  : ###DOTS_03###,
           "icons" : ###ICONS_03###
         },
-        "plugins" : ["themes", "html_data", "cookies"]
+        "plugins" : [ ###PLUGINS_03### ]
       });
     }
   }
@@ -96,12 +112,15 @@ function cleanup_afterAJAXrequest( )
     if( $( "###SELECTOR_04###" ).length )
     {
       $("###SELECTOR_04###").jstree({
+        "checkbox" : {
+          "override_ui" : true
+        },
         "themes" : {
           "theme" : "###THEME_04###",
           "dots"  : ###DOTS_04###,
           "icons" : ###ICONS_04###
         },
-        "plugins" : ["themes", "html_data", "cookies"]
+        "plugins" : [ ###PLUGINS_04### ]
       });
     }
   }
@@ -113,12 +132,15 @@ function cleanup_afterAJAXrequest( )
     if( $( "###SELECTOR_05###" ).length )
     {
       $("###SELECTOR_05###").jstree({
+        "checkbox" : {
+          "override_ui" : true
+        },
         "themes" : {
           "theme" : "###THEME_05###",
           "dots"  : ###DOTS_05###,
           "icons" : ###ICONS_05###
         },
-        "plugins" : ["themes", "html_data", "cookies"]
+        "plugins" : [ ###PLUGINS_05### ]
       });
     }
   }
