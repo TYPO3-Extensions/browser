@@ -35,7 +35,7 @@ $( document ).ready( function( )
 
 function generateHiddenFieldsForTree( treeId ) 
 {
-  $( "###SELECTOR_01###" ).plugins.checkbox.get_checked( $( "###SELECTOR_01###" ).reference( "#" + treeId ) ).each( function ( )
+  $( "###SELECTOR_01###" ).jstree.plugins.checkbox.get_checked( $( "###SELECTOR_01###" ).jstree.reference( "#" + treeId ) ).each( function ( )
   {
     var checkedId = this.id;
     $("<input>").attr("type", "hidden").attr("name", checkedId).val("on").appendTo("#" + treeId);
