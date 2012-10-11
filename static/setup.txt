@@ -3589,6 +3589,72 @@ plugin.tx_browser_pi1 {
                   // [Boolean] true: set icons; false: don't set icons
                 value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.icons}
               }
+                // Path to theme for selector 1
+              path_to_theme_01 = TEXT
+              path_to_theme_01 {
+                  // [String] Path to the folder, which contains the themes (with ending slash)
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.pathToTheme}
+              }
+                // Path to theme for selector 2
+              path_to_theme_02 = TEXT
+              path_to_theme_02 {
+                  // [String] Path to the folder, which contains the themes (with ending slash)
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.pathToTheme}
+              }
+                // Path to theme for selector 3
+              path_to_theme_03 = TEXT
+              path_to_theme_03 {
+                  // [String] Path to the folder, which contains the themes (with ending slash)
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.pathToTheme}
+              }
+                // Path to theme for selector 4
+              path_to_theme_04 = TEXT
+              path_to_theme_04 {
+                  // [String] Path to the folder, which contains the themes (with ending slash)
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.pathToTheme}
+              }
+                // Path to theme for selector 5
+              path_to_theme_05 = TEXT
+              path_to_theme_05 {
+                  // [String] Path to the folder, which contains the themes (with ending slash)
+                value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.pathToTheme}
+              }
+                // Plugins for selector 1: category_menu or checkbox
+              plugins_01 = COA
+              plugins_01 {
+                  // Plugins for the CATEGORY_MENU
+                10 = TEXT
+                10 {
+                    // [STRING] list of plugins
+                  value = "themes", "html_data", "cookies"
+                  if {
+                    value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.plugins}
+                    equals = category_menu
+                  }
+                }
+                  // Plugins for the CHECKBOX
+                20 = TEXT
+                20 {
+                    // [STRING] list of plugins
+                  value = "themes", "html_data", "checkbox",  "ui", "cookies"
+                  if {
+                    value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.plugins}
+                    equals = checkbox
+                  }
+                }
+              }
+              plugins_02 < . plugins_01
+                // Plugins for selector 2
+              plugins_02 = TEXT
+              plugins_03 < . plugins_01
+                // Plugins for selector 3
+              plugins_03 = TEXT
+              plugins_04 < . plugins_01
+                // Plugins for selector 4
+              plugins_04 = TEXT
+              plugins_05 < . plugins_01
+                // Plugins for selector 5
+              plugins_05 = TEXT
                 // Theme for selector 1
               theme_01 = TEXT
               theme_01 {
