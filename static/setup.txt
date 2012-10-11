@@ -3679,20 +3679,9 @@ plugin.tx_browser_pi1 {
         library {
             // [Boolean] 0: link to the script file, 1 (default): include the script inline
           inline = 1
-          marker {
-              // Id of the div-wrap of the treeview (selector). Should correspondend with displayList.master_templates.category_menu.treeview.html_id
-            selector = TEXT
-            selector {
-              value = #{$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
-            }
-            theme = TEXT
-            theme {
-                // [String] supported are: apple, classic, default, default-rtl
-              value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.theme}
-            }
-          }
-          marker >
           marker < plugin.tx_browser_pi1.javascript.jquery.plugins.jstree.library.marker
+            // marker is copied by plugins.jstree.library.marker
+          marker =
         }
       }
     }
