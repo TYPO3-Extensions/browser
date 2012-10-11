@@ -116,7 +116,7 @@ function generateHiddenFieldsForTree( treeId, tableField )
   
   var checked_ids = [];
   var name = "tx_browser_pi1[" + tableField + "][]"; 
-  alert( treeId + ": " + name );
+  //alert( treeId + ": " + name );
 
     // Append an input field for each selected <li>-item to the current form
   $( treeId ).jstree( "get_checked" , null, true ).each(function( )
