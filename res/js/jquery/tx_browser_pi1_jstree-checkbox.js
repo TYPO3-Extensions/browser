@@ -35,11 +35,15 @@ $( document ).ready( function( )
 
 function generateHiddenFieldsForTree( treeId ) 
 {
-  $.jstree.plugins.checkbox.get_checked( jstree.reference( "#" + treeId ) ).each( function ( )
+  var checked_ids = [];
+  $( treeId ).jstree( "get_checked" , null, true ).each(function( )
   {
-    var checkedId = this.id;
-    $("<input>").attr("type", "hidden").attr("name", checkedId).val("on").appendTo("#" + treeId);
+      checked_ids.push( this.id );
   });
+  //setting to hidden field
+  //document.getElementById('jsfields').value = checked_ids.join(",");
+  value = checked_ids.join(",");
+  alert( value );
 }
 
 $( function ( ) {
