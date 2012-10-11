@@ -1,44 +1,43 @@
-/**
- *
- * Copyright (c) 2012 Dirk Wildt
- * http://wildt.at.die-netzmacher.de/
- *
- * Version 4.1.19
- */
 
-
-
-$( document ).ready( function( )
-{
-  if( $( "###SELECTOR_01###" ).length )
-  {
-    $("###SELECTOR_01###").jstree({
-      "plugins" : ["themes", "html_data", "checkbox", "ui", "cookies"]
-    })
-    .bind("select_node.jstree", function (event, data) { 
-      // `data.rslt.obj` is the jquery extended node that was clicked
-      alert(data.rslt.obj.attr("id"));
-    })
-  }
+$( document ).ready( function( ) {
+  $( "#tx_greencars_manufacturer_title" ).jstree({ 
+    "themes" : {
+      "theme" : "classic",
+      "dots"  : true,
+      "icons" : false
+    },
+    "checkbox"	: {
+      "override_ui" : true
+    },
+    "plugins" : [ "themes", "html_data", "checkbox",  "ui", "cookies" ]
+  });
+  //$.jstree._themes = "/jstree-read-only/themes/";
 });
 
-function generateHiddenFieldsForTree( treeId ) 
+function generateHiddenFieldsForTree( ) 
 {
   var checked_ids = [];
-  $( treeId ).jstree( "get_checked" , null, true ).each(function( )
-  {
-      checked_ids.push( this.id );
-  });
-  //setting to hidden field
-  //document.getElementById('jsfields').value = checked_ids.join(",");
-  value = checked_ids.join(",");
-  alert( value );
-}
+  var name  = "tx_browser_pi1[tx_greencars_manufacturer.title][]";
 
-$( function ( ) {
-  $( "form" ).submit( function ( )
+    // Append an input field for each selected <li>-item to the current form
+  $( "#tx_greencars_manufacturer_title" ).jstree( "get_checked" , null, true ).each(function( )
   {
-    alert( "HALLO" );
-    generateHiddenFieldsForTree( "###SELECTOR_01###" ); 
+      // Get current record uid
+    var thisId         = this.id;
+    var thisIdSplitted = thisId.split( "_" );
+    var recordUid      = thisIdSplitted[ thisIdSplitted.length - 1 ];
+
+     // Append an input field with the record uid
+    if( recordUid )
+    {
+      $( form ).append('<input type="hidden" name="' + name + '" value="' + recordUid + '" />');
+    }
+  });
+
+}
+$( function ( ) {
+  $( form ).submit( function ( )
+  {
+    generateHiddenFieldsForTree( );
   });
 });

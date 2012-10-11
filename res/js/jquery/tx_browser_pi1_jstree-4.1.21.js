@@ -3,17 +3,23 @@
  * Copyright (c) 2012 Dirk Wildt
  * http://wildt.at.die-netzmacher.de/
  *
- * Version 4.1.18
+ * Version 4.1.21
  *
  * jquery.jstree-x.x.x.js is needed:
- *   http://docs.jquery.com/Plugins/jstree
+ *   http://www.jstree.com/
  *
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  */
 
-
+/**
+ *
+ * BE AWARE
+ * - Any changing must handled in both 
+ *   - tx_browser_pi1_jstree-x.x.x.js
+ *   - tx_browser_pi1-x.x.x.cleanup.js
+ */
 
 $( document ).ready( function( )
 {

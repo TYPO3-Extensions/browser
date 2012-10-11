@@ -1,4 +1,4 @@
-includeLibs {
+inc3ludeLibs {
     // Extends tx_cssstyledcontent_pi1
   tx_browser_cssstyledcontent = EXT:browser/lib/class.tx_browser_cssstyledcontent.php
     // Extends tslib_pibase
@@ -3496,7 +3496,7 @@ plugin.tx_browser_pi1 {
               inline = 0
             }
           }
-          library = EXT:browser/res/js/jquery/tx_browser_pi1_jstree-4.1.18.js
+          library = EXT:browser/res/js/jquery/tx_browser_pi1_jstree-4.1.21.js
           library {
               // [Boolean] 0: link to the script file, 1 (default): include the script inline
             inline = 1
@@ -3672,7 +3672,7 @@ plugin.tx_browser_pi1 {
         inline = 0
       }
       cleanup {
-        library = EXT:browser/res/js/jquery/tx_browser_pi1-0.0.3.cleanup.js
+        library = EXT:browser/res/js/jquery/tx_browser_pi1_cleanup-4.1.21.js
         library {
             // [Boolean] 0: link to the script file, 1 (default): include the script inline
           inline = 1
