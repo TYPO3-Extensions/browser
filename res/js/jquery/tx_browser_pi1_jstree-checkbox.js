@@ -18,12 +18,6 @@ $( document ).ready( function( )
         "dots"  : ###DOTS_01###,
         "icons" : ###ICONS_01###
       },
-      "checkbox" : {
-        "real_checkboxes" : true
-      },
-      "ui"  : {
-        "theme_name"  : "checkbox"
-      },
       "plugins" : ["themes", "html_data", "checkbox", "sort", "ui", "cookies"]
     })
     .bind("select_node.jstree", function (event, data) { 
