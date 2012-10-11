@@ -40,7 +40,7 @@ function cleanup_afterAJAXrequest( )
     /////////////////////////////////////////////////////
     //
     // jQuery plugin jstree
-
+/**
   try {
     if( $( "###SELECTOR_01###" ).length )
     {
@@ -127,5 +127,5 @@ function cleanup_afterAJAXrequest( )
     // jQuery plugin jstree isn't included. Don't worry!
   }
     // jQuery plugin jstree
-
+*/
 }
