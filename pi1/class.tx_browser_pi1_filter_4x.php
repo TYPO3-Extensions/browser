@@ -489,7 +489,7 @@ class tx_browser_pi1_filter_4x {
         // Get nice_piVar
       $arr_result   = $this->zz_getNicePiVar( $tableField );
       $arr_piVar    = $arr_result['data']['arr_piVar'];
-$this->pObj->dev_var_dump( $tableField, $arr_piVar );
+//$this->pObj->dev_var_dump( $tableField, $arr_piVar );
       unset ($arr_result);
         // Get nice_piVar
 
@@ -594,7 +594,7 @@ $this->pObj->dev_var_dump( $tableField, $arr_piVar );
       default:
           // Handle default filter (without area)
         $str_uidList  = implode( ', ', $arr_piVar );
-$this->pObj->dev_var_dump( $arr_piVar, $str_uidList );
+//$this->pObj->dev_var_dump( $arr_piVar, $str_uidList );
         $str_andWhere = $table . '.uid IN (' . $str_uidList . ')' . PHP_EOL;
           // #30912, 120127, dwildt+
         $this->arr_filter_condition[$table . '.uid']['uid_in_list'] = $arr_piVar;
@@ -6216,7 +6216,7 @@ $this->pObj->dev_var_dump( $arr_piVar, $str_uidList );
 
     list ($table, $field) = explode( '.', $tableField );
 
-      // SWITCH : default $tableField versus 'oderBy'
+      // SWITCH : default $tableField versus 'orderBy'
     switch( $tableField )
     {
       case( 'orderBy' ):
@@ -6228,7 +6228,7 @@ $this->pObj->dev_var_dump( $arr_piVar, $str_uidList );
         $conf_array = $this->conf_view['filter.'][$table . '.'][$field . '.'];
         break;
     }
-      // SWITCH : default $tableField versus 'oderBy'
+      // SWITCH : default $tableField versus 'orderBy'
 
       // SWITCH : set default $strNicePiVar
     switch( $conf_array['nice_piVar'] )
@@ -6274,14 +6274,14 @@ $this->pObj->dev_var_dump( $arr_piVar, $str_uidList );
       case( false ):
         $key_piVar    = $this->pObj->prefixId . '[' . $strNicePiVar . ']';
         $arr_piVar[0] = $this->pObj->piVars[$strNicePiVar];
-$this->pObj->dev_var_dump( $strNicePiVar, $arr_piVar );
+$this->pObj->dev_var_dump( $tableField, $conf_name, $conf_array, $strNicePiVar, $arr_piVar );
         break;
       case( true ):
       default:
         $key_piVar = $this->pObj->prefixId . '[' . $strNicePiVar . '][]';
         $arr_piVar = $this->pObj->piVars[$strNicePiVar];
-$this->pObj->dev_var_dump( $strNicePiVar, $arr_piVar );
-        
+$this->pObj->dev_var_dump( $tableField, $conf_name, $conf_array, $strNicePiVar, $arr_piVar );
+        break;
     }
       // SWITCH : set piVar depending on multiple
 
