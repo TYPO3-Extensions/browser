@@ -3,7 +3,7 @@
  * Copyright (c) 2012 - Dirk Wildt
  * http://wildt.at.die-netzmacher.de/
  *
- * @version 0.0.3
+ * @version 4.1.21
  *
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
@@ -41,23 +41,6 @@ function cleanup_afterAJAXrequest( )
     //
     // jQuery plugin jstree
 
-  try {
-    if( $( "###SELECTOR_01###" ).length )
-    {
-      $("###SELECTOR_01###").jstree({
-        "themes" : {
-          "theme" : "###THEME_01###",
-          "dots"  : ###DOTS_01###,
-          "icons" : ###ICONS_01###
-        },
-        "plugins" : ["themes", "html_data", "cookies"]
-      });
-    }
-  }
-  catch( err )
-  {
-    // jQuery plugin jstree isn't included. Don't worry!
-  }
   try {
     if( $( "###SELECTOR_01###" ).length )
     {
@@ -117,6 +100,23 @@ function cleanup_afterAJAXrequest( )
           "theme" : "###THEME_04###",
           "dots"  : ###DOTS_04###,
           "icons" : ###ICONS_04###
+        },
+        "plugins" : ["themes", "html_data", "cookies"]
+      });
+    }
+  }
+  catch( err )
+  {
+    // jQuery plugin jstree isn't included. Don't worry!
+  }
+  try {
+    if( $( "###SELECTOR_05###" ).length )
+    {
+      $("###SELECTOR_05###").jstree({
+        "themes" : {
+          "theme" : "###THEME_05###",
+          "dots"  : ###DOTS_05###,
+          "icons" : ###ICONS_05###
         },
         "plugins" : ["themes", "html_data", "cookies"]
       });
