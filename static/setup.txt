@@ -3645,16 +3645,16 @@ plugin.tx_browser_pi1 {
               }
               plugins_02 < . plugins_01
                 // Plugins for selector 2
-              plugins_02 = TEXT
+              plugins_02 = COA
               plugins_03 < . plugins_01
                 // Plugins for selector 3
-              plugins_03 = TEXT
+              plugins_03 = COA
               plugins_04 < . plugins_01
                 // Plugins for selector 4
-              plugins_04 = TEXT
+              plugins_04 = COA
               plugins_05 < . plugins_01
                 // Plugins for selector 5
-              plugins_05 = TEXT
+              plugins_05 = COA
                 // Theme for selector 1
               theme_01 = TEXT
               theme_01 {
