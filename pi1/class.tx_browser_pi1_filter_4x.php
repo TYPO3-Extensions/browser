@@ -4038,8 +4038,49 @@ class tx_browser_pi1_filter_4x {
 
           // Get table
         list( $table ) = explode( '.', $tableField );
+        
+        $conf_view        = $this->conf_view;
+        $cObj_name        = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['enabled'];
+        $cObj_conf        = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['enabled.'];
+        $treeviewEnabled  = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+        
+          // CONTINUE : field has an dot
+        if( ! $treeviewEnabled )
+        {
+          continue;
+        }
+          // CONTINUE : field has an dot
 
+        switch( $this->conf_view['filter.'][$table . '.'][$field] )
+        {
+          case( 'CATEGORY_MENU' ):
 $this->pObj->dev_var_dump( $tableField, $this->conf_view['filter.'][$table . '.'][$field] );          
+            break;
+          case( 'TREEVIEW' ):
+$this->pObj->dev_var_dump( $tableField, $this->conf_view['filter.'][$table . '.'][$field] );          
+            break;
+          default:
+            $prompt = '<h1>Evaluation of treeview filter failed!</h1>
+                      <h2>Filter ' . $tableField . '</h2>
+                      <p>
+                        ' . $tableField . ' is configured as ' . $this->conf_view['filter.'][$table . '.'][$field] . '<br />
+                        But ' . $tableField . '.treeview.enabled is true. This isn\'t proper.
+                      </p>
+                      <p>
+                        Please take care of a proper TypoScript configuration.<br />
+                        Remove ' . $tableField . '.treeview.enabled or set it to false. 
+                      </p>
+                      <p>
+                        Method: ' . __METHOD__ . '<br />
+                        Line: ' . __LINE__ . '<br />
+                        <br />
+                        Browser - TYPO3 without PHP
+                      </p>
+                      ';
+            die( $prompt );
+            break;
+        }
+
       }
     }
       // LOOP each filter
