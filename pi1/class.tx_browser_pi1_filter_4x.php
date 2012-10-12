@@ -4022,9 +4022,9 @@ class tx_browser_pi1_filter_4x {
   private function eval_treeview( )
   {
       // LOOP : all table.field
-    foreach( ( array ) $this->conf_view['filter.'] as $tables )
+    foreach( ( array ) array_keys( $this->conf_view['filter.'] ) as $tables )
     {
-$this->pObj->dev_var_dump( $tables, array_keys( $tables ) );
+$this->pObj->dev_var_dump( $tables );
         // CONTINUE : table has an dot
       if( rtrim( $tables, '.' ) != $tables )
       {
@@ -4033,7 +4033,7 @@ $this->pObj->dev_var_dump( $tables, array_keys( $tables ) );
 
       foreach( ( array ) $tables as $table )
       {
-$this->pObj->dev_var_dump( $table, array_keys( $table ) );
+$this->pObj->dev_var_dump( $table );
       }
 //      
 //        // #41776, dwildt, 1-
