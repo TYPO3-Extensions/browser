@@ -4021,45 +4021,28 @@ class tx_browser_pi1_filter_4x {
  */
   private function eval_treeview( )
   {
-      // LOOP : all table.field
-    foreach( ( array ) array_keys( $this->conf_view['filter.'] ) as $tables )
+      // LOOP each filter
+    foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
     {
-$this->pObj->dev_var_dump( $tables );
-        // CONTINUE : table has an dot
-      if( rtrim( $tables, '.' ) != $tables )
+      foreach( array_keys ( ( array ) $fields ) as $field )
       {
-        continue;
-      }
+          // CONTINUE : field has an dot
+        if( rtrim($field, '.') != $field )
+        {
+          continue;
+        }
+          // CONTINUE : field has an dot
 
-      foreach( ( array ) $tables as $table )
-      {
-$this->pObj->dev_var_dump( $table );
-      }
-//      
-//        // #41776, dwildt, 1-
-////      while( $value = current( $arrFields ) )
-//        // #41776, dwildt, 1+
-//      while( current( $arrFields ) )
-//      {
-//        $field = key( $arrFields );
-//          // IF : add field without a dot to $arr_tsFilterTableFields
-//        if( substr( $field, -1 ) != '.' )
-//        {
-//          $this->arr_tsFilterTableFields[] = trim( $tables ) . $field;
-//        }
-//          // IF : add field without a dot to $arr_tsFilterTableFields
-//        next( $arrFields );
-//      }
-    }
-      // LOOP : all table.field
+          // Class var table.field
+        $tableField = $tableWiDot . $field;
 
-      // DRS
-    if( $this->pObj->b_drs_filter )
-    {
-      $prompt = $viewWiDot . $mode . ' . filters isn\'t an array. There isn\'t any filter for processing.';
-      t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+          // Get table
+        list( $table ) = explode( '.', $tableField );
+
+$this->pObj->dev_var_dump( $tableField, $this->conf_view['filter.'][$table] );          
+      }
     }
-      // DRS
+      // LOOP each filter
 
     return;
   }
