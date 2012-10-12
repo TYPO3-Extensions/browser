@@ -1649,6 +1649,8 @@ plugin.tx_browser_pi1 {
               // treeview (default)
             value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.selector_01}
           }
+            // [String] type: category_menu or checkbox. Property is for evaluation only.
+          type = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.plugins}
         }
           // [String/optional] Name for the piVar. Name must be unique.
         nice_piVar =
