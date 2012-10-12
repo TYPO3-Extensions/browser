@@ -4054,10 +4054,10 @@ class tx_browser_pi1_filter_4x {
         switch( $this->conf_view['filter.'][$table . '.'][$field] )
         {
           case( 'CATEGORY_MENU' ):
-$this->pObj->dev_var_dump( $tableField, $this->conf_view['filter.'][$table . '.'][$field] );          
+            $this->eval_treeviewCategoryMenu( $tableField );
             break;
           case( 'TREEVIEW' ):
-$this->pObj->dev_var_dump( $tableField, $this->conf_view['filter.'][$table . '.'][$field] );          
+            $this->eval_treeviewCheckbox( $tableField );
             break;
           default:
             $prompt = '<h1>Evaluation of treeview filter failed!</h1>
@@ -4084,6 +4084,138 @@ $this->pObj->dev_var_dump( $tableField, $this->conf_view['filter.'][$table . '.'
       }
     }
       // LOOP each filter
+
+    return;
+  }
+
+
+
+/**
+ * eval_treeviewCategoryMenu( ): 
+ *
+ * @return	void
+ * @internal  #41753
+ * @version 4.1.21
+ * @since   4.1.21
+ */
+  private function eval_treeviewCategoryMenu( $tableField )
+  {
+          // Get table
+        list( $table, $field ) = explode( '.', $tableField );
+        
+        $type = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['type'];
+        
+        switch( $type )
+        {
+          case( 'category_menu' ):
+              // Configuration is proper.
+            break;
+          case( 'checkbox' ):
+          default:
+            $prompt = '<h1>Evaluation of treeview filter failed!</h1>
+                      <h2>Filter ' . $tableField . '</h2>
+                      <p>
+                        ' . $tableField . ' is configured as ' . $this->conf_view['filter.'][$table . '.'][$field] . '<br />
+                        But ' . $tableField . '.treeview.type is ' . $type . '. This isn\'t proper.
+                      </p>
+                      <p>
+                        Please take care of a proper TypoScript configuration:
+                      </p>
+                      <ul>
+                        <li>
+                          Look for the property plugins in the TypoScript Constant Editor.
+                        </li>
+                        <li>
+                          Set plugins to [category_menu].
+                        </li>
+                      </ul>
+                      <p>
+                        Alternate proper TypoScript configuration:
+                      </p>
+                      <ul>
+                        <li>
+                          Look for filter. ' . $tableField . ' the the TypoScript setup.
+                        </li>
+                        <li>
+                          Set filter. ' . $tableField . ' to TREEVIEW by copying the master template for a TREEVIEW.
+                        </li>
+                      </ul>
+                      <p>
+                        Method: ' . __METHOD__ . '<br />
+                        Line: ' . __LINE__ . '<br />
+                        <br />
+                        Browser - TYPO3 without PHP
+                      </p>
+                      ';
+            die( $prompt );
+            break;
+        }
+
+    return;
+  }
+
+
+
+/**
+ * eval_treeviewCheckbox( ): 
+ *
+ * @return	void
+ * @internal  #41753
+ * @version 4.1.21
+ * @since   4.1.21
+ */
+  private function eval_treeviewCheckbox( $tableField )
+  {
+          // Get table
+        list( $table, $field ) = explode( '.', $tableField );
+        
+        $type = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['type'];
+        
+        switch( $type )
+        {
+          case( 'checkbox' ):
+              // Configuration is proper.
+            break;
+          case( 'category_menu' ):
+          default:
+            $prompt = '<h1>Evaluation of treeview filter failed!</h1>
+                      <h2>Filter ' . $tableField . '</h2>
+                      <p>
+                        ' . $tableField . ' is configured as ' . $this->conf_view['filter.'][$table . '.'][$field] . '<br />
+                        But ' . $tableField . '.treeview.type is ' . $type . '. This isn\'t proper.
+                      </p>
+                      <p>
+                        Please take care of a proper TypoScript configuration:
+                      </p>
+                      <ul>
+                        <li>
+                          Look for the property plugins in the TypoScript Constant Editor.
+                        </li>
+                        <li>
+                          Set plugins to [checkbox].
+                        </li>
+                      </ul>
+                      <p>
+                        Alternate proper TypoScript configuration:
+                      </p>
+                      <ul>
+                        <li>
+                          Look for filter. ' . $tableField . ' the the TypoScript setup.
+                        </li>
+                        <li>
+                          Set filter. ' . $tableField . ' to CATEGORY_MENU by copying the master template for a CATEGORY_MENU.
+                        </li>
+                      </ul>
+                      <p>
+                        Method: ' . __METHOD__ . '<br />
+                        Line: ' . __LINE__ . '<br />
+                        <br />
+                        Browser - TYPO3 without PHP
+                      </p>
+                      ';
+            die( $prompt );
+            break;
+        }
 
     return;
   }
