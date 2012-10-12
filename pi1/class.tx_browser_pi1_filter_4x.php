@@ -4026,13 +4026,13 @@ class tx_browser_pi1_filter_4x {
     {
       foreach( ( array ) $tables as $table )
       {
+$this->pObj->dev_var_dump( $table, array_keys( $table ) );
           // CONTINUE : table has an dot
         if( rtrim( $table, '.' ) != $table )
         {
           continue;
         }
           // CONTINUE : table has an dot
-$this->pObj->dev_var_dump( $table, array_keys( $table ) );
       }
 //      
 //        // #41776, dwildt, 1-
