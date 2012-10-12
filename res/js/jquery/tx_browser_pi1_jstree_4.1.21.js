@@ -31,6 +31,10 @@ $( document ).ready( function( )
       "checkbox" : {
         "override_ui" : true
       },
+      "cookies" : {
+        "save_opened"   : "###SELECTOR_01###_opened",
+        "save_selected" : "###SELECTOR_01###_selected"
+      },
       "themes" : {
         "theme" : "###THEME_01###",
         "dots"  : ###DOTS_01###,
@@ -44,6 +48,10 @@ $( document ).ready( function( )
     $("###SELECTOR_02###").jstree({
       "checkbox" : {
         "override_ui" : true
+      },
+      "cookies" : {
+        "save_opened"   : "###SELECTOR_02###_opened",
+        "save_selected" : "###SELECTOR_02###_selected"
       },
       "themes" : {
         "theme" : "###THEME_02###",
@@ -59,6 +67,10 @@ $( document ).ready( function( )
       "checkbox" : {
         "override_ui" : true
       },
+      "cookies" : {
+        "save_opened"   : "###SELECTOR_03###_opened",
+        "save_selected" : "###SELECTOR_03###_selected"
+      },
       "themes" : {
         "theme" : "###THEME_03###",
         "dots"  : ###DOTS_03###,
@@ -73,6 +85,10 @@ $( document ).ready( function( )
       "checkbox" : {
         "override_ui" : true
       },
+      "cookies" : {
+        "save_opened"   : "###SELECTOR_04###_opened",
+        "save_selected" : "###SELECTOR_04###_selected"
+      },
       "themes" : {
         "theme" : "###THEME_04###",
         "dots"  : ###DOTS_04###,
@@ -86,6 +102,10 @@ $( document ).ready( function( )
     $("###SELECTOR_05###").jstree({
       "checkbox" : {
         "override_ui" : true
+      },
+      "cookies" : {
+        "save_opened"   : "###SELECTOR_05###_opened",
+        "save_selected" : "###SELECTOR_05###_selected"
       },
       "themes" : {
         "theme" : "###THEME_05###",
