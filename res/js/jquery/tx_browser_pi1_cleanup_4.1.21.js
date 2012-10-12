@@ -56,6 +56,7 @@ function cleanup_afterAJAXrequest( )
           "override_ui" : true
         },
         "cookies" : {
+          "save_loaded"   : "jstreeTreeview01_loaded",
           "save_opened"   : "jstreeTreeview01_opened",
           "save_selected" : "jstreeTreeview01_selected"
         },
@@ -80,6 +81,7 @@ function cleanup_afterAJAXrequest( )
           "override_ui" : true
         },
         "cookies" : {
+          "save_loaded"   : "jstreeTreeview02_loaded",
           "save_opened"   : "jstreeTreeview02_opened",
           "save_selected" : "jstreeTreeview02_selected"
         },
@@ -104,6 +106,7 @@ function cleanup_afterAJAXrequest( )
           "override_ui" : true
         },
         "cookies" : {
+          "save_loaded"   : "jstreeTreeview03_loaded",
           "save_opened"   : "jstreeTreeview03_opened",
           "save_selected" : "jstreeTreeview03_selected"
         },
@@ -128,6 +131,7 @@ function cleanup_afterAJAXrequest( )
           "override_ui" : true
         },
         "cookies" : {
+          "save_loaded"   : "jstreeTreeview04_loaded",
           "save_opened"   : "jstreeTreeview04_opened",
           "save_selected" : "jstreeTreeview04_selected"
         },
@@ -152,6 +156,7 @@ function cleanup_afterAJAXrequest( )
           "override_ui" : true
         },
         "cookies" : {
+          "save_loaded"   : "jstreeTreeview05_loaded",
           "save_opened"   : "jstreeTreeview05_opened",
           "save_selected" : "jstreeTreeview05_selected"
         },
