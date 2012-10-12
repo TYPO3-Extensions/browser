@@ -4021,6 +4021,8 @@ class tx_browser_pi1_filter_4x {
  */
   private function eval_treeview( )
   {
+    static $bool_drsFirstPrompt = true;
+    
       // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
     {
@@ -4050,6 +4052,20 @@ class tx_browser_pi1_filter_4x {
           continue;
         }
           // CONTINUE : field has an dot
+
+          // DRS
+        if( $this->pObj->b_drs_warn )
+        {
+          if( $bool_drsFirstPrompt )
+          {
+            $prompt = 'The treeview of ' . $tableField . ' is enabled.';
+            t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
+            $prompt = 'BE AWARE: Don\'t use AJAX. You will get unexpected effects!';
+            t3lib_div :: devLog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
+            $bool_drsFirstPrompt = false;
+          }
+        }
+          // DRS
 
         switch( $this->conf_view['filter.'][$table . '.'][$field] )
         {
@@ -4109,6 +4125,14 @@ class tx_browser_pi1_filter_4x {
         {
           case( 'category_menu' ):
               // Configuration is proper.
+              // DRS
+            if( $this->pObj->b_drs_filter )
+            {
+              $prompt = $tableField . ' =  ' . $this->conf_view['filter.'][$table . '.'][$field] . 
+                        ' and ' . $tableField . '.treeview.type is ' . $type . '. This is proper.';
+              t3lib_div :: devLog( '[OK/FILTER] ' . $prompt, $this->pObj->extKey, -1 );
+            }
+              // DRS
             break;
           case( 'checkbox' ):
           default:
@@ -4166,7 +4190,6 @@ class tx_browser_pi1_filter_4x {
  */
   private function eval_treeviewCheckbox( $tableField )
   {
-$this->pObj->dev_var_dump( "Evaluate AJAX" );
           // Get table
         list( $table, $field ) = explode( '.', $tableField );
         
@@ -4176,6 +4199,14 @@ $this->pObj->dev_var_dump( "Evaluate AJAX" );
         {
           case( 'checkbox' ):
               // Configuration is proper.
+              // DRS
+            if( $this->pObj->b_drs_filter )
+            {
+              $prompt = $tableField . ' =  ' . $this->conf_view['filter.'][$table . '.'][$field] . 
+                        ' and ' . $tableField . '.treeview.type is ' . $type . '. This is proper.';
+              t3lib_div :: devLog( '[OK/FILTER] ' . $prompt, $this->pObj->extKey, -1 );
+            }
+              // DRS
             break;
           case( 'category_menu' ):
           default:
