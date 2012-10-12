@@ -4166,6 +4166,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function eval_treeviewCheckbox( $tableField )
   {
+$this->pObj->dev_var_dump( "Evaluate AJAX" );
           // Get table
         list( $table, $field ) = explode( '.', $tableField );
         
