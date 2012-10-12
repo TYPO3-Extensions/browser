@@ -4103,7 +4103,7 @@ class tx_browser_pi1_filter_4x {
           // Get table
         list( $table, $field ) = explode( '.', $tableField );
         
-        $type = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['type'];
+        $type = $this->conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['type'];
         
         switch( $type )
         {
@@ -4169,7 +4169,7 @@ class tx_browser_pi1_filter_4x {
           // Get table
         list( $table, $field ) = explode( '.', $tableField );
         
-        $type = $conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['type'];
+        $type = $this->conf_view['filter.'][$table . '.'][$field . '.']['treeview.']['type'];
         
         switch( $type )
         {
