@@ -4039,7 +4039,7 @@ class tx_browser_pi1_filter_4x {
           // Get table
         list( $table ) = explode( '.', $tableField );
 
-$this->pObj->dev_var_dump( $tableField, $this->conf_view['filter.'][$table] );          
+$this->pObj->dev_var_dump( $tableField, $table, $this->conf_view['filter.'][$table] );          
       }
     }
       // LOOP each filter
