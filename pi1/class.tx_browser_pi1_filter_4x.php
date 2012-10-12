@@ -4024,14 +4024,16 @@ class tx_browser_pi1_filter_4x {
       // LOOP : all table.field
     foreach( ( array ) $this->conf_view['filter.'] as $tables )
     {
-$this->pObj->dev_var_dump( $tables, array_keys( $tables ) );
-return;
-        // CONTINUE : table has an dot
-      if( rtrim( $tables, '.' ) != $tables )
+      foreach( ( array ) $tables as $table )
       {
-        continue;
+          // CONTINUE : table has an dot
+        if( rtrim( $table, '.' ) != $table )
+        {
+          continue;
+        }
+          // CONTINUE : table has an dot
+$this->pObj->dev_var_dump( $table, array_keys( $table ) );
       }
-        // CONTINUE : table has an dot
 //      
 //        // #41776, dwildt, 1-
 ////      while( $value = current( $arrFields ) )
