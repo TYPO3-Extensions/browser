@@ -4058,9 +4058,8 @@ class tx_browser_pi1_filter_4x {
         {
           if( $bool_drsFirstPrompt )
           {
-            $prompt = 'The treeview of ' . $tableField . ' is enabled.';
-            t3lib_div :: devLog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
-            $prompt = 'BE AWARE: Don\'t use AJAX. You will get unexpected effects!';
+            $prompt = 'DON\'T USE AJAX: The treeview of ' . $tableField . ' is enabled. ' .
+                      'You will get unexpected effects!';
             t3lib_div :: devLog( '[WARN/FILTER] ' . $prompt, $this->pObj->extKey, 2 );
             $bool_drsFirstPrompt = false;
           }
