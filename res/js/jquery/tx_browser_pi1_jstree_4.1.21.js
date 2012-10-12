@@ -32,8 +32,8 @@ $( document ).ready( function( )
         "override_ui" : true
       },
       "cookies" : {
-        "save_opened"   : "###SELECTOR_01###_opened",
-        "save_selected" : "###SELECTOR_01###_selected"
+        "save_opened"   : "jstreeTreeview01_opened",
+        "save_selected" : "jstreeTreeview01_selected"
       },
       "themes" : {
         "theme" : "###THEME_01###",
@@ -50,8 +50,8 @@ $( document ).ready( function( )
         "override_ui" : true
       },
       "cookies" : {
-        "save_opened"   : "###SELECTOR_02###_opened",
-        "save_selected" : "###SELECTOR_02###_selected"
+        "save_opened"   : "jstreeTreeview02_opened",
+        "save_selected" : "jstreeTreeview02_selected"
       },
       "themes" : {
         "theme" : "###THEME_02###",
@@ -68,8 +68,8 @@ $( document ).ready( function( )
         "override_ui" : true
       },
       "cookies" : {
-        "save_opened"   : "###SELECTOR_03###_opened",
-        "save_selected" : "###SELECTOR_03###_selected"
+        "save_opened"   : "jstreeTreeview03_opened",
+        "save_selected" : "jstreeTreeview03_selected"
       },
       "themes" : {
         "theme" : "###THEME_03###",
@@ -86,8 +86,8 @@ $( document ).ready( function( )
         "override_ui" : true
       },
       "cookies" : {
-        "save_opened"   : "###SELECTOR_04###_opened",
-        "save_selected" : "###SELECTOR_04###_selected"
+        "save_opened"   : "jstreeTreeview04_opened",
+        "save_selected" : "jstreeTreeview04_selected"
       },
       "themes" : {
         "theme" : "###THEME_04###",
@@ -104,8 +104,8 @@ $( document ).ready( function( )
         "override_ui" : true
       },
       "cookies" : {
-        "save_opened"   : "###SELECTOR_05###_opened",
-        "save_selected" : "###SELECTOR_05###_selected"
+        "save_opened"   : "jstreeTreeview05_opened",
+        "save_selected" : "jstreeTreeview05_selected"
       },
       "themes" : {
         "theme" : "###THEME_05###",
