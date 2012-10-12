@@ -408,22 +408,17 @@ class tx_browser_pi1_filter_4x {
       // #41776, dwildt, 1-
 //    $this->pObj->objFltr3x->get_tableFields( );
 
-    $this->init_boolIsFilter( );
-
       // RETURN: if there isn't any filter array
-    if( ! $this->init_consolidationAndSelect_isFilterArray( ) )
+    if( ! $this->init_boolIsFilter( ) )
     {
       return;
     }
       // RETURN: if there isn't any filter array
 
-      // RETURN: if there isn't any table.field configured
-    if( ! $this->init_consolidationAndSelect_isTableFields( ) )
-    {
-      return;
-    }
-      // RETURN: if there isn't any table.field configured
-
+      // Evaluate TREEVIEW filter
+      // #41753, 121012, dwildt, 1+
+    $this->eval_treeview( );
+    
       // #41776, dwildt, 2+
       // Set the array consolidation and the ts property SELECT
     $this->init_consolidationAndSelect( );
@@ -3998,6 +3993,72 @@ class tx_browser_pi1_filter_4x {
       // DRS
 
     $firstVisit = false;
+  }
+
+
+
+
+
+
+
+
+
+ /***********************************************
+  *
+  * Evaluation
+  *
+  **********************************************/
+
+
+
+/**
+ * eval_treeview( ): 
+ *
+ * @return	void
+ * @internal  #41753
+ * @version 4.1.21
+ * @since   4.1.21
+ */
+  private function eval_treeview( )
+  {
+      // LOOP : all table.field
+    foreach( ( array ) $this->conf_view['filter.'] as $tables )
+    {
+$this->pObj->dev_var_dump( $tables, array_keys( $tables ) );
+return;
+        // CONTINUE : table has an dot
+      if( rtrim( $tables, '.' ) != $tables )
+      {
+        continue;
+      }
+        // CONTINUE : table has an dot
+//      
+//        // #41776, dwildt, 1-
+////      while( $value = current( $arrFields ) )
+//        // #41776, dwildt, 1+
+//      while( current( $arrFields ) )
+//      {
+//        $field = key( $arrFields );
+//          // IF : add field without a dot to $arr_tsFilterTableFields
+//        if( substr( $field, -1 ) != '.' )
+//        {
+//          $this->arr_tsFilterTableFields[] = trim( $tables ) . $field;
+//        }
+//          // IF : add field without a dot to $arr_tsFilterTableFields
+//        next( $arrFields );
+//      }
+    }
+      // LOOP : all table.field
+
+      // DRS
+    if( $this->pObj->b_drs_filter )
+    {
+      $prompt = $viewWiDot . $mode . ' . filters isn\'t an array. There isn\'t any filter for processing.';
+      t3lib_div :: devlog( '[INFO/FILTER] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+
+    return;
   }
 
 
