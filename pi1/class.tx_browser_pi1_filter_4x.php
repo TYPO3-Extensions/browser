@@ -4123,7 +4123,7 @@ class tx_browser_pi1_filter_4x {
                       </p>
                       <ul>
                         <li>
-                          Look for the property plugins in the TypoScript Constant Editor.
+                          Look for the property plugins within the TypoScript Constant Editor.
                         </li>
                         <li>
                           Set plugins to [category_menu].
@@ -4200,7 +4200,7 @@ class tx_browser_pi1_filter_4x {
                       </p>
                       <ul>
                         <li>
-                          Look for filter. ' . $tableField . ' the the TypoScript setup.
+                          Look for filter. ' . $tableField . ' within the TypoScript setup.
                         </li>
                         <li>
                           Set filter. ' . $tableField . ' to CATEGORY_MENU by copying the master template for a CATEGORY_MENU.
