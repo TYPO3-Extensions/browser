@@ -766,22 +766,6 @@ plugin.tx_browser_pi1 {
                       // Be aware of the trailing slash!
                     OpenLayers.ImgPath = "/typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.10.0/img/";
                     var rawdata = '###JSONDATA###';
-                    var XX_oxMapConfig = {
-                      MapId:          'oxMapArea',                //    HTML map viewport id
-                      MapControls:    '###MAPCONTROLS###',        //    customized control types
-                      MapZoomLevels:  '###MAPZOOMLEVELS###',      //    customized zoom levels
-                      MapMarker:      '###MAPMARKER###',          //    standalone marker is allowed
-                      MapMarkerInfo:  '###MAPMARKERINFO###',      //    marker with infolayer is allowed
-                      MapMarkerEvent: '###MAPMARKEREVENT###',     //    click | hover | on (for drawing one point only)
-
-                      OSM:            true,                       //    WMS type OSM
-                      OSMConfig:      {
-                        type:    'Mapnik',                        //    Mapnik
-                        name:    'OpenStreetMap (Mapnik)',        //    OpenStreetMap (Mapnik)
-                        center:  '###OSMCONFIGCENTER###',         //    setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
-                        zoom:    '###OSMCONFIGZOOM###'            //    integer (0 - 16) set zoom level
-                      }
-                    };
                     var oxMapConfig = {
                       MapId:          'oxMapArea',                //    HTML map viewport id
                       MapControls:    '###MAPCONTROLS###',        //    customized control types
@@ -793,38 +777,10 @@ plugin.tx_browser_pi1 {
 
                       OSM:            true,                                              //    WMS type OSM
                       OSMConfig:      {
-                        type:           'Mapnik',                        //    Mapnik
-                        name:           'OpenStreetMap (Mapnik)',        //    OpenStreetMap (Mapnik)
-                        center:         '###OSMCONFIGCENTER###',         //    setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
-                        //zoom:           '###OSMCONFIGZOOM###'            //    integer (0 - 16) set zoom level
+                        type:           'Mapnik',                  //    Mapnik
+                        name:           'OpenStreetMap (Mapnik)',  //    OpenStreetMap (Mapnik)
+                        center:         '###OSMCONFIGCENTER###',   //    setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
                         zoomStartLevel: '###OSMCONFIGZOOM###',     //    integer (0 - 19) set zoom level
-                        xx_custom:    {
-                          type: 'customBBOX',                            //    custom layer type
-                          content: {
-                            sort : 'image',
-                            size: {                                    //    image size in pixel units
-                              w: 620,
-                              h: 715    
-                            },
-                            bounds: {                                  //    bounding box coordinates for the restricted extent
-                              w: 11.29976,
-                              s: 50.95955,
-                              e: 11.35304,
-                              n: 50.99803
-                            },
-                            png:{                                      //    by default PNG image or for browser, that don't support SVG
-                              0: 'img/ci_map_v2.level0.png',
-                              1: 'img/ci_map_v2.level1.png',
-                              2: 'img/ci_map_v2.level2.png'
-                            },
-                            svg: {                                     //    modern browser support SVG, better image quality in maps !!
-                              0: 'img/ci_map_v2.level0.svg',
-                              1: 'img/ci_map_v2.level1.svg',
-                              2: 'img/ci_map_v2.level1.svg'
-                            }
-                          },
-                          numZoomLevels: 3
-                        },
                       }
                     };
                   /* ]]> */
