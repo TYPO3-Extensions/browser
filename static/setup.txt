@@ -797,7 +797,7 @@ plugin.tx_browser_pi1 {
                         name:           'OpenStreetMap (Mapnik)',        //    OpenStreetMap (Mapnik)
                         center:         '###OSMCONFIGCENTER###',         //    setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
                         //zoom:           '###OSMCONFIGZOOM###'            //    integer (0 - 16) set zoom level
-                        zoomStartLevel: '###OSMCONFIGZOOM###'     //    integer (0 - 19) set zoom level
+                        zoomStartLevel: '###OSMCONFIGZOOM###',     //    integer (0 - 19) set zoom level
                         xx_custom:    {
                           type: 'customBBOX',                            //    custom layer type
                           content: {
@@ -824,7 +824,7 @@ plugin.tx_browser_pi1 {
                             }
                           },
                           numZoomLevels: 3
-                        }
+                        },
                       }
                     };
                   /* ]]> */
