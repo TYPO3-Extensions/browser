@@ -824,7 +824,7 @@ plugin.tx_browser_pi1 {
                             }
                           },
                           numZoomLevels: 3
-                        },
+                        }
                       }
                     };
                   /* ]]> */
