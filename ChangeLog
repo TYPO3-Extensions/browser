@@ -12,8 +12,11 @@
             oxMapConfig_0.0.2.js -> oxMapConfig_0.0.9.js
             oxRenderMap_0.0.2.js -> oxRenderMap_0.0.9.js
             Effected files:
+            * pi1/class.tx_browser_pi1_map.php
+            * res/html/map/default_0.0.9.tmpl
             * static
               * setup.txt
+              * downgrade/3.9.0/setup.txt
             * t3jquery.txt
   * #42128: OpenStreetMap: filter aren't proper while using the zoom
             Effected files: see #42127
