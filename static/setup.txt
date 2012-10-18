@@ -765,7 +765,7 @@ plugin.tx_browser_pi1 {
                   /* <![CDATA[ */
                       // Be aware of the trailing slash!
                     OpenLayers.ImgPath = "/typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.10.0/img/";
-                    var rawData = '###JSONDATA###';
+                    var rawdata = '###JSONDATA###';
                     var oxMapConfig = {
                       MapId:          'oxMapArea',                //    HTML map viewport id
                       MapControls:    '###MAPCONTROLS###',        //    customized control types
