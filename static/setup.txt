@@ -820,7 +820,7 @@ plugin.tx_browser_pi1 {
               MapMarkerEvent = TEXT
               MapMarkerEvent {
                   // [STRING] customized marker events
-                value = {$plugin.tx_browser_pi1.map.popup.behaviour}
+                value = '{$plugin.tx_browser_pi1.map.popup.behaviour}'
               }
                 // Center of the map
               OSMConfigCenter = TEXT
