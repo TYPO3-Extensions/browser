@@ -2630,9 +2630,13 @@ plugin.tx_browser_pi1 {
             field       = {$plugin.tx_browser_pi1.map.field.category}
             noTrimWrap  = |(|) <br />|
           }
-            // Link to the single view
+            // Link to the single view (in 'click'-mode only)
           30 = TEXT
           30 {
+            if {
+              value   = '{$plugin.tx_browser_pi1.map.popup.behaviour}' 
+              equals  = 'click'
+            }
             value = In detail &raquo;
             lang {
               de = Mehr Informationen &raquo;
