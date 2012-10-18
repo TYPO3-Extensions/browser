@@ -485,6 +485,9 @@ class tx_browser_pi1_map
     {
         // Get the draft for an input field
       $input = $this->confMap['configuration.']['categories.']['form_input'];
+      $cObj_name = $this->confMap['configuration.']['categories.']['form_input'];
+      $cObj_conf = $this->confMap['configuration.']['categories.']['form_input.'];
+      $input     = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
         // replace the catgeroy marker
       $input = str_replace( '###CAT###', $labelValue, $input );
         // 4.1.17, 120927, dwildt
@@ -509,7 +512,7 @@ class tx_browser_pi1_map
               // 4.1.7, dwildt, +
             break;
           default:
-          // Render the image
+              // Render the image
             $cObj_name = $this->confMap['configuration.']['categories.']['colours.']['legend.'][$labelKey];
             $cObj_conf = $this->confMap['configuration.']['categories.']['colours.']['legend.'][$labelKey . '.'];
             $img       = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
