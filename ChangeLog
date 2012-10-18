@@ -30,6 +30,9 @@
               * setup.txt
               * downgrade/3.9.0/setup.txt
             * t3jquery.txt
+  * #00000: inc3ludeLibs -> includeLibs
+            Effected files:
+            * static/setup.txt
 
 4.1.21
   121009
