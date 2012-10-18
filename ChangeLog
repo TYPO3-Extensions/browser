@@ -1,13 +1,24 @@
-4.1.21
+4.1.23
   121018
   New Features
   * #42124: OpenStreetMap: improve performance
   * #42125: OpenStreetMap: offset for categories
   * #42126: OpenStreetMap: individual design of control panel
+
+4.1.22
+  121018
   Bugfixing
   * #42127: OpenStreetMap: filter aren't proper in Internet Explorer 8
+            oxMapConfig_0.0.2.js -> oxMapConfig_0.0.9.js
+            oxRenderMap_0.0.2.js -> oxRenderMap_0.0.9.js
+            Effected files:
+            * static
+              * setup.txt
+            * t3jquery.txt
   * #42128: OpenStreetMap: filter aren't proper while using the zoom
+            Effected files: see #42127
   * #42129: OpenStreetMap: tooltips aren't proper
+            Effected files: see #42127
   * #41570: jquery.t3browser-0.0.2.js -> jquery.t3browser-0.0.3.js
             marginBottomPx: width -> height
             Effected files:
@@ -16,12 +27,6 @@
               * setup.txt
               * downgrade/3.9.0/setup.txt
             * t3jquery.txt
-
-4.01. Internet Explorer 8
-4.02. Zoom-Funktion
-4.03. Tool-Tips
-
-
 
 4.1.21
   121009
