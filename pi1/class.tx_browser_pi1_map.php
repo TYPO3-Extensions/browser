@@ -484,10 +484,12 @@ class tx_browser_pi1_map
     foreach( $this->arrCategories['labels'] as $labelKey => $labelValue )
     {
         // Get the draft for an input field
+      //$input = $this->confMap['configuration.']['categories.']['form_input'];
       $cObj_name = $this->confMap['configuration.']['categories.']['form_input'];
       $cObj_conf = $this->confMap['configuration.']['categories.']['form_input.'];
       $input     = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
-        // replace the category marker
+$this->pObj->dev_var_dump( $cObj_name, $cObj_conf, $input );
+      // replace the category marker
       $input = str_replace( '###CAT###', $labelValue, $input );
         // 4.1.17, 120927, dwildt
         // replace the category marker
