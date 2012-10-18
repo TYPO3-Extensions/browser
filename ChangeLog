@@ -1,4 +1,29 @@
 4.1.21
+  121018
+  New Features
+  * #42124: OpenStreetMap: improve performance
+  * #42125: OpenStreetMap: offset for categories
+  * #42126: OpenStreetMap: individual design of control panel
+  Bugfixing
+  * #42127: OpenStreetMap: filter aren't proper in Internet Explorer 8
+  * #42128: OpenStreetMap: filter aren't proper while using the zoom
+  * #42129: OpenStreetMap: tooltips aren't proper
+  * #41570: jquery.t3browser-0.0.2.js -> jquery.t3browser-0.0.3.js
+            marginBottomPx: width -> height
+            Effected files:
+            * res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.3.js
+            * static
+              * setup.txt
+              * downgrade/3.9.0/setup.txt
+
+4.01. Internet Explorer 8
+4.02. Zoom-Funktion
+4.03. Tool-Tips
+
+
+
+4.1.21
+  121009
   New Feature
   * #41753: Treeview as checkbox
             * #41753.01:  New COA TREEVIEW

@@ -1211,9 +1211,7 @@ class tx_browser_pi1 extends tslib_pibase {
  *                    The calling method is a debug method - if it is called by another
  *                    method, please set the level in the calling method to 2.
  *
- * $param   integer   $level      : integer
- *
- * @param    [type]        $$level: ...
+ * @param    integer        $level: ...
  * @return    array        $arr_return : with elements class, method, line and prompt
  * @version 3.9.9
  * @since   3.9.9

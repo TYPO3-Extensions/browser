@@ -784,7 +784,7 @@ plugin.tx_browser_pi1 {
                     };
                   /* ]]> */
                   </script>
-                  <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.2.js"></script>
+                  <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.9.js"></script>
   )
               }
             }
@@ -3693,7 +3693,7 @@ plugin.tx_browser_pi1 {
         }
         t3browser {
             // [String] Path to the jss file of the t3browser plugin
-          plugin = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.2.js
+          plugin = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.3.js
           plugin {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0

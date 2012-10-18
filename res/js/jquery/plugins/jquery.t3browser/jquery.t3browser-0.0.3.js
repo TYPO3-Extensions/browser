@@ -175,7 +175,7 @@
                         // Get the size of the html element
                       var heightWiPx      = $( html_element ).css( "height" );
                       var widthWiPx       = $( html_element ).css( "width" );
-                      var marginBottomPx  = "-" + $( html_element ).css( "width" );
+                      var marginBottomPx  = "-" + $( html_element ).css( "height" );
                         // Set the loader to the size of the html element
                       $( "#tx-browser-pi1-loader" ).css( "height",        heightWiPx      );
                       $( "#tx-browser-pi1-loader" ).css( "width",         widthWiPx       );
