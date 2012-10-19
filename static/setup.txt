@@ -773,7 +773,7 @@ plugin.tx_browser_pi1 {
               MapZoomLevels = TEXT
               MapZoomLevels {
                   // [INTEGER] Value from 0 to 18. Example: 4
-                value = {$plugin.tx_browser_pi1.map.zoomLevel.fixed}
+                value = {$plugin.tx_browser_pi1.map.zoomLevel.max}
               }
                 // Map marker standalone mode
               MapMarker = TEXT
