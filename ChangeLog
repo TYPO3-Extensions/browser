@@ -3,7 +3,6 @@
   New Features
   * #42124: OpenStreetMap: improve performance
   * #42125: OpenStreetMap: offset for categories
-  * #42126: OpenStreetMap: individual design of control panel
 
 4.1.23
   121019
@@ -14,6 +13,8 @@
               * constants.txt
               * setup.txt
   * #42172: OpenStreetMap: configurable event mode
+            Effected files: see #42173
+  * #42126: OpenStreetMap: individual design of control panel
             Effected files: see #42173
 
 4.1.22
