@@ -132,7 +132,7 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Map//108;             type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
   map.field.categoryIcon = 
   # cat=Browser - Map//201;             type=string;    label= Map controls: Comma seperated list of quoted map controls wrapped by square brackets. Example: ['Navigation', 'PanZoomBar']
-  map.openLayers.imgPath = ['Navigation', 'PanZoomBar'] 
+  map.openLayers.controls = ['Navigation', 'PanZoomBar'] 
   # cat=Browser - Map//202;             type=string;    label= Control panel directory: Path to the directory with the icons of the control panel among others (with ending slash). Example: fileadmin/my_openstreetmap/icons/
   map.openLayers.imgPath = /typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.10.0/img/ 
   # cat=Browser - Map//203;             type=string;    label= Icons directory: Path to the directory with the category icons (with ending slash). Example: uploads/tx_org/ Default: uploads/media/
