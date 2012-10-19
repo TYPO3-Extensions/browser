@@ -1,9 +1,20 @@
-4.1.23
-  121018
+4.1.24
+  121030
   New Features
   * #42124: OpenStreetMap: improve performance
   * #42125: OpenStreetMap: offset for categories
   * #42126: OpenStreetMap: individual design of control panel
+
+4.1.23
+  121019
+  New Features
+  * #42173: OpenStreetMap: configurable zoomWheel
+            Effected files:
+            * static
+              * constants.txt
+              * setup.txt
+  * #42172: OpenStreetMap: configurable event mode
+            Effected files: see #42173
 
 4.1.22
   121018

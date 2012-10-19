@@ -734,7 +734,7 @@ plugin.tx_browser_pi1 {
                     var oxMapConfig = {
                       MapId:          'oxMapArea',                //    HTML map viewport id
                       MapControls:    '###MAPCONTROLS###',        //    customized control types
-                      //MapZoomWheel:   false,
+                      MapZoomWheel:   '###MAPZOOMWHEEL###',
                       MapZoomLevels:  '###MAPZOOMLEVELS###',      //    customized zoom levels
                       MapMarker:      '###MAPMARKER###',          //    standalone marker is allowed
                       MapMarkerInfo:  '###MAPMARKERINFO###',      //    marker with infolayer is allowed
@@ -786,6 +786,12 @@ plugin.tx_browser_pi1 {
               MapMarkerEvent {
                   // [STRING] customized marker events
                 value = '{$plugin.tx_browser_pi1.map.popup.behaviour}'
+              }
+                // Map marker event type
+              MapZoomWheel = TEXT
+              MapZoomWheel {
+                  // [BOOLEAN] enable or disable the zoom wheel
+                value = {$plugin.tx_browser_pi1.map.zoomWheel}
               }
                 // Center of the map
               OSMConfigCenter = TEXT
