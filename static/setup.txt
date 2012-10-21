@@ -750,7 +750,7 @@ plugin.tx_browser_pi1 {
                     };
                   /* ]]> */
                   </script>
-                  <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.9.js"></script>
+                  <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.10.js"></script>
   )
               }
             }
