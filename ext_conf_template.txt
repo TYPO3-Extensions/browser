@@ -17,7 +17,7 @@ external_links_02=0
 
 
 
-  # cat=Debugging/dev;                type=options[Don't log anything,---------------------------------------,Warnings and errors,All,---------------------------------------,Performance,---------------------------------------,Auto Discover development,Calendar,cObj->data,Download,Export,Filter and Category Menu,Flexform,Hooks,Javascript,Localisation,Map,Navigation,Realurl,Search,SEO (Search Engine Optimization),Session Management,Social media,SQL development,Statistics,Templating,Typoscript Template Container,Typoscript Update Checker,---------------------------------------,:TODO: for Development]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
+  # cat=Debugging/dev;                type=options[Don't log anything,---------------------------------------,Warnings and errors,All,---------------------------------------,Performance,---------------------------------------,Auto Discover development,BrowserMaps,Calendar,cObj->data,Download,Export,Filter and Category Menu,Flexform,Hooks,Javascript,Localisation,Navigation,Realurl,Search,SEO (Search Engine Optimization),Session Management,Social media,SQL development,Statistics,Templating,Typoscript Template Container,Typoscript Update Checker,---------------------------------------,:TODO: for Development]; label= DRS - Development Reporting System: Messages will be written to DevLog (you need the extension devlog).
 drs_mode = Don't log anything
 
   # cat=Debugging/others;             type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links

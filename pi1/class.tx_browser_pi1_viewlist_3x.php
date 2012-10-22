@@ -756,7 +756,7 @@ class tx_browser_pi1_viewlist_3x
       case( 'map' ) :
         if ( $this->pObj->b_drs_templating || $this->pObj->b_drs_map )
         {
-          t3lib_div::devlog('[INFO/TEMPLATING+MAP] ' . $str_marker . ' is ignored. ###TEMPLATE_CSV### is used as template marker.',  $this->pObj->extKey, 0);
+          t3lib_div::devlog('[INFO/TEMPLATING+BROWSERMAP] ' . $str_marker . ' is ignored. ###TEMPLATE_CSV### is used as template marker.',  $this->pObj->extKey, 0);
         }
         $str_marker     = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
         $template_path  = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['file'];

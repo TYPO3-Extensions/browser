@@ -150,7 +150,7 @@ class tx_browser_pi1_map
       if( $this->pObj->b_drs_map )
       {
         $prompt = 'RETURN. Map is disabled.';
-        t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+        t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
       }
       return $template;
     }
@@ -163,10 +163,10 @@ class tx_browser_pi1_map
       $prompt = 'The map module uses a JSON array. If you get any unexpected result, ' .
                 'please remove config.xhtml_cleaning and/or page.config.xhtml_cleaning ' .
                 'in your TypoScript configuration of the current page.';
-      t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2);
+      t3lib_div :: devLog('[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2);
       $prompt = 'The map module causes some conflicts with AJAX. PLease disable AJAX in the ' .
                 'plugin/flecform of the browser.';
-      t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2);
+      t3lib_div :: devLog('[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2);
     }
       // DRS
 
@@ -226,7 +226,7 @@ class tx_browser_pi1_map
             $prompt = 'Map is disabled.';
             break;
         }
-        t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+        t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
       }
       return;
     }
@@ -259,7 +259,7 @@ class tx_browser_pi1_map
         if( $this->pObj->b_drs_map )
         {
           $prompt = 'Local configuration in: views.' . $viewWiDot . $mode . '.navigation.map';
-          t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+          t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
         }
         break;
           // local configuration
@@ -269,7 +269,7 @@ class tx_browser_pi1_map
         if( $this->pObj->b_drs_map )
         {
           $prompt = 'Global configuration in: navigation.map';
-          t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+          t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
         }
         break;
           // global configuration
@@ -326,7 +326,7 @@ class tx_browser_pi1_map
           $prompt = 'Map is disabled.';
           break;
       }
-      t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+      t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
     }
       // DRS - Development Reporting System
 
@@ -398,7 +398,7 @@ class tx_browser_pi1_map
       if( $this->pObj->b_drs_map )
       {
         $prompt = 'The HTML template contains the marker ' . $str_mapMarker . '.';
-        t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+        t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
       }
       return $template;
     }
@@ -415,9 +415,9 @@ class tx_browser_pi1_map
       $prompt_01 = 'The HTML template doesn\'t contain any marker ' . $str_mapMarker . '.';
       $prompt_02 = 'Marker ' . $str_mapMarker . ' will added before the last div-tag automatically.';
       $prompt_03 = 'But it would be better, you add the marker ' . $str_mapMarker . ' to your HTML template manually.';
-      t3lib_div :: devLog('[WARN/MAP] ' . $prompt_01 , $this->pObj->extKey, 2);
-      t3lib_div :: devLog('[OK/MAP] '   . $prompt_02 , $this->pObj->extKey, -1);
-      t3lib_div :: devLog('[HELP/MAP] ' . $prompt_03 , $this->pObj->extKey, 1);
+      t3lib_div :: devLog('[WARN/BROWSERMAPS] ' . $prompt_01 , $this->pObj->extKey, 2);
+      t3lib_div :: devLog('[OK/BROWSERMAPS] '   . $prompt_02 , $this->pObj->extKey, -1);
+      t3lib_div :: devLog('[HELP/BROWSERMAPS] ' . $prompt_03 , $this->pObj->extKey, 1);
     }
       // DRS - Development Reporting System
 
@@ -575,7 +575,7 @@ class tx_browser_pi1_map
         if( $this->pObj->b_drs_map )
         {
           $prompt = 'current rows doesn\'t contain the field "' . $fieldForLabel . '"';
-          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
+          t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
         }
         $this->arrCategories = array( );
         return $this->arrCategories;
@@ -622,9 +622,9 @@ class tx_browser_pi1_map
         if( $this->pObj->b_drs_map )
         {
           $prompt = 'configuration.categories.orderBy has an unproper value: "' . $orderBy . '"';
-          t3lib_div :: devLog( '[ERROR/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+          t3lib_div :: devLog( '[ERROR/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
           $prompt = 'categories will ordered by SORT_REGULAR!';
-          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
+          t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
         }
         sort( $categoryLabels, SORT_REGULAR );
         break;
@@ -690,7 +690,7 @@ class tx_browser_pi1_map
       if( $this->pObj->b_drs_map )
       {
         $prompt = 'There is more than one category.';
-        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
       }
     }
     else
@@ -699,7 +699,7 @@ class tx_browser_pi1_map
       if( $this->pObj->b_drs_map )
       {
         $prompt = 'There isn\'t more than one category.';
-        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
       }
     }
     return $this->boolMoreThanOneCategory;
@@ -740,9 +740,9 @@ class tx_browser_pi1_map
       if( $this->pObj->b_drs_map )
       {
         $prompt = 'This fields are added to cObject: ' . implode( ', ', array_keys( $row ) );
-        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
         $prompt = 'I.e: you can use the content in TypoScript with: field = ' . key( $row );
-        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
       }
       $first_loop = false;
     }
@@ -777,14 +777,14 @@ class tx_browser_pi1_map
         if( empty ( $content ) )
         {
           $prompt = 'marker.addToCData.' . $marker . ' is empty. Probably this is an error!';
-          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+          t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
         }
         else
         {
           $prompt = 'Added to cObject[' . $marker . ']: ' . $content;
-          t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+          t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
           $prompt = 'You can use the content in TypoScript with: field = ' . $marker;
-          t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+          t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
         }
       }
       $this->pObj->cObj->data[ $marker ] = $content;
@@ -815,14 +815,14 @@ class tx_browser_pi1_map
         if( empty ( $value ) )
         {
           $prompt = $key . ' is empty. Probably this is an error!';
-          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+          t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
         }
         else
         {
           $prompt = 'Added to cObject[' . $key . ']: ' . $value;
-          t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+          t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
           $prompt = 'You can use the content in TypoScript with: field = ' . $key;
-          t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+          t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
         }
       }
       $this->pObj->cObj->data[ $key ] = $value;
@@ -1093,7 +1093,7 @@ class tx_browser_pi1_map
         if( $this->pObj->b_drs_map )
         {
           $prompt = $hashKeyMarker . ' isn\'t part of the map HTML template. It won\'t rendered!';
-          t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+          t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
         }
         continue;
       }
@@ -1106,7 +1106,7 @@ class tx_browser_pi1_map
         if( $this->pObj->b_drs_map )
         {
           $prompt = 'marker.variables.dynamic.' . $marker . ' is empty. Probably this is an error!';
-          t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
+          t3lib_div :: devLog('[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3);
         }
       }
       $markerArray[ $hashKeyMarker ] = $content;
@@ -1478,7 +1478,7 @@ class tx_browser_pi1_map
     if( $this->pObj->b_drs_map )
     {
       $prompt = 'JSON array: ' . var_export( $mapMarkers, true);
-      t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+      t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
     }
     switch( true )
     {
@@ -1488,20 +1488,20 @@ class tx_browser_pi1_map
         if( $this->pObj->b_drs_error )
         {
           $prompt = 'JSON array is null.';
-          t3lib_div :: devLog( '[ERROR/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+          t3lib_div :: devLog( '[ERROR/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
           $prompt = 'You will get an empty map!';
-          t3lib_div :: devLog( '[WARN/MAP] ' . $prompt , $this->pObj->extKey, 2 );
+          t3lib_div :: devLog( '[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 2 );
           $prompt = 'Please check the TypoScript Constant Editor > Category [BROWSER - MAP].';
-          t3lib_div :: devLog( '[HELP/MAP] ' . $prompt , $this->pObj->extKey, 1 );
+          t3lib_div :: devLog( '[HELP/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 1 );
         }
         break;
       default:
         if( $this->pObj->b_drs_map )
         {
           $prompt = 'JSON array seem\'s to be proper.';
-          t3lib_div :: devLog( '[OK/MAP] ' . $prompt , $this->pObj->extKey, -1 );
+          t3lib_div :: devLog( '[OK/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, -1 );
           $prompt = 'If you have an unexpected effect in your map, please check the JSON array from above!';
-          t3lib_div :: devLog( '[HELP/MAP] ' . $prompt , $this->pObj->extKey, 1 );
+          t3lib_div :: devLog( '[HELP/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 1 );
         }
         break;
     }
@@ -1558,7 +1558,7 @@ class tx_browser_pi1_map
         if( $this->pObj->b_drs_error )
         {
           $prompt = 'configuration.centerCoordinates.mode is undefined: ' . $mode . '. But is has to be auto or ts!';
-          t3lib_div :: devLog( '[ERROR/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+          t3lib_div :: devLog( '[ERROR/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
         }
           // DRS
           // RETURN: there is an error!
@@ -1574,7 +1574,7 @@ class tx_browser_pi1_map
       if( $this->pObj->b_drs_map )
       {
         $prompt = 'configuration.centerCoordinates.mode is: ' . $mode . '. Coordinates won\'t calculated.';
-        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
       }
         // DRS
       return $map_template;
@@ -1605,7 +1605,7 @@ class tx_browser_pi1_map
     if( $this->pObj->b_drs_map )
     {
       $prompt = 'configuration.centerCoordinates.mode is: ' . $mode . '. Calculated coordinates are ' . $centerCoor;
-      t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+      t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
     }
       // DRS
       
@@ -1648,7 +1648,7 @@ class tx_browser_pi1_map
         if( $this->pObj->b_drs_error )
         {
           $prompt = 'configuration.zoomLevel.mode is undefined: ' . $mode . '. But is has to be auto or ts!';
-          t3lib_div :: devLog( '[ERROR/MAP] ' . $prompt , $this->pObj->extKey, 3 );
+          t3lib_div :: devLog( '[ERROR/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
         }
           // DRS
           // RETURN: there is an error!
@@ -1664,7 +1664,7 @@ class tx_browser_pi1_map
       if( $this->pObj->b_drs_map )
       {
         $prompt = 'configuration.zoomLevel.mode is: ' . $mode . '. Zoom level won\'t calculated.';
-        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
       }
         // DRS
       return $map_template;
@@ -1725,7 +1725,7 @@ class tx_browser_pi1_map
     if( $this->pObj->b_drs_map )
     {
       $prompt = 'configuration.zoomLevel.mode is: ' . $mode . '. Calculated zoom level is ' . $zoomLevel;
-      t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+      t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
     }
       // DRS
       
@@ -1786,7 +1786,7 @@ class tx_browser_pi1_map
         if( $this->pObj->b_drs_map )
         {
           $prompt = $hashKeyMarker . ' isn\'t part of the map HTML template. It won\'t rendered!';
-          t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+          t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
         }
         continue;
       }
@@ -1799,7 +1799,7 @@ class tx_browser_pi1_map
         if( $this->pObj->b_drs_map )
         {
           $prompt = 'marker.html.' . $tsProperty . '.' . $marker . ' is empty. Probably this is an error!';
-          t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
+          t3lib_div :: devLog('[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3);
         }
       }
       $markerArray[ $hashKeyMarker ] = $content;
@@ -1845,7 +1845,7 @@ class tx_browser_pi1_map
       if( $this->pObj->b_drs_map )
       {
         $prompt = 'There isn\'t more than one category. Any form with categories will rendered.';
-        t3lib_div :: devLog( '[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0 );
+        t3lib_div :: devLog( '[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0 );
       }
       return $markerArray;
     }
@@ -1890,7 +1890,7 @@ class tx_browser_pi1_map
         if( $this->pObj->b_drs_map )
         {
           $prompt = $hashKeyMarker . ' isn\'t part of the map HTML template. It won\'t rendered!';
-          t3lib_div :: devLog('[INFO/MAP] ' . $prompt , $this->pObj->extKey, 0);
+          t3lib_div :: devLog('[INFO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 0);
         }
         continue;
       }
@@ -1903,7 +1903,7 @@ class tx_browser_pi1_map
         if( $this->pObj->b_drs_map )
         {
           $prompt = 'marker.snippets.jss.dynamic.' . $marker . ' is empty. Probably this is an error!';
-          t3lib_div :: devLog('[WARN/MAP] ' . $prompt , $this->pObj->extKey, 3);
+          t3lib_div :: devLog('[WARN/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3);
         }
       }
       $markerArray[ "'" . $hashKeyMarker . "'" ] = $content;

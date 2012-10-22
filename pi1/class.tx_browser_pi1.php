@@ -1367,6 +1367,15 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_tca        = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
+    if ($this->arr_extConf['drs_mode'] == 'BrowserMaps')
+    {
+      $this->b_drs_error      = true;
+      $this->b_drs_warn       = true;
+      $this->b_drs_info       = true;
+      $this->b_drs_map        = true;
+//      $this->b_drs_perform    = true;
+      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
+    }
     if ($this->arr_extConf['drs_mode'] == 'Calendar')
     {
       $this->b_drs_error      = true;
@@ -1444,15 +1453,6 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_info         = true;
       $this->b_drs_localisation = true;
       $this->b_drs_perform      = true;
-      t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
-    }
-    if ($this->arr_extConf['drs_mode'] == 'Map')
-    {
-      $this->b_drs_error      = true;
-      $this->b_drs_warn       = true;
-      $this->b_drs_info       = true;
-      $this->b_drs_map        = true;
-//      $this->b_drs_perform    = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
     if ($this->arr_extConf['drs_mode'] == 'Navigation')
