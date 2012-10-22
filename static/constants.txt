@@ -151,7 +151,7 @@ plugin.tx_browser_pi1 {
   map.pathToLegend = EXT:browser/res/js/map/icons/legend/
   # cat=BrowserMaps - Default Icons//102;             type=string;    label= Path to point icons: Path to the directory, which contains the images for points in the map (with ending slash!). Default: EXT:browser/res/js/map/icons/points/ 
   map.pathToPoints = EXT:browser/res/js/map/icons/points/
-  # cat=BrowserMaps - Zoom//101;             type=boolean;   label= Zoom wheel:Enable or disable the zomm wheel.
+  # cat=BrowserMaps - Zoom//101;             type=boolean;   label= Zoom wheel:Enable or disable the zoom wheel.
   map.zoomWheel = 1
   # cat=BrowserMaps - Zoom//102;             type=options[auto,fixed];  label= Zoom level mode:Auto: An optimal zoom level will calculated. Fixed: Zoom level will taken from the field "Fixed zoom level" below.
   map.zoomLevel.mode = auto
