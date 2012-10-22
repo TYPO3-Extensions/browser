@@ -5,8 +5,7 @@
             oxMapConfig_0.0.9.js -> oxMapConfig_0.0.10.js
             oxRenderMap_0.0.9.js -> oxRenderMap_0.0.10.js
             Effected files:
-            * t3jquery.txt
-  * #42125: OpenStreetMap: offset for categories
+            * t3jquery.txt  * #42125: OpenStreetMap: offset for categories
 
 4.1.23
   121019
