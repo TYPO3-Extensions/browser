@@ -78,7 +78,7 @@
       <label index="manuals.section_header">Browser Handb<![CDATA[&uuml;]]>cher</label>
       <label index="manuals.browser.title">Browser - TYPO3 ohne PHP: das Handbuch (Kurzform)</label>
       <label index="manuals.browser.description">Das Handbuch f<![CDATA[&uuml;]]>r den Browser  - TYPO3 ohne PHP - (Kurzform): Installation und Schnellstart. Beachte bitte das TYPO3 Handbuch in der Langfassung unten.</label>
-      <label index="manuals.browser_manual_en.title">Browser - TYPO3 ohne PHP: dasHandbuch (Langfassung)</label>
+      <label index="manuals.browser_manual_en.title">Browser - TYPO3 ohne PHP: das Handbuch (Langfassung)</label>
       <label index="manuals.browser_manual_en.description">Das komplette Handbuch f<![CDATA[&uuml;]]>r den Browser  - TYPO3 ohne PHP: Installation, Schnellstart, viele Beispiele und die Referenz.</label>
       <label index="tutorials.section_header">Browser Tutorials</label>
       <label index="tutorials.browser_tut_ajax_en.title">Browser Tutorial AJAX</label>
