@@ -8,7 +8,7 @@
             * t3jquery.txt  * #42125: OpenStreetMap: offset for categories
 
 4.1.23
-  121019
+  121023
   New Features
   * #42173: OpenStreetMap: configurable zoomWheel
             Effected files:
@@ -19,6 +19,8 @@
             Effected files: see #42173
   * #42126: OpenStreetMap: individual design of control panel
             Effected files: see #42173
+  Update
+  * #00000: Manual
 
 4.1.22
   121018
