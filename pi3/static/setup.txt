@@ -662,6 +662,7 @@ plugin.tx_browser_pi3 {
         }
       }
     }
+  }
 
     // Websites
   websites {
