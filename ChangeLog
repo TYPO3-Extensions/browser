@@ -1,4 +1,4 @@
-4.1.24
+4.1.25
   121030
   New Features
   * #42124: OpenStreetMap: improve performance
@@ -6,6 +6,11 @@
             oxRenderMap_0.0.9.js -> oxRenderMap_0.0.10.js
             Effected files:
             * t3jquery.txt  * #42125: OpenStreetMap: offset for categories
+
+4.1.24
+  121024
+  Update
+  * #00000: * pi3/locallang.xml
 
 4.1.23
   121023
