@@ -65,8 +65,8 @@ class tx_browser_pi3 extends tslib_pibase
   {
     $content = $content . $this->cObj->COBJ_ARRAY( $conf['title.'], $ext='' );
     $content = $content . $this->cObj->COBJ_ARRAY( $conf['manuals.'], $ext='' );
-    $content = $content . $this->cObj->COBJ_ARRAY( $conf['tutorials.'], $ext='' );
     $content = $content . $this->cObj->COBJ_ARRAY( $conf['browserMaps.'], $ext='' );
+    $content = $content . $this->cObj->COBJ_ARRAY( $conf['tutorials.'], $ext='' );
     $content = $content . $this->cObj->COBJ_ARRAY( $conf['websites.'], $ext='' );
     return $content;
   }
