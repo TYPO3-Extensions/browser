@@ -652,13 +652,13 @@ plugin.tx_browser_pi3 {
         }
         30 {
           stdWrap {
-            data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_map_en.title
+            data = LLL:EXT:browser/pi3/locallang.xml:browserMaps.browser_tut_map_en.title
           }
         }
       }
       20 {
         stdWrap {
-          data = LLL:EXT:browser/pi3/locallang.xml:tutorials.browser_tut_map_en.description
+          data = LLL:EXT:browser/pi3/locallang.xml:browserMaps.browser_tut_map_en.description
         }
       }
     }
