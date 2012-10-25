@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 - 2011: Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2010 - 2012: Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +29,7 @@
 *
 * @package    TYPO3
 * @subpackage    browser
-* @version   3.7.0
+* @version   4.1.25
 * @since     3.4.4
 */
 
@@ -84,8 +84,8 @@
 /**
  * Constructor. The method initiate the parent object
  *
- * @param	object		The parent object
- * @return	void
+ * @param    object        The parent object
+ * @return    void
  */
   function __construct($parentObj)
   {
@@ -110,9 +110,9 @@
     /**
  * Returns the value for a $GLOBALS marker
  *
- * @param	string		$arr_tsConf: The current TypoScript configuration
- * @param	array		$elements: Array with the element session
- * @return	string		The value from the TSFE array
+ * @param    string        $arr_tsConf: The current TypoScript configuration
+ * @param    array        $elements: Array with the element session
+ * @return    string        The value from the TSFE array
  */
   function session_marker($arr_tsConf, $elements)
   {
@@ -182,9 +182,9 @@
  *                                  * The method extends the SQL result with all piVar values. ###CHASH### has a process.
  *                                  * This method should supersede the deprecated method substitute_marker_recursive ()
  *
- * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
- * @param	array		$elements: The current row of the SQL result
- * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ * @param    array        $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
+ * @param    array        $elements: The current row of the SQL result
+ * @return    array        $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
  * @version 3.7.0
  * @since   3.6.0
  */
@@ -410,9 +410,9 @@
  *                                  * The method extends the SQL result with all piVar values. ###CHASH### has a process.
  *                                  * This method should supersede the deprecated method substitute_marker_recursive ()
  *
- * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
- * @param	array		$elements: The current row of the SQL result
- * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ * @param    array        $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
+ * @param    array        $elements: The current row of the SQL result
+ * @return    array        $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
  * @version 3.7.0
  * @since   3.6.0
  */
@@ -562,15 +562,15 @@
 
 
   /**
- * [DEPRECATED] Use substitute_tablefield_marker()
+ * [DEPRECATED] Use substitute_tablefield_marker( )
  *
  * substitute_marker_recurs(): Replace all markers in a multi-dimensional array like an TypoScript array with the real values from the SQL result
  * The method extends the SQL result with all piVar values. ###CHASH### has a process.
  *
- * @param	array		$arr_multi_dimensional: Multi-dimensional array like an TypoScript array
- * @param	array		$elements: The current row of the SQL result
- * @return	array		$arr_multi_dimensional: The current Multi-dimensional array with substituted markers
- * @version 3.6.2
+ * @param    array        $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
+ * @param    array        $elements: The current row of the SQL result
+ * @return    array        $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
+ * @version 4.1.25
  */
   function substitute_marker_recurs($arr_multi_dimensional, $elements)
   {
@@ -614,11 +614,24 @@
     $int_levelRecurs++;
     if ($int_levelRecurs > $int_levelRecursMax)
     {
+        // 4.1.25, 121025, dwildt, 2+
+      $debugTrailLevel = 1;
+      $debugTrail_01 = $this->pObj->drs_debugTrail( $debugTrailLevel );
+      $debugTrailLevel = 2;
+      $debugTrail_02 = $this->pObj->drs_debugTrail( $debugTrailLevel );
+      $debugTrailLevel = 3;
+      $debugTrail_03 = $this->pObj->drs_debugTrail( $debugTrailLevel );
+      
       if ($this->pObj->b_drs_error)
       {
-        t3lib_div::devlog('[ERROR] Recursion is bigger than '.$int_levelRecursMax, $this->pObj->extKey, 3);
-        t3lib_div::devlog('[HELP] If it is ok, please increase advanced.recursionGuard.', $this->pObj->extKey, 1);
-        t3lib_div::devlog('[ERROR] EXIT', $this->pObj->extKey, 3);
+        $prompt = 'Recursion is bigger than ' . $int_levelRecursMax;
+        t3lib_div::devlog('[ERROR] ' . $prompt, $this->pObj->extKey, 3);
+        $prompt = 'Called from ' . $debugTrail_01['prompt'] . ' -> ' . $debugTrail_02['prompt'] . ' -> ' . $debugTrail_03['prompt'];
+        t3lib_div::devlog('[INFO] ' . $prompt, $this->pObj->extKey, 2);
+        $prompt = 'If it is ok, please increase advanced.recursionGuard.';
+        t3lib_div::devlog('[HELP] ' . $prompt, $this->pObj->extKey, 1);
+        $prompt = 'EXIT';
+        t3lib_div::devlog('[ERROR] ' . $prompt, $this->pObj->extKey, 3);
       }
         // 12310, dwildt, 110310
       $prompt = '<h1>Recursion Guard</h1>
@@ -626,7 +639,14 @@
           Recursion is bigger than '.$int_levelRecursMax.'<br />
           If it is ok, please increase advanced.recursionGuard.<br />
           Did you miss to include the browser template in the page template?<br />
-          Method: ' . __METHOD__ . '
+          Method: ' . __METHOD__ . ' (line: ' . __LINE__ . ')
+        </p>
+        <p>
+          Called from ' . $debugTrail_01['prompt'] . ' -> ' . $debugTrail_02['prompt'] . ' -> ' . $debugTrail_03['prompt'] . '
+        </p>
+        <p style="border:1em solid red;color:red;font-weight:bold;padding: 2em;text-align:center;">
+          The method: ' . __METHOD__ . ' is deprecated.<br />
+          Please use substitute_tablefield_marker( )
         </p>';
       echo $prompt;
       exit;
@@ -887,8 +907,8 @@
  * extend_marker_wi_cObjData: Extend the given marker array with key/values from cObj->data,
  *                            the data of the tt_content record of the browser plugin
  *
- * @param	array		$markerArray: Array with markers
- * @return	array		$markerArray: Array with markers extended
+ * @param    array        $markerArray: Array with markers
+ * @return    array        $markerArray: Array with markers extended
  * @version 3.7.0
  * @since 3.7.0
  */
@@ -927,8 +947,8 @@
   /**
  * extend_marker_wi_pivars: Extend the given marker array with key/values from the piVars
  *
- * @param	array		$markerArray: Array with markers
- * @return	array		$markerArray: Array with markers extended
+ * @param    array        $markerArray: Array with markers
+ * @return    array        $markerArray: Array with markers extended
  * @version 2.0.0
  * @since 2.0.0
  */
@@ -966,8 +986,8 @@
  * replace_left_over(): Replace all markers, which are left over
  *                      Feature: #28657
  *
- * @param	array		$str_content: current content
- * @return	string		$str_content: rendered content
+ * @param    array        $str_content: current content
+ * @return    string        $str_content: rendered content
  * @version 3.7.0
  * @since 3.7.0
  */

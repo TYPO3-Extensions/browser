@@ -29,7 +29,7 @@
 * @package    TYPO3
 * @subpackage    browser
 *
-* @version 3.9.13
+* @version 4.1.25
 * @since 3.0.0
 */
 
@@ -74,8 +74,8 @@ class tx_browser_pi1_wrapper
    /**
  * Constructor. The method initiate the parent object
  *
- * @param	object		The parent object
- * @return	void
+ * @param    object        The parent object
+ * @return    void
  */
   function __construct($parentObj)
   {
@@ -110,7 +110,7 @@ class tx_browser_pi1_wrapper
   /**
  * constant_markers(): Generate the markerArray with self-defined markers out of the TypoScript. Return a markerArray, if there are values for replacement.
  *
- * @return	array		The markerArray. If there aren't any value, it returns FALSE.
+ * @return    array        The markerArray. If there aren't any value, it returns FALSE.
  * @version 3.6.1
  */
   function constant_markers()
@@ -293,11 +293,11 @@ class tx_browser_pi1_wrapper
   /**
  * wrapAndLinkValue(): Wraps a value and links it. Method uses the COA property and API function
  *
- * @param	string		$tableField: the field name in the format table.field
- * @param	string		$value: The value, which should be wrapped
- * @param	integer		$recordId: Id of the record, which should be displayed in a single view
- * @return	string		The wrapped and linked value
- * @version 4.0.0
+ * @param    string        $tableField: the field name in the format table.field
+ * @param    string        $value: The value, which should be wrapped
+ * @param    integer        $recordId: Id of the record, which should be displayed in a single view
+ * @return    string        The wrapped and linked value
+ * @version 4.1.25
  * @since 2.0.0
  */
   function wrapAndLinkValue($tableField, $value, $recordId=0)
@@ -898,11 +898,11 @@ class tx_browser_pi1_wrapper
  *                            workflow of the browser. Children records became a string. This method enables, to
  *                            wrap each child in the string seperately.
  *
- * @param	string		$tableField: the field name in the format table.field
- * @param	string		$xsv_value: Variable seperated values, which should be wrapped
- * @param	array		$lConfCObj: TypoScript configuration array
- * @param	string		$ext: If "INT" then the cObject is a "COBJ_ARRAY_INT" (non-cached), otherwise just "COBJ_ARRAY" (cached)
- * @return	string		The wrapped and linked children values
+ * @param    string        $tableField: the field name in the format table.field
+ * @param    string        $xsv_value: Variable seperated values, which should be wrapped
+ * @param    array        $lConfCObj: TypoScript configuration array
+ * @param    string        $ext: If "INT" then the cObject is a "COBJ_ARRAY_INT" (non-cached), otherwise just "COBJ_ARRAY" (cached)
+ * @return    string        The wrapped and linked children values
  */
   function wrapAndLinkValue_Children($tableField, $xsv_values, $lConfCObj, $ext)
   {
@@ -1013,8 +1013,8 @@ class tx_browser_pi1_wrapper
   /**
  * Wrap images with the TYPO3 stdWrap method
  *
- * @param	array		$tsImage : the typoscript array of an image
- * @return	string		The wrapped image(s)
+ * @param    array        $tsImage : the typoscript array of an image
+ * @return    string        The wrapped image(s)
  * @version 3.6.0
  * @since 1.0
  */
@@ -1195,8 +1195,8 @@ class tx_browser_pi1_wrapper
  *                    class i.e : class="c2794-tx-browser-pi1"
  *                    Method is added with #28562
  *
- * @param	string		$content: the content which will be wrapped
- * @return	string		the wrapped content
+ * @param    string        $content: the content which will be wrapped
+ * @return    string        the wrapped content
  * @version 4.0.0
  * @since 3.7.0
  */
@@ -1233,8 +1233,8 @@ class tx_browser_pi1_wrapper
   /**
  * Wrap documents with the TYPO3 filelink method
  *
- * @param	string		$documents : the list of documents
- * @return	string		The wrapped document(s)
+ * @param    string        $documents : the list of documents
+ * @return    string        The wrapped document(s)
  */
   function wrapDocument($documents) {
 
@@ -1286,9 +1286,9 @@ class tx_browser_pi1_wrapper
   /**
  * Wrap string in the format YYYY-MM-DD. It is a special method for the extension ships.
  *
- * @param	string		$string : the string in the format YYYY-MM-DD
- * @param	string		$view : list or single
- * @return	string		The wrapped document(s)
+ * @param    string        $string : the string in the format YYYY-MM-DD
+ * @param    string        $view : list or single
+ * @return    string        The wrapped document(s)
  */
   function wrapYYYYMMDD($specialDate) {
 
@@ -1319,9 +1319,9 @@ class tx_browser_pi1_wrapper
  * Wraps the given string with general_stdWrap from configuration. If $arr_tsConf is an array, $arr_tsConf will be
  * processed instead of general_stdWrap.
  *
- * @param	string		$string to wrap
- * @param	array		$arr_tsConf: Array with a TS configuration
- * @return	string		Wrapped string
+ * @param    string        $string to wrap
+ * @param    array        $arr_tsConf: Array with a TS configuration
+ * @return    string        Wrapped string
  */
   function general_stdWrap($str, $arr_tsConf)
   {
@@ -1351,8 +1351,8 @@ class tx_browser_pi1_wrapper
   /**
  * Return the table summary out of the locallang_db.xml
  *
- * @param	string		view: list or single
- * @return	string		summary
+ * @param    string        view: list or single
+ * @return    string        summary
  */
   function tableSummary($view)
   {
@@ -1395,8 +1395,8 @@ class tx_browser_pi1_wrapper
   /**
  * Return the table caption out of the locallang_db.xml
  *
- * @param	string		view: list or single
- * @return	string		summary
+ * @param    string        view: list or single
+ * @return    string        summary
  */
   function tableCaption($view) {
 
@@ -1434,9 +1434,9 @@ class tx_browser_pi1_wrapper
   /**
  * Substitute marker ###TABLE.FIELD### with the value of table.field
  *
- * @param	string		String with one or more table field markers
- * @param	array		The single record
- * @return	string		String with one ore more table field values
+ * @param    string        String with one or more table field markers
+ * @param    array        The single record
+ * @return    string        String with one ore more table field values
  */
   function wrapTableFields($wrapThisString, $elements) {
 

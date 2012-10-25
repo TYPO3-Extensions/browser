@@ -3,11 +3,9 @@
  * 
  *  author:    o'xkape, Mike Kunert <warum@oxkape.de>
  *  copyright: o'xkape <http://www.webkartografie.de> by <http://www.oxkape.de>
- *  date: 2012-02-20
+ *  date: 2012-10-24
  *  
  * */
-
-//alert('X');
 
 var oxMapRender = function(){
     'use strict';
@@ -16,6 +14,7 @@ var oxMapRender = function(){
         layerOn = null,
         layerCat = null;
 
+    this.markerWithSpecialUrl = [];
     this.markerList = [];
 
     this.init = function( oConfig ){                                                                //  default initialize method
@@ -24,7 +23,7 @@ var oxMapRender = function(){
 
         oConfig.Marker = rawdata;
 
-        var aAllowedWMS = [ 'OSM','Custom', 'GMap' ],                                                       //  list of allowed WMS like OpenStreetMap
+        var aAllowedWMS = [ 'OSM','Custom' ],                                                       //  list of allowed WMS like OpenStreetMap
             sWms = null,
             bConfigExists = false,
             oWmsLayer = null,
@@ -77,11 +76,6 @@ var oxMapRender = function(){
                     self.custom[ oWmsConfig.custom.type ]( oWmsConfig.custom, oWmsConfig.zoomStartLevel );
                 }
             }
-            
-            if( aAllowedWMS[ a ] === 'GMap' ){
-                oWmsLayer = self.addDefaultMapLayer( aAllowedWMS[ a ] , oWmsConfig );
-                oxMap.addLayer( oWmsLayer );
-            }
         }
 
         if( oWmsConfig.center ){
@@ -100,7 +94,6 @@ var oxMapRender = function(){
     this.addDefaultMapLayer = function( sWms, oWmsConfig ){                                         //  create default map layer, default OSM.Mapnik
         switch( oWmsConfig.type ){
             case 'Osmarender': return new OpenLayers.Layer.OSM.Osmarender(); break;
-            case 'Street'    : return new OpenLayers.Layer.Google('Google Streets',{numZoomLevels: 20}); break;
             default          : return new OpenLayers.Layer.OSM.Mapnik(); break;
         }
     };
@@ -126,6 +119,7 @@ var oxMapRender = function(){
 
         OpenLayers.Marker.prototype.name = '';
         OpenLayers.Marker.prototype.category = '';
+        OpenLayers.Marker.prototype.goToUrl = null;
 
         for ( sCategory in oMarker ) {                                                              //  check category for data
             oCategoryData = oMarker[ sCategory ];
@@ -141,19 +135,23 @@ var oxMapRender = function(){
             }
 
             $.each(oCategoryData.data, function( key, kVal){
-                var mHTML,
-                    img = icon.clone();
+                var img = icon.clone();
 
                 n = self.setCoordinates( kVal.coors );                                              //  make an OpenLayers.LonLat object for drawing
                 m = new OpenLayers.Marker( n, img );                                                //  create OpenLayers.Marker object
                 m.name = key;                                                                       //  give marker a name
                 m.category = sCategory;                                                             //  and his category
 
+                if( kVal.url ){
+                    m.goToUrl = kVal.url;
+                    self.markerWithSpecialUrl.push( m );
+                }
+
                 $(img.imageDiv).addClass( 'tooltip' )
                                .attr( 'data-catID', sCategory )
                                .attr( 'data-name', key );
 
-                if(self.oxMapConfig.MapMarkerEvent == 'on'){                                        //  if only one marker exists, open info box automatically
+                if( self.oxMapConfig.MapMarkerEvent == 'on' ){                                        //  if only one marker exists, open info box automatically
                     self.setLayer( null, m );
                     self.oxMapConfig.MapMarkerEvent = 'click';
                 }
@@ -163,24 +161,33 @@ var oxMapRender = function(){
 
                 marker.addMarker( m );                                                              //  add marker to special category marker layer
 
-                mHTML = $( m.icon.imageDiv );                                                       //    HTML wrapper around marker icon
-
-                if ( kVal.url && self.oxMapConfig.MapMarkerEvent != 'click' ) {                     //    if marker has an url
-                    var link = $('<a></a>').attr( 'href', kVal.url )                                //    wrap icon with A element, set url
-                                           .addClass( 'markerLink' );                               //    and css class for styling
-
-                    mHTML.find('img').wrap( link );                            
-                }
-
+                //mHTML = $( m.icon.imageDiv );                                                       //  HTML wrapper around marker icon
+/*
                 if ( kVal.number ) {                                                                //    plus a number if set
                     mHTML.append( '<span class="markerNumber">' + kVal.number + '</span>' );
                 }
+*/
             });
 
             self.markerList.push( marker );
         }
 
         self.oxMap.addLayers( self.markerList );                                                    //  and bind it to map object
+
+        (function setSpecialUrl(){
+            var markerIcon,
+                markerLink = $('<a></a>').addClass('markerLink'),
+                markerUrl, mL;
+            
+            $.each( self.markerWithSpecialUrl, function( key,marker ){
+                markerUrl = marker.goToUrl;
+                mL = markerLink.clone();
+                mL.attr('href', markerUrl)
+
+                markerIcon = $( marker.icon.imageDiv ).find('img');
+                markerIcon.wrap( mL );
+            });
+        })();
 
         $(self.oxMap.div).on( self.getEvent( self.oxMapConfig.MapMarkerEvent ), '.tooltip', self.toolTip );
 
@@ -215,19 +222,9 @@ var oxMapRender = function(){
                 return null;
         }
     };
-    
+
     this.toolTip = function( event ){
         event.stopPropagation();
-
-        if( layerOn ){
-            layerOn.remove();
-            layerOn = null;
-            layerCat.css( 'z-index', layerCat.attr('data-z') );
-
-            if( event.type === 'mouseout' ){
-                return true;
-            }
-        }
 
         var tooltip = $( '<div class="oxTextLayer"></div>' ),
             el = $(this),
@@ -235,6 +232,16 @@ var oxMapRender = function(){
             name = el.attr('data-name'),
             cat = el.attr('data-catID'),
             data = self.oxMapConfig.Marker[ cat ][ 'data' ][ name ];
+
+        if( layerOn ){
+            layerOn.remove();
+            layerOn = null;
+            layerCat.css( 'z-index', layerCat.attr('data-z') );
+
+            if( event.type === 'mouseout' || layerCat.attr('id') == elWrap.attr('id') ){
+                return true;
+            }
+        }
 
         layerOn = tooltip;
         layerCat = elWrap;

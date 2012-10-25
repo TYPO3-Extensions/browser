@@ -738,7 +738,7 @@ plugin.tx_browser_pi1 {
                       MapZoomLevels:  '###MAPZOOMLEVELS###',      //    customized zoom levels
                       MapMarker:      '###MAPMARKER###',          //    standalone marker is allowed
                       MapMarkerInfo:  '###MAPMARKERINFO###',      //    marker with infolayer is allowed
-                      MapMarkerEvent: '###MAPMARKEREVENT###',     //    click | hover | off | on (for drawing one point only)
+                      MapMarkerEvent: '###MAPMARKEREVENT###',     //    click | hover | off | on (for drawing one point only)
 
                       OSM:            true,                                              //    WMS type OSM
                       OSMConfig:      {
@@ -750,7 +750,7 @@ plugin.tx_browser_pi1 {
                     };
                   /* ]]> */
                   </script>
-                  <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.9.js"></script>
+                  <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.11.js"></script>
   )
               }
             }
@@ -3411,6 +3411,8 @@ plugin.tx_browser_pi1 {
       }
     }
     viewList {
+        // [BOOLEAN] 1 (default): Display the listview. 0: Don't display the listview.
+      display_listview = 1
         // [STRING] independent (default) || controlled: Calculate total hits. Can be overriden while runtime by the flexform value.
       total_hits = independent
         // [Boolean] True: hits will counted (default). False: hits won't counted (best performance)

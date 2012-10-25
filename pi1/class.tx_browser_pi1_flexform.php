@@ -63,7 +63,7 @@
  * @author    Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package    TYPO3
  * @subpackage    browser
- * @version 4.1.10
+ * @version 4.1.25
  * @since   2.0.0
  */
 class tx_browser_pi1_flexform {
@@ -331,12 +331,15 @@ class tx_browser_pi1_flexform {
 
 
 
-  /**
+/**
  * Changes the piVars array, if there is more than one plugin on the current page.
  * If there is, the piVars[plugin] with the uid of the current plugin is added to the piVars.
  * If the visitor of the page hasn't selected the current plugin, all piVars will be removed.
  *
  * @return    void
+ *
+ * @version   4.1.25
+ * @since     2.x 
  */
   function prepare_piVars() {
 
@@ -368,12 +371,18 @@ class tx_browser_pi1_flexform {
 
     // For Development
     if (1 == 0) {
-      $query = $GLOBALS['TYPO3_DB']->SELECTquery($select_fields, $from_table, $where_clause, $groupBy = '', $orderBy = '', $limit = '');
+        // 121025, dwildt, 1-
+      //$query = $GLOBALS['TYPO3_DB']->SELECTquery($select_fields, $from_table, $where_clause, $groupBy = '', $orderBy = '', $limit = '');
+        // 121025, dwildt, 1+
+      $query = $GLOBALS['TYPO3_DB']->SELECTquery( $select_fields, $from_table, $where_clause );
       t3lib_div :: devlog('[INFO/SQL] ' . $query, $this->pObj->extKey, 0);
     }
     // For Development
 
-    $rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows($select_fields, $from_table, $where_clause, $groupBy = '', $orderBy = '', $limit = '', $uidIndexField = '');
+      // 121025, dwildt, 1-
+    //$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows($select_fields, $from_table, $where_clause, $groupBy = '', $orderBy = '', $limit = '', $uidIndexField = '');
+      // 121025, dwildt, 1+
+    $rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows( $select_fields, $from_table, $where_clause );
     // Build and execute the SQL query
 
     //////////////////////////////////////////////////////////////////////
@@ -645,11 +654,14 @@ class tx_browser_pi1_flexform {
    *
    **********************************************/
 
-  /**
+/**
  * If the current plugin has views selected, only the selected views are available for the plugin.
  * The method removes "unavailable" views from the TypoScript.
  *
  * @return    void
+ * 
+ * @version   4.1.25
+ * @since     2.x
  */
   function sheet_sDEF_views() {
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
@@ -818,7 +830,8 @@ class tx_browser_pi1_flexform {
         $arr_viewsList_proper = array_unique($arr_viewsList_proper);
       }
       if (!is_array($arr_viewsList_proper)) {
-        $bool_viewsList = false;
+          // 121025, dwildt, 1-
+        //$bool_viewsList = false;
         if ($this->pObj->b_drs_flexform) {
           $str_prompt = implode(', ', $arr_viewsList);
           t3lib_div :: devlog('[WARN/FLEXFORM] sDEF/viewsList hasn\'t any proper views.list id: \'' . $str_prompt . '\'', $this->pObj->extKey, 2);
@@ -984,7 +997,6 @@ class tx_browser_pi1_flexform {
   function sheet_advanced() {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
-    $str_lang = $this->pObj->lang->lang;
 
     $conf = $this->pObj->conf;
     $modeWiDot = (int) $this->mode . '.';
@@ -1283,7 +1295,6 @@ class tx_browser_pi1_flexform {
   function sheet_javascript() {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
-    $str_lang = $this->pObj->lang->lang;
     $sheet = 'javascript';
 
 
@@ -2226,7 +2237,6 @@ class tx_browser_pi1_flexform {
   function sheet_socialmedia() {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
-    $str_lang = $this->pObj->lang->lang;
 
     $str_enabled = $this->pObj->pi_getFFvalue($arr_piFlexform, 'enabled', 'socialmedia', 'lDEF', 'vDEF');
     switch ($str_enabled) {
@@ -2291,7 +2301,6 @@ class tx_browser_pi1_flexform {
   {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
-    $str_lang       = $this->pObj->lang->lang;
     $modeWiDot      = (int) $this->mode . '.';
     $viewWiDot      = $this->pObj->view . '.';
 
@@ -2357,7 +2366,6 @@ class tx_browser_pi1_flexform {
   {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
-    $str_lang = $this->pObj->lang->lang;
     $modeWiDot = (int) $this->mode . '.';
     $viewWiDot = $this->pObj->view . '.';
     $sheet = 'templating';
@@ -2611,18 +2619,84 @@ class tx_browser_pi1_flexform {
 
 
 
-  /**
+/**
  * If the current plugin has views selected, only the selected views are available for the plugin.
  * The method removes "unavailable" views from the TypoScript.
  *
  * @return    void
- * @version 4.0.0
+ * @version 4.1.25
+ * @since   2.x
  */
   function sheet_viewList( )
   {
 
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
+      // 121025, dwildt, 1+
+    $str_lang       = $this->pObj->lang->lang;
     $sheet          = 'viewList';
+
+
+
+      //////////////////////////////////////////////////////////////////////
+      //
+      // Field display_listview
+      // #42124, 121025, dwildt+
+
+    $field = 'display_listview';
+    $display_listview = $this->pObj->pi_getFFvalue( $arr_piFlexform, $field, $sheet, 'lDEF', 'vDEF' );
+
+    if ( $this->pObj->b_drs_flexform )
+    {
+      t3lib_div :: devlog( '[INFO/FLEXFORM] ' . $field . ': \'' . $display_listview . '\'', $this->pObj->extKey, 0 );
+    }
+
+    switch ( $display_listview )
+    {
+      case ( null ) :
+      case ( '' ) :
+      case ( 'yes' ) :
+        $this->pObj->conf['flexform.']['viewList.']['display_listview'] = 1;
+        if ($this->pObj->b_drs_flexform)
+        {
+          t3lib_div :: devlog('[INFO/FLEXFORM] flexform.viewList.display_listview is set to ' . 1, $this->pObj->extKey, 0);
+        }
+        break;
+      case ( 'no' ) :
+        $this->pObj->conf['flexform.']['viewList.']['display_listview'] = 0;
+        if ( $this->pObj->b_drs_flexform )
+        {
+          t3lib_div :: devlog('[INFO/FLEXFORM] flexform.viewList.display_listview is set to ' . 0, $this->pObj->extKey, 0);
+        }
+        break;
+      case ('ts') :
+          // Do nothing;
+        if ($this->pObj->b_drs_flexform)
+        {
+          $value = $this->pObj->conf['flexform.']['viewList.']['display_listview'];
+          t3lib_div :: devlog('[INFO/FLEXFORM] flexform.viewList.display_listview isn\'t changed: ' . $value, $this->pObj->extKey, 0);
+        }
+        break;
+      default :
+        $prompt = '
+                  <div style="background:white; font-weight:bold;border:.4em solid orange;">
+                    <h1>
+                      WARNING
+                    </h1>
+                    <p>
+                      Flexform field has an invalid value. The value isn\'t defined.<br />
+                      sheet: ' . $sheet . '<br />
+                      field: ' . $field . '<br />
+                      value: ' . $display_listview . '<br />
+                      ' . __METHOD__ . ' (' . __LINE__ . ')
+                    </p>
+                    <p>
+                      Please save the plugin/flexform of the browser. The bug will be fixed probably.
+                    </p>
+                  </div>';
+        echo $prompt;
+    }
+      // #42124, 121025, dwildt+
+      // Field display_listview
 
 
 
@@ -3451,15 +3525,13 @@ class tx_browser_pi1_flexform {
  * The method removes "unavailable" views from the TypoScript.
  *
  * @return    void
+ * @version 4.1.25
  * @since 3.7.0
- * @version 3.7.3
  */
   function sheet_viewSingle()
   {
     $arr_piFlexform = $this->pObj->cObj->data['pi_flexform'];
-    $modeWiDot = (int) $this->mode . '.';
-    $viewWiDot = $this->pObj->view . '.';
-
+    
 
 
       //////////////////////////////////////////////////////////////////////

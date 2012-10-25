@@ -125,8 +125,8 @@ class tx_browser_pi1_viewlist
    /**
  * Constructor. The method initiate the parent object
  *
- * @param	object		The parent object
- * @return	void
+ * @param    object        The parent object
+ * @return    void
  */
   function __construct( $parentObj )
   {
@@ -152,7 +152,7 @@ class tx_browser_pi1_viewlist
   /**
  * main( ): Display a search form, indexBrowser, pageBrowser and a list of records
  *
- * @return	string		$template : The processed HTML template
+ * @return    string        $template : The processed HTML template
  * @version 3.9.8
  * @since 3.9.8
  */
@@ -371,7 +371,35 @@ class tx_browser_pi1_viewlist
     }
       // record browser
 
-    $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
+      // #42124, dwildt, 2-
+    //$content = $this->pObj->objTemplate->tmplListview( $content, $rows );
+    //$this->content = $content;
+      // #42124, dwildt, 10+
+//$this->pObj->dev_var_dump( $this->pObj->conf['flexform.']['viewList.']['display_listview'] );
+//die( __METHOD__ . ' - ' . __LINE__ );
+    switch( true )
+    {
+      case( strpos( $content, '###LISTBODYITEM###' ) === false ):
+          // Don't render the rows of the listview 
+        if ( $this->pObj->b_drs_templating )
+        {
+          $prompt = 'Template doesn\'t contain the marker ###LISTBODYITEM###. List data won\'t be processed!';
+          t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt , $this->pObj->extKey, 0 );
+        }
+        break;
+      case( empty( $this->pObj->conf['flexform.']['viewList.']['display_listview'] ) ):
+          // Don't render the rows of the listview 
+        if ( $this->pObj->b_drs_templating )
+        {
+          $prompt = 'flexform.viewList.display_listview is 0. List data won\'t be processed.';
+          t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt , $this->pObj->extKey, 0 );
+        }
+        break;
+      default:
+        $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
+        break;
+    }
+      // #42124, dwildt, +
     $this->content = $content;
 
       // Prompt the expired time to devlog
@@ -388,7 +416,7 @@ class tx_browser_pi1_viewlist
   /**
  * init( ): Overwrite general_stdWrap, set globals $lDisplayList and $lDisplay
  *
- * @return	void
+ * @return    void
  * @version 3.9.8
  * @since 1.0.0
  */
@@ -434,7 +462,7 @@ class tx_browser_pi1_viewlist
   /**
  * check_view( ):
  *
- * @return	string		Error prompt in case of an error
+ * @return    string        Error prompt in case of an error
  * @version 3.9.8
  * @since 1.0.0
  */
@@ -498,7 +526,7 @@ var_dump( __METHOD__, __LINE__ );
 /**
  * content_setCSV( ): Sets content to CSV template
  *
- * @return	void
+ * @return    void
  * @version 3.9.12
  * @since   3.9.9
  */
@@ -531,7 +559,7 @@ var_dump( __METHOD__, __LINE__ );
  *                        * indexBrowser
  *                        *
  *
- * @return	array		$arr_return: Contains an error message in case of an error
+ * @return    array        $arr_return: Contains an error message in case of an error
  * @version 3.9.12
  * @since   3.9.9
  */
@@ -586,10 +614,10 @@ var_dump( __METHOD__, __LINE__ );
  * content_dieIfEmpty( ): If content is empty, the methods will die the workflow
  *                        with a qualified prompt.
  *
- * @param	string		$marker:  subpart marker
- * @param	string		$method:  calling method
- * @param	string		$line:    line of calling method
- * @return	void		...
+ * @param    string        $marker:  subpart marker
+ * @param    string        $method:  calling method
+ * @param    string        $line:    line of calling method
+ * @return    void        ...
  * @version 3.9.24
  * @since   3.9.12
  */
@@ -644,8 +672,8 @@ var_dump( __METHOD__, __LINE__ );
   /**
  * rows_consolidateLL( ): Consolidate localisation. Returns consolidated rows.
  *
- * @param	array		$rows  : consolidated rows
- * @return	void
+ * @param    array        $rows  : consolidated rows
+ * @return    void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -674,8 +702,8 @@ var_dump( __METHOD__, __LINE__ );
   /**
  * rows_consolidateChildren( ): Consolidate children, returns consolidated rows.
  *
- * @param	array		$rows  : consolidated rows
- * @return	void
+ * @param    array        $rows  : consolidated rows
+ * @return    void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -708,8 +736,8 @@ var_dump( __METHOD__, __LINE__ );
   /**
  * rows_sql( ): Move SQL result to rows and set the global var $rows.
  *
- * @param	array		$res  : current SQL result
- * @return	void
+ * @param    array        $res  : current SQL result
+ * @return    void
  * @version 4.1.2
  * @since   3.9.12
  */
@@ -756,8 +784,8 @@ var_dump( __METHOD__, __LINE__ );
  * rows_getCaseAliases( ):  Move SQL result to rows, depending on
  *                          values from aliases.tables
  *
- * @param	array		$res  : current SQL result
- * @return	array		$rows : the rows
+ * @param    array        $res  : current SQL result
+ * @return    array        $rows : the rows
  * @version 4.1.2
  * @since   3.9.12
  */
@@ -794,8 +822,8 @@ var_dump( __METHOD__, __LINE__ );
   /**
  * rows_getDefault( ): Move SQL result to rows
  *
- * @param	array		$res  : current SQL result
- * @return	array		$rows : the rows
+ * @param    array        $res  : current SQL result
+ * @return    array        $rows : the rows
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -816,7 +844,7 @@ var_dump( __METHOD__, __LINE__ );
   /**
  * rows_sql( ): Building the SQL query, returns the SQL result.
  *
- * @return	array		$arr_return: Contains the SQL res or an error message
+ * @return    array        $arr_return: Contains the SQL res or an error message
  * @version 3.9.13
  * @since   3.9.12
  */
@@ -888,7 +916,7 @@ var_dump( __METHOD__, __LINE__ );
  /**
   * rows_sqlIdsOfRowsWiTranslationOnly( ) : Get the ids of default or translated rows
   *
-  * @return	array		$arr_return: Contains the ids
+  * @return    array        $arr_return: Contains the ids
   * @version 4.1.2
   * @since   3.9.13
   */
@@ -945,7 +973,7 @@ var_dump( __METHOD__, __LINE__ );
  /**
   * rows_sqlIdsOfRowsWiTranslationAndThanWoTranslation( ) : Get the ids of default or translated rows
   *
-  * @return	array		$arr_return: Contains the ids
+  * @return    array        $arr_return: Contains the ids
   * @version 3.9.13
   * @since   3.9.13
   */
@@ -991,7 +1019,7 @@ var_dump( __METHOD__, __LINE__ );
  /**
   * rows_sqlIdsOfRowsWiDefaultLanguageAndThanWiTranslation( ) : Get the ids of default or translated rows
   *
-  * @return	array		$arr_return: Contains the SQL res or an error message
+  * @return    array        $arr_return: Contains the SQL res or an error message
   * @version 3.9.13
   * @since   3.9.13
   */
@@ -1035,8 +1063,8 @@ var_dump( __METHOD__, __LINE__ );
   /**
  * rows_sqlIdsOfRowsWiTranslation( ) : Get ids of rows with translated records and ids of translated records
  *
- * @param	[type]		$$withIds: ...
- * @return	array		$arr_return: Array with two elements with the ids
+ * @param    [type]        $$withIds: ...
+ * @return    array        $arr_return: Array with two elements with the ids
  * @version 4.1.2
  * @since   3.9.13
  */
@@ -1246,9 +1274,9 @@ var_dump( __METHOD__, __LINE__ );
   *                                       which ids within the array $withoutIds will
   *                                       ignored
   *
-  * @param	array		$withoutIds : Ids of rows, which have a translated record
-  * @param	boolean		$limited    : true: query gets a limit
-  * @return	array		$arr_return : Contains the ids of rows
+  * @param    array        $withoutIds : Ids of rows, which have a translated record
+  * @param    boolean        $limited    : true: query gets a limit
+  * @return    array        $arr_return : Contains the ids of rows
   * @version 4.1.2
   * @since   3.9.13
   */
@@ -1422,7 +1450,7 @@ var_dump( __METHOD__, __LINE__ );
   /**
  * rows_sqlLanguageDefault( ): Building the SQL query, returns the SQL result.
  *
- * @return	array		$arr_return: Contains the SQL res or an error message
+ * @return    array        $arr_return: Contains the SQL res or an error message
  * @version 4.1.2
  * @since   3.9.13
  */
@@ -1460,7 +1488,7 @@ var_dump( __METHOD__, __LINE__ );
   /**
  * rows_sqlLanguageFirstDefaultOrFirstTranslated( ): Get the ids of default or translated rows
  *
- * @return	array		$arr_return: Contains the ids
+ * @return    array        $arr_return: Contains the ids
  * @version 3.9.13
  * @since   3.9.13
  */
@@ -1497,8 +1525,8 @@ var_dump( __METHOD__, __LINE__ );
   /**
  * rows_sqlRowsbyIds( ): Get the rows for the list view. The method returns the SQL result, but an array.
  *
- * @param	string		$withIds     : Ids of the rows for the lost view
- * @return	array		$arr_return : Contains the SQL res or an error message
+ * @param    string        $withIds     : Ids of the rows for the lost view
+ * @return    array        $arr_return : Contains the SQL res or an error message
  * @version 4.1.16
  * @since   3.9.13
  * @todo    120506, dwildt: filterIsSelected
@@ -1572,8 +1600,8 @@ var_dump( __METHOD__, __LINE__ );
  *                          is localised, fields for language controlling
  *                          are added
  *
- * @param	string		$select : Current select
- * @return	string		$select : Select with fields for localisation
+ * @param    string        $select : Current select
+ * @return    string        $select : Select with fields for localisation
  * @version 3.9.13
  * @since   3.9.12
  */
@@ -1663,7 +1691,7 @@ var_dump( __METHOD__, __LINE__ );
  * subpart_setSearchbox( ): Get the searchform. Part of content is generated
  *                          by the template class. Replace filter marker.
  *
- * @return	array		$arr_return : Error message in case of an error
+ * @return    array        $arr_return : Error message in case of an error
  * @version 3.9.8
  * @since 1.0.0
  */
@@ -1680,7 +1708,7 @@ var_dump( __METHOD__, __LINE__ );
 /**
  * subpart_setSearchboxFilter( ): Get filter values and then replace filter marker with filter content.
  *
- * @return	array		$arr_return: Error message in case of an error
+ * @return    array        $arr_return: Error message in case of an error
  * @version 3.9.8
  * @since 1.0.0
  */
@@ -1724,7 +1752,7 @@ var_dump( __METHOD__, __LINE__ );
  * subpart_setIndexBrowser( ):  Replaces the indexbrowser subpart in the current content
  *                              with the content from ->get_indexBrowser( )
  *
- * @return	array		$arr_return : Contains an error message in case of an error
+ * @return    array        $arr_return : Contains an error message in case of an error
  * @version 3.9.12
  * @since 1.0.0
  */
@@ -1754,7 +1782,7 @@ var_dump( __METHOD__, __LINE__ );
  * subpart_setModeSelector( ):  Replaces the indexbrowser subpart in the current content
  *                              with the content from ->get_indexBrowser( )
  *
- * @return	array		$arr_return : Contains an error message in case of an error
+ * @return    array        $arr_return : Contains an error message in case of an error
  * @version 3.9.12
  * @since 1.0.0
  */
@@ -1813,7 +1841,7 @@ var_dump( __METHOD__, __LINE__ );
  * subpart_setPageBrowser( ):  Replaces the pagebrowser subpart in the current content
  *                              with the content from ->objNaviPageBrowser->get( )
  *
- * @return	array		$arr_return : Contains an error message in case of an error
+ * @return    array        $arr_return : Contains an error message in case of an error
  * @version 3.9.12
  * @since 1.0.0
  */
@@ -1870,7 +1898,7 @@ var_dump( __METHOD__, __LINE__ );
   /**
  * hook_afterConsolidatetRows( ): Implement the hook rows_filter_values
  *
- * @return	void
+ * @return    void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1945,7 +1973,7 @@ var_dump( __METHOD__, __LINE__ );
   /**
  * zz_drsFirstRow( ): Prompt to devLog the first row
  *
- * @return	void
+ * @return    void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1977,7 +2005,7 @@ var_dump( __METHOD__, __LINE__ );
   *                                 browser is selected and the index browser tableField
   *                                 is localised.
   *
-  * @return	boolean		$tableFieldIsLocalised : true or false
+  * @return    boolean        $tableFieldIsLocalised : true or false
   * @version 3.9.13
   * @since   3.9.13
   */
@@ -2006,7 +2034,7 @@ var_dump( __METHOD__, __LINE__ );
   * zz_orderByValueIsLocalised( )  : Method returns true, if the first value in the ORDER BY
   *                               clause is localised.
   *
-  * @return	boolean		$tableFieldIsLocalised : true or false
+  * @return    boolean        $tableFieldIsLocalised : true or false
   * @version 3.9.13
   * @since   3.9.13
   */
@@ -2052,7 +2080,7 @@ var_dump( __METHOD__, __LINE__ );
  /**
   * zz_setGlobalArrLinkToSingle( ): Set the global $arrLinkToSingle
   *
-  * @return	array
+  * @return    array
   * @version 3.9.8
   * @since 1.0.0
   */

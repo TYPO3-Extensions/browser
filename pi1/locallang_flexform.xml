@@ -299,6 +299,10 @@
       <label index="sheet_templating.wrapBaseClass">Templating: default <![CDATA[<div>]]>-container for this plugin</label>
       <label index="sheet_templating.wrapBaseClass.0">Wrap in base class (recommended)</label>
       <label index="sheet_viewList">List View</label>
+      <label index="sheet_viewList.display_listview">List View</label>
+      <label index="sheet_viewList.display_listview.yes">enabled (recommended)</label>
+      <label index="sheet_viewList.display_listview.no">disabled (if you need BrowserMaps without listed data)</label>
+      <label index="sheet_viewList.display_listview.ts">Take the value from TypoScript</label>
       <label index="sheet_viewList.title">Title (substitutes ###MY_TITLE###)</label>
       <label index="sheet_viewList.titleWrap">Title Wrap (i.e. <![CDATA[<h1>|</h1>]]>)</label>
       <label index="sheet_viewList.grouptitleWrap">Group Title Wrap (i.e. <![CDATA[<h2>|</h2>]]>)</label>
@@ -343,9 +347,9 @@
       <label index="sheet_viewList.rotateviews.ts">Take the value from TypoScript!</label>
       <label index="sheet_viewList.simulateSingleUid">Display record with UID (single view)</label>
       <label index="sheet_viewSingle">Single View</label>
-      <label index="sheet_viewSingle.display_listview">Single-View</label>
+      <label index="sheet_viewSingle.display_listview">Single View</label>
       <label index="sheet_viewSingle.display_listview.no">enabled (default)</label>
-      <label index="sheet_viewSingle.display_listview.yes">disabled (list-view will displayed)</label>
+      <label index="sheet_viewSingle.display_listview.yes">disabled (list view will displayed)</label>
       <label index="sheet_viewSingle.display_listview.ts">Take the value from TypoScript</label>
       <label index="sheet_viewSingle.record_browser">Record Browser</label>
       <label index="sheet_viewSingle.record_browser.disabled">disabled</label>
@@ -663,6 +667,10 @@
       <label index="sheet_templating.wrapBaseClass">Templating: Standard <![CDATA[<div>]]>-Container fuer dieses Plugin</label>
       <label index="sheet_templating.wrapBaseClass.0">Mit Basis-Klasse umschliessen (empfohlen)</label>
       <label index="sheet_viewList">Listenansicht</label>
+      <label index="sheet_viewList.display_listview">Listenansicht</label>
+      <label index="sheet_viewList.display_listview.yes">aktiviert (empfohlen)</label>
+      <label index="sheet_viewList.display_listview.no">deaktiviert (wenn Du nur BrowserMaps ben<![CDATA[&ouml;]]>tigst)</label>
+      <label index="sheet_viewList.display_listview.ts">Nimm den Wert aus TypoScript</label>
       <label index="sheet_viewList.title">Titel (ersetzt ###MY_TITLE###)</label>
       <label index="sheet_viewList.titleWrap">Titel Wrap (z.B.. <![CDATA[<h1>|</h1>]]>)</label>
       <label index="sheet_viewList.grouptitleWrap">Gruppentitel Wrap (z.B. <![CDATA[<h2>|</h2>]]>)</label>
