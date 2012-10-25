@@ -2511,7 +2511,7 @@ class tx_browser_pi1_template
         // 120915, dwildt, 1-
       //$bool_success_jQuery  = $this->pObj->objJss->load_jQuery();
         // 120918, dwildt, 1+
-      $bool_success_jQuery  = $this->pObj->objJss->load_jQuery();
+      $this->pObj->objJss->load_jQuery();
 
       if ($this->pObj->objFlexform->bool_ajax_enabled)
       {
