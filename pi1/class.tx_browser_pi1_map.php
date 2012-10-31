@@ -1448,6 +1448,12 @@ $this->pObj->dev_var_dump( $this->catDevider, $row[ $catField ], $categories );
           $this->cObjDataAddArray( array( $catIconsField => $categoryIcons[ $key ] ) );
         }
         
+          // #42566, 121031, dwildt
+        $this->cObjDataRemoveArray( array( $catField ) );
+        $catValue = implode( ', ', $categories );
+        $this->cObjDataAddArray( array( $catField => $catValue ) );
+        
+        
           // Add x offset and y offset to current cObject
           // #42125, 121031, dwildt, 2+
         $this->cObjDataAddArray( array( $catOffsetXField => $categoryOffsetsX[ $key ] ) );

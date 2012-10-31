@@ -15,6 +15,7 @@
               * setup.txt
             * t3jquery.txt  * #42125: OpenStreetMap: offset for categories
   Bugfixing
+  * #42566: BrowserMaps: remove the cat devider from categories
   * #42565: Unproper result, if first children is 0, empty or null
             Effected files:
             * pi1/class.tx_browser_pi1_consolidate.php
