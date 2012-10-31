@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      4.1.21
+ * @version      4.1.25
  * @since        3.9.9
  */
 
@@ -2886,7 +2886,7 @@ class tx_browser_pi1_filter_4x {
  *
  * @param	object		$res  : current SQL ressource
  * @return	array		$rows : rows
- * @version 3.9.9
+ * @version 4.1.25
  * @since   3.9.9
  */
   private function sql_resToRows( $res )
@@ -2904,7 +2904,10 @@ class tx_browser_pi1_filter_4x {
       // LOOP build the rows
 
       // Free SQL result
-    $GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
+      // #42302, dwildt, 1-
+    //$GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
+      // #42302, dwildt, 1+
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
       // RETURN rows
     return $rows;

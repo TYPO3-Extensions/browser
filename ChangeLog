@@ -1,6 +1,10 @@
 4.1.25
-  121024
+  121031
   New Features
+  * #42125: OpenStreetMap: offset for categories
+            Effected files:
+            * static
+              * constants.txt
   * #42124: OpenStreetMap: improve performance
             oxMapConfig_0.0.9.js -> oxMapConfig_0.0.10.js
             oxRenderMap_0.0.9.js -> oxRenderMap_0.0.11.js
@@ -8,6 +12,8 @@
             * static
               * setup.txt
             * t3jquery.txt  * #42125: OpenStreetMap: offset for categories
+  Bugfixing
+  * #42302: Invalid database result resource detected
 
 4.1.24
   121024

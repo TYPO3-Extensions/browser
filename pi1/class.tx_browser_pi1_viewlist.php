@@ -28,7 +28,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     4.1.16
+ * @version     4.1.25
  * @since       1.0
  */
 
@@ -738,7 +738,7 @@ var_dump( __METHOD__, __LINE__ );
  *
  * @param    array        $res  : current SQL result
  * @return    void
- * @version 4.1.2
+ * @version 4.1.25
  * @since   3.9.12
  */
   private function rows_fromSqlRes( $res )
@@ -767,7 +767,10 @@ var_dump( __METHOD__, __LINE__ );
     unset( $arr_table_realnames );
 
       // SQL Free Result
-    $GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
+      // #42302, dwildt, 1-
+    //$GLOBALS['TYPO3_DB']->sql_free_result( $this->res );
+      // #42302, dwildt, 1+
+    $GLOBALS['TYPO3_DB']->sql_free_result( $res );
 
       // Set global var
     $this->pObj->rows = $rows;

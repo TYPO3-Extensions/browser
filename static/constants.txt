@@ -161,24 +161,26 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Controlling//301;             type=options[click,hover,off,on];  label= Pop-up behaviour:click: display by a mouse click. hover: display by a mouse over. off: don't display. on:
   map.popup.behaviour = hover
 
-  # cat=BrowserMaps - Database connector//101;             type=string;    label= table.field with record uid: Example: tx_org_headquarters.uid
+  # cat=BrowserMaps - Database//101;             type=string;    label= table.field with record uid: Example: tx_org_headquarters.uid
   map.field.linktoSingle = 
-  # cat=BrowserMaps - Database connector//102;             type=string;    label= table.field with the latitude: Example: tx_org_headquarters.latitude
+  # cat=BrowserMaps - Database//102;             type=string;    label= table.field with the latitude: Example: tx_org_headquarters.latitude
   map.field.latitude = 
-  # cat=BrowserMaps - Database connector//103;             type=string;    label= table.field with the longitude: Example: tx_org_headquarters.longitude
+  # cat=BrowserMaps - Database//103;             type=string;    label= table.field with the longitude: Example: tx_org_headquarters.longitude
   map.field.longitude = 
-  # cat=BrowserMaps - Database connector//104;             type=string;    label= table.field with the content: table.field with the content for the popup. Example: tx_org_headquarters.short
+  # cat=BrowserMaps - Database//104;             type=string;    label= table.field with the content: table.field with the content for the popup. Example: tx_org_headquarters.short
   map.field.description = 
-  # cat=BrowserMaps - Database connector//105;             type=string;    label= table.field with the number: It may be a number or text. It is optional. Example: tx_org_headquarters.uid
+  # cat=BrowserMaps - Database//105;             type=string;    label= table.field with the number: It may be a number or text. It is optional. Example: tx_org_headquarters.uid
   map.field.number = 
-  # cat=BrowserMaps - Database connector//106;             type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
+  # cat=BrowserMaps - Database//106;             type=string;    label= table.field with the category: Example: tx_org_headquarterscat.title
   map.field.category = 
-  # cat=BrowserMaps - Database connector//107;             type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
+  # cat=BrowserMaps - Database//107;             type=string;    label= table.field with the category icons: Example: tx_org_headquarterscat.icons
   map.field.categoryIcon = 
-  # cat=BrowserMaps - Database connector//108;             type=string;    label= Position of legend icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
+  # cat=BrowserMaps - Database//108;             type=string;    label= Position of legend icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
   map.position.categoryIconLegend = 0 
-  # cat=BrowserMaps - Database connector//109;             type=string;    label= Position of map icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
+  # cat=BrowserMaps - Database//109;             type=string;    label= Position of map icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
   map.position.categoryIconMap = 0 
+  # cat=BrowserMaps - Database//110;             type=string;    label= table.field with the category offset: Example: tx_org_headquarterscat.iconoffset
+  map.field.categoryOffset = 
 
   # cat=BrowserMaps - Default Icons//101;             type=string;    label= Path to legend icons: Path to the directory, which contains the images for the form legend (with ending slash!). Default: EXT:browser/res/js/map/icons/legend/ 
   map.pathToLegend = EXT:browser/res/js/map/icons/legend/
