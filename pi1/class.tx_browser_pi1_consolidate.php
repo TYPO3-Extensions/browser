@@ -398,8 +398,6 @@ class tx_browser_pi1_consolidate
     }
     // Loop through the localTable array with all unique ids and loop through all rows
 
-$this->pObj->dev_var_dump( $arr_localTable_foreignTables );    
-
     $arr_rows_consolidated_fields = explode(',', $this->pObj->csvSelectWoFunc);
     foreach ($arr_rows_consolidated_fields as $key => $tableField)
     {
@@ -478,7 +476,7 @@ $this->pObj->dev_var_dump( $arr_localTable_foreignTables );
             $bool_new = false;
 
             // 2nd loop at least
-            if ($rows_cons[$int_count][$table.'.uid'])
+            if( $rows_cons[$int_count][$table.'.uid'] )
             {
               $arrUids = explode(', ', $rows_cons[$int_count][$table.'.uid']);
               if (!in_array($arrFields['uid'], $arrUids))
@@ -491,12 +489,9 @@ $this->pObj->dev_var_dump( $arr_localTable_foreignTables );
             // 2nd loop at least
 
             // 1st loop
-            if (!$rows_cons[$int_count][$table.'.uid'])
+            if( ! $rows_cons[ $int_count ][ $table . '.uid' ] )
             {
-                // 121031, dwildt, 1-
-//              if( ! empty( $arrFields['uid'] ) )
-                // 121031, dwildt, 1+
-              if( $arrFields['uid'] !== null )
+              if( ! empty( $arrFields['uid'] ) )
               {
                 $rows_cons[$int_count][$table.'.uid'] = $arrFields['uid'];
               }
@@ -546,7 +541,7 @@ $this->pObj->dev_var_dump( $arr_localTable_foreignTables );
       // Loop through all tables (local and foreign)
     }
     // Consolidate groupBy. Bugfix #9025, #8523
-//if(t3lib_div::_GP('dev')) var_dump('cons 490', array_keys(current($rows_cons)));
+$this->pObj->dev_var_dump( $rows_cons );    
 
 
 
