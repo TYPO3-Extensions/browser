@@ -1385,6 +1385,7 @@ class tx_browser_pi1_map
         if( isset( $row[ $catField ] ) )
         {
           $categories = explode( $this->catDevider, $row[ $catField ] );
+$this->pObj->dev_var_dump( $this->catDevider, $row[ $catField ], $categories );    
         }
         else
         {
