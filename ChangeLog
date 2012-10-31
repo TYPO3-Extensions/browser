@@ -15,6 +15,9 @@
               * setup.txt
             * t3jquery.txt  * #42125: OpenStreetMap: offset for categories
   Bugfixing
+  * #42565: Unproper result, if first children is 0, empty or null
+            Effected files:
+            * pi1/class.tx_browser_pi1_consolidate.php
   * #42302: Invalid database result resource detected
 
 4.1.24

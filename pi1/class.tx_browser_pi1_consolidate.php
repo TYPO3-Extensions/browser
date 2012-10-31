@@ -28,7 +28,7 @@
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *
 * @since    3.4.4
-* @version  3.6.1
+* @version  4.1.25
 *
 * @package    TYPO3
 * @subpackage  browser
@@ -101,7 +101,8 @@ class tx_browser_pi1_consolidate
  *
  * @param	array		$rows: The rows form the SQL result
  * @return	array		$rows_new: Consolidated rows.
- * @version   3.4.3
+ * @version   4.1.25
+ * @since    3.4.4
  */
   function consolidate( $rows )
   {
@@ -476,7 +477,10 @@ class tx_browser_pi1_consolidate
             $bool_new = false;
 
             // 2nd loop at least
-            if( $rows_cons[$int_count][$table.'.uid'] )
+              // #42565, 121031, dwildt, 1-
+//            if( $rows_cons[$int_count][$table.'.uid'] )
+              // #42565, 121031, dwildt, 1+
+            if( isset( $rows_cons[$int_count][$table.'.uid'] ) )
             {
               $arrUids = explode(', ', $rows_cons[$int_count][$table.'.uid']);
               if (!in_array($arrFields['uid'], $arrUids))
@@ -490,7 +494,10 @@ class tx_browser_pi1_consolidate
             // 2nd loop at least
 
             // 1st loop
-            if( ! $rows_cons[ $int_count ][ $table . '.uid' ] )
+              // #42565, 121031, dwildt, 1-
+//            if( ! $rows_cons[ $int_count ][ $table . '.uid' ] )
+              // #42565, 121031, dwildt, 1+
+            if( ! isset( $rows_cons[ $int_count ][ $table . '.uid' ] ) )
             {
               if( ! empty( $arrFields['uid'] ) )
               {
@@ -514,8 +521,9 @@ class tx_browser_pi1_consolidate
                   // CONTINUE : current field is the uid
                 
                 // 2nd loop at least
-//$this->pObj->dev_var_dump( $int_count, $table.'.'.$field, $rows_cons[ $int_count ][ $table . '.' . $field ] );    
+                  // #42565, 121031, dwildt, 1-
 //                if( $rows_cons[ $int_count ][ $table . '.' . $field ] )
+                  // #42565, 121031, dwildt, 1+
                 if( isset( $rows_cons[ $int_count ][ $table . '.' . $field ] ) )
                 {
                   if( $table . '.' . $field == $groupBy_table . '.' . $groupBy_field )
@@ -524,17 +532,17 @@ class tx_browser_pi1_consolidate
                   }
                   if( $table . '.' . $field != $groupBy_table . '.' . $groupBy_field )
                   {
-$this->pObj->dev_var_dump( $table.'.'.$field );    
                     $rows_cons[$int_count][$table.'.'.$field] .= $str_devider . $value;
                     $arr_children_to_devide[] = $table.'.'.$field;  // 3.3.3
                   }
                 }
                 // 2nd loop at least
                 // 1st loop
+                  // #42565, 121031, dwildt, 1-
 //                if( ! $rows_cons[ $int_count ][ $table . '.' . $field ] )
+                  // #42565, 121031, dwildt, 1+
                 if( ! isset( $rows_cons[ $int_count ][ $table . '.' . $field ] ) )
                 {
-$this->pObj->dev_var_dump( $table.'.'.$field );    
                   $rows_cons[$int_count][$table.'.'.$field] = $value;
                 }
                 // 1st loop
@@ -551,7 +559,7 @@ $this->pObj->dev_var_dump( $table.'.'.$field );
       // Loop through all tables (local and foreign)
     }
     // Consolidate groupBy. Bugfix #9025, #8523
-$this->pObj->dev_var_dump( $rows_cons );    
+//$this->pObj->dev_var_dump( $rows_cons );    
 
 
 
