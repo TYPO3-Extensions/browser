@@ -722,8 +722,10 @@ var_dump( __METHOD__, __LINE__ );
       // RETURN : SQL manual mode
 
       // Consolidate children
+$this->pObj->dev_var_dump( $rows );    
     $arr_return       = $this->pObj->objConsolidate->consolidate( $rows );
     $rows             = $arr_return['data']['rows'];
+$this->pObj->dev_var_dump( $rows );    
 //    $int_rows_wo_cons = $arr_return['data']['rows_wo_cons'];
 //    $int_rows_wi_cons = $arr_return['data']['rows_wi_cons'];
 
