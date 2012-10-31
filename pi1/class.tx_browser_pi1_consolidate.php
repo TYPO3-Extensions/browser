@@ -551,6 +551,7 @@ class tx_browser_pi1_consolidate
     // Prepaire global array for children and link workflow
 
     $this->pObj->arr_children_to_devide = array_unique($arr_children_to_devide);  // 3.3.3
+$this->pObj->dev_var_dump( $rows_cons, $this->pObj->arr_children_to_devide );    
     //if(t3lib_div::_GP('dev')) var_dump('sql_func 2525', $this->pObj->arr_children_to_devide);
     // Prepaire global array for children and link workflow
 
