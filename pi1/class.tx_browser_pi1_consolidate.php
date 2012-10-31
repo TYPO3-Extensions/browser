@@ -504,13 +504,13 @@ $this->pObj->dev_var_dump( $table.'.uid' );
             if ($bool_new)
             {
               // Loop through all elements
-              foreach ($arrFields as $field => $value)
+              foreach( $arrFields as $field => $value )
               {
-                if($field != 'uid')
+                if( $field != 'uid' )
                 {
                   // 2nd loop at least
-                  if ($rows_cons[$int_count][$table.'.'.$field])
-                  {
+//                  if( $rows_cons[ $int_count ][ $table . '.' . $field ] )
+//                  {
                     if($table.'.'.$field == $groupBy_table.'.'.$groupBy_field)
                     {
                       $rows_cons[$int_count][$table.'.'.$field] = $value;
@@ -521,7 +521,7 @@ $this->pObj->dev_var_dump( $table.'.'.$field );
                       $rows_cons[$int_count][$table.'.'.$field] .= $str_devider.$value;
                       $arr_children_to_devide[] = $table.'.'.$field;  // 3.3.3
                     }
-                  }
+//                  }
                   // 2nd loop at least
                   // 1st loop
                   if (!$rows_cons[$int_count][$table.'.'.$field])
