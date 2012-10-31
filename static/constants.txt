@@ -179,7 +179,7 @@ plugin.tx_browser_pi1 {
   map.position.categoryIconLegend = 0 
   # cat=BrowserMaps - Database//109;             type=string;    label= Position of map icon: Position of the icon in the table.field with the category icons. 1st position: 0. 2nd position: 1. 3rd position: 2. ... Default: 0
   map.position.categoryIconMap = 0 
-  # cat=BrowserMaps - Database//110;             type=string;    label= table.field with the category offset: Example: tx_org_headquarterscat.iconoffset
+  # cat=BrowserMaps - Database//110;             type=string;    label= table.field with category offset: Example: tx_org_headquarterscat.iconoffset
   map.field.categoryOffset = 
 
   # cat=BrowserMaps - Default Icons//101;             type=string;    label= Path to legend icons: Path to the directory, which contains the images for the form legend (with ending slash!). Default: EXT:browser/res/js/map/icons/legend/ 
