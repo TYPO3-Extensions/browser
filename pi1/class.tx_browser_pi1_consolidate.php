@@ -103,7 +103,7 @@ class tx_browser_pi1_consolidate
  * @return	array		$rows_new: Consolidated rows.
  * @version   3.4.3
  */
-  function consolidate($rows)
+  function consolidate( $rows )
   {
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
@@ -150,8 +150,8 @@ class tx_browser_pi1_consolidate
       //
       // Init consolidation array
 
-    $this->init_arrConsolidation();
-    if (!$this->bool_conf_unique_rows)
+    $this->init_arrConsolidation( );
+    if( ! $this->bool_conf_unique_rows )
     {
       return $arr_return;
     }
@@ -169,17 +169,17 @@ class tx_browser_pi1_consolidate
       // Do we have non unique rows
 
       // Do we have a showUid not for the local table but for the foreign table? 3.3.3
-    if($this->pObj->arrLocalTable['showUid4TableField'])
+    if( $this->pObj->arrLocalTable['showUid4TableField'] )
     {
-      list($localTable, $dummyField) = explode('.', $this->pObj->arrLocalTable['showUid4TableField']);
+      list( $localTable, $dummyField ) = explode( '.', $this->pObj->arrLocalTable['showUid4TableField'] );
     }
-    if(!$this->pObj->arrLocalTable['showUid4TableField'])
+    if( ! $this->pObj->arrLocalTable['showUid4TableField'] )
     {
       $localTable = $this->pObj->localTable;
     }
       // Do we have a showUid not for the local table but for the foreign table? 3.3.3
 
-    foreach((array) $rows as $elements)
+    foreach( ( array ) $rows as $elements )
     {
       $arr_localTable_uid[] = $elements[$localTable.'.uid'];
     }
@@ -189,13 +189,13 @@ class tx_browser_pi1_consolidate
     $arr_return['data']['rows_wi_cons'] = $int_rows_unique;
 
       // RETURN: all rows are unique
-    if ($int_rows_nonUnique == $int_rows_unique)
+    if( $int_rows_nonUnique == $int_rows_unique )
     {
-      if ($this->pObj->b_drs_sql)
+      if( $this->pObj->b_drs_sql )
       {
-        t3lib_div::devlog('[INFO/SQL] Rows are unique: #'.$int_rows_nonUnique.' rows. Nothing to consolidate.', $this->pObj->extKey, 0);
+        t3lib_div::devlog( '[INFO/SQL] Rows are unique: #' . $int_rows_nonUnique . ' rows. Nothing to consolidate.', $this->pObj->extKey, 0);
       }
-      $this->pObj->arrConsolidate['rows_wi_cons'] = count($rows);
+      $this->pObj->arrConsolidate['rows_wi_cons'] = count( $rows );
       return $arr_return;
     }
       // RETURN: all rows are unique
@@ -217,12 +217,12 @@ class tx_browser_pi1_consolidate
     reset($rows);
     $int_keyFirstRow = key($rows);
     $arr_tableFields = array_keys($rows[$int_keyFirstRow]);
-    foreach((array) $arr_tableFields as $tableField)
+    foreach( ( array ) $arr_tableFields as $tableField )
     {
-      list($table, $field) = explode('.', $tableField);
-      if($table != $localTable)
+      list( $table, $field ) = explode( '.', $tableField );
+      if( $table != $localTable )
       {
-        if($field == 'uid')
+        if( $field == 'uid' )
         {
           $arr_foreignTables[] = $table;
         }
@@ -247,23 +247,23 @@ class tx_browser_pi1_consolidate
       // BUG (101029): If there are only rows from the local table,
       //               rows will be empty after consolidation
 
-    if(empty($arr_foreignTables))
+    if( empty( $arr_foreignTables ) )
     {
-      if ($this->pObj->b_drs_warn)
+      if( $this->pObj->b_drs_warn )
       {
         t3lib_div::devlog('[WARN/SQL] WORKAROUND: There isn\'t any foreign table. This case is buggy!',
           $this->pObj->extKey, 2);
       }
         // RETURN first row
-      if($int_rows_unique == 1)
+      if( $int_rows_unique == 1 )
       {
-        if ($this->pObj->b_drs_warn)
+        if( $this->pObj->b_drs_warn )
         {
           t3lib_div::devlog('[INFO/SQL] WORKAROUND: First row is returned.',
             $this->pObj->extKey, 0);
         }
-        reset($rows);
-        $firstKey = key($rows);
+        reset( $rows );
+        $firstKey = key( $rows );
         $rows_cons[$firstKey] = $rows[$firstKey];
         $arr_return['data']['rows']                 = $rows_cons;
         $this->pObj->arrConsolidate['rows_wi_cons'] = count($rows_cons);
@@ -272,9 +272,9 @@ class tx_browser_pi1_consolidate
       }
         // RETURN first row
 
-      if($int_rows_unique > 1)
+      if( $int_rows_unique > 1 )
       {
-        if ($this->pObj->b_drs_error)
+        if( $this->pObj->b_drs_error )
         {
           t3lib_div::devlog('[ERROR/SQL] WORKAROUND: There is more than 1 unique row. And without any foreign table.'.
             'Sorry, but this can\'t be true!',
@@ -313,13 +313,13 @@ class tx_browser_pi1_consolidate
 
     $arr_localTable_foreignTables = false;
     $str_localTableUid            = $localTable.'.uid';
-    foreach((array) $arr_localTable_uid as $localUid)
+    foreach( ( array ) $arr_localTable_uid as $localUid )
     {
-      foreach((array) $arr_foreignTables as $foreignTable)
+      foreach( ( array ) $arr_foreignTables as $foreignTable )
       {
         foreach((array) $rows as $row => $elements)
         {
-          if ($elements[$str_localTableUid] == $localUid)
+          if( $elements[$str_localTableUid] == $localUid )
           {
             $bool_newId = false;
             $int_foreignUid = $elements[$foreignTable.'.uid'];
@@ -355,9 +355,9 @@ class tx_browser_pi1_consolidate
                 {
                   $arr_localTable_foreignTables[$localUid][$table][$int_foreignUid][$field] = $element;
                 }
-                if (!in_array($table, $arr_foreignTables))
+                if ( ! in_array( $table, $arr_foreignTables ) )
                 {
-                  if ($table != $localTable)
+                  if( $table != $localTable )
                   {
                     // #9727
                     $bool_trueForeignTable = false;
@@ -398,6 +398,7 @@ class tx_browser_pi1_consolidate
     }
     // Loop through the localTable array with all unique ids and loop through all rows
 
+$this->pObj->dev_var_dump( $arr_localTable_foreignTables );    
 
     $arr_rows_consolidated_fields = explode(',', $this->pObj->csvSelectWoFunc);
     foreach ($arr_rows_consolidated_fields as $key => $tableField)
@@ -551,7 +552,6 @@ class tx_browser_pi1_consolidate
     // Prepaire global array for children and link workflow
 
     $this->pObj->arr_children_to_devide = array_unique($arr_children_to_devide);  // 3.3.3
-$this->pObj->dev_var_dump( $rows_cons, $this->pObj->arr_children_to_devide );    
     //if(t3lib_div::_GP('dev')) var_dump('sql_func 2525', $this->pObj->arr_children_to_devide);
     // Prepaire global array for children and link workflow
 
