@@ -345,7 +345,8 @@ class tx_browser_pi1_map
   private function initCatDevider( )
   {
     $this->pObj->objTyposcript->set_confSqlDevider();
-    $this->catDevider = $this->pObj->objTyposcript->str_sqlDeviderDisplay.$this->pObj->objTyposcript->str_sqlDeviderWorkflow;
+    $this->catDevider = $this->pObj->objTyposcript->str_sqlDeviderDisplay .
+                        $this->pObj->objTyposcript->str_sqlDeviderWorkflow;
   }
 
 
@@ -1450,7 +1451,7 @@ $this->pObj->dev_var_dump( $this->catDevider, $row[ $catField ], $categories );
         
           // #42566, 121031, dwildt
         $this->cObjDataRemoveArray( array( $catField ) );
-        $catValue = implode( ', ', $categories );
+        $catValue = implode( $this->pObj->objTyposcript->str_sqlDeviderDisplay, $categories );
         $this->cObjDataAddArray( array( $catField => $catValue ) );
         
         
