@@ -509,7 +509,7 @@ class tx_browser_pi1_consolidate
                 if( $field != 'uid' )
                 {
                   // 2nd loop at least
-$this->pObj->dev_var_dump( $int_count, $table.'.'.$field );    
+$this->pObj->dev_var_dump( $int_count, $table.'.'.$field, $rows_cons[ $int_count ][ $table . '.' . $field ] );    
                   if( $rows_cons[ $int_count ][ $table . '.' . $field ] )
                   {
                     if($table.'.'.$field == $groupBy_table.'.'.$groupBy_field)
