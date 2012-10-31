@@ -481,6 +481,7 @@ class tx_browser_pi1_consolidate
               $arrUids = explode(', ', $rows_cons[$int_count][$table.'.uid']);
               if (!in_array($arrFields['uid'], $arrUids))
               {
+$this->pObj->dev_var_dump( $table.'.uid' );    
                 $rows_cons[$int_count][$table.'.uid'] .= $str_devider.$arrFields['uid'];
                 $bool_new = true;
                 $arr_children_to_devide[] = $table.'.uid';  // 3.3.3
@@ -516,6 +517,7 @@ class tx_browser_pi1_consolidate
                     }
                     if($table.'.'.$field != $groupBy_table.'.'.$groupBy_field)
                     {
+$this->pObj->dev_var_dump( $table.'.'.$field );    
                       $rows_cons[$int_count][$table.'.'.$field] .= $str_devider.$value;
                       $arr_children_to_devide[] = $table.'.'.$field;  // 3.3.3
                     }
