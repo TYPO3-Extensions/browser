@@ -493,7 +493,10 @@ $this->pObj->dev_var_dump( $arr_localTable_foreignTables );
             // 1st loop
             if (!$rows_cons[$int_count][$table.'.uid'])
             {
-              if(!empty($arrFields['uid']))
+                // 121031, dwildt, 1-
+//              if( ! empty( $arrFields['uid'] ) )
+                // 121031, dwildt, 1+
+              if( $arrFields['uid'] !== null )
               {
                 $rows_cons[$int_count][$table.'.uid'] = $arrFields['uid'];
               }
