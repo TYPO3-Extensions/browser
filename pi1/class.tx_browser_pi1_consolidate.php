@@ -501,7 +501,7 @@ class tx_browser_pi1_consolidate
             // 1st loop
 
             // We have a new record
-            if ($bool_new)
+            if( $bool_new )
             {
               // Loop through all elements
               foreach( $arrFields as $field => $value )
@@ -509,14 +509,14 @@ class tx_browser_pi1_consolidate
                 if( $field != 'uid' )
                 {
                   // 2nd loop at least
-$this->pObj->dev_var_dump( $int_count, $table.'.'.$field, $rows_cons[ $int_count ][ $table . '.' . $field ] );    
+//$this->pObj->dev_var_dump( $int_count, $table.'.'.$field, $rows_cons[ $int_count ][ $table . '.' . $field ] );    
                   if( $rows_cons[ $int_count ][ $table . '.' . $field ] )
                   {
-                    if($table.'.'.$field == $groupBy_table.'.'.$groupBy_field)
+                    if( $table . '.' . $field == $groupBy_table . '.' . $groupBy_field )
                     {
                       $rows_cons[$int_count][$table.'.'.$field] = $value;
                     }
-                    if($table.'.'.$field != $groupBy_table.'.'.$groupBy_field)
+                    if( $table . '.' . $field != $groupBy_table . '.' . $groupBy_field )
                     {
 $this->pObj->dev_var_dump( $table.'.'.$field );    
                       $rows_cons[$int_count][$table.'.'.$field] .= $str_devider.$value;
@@ -525,8 +525,9 @@ $this->pObj->dev_var_dump( $table.'.'.$field );
                   }
                   // 2nd loop at least
                   // 1st loop
-                  if (!$rows_cons[$int_count][$table.'.'.$field])
+                  if( ! $rows_cons[ $int_count ][ $table . '.' . $field ] )
                   {
+$this->pObj->dev_var_dump( $table.'.'.$field );    
                     $rows_cons[$int_count][$table.'.'.$field] = $value;
                   }
                   // 1st loop
