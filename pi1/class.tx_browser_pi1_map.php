@@ -1190,12 +1190,35 @@ class tx_browser_pi1_map
           $series[$mapMarker['cat']]['icon'][] = $mapMarker['catIconMap'];
           $series[$mapMarker['cat']]['icon'][] = $width;
           $series[$mapMarker['cat']]['icon'][] = $height;
-          $series[$mapMarker['cat']]['icon'][] = $this->confMap['configuration.']['categories.']['offset.']['x'];
-          $series[$mapMarker['cat']]['icon'][] = $this->confMap['configuration.']['categories.']['offset.']['y'];
+            // #42125, 121031, dwildt, 2-
+//          $series[$mapMarker['cat']]['icon'][] = ( int ) $this->confMap['configuration.']['categories.']['offset.']['x'];
+//          $series[$mapMarker['cat']]['icon'][] = ( int ) $this->confMap['configuration.']['categories.']['offset.']['y'];
+            // IF database has a field x-offset, take calue from database
+            // #42125, 121031, dwildt, 8+
+          if( isset( $mapMarker['iconOffsetX'] ) )
+          {
+            $series[$mapMarker['cat']]['icon'][] = ( int ) $mapMarker['iconOffsetX'];
+          }
+          else
+          {
+            $series[$mapMarker['cat']]['icon'][] = ( int ) $this->confMap['configuration.']['categories.']['offset.']['x'];
+          }
+            // IF database has a field x-offset, take calue from database
+            // IF database has a field y-offset, take calue from database
+            // #42125, 121031, dwildt, 8+
+          if( isset( $mapMarker['iconOffsetY'] ) )
+          {
+            $series[$mapMarker['cat']]['icon'][] = ( int ) $mapMarker['iconOffsetY'];
+          }
+          else
+          {
+            $series[$mapMarker['cat']]['icon'][] = ( int ) $this->confMap['configuration.']['categories.']['offset.']['y'];
+          }
+            // IF database has a field y-offset, take calue from database
         }
           // Database category has its own icon
-        else
           // Database categories without own icons
+        if( ! isset( $mapMarker['catIconMap'] ) )
         {
           $series[$mapMarker['cat']]['icon'] = $catIcons[$mapMarker['iconKey']];
         }
@@ -1347,11 +1370,15 @@ class tx_browser_pi1_map
 
       // FOREACH row
     $mapMarkers = null;
-    $catField       = $this->confMap['configuration.']['categories.']['fields.']['category'];
-    $catIconsField  = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+    $catField         = $this->confMap['configuration.']['categories.']['fields.']['category'];
+    $catIconsField    = $this->confMap['configuration.']['categories.']['fields.']['categoryIcon'];
+      // #42125, 121031, dwildt, 2+
+    $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
+    $catOffsetYField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
 //$this->pObj->dev_var_dump( $this->pObj->rows, $catField, $catIconsField );    
     foreach( $this->pObj->rows as $row )
     {
+        // IF there are more than one category
       if( $this->boolMoreThanOneCategory )
       {
           // Get categories
@@ -1370,15 +1397,43 @@ class tx_browser_pi1_map
           $categoryIcons = explode( $this->catDevider, $row[ $catIconsField ] );
         }
           // Get category icons
+          // Get category offsets
+          // #42125, 121031, dwildt, 8+
+        if( isset( $row[ $catOffsetXField ] ) )
+        {
+          $categoryOffsetsX = explode( $this->catDevider, $row[ $catOffsetXField ] );
+        }
+        if( isset( $row[ $catOffsetYField ] ) )
+        {
+          $categoryOffsetsY = explode( $this->catDevider, $row[ $catOffsetYField ] );
+        }
+          // Get category offsets
       }
-      else
+        // IF there are more than one category
+        // IF there is one category exactly
+      if( ! $this->boolMoreThanOneCategory )
       {
+          // Set dummy category
         $categories = array( $keys[ 0 ] => 'dummy' );
+          // IF there are one icon at least
         if( isset( $this->arrCategories['icons'] ) )
         {
           list( $categoryIcons[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catIconsField ] );
         }
+          // IF there are one icon at least
+          // Get category offset
+          // #42125, 121031, dwildt, 8+
+        if( isset( $row[ $catOffsetXField ] ) )
+        {
+          list( $categoryOffsetsX[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catOffsetXField ] );
+        }
+        if( isset( $row[ $catOffsetYField ] ) )
+        {
+          list( $categoryOffsetsY[ $keys[ 0 ] ] ) = explode( $this->catDevider, $row[ $catOffsetYField ] );
+        }
+          // Get category offset
       }
+        // IF there is one category exactly
 
         // FOREACH category
       foreach( $categories as $key => $category )
@@ -1389,8 +1444,14 @@ class tx_browser_pi1_map
         $this->cObjDataAddMarker( );
         if( isset( $this->arrCategories['icons'] ) )
         {
-          $this->cObjDataAddArray( array( $catIconsField => $categoryIcons[$key] ) );
+          $this->cObjDataAddArray( array( $catIconsField => $categoryIcons[ $key ] ) );
         }
+        
+          // Add x offset and y offset to current cObject
+          // #42125, 121031, dwildt, 2+
+        $this->cObjDataAddArray( array( $catOffsetXField => $categoryOffsetsX[ $key ] ) );
+        $this->cObjDataAddArray( array( $catOffsetYField => $categoryOffsetsY[ $key ] ) );
+          // Add x offset and y offset to current cObject
 
           // Get the longitude
         $mapMarker['lon'] = $this->renderMapMarkerVariablesSystemItem( 'longitude' );
@@ -1455,6 +1516,11 @@ class tx_browser_pi1_map
         }
           // Get the iconKey
         $mapMarker['iconKey'] = $arrCategoriesFlipped[ $category ];
+
+          // Add offset to the mapMarker
+        $mapMarker['iconOffsetX'] = $this->renderMapMarkerVariablesSystemItem( 'categoryOffsetX' );
+        $mapMarker['iconOffsetY'] = $this->renderMapMarkerVariablesSystemItem( 'categoryOffsetY' );
+          // Add offset to the mapMarker
 
           // Save each mapMarker
         $mapMarkers[] = $mapMarker;

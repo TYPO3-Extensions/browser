@@ -3,8 +3,10 @@
   New Features
   * #42125: OpenStreetMap: offset for categories
             Effected files:
+            * pi1/class.tx_browser_pi1_map.php
             * static
               * constants.txt
+              * setup.txt
   * #42124: OpenStreetMap: improve performance
             oxMapConfig_0.0.9.js -> oxMapConfig_0.0.10.js
             oxRenderMap_0.0.9.js -> oxRenderMap_0.0.11.js

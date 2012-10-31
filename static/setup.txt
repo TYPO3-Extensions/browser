@@ -564,6 +564,10 @@ plugin.tx_browser_pi1 {
             category = {$plugin.tx_browser_pi1.map.field.category}
               // [STRING] table.field with the category icons. Example: tx_org_headquarterscat.icons
             categoryIcon = {$plugin.tx_browser_pi1.map.field.categoryIcon}
+              // [STRING] table.field with the x offset of the category icons. Example: tx_org_headquarterscat.icon_offset_x
+            categoryOffsetX = {$plugin.tx_browser_pi1.map.field.categoryOffsetX}
+              // [STRING] table.field with the y offset of the category icons. Example: tx_org_headquarterscat.icon_offset_y
+            categoryOffsetY = {$plugin.tx_browser_pi1.map.field.categoryOffsetY}
           }
             // [STRING/HTML] Draft for an input field of the category form
           form_input = TEXT
@@ -868,6 +872,24 @@ plugin.tx_browser_pi1 {
                 stdWrap.listNum = {$plugin.tx_browser_pi1.map.position.categoryIconMap}
               }
             }
+              // [INTEGER] x-offset of the current icon in pixel
+            categoryOffsetX = TEXT
+            categoryOffsetX {
+                // [STRING] table.field. Example: tx_org_headquarterscat.icon_offset_x
+              field = {$plugin.tx_browser_pi1.map.field.categoryOffsetX}
+            }
+              // [INTEGER] y-offset of the current icon in pixel
+            categoryOffsetY = TEXT
+            categoryOffsetY {
+                // [STRING] table.field. Example: tx_org_headquarterscat.icon_offset_y
+              field = {$plugin.tx_browser_pi1.map.field.categoryOffsetY}
+            }
+              // [STRING] content in the popup
+            description = TEXT
+            description {
+                // [STRING] table.field. Example: tx_org_headquarters.title
+              field = {$plugin.tx_browser_pi1.map.field.description}
+            }
               // [NUMBER] latitude
             latitude = TEXT
             latitude {
@@ -880,11 +902,11 @@ plugin.tx_browser_pi1 {
                 // [STRING] table.field. Example: tx_org_headquarters.mail_lon
               field = {$plugin.tx_browser_pi1.map.field.longitude}
             }
-              // [STRING] content in the popup
-            description = TEXT
-            description {
+              // [STRING] number of the point (has an effect ...
+            number = TEXT
+            number {
                 // [STRING] table.field. Example: tx_org_headquarters.title
-              field = {$plugin.tx_browser_pi1.map.field.description}
+              field = {$plugin.tx_browser_pi1.map.field.number}
             }
               // [STRING] URL of the point (has an effect in hoover mode only!)
             url = TEXT
@@ -893,12 +915,6 @@ plugin.tx_browser_pi1 {
                 parameter.data = field:mapLinkToSingle
                 returnLast  = url
               }
-            }
-              // [STRING] number of the point (has an effect ...
-            number = TEXT
-            number {
-                // [STRING] table.field. Example: tx_org_headquarters.title
-              field = {$plugin.tx_browser_pi1.map.field.number}
             }
           }
         }
