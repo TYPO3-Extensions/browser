@@ -1375,7 +1375,7 @@ class tx_browser_pi1_map
       // #42125, 121031, dwildt, 2+
     $catOffsetXField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetX'];
     $catOffsetYField  = $this->confMap['configuration.']['categories.']['fields.']['categoryOffsetY'];
-//$this->pObj->dev_var_dump( $this->pObj->rows, $catField, $catIconsField );    
+$this->pObj->dev_var_dump( $this->pObj->rows, $this->confMap['configuration.']['categories.']['fields.'], $catOffsetXField, $catOffsetYField );    
     foreach( $this->pObj->rows as $row )
     {
         // IF there are more than one category
