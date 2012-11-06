@@ -1388,6 +1388,8 @@ var_dump( __METHOD__, __LINE__ );
 
     switch( $limited )
     {
+        // #42738, 121106, dwildt, +
+      case( $this->pObj->objExport->str_typeNum == 'csv' ):
       case( false ):
         $limit  = null;
         break;
