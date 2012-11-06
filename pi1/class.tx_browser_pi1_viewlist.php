@@ -527,24 +527,31 @@ var_dump( __METHOD__, __LINE__ );
  * content_setCSV( ): Sets content to CSV template
  *
  * @return    void
- * @version 3.9.12
+ * @version 4.1.25
  * @since   3.9.9
  */
   private function content_setCSV( )
   {
+      // Get the label of the subpart marker for the csv content
+    $str_marker     = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
+
       // DRS
     if ( $this->pObj->b_drs_templating || $this->pObj->b_drs_export )
     {
-      t3lib_div::devlog('[INFO/TEMPLATING+EXPORT] ###TEMPLATE_CSV### is used as template marker.',  $this->pObj->extKey, 0);
+      $prompt = $str_marker . ' is used as template marker.'; 
+      t3lib_div::devlog( '[INFO/TEMPLATING+EXPORT] ' . $prompt,  $this->pObj->extKey, 0 );
     }
       // DRS
-
-      // Get the label of the subpart marker for the csv content
-    $str_marker     = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['marker'];
+    
       // Get the csv content file
     $template_path  = $this->conf['flexform.']['viewList.']['csvexport.']['template.']['file'];
       // Set the csv content
-    $this->content  = $this->pObj->cObj->fileResource( $template_path );
+      // #42738, 121106, dwildt, 1-
+//    $this->content  = $this->pObj->cObj->fileResource( $template_path );
+      // #42738, 121106, dwildt, 2+
+    $template       = $this->pObj->cObj->fileResource( $template_path );
+    $this->content  = $this->pObj->cObj->getSubpart( $template, $str_marker );
+
 
       // Die, if content is empty
     $this->content_dieIfEmpty( $str_marker, __METHOD__, __LINE__ );

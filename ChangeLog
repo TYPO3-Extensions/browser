@@ -17,6 +17,7 @@
   Improvement
   * #00000: Qaulified prompt in tx_browser_pi1_localisation::zz_promptLLdie()          
   Bugfixing
+  * #42738: CSV-Export: Supbart isn't processed
   * #42736: "Is not an array" in cal, map, 
             Missing parameters in tmplRowFieldOfSingleViewIsEmpty( )
             Thanks to Thomas.Scholze@HS-Lausitz.de for bug report and a patch
