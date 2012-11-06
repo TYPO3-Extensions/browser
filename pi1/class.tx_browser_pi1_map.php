@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 4.1.7
+* @version 4.1.25
 * @since 3.9.6
 */
 
@@ -758,12 +758,15 @@ class tx_browser_pi1_map
  * cObjDataAddMarker( ):
  *
  * @return    void
- * @version 4.1.0
+ * @version 4.1.25
  * @since   4.1.0
  */
   private function cObjDataAddMarker( )
   {
-    foreach( array_keys( $this->confMap['marker.']['addToCData.']['system.'] ) as $marker )
+      // #42736, dwildt, 1-
+//    foreach( array_keys( $this->confMap['marker.']['addToCData.']['system.'] ) as $marker )
+      // #42736, dwildt, 1+ (Thanks to Thomas.Scholze@HS-Lausitz.de)
+    foreach( ( array ) array_keys( $this->confMap['marker.']['addToCData.']['system.'] ) as $marker )
     {
       if( substr( $marker, -1, 1 ) == '.' )
       {

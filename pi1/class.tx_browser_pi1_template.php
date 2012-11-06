@@ -2721,7 +2721,10 @@ class tx_browser_pi1_template
       //list($table, $field)  = explode('.', $key);
 
         // CONTINUE: field for single view is empty
-      if( $this->tmplRowFieldOfSingleViewIsEmpty( ) )
+        // ##42736, 121006, dwildt, 1-
+//      if( $this->tmplRowFieldOfSingleViewIsEmpty( ) )
+        // ##42736, 121006, dwildt, 1+ (Thanks to Thomas.Scholze@HS-Lausitz.de)
+      if( $this->tmplRowFieldOfSingleViewIsEmpty( $bool_dontHandleEmptyValues, $value ) )
       {
         continue;
       }

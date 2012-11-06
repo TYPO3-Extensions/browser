@@ -30,7 +30,7 @@
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 4.1.21
+* @version 4.1.25
 * @since 3.6.0
 */
 
@@ -2061,7 +2061,7 @@ class tx_browser_pi1_cal
  * area_init: Check configuration and init class var arr_area
  *
  * @return	void
- * @version 4.1.21
+ * @version 4.1.25
  * @since 3.6.0
  * @link  http://forge.typo3.org/issues/11402  TYPO3-Browser: Filter for area
  */
@@ -2076,8 +2076,11 @@ class tx_browser_pi1_cal
 
       // #41776, dwildt, 1-
 //    foreach ($this->pObj->objFltr3x->arr_conf_tableFields as $tableField)
-      // #41776, dwildt, 1+
-    foreach ($this->pObj->objFltr4x->arr_tsFilterTableFields as $tableField)
+      // #42736, dwildt, 2-
+//      // #41776, dwildt, 1+
+//    foreach ($this->pObj->objFltr4x->arr_tsFilterTableFields as $tableField)
+      // #42736, dwildt, 1+ (Thanks to Thomas.Scholze@HS-Lausitz.de)
+    foreach( ( array ) $this->pObj->objFltr4x->arr_tsFilterTableFields as $tableField )
     {
       list ($table, $field) = explode('.', $tableField);
       $arr_ts = $conf_view['filter.'][$table . '.'][$field . '.'];

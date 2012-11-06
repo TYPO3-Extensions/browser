@@ -29,7 +29,7 @@
 * @package    TYPO3
 * @subpackage  browser
 *
-* @version 3.9.13
+* @version 4.1.25
 * @since 2.0.0
 */
 
@@ -1797,11 +1797,40 @@ class tx_browser_pi1_localisation
   * @param	string		$method : name of calling method
   * @param	integer		$line   : line number of the call
   * @return	void
-  * @version 3.9.13
+  * @version 4.1.25
   * @since   3.9.13
   */
   public function zz_promptLLdie( $method, $line )
   {
+    switch( $this->int_localisation_mode )
+    {
+      case( 0 ):
+        $llMode = 'PI1_ANY_LANGUAGE';
+        break;
+      case( 1 ):
+        $llMode = 'PI1_DEFAULT_LANGUAGE';
+        break;
+      case( 2 ):
+        $llMode = 'PI1_DEFAULT_LANGUAGE_ONLY';
+        break;
+      case( 3 ):
+        $llMode = 'PI1_SELECTED_OR_DEFAULT_LANGUAGE';
+        break;
+      case( 4 ):
+        $llMode = 'PI1_SELECTED_LANGUAGE_ONLY';
+        break;
+      default:
+        $llMode = 'undefined';
+        break;
+    }
+    $llMode = $llMode . ' (' . $this->int_localisation_mode . ')';
+
+    define('PI1_ANY_LANGUAGE',                  0);
+    define('PI1_DEFAULT_LANGUAGE',              1);
+    define('PI1_DEFAULT_LANGUAGE_ONLY',         2);
+    define('PI1_SELECTED_OR_DEFAULT_LANGUAGE',  3);
+    define('PI1_SELECTED_LANGUAGE_ONLY',        4);
+
     $prompt = '
       <div style="text-align:center;">
         <div style="border:1em solid red;padding:1em">

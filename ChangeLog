@@ -14,7 +14,12 @@
             * static
               * setup.txt
             * t3jquery.txt  * #42125: OpenStreetMap: offset for categories
+  Improvement
+  * #00000: Qaulified prompt in tx_browser_pi1_localisation::zz_promptLLdie()          
   Bugfixing
+  * #42736: "Is not an array" in cal, map, 
+            Missing parameters in tmplRowFieldOfSingleViewIsEmpty( )
+            Thanks to Thomas.Scholze@HS-Lausitz.de for bug report and a patch
   * #42566: BrowserMaps: remove the cat devider from categories
   * #42565: Unproper result, if first children is 0, empty or null
             Effected files:
