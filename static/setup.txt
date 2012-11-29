@@ -1635,7 +1635,7 @@ plugin.tx_browser_pi1 {
           enabled = TEXT
           enabled {
               // True (default)
-            value = 1
+            value = 0
           }
             // [String] HTML id of the treeview.
           html_id = TEXT

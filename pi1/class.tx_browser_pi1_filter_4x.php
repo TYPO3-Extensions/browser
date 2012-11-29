@@ -4149,7 +4149,8 @@ class tx_browser_pi1_filter_4x {
                       </p>
                       <ul>
                         <li>
-                          Look for the property plugins within the TypoScript Constant Editor.
+                          Look for the property plugins within the TypoScript Constant Editor.<br />
+                          See category: [BROWSER - JQUERY JSTREE]
                         </li>
                         <li>
                           Set plugins to [category_menu].
@@ -4160,7 +4161,7 @@ class tx_browser_pi1_filter_4x {
                       </p>
                       <ul>
                         <li>
-                          Look for filter. ' . $tableField . ' the the TypoScript setup.
+                          Look for filter. ' . $tableField . ' in the TypoScript setup.
                         </li>
                         <li>
                           Set filter. ' . $tableField . ' to TREEVIEW by copying the master template for a TREEVIEW.

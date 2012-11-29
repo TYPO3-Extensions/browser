@@ -1,3 +1,15 @@
+4.1.26
+  121107
+  Improvement
+  * #00000: Qualified prompt in tx_browser_pi1_localisation::zz_promptLLdie()          
+  * #00000: category_menu.treeview.enabled.value = 0
+  Bugfixing
+  * #42738: CSV-Export: Supbart isn't processed
+  * #42736: "Is not an array" in cal, map, 
+            Missing parameters in tmplRowFieldOfSingleViewIsEmpty( )
+            Thanks to Thomas.Scholze@HS-Lausitz.de for bug report and a patch
+  * #42302: Invalid database result resource detected
+
 4.1.25
   121031
   New Features
@@ -14,18 +26,11 @@
             * static
               * setup.txt
             * t3jquery.txt  * #42125: OpenStreetMap: offset for categories
-  Improvement
-  * #00000: Qaulified prompt in tx_browser_pi1_localisation::zz_promptLLdie()          
   Bugfixing
-  * #42738: CSV-Export: Supbart isn't processed
-  * #42736: "Is not an array" in cal, map, 
-            Missing parameters in tmplRowFieldOfSingleViewIsEmpty( )
-            Thanks to Thomas.Scholze@HS-Lausitz.de for bug report and a patch
   * #42566: BrowserMaps: remove the cat devider from categories
   * #42565: Unproper result, if first children is 0, empty or null
             Effected files:
             * pi1/class.tx_browser_pi1_consolidate.php
-  * #42302: Invalid database result resource detected
 
 4.1.24
   121024
