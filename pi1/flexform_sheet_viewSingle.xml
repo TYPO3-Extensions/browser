@@ -53,7 +53,7 @@
                 <numIndex index="1">ts</numIndex>
               </numIndex>
             </items>
-            <default>ts</default>
+            <default>by_flexform</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>

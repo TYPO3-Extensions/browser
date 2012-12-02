@@ -4,6 +4,9 @@
   * #00000: Qualified prompt in tx_browser_pi1_localisation::zz_promptLLdie()          
   * #00000: category_menu.treeview.enabled.value = 0
   Bugfixing
+  * #43530: BUG at tx_browser_pi1_backend::evaluate_pluginInitRecordBrowser
+            Effected files:
+            * pi1/class.tx_browser_pi1_backend.php
   * #42738: CSV-Export: Supbart isn't processed
   * #42736: "Is not an array" in cal, map, 
             Missing parameters in tmplRowFieldOfSingleViewIsEmpty( )

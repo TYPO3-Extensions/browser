@@ -3618,6 +3618,8 @@ class tx_browser_pi1_flexform {
         $this->pObj->conf['navigation.']['record_browser'] = 1;
         break;
       case ('ts') :
+        // #43530, 121202, dwildt, 1+
+      default:
         // Do nothing
         $value = $this->pObj->conf['navigation.']['record_browser'];
         if ($this->pObj->b_drs_flexform) {
