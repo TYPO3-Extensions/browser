@@ -635,23 +635,27 @@ class tx_browser_pi1_backend
         return;
         break;
       case ('ts') :
+        // #43530, 121202, dwildt, 1+
+      default:
         $this->boolRecordBrowser = $this->obj_TypoScript->setup['plugin.']['tx_browser_pi1.']['navigation.']['record_browser'];
         return;
         break;
-      default :
-        $str_prompt = '
-          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              BUG at ' . __METHOD__ . ' (line ' . __LINE__ . '): value in switch is undefined: "' . $record_browser . '".
-            </div>
-          </div>
-          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
-            <div class="message-body">
-              The Browser team has to take care for a proper code!
-            </div>
-          </div>
-          ';
-        return $str_prompt;
+        // #43530, 121202, dwildt, -
+//      default :
+//        $str_prompt = '
+//          <div class="typo3-message message-error" style="max-width:' . $this->maxWidth . ';">
+//            <div class="message-body">
+//              BUG at ' . __METHOD__ . ' (line ' . __LINE__ . '): value in switch is undefined: "' . $record_browser . '".
+//            </div>
+//          </div>
+//          <div class="typo3-message message-information" style="max-width:' . $this->maxWidth . ';">
+//            <div class="message-body">
+//              The Browser team has to take care for a proper code!
+//            </div>
+//          </div>
+//          ';
+//        return $str_prompt;
+        // #43530, 121202, dwildt, -
     }
 
   }

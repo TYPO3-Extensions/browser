@@ -6,7 +6,9 @@
   Bugfixing
   * #43530: BUG at tx_browser_pi1_backend::evaluate_pluginInitRecordBrowser
             Effected files:
-            * pi1/class.tx_browser_pi1_backend.php
+            * pi1
+              * class.tx_browser_pi1_backend.php
+              * class.tx_browser_pi1_flexform.php
   * #42738: CSV-Export: Supbart isn't processed
   * #42736: "Is not an array" in cal, map, 
             Missing parameters in tmplRowFieldOfSingleViewIsEmpty( )
