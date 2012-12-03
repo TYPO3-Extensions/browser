@@ -205,8 +205,8 @@ class tx_browser_pi1_navi_indexBrowser
  /**
   * Constructor. The method initiate the parent object
   *
-  * @param	object		The parent object
-  * @return	void
+  * @param    object        The parent object
+  * @return    void
   * @version  3.9.9
   * @since    3.9.9
   */
@@ -237,8 +237,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * get( ): Get the index browser. It has to replace the subpart in the current content.
  *
- * @param	string		$content: current content
- * @return	array
+ * @param    string        $content: current content
+ * @return    array
  * @version 3.9.12
  * @since   3.9.9
  */
@@ -341,7 +341,7 @@ class tx_browser_pi1_navi_indexBrowser
  *                            * $int_localisation_mode
  *                            * bool_dontLocalise
  *
- * @return	void
+ * @return    void
  * @version 3.9.11
  * @since   3.9.11
  * @todo  120503: Remove $this->bool_dontLocalise from the method and from the class
@@ -400,7 +400,7 @@ class tx_browser_pi1_navi_indexBrowser
  *                                counted before for the default language and the localised
  *                                language.
  *
- * @return	array		$arr_return: Contains an error message in case of an error
+ * @return    array        $arr_return: Contains an error message in case of an error
  * @version 3.9.13
  * @since   3.9.10
  * @internal  #36842
@@ -519,7 +519,7 @@ class tx_browser_pi1_navi_indexBrowser
  *                        * configuration of TS tabs
  *                        It returns true, if a requirement isn't met
  *
- * @return	mixed		true or array, if a requirement isn't met
+ * @return    mixed        true or array, if a requirement isn't met
  * @version 3.9.11
  * @since   3.9.9
  * @todo  120503: Remove $this->bool_dontLocalise. It isn't needed.
@@ -574,7 +574,7 @@ class tx_browser_pi1_navi_indexBrowser
  *                      correspondends with the local table.
  *                      Sets the class var $indexBrowserTableField.
  *
- * @return	array		$arr_return : Contains an error message in case of an error
+ * @return    array        $arr_return : Contains an error message in case of an error
  * @version 3.9.11
  * @since   3.9.9
  */
@@ -625,7 +625,7 @@ class tx_browser_pi1_navi_indexBrowser
  * tableField_init( ):  Set the class var $this->indexBrowserTableField
  *                      Value is the table.field for SQL queries
  *
- * @return	void
+ * @return    void
  * @version 3.9.11
  * @since   3.9.9
  */
@@ -714,7 +714,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * subpart( ): Returns the content for the index browser subpart
  *
- * @return	array		$arr_return : Content or an erreor message in case of an error
+ * @return    array        $arr_return : Content or an erreor message in case of an error
  * @version 3.9.12
  * @since   3.9.9
  */
@@ -777,7 +777,7 @@ class tx_browser_pi1_navi_indexBrowser
  * subpart_setContainer( ): Replace markers in the subpart for the index browser
  *                          but not the subpart ###TABS###
  *
- * @return	[type]		...
+ * @return    [type]        ...
  * @version 3.9.12
  * @since   3.9.9
  */
@@ -920,7 +920,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * tabs_init( ):    Sets the class var $indexBrowserTab
  *
- * @return	array		$arr_return: Contains an error message in case of an error
+ * @return    array        $arr_return: Contains an error message in case of an error
  * @version 3.9.11
  * @since   3.9.10
  */
@@ -1008,10 +1008,10 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * tabs_initAttributes( ):  Sets the array attributes of the class var $indexBrowserTab
  *
- * @param	string		$csvAttributes  : attributes
- * @param	string		$tabLabel       : label of the current tab
- * @param	integer		$tabId          : Id of the current tab
- * @return	array		$arr_return     : Contains an error message in case of an error
+ * @param    string        $csvAttributes  : attributes
+ * @param    string        $tabLabel       : label of the current tab
+ * @param    integer        $tabId          : Id of the current tab
+ * @return    array        $arr_return     : Contains an error message in case of an error
  * @version 3.9.11
  * @since   3.9.10
  */
@@ -1059,7 +1059,7 @@ class tx_browser_pi1_navi_indexBrowser
  * tabs_initFindInSetForCurrentTab( ) : Set the FIND IN SET SQL statement for the
  *                                      current tab. It is needed by the list view.
  *
- * @return	array		$ar_return  : Contains an error message in case of an error
+ * @return    array        $ar_return  : Contains an error message in case of an error
  * @version 3.9.13
  * @since   3.9.13
  */
@@ -1146,11 +1146,11 @@ class tx_browser_pi1_navi_indexBrowser
  * tabs_initProperties( ):  Sets the elements tabIds and tabLabels of the class var $indexBrowserTab
  *                          Updates the element tabSpecial.
  *
- * @param	array		$conf_tabs      : TS configuration array
- * @param	integer		$tabId          : Current tab ID for TS configuration array
- * @param	string		$tabLabel       : Label of the current tab
- * @param	boolean		$displayWoItems : Default value for displaying tabs without any hit
- * @return	array		$arr_return     : Contains an error message in case of an error
+ * @param    array        $conf_tabs      : TS configuration array
+ * @param    integer        $tabId          : Current tab ID for TS configuration array
+ * @param    string        $tabLabel       : Label of the current tab
+ * @param    boolean        $displayWoItems : Default value for displaying tabs without any hit
+ * @return    array        $arr_return     : Contains an error message in case of an error
  * @version 3.9.11
  * @since   3.9.10
  */
@@ -1212,8 +1212,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * tabs_initSpecialChars( ): Inits the array initials of the class var $indexBrowserTab
  *
- * @param	array		$arrCsvAttributes : initials from the tab TS configuration
- * @return	void
+ * @param    array        $arrCsvAttributes : initials from the tab TS configuration
+ * @return    void
  * @version 3.9.11
  * @since   3.9.10
  */
@@ -1274,7 +1274,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * count_chars( ): Updates sum / number of hits of chars (one byte)
  *
- * @return	array		$arr_return : Contains an erreor message in case of an error
+ * @return    array        $arr_return : Contains an erreor message in case of an error
  * @version 3.9.12
  * @since   3.9.11
  */
@@ -1315,8 +1315,8 @@ class tx_browser_pi1_navi_indexBrowser
  * count_chars_addSumToTab( ) : Updates the sum in the arrays tabIds and attributes
  *                              of the class var $indexBrowserTab
  *
- * @param	array		$res  : SQL result
- * @return	void
+ * @param    array        $res  : SQL result
+ * @return    void
  * @version 3.9.12
  * @since   3.9.11
  */
@@ -1469,8 +1469,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * count_chars_resSqlCount( ): SQL query and execution for counting initials
  *
- * @param	string		$currSqlCharset : Current SQL charset for reset in error case
- * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @param    string        $currSqlCharset : Current SQL charset for reset in error case
+ * @return    array        $arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.11
  */
@@ -1516,9 +1516,9 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * count_chars_resSqlCountDefLL( ):
  *
- * @param	string		$strFindInSet : Current SQL charset for reset in error case
- * @param	[type]		$currSqlCharset: ...
- * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @param    string        $strFindInSet : Current SQL charset for reset in error case
+ * @param    [type]        $currSqlCharset: ...
+ * @return    array        $arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.11
  */
@@ -1580,9 +1580,9 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * count_chars_resSqlCountSelOrDefLL( ) : SQL query and execution for counting initials
  *
- * @param	string		$currSqlCharset : Current SQL charset for reset in error case
- * @param	[type]		$currSqlCharset: ...
- * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @param    string        $currSqlCharset : Current SQL charset for reset in error case
+ * @param    [type]        $currSqlCharset: ...
+ * @return    array        $arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.11
  */
@@ -1679,7 +1679,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * count_specialChars( ): Updates sum / number of hits of sepcial chars (multy byte)
  *
- * @return	array		$arr_return : Contains an erreor message in case of an error
+ * @return    array        $arr_return : Contains an erreor message in case of an error
  * @version 3.9.12
  * @since   3.9.10
  */
@@ -1718,8 +1718,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * count_specialChars_addSum( ): Updates sum / number of hits of sepcial chars
  *
- * @param	array		$row        : Row with special chars and their SQL length
- * @return	array		$arr_return : Contains an erreor message in case of an error
+ * @param    array        $row        : Row with special chars and their SQL length
+ * @return    array        $arr_return : Contains an erreor message in case of an error
  * @version 3.9.12
  * @since   3.9.10
  */
@@ -1764,10 +1764,10 @@ class tx_browser_pi1_navi_indexBrowser
  * count_specialChars_resSqlCount( ): SQL query and execution for counting
  *                                    special char initials
  *
- * @param	integer		$length         : SQL length of special chars group
- * @param	array		$arrfindInSet   : FIND IN SET statement with proper length
- * @param	string		$currSqlCharset : Current SQL charset for reset in error case
- * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @param    integer        $length         : SQL length of special chars group
+ * @param    array        $arrfindInSet   : FIND IN SET statement with proper length
+ * @param    string        $currSqlCharset : Current SQL charset for reset in error case
+ * @return    array        $arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.12
  * @since   3.9.10
  */
@@ -1808,10 +1808,10 @@ class tx_browser_pi1_navi_indexBrowser
  * count_specialChars_resSqlCountDefLL( ): SQL query and execution for counting
  *                                    special char initials
  *
- * @param	integer		$length         : SQL length of special chars group
- * @param	array		$strFindInSet   : FIND IN SET statement with proper length
- * @param	string		$currSqlCharset : Current SQL charset for reset in error case
- * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @param    integer        $length         : SQL length of special chars group
+ * @param    array        $strFindInSet   : FIND IN SET statement with proper length
+ * @param    string        $currSqlCharset : Current SQL charset for reset in error case
+ * @return    array        $arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.13
  */
@@ -1858,10 +1858,10 @@ class tx_browser_pi1_navi_indexBrowser
  * count_specialChars_resSqlCountSelOrDefLL( ): SQL query and execution for counting
  *                                    special char initials
  *
- * @param	integer		$length         : SQL length of special chars group
- * @param	array		$strFindInSet   : FIND IN SET statement with proper length
- * @param	string		$currSqlCharset : Current SQL charset for reset in error case
- * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @param    integer        $length         : SQL length of special chars group
+ * @param    array        $strFindInSet   : FIND IN SET statement with proper length
+ * @param    string        $currSqlCharset : Current SQL charset for reset in error case
+ * @return    array        $arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.13
  */
@@ -1955,7 +1955,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * sqlCharsetGet( ):  Get the current SQL charset like latin1 or utf8.
  *
- * @return	string		$charset  : current charset
+ * @return    string        $charset  : current charset
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -1987,8 +1987,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * sqlCharsetSet( ):  Execute SET NAMES with given charset
  *
- * @param	string		$sqlCharset : SQL charset like latin1 or utf8
- * @return	[type]		...
+ * @param    string        $sqlCharset : SQL charset like latin1 or utf8
+ * @return    [type]        ...
  * @version 3.9.9
  * @since   3.9.9
  */
@@ -2011,8 +2011,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * sqlStatement_from( ): SQL statement FROM without a FROM
  *
- * @param	string		$table  : The current from table
- * @return	string		$from   : FROM statement without a from
+ * @param    string        $table  : The current from table
+ * @return    string        $from   : FROM statement without a from
  * @version 3.9.25
  * @since   3.9.12
  */
@@ -2040,9 +2040,9 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * sqlStatement_where( ): SQL statement WHERE without a WHERE
  *
- * @param	string		$table              : The current from table
- * @param	string		$andWhereFindInSet  : FIND IN SET
- * @return	string		$where            : WHERE statement without a WHERE
+ * @param    string        $table              : The current from table
+ * @param    string        $andWhereFindInSet  : FIND IN SET
+ * @return    string        $where            : WHERE statement without a WHERE
  * @version 3.9.25
  * @since   3.9.12
  */
@@ -2112,9 +2112,9 @@ class tx_browser_pi1_navi_indexBrowser
  * sqlStatement_whereAndFindInSet( ): SQL statement AND WHERE without an AND
  *                                    especially for FIND IN SET
  *
- * @param	string		$where              : The current WHERE statement
- * @param	string		$findInSet  : FIND IN SET
- * @return	string		$where            : AND WHERE statement without an AND
+ * @param    string        $where              : The current WHERE statement
+ * @param    string        $findInSet  : FIND IN SET
+ * @return    string        $where            : AND WHERE statement without an AND
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2162,7 +2162,7 @@ class tx_browser_pi1_navi_indexBrowser
   *                           ###AZSELECTOR### will return
   *                           * Feature: #35032
   *
-  * @return	string		###INDEXBROWSER### || ###AZSELECTOR###
+  * @return    string        ###INDEXBROWSER### || ###AZSELECTOR###
   * @version  3.9.10
   * @since    3.9.10
   */
@@ -2208,7 +2208,7 @@ class tx_browser_pi1_navi_indexBrowser
   *                               ###AZSELECTORTABS### will return
   *                               * Feature: #35032
   *
-  * @return	string		###INDEXBROWSERTABS### || ###AZSELECTORTABS###
+  * @return    string        ###INDEXBROWSERTABS### || ###AZSELECTORTABS###
   * @version  3.9.10
   * @since    3.9.10
   */
@@ -2265,8 +2265,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * zz_specCharsToASCII( ): Convert labels to ascii labels
  *
- * @param	string		$string:  the string for conversion
- * @return	string		$ascii:   the converted string
+ * @param    string        $string:  the string for conversion
+ * @return    string        $ascii:   the converted string
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2298,10 +2298,10 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * zz_sqlCountInitialsLL( ) : SQL query and execution for counting initials by given uids
  *
- * @param	integer		$length             : SQL length of special chars group
- * @param	string		$uidListDefAndCurr  : Record uids of translated records and default language records, which aren't translated
- * @param	string		$currSqlCharset     : Current SQL charset like 'latin1'
- * @return	array		$arr_return         : SQL ressource or an error message in case of an error
+ * @param    integer        $length             : SQL length of special chars group
+ * @param    string        $uidListDefAndCurr  : Record uids of translated records and default language records, which aren't translated
+ * @param    string        $currSqlCharset     : Current SQL charset like 'latin1'
+ * @return    array        $arr_return         : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.11
  */
@@ -2393,9 +2393,9 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * zz_sqlIdsOfDefLL( ) : Get Ids of all (!) default language records
  *
- * @param	string		$strFindInSet   : FIND IN SET( )
- * @param	string		$currSqlCharset : Current SQL charset like 'latin1'
- * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @param    string        $strFindInSet   : FIND IN SET( )
+ * @param    string        $currSqlCharset : Current SQL charset like 'latin1'
+ * @return    array        $arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.13
  */
@@ -2467,10 +2467,10 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * zz_sqlIdsOfTranslatedLL( ) : Get Ids of all (!) translated language records
  *
- * @param	string		$currSqlCharset : Current SQL charset for reset in error case
- * @param	[type]		$currSqlCharset: ...
- * @param	[type]		$currSqlCharset: ...
- * @return	array		$arr_return     : SQL ressource or an error message in case of an error
+ * @param    string        $currSqlCharset : Current SQL charset for reset in error case
+ * @param    [type]        $currSqlCharset: ...
+ * @param    [type]        $currSqlCharset: ...
+ * @return    array        $arr_return     : SQL ressource or an error message in case of an error
  * @version 3.9.13
  * @since   3.9.11
  */
@@ -2588,8 +2588,8 @@ class tx_browser_pi1_navi_indexBrowser
  *                                        A special char group is grouped by the length of a special
  *                                        char.
  *
- * @param	array		$row  : Row with special chars and their SQL length
- * @return	[type]		...
+ * @param    array        $row  : Row with special chars and their SQL length
+ * @return    [type]        ...
  * @version 3.9.12
  * @since   3.9.10
  */
@@ -2608,8 +2608,8 @@ class tx_browser_pi1_navi_indexBrowser
  *                                        A special char group is grouped by the length of a special
  *                                        char.
  *
- * @param	array		$row  : Row with special chars and their SQL length
- * @return	[type]		...
+ * @param    array        $row  : Row with special chars and their SQL length
+ * @return    [type]        ...
  * @version 3.9.12
  * @since   3.9.10
  */
@@ -2628,9 +2628,9 @@ class tx_browser_pi1_navi_indexBrowser
  *                                        A special char group is grouped by the length of a special
  *                                        char.
  *
- * @param	array		$row  : Row with special chars and their SQL length
- * @param	[type]		$fromLength: ...
- * @return	[type]		...
+ * @param    array        $row  : Row with special chars and their SQL length
+ * @param    [type]        $fromLength: ...
+ * @return    [type]        ...
  * @version 3.9.12
  * @since   3.9.10
  */
@@ -2659,8 +2659,8 @@ class tx_browser_pi1_navi_indexBrowser
  /**
   * zz_getSqlLengthAsRow( ): Return a row with the SQL length of the given chars
   *
-  * @param	array		$arrChars  : array with the chars
-  * @return	array		$arr_return       : row with all special chars and their SQL length
+  * @param    array        $arrChars  : array with the chars
+  * @return    array        $arr_return       : row with all special chars and their SQL length
   * @version 3.9.12
   * @since   3.9.10
   */
@@ -2739,8 +2739,8 @@ class tx_browser_pi1_navi_indexBrowser
  * zz_setTabClassSelected( ): Sets the class property selected, if the current tab
  *                      is selected. Sets the class var indexBrowserTab.
  *
- * @param	integer		$tabId    : Current tab ID for TS configuration array
- * @return	[type]		...
+ * @param    integer        $tabId    : Current tab ID for TS configuration array
+ * @return    [type]        ...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2790,9 +2790,9 @@ class tx_browser_pi1_navi_indexBrowser
  * zz_setTabPiVars( ):  Makes a backup of the current piVars. Than it removes some
  *                      elements, which shouldn't be part of a index browser link.
  *
- * @param	string		$labelAscii : label of the current tab in ascii format
- * @param	string		$label      : label of the current tab
- * @return	[type]		...
+ * @param    string        $labelAscii : label of the current tab in ascii format
+ * @param    string        $label      : label of the current tab
+ * @return    [type]        ...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2822,8 +2822,8 @@ class tx_browser_pi1_navi_indexBrowser
  *                                the default tab, if default tab should get a
  *                                link
  *
- * @param	string		$label: label of the current tab
- * @return	[type]		...
+ * @param    string        $label: label of the current tab
+ * @return    [type]        ...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2853,10 +2853,10 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * zz_tabClass( ): Returns the tab class like ' class="tab-u tab-29 selected last"'
  *
- * @param	integer		$lastTabId  : id of the last visible tab
- * @param	array		$tab        : array with elements of the current tab
- * @param	integer		$key        : id of the tab from the TS configuration
- * @return	string		$class      : complete class tag
+ * @param    integer        $lastTabId  : id of the last visible tab
+ * @param    array        $tab        : array with elements of the current tab
+ * @param    integer        $key        : id of the tab from the TS configuration
+ * @return    string        $class      : complete class tag
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2889,7 +2889,7 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * zz_tabDefaultLabel( ): Set class var $tabDefaultLabel
  *
- * @return	[type]		...
+ * @return    [type]        ...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2907,7 +2907,7 @@ class tx_browser_pi1_navi_indexBrowser
  * zz_tabDefaultLink( ):  Set the boolean class var linkDefaultTab: Should
  *                        the default tab get a link?
  *
- * @return	[type]		...
+ * @return    [type]        ...
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2949,8 +2949,8 @@ class tx_browser_pi1_navi_indexBrowser
 /**
  * zz_tabLinkLabel( ): Links the label of the current tab
  *
- * @param	array		$tab            : array with elements of the current tab
- * @return	string		$tabLinkedLabel : the linked label
+ * @param    array        $tab            : array with elements of the current tab
+ * @return    string        $tabLinkedLabel : the linked label
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2991,7 +2991,7 @@ class tx_browser_pi1_navi_indexBrowser
  *                  if the property displayWoItems is true or of the tab has
  *                  one hit at least
  *
- * @return	integer		$id: Id of the last visible tab
+ * @return    integer        $id: Id of the last visible tab
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -3048,8 +3048,8 @@ class tx_browser_pi1_navi_indexBrowser
  * zz_tabTitle( ): Returns the value for the title property. Something like
  *                 "1 item" or "12 items"
  *
- * @param	integer		$sum    : Amount of hits of the current tab
- * @return	string		$title  :	The title value
+ * @param    integer        $sum    : Amount of hits of the current tab
+ * @return    string        $title  :    The title value
  * @version 3.9.12
  * @since   3.9.12
  */
