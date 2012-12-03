@@ -837,15 +837,15 @@ class tx_browser_pi1_navi_indexBrowser
         continue;
       }
 
-        // #00000, 121203, dwildt, 6-
+        // #43558, 121203, dwildt, 6-
         // Wrap the label
 //      $label  = $tab['label'];
 //      if( isset ( $tab['wrap'] ) )
 //      {
 //        $label = str_replace( '|', $label, $tab['wrap'] );
 //      }
-        // #00000, 121203, dwildt, 6-
-        // #00000, 121203, dwildt, 2+
+        // #43558, 121203, dwildt, 6-
+        // #43558, 121203, dwildt, 2+
         // Wrap the label
       $label  = $tab['label'];
 
@@ -873,7 +873,7 @@ class tx_browser_pi1_navi_indexBrowser
       }
         // SWITCH : sum of hits of tab, display without items
 
-        // #00000, 121203, dwildt, 14+
+        // #43558, 121203, dwildt, 14+
         // Wrap the label
       if( isset ( $tab['wrap'] ) )
       {
@@ -881,16 +881,14 @@ class tx_browser_pi1_navi_indexBrowser
       }
       if( ! ( isset ( $tab['wrap'] ) ) )
       {
-//var_dump( __LINE__, $tab );
         $markerArray['###TAB###'] = str_replace
                                     ( 
                                       '|', 
                                       $markerArray['###TAB###'], 
                                       $this->pObj->conf['navigation.']['indexBrowser.']['defaultTabWrap'] 
                                     );
-//var_dump( __LINE__, $label );
       }
-        // #00000, 121203, dwildt, 14+
+        // #43558, 121203, dwildt, 14+
 
         // Set the content
       $content = $content . $this->pObj->cObj->substituteMarkerArray( $this->subpartTab, $markerArray );
