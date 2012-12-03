@@ -29,7 +29,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     3.9.25
+ * @version     4.1.26
  * @since       3.9.9
  */
 
@@ -799,7 +799,7 @@ class tx_browser_pi1_navi_indexBrowser
  * subpart_setTabs( ): Set the content in the subpart for the tabs
  *
  * @return	void
- * @version 3.9.12
+ * @version 4.1.26
  * @since   3.9.12
  */
   private function subpart_setTabs( )
@@ -825,7 +825,7 @@ class tx_browser_pi1_navi_indexBrowser
       }
     }
       // Get the tab array
-    ( array ) $arrTabs= $this->indexBrowserTab['tabIds'];
+    ( array ) $arrTabs = $this->indexBrowserTab['tabIds'];
       // get id of the last visible tab
     $lastTabId = $this->zz_tabLastId( );
 
@@ -837,12 +837,17 @@ class tx_browser_pi1_navi_indexBrowser
         continue;
       }
 
+        // #00000, 121203, dwildt, 6-
+        // Wrap the label
+//      $label  = $tab['label'];
+//      if( isset ( $tab['wrap'] ) )
+//      {
+//        $label = str_replace( '|', $label, $tab['wrap'] );
+//      }
+        // #00000, 121203, dwildt, 6-
+        // #00000, 121203, dwildt, 2+
         // Wrap the label
       $label  = $tab['label'];
-      if( isset ( $tab['wrap'] ) )
-      {
-        $label = str_replace('|', $label, $tab['wrap']);
-      }
 
         // Init the marker array
       unset( $markerArray );
@@ -867,6 +872,25 @@ class tx_browser_pi1_navi_indexBrowser
           continue;
       }
         // SWITCH : sum of hits of tab, display without items
+
+        // #00000, 121203, dwildt, 14+
+        // Wrap the label
+      if( isset ( $tab['wrap'] ) )
+      {
+        $markerArray['###TAB###'] = str_replace( '|', $markerArray['###TAB###'], $tab['wrap'] );
+      }
+      if( ! ( isset ( $tab['wrap'] ) ) )
+      {
+//var_dump( __LINE__, $tab );
+        $markerArray['###TAB###'] = str_replace
+                                    ( 
+                                      '|', 
+                                      $markerArray['###TAB###'], 
+                                      $this->pObj->conf['navigation.']['indexBrowser.']['defaultTabWrap'] 
+                                    );
+//var_dump( __LINE__, $label );
+      }
+        // #00000, 121203, dwildt, 14+
 
         // Set the content
       $content = $content . $this->pObj->cObj->substituteMarkerArray( $this->subpartTab, $markerArray );
