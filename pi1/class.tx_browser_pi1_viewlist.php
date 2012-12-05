@@ -699,10 +699,11 @@ $this->pObj->dev_var_dump( $this->content );
       $cObj_name  = $confMarker[$marker];
       $cObj_conf  = $confMarker[$marker . '.'];
       $content    = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+      $hashMarker = '###' . strtoupper( $marker ). '###';
 
-      $this->content  = $this->pObj->cObj-> substituteMarker( $this->content, $marker, $content );
+      $this->content  = $this->pObj->cObj-> substituteMarker( $this->content, $hashMarker, $content );
   // #43627, 121205, dwildt
-$this->pObj->dev_var_dump( $marker, $this->content );    
+$this->pObj->dev_var_dump( $marker, $hashMarker, $content, $this->content );    
     }
       // RETURN htmlSnippets isn't set
 return;
