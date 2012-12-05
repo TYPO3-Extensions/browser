@@ -671,11 +671,10 @@ var_dump( __METHOD__, __LINE__ );
  */
   private function content_replaceStaticHtmlMarker( )
   {
-  // #43627, 121205, dwildt
-$this->pObj->dev_var_dump( $this->content );    
+//$this->pObj->dev_var_dump( $this->content );    
 
 
-      // RETURN htmlSnippets isn't set
+      // RETURN htmlSnippets.marker isn't set
     if( ! is_array( $this->conf_view['htmlSnippets.']['marker.'] ) )
     {
       if ( $this->pObj->b_drs_templating )
@@ -685,51 +684,32 @@ $this->pObj->dev_var_dump( $this->content );
       }
       return;
     }
-      // RETURN htmlSnippets isn't set
+      // RETURN htmlSnippets.marker isn't set
 
+      // FOREACH marker
     $confMarker = $this->conf_view['htmlSnippets.']['marker.'];
     foreach( array_keys ( ( array ) $confMarker ) as $marker )
     {
-        // Take keys without a dot only
+        // CONTINUE current marker has a dot
       if( $marker !== rtrim( $marker, '.' ) )
       {
         continue;
       }
+        // CONTINUE current marker has a dot
       
+        // Get the marker content
       $cObj_name  = $confMarker[$marker];
       $cObj_conf  = $confMarker[$marker . '.'];
       $content    = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+        // Get the marker content
+
+        // Replace the marker by the content
       $hashMarker = '###' . strtoupper( $marker ). '###';
-
       $this->content  = $this->pObj->cObj-> substituteMarker( $this->content, $hashMarker, $content );
-  // #43627, 121205, dwildt
-$this->pObj->dev_var_dump( $marker, $hashMarker, $content, $this->content );    
+        // Replace the marker by the content
+//$this->pObj->dev_var_dump( $marker, $hashMarker, $content, $this->content );    
     }
-      // RETURN htmlSnippets isn't set
-return;
-
-      // RETURN true : index browser hasn't any configured tab
-    $arr_conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
-    if( ! is_array( $arr_conf_tabs ) )
-    {
-      // The index browser isn't configured
-      if ( $this->pObj->b_drs_navi )
-      {
-        $prompt = 'navigation.indexBrowser.tabs hasn\'t any element.';
-        t3lib_div::devlog( '[WARN/NAVIGATION] ' . $prompt, $this->pObj->extKey, 2 );
-        $prompt = 'navigation.indexBrowser won\'t be processed.';
-        t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-      $arr_return = array( );
-      $arr_return['error']['status'] = true;
-      $arr_return['error']['header'] = '<h1 style="color:red">Error Index Browser</h1>';
-      $prompt = 'Index browser is enabled by the flexform or by TypoScript. ' .
-                'But the TypoScript navigation.indexBrowser.tabs hasn\'t any element. ' .
-                'Please take care of a proper TypoScript or disable the index browser.';
-      $arr_return['error']['prompt'] = '<p style="color:red">' . $prompt . '</p>';
-      return $arr_return;
-    }
-      // RETURN true : index browser hasn't any configured tab
+      // FOREACH marker
 
     return;
   }
