@@ -588,7 +588,7 @@ var_dump( __METHOD__, __LINE__ );
       return $arr_return;
     }
       // Replace static html marker and subparts by typoscript marker and subparts
-
+$this->pObj->dev_var_dump( $this->content );
       // Set search box and filter
     $arr_return = $this->subpart_setSearchbox( );
     if( $arr_return['error']['status'] )
