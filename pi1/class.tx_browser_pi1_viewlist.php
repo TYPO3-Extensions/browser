@@ -223,6 +223,7 @@ class tx_browser_pi1_viewlist
         break;
           // CASE no csv
     }
+$this->pObj->dev_var_dump( $this->content );
     $content = $this->content;
       // Get template for csv
       // csv export versus list view
@@ -588,7 +589,7 @@ var_dump( __METHOD__, __LINE__ );
       return $arr_return;
     }
       // Replace static html marker and subparts by typoscript marker and subparts
-$this->pObj->dev_var_dump( $this->content );
+      
       // Set search box and filter
     $arr_return = $this->subpart_setSearchbox( );
     if( $arr_return['error']['status'] )
@@ -620,7 +621,6 @@ $this->pObj->dev_var_dump( $this->content );
       return $arr_return;
     }
       // Set mode selector
-$this->pObj->dev_var_dump( $this->content );
 
     return;
   }
@@ -708,7 +708,7 @@ $this->pObj->dev_var_dump( $this->content );
       $hashMarker = '###' . strtoupper( $marker ). '###';
       $this->content  = $this->pObj->cObj-> substituteMarker( $this->content, $hashMarker, $content );
         // Replace the marker by the content
-$this->pObj->dev_var_dump( $marker, $hashMarker, $content, $this->content );    
+//$this->pObj->dev_var_dump( $marker, $hashMarker, $content, $this->content );    
     }
       // FOREACH marker
 
