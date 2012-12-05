@@ -688,23 +688,24 @@ $this->pObj->dev_var_dump( $this->content );
       // RETURN htmlSnippets isn't set
 
     $confMarker = $this->conf_view['htmlSnippets.']['marker.'];
-    foreach( array_keys ( ( array ) $confMarker ) as $key )
+    foreach( array_keys ( ( array ) $confMarker ) as $marker )
     {
         // Take keys without a dot only
-      if( $key !== rtrim( $key, '.' ) )
+      if( $marker !== rtrim( $marker, '.' ) )
       {
         continue;
       }
       
-      $cObj_name  = $confMarker[$key];
-      $cObj_conf  = $confMarker[$key . '.'];
-      $marker = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+      $cObj_name  = $confMarker[$marker];
+      $cObj_conf  = $confMarker[$marker . '.'];
+      $content    = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+
+      $this->content  = $this->pObj->cObj-> substituteMarker( $this->content, $marker, $content );
   // #43627, 121205, dwildt
-$this->pObj->dev_var_dump( $marker );    
+$this->pObj->dev_var_dump( $marker, $this->content );    
     }
       // RETURN htmlSnippets isn't set
 return;
-    $this->content  = $this->pObj->cObj->substituteSubpart( $this->content, $marker, $content, true);
 
       // RETURN true : index browser hasn't any configured tab
     $arr_conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
