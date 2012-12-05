@@ -223,7 +223,6 @@ class tx_browser_pi1_viewlist
         break;
           // CASE no csv
     }
-$this->pObj->dev_var_dump( $this->content );
     $content = $this->content;
       // Get template for csv
       // csv export versus list view
@@ -403,7 +402,6 @@ $this->pObj->dev_var_dump( $this->content );
     }
       // #42124, dwildt, +
     $this->content = $content;
-$this->pObj->dev_var_dump( $this->content );
 
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
@@ -1810,8 +1808,10 @@ var_dump( __METHOD__, __LINE__ );
  */
   private function subpart_setSearchbox( )
   {
+$this->pObj->dev_var_dump( $this->content );
     $this->content  = $this->pObj->objTemplate->tmplSearchBox( $this->content );
     $arr_return     = $this->subpart_setSearchboxFilter( $filter );
+$this->pObj->dev_var_dump( $this->content );
 
     return $arr_return;
   }
