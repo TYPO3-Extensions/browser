@@ -620,6 +620,7 @@ $this->pObj->dev_var_dump( $this->content );
       return $arr_return;
     }
       // Set mode selector
+$this->pObj->dev_var_dump( $this->content );
 
     return;
   }
