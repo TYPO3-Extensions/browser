@@ -228,6 +228,9 @@ class tx_browser_pi1_viewlist
       // csv export versus list view
       // #29370, 110831, dwildt+
 
+      // #43627, 121205, dwildt
+$this->pObj->dev_var_dump( $content );    
+    
 
       // Building SQL query and get the SQL result
     $arr_return = $this->rows_sql( );
