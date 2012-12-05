@@ -178,8 +178,8 @@ class tx_browser_pi1_viewlist
 
       // Get HTML content
     $this->content = $this->pObj->str_template_raw;
-  // #43627, 121205, dwildt
-$this->pObj->dev_var_dump( $this->content );    
+//  // #43627, 121205, dwildt
+//$this->pObj->dev_var_dump( $this->content );    
 
       // Set SQL query parts in general and statements for rows
     $arr_return = $this->pObj->objSqlInit->init( );
@@ -230,8 +230,8 @@ $this->pObj->dev_var_dump( $this->content );
       // csv export versus list view
       // #29370, 110831, dwildt+
 
-  // #43627, 121205, dwildt
-$this->pObj->dev_var_dump( $content );    
+//  // #43627, 121205, dwildt
+//$this->pObj->dev_var_dump( $content );    
     
 
       // Building SQL query and get the SQL result
@@ -581,6 +581,8 @@ var_dump( __METHOD__, __LINE__ );
     $str_marker     = $this->pObj->lDisplayList['templateMarker'];
       // Set the list view content
     $this->content  = $this->pObj->cObj->getSubpart( $this->content, $str_marker );
+  // #43627, 121205, dwildt
+$this->pObj->dev_var_dump( $this->content );    
 
       // Die, if content is empty
     $this->content_dieIfEmpty( $str_marker, __METHOD__, __LINE__ );
