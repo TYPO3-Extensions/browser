@@ -2494,6 +2494,8 @@ class tx_browser_pi1 extends tslib_pibase {
     $template = $cObj->fileResource( $template_path );
       // Catch the template
 
+      // #43627, 121205, dwildt
+$this->dev_var_dump( $template );    
 
 
       //////////////////////////////////////////////////////////////////////

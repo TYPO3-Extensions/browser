@@ -624,8 +624,6 @@ class tx_browser_pi1_template
       // Set the groupby mode and get a proper template
 
     $template = $this->groupBy_verify($template);
-      // #43627, 121205, dwildt
-$this->pObj->dev_var_dump( $template );    
       // Set the groupby mode and get a proper template
 
 
