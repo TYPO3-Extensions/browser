@@ -1,5 +1,8 @@
 4.1.26
-  121107
+  121205
+  New Feature
+  * #43627: TypoScript snippets for HTML templates
+            Effected files:
   Improvement
   * #00000: tx_browser_pi1-0.0.3 -> tx_browser_pi1-0.0.4
   * #00000: Qualified prompt in tx_browser_pi1_localisation::zz_promptLLdie()          
