@@ -640,7 +640,7 @@ var_dump( __METHOD__, __LINE__ );
     {
       if ( $this->pObj->b_drs_templating )
       {
-        $prompt = 'views.list.' . $mode . '.htmlSnippets isn\'t set. Nothing to do.';
+        $prompt = 'views.list.' . $this->mode . '.htmlSnippets isn\'t set. Nothing to do.';
         t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return;
