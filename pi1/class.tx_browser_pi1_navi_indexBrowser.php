@@ -845,9 +845,28 @@ class tx_browser_pi1_navi_indexBrowser
 //        $label = str_replace( '|', $label, $tab['wrap'] );
 //      }
         // #43558, 121203, dwildt, 6-
-        // #43558, 121203, dwildt, 2+
+         
+        // #43558, 121203, dwildt, 14+
         // Wrap the label
-      $label  = $tab['label'];
+      if( isset ( $tab['wrap'] ) )
+      {
+        $tab['label'] = str_replace( '|', $tab['label'], $tab['wrap'] );
+      }
+      if( ! ( isset ( $tab['wrap'] ) ) )
+      {
+        $tab['label'] = str_replace
+                        ( 
+                          '|', 
+                          $tab['label'], 
+                          $this->pObj->conf['navigation.']['indexBrowser.']['defaultTabWrap'] 
+                        );
+      }
+        // #43558, 121203, dwildt, 14+
+         
+        
+//        // #43558, 121203, dwildt, 2+
+//        // Wrap the label
+//      $label  = $tab['label'];
 
         // Init the marker array
       unset( $markerArray );
@@ -866,29 +885,32 @@ class tx_browser_pi1_navi_indexBrowser
           break;
         case( $tab['displayWoItems'] ):
             // Tab without hits
-          $markerArray['###TAB###'] = $label;
+            // #43558, 121203, dwildt, 1-
+          //$markerArray['###TAB###'] = $label;
+            // #43558, 121203, dwildt, 1+
+          $markerArray['###TAB###'] = $tab['label'];
           break;
         default:
           continue;
       }
         // SWITCH : sum of hits of tab, display without items
 
-        // #43558, 121203, dwildt, 14+
-        // Wrap the label
-      if( isset ( $tab['wrap'] ) )
-      {
-        $markerArray['###TAB###'] = str_replace( '|', $markerArray['###TAB###'], $tab['wrap'] );
-      }
-      if( ! ( isset ( $tab['wrap'] ) ) )
-      {
-        $markerArray['###TAB###'] = str_replace
-                                    ( 
-                                      '|', 
-                                      $markerArray['###TAB###'], 
-                                      $this->pObj->conf['navigation.']['indexBrowser.']['defaultTabWrap'] 
-                                    );
-      }
-        // #43558, 121203, dwildt, 14+
+//        // #43558, 121203, dwildt, 14+
+//        // Wrap the label
+//      if( isset ( $tab['wrap'] ) )
+//      {
+//        $markerArray['###TAB###'] = str_replace( '|', $markerArray['###TAB###'], $tab['wrap'] );
+//      }
+//      if( ! ( isset ( $tab['wrap'] ) ) )
+//      {
+//        $markerArray['###TAB###'] = str_replace
+//                                    ( 
+//                                      '|', 
+//                                      $markerArray['###TAB###'], 
+//                                      $this->pObj->conf['navigation.']['indexBrowser.']['defaultTabWrap'] 
+//                                    );
+//      }
+//        // #43558, 121203, dwildt, 14+
 
         // Set the content
       $content = $content . $this->pObj->cObj->substituteMarkerArray( $this->subpartTab, $markerArray );
