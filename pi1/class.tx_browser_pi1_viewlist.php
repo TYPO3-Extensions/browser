@@ -403,6 +403,7 @@ $this->pObj->dev_var_dump( $this->content );
     }
       // #42124, dwildt, +
     $this->content = $content;
+$this->pObj->dev_var_dump( $this->content );
 
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
