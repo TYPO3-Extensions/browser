@@ -1,6 +1,7 @@
 4.1.26
   121107
   Improvement
+  * #00000: tx_browser_pi1-0.0.3 -> tx_browser_pi1-0.0.4
   * #00000: Qualified prompt in tx_browser_pi1_localisation::zz_promptLLdie()          
   * #00000: category_menu.treeview.enabled.value = 0
   Bugfixing
