@@ -176,14 +176,14 @@ class tx_browser_pi1_views
     
       // Replace static html marker and subparts by typoscript marker and subparts
       // #43627, 1212105, dwildt, 8+
-    $this->pObj->objViewlist->template  = $template;
+    $this->pObj->objViewlist->content   = $template;
     $this->pObj->objViewlist->conf_view = $conf_view;
     $arr_return = $this->pObj->objViewlist->content_replaceStaticHtml( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
-    $template = $this->pObj->objViewlist->template;
+    $template = $this->pObj->objViewlist->content;
     $this->pObj->str_template_raw = $template;
       // #43627, 1212105, dwildt, 8+
       // Replace static html marker and subparts by typoscript marker and subparts
