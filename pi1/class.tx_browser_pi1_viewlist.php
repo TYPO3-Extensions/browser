@@ -655,6 +655,14 @@ var_dump( __METHOD__, __LINE__ );
     }
       // Replace static html marker by typoscript marker
 
+      // Replace static html subparts by typoscript subparts
+    $arr_return = $this->content_replaceStaticHtmlSubparts( );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+      // Replace static html subparts by typoscript subparts
+
     return;
   }
 
@@ -671,16 +679,13 @@ var_dump( __METHOD__, __LINE__ );
  */
   private function content_replaceStaticHtmlMarker( )
   {
-//$this->pObj->dev_var_dump( $this->content );    
-
-
       // RETURN htmlSnippets.marker isn't set
     if( ! is_array( $this->conf_view['htmlSnippets.']['marker.'] ) )
     {
       if ( $this->pObj->b_drs_templating )
       {
-        $prompt = 'views.list.' . $mode . '.htmlSnippets.marker isn\'t set. Nothing to do.';
-        t3lib_div::devlog( '[INFO/TEMPLATING] ', $this->pObj->extKey, 0 );
+        $prompt = 'views.list.' . $this->mode . '.htmlSnippets.marker isn\'t set. Nothing to do.';
+        t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return;
     }
@@ -710,6 +715,60 @@ var_dump( __METHOD__, __LINE__ );
 //$this->pObj->dev_var_dump( $marker, $hashMarker, $content, $this->content );    
     }
       // FOREACH marker
+
+    return;
+  }
+
+
+
+/**
+ * content_replaceStaticHtmlSubparts( ):
+ *
+ * @return    array        $arr_return: Contains an error message in case of an error
+ * @version 4.1.26
+ * @since   4.1.26
+ * 
+ * @internal  #43627
+ */
+  private function content_replaceStaticHtmlSubparts( )
+  {
+      // RETURN htmlSnippets.subparts isn't set
+    if( ! is_array( $this->conf_view['htmlSnippets.']['subparts.'] ) )
+    {
+      if ( $this->pObj->b_drs_templating )
+      {
+        $prompt = 'views.list.' . $this->mode . '.htmlSnippets.subparts isn\'t set. Nothing to do.';
+        t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return;
+    }
+      // RETURN htmlSnippets.subparts isn't set
+
+      // FOREACH subparts
+    $confSubpart = $this->conf_view['htmlSnippets.']['subparts.'];
+    foreach( array_keys ( ( array ) $confSubpart ) as $subpart )
+    {
+        // CONTINUE current subpart has a dot
+      if( $subpart !== rtrim( $subpart, '.' ) )
+      {
+        continue;
+      }
+        // CONTINUE current subpart has a dot
+      
+        // Get the subpart content
+      $cObj_name  = $confSubpart[$subpart];
+      $cObj_conf  = $confSubpart[$subpart . '.'];
+      $content    = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+        // Get the subpart content
+
+        // Replace the subpart by the content
+      $hashSubpart = '###' . strtoupper( $subpart ). '###';
+      $content     = '<!-- ' . $hashSubpart . ' begin -->' . $content . '<!-- ' . $hashSubpart . ' end -->';
+      $this->content  = $this->pObj->cObj-> substituteSubpart( $this->content, $hashSubpart, $content );
+        // Replace the subpart by the content
+//$this->pObj->dev_var_dump( $subpart, $hashSubpart, $content, $this->content );    
+    }
+      // FOREACH subpart
 
     return;
   }
@@ -1808,10 +1867,8 @@ var_dump( __METHOD__, __LINE__ );
  */
   private function subpart_setSearchbox( )
   {
-$this->pObj->dev_var_dump( $this->content );
     $this->content  = $this->pObj->objTemplate->tmplSearchBox( $this->content );
     $arr_return     = $this->subpart_setSearchboxFilter( $filter );
-$this->pObj->dev_var_dump( $this->content );
 
     return $arr_return;
   }
