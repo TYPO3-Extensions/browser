@@ -1831,6 +1831,8 @@ $this->pObj->dev_var_dump( $this->content );
     $arr_return = array( );
 
       // Get filter
+      // #43627, 121205, dwildt, 1+
+    $this->pObj->str_template_raw = $this->content;
     $arr_return = $this->pObj->objFltr4x->get( );
     if( $arr_return['error']['status'] )
     {
