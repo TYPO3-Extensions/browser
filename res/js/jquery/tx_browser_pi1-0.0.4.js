@@ -23,7 +23,7 @@ $( document ).ready( function( )
     // UI for buttons in areas with the class tx-browser-pi1
 
   //alert( jQuery.isFunction( $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( ) ) );
-  if( 1 == 0 ) {
+  //if( 1 == 0 ) {
     try {
       $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
     }
@@ -31,7 +31,7 @@ $( document ).ready( function( )
     {
       // jQuery is compiled without button method. Don't worry!
     }
-  }
+  //}
     // UI for buttons in areas with the class tx-browser-pi1
 
 

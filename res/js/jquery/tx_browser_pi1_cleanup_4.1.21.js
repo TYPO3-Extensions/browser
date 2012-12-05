@@ -25,7 +25,7 @@ function cleanup_afterAJAXrequest( )
     // jQuery button
 
     // Try to reload CSS classes for buttons
-  if( 1 == 0 ) {
+  //if( 1 == 0 ) {
     try {
       $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
     }
@@ -33,7 +33,7 @@ function cleanup_afterAJAXrequest( )
     {
       // jQuery is compiled without button method. Don't worry!
     }
-  }
+  //}
     // Try to reload CSS classes for buttons
     // jQuery button
 
