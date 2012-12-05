@@ -178,6 +178,8 @@ class tx_browser_pi1_viewlist
 
       // Get HTML content
     $this->content = $this->pObj->str_template_raw;
+  // #43627, 121205, dwildt
+$this->pObj->dev_var_dump( $this->content );    
 
       // Set SQL query parts in general and statements for rows
     $arr_return = $this->pObj->objSqlInit->init( );
@@ -228,7 +230,7 @@ class tx_browser_pi1_viewlist
       // csv export versus list view
       // #29370, 110831, dwildt+
 
-      // #43627, 121205, dwildt
+  // #43627, 121205, dwildt
 $this->pObj->dev_var_dump( $content );    
     
 
