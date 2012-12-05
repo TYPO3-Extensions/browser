@@ -636,7 +636,7 @@ var_dump( __METHOD__, __LINE__ );
  * @since   4.1.26
  * @internal  #43627
  */
-  private function content_replaceStaticHtml( )
+  public function content_replaceStaticHtml( )
   {
       // RETURN htmlSnippets isn't set
     if( ! is_array( $this->conf_view['htmlSnippets.'] ) )
