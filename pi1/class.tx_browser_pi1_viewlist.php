@@ -582,11 +582,13 @@ var_dump( __METHOD__, __LINE__ );
     $this->content_dieIfEmpty( $str_marker, __METHOD__, __LINE__ );
 
       // Replace static html marker and subparts by typoscript marker and subparts
+      // #43627, 1212105, dwildt, 5+
     $arr_return = $this->content_replaceStaticHtml( );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
     }
+      // #43627, 1212105, dwildt, 5+
       // Replace static html marker and subparts by typoscript marker and subparts
       
       // Set search box and filter
@@ -632,6 +634,7 @@ var_dump( __METHOD__, __LINE__ );
  * @return    array        $arr_return: Contains an error message in case of an error
  * @version 4.1.26
  * @since   4.1.26
+ * @internal  #43627
  */
   private function content_replaceStaticHtml( )
   {
@@ -640,7 +643,7 @@ var_dump( __METHOD__, __LINE__ );
     {
       if ( $this->pObj->b_drs_templating )
       {
-        $prompt = 'views.list.' . $this->mode . '.htmlSnippets isn\'t set. Nothing to do.';
+        $prompt = 'views.' . $this->view . '.' . $this->mode . '.htmlSnippets isn\'t set. Nothing to do.';
         t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return;
@@ -684,7 +687,7 @@ var_dump( __METHOD__, __LINE__ );
     {
       if ( $this->pObj->b_drs_templating )
       {
-        $prompt = 'views.list.' . $this->mode . '.htmlSnippets.marker isn\'t set. Nothing to do.';
+        $prompt = 'views.' . $this->view . '.' . $this->mode . '.htmlSnippets.marker isn\'t set. Nothing to do.';
         t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return;
@@ -737,7 +740,7 @@ var_dump( __METHOD__, __LINE__ );
     {
       if ( $this->pObj->b_drs_templating )
       {
-        $prompt = 'views.list.' . $this->mode . '.htmlSnippets.subparts isn\'t set. Nothing to do.';
+        $prompt = 'views.' . $this->view . '.' . $this->mode . '.htmlSnippets.subparts isn\'t set. Nothing to do.';
         t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
       }
       return;

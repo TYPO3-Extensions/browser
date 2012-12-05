@@ -28,7 +28,7 @@
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage  browser
- * @version 3.9.8
+ * @version 4.1.26
  * @since 1.0
  */
 
@@ -108,14 +108,16 @@ class tx_browser_pi1_views
  *
  * @param	string		$template: HTML template with TYPO3 subparts and markers
  * @return	void
- * @version 3.6.3
+ * @version 4.1.26
+ * @since   1.x
  */
   function singleView( )
   {
 
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
-    $cObj = $this->pObj->cObj;
+      // dwildt, 121205, 1-
+    //$cObj = $this->pObj->cObj;
 
     $view       = $this->pObj->view;
     $viewWiDot  = $view.'.';
@@ -170,8 +172,22 @@ class tx_browser_pi1_views
     }
       // Overwrite global general_stdWrap
 
-
-
+    
+    
+      // Replace static html marker and subparts by typoscript marker and subparts
+      // #43627, 1212105, dwildt, 7+
+    $this->pObj->viewlist->template = $template;
+    $arr_return = $this->pObj->viewlist->content_replaceStaticHtml( );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+    $template = $this->pObj->viewlist->template;
+    $this->pObj->str_template_raw = $template;
+      // Replace static html marker and subparts by typoscript marker and subparts
+    
+    
+    
       /////////////////////////////////////
       //
       // Get the local or global displaySingle
@@ -385,8 +401,9 @@ class tx_browser_pi1_views
     {
       $arr_result       = $this->pObj->objConsolidate->consolidate($rows);
       $rows             = $arr_result['data']['rows'];
-      $int_rows_wo_cons = $arr_result['data']['rows_wo_cons'];
-      $int_rows_wi_cons = $arr_result['data']['rows_wi_cons'];
+        // dwildt, 121205, 2-
+      //$int_rows_wo_cons = $arr_result['data']['rows_wo_cons'];
+      //$int_rows_wi_cons = $arr_result['data']['rows_wi_cons'];
       unset($arr_result);
       $this->pObj->rows = $rows;
     }
@@ -594,10 +611,12 @@ class tx_browser_pi1_views
     }
 
     // HTML mode selector
+      // 121205, dwildt, 1+
+    $arr_data = array( );
     $arr_data['template']     = $template;
     $arr_data['arrModeItems'] = $this->pObj->arrModeItems;
     $template = $this->pObj->objNaviModeSelector->tmplModeSelector($arr_data);
-    unset($arr_data);
+    unset( $arr_data );
       // Building the template
 
 
@@ -610,7 +629,10 @@ class tx_browser_pi1_views
     // dwildt, 101012
     if(is_array($conf['views.'][$viewWiDot][$mode.'.']))
     {
-      foreach ($conf['views.'][$viewWiDot][$mode.'.'] as $ts_key => $ts_value)
+        // 121205, dwildt, 1-
+      //foreach ($conf['views.'][$viewWiDot][$mode.'.'] as $ts_key => $ts_value)
+        // 121205, dwildt, 1+
+      foreach ($conf['views.'][$viewWiDot][$mode.'.'] as $ts_value)
       {
         if ($ts_value == 'TT_CONTAINER')
         {
