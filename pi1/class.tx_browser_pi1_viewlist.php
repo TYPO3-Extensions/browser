@@ -28,7 +28,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     4.1.25
+ * @version     4.1.26
  * @since       1.0
  */
 
@@ -178,8 +178,6 @@ class tx_browser_pi1_viewlist
 
       // Get HTML content
     $this->content = $this->pObj->str_template_raw;
-//  // #43627, 121205, dwildt
-//$this->pObj->dev_var_dump( $this->content );    
 
       // Set SQL query parts in general and statements for rows
     $arr_return = $this->pObj->objSqlInit->init( );
@@ -230,8 +228,6 @@ class tx_browser_pi1_viewlist
       // csv export versus list view
       // #29370, 110831, dwildt+
 
-//  // #43627, 121205, dwildt
-//$this->pObj->dev_var_dump( $content );    
     
 
       // Building SQL query and get the SQL result
@@ -572,7 +568,7 @@ var_dump( __METHOD__, __LINE__ );
  *                        *
  *
  * @return    array        $arr_return: Contains an error message in case of an error
- * @version 3.9.12
+ * @version 4.1.26
  * @since   3.9.9
  */
   private function content_setDefault( )
@@ -581,11 +577,17 @@ var_dump( __METHOD__, __LINE__ );
     $str_marker     = $this->pObj->lDisplayList['templateMarker'];
       // Set the list view content
     $this->content  = $this->pObj->cObj->getSubpart( $this->content, $str_marker );
-  // #43627, 121205, dwildt
-$this->pObj->dev_var_dump( $this->content );    
 
       // Die, if content is empty
     $this->content_dieIfEmpty( $str_marker, __METHOD__, __LINE__ );
+
+      // Replace static html marker and subparts by typoscript marker and subparts
+    $arr_return = $this->content_replaceStaticHtml( );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+      // Replace static html marker and subparts by typoscript marker and subparts
 
       // Set search box and filter
     $arr_return = $this->subpart_setSearchbox( );
@@ -618,6 +620,114 @@ $this->pObj->dev_var_dump( $this->content );
       return $arr_return;
     }
       // Set mode selector
+
+    return;
+  }
+
+
+
+/**
+ * content_replaceStaticHtml( ):
+ *
+ * @return    array        $arr_return: Contains an error message in case of an error
+ * @version 4.1.26
+ * @since   4.1.26
+ */
+  private function content_replaceStaticHtml( )
+  {
+      // RETURN htmlSnippets isn't set
+    if( ! is_array( $this->conf_view['htmlSnippets.'] ) )
+    {
+      if ( $this->pObj->b_drs_templating )
+      {
+        $prompt = 'views.list.' . $mode . '.htmlSnippets isn\'t set. Nothing to do.';
+        t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return;
+    }
+      // RETURN htmlSnippets isn't set
+
+      // Replace static html marker by typoscript marker
+    $arr_return = $this->content_replaceStaticHtmlMarker( );
+    if( $arr_return['error']['status'] )
+    {
+      return $arr_return;
+    }
+      // Replace static html marker by typoscript marker
+
+    return;
+  }
+
+
+
+/**
+ * content_replaceStaticHtmlMarker( ):
+ *
+ * @return    array        $arr_return: Contains an error message in case of an error
+ * @version 4.1.26
+ * @since   4.1.26
+ * 
+ * @internal  #43627
+ */
+  private function content_replaceStaticHtmlMarker( )
+  {
+  // #43627, 121205, dwildt
+$this->pObj->dev_var_dump( $this->content );    
+
+
+      // RETURN htmlSnippets isn't set
+    if( ! is_array( $this->conf_view['htmlSnippets.']['marker.'] ) )
+    {
+      if ( $this->pObj->b_drs_templating )
+      {
+        $prompt = 'views.list.' . $mode . '.htmlSnippets.marker isn\'t set. Nothing to do.';
+        t3lib_div::devlog( '[INFO/TEMPLATING] ', $this->pObj->extKey, 0 );
+      }
+      return;
+    }
+      // RETURN htmlSnippets isn't set
+
+    $confMarker = $this->conf_view['htmlSnippets.']['marker.'];
+    foreach( array_keys ( ( array ) $confMarker ) as $key )
+    {
+        // Take keys without a dot only
+      if( $key !== rtrim( $key, '.' ) )
+      {
+        continue;
+      }
+      
+      $cObj_name  = $confMarker[$key];
+      $cObj_conf  = $confMarker[$key . '.'];
+      $marker = $this->pObj->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+  // #43627, 121205, dwildt
+$this->pObj->dev_var_dump( $marker );    
+    }
+      // RETURN htmlSnippets isn't set
+return;
+    $this->content  = $this->pObj->cObj->substituteSubpart( $this->content, $marker, $content, true);
+
+      // RETURN true : index browser hasn't any configured tab
+    $arr_conf_tabs = $this->conf['navigation.']['indexBrowser.']['tabs.'];
+    if( ! is_array( $arr_conf_tabs ) )
+    {
+      // The index browser isn't configured
+      if ( $this->pObj->b_drs_navi )
+      {
+        $prompt = 'navigation.indexBrowser.tabs hasn\'t any element.';
+        t3lib_div::devlog( '[WARN/NAVIGATION] ' . $prompt, $this->pObj->extKey, 2 );
+        $prompt = 'navigation.indexBrowser won\'t be processed.';
+        t3lib_div::devlog( '[INFO/NAVIGATION] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      $arr_return = array( );
+      $arr_return['error']['status'] = true;
+      $arr_return['error']['header'] = '<h1 style="color:red">Error Index Browser</h1>';
+      $prompt = 'Index browser is enabled by the flexform or by TypoScript. ' .
+                'But the TypoScript navigation.indexBrowser.tabs hasn\'t any element. ' .
+                'Please take care of a proper TypoScript or disable the index browser.';
+      $arr_return['error']['prompt'] = '<p style="color:red">' . $prompt . '</p>';
+      return $arr_return;
+    }
+      // RETURN true : index browser hasn't any configured tab
 
     return;
   }
