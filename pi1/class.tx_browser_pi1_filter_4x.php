@@ -1120,7 +1120,7 @@ class tx_browser_pi1_filter_4x {
     }
 
       // Set class var $bool_dontLocalise
-      // SWTCH $int_localisation_mode
+      // SWITCH $int_localisation_mode
     switch( $this->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
@@ -1136,7 +1136,7 @@ class tx_browser_pi1_filter_4x {
         $prompt = 'Localisation mode is enabled';
         break;
     }
-      // SWTCH $int_localisation_mode
+      // SWITCH $int_localisation_mode
       // Set class var $bool_dontLocalise
 
       // DRS
@@ -4280,7 +4280,8 @@ class tx_browser_pi1_filter_4x {
  */
   private function localise( )
   {
-      // SWTCH localisation mode
+$this->pObj->dev_var_dump( 1 );
+      // SWITCH localisation mode
       // RETURN value
     switch( $this->int_localisation_mode )
     {
@@ -4296,12 +4297,13 @@ class tx_browser_pi1_filter_4x {
         break;
     }
       // RETURN value
-      // SWTCH localisation mode
+      // SWITCH localisation mode
 
       // SWITCH language overlay or sys language
     switch( true )
     {
       case( $this->sql_filterFields[$this->curr_tableField]['lang_ol'] ):
+$this->pObj->dev_var_dump( 2 );
         $this->localise_langOl( );
         break;
       case( $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'] ):
