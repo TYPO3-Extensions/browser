@@ -3075,7 +3075,7 @@ $this->pObj->dev_var_dump( 3069 );
     }
       // RETURN no localisation
 
-$this->pObj->dev_var_dump( 3078 );
+$this->pObj->dev_var_dump( $this->curr_tableField );
       // Get addSelect
     $addSelect = $this->sql_select_addLL_sysLanguage( );
     $addSelect = $addSelect . $this->sql_select_addLL_langOl( );
