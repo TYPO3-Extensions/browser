@@ -1,3 +1,8 @@
+4.2.0
+  121206
+  Bugfix
+  * #43692: jQuery isn't loaded in some cases of a treeview
+
 4.1.26
   121206
   New Feature

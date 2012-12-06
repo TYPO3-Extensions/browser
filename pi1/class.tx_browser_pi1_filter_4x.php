@@ -4079,6 +4079,21 @@ class tx_browser_pi1_filter_4x {
             break;
           case( 'TREEVIEW' ):
             $this->eval_treeviewCheckbox( $tableField );
+              // #43692, 121206, dwildt, 13+
+              // Adding jQuery
+            $bool_success_jQuery = $this->pObj->objJss->load_jQuery( );
+            if( $bool_success_jQuery )
+            {
+              if( $this->pObj->b_drs_javascript )
+              {
+                $prompt = 'Current filter is a treeview.';
+                t3lib_div::devlog( '[INFO/JSS] ' . $prompt, $this->pObj->extKey, 0 );
+                $prompt = 'jQuery will be loaded.';
+                t3lib_div::devlog( '[INFO/JSS] ' . $prompt, $this->pObj->extKey, 0 );
+              }
+            }
+              // Adding jQuery
+              // #43692, 121206, dwildt, 13+
             break;
           default:
             $prompt = '<h1>Evaluation of treeview filter failed!</h1>
