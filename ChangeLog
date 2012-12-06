@@ -4,6 +4,7 @@
   * #43627: TypoScript snippets for HTML templates
             Effected files:
             * pi1/class.tx_browser_pi1_viewlist.php
+            * pi1/class.tx_browser_pi1_views.php
   Improvement
   * #00000: tx_browser_pi1-0.0.3 -> tx_browser_pi1-0.0.4
   * #00000: Qualified prompt in tx_browser_pi1_localisation::zz_promptLLdie()          

@@ -4325,7 +4325,7 @@ class tx_browser_pi1_filter_4x {
   private function localise_langOl( )
   {
     $boolOlPrefix = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['langPrefix'];
-
+$this->pObj->dev_var_dump( $boolOlPrefix );
     switch( $boolOlPrefix )
     {
       case( true ):
