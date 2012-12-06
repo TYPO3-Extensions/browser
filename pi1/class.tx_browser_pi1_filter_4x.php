@@ -3070,7 +3070,6 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_select_addLL( )
   {
-$this->pObj->dev_var_dump( $this->curr_tableField );
       // RETURN no localisation
     if( $this->bool_dontLocalise )
     {
@@ -3078,7 +3077,6 @@ $this->pObj->dev_var_dump( $this->curr_tableField );
     }
       // RETURN no localisation
 
-$this->pObj->dev_var_dump( $this->curr_tableField );
       // Get addSelect
     $addSelect = $this->sql_select_addLL_sysLanguage( );
     $addSelect = $addSelect . $this->sql_select_addLL_langOl( );
@@ -4304,11 +4302,9 @@ $this->pObj->dev_var_dump( $this->curr_tableField );
       // SWITCH localisation mode
 
       // SWITCH language overlay or sys language
-$this->pObj->dev_var_dump( $this->curr_tableField, $this->sql_filterFields[$this->curr_tableField] );
     switch( true )
     {
       case( $this->sql_filterFields[$this->curr_tableField]['lang_ol'] ):
-$this->pObj->dev_var_dump( 2 );
         $this->localise_langOl( );
         break;
       case( $this->sql_filterFields[$this->curr_tableField]['transOrigPointerField'] ):
@@ -4332,7 +4328,7 @@ $this->pObj->dev_var_dump( 2 );
   private function localise_langOl( )
   {
     $boolOlPrefix = $this->pObj->objLocalise->conf_localisation['TCA.']['value.']['langPrefix'];
-$this->pObj->dev_var_dump( $boolOlPrefix );
+
     switch( $boolOlPrefix )
     {
       case( true ):
