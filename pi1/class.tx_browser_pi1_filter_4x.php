@@ -4280,7 +4280,6 @@ class tx_browser_pi1_filter_4x {
  */
   private function localise( )
   {
-$this->pObj->dev_var_dump( 1 );
       // SWITCH localisation mode
       // RETURN value
     switch( $this->int_localisation_mode )
@@ -4300,6 +4299,7 @@ $this->pObj->dev_var_dump( 1 );
       // SWITCH localisation mode
 
       // SWITCH language overlay or sys language
+$this->pObj->dev_var_dump( $this->curr_tableField, $this->sql_filterFields[$this->curr_tableField] );
     switch( true )
     {
       case( $this->sql_filterFields[$this->curr_tableField]['lang_ol'] ):
