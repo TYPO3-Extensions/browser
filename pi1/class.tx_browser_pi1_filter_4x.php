@@ -3067,6 +3067,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_select_addLL( )
   {
+$this->pObj->dev_var_dump( 3069 );
       // RETURN no localisation
     if( $this->bool_dontLocalise )
     {
@@ -3074,6 +3075,7 @@ class tx_browser_pi1_filter_4x {
     }
       // RETURN no localisation
 
+$this->pObj->dev_var_dump( 3078 );
       // Get addSelect
     $addSelect = $this->sql_select_addLL_sysLanguage( );
     $addSelect = $addSelect . $this->sql_select_addLL_langOl( );

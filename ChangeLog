@@ -1,5 +1,5 @@
 4.1.26
-  121205
+  121206
   New Feature
   * #43627: TypoScript snippets for HTML templates
             Effected files:
@@ -9,7 +9,8 @@
   * #00000: tx_browser_pi1-0.0.3 -> tx_browser_pi1-0.0.4
   * #00000: Qualified prompt in tx_browser_pi1_localisation::zz_promptLLdie()          
   * #00000: category_menu.treeview.enabled.value = 0
-  Bugfixing
+  Bugfixes
+  * #43685: Treeview and localisation: language prefixes are ignored
   * #43558: navigation.indexBrowser.defaultTabWrap isn't handled since 4.0
             Effected files:
             * pi1/class.tx_browser_pi1_navi_indexBrowser.php
