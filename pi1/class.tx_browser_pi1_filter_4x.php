@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      4.1.25
+ * @version      4.1.26
  * @since        3.9.9
  */
 
@@ -2705,7 +2705,7 @@ class tx_browser_pi1_filter_4x {
  *
  * @return	array		$arr_return : Array with the SQL ressource or an error message
  * @internal  #41754.03
- * @version 4.1.21
+ * @version 4.1.26
  * @since   4.1.21
  */
   private function sql_resAllItemsFilterWoRelation( )
@@ -2723,6 +2723,9 @@ class tx_browser_pi1_filter_4x {
                 $tableField . " AS '" . $tableField . "', " .
                 $tableUid . " AS '" . $tableUid . "' ";
     $select   = $select . $this->sql_select_addTreeview( );
+      // #43685, 121206, dwildt, 2+
+      // Add localisation fields to select
+    $select   = $select . $this->sql_select_addLL( );
     $from     = $table;
     $where    = '1 ' .
                 $this->sql_whereAnd_pidList( ) .
@@ -3067,7 +3070,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_select_addLL( )
   {
-$this->pObj->dev_var_dump( 3069 );
+$this->pObj->dev_var_dump( $this->curr_tableField );
       // RETURN no localisation
     if( $this->bool_dontLocalise )
     {
