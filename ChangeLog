@@ -1,5 +1,9 @@
 4.2.0
   121206
+  New Feature
+  * #43732: Integration of index browser in jQuery UI themes
+            Effected files:
+            * res/html/default/main.tmpl
   Bugfix
   * #43692: jQuery isn't loaded in some cases of a treeview
 

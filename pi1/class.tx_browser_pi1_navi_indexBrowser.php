@@ -2882,13 +2882,17 @@ class tx_browser_pi1_navi_indexBrowser
  */
   private function zz_tabClass( $lastTabId, $tab, $key )
   {
+#43732
+    
       // Default class
-    $class = 'tab-' . $tab['labelAscii'] . ' tab-' . $key;
+    //$class = 'tab-' . $tab['labelAscii'] . ' tab-' . $key;
+    $class = 'ui-state-default ui-corner-top tab-' . $tab['labelAscii'] . ' tab-' . $key;
 
       // Selected tab
     if( ! empty ( $tab['selected'] ) )
     {
-      $class = $class . ' selected';
+      //$class = $class . ' selected';
+      $class = $class . ' ui-tabs-active ui-state-active selected';
     }
       // Selected tab
 
@@ -2983,7 +2987,9 @@ class tx_browser_pi1_navi_indexBrowser
     $title  = $this->zz_tabTitle( $tab['sum'] );
     if( $title )
     {
-      $typolink['parameter'] = $typolink['parameter'] . ' - - "' . $title . '"';
+      #43732
+      $class = '"ui-tabs-anchor"';
+      $typolink['parameter'] = $typolink['parameter'] . ' ' . $class . ' - "' . $title . '"';
     }
       // Get the property title
 
