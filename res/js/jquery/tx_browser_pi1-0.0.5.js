@@ -3,7 +3,7 @@
  * Copyright (c) 2011-2012 Dirk Wildt
  * http://wildt.at.die-netzmacher.de/
  *
- * Version 0.0.4
+ * Version 0.0.5
  *
  * jquery.t3browser-x.x.x.js is needed:
  *   http://docs.jquery.com/Plugins/t3browser
@@ -17,26 +17,6 @@
 
 $( document ).ready( function( )
 {
-
-    //////////////////////////////////////////////////////////
-    //
-    // UI for buttons in areas with the class tx-browser-pi1
-
-  //alert( jQuery.isFunction( $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( ) ) );
-  // #43737, 121207, dwildt
-  if( 1 == 0 ) {
-    try {
-      $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
-    }
-    catch( err )
-    {
-      // jQuery is compiled without button method. Don't worry!
-    }
-  }
-    // UI for buttons in areas with the class tx-browser-pi1
-
-
-
     //////////////////////////////////////////////////////////
     //
     // Record browser

@@ -3,7 +3,7 @@
  * Copyright (c) 2012 - Dirk Wildt
  * http://wildt.at.die-netzmacher.de/
  *
- * @version 4.1.21
+ * @version 4.2.0
  *
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
@@ -15,31 +15,11 @@
  * cleanup_afterAJAXrequest( ): This method calls functions, which are needed
  *                              after an AJAX request.
  *                              * Reload of CSS styles 
- * @version 0.0.3
+ * @version 4.2.0
  */
 
 function cleanup_afterAJAXrequest( )
 {
-    /////////////////////////////////////////////////////
-    //
-    // jQuery button
-
-    // Try to reload CSS classes for buttons
-  // #43737, 121207, dwildt
-  if( 1 == 0 ) {
-    try {
-      $( "button, input:submit, input:button, a.backbutton, div.iconbutton", ".tx-browser-pi1" ).button( );
-    }
-    catch( err )
-    {
-      // jQuery is compiled without button method. Don't worry!
-    }
-  }
-    // Try to reload CSS classes for buttons
-    // jQuery button
-
-
-
     /////////////////////////////////////////////////////
     //
     // jQuery plugin jstree

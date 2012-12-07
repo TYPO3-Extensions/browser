@@ -6,6 +6,16 @@
             * res/html/default/main.tmpl
   Improvement
   * #43737: Remove button method
+            tx_browser_pi1_cleanup_4.1.21.js -> tx_browser_pi1_cleanup_4.2.0.js
+            tx_browser_pi1-0.0.4.js -> tx_browser_pi1-0.0.5.js
+            Effected files:
+            * t3jquery.txt
+            * static/setup.txt
+            * static/downgrade/3.9.0/setup.txt
+            * res/js/jquery/tx_browser_pi1-0.0.4.js
+            * res/js/jquery/tx_browser_pi1-0.0.5.js
+            * res/js/jquery/tx_browser_pi1_cleanup_4.2.0.js
+            * res/js/jquery/tx_browser_pi1_cleanup_4.1.21.js
   Bugfix
   * #43692: jQuery isn't loaded in some cases of a treeview
 
