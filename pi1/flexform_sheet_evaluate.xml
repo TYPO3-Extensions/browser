@@ -68,7 +68,7 @@
       <externalLinks>
         <TCEforms>
           <exclude>0</exclude>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_evaluate.externalLinks</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_evaluate.externalLinks</label>
           <config>
             <type>user</type>
             <userFunc>tx_browser_pi1_backend->evaluate_externalLinks</userFunc>

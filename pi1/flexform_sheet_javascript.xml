@@ -51,26 +51,26 @@
       </jquery_library_own>
       <jquery_ui>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_ui</label>
           <onChange>reload</onChange>
           <config>
             <type>select</type>
             <selicon_cols>7</selicon_cols>
             <items type="array">
               <numIndex index="0" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.ts</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_ui.ts</numIndex>
                 <numIndex index="1">ts</numIndex>
               </numIndex>
               <numIndex index="1" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.own</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_ui.own</numIndex>
                 <numIndex index="1">own</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.yes</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_ui.yes</numIndex>
                 <numIndex index="1">yes</numIndex>
               </numIndex>
               <numIndex index="3" type="array">
-                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.no</numIndex>
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_ui.no</numIndex>
                 <numIndex index="1">no</numIndex>
               </numIndex>
             </items>
@@ -82,7 +82,7 @@
       </jquery_ui>
       <jquery_ui.own.path>
         <TCEforms>
-          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.own.path</label>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_ui.own.path</label>
           <displayCond>FIELD:jquery_ui:IN:own</displayCond>
           <config>
             <type>group</type>
