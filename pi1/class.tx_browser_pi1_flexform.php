@@ -1375,11 +1375,31 @@ class tx_browser_pi1_flexform {
           t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.ui is set to null.', $this->pObj->extKey, 0);
         }
         break;
-      case ('ts') :
-        // Do nothing;
-        $this->bool_jquery_ui = true;
+        // #43741, 121208, dwildt, 7+
+      case ('yes') :
+        $this->pObj->conf['javascript.']['jquery.']['ui'] = null;
+        $this->bool_jquery_ui = false;
         if ($this->pObj->b_drs_flexform) {
-          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.ui isn\'t changed by the flexform.', $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] javascript.jquery.ui is set to null.', $this->pObj->extKey, 0);
+        }
+        break;
+      case ('ts') :
+        // #43741, 121208, dwildt, 7+
+      default :
+          // Take the value from TypoScript;
+        $this->bool_jquery_ui = $this->pObj->conf['flexform.']['javascript.']['jquery_ui'];
+        if( $this->pObj->b_drs_flexform ) 
+        {
+          if( $this->bool_jquery_ui)
+          {
+            $prompt = 'javascript.jquery.ui is set by TypoScript to true.';
+            t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+          }
+          if( ! $this->bool_jquery_ui)
+          {
+            $prompt = 'javascript.jquery.ui is set by TypoScript to false.';
+            t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+          }
         }
         break;
     }
