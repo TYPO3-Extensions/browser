@@ -66,6 +66,10 @@
                 <numIndex index="1">own</numIndex>
               </numIndex>
               <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.yes</numIndex>
+                <numIndex index="1">yes</numIndex>
+              </numIndex>
+              <numIndex index="3" type="array">
                 <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.no</numIndex>
                 <numIndex index="1">no</numIndex>
               </numIndex>

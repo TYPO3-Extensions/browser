@@ -106,6 +106,7 @@
       <label index="sheet_javascript.jquery_ui.own">Own file</label>
       <label index="sheet_javascript.jquery_ui.own.path">jQuery UI (User Interface): file</label>
       <label index="sheet_javascript.jquery_ui.ts">Take the value from TypoScript (recommended)</label>
+      <label index="sheet_javascript.jquery_ui.yes">Embed it!</label>
       <label index="sheet_javascript.jquery_plugins.t3browser">jQuery Plugin t3browser</label>
       <label index="sheet_javascript.jquery_plugins.t3browser.no">Don't embed it!</label>
       <label index="sheet_javascript.jquery_plugins.t3browser.own">Own file</label>
@@ -476,6 +477,7 @@
       <label index="sheet_javascript.jquery_ui.no">Nicht einbinden!</label>
       <label index="sheet_javascript.jquery_ui.own">Eigene Datei</label>
       <label index="sheet_javascript.jquery_ui.own.path">jQuery UI (User Interface): Datei</label>
+      <label index="sheet_javascript.jquery_ui.yes">Einbinden!</label>
       <label index="sheet_javascript.jquery_ui.ts">Nimm den Wert aus TypoScript (empfohlen)</label>
       <label index="sheet_javascript.jquery_plugins.t3browser">jQuery Plugin t3browser</label>
       <label index="sheet_javascript.jquery_plugins.t3browser.no">Nicht einbinden!</label>

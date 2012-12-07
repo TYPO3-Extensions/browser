@@ -1,6 +1,13 @@
 4.2.0
   121206
-  New Feature
+  New Features
+  * #43741: Centralised jQuery UI configuration
+            Effected files:
+            * pi1/locallang_flexform.xml
+            * pi1/class.tx_browser_pi1_flexform.php
+            * pi1/flexform_sheet_templating.xml
+            * pi1/flexform_sheet_javascript.xml
+            * static/setup.txt
   * #43732: Integration of index browser in jQuery UI themes
             Effected files:
             * res/html/default/main.tmpl

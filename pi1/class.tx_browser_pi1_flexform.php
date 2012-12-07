@@ -2497,32 +2497,34 @@ class tx_browser_pi1_flexform {
         $field . ': \'' . $css_jqui . '\'', $this->pObj->extKey, 0);
     }
 
-    switch ($css_jqui)
+    switch( $css_jqui )
     {
-      case ('black_tie') :
-      case ('blitzer') :
-      case ('cupertino') :
-      case ('dark_hive') :
-      case ('darkness') :
-      case ('dot_luv') :
-      case ('eggplant') :
-      case ('excite_bike') :
-      case ('flick') :
-      case ('hot_sneaks') :
-      case ('humanity') :
-      case ('le_frog') :
-      case ('lightness') :
-      case ('mint_choc') :
-      case ('netzmacher') :
-      case ('overcast') :
-      case ('pepper_grinder') :
-      case ('redmond') :
-      case ('south_street') :
-      case ('start') :
-      case ('sunny') :
-      case ('swanky_purse') :
-      case ('trontastic') :
-      case ('vader') :
+      case ( 'black_tie' ) :
+      case ( 'blitzer' ) :
+      case ( 'cupertino' ) :
+      case ( 'dark_hive' ) :
+      case ( 'darkness' ) :
+      case ( 'dot_luv' ) :
+      case ( 'eggplant' ) :
+      case ( 'excite_bike' ) :
+      case ( 'flick' ) :
+      case ( 'hot_sneaks' ) :
+      case ( 'humanity' ) :
+      case ( 'le_frog' ) :
+      case ( 'lightness' ) :
+      case ( 'mint_choc' ) :
+      case ( 'netzmacher' ) :
+      case ( 'overcast' ) :
+      case ( 'pepper_grinder' ) :
+      case ( 'redmond' ) :
+        // #43741, dwildt, 1+
+      case ( 'smoothness' ) :
+      case ( 'south_street' ) :
+      case ( 'start' ) :
+      case ( 'sunny' ) :
+      case ( 'swanky_purse' ) :
+      case ( 'trontastic' ) :
+      case ( 'vader' ) :
         $css = $this->pObj->conf['flexform.']['templating.']['jquery_ui.'][$css_jqui . '.']['css'];
         $this->pObj->conf['template.']['css.']['jquery_ui'] = $css;
         $this->bool_css_jqui = true;
@@ -2530,7 +2532,7 @@ class tx_browser_pi1_flexform {
           t3lib_div :: devlog('[INFO/FLEXFORM] template.css.jquery_ui is set to ' . $css, $this->pObj->extKey, 0);
         }
         break;
-      case ('z_own') :
+      case ( 'z_own' ) :
         $css = $this->pObj->pi_getFFvalue($arr_piFlexform, 'css.jqui.z_own.path', $sheet, 'lDEF', 'vDEF');
         $this->pObj->conf['template.']['css.']['jquery_ui'] = $css;
         $this->bool_css_jqui = true;
@@ -2538,14 +2540,15 @@ class tx_browser_pi1_flexform {
           t3lib_div :: devlog('[INFO/FLEXFORM] template.css.jquery_ui is set to ' . $css, $this->pObj->extKey, 0);
         }
         break;
-      case ('z_none') :
-        $this->pObj->conf['template.']['css.']['jquery_ui'] = null;
-        $this->bool_css_jqui = false;
-        if ($this->pObj->b_drs_flexform) {
-          t3lib_div :: devlog('[INFO/FLEXFORM] template.css.jquery_ui is set to null', $this->pObj->extKey, 0);
-        }
-        break;
-      case ('z_ts') :
+        // #43741, dwildt, 6-
+//      case ( 'z_none' ) :
+//        $this->pObj->conf['template.']['css.']['jquery_ui'] = null;
+//        $this->bool_css_jqui = false;
+//        if ($this->pObj->b_drs_flexform) {
+//          t3lib_div :: devlog('[INFO/FLEXFORM] template.css.jquery_ui is set to null', $this->pObj->extKey, 0);
+//        }
+//        break;
+      case ( 'z_ts' ) :
         // Do nothing;
         $this->bool_css_jqui = true;
         if ($this->pObj->b_drs_flexform) {
@@ -2554,15 +2557,25 @@ class tx_browser_pi1_flexform {
         break;
       case ( null ) :
       case ( '' ) :
-      case ( 'smoothness' ) :
+        // #43741, dwildt, 1-
+      //case ( 'smoothness' ) :
+        // #43741, dwildt, 1+
+      case ( 'z_none' ) :
       default :
-          // #29336, 111130, dwildt
-        $css = $this->pObj->conf['flexform.']['templating.']['jquery_ui.']['smoothness.']['css'];
-        $this->pObj->conf['template.']['css.']['jquery_ui'] = $css;
-        $this->bool_css_jqui = true;
+          // #43741, dwildt, 5+
+        $this->pObj->conf['template.']['css.']['jquery_ui'] = null;
+        $this->bool_css_jqui = false;
         if ($this->pObj->b_drs_flexform) {
-          t3lib_div :: devlog('[INFO/FLEXFORM] template.css.jquery_ui is set to ' . $css, $this->pObj->extKey, 0);
+          t3lib_div :: devlog('[INFO/FLEXFORM] template.css.jquery_ui is set to null', $this->pObj->extKey, 0);
         }
+          // #43741, dwildt, 7-
+//          // #29336, 111130, dwildt
+//        $css = $this->pObj->conf['flexform.']['templating.']['jquery_ui.']['smoothness.']['css'];
+//        $this->pObj->conf['template.']['css.']['jquery_ui'] = $css;
+//        $this->bool_css_jqui = true;
+//        if ($this->pObj->b_drs_flexform) {
+//          t3lib_div :: devlog('[INFO/FLEXFORM] template.css.jquery_ui is set to ' . $css, $this->pObj->extKey, 0);
+//        }
         break;
     }
     // #28562, dwildt, 110806
