@@ -888,6 +888,10 @@ class tx_browser_pi1_navi_indexBrowser
             // #43558, 121203, dwildt, 1-
           //$markerArray['###TAB###'] = $label;
             // #43558, 121203, dwildt, 1+
+#43732
+$class = 'class="ui-tabs-anchor without-href"';
+$tab['label'] = '<a ' . $class . '>' . $tab['label'] . '   ';
+$this->pObj->dev_var_dump( $tab['label'] );    
           $markerArray['###TAB###'] = $tab['label'];
           break;
         default:
@@ -3003,14 +3007,6 @@ class tx_browser_pi1_navi_indexBrowser
                         $this->pObj->piVars,
                         $this->pObj->boolCache
                       );
-
-    if( ! $title )
-    {
-      #43732
-      $class = 'class="ui-tabs-anchor without-href"';
-      $tabLinkedLabel = '<a ' . $class . '>' . $tabLinkedLabel . '   ';
-    }
-$this->pObj->dev_var_dump( $tabLinkedLabel );    
 
       // RESET piVars
     $this->pObj->piVars = $this->piVarsBak;
