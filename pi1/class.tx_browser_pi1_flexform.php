@@ -2545,11 +2545,27 @@ class tx_browser_pi1_flexform {
       case ( 'swanky_purse' ) :
       case ( 'trontastic' ) :
       case ( 'vader' ) :
+        // #43741, dwildt, 1+
+      case ( 'z_ts' ) :
         $css = $this->pObj->conf['flexform.']['templating.']['jquery_ui.'][$css_jqui . '.']['css'];
         $this->pObj->conf['template.']['css.']['jquery_ui'] = $css;
-        $this->bool_css_jqui = true;
-        if ($this->pObj->b_drs_flexform) {
-          t3lib_div :: devlog('[INFO/FLEXFORM] template.css.jquery_ui is set to ' . $css, $this->pObj->extKey, 0);
+        if( $css )
+        {
+          if( $this->pObj->b_drs_flexform )
+          {
+            $prompt = 'template.css.jquery_ui is set to ' . $css;
+            t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+          }
+          $this->bool_css_jqui = true;
+        }
+        if( ! $css )
+        {
+          if( $this->pObj->b_drs_flexform )
+          {
+            $prompt = 'template.css.jquery_ui is set to null.';
+            t3lib_div :: devlog('[INFO/FLEXFORM] ' . $prompt, $this->pObj->extKey, 0);
+          }
+          $this->bool_css_jqui = false;
         }
         break;
       case ( 'z_own' ) :
@@ -2568,13 +2584,14 @@ class tx_browser_pi1_flexform {
 //          t3lib_div :: devlog('[INFO/FLEXFORM] template.css.jquery_ui is set to null', $this->pObj->extKey, 0);
 //        }
 //        break;
-      case ( 'z_ts' ) :
-        // Do nothing;
-        $this->bool_css_jqui = true;
-        if ($this->pObj->b_drs_flexform) {
-          t3lib_div :: devlog('[INFO/FLEXFORM] template.css.jquery_ui isn\'t changed by the flexform.', $this->pObj->extKey, 0);
-        }
-        break;
+        // #43741, dwildt, 6-
+//      case ( 'z_ts' ) :
+//        // Do nothing;
+//        $this->bool_css_jqui = true;
+//        if ($this->pObj->b_drs_flexform) {
+//          t3lib_div :: devlog('[INFO/FLEXFORM] template.css.jquery_ui isn\'t changed by the flexform.', $this->pObj->extKey, 0);
+//        }
+//        break;
       case ( null ) :
       case ( '' ) :
         // #43741, dwildt, 1-
