@@ -4,6 +4,8 @@
   * #43732: Integration of index browser in jQuery UI themes
             Effected files:
             * res/html/default/main.tmpl
+  Improvement
+  * #43737: Remove button method
   Bugfix
   * #43692: jQuery isn't loaded in some cases of a treeview
 
@@ -14,7 +16,7 @@
             Effected files:
             * pi1/class.tx_browser_pi1_viewlist.php
             * pi1/class.tx_browser_pi1_views.php
-  Improvement
+  Improvements
   * #00000: tx_browser_pi1-0.0.3 -> tx_browser_pi1-0.0.4
   * #00000: Qualified prompt in tx_browser_pi1_localisation::zz_promptLLdie()          
   * #00000: category_menu.treeview.enabled.value = 0
