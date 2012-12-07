@@ -3004,6 +3004,13 @@ class tx_browser_pi1_navi_indexBrowser
                         $this->pObj->boolCache
                       );
 
+    if( ! $title )
+    {
+      #43732
+      $class = 'class="ui-tabs-anchor without-href"';
+      $tabLinkedLabel = '<a ' . $class . '>' . $tabLinkedLabel . '   ';
+    }
+
       // RESET piVars
     $this->pObj->piVars = $this->piVarsBak;
 
