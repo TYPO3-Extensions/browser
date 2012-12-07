@@ -3010,6 +3010,7 @@ class tx_browser_pi1_navi_indexBrowser
       $class = 'class="ui-tabs-anchor without-href"';
       $tabLinkedLabel = '<a ' . $class . '>' . $tabLinkedLabel . '   ';
     }
+$this->pObj->dev_var_dump( $tabLinkedLabel );    
 
       // RESET piVars
     $this->pObj->piVars = $this->piVarsBak;
