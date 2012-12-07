@@ -292,10 +292,10 @@
       <label index="sheet_templating.css.jqui.swanky_purse">UI: Swanky Purse</label>
       <label index="sheet_templating.css.jqui.trontastic">UI: Trontastic</label>
       <label index="sheet_templating.css.jqui.vader">UI: Vader</label>
-      <label index="sheet_templating.css.jqui.z_none">Don't embed it!</label>
+      <label index="sheet_templating.css.jqui.z_none">Don't embed it! (recommended)</label>
       <label index="sheet_templating.css.jqui.z_own">Own file</label>
       <label index="sheet_templating.css.jqui.z_own.path">CSS jQuery UI *.css (i.e. fileadmin/..., http://..., EXT:...)</label>
-      <label index="sheet_templating.css.jqui.z_ts">Take the value from TypoScript (recommended)</label>
+      <label index="sheet_templating.css.jqui.z_ts">Take the value from TypoScript</label>
       <label index="sheet_templating.dataQuery">Data: query</label>
       <label index="sheet_templating.wrapBaseClass">Templating: default <![CDATA[<div>]]>-container for this plugin</label>
       <label index="sheet_templating.wrapBaseClass.0">Wrap in base class (recommended)</label>
@@ -661,10 +661,10 @@
       <label index="sheet_templating.css.jqui.swanky_purse">UI: Swanky Purse</label>
       <label index="sheet_templating.css.jqui.trontastic">UI: Trontastic</label>
       <label index="sheet_templating.css.jqui.vader">UI: Vader</label>
-      <label index="sheet_templating.css.jqui.z_none">Don't embed it!</label>
+      <label index="sheet_templating.css.jqui.z_none">Nicht einbinden! (empfohlen)</label>
       <label index="sheet_templating.css.jqui.z_own">Own file</label>
       <label index="sheet_templating.css.jqui.z_own.path">CSS jQuery UI: Datei</label>
-      <label index="sheet_templating.css.jqui.z_ts">Nimm den Wert aus TypoScript (empfohlen)</label>
+      <label index="sheet_templating.css.jqui.z_ts">Nimm den Wert aus TypoScript</label>
       <label index="sheet_templating.dataQuery">Daten: Abfrage</label>
       <label index="sheet_templating.wrapBaseClass">Templating: Standard <![CDATA[<div>]]>-Container fuer dieses Plugin</label>
       <label index="sheet_templating.wrapBaseClass.0">Mit Basis-Klasse umschliessen (empfohlen)</label>
