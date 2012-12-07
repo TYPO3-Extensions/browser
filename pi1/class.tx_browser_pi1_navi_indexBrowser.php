@@ -2989,7 +2989,7 @@ class tx_browser_pi1_navi_indexBrowser
     {
       #43732
       $class = '"ui-tabs-anchor"';
-      $typolink['parameter'] = $typolink['parameter'] . ' ' . $class . ' - "' . $title . '"';
+      $typolink['parameter'] = $typolink['parameter'] . ' - ' . $class . ' "' . $title . '"';
     }
       // Get the property title
 
