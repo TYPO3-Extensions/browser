@@ -1868,10 +1868,7 @@ class tx_browser_pi1_viewlist
  */
   private function subpart_setSearchbox( )
   {
-$this->pObj->dev_var_dump( $this->content );  // ###FILTER###
     $this->content  = $this->pObj->objTemplate->tmplSearchBox( $this->content );
-$this->pObj->dev_var_dump( $this->content );  // ###FILTER###
-$this->pObj->dev_var_dump( $this->pObj->str_template_raw );  // ###FILTER###
     $arr_return     = $this->subpart_setSearchboxFilter( $filter );
 
     return $arr_return;

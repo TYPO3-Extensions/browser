@@ -414,7 +414,6 @@ class tx_browser_pi1_filter_4x {
       return;
     }
       // RETURN: if there isn't any filter array
-$this->pObj->dev_var_dump( $this->pObj->str_template_raw );
 
       // Evaluate TREEVIEW filter
       // #41753, 121012, dwildt, 1+
@@ -1199,7 +1198,6 @@ $this->pObj->dev_var_dump( $this->pObj->str_template_raw );
       // Set marker label
     $markerLabel = '###' . strtoupper( $this->curr_tableField ) . '###';
 
-$this->pObj->dev_var_dump( 1201 );
       // RETURN condition isn't met
     if( ! $this->ts_getCondition( ) )
     {
@@ -1212,7 +1210,6 @@ $this->pObj->dev_var_dump( 1201 );
 
     $this->set_currFilterIsArea( );
 
-$this->pObj->dev_var_dump( 1214 );
       // Get filter rows
     $arr_return = $this->get_rows( );
     if( $arr_return['error']['status'] )
