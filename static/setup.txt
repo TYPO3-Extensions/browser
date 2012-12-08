@@ -1,12 +1,56 @@
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // INDEX
+  //
+  // includeLibs
+  // plugin.tx_browser_pi1: templating
+  // plugin.tx_browser_pi1: localTable
+  // plugin.tx_browser_pi1: navigation
+  // plugin.tx_browser_pi1: general
+  // plugin.tx_browser_pi1: document_stdWrap
+  // plugin.tx_browser_pi1: displaySingle
+  // plugin.tx_browser_pi1: displayList
+  // plugin.tx_browser_pi1: displayList master_templates
+  // plugin.tx_browser_pi1: displayList images
+  // plugin.tx_browser_pi1: marker
+  // plugin.tx_browser_pi1: flexform
+  // plugin.tx_browser_pi1: javascript
+  // plugin.tx_browser_pi1: export
+  // plugin.tx_browser_pi1: download
+  // plugin.tx_browser_pi1: rss
+  // plugin.tx_browser_pi1: autoconfig
+  // plugin.tx_browser_pi1: format
+  // plugin.tx_browser_pi1: advanced
+  // plugin.tx_browser_pi1: _CSS_DEFAULT_STYLE
+  // plugin.tx_browser_pi1: views
+  // plugin.tx_browser_pi1: _LOCAL_LANG mode
+  // plugin.tx_browser_pi1: _LOCAL_LANG pagebrowser
+  // pages: browser_ajax
+  // pages: browser_csv
+  // pages: browser_download
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // includeLibs
+
 includeLibs {
     // Extends tx_cssstyledcontent_pi1
   tx_browser_cssstyledcontent = EXT:browser/lib/class.tx_browser_cssstyledcontent.php
     // Extends tslib_pibase
   tx_browser_typoscript       = EXT:browser/lib/class.tx_browser_typoscript.php
 }
+  // includeLibs
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: templating
 
 plugin.tx_browser_pi1 {
-
     // [STRING] Path to the HTML template file
   template {
       // default file
@@ -25,18 +69,25 @@ plugin.tx_browser_pi1 {
     }
     extensions {
       browser {
-        table {
-          name = Browser: Table
-          file = EXT:browser/res/html/default.tmpl
+        default {
+            // #43627, 43746
+          name      = Browser: Default
+          file      = EXT:browser/res/html/default.tmpl
+          csvViews  = 43746
         }
-        table_until_3-9-6 {
-          name = Browser: Table (until version 4.0)
-          file = EXT:browser/res/html/until_3.9.6/default.tmpl
-        }
-        list {
-          name = Browser: List
-          file = EXT:browser/res/html/default_ul.tmpl
-        }
+          // #43627
+        // table {
+        //   name = Browser: Table
+        //   file = EXT:browser/res/html/default.tmpl
+        // }
+        // table_until_3-9-6 {
+        //   name = Browser: Table (until version 4.0)
+        //   file = EXT:browser/res/html/until_3.9.6/default.tmpl
+        // }
+        // list {
+        //   name = Browser: List
+        //   file = EXT:browser/res/html/default_ul.tmpl
+        // }
       }
     }
     add_parameter {
@@ -88,18 +139,34 @@ plugin.tx_browser_pi1 {
           if.isTrue.data  = GPvar:tx_browser_pi1|sword
         }
       }
-      extensions {
-      }
     }
   }
+}
+  // plugin.tx_browser_pi1: templating
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: localTable
+
+plugin.tx_browser_pi1 {
   localTable {
       // [STRING] Uid field of the local table. This is the name of the uid field of the record for a link to a single view. It is "uid" usually
     uid = uid
       // [STRING] Pid field of the local table.
     pid = pid
   }
+}
+  // plugin.tx_browser_pi1: localTable
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: navigation
+
+plugin.tx_browser_pi1 {
     // indexBrowser (A-Z), map, modeSelector, pageBrowser, record_browser
   navigation =
   navigation {
@@ -1192,8 +1259,16 @@ plugin.tx_browser_pi1 {
       }
     }
   }
+}
+  // plugin.tx_browser_pi1: navigation
 
 
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: general
+
+plugin.tx_browser_pi1 {
   # Rendering of news items. re-use the RTE parseFunc configuration for normal content
   general_stdWrap {
     parseFunc < lib.parseFunc_RTE
@@ -1205,14 +1280,32 @@ plugin.tx_browser_pi1 {
       }
     }
   }
+}
+  // plugin.tx_browser_pi1: general
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: document_stdWrap
+
+plugin.tx_browser_pi1 {
   document_stdWrap {
     icon = 1
     stdWrap {
       noTrimWrap = || |
     }
   }
+}
+  // plugin.tx_browser_pi1: document_stdWrap
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: displaySingle
+
+plugin.tx_browser_pi1 {
   displaySingle {
 
     seo {
@@ -1340,7 +1433,16 @@ plugin.tx_browser_pi1 {
     }
 
   }
+}
+  // plugin.tx_browser_pi1: displaySingle
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: displayList
+
+plugin.tx_browser_pi1 {
   displayList {
 
     singlePid =
@@ -1619,7 +1721,18 @@ plugin.tx_browser_pi1 {
         }
       }
     }
+  }
+}
+  // plugin.tx_browser_pi1: displayList
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: displayList master_templates
+
+plugin.tx_browser_pi1 {
+  displayList {
     master_templates {
         // Master template for a category menu
       category_menu = CATEGORY_MENU
@@ -1724,34 +1837,8 @@ plugin.tx_browser_pi1 {
             class = ###ITEM_SELECTED### ###ONCHANGE###
               // [String] Default HTML style
             style =
-            wraps {
-              item {
-                stdWrap {
-                  wrap = <li>|</li>
-                }
-              }
-              value {
-                stdWrap {
-                  htmlSpecialChars  = 1
-                  crop              = 60 | ... | 1
-                }
-              }
-            }
               // DEPRECATED - please use the cObject!
             wraps =
-            wraps {
-              item {
-                stdWrap {
-                  wrap = <a href="###URL###"###CLASS######STYLE######TITLE###>|</a>
-                }
-              }
-              value {
-                stdWrap {
-                  htmlSpecialChars  = 1
-                  crop              = 60 | ... | 1
-                }
-              }
-            }
               // Wrap the filter item
             cObject = COA
             cObject {
@@ -1889,18 +1976,6 @@ plugin.tx_browser_pi1 {
             style =
               // DEPRECATED - please use the cObject!
             wraps =
-            wraps {
-              item {
-                stdWrap {
-                  noTrimWrap = |<input###CLASS######STYLE### type="checkbox" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###>  ||
-                }
-              }
-              value {
-                stdWrap {
-                  crop = 60 | ... | 1
-                }
-              }
-            }
               // Wrap the filter item
             cObject = COA
             cObject {
@@ -2047,18 +2122,6 @@ plugin.tx_browser_pi1 {
             style =
               // DEPRECATED - please use the cObject!
             wraps =
-            wraps {
-              item {
-                stdWrap {
-                  noTrimWrap = |<input###CLASS######STYLE### type="radio" name="###TABLE.FIELD###" value="###UID###"###ITEM_SELECTED###> ||
-                }
-              }
-              value {
-                stdWrap {
-                  crop = 60 | ... | 1
-                }
-              }
-            }
               // Wrap the filter item
             cObject = COA
             cObject {
@@ -2234,19 +2297,6 @@ plugin.tx_browser_pi1 {
             style =
               // DEPRECATED - please use the cObject!
             wraps =
-            wraps {
-              item {
-                stdWrap {
-                  wrap = <option###CLASS######STYLE### value="###UID###"###ITEM_SELECTED###>|</option>
-                }
-              }
-              value {
-                stdWrap {
-                  htmlSpecialChars = 1
-                  crop             = 60 | ... | 1
-                }
-              }
-            }
               // Wrap the filter item
             cObject = COA
             cObject {
@@ -2813,7 +2863,18 @@ plugin.tx_browser_pi1 {
         }
       }
     }
+  }
+}
+  // plugin.tx_browser_pi1: displayList master_templates
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: displayList images
+
+plugin.tx_browser_pi1 {
+  displayList {
       // [Boolean] Display caption in List view?
     caption_stdWrap.if.directReturn = 0
 
@@ -2856,7 +2917,16 @@ plugin.tx_browser_pi1 {
       wrap = <p style="padding:2em 0;">|</p>
     }
   }
+}
+  // plugin.tx_browser_pi1: displayList images
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: marker
+
+plugin.tx_browser_pi1 {
   marker {
         // markers can use TEXT or COA
     my_title = TEXT
@@ -2916,7 +2986,16 @@ plugin.tx_browser_pi1 {
       }
     }
   }
+}
+  // plugin.tx_browser_pi1: marker
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: flexform
+
+plugin.tx_browser_pi1 {
   flexform {
     sDEF {
       controlling {
@@ -3478,6 +3557,16 @@ plugin.tx_browser_pi1 {
       display_listview = 0
     }
   }
+}
+  // plugin.tx_browser_pi1: flexform
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: javascript
+
+plugin.tx_browser_pi1 {
 
     // jQuery, jQuery plugins, ajax, general
   javascript =
@@ -3885,7 +3974,16 @@ plugin.tx_browser_pi1 {
       file = EXT:browser/res/js/tx_browser_pi1.js
     }
   }
+}
+  // plugin.tx_browser_pi1: javascript
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: export
+
+plugin.tx_browser_pi1 {
   export {
     csv {
       page = PAGE
@@ -3936,7 +4034,16 @@ plugin.tx_browser_pi1 {
       }
     }
   }
+}
+  // plugin.tx_browser_pi1: export
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: download
+
+plugin.tx_browser_pi1 {
   download {
     page = PAGE
     page {
@@ -4071,7 +4178,16 @@ plugin.tx_browser_pi1 {
       }
     }
   }
+}
+  // plugin.tx_browser_pi1: download
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: rss
+
+plugin.tx_browser_pi1 {
   rss {
     page = PAGE
     page {
@@ -4103,7 +4219,16 @@ plugin.tx_browser_pi1 {
       }
     }
   }
+}
+  // plugin.tx_browser_pi1: rss
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: autoconfig
+
+plugin.tx_browser_pi1 {
   autoconfig {
       // [BOOLEAN] Build relations automatically
     relations = {$plugin.tx_browser_pi1.autoSQLrelConfig}
@@ -4326,7 +4451,16 @@ plugin.tx_browser_pi1 {
       }
     }
   }
+}
+  // plugin.tx_browser_pi1: autoconfig
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: format
+
+plugin.tx_browser_pi1 {
   format {
       // Default output format for timestamps
     strftime    = {$plugin.tx_browser_pi1.strftime}
@@ -4335,7 +4469,16 @@ plugin.tx_browser_pi1 {
       utf8_encode = 1
     }
   }
+}
+  // plugin.tx_browser_pi1: format
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: advanced
+
+plugin.tx_browser_pi1 {
   advanced {
     downgrade {
       3_6_0 {
@@ -4425,6 +4568,16 @@ plugin.tx_browser_pi1 {
       }
     }
   }
+}
+  // plugin.tx_browser_pi1: advanced
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: _CSS_DEFAULT_STYLE
+
+plugin.tx_browser_pi1 {
 
   _CSS_DEFAULT_STYLE (
     .tx-browser-pi1 div.azSelector,
@@ -4498,7 +4651,241 @@ plugin.tx_browser_pi1 {
     /* #9659 */
 
   )
+}
+  // plugin.tx_browser_pi1: _CSS_DEFAULT_STYLE
 
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: views
+
+plugin.tx_browser_pi1 {
+  views {
+    list {
+      43746 = Browser: Default
+      43746 {
+        name    = Browser: Default
+        showUid = calendarUid
+        select (
+          tt_content.header,
+          tt_content.tstamp,
+          tt_content.bodytext,
+          tt_content.list_type,
+          tt_content.image
+        )
+        orderBy             = tt_content.header
+        csvLinkToSingleView = tt_content.header
+        filter {
+          tt_content {
+            datetime < plugin.tx_browser_pi1.displayList.master_templates.category_menu
+            datetime {
+              first_item {
+                cObject {
+                  20 {
+                    data = LLL:EXT:org/locallang_db.xml:filter_phrase.calendar
+                  }
+                }
+              }
+              wrap = <span class="category_menu">|</span>
+              order.field = uid
+              area < plugin.tx_browser_pi1.displayList.master_templates.areas.sample_period
+              area {
+                interval {
+                  case = week
+                }
+              }
+            }
+          }
+        }
+        tt_content {
+          list_type = COA
+          list_type {
+            10 = TEXT
+            10 {
+              field = tt_content.list_type
+              wrap  = [|]
+            }
+          }
+        }
+          // marker and subparts will replaced in the HTML template before data handling
+          // #43627, 121205, dwildt
+        htmlSnippets =
+        htmlSnippets {
+          marker {
+            filter = TEXT
+            filter {
+              value (
+              <div class="filter">
+                <div class="period_menu">
+                  ###TX_ORG_CAL.DATETIME###
+                </div>
+                ###TX_ORG_CALTYPE.TITLE### ###TX_ORG_DEPARTMENT.TITLE###
+              </div>
+)
+            }
+          }
+          subparts {
+            listview = TEXT
+            listview {
+              value (
+            <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="###VIEW###view ###VIEW###view-content ###VIEW###view-###MODE### ###VIEW###view-content-###MODE###">
+              <!-- ###GROUPBY### begin -->
+              <!-- ###GROUPBYHEAD### begin -->
+              ###GROUPBY_GROUPNAME###
+              <!-- ###GROUPBYHEAD### end -->
+              <!-- ###GROUPBYBODY### begin -->
+              <table id="c###TT_CONTENT.UID###-listview-###MODE###-table"###SUMMARY###>
+                ###CAPTION###
+                <!-- ###LISTHEAD### begin -->
+                <thead>
+                  <tr><!-- ###LISTHEADITEM### begin -->
+                    <th###CLASS###>###ITEM###</th><!-- ###LISTHEADITEM### end -->
+                  </tr>
+                </thead><!-- ###LISTHEAD### end -->
+                <tbody><!-- ###LISTBODY### begin -->
+                  <tr###CLASS###><!-- ###LISTBODYITEM### begin -->
+                    <td###CLASS###>###ITEM### ###SOCIALMEDIA_BOOKMARKS###</td><!-- ###LISTBODYITEM### end -->
+                  </tr><!-- ###LISTBODY### end -->
+                </tbody>
+              </table>
+              <!-- ###GROUPBYBODY### end -->
+              <!-- ###GROUPBY### end -->
+            </div> <!-- /listview -->
+)
+            }
+          }
+        }
+      }
+    }
+    single {
+      43746 = Browser: Default
+      43746 {
+        name    = Browser: Default
+        showUid = calendarUid
+        select (
+          tt_content.header,
+          tt_content.tstamp,
+          tt_content.bodytext,
+          tt_content.list_type,
+          tt_content.image
+        )
+        orderBy             = tt_content.header
+        csvLinkToSingleView = tt_content.header
+        filter {
+          tt_content {
+            datetime < plugin.tx_browser_pi1.displayList.master_templates.category_menu
+            datetime {
+              first_item {
+                cObject {
+                  20 {
+                    data = LLL:EXT:org/locallang_db.xml:filter_phrase.calendar
+                  }
+                }
+              }
+              wrap = <span class="category_menu">|</span>
+              order.field = uid
+              area < plugin.tx_browser_pi1.displayList.master_templates.areas.sample_period
+              area {
+                interval {
+                  case = week
+                }
+              }
+            }
+          }
+        }
+        tt_content {
+          datetime = TEXT
+          datetime {
+            value = ###TX_ORG_CAL.DATETIME###
+            strftime = %A, %d. %B %Y, %H:%M Uhr
+          }
+        }
+          // marker and subparts will replaced in the HTML template before data handling
+          // #43627, 121205, dwildt
+        htmlSnippets =
+        htmlSnippets {
+          subparts {
+            singleview = TEXT
+            singleview {
+              value (
+<!-- ###AREA_FOR_AJAX_LIST_01### begin -->
+        <div id="c###TT_CONTENT.UID###-singleview-###MODE###" class="singleview singleview-###MODE###">
+<!-- ###AREA_FOR_AJAX_LIST_01### begin -->
+        <div id="c###TT_CONTENT.UID###-singleview-###MODE###" class="singleview singleview-###MODE###">
+          ###RECORD_BROWSER###
+          <div class="ui-widget ui-corner-all">
+            <h1 class="ui-widget-header ui-corner-top">
+              ###TITLE###
+            </h1>
+            <div class="ui-widget-content ui-corner-bottom">
+              <table###SUMMARY###>
+                ###CAPTION###<!-- ###SINGLEBODY### begin -->
+                <tbody><!-- ###SINGLEBODYROW### begin -->
+                  <tr###CLASS###>
+                    <th>###FIELD###</th>
+                    <td>###VALUE### ###SOCIALMEDIA_BOOKMARKS###</td>
+                  </tr><!-- ###SINGLEBODYROW### end -->
+                </tbody><!-- ###SINGLEBODY### end -->
+              </table>
+            </div>
+<!-- ###AREA_FOR_AJAX_LIST_01### end -->
+            <!-- ###BACKBUTTON### begin -->
+            <p class="backbutton">
+              ###BUTTON###
+            </p>
+          <!-- ###BACKBUTTON### end -->
+<!-- ###AREA_FOR_AJAX_LIST_02### begin -->
+          </div>
+        </div>
+<!-- ###AREA_FOR_AJAX_LIST_02### end -->
+)
+            }
+          }
+        }
+      }
+    }
+  }
+}
+  // plugin.tx_browser_pi1: views
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: _LOCAL_LANG mode
+
+plugin.tx_browser_pi1 {
+  _LOCAL_LANG {
+    default {
+      list_mode_43746             = TYPO3 Browser with tt_content sample
+      list_mode_43746_titleTag    = TYPO3 Browser: tt_content sample
+      list_mode_43746_keywords    = TYPO3, Browser, tt_content, sample
+      list_mode_43746_summary     = TYPO3 Browser: tt_content sample
+      single_mode_43746_titleTag  = TYPO3 Browser: ###TT_CONTENT.HEADER###
+      single_mode_43746_keywords  = Sorry, tt_content hasn't any keyword field. Sample would be ###TT_CONTENT.KEYWORDS###
+      single_mode_43746_summary   = Sorry, tt_content hasn't any desciption field. Sample would be ###TT_CONTENT.DESCRIPTION###
+    }
+    de {
+      list_mode_43746             = TYPO3 Browser mit tt_content-Beispiel
+      list_mode_43746_titleTag    = TYPO3 Browser: tt_content-Beispiel
+      list_mode_43746_keywords    = TYPO3, Browser, tt_content, Beispiel
+      list_mode_43746_summary     = TYPO3 Browser: tt_content-Beispiel
+      single_mode_43746_titleTag  = TYPO3 Browser: ###TT_CONTENT.HEADER###
+      single_mode_43746_keywords  = Pardon, tt_content hat kein Feld keyword. Ein Beispiel wäre: ###TT_CONTENT.KEYWORDS###
+      single_mode_43746_summary   = Pardon, tt_content hat kein Feld desciption. Ein Beispiel wäre: ###TT_CONTENT.DESCRIPTION###
+    }
+  }
+}
+  // plugin.tx_browser_pi1: _LOCAL_LANG mode
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: _LOCAL_LANG pagebrowser
+
+plugin.tx_browser_pi1 {
   _LOCAL_LANG {
     default {
       pi_list_browseresults_prev      = &#171;
@@ -4517,8 +4904,14 @@ plugin.tx_browser_pi1 {
       pi_list_browseresults_page      = Seite
     }
   }
-
 }
+  // plugin.tx_browser_pi1: _LOCAL_LANG pagebrowser
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // pages: browser_ajax
 
   // TYPO3-Browser: ajax page object II. In case of localisation: Configure the id of sys_languagein the Constant Editor. Move in this line ...jQuery.default to ...jQuery.de (i.e.)
 browser_ajax < plugin.tx_browser_pi1.javascript.ajax.jQuery.default
@@ -4527,6 +4920,13 @@ browser_ajax < plugin.tx_browser_pi1.javascript.ajax.jQuery.default
     // Don't handle header of content element
   lib.stdheader >
 [global]
+  // pages: browser_ajax
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // pages: browser_csv
 
   // TYPO3-Browser: CSV export page object
 browser_csv < plugin.tx_browser_pi1.export.csv.page
@@ -4535,6 +4935,14 @@ browser_csv < plugin.tx_browser_pi1.export.csv.page
     // Don't wrap the content of the CSV export page object by default
   tt_content.stdWrap >
 [global]
+  // pages: browser_csv
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // pages: browser_download
+
 
   // TYPO3-Browser: Download page object
 browser_download < plugin.tx_browser_pi1.download.page
@@ -4546,3 +4954,4 @@ browser_map < plugin.tx_browser_pi1.export.map.page
     // Don't wrap the content of the page object for the map category markers by default
   tt_content.stdWrap >
 [global]
+  // pages: browser_download

@@ -75,29 +75,22 @@ This template is the default template for all list views.
               <input type="hidden" name="no_cache" value="1" />
               <input type="hidden" name="tx_browser_pi1[plugin]" value="###PLUGIN###" />
               <input class="sword" type="text" name="tx_browser_pi1[sword]" onfocus="if(this.value =='###SWORD_DEFAULT###') this.value=''" value="###SWORD###" />
-              <button id="c###TT_CONTENT.UID###-list-submit-sword-###MODE###" class="button hidesubmit ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">
-                <span class="ui-button-text">###MY_SEARCH###</span>
-              </button>
+              <input class="button hidesubmit" type="submit" value="###MY_SEARCH###" />
               <!-- ###BUTTON_CSV-EXPORT### begin -->
-                <button id="c###TT_CONTENT.UID###-list-submit-csv-export-###MODE###" class="button hidesubmit ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">
-                  <span class="ui-button-text">###MY_CSV_EXPORT###</span>
-                </button>
+                <input id="c###TT_CONTENT.UID###-list-submit-csv-export-###MODE###" class="button hidesubmit"  type="submit"  value="###MY_CSV_EXPORT###" />
               <!-- ###BUTTON_CSV-EXPORT### end -->
-              <button id="c###TT_CONTENT.UID###-list-submit-sword-###MODE###" onclick="location='###MY_URL###'" class="button reset ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">
-                <span class="ui-button-text">###MY_RESET###</span>
-              </button>
-              <! -- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
-              ###FILTER###
+              <input class="button reset" type="button" onclick="location='###MY_URL###'" value="###MY_RESET###" />
+              <!-- Add filters with the ###TABLE.FIELD### syntax and configure your filters with TypoScript -->
             </fieldset>
           </form>
           ###RESULTPHRASE###
         </div><!-- ###SEARCHFORM### end -->
-        <div class="listarea  ui-widget ui-widget-content ui-corner-all">
+        <div class="listarea">
           <!-- ###LISTTABS### begin -->
-          <div id="c###TT_CONTENT.UID###-list-tabs-###MODE###" class="ui-tabs-list ui-tabs-list-###MODE###">
+          <div id="c###TT_CONTENT.UID###-list-tabs-###MODE###" class="ui-tabs ui-tabs-list-###MODE### ui-widget ui-widget-content ui-corner-all">
             <!-- ###INDEXBROWSER### begin -->
-            <div id="c###TT_CONTENT.UID###-indexBrowser-###MODE###" class="ui-tabs">
-              <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all role="tablist"><!-- ###INDEXBROWSERTABS### begin -->
+            <div id="c###TT_CONTENT.UID###-indexBrowser-###MODE###" class="indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE###">
+              <ul class="indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE###"><!-- ###INDEXBROWSERTABS### begin -->
                 <li###LI_CLASS###>###TAB###</li><!-- ###INDEXBROWSERTABS### end -->
               </ul>
             </div><!-- ###INDEXBROWSER### end -->
@@ -115,7 +108,27 @@ This template is the default template for all list views.
             </div><!-- ###MODESELECTOR### end -->
             <!-- ###LISTVIEW### begin -->
             <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="###VIEW###view ###VIEW###view-content ###VIEW###view-###MODE### ###VIEW###view-content-###MODE###">
-              LISTVIEW subpart will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.subparts.listview while runtime ...
+              <!-- ###GROUPBY### begin -->
+              <!-- ###GROUPBYHEAD### begin -->
+              ###GROUPBY_GROUPNAME###
+              <!-- ###GROUPBYHEAD### end -->
+              <!-- ###GROUPBYBODY### begin -->
+              <table id="c###TT_CONTENT.UID###-listview-###MODE###-table"###SUMMARY###>
+                ###CAPTION###
+                <!-- ###LISTHEAD### begin -->
+                <thead>
+                  <tr><!-- ###LISTHEADITEM### begin -->
+                    <th###CLASS###>###ITEM###</th><!-- ###LISTHEADITEM### end -->
+                  </tr>
+                </thead><!-- ###LISTHEAD### end -->
+                <tbody><!-- ###LISTBODY### begin -->
+                  <tr###CLASS###><!-- ###LISTBODYITEM### begin -->
+                    <td###CLASS###>###ITEM### ###SOCIALMEDIA_BOOKMARKS###</td><!-- ###LISTBODYITEM### end -->
+                  </tr><!-- ###LISTBODY### end -->
+                </tbody>
+              </table>
+              <!-- ###GROUPBYBODY### end -->
+              <!-- ###GROUPBY### end -->
             </div> <!-- /listview -->
             <!-- ###LISTVIEW### end -->
           </div> <!-- /ui-tabs -->
@@ -168,7 +181,34 @@ plugin.tx_browser_pi1.views.single.XX.template.default = 1
 <!-- ###TEMPLATE_SINGLE### begin -->
       <div class="###MODE### singleview-###MODE### ui-widget ui-corner-all">
         <!-- ###SINGLEVIEW### begin -->
-          SINGLEVIEW subpart will replaced by plugin.tx_browser_pi1.views.single.###MODE###.htmlSnippets.subparts.singleview while runtime ...
+<!-- ###AREA_FOR_AJAX_LIST_01### begin -->
+        <div id="c###TT_CONTENT.UID###-singleview-###MODE###" class="singleview singleview-###MODE###">
+          ###RECORD_BROWSER###
+          <div class="ui-widget ui-corner-all">
+            <h1 class="ui-widget-header ui-corner-top">
+              ###TITLE###
+            </h1>
+            <div class="ui-widget-content ui-corner-bottom">
+              <table###SUMMARY###>
+                ###CAPTION###<!-- ###SINGLEBODY### begin -->
+                <tbody><!-- ###SINGLEBODYROW### begin -->
+                  <tr###CLASS###>
+                    <th>###FIELD###</th>
+                    <td>###VALUE### ###SOCIALMEDIA_BOOKMARKS###</td>
+                  </tr><!-- ###SINGLEBODYROW### end -->
+                </tbody><!-- ###SINGLEBODY### end -->
+              </table>
+            </div>
+<!-- ###AREA_FOR_AJAX_LIST_01### end -->
+            <!-- ###BACKBUTTON### begin -->
+            <p class="backbutton">
+              ###BUTTON###
+            </p>
+          <!-- ###BACKBUTTON### end -->
+<!-- ###AREA_FOR_AJAX_LIST_02### begin -->
+          </div>
+        </div>
+<!-- ###AREA_FOR_AJAX_LIST_02### end -->
         <!-- ###SINGLEVIEW### end -->
       </div> <!-- /ui-widget -->
 <!-- ###TEMPLATE_SINGLE### end -->

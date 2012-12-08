@@ -1,6 +1,9 @@
 4.2.0
   121206
   New Features
+  * #43746: Preconfigures view
+            Effected files:
+            * static/setup.txt
   * #43741: Centralised jQuery UI configuration
             Effected files:
             * pi1/locallang_flexform.xml
@@ -11,6 +14,11 @@
   * #43732: Integration of index browser in jQuery UI themes
             Effected files:
             * res/html/default/main.tmpl
+  * #43627: TypoScript snippets for HTML templates
+            Effected files:
+            * res/html/default.tmpl
+            * res/html/default_ul.tmpl (removed)
+            * static/setup.txt
   Improvement
   * #43737: Remove button method
             tx_browser_pi1_cleanup_4.1.21.js -> tx_browser_pi1_cleanup_4.2.0.js
@@ -28,11 +36,6 @@
 
 4.1.26
   121206
-  New Feature
-  * #43627: TypoScript snippets for HTML templates
-            Effected files:
-            * pi1/class.tx_browser_pi1_viewlist.php
-            * pi1/class.tx_browser_pi1_views.php
   Improvements
   * #00000: tx_browser_pi1-0.0.3 -> tx_browser_pi1-0.0.4
   * #00000: Qualified prompt in tx_browser_pi1_localisation::zz_promptLLdie()          
