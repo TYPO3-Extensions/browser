@@ -133,6 +133,27 @@ plugin.tx_browser_pi3 {
         }
       }
     }
+      // browser manual in detail
+    22 < plugin.tx_browser_pi3.template
+    22 {
+      10 {
+        11 {
+          typolink {
+            parameter   = typo3conf/ext/browser_manual_ootb_en/doc/manual.pdf
+          }
+        }
+        30 {
+          stdWrap {
+            data = LLL:EXT:browser/pi3/locallang.xml:manuals.browser_manual_ootb_en.title
+          }
+        }
+      }
+      20 {
+        stdWrap {
+          data = LLL:EXT:browser/pi3/locallang.xml:manuals.browser_manual_ootb_en.description
+        }
+      }
+    }
   }
 
     // Tutorials

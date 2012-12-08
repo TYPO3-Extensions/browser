@@ -4617,13 +4617,11 @@ plugin.tx_browser_pi1 {
     .tx-browser-pi1 ul.modeSelector li.selected {
       background:yellow;
     }
-    .tx-browser-pi1 .ui-tabs ul li,
-    #content .ui-tabs ul li {
+    .tx-browser-pi1 .ui-tabs ul li {
       font-size:0.75em;
       font-weight:bold;
     }
-    .tx-browser-pi1 .ui-tabs .without-href,
-    #content .ui-tabs .without-href {
+    .tx-browser-pi1 .ui-tabs .without-href {
       opacity: 0.20;
       cursor:default;
     }
