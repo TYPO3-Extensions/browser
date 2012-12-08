@@ -95,6 +95,14 @@ This template is the default template for all list views.
         <div class="listarea  ui-widget ui-widget-content ui-corner-all">
           <!-- ###LISTTABS### begin -->
           <div id="c###TT_CONTENT.UID###-list-tabs-###MODE###" class="ui-tabs-list ui-tabs-list-###MODE###">
+            <!-- ###MODESELECTOR### begin -->
+            <div id="c###TT_CONTENT.UID###-modeSelector-###MODE###" class="ui-tabs modeSelector modeSelector-list-###MODE###">
+              <ul class="ui-tabs-nav ui-tabs-nav-list-###MODE### ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+                <!-- ###MODESELECTORTABS### begin -->
+                <li id="c###TT_CONTENT.UID###-list-tab-###MODE###" class="ui-state-default ui-corner-top c###TT_CONTENT.UID###-list-tab###UI-STATE-ACTIVE######UI-TABS-SELECTED###">###TABS###</li>
+                <!-- ###MODESELECTORTABS### end -->
+              </ul>
+            </div><!-- ###MODESELECTOR### end -->
             <!-- ###INDEXBROWSER### begin -->
             <div id="c###TT_CONTENT.UID###-indexBrowser-###MODE###" class="ui-tabs indexBrowser indexBrowser-list-###MODE###">
               <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist"><!-- ###INDEXBROWSERTABS### begin -->
@@ -105,14 +113,6 @@ This template is the default template for all list views.
             <div id="c###TT_CONTENT.UID###-browsebox-###MODE###" class="browsebox browsebox-list-###MODE###">
               ###RESULT_AND_ITEMS###
             </div><!-- ###PAGEBROWSER### end -->
-            <!-- ###MODESELECTOR### begin -->
-            <div id="c###TT_CONTENT.UID###-modeSelector-###MODE###" class="ui-tabs modeSelector modeSelector-list-###MODE###">
-              <ul class="ui-tabs-nav ui-tabs-nav-list-###MODE### ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
-                <!-- ###MODESELECTORTABS### begin -->
-                <li id="c###TT_CONTENT.UID###-list-tab-###MODE###" class="ui-state-default ui-corner-top c###TT_CONTENT.UID###-list-tab###UI-STATE-ACTIVE######UI-TABS-SELECTED###">###TABS###</li>
-                <!-- ###MODESELECTORTABS### end -->
-              </ul>
-            </div><!-- ###MODESELECTOR### end -->
             <!-- ###LISTVIEW### begin -->
             <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="###VIEW###view ###VIEW###view-content ###VIEW###view-###MODE### ###VIEW###view-content-###MODE###">
               LISTVIEW subpart will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.subparts.listview while runtime ...
