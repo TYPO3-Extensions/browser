@@ -4860,6 +4860,94 @@ plugin.tx_browser_pi1 {
               </ul>
             </div>
 )
+                lang.de (
+            <div style="background:white;border:0.3em solid darkblue;color:darkred;padding:0 1em;position:relative;">
+              <p>
+                Konfigurationsschritte
+              </p>
+              <ul>
+                <li>
+                  Flexform [Verhalten]
+                  <ul>
+                    <li>
+                      Datensatzsammlung: Wähle Deine Startseite aus.
+                    </li>
+                    <li>
+                      ReKursive: [Undendlich]
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  Flexform [Plug-In] > [Templating]
+                  <ul>
+                    <li>
+                      CSS jQuery UI (User Interface): Wähle eins von 24 Themen aus.
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  Flexform [Plugin] > [Listenansicht]
+                  <ul>
+                    <li>
+                      Limit: Datensätze pro Seite (1 bis 1000): 5
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  Passe die Views an Deine Anforderungen an 
+                  <ul>
+                    <li>
+                      Modul Web > Template
+                    </li>
+                    <li>
+                      Seiten Baum > die aktuelle Seite
+                    </li>
+                    <li>
+                      Bearbeitungsbereich
+                      <ul>
+                        <li>
+                          [TypoScript-Objekt-Browser]
+                        </li>
+                        <li>
+                          Durchsuchen: [Setup]
+                        </li>
+                        <li>
+                          Sieh' Dir folgenden Code an:<br />
+                          * plugin.tx_browser_pi1.views.list.43746<br />
+                          * plugin.tx_browser_pi1.views.single.43746
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  Diesen Hinweis entfernen
+                  <ul>
+                    <li>
+                      Modul Web > Template
+                    </li>
+                    <li>
+                      Seiten Baum > die aktuelle Seite
+                    </li>
+                    <li>
+                      Bearbeitungsbereich
+                      <ul>
+                        <li>
+                          [TypoScript-Objekt-Browser]
+                        </li>
+                        <li>
+                          Durchsuchen: [Setup]
+                        </li>
+                        <li>
+                          Entfernen: plugin.tx_browser_pi1.views.list.43746.htmlSnippets.subparts.listview.10
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+)
               }
               20 = TEXT
               20 {
