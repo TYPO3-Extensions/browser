@@ -4673,7 +4673,7 @@ plugin.tx_browser_pi1 {
           tt_content.list_type,
           tt_content.image
         )
-        orderBy             = tt_content.header
+        orderBy             = tt_content.header, tt_content.list_type
         csvLinkToSingleView = tt_content.header
         filter {
           tt_content {
