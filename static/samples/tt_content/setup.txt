@@ -82,10 +82,8 @@ plugin.tx_browser_pi1 {
         showUid = contentUid
         select (
           tt_content.header,
-          tt_content.tstamp,
           tt_content.bodytext,
           tt_content.list_type,
-          tt_content.CType,
           tt_content.image
         )
         orderBy             = tt_content.header, tt_content.list_type
@@ -175,9 +173,9 @@ plugin.tx_browser_pi1 {
               value (
               <div class="filter">
                 <div class="period_menu">
-                  ###TX_ORG_CAL.DATETIME###
+                  ###TT_CONTENT.TSTAMP###
                 </div>
-                ###TX_ORG_CALTYPE.TITLE### ###TX_ORG_DEPARTMENT.TITLE###
+                ###TT_CONTENT.CTYPE###
               </div>
 )
             }
