@@ -4677,12 +4677,40 @@ plugin.tx_browser_pi1 {
         csvLinkToSingleView = tt_content.header
         filter {
           tt_content {
-            datetime < plugin.tx_browser_pi1.displayList.master_templates.category_menu
-            datetime {
+            CType < plugin.tx_browser_pi1.displayList.master_templates.selectbox
+            CType {
               first_item {
                 cObject {
                   20 {
-                    data = LLL:EXT:org/locallang_db.xml:filter_phrase.calendar
+                    data >
+                    value = Content type (CType)
+                    lang {
+                      de = Inhaltstyp (CType)
+                      en = Content type (CType)
+                    }
+                  }
+                }
+              }
+              wrap = <span class="category_menu">|</span>
+              order.field = uid
+              area < plugin.tx_browser_pi1.displayList.master_templates.areas.sample_period
+              area {
+                interval {
+                  case = week
+                }
+              }
+            }
+            tstamp < plugin.tx_browser_pi1.displayList.master_templates.category_menu
+            tstamp {
+              first_item {
+                cObject {
+                  20 {
+                    data >
+                    value = Week
+                    lang {
+                      de = Woche
+                      en = Week
+                    }
                   }
                 }
               }
@@ -4779,10 +4807,14 @@ plugin.tx_browser_pi1 {
         showUid = calendarUid
         select (
           tt_content.header,
+          tt_content.header_layout
           tt_content.tstamp,
+          tt_content.CType,
           tt_content.bodytext,
           tt_content.list_type,
-          tt_content.image
+          tt_content.image,
+          tt_content.layout,
+          tt_content.colPos
         )
         orderBy             = tt_content.header
         csvLinkToSingleView = tt_content.header
