@@ -1,6 +1,8 @@
 4.2.0
   121206
   New Features
+  * #43780: New manual: Browser out of the box
+            See extension browser_manual_ootb_en
   * #43746: Preconfigures view
             Effected files:
             * static/setup.txt
