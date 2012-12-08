@@ -4706,10 +4706,10 @@ plugin.tx_browser_pi1 {
               if {
                 isFalse = ###TT_CONTENT.LIST_TYPE###
               }
-              value = No plugin
+              value = default
               lang {
-                de = Kein Plugin
-                en = No plugin
+                de = Standard
+                en = default
               }
             }
               // If its is a plugin
