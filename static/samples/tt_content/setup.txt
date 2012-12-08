@@ -111,10 +111,10 @@ plugin.tx_browser_pi1 {
                 cObject {
                   20 {
                     data >
-                    value = Week
+                    value = Year
                     lang {
-                      de = Woche
-                      en = Week
+                      de = Jahr
+                      en = Year
                     }
                   }
                 }
@@ -122,11 +122,6 @@ plugin.tx_browser_pi1 {
               wrap = <span class="category_menu">|</span>
               order.field = uid
               area < plugin.tx_browser_pi1.displayList.master_templates.areas.sample_period
-              area {
-                interval {
-                  case = week
-                }
-              }
             }
           }
         }
