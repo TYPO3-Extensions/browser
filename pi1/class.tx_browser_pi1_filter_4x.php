@@ -324,7 +324,6 @@ class tx_browser_pi1_filter_4x {
 
       // Init localisation
     $this->init( );
-$this->pObj->dev_var_dump( $this->pObj->str_template_raw );
 
       // LOOP each filter
     foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
@@ -415,6 +414,7 @@ $this->pObj->dev_var_dump( $this->pObj->str_template_raw );
       return;
     }
       // RETURN: if there isn't any filter array
+$this->pObj->dev_var_dump( $this->pObj->str_template_raw );
 
       // Evaluate TREEVIEW filter
       // #41753, 121012, dwildt, 1+
@@ -438,6 +438,7 @@ $this->pObj->dev_var_dump( $this->pObj->str_template_raw );
 
       // Init the data of the cObj
     $this->cObjData_init( );
+$this->pObj->dev_var_dump( $this->pObj->str_template_raw );
 
     return;
   }
