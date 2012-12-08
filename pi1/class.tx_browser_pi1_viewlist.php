@@ -1897,7 +1897,6 @@ class tx_browser_pi1_viewlist
       return $arr_return;
     }
     $filter = $arr_return['data']['filter'];
-$this->pObj->dev_var_dump( $filter );
       // Get filter
 
       // RETURN : there isn't any filter
