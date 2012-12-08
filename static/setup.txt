@@ -4773,8 +4773,16 @@ plugin.tx_browser_pi1 {
               10 = TEXT
               10 {
                 value (
-            <div style="border: 1em solid darkblue;padding:1em;">
-              Hallo
+            <div style="background:white;border: 0.3em solid darkblue;padding:1em;">
+              <p>
+                Configuration Workflow
+              </p>
+              <ul>
+                <li>
+                </li>
+                <li>
+                </li>
+              </ul>
             </div>
 )
               }
