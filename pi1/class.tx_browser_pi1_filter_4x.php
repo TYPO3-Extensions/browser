@@ -323,6 +323,7 @@ class tx_browser_pi1_filter_4x {
       // RETURN there isn't any filter
 
       // Init localisation
+$this->pObj->dev_var_dump( $this->pObj->str_template_raw );
     $this->init( );
 
       // LOOP each filter
@@ -438,7 +439,6 @@ $this->pObj->dev_var_dump( $this->pObj->str_template_raw );
 
       // Init the data of the cObj
     $this->cObjData_init( );
-$this->pObj->dev_var_dump( $this->pObj->str_template_raw );
 
     return;
   }
@@ -6031,13 +6031,11 @@ $this->pObj->dev_var_dump( $arr_return );
  */
   private function requiredMarker( $tableField )
   {
-$this->pObj->dev_var_dump( $this->subpart );
     
     if( $this->subpart === null )
     {
       $this->subpart = $this->pObj->cObj->getSubpart( $this->pObj->str_template_raw, '###SEARCHFORM###' );
     }
-$this->pObj->dev_var_dump( $this->subpart );
 
       // Convert table.field to HTML marker
     $htmlMarker = '###' . strtoupper( $tableField ) . '###';
