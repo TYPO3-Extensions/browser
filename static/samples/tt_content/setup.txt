@@ -160,7 +160,15 @@ plugin.tx_browser_pi1 {
             filter = TEXT
             filter {
               value (
-              <div class="filter">
+              <style type="text/css">
+              <!--
+                .filter ul {
+                  margin: .2em 0 0;
+                  padding: 0;
+                }
+              -->
+              </style>
+              <div class="filter" style="padding:.4em 0 0 0;">
                 <div style="float:left;margin: 0 1em 0 0;">
                   ###TT_CONTENT.TSTAMP###
                 </div>
