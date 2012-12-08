@@ -1868,7 +1868,9 @@ class tx_browser_pi1_viewlist
  */
   private function subpart_setSearchbox( )
   {
+$this->pObj->dev_var_dump( $this->pObj->str_template_raw );
     $this->content  = $this->pObj->objTemplate->tmplSearchBox( $this->content );
+$this->pObj->dev_var_dump( $this->pObj->str_template_raw );
     $arr_return     = $this->subpart_setSearchboxFilter( $filter );
 
     return $arr_return;
@@ -1891,7 +1893,6 @@ class tx_browser_pi1_viewlist
       // Get filter
       // #43627, 121205, dwildt, 1+
     $this->pObj->str_template_raw = $this->content;
-$this->pObj->dev_var_dump( $this->pObj->str_template_raw );
     $arr_return = $this->pObj->objFltr4x->get( );
     if( $arr_return['error']['status'] )
     {

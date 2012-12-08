@@ -323,7 +323,6 @@ class tx_browser_pi1_filter_4x {
       // RETURN there isn't any filter
 
       // Init localisation
-$this->pObj->dev_var_dump( $this->pObj->str_template_raw );
     $this->init( );
 
       // LOOP each filter
@@ -1242,7 +1241,6 @@ $this->pObj->dev_var_dump( 1214 );
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
-$this->pObj->dev_var_dump( $arr_return );
     return $arr_return;
   }
 
