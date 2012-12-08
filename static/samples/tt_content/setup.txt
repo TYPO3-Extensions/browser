@@ -158,8 +158,8 @@ plugin.tx_browser_pi1 {
             filter = TEXT
             filter {
               value (
-              <div style="display:inline;">
-                <div class="period_menu">
+              <div class="filter">
+                <div style="display:inline;">
                   ###TT_CONTENT.TSTAMP###
                 </div>
                 ###TT_CONTENT.CTYPE###
