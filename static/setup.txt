@@ -4768,9 +4768,19 @@ plugin.tx_browser_pi1 {
             }
           }
           subparts {
-            listview = TEXT
+            listview = COA
             listview {
-              value (
+              10 = TEXT
+              10 {
+                value (
+            <div style="border: 1em solid darkblue;padding:1em;">
+              Hallo
+            </div>
+)
+              }
+              20 = TEXT
+              20 {
+                value (
             <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="###VIEW###view ###VIEW###view-content ###VIEW###view-###MODE### ###VIEW###view-content-###MODE###">
               <!-- ###GROUPBY### begin -->
               <!-- ###GROUPBYHEAD### begin -->
@@ -4795,6 +4805,7 @@ plugin.tx_browser_pi1 {
               <!-- ###GROUPBY### end -->
             </div> <!-- /listview -->
 )
+              }
             }
           }
         }
