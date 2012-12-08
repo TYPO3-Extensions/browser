@@ -1198,6 +1198,7 @@ class tx_browser_pi1_filter_4x {
       // Set marker label
     $markerLabel = '###' . strtoupper( $this->curr_tableField ) . '###';
 
+$this->pObj->dev_var_dump( 1201 );
       // RETURN condition isn't met
     if( ! $this->ts_getCondition( ) )
     {
@@ -1210,6 +1211,7 @@ class tx_browser_pi1_filter_4x {
 
     $this->set_currFilterIsArea( );
 
+$this->pObj->dev_var_dump( 1214 );
       // Get filter rows
     $arr_return = $this->get_rows( );
     if( $arr_return['error']['status'] )
