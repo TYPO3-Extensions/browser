@@ -4779,6 +4779,15 @@ plugin.tx_browser_pi1 {
               </p>
               <ul>
                 <li>
+                  Flexform [Behaviour]
+                  <ul>
+                    <li>
+                      Record Storage Page: select your root page
+                    </li>
+                    <li>
+                      Recursive: [Infinite]
+                    </li>
+                  </ul>
                 </li>
                 <li>
                 </li>
