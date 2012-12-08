@@ -109,7 +109,7 @@
             <type>select</type>
             <selicon_cols>7</selicon_cols>
             <itemsProcFunc>tx_browser_pi1_backend->templating_get_jquery_ui</itemsProcFunc>
-            <default>z_none</default>
+            <default>z_ts</default>
             <maxitems>1</maxitems>
             <size>1</size>
           </config>
