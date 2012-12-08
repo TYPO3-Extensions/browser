@@ -104,7 +104,9 @@ plugin.tx_browser_pi1 {
                   }
                 }
               }
+              wrap = <div class="selectbox">|</div>
             }
+
             tstamp < plugin.tx_browser_pi1.displayList.master_templates.category_menu
             tstamp {
               first_item {
@@ -128,7 +130,7 @@ plugin.tx_browser_pi1 {
         tt_content {
           list_type = COA
           list_type {
-              // If its is default content
+              // If it is default content
             10 = TEXT
             10 {
               if {
@@ -140,7 +142,7 @@ plugin.tx_browser_pi1 {
                 en = default
               }
             }
-              // If its is a plugin
+              // If it is a plugin
             20 = TEXT
             20 {
               if {
@@ -159,7 +161,7 @@ plugin.tx_browser_pi1 {
             filter {
               value (
               <div class="filter">
-                <div style="display:inline;">
+                <div style="float:left;margin: 0 1em 0 0;">
                   ###TT_CONTENT.TSTAMP###
                 </div>
                 ###TT_CONTENT.CTYPE###
