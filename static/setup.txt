@@ -4775,7 +4775,7 @@ plugin.tx_browser_pi1 {
                 value (
             <div style="background:white;border:0.3em solid darkblue;color:darkred;padding:0 1em;position:relative;">
               <p>
-                Configuration Workflow
+                Configuration Briefing
               </p>
               <ul>
                 <li>
@@ -4863,7 +4863,7 @@ plugin.tx_browser_pi1 {
                 lang.de (
             <div style="background:white;border:0.3em solid darkblue;color:darkred;padding:0 1em;position:relative;">
               <p>
-                Konfigurationsschritte
+                Konfigurationsanweisung
               </p>
               <ul>
                 <li>
@@ -4873,7 +4873,7 @@ plugin.tx_browser_pi1 {
                       Datensatzsammlung: Wähle Deine Startseite aus.
                     </li>
                     <li>
-                      ReKursive: [Undendlich]
+                      Rekursive: [Undendlich]
                     </li>
                   </ul>
                 </li>
@@ -4894,7 +4894,7 @@ plugin.tx_browser_pi1 {
                   </ul>
                 </li>
                 <li>
-                  Passe die Views an Deine Anforderungen an 
+                  Pass' die Views an Deine Anforderungen an:
                   <ul>
                     <li>
                       Modul Web > Template
@@ -4913,15 +4913,15 @@ plugin.tx_browser_pi1 {
                         </li>
                         <li>
                           Sieh' Dir folgenden Code an:<br />
-                          * plugin.tx_browser_pi1.views.list.43746<br />
-                          * plugin.tx_browser_pi1.views.single.43746
+                          * plugin.tx_browser_pi1.views.list.43746. ...<br />
+                          * plugin.tx_browser_pi1.views.single.43746. ...
                         </li>
                       </ul>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  Diesen Hinweis entfernen
+                  Diesen Hinweis entfernen:
                   <ul>
                     <li>
                       Modul Web > Template
@@ -4939,7 +4939,7 @@ plugin.tx_browser_pi1 {
                           Durchsuchen: [Setup]
                         </li>
                         <li>
-                          Entfernen: plugin.tx_browser_pi1.views.list.43746.htmlSnippets.subparts.listview.10
+                          Entfernen: plugin.tx_browser_pi1.views.list.43746.htmlSnippets.subparts.listview.10 >
                         </li>
                       </ul>
                     </li>
