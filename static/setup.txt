@@ -4790,6 +4790,14 @@ plugin.tx_browser_pi1 {
                   </ul>
                 </li>
                 <li>
+                  Flexform [Plugin] > [Templating]
+                  <ul>
+                    <li>
+                      CSS jQuery UI (User Interface): select one out of 24 themes
+                    </li>
+                  </ul>
+                </li>
+                <li>
                 </li>
               </ul>
             </div>
