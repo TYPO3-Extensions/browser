@@ -16,6 +16,8 @@
             * res/html/default/main.tmpl
   * #43627: TypoScript snippets for HTML templates
             Effected files:
+            * pi1/class.tx_browser_pi1_viewlist.php
+            * pi1/class.tx_browser_pi1_views.php
             * res/html/default.tmpl
             * res/html/default_ul.tmpl (removed)
             * static/setup.txt

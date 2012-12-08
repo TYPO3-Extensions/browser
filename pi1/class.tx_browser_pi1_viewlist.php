@@ -582,6 +582,7 @@ class tx_browser_pi1_viewlist
       // Replace static html marker and subparts by typoscript marker and subparts
       // #43627, 1212105, dwildt, 5+
     $arr_return = $this->content_replaceStaticHtml( );
+$this->pObj->dev_var_dump( $this->content );
     if( $arr_return['error']['status'] )
     {
       return $arr_return;
