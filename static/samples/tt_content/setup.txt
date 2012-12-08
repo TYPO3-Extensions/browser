@@ -83,7 +83,9 @@ plugin.tx_browser_pi1 {
         select (
           tt_content.header,
           tt_content.bodytext,
+          tt_content.tstamp,
           tt_content.list_type,
+          tt_content.CType,
           tt_content.image
         )
         orderBy             = tt_content.header, tt_content.list_type
@@ -102,14 +104,6 @@ plugin.tx_browser_pi1 {
                       en = Content type (CType)
                     }
                   }
-                }
-              }
-              wrap = <span class="category_menu">|</span>
-              order.field = uid
-              area < plugin.tx_browser_pi1.displayList.master_templates.areas.sample_period
-              area {
-                interval {
-                  case = week
                 }
               }
             }
