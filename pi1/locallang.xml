@@ -58,6 +58,10 @@ Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable D
         * Or did you forget, to configure plugin.tx_browser_pi1.views.list<![CDATA[<br />]]>
         * Do you have selected a proper template in the plugin/flexform?<![CDATA[<br />]]>
         <![CDATA[<br />]]>
+        * If you like, you can run the Browser out of the box.<![CDATA[<br />]]>
+        * Please embed the Static Template "+Browser - out of the box" by your TypoScript template.<![CDATA[<br />]]>
+        * The Browser will prompt a Briefing in the frontend.<![CDATA[<br />]]>
+        <![CDATA[<br />]]>
         Browser - TYPO3 without PHP.
       </label>
       <label index="error_value_empty">Error: value is empty.</label>
@@ -135,6 +139,10 @@ DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DR
         * Hast Du vergessen, das static template des TYPO3 Browsers einzubinden?<![CDATA[<br />]]>
         * Oder hast du vergessen, plugin.tx_browser_pi1.views.list zu konfigurieren?<![CDATA[<br />]]>
         * Hast Du ein g<![CDATA[&uuml;]]>ltiges Template im Plugin/in der Flexform ausgew<![CDATA[&auml;]]>hlt?<![CDATA[<br />]]>
+        <![CDATA[<br />]]>
+        * Du kannst den Browser auch Out-of-the-Box starten.<![CDATA[<br />]]>
+        * Binde in Deinem TypoScript-Template das Static Template "+Browser - Out of the Box" ein.<![CDATA[<br />]]>
+        * Folge den Anweisungen, die Dir der Browser im Frontend anzeigt.<![CDATA[<br />]]>
         <![CDATA[<br />]]>
         Browser - TYPO3 ohne PHP.
       </label>
