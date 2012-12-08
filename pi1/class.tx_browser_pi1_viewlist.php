@@ -575,6 +575,7 @@ class tx_browser_pi1_viewlist
     $str_marker     = $this->pObj->lDisplayList['templateMarker'];
       // Set the list view content
     $this->content  = $this->pObj->cObj->getSubpart( $this->content, $str_marker );
+$this->pObj->dev_var_dump( $this->content );
 
       // Die, if content is empty
     $this->content_dieIfEmpty( $str_marker, __METHOD__, __LINE__ );
@@ -586,6 +587,7 @@ class tx_browser_pi1_viewlist
     {
       return $arr_return;
     }
+$this->pObj->dev_var_dump( $this->content );
       // #43627, 1212105, dwildt, 5+
       // Replace static html marker and subparts by typoscript marker and subparts
       
