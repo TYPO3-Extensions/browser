@@ -269,6 +269,8 @@ class tx_browser_pi1_template
       // 110829, dwildt+
     $this->tmpl_marker( );
     $markerArray = $this->markerArray;
+unset($markerArray['###TT_CONTENT.TSTAMP###']);
+unset($markerArray['###TT_CONTENT.CTYPE###']);
       // 110829, dwildt+
       // 110829, dwildt-
 //    $markerArray                  = $this->pObj->objWrapper->constant_markers();
