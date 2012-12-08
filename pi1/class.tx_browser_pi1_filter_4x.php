@@ -308,8 +308,6 @@ class tx_browser_pi1_filter_4x {
     $arr_return = array( );
     $arr_return['data']['marker'] = array( );
 
-$this->pObj->dev_var_dump( 311 );
-    
       // RETURN there isn't any filter
     if( ! is_array ( $this->conf_view['filter.'] ) )
     {
@@ -324,7 +322,7 @@ $this->pObj->dev_var_dump( 311 );
     }
       // RETURN there isn't any filter
 
-$this->pObj->dev_var_dump( 327 );
+$this->pObj->dev_var_dump( $this->conf_view['filter.'] );
       // Init localisation
     $this->init( );
 

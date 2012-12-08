@@ -575,7 +575,8 @@ class tx_browser_pi1_viewlist
     $str_marker     = $this->pObj->lDisplayList['templateMarker'];
       // Set the list view content
     $this->content  = $this->pObj->cObj->getSubpart( $this->content, $str_marker );
-
+    $this->pObj->str_template_raw = $this->content;
+        
       // Die, if content is empty
     $this->content_dieIfEmpty( $str_marker, __METHOD__, __LINE__ );
 
@@ -586,6 +587,7 @@ class tx_browser_pi1_viewlist
     {
       return $arr_return;
     }
+    $this->pObj->str_template_raw = $this->content;
       // #43627, 1212105, dwildt, 5+
       // Replace static html marker and subparts by typoscript marker and subparts
       
@@ -595,6 +597,7 @@ class tx_browser_pi1_viewlist
     {
       return $arr_return;
     }
+    $this->pObj->str_template_raw = $this->content;
       // Set search box and filter
 
       // Set index browser
@@ -603,6 +606,7 @@ class tx_browser_pi1_viewlist
     {
       return $arr_return;
     }
+    $this->pObj->str_template_raw = $this->content;
       // Set index browser
 
       // Set page browser
@@ -611,6 +615,7 @@ class tx_browser_pi1_viewlist
     {
       return $arr_return;
     }
+    $this->pObj->str_template_raw = $this->content;
       // Set page browser
 
       // Set mode selector
@@ -619,6 +624,7 @@ class tx_browser_pi1_viewlist
     {
       return $arr_return;
     }
+    $this->pObj->str_template_raw = $this->content;
       // Set mode selector
 
     return;
