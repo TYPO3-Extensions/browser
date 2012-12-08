@@ -69,25 +69,24 @@ plugin.tx_browser_pi1 {
     }
     extensions {
       browser {
-        default {
+        out-of-the-box {
             // #43627, 43746
-          name      = Browser: Default
-          file      = EXT:browser/res/html/default.tmpl
+          name      = Browser: Out of the box
+          file      = EXT:browser/res/html/out-of-the-box.tmpl
           csvViews  = 43746
         }
-          // #43627
-        // table {
-        //   name = Browser: Table
-        //   file = EXT:browser/res/html/default.tmpl
-        // }
-        // table_until_3-9-6 {
-        //   name = Browser: Table (until version 4.0)
-        //   file = EXT:browser/res/html/until_3.9.6/default.tmpl
-        // }
-        // list {
-        //   name = Browser: List
-        //   file = EXT:browser/res/html/default_ul.tmpl
-        // }
+        table {
+          name = Browser: Table (without any view)
+          file = EXT:browser/res/html/default.tmpl
+        }
+        list {
+          name = Browser: List (without any view)
+          file = EXT:browser/res/html/default_ul.tmpl
+        }
+        table_until_3-9-6 {
+          name = Browser: Table (until version 4.0)
+          file = EXT:browser/res/html/until_3.9.6/default.tmpl
+        }
       }
     }
     add_parameter {
