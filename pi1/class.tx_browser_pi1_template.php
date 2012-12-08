@@ -29,7 +29,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 4.1.9
+ * @version 4.2.0
  * @since 1.0.0
  */
 
@@ -157,7 +157,7 @@ class tx_browser_pi1_template
  *
  * @param	string		$template: The current template part
  * @return	string		$template: The HTML template part
- * @version 4.1.9
+ * @version 4.2.0
  * @since 1.0.0
  */
   function tmplSearchBox( $template )
@@ -268,9 +268,9 @@ class tx_browser_pi1_template
 
       // 110829, dwildt+
     $this->tmpl_marker( );
+      // #43778, 121208, dwildt, 1+
+    $this->tmpl_marker_rmFilter( );
     $markerArray = $this->markerArray;
-unset($markerArray['###TT_CONTENT.TSTAMP###']);
-unset($markerArray['###TT_CONTENT.CTYPE###']);
       // 110829, dwildt+
       // 110829, dwildt-
 //    $markerArray                  = $this->pObj->objWrapper->constant_markers();
@@ -3278,14 +3278,8 @@ unset($markerArray['###TT_CONTENT.CTYPE###']);
 
 
 
-
-
-
-
-
-
-  /**
- * cal_marker(): Set some global marker
+/**
+ * tmpl_marker(): Set some global marker
  *
  * @return	void
  * @version 4.0.0
@@ -3303,6 +3297,40 @@ unset($markerArray['###TT_CONTENT.CTYPE###']);
       $this->markerArray[$key] = $value;
     }
       // Set marker
+  }
+
+
+
+/**
+ * tmpl_marker_rmMarker(): Remove fields, if they are filter
+ *
+ * @return    void
+ * @version   4.2.0
+ * @since     4.2.0
+ * @internal  43778
+ */
+  private function tmpl_marker_rmFilter( )
+  {
+      // LOOP each filter
+    foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $fields )
+    {
+      foreach( array_keys ( ( array ) $fields ) as $field )
+      {
+          // CONTINUE : field has an dot
+        if( rtrim($field, '.') != $field )
+        {
+          continue;
+        }
+          // CONTINUE : field has an dot
+
+        $currFilter = $tableWiDot . $field;
+        $hashFilter = '###' . strtoupper( $currFilter ) . '###';
+        
+        unset( $this->markerArray[ $hashFilter] );
+      }
+    }
+      // LOOP each filter
+
   }
 
 

@@ -34,6 +34,7 @@
             * res/js/jquery/tx_browser_pi1_cleanup_4.2.0.js
             * res/js/jquery/tx_browser_pi1_cleanup_4.1.21.js
   Bugfix
+  * #43778: Filter aren't handled proper in some cases
   * #43692: jQuery isn't loaded in some cases of a treeview
 
 4.1.26
