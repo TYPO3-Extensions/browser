@@ -4807,7 +4807,7 @@ plugin.tx_browser_pi1 {
         showUid = calendarUid
         select (
           tt_content.header,
-          tt_content.header_layout
+          tt_content.header_layout,
           tt_content.tstamp,
           tt_content.CType,
           tt_content.bodytext,
