@@ -200,6 +200,9 @@ plugin.tx_browser_pi1 {
                   Flexform [Plugin] > [Templating]
                   <ul>
                     <li>
+                      HTML: [Browser: Out of the box (browser)]
+                    </li>
+                    <li>
                       CSS jQuery UI (User Interface): select one out of 24 themes
                     </li>
                   </ul>
@@ -287,6 +290,9 @@ plugin.tx_browser_pi1 {
                 <li>
                   Flexform [Plug-In] > [Templating]
                   <ul>
+                    <li>
+                      HTML: [Browser: Out of the Box (browser)]
+                    </li>
                     <li>
                       CSS jQuery UI (User Interface): Wähle eins von 24 Themen aus.
                     </li>
