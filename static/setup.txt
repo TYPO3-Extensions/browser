@@ -4700,10 +4700,25 @@ plugin.tx_browser_pi1 {
         tt_content {
           list_type = COA
           list_type {
+              // If its is default content
             10 = TEXT
             10 {
+              if {
+                isFalse = ###TT_CONTENT.LIST_TYPE###
+              }
+              value = No plugin
+              lang {
+                de = Kein Plugin
+                en = No plugin
+              }
+            }
+              // If its is a plugin
+            20 = TEXT
+            20 {
+              if {
+                isTrue = ###TT_CONTENT.LIST_TYPE###
+              }
               value = ###TT_CONTENT.LIST_TYPE###
-              wrap  = [|]
             }
           }
         }
