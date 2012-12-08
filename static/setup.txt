@@ -4798,6 +4798,14 @@ plugin.tx_browser_pi1 {
                   </ul>
                 </li>
                 <li>
+                  Flexform [Plugin] > [List View]
+                  <ul>
+                    <li>
+                      Limit: records per page (from 1 to 1000): 5
+                    </li>
+                  </ul>
+                </li>
+                <li>
                   Adapt the vies to your needs
                   <ul>
                     <li>
