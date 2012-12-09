@@ -8,6 +8,7 @@
 4.2.0
   121206
   New Features
+  * #43808: Reintegration of group by feature from 3.x to 4.x
   * #43780: New manual: Browser out of the box
             See extension browser_manual_ootb_en
   * #43746: Preconfigured view: Out of the box

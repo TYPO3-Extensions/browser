@@ -3388,8 +3388,10 @@ class tx_browser_pi1_template
  *
  * @param	string		$template: The HTML template with the GROUPBY-markers
  * @return	string		$template: The HTML template with or without the GROUPBY-by-markers
+ * @version   3.3.7
+ * @since     3.3.0
  */
-  function groupBy_verify($template)
+  private function groupBy_verify( $template )
   {
     // Do we have a TypoScript group by configuration?
     $this->bool_groupby = false;
@@ -3465,8 +3467,10 @@ class tx_browser_pi1_template
  *
  * @param	string		$template: The HTML template with the groupby-markers
  * @return	string		$template: The HTML template without the groupby-markers
+ * @version   3.3.7
+ * @since     3.3.0
  */
-  function groupBy_remove($template)
+  private function groupBy_remove($template)
   {
     $template = $this->pObj->cObj->substituteSubpart($template, '###GROUPBYHEAD###', '', true);
     $template = str_replace('<!-- ###GROUPBY### begin -->',     '', $template);
@@ -3488,17 +3492,30 @@ class tx_browser_pi1_template
  *
  * @param	array		$elements: The current record
  * @return	string		$str_return: Value of the group field. FALSE, if we aren't in group mode
+ * @version   4.2.0
+ * @since     3.3.0
  */
-  function groupBy_get_groupname($elements)
+  private function groupBy_get_groupname( $elements )
   {
-    $str_value = false;
-
-    if($this->bool_groupby)
+$this->pObj->dev_var_dump( 3500 );
+    if( ! $this->bool_groupby )
     {
-      $str_tableField = trim($this->pObj->objSqlFun_3x->get_orderBy_tableFields($this->pObj->conf_sql['groupBy']));
-      $str_value      = $elements[$str_tableField];
+      return false;
     }
+    
+    $str_tableField = trim( $this->pObj->objSqlFun_3x->get_orderBy_tableFields( $this->pObj->conf_sql['groupBy'] ) );
+    $str_value      = $elements[$str_tableField];
+
+  // #43808
+$this->pObj->dev_var_dump( $this->pObj->conf_sql['groupBy'], $str_value );
+
     return $str_value;
+
+//    if ($this->pObj->b_drs_templating)
+//    {
+//      t3lib_div::devLog('[INFO/TEMPLATING] TypoScript is configured without groupby. '.
+//        'All markers ###GROUPBY### will removed in the template.', $this->pObj->extKey, 0);
+//    }
   }
 
 
@@ -3513,8 +3530,10 @@ class tx_browser_pi1_template
  *
  * @param	array		$elements: The current record
  * @return	string		$str_return: Value of the group field wrapped by stdWrap if we have a TSconfig
+ * @version   3.3.7
+ * @since     3.3.0
  */
-  function groupBy_stdWrap($elements)
+  private function groupBy_stdWrap($elements)
   {
     // THIS is a method with a general task. todo: Generalie this method. dwildt, 100615
 
