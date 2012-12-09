@@ -3502,19 +3502,25 @@ class tx_browser_pi1_template
       return false;
     }
     
-    $str_tableField = trim( $this->pObj->objSqlFun_3x->get_orderBy_tableFields( $this->pObj->conf_sql['groupBy'] ) );
-    $str_value      = $elements[$str_tableField];
+    $key = trim( $this->pObj->objSqlFun_3x->get_orderBy_tableFields( $this->pObj->conf_sql['groupBy'] ) );
+    
+      // #43808, 121209, dwildt, +
+    if( ! isset( $elements[ $key ] ) )
+    {
+      if( $this->pObj->b_drs_templating )
+      {
+        $prompt = 'GroupBy field is missing! Records won\'t be groupped.';
+        t3lib_div::devLog( '[ERROR/TEMPLATING] ' . $prompt, $this->pObj->extKey, 3 );
+        $prompt = 'GroupBy field must be part of the select statement from version 4.0.';
+        t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 2 );
+        $prompt = 'Current GroupBy field is: ' . $key;
+        t3lib_div::devLog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 2 );
+      }
+    }
+      // #43808, 121209, dwildt, +
 
-  // #43808
-$this->pObj->dev_var_dump( $elements, $this->pObj->conf_sql['groupBy'], $str_value );
+    return $elements[ $key ];
 
-    return $str_value;
-
-//    if ($this->pObj->b_drs_templating)
-//    {
-//      t3lib_div::devLog('[INFO/TEMPLATING] TypoScript is configured without groupby. '.
-//        'All markers ###GROUPBY### will removed in the template.', $this->pObj->extKey, 0);
-//    }
   }
 
 
