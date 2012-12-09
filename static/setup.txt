@@ -1779,7 +1779,7 @@ plugin.tx_browser_pi1 {
                 noTrimWrap  = | (|)|
               }
             }
-            wrap = <a href="###URL###"###CLASS######STYLE######TITLE###>|</a>
+            wrap = <li><a href="###URL###"###CLASS######STYLE######TITLE###>|</a></li>
           }
             // [STRING, unique] Value attribute in the option tag (#11401)
           option_value = 0
@@ -1888,7 +1888,7 @@ plugin.tx_browser_pi1 {
                   }
                 }
               }
-              wrap = <a href="###URL###"###CLASS######STYLE######TITLE###>|</a>
+              wrap = <li><a href="###URL###"###CLASS######STYLE######TITLE###>|</a></li>
             }
           }
         }
@@ -4655,6 +4655,9 @@ plugin.tx_browser_pi1 {
   )
 }
   // plugin.tx_browser_pi1: _CSS_DEFAULT_STYLE
+
+
+
   ///////////////////////////////////////////////////////////////
   //
   // plugin.tx_browser_pi1: _LOCAL_LANG pagebrowser
