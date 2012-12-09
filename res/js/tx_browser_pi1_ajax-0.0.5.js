@@ -8,8 +8,8 @@
  *
  * for more info visit http://typo3-browser-forum.de/
  * 
- * status: 29 Sept 2012
- * version: 0.0.4
+ * status: 09.12.2012
+ * version: 0.0.5
  *
  */
  
@@ -105,7 +105,10 @@ function ajaxifyResetButton(pObj) {
     var targetObj = pObj.find('.searchbox');
     targetObj.addClass('loading');
     targetObj.prepend("\t<div class='txbrowserpi1loader'></div>\n");
-    targetObj.find('.txbrowserpi1loader').fadeOut(0).fadeIn(150);
+      // #33841, 121209, dwildt, 1-
+//    targetObj.find('.txbrowserpi1loader').fadeOut(0).fadeIn(150);
+      // #33841, 121209, dwildt, 1+
+    targetObj.find( '.txbrowserpi1loader' ).fadeTo( 0, 0 ).fadeTo( 150, 1 );
     var baseUrl = $('base').attr('href');
     var href = $(this).attr('href');
     if (!(href > '')) {
@@ -202,7 +205,10 @@ function ajaxifySearchFormSubmit( pObj )
     dataString     = insertParam(dataString, 'type', typeNum);
     listarea.addClass('loading');
     listarea.prepend("\t<div class='txbrowserpi1loader'></div>\n");
-    listarea.find('.txbrowserpi1loader').fadeOut(0).fadeIn(200);
+      // #33841, 121209, dwildt, 1-
+//    listarea.find('.txbrowserpi1loader').fadeOut(0).fadeIn(200);
+      // #33841, 121209, dwildt, 1+
+    listarea.find( '.txbrowserpi1loader' ).fadeTo( 0, 0 ).fadeTo( 200, 1 );
     $.ajax({
       context: pObj,
       type: 'GET',
@@ -262,7 +268,10 @@ function ajaxifyDynamicFilters(pObj) {
       dataString = insertParam(dataString, 'type', typeNum);
       searchform.addClass('loading');
       searchform.prepend("\t<div class='txbrowserpi1loader'></div>\n");
-      searchform.find('.txbrowserpi1loader').fadeOut(0).fadeIn(150);
+        // #33841, 121209, dwildt, 1-
+//      searchform.find('.txbrowserpi1loader').fadeOut(0).fadeIn(150);
+        // #33841, 121209, dwildt, 1+
+      searchform.find('.txbrowserpi1loader').fadeTo(0,0).fadeTo(150,1);
       searchform.find(':input').add(':checkbox').add(':radio').add('button').attr("disabled", "disabled");
       $.ajax({
         context: pObj,
@@ -321,7 +330,10 @@ function ajaxifySingleLinks(pObj) {
     var targetObj = pObj.find('.singleview');
     targetObj.addClass('loading');
     targetObj.prepend("\t<div class='txbrowserpi1loader'></div>\n");
-    targetObj.find('.txbrowserpi1loader').fadeIn(150);
+      // #33841, 121209, dwildt, 11
+//    targetObj.find('.txbrowserpi1loader').fadeIn(150);
+      // #33841, 121209, dwildt, 1+
+    targetObj.find('.txbrowserpi1loader').fadeTo(150,1);
     var baseUrl = $('base').attr('href');
     var url = baseUrl + $(this).attr('href');
     var dataString = 'type=' + typeNum + '&tx_browser_pi1[segment]=single';
@@ -408,7 +420,10 @@ function ajaxifyListViewLinks(pObj) {
     var targetObj = pObj.find('.listarea');
     targetObj.addClass('loading');
     targetObj.prepend("\t<div class='txbrowserpi1loader'></div>\n");
-    targetObj.find('.txbrowserpi1loader').fadeOut(0).fadeIn(800);
+      // #33841, 121209, dwildt, 1-
+//    targetObj.find('.txbrowserpi1loader').fadeOut(0).fadeIn(800);
+      // #33841, 121209, dwildt, 1+
+    targetObj.find('.txbrowserpi1loader').fadeTo(0,0).fadeTo(800,1);
     var baseUrl = $('base').attr('href');
     var url = baseUrl+$(this).attr('href');
     var dataString = 'type=' + typeNum + '&tx_browser_pi1[segment]=list';
@@ -518,7 +533,10 @@ function ajaxifyOrderBy(pObj) {
     dataString = insertParam(dataString, 'type', typeNum);
     listarea.addClass('loading');
     listarea.prepend("\t<div class='txbrowserpi1loader'></div>\n");
-    listarea.find('.txbrowserpi1loader').fadeOut(0).fadeIn(150);
+      // #33841, 121209, dwildt, 1-
+//    listarea.find('.txbrowserpi1loader').fadeOut(0).fadeIn(150);
+      // #33841, 121209, dwildt, 1+
+    listarea.find('.txbrowserpi1loader').fadeTo(0,0).fadeTo(150,1);
     $.ajax({
       context: pObj,
       type: 'GET',

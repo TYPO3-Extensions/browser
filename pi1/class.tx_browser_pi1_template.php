@@ -625,7 +625,7 @@ class tx_browser_pi1_template
       //
       // Set the groupby mode and get a proper template
 
-    $template = $this->groupBy_verify($template);
+    $template = $this->groupBy_verify( $template );
       // Set the groupby mode and get a proper template
 
 
@@ -1273,7 +1273,7 @@ class tx_browser_pi1_template
         {
           if ($this->pObj->b_drs_templating)
           {
-            t3lib_div::devlog('[INFO/TEMPLATING] ###LISTBODY###, ###GROUPBY### will ignored bevause of ignore_empty_rows_rule.', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/TEMPLATING] ###LISTBODY###, ###GROUPBY### will ignored because of ignore_empty_rows_rule.', $this->pObj->extKey, 0);
           }
         }
         if( ! $this->ignore_empty_rows_rule )
@@ -1299,7 +1299,7 @@ class tx_browser_pi1_template
         {
           if ($this->pObj->b_drs_templating)
           {
-            t3lib_div::devlog('[INFO/TEMPLATING] ###LISTBODY### will ignored bevause of ignore_empty_rows_rule.', $this->pObj->extKey, 0);
+            t3lib_div::devlog('[INFO/TEMPLATING] ###LISTBODY### will ignored because of ignore_empty_rows_rule.', $this->pObj->extKey, 0);
           }
         }
         if( ! $this->ignore_empty_rows_rule )

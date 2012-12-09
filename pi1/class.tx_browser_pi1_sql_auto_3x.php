@@ -30,7 +30,7 @@
  * @package     TYPO3
  * @subpackage  browser
  *
- * @version     3.9.9
+ * @version     4.2.0
  * @since       2.0.0
  */
 
@@ -856,6 +856,7 @@ class tx_browser_pi1_sql_auto_3x
  * Relation method: Building the relation part for the where clause
  *
  * @return	string		TRUE || FALSE or the SQL-where-clause
+ * @version 4.2.0
  */
   function get_joins( )
   {
@@ -1231,13 +1232,19 @@ class tx_browser_pi1_sql_auto_3x
         switch(true)
         {
           case($localTableFieldMaxItems == 1):
-            $str_query_part = "   " . $localTableField . " = " . $foreignTableField .
+              // #41004, 121209, cweikse, 1-
+            //$str_query_part = "   " . $localTableField . " = " . $foreignTableField .
+              // #41004,  121209, cweikse, 1+
+            $str_query_part = "   " . $localTableField . " <=> " . $foreignTableField .
                               "   " . $str_enablefields_foreign .
                               "   " . $str_pidStatement ;
             break;
           case($localTableFieldMaxItems == 2):
             $str_query_part = "   ( " .
-                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
+              // #41004, 121209, cweikse, 1-
+//                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
+              // #41004, 121209, cweikse, 1+
+                              "     " . $localTableField . " <=> " . $foreignTableField . " OR " .
                               "     " . $localTableField . " LIKE CONCAT(" . $foreignTableField . ", ',%') OR " .
                               "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField .
                               "   )" .
@@ -1246,7 +1253,10 @@ class tx_browser_pi1_sql_auto_3x
             break;
           default:
             $str_query_part = "   ( " .
-                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
+              // #41004, 121209, cweikse, 1-
+//                              "     " . $localTableField . " = " . $foreignTableField . " OR " .
+              // #41004, 121209, cweikse, 1+
+                              "     " . $localTableField . " <=> " . $foreignTableField . " OR " .
                               "     " . $localTableField . " LIKE CONCAT(" . $foreignTableField . ", ',%') OR " .
                               "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField . ", ',%') OR " .
                               "     " . $localTableField . " LIKE CONCAT('%,', " . $foreignTableField . ") " .

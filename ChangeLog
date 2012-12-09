@@ -1,3 +1,10 @@
+  Todo
+  * #43108: TYPO3 6.0 compatibility
+            See: http://wiki.typo3.org/TYPO3_6.0_Incompatible_Extensions_B -> browser
+            t3lib_div::intInRange   ->  t3lib_utility_Math::forceIntegerInRange()
+            t3lib_div::int_from_ver ->  t3lib_utility_VersionNumber::convertVersionNumberToInteger()
+            t3lib_div::cHashParams  ->  t3lib_cacheHash
+
 4.2.0
   121206
   New Features
@@ -23,6 +30,14 @@
             * res/html/default.tmpl
             * res/html/default_ul.tmpl (removed)
             * static/setup.txt
+  * #33841: AJAX: optimised JSS code for transparncy in IE 8
+            Thanks to Renate for publish this feature
+            * jquery.t3browser-0.0.3.js -> jquery.t3browser-0.0.4.js
+            * tx_browser_pi1_ajax-0.0.4.js -> tx_browser_pi1_ajax-0.0.5.js
+            Effected files:
+            * res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.3.js
+            * res/js/tx_browser_pi1_ajax-0.0.4.js
+
   Improvement
   * #43737: Remove button method
             tx_browser_pi1_cleanup_4.1.21.js -> tx_browser_pi1_cleanup_4.2.0.js
@@ -37,8 +52,14 @@
             * res/js/jquery/tx_browser_pi1_cleanup_4.1.21.js
   Bugfix
   * #43803: Category menu: li-tags are missing
+            Effected files:
+            * static/setup.txt
   * #43778: Filter aren't handled proper in some cases
   * #43692: jQuery isn't loaded in some cases of a treeview
+  * #41004: SQL table join: NULL safe comparsion
+            Thanks to Christian Weiske for the bug report
+            Effected files:
+            * pi1/class.tx_browser_pi1_sql_auto_3x.php
 
 4.1.26
   121206

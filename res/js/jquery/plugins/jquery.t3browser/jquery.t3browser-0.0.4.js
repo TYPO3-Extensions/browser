@@ -1,9 +1,9 @@
 /**
- * jQuery t3browser Plugin 0.0.2
+ * jQuery t3browser Plugin 0.0.4
  *
  * http://docs.jquery.com/Plugins/t3browser
  *
- * Copyright (c) 2011 Dirk Wildt
+ * Copyright (c) 2011-2012 Dirk Wildt
  * http://wildt.at.die-netzmacher.de/
  *
  * Dual licensed under the MIT and GPL licenses:
@@ -181,7 +181,10 @@
                       $( "#tx-browser-pi1-loader" ).css( "width",         widthWiPx       );
                       $( "#tx-browser-pi1-loader" ).css( "margin-bottom", marginBottomPx  );
                         // Fade in the loader
-                      $( "#tx-browser-pi1-loader" ).fadeIn( 150 );
+                        // #33841, 121209, dwildt, 1-
+                      //$( "#tx-browser-pi1-loader" ).fadeIn( 150 );
+                        // #33841, 121209, dwildt, 1+
+                      $( "#tx-browser-pi1-loader" ).fadeTo( 150, 1 );
                         // Cover the html element with a loading gif
                     };
                       // Cover the current html element with the loader *.gif
@@ -325,7 +328,10 @@
                         }
                         else
                         {
-                            $( element_in ).removeAttr( "style" ).hide().fadeIn();
+                              // #33841, 121209, dwildt, 1-
+                            //$( element_in ).removeAttr( "style" ).hide().fadeIn();
+                              // #33841, 121209, dwildt, 1+
+                            $( element_in ).removeAttr( "style" ).hide().fadeTo( 400, 1 );
                         }
                       }, 1 );
                     };
@@ -409,7 +415,10 @@
                       $( "#tx-browser-pi1-loader" ).css( "width",         widthWiPx       );
                       $( "#tx-browser-pi1-loader" ).css( "margin-bottom", marginBottomPx  );
                         // Fade in the loader
-                      $( "#tx-browser-pi1-loader" ).fadeIn( 150 );
+                        // #33841, 121209, dwildt, 11
+                      //$( "#tx-browser-pi1-loader" ).fadeIn( 150 );
+                        // #33841, 121209, dwildt, 1+
+                      $( "#tx-browser-pi1-loader" ).fadeTo( 150, 1 );
                         // Cover the html element with a loading gif
                     };
                       // Cover the current html element with the loader *.gif

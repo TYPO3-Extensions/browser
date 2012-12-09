@@ -2790,7 +2790,7 @@ plugin.tx_browser_pi1 {
         }
         t3browser {
             // [String] Path to the jss file of the t3browser plugin
-          plugin = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.3.js
+          plugin = EXT:browser/res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.4.js
           plugin {
               // [Boolean] 0 (default): link to the script file, 1: include the script inline
             inline = 0
@@ -2862,7 +2862,7 @@ plugin.tx_browser_pi1 {
     }
     ajax {
         // [STRING] Path to Javascript file with ajax methods
-      file    = EXT:browser/res/js/tx_browser_pi1_ajax-0.0.4.js
+      file    = EXT:browser/res/js/tx_browser_pi1_ajax-0.0.5.js
       file {
           // [Boolean] 0 (default): link to the script file, 1: include the script inline
         inline = 0
