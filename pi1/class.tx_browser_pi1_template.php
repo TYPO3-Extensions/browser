@@ -3497,8 +3497,6 @@ class tx_browser_pi1_template
  */
   private function groupBy_get_groupname( $elements )
   {
-  // #43808
-$this->pObj->dev_var_dump( 3500 );
     if( ! $this->bool_groupby )
     {
       return false;
@@ -3508,7 +3506,7 @@ $this->pObj->dev_var_dump( 3500 );
     $str_value      = $elements[$str_tableField];
 
   // #43808
-$this->pObj->dev_var_dump( $this->pObj->conf_sql['groupBy'], $str_value );
+$this->pObj->dev_var_dump( $elements, $this->pObj->conf_sql['groupBy'], $str_value );
 
     return $str_value;
 
