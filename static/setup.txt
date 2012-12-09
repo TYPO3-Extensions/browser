@@ -4621,6 +4621,9 @@ plugin.tx_browser_pi1 {
       font-size:0.75em;
       font-weight:bold;
     }
+    .tx-browser-pi1 .ui-tabs ul li  a {
+      padding:0.3em 0.5em 0.1em;
+    }
     .tx-browser-pi1 .ui-tabs .without-href {
       opacity: 0.20;
       cursor:default;
