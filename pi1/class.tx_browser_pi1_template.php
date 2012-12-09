@@ -1003,8 +1003,6 @@ class tx_browser_pi1_template
           continue;
         }
           // In case of the first group and a new group
-  // #43808
-$this->pObj->dev_var_dump( 1007 );
         $str_next_group = $this->groupBy_get_groupname($elements);
         if($this->bool_groupby)
         {
@@ -1194,8 +1192,6 @@ $this->pObj->dev_var_dump( 1007 );
           continue;
         }
           // In case of the first group and a new group
-  // #43808
-$this->pObj->dev_var_dump( 1196 );
         $str_next_group = $this->groupBy_get_groupname($elements);
         if($this->bool_groupby)
         {
