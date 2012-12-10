@@ -8,7 +8,7 @@
 4.2.0
   121206
   New Features
-  * #43808: Reintegration of group by feature from 3.x to 4.x
+  * #43808: Reintegration of groupby feature from 3.x to 4.x
   * #43780: New manual: Browser out of the box
             See extension browser_manual_ootb_en
   * #43746: Preconfigured view: Out of the box
@@ -52,6 +52,10 @@
             * res/js/jquery/tx_browser_pi1_cleanup_4.2.0.js
             * res/js/jquery/tx_browser_pi1_cleanup_4.1.21.js
   Bugfix
+  * #43852: CSV-Export: Is ignored, if you are using several plugins
+            Workaround documented. See
+            * http://typo3.org/extensions/repository/view/browser_tut_rss_en/
+            * http://typo3.org/extensions/repository/view/browser_tut_severalplugins_en/
   * #43803: Category menu: li-tags are missing
             Effected files:
             * static/setup.txt

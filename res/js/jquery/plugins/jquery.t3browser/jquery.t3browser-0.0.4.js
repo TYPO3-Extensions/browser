@@ -230,14 +230,14 @@
                         // ERROR with source
                       if( typeof source == "undefined" )
                       {
-                        source =  'ERROR in jquery.t3browser-0.0.2.js: source is undefined. It seems that there is a ' +
+                        source =  'ERROR in jquery.t3browser-0.0.4.js: source is undefined. It seems that there is a ' +
                                   'problem with a not defined variable. Function format( source, params ).';
                       }
                         // ERROR with params
                       if( typeof params == "undefined" )
                       {
                         params = new Array();
-                        params[0] = 'ERROR in jquery.t3browser-0.0.2.js:';
+                        params[0] = 'ERROR in jquery.t3browser-0.0.4.js:';
                         params[1] = 'params are undefined. It seems that there is a problem with a not defined variable. ' +
                                     'Function format( source, params ). Please check settings { ... }.';
                       }
@@ -464,14 +464,14 @@
                         // ERROR with source
                       if( typeof source == "undefined" )
                       {
-                        source =  'ERROR in jquery.t3browser-0.0.2.js: source is undefined. It seems that there is ' +
+                        source =  'ERROR in jquery.t3browser-0.0.4.js: source is undefined. It seems that there is ' +
                                   'a problem with a not defined variable. Function format( source, params ).';
                       }
                         // ERROR with params
                       if( typeof params == "undefined" )
                       {
                         params = new Array();
-                        params[0] = 'ERROR in jquery.t3browser-0.0.2.js:';
+                        params[0] = 'ERROR in jquery.t3browser-0.0.4.js:';
                         params[1] = 'params are undefined. It seems that there is a problem with a not defined variable. ' +
                                     'Function format( source, params ). Please check settings { ... }.';
                       }

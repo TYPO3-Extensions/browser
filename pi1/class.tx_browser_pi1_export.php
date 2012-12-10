@@ -140,6 +140,7 @@ class tx_browser_pi1_export
           // Given typeNum isn't the internal typeNum for CSV export
         $this->str_typeNum = 'undefined';
     }
+    unset( $conf );
       // Check the proper typeNum
 
       // DRS - Development Reporting System
