@@ -2319,7 +2319,7 @@ class tx_browser_pi1_sql_auto
     {
       if( $this->pObj->b_drs_error )
       {
-        $prompt = 'There is more than one LEFT JOIN for ' .$mmTable . '.' .
+        $prompt = 'There is more than one LEFT JOIN for ' .$localTable . ' and ' . $foreignTable . '. ' .
                   'But the Browser  supports one relation per table only.';
         t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3 );
       }
@@ -2477,7 +2477,7 @@ class tx_browser_pi1_sql_auto
     {
       if( $this->pObj->b_drs_error )
       {
-        $prompt = 'There is more than one LEFT JOIN for ' .$foreignTable . '.' .
+        $prompt = 'There is more than one LEFT JOIN for ' . $localTableField . ' and ' . $foreignTable . '. ' .
                   'But the Browser  supports one relation per table only.';
         t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3 );
       }
