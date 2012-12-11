@@ -1759,7 +1759,9 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_tableFields );
                 $uidIndexField=""
               );
       // SQL query
-//var_dump( __METHOD__, __LINE__, $query );
+// #43889
+$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $query );
+// #43889
 
       // Execute query
     $promptOptimise   = 'Maintain the performance? Reduce the relations: reduce the filter. ' .
