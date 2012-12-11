@@ -8,9 +8,11 @@
 4.2.0
   121206
   New Features
+  * #43854: Workaround: don't use relation twice
+            * pi1/class.tx_browser_pi1_sql_auto.php
   * #43808: Reintegration of groupby feature from 3.x to 4.x
   * #43780: New manual: Browser out of the box
-            See extension browser_manual_ootb_en
+            * http://typo3.org/extensions/repository/view/browser_manual_ootb/
   * #43746: Preconfigured view: Out of the box
             Effected files:
             * static/setup.txt

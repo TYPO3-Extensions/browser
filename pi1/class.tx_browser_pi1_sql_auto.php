@@ -2304,6 +2304,22 @@ class tx_browser_pi1_sql_auto
  */
   private function get_joinsSetMmLeftJoin( $localTable, $mmTable, $foreignTable, $leftJoin )
   {
+      // #43854, 121211, dwildt
+      // RETURN : ERROR mmTable is part of left join already
+    $leftJoinMmTable = ' LEFT JOIN ' . $mmTable;
+    if( strpos( $leftJoin, $leftJoinMmTable ) === true )
+    {
+      if( $this->pObj->b_drs_error )
+      {
+        $prompt = 'There is more than one LEFT JOIN for ' .$mmTable . '.' .
+                  'But the Browser  supports one relation per table only.';
+        t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3 );
+      }
+      return $leftJoin;
+    }
+      // RETURN : ERROR mmTable is part of left join already
+      // #43854, 121211, dwildt
+
       // Get enabled fields for the foreign table
     $foreignTableEnableFields = $this->pObj->cObj->enableFields( $foreignTable );
       // Get the pid list for the foreign table
@@ -2336,6 +2352,7 @@ class tx_browser_pi1_sql_auto
     }
       // SWITCH : opposite
 //$this->pObj->dev_var_dump( $relation, $where );
+    
 
       // Add relation once only
     if( strpos( $leftJoin, $relation ) === false )
