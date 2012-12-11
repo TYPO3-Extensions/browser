@@ -113,6 +113,7 @@ class tx_browser_pi1_consolidate
     $viewWiDot = $view.'.';
     $conf_view = $conf['views.'][$viewWiDot][$mode.'.'];
 
+    $arr_return = array( );
     $arr_return['data']['uids']                 = false;
     $arr_return['data']['rows']                 = $rows;
     $arr_return['data']['rows_wo_cons']         = count($rows);
@@ -159,8 +160,9 @@ class tx_browser_pi1_consolidate
       // Init consolidation array
 
 
-    $conf_sqlRowsUnique     = $this->arr_conf_consolidation['sql.']['rows.']['unique.'];
-    $bool_rmNonUniqueValue  = $conf_sqlRowsUnique['rm_nonUnique_values'];
+      // 121211, dwildt, 2-
+    //$conf_sqlRowsUnique     = $this->arr_conf_consolidation['sql.']['rows.']['unique.'];
+    //$bool_rmNonUniqueValue  = $conf_sqlRowsUnique['rm_nonUnique_values'];
       // Should rows consolidated?
 
 
@@ -172,7 +174,10 @@ class tx_browser_pi1_consolidate
       // Do we have a showUid not for the local table but for the foreign table? 3.3.3
     if( $this->pObj->arrLocalTable['showUid4TableField'] )
     {
-      list( $localTable, $dummyField ) = explode( '.', $this->pObj->arrLocalTable['showUid4TableField'] );
+        // 121211, dwildt, 1-
+      // list( $localTable, $dummyField ) = explode( '.', $this->pObj->arrLocalTable['showUid4TableField'] );
+        // 121211, dwildt, 1+
+      list( $localTable ) = explode( '.', $this->pObj->arrLocalTable['showUid4TableField'] );
     }
     if( ! $this->pObj->arrLocalTable['showUid4TableField'] )
     {
@@ -287,7 +292,6 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
     }
       // WORKAROUND
 
-//if(t3lib_div::_GP('dev')) var_dump('cons 287', $arr_foreignTables, count($arr_foreignTables), empty($arr_foreignTables));
 
 
       /////////////////////////////////////////////////////////////////
@@ -302,7 +306,8 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
         foreach((array) $arr_relation_tables as $str_relation_table => $str_foreign_table)
         {
           $arr_mm_tables[$str_relation_table][]     = $str_foreign_table;
-          $arr_foreign_tables[$str_foreign_table][] = $str_relation_table;
+            // 121211, dwildt, 1-
+          //$arr_foreign_tables[$str_foreign_table][] = $str_relation_table;
         }
       }
     }
@@ -467,14 +472,20 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
 
       list($groupBy_table, $groupBy_field) = explode('.', $this->pObj->conf_sql['groupBy']);
 
-      // Loop through all tables (local and foreign)
-      foreach ($arr_localTable_foreignTables as $localTableUid => $arrTables)
+        // Loop through all tables (local and foreign)
+        // 121211, dwildt, 1-
+      //foreach ($arr_localTable_foreignTables as $localTableUid => $arrTables)
+        // 121211, dwildt, 1+
+      foreach( $arr_localTable_foreignTables as $arrTables )
       {
-        // Loop through all tables (key is the uid of the local record)
+          // Loop through all tables (key is the uid of the local record)
         foreach ($arrTables as $table => $arrRecordUids)
         {
-          // Loop through all elements (key is the uid of the current record)
-          foreach ($arrRecordUids as $redordUid => $arrFields)
+            // Loop through all elements (key is the uid of the current record)
+            // 121211, dwildt, 1-
+          //foreach ($arrRecordUids as $redordUid => $arrFields)
+            // 121211, dwildt, 1+
+          foreach ($arrRecordUids as $arrFields)
           {
             $bool_new = false;
 
@@ -730,6 +741,7 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
     //
     // Init RETURN array
 
+    $arr_return = array( );
     $arr_return['data']['arrFetchedTables'] = $this->pObj->arr_realTables_arrFields;
     if(isset($this->pObj->arrConsolidate['addedTableFields']))
     {
@@ -758,8 +770,8 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
     //
     // Add table.uids to the global arr_realTables_arrFields
 
-    $arr_TCAcolumns = false;
-//var_dump('sql_func 2224', $table, $GLOBALS['TCA']);
+      // 121211, dwildt, 1-
+    //$arr_TCAcolumns = false;
     foreach ($this->pObj->arr_realTables_arrFields as $table => $arrFields)
     {
 //      $this->pObj->objZz->loadTCA($table);
