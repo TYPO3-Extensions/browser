@@ -278,7 +278,7 @@ class tx_browser_pi1_typoscript
     $this->pObj->csvSelectWoFunc = $csvSelectWoFunc;
       // Set the global csvSelectWoFunc with table.fields only and without any function
 
-    $this->fetch_realTableWiField( $lConfSql['select'] );
+    $this->fetch_realTableWiField( $lConfSql['select'], 'select' );
       // Fetch used tables from the SELECT statement
 
     
@@ -290,7 +290,7 @@ class tx_browser_pi1_typoscript
       // Fetch used tables from the search fields, if there is a sword
     if( $this->pObj->piVar_sword )
     {
-      $this->fetch_realTableWiField( $lConfSql['search'] );
+      $this->fetch_realTableWiField( $lConfSql['search'], 'search' );
     }
 
       // Try to fetch used tables from the ORDER BY statement
@@ -298,7 +298,7 @@ class tx_browser_pi1_typoscript
       // Bugfix #6468, #6518,  010220, dwildt
     $csvOrderBy = str_ireplace( ' desc', '', $csvOrderBy );
     $csvOrderBy = str_ireplace( ' asc',  '', $csvOrderBy );
-    $this->fetch_realTableWiField( $csvOrderBy );
+    $this->fetch_realTableWiField( $csvOrderBy, 'orderBy' );
 
       
       // Try to fetch used tables from the AND WHERE statement
@@ -312,7 +312,7 @@ class tx_browser_pi1_typoscript
       $this->pObj->dev_var_dump($this->arr_realTables_arrFields);
     }
 // #43889
-      $this->fetch_realTableWiField( $strCsvTableFields );
+      $this->fetch_realTableWiField( $strCsvTableFields, 'andWhere' );
 // #43889
     if ($this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167) {
       $this->pObj->dev_var_dump($this->arr_realTables_arrFields);
@@ -379,7 +379,7 @@ class tx_browser_pi1_typoscript
     if( is_array( $arr_tableField ) )
     {
       $arrCsvFilter = implode( ',', $arr_tableField );
-      $this->fetch_realTableWiField( $arrCsvFilter );
+      $this->fetch_realTableWiField( $arrCsvFilter, 'filter' );
     }
       // Get table fields out of the filter, if filter is set
 
@@ -1008,7 +1008,7 @@ class tx_browser_pi1_typoscript
  * @version     4.2.0
  * @since       2.0.0
  */
-  private function fetch_realTableWiField( $str_queryPart ) 
+  private function fetch_realTableWiField( $str_queryPart, $key_queryPart ) 
   {
 
       // RETURN : $str_queryPart is empty
@@ -1041,9 +1041,25 @@ class tx_browser_pi1_typoscript
       $field = trim( $field );
       
         // #43889, 121211, dwildt
-      if( $field == 'uid' )
+      switch( $key_queryPart )
       {
-        continue;
+        case( 'select' ):
+          break;
+        case( 'orderBy' ):
+        case( 'search' ):
+        case( 'where' ):
+        case( 'andWhere' ):
+        case( 'filter' ):
+          if( $field == 'uid' )
+          {
+            continue 2;
+          }
+          break;
+        default:
+          $prompt = __METHOD__ . ' (line: ' . __LINE__ . '): <br />' .
+                    'Undefined value in SWITCH: ' . $key_queryPart;
+          die( $prompt );
+          break;
       }
         // #43889, 121211, dwildt
 
