@@ -448,6 +448,8 @@ class tx_browser_pi1_sql_init
       }
     }
       // DRS - Logging if user defined values were changed
+// #43889
+$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->csvSelect );
 
     return true;
   }

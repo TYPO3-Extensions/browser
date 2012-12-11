@@ -190,6 +190,7 @@ class tx_browser_pi1_consolidate
 //$int_keyFirstRow = key($rows);
 //$arr_tableFields = array_keys( $rows[$int_keyFirstRow] );
 //$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_tableFields );
+//// #43889
 
     foreach( ( array ) $rows as $elements )
     {
@@ -260,8 +261,8 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_tableFields );
       // BUG (101029): If there are only rows from the local table,
       //               rows will be empty after consolidation
 
-// #43889
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
+//// #43889
+//$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
 
     if( empty( $arr_foreignTables ) )
     {

@@ -1721,12 +1721,8 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_tableFields );
 
       // SQL query array
     $select = $this->pObj->objSqlInit->statements['listView']['select'];
-// #43889
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $select );
 
     $select = $this->sql_selectLocalised( $select );
-// #43889
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $select );
 
     $from     = $this->pObj->objSqlInit->statements['listView']['from'];
     $where    = $this->pObj->objSqlInit->statements['listView']['where'];
