@@ -737,11 +737,12 @@ class tx_browser_pi1_consolidate
 
 
 
-  /**
+/**
  * addUidAndPid:    Returns an array with table.uid, which are missing in the select statement
  *                  It depends on the consolidation parameters in TypoScript
  *
  * @return	array		Array with completed arr_realTables_arrFields and with missing table.uids
+ * @version   4.2.0 
  */
   function addUidAndPid()
   {
@@ -749,13 +750,17 @@ class tx_browser_pi1_consolidate
     //
     // Init RETURN array
 
+// #43889
+// 24: OK; 167: BUG
+$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->arr_realTables_arrFields );
+// #43889
     $arr_return = array( );
     $arr_return['data']['arrFetchedTables'] = $this->pObj->arr_realTables_arrFields;
-    if(isset($this->pObj->arrConsolidate['addedTableFields']))
+    if( isset( $this->pObj->arrConsolidate['addedTableFields'] ) )
     {
       $arr_return['data']['consolidate']['addedTableFields'] = $this->pObj->arrConsolidate['addedTableFields'];
     }
-    if(!isset($this->pObj->arrConsolidate['addedTableFields']))
+    if( ! isset($this->pObj->arrConsolidate['addedTableFields'] ) )
     {
       $arr_return['data']['consolidate']['addedTableFields'] = false;
     }
