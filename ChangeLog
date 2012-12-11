@@ -54,6 +54,8 @@
             * res/js/jquery/tx_browser_pi1_cleanup_4.2.0.js
             * res/js/jquery/tx_browser_pi1_cleanup_4.1.21.js
   Bugfix
+  * #43889: consolidation module: foreign table is missing in special case
+
   * #43852: CSV-Export: Is ignored, if you are using several plugins
             Workaround documented. See
             * http://typo3.org/extensions/repository/view/browser_tut_rss_en/

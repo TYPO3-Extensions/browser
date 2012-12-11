@@ -248,6 +248,9 @@ class tx_browser_pi1_consolidate
       // BUG (101029): If there are only rows from the local table,
       //               rows will be empty after consolidation
 
+// #43889
+$this->pObj->dev_var_dump( $arr_foreignTables );
+
     if( empty( $arr_foreignTables ) )
     {
       if( $this->pObj->b_drs_warn )
@@ -268,7 +271,6 @@ class tx_browser_pi1_consolidate
         $rows_cons[$firstKey] = $rows[$firstKey];
         $arr_return['data']['rows']                 = $rows_cons;
         $this->pObj->arrConsolidate['rows_wi_cons'] = count($rows_cons);
-//if(t3lib_div::_GP('dev')) var_dump('cons 270', $arr_return);
         return $arr_return;
       }
         // RETURN first row

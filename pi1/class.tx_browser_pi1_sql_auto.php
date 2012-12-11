@@ -2320,7 +2320,7 @@ class tx_browser_pi1_sql_auto
       if( $this->pObj->b_drs_error )
       {
         $prompt = 'There is more than one LEFT JOIN for ' .$localTable . ' and ' . $foreignTable . '. ' .
-                  'But the Browser  supports one relation per table only.';
+                  'But the Browser  supports one LEFT JOIN relation per table only.';
         t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3 );
         $prompt = 'Current relation will ignored. Maybe you will get an unexpeted result.';
         t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 2 );
@@ -2472,23 +2472,24 @@ class tx_browser_pi1_sql_auto
                           " ON ( " .
                             $str_query_part .
                           " )" ;
-      // #43854, 121211, dwildt
-      // RETURN : ERROR mmTable is part of left join already
-    $leftJoinForeignTable = ' LEFT JOIN ' . $foreignTable;
-    if( ! ( strpos( $leftJoin, $leftJoinForeignTable ) === false ) )
-    {
-      if( $this->pObj->b_drs_error )
-      {
-        $prompt = 'There is more than one LEFT JOIN for ' . $localTableField . ' and ' . $foreignTable . '. ' .
-                  'But the Browser  supports one relation per table only.';
-        t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3 );
-        $prompt = 'Current relation will ignored. Maybe you will get an unexpeted result.';
-        t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 2 );
-      }
-      break;
-    }
-      // RETURN : ERROR mmTable is part of left join already
-      // #43854, 121211, dwildt
+
+            // #43854, 121211, dwildt
+            // RETURN : ERROR mmTable is part of left join already
+          $leftJoinForeignTable = ' LEFT JOIN ' . $foreignTable;
+          if( ! ( strpos( $leftJoin, $leftJoinForeignTable ) === false ) )
+          {
+            if( $this->pObj->b_drs_error )
+            {
+              $prompt = 'There is more than one LEFT JOIN for ' . $localTableField . ' and ' . $foreignTable . '. ' .
+                        'But the Browser supports one LEFT JOIN relation per table only.';
+              t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3 );
+              $prompt = 'Current relation will ignored. Maybe you will get an unexpeted result.';
+              t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 2 );
+            }
+            break;
+          }
+            // RETURN : ERROR mmTable is part of left join already
+            // #43854, 121211, dwildt
 
             // Add current LEFT JOIN once only
           if( strpos( $leftJoin, $andLeftJoin ) === false )
