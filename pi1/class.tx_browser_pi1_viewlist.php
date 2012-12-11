@@ -191,10 +191,10 @@ class tx_browser_pi1_viewlist
     }
       // Set SQL query parts in general and statements for rows
 
-// 24: OK, 167: Bug
-// #43889
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->csvSelect );
-// #43889
+//// 24 and 167: the same
+//// #43889
+//$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->csvSelect );
+//// #43889
 
 
 
@@ -1713,7 +1713,6 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->csvSelec
  */
   private function rows_sqlRowsbyIds( $withIds )
   {
-//$this->pObj->dev_var_dump( $withIds );    
       // 120927, dwildt, +
     if( empty ( $withIds ) )
     {
@@ -1723,6 +1722,10 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->csvSelec
 
       // SQL query array
     $select = $this->pObj->objSqlInit->statements['listView']['select'];
+// 24 and 167: the same
+// #43889
+$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $select );
+// #43889
 
     $select = $this->sql_selectLocalised( $select );
 

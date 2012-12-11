@@ -150,7 +150,7 @@ class tx_browser_pi1_sql_init
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel, 'begin' );
 
-      // Set the globals csvSelect, csvSelect, csvOrderBy, arrLocalTable
+      // Set the globals csvSelect, csvSearch, csvOrderBy, arrLocalTable
     $arr_return = $this->init_global_csv( );
     if( $arr_return['error']['status'] )
     {
