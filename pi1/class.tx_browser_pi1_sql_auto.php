@@ -144,8 +144,8 @@ class tx_browser_pi1_sql_auto
 /**
  * Constructor. The method initiate the parent object
  *
- * @param	object		The parent object
- * @return	void
+ * @param    object        The parent object
+ * @return    void
  */
   public function __construct($parentObj)
   {
@@ -173,7 +173,7 @@ class tx_browser_pi1_sql_auto
  *                    SELECT, FROM, WHERE, ORDER BY, LIMIT
  *                    GROUP BY isn't handled
  *
- * @return	array		$arr_return : contains statements or an error message
+ * @return    array        $arr_return : contains statements or an error message
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -306,7 +306,7 @@ class tx_browser_pi1_sql_auto
  *            If required localisation fields will added too.
  *            Added fields will added to the consolidation array.
  *
- * @return	string		SQL select or FALSE, if there is an error
+ * @return    string        SQL select or FALSE, if there is an error
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -352,7 +352,7 @@ class tx_browser_pi1_sql_auto
 /**
  * get_statements_from( ): The method returns the FROM clause for the SQL query
  *
- * @return	string		SQL from
+ * @return    string        SQL from
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -507,7 +507,7 @@ class tx_browser_pi1_sql_auto
  * If there aren't piVars and there aren't a TypoSCript configuration, it will be empty.
  * If there are aliases, the aliases will be deleted.
  *
- * @return	string		$csvOrder: SQL ORDER BY clause.
+ * @return    string        $csvOrder: SQL ORDER BY clause.
  * @version 3.9.13
  * @since   3.9.12
  */
@@ -619,7 +619,7 @@ class tx_browser_pi1_sql_auto
 /**
  * get_statements_groupBy( )
  *
- * @return	void
+ * @return    void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -646,7 +646,7 @@ class tx_browser_pi1_sql_auto
 /**
  * Relation method: Building the whole where clause
  *
- * @return	string		FALSE or the SQL-where-clause
+ * @return    string        FALSE or the SQL-where-clause
  * @version 3.9.13
  * @since   3.9.12
  */
@@ -860,7 +860,7 @@ class tx_browser_pi1_sql_auto
 /**
  * get_statements_whereLL( ) : ...
  *
- * @return	string		FALSE or the SQL-where-clause
+ * @return    string        FALSE or the SQL-where-clause
  * @version 3.9.24
  * @since   3.9.12
  */
@@ -885,7 +885,7 @@ class tx_browser_pi1_sql_auto
  * The SQL result will be true:
  * - If every sword will be once in one field at least
  *
- * @return	string		SQL query string
+ * @return    string        SQL query string
  * @version   3.9.13
  * @since     2.0.0
  */
@@ -1154,7 +1154,7 @@ class tx_browser_pi1_sql_auto
 /**
  * Relation method: Building a further part for the where clause
  *
- * @return	string		TRUE || FALSE or the SQL-where-clause
+ * @return    string        TRUE || FALSE or the SQL-where-clause
  */
   private function andWhere()
   {
@@ -1235,7 +1235,7 @@ class tx_browser_pi1_sql_auto
  * table.pid IN (pidlist). pidlist is a comma seperated list of uids.
  * If aliases are configured, table will become an alias.
  *
- * @return	array		$arr_andWherePid: Array with statements: table.pid IN (pidlist)
+ * @return    array        $arr_andWherePid: Array with statements: table.pid IN (pidlist)
  */
   private function arr_andWherePid()
   {
@@ -1270,7 +1270,7 @@ class tx_browser_pi1_sql_auto
  * table.deleted = 0 AND table.hidden = 0.
  * If aliases are configured, table will become an alias.
  *
- * @return	array		$arr_andWhereEnablefields: Array with enablefields statements
+ * @return    array        $arr_andWhereEnablefields: Array with enablefields statements
  */
   private function arr_andWhereEnablefields()
   {
@@ -1306,8 +1306,8 @@ class tx_browser_pi1_sql_auto
 /**
  * Get the AND WHERE enablefields for the current table. Replace the real name with an alias, if there is an alias.
  *
- * @param	string		$realTable: Name of the current table
- * @return	array		$arr_andWhereEnablefields: Array with enablefields statements
+ * @param    string        $realTable: Name of the current table
+ * @return    array        $arr_andWhereEnablefields: Array with enablefields statements
  */
   private function str_enableFields($realTable)
   {
@@ -1343,7 +1343,7 @@ class tx_browser_pi1_sql_auto
  * init_class_relations( ): Inits the class var $arr_relations_mm_simple,
  *                                an array with the arrays MM and/or simple
  *
- * @return	void
+ * @return    void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1451,7 +1451,7 @@ class tx_browser_pi1_sql_auto
  * init_class_relationsLoop( ): Inits the class var $arr_relations_mm_simple,
  *                                an array with the arrays MM and/or simple
  *
- * @return	void
+ * @return    void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1524,10 +1524,10 @@ class tx_browser_pi1_sql_auto
  *          arr_relations_mm_simple['MM'][$table][$config['MM']]
  *          arr_relations_opposite[$table][$config['MM']]['MM_opposite_field']
  *
- * @param	string		$$table       : current table from used tables
- * @param	array		$config       : configuration of the current TCA column
- * @param	string		$foreignTable : current foreign table from TCA
- * @return	void
+ * @param    string        $$table       : current table from used tables
+ * @param    array        $config       : configuration of the current TCA column
+ * @param    string        $foreignTable : current foreign table from TCA
+ * @return    void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1589,10 +1589,10 @@ class tx_browser_pi1_sql_auto
 /**
  * init_class_relationsSingle( ): Sets the class var $arr_relations_mm_simple['simple']
  *
- * @param	string		$$table       : current table from used tables
- * @param	string		$columnsKey   : current column name from TCA
- * @param	string		$foreignTable : current foreign table from TCA
- * @return	void
+ * @param    string        $$table       : current table from used tables
+ * @param    string        $columnsKey   : current column name from TCA
+ * @param    string        $foreignTable : current foreign table from TCA
+ * @return    void
  * @version 4.1.21
  * @since   3.9.12
  * @todo    120404, dwildt: Initialise $boolSelfReference
@@ -1672,7 +1672,7 @@ class tx_browser_pi1_sql_auto
  * relations_confDRSprompt( ):  Prompts to the DRS the current TypoScript
  *                            configuration for relation building
  *
- * @return	void
+ * @return    void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1749,7 +1749,7 @@ class tx_browser_pi1_sql_auto
  * relations_dontUseFields( ):  Returns an array with tablefields, which shouldn't
  *                              used for relation building.
  *
- * @return	array		$arr_return : table.fields, which shouldn't used for relation building
+ * @return    array        $arr_return : table.fields, which shouldn't used for relation building
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1802,10 +1802,10 @@ class tx_browser_pi1_sql_auto
  * relations_getForeignTable( ): Returns the foreign table from the
  *                               configuration of the current TCA column
  *
- * @param	string		$table        : current table from used tables
- * @param	array		$config       : configuration of current TCA column
- * @param	string		$configPath   : configuration path of curren TCA columen
- * @return	string		$foreignTable : the foreign table
+ * @param    string        $table        : current table from used tables
+ * @param    array        $config       : configuration of current TCA column
+ * @param    string        $configPath   : configuration path of curren TCA columen
+ * @return    string        $foreignTable : the foreign table
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1869,10 +1869,10 @@ class tx_browser_pi1_sql_auto
  * relations_requirements( ): Checks requirements for relation building.
  *                            Returns true if they met, false if not.
  *
- * @param	string		$table              : current table from used tables
- * @param	array		$config             : configuration of current TCA column
- * @param	string		$configPath         : configuration path of curren TCA columen
- * @return	boolean		true: requirements are met, false: req. aren't met
+ * @param    string        $table              : current table from used tables
+ * @param    array        $config             : configuration of current TCA column
+ * @param    string        $configPath         : configuration path of curren TCA columen
+ * @return    boolean        true: requirements are met, false: req. aren't met
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -1983,7 +1983,7 @@ class tx_browser_pi1_sql_auto
 /**
  * get_joins( ) : Relation method: Building the relation part for the where clause
  *
- * @return	string		TRUE || FALSE or the SQL-where-clause
+ * @return    string        TRUE || FALSE or the SQL-where-clause
  * @version   3.9.13
  * @since     2.0.0
  */
@@ -2070,8 +2070,8 @@ class tx_browser_pi1_sql_auto
 /**
  * get_joinsAddTablesForeign( ) :
  *
- * @param	[type]		$$foreignTable: ...
- * @return	array
+ * @param    [type]        $$foreignTable: ...
+ * @return    array
  * @version   3.9.13
  * @since     2.0.0
  */
@@ -2093,8 +2093,8 @@ class tx_browser_pi1_sql_auto
 /**
  * get_joinsAddTablesMm( ) :
  *
- * @param	[type]		$$mmTable: ...
- * @return	array
+ * @param    [type]        $$mmTable: ...
+ * @return    array
  * @version   3.9.13
  * @since     2.0.0
  */
@@ -2140,7 +2140,7 @@ class tx_browser_pi1_sql_auto
 /**
  * get_joinsSetMm( ) : Relation method: Building the relation part for the where clause
  *
- * @return	string		TRUE || FALSE or the SQL-where-clause
+ * @return    string        TRUE || FALSE or the SQL-where-clause
  * @version   3.9.13
  * @since     2.0.0
  */
@@ -2250,11 +2250,11 @@ class tx_browser_pi1_sql_auto
 /**
  * get_joinsSetMmFullJoin :
  *
- * @param	[type]		$$localTable: ...
- * @param	[type]		$mmTable: ...
- * @param	[type]		$foreignTable: ...
- * @param	[type]		$fullJoin: ...
- * @return	array
+ * @param    [type]        $$localTable: ...
+ * @param    [type]        $mmTable: ...
+ * @param    [type]        $foreignTable: ...
+ * @param    [type]        $fullJoin: ...
+ * @return    array
  * @version   3.9.13
  * @since     2.0.0
  */
@@ -2302,11 +2302,11 @@ class tx_browser_pi1_sql_auto
 /**
  * get_joinsSetMmLeftJoin :
  *
- * @param	[type]		$$localTable: ...
- * @param	[type]		$mmTable: ...
- * @param	[type]		$foreignTable: ...
- * @param	[type]		$leftJoin: ...
- * @return	array
+ * @param    [type]        $$localTable: ...
+ * @param    [type]        $mmTable: ...
+ * @param    [type]        $foreignTable: ...
+ * @param    [type]        $leftJoin: ...
+ * @return    array
  * @version   3.9.13
  * @since     2.0.0
  */
@@ -2389,7 +2389,7 @@ class tx_browser_pi1_sql_auto
 /**
  * get_joinsSetCsv( ) : Relation method: Building the relation part for the where clause
  *
- * @return	string		TRUE || FALSE or the SQL-where-clause
+ * @return    string        TRUE || FALSE or the SQL-where-clause
  * @version   3.9.13
  * @since     2.0.0
  */
@@ -2545,7 +2545,7 @@ class tx_browser_pi1_sql_auto
  *                                  Example:
  *                                    ["tt_news"]["cruser_id"] -> ["tt_news.cruser_id"]
  *
- * @return	array		$tables : one dimensional array
+ * @return    array        $tables : one dimensional array
  * @version   3.9.13
  * @since     2.0.0
  */
@@ -2596,7 +2596,7 @@ class tx_browser_pi1_sql_auto
  *                                  the local and global array autoconfig.relations.
  *                                  Sets the class var $boolAutorelation.
  *
- * @return	void
+ * @return    void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2672,7 +2672,7 @@ class tx_browser_pi1_sql_auto
 /**
  * init_class_arrRelationsMmSimple( ) :
  *
- * @return	void
+ * @return    void
  * @version   3.9.13
  * @since     2.0.0
  */
@@ -2708,7 +2708,7 @@ class tx_browser_pi1_sql_auto
 /**
  * init_class_bLeftJoin( ): Initialises the class var $b_left_join
  *
- * @return	void
+ * @return    void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2744,9 +2744,9 @@ class tx_browser_pi1_sql_auto
  *    * $statementTables['select']['localtable']['tx_org_cal']        = 'tx_org_cal'
  *    * $statementTables['select']['foreigntable']['tx_org_caltype']  = 'tx_org_caltype'
  *
- * @param	string		$type         : select, from, where, orderBy, groupBy
- * @param	string		$csvStatement : current SQL statement
- * @return	void
+ * @param    string        $type         : select, from, where, orderBy, groupBy
+ * @param    string        $csvStatement : current SQL statement
+ * @return    void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2794,7 +2794,7 @@ class tx_browser_pi1_sql_auto
  * init_class_statementTablesByFilter( ): Add filter tables to the class var
  *                                        $statementTables
  *
- * @return	void
+ * @return    void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2813,9 +2813,9 @@ class tx_browser_pi1_sql_auto
  *                table is the fist table of the statement.
  *                Adds table.uid to the class var $addedTableFields.
  *
- * @param	string		$type         : select, from, where, orderBy, groupBy
- * @param	string		$csvStatement : current SQL statement
- * @return	string		$csvStatement : the statement with the table.uid
+ * @param    string        $type         : select, from, where, orderBy, groupBy
+ * @param    string        $csvStatement : current SQL statement
+ * @return    string        $csvStatement : the statement with the table.uid
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2863,8 +2863,8 @@ class tx_browser_pi1_sql_auto
  *                        Values are taken from the global var
  *                        $arrConsolidate['addedTableFields'].
  *
- * @param	string		$csvSelect : current SQL statement
- * @return	string		$csvSelect : the statement with the table.uid
+ * @param    string        $csvSelect : current SQL statement
+ * @return    string        $csvSelect : the statement with the table.uid
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2891,7 +2891,7 @@ class tx_browser_pi1_sql_auto
 /**
  * zz_checkIfOneTabelIsUsedAtLeast( ) : Returns an error, if any table isn't used
  *
- * @return	array		$arr_return : Contains an error prompt in case of an error
+ * @return    array        $arr_return : Contains an error prompt in case of an error
  * @version   3.1.13
  * @since     2.0.0
  */
@@ -2929,8 +2929,8 @@ class tx_browser_pi1_sql_auto
 /**
  * zz_dieIfOverride( ): Dies if an override for given type is defined
  *
- * @param	string		$type : select, from, where, orderBy, groupBy
- * @return	void
+ * @param    string        $type : select, from, where, orderBy, groupBy
+ * @return    void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -2979,7 +2979,7 @@ class tx_browser_pi1_sql_auto
 /**
  * zz_loadTCAforAllTables( ): Load the TCA for all tables
  *
- * @return	void
+ * @return    void
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -3000,8 +3000,8 @@ class tx_browser_pi1_sql_auto
  * zz_setToRealTableNames( ): Returns the given SQL statement with table.fields
  *                            (real names) only.
  *
- * @param	string		$csvStatement: current SQL statement
- * @return	string		$csvStatement: SQL statement with table.fields only
+ * @param    string        $csvStatement: current SQL statement
+ * @return    string        $csvStatement: SQL statement with table.fields only
  * @version 3.9.12
  * @since   3.9.12
  */
@@ -3023,9 +3023,9 @@ class tx_browser_pi1_sql_auto
  * zz_woForeignTables( ): Removes foreign table.fields from the given
  *                        statement.
  *
- * @param	string		$type         : select, from, where, orderBy, groupBy
- * @param	string		$csvStatement : current SQL statement
- * @return	string		$csvStatement : the statement without foreign tables
+ * @param    string        $type         : select, from, where, orderBy, groupBy
+ * @param    string        $csvStatement : current SQL statement
+ * @return    string        $csvStatement : the statement without foreign tables
  * @version 3.9.12
  * @since   3.9.12
  */
