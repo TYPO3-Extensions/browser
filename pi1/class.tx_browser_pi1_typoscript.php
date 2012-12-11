@@ -257,6 +257,12 @@ class tx_browser_pi1_typoscript
       // Set the typoscript configuration for the SQL query
 
 
+// #43889
+    if ($this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167) {
+      $this->pObj->dev_var_dump($this->arr_realTables_arrFields);
+    }
+// #43889
+      
       /////////////////////////////////////////////////////
       //
       // Fetch used tables from the SELECT statement
@@ -368,6 +374,11 @@ class tx_browser_pi1_typoscript
             // DEVELOPMENT: Browser engine 4.x
       }
     }
+// #43889
+    if ($this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167) {
+      $this->pObj->dev_var_dump($this->arr_realTables_arrFields);
+    }
+// #43889
     if( is_array( $arr_tableField ) )
     {
       $arrCsvFilter = implode( ',', $arr_tableField );
