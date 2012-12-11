@@ -1722,7 +1722,7 @@ class tx_browser_pi1_viewlist
 
       // SQL query array
     $select = $this->pObj->objSqlInit->statements['listView']['select'];
-// 24 and 167: the same
+// 24: OK; 167: BUG
 // #43889
 $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $select );
 // #43889

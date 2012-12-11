@@ -2877,6 +2877,11 @@ class tx_browser_pi1_sql_auto
  */
   private function zz_addUidsToSelect( $csvSelect )
   {
+// 24: OK; 167: BUG
+// #43889
+$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->arrConsolidate['addedTableFields'] );
+// #43889
+    
     if( ! is_array( $this->pObj->arrConsolidate['addedTableFields'] ) )
     {
       return $csvSelect;
