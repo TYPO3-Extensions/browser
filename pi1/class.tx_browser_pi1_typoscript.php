@@ -595,7 +595,6 @@ class tx_browser_pi1_typoscript
         // IF no override
 
     }
-//$this->pObj->dev_var_dump( $conf_sql );
 
 
       //////////////////////////////////////////////////////
@@ -815,7 +814,13 @@ class tx_browser_pi1_typoscript
       // Set the global array conf_sql
 
     $this->pObj->conf_sql = $conf_sql;
-//$this->pObj->dev_var_dump( $this->pObj->conf_sql );
+// #43889
+// 24: OK; 167: BUG
+if( $this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167 )
+{
+  $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $conf_sql );
+}
+// #43889
     // Set the global array conf_sql
 
     return $conf_sql;

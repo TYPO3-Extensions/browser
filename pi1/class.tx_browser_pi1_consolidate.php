@@ -750,10 +750,10 @@ class tx_browser_pi1_consolidate
     //
     // Init RETURN array
 
-// #43889
-// 24: OK; 167: BUG
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->arr_realTables_arrFields );
-// #43889
+//// #43889
+//// 24: OK; 167: BUG
+//$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->arr_realTables_arrFields );
+//// #43889
     $arr_return = array( );
     $arr_return['data']['arrFetchedTables'] = $this->pObj->arr_realTables_arrFields;
     if( isset( $this->pObj->arrConsolidate['addedTableFields'] ) )
