@@ -2322,6 +2322,8 @@ class tx_browser_pi1_sql_auto
         $prompt = 'There is more than one LEFT JOIN for ' .$localTable . ' and ' . $foreignTable . '. ' .
                   'But the Browser  supports one relation per table only.';
         t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3 );
+        $prompt = 'Current relation will ignored. Maybe you will get an unexpeted result.';
+        t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 2 );
       }
       return $leftJoin;
     }
@@ -2480,6 +2482,8 @@ class tx_browser_pi1_sql_auto
         $prompt = 'There is more than one LEFT JOIN for ' . $localTableField . ' and ' . $foreignTable . '. ' .
                   'But the Browser  supports one relation per table only.';
         t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3 );
+        $prompt = 'Current relation will ignored. Maybe you will get an unexpeted result.';
+        t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 2 );
       }
       break;
     }
