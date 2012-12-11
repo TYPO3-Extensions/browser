@@ -2402,8 +2402,10 @@ class tx_browser_pi1_sql_auto
       // #43854, 121211, dwildt, 2-
     //$leftJoin   = false;
     //$fullJoin   = false;
-      // #43854, 121211, dwildt, 1+
+      // #43854, 121211, dwildt, 3+
     $leftJoinForeignTable = null;
+    $arr_return['data']['left_join'] = $leftJoin;
+    $arr_return['data']['full_join'] = $fullJoin;
 
       // Get the tables with a CSV relation
     $tables = $this->arr_relations_mm_simple['simple'];
