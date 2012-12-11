@@ -2024,9 +2024,17 @@ class tx_browser_pi1_sql_auto
       // Set the MM relations
 
       // Set the CSV relations
-    $arr_return = $this->get_joinsSetCsv( );
-    $leftJoin   = $leftJoin . $arr_return['data']['left_join'];
-    $fullJoin   = $fullJoin . $arr_return['data']['full_join'];
+      // #43854, 121211, dwildt, 1-
+    //$arr_return = $this->get_joinsSetCsv( );
+      // #43854, 121211, dwildt, 1+
+    $arr_return = $this->get_joinsSetCsv( $leftJoin, $fullJoin );
+
+      // #43854, 121211, dwildt, 2-
+//    $leftJoin   = $leftJoin . $arr_return['data']['left_join'];
+//    $fullJoin   = $fullJoin . $arr_return['data']['full_join'];
+      // #43854, 121211, dwildt, 2+
+    $leftJoin   = $arr_return['data']['left_join'];
+    $fullJoin   = $arr_return['data']['full_join'];
       // Set the CSV relations
 
       // RETURN : left_join or full_join
@@ -2307,7 +2315,7 @@ class tx_browser_pi1_sql_auto
       // #43854, 121211, dwildt
       // RETURN : ERROR mmTable is part of left join already
     $leftJoinMmTable = ' LEFT JOIN ' . $mmTable;
-    if( strpos( $leftJoin, $leftJoinMmTable ) === true )
+    if( ! ( strpos( $leftJoin, $leftJoinMmTable ) === false ) )
     {
       if( $this->pObj->b_drs_error )
       {
@@ -2385,11 +2393,17 @@ class tx_browser_pi1_sql_auto
  * @version   3.9.13
  * @since     2.0.0
  */
-  private function get_joinsSetCsv( )
+    // #43854, 121211, dwildt, 1-
+  //private function get_joinsSetCsv( )
+    // #43854, 121211, dwildt, 1+
+  private function get_joinsSetCsv( $leftJoin, $fullJoin )
   {
     $arr_return = array( );
-    $leftJoin   = false;
-    $fullJoin   = false;
+      // #43854, 121211, dwildt, 2-
+    //$leftJoin   = false;
+    //$fullJoin   = false;
+      // #43854, 121211, dwildt, 1+
+    $leftJoinForeignTable = null;
 
       // Get the tables with a CSV relation
     $tables = $this->arr_relations_mm_simple['simple'];
@@ -2449,10 +2463,27 @@ class tx_browser_pi1_sql_auto
       switch( $this->b_left_join )
       {
         case( true ) :
+            // #43854, 121211, dwildt, 1+
           $andLeftJoin =  " LEFT JOIN " . $foreignTable .
                           " ON ( " .
                             $str_query_part .
                           " )" ;
+      // #43854, 121211, dwildt
+      // RETURN : ERROR mmTable is part of left join already
+    $leftJoinForeignTable = ' LEFT JOIN ' . $foreignTable;
+    if( ! ( strpos( $leftJoin, $leftJoinForeignTable ) === false ) )
+    {
+      if( $this->pObj->b_drs_error )
+      {
+        $prompt = 'There is more than one LEFT JOIN for ' .$foreignTable . '.' .
+                  'But the Browser  supports one relation per table only.';
+        t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3 );
+      }
+      break;
+    }
+      // RETURN : ERROR mmTable is part of left join already
+      // #43854, 121211, dwildt
+
             // Add current LEFT JOIN once only
           if( strpos( $leftJoin, $andLeftJoin ) === false )
           {
