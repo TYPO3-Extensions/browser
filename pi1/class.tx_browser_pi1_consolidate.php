@@ -256,15 +256,15 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
       if( $this->pObj->b_drs_warn )
       {
         $prompt = 'WORKAROUND: There isn\'t any foreign table. This case is buggy!';
-        t3lib_div::devlog( '[WARN/SQL] ', $this->pObj->extKey, 3 );
+        t3lib_div::devlog( '[WARN/SQL] ' . $prompt, $this->pObj->extKey, 3 );
       }
         // RETURN first row
       if( $int_rows_unique == 1 )
       {
         if( $this->pObj->b_drs_warn )
         {
-          t3lib_div::devlog('[INFO/SQL] WORKAROUND: First row is returned.',
-            $this->pObj->extKey, 0);
+          $prompt = 'WORKAROUND: First row is returned.';
+          t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
         }
         reset( $rows );
         $firstKey = key( $rows );
@@ -279,9 +279,9 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
       {
         if( $this->pObj->b_drs_error )
         {
-          $prompt = 'WORKAROUND: WORKAROUND: There is more than 1 unique row. ' .
+          $prompt = 'WORKAROUND: There is more than 1 unique row. ' .
                     'And without any foreign table. Sorry, but this can\'t be true!';
-          t3lib_div::devlog( '[ERROR/SQL] ', $this->pObj->extKey, 3 );
+          t3lib_div::devlog( '[ERROR/SQL] ' . $prompt, $this->pObj->extKey, 3 );
         }
       }
     }
