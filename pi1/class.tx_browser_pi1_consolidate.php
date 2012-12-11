@@ -185,11 +185,11 @@ class tx_browser_pi1_consolidate
     }
       // Do we have a showUid not for the local table but for the foreign table? 3.3.3
 
-// #43889
-reset($rows);
-$int_keyFirstRow = key($rows);
-$arr_tableFields = array_keys( $rows[$int_keyFirstRow] );
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_tableFields );
+//// #43889
+//reset($rows);
+//$int_keyFirstRow = key($rows);
+//$arr_tableFields = array_keys( $rows[$int_keyFirstRow] );
+//$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_tableFields );
 
     foreach( ( array ) $rows as $elements )
     {
