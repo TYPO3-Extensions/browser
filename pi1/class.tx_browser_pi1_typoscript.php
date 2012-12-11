@@ -1039,6 +1039,14 @@ class tx_browser_pi1_typoscript
       
       $table = trim( $table );
       $field = trim( $field );
+      
+        // #43889, 121211, dwildt
+      if( $field == 'uid' )
+      {
+        continue;
+      }
+        // #43889, 121211, dwildt
+
       if( ! is_array( $this->arr_realTables_arrFields[$table] ) )
       {
         $this->arr_realTables_arrFields[$table][] = $field;
