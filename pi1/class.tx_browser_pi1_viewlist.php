@@ -193,7 +193,7 @@ class tx_browser_pi1_viewlist
 
 // 24: OK, 167: Bug
 // #43889
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_return );
+$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->csvSelect );
 // #43889
 
 
