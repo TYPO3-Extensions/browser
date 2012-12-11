@@ -230,8 +230,8 @@ class tx_browser_pi1_consolidate
     reset($rows);
     $int_keyFirstRow = key($rows);
     $arr_tableFields = array_keys( $rows[$int_keyFirstRow] );
-// #43889
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_tableFields );
+//// #43889
+//$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_tableFields );
     foreach( ( array ) $arr_tableFields as $tableField )
     {
       list( $table, $field ) = explode( '.', $tableField );
