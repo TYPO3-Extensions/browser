@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010-2011 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2010-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,8 +27,8 @@
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *
+* @version  4.2.0
 * @since    3.4.4
-* @version  4.1.25
 *
 * @package    TYPO3
 * @subpackage  browser
@@ -101,7 +101,7 @@ class tx_browser_pi1_consolidate
  *
  * @param	array		$rows: The rows form the SQL result
  * @return	array		$rows_new: Consolidated rows.
- * @version   4.1.25
+ * @version   4.2.0
  * @since    3.4.4
  */
   function consolidate( $rows )
@@ -249,14 +249,14 @@ class tx_browser_pi1_consolidate
       //               rows will be empty after consolidation
 
 // #43889
-$this->pObj->dev_var_dump( $arr_foreignTables );
+$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
 
     if( empty( $arr_foreignTables ) )
     {
       if( $this->pObj->b_drs_warn )
       {
-        t3lib_div::devlog('[WARN/SQL] WORKAROUND: There isn\'t any foreign table. This case is buggy!',
-          $this->pObj->extKey, 2);
+        $prompt = 'WORKAROUND: There isn\'t any foreign table. This case is buggy!';
+        t3lib_div::devlog( '[WARN/SQL] ', $this->pObj->extKey, 3 );
       }
         // RETURN first row
       if( $int_rows_unique == 1 )
@@ -279,9 +279,9 @@ $this->pObj->dev_var_dump( $arr_foreignTables );
       {
         if( $this->pObj->b_drs_error )
         {
-          t3lib_div::devlog('[ERROR/SQL] WORKAROUND: There is more than 1 unique row. And without any foreign table.'.
-            'Sorry, but this can\'t be true!',
-            $this->pObj->extKey, 3);
+          $prompt = 'WORKAROUND: WORKAROUND: There is more than 1 unique row. ' .
+                    'And without any foreign table. Sorry, but this can\'t be true!';
+          t3lib_div::devlog( '[ERROR/SQL] ', $this->pObj->extKey, 3 );
         }
       }
     }
