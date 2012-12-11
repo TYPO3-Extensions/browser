@@ -244,7 +244,6 @@ class tx_browser_pi1_viewlist
       //  #38612, 120703, dwildt, 1-
     //$res = $arr_return['data']['res'];
       //  #38612, 120703, dwildt+
-//$this->pObj->dev_var_dump( 'Consolidate code!', $arr_return );
     if( isset( $arr_return['data']['res'] ) )
     {
       $res = $arr_return['data']['res'];
@@ -254,8 +253,6 @@ class tx_browser_pi1_viewlist
     {
       $res = $arr_return['limited']['data']['res'];
       $idsForRecordBrowser = $arr_return['unlimited']['data']['idsOfHitsWoCurrTranslation'];
-//var_dump( __METHOD__, __LINE__, $arr_return );
-//var_dump( __METHOD__, __LINE__, $idsForRecordBrowser );
     }
       //  #38612, 120703, dwildt+
   
@@ -273,12 +270,12 @@ class tx_browser_pi1_viewlist
     }
       // DRS
 
-//// #43889
-//reset( $rows );
-//$int_keyFirstRow = key( $rows );
-//$arr_tableFields = array_keys( $rows[$int_keyFirstRow] );
-//$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_tableFields );
-//// #43889
+// #43889
+reset( $rows );
+$int_keyFirstRow = key( $rows );
+$arr_tableFields = array_keys( $rows[$int_keyFirstRow] );
+$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_tableFields );
+// #43889
 
       // Consolidate localisation
     $rows = $this->rows_consolidateLL( $rows );
