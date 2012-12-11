@@ -1025,7 +1025,8 @@ if( $this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 16
  * @param	string		$str_queryPart: The query part out of the global conf_sql.
  * @return	boolean		false
  */
-  function fetch_realTableWiField($str_queryPart) {
+  private function fetch_realTableWiField( $str_queryPart ) 
+  {
 
     if (!$str_queryPart)
     {
@@ -1036,17 +1037,24 @@ if( $this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 16
     $arrTmp[0]  = $arrCsv;
     $arrTmp     = $this->pObj->objSqlFun_3x->replace_tablealias($arrTmp);
     $arrCsv     = $arrTmp[0];
-    foreach((array) $arrCsv as $tableField) {
-      list($table, $field) = explode('.', $tableField);
-      $table = trim($table);
-      $field = trim($field);
-      if(!is_array($this->arr_realTables_arrFields[$table]))
+    foreach( ( array ) $arrCsv as $tableField )
+    {
+      list( $table, $field ) = explode( '.', $tableField );
+        // 121211, dwildt, 4+ 
+      if( empty( $table ) )
+      {
+        continue; 
+      }
+        // 121211, dwildt, 4+ 
+      $table = trim( $table );
+      $field = trim( $field );
+      if( ! is_array( $this->arr_realTables_arrFields[$table] ) )
       {
         $this->arr_realTables_arrFields[$table][] = $field;
       }
-      if(is_array($this->arr_realTables_arrFields[$table]))
+      if( is_array( $this->arr_realTables_arrFields[$table] ) )
       {
-        if(!in_array($field, $this->arr_realTables_arrFields[$table]))
+        if( ! in_array( $field, $this->arr_realTables_arrFields[$table] ) )
         {
           $this->arr_realTables_arrFields[$table][] = $field;
         }
