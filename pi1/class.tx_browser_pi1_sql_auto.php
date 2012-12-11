@@ -30,7 +30,7 @@
  * @package     TYPO3
  * @subpackage  browser
  *
- * @version     4.1.21
+ * @version     4.2.0
  * @since       3.9.12
  */
 
@@ -1984,7 +1984,7 @@ class tx_browser_pi1_sql_auto
  * get_joins( ) : Relation method: Building the relation part for the where clause
  *
  * @return    string        TRUE || FALSE or the SQL-where-clause
- * @version   3.9.13
+ * @version   4.2.0
  * @since     2.0.0
  */
   private function get_joins( )
@@ -2307,7 +2307,7 @@ class tx_browser_pi1_sql_auto
  * @param    [type]        $foreignTable: ...
  * @param    [type]        $leftJoin: ...
  * @return    array
- * @version   3.9.13
+ * @version   4.2.0
  * @since     2.0.0
  */
   private function get_joinsSetMmLeftJoin( $localTable, $mmTable, $foreignTable, $leftJoin )
@@ -2390,7 +2390,7 @@ class tx_browser_pi1_sql_auto
  * get_joinsSetCsv( ) : Relation method: Building the relation part for the where clause
  *
  * @return    string        TRUE || FALSE or the SQL-where-clause
- * @version   3.9.13
+ * @version   4.20
  * @since     2.0.0
  */
     // #43854, 121211, dwildt, 1-
