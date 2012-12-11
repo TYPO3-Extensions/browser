@@ -339,6 +339,8 @@ class tx_browser_pi1_sql_init
       // Get the SELECT statement
 
     $this->pObj->csvSelect  = $conf_view['select'];
+// #43889
+$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->csvSelect );
     $this->pObj->csvSelect  = $this->pObj->objSqlFun->cObjGetSingle
                               (
                                 'select',
@@ -349,8 +351,6 @@ class tx_browser_pi1_sql_init
 // #43889
 $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->csvSelect );
     $this->pObj->csvSelect = $this->pObj->objZz->cleanUp_lfCr_doubleSpace( $this->pObj->csvSelect );
-// #43889
-$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->csvSelect );
 
     if( empty( $this->pObj->csvSelect ) )
     {
