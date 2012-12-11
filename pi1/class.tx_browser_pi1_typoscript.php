@@ -28,8 +28,8 @@
 * @author       Dirk Wildt http://wildt.at.die-netzmacher.de
 * @package      TYPO3
 * @subpackage   browser
-* @version      3.9.19
-   *
+* @version      4.2.0
+* since         2.0.0
 */
 
   /**
@@ -232,6 +232,12 @@ class tx_browser_pi1_typoscript
     static $promptDRSEngine4 = true;
 
 
+// #43889
+    if ($this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167) {
+      $this->pObj->dev_var_dump($this->arr_realTables_arrFields);
+    }
+// #43889
+      
       //////////////////////////////////////////////////////
       //
       // DRS - Development Reporting System
@@ -261,7 +267,8 @@ class tx_browser_pi1_typoscript
     {
       $str_statement  = $arr_dealastable['statement'];
       $str_aliasTable = $arr_dealastable['alias'];
-      $arr_dealAlias[$str_aliasTable] = $str_statement;
+        // 121211, dwildt, 1-
+      //$arr_dealAlias[$str_aliasTable] = $str_statement;
       // I.e.: $conf_sql['select'] = CONCAT(tx_bzdstaffdirectory_persons.title, ' ', tx_bzdstaffdirectory_persons.first_name, ' ', tx_bzdstaffdirectory_persons.last_name), tx_bzdstaffdirectory_groups.group_name
       $lConfSql['select'] = str_replace( $str_statement, $str_aliasTable, $lConfSql['select'] );
       // I.e.: $conf_sql['select'] = tx_bzdstaffdirectory_persons.last_name, tx_bzdstaffdirectory_groups.group_name
@@ -314,12 +321,15 @@ class tx_browser_pi1_typoscript
     $arr_tableField = false;
     if( is_array( $this->conf_view['filter.'] ) )
     {
-      $arr_prompt = array( );
+        // 121211, dwildt, 1-
+      //$arr_prompt = array( );
       foreach( ( array ) $this->conf_view['filter.'] as $tableWiDot => $arrFields )
       {
         // Get piVar name
         $tableField           = $tableWiDot.key( $arrFields );
-        list($table, $field)  = explode( '.', $tableField );
+        list( $table, $field )  = explode( '.', $tableField );
+          // 121211, dwildt, 1+
+        unset( $table );
         $str_nice_piVar       = $arrFields[$field.'.']['nice_piVar'];
         if( ! $str_nice_piVar )
         {
@@ -374,6 +384,12 @@ class tx_browser_pi1_typoscript
     $this->conf_sql = $lConfSql;
       // Set the class var conf_sql
 
+// #43889
+if( $this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167 )
+{
+  $this->pObj->dev_var_dump( $this->arr_realTables_arrFields );
+}
+// #43889
     return $this->arr_realTables_arrFields;
   }
 
@@ -530,6 +546,8 @@ class tx_browser_pi1_typoscript
   */
   function set_confSql( )
   {
+      // 121211, dwildt, 1+
+    $conf_sql = array( );
 
       // DRS
     if ( $this->pObj->b_drs_sql )
@@ -814,13 +832,13 @@ class tx_browser_pi1_typoscript
       // Set the global array conf_sql
 
     $this->pObj->conf_sql = $conf_sql;
-// #43889
-// 24: OK; 167: BUG
-if( $this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167 )
-{
-  $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $conf_sql );
-}
-// #43889
+//// #43889
+//// 24: OK; 167: BUG
+//if( $this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167 )
+//{
+//  $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $conf_sql );
+//}
+//// #43889
     // Set the global array conf_sql
 
     return $conf_sql;
