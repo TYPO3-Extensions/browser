@@ -291,6 +291,12 @@ class tx_browser_pi1_typoscript
     $this->fetch_realTableWiField( $lConfSql['select'] );
       // Fetch used tables from the SELECT statement
 
+// #43889
+    if ($this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167) {
+      $this->pObj->dev_var_dump($this->arr_realTables_arrFields);
+    }
+// #43889
+    
 
       /////////////////////////////////////////////////////
       //
@@ -309,6 +315,12 @@ class tx_browser_pi1_typoscript
     $csvOrderBy = str_ireplace( ' asc',  '', $csvOrderBy );
     $this->fetch_realTableWiField( $csvOrderBy );
 
+// #43889
+    if ($this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167) {
+      $this->pObj->dev_var_dump($this->arr_realTables_arrFields);
+    }
+// #43889
+      
       // Try to fetch used tables from the AND WHERE statement
     if( $lConfSql['andWhere'] )
     {
@@ -319,6 +331,11 @@ class tx_browser_pi1_typoscript
     }
       // Fetch used tables from the SEARCH, ORDER BY and AND WHERE statement
 
+// #43889
+    if ($this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167) {
+      $this->pObj->dev_var_dump($this->arr_realTables_arrFields);
+    }
+// #43889
 
       /////////////////////////////////////////////////////
       //
@@ -374,11 +391,6 @@ class tx_browser_pi1_typoscript
             // DEVELOPMENT: Browser engine 4.x
       }
     }
-// #43889
-    if ($this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167) {
-      $this->pObj->dev_var_dump($this->arr_realTables_arrFields);
-    }
-// #43889
     if( is_array( $arr_tableField ) )
     {
       $arrCsvFilter = implode( ',', $arr_tableField );
