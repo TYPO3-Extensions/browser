@@ -232,11 +232,6 @@ class tx_browser_pi1_typoscript
     static $promptDRSEngine4 = true;
 
 
-// #43889
-    if ($this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167) {
-      $this->pObj->dev_var_dump($this->arr_realTables_arrFields);
-    }
-// #43889
       
       //////////////////////////////////////////////////////
       //
@@ -257,12 +252,7 @@ class tx_browser_pi1_typoscript
       // Set the typoscript configuration for the SQL query
 
 
-// #43889
-    if ($this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167) {
-      $this->pObj->dev_var_dump($this->arr_realTables_arrFields);
-    }
-// #43889
-      
+
       /////////////////////////////////////////////////////
       //
       // Fetch used tables from the SELECT statement
@@ -291,11 +281,6 @@ class tx_browser_pi1_typoscript
     $this->fetch_realTableWiField( $lConfSql['select'] );
       // Fetch used tables from the SELECT statement
 
-// #43889
-    if ($this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167) {
-      $this->pObj->dev_var_dump($this->arr_realTables_arrFields);
-    }
-// #43889
     
 
       /////////////////////////////////////////////////////
@@ -407,12 +392,6 @@ class tx_browser_pi1_typoscript
     $this->conf_sql = $lConfSql;
       // Set the class var conf_sql
 
-// #43889
-if( $this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167 )
-{
-  $this->pObj->dev_var_dump( $this->arr_realTables_arrFields );
-}
-// #43889
     return $this->arr_realTables_arrFields;
   }
 
@@ -1020,32 +999,44 @@ if( $this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 16
 
 
 /**
- * Allocates the class array arr_table_wi_arrFields with realname tables and there fields
+ * fetch_realTableWiField( )  : Allocates the class array arr_table_wi_arrFields with realname 
+ *                              tables and there fields
  *
- * @param	string		$str_queryPart: The query part out of the global conf_sql.
- * @return	boolean		false
+ * @param	string		$str_queryPart: The SQL query part out of the global conf_sql.
+ * @return	void
+ * 
+ * @version     4.2.0
+ * @since       2.0.0
  */
   private function fetch_realTableWiField( $str_queryPart ) 
   {
 
-    if (!$str_queryPart)
+      // RETURN : $str_queryPart is empty
+    if ( empty( $str_queryPart ) )
     {
       return false;
     }
+      // RETURN : $str_queryPart is empty
+
     $arrCsv     = explode(',', $str_queryPart);
     $arrCsv     = $this->pObj->objSqlFun_3x->clean_up_as_and_alias($arrCsv);
     $arrTmp[0]  = $arrCsv;
     $arrTmp     = $this->pObj->objSqlFun_3x->replace_tablealias($arrTmp);
     $arrCsv     = $arrTmp[0];
+    
+      // LOOP each query part
     foreach( ( array ) $arrCsv as $tableField )
     {
       list( $table, $field ) = explode( '.', $tableField );
-        // 121211, dwildt, 4+ 
+        // 121211, dwildt, 6+ 
+        // CONTINUE : table is empty
       if( empty( $table ) )
       {
         continue; 
       }
-        // 121211, dwildt, 4+ 
+        // CONTINUE : table is empty
+        // 121211, dwildt, 6+
+      
       $table = trim( $table );
       $field = trim( $field );
       if( ! is_array( $this->arr_realTables_arrFields[$table] ) )
@@ -1060,7 +1051,9 @@ if( $this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 16
         }
       }
     }
-    return false;
+      // LOOP each query part
+
+    return;
   }
 
 
