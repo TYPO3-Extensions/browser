@@ -185,13 +185,6 @@ class tx_browser_pi1_consolidate
     }
       // Do we have a showUid not for the local table but for the foreign table? 3.3.3
 
-//// #43889
-//reset($rows);
-//$int_keyFirstRow = key($rows);
-//$arr_tableFields = array_keys( $rows[$int_keyFirstRow] );
-//$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_tableFields );
-//// #43889
-
     foreach( ( array ) $rows as $elements )
     {
       $arr_localTable_uid[] = $elements[$localTable.'.uid'];
@@ -230,8 +223,6 @@ class tx_browser_pi1_consolidate
     reset($rows);
     $int_keyFirstRow = key($rows);
     $arr_tableFields = array_keys( $rows[$int_keyFirstRow] );
-//// #43889
-//$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_tableFields );
     foreach( ( array ) $arr_tableFields as $tableField )
     {
       list( $table, $field ) = explode( '.', $tableField );
@@ -260,9 +251,6 @@ class tx_browser_pi1_consolidate
 
       // BUG (101029): If there are only rows from the local table,
       //               rows will be empty after consolidation
-
-//// #43889
-//$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
 
     if( empty( $arr_foreignTables ) )
     {
@@ -750,10 +738,6 @@ class tx_browser_pi1_consolidate
     //
     // Init RETURN array
 
-//// #43889
-//// 24: OK; 167: BUG
-//$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->arr_realTables_arrFields );
-//// #43889
     $arr_return = array( );
     $arr_return['data']['arrFetchedTables'] = $this->pObj->arr_realTables_arrFields;
     if( isset( $this->pObj->arrConsolidate['addedTableFields'] ) )

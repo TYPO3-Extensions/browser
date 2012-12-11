@@ -191,11 +191,6 @@ class tx_browser_pi1_viewlist
     }
       // Set SQL query parts in general and statements for rows
 
-//// 24 and 167: the same
-//// #43889
-//$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->csvSelect );
-//// #43889
-
 
 
       //////////////////////////////////////////////////////////////////////
@@ -273,14 +268,6 @@ class tx_browser_pi1_viewlist
       t3lib_div::devlog('[ERROR/TODO] ' . $prompt, $this->pObj->extKey, 3);
     }
       // DRS
-
-//// 24: OK, 167: Bug
-//// #43889
-//reset( $rows );
-//$int_keyFirstRow = key( $rows );
-//$arr_tableFields = array_keys( $rows[$int_keyFirstRow] );
-//$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_tableFields );
-//// #43889
 
       // Consolidate localisation
     $rows = $this->rows_consolidateLL( $rows );
@@ -1722,10 +1709,6 @@ class tx_browser_pi1_viewlist
 
       // SQL query array
     $select = $this->pObj->objSqlInit->statements['listView']['select'];
-//// 24: OK; 167: BUG
-//// #43889
-//$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $select );
-//// #43889
 
     $select = $this->sql_selectLocalised( $select );
 

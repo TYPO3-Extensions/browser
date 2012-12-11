@@ -40,7 +40,6 @@
             Effected files:
             * res/js/jquery/plugins/jquery.t3browser/jquery.t3browser-0.0.3.js
             * res/js/tx_browser_pi1_ajax-0.0.4.js
-
   Improvement
   * #43737: Remove button method
             tx_browser_pi1_cleanup_4.1.21.js -> tx_browser_pi1_cleanup_4.2.0.js
@@ -54,8 +53,9 @@
             * res/js/jquery/tx_browser_pi1_cleanup_4.2.0.js
             * res/js/jquery/tx_browser_pi1_cleanup_4.1.21.js
   Bugfix
-  * #43889: consolidation module: foreign table is missing in special case
-
+  * #43889: consolidation module: foreign table is missing, if andWhere contains table.uid
+            Effected files:
+            * pi1/class.tx_browser_pi1_typoscript.php
   * #43852: CSV-Export: Is ignored, if you are using several plugins
             Workaround documented. See
             * http://typo3.org/extensions/repository/view/browser_tut_rss_en/

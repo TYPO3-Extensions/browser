@@ -2872,30 +2872,11 @@ class tx_browser_pi1_sql_auto
  *
  * @param    string        $csvSelect : current SQL statement
  * @return    string        $csvSelect : the statement with the table.uid
- * @version 3.9.12
+ * @version 4.2.0
  * @since   3.9.12
  */
   private function zz_addUidsToSelect( $csvSelect )
   {
-//// #43889
-//// 24: OK;
-////array (
-////  0 => 'fe_users.uid',
-////  1 => 'fe_users.pid',
-////  2 => 'fe_groups.uid',
-////  3 => 'fe_groups.pid',
-////  4 => 'tx_org_department.uid',
-////  5 => 'tx_org_department.pid',
-////) 
-//// 167: BUG
-//// array (
-////  0 => 'fe_users.uid',
-////  1 => 'fe_users.pid',
-////  2 => 'fe_groups.pid',
-////  3 => 'tx_org_department.pid',
-////)
-//$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $this->pObj->arrConsolidate['addedTableFields'] );
-//// #43889
     
     if( ! is_array( $this->pObj->arrConsolidate['addedTableFields'] ) )
     {
@@ -2905,6 +2886,8 @@ class tx_browser_pi1_sql_auto
     foreach( ( array ) $this->pObj->arrConsolidate['addedTableFields'] as $tableField )
     {
       list( $table, $field ) = explode( '.', $tableField );
+        // 121211, dwildt, 1+
+      unset( $table );
       if( $field == 'uid' )
       {
         $csvSelect = $csvSelect . ", " . $tableField . " AS '" . $tableField . "'";

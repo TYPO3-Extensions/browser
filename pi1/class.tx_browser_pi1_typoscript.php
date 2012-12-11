@@ -307,17 +307,7 @@ class tx_browser_pi1_typoscript
       $arr_result        = $this->pObj->objSqlFun_3x->get_propper_andWhere( $lConfSql['andWhere'] );
       $strCsvTableFields = implode( ',', $arr_result['data']['arr_used_tableFields'] );
       unset( $arr_result );
-// #43889
-    if ($this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167) {
-      $this->pObj->dev_var_dump($this->arr_realTables_arrFields);
-    }
-// #43889
       $this->fetch_realTableWiField( $strCsvTableFields, 'andWhere' );
-// #43889
-    if ($this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167) {
-      $this->pObj->dev_var_dump($this->arr_realTables_arrFields);
-    }
-// #43889
     }
       // Fetch used tables from the SEARCH, ORDER BY and AND WHERE statement
 
@@ -834,14 +824,7 @@ class tx_browser_pi1_typoscript
       // Set the global array conf_sql
 
     $this->pObj->conf_sql = $conf_sql;
-//// #43889
-//// 24: OK; 167: BUG
-//if( $this->pObj->cObj->data['uid'] == 24 || $this->pObj->cObj->data['uid'] == 167 )
-//{
-//  $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $conf_sql );
-//}
-//// #43889
-    // Set the global array conf_sql
+      // Set the global array conf_sql
 
     return $conf_sql;
 
