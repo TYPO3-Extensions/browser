@@ -222,7 +222,9 @@ class tx_browser_pi1_consolidate
 
     reset($rows);
     $int_keyFirstRow = key($rows);
-    $arr_tableFields = array_keys($rows[$int_keyFirstRow]);
+    $arr_tableFields = array_keys( $rows[$int_keyFirstRow] );
+// #43889
+$this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_tableFields );
     foreach( ( array ) $arr_tableFields as $tableField )
     {
       list( $table, $field ) = explode( '.', $tableField );
@@ -234,13 +236,12 @@ class tx_browser_pi1_consolidate
         }
       }
     }
-    $arr_foreignTables = array_unique($arr_foreignTables);
+    $arr_foreignTables = array_unique( $arr_foreignTables );
     if ($this->pObj->b_drs_sql)
     {
       $prompt_foreignTables = implode('<br />', $arr_foreignTables);
-      t3lib_div::devlog('[INFO/SQL] We found this foreign tables with an uid field:<br />
-        <br />
-        '.$prompt_foreignTables, $this->pObj->extKey, 0);
+      $prompt = 'We found this foreign tables with an uid field: ' . $prompt_foreignTables;
+      t3lib_div::devlog( '[INFO/SQL] ' . $prompt, $this->pObj->extKey, 0 );
     }
       // Get all foreign tables, which have an uid
 
@@ -841,12 +842,12 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
     static $bool_this_firstLoop     = true;
     static $arr_fields_wi_relation  = null;
 
-    $conf = $this->pObj->conf;
-    $mode = $this->pObj->piVar_mode;
-    $view = $this->pObj->view;
-
-    $viewWiDot = $view.'.';
-    $conf_view = $conf['views.'][$viewWiDot][$mode.'.'];
+      // 121211, dwildt, 5-
+    //$conf = $this->pObj->conf;
+    //$mode = $this->pObj->piVar_mode;
+    //$view = $this->pObj->view;
+    //$viewWiDot = $view.'.';
+    //$conf_view = $conf['views.'][$viewWiDot][$mode.'.'];
 
     $rows = $this->pObj->rows;
     //var_dump('cons 748', $rows);
@@ -1212,7 +1213,10 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
       if($bool_handle)
       {
         $arr_tsConf_value = null;
-        foreach((array) $arr_result as $tsConfkey_path => $tsConf_value)
+          // 121211, dwildt, 1-
+        //foreach((array) $arr_result as $tsConfkey_path => $tsConf_value)
+          // 121211, dwildt, 1+
+        foreach( array_keys( ( array ) $arr_result ) as $tsConfkey_path )
         {
           $str_searchFor    = '/.value$/';
           preg_match($str_searchFor, $tsConfkey_path, $arr_result);
@@ -1232,7 +1236,10 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
       // Get all tsConf TEXT arrays with values with markers for foreign tables
       if($bool_handle)
       {
-        foreach((array) $arr_tsConf_value as $key_value => $value_value)
+          // 121211, dwildt, 1-
+        //foreach((array) $arr_tsConf_value as $key_value => $value_value)
+          // 121211, dwildt, 1+
+        foreach( array_keys( ( array ) $arr_tsConf_value ) as $key_value )
         {
           $key_TEXT = substr($key_value, 0, strlen($key_value) - strlen('.value'));
           if($arr_ts_one_dimension[$key_TEXT] == 'TEXT')
@@ -1315,8 +1322,11 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
 
 
 
-    // Loop: Each TEXT ts conf with marker for foreign tables
-    foreach((array) $arr_tsConf_TEXT_path_wi_marker as $key_TEXT => $value_TEXT)
+      // Loop: Each TEXT ts conf with marker for foreign tables
+      // 121211, dwildt, 1+
+    //foreach((array) $arr_tsConf_TEXT_path_wi_marker as $key_TEXT => $value_TEXT)
+      // 121211, dwildt, 1+
+    foreach( array_keys( ( array ) $arr_tsConf_TEXT_path_wi_marker ) as $key_TEXT )
     {
 
       $bool_handle = true;
@@ -1404,7 +1414,8 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
       // Get rows from the foreign table
       if($bool_handle)
       {
-        $arr_uid_foreign = explode(',', $this->arr_row_current[$tableField]);
+          // 121211, dwildt, 1-
+        //$arr_uid_foreign = explode(',', $this->arr_row_current[$tableField]);
 
         $select_fields  = '*';
         $from_table     = $foreign_table;
@@ -1416,10 +1427,28 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
         }
         if ($this->pObj->b_drs_sql)
         {
-          $query = $GLOBALS['TYPO3_DB']->SELECTquery($select_fields,$from_table,$where_clause,$groupBy='',$orderBy,$limit='');
+          $query = $GLOBALS['TYPO3_DB']->SELECTquery(
+                                            $select_fields,
+                                            $from_table,
+                                            $where_clause,
+                                            $groupBy='',
+                                            $orderBy,
+                                            $limit=''
+                                          );
           t3lib_div::devlog('[INFO/SQL] manipulate_tsConf(): '.$query, $this->pObj->extKey, 0);
         }
-        $rows_foreignTable = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows($select_fields,$from_table,$where_clause,$groupBy='',$orderBy,$limit='',$uidIndexField='');
+        $rows_foreignTable = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+                                                      $select_fields,
+                                                      $from_table,
+                                                      $where_clause,
+                                                      $groupBy='',
+                                                      $orderBy,
+                                                        // 121211, dwildt, 1+
+                                                      $limit=''
+                                                        // 121211, dwildt, 2-
+                                                      //$limit='',
+                                                      //$uidIndexField=''
+                                                    );
         if(empty($rows_foreignTable))
         {
           if ($this->pObj->b_drs_warn)
@@ -1541,23 +1570,10 @@ $this->pObj->dev_var_dump( $this->pObj->cObj->data['uid'], $arr_foreignTables );
 
 
 
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-  }
-
-  if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_consolidate.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_consolidate.php']);
-  }
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_consolidate.php']) {
+  include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/browser/pi1/class.tx_browser_pi1_consolidate.php']);
+}
 
 ?>
