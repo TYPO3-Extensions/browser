@@ -2233,14 +2233,13 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->typo3Version = $version;
       // Set TYPO3 version as integer (sample: 4.7.7 -> 4007007)
 
-    //if( ( int ) $this->typo3Version > 1 ) 
-    if(  1 ) 
+    if( $this->typo3Version < 3000000 ) 
     {
       $prompt = '<h1>ERROR</h1>
         <h2>Unproper TYPO3 version</h2>
         <ul>
           <li>
-            TYPO3 version can\'t inpected
+            TYPO3 version is smaller than 3.0.0
           </li>
           <li>
             constant TYPO3_version: ' . TYPO3_version . '
@@ -2252,8 +2251,7 @@ class tx_browser_pi1 extends tslib_pibase {
           ';
       die ( $prompt );
     }
-//$this->dev_var_dump( $this->typo3Version );   
-//die( TYPO3_version . ' | ' . $this->typo3Version );
+
       // Set the global $bool_typo3_43
     if( $this->typo3Version >= 4003000 )
     {
