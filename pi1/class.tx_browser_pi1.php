@@ -2219,21 +2219,40 @@ class tx_browser_pi1 extends tslib_pibase {
   {
       // #43108, 121212, dwildt, +
       // RETURN : typo3Version is set
-    if( ! ( $this->typo3Version === null ) )
+    if( $this->typo3Version !== null )
     {
       return;
     }
       // RETURN : typo3Version is set
     
+    //if( ( int ) $this->typo3Version < 1 ) 
+    if( 1 ) 
+    {
+      $prompt = '<h1>ERROR</h1>
+        <h2>Unproper TYPO3 version</h2>
+        <ul>
+          <li>
+            TYPO3 version can\'t inpected
+          </li>
+          <li>
+            constant TYPO3_version: ' . TYPO3_version . '
+          </li>
+          <li>
+            integer $this->typo3Version: ' . $this->typo3Version . '
+          </li>
+        </ul>
+          ';
+      die ( $prompt );
+    }
       // Set TYPO3 version as integer like 400700017
-    list( $main, $sub, $bugfix ) = implode( '.', TYPO3_version );
+    list( $main, $sub, $bugfix ) = explode( '.', TYPO3_version );
     $main   = sprintf( "[%030s]", $main );
     $sub    = sprintf( "[%030s]", $sub );
     $bugfix = sprintf( "[%030s]", $bugfix );
     $this->typo3Version = ( int ) ( $main . $sub . $bugfix );
       // Set TYPO3 version as integer like 400700017
-$this->dev_var_dump( $this->typo3Version );   
-die( TYPO3_version . ' | ' . $this->typo3Version );
+//$this->dev_var_dump( $this->typo3Version );   
+//die( TYPO3_version . ' | ' . $this->typo3Version );
       // Set the global $bool_typo3_43
     if( $this->typo3Version >= 4003000 )
     {
