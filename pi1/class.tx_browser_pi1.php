@@ -2227,9 +2227,9 @@ class tx_browser_pi1 extends tslib_pibase {
     
       // Set TYPO3 version as integer like 400700017
     list( $main, $sub, $bugfix ) = explode( '.', TYPO3_version );
-    $main   = sprintf( "[%030s]", $main );
-    $sub    = sprintf( "[%030s]", $sub );
-    $bugfix = sprintf( "[%030s]", $bugfix );
+    $main   = sprintf( '%03d', $main );
+    $sub    = sprintf( '%03d', $sub );
+    $bugfix = sprintf( '%03d', $bugfix );
     $this->typo3Version = ( int ) ( $main . $sub . $bugfix );
       // Set TYPO3 version as integer like 400700017
 
