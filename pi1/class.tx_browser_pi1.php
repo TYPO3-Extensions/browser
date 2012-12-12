@@ -2219,7 +2219,7 @@ class tx_browser_pi1 extends tslib_pibase {
   {
       // #43108, 121212, dwildt, +
       // RETURN : typo3Version is set
-    if( $this->typo3Version !== null )
+    if( ! ( $this->typo3Version === null ) )
     {
       return;
     }
