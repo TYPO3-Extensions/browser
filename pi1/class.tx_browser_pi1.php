@@ -2233,7 +2233,8 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->typo3Version = ( int ) ( $main . $sub . $bugfix );
       // Set TYPO3 version as integer like 400700017
 
-    if( ( int ) $this->typo3Version > 1 ) 
+    //if( ( int ) $this->typo3Version > 1 ) 
+    if(  1 ) 
     {
       $prompt = '<h1>ERROR</h1>
         <h2>Unproper TYPO3 version</h2>
