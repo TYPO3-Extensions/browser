@@ -2225,25 +2225,6 @@ class tx_browser_pi1 extends tslib_pibase {
     }
       // RETURN : typo3Version is set
     
-    //if( ( int ) $this->typo3Version < 1 ) 
-    if( ( int ) $this->typo3Version < 1 ) 
-    {
-      $prompt = '<h1>ERROR</h1>
-        <h2>Unproper TYPO3 version</h2>
-        <ul>
-          <li>
-            TYPO3 version can\'t inpected
-          </li>
-          <li>
-            constant TYPO3_version: ' . TYPO3_version . '
-          </li>
-          <li>
-            integer $this->typo3Version: ' . ( int ) $this->typo3Version . '
-          </li>
-        </ul>
-          ';
-      die ( $prompt );
-    }
       // Set TYPO3 version as integer like 400700017
     list( $main, $sub, $bugfix ) = explode( '.', TYPO3_version );
     $main   = sprintf( "[%030s]", $main );
