@@ -106,6 +106,14 @@ class tx_browser_pi1 extends tslib_pibase {
 
     ////////////////////////////////////////////////////////////////////
     //
+    // TYPO3
+
+    // [INTEGER] TYPO3 version. Example 400700017 (4.7.17)
+  var $typo3Version = null;
+    // TYPO3
+    
+    ////////////////////////////////////////////////////////////////////
+    //
     // TYPO3 extension
 
     // Same as class name
@@ -118,7 +126,6 @@ class tx_browser_pi1 extends tslib_pibase {
     // [Array] values out of the extConf file
   var $arr_extConf    = null;
     // TYPO3 extension
-
 
 
     ////////////////////////////////////////////////////////////////////
@@ -2197,40 +2204,71 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
 
-  /**
+/**
  * get_typo3version( ): Get the current TYPO3 version, move it to an integer
  *                      and set the global $bool_typo3_43
+ *                      This method is independent from
+ *                        * t3lib_div::int_from_ver (upto 4.7)
+ *                        * t3lib_utility_VersionNumber::convertVersionNumberToInteger (from 4.7)
  *
  * @return    void
- * @version 3.9.17
+ * @version 4.2.0
  * @since   2.0.0
  */
   private function get_typo3version( )
   {
-      // Get the current TYPO3 version
-    $str_version = TYPO3_version;
-
-      // Set default value
-    if( ! $str_version )
+      // #43108, 121212, dwildt, +
+      // RETURN : typo3Version is set
+    if( $this->typo3Version !== null )
     {
-      $str_version = '4.2.9';
+      return;
     }
-      // Set default value
-
-      // Move version to an integer
-    $int_version = t3lib_div::int_from_ver( $str_version );
-    $this->typo3Version = $int_version;
-
+      // RETURN : typo3Version is set
+    
+      // Set TYPO3 version as integer like 400700017
+    list( $main, $sub, $bugfix ) = implode( '.', TYPO3_version );
+    $main   = sprintf( "[%030s]", $main );
+    $sub    = sprintf( "[%030s]", $sub );
+    $bugfix = sprintf( "[%030s]", $bugfix );
+    $this->typo3Version = ( int ) ( $main . $sub . $bugfix );
+      // Set TYPO3 version as integer like 400700017
+$this->dev_var_dump( $this->typo3Version );    
       // Set the global $bool_typo3_43
-    if( $int_version >= 4003000 )
+    if( $this->typo3Version >= 4003000 )
     {
       $this->bool_typo3_43 = true;
     }
-    if( $int_version < 4003000 )
+    if( $this->typo3Version < 4003000 )
     {
       $this->bool_typo3_43 = false;
     }
       // Set the global $bool_typo3_43
+      // #43108, 121212, dwildt, +
+    
+//      // Get the current TYPO3 version
+//    $str_version = TYPO3_version;
+//
+//      // Set default value
+//    if( ! $str_version )
+//    {
+//      $str_version = '4.2.9';
+//    }
+//      // Set default value
+//
+//      // Move version to an integer
+//    $int_version = t3lib_div::int_from_ver( $str_version );
+//    $this->typo3Version = $int_version;
+//
+//      // Set the global $bool_typo3_43
+//    if( $int_version >= 4003000 )
+//    {
+//      $this->bool_typo3_43 = true;
+//    }
+//    if( $int_version < 4003000 )
+//    {
+//      $this->bool_typo3_43 = false;
+//    }
+//      // Set the global $bool_typo3_43
   }
 
 
