@@ -2233,7 +2233,7 @@ class tx_browser_pi1 extends tslib_pibase {
     $this->typo3Version = ( int ) ( $main . $sub . $bugfix );
       // Set TYPO3 version as integer like 400700017
 $this->dev_var_dump( $this->typo3Version );   
-die( $this->typo3Version );
+die( TYPO3_version . ' | ' . $this->typo3Version );
       // Set the global $bool_typo3_43
     if( $this->typo3Version >= 4003000 )
     {
