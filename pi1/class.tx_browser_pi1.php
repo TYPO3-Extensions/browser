@@ -108,7 +108,7 @@ class tx_browser_pi1 extends tslib_pibase {
     //
     // TYPO3
 
-    // [INTEGER] TYPO3 version. Example 400700017 (4.7.17)
+    // [INTEGER] TYPO3 version. Sample: 4.7.7 -> 4007007
   var $typo3Version = null;
     // TYPO3
     
