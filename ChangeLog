@@ -26,7 +26,7 @@
             * res/html/default.tmpl
             * res/html/default_ul.tmpl (removed)
             * static/setup.txt
-  * #33841: AJAX: optimised JSS code for transparncy in IE 8
+  * #33841: AJAX: optimised JSS code for transparency in IE 8
             Thanks to Renate for publish this feature
             * jquery.t3browser-0.0.3.js -> jquery.t3browser-0.0.4.js
             * tx_browser_pi1_ajax-0.0.4.js -> tx_browser_pi1_ajax-0.0.5.js

@@ -19,8 +19,6 @@
       <label index="manuals.browser_manual_ootb_en.title">Browser - TYPO3 without PHP: Out of the box</label>
       <label index="manuals.browser_manual_ootb_en.description">Browser - TYPO3 without PHP: Install the Browser out of the box!</label>
       <label index="tutorials.section_header">Browser Tutorials</label>
-      <label index="tutorials.browser_tut_ajax_en.title">Browser Tutorial AJAX</label>
-      <label index="tutorials.browser_tut_ajax_en.description">Publish your data supported by AJAX.</label>
       <label index="tutorials.browser_tut_basics_en.title">Browser Tutorial Basics</label>
       <label index="tutorials.browser_tut_basics_en.description">Step-by-step introduction for the basics.</label>
       <label index="tutorials.browser_tut_befilter_en.title">Browser Tutorial Backend Filter</label>
@@ -37,6 +35,8 @@
       <label index="tutorials.browser_tut_hooks_en.description">Use hooks for your data. Handle data of any extension in your extension.</label>
       <label index="tutorials.browser_tut_images_en.title">Browser Tutorial Images</label>
       <label index="tutorials.browser_tut_images_en.description">Configuring images and galeries.</label>
+      <label index="tutorials.browser_tut_jss_en.title">Browser Tutorial JavaScript</label>
+      <label index="tutorials.browser_tut_jss_en.description">The Browser - TYPO3 without PHP - supports the using of ready JSS scripts and the integration of JavaScript frameworks like jquery. This tutorials has some examples for AJAX, own Designs with jQuery and t3jquery in principle.</label>
       <label index="tutorials.browser_tut_labeling_en.title">Browser Tutorial Labeling</label>
       <label index="tutorials.browser_tut_labeling_en.description">Labeling and field properties.</label>
       <label index="tutorials.browser_tut_localisation_en.title">Browser Tutorial Localisation</label>
@@ -89,8 +89,6 @@
       <label index="manuals.browser_manual_ootb_en.title">Browser - TYPO3 ohne PHP - Out of the box</label>
       <label index="manuals.browser_manual_ootb_en.description">Browser - TYPO3 ohne PHP. Installiere den Browser Out-of-the-Box!</label>
       <label index="tutorials.section_header">Browser Tutorials</label>
-      <label index="tutorials.browser_tut_ajax_en.title">Browser Tutorial AJAX</label>
-      <label index="tutorials.browser_tut_ajax_en.description">Ver<![CDATA[&ouml;]]>ffentliche Deine Daten und benutze dabei AJAX!</label>
       <label index="tutorials.browser_tut_basics_en.title">Browser Tutorial Basics - Grundlagen</label>
       <label index="tutorials.browser_tut_basics_en.description">Einf<![CDATA[&uuml;]]>hrung in die Grundlagen. Die wichtigste Unterlage nach dem Manual und vor jedem anderen Tutorial. U.a.: stdWrap, HTML-Templating, Optimierung f<![CDATA[&uuml;]]>r Suchmaschinen.</label>
       <label index="tutorials.browser_tut_befilter_en.title">Browser Tutorial Backend Filter</label>
@@ -107,6 +105,8 @@
       <label index="tutorials.browser_tut_hooks_en.description">Benutze Hooks <![CDATA[f&uuml;r]]> Deine Daten. Verarbeite die Daten von jeder Extension in Deiner Extension.</label>
       <label index="tutorials.browser_tut_images_en.title">Browser Tutorial Images - Bilder</label>
       <label index="tutorials.browser_tut_images_en.description">Bilder konfigurieren und Bildergalerien benutzen.</label>
+      <label index="tutorials.browser_tut_jss_en.title">Browser Tutorial JavaScript</label>
+      <label index="tutorials.browser_tut_jss_en.description">Mit dem Browser - TYPO3 ohne PHP - kannst Du mächtige JavaScript-Funktionen und JavaScript Frameworks wie jQuery benutzen. Das Tutorial zeigt Dir ein paar Beispiele mit AJAX und eigenen Designs mit jQuery und t3jquery.</label>
       <label index="tutorials.browser_tut_labeling_en.title">Browser Tutorial Labelling - Bezeichnungen</label>
       <label index="tutorials.browser_tut_labeling_en.description">Felder bezeichnen und Eigenschaften <![CDATA[&auml;]]>ndern.</label>
       <label index="tutorials.browser_tut_localisation_en.title">Browser Tutorial Localisation - Sprachen</label>
