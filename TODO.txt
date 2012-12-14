@@ -1,0 +1,7 @@
+4.3.0
+  Feature
+  * #43108: TYPO3 6.0 compatibility
+            See: http://wiki.typo3.org/TYPO3_6.0_Incompatible_Extensions_B -> browser
+            t3lib_div::intInRange   ->  t3lib_utility_Math::forceIntegerInRange()
+            t3lib_div::int_from_ver ->  t3lib_utility_VersionNumber::convertVersionNumberToInteger()
+            t3lib_div::cHashParams  ->  t3lib_cacheHash
