@@ -29,7 +29,7 @@
  * @author      Dirk Wildt <http://wildt.at.die-netzmacher.de>
  * @package     TYPO3
  * @subpackage  browser
- * @version     4.1.26
+ * @version     4.3.1
  * @since       3.9.9
  */
 
@@ -1500,8 +1500,6 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
  */
   private function count_chars_resSqlCount( $currSqlCharset )
   {
-    static $drsPrompt = true;
-
       // Build FIND IN SET
     $strFindInSet = null;
     foreach( $this->findInSet as $arrfindInSet )
@@ -1543,7 +1541,7 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
  * @param    string        $strFindInSet : Current SQL charset for reset in error case
  * @param    [type]        $currSqlCharset: ...
  * @return    array        $arr_return     : SQL ressource or an error message in case of an error
- * @version 3.9.13
+ * @version 4.3.1
  * @since   3.9.11
  */
   private function count_chars_resSqlCountDefLL( $strFindInSet, $currSqlCharset )
@@ -1565,18 +1563,32 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
           // #41051, 120918, dwildt, 2-
 //        $uid      = "UPPER ( " . $tableUid . " )";
 //        $initial  = "UPPER ( " . $tableField . " )";
+          // #44125, 121218, dwildt, 3-
+//          // #41051, 120918, dwildt, 2+
+//        $uid      = "upper ( " . $tableUid . " )";
+//        $initial  = "upper ( " . $tableField . " )";
+          // #44125, 121218, dwildt, 3+
           // #41051, 120918, dwildt, 2+
-        $uid      = "upper ( " . $tableUid . " )";
-        $initial  = "upper ( " . $tableField . " )";
+        $uid      = "upper( " . $tableUid . " )";
+        $initial  = "upper( " . $tableField . " )";
         break;
     }
 
       // Query for all filter items
-    $select = "COUNT( DISTINCT " . $uid . " ) AS 'count', LEFT ( " . $initial . ", 1 ) AS 'initial'";
+      // #44125, 121218, dwildt, 1-
+//    $select = "COUNT( DISTINCT " . $uid . " ) AS 'count', LEFT ( " . $initial . ", 1 ) AS 'initial'";
+      // #44125, 121218, dwildt, 1+
+    $select = "COUNT( DISTINCT " . $uid . " ) AS 'count', LEFT( " . $initial . ", 1 ) AS 'initial'";
     $from   = $this->sqlStatement_from( $table );
     $where  = $this->sqlStatement_where( $table, $strFindInSet );
-    $groupBy  = "LEFT ( " . $initial . ", 1 )";
-    $orderBy  = "LEFT ( " . $initial . ", 1 )";
+      // #44125, 121218, dwildt, 3-
+//    $select = "COUNT( DISTINCT " . $uid . " ) AS 'count', LEFT ( " . $initial . ", 1 ) AS 'initial'";
+//    $groupBy  = "LEFT ( " . $initial . ", 1 )";
+//    $orderBy  = "LEFT ( " . $initial . ", 1 )";
+      // #44125, 121218, dwildt, 3+
+    $select = "COUNT( DISTINCT " . $uid . " ) AS 'count', LEFT( " . $initial . ", 1 ) AS 'initial'";
+    $groupBy  = "LEFT( " . $initial . ", 1 )";
+    $orderBy  = "LEFT( " . $initial . ", 1 )";
     $limit    = null;
 
       // Execute the query
@@ -1792,16 +1804,15 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
  * @param    array        $arrfindInSet   : FIND IN SET statement with proper length
  * @param    string        $currSqlCharset : Current SQL charset for reset in error case
  * @return    array        $arr_return     : SQL ressource or an error message in case of an error
- * @version 3.9.12
+ * @version 4.3.1
  * @since   3.9.10
  */
   private function count_specialChars_resSqlCount( $length, $arrfindInSet, $currSqlCharset )
   {
-    static $drsPrompt = true;
-
-      // Get current table.field of the index browser
-    $tableField     = $this->indexBrowserTableField;
-    list( $table )  = explode( '.', $tableField );
+      // 121218, dwildt, 3-
+//      // Get current table.field of the index browser
+//    $tableField     = $this->indexBrowserTableField;
+//    list( $table )  = explode( '.', $tableField );
 
     $strFindInSet = "(" . implode ( " OR ", $arrfindInSet ) . ")";
 
@@ -1836,24 +1847,30 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
  * @param    array        $strFindInSet   : FIND IN SET statement with proper length
  * @param    string        $currSqlCharset : Current SQL charset for reset in error case
  * @return    array        $arr_return     : SQL ressource or an error message in case of an error
- * @version 3.9.13
+ * @version 4.3.1
  * @since   3.9.13
  */
   private function count_specialChars_resSqlCountDefLL( $length, $strFindInSet, $currSqlCharset )
   {
-    static $drsPrompt = true;
-
       // Get current table.field of the index browser
     $tableField     = $this->indexBrowserTableField;
     list( $table )  = explode( '.', $tableField );
 
       // Query for all filter items
+      // #44125, 121218, dwildt, 2-
+//    $select       = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', " .
+//                    "LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
+      // #44125, 121218, dwildt, 2+
     $select       = "COUNT( DISTINCT " . $table . ".uid ) AS 'count', " .
-                    "LEFT ( " . $tableField . ", " . $length . " ) AS 'initial'";
+                    "LEFT( " . $tableField . ", " . $length . " ) AS 'initial'";
     $from         = $this->sqlStatement_from( $table );
     $where        = $this->sqlStatement_where( $table, $strFindInSet );
-    $groupBy      = "LEFT ( " . $tableField . ", " . $length . " )";
-    $orderBy      = "LEFT ( " . $tableField . ", " . $length . " )";
+      // #44125, 121218, dwildt, 2-
+//    $groupBy      = "LEFT ( " . $tableField . ", " . $length . " )";
+//    $orderBy      = "LEFT ( " . $tableField . ", " . $length . " )";
+      // #44125, 121218, dwildt, 2+
+    $groupBy      = "LEFT( " . $tableField . ", " . $length . " )";
+    $orderBy      = "LEFT( " . $tableField . ", " . $length . " )";
     $limit        = null;
 
       // Execute the query
@@ -2326,7 +2343,7 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
  * @param    string        $uidListDefAndCurr  : Record uids of translated records and default language records, which aren't translated
  * @param    string        $currSqlCharset     : Current SQL charset like 'latin1'
  * @return    array        $arr_return         : SQL ressource or an error message in case of an error
- * @version 3.9.13
+ * @version 4.3.1
  * @since   3.9.11
  */
   private function zz_sqlCountInitialsLL( $length, $uidListDefAndCurr, $currSqlCharset )
@@ -2369,9 +2386,14 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
           // #41051, 120918, dwildt, 2-
 //        $uid      = "UPPER ( " . $tableUid . " )";
 //        $initial  = "UPPER ( " . $tableField . " )";
+          // #44125, 121218, dwildt, 3-
+//          // #41051, 120918, dwildt, 2+
+//        $uid      = "upper ( " . $tableUid . " )";
+//        $initial  = "upper ( " . $tableField . " )";
+          // #44125, 121218, dwildt, 3+
           // #41051, 120918, dwildt, 2+
-        $uid      = "upper ( " . $tableUid . " )";
-        $initial  = "upper ( " . $tableField . " )";
+        $uid      = "upper( " . $tableUid . " )";
+        $initial  = "upper( " . $tableField . " )";
         break;
     }
 
@@ -2383,12 +2405,20 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
 //    $groupBy  = "LEFT ( " . $tableField . ", " . $length . " )";
 //    $orderBy  = "LEFT ( " . $tableField . ", " . $length . " )";
 //    $limit    = null;
+      // #44125, 121218, dwildt, 2-
+//    $select   = "COUNT( DISTINCT " . $uid . " ) AS 'count', " .
+//                "LEFT ( " . $initial . ", " . $length . " ) AS 'initial'";
+      // #44125, 121218, dwildt, 2+
     $select   = "COUNT( DISTINCT " . $uid . " ) AS 'count', " .
-                "LEFT ( " . $initial . ", " . $length . " ) AS 'initial'";
+                "LEFT( " . $initial . ", " . $length . " ) AS 'initial'";
     $from     = $table;
     $where    = $table . ".uid IN (" . $uidListDefAndCurr . ")";
-    $groupBy  = "LEFT ( " . $initial . ", " . $length . " )";
-    $orderBy  = "LEFT ( " . $initial . ", " . $length . " )";
+      // #44125, 121218, dwildt, 2-
+//    $groupBy  = "LEFT ( " . $initial . ", " . $length . " )";
+//    $orderBy  = "LEFT ( " . $initial . ", " . $length . " )";
+      // #44125, 121218, dwildt, 2+
+    $groupBy  = "LEFT( " . $initial . ", " . $length . " )";
+    $orderBy  = "LEFT( " . $initial . ", " . $length . " )";
     $limit    = null;
       // Query for all filter items
 
@@ -2655,7 +2685,7 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
  * @param    array        $row  : Row with special chars and their SQL length
  * @param    [type]        $fromLength: ...
  * @return    [type]        ...
- * @version 3.9.12
+ * @version 4.3.1
  * @since   3.9.10
  */
   private function zz_getFindInSetFromLength( $row, $fromLength )
@@ -2671,7 +2701,10 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
       {
         continue;
       }
-      $findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
+        // #44125, 121218, dwildt, 1-
+//      $findInSet[$length][] = "FIND_IN_SET( LEFT ( " . $tableField . ", " . $length . " ), '" . $char . "' )";
+        // #44125, 121218, dwildt, 1-
+      $findInSet[$length][] = "FIND_IN_SET( LEFT( " . $tableField . ", " . $length . " ), '" . $char . "' )";
     }
       // LOOP : generate a find in set statement for each special char
 
@@ -2685,7 +2718,7 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
   *
   * @param    array        $arrChars  : array with the chars
   * @return    array        $arr_return       : row with all special chars and their SQL length
-  * @version 3.9.12
+  * @version 4.3.1
   * @since   3.9.10
   */
   private function zz_getSqlLengthAsRow( $arrChars )
@@ -2701,7 +2734,10 @@ $tab['label'] = '<a ' . $class . '>' . $tab['label'] . '</a>';
     $arrStatement = array( );
     foreach( ( array ) $arrChars as $specialChar )
     {
-      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
+        // #44125, 121218, dwildt, 1-
+//      $arrStatement[] = "LENGTH ( '" . $specialChar . "' ) AS '" . $specialChar . "'";
+        // #44125, 121218, dwildt, 1+
+      $arrStatement[] = "LENGTH( '" . $specialChar . "' ) AS '" . $specialChar . "'";
     }
       // Build the select statement parts for the length of each special char
 

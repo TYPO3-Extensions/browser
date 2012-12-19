@@ -1,4 +1,11 @@
-4.2.0
+4.3.1
+  121219
+  Bugfixes
+  * #44125: SQL statements: brackets without slash
+            Thanks to tomcat (Kuschmann) for reporting the fix on typo3-browser-forum.de
+
+
+4.3.0
   121206
   New Features
   * #43854: Workaround: don't use relation twice

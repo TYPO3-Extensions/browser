@@ -30,7 +30,7 @@
  * @package     TYPO3
  * @subpackage  browser
  *
- * @version     4.2.0
+ * @version     4.3.1
  * @since       3.9.12
  */
 
@@ -2392,7 +2392,7 @@ class tx_browser_pi1_sql_auto
  * get_joinsSetCsv( ) : Relation method: Building the relation part for the where clause
  *
  * @return    string        TRUE || FALSE or the SQL-where-clause
- * @version   4.20
+ * @version   4.3.1
  * @since     2.0.0
  */
     // #43854, 121211, dwildt, 1-
@@ -2457,7 +2457,12 @@ class tx_browser_pi1_sql_auto
                             "   " . $foreignTablePidList ;
           break;
         default:
-          $str_query_part = "   FIND_IN_SET ( " . $foreignTableField . ", " . $localTableField . " )" .
+            // #44125, 121218, dwildt, 3-
+//          $str_query_part = "   FIND_IN_SET ( " . $foreignTableField . ", " . $localTableField . " )" .
+//                            "   " . $foreignTableEnableFields .
+//                            "   " . $foreignTablePidList ;
+            // #44125, 121218, dwildt, 3+
+          $str_query_part = "   FIND_IN_SET( " . $foreignTableField . ", " . $localTableField . " )" .
                             "   " . $foreignTableEnableFields .
                             "   " . $foreignTablePidList ;
       }
@@ -2472,7 +2477,6 @@ class tx_browser_pi1_sql_auto
                           " ON ( " .
                             $str_query_part .
                           " )" ;
-
             // #43854, 121211, dwildt
             // RETURN : ERROR mmTable is part of left join already
           $leftJoinForeignTable = ' LEFT JOIN ' . $foreignTable;

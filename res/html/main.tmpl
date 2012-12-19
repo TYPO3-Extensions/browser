@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <body>
+<pre>
+<em>
+
+VERSION 4.3.1
+
+
+
+DEFAULT TEMPLATE FOR LIST VIEWS
+===============================
+This template is the default template for all list views.
+
+
+  CONTROLLING MARKERS
+  ===================
+  You can control the display of subparts and markers with typoscript:
+
+    EACH MARKER AND SUBPART 
+    =======================
+
+    plugin.tx_browser_pi1.views.list.XX.htmlSnippets {
+      marker {
+        filter = TEXT
+        filter {
+          ...
+        }
+      }
+      subparts {
+        listview = TEXT
+        listview {
+          ...
+        }
+      }
+    }
+
+    TABLE: SUMMARY AND CAPTION
+    ==========================
+
+    plugin.tx_browser_pi1.views.list.XX.display {
+      table {
+        summary     = 1     // Display [1] or hide [0] the table summary
+        caption     = 1     // Display [1] or hide [0] the table caption
+      }
+    }
+
+    MODESELECTOR
+    ============
+    The display of the modeselector depends on the number of your views.
+    If you have only one list view, there won't be any modeselector.
+    If you have more than one list view, there will be a modeselector.
+
+  SELF-DEFINED MARKERS
+  ====================
+  You can define markers by your self. Every self-defined marker has the stdWrap property.
+  Examples for self-defined markers in the TEMPLATE_LIST are
+  - MY_TITLE
+  - MY_URL
+  - MY_RESET
+
+  You find the configuration in
+  - plugin.tx_browser_pi1.markers
+  - plugin.tx_browser_pi1.views.list.XX.markers
+  - plugin.tx_browser_pi1.views.single.XX.markers
+
+  If a view hasn't any marker array, the browser takes the global marker array.
+
+</em>
+
+<!-- ###TEMPLATE_LIST### begin -->
+      <div class="###MODE### listview-###MODE### ui-widget ui-corner-all">
+<!-- ###LIST_TITLE### begin -->
+        ###MY_TITLE###
+<!-- ###LIST_TITLE### end -->
+<!-- ###SEARCHFORM### begin -->
+        <div id="c###TT_CONTENT.UID###-list-searchbox-###MODE###" class="searchbox searchbox-list-###MODE###">
+          <form id="c###TT_CONTENT.UID###-list-searchbox-form-###MODE###" action="###ACTION###" method="post" >
+            <fieldset class="ui-corner-all">
+              <legend>###MY_SEARCH_LEGEND###</legend>
+              ###HIDDEN###
+              <input type="hidden" name="no_cache" value="1" />
+              <input type="hidden" name="tx_browser_pi1[plugin]" value="###PLUGIN###" />
+              <input class="sword" type="text" name="tx_browser_pi1[sword]" onfocus="if(this.value =='###SWORD_DEFAULT###') this.value=''" value="###SWORD###" />
+              <button id="c###TT_CONTENT.UID###-list-submit-sword-###MODE###" class="button hidesubmit ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">
+                <span class="ui-button-text">###MY_SEARCH###</span>
+              </button>
+              <!-- ###BUTTON_CSV-EXPORT### begin -->
+                <button id="c###TT_CONTENT.UID###-list-submit-csv-export-###MODE###" class="button hidesubmit ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">
+                  <span class="ui-button-text">###MY_CSV_EXPORT###</span>
+                </button>
+              <!-- ###BUTTON_CSV-EXPORT### end -->
+              <button id="c###TT_CONTENT.UID###-list-submit-sword-###MODE###" type="reset" onclick="location='###MY_URL###'" class="button reset ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button">
+                <span class="ui-button-text">###MY_RESET###</span>
+              </button>
+              <! -- FILTER marker will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.marker.filter while runtime ... -->
+              ###FILTER###
+            </fieldset>
+          </form>
+          ###RESULTPHRASE###
+        </div><!-- ###SEARCHFORM### end -->
+        <div class="listarea  ui-widget ui-widget-content ui-corner-all">
+          <!-- ###LISTTABS### begin -->
+          <div id="c###TT_CONTENT.UID###-list-tabs-###MODE###" class="ui-tabs-list ui-tabs-list-###MODE###">
+            <!-- ###INDEXBROWSER### begin -->
+            <div id="c###TT_CONTENT.UID###-indexBrowser-###MODE###" class="ui-tabs">
+              <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist"><!-- ###INDEXBROWSERTABS### begin -->
+                <li###LI_CLASS###>###TAB###</li><!-- ###INDEXBROWSERTABS### end -->
+              </ul>
+            </div><!-- ###INDEXBROWSER### end -->
+            <!-- ###PAGEBROWSER### begin -->
+            <div id="c###TT_CONTENT.UID###-browsebox-###MODE###" class="browsebox browsebox-list-###MODE###">
+              ###RESULT_AND_ITEMS###
+            </div><!-- ###PAGEBROWSER### end -->
+            <!-- ###MODESELECTOR### begin -->
+            <div id="c###TT_CONTENT.UID###-modeSelector-###MODE###" class="modeSelector modeSelector-list-###MODE###">
+              <ul class="ui-tabs-nav ui-tabs-nav-list-###MODE### ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+                <!-- ###MODESELECTORTABS### begin -->
+                <li id="c###TT_CONTENT.UID###-list-tab-###MODE###" class="ui-state-default ui-corner-top c###TT_CONTENT.UID###-list-tab###UI-STATE-ACTIVE######UI-TABS-SELECTED###">###TABS###</li>
+                <!-- ###MODESELECTORTABS### end -->
+              </ul>
+            </div><!-- ###MODESELECTOR### end -->
+            <!-- ###LISTVIEW### begin -->
+            <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="###VIEW###view ###VIEW###view-content ###VIEW###view-###MODE### ###VIEW###view-content-###MODE###">
+              LISTVIEW subpart will replaced by plugin.tx_browser_pi1.views.list.###MODE###.htmlSnippets.subparts.listview while runtime ...
+            </div> <!-- /listview -->
+            <!-- ###LISTVIEW### end -->
+          </div> <!-- /ui-tabs -->
+          ###MAP###
+          <!-- ###LISTTABS### end -->
+        </div> <!-- /listarea -->
+      </div> <!-- /ui-widget -->
+<!-- ###TEMPLATE_LIST### end -->
+
+
+
+
+
+<em>
+
+DEFAULT TEMPLATE FOR SINGLE VIEWS WITH TABLE
+============================================
+THIS SHOULD BE THE DEFAULT FOR A SINGLE VIEW!
+
+This template is used, if you have configured your typoscript like this:
+plugin.tx_browser_pi1.views.single.XX.template.default = 1
+
+  CONTROLLING MARKERS
+  ===================
+  You can control the display of subparts and markers with typoscript:
+
+    EACH MARKER AND SUBPART 
+    =======================
+
+    plugin.tx_browser_pi1.views.list.XX.htmlSnippets {
+      marker {
+        filter = TEXT
+        filter {
+          ...
+        }
+      }
+      subparts {
+        listview = TEXT
+        listview {
+          ...
+        }
+      }
+    }
+
+    TABLE: SUMMARY AND CAPTION
+    ==========================
+
+    plugin.tx_browser_pi1.views.single.XX.display {
+      title         = 1     // Display [1] or hide [0] the title
+      table {
+        summary     = 1     // Display [1] or hide [0] the table summary
+        caption     = 1     // Display [1] or hide [0] the table caption
+      }
+      backbutton    = 1     // Display [1] or hide [0] the backbutton
+    }
+
+    MODESELECTOR
+    ============
+    The display of the modeselector depends on the number of your views.
+    If you have only one single view, there won't be any modeselector.
+    If you have more than one single view, there will be a modeselector.
+
+  SELF-DEFINED MARKERS
+  ====================
+  See the information in the section of the list view
+
+
+
+</em>
+
+<!-- ###TEMPLATE_SINGLE### begin -->
+      <div class="###MODE### singleview-###MODE### ui-widget ui-corner-all">
+        <!-- ###SINGLEVIEW### begin -->
+          SINGLEVIEW subpart will replaced by plugin.tx_browser_pi1.views.single.###MODE###.htmlSnippets.subparts.singleview while runtime ...
+        <!-- ###SINGLEVIEW### end -->
+      </div> <!-- /ui-widget -->
+<!-- ###TEMPLATE_SINGLE### end -->
+
+
+
+
+</pre>
+  </body>
+</html>
