@@ -75,13 +75,17 @@ plugin.tx_browser_pi1 {
           name = Browser: List (without any view)
           file = EXT:browser/res/html/default_ul.tmpl
         }
+          // #44131
         main {
-          name = Browser: Main
-          file = EXT:browser/res/html/main.tmpl
+          name      = Browser: Main
+          file      = EXT:browser/res/html/main.tmpl
+          csvViews  = all
         }
+          // #44131
         margin {
-          name = Browser: Margin
-          file = EXT:browser/res/html/margin.tmpl
+          name      = Browser: Margin
+          file      = EXT:browser/res/html/margin.tmpl
+          csvViews  = all
         }
         table_until_3-9-6 {
           name = Browser: Table (until version 4.0)

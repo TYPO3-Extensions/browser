@@ -2014,13 +2014,32 @@ class tx_browser_pi1_backend
       {
         $key_listview = strtolower(substr($key_listview, 0, -1));
         $bool_handleCurrList = true;
-        if(count($arr_views) >= 1)
+          // #44131, 121219, dwildt, 7-
+//        if(count($arr_views) >= 1)
+//        {
+//          if(!in_array($key_listview, $arr_views))
+//          {
+//            $bool_handleCurrList = false;
+//          }
+//        }
+          // #44131, 121219, dwildt, 15+
+        switch( true )
         {
-          if(!in_array($key_listview, $arr_views))
-          {
-            $bool_handleCurrList = false;
-          }
+          case( in_array( 'all', $arr_views ) ):
+              // Leave $bool_handleCurrList true
+            break;
+          default:
+            if( count($arr_views) >= 1 )
+            {
+              if( ! in_array( $key_listview, $arr_views ) )
+              {
+                $bool_handleCurrList = false;
+              }
+            }
+            break;
         }
+          // #44131, 121219, dwildt, 15+
+
         if($bool_handleCurrList)
         {
           if($arr_listview['name'])
