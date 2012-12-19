@@ -5,11 +5,12 @@
             Effected files:
             * pi1/class.tx_browser_pi1_backend.php
             * static/setup.txt
-
   Bugfixes
   * #44125: SQL statements: brackets without slash
             Thanks to tomcat (Kuschmann) for reporting the fix on typo3-browser-forum.de
-
+            Effected files:
+            * pi1/class.tx_browser_pi1_navi_indexBrowser.php
+            * pi1/class.tx_browser_pi1_sql_auto.php
 
 4.3.0
   121206
