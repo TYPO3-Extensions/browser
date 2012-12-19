@@ -3,6 +3,7 @@
   New Features
   * #44131: Additional HTML templates main and margin
             Effected files:
+            * pi1/class.tx_browser_pi1_backend.php
             * static/setup.txt
 
   Bugfixes
