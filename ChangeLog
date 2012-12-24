@@ -1,3 +1,25 @@
+4.4.0
+  121223
+  New Feature
+  * #42788: BrowserMaps will extended for GoogleMaps
+            oxMapConfig_0.0.10.js -> oxMapConfig_0.0.10.js
+            oxRenderMap_0.0.11.js -> oxRenderMap_0.0.11.js
+            Effected files:
+            * res/js/map
+              * 
+            * static
+              * setup.txt
+            * t3jquery.txt
+  Improvement
+  * #00000: Removed deprecated files
+            Effected files:
+            * res/js/map
+              * oxMapConfig_0.0.9.js      removed
+              * oxRenderMap_0.0.9.js      removed
+              * oxRenderMap_0.0.10.js     removed
+            * res/js/map/lib
+              * OpenLayers                removed
+
 4.3.1
   121219
   New Features
@@ -114,7 +136,7 @@
             Effected files:
             * static
               * setup.txt
-            * t3jquery.txt  * #42125: OpenStreetMap: offset for categories
+            * t3jquery.txt
   Bugfixing
   * #42566: BrowserMaps: remove the cat devider from categories
   * #42565: Unproper result, if first children is 0, empty or null
