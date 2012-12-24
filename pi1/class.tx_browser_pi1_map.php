@@ -79,6 +79,8 @@ class tx_browser_pi1_map
 
     // [BOOLEAN] Is map enabled? Will set by init( ) while runtime
   var $enabled      = null;
+    // [STRING] GoogleMaps, Open Street Map (default)
+  var $provider     = null;
     // [ARRAY] TypoScript configuration array. Will set by init( ) while runtime
   var $confMap      = null;
     // [Integer] Number of the current typeNum
@@ -286,6 +288,27 @@ class tx_browser_pi1_map
 //    $cObj_conf      = $this->confMap['enabled.'];
 //    $this->enabled  = $this->pObj->cObj->cObjGetSingle($cObj_name, $cObj_conf);
     $this->enabled = $this->confMap['enabled'];
+      // Set the global $enabled
+
+
+
+      ///////////////////////////////////////////////////////////////
+      //
+      // Set the global $provider
+
+      // ##42788, 121224, dwildt, +
+    $this->provider = $this->confMap['provider'];
+    switch( true )
+    {
+      case( $this->provider == 'GoogleMaps' ):
+        break;
+      case( $this->provider == 'Open Street Map (default)' ):
+        break;
+      default:
+        $prompt = 'Unexpeted value in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' . 
+                  'TypoScript property map.provider is "' . $this->provider . '".';
+        die( $prompt );
+    }
       // Set the global $enabled
 
 
