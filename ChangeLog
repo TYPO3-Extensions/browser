@@ -5,9 +5,9 @@
             oxMapConfig_0.0.10.js -> oxMapConfig_0.0.10.js
             oxRenderMap_0.0.11.js -> oxRenderMap_0.0.11.js
             Effected files:
-            * res/js/map
-              * 
+            * res/js/map/api_1.0.3/*      new
             * static
+              * constants.txt
               * setup.txt
             * t3jquery.txt
   Improvement
