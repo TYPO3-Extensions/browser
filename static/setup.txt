@@ -343,6 +343,8 @@ plugin.tx_browser_pi1 {
     map {
         // [BOOLEAN] 0 (default), 1
       enabled  = {$plugin.tx_browser_pi1.map.enabled}
+        // [STRING] GoogleMaps or Open Street Map (default)
+      provider  = {$plugin.tx_browser_pi1.map.provider}
       template {
           // [STRING] Path to the map HTML template
         file = EXT:browser/res/html/map/default_0.0.9.tmpl
