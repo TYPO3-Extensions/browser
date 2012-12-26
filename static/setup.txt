@@ -995,6 +995,14 @@ plugin.tx_browser_pi1 {
                           numZoomLevels: 4,
                           startLevel : 8
                         },
+                        custom          : {
+                          size: {
+                            w: {$plugin.tx_browser_pi1.map.width},
+                            h: {$plugin.tx_browser_pi1.map.height}
+                          },
+                          numZoomLevels : '###MAPZOOMLEVELS###',
+                          startLevel    : '###OSMCONFIGZOOM###'
+                        },
 
                         filter          : '#oxMapFilter',
                         filterItems     : '.oxMapFilter',
