@@ -840,8 +840,8 @@ plugin.tx_browser_pi1 {
                   10 = TEXT
                   10 {
                     if {
-                      value = GoogleMaps
-                      equal = {$plugin.tx_browser_pi1.map.provider}
+                      value   = {$plugin.tx_browser_pi1.map.provider}
+                      equals  = GoogleMaps
         // [STRING] GoogleMaps or Open Street Map (default)
                     }
                     value (
