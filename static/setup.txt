@@ -962,7 +962,7 @@ plugin.tx_browser_pi1 {
                         center          : [ '###OSMCONFIGCENTER###' ],
                         startLevel      : 8,
                         numZoomLevels   : 8,
-                        Xcustom          : {
+                        custom          : {
                           type: 'Image',
                           size: {
                             w: 705,
