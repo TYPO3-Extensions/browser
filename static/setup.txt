@@ -867,6 +867,7 @@ plugin.tx_browser_pi1 {
                       </div>
 )
                   }
+                    // Content, if provider is an element of the list of providers
                   20 = COA
                   20 {
                     if {
@@ -907,6 +908,10 @@ plugin.tx_browser_pi1 {
                   // Custom
                 30 = TEXT
                 30 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = Open Street Map
+                  }
                   value (
                     <script>
                     /* <![CDATA[ */
@@ -934,11 +939,95 @@ plugin.tx_browser_pi1 {
                     </script>
 )
                 }
+                31 = TEXT
+                31 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = GoogleMaps
+                  }
+                  value (
+                    <script>
+                    /* <![CDATA[ */
+                        // Be aware of the trailing slash!
+                      OpenLayers.ImgPath = '###OPENLAYERSIMGPATH###';
+                      var rawdata = '###JSONDATA###';
+                      window.oxMap = {};
+                      window.oxMap.Config = {
+
+                        modules         : [
+                                            'Error', 'OSM', 'OSM.CDmap','OSM.Filter'
+                                          ],
+                        wms             : 'GMap',
+                        type            : ['ROADMAP'],
+                        center          : [ '###OSMCONFIGCENTER###' ],
+                        startLevel      : 8,
+                        numZoomLevels   : 8,
+                        Xcustom          : {
+                          type: 'Image',
+                          size: {
+                            w: 705,
+                            h: 567
+                          },
+                          bounds: {
+                            w: 9.69132,
+                            s: 50.13531,
+                            e: 12.84027,
+                            n: 51.71852
+                          },
+                          imageType: 'png',
+                          png:{
+                            0: 'img/thuer.level1.png',
+                            1: 'img/thuer.level1_2.png',
+                            2: 'img/thuer.level2.png',
+                            3: 'img/thuer.level2.png'
+                          },
+                          svg: {
+                            0: 'img/thuer.level1.svg',
+                            1: 'img/thuer.level1.svg',
+                            2: 'img/thuer.level2.svg',
+                            3: 'img/thuer.level2.svg'
+                          },
+                          numZoomLevels: 4,
+                          startLevel : 8
+                        },
+
+                        filter          : '#oxMapFilter',
+                        filterItems     : '.oxMapFilter',
+
+                        mapID           : 'oxMapArea',
+                        mapControls     : [ 'Navigation', 'PanZoom', 'LayerSwitcher' ],
+                        mapMarkerEvent  : '###MAPMARKEREVENT###'    // click | hover | on (for drawing one point only)
+                      };
+                    /* ]]> */
+                    </script>
+)
+                }
                   // oxRenderMap
                 40 = TEXT
                 40 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = Open Street Map
+                  }
                   value (
                     <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.11.js"></script>
+)
+                }
+                41 = TEXT
+                41 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = GoogleMaps
+                  }
+                  value (
+                    <script src="typo3conf/ext/browser/res/js/map/api_1.0.3/oxMap.Config.js"></script>
+                    <script src="typo3conf/ext/browser/res/js/map/api_1.0.3/oxMap.Helper.js"></script>
+                    <script src="typo3conf/ext/browser/res/js/map/api_1.0.3/oxMap.Error.js"></script>
+                    <script src="typo3conf/ext/browser/res/js/map/api_1.0.3/oxMap.OSM.js"></script>
+                    <script src="typo3conf/ext/browser/res/js/map/api_1.0.3/oxMap.OSM.Marker.js"></script>
+                    <script src="typo3conf/ext/browser/res/js/map/api_1.0.3/oxMap.OSM.Filter.js"></script>
+                    <script src="typo3conf/ext/browser/res/js/map/api_1.0.3/oxMap.OSM.CDmap.js"></script>
+                    <script src="typo3conf/ext/browser/res/js/map/api_1.0.3/oxMap.js"></script>
 )
                 }
               }
