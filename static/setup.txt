@@ -1025,7 +1025,7 @@ plugin.tx_browser_pi1 {
                     equals  = Open Street Map
                   }
                   value (
-                    <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.12.js"></script>
+                    <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.10.js"></script>
 )
                 }
                   // oxMap (GoogleMaps, 1.0.3)
