@@ -844,12 +844,9 @@ plugin.tx_browser_pi1 {
                         <h1>ALARM {$plugin.tx_browser_pi1.map.provider}</h1>
 )
                       if {
-                        isTrue  = 1
-                      }
-                      Xif {
                         value   = {$plugin.tx_browser_pi1.map.provider}
                         equals  = Open Street Map (default)
-                        negate  = 1
+                        //negate  = 1
                       }
                     }
                     if {
