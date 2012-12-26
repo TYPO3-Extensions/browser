@@ -959,7 +959,7 @@ plugin.tx_browser_pi1 {
                                           ],
                         wms             : 'GMap',
                         type            : ['ROADMAP'],
-                        center          : [ '###OSMCONFIGCENTER###' ],
+                        center          : '###OSMCONFIGCENTER###',
                         startLevel      : 8,
                         numZoomLevels   : 8,
                         custom          : {
@@ -995,7 +995,9 @@ plugin.tx_browser_pi1 {
                         filterItems     : '.oxMapFilter',
 
                         mapID           : 'oxMapArea',
-                        mapControls     : [ 'Navigation', 'PanZoom', 'LayerSwitcher' ],
+                        mapControls     : [ 
+                                            'Navigation', 'PanZoom', 'LayerSwitcher' 
+                                          ],
                         mapMarkerEvent  : '###MAPMARKEREVENT###'    // click | hover | on (for drawing one point only)
                       };
                     /* ]]> */
