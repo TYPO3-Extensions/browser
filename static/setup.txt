@@ -995,10 +995,6 @@ plugin.tx_browser_pi1 {
                           numZoomLevels: 4,
                           startLevel : 8
                         },
-                        custom          : {
-                          //numZoomLevels : 4,
-                          //startLevel    : 8
-                        },
 
                         filter          : '#oxMapFilter',
                         filterItems     : '.oxMapFilter',
