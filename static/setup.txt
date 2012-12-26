@@ -838,15 +838,12 @@ plugin.tx_browser_pi1 {
                 20 {
                   10 = COA
                   10 {
-                    10 = COA
+                    10 = TEXT
                     10 {
-                      10 = TEXT
-                      10 {
-                        value (
-                          <h1>ALARM {$plugin.tx_browser_pi1.map.provider}</h1>
+                      value (
+                        <h1>ALARM {$plugin.tx_browser_pi1.map.provider}</h1>
 )
-                      }
-                      if {
+                      ifX {
                         value   = {$plugin.tx_browser_pi1.map.provider}
                         equals  = Open Street Map (default)
                         negate  = 1
