@@ -833,12 +833,29 @@ plugin.tx_browser_pi1 {
                 // 20: Provider and API, 30: Custom, 40: oxRenderMap
               map_jss = COA
               map_jss {
-                  // 10: GoogleMaps, 20: OpenLayers, 30: OpenStreetMap
+                  // 10: GoogleMaps API, if ...; 20: OpenLayers; 30: OpenStreetMap API, if ...
                 20 = COA
                 20 {
-                    // GoogleMaps API, if GoogleMaps
                   10 = TEXT
                   10 {
+                    if {
+                      value   = {$plugin.tx_browser_pi1.map.provider}
+                      equals  = GoogleMaps
+                      negate  = 1
+                      if {
+                        value   = {$plugin.tx_browser_pi1.map.provider}
+                        equals  = Open Street Map (default)
+                        negate  = 1
+                      }
+                    }
+                    value (
+                      <h1>ALARM {$plugin.tx_browser_pi1.map.provider}</h1>
+)
+                  }
+
+                    // GoogleMaps API, if GoogleMaps
+                  20 = TEXT
+                  20 {
                     if {
                       value   = {$plugin.tx_browser_pi1.map.provider}
                       equals  = GoogleMaps
@@ -848,15 +865,15 @@ plugin.tx_browser_pi1 {
 )
                   }
                     // OpenLayers
-                  20 = TEXT
-                  20 {
+                  30 = TEXT
+                  30 {
                     value (
                       <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.10.0/OpenLayers.js"></script>
 )
                   }
                     // OpenStreetMap, if Open Street Map (default)
-                  30 = TEXT
-                  30 {
+                  40 = TEXT
+                  40 {
                     if {
                       value   = {$plugin.tx_browser_pi1.map.provider}
                       equals  = Open Street Map (default)
