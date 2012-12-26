@@ -842,7 +842,21 @@ plugin.tx_browser_pi1 {
                       <div style="background:white;border:1em solid red;color:red;padding:1em;text-align:center;">
                         <h1>TypoScript Error</h1>
                         <p>
-                            '{$plugin.tx_browser_pi1.map.provider}' is not in the list: GoogleMaps,Open Street Map (default)
+                          '{$plugin.tx_browser_pi1.map.provider}' isn't any element of the list: GoogleMaps,Open Street Map (default)
+                        </p>
+                        <p>
+                          Browser - TYPO3 without PHP
+                        </p>
+                      </div>
+)
+                    lang.de (
+                      <div style="background:white;border:1em solid red;color:red;padding:1em;text-align:center;">
+                        <h1>TypoScript Fehler</h1>
+                        <p>
+                          '{$plugin.tx_browser_pi1.map.provider}' ist kein Element der Liste: GoogleMaps,Open Street Map (default)
+                        </p>
+                        <p>
+                          Browser - TYPO3 ohne PHP
                         </p>
                       </div>
 )
