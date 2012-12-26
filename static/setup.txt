@@ -826,7 +826,7 @@ plugin.tx_browser_pi1 {
                     };
                   /* ]]> */
                   </script>
-                  <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.12.js"></script>
+                  <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.11.js"></script>
 )
               }
               map_jss >
@@ -1035,7 +1035,7 @@ plugin.tx_browser_pi1 {
                     value   = {$plugin.tx_browser_pi1.map.provider}
                     equals  = GoogleMaps
                   }
-                  value (
+                  XXX_value (
                     <script src="typo3conf/ext/browser/res/js/map/api_0.0.12/oxMap.Helper.js"></script>
                     <script src="typo3conf/ext/browser/res/js/map/api_0.0.12/oxMap.Error.js"></script>
                     <script src="typo3conf/ext/browser/res/js/map/api_0.0.12/oxMap.OSM.js"></script>
@@ -1043,6 +1043,9 @@ plugin.tx_browser_pi1 {
                     <script src="typo3conf/ext/browser/res/js/map/api_0.0.12/oxMap.OSM.Filter.js"></script>
                     <script src="typo3conf/ext/browser/res/js/map/api_0.0.12/oxMap.OSM.CDmap.js"></script>
                     <script src="typo3conf/ext/browser/res/js/map/api_0.0.12/oxMap.js"></script>
+)
+                  value (
+                    <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.13.js"></script>
 )
                 }
               }

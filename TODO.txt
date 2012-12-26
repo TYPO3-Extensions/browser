@@ -11,3 +11,5 @@
   * #42788: BrowserMaps will extended for GoogleMaps
             - index.html
               - other order of JSS scripts!
+            - oxMapConfig_0.0.13
+              - sample without custom array and for OSM is needed
