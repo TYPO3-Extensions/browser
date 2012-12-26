@@ -800,7 +800,7 @@ plugin.tx_browser_pi1 {
               map_jss = TEXT
               map_jss {
                 value (
-                  <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.10.0/OpenLayers.js"></script>
+                  <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.12/OpenLayers.js"></script>
                   <script src="typo3conf/ext/browser/res/js/map/lib/OpenStreetMap/OpenStreetMap_0.0.2.js"></script>
                   <script>
                   /* <![CDATA[ */
@@ -889,7 +889,7 @@ plugin.tx_browser_pi1 {
                     30 = TEXT
                     30 {
                       value (
-                        <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.10.0/OpenLayers.js"></script>
+                        <script src="typo3conf/ext/browser/res/js/map/lib/OpenLayers_2.12/OpenLayers.js"></script>
   )
                     }
                       // OpenStreetMap, if Open Street Map
