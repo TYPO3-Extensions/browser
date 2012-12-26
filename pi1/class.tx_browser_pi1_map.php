@@ -79,7 +79,7 @@ class tx_browser_pi1_map
 
     // [BOOLEAN] Is map enabled? Will set by init( ) while runtime
   var $enabled      = null;
-    // [STRING] GoogleMaps, Open Street Map (default)
+    // [STRING] GoogleMaps, Open Street Map
   var $provider     = null;
     // [ARRAY] TypoScript configuration array. Will set by init( ) while runtime
   var $confMap      = null;
@@ -302,7 +302,7 @@ class tx_browser_pi1_map
     {
       case( $this->provider == 'GoogleMaps' ):
         break;
-      case( $this->provider == 'Open Street Map (default)' ):
+      case( $this->provider == 'Open Street Map' ):
         break;
       default:
         $prompt = 'Unexpeted value in ' . __METHOD__ . ' (line ' . __LINE__ . '): ' . 
