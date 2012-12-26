@@ -853,9 +853,6 @@ plugin.tx_browser_pi1 {
                       }
                     }
                     if {
-                      isTrue  = 1
-                    }
-                    Xif {
                       value   = {$plugin.tx_browser_pi1.map.provider}
                       equals  = GoogleMaps
                       negate  = 1
