@@ -965,8 +965,8 @@ plugin.tx_browser_pi1 {
                         wms             : 'GMap',
                         type            : ['ROADMAP'],
                         center          : '###OSMCONFIGCENTER###',
-                        startLevel      : 8,
-                        numZoomLevels   : 8,
+                        startLevel      : '###OSMCONFIGZOOM###',
+                        numZoomLevels   : '###MAPZOOMLEVELS###',
                         XXcustom          : {
                           type: 'Image',
                           size: {
