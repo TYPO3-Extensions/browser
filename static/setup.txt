@@ -951,8 +951,8 @@ plugin.tx_browser_pi1 {
                         // Be aware of the trailing slash!
                       OpenLayers.ImgPath = '###OPENLAYERSIMGPATH###';
                       var rawdata = '###JSONDATA###';
-                      window.oxMap = {};
-                      window.oxMap.Config = {
+                      window.XXoxMap = {};
+                      window.XXoxMap.Config = {
 
                         modules         : [
                                             'Error', 'OSM', 'OSM.CDmap','OSM.Filter'
@@ -1022,6 +1022,7 @@ plugin.tx_browser_pi1 {
                     equals  = GoogleMaps
                   }
                   value (
+                    <script src="typo3conf/ext/browser/res/js/map/api_1.0.3/oxMap.Config.js"></script>
                     <script src="typo3conf/ext/browser/res/js/map/api_1.0.3/oxMap.Helper.js"></script>
                     <script src="typo3conf/ext/browser/res/js/map/api_1.0.3/oxMap.Error.js"></script>
                     <script src="typo3conf/ext/browser/res/js/map/api_1.0.3/oxMap.OSM.js"></script>
