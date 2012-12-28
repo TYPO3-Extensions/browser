@@ -653,7 +653,7 @@ plugin.tx_browser_pi1 {
             // [STRING] auto (recommended) || ts. auto: center will calculated. ts: center will taken from TypoScript 
           mode          = auto
             // [STRING] marker for the center in the HTML code. Example: OSMConfigCenter
-          dynamicMarker = OSMConfigCenter
+          dynamicMarker = oxMapConfigCenter
         }
         00Coordinates {
             // [BOOLEAN] true (recommended) || false: If a coordinate is 0,0, it won't handled and won't displayed
@@ -910,35 +910,51 @@ plugin.tx_browser_pi1 {
                   }
                 }
                   // Custom configuration
-                30 = TEXT
+                30 = COA
                 30 {
-                  value (
-                    <script>
-                    /* <![CDATA[ */
-                        // Be aware of the trailing slash!
-                      OpenLayers.ImgPath = '###OPENLAYERSIMGPATH###';
-                      var rawdata = '###JSONDATA###';
-                      window.oxMap = {};
-                      window.oxMap.Config = {
-                          language        : '###OXMAPCONFIGLANGUAGE###'         //  default | en | de
-                        , modules         : '###OXMAPCONFIGMODULES###'          //  Error, OSM, OSM.CDmap, OSM.Filter
-                        , wms             : '###OXMAPCONFIGWMS###'              //  OSM | GMap
-                        , type            : '###OXMAPCONFIGTYPE###'             //  Mapnik | ROADMAP
-                        , center          : '###OXMAPCONFIGCENTER###'
-                        , startLevel      : '###OXMAPCONFIGSTARTLEVEL###'
-                        , mapZoomWheel    : '###OXMAPCONFIGMAPZOOMWHEEL###'
-                        , numZoomLevels   : '###OXMAPCONFIGNUMZOOMLEVELS###'
-                        , filter          : '#oxMapFilter'
-                        , filterItems     : '.oxMapFilter'
-                        , mapID           : 'oxMapArea'
-                        , mapControls     : '###OXMAPCONFIGMAPCONTROLS###'
-                        , mapMarker       : '###OXMAPCONFIGMAPMARKER###'        // standalone marker is allowed
-                        , mapMarkerInfo   : '###OXMAPCONFIGMAPMARKERINFO###'    // marker with infolayer is allowed
-                        , mapMarkerEvent  : '###OXMAPCONFIGMAPMARKEREVENT###'   // click | hover | on (for drawing one point only)
-                      };
-                    /* ]]> */
-                    </script>
+                    // Begin: Don't edit it!
+                  10 = TEXT
+                  10 {
+                    value (
+                      <script>
+                      /* <![CDATA[ */
+                          // Be aware of the trailing slash!
+                        OpenLayers.ImgPath = '###OPENLAYERSIMGPATH###';
+                        var rawdata = '###JSONDATA###';
+                        window.oxMap = {};
+                        window.oxMap.Config = {
 )
+                  }
+                    // Variables: Adapt it to your needs
+                  20 = TEXT
+                  20 {
+                    value (
+                            language        : '###OXMAPCONFIGLANGUAGE###'         //  default | en | de
+                          , modules         : '###OXMAPCONFIGMODULES###'          //  Error, OSM, OSM.CDmap, OSM.Filter
+                          , wms             : '###OXMAPCONFIGWMS###'              //  OSM | GMap
+                          , type            : '###OXMAPCONFIGTYPE###'             //  Mapnik | ROADMAP
+                          , center          : '###OXMAPCONFIGCENTER###'
+                          , startLevel      : '###OXMAPCONFIGSTARTLEVEL###'
+                          , mapZoomWheel    : '###OXMAPCONFIGMAPZOOMWHEEL###'
+                          , numZoomLevels   : '###OXMAPCONFIGNUMZOOMLEVELS###'
+                          , filter          : '#oxMapFilter'
+                          , filterItems     : '.oxMapFilter'
+                          , mapID           : 'oxMapArea'
+                          , mapControls     : '###OXMAPCONFIGMAPCONTROLS###'
+                          , mapMarker       : '###OXMAPCONFIGMAPMARKER###'        // standalone marker is allowed
+                          , mapMarkerInfo   : '###OXMAPCONFIGMAPMARKERINFO###'    // marker with infolayer is allowed
+                          , mapMarkerEvent  : '###OXMAPCONFIGMAPMARKEREVENT###'   // click | hover | on (for drawing one point only)
+)
+                  }
+                    // End: Don't edit it!
+                  30 = TEXT
+                  30 {
+                    value (
+                        };
+                      /* ]]> */
+                      </script>
+)
+                  }
                 }
                   // oxRenderMap: Compressed || Uncompressed
                 40 = COA
