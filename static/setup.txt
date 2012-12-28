@@ -992,6 +992,7 @@ plugin.tx_browser_pi1 {
               oxMapConfigLanguage {
                   // [STRING] default, en, de
                 value = default
+                wrap  = '|'
               }
                 // Map controlling tools
               oxMapConfigMapControls = TEXT
