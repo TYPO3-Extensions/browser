@@ -13,3 +13,8 @@
               - other order of JSS scripts!
             - oxMapConfig_0.0.13
               - sample without custom array and for OSM is needed
+            - Icons
+              - behind the customer map
+            - mapControls: 'LayerSwitcher' is missing
+            - LayerSwitcher: Filter labels without icons
+            - Filter form: without any effect

@@ -31,10 +31,10 @@ window.oxMap.Config = {
         },
         imageType   : 'png',
         png         :{
-              0: 'img/thuer.level1_1.png'
-            , 1: 'img/thuer.level1_2.png'
-            , 2: 'img/thuer.level2_1.png'
-            , 3: 'img/thuer.level2_2.png'
+              0: 'fileadmin/user_upload/browser/test_thueringen/thuer.level1_1.png'
+            , 1: 'fileadmin/user_upload/browser/test_thueringen/thuer.level1_2.png'
+            , 2: 'fileadmin/user_upload/browser/test_thueringen/thuer.level2_1.png'
+            , 3: 'fileadmin/user_upload/browser/test_thueringen/thuer.level2_2.png'
         },
         numZoomLevels: 4,
         startLevel  : 8
@@ -45,7 +45,7 @@ window.oxMap.Config = {
 
     mapID           : 'oxMapArea',
     mapControls     : [
-                        'Navigation', 'PanZoom'
+                        'Navigation', 'PanZoom', 'LayerSwitcher'
                       ],
     mapMarkerEvent  : 'hover'//    click | hover | on (for drawing one point only)
 };
