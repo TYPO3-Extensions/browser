@@ -8,10 +8,10 @@ window.oxMap.Modules = {
 	'Error'			: 0,
 	'OSM'			: 'map',
 	'OSM.Render'	: 'init',
+	'OSM.CDmap'		: 0,
 	'OSM.Marker'	: 'init',
 	'OSM.Tooltip'	: 'init',
-	'OSM.Filter'	: 0,
-	'OSM.CDmap'		: 0
+	'OSM.Filter'	: 0
 };
 
 

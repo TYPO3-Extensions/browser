@@ -56,14 +56,13 @@ window.oxMap.OSM = {
 			options.startLevel
 		);
 
-		//DEPRECATED
-//		if( options.custom.bounds ){
-//			oxMap.OSM.map.setOptions(
-//				$.extend( oxMap.OSM.map.options, {
-//					restrictedExtent : oxMap.Helper.OL.createBoundObject( options.custom.bounds, 'WGS84')
-//				})
-//			);
-//		}
+		if( options.custom && options.custom.bounds ){
+			oxMap.OSM.map.setOptions(
+				$.extend( oxMap.OSM.map.options, {
+					restrictedExtent : oxMap.Helper.OL.createBoundObject( options.custom.bounds, 'WGS84')
+				})
+			);
+		}
 
 		oxMap.OSM.wmsLayer = mapLayer;
 

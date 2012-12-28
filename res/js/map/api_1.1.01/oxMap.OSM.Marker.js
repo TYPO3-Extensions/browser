@@ -52,7 +52,9 @@ window.oxMap.OSM.Marker = function( data ){
 
 	    oxMap.OSM.map.addLayers( oxMap.OSM.markerList );
 
-	    self.setSpecialUrl( markerWithSpecialUrl );
+        if( markerWithSpecialUrl.length > 0 ){
+	    	self.setSpecialUrl( markerWithSpecialUrl );
+	    }
 
 	};
 
