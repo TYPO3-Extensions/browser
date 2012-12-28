@@ -10,7 +10,7 @@
               * MapControls     -> oxMapConfigMapControls
               * MapMarker       -> oxMapConfigMapMarker
               * MapMarkerInfo   -> oxMapConfigMapMarkerInfo
-              * MapMarkerEvent  -> osMapConfigMapMarkerEvent
+              * MapMarkerEvent  -> oxMapConfigMapMarkerEvent
               * MapZoomLevels   -> oxMapConfigNumZoomLevels
               * MapZoomWheel    -> oxMapConfigMapZoomWheel
               * OSMConfigCenter -> oxMapConfigCenter

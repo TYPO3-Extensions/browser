@@ -1013,8 +1013,8 @@ plugin.tx_browser_pi1 {
                 value = true
               }
                 // Map marker event type
-              osMapConfigMapMarkerEvent = TEXT
-              osMapConfigMapMarkerEvent {
+              oxMapConfigMapMarkerEvent = TEXT
+              oxMapConfigMapMarkerEvent {
                   // [STRING] customized marker events
                 value = '{$plugin.tx_browser_pi1.map.popup.behaviour}'
               }
