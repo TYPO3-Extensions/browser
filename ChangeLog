@@ -2,9 +2,10 @@
   121223
   New Feature
   * #42788: BrowserMaps will extended for GoogleMaps
-            OpenLayers_2.10.0 -> OpenLayers_2.12
-            oxMapConfig_0.0.10.js -> oxMapConfig_1.1.01.js
-            oxRenderMap_0.0.10.js -> oxRenderMap_1.1.01.js
+            * OpenLayers_2.10.0 -> OpenLayers_2.12
+            * oxMapConfig_0.0.10.js -> oxMapConfig_1.1.01.js
+            * oxRenderMap_0.0.10.js -> oxRenderMap_1.1.01.js
+            * ID of filter is moved from filter to oxMapFilter
             Effected files:
             * res/js/map/api_1.1.01/*      new
             * static

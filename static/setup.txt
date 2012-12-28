@@ -744,7 +744,7 @@ plugin.tx_browser_pi1 {
               filter_form = TEXT
               filter_form {
                 value (
-                  <form id="filter">
+                  <form id="oxMapFilter">
                     ###INPUTS###
                   </form>
   )
