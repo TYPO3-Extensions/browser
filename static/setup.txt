@@ -926,7 +926,7 @@ plugin.tx_browser_pi1 {
                         , type            : '###OXMAPCONFIGTYPE###'             //  Mapnik | ROADMAP
                         , center          : '###OXMAPCONFIGCENTER###'
                         , startLevel      : '###OXMAPCONFIGSTARTLEVEL###'
-                        , mapZoomWheel    : '###OXMAPCONFIGMAPZOOMWHEEL###',
+                        , mapZoomWheel    : '###OXMAPCONFIGMAPZOOMWHEEL###'
                         , numZoomLevels   : '###OXMAPCONFIGNUMZOOMLEVELS###'
                         , filter          : '#oxMapFilter'
                         , filterItems     : '.oxMapFilter'
