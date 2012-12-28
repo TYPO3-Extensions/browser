@@ -660,10 +660,10 @@ plugin.tx_browser_pi1 {
           dontHandle = true  
         }
         zoomLevel {
-            // [STRING] auto (recommended) || fixed. auto: zoom level will calculated. fixed: zoom level will taken from map.marker.snippets.jss.dynamic.MapZoomLevels and map.marker.snippets.jss.dynamic.OSMConfigZoom 
+            // [STRING] auto (recommended) || fixed. auto: zoom level will calculated. fixed: zoom level will taken from map.marker.snippets.jss.dynamic.oxMapConfigNumZoomLevels and map.marker.snippets.jss.dynamic.oxMapConfigStartLevel 
           mode          = {$plugin.tx_browser_pi1.map.zoomLevel.mode}
-            // [STRING] marker for the center in the HTML code. Example: OSMConfigZoom
-          dynamicMarker = OSMConfigZoom
+            // [STRING] marker for the center in the HTML code. Example: oxMapConfigStartLevel
+          dynamicMarker = oxMapConfigStartLevel
             // [INTEGER] Maximum zoom level
           max           = {$plugin.tx_browser_pi1.map.zoomLevel.max}
         }
@@ -833,7 +833,7 @@ plugin.tx_browser_pi1 {
                 // 20: Provider and API, 30: Custom, 40: oxRenderMap
               map_jss = COA
               map_jss {
-                  // 10: GoogleMaps API, if ...; 20: OpenLayers; 30: OpenStreetMap API, if ...
+                  // 10: Error prompt, if provider isn't proper. 20: GoogleMaps API || OpenStreetMap API
                 20 = COA
                 20 {
                     // Error prompt, if provider isn't in list of providers
@@ -909,47 +909,9 @@ plugin.tx_browser_pi1 {
                     }
                   }
                 }
-                  // Custom (OSM, 0.0.10)
+                  // Custom configuration
                 30 = TEXT
                 30 {
-                  if {
-                    value   = {$plugin.tx_browser_pi1.map.provider}
-                    equals  = Open Street Map
-                  }
-                  value (
-                    <script>
-                    /* <![CDATA[ */
-                        // Be aware of the trailing slash!
-                      OpenLayers.ImgPath = '###OPENLAYERSIMGPATH###';
-                      var rawdata = '###JSONDATA###';
-                      var oxMapConfig = {
-                        MapId:          'oxMapArea',                //    HTML map viewport id
-                        MapControls:    '###MAPCONTROLS###',        //    customized control types
-                        MapZoomWheel:   '###MAPZOOMWHEEL###',
-                        MapZoomLevels:  '###MAPZOOMLEVELS###',      //    customized zoom levels
-                        MapMarker:      '###MAPMARKER###',          //    standalone marker is allowed
-                        MapMarkerInfo:  '###MAPMARKERINFO###',      //    marker with infolayer is allowed
-                        MapMarkerEvent: '###MAPMARKEREVENT###',     //    click | hover | off | on (for drawing one point only)
-
-                        OSM:            true,                                              //    WMS type OSM
-                        OSMConfig:      {
-                          type:           'Mapnik',                  //    Mapnik
-                          name:           'OpenStreetMap (Mapnik)',  //    OpenStreetMap (Mapnik)
-                          center:         '###OSMCONFIGCENTER###',   //    setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X
-                          zoomStartLevel: '###OSMCONFIGZOOM###',     //    integer (0 - 19) set zoom level
-                        }
-                      };
-                    /* ]]> */
-                    </script>
-)
-                }
-                  // Custom (GoogleMaps, 1.0.3)
-                31 = TEXT
-                31 {
-                  if {
-                    value   = {$plugin.tx_browser_pi1.map.provider}
-                    equals  = GoogleMaps
-                  }
                   value (
                     <script>
                     /* <![CDATA[ */
@@ -958,95 +920,55 @@ plugin.tx_browser_pi1 {
                       var rawdata = '###JSONDATA###';
                       window.oxMap = {};
                       window.oxMap.Config = {
-
-                        modules         : [
-                                            'Error', 'OSM', 'OSM.CDmap','OSM.Filter'
-                                          ],
-                        wms             : 'GMap',
-                        type            : ['ROADMAP'],
-                        center          : '###OSMCONFIGCENTER###',
-                        startLevel      : '###OSMCONFIGZOOM###',
-                        numZoomLevels   : '###MAPZOOMLEVELS###',
-                        XXcustom          : {
-                          type: 'Image',
-                          size: {
-                            w: 705,
-                            h: 567
-                          },
-                          bounds: {
-                            w: 9.69132,
-                            s: 50.13531,
-                            e: 12.84027,
-                            n: 51.71852
-                          },
-                          imageType: 'png',
-                          png:{
-                            0: 'img/thuer.level1.png',
-                            1: 'img/thuer.level1_2.png',
-                            2: 'img/thuer.level2.png',
-                            3: 'img/thuer.level2.png'
-                          },
-                          svg: {
-                            0: 'img/thuer.level1.svg',
-                            1: 'img/thuer.level1.svg',
-                            2: 'img/thuer.level2.svg',
-                            3: 'img/thuer.level2.svg'
-                          },
-                          numZoomLevels: 4,
-                          startLevel : 8
-                        },
-                        custom          : {
-                          size: {
-                            w: {$plugin.tx_browser_pi1.map.width},
-                            h: {$plugin.tx_browser_pi1.map.height}
-                          },
-                          numZoomLevels : '###MAPZOOMLEVELS###',
-                          startLevel    : '###OSMCONFIGZOOM###'
-                        },
-
-                        filter          : '#oxMapFilter',
-                        filterItems     : '.oxMapFilter',
-
-                        mapID           : 'oxMapArea',
-                        mapControls     : [ 
-                                            'Navigation', 'PanZoom', 'LayerSwitcher' 
-                                          ],
-                        mapMarkerEvent  : '###MAPMARKEREVENT###'    // click | hover | on (for drawing one point only)
+                          language        : '###OXMAPCONFIGLANGUAGE###'         //  default | en | de
+                        , modules         : '###OXMAPCONFIGMODULES###'          //  Error, OSM, OSM.CDmap, OSM.Filter
+                        , wms             : '###OXMAPCONFIGWMS###'              //  OSM | GMap
+                        , type            : '###OXMAPCONFIGTYPE###'             //  Mapnik | ROADMAP
+                        , center          : '###OXMAPCONFIGCENTER###'
+                        , startLevel      : '###OXMAPCONFIGSTARTLEVEL###'
+                        , mapZoomWheel    : '###OXMAPCONFIGMAPZOOMWHEEL###',
+                        , numZoomLevels   : '###OXMAPCONFIGNUMZOOMLEVELS###'
+                        , filter          : '#oxMapFilter'
+                        , filterItems     : '.oxMapFilter'
+                        , mapID           : 'oxMapArea'
+                        , mapControls     : '###OXMAPCONFIGMAPCONTROLS###'
+                        , mapMarker       : '###OXMAPCONFIGMAPMARKER###'        // standalone marker is allowed
+                        , mapMarkerInfo   : '###OXMAPCONFIGMAPMARKERINFO###'    // marker with infolayer is allowed
+                        , mapMarkerEvent  : '###OXMAPCONFIGMAPMARKEREVENT###'   // click | hover | on (for drawing one point only)
                       };
                     /* ]]> */
                     </script>
 )
                 }
-                  // oxRenderMap (OSM, 0.0.11)
-                40 = TEXT
+                  // oxRenderMap: Compressed || Uncompressed
+                40 = COA
                 40 {
-                  if {
-                    value   = {$plugin.tx_browser_pi1.map.provider}
-                    equals  = Open Street Map
+                    // One compressed file (default mode)
+                  10 = TEXT
+                  10 {
+                    if {
+                      isFalse = {$plugin.tx_browser_pi1.map.debugging.uncompressed}
+                    }
+                    value (
+                      <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_1.1.01.js"></script>
+)
                   }
-                  value (
-                    <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_0.0.11.js"></script>
+                    // All uncompressed files (debugging mode)
+                  20 = TEXT
+                  20 {
+                    if {
+                      isTrue = {$plugin.tx_browser_pi1.map.debugging.uncompressed}
+                    }
+                    value (
+                      <script src="typo3conf/ext/browser/res/js/map/api_1.1.01/oxMap.Helper.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api_1.1.01/oxMap.Error.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api_1.1.01/oxMap.OSM.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api_1.1.01/oxMap.OSM.Marker.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api_1.1.01/oxMap.OSM.Filter.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api_1.1.01/oxMap.OSM.CDmap.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api_1.1.01/oxMap.js"></script>
 )
-                }
-                  // oxMap (GoogleMaps, 1.0.3)
-                41 = TEXT
-                41 {
-                  if {
-                    value   = {$plugin.tx_browser_pi1.map.provider}
-                    equals  = GoogleMaps
                   }
-                  XXX_value (
-                    <script src="typo3conf/ext/browser/res/js/map/api_1.1.01/oxMap.Helper.js"></script>
-                    <script src="typo3conf/ext/browser/res/js/map/api_1.1.01/oxMap.Error.js"></script>
-                    <script src="typo3conf/ext/browser/res/js/map/api_1.1.01/oxMap.OSM.js"></script>
-                    <script src="typo3conf/ext/browser/res/js/map/api_1.1.01/oxMap.OSM.Marker.js"></script>
-                    <script src="typo3conf/ext/browser/res/js/map/api_1.1.01/oxMap.OSM.Filter.js"></script>
-                    <script src="typo3conf/ext/browser/res/js/map/api_1.1.01/oxMap.OSM.CDmap.js"></script>
-                    <script src="typo3conf/ext/browser/res/js/map/api_1.1.01/oxMap.js"></script>
-)
-                  value (
-                    <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_1.1.01.js"></script>
-)
                 }
               }
             }
@@ -1059,53 +981,125 @@ plugin.tx_browser_pi1 {
                   // [STRING] Relative path. Be aware of the ending slash!
                 value = "{$plugin.tx_browser_pi1.map.openLayers.imgPath}"
               }
+                // Default center of the map
+              oxMapConfigCenter = TEXT
+              oxMapConfigCenter {
+                  // [STRING] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X. Example: [9.15,50.1725] <- Center of European Union
+                value = [9.15,50.1725]
+              }
+                // Default language for error prompts
+              oxMapConfigLanguage = TEXT
+              oxMapConfigLanguage {
+                  // [STRING] default, en, de
+                value = default
+              }
                 // Map controlling tools
-              MapControls = TEXT
-              MapControls {
+              oxMapConfigMapControls = TEXT
+              oxMapConfigMapControls {
                   // [STRING/CSV] Comma seperated list of quoted map controls wrapped by square brackets. Example: ['Navigation', 'PanZoomBar']
                 value = {$plugin.tx_browser_pi1.map.controls}
               }
-                // Map zoom level
-              MapZoomLevels = TEXT
-              MapZoomLevels {
-                  // [INTEGER] Value from 0 to 18. Example: 4
-                value = {$plugin.tx_browser_pi1.map.zoomLevel.max}
-              }
                 // Map marker standalone mode
-              MapMarker = TEXT
-              MapMarker {
+              oxMapConfigMapMarker = TEXT
+              oxMapConfigMapMarker {
                   // [Boolean] standalone marker is allowed
                 value = true
               }
                 // Map marker infolayer mode
-              MapMarkerInfo = TEXT
-              MapMarkerInfo {
+              oxMapConfigMapMarkerInfo = TEXT
+              oxMapConfigMapMarkerInfo {
                   // [BOOLEAN] marker with infolayer is allowed
                 value = true
               }
                 // Map marker event type
-              MapMarkerEvent = TEXT
-              MapMarkerEvent {
+              osMapConfigMapMarkerEvent = TEXT
+              osMapConfigMapMarkerEvent {
                   // [STRING] customized marker events
                 value = '{$plugin.tx_browser_pi1.map.popup.behaviour}'
               }
-                // Map marker event type
-              MapZoomWheel = TEXT
-              MapZoomWheel {
+                // Map zoom wheel
+              oxMapConfigMapZoomWheel = TEXT
+              oxMapConfigMapZoomWheel {
                   // [BOOLEAN] enable or disable the zoom wheel
                 value = {$plugin.tx_browser_pi1.map.zoomWheel}
               }
-                // Default center of the map
-              OSMConfigCenter = TEXT
-              OSMConfigCenter {
-                  // [STRING] setCenter coordinates [ longitude , latitude ]  longitude = Y, latitude = X. Example: [9.15,50.1725] <- Center of European Union
-                value = [9.15,50.1725]
+                // Map modules
+              oxMapConfigModules = COA
+              oxMapConfigModules {
+                  // Debug mode off
+                10 = TEXT
+                10 {
+                  if {
+                    isFalse = {$plugin.tx_browser_pi1.map.debugging.feAlert}
+                  }
+                    // [ARRAY] Possible modules: Error, OSM, OSM.CDmap, OSM.Filter
+                  value = ['OSM', 'OSM.Filter']
+                }
+                  // Debug mode on
+                20 = TEXT
+                20 {
+                  if {
+                    isTrue = {$plugin.tx_browser_pi1.map.debugging.feAlert}
+                  }
+                    // [ARRAY] Possible modules: Error, OSM, OSM.CDmap, OSM.Filter
+                  value = ['Error', 'OSM', 'OSM.Filter']
+                }
               }
                 // Map zoom level
-              OSMConfigZoom = TEXT
-              OSMConfigZoom {
+              oxMapConfigNumZoomLevels = TEXT
+              oxMapConfigNumZoomLevels {
+                  // [INTEGER] Value from 0 to 18. Example: 4
+                value = {$plugin.tx_browser_pi1.map.zoomLevel.max}
+              }
+                // Map start level
+              oxMapConfigStartLevel = TEXT
+              oxMapConfigStartLevel {
                   // [INTEGER] Value from 0 to 18. Example: 4
                 value = {$plugin.tx_browser_pi1.map.zoomLevel.fixed}
+              }
+                // Map type: ROADMAP || Mapnik
+              oxMapConfigType = COA
+              oxMapConfigType {
+                  // ROADMAP, if GoogleMaps
+                10 = TEXT
+                10 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = GoogleMaps
+                  }
+                  value = ['ROADMAP']
+                }
+                  // Mapnik, if Open Street Map
+                20 = TEXT
+                20 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = Open Street Map
+                  }
+                  value = ['Mapnik']
+                }
+              }
+                // Map wms: GMap || OSM
+              oxMapConfigWms = COA
+              oxMapConfigWms {
+                  // GMS, if GoogleMaps
+                10 = TEXT
+                10 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = GoogleMaps
+                  }
+                  value = 'GMap'
+                }
+                  // OSM, if Open Street Map
+                20 = TEXT
+                20 {
+                  if {
+                    value   = {$plugin.tx_browser_pi1.map.provider}
+                    equals  = Open Street Map
+                  }
+                  value = 'OSM'
+                }
               }
             }
           }

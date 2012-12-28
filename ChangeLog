@@ -6,6 +6,15 @@
             * oxMapConfig_0.0.10.js -> oxMapConfig_1.1.01.js
             * oxRenderMap_0.0.10.js -> oxRenderMap_1.1.01.js
             * ID of filter is moved from filter to oxMapFilter
+            * TypoSCript properties are moved from to
+              * MapControls     -> oxMapConfigMapControls
+              * MapMarker       -> oxMapConfigMapMarker
+              * MapMarkerInfo   -> oxMapConfigMapMarkerInfo
+              * MapMarkerEvent  -> osMapConfigMapMarkerEvent
+              * MapZoomLevels   -> oxMapConfigNumZoomLevels
+              * MapZoomWheel    -> oxMapConfigMapZoomWheel
+              * OSMConfigCenter -> oxMapConfigCenter
+              * OSMConfigZoom   -> oxMapConfigStartLevel
             Effected files:
             * res/js/map/api_1.1.01/*      new
             * static
