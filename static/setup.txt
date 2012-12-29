@@ -923,6 +923,7 @@ plugin.tx_browser_pi1 {
                         var rawdata = '###JSONDATA###';
                         window.oxMap = {};
                         window.oxMap.Config = {
+
 )
                   }
                     // Variables: Adapt it to your needs
@@ -950,6 +951,7 @@ plugin.tx_browser_pi1 {
                   30 = TEXT
                   30 {
                     value (
+
                         };
                       /* ]]> */
                       </script>
