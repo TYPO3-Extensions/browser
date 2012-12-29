@@ -1052,7 +1052,7 @@ plugin.tx_browser_pi1 {
                     isFalse = {$plugin.tx_browser_pi1.map.debugging.feAlert}
                   }
                     // [ARRAY] Possible modules: Error, OSM, OSM.CDmap, OSM.Filter
-                  value = ['OSM', 'OSM.Filter']
+                  value = {$plugin.tx_browser_pi1.map.modules.default}
                 }
                   // Debug mode on
                 20 = TEXT
@@ -1061,7 +1061,7 @@ plugin.tx_browser_pi1 {
                     isTrue = {$plugin.tx_browser_pi1.map.debugging.feAlert}
                   }
                     // [ARRAY] Possible modules: Error, OSM, OSM.CDmap, OSM.Filter
-                  value = ['Error', 'OSM', 'OSM.Filter']
+                  value = {$plugin.tx_browser_pi1.map.modules.debugging}
                 }
               }
                 // Map zoom level
