@@ -1068,7 +1068,7 @@ plugin.tx_browser_pi1 {
               oxMapConfigNumZoomLevels = TEXT
               oxMapConfigNumZoomLevels {
                   // [INTEGER] Value from 0 to 18. Example: 4
-                value = {$plugin.tx_browser_pi1.map.zoomLevel.max}
+                value = {$plugin.tx_browser_pi1.map.numZoomLevels}
               }
                 // Map start level
               oxMapConfigStartLevel = TEXT
