@@ -652,7 +652,7 @@ plugin.tx_browser_pi1 {
         centerCoordinates {
             // [STRING] auto (recommended) || ts. auto: center will calculated. ts: center will taken from TypoScript 
           mode          = auto
-            // [STRING] marker for the center in the HTML code. Example: OSMConfigCenter
+            // [STRING] marker for the center in the HTML code. Example: oxMapConfigCenter
           dynamicMarker = oxMapConfigCenter
         }
         00Coordinates {

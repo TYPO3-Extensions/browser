@@ -208,7 +208,7 @@ plugin.tx_browser_pi1 {
   map.zoomLevel.start = 4
   # cat=BrowserMaps - Zoom//104;             type=int+;      label= Maximum zoom level: The maximum zoom level. Maximum value has an effect only, if zoom level mode is "auto".  Default: 18
   map.zoomLevel.max = 18
-  # cat=BrowserMaps - Zoom//105;             type=int+;      label= Maximum number of zoom levels: The maximum number of zoom levels. Value should not be greater than Maximum zommlevel.
+  # cat=BrowserMaps - Zoom//105;             type=int+;      label= Number of zoom levels for CI: The number of zoom levels with an own CI. Value should not be greater than Maximum zoom level.
   map.zoomLevel.levels = 18
 
 }
