@@ -8,6 +8,8 @@
               * oxMapConfig_0.0.10.js -> oxMapConfig_1.1.01.js
               * oxRenderMap_0.0.10.js -> oxRenderMap_1.1.02.js
             * ID of filter is moved from filter to oxMapFilter
+            * TypoScript constants are moved from ... to ...
+              * zoomLevel.fixed -> zoomLevel.start
             * TypoScript properties are moved from ... to ...
               * MapControls     -> oxMapConfigMapControls
               * MapMarker       -> oxMapConfigMapMarker

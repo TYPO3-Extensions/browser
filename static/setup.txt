@@ -1068,13 +1068,13 @@ plugin.tx_browser_pi1 {
               oxMapConfigNumZoomLevels = TEXT
               oxMapConfigNumZoomLevels {
                   // [INTEGER] Value from 0 to 18. Example: 4
-                value = {$plugin.tx_browser_pi1.map.numZoomLevels}
+                value = {$plugin.tx_browser_pi1.map.zoomLevel.levels}
               }
                 // Map start level
               oxMapConfigStartLevel = TEXT
               oxMapConfigStartLevel {
                   // [INTEGER] Value from 0 to 18. Example: 4
-                value = {$plugin.tx_browser_pi1.map.zoomLevel.fixed}
+                value = {$plugin.tx_browser_pi1.map.zoomLevel.start}
               }
                 // Map type: ROADMAP || Mapnik
               oxMapConfigType = COA
