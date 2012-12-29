@@ -148,7 +148,7 @@ plugin.tx_browser_pi1 {
 
   # cat=BrowserMaps - Controlling//101;             type=boolean;   label= Enable the map:Please enable the map. Without enabling any map won't rendered. 
   map.enabled = 0 
-  # cat=BrowserMaps - Controlling//102;             type=options[GoogleMaps,Open Street Map];  label= Map Provider: GoogleMaps or OpenStreetMap. Please take care of the licences!  Copyright must be visible!
+  # cat=BrowserMaps - Controlling//102;             type=options[GoogleMaps,Open Street Map];  label= Map Provider: GoogleMaps or OpenStreetMap. Please take care of the licences! Copyright must be visible!
   map.provider = Open Street Map
   # cat=BrowserMaps - Controlling//103;             type=int+;      label= Map height: Height of the map (in pixel)
   map.height = 400
