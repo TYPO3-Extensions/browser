@@ -506,6 +506,10 @@
                       // If url contains a question mark, param will added with ?param
                       // otherwise with &param
 
+                      // #44295, 130103, dwildt
+                    alert( url );
+                    alert( typeof url );
+                    
                     if( typeof url == "undefined" )
                     {
                       url   = "";

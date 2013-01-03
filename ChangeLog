@@ -1,5 +1,5 @@
 4.4.0
-  121223
+  130104
   New Feature
   * #42788: BrowserMaps will extended for GoogleMaps
             * Moved files
@@ -34,6 +34,8 @@
               * oxRenderMap_0.0.10.js     removed
             * res/js/map/lib
               * OpenLayers                removed
+  Bugfix
+  * #44295: Rotation of modes: Content is empty!
 
 4.3.1
   121219
