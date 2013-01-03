@@ -507,8 +507,7 @@
                       // otherwise with &param
 
                       // #44295, 130103, dwildt
-                    alert( url );
-                    alert( typeof url );
+                    alert( typeof url + ' | ' + url + ' | ' + param );
                     
                     if( typeof url == "undefined" )
                     {
