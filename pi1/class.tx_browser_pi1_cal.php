@@ -726,7 +726,7 @@ class tx_browser_pi1_cal
   private function cal_template( )
   {
     $this->cal_marker( );
-$this->pObj->dev_var_dump( $this->markerArray );
+
       /////////////////////////////////////////////////////////////////
       //
       // Get fields and set marker
@@ -766,6 +766,7 @@ $this->pObj->dev_var_dump( $this->markerArray );
     $subPrt_listView  = $this->pObj->cObj->substituteMarkerArray($subPrt_listView, $this->markerArray);
     $subPrt_listView  = '<!-- ###LISTVIEW### begin -->' . $subPrt_listView . '<!-- ###LISTVIEW### end -->';
     $template         = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $subPrt_listView, true);
+$this->pObj->dev_var_dump( $this->markerArray, $template );
 
     $arr_return['template'] = $template;
     $arr_return['success']  = true;
