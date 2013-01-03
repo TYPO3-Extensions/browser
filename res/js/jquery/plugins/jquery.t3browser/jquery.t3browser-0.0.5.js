@@ -545,7 +545,7 @@
     }
 
       // Error: No proper method, no arguments
-    $.error( "Method " +  method + " does not exist on jQuery.t3browser" );
+    $.error( "Method " +  method + " does not exist on jquery.t3browser-0.0.5.js" );
       // Method calling logic
   };
 

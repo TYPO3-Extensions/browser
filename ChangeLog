@@ -35,6 +35,7 @@
             * res/js/map/lib
               * OpenLayers                removed
   Bugfix
+  * #44296: Rotation of modes: $(...).effect is not a function
   * #44295: Rotation of modes: Content is empty!
             Effected files:
             * jquery.t3browser-0.0.4.js -> jquery.t3browser-0.0.5.js

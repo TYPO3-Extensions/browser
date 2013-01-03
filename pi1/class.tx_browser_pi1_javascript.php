@@ -521,10 +521,14 @@ class tx_browser_pi1_javascript
  */
   function load_jQuery( )
   {
+// #44296
+$this->pObj->dev_var_dump( 'X' );
       // name has to correspondend with similar code in tx_browser_pi1_template.php
     $name = 'jQuery';
     if(isset ($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]))
     {
+// #44296
+$this->pObj->dev_var_dump( $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name], $this->pObj->extKey.'_'.$name );
       return true;
     }
 
@@ -552,7 +556,8 @@ class tx_browser_pi1_javascript
       }
       return true;
     }
-
+// #44296
+$this->pObj->dev_var_dump( T3JQUERY );
 
 
     $path         = $this->pObj->conf['javascript.']['jquery.']['library'];
