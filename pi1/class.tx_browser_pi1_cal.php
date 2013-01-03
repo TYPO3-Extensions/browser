@@ -726,7 +726,7 @@ class tx_browser_pi1_cal
   private function cal_template( )
   {
     $this->cal_marker( );
-$this->pObj->dev_var_dump( $this->marker );
+$this->pObj->dev_var_dump( $this->markerArray );
       /////////////////////////////////////////////////////////////////
       //
       // Get fields and set marker
