@@ -762,10 +762,16 @@ class tx_browser_pi1_cal
     $this->cal_template_body( );
 
     $template         = $this->template;
-    $subPrt_listView  = $this->pObj->cObj->getSubpart($template, '###LISTVIEW###');
+      // #44295, 130103, dwildt, 4-
+//    $subPrt_listView  = $this->pObj->cObj->getSubpart($template, '###LISTVIEW###');
+//    $subPrt_listView  = $this->pObj->cObj->substituteMarkerArray($subPrt_listView, $this->markerArray);
+//    $subPrt_listView  = '<!-- ###LISTVIEW### begin -->' . $subPrt_listView . '<!-- ###LISTVIEW### end -->';
+//    $template         = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $subPrt_listView, true);
+      // #44295, 130103, dwildt, 4+
+    $subPrt_listView  = $this->pObj->cObj->getSubpart($template, '###TEMPLATE_LIST###');
     $subPrt_listView  = $this->pObj->cObj->substituteMarkerArray($subPrt_listView, $this->markerArray);
-    $subPrt_listView  = '<!-- ###LISTVIEW### begin -->' . $subPrt_listView . '<!-- ###LISTVIEW### end -->';
-    $template         = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $subPrt_listView, true);
+    $subPrt_listView  = '<!-- ###TEMPLATE_LIST### begin -->' . $subPrt_listView . '<!-- ###TEMPLATE_LIST### end -->';
+    $template         = $this->pObj->cObj->substituteSubpart($template, '###TEMPLATE_LIST###', $subPrt_listView, true);
 $this->pObj->dev_var_dump( $this->markerArray, $template );
 
     $arr_return['template'] = $template;
