@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2008-2013 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +29,7 @@
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 4.2.0
+ * @version 4.4.0
  * @since 1.0.0
  */
 
@@ -601,7 +601,7 @@ class tx_browser_pi1_template
  * @param	string		A HTML template with the TYPO3 subparts and markers
  * @param	array		Array with the records of the SQL result
  * @return	void
- * @version 4.1.9
+ * @version 4.4.0
  * @since 1.0.0
  */
   function tmplListview( $template, $rows )
@@ -1329,6 +1329,8 @@ class tx_browser_pi1_template
     $markerArray['###VIEW###']    = $this->pObj->view;
     $markerArray['###SUMMARY###'] = $this->pObj->objWrapper->tableSummary('list');
     $markerArray['###CAPTION###'] = $this->pObj->objWrapper->tableCaption('list');
+      // #44295, 130103, dwildt, 1+
+    $markerArray['###TT_CONTENT.UID###']  = $this->pObj->cObj->data['uid'];
     $subpart        = $this->pObj->cObj->getSubpart($template, '###LISTVIEW###');
     $listview       = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
     $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $listview, true);
