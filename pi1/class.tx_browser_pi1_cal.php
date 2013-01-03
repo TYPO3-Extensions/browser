@@ -768,7 +768,7 @@ class tx_browser_pi1_cal
 //    $subPrt_listView  = '<!-- ###LISTVIEW### begin -->' . $subPrt_listView . '<!-- ###LISTVIEW### end -->';
 //    $template         = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $subPrt_listView, true);
       // #44295, 130103, dwildt, 1+
-//    $template  = $this->pObj->cObj->substituteMarkerArray($template, $this->markerArray);
+    $template  = $this->pObj->cObj->substituteMarkerArray($template, $this->markerArray);
 //$this->pObj->dev_var_dump( $this->markerArray, $template );
 
     $arr_return['template'] = $template;
