@@ -311,6 +311,8 @@ class tx_browser_pi1_viewlist
     $this->zz_setGlobalArrLinkToSingle( );
 
 
+var_dump( __METHOD__, __LINE__, 'W' );        
+$this->dev_var_dump( 'W' );        
 
       /////////////////////////////////////////////////////////////////
       //
@@ -393,8 +395,6 @@ class tx_browser_pi1_viewlist
         }
         break;
       default:
-var_dump( 'W' );        
-$this->dev_var_dump( 'W' );        
         $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
         break;
     }
