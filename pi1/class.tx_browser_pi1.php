@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2008-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+ *  (c) 2008-2013 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -62,7 +62,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 4.1.13
+ * @version 4.4.0
  * @since 0.0.1
  */
 
@@ -414,7 +414,7 @@ class tx_browser_pi1 extends tslib_pibase {
  * @param    string        $content: The content of the PlugIn
  * @param    array        $conf: The PlugIn Configuration
  * @return    string        The content that should be displayed on the website
- * @version 3.9.8
+ * @version 4.4.0
  * @since   0.0.1
  */
   public function main( $content, $conf )
@@ -1067,27 +1067,55 @@ class tx_browser_pi1 extends tslib_pibase {
     }
 
     $bool_load_jQuery = false;
-    if( $this->objFlexform->bool_ajax_enabled )
+      // #44296, 130104, dwildt, -
+//    if( $this->objFlexform->bool_ajax_enabled )
+//    {
+//      if( $this->b_drs_javascript )
+//      {
+//        t3lib_div::devlog( '[INFO/JSS] AJAX is enabled.', $this->extKey, 0 );
+//        t3lib_div::devlog( '[INFO/JSS] jQuery will be loaded.', $this->extKey, 0 );
+//      }
+//      $bool_load_jQuery = true;
+//    }
+//    if( $this->objFlexform->bool_jquery_ui )
+//    {
+//      if( $this->b_drs_javascript )
+//      {
+//        t3lib_div::devlog( '[INFO/JSS] jQuery UI should included.', $this->extKey, 0 );
+//        t3lib_div::devlog( '[INFO/JSS] jQuery will be loaded.', $this->extKey, 0 );
+//      }
+//      $bool_load_jQuery = true;
+//    }
+      // #44296, 130104, dwildt, -
+
+      // #44296, 130104, dwildt, +
+    switch( true )
     {
-      if( $this->b_drs_javascript )
-      {
-        t3lib_div::devlog( '[INFO/JSS] AJAX is enabled.', $this->extKey, 0 );
-        t3lib_div::devlog( '[INFO/JSS] jQuery will be loaded.', $this->extKey, 0 );
-      }
-      $bool_load_jQuery = true;
+      case( $this->objFlexform->bool_ajax_enabled ):
+        $promptFf = 'AJAX is enabled.';
+        $bool_load_jQuery = true;
+        break;
+      case( $this->objFlexform->bool_jquery_ui ):
+        $promptFf = 'jQuery UI should included.';
+        $bool_load_jQuery = true;
+        break;
+      case( $this->objFlexform->sheet_viewList_rotateviews ):
+        $promptFf = '[rotate views] is enabled.';
+        $bool_load_jQuery = true;
+        break;
     }
-    if( $this->objFlexform->bool_jquery_ui )
-    {
-      if( $this->b_drs_javascript )
-      {
-        t3lib_div::devlog( '[INFO/JSS] jQuery UI should included.', $this->extKey, 0 );
-        t3lib_div::devlog( '[INFO/JSS] jQuery will be loaded.', $this->extKey, 0 );
-      }
-      $bool_load_jQuery = true;
-    }
+      // #44296, 130104, dwildt, +
 
     if( $bool_load_jQuery )
     {
+        // #44296, 130104, dwildt, 6+
+      if( $this->b_drs_javascript )
+      {
+        t3lib_div::devlog( '[INFO/JSS] ' . $promptFf, $this->extKey, 0 );
+        $prompt = 'jQuery will be loaded.';
+        t3lib_div::devlog( '[INFO/JSS] ' . $prompt, $this->extKey, 0 );
+      }
+        // #44296, 130104, dwildt, 6+
         // Adding jQuery
       $bool_success_jQuery = $this->objJss->load_jQuery( );
       if( $bool_success_jQuery )
