@@ -312,7 +312,7 @@ class tx_browser_pi1_viewlist
 
 
 var_dump( __METHOD__, __LINE__, 'W' );        
-$this->dev_var_dump( 'W' );        
+$this->pObj->dev_var_dump( 'W' );        
 
       /////////////////////////////////////////////////////////////////
       //

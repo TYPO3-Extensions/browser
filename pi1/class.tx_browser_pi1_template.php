@@ -606,7 +606,7 @@ class tx_browser_pi1_template
  */
   function tmplListview( $template, $rows )
   {
-$this->dev_var_dump( 'X' );
+$this->pObj->dev_var_dump( 'X' );
     
       ///////////////////////////////////////////////////////////
       //
@@ -1333,7 +1333,7 @@ $this->dev_var_dump( 'X' );
     $markerArray['###CAPTION###'] = $this->pObj->objWrapper->tableCaption('list');
       // #44295, 130103, dwildt, 1+
     $markerArray['###TT_CONTENT.UID###']  = $this->pObj->cObj->data['uid'];
-$this->dev_var_dump( $markerArray );
+$this->pObj->dev_var_dump( $markerArray );
     $subpart        = $this->pObj->cObj->getSubpart($template, '###LISTVIEW###');
     $listview       = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
     $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $listview, true);
