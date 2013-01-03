@@ -134,10 +134,12 @@
                             "Please check the link manually:\n" +
                             url + "\n" +
                             "\n" +
+                            "Please check the HTML id manually:\n" +
+                            plugin_id + "\n" +
+                            "\n" +
                             "Reasons can be:\n" +
                             "* The TYPO3 colPos of your content isn't 0.\n" +
-                            "\n" +
-                            "Please take care of a proper TypoScript."
+                            "* THE HTML id isn't proper."
                           );
                             // Fade out the loading *.gif, initiate buttons again
                           clean_up( html_element );
@@ -505,10 +507,6 @@
                       // Concatenate the url and the param in dependence of a question mark.
                       // If url contains a question mark, param will added with ?param
                       // otherwise with &param
-
-                      // #44295, 130103, dwildt
-                    alert( typeof url + ' | ' + url + ' | ' + param );
-                    
                     if( typeof url == "undefined" )
                     {
                       url   = "";
