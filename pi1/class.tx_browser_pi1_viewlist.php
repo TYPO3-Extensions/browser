@@ -311,7 +311,6 @@ class tx_browser_pi1_viewlist
     $this->zz_setGlobalArrLinkToSingle( );
 
 
-var_dump( __METHOD__, __LINE__, 'W' );        
 $this->pObj->dev_var_dump( 'W' );        
 
       /////////////////////////////////////////////////////////////////
@@ -352,6 +351,7 @@ $this->pObj->dev_var_dump( 'W' );
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'after $this->pObj->objCal->cal( )' );
       // Extension pi5: +Browser Calendar
+$this->pObj->dev_var_dump( 'W' );        
 
 
 
@@ -368,6 +368,7 @@ $this->pObj->dev_var_dump( 'W' );
       $prompt = $arr_result['error']['header'].$arr_result['error']['prompt'];
       return $this->pObj->pi_wrapInBaseClass( $prompt );
     }
+$this->pObj->dev_var_dump( 'W' );        
       // record browser
 
       // #42124, dwildt, 2-
@@ -405,6 +406,7 @@ $this->pObj->dev_var_dump( 'W' );
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
+$this->pObj->dev_var_dump( 'W' );        
       // RETURN content
     return $this->content;
   }
