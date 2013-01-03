@@ -130,6 +130,7 @@
 
 
                         if( ! $( "#tmp-container div" ).length ) {
+                            // #44295, 130103, dwildt
                           alert( "ERROR: Content is empty!\n" +
                             "Please check the link manually:\n" +
                             url + "\n" +
