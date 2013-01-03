@@ -606,6 +606,8 @@ class tx_browser_pi1_template
  */
   function tmplListview( $template, $rows )
   {
+$this->dev_var_dump( 'X' );
+    
       ///////////////////////////////////////////////////////////
       //
       // Get the local or the global displayList array
