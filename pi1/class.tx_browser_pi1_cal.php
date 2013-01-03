@@ -1932,6 +1932,8 @@ class tx_browser_pi1_cal
       // Set marker
     $this->markerArray['###MODE###']  = $this->pObj->piVar_mode;
     $this->markerArray['###VIEW###']  = $this->pObj->view;
+      // #44295, 130103, dwildt, 1+
+    $markerArray['###TT_CONTENT.UID###']  = $this->pObj->cObj->data['uid'];
     $this->markerArray                = $this->pObj->objMarker->extend_marker_wi_cObjData( $this->markerArray );
     $markerArray                      = $this->pObj->objWrapper->constant_markers( );
     foreach( (array) $markerArray as $key => $value)

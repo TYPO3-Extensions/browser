@@ -393,7 +393,6 @@ class tx_browser_pi1_viewlist
         }
         break;
       default:
-$this->pObj->dev_var_dump( 'W' );        
         $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
         break;
     }
@@ -404,7 +403,6 @@ $this->pObj->dev_var_dump( 'W' );
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
 
-$this->pObj->dev_var_dump( 'W' );        
       // RETURN content
     return $this->content;
   }
