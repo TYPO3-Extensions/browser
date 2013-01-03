@@ -298,7 +298,7 @@ class tx_browser_pi1_viewlist
     }
       // DRS - :TODO:
 
-    // Delete fields, which were added whily runtime
+      // Delete fields, which were added whily runtime
     $arr_return = $this->pObj->objSqlFun_3x->rows_with_cleaned_up_fields( $rows );
     $rows       = $arr_return['data']['rows'];
     unset($arr_return);
@@ -393,6 +393,8 @@ class tx_browser_pi1_viewlist
         }
         break;
       default:
+var_dump( 'W' );        
+$this->dev_var_dump( 'W' );        
         $content = $this->pObj->objTemplate->tmplListview( $content, $rows );
         break;
     }
