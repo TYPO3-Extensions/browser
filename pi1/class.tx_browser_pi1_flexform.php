@@ -3545,7 +3545,18 @@ class tx_browser_pi1_flexform {
     $this->sheet_viewList_rotateviews = $this->pObj->conf['flexform.'][$sheet . '.'][$field];
     if ( $this->pObj->b_drs_javascript )
     {
-      t3lib_div :: devlog('[INFO/JSS] global sheet_viewList_rotateviews is set to ' . $this->sheet_viewList_rotateviews, $this->pObj->extKey, 0);
+        // 130104, dwildt
+      switch( $this->sheet_viewList_rotateviews )
+      {
+        case( true ):
+          $prompt = 'global sheet_viewList_rotateviews is set to true';
+          break;
+        case( false ):
+        default:
+          $prompt = 'global sheet_viewList_rotateviews is set to false';
+          break;
+      }
+      t3lib_div :: devlog('[INFO/JSS] ' . $prompt, $this->pObj->extKey, 0);
     }
       // Field rotateviews
 

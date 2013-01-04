@@ -48,7 +48,7 @@
  *
  *              SECTION: Files
  *  505:     function load_jQuery()
- *  615:     function addJssFile( $path, $name, $keyPathTs )
+ *  615:     function addJssFileToHead( $path, $name, $keyPathTs )
  *
  *              SECTION: Helper
  *  693:     function set_arrSegment()
@@ -536,6 +536,11 @@ class tx_browser_pi1_javascript
       // RETURN : method is called before
     if( ! ( $this->jqueryIsLoaded === null ) )
     {
+      if( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
+      {
+        $prompt = 'RETURN: load_jQuery( ) is called before';
+        t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 0 );
+      }
       return $this->jqueryIsLoaded;
     }
       // RETURN : method is called before
@@ -548,8 +553,13 @@ class tx_browser_pi1_javascript
     $name = 'jQuery';
     if(isset ($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]))
     {
-        // #44306, 130104, dwildt, 1+
+        // #44306, 130104, dwildt, 6+
       $this->jqueryIsLoaded = true;
+      if( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
+      {
+        $prompt = 'RETURN true: additionalHeaderData contains ' . $this->pObj->extKey . '_' . $name;
+        t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 0 );
+      }
       return true;
     }
 
@@ -584,8 +594,13 @@ class tx_browser_pi1_javascript
       // RETURN true  : t3jquery is loaded
     if( $this->load_t3jquery( ) )
     {
-        // #44306, 130104, dwildt, 1+
+        // #44306, 130104, dwildt, 6+
       $this->jqueryIsLoaded = true;
+      if( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
+      {
+        $prompt = 'RETURN true: t3juery is loaded.';
+        t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 0 );
+      }
       return true;
     }
       // RETURN true  : t3jquery is loaded
@@ -599,14 +614,18 @@ class tx_browser_pi1_javascript
     if( empty($path) )
     {
         // Do nothing
-      if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
+      if( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
       {
-        if(empty($this->pObj->objFlexform->str_jquery_library))
+        if( empty( $this->pObj->objFlexform->str_jquery_library ) )
         {
-          t3lib_div::devlog('[INFO/FLEXFORM+JSS] Flexform Javascript|jquery_library is empty.', $this->pObj->extKey, 0);
+          $prompt = 'Flexform Javascript|jquery_library is empty.';
+          t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 0) ;
         }
-        t3lib_div::devlog('[INFO/FLEXFORM+JSS] jQuery path is empty: jQuery isn\'t embedded.', $this->pObj->extKey, 0);
+        $prompt = 'jQuery path is empty: jQuery isn\'t embedded.';
+        t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 0 );
       }
+        // #44306, 130104, dwildt, 1+
+      $this->jqueryIsLoaded = false;
         // #44306, 130104, dwildt, 1-
 //      return true;
         // #44306, 130104, dwildt, 1+
@@ -621,7 +640,7 @@ class tx_browser_pi1_javascript
       // name has to correspondend with similar code in tx_browser_pi1_template.php
     $name         = 'jQuery';
     $path_tsConf  = 'javascript.jquery.file';
-    $bool_success = $this->addJssFile($path, $name, $path_tsConf);
+    $bool_success = $this->addJssFileToHead($path, $name, $path_tsConf);
     
       // DRS
     switch( true )
@@ -753,7 +772,7 @@ class tx_browser_pi1_javascript
 
 
 /**
- * addJssFile(): Add a JavaScript file the the HTML head
+ * addJssFileToHead(): Add a JavaScript file to the HTML head
  *
  * @param	string		$path: Path to the Javascript
  * @param	string		$name: For the key of additionalHeaderData
@@ -762,7 +781,7 @@ class tx_browser_pi1_javascript
  * @version 4.4.0
  * @since 3.5.0
  */
-  function addJssFile( $path, $name, $keyPathTs )
+  function addJssFileToHead( $path, $name, $keyPathTs )
   {
     if(isset ($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]))
     {
@@ -1211,7 +1230,7 @@ class tx_browser_pi1_javascript
 
 
 /**
- * addJssFile(): Add a JavaScript file the the HTML head
+ * addJssFileToHead(): Add a JavaScript file the the HTML head
  *
  * @param	string		$path:          Path to the Javascript or CSS
  * @param	string		$ie_condition:  Optional condition for Internet Explorer
@@ -1328,23 +1347,25 @@ class tx_browser_pi1_javascript
             '  <link rel="stylesheet" type="text/css" href="' . $path . '" media="all" />';
         }
         break;
-      case('jss'):
-        if($bool_inline)
+      case( 'jss' ):
+        if( $bool_inline )
         {
           $inline_jss =
 '  <script type="text/javascript">
   <!--
-' . implode ('', file($absPath)) . '
+' . implode ( '', file( $absPath ) ) . '
   //-->
   </script>';
           $inline_jss = $this->pObj->cObj->substituteMarkerArray($inline_jss, $markerArray);
           $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] = $inline_jss;
         }
-        if(!$bool_inline)
+        if( ! $bool_inline )
         {
           $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
             '  <script src="'.$path.'" type="text/javascript"></script>';
         }
+          // #44306, 130104, dwildt, 1+
+        $this->load_jQuery( );
         break;
       default:
         $prompt = '

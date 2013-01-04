@@ -2524,19 +2524,19 @@ class tx_browser_pi1_template
         $name         = 'ajaxLL';
         $path         = $this->pObj->conf['javascript.']['ajax.']['fileLL'];
         $path_tsConf  = 'javascript.ajax.fileLL';
-        $bool_success = $this->pObj->objJss->addJssFile($path, $name, $path_tsConf);
+        $bool_success = $this->pObj->objJss->addJssFileToHead($path, $name, $path_tsConf);
           // name has to correspondend with similar code in tx_browser_pi1.php
         $name         = 'ajax';
         $path         = $this->pObj->conf['javascript.']['ajax.']['file'];
         $path_tsConf  = 'javascript.ajax.file';
-        $bool_success = $this->pObj->objJss->addJssFile($path, $name, $path_tsConf);
+        $bool_success = $this->pObj->objJss->addJssFileToHead($path, $name, $path_tsConf);
       }
 
         // Adding Browser General JSS file
       $name         = 'general';
       $path         = $this->pObj->conf['javascript.']['general.']['file'];
       $path_tsConf  = 'javascript.general.file';
-      $bool_success = $this->pObj->objJss->addJssFile($path, $name, $path_tsConf);
+      $bool_success = $this->pObj->objJss->addJssFileToHead($path, $name, $path_tsConf);
         // Adding Browser General JSS file
 
         // Add Javascript
