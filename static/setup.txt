@@ -2124,14 +2124,17 @@ plugin.tx_browser_pi1 {
                     // Display with hits only or in case of a tree view
                   cObject = COA
                   cObject {
+                      // field = hits
                     10 = TEXT
                     10 {
                       field = hits
                     }
+                      // field = tx_browser_pi1.flag_displayInCaseOfNoCounting
                     20 = TEXT
                     20 {
                       field = tx_browser_pi1.flag_displayInCaseOfNoCounting
                     }
+                      // field = tx_browser_pi1.flag_treeview
                     30 = TEXT
                     30 {
                       field = tx_browser_pi1.flag_treeview
@@ -2267,10 +2270,12 @@ plugin.tx_browser_pi1 {
                     // Display with hits only or in case of a tree view
                   cObject = COA
                   cObject {
+                      // field = hits
                     10 = TEXT
                     10 {
                       field = hits
                     }
+                      // field = tx_browser_pi1.flag_displayInCaseOfNoCounting
                     20 = TEXT
                     20 {
                       field = tx_browser_pi1.flag_displayInCaseOfNoCounting
@@ -2407,10 +2412,12 @@ plugin.tx_browser_pi1 {
                     // Display with hits only or in case of a tree view
                   cObject = COA
                   cObject {
+                      // field = hits
                     10 = TEXT
                     10 {
                       field = hits
                     }
+                      // field = tx_browser_pi1.flag_displayInCaseOfNoCounting
                     20 = TEXT
                     20 {
                       field = tx_browser_pi1.flag_displayInCaseOfNoCounting
@@ -2582,10 +2589,12 @@ plugin.tx_browser_pi1 {
                     // Display with hits only or in case of a tree view
                   cObject = COA
                   cObject {
+                      // field = hits
                     10 = TEXT
                     10 {
                       field = hits
                     }
+                      // field = tx_browser_pi1.flag_displayInCaseOfNoCounting
                     20 = TEXT
                     20 {
                       field = tx_browser_pi1.flag_displayInCaseOfNoCounting
