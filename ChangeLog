@@ -2,6 +2,9 @@
   130104
   New Features
   * #44306: Improve jquery loading
+            Effected files:
+            * pi1
+              * class.tx_browser_pi1_javascript.php
   * #44299: t3jquery: respect dontIntegrateOnUID
             Effected files:
             * pi1
