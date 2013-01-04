@@ -1136,7 +1136,6 @@ class tx_browser_pi1 extends tslib_pibase {
       // AJAX
 
       // #44296, 130104, dwildt, +
-$this->dev_var_dump( $this->objFlexform->sheet_viewList_rotateviews, $this->objJss->t3jqueryIsUsed );
     if( $this->objFlexform->sheet_viewList_rotateviews )
     {
       switch( $this->objJss->t3jqueryIsUsed )
