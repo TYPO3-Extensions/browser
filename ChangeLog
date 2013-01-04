@@ -39,6 +39,7 @@
             Effected files:
             * pi1
               * class.tx_browser_pi1.php
+            * t3jquery.txt
   * #44295: Rotation of modes: Content is empty!
             Effected files:
             * jquery.t3browser-0.0.4.js -> jquery.t3browser-0.0.5.js
@@ -49,7 +50,7 @@
               * static
                 * downgrade/3.9.0/setup.txt
                 * setup.txt
-              * t3jquery.txt
+            * t3jquery.txt
 
 4.3.1
   121219
