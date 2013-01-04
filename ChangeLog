@@ -51,6 +51,7 @@
             * res/js/map/lib
               * OpenLayers                removed
   Bugfix
+  * #44313: GPvar is not interpreted in some case: Case is org_npzch
   * #44296: Rotation of modes: $(...).effect is not a function
             Effected files:
             * pi1

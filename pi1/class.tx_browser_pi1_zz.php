@@ -181,6 +181,9 @@
  */
   function prepairePiVars()
   {
+// #44313, 130104, dwildt
+$this->pObj->dev_var_dump( $GLOBALS['_GET'] );
+
       //////////////////////////////////////
       //
       // DRS message?
