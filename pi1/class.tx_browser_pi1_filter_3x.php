@@ -2564,7 +2564,13 @@ class tx_browser_pi1_filter_3x {
       {
         $key_marker = '###' . strtoupper($conf_tableField) . '###';
         $markerArray[$key_marker] = $value_marker;
-        $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $markerArray);
+          // #44316, 130104, dwildt, 1-
+//        $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $markerArray);
+          // #44316, 130104, dwildt, 4+
+        $currElements         = $this->pObj->elements;
+        $this->pObj->elements = $markerArray;
+        $lConfCObj            = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
+        $this->pObj->elements = $currElements;
         if ($this->pObj->b_drs_filter)
         {
           t3lib_div :: devLog('[INFO/FILTER] ###TITLE### will be replaced with the localised value of \'' . $conf_tableField . '\': \'' . $value_marker . '\'.', $this->pObj->extKey, 0);

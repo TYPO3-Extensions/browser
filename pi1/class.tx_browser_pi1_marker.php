@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 - 2012: Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2010-2013: Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +29,7 @@
 *
 * @package    TYPO3
 * @subpackage    browser
-* @version   4.1.25
+* @version   4.4.0
 * @since     3.4.4
 */
 
@@ -107,12 +107,14 @@
     *
     **********************************************/
 
-    /**
+/**
  * Returns the value for a $GLOBALS marker
  *
  * @param    string        $arr_tsConf: The current TypoScript configuration
  * @param    array        $elements: Array with the element session
  * @return    string        The value from the TSFE array
+ * 
+ * @version   4.4.0
  */
   function session_marker($arr_tsConf, $elements)
   {
@@ -130,7 +132,13 @@
       // RETURN default value, if we don't have any session
 
 
-    $arr_tsConf = $this->substitute_marker_recurs($arr_tsConf, $elements);
+      // #44316, 130104, dwildt, 1-
+//    $arr_tsConf = $this->substitute_marker_recurs($arr_tsConf, $elements);
+      // #44316, 130104, dwildt, 4+
+    $currElements         = $this->pObj->elements;
+    $this->pObj->elements = $elements;
+    $arr_tsConf           = $this->pObj->objMarker->substitute_tablefield_marker( $arr_tsConf );
+    $this->pObj->elements = $currElements;
 
     $str_keyElement   = $arr_tsConf['session.']['whereElement.']['key'];   // i.e: uid
     $str_valueElement = $arr_tsConf['session.']['whereElement.']['value']; // i.e: ###SHOWUID###
@@ -570,7 +578,7 @@
  * @param    array        $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
  * @param    array        $elements: The current row of the SQL result
  * @return    array        $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
- * @version 4.1.25
+ * @version 4.4.0
  */
   function substitute_marker_recurs($arr_multi_dimensional, $elements)
   {
@@ -738,7 +746,14 @@
       if (is_array($value_tsConf))
       {
           // Loop through the next level of the multi-dimensional array (recursive)
-        $arr_multi_dimensional[$key_tsConf] = $this->substitute_marker_recurs($value_tsConf, $elements);
+          // #44316, 130104, dwildt, 1-
+//        $arr_multi_dimensional[$key_tsConf] = $this->substitute_marker_recurs($value_tsConf, $elements);
+          // #44316, 130104, dwildt, 4+
+        $currElements                       = $this->pObj->elements;
+        $this->pObj->elements               = $elements;
+        $arr_multi_dimensional[$key_tsConf] = $this->pObj->objMarker->substitute_tablefield_marker( $value_tsConf );
+        $this->pObj->elements               = $currElements;
+          // Loop through the next level of the multi-dimensional array (recursive)
       }
 
 

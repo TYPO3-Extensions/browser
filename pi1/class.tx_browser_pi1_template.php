@@ -3538,7 +3538,7 @@ class tx_browser_pi1_template
  *
  * @param	array		$elements: The current record
  * @return	string		$str_return: Value of the group field wrapped by stdWrap if we have a TSconfig
- * @version   3.3.7
+ * @version   4.4.0
  * @since     3.3.0
  */
   private function groupBy_stdWrap($elements)
@@ -3593,7 +3593,14 @@ class tx_browser_pi1_template
     // RETURN with stdWrap
     $lConfCObj['10']  = $conf_view[$table.'.'][$field];
     $lConfCObj['10.'] = $conf_view[$table.'.'][$field.'.'];
-    $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $elements);
+      // #44316, 130104, dwildt, 1-
+//    $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $elements);
+      // #44316, 130104, dwildt, 4+
+    $currElements         = $this->pObj->elements;
+    $this->pObj->elements = $elements;
+    $lConfCObj            = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
+    $this->pObj->elements = $currElements;
+    
     $str_value = $this->pObj->objWrapper->general_stdWrap($this->pObj->local_cObj->COBJ_ARRAY($lConfCObj, $ext=''), false);
 
     return $str_value;

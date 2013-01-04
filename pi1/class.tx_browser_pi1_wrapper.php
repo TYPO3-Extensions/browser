@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008 - 2012 - Dirk Wildt http://wildt.at.die-netzmacher.de
+*  (c) 2008-2013 - Dirk Wildt http://wildt.at.die-netzmacher.de
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +29,7 @@
 * @package    TYPO3
 * @subpackage    browser
 *
-* @version 4.1.25
+* @version 4.4.0
 * @since 3.0.0
 */
 
@@ -300,7 +300,7 @@ class tx_browser_pi1_wrapper
  * @param    string        $value: The value, which should be wrapped
  * @param    integer        $recordId: Id of the record, which should be displayed in a single view
  * @return    string        The wrapped and linked value
- * @version 4.1.25
+ * @version 4.4.0
  * @since 2.0.0
  */
   function wrapAndLinkValue($tableField, $value, $recordId=0)
@@ -638,9 +638,9 @@ class tx_browser_pi1_wrapper
           t3lib_div::devLog('[WARN/TEMPLATING] $this->pObj->elements isn\'t set!', $this->pObj->extKey, 2);
         }
       }
-        // 130104, dwildt, 1-
+        // #44316, 130104, dwildt, 1-
       //$lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
-        // 130104, dwildt, 1+
+        // #44316, 130104, dwildt, 1+
       $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
       //Replace all ###MARKER### in Typoscript with its values.
       //if(t3lib_div::_GP('dev')) var_dump('wrapper 485', $lConfCObj);
@@ -764,7 +764,10 @@ class tx_browser_pi1_wrapper
             t3lib_div::devLog('[WARN/TEMPLATING] $this->pObj->elements isn\'t set!', $this->pObj->extKey, 2);
           }
         }
-        $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
+          // #44316, 130104, dwildt, 1-
+//        $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
+          // #44316, 130104, dwildt, 1+
+        $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
           // Replace all ###MARKER### in Typoscript with its values.
 
           // Recover piVars, if they weren't used in the realUrl path

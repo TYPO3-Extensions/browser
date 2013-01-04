@@ -3,7 +3,14 @@
   New Features
   * #44316: Improve performance: substitute_marker_recurs( ) is deprecated. 
             Substitute it with substitute_tablefield_marker( )
-
+            Effected files:
+            * pi1
+              * class.tx_browser_pi1_wrapper.php
+              * class.tx_browser_pi1_filter_4x.php
+              * class.tx_browser_pi1_template.php
+              * class.tx_browser_pi1_marker.php
+              * class.tx_browser_pi1_ttcontainer.php
+              * class.tx_browser_pi1_filter_3x.php
   * #44306: Improve jquery loading
             Effected files:
             * pi1

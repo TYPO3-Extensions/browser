@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2009 - 2010 Dirk Wildt <dirk.wildt.at.die-netzmacher.de>
+ *  (c) 2009-2013 Dirk Wildt <dirk.wildt.at.die-netzmacher.de>
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,6 +28,7 @@
  * @author    Dirk Wildt <dirk.wildt.at.die-netzmacher.de>
  * @package    TYPO3
  * @subpackage  browser
+ * @version 4.40
  */
 
 /**
@@ -1307,13 +1308,15 @@ class tx_browser_pi1_ttcontainer
 
 
 
-  /**
+/**
  * Wrap every marker. Extra process, if there is no row and if there is a no record message
  *
  * @param	array		$arr_ttc_values: TypoScript array of the current TTC_STDWRAP or TTC_COA
  * @param	array		$arr_marker_values: Rows with the pairs marker and value like: $arr_markers[0][tx_civserv_service.uid] = 112
  * @param	string		$str_ttc_type: Type of the TTC. TTC_COA or TTC_STDWRAP
  * @return	array		Array with the elements error and data. Data contains the template.
+ * 
+ * @version   4.4.0
  */
   function get_wrapped_marker($arr_ttc_values, $arr_marker_values, $str_ttc_type)
   {
@@ -1369,8 +1372,15 @@ class tx_browser_pi1_ttcontainer
     // Update all markers in the current TypoScript recursive
     foreach((array) $arr_marker_values as $key_key_marker => $arr_values)
     {
-      $arr_ttc_values_substituted = $this->pObj->objMarker->substitute_marker_recurs($arr_ttc_values, $arr_values);
-      // Get the current TypoScript array with substituted markers
+        // Get the current TypoScript array with substituted markers
+        // #44316, 130104, dwildt, 1-
+//      $arr_ttc_values_substituted = $this->pObj->objMarker->substitute_marker_recurs($arr_ttc_values, $arr_values);
+        // #44316, 130104, dwildt, 4+
+      $currElements               = $this->pObj->elements;
+      $this->pObj->elements       = $arr_values;
+      $arr_ttc_values_substituted = $this->pObj->objMarker->substitute_tablefield_marker( $arr_ttc_values );
+      $this->pObj->elements       = $currElements;
+        // Get the current TypoScript array with substituted markers
 
       $arr_curr_realurl_conf = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl'];
       // Store the current realurl configuration
