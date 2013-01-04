@@ -27,6 +27,18 @@
               * setup.txt
             * t3jquery.txt
   Improvement
+  * #44300: Update jQuery 1.6.2 -> 1.8.3
+            Effected files:
+            * res/js/jquery
+              * jquery-1.6.2.min.js       removed
+              * jquery-1.8.3.min.js       added
+            * pi1
+              * class.tx_browser_pi1.php
+              * class.tx_browser_pi1_javascript.php
+              * flexform_sheet_javascript.xml
+            * static
+              * setup.txt
+              * downgrade/3.9.0/setup.txt
   * #00000: Removed deprecated files
             Effected files:
             * res/js/map

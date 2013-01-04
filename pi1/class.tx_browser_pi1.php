@@ -1102,12 +1102,6 @@ class tx_browser_pi1 extends tslib_pibase {
       case( $this->objFlexform->sheet_viewList_rotateviews ):
         $promptFf = '[rotate views] is enabled.';
         $bool_load_jQuery = true;
-//        $this->objFlexform->bool_jquery_ui = true;
-//        if( $this->b_drs_javascript )
-//        {
-//          $prompt = '[rotate views] is enabled. objFlexform->bool_jquery_ui is set to true.';
-//          t3lib_div::devlog( '[INFO/JSS] ' . $prompt, $this->extKey, 0 );
-//        }
         break;
     }
       // #44296, 130104, dwildt, +
@@ -1141,6 +1135,26 @@ class tx_browser_pi1 extends tslib_pibase {
       // #9659, 101010 fsander
       // AJAX
 
+      // #44296, 130104, dwildt, +
+    if( $this->objFlexform->sheet_viewList_rotateviews )
+    {
+      switch( $this->pObj->objJss->t3jqueryIsUsed )
+      {
+        case( true ):
+            // Follow the workflow
+          break;
+        case( false ):
+        default:
+          $this->objFlexform->bool_jquery_ui = true;
+          if( $this->b_drs_javascript )
+          {
+            $prompt = '[rotate views] is enabled. objFlexform->bool_jquery_ui is set to true.';
+            t3lib_div::devlog( '[INFO/JSS] ' . $prompt, $this->extKey, 0 );
+          }
+          break;
+      }
+    }
+      // #44296, 130104, dwildt, +
 
 
       // 110804, dwildt

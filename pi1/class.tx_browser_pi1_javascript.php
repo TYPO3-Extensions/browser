@@ -65,6 +65,13 @@
  */
 class tx_browser_pi1_javascript
 {
+  
+ /**
+  * True, if t3jquery is included
+  *
+  * @var boolean
+  */
+  public $t3jqueryIsUsed = null;
 
 
 
@@ -627,6 +634,15 @@ class tx_browser_pi1_javascript
  */
   private function load_t3jquery( )
   {
+      // RETURN : method is called before
+    if( ! ( $this->t3jqueryIsUsed === null ) )
+    {
+      return $this->t3jqueryIsUsed;
+    }
+      // RETURN : method is called before
+    
+      // Set default
+    $this->t3jqueryIsUsed = false;
 
       // RETURN false : t3jquery isn't loaded
     if( ! t3lib_extMgm::isLoaded('t3jquery' ) )
@@ -673,6 +689,7 @@ class tx_browser_pi1_javascript
         $prompt = 'Success: tx_t3jquery::addJqJS()';
         t3lib_div::devlog( '[INFO/JSS] ' . $prompt, $this->pObj->extKey, 0 );
       }
+      $this->t3jqueryIsUsed = true;
       return true;
     }
       // RETURN true : t3jquery is loaded and the custom library had been created
