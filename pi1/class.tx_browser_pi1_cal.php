@@ -753,7 +753,7 @@ class tx_browser_pi1_cal
       // Get fields and set marker
 
 // #44313, 130104, dwildt
-$this->pObj->dev_var_dump( $GLOBALS['_GET'] );
+$this->pObj->dev_var_dump( $GLOBALS['_GET'], $this->markerArray );
     
 
 
