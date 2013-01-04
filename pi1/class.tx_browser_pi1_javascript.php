@@ -529,36 +529,43 @@ class tx_browser_pi1_javascript
       return true;
     }
 
-      // #44299, 130104, dwildt, +
-    $t3jqueryExtConf = unserialize( $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['t3jquery'] );
-$this->pObj->dev_var_dump( $t3jqueryExtConf );    
+      // #44299, 130104, dwildt, -
+//      // checks if t3jquery is loaded
+//    if (t3lib_extMgm::isLoaded('t3jquery'))
+//    {
+//      require_once(t3lib_extMgm::extPath('t3jquery').'class.tx_t3jquery.php');
+//    }
+//    if (!t3lib_extMgm::isLoaded('t3jquery'))
+//    {
+//      if ( $this->pObj->b_drs_javascript )
+//      {
+//        t3lib_div::devlog('[INFO/JSS] Extension t3jquery isn\'t loaded.', $this->pObj->extKey, 0);
+//        t3lib_div::devlog('[INFO/JSS] We try to get another jQuery source.', $this->pObj->extKey, 0);
+//        t3lib_div::devlog('[HELP/JSS] Change it? Load \'t3jquery\'', $this->pObj->extKey, 1);
+//      }
+//    }
+//      // if t3jquery is loaded and the custom library had been created
+//    if (T3JQUERY === true)
+//    {
+//      tx_t3jquery::addJqJS();
+//      if ( $this->pObj->b_drs_javascript )
+//      {
+//        t3lib_div::devlog('[INFO/JSS] Success: tx_t3jquery::addJqJS()', $this->pObj->extKey, 0);
+//      }
+//      return true;
+//    }
+      // #44299, 130104, dwildt, -
 
-      // checks if t3jquery is loaded
-    if (t3lib_extMgm::isLoaded('t3jquery'))
+      // #44299, 130104, dwildt, 6+
+      // RETURN true  : t3jquery is loaded
+    if( $this->load_t3jquery( ) )
     {
-      require_once(t3lib_extMgm::extPath('t3jquery').'class.tx_t3jquery.php');
-    }
-    if (!t3lib_extMgm::isLoaded('t3jquery'))
-    {
-      if ( $this->pObj->b_drs_javascript )
-      {
-        t3lib_div::devlog('[INFO/JSS] Extension t3jquery isn\'t loaded.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[INFO/JSS] We try to get another jQuery source.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[HELP/JSS] Change it? Load \'t3jquery\'', $this->pObj->extKey, 1);
-      }
-    }
-      // if t3jquery is loaded and the custom library had been created
-    if (T3JQUERY === true)
-    {
-      tx_t3jquery::addJqJS();
-      if ( $this->pObj->b_drs_javascript )
-      {
-        t3lib_div::devlog('[INFO/JSS] Success: tx_t3jquery::addJqJS()', $this->pObj->extKey, 0);
-      }
       return true;
     }
-
-
+      // RETURN true  : t3jquery is loaded
+      // #44299, 130104, dwildt, 6+
+    
+    
     $path         = $this->pObj->conf['javascript.']['jquery.']['library'];
 
       // #13429, dwildt, 110519
@@ -606,6 +613,72 @@ $this->pObj->dev_var_dump( $t3jqueryExtConf );
     }
 
     return $bool_success;
+  }
+
+
+
+/**
+ * load_t3jquery( ):
+ *
+ * @return  boolean		True: success. False: error.
+ * @version 4.4.0
+ * @since   4.4.0
+ * @internal  #44299
+ */
+  private function load_t3jquery( )
+  {
+
+      // RETURN false : t3jquery isn't loaded
+    if( ! t3lib_extMgm::isLoaded('t3jquery' ) )
+    {
+      if ( $this->pObj->b_drs_javascript )
+      {
+        $prompt = 'Extension t3jquery isn\'t loaded.';
+        t3lib_div::devlog('[INFO/JSS] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 'We try to get another jQuery source.';
+        t3lib_div::devlog('[INFO/JSS] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 'Change it? Load \'t3jquery\'';
+        t3lib_div::devlog('[HELP/JSS] ' . $prompt, $this->pObj->extKey, 1);
+      }
+      return false;
+    }
+      // RETURN false : t3jquery isn't loaded
+
+      // RETURN false : current page is element of dontIntegrateOnUID
+    $t3jqueryExtConf  = unserialize( $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['t3jquery'] );
+    $arrPages         = $this->pObj->objZz->getCSVasArray( $t3jqueryExtConf['dontIntegrateOnUID'] );
+    if( in_array( $GLOBALS['TSFE']->id, $arrPages ) )
+    {
+      if ( $this->pObj->b_drs_javascript )
+      {
+        $prompt = 'Current page (id ' . $GLOBALS['TSFE']->id . ') is an element of t3jquery.dontIntegrateOnUID.';
+        t3lib_div::devlog('[INFO/JSS] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 't3jquery will not included. We try to get another jQuery source.';
+        t3lib_div::devlog('[INFO/JSS] ' . $prompt, $this->pObj->extKey, 0);
+        $prompt = 'Change it? Change the values of dontIntegrateOnUID in the t3jquery extension manager. ';
+        t3lib_div::devlog('[HELP/JSS] ' . $prompt, $this->pObj->extKey, 1);
+      }
+      return false;
+    }
+      // RETURN false : current page is element of dontIntegrateOnUID
+
+
+      // RETURN true : t3jquery is loaded and the custom library had been created
+    require_once(t3lib_extMgm::extPath('t3jquery').'class.tx_t3jquery.php');
+    if (T3JQUERY === true)
+    {
+      tx_t3jquery::addJqJS();
+      if ( $this->pObj->b_drs_javascript )
+      {
+        $prompt = 'Success: tx_t3jquery::addJqJS()';
+        t3lib_div::devlog( '[INFO/JSS] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      return true;
+    }
+      // RETURN true : t3jquery is loaded and the custom library had been created
+    
+      // RETURN false : t3jquery isn't included
+    return false;
   }
 
 
