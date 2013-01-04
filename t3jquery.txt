@@ -1,6 +1,6 @@
 
   //
-  // browser version 4.1.18
+  // browser version 4.4.0
   //
   // res/js/tx_browser_pi1.js
   // res/js/tx_browser_pi1_ajax-0.0.5.js
