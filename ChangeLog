@@ -2,6 +2,10 @@
   130104
   New Features
   * #44299: t3jquery: respect dontIntegrateOnUID
+            Effected files:
+            * pi1
+              * class.tx_browser_pi1.php
+              * class.tx_browser_pi1_javascript.php
   * #42788: BrowserMaps will extended for GoogleMaps
             * Moved files
               * default_0.0.9.tmpl    -> default_1.1.01.tmpl
@@ -32,10 +36,6 @@
             * res/js/jquery
               * jquery-1.6.2.min.js       removed
               * jquery-1.8.3.min.js       added
-            * pi1
-              * class.tx_browser_pi1.php
-              * class.tx_browser_pi1_javascript.php
-              * flexform_sheet_javascript.xml
             * static
               * setup.txt
               * downgrade/3.9.0/setup.txt
