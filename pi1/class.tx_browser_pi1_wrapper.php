@@ -205,12 +205,15 @@ class tx_browser_pi1_wrapper
       //
       // Building the marker array for replacement
 
-    foreach((array) $conf_marker as $key_marker => $arr_marker)
+      // 130104, dwildt, 1-
+//    foreach((array) $conf_marker as $key_marker => $arr_marker)
+      // 130104, dwildt, 1+
+    foreach( array_keys( ( array ) $conf_marker ) as $key_marker )
     {
       if(substr($key_marker, -1, 1) == '.')
       {
           // I.e. $key_marker is 'title.', but we like the marker name without any dot
-        $str_marker     = substr($key_marker, 0, strlen($key_marker) -1);
+        $str_marker = substr( $key_marker, 0, strlen( $key_marker ) -1 );
           // #32119, 111127, dwildt-
 //          // #12472, 110123, dwildt
 //        $tskey          = $conf_marker[$str_marker]; // TEXT or COA
@@ -248,9 +251,14 @@ class tx_browser_pi1_wrapper
           $coa_name = 'TEXT';
         }
         $coa_conf                     = $conf_marker[$str_marker . '.'];
-        $value                        = $this->pObj->cObj->cObjGetSingle($coa_name, $coa_conf);
-        $hashKeyMarker                = '###'.strtoupper($str_marker).'###';
+        $value                        = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
+        $hashKeyMarker                = '###'.strtoupper( $str_marker ).'###';
         $markerArray[$hashKeyMarker]  = $value;
+if( $hashKeyMarker == '###NPZ_TITLE_DATE###' )
+{
+  // #44313, 130104, dwildt
+  $this->pObj->dev_var_dump( $GLOBALS['_GET'], $coa_conf, $markerArray[$hashKeyMarker] );
+}
           // #32119, 111127, dwildt+
       }
     }
