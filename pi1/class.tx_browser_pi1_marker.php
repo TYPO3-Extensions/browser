@@ -196,7 +196,7 @@
  * @version 3.7.0
  * @since   3.6.0
  */
-  function substitute_tablefield_marker($arr_multi_dimensional)
+  function substitute_tablefield_marker( $arr_multi_dimensional )
   {
     $elements = $this->pObj->elements;
 
@@ -364,11 +364,12 @@
       }
         // Replace cHash marker
 
-        // Clear markers, which aren't replaced
-      if($this->pObj->objZz->bool_advanced_3_6_0_rmMarker)
-      {
-        $value_tsConf_after_loop = preg_replace('|###.*?###|i', '', $value_tsConf_after_loop);
-      }
+// 130105, dwildt, -      
+//        // Clear markers, which aren't replaced
+//      if($this->pObj->objZz->bool_advanced_3_6_0_rmMarker)
+//      {
+//        $value_tsConf_after_loop = preg_replace('|###.*?###|i', '', $value_tsConf_after_loop);
+//      }
 
         // DRS - Development Reporting System
       if ($value_tsConf_after_loop != $value_tsConf)

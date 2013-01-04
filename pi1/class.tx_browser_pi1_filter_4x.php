@@ -2137,7 +2137,7 @@ class tx_browser_pi1_filter_4x {
       //$title_stdWrap = $this->pObj->objMarker->substitute_marker_recurs( $title_stdWrap, $markerArray );
         // #44316, 130104, dwildt, 4+
       $currElements         = $this->pObj->elements;
-      $this->pObj->elements = $this->pObj->elements + $markerArray;
+      $this->pObj->elements = ( array ) $this->pObj->elements + $markerArray;
       $title_stdWrap        = $this->pObj->objMarker->substitute_tablefield_marker( $title_stdWrap );
       $this->pObj->elements = $currElements;
         // DRS
