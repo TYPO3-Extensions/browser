@@ -1158,10 +1158,10 @@ class tx_browser_pi1 extends tslib_pibase {
 
 
       // 110804, dwildt
-    $this->objJss->addJssFileToHeads( );
+    $this->objJss->addJssFiles( );
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
-    $this->timeTracking_log( $debugTrailLevel,  'after $this->objJss->addJssFileToHeads( )' );
+    $this->timeTracking_log( $debugTrailLevel,  'after $this->objJss->addJssFiles( )' );
 
 
 
