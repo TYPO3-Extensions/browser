@@ -254,16 +254,6 @@ class tx_browser_pi1_wrapper
         $value                        = $this->pObj->cObj->cObjGetSingle( $coa_name, $coa_conf );
         $hashKeyMarker                = '###'.strtoupper( $str_marker ).'###';
         $markerArray[$hashKeyMarker]  = $value;
-if( $hashKeyMarker == '###NPZ_TITLE_DATE###' )
-{
-  // #44313, 130104, dwildt
-  $this->pObj->dev_var_dump( $GLOBALS['_GET'], $coa_conf, $markerArray[$hashKeyMarker] );
-}
-if( $hashKeyMarker == '###TEST###' )
-{
-  // #44313, 130104, dwildt
-  $this->pObj->dev_var_dump( $GLOBALS['_GET'], $coa_conf, $markerArray[$hashKeyMarker] );
-}
           // #32119, 111127, dwildt+
       }
     }

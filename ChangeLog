@@ -52,6 +52,11 @@
               * OpenLayers                removed
   Bugfix
   * #44313: GPvar is not interpreted in some case: Case is org_npzch
+            Cause: GPvar is deprecated. Use GP instead
+            Effected files:
+            * static
+              * setup.txt
+              * downgrade/3.9.0/setup.txt
   * #44296: Rotation of modes: $(...).effect is not a function
             Effected files:
             * pi1

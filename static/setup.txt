@@ -103,43 +103,43 @@ plugin.tx_browser_pi1 {
         10 = TEXT
         10 {
           dataWrap        = &tx_browser_pi1[showUid]={GP:tx_browser_pi1|showUid}
-          if.isTrue.data  = GPvar:tx_browser_pi1|showUid
+          if.isTrue.data  = GP:tx_browser_pi1|showUid
         }
           // azTab
         20 = TEXT
         20  {
           dataWrap        = &tx_browser_pi1[azTab]={GP:tx_browser_pi1|azTab}
-          if.isTrue.data  = GPvar:tx_browser_pi1|azTab
+          if.isTrue.data  = GP:tx_browser_pi1|azTab
         }
           // indexBrowserTab
         21 = TEXT
         21  {
           dataWrap        = &tx_browser_pi1[indexBrowserTab]={GP:tx_browser_pi1|indexBrowserTab}
-          if.isTrue.data  = GPvar:tx_browser_pi1|indexBrowserTab
+          if.isTrue.data  = GP:tx_browser_pi1|indexBrowserTab
         }
           // mode
         30 = TEXT
         30  {
           dataWrap        = &tx_browser_pi1[mode]={GP:tx_browser_pi1|mode}
-          if.isTrue.data  = GPvar:tx_browser_pi1|mode
+          if.isTrue.data  = GP:tx_browser_pi1|mode
         }
           // pointer
         40 = TEXT
         40  {
           dataWrap        = &tx_browser_pi1[pointer]={GP:tx_browser_pi1|pointer}
-          if.isTrue.data  = GPvar:tx_browser_pi1|pointer
+          if.isTrue.data  = GP:tx_browser_pi1|pointer
         }
           // sort
         50 = TEXT
         50  {
           dataWrap        = &tx_browser_pi1[sort:tx_browser_pi1|sort}
-          if.isTrue.data  = GPvar:tx_browser_pi1|sort
+          if.isTrue.data  = GP:tx_browser_pi1|sort
         }
           // sword
         60 = TEXT
         60  {
           dataWrap        = &tx_browser_pi1[sword]={GP:tx_browser_pi1|sword}
-          if.isTrue.data  = GPvar:tx_browser_pi1|sword
+          if.isTrue.data  = GP:tx_browser_pi1|sword
         }
       }
     }
@@ -4138,8 +4138,8 @@ plugin.tx_browser_pi1 {
               10.value = list_type = 'browser_pi1'
                 // if an UID is provided in the querystring, choose only that plugin
               20 = TEXT
-              20.data = GPvar:tx_browser_pi1|plugin
-              20.if.isTrue.data = GPvar:tx_browser_pi1|plugin
+              20.data = GP:tx_browser_pi1|plugin
+              20.if.isTrue.data = GP:tx_browser_pi1|plugin
               20.outerWrap = AND uid = |
             }
           }
