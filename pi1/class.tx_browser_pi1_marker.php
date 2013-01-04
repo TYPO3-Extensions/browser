@@ -136,7 +136,7 @@
 //    $arr_tsConf = $this->substitute_marker_recurs($arr_tsConf, $elements);
       // #44316, 130104, dwildt, 4+
     $currElements         = $this->pObj->elements;
-    $this->pObj->elements = $elements;
+    $this->pObj->elements = $this->pObj->elements + $elements;
     $arr_tsConf           = $this->pObj->objMarker->substitute_tablefield_marker( $arr_tsConf );
     $this->pObj->elements = $currElements;
 
@@ -746,14 +746,7 @@
       if (is_array($value_tsConf))
       {
           // Loop through the next level of the multi-dimensional array (recursive)
-          // #44316, 130104, dwildt, 1-
-//        $arr_multi_dimensional[$key_tsConf] = $this->substitute_marker_recurs($value_tsConf, $elements);
-          // #44316, 130104, dwildt, 4+
-        $currElements                       = $this->pObj->elements;
-        $this->pObj->elements               = $elements;
-        $arr_multi_dimensional[$key_tsConf] = $this->pObj->objMarker->substitute_tablefield_marker( $value_tsConf );
-        $this->pObj->elements               = $currElements;
-          // Loop through the next level of the multi-dimensional array (recursive)
+        $arr_multi_dimensional[$key_tsConf] = $this->substitute_marker_recurs($value_tsConf, $elements);
       }
 
 

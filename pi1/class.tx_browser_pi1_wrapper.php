@@ -160,7 +160,7 @@ class tx_browser_pi1_wrapper
       // Replace database marker in case of a current row
 
       // 110301, dwildt: 13008
-    $conf_marker = $this->pObj->objMarker->substitute_tablefield_marker($conf_marker);
+    $conf_marker = $this->pObj->objMarker->substitute_tablefield_marker( $conf_marker );
 
 
       // One dimensional array of the tsConf markers
