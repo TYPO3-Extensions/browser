@@ -611,18 +611,18 @@ class tx_browser_pi1_javascript
 
       // #13429, dwildt, 110519
       // RETURN, there isn't any jQuery for embedding
-    if( empty($path) )
+    if( empty( $path ) )
     {
         // Do nothing
-      if( $this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript )
+      if( $this->pObj->b_drs_error )
       {
         if( empty( $this->pObj->objFlexform->str_jquery_library ) )
         {
           $prompt = 'Flexform Javascript|jquery_library is empty.';
-          t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 0) ;
+          t3lib_div::devlog( '[WARN/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 2 ) ;
         }
         $prompt = 'jQuery path is empty: jQuery isn\'t embedded.';
-        t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 0 );
+        t3lib_div::devlog( '[ERROR/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 3 );
       }
         // #44306, 130104, dwildt, 1+
       $this->jqueryIsLoaded = false;
@@ -1348,6 +1348,8 @@ class tx_browser_pi1_javascript
         }
         break;
       case( 'jss' ):
+          // #44306, 130104, dwildt, 1+
+        $this->load_jQuery( );
         if( $bool_inline )
         {
           $inline_jss =
@@ -1364,8 +1366,6 @@ class tx_browser_pi1_javascript
           $GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name] =
             '  <script src="'.$path.'" type="text/javascript"></script>';
         }
-          // #44306, 130104, dwildt, 1+
-        $this->load_jQuery( );
         break;
       default:
         $prompt = '
