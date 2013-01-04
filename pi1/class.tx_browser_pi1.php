@@ -1102,12 +1102,12 @@ class tx_browser_pi1 extends tslib_pibase {
       case( $this->objFlexform->sheet_viewList_rotateviews ):
         $promptFf = '[rotate views] is enabled.';
         $bool_load_jQuery = true;
-        $this->objFlexform->bool_jquery_ui = true;
-        if( $this->b_drs_javascript )
-        {
-          $prompt = '[rotate views] is enabled. objFlexform->bool_jquery_ui is set to true.';
-          t3lib_div::devlog( '[INFO/JSS] ' . $prompt, $this->extKey, 0 );
-        }
+//        $this->objFlexform->bool_jquery_ui = true;
+//        if( $this->b_drs_javascript )
+//        {
+//          $prompt = '[rotate views] is enabled. objFlexform->bool_jquery_ui is set to true.';
+//          t3lib_div::devlog( '[INFO/JSS] ' . $prompt, $this->extKey, 0 );
+//        }
         break;
     }
       // #44296, 130104, dwildt, +

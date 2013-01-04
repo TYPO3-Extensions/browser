@@ -36,6 +36,9 @@
               * OpenLayers                removed
   Bugfix
   * #44296: Rotation of modes: $(...).effect is not a function
+            Effected files:
+            * pi1
+              * class.tx_browser_pi1.php
   * #44295: Rotation of modes: Content is empty!
             Effected files:
             * jquery.t3browser-0.0.4.js -> jquery.t3browser-0.0.5.js
