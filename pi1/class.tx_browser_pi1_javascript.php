@@ -67,15 +67,18 @@ class tx_browser_pi1_javascript
 {
   
  /**
+  * True, if jquery is loaded
+  *
+  * @var boolean
+  */
+  public $jqueryIsLoaded = null;
+
+  /**
   * True, if t3jquery is included
   *
   * @var boolean
   */
   public $t3jqueryIsUsed = null;
-
-
-
-
 
 
 
@@ -529,10 +532,24 @@ class tx_browser_pi1_javascript
  */
   function load_jQuery( )
   {
+      // #44306, 130104, dwildt, 6+
+      // RETURN : method is called before
+    if( ! ( $this->jqueryIsLoaded === null ) )
+    {
+      return $this->jqueryIsLoaded;
+    }
+      // RETURN : method is called before
+      // #44306, 130104, dwildt, 6+
+    
+      // Set default
+    $this->jqueryIsLoaded = false;
+
       // name has to correspondend with similar code in tx_browser_pi1_template.php
     $name = 'jQuery';
     if(isset ($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]))
     {
+        // #44306, 130104, dwildt, 1+
+      $this->jqueryIsLoaded = true;
       return true;
     }
 
@@ -567,17 +584,19 @@ class tx_browser_pi1_javascript
       // RETURN true  : t3jquery is loaded
     if( $this->load_t3jquery( ) )
     {
+        // #44306, 130104, dwildt, 1+
+      $this->jqueryIsLoaded = true;
       return true;
     }
       // RETURN true  : t3jquery is loaded
       // #44299, 130104, dwildt, 6+
     
     
-    $path         = $this->pObj->conf['javascript.']['jquery.']['library'];
+    $path = $this->pObj->conf['javascript.']['jquery.']['library'];
 
       // #13429, dwildt, 110519
       // RETURN, there isn't any jQuery for embedding
-    if(empty($path))
+    if( empty($path) )
     {
         // Do nothing
       if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
@@ -588,7 +607,10 @@ class tx_browser_pi1_javascript
         }
         t3lib_div::devlog('[INFO/FLEXFORM+JSS] jQuery path is empty: jQuery isn\'t embedded.', $this->pObj->extKey, 0);
       }
-      return true;
+        // #44306, 130104, dwildt, 1-
+//      return true;
+        // #44306, 130104, dwildt, 1+
+      return false;
     }
       // RETURN, there isn't any jQuery for embedding
       // #13429, dwildt, 110519
@@ -600,24 +622,41 @@ class tx_browser_pi1_javascript
     $name         = 'jQuery';
     $path_tsConf  = 'javascript.jquery.file';
     $bool_success = $this->addJssFile($path, $name, $path_tsConf);
-    if ($this->pObj->b_drs_flexform || $this->pObj->b_drs_javascript)
+    
+      // DRS
+    switch( true )
     {
-      if($bool_success)
-      {
-        t3lib_div::devlog('[INFO/FLEXFORM+JSS] ' . $path . ' is embedded.', $this->pObj->extKey, 0);
-      }
-      if(!$bool_success)
-      {
-        t3lib_div::devlog('[INFO/FLEXFORM+JSS] ' . $path . ' is embedded.', $this->pObj->extKey, 0);
-      }
+      case( $this->pObj->b_drs_error ):
+      case( $this->pObj->b_drs_flexform ):
+      case( $this->pObj->b_drs_javascript ):
+        if( $bool_success )
+        {
+          $prompt = $path . ' is embedded.';
+          t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 0 );
+        }
+        if( ! $bool_success )
+        {
+          $prompt = $path . ' couldn\'t embedded.';
+          t3lib_div::devlog( '[ERROR/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 3 );
+        }
+        break;
     }
-    if(!$bool_success)
+      // DRS
+
+      // #44306, 130104, dwildt, 12+
+      // SWITCH $bool_success : Set $this->jqueryIsLoaded
+    switch( $bool_success )
     {
-      if ($this->pObj->b_drs_error)
-      {
-        t3lib_div::devlog('[ERROR/FLEXFORM+JSS] ' . $path . ' couldn\'t embedded.', $this->pObj->extKey, 3);
-      }
+      case( true ):
+        $this->jqueryIsLoaded = true;
+        break;
+      case( false ):
+      default:
+        $this->jqueryIsLoaded = false;
+        break;
     }
+      // SWITCH $bool_success : Set $this->jqueryIsLoaded
+      // #44306, 130104, dwildt, 12+
 
     return $bool_success;
   }
@@ -720,13 +759,15 @@ class tx_browser_pi1_javascript
  * @param	string		$name: For the key of additionalHeaderData
  * @param	string		$keyPathTs: The TypoScript element path to $path for the DRS
  * @return	boolean		True: success. False: error.
- * @version 3.6.5
+ * @version 4.4.0
  * @since 3.5.0
  */
   function addJssFile( $path, $name, $keyPathTs )
   {
     if(isset ($GLOBALS['TSFE']->additionalHeaderData[$this->pObj->extKey.'_'.$name]))
     {
+        // #44306, 130104, dwildt, 1+
+      $this->load_jQuery( );
       return true;
     }
 
@@ -748,6 +789,8 @@ class tx_browser_pi1_javascript
         t3lib_div::devlog('[INFO/FLEXFORM+JSS] file is included: '.$path, $this->pObj->extKey, 0);
         t3lib_div::devlog('[HELP/FLEXFORM+JSS] Change it? Configure: \''.$keyPathTs.'\'', $this->pObj->extKey, 1);
       }
+        // #44306, 130104, dwildt, 1+
+      $this->load_jQuery( );
       return true;
     }
 
@@ -760,6 +803,8 @@ class tx_browser_pi1_javascript
         t3lib_div::devlog('[INFO/FLEXFORM+JSS] Flexform Javascript|browser_libraries is empty.', $this->pObj->extKey, 0);
         t3lib_div::devlog('[INFO/FLEXFORM+JSS] Script isn\'t included. ', $this->pObj->extKey, 0);
       }
+        // #44306, 130104, dwildt, 1+
+      $this->load_jQuery( );
       return true;
     }
       // RETURN, there isn't any file for embedding

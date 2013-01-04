@@ -3,4 +3,4 @@
 * Flexform will added here:
   * plugin.tx_browser_pi1.flexform.pi5
 
-* See more in static.txt
+* See more in setup.txt

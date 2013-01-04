@@ -1,10 +1,10 @@
 4.4.0
   130104
   New Features
+  * #44306: Improve jquery loading
   * #44299: t3jquery: respect dontIntegrateOnUID
             Effected files:
             * pi1
-              * class.tx_browser_pi1.php
               * class.tx_browser_pi1_javascript.php
   * #42788: BrowserMaps will extended for GoogleMaps
             * Moved files
