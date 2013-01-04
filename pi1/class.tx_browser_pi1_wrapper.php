@@ -638,7 +638,10 @@ class tx_browser_pi1_wrapper
           t3lib_div::devLog('[WARN/TEMPLATING] $this->pObj->elements isn\'t set!', $this->pObj->extKey, 2);
         }
       }
-      $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
+        // 130104, dwildt, 1-
+      //$lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
+        // 130104, dwildt, 1+
+      $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
       //Replace all ###MARKER### in Typoscript with its values.
       //if(t3lib_div::_GP('dev')) var_dump('wrapper 485', $lConfCObj);
     }
