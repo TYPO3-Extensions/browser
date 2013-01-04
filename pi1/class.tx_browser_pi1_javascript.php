@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2010-2013 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,7 +27,7 @@
 *
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *
-* @version  3.9.3
+* @version  4.4.0
 * @since    3.5.0
 *
 * @package    TYPO3
@@ -457,6 +457,7 @@ class tx_browser_pi1_javascript
     {
       $lang = 'en';
     }
+    $arr_wrap = array( );
     $arr_wrap[0] = '<div class="'.$str_ajax_class.'" lang="'.$lang.'">';
     $arr_wrap[1] = '</div> <!-- /ajax -->';
 
@@ -516,7 +517,7 @@ class tx_browser_pi1_javascript
  *                load file from the browser ressources
  *
  * @return	boolean		True: success. False: error.
- * @since 3.5.0
+ * @since 4.4.0
  * @version 3.6.5
  */
   function load_jQuery( )
@@ -527,6 +528,10 @@ class tx_browser_pi1_javascript
     {
       return true;
     }
+
+      // #44299, 130104, dwildt, +
+    $t3jqueryExtConf = unserialize( $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['t3jquery'] );
+$this->pObj->dev_var_dump( $t3jqueryExtConf );    
 
       // checks if t3jquery is loaded
     if (t3lib_extMgm::isLoaded('t3jquery'))
@@ -641,6 +646,7 @@ class tx_browser_pi1_javascript
       {
           // relative path to the JssFile as measured from the PATH_site (frontend)
           // #32220, uherrmann, 111202
+        $matches = array( );
         preg_match( '%^EXT:([a-z0-9_]*)/(.*)$%', $path, $matches );
         $path = t3lib_extMgm::siteRelPath($matches[1]) . $matches[2];
           // /#32220
@@ -939,7 +945,10 @@ class tx_browser_pi1_javascript
         {
           continue;
         }
-        foreach( $arr_properties as $key_property => $value_property)
+          // 130104, dwildt, 1-
+        // foreach( $arr_properties as $key_property => $value_property )
+          // 130104, dwildt, 1-
+        foreach( array_keys( $arr_properties ) as $key_property )
         {
             // Take keys with a dot (i.e. 10.) only
           if( strpos ( $key_property , '.' ) === false )
@@ -1125,7 +1134,12 @@ class tx_browser_pi1_javascript
     if( ! isset( $arr_parsed_url['scheme'] ) )
     {
         // absolute path
-      $absPath  = t3lib_div::getFileAbsFileName($path,$onlyRelative=1,$relToTYPO3_mainDir=0);
+        // 130104, dwildt, 1-
+//      $absPath  = t3lib_div::getFileAbsFileName($path,$onlyRelative=1,$relToTYPO3_mainDir=0);
+        // 130104, dwildt, 3+
+      $onlyRelative       = 1;
+      $relToTYPO3_mainDir = 0;
+      $absPath  = t3lib_div::getFileAbsFileName($path, $onlyRelative, $relToTYPO3_mainDir );
       if ( ! file_exists( $absPath ) )
       {
         $bool_file_exists = false;
@@ -1270,7 +1284,6 @@ class tx_browser_pi1_javascript
   function dyn_method_load_all_modes( )
   {
     $conf       = $this->pObj->conf;
-    $mode       = $this->pObj->piVar_mode;
     $view       = $this->pObj->view;
     $viewWiDot  = $view.'.';
     $views      = $conf['views.'][$viewWiDot];
@@ -1311,7 +1324,10 @@ class tx_browser_pi1_javascript
   ###NEXT_VIEW###
   ###TAB###}, int_seconds );';
 
-    foreach( $views as $key_viewWiDot => $arr_view)
+      // 130104, dwildt, 1-
+//    foreach( $views as $key_viewWiDot => $arr_view)
+      // 130104, dwildt, 1+
+    foreach( array_keys( $views ) as $key_viewWiDot )
     {
       if( strpos ( $key_viewWiDot , '.' ) === false )
       {

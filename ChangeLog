@@ -1,6 +1,7 @@
 4.4.0
   130104
-  New Feature
+  New Features
+  * #44299: t3jquery: respect dontIntegrateOnUID
   * #42788: BrowserMaps will extended for GoogleMaps
             * Moved files
               * default_0.0.9.tmpl    -> default_1.1.01.tmpl
