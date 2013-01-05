@@ -433,12 +433,12 @@ if( $this->pObj->boolFirstRow )
       // #44318, 130104, dwildt, 6+
       // Reset the first key
     $unproperKey              = key( $arr_multi_dimensional );
-    if( $unproperKey == 0 )
-    {
+//    if( $unproperKey == 0 )
+//    {
       $firstElement[$properKey] = $arr_multi_dimensional[$unproperKey];
       unset( $arr_multi_dimensional[$unproperKey] );
       $arr_multi_dimensional    = $firstElement + $arr_multi_dimensional;
-    }
+//    }
       // Reset the first key
     
     return $arr_multi_dimensional;
