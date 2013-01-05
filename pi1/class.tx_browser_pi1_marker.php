@@ -287,6 +287,7 @@
     foreach( ( array ) $arr_one_dimensional as $key_tsConf => $value_tsConf )
     {
       $value_tsConf_after_loop = $value_tsConf;
+$this->pObj->dev_var_dump( $value_tsConf_after_loop );      
 
         // CONTINUE: there isn't any marker - go to the next tsConf element
       $int_countMarker = substr_count( $value_tsConf, '###' );  // I.e: 4
@@ -408,6 +409,7 @@
         // DRS - Development Reporting System
 
       $arr_one_dimensional[$key_tsConf] = $value_tsConf_after_loop;
+$this->pObj->dev_var_dump( $value_tsConf_after_loop );      
     }
       // Loop through one dimensional tsConf array
 
