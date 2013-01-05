@@ -285,6 +285,7 @@
 
 if( $this->pObj->tmp )
 {
+  $this->pObj->dev_var_dump( key ( $arr_multi_dimensional ) );  
   $this->pObj->dev_var_dump( $arr_multi_dimensional, $arr_one_dimensional );
 }
 
@@ -421,10 +422,6 @@ if( $this->pObj->tmp )
       // Rebuild $arr_multi_dimensional
     unset( $arr_multi_dimensional );
     $arr_multi_dimensional = $this->pObj->objTyposcript->oneDim_to_tree( $arr_one_dimensional );
-if( $this->pObj->tmp )
-{
-  $this->pObj->dev_var_dump( $arr_multi_dimensional, $arr_one_dimensional );
-}
       // #12472, 110124, dwildt
 //$this->pObj->dev_var_dump( $arr_multi_dimensional );      
     return $arr_multi_dimensional;
