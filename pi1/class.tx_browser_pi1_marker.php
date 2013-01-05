@@ -290,6 +290,11 @@ if( in_array( 'First night: TYPO3 Organiser', $arr_one_dimensional ) )
 {        
   $this->pObj->dev_var_dump( $arr_one_dimensional );
 }
+if( $this->pObj->boolFirstRow )  
+{        
+  $this->pObj->dev_var_dump( $arr_one_dimensional );
+}
+
       // One dimensional array of the tsConf markers
 
       // Loop through one dimensional tsConf array
@@ -427,10 +432,10 @@ if( in_array( 'First night: TYPO3 Organiser', $arr_one_dimensional ) )
     
       // #44318, 130104, dwildt, 6+
       // Reset the first key
-    $unproperKey              = key( $arr_multi_dimensional );
-    $firstElement[$properKey] = $arr_multi_dimensional[$unproperKey];
-    unset( $arr_multi_dimensional[$unproperKey] );
-    $arr_multi_dimensional    = $firstElement + $arr_multi_dimensional;
+//    $unproperKey              = key( $arr_multi_dimensional );
+//    $firstElement[$properKey] = $arr_multi_dimensional[$unproperKey];
+//    unset( $arr_multi_dimensional[$unproperKey] );
+//    $arr_multi_dimensional    = $firstElement + $arr_multi_dimensional;
       // Reset the first key
     
     return $arr_multi_dimensional;
