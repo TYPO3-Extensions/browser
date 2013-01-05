@@ -598,7 +598,7 @@
  * @return    array        $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
  * @version 4.4.0
  */
-  function substitute_marker_recurs($arr_multi_dimensional, $elements)
+  function substitute_marker_recurs( $arr_multi_dimensional, $elements )
   {
 
       // 110312, dwildt
