@@ -429,9 +429,9 @@ if( $this->pObj->tmp )
     
       // #44316, 130104, dwildt, 1+
     $tmpFirstKeyOfMdArray   = key( $arr_multi_dimensional );
-    $tmpFirstElement        = $arr_multi_dimensional[$tmpFirstKeyOfMdArray];
+    $tmpFirstElement[$firstKeyOfMdArray]        = $arr_multi_dimensional[$tmpFirstKeyOfMdArray];
     unset( $arr_multi_dimensional[$tmpFirstKeyOfMdArray] );
-    $arr_multi_dimensional  = $tmpFirstElement[$firstKeyOfMdArray] + $arr_multi_dimensional;
+    $arr_multi_dimensional  = $tmpFirstElement + $arr_multi_dimensional;
     
     return $arr_multi_dimensional;
   }
