@@ -640,7 +640,7 @@ class tx_browser_pi1_wrapper
 if( $this->pObj->boolFirstRow )
 {
   //$this->pObj->dev_var_dump( $lConfCObj );
-  $tmplConfCObj = $lConfCObj;
+  $tmplConfCObj1 = $lConfCObj;
 }
       $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs( $lConfCObj, $this->pObj->elements );
         // #44316, 130104, dwildt, 1+
@@ -648,10 +648,10 @@ if( $this->pObj->boolFirstRow )
 if( $this->pObj->boolFirstRow )
 {
   //$this->pObj->dev_var_dump( $lConfCObj );
-  $tmplConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $tmplConfCObj );
-  if( $tmplConfCObj != $lConfCObj ) 
+  $tmplConfCObj2 = $this->pObj->objMarker->substitute_tablefield_marker( $tmplConfCObj1 );
+  if( $tmplConfCObj2 != $lConfCObj ) 
   {
-    $this->pObj->dev_var_dump( $tmplConfCObj );
+    $this->pObj->dev_var_dump( $tmplConfCObj1, $lConfCObj, $tmplConfCObj2 );
   }
 }
 //$this->pObj->dev_var_dump( $lConfCObj );      
