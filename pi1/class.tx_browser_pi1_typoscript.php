@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2008-2012 - Dirk Wildt http://wildt.at.die-netzmacher.de
+*  (c) 2008-2013 - Dirk Wildt http://wildt.at.die-netzmacher.de
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,7 +28,7 @@
 * @author       Dirk Wildt http://wildt.at.die-netzmacher.de
 * @package      TYPO3
 * @subpackage   browser
-* @version      4.2.0
+* @version      4.4.0
 * since         2.0.0
 */
 
@@ -86,9 +86,9 @@ class tx_browser_pi1_typoscript
   var $arr_realTables_arrFields;
   // Array with tables and fields in this syntax: array[table][] = field
 
-  var $str_sqlDeviderDisplay  = false;
+  var $str_sqlDeviderDisplay  = null;
   // [String] Devider for children records. This devider should be displayed.
-  var $str_sqlDeviderWorkflow = false;
+  var $str_sqlDeviderWorkflow = null;
   // [String] Devider for children records. This devider is for the workflow of stdWrap.
   // Variables set by this class
 
@@ -929,20 +929,36 @@ class tx_browser_pi1_typoscript
  /**
   * Sets the global vars $str_sqlDeviderDisplay and $str_sqlDeviderWorkflow
   *
-  * @return	boolean		false
+  * @return	string		sqlDevider
+  * 
+  * @version 4.4.0
   */
-  function set_confSqlDevider()
+  function set_confSqlDevider( )
   {
-    // Get global or local advanced array
+      // 130105, dwildt, +
+    switch( true )
+    {
+      case( ! ( $this->str_sqlDeviderDisplay === null ) ):
+      case( ! ( $this->str_sqlDeviderWorkflow === null ) ):
+        $str_devider = $this->str_sqlDeviderDisplay.$this->str_sqlDeviderWorkflow;
+        return $str_devider;
+        break;
+      default:
+          // Follow the workflow
+        break;
+    }
+      // 130105, dwildt, +
+      
+      // Get global or local advanced array
     $arr_conf_advanced = $this->conf['advanced.'];
-    #10116
+      #10116
     if(!empty($this->conf_view['advanced.']))
     {
       $arr_conf_advanced = $this->conf_view['advanced.'];
     }
-    // Get global or local advanced array
+      // Get global or local advanced array
 
-    // Devider for display: Wrap the devider for the values of children records
+      // Devider for display: Wrap the devider for the values of children records
     $str_deviderDisplay = $arr_conf_advanced['sql.']['devider.']['childrenRecords.']['value'];
     $conf_stdWrap       = $arr_conf_advanced['sql.']['devider.']['childrenRecords.'];
     if (is_array($conf_stdWrap))
@@ -950,9 +966,9 @@ class tx_browser_pi1_typoscript
       $str_deviderDisplay = $this->pObj->objWrapper->general_stdWrap($str_deviderDisplay, $conf_stdWrap);
     }
     $this->str_sqlDeviderDisplay = $str_deviderDisplay;
-    // Devider for display: Wrap the devider for the values of children records
+      // Devider for display: Wrap the devider for the values of children records
 
-    // Devider for workflow: Wrap the devider for the values of children records
+      // Devider for workflow: Wrap the devider for the values of children records
     $str_deviderWorkflow = $arr_conf_advanced['sql.']['devider.']['workflow.']['value'];
     $conf_stdWrap        = $arr_conf_advanced['sql.']['devider.']['workflow.'];
     if (is_array($conf_stdWrap))
@@ -960,9 +976,15 @@ class tx_browser_pi1_typoscript
       $str_deviderWorkflow = $this->pObj->objWrapper->general_stdWrap($str_deviderWorkflow, $conf_stdWrap);
     }
     $this->str_sqlDeviderWorkflow = $str_deviderWorkflow;
-    // Devider for workflow: Wrap the devider for the values of children records
+      // Devider for workflow: Wrap the devider for the values of children records
+    
+      // 130105, dwildt, 1+
+    $str_devider = $this->str_sqlDeviderDisplay.$this->str_sqlDeviderWorkflow;
 
-    return false;
+      // 130105, dwildt, 1-
+//    return false;
+      // 130105, dwildt, 1+
+    return $str_devider;
   }
 
 

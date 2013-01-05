@@ -187,7 +187,7 @@
 
 
 
-  /**
+/**
  * substitute_tablefield_marker():  Replace database markers:
  *                                  Replace all markers in the given multidimensional array like the TypoScript
  *                                  configuration with the real values from the SQL result (with table.field values)
@@ -197,84 +197,84 @@
  * @param    array        $arr_multi_dimensional: Multi-dimensional array like an TypoScript array
  * @param    array        $elements: The current row of the SQL result
  * @return    array        $arr_multi_dimensional: The current Multi-dimensional array with substituted markers
- * @version 3.7.0
+ * @version 4.4.0
  * @since   3.6.0
  */
   function substitute_tablefield_marker( $arr_multi_dimensional )
   {
     $elements = $this->pObj->elements;
 
-
-
-      /////////////////////////////////////
-      //
       // RETURN there isn't any element
-
     if( empty( $elements ) )
     {
       return $arr_multi_dimensional;
     }
       // RETURN there isn't any element
 
-
-
-      /////////////////////////////////////
-      //
       // Get the children devider configuration
+    $arr_children_to_devide = ( array ) $this->pObj->arr_children_to_devide;
 
-      // Get arr_children_to_devide as array
-    $arr_children_to_devide = (array) $this->pObj->arr_children_to_devide;
+      // 130105, dwildt, -
+//    if( $this->pObj->objTyposcript->str_sqlDeviderDisplay == false )
+//    {
+//      $this->pObj->objTyposcript->set_confSqlDevider();
+//    }
+//    if( $this->pObj->objTyposcript->str_sqlDeviderWorkflow == false )
+//    {
+//      $this->pObj->objTyposcript->set_confSqlDevider();
+//    }
+//    $str_sqlDeviderDisplay  = $this->pObj->objTyposcript->str_sqlDeviderDisplay;
+//    $str_sqlDeviderWorkflow = $this->pObj->objTyposcript->str_sqlDeviderWorkflow;
+//    $str_devider            = $str_sqlDeviderDisplay.$str_sqlDeviderWorkflow;
+//      // Get the children devider configuration
+      // 130105, dwildt, -
 
-    if( $this->pObj->objTyposcript->str_sqlDeviderDisplay == false )
-    {
-      $this->pObj->objTyposcript->set_confSqlDevider();
-    }
-    if( $this->pObj->objTyposcript->str_sqlDeviderWorkflow == false )
-    {
-      $this->pObj->objTyposcript->set_confSqlDevider();
-    }
+      // 130105, dwildt, 3+
+      // Get the children devider configuration
+    $str_devider            = $this->pObj->objTyposcript->set_confSqlDevider();
     $str_sqlDeviderDisplay  = $this->pObj->objTyposcript->str_sqlDeviderDisplay;
-    $str_sqlDeviderWorkflow = $this->pObj->objTyposcript->str_sqlDeviderWorkflow;
-    $str_devider            = $str_sqlDeviderDisplay.$str_sqlDeviderWorkflow;
-      // Get the children devider configuration
 
 
+      // dwildt, 130105, -
+//      /////////////////////////////////////
+//      //
+//      // Add to the $elements piVars and singlePid
+//
+//      // Add to the $elements piVars
+//    foreach( $this->pObj->piVars as $key_pivar => $value_pivar )
+//    {
+//      // dwildt, 090620: If we have multiple selects, piVars can contain arrays
+//      // This array should be array of uids. We don't need any process for uids here.
+//      if( ! is_array( $value_pivar ) )
+//      {
+//          // dwildt, 110320: Prevent to override database values in $elements by piVars
+//        if( ! isset( $elements[strtolower( $key_pivar )] ) )
+//        {
+//          $elements[strtolower( $key_pivar )] = $value_pivar;
+//        }
+//      }
+//      if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
+//      {
+//        $prompt = 'The piVar ['.$key_pivar.'] is available.';
+//        t3lib_div::devlog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
+//        $prompt = 'If you use the marker ###' . strtoupper( $key_pivar ) . '###, it will become ' . $value_pivar;
+//        t3lib_div::devlog( '[HELP/MARKER] ' . $prompt, $this->pObj->extKey, 1 );
+//      }
+//    }
+//      // Add to the $elements piVars
+//    
+//
+//      // Add to the $elements the singlePid
+//    if( isset( $this->pObj->singlePid ) )
+//    {
+//      $elements[strtolower( 'singlePid' )] = $this->pObj->singlePid;
+//    }
+//      // Add to the $elements the singlePid
+//      // Add to the $elements piVars and singlePid
+      // dwildt, 130105, -
 
-      /////////////////////////////////////
-      //
-      // Add to the $elements piVars and singlePid
-
-      // Add to the $elements piVars
-    foreach( $this->pObj->piVars as $key_pivar => $value_pivar )
-    {
-      // dwildt, 090620: If we have multiple selects, piVars can contain arrays
-      // This array should be array of uids. We don't need any process for uids here.
-      if( ! is_array( $value_pivar ) )
-      {
-          // dwildt, 110320: Prevent to override database values in $elements by piVars
-        if( ! isset( $elements[strtolower( $key_pivar )] ) )
-        {
-          $elements[strtolower( $key_pivar )] = $value_pivar;
-        }
-      }
-      if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
-      {
-        $prompt = 'The piVar ['.$key_pivar.'] is available.';
-        t3lib_div::devlog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
-        $prompt = 'If you use the marker ###' . strtoupper( $key_pivar ) . '###, it will become ' . $value_pivar;
-        t3lib_div::devlog( '[HELP/MARKER] ' . $prompt, $this->pObj->extKey, 1 );
-      }
-    }
-      // Add to the $elements piVars
-
-      // Add to the $elements the singlePid
-    if( isset( $this->pObj->singlePid ) )
-    {
-      $elements[strtolower( 'singlePid' )] = $this->pObj->singlePid;
-    }
-      // Add to the $elements the singlePid
-      // Add to the $elements piVars and singlePid
-
+      // 130105, dwildt, 1+
+    $elements = $this->extend_elements( $elements );
 
 
       /////////////////////////////////////
@@ -312,11 +312,16 @@
       }
         // CONTINUE: there isn't any marker - go to the next tsConf element
 
+        // DRS
       if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
       {
         $prompt = '$elements: ' . var_export( $elements, true );
         t3lib_div::devlog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
       }
+        // DRS
+      
+        // 130105, dwildt, +
+      $value_tsConf_after_loop = $this->elements_loop( $elements, $value_tsConf_after_loop, $str_devider, $str_sqlDeviderDisplay, $key_tsConf );
       
         // Loop through all elements (real values)
       foreach( ( array ) $elements as $key_tableField => $value_tableField )
@@ -324,6 +329,7 @@
           // Replace constant marker with real value
         $key_marker = '###' . strtoupper( $key_tableField ) . '###';
 
+          // #44316, 130105, dwildt, TODO: Uncomment the code below?
           // session marker
 //        if(in_array('session.', $key_tsConf))
 //        {
@@ -339,7 +345,7 @@
             // Marker has children values
           if( in_array( $key_tableField, ( array ) $arr_children_to_devide ) )
           {
-              // #44318, 130105, dwildt, 7+
+              // #44316, 130105, dwildt, 7+
               // DRS
             if( $this->pObj->boolFirstRow && $this->pObj->b_drs_error )
             {
@@ -496,10 +502,10 @@
           $marker['###' . strtoupper($key_pivar) . '###'] = $value_pivar;
         }
       }
-      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_marker)
       {
-        t3lib_div::devlog('[INFO/TEMPLATING] The piVar ['.$key_pivar.'] is available.', $this->pObj->extKey, 0);
-        t3lib_div::devlog('[HELP/TEMPLATING] If you use the marker ###'.strtoupper($key_pivar).'###, it will become '.$value_pivar, $this->pObj->extKey, 1);
+        t3lib_div::devlog('[INFO/MARKER] The piVar ['.$key_pivar.'] is available.', $this->pObj->extKey, 0);
+        t3lib_div::devlog('[HELP/MARKER] If you use the marker ###'.strtoupper($key_pivar).'###, it will become '.$value_pivar, $this->pObj->extKey, 1);
       }
     }
       // Add to the $marker piVars
@@ -745,10 +751,10 @@
       if ($int_levelRecurs < 2)
       {
         // It is the first loop
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_marker)
         {
-          t3lib_div::devlog('[INFO/TEMPLATING] The piVar ['.$key_pivar.'] is available.', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[HELP/TEMPLATING] If you use the marker ###'.strtoupper($key_pivar).'###, it will become '.$value_pivar, $this->pObj->extKey, 1);
+          t3lib_div::devlog('[INFO/MARKER] The piVar ['.$key_pivar.'] is available.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/MARKER] If you use the marker ###'.strtoupper($key_pivar).'###, it will become '.$value_pivar, $this->pObj->extKey, 1);
         }
       }
     }
@@ -833,8 +839,11 @@
                   // EXAMPLE for value
                   //   Before marker replacement: &tx_trevent_pi1[uid]=###FE_USERS.UID###&###CHASH###
                   //   After  marker replacement: &tx_trevent_pi1[uid]=158&###CHASH###, ;|;&tx_trevent_pi1[uid]=155&###CHASH###
-                $arr_lConfCObj = array();
-                foreach((array) $arr_valuesChildren as $keyChild => $valueChild)
+                  // 130105, dwildt, 1-
+//                $arr_lConfCObj = array();
+                  // 130105, dwildt, 1-
+//                foreach((array) $arr_valuesChildren as $keyChild => $valueChild)
+                foreach( ( array ) $arr_valuesChildren as $valueChild )
                 {
                   $arr_value_after_loop[] = str_replace($key_marker, $valueChild, $value_tsConf_curr);
                 }
@@ -926,7 +935,10 @@
               if (count($arr_markers_in_value) >= 1)
               {
                   // There is one non replaced marker at least
-                foreach ($arr_markers_in_value as $key_m_i_value => $value_m_i_value)
+                  // 130105, dwildt, 1-
+//                foreach ($arr_markers_in_value as $key_m_i_value => $value_m_i_value)
+                  // 130105, dwildt, 1+
+                foreach( array_keys( $arr_markers_in_value ) as $key_m_i_value )
                 {
                   $value_tsConf = str_replace('###'.strtoupper($key_m_i_value).'###', '', $value_tsConf);
                 }
@@ -944,7 +956,150 @@
 
     return $arr_multi_dimensional;
   }
+  
+  
+  
+/**
+ * elements_loop( ): 
+ *
+ * @param    
+ * @return    string      $value_tsConf_after_loop 
+ * @version   4.4.0
+ * @since     4.4.0
+ */
+  function elements_loop( $elements, $value_tsConf_after_loop, $key_tsConf )
+  {
+      // Get the children devider configuration
+    $arr_children_to_devide = ( array ) $this->pObj->arr_children_to_devide;
 
+      // FOREACH  : elements
+    foreach( ( array ) $elements as $key_tableField => $value_tableField )
+    {
+        // cHashMarker
+      $key_marker = '###' . strtoupper( $key_tableField ) . '###';
+
+        // #44316, 130105, dwildt, TODO: Uncomment the code below?
+        // session marker
+//        if(in_array('session.', $key_tsConf))
+//        {
+//            // 110124, dwildt, :todo: session
+//          $elements = $this->session_marker($value_tsConf_after_loop, $elements);
+//        }
+        // session marker
+
+        // CONTINUE : Value doesn't contain the current marker
+      if( strpos( $value_tsConf_after_loop, $key_marker ) === false ) 
+      {
+        continue;
+      }
+        // CONTINUE : Value doesn't contain the current marker
+        
+        // CONTINUE : Marker hasn't any child value, replace marker with value
+      if( ! in_array( $key_tsConf, ( array ) $arr_children_to_devide ) )
+      {
+          // Color swords
+        $value_tableField        = $this->pObj->objZz->color_swords( $key_tableField, $value_tableField );
+        $value_tsConf_after_loop = str_replace( $key_marker, $value_tableField, $value_tsConf_after_loop );
+        continue; 
+      }
+        // CONTINUE : Marker hasn't any child value, replace marker with value
+        
+        // Replace marker with children
+      $value_tsConf_after_loop = $this->elements_loopReplaceChildren( $value_tsConf_after_loop, $value_tableField, $key_marker );
+    }
+      // FOREACH  : elements
+
+    return $value_tsConf_after_loop;
+  }
+  
+  
+  
+/**
+ * elements_loopReplaceChildren( ): 
+ *
+ * @param    
+ * @return    string      $value_tsConf_after_loop 
+ * @version   4.4.0
+ * @since     4.4.0
+ */
+  function elements_loopReplaceChildren( $value_tsConf_after_loop, $value_tableField, $key_marker )
+  {
+      // Get the sqlDevider configuration
+    $str_devider            = $this->pObj->objTyposcript->set_confSqlDevider();
+    $str_sqlDeviderDisplay  = $this->pObj->objTyposcript->str_sqlDeviderDisplay;
+
+      // #44316, 130105, dwildt, 7+
+      // DRS
+    if( $this->pObj->boolFirstRow && $this->pObj->b_drs_error )
+    {
+      $prompt = 'It seem\'s, that children aren\'t run proper!';
+      t3lib_div::devlog( '[WARN/MARKER] ' . $prompt, $this->pObj->extKey, 3 );
+    }
+      // DRS
+      // Get children values
+    $arr_valuesChildren = explode( $str_devider, $value_tableField );
+
+      // Multiple the values and replace the marker for every child
+      // EXAMPLE for value
+      //   Before marker replacement: &tx_trevent_pi1[uid]=###FE_USERS.UID###&###CHASH###
+      //   After  marker replacement: &tx_trevent_pi1[uid]=158&###CHASH###, ;|;&tx_trevent_pi1[uid]=155&###CHASH###
+    $arr_value_after_loop = null;
+    foreach( ( array ) $arr_valuesChildren as $valueChild )
+    {
+      $arr_value_after_loop[] = str_replace( $key_marker, $valueChild, $value_tsConf_after_loop );
+    }
+      // 13008, 110302, dwildt
+      // 13807, 110313, dwildt
+    $value_tsConf_after_loop = implode( $str_sqlDeviderDisplay, ( array ) $arr_value_after_loop );
+      // Multiple the values and replace the marker for every child
+
+    return $value_tsConf_after_loop;
+  }
+  
+  
+  
+/**
+ * extend_elements( ):
+ * 
+ * @param     array       $elements : The current row of the SQL result
+ * @return    array       $elements : extended with piVars and siglePid
+ * @version   4.4.0
+ * @since     4.4.0
+ */
+  function extend_elements( $elements )
+  {
+      // Add to the $elements piVars
+    foreach( $this->pObj->piVars as $key_pivar => $value_pivar )
+    {
+      // dwildt, 090620: If we have multiple selects, piVars can contain arrays
+      // This array should be array of uids. We don't need any process for uids here.
+      if( ! is_array( $value_pivar ) )
+      {
+          // dwildt, 110320: Prevent to override database values in $elements by piVars
+        if( ! isset( $elements[strtolower( $key_pivar )] ) )
+        {
+          $elements[strtolower( $key_pivar )] = $value_pivar;
+        }
+      }
+      if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
+      {
+        $prompt = 'The piVar ['.$key_pivar.'] is available.';
+        t3lib_div::devlog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you use the marker ###' . strtoupper( $key_pivar ) . '###, it will become ' . $value_pivar;
+        t3lib_div::devlog( '[HELP/MARKER] ' . $prompt, $this->pObj->extKey, 1 );
+      }
+    }
+      // Add to the $elements piVars
+    
+      // Add to the $elements the singlePid
+    if( isset( $this->pObj->singlePid ) )
+    {
+      $elements[strtolower( 'singlePid' )] = $this->pObj->singlePid;
+    }
+      // Add to the $elements the singlePid
+
+    return $elements;
+  }
 
 
 
@@ -973,12 +1128,12 @@
       if(!empty($value_cObjData))
       {
         $markerArray['###TT_CONTENT.'.strtoupper($key_cObjData).'###'] = $value_cObjData;
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_marker)
         {
             // Make serial array line-break-able
           $value_cObjData = str_replace(';', '; ', $value_cObjData);
-          t3lib_div::devlog('[INFO/TEMPLATING] The cObjData ['.$key_cObjData.'] is available.', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[HELP/TEMPLATING] If you use the marker ###TT_CONTENT.'.strtoupper($key_cObjData).'###, it will become '.$value_cObjData, $this->pObj->extKey, 1);
+          t3lib_div::devlog('[INFO/MARKER] The cObjData ['.$key_cObjData.'] is available.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/MARKER] If you use the marker ###TT_CONTENT.'.strtoupper($key_cObjData).'###, it will become '.$value_cObjData, $this->pObj->extKey, 1);
         }
       }
     }
@@ -1013,10 +1168,10 @@
       if(!empty($value_pivar))
       {
         $markerArray['###'.strtoupper($key_pivar).'###'] = $value_pivar;
-        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+        if ($this->pObj->boolFirstRow && $this->pObj->b_drs_marker)
         {
-          t3lib_div::devlog('[INFO/TEMPLATING] The piVar ['.$key_pivar.'] is available.', $this->pObj->extKey, 0);
-          t3lib_div::devlog('[HELP/TEMPLATING] If you use the marker ###'.strtoupper($key_pivar).'###, it will become '.$value_pivar, $this->pObj->extKey, 1);
+          t3lib_div::devlog('[INFO/MARKER] The piVar ['.$key_pivar.'] is available.', $this->pObj->extKey, 0);
+          t3lib_div::devlog('[HELP/MARKER] If you use the marker ###'.strtoupper($key_pivar).'###, it will become '.$value_pivar, $this->pObj->extKey, 1);
         }
       }
     }
@@ -1057,8 +1212,10 @@
       case(''):
       case(null):
           // DRS - Development Reporting System
-        if ($this->pObj->b_drs_templating)
+        if( $this->pObj->b_drs_marker )
         {
+            // 130105, dwildt, 1+
+          $arr_markers = array( );
           preg_match_all
           (
             '|###.*?###|i',
