@@ -320,71 +320,72 @@
       }
         // DRS
       
-        // 130105, dwildt, +
+        // 130105, dwildt, 2+
+        // LOOP elements
       $value_tsConf_after_loop = $this->elements_loop( $elements, $value_tsConf_after_loop, $str_devider, $str_sqlDeviderDisplay, $key_tsConf );
       
-        // Loop through all elements (real values)
-      foreach( ( array ) $elements as $key_tableField => $value_tableField )
-      {
-          // Replace constant marker with real value
-        $key_marker = '###' . strtoupper( $key_tableField ) . '###';
-
-          // #44316, 130105, dwildt, TODO: Uncomment the code below?
-          // session marker
-//        if(in_array('session.', $key_tsConf))
+//        // Loop through all elements (real values)
+//      foreach( ( array ) $elements as $key_tableField => $value_tableField )
+//      {
+//          // Replace constant marker with real value
+//        $key_marker = '###' . strtoupper( $key_tableField ) . '###';
+//
+//          // #44316, 130105, dwildt, TODO: Uncomment the code below?
+//          // session marker
+////        if(in_array('session.', $key_tsConf))
+////        {
+////            // 110124, dwildt, :todo: session
+////          $elements = $this->session_marker($value_tsConf_after_loop, $elements);
+////        }
+//          // session marker
+//
+//
+//          // Value contains the current marker: handle children records
+//        if( ! ( strpos( $value_tsConf_after_loop, $key_marker ) === false ) )
 //        {
-//            // 110124, dwildt, :todo: session
-//          $elements = $this->session_marker($value_tsConf_after_loop, $elements);
+//            // Marker has children values
+//          if( in_array( $key_tableField, ( array ) $arr_children_to_devide ) )
+//          {
+//              // #44316, 130105, dwildt, 7+
+//              // DRS
+//            if( $this->pObj->boolFirstRow && $this->pObj->b_drs_error )
+//            {
+//              $prompt = 'It seem\'s, that children aren\'t run proper!';
+//              t3lib_div::devlog( '[WARN/MARKER] ' . $prompt, $this->pObj->extKey, 3 );
+//            }
+//              // DRS
+//              // Get children values
+//            $arr_valuesChildren = explode( $str_devider, $value_tableField );
+//
+//              // Multiple the values and replace the marker for every child
+//              // EXAMPLE for value
+//              //   Before marker replacement: &tx_trevent_pi1[uid]=###FE_USERS.UID###&###CHASH###
+//              //   After  marker replacement: &tx_trevent_pi1[uid]=158&###CHASH###, ;|;&tx_trevent_pi1[uid]=155&###CHASH###
+//            $arr_value_after_loop = null;
+//            foreach( ( array ) $arr_valuesChildren as $valueChild )
+//            {
+//              $arr_value_after_loop[] = str_replace( $key_marker, $valueChild, $value_tsConf_after_loop );
+//            }
+//              // 13008, 110302, dwildt
+//              // 13807, 110313, dwildt
+//            $value_tsConf_after_loop = implode( $str_sqlDeviderDisplay, ( array ) $arr_value_after_loop );
+//              // Multiple the values and replace the marker for every child
+//          }
+//            // Marker has children values
+//
+//            // Marker hasn't any child value
+//          if( ! in_array( $key_tsConf, ( array ) $arr_children_to_devide ) )
+//          {
+//              // Color swords
+//            $value_tableField        = $this->pObj->objZz->color_swords( $key_tableField, $value_tableField );
+//            $value_tsConf_after_loop = str_replace( $key_marker, $value_tableField, $value_tsConf_after_loop );
+//          }
+//            // Marker hasn't any child value
 //        }
-          // session marker
-
-
-          // Value contains the current marker: handle children records
-        if( ! ( strpos( $value_tsConf_after_loop, $key_marker ) === false ) )
-        {
-            // Marker has children values
-          if( in_array( $key_tableField, ( array ) $arr_children_to_devide ) )
-          {
-              // #44316, 130105, dwildt, 7+
-              // DRS
-            if( $this->pObj->boolFirstRow && $this->pObj->b_drs_error )
-            {
-              $prompt = 'It seem\'s, that children aren\'t run proper!';
-              t3lib_div::devlog( '[WARN/MARKER] ' . $prompt, $this->pObj->extKey, 3 );
-            }
-              // DRS
-              // Get children values
-            $arr_valuesChildren = explode( $str_devider, $value_tableField );
-
-              // Multiple the values and replace the marker for every child
-              // EXAMPLE for value
-              //   Before marker replacement: &tx_trevent_pi1[uid]=###FE_USERS.UID###&###CHASH###
-              //   After  marker replacement: &tx_trevent_pi1[uid]=158&###CHASH###, ;|;&tx_trevent_pi1[uid]=155&###CHASH###
-            $arr_value_after_loop = null;
-            foreach( ( array ) $arr_valuesChildren as $valueChild )
-            {
-              $arr_value_after_loop[] = str_replace( $key_marker, $valueChild, $value_tsConf_after_loop );
-            }
-              // 13008, 110302, dwildt
-              // 13807, 110313, dwildt
-            $value_tsConf_after_loop = implode( $str_sqlDeviderDisplay, ( array ) $arr_value_after_loop );
-              // Multiple the values and replace the marker for every child
-          }
-            // Marker has children values
-
-            // Marker hasn't any child value
-          if( ! in_array( $key_tsConf, ( array ) $arr_children_to_devide ) )
-          {
-              // Color swords
-            $value_tableField        = $this->pObj->objZz->color_swords( $key_tableField, $value_tableField );
-            $value_tsConf_after_loop = str_replace( $key_marker, $value_tableField, $value_tsConf_after_loop );
-          }
-            // Marker hasn't any child value
-        }
-          // Value contains the current marker: handle children records
-
-      }
-        // Loop through all elements (real values)
+//          // Value contains the current marker: handle children records
+//
+//      }
+//        // Loop through all elements (real values)
 
         // Replace cHash marker
       $pos = strpos( $value_tsConf_after_loop, '&###CHASH###' );
