@@ -637,9 +637,19 @@ class tx_browser_pi1_wrapper
         }
       }
         // #44316, 130104, dwildt, 1-
-//      $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
+if( $this->pObj->boolFirstRow )
+{
+  $this->pObj->dev_var_dump( $lConfCObj );
+  $tmplConfCObj = $lConfCObj;
+}
+      $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
         // #44316, 130104, dwildt, 1+
-      $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
+//      $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
+if( $this->pObj->boolFirstRow )
+{
+  $tmplConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $tmplConfCObj );
+  $this->pObj->dev_var_dump( $tmplConfCObj );
+}
 //$this->pObj->dev_var_dump( $lConfCObj );      
         //Replace all ###MARKER### in Typoscript with its values.
     }
