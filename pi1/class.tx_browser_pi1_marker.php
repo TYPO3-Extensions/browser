@@ -256,7 +256,7 @@
           $elements[strtolower( $key_pivar )] = $value_pivar;
         }
       }
-      if( $this->pObj->boolFirstRow && $this->pObj->b_drs_templating )
+      if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
       {
         $prompt = 'The piVar ['.$key_pivar.'] is available.';
         t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
@@ -292,14 +292,14 @@
       $int_countMarker = substr_count( $value_tsConf, '###' );  // I.e: 4
       if( $int_countMarker == 0 )
       {
-        if( $this->pObj->b_drs_marker )
+        if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
         {
           $value_tsConf_html = htmlspecialchars( $value_tsConf );
           if( strlen( $value_tsConf_html ) > $this->pObj->i_drs_max_sql_result_len )
           {
             $value_tsConf_html = substr( $value_tsConf_html, 0, $this->pObj->i_drs_max_sql_result_len ) . ' ...';
           }
-          $prompt = '... ' . $value_tsConf . ' hasn\'t any marker.';
+          $prompt = 'without marker: ' . $value_tsConf;
           t3lib_div::devlog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
         }
         continue;
@@ -378,9 +378,9 @@
       }
 
         // DRS - Development Reporting System
-      if( $value_tsConf_after_loop != $value_tsConf )
+      if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
       {
-        if( $this->pObj->b_drs_marker )
+        if( $value_tsConf_after_loop != $value_tsConf )
         {
           $value_tsConf_html = htmlspecialchars( $value_tsConf_after_loop );
           if( strlen( $value_tsConf_html ) > $this->pObj->i_drs_max_sql_result_len )
