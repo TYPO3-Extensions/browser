@@ -286,6 +286,10 @@
       // $properKey is needed for a workaround: t3lib_BEfunc::implodeTSParams returns an unproper first key
     $properKey            = key( $arr_multi_dimensional );
     $arr_one_dimensional  = t3lib_BEfunc::implodeTSParams( $arr_multi_dimensional );
+if( in_array( 'First night: TYPO3 Organiser', $arr_one_dimensional ) )  
+{        
+  $this->pObj->dev_var_dump( $arr_one_dimensional );
+}
       // One dimensional array of the tsConf markers
 
       // Loop through one dimensional tsConf array
