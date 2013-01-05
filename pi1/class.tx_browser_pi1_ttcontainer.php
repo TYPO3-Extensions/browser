@@ -1377,7 +1377,8 @@ class tx_browser_pi1_ttcontainer
 //      $arr_ttc_values_substituted = $this->pObj->objMarker->substitute_marker_recurs($arr_ttc_values, $arr_values);
         // #44316, 130104, dwildt, 4+
       $currElements               = $this->pObj->elements;
-      $this->pObj->elements       = $this->pObj->elements + $arr_values;
+//      $this->pObj->elements       = $this->pObj->elements + $arr_values;
+      $this->pObj->elements       = $arr_values;
       $arr_ttc_values_substituted = $this->pObj->objMarker->substitute_tablefield_marker( $arr_ttc_values );
       $this->pObj->elements       = $currElements;
         // Get the current TypoScript array with substituted markers

@@ -136,7 +136,8 @@
 //    $arr_tsConf = $this->substitute_marker_recurs($arr_tsConf, $elements);
       // #44316, 130104, dwildt, 4+
     $currElements         = $this->pObj->elements;
-    $this->pObj->elements = $this->pObj->elements + $elements;
+//    $this->pObj->elements = $this->pObj->elements + $elements;
+    $this->pObj->elements = $elements;
     $arr_tsConf           = $this->pObj->objMarker->substitute_tablefield_marker( $arr_tsConf );
     $this->pObj->elements = $currElements;
 

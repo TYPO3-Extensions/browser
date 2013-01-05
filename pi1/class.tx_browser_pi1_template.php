@@ -3559,7 +3559,8 @@ class tx_browser_pi1_template
 //    $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $elements);
       // #44316, 130104, dwildt, 4+
     $currElements         = $this->pObj->elements;
-    $this->pObj->elements = $this->pObj->elements + $elements;
+//    $this->pObj->elements = $this->pObj->elements + $elements;
+    $this->pObj->elements = $elements;
     $lConfCObj            = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
     $this->pObj->elements = $currElements;
     
