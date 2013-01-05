@@ -1,6 +1,7 @@
 4.4.0
   130104
   New Features
+  * #44318: Workaround bug t3lib_BEfunc::implodeTSParams
   * #44316: Improve performance: substitute_marker_recurs( ) is deprecated. 
             Substitute it with substitute_tablefield_marker( )
             Effected files:

@@ -282,8 +282,13 @@
 
       // One dimensional array of the tsConf markers
       // #44316, 130104, dwildt, 1+
-    $firstKeyOfMdArray    = key( $arr_multi_dimensional );
+    $firstKey             = key( $arr_multi_dimensional );
     $arr_one_dimensional  = t3lib_BEfunc::implodeTSParams( $arr_multi_dimensional );
+      // #44316, 130104, dwildt, 1+
+    $tmpFirstKey                = key( $arr_one_dimensional );
+    $tmpFirstElement[$firstKey] = $arr_one_dimensional[$tmpFirstKey];
+    unset( $arr_one_dimensional[$tmpFirstKey] );
+    $arr_one_dimensional  = $tmpFirstElement + $arr_one_dimensional;
 
 if( $this->pObj->tmp )
 {
@@ -427,12 +432,7 @@ if( $this->pObj->tmp )
       // #12472, 110124, dwildt
 //$this->pObj->dev_var_dump( $arr_multi_dimensional );     
     
-      // #44316, 130104, dwildt, 1+
-    $tmpFirstKeyOfMdArray   = key( $arr_multi_dimensional );
-    $tmpFirstElement[$firstKeyOfMdArray]        = $arr_multi_dimensional[$tmpFirstKeyOfMdArray];
-    unset( $arr_multi_dimensional[$tmpFirstKeyOfMdArray] );
-    $arr_multi_dimensional  = $tmpFirstElement + $arr_multi_dimensional;
-    
+   
     return $arr_multi_dimensional;
   }
 
