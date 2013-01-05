@@ -642,17 +642,8 @@ class tx_browser_pi1_wrapper
       //$lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
         // #44316, 130104, dwildt, 1+
       $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
-      //Replace all ###MARKER### in Typoscript with its values.
-      //if(t3lib_div::_GP('dev')) var_dump('wrapper 485', $lConfCObj);
+        //Replace all ###MARKER### in Typoscript with its values.
     }
-// 110125, dwildt
-//if(t3lib_div::getIndpEnv('REMOTE_ADDR') =='84.184.207.88')
-//{
-//  if(isset($lConfCObj['10.']['layout.']['default.']['value']))
-//  {
-//    var_dump('wrapper 608', $lConfCObj['10.']['layout.']['default.']['value']);
-//  }
-//}
     if (!$lAutoconf['marker.']['typoScript.']['replacement'])
     {
       if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
