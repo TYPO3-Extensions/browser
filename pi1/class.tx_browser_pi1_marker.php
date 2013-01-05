@@ -259,9 +259,9 @@
       if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
       {
         $prompt = 'The piVar ['.$key_pivar.'] is available.';
-        t3lib_div::devlog( '[INFO/TEMPLATING] ' . $prompt, $this->pObj->extKey, 0 );
+        t3lib_div::devlog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
         $prompt = 'If you use the marker ###' . strtoupper( $key_pivar ) . '###, it will become ' . $value_pivar;
-        t3lib_div::devlog( '[HELP/TEMPLATING] ' . $prompt, $this->pObj->extKey, 1 );
+        t3lib_div::devlog( '[HELP/MARKER] ' . $prompt, $this->pObj->extKey, 1 );
       }
     }
       // Add to the $elements piVars
@@ -306,6 +306,12 @@
       }
         // CONTINUE: there isn't any marker - go to the next tsConf element
 
+      if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
+      {
+        $prompt = var_export( $elements, true );
+        t3lib_div::devlog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
+      }
+      
         // Loop through all elements (real values)
       foreach( ( array ) $elements as $key_tableField => $value_tableField )
       {
@@ -372,7 +378,7 @@
         // Replace cHash marker
 
         // Clear markers, which aren't replaced
-      if($this->pObj->objZz->bool_advanced_3_6_0_rmMarker)
+      if( $this->pObj->objZz->bool_advanced_3_6_0_rmMarker )
       {
         $value_tsConf_after_loop = preg_replace('|###.*?###|i', '', $value_tsConf_after_loop);
       }
