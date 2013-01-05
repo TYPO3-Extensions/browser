@@ -202,6 +202,8 @@
  */
   function substitute_tablefield_marker( $arr_multi_dimensional )
   {
+$this->pObj->dev_var_dump( 'X' );
+
     $elements = $this->pObj->elements;
 
       // RETURN there isn't any element
@@ -620,6 +622,7 @@
  */
   function substitute_marker_recurs( $arr_multi_dimensional, $elements )
   {
+$this->pObj->dev_var_dump( 'Y' );
 
       // 110312, dwildt
     //return $this->substitute_tablefield_marker($arr_multi_dimensional);
