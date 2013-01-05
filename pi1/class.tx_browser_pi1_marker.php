@@ -281,7 +281,9 @@
       // Loop through all elements (real values)
 
       // One dimensional array of the tsConf markers
-    $arr_one_dimensional = t3lib_BEfunc::implodeTSParams( $arr_multi_dimensional );
+      // #44316, 130104, dwildt, 1+
+    $firstKeyOfMdArray    = key( $arr_multi_dimensional );
+    $arr_one_dimensional  = t3lib_BEfunc::implodeTSParams( $arr_multi_dimensional );
 
 if( $this->pObj->tmp )
 {
@@ -423,7 +425,14 @@ if( $this->pObj->tmp )
     unset( $arr_multi_dimensional );
     $arr_multi_dimensional = $this->pObj->objTyposcript->oneDim_to_tree( $arr_one_dimensional );
       // #12472, 110124, dwildt
-//$this->pObj->dev_var_dump( $arr_multi_dimensional );      
+//$this->pObj->dev_var_dump( $arr_multi_dimensional );     
+    
+      // #44316, 130104, dwildt, 1+
+    $tmpFirstKeyOfMdArray   = key( $arr_multi_dimensional );
+    $tmpFirstElement        = $arr_multi_dimensional[$tmpFirstKeyOfMdArray];
+    unset( $arr_multi_dimensional[$tmpFirstKeyOfMdArray] );
+    $arr_multi_dimensional  = $tmpFirstElement[$firstKeyOfMdArray] + $arr_multi_dimensional;
+    
     return $arr_multi_dimensional;
   }
 
