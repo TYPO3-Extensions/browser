@@ -286,14 +286,6 @@
       // $properKey is needed for a workaround: t3lib_BEfunc::implodeTSParams returns an unproper first key
     $properKey            = key( $arr_multi_dimensional );
     $arr_one_dimensional  = t3lib_BEfunc::implodeTSParams( $arr_multi_dimensional );
-if( in_array( 'First night: TYPO3 Organiser', $arr_one_dimensional ) )  
-{        
-  $this->pObj->dev_var_dump( $arr_one_dimensional );
-}
-if( $this->pObj->boolFirstRow )  
-{        
-  $this->pObj->dev_var_dump( $arr_one_dimensional );
-}
 
       // One dimensional array of the tsConf markers
 
@@ -347,6 +339,13 @@ if( $this->pObj->boolFirstRow )
             // Marker has children values
           if( in_array( $key_tableField, ( array ) $arr_children_to_devide ) )
           {
+              // DRS
+            if( $this->pObj->boolFirstRow && $this->pObj->b_drs_error )
+            {
+              $prompt = 'It seem\'s, that children aren\'t run proper!';
+              t3lib_div::devlog( '[WARN/MARKER] ' . $prompt, $this->pObj->extKey, 3 );
+            }
+              // DRS
               // Get children values
             $arr_valuesChildren = explode( $str_devider, $value_tableField );
 
