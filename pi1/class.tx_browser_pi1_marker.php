@@ -202,7 +202,7 @@
  */
   function substitute_tablefield_marker( $arr_multi_dimensional )
   {
-$this->pObj->dev_var_dump( 'X' );
+//$this->pObj->dev_var_dump( 'X' );
 
     $elements = $this->pObj->elements;
 
@@ -622,7 +622,7 @@ $this->pObj->dev_var_dump( 'X' );
  */
   function substitute_marker_recurs( $arr_multi_dimensional, $elements )
   {
-$this->pObj->dev_var_dump( 'Y' );
+//$this->pObj->dev_var_dump( 'Y' );
 
       // 110312, dwildt
     //return $this->substitute_tablefield_marker($arr_multi_dimensional);
@@ -825,7 +825,7 @@ $this->pObj->dev_var_dump( 'Y' );
                 // Marker has children values
               if(in_array($key_tableField, $arr_children_to_devide))
               {
-$this->pObj->dev_var_dump( 'Y' );
+//$this->pObj->dev_var_dump( 'Y' );
                   // Get children values
                 $arr_valuesChildren   = explode($str_devider, $value_tableField);
 
@@ -1023,20 +1023,20 @@ $this->pObj->dev_var_dump( 'Y' );
  */
   function elements_loopReplaceChildren( $value_tsConf_after_loop, $value_tableField, $key_marker )
   {
-    $this->pObj->dev_var_dump( 'X' );
+//    $this->pObj->dev_var_dump( 'X' );
     
       // Get the sqlDevider configuration
     $str_devider            = $this->pObj->objTyposcript->set_confSqlDevider();
     $str_sqlDeviderDisplay  = $this->pObj->objTyposcript->str_sqlDeviderDisplay;
 
-      // #44316, 130105, dwildt, 7+
-      // DRS
-    if( $this->pObj->boolFirstRow && $this->pObj->b_drs_error )
-    {
-      $prompt = 'It seem\'s, that children aren\'t run proper!';
-      t3lib_div::devlog( '[WARN/MARKER] ' . $prompt, $this->pObj->extKey, 3 );
-    }
-      // DRS
+//      // #44316, 130105, dwildt, 7+
+//      // DRS
+//    if( $this->pObj->boolFirstRow && $this->pObj->b_drs_error )
+//    {
+//      $prompt = 'It seem\'s, that children aren\'t run proper!';
+//      t3lib_div::devlog( '[WARN/MARKER] ' . $prompt, $this->pObj->extKey, 3 );
+//    }
+//      // DRS
       // Get children values
     $arr_valuesChildren = explode( $str_devider, $value_tableField );
 
