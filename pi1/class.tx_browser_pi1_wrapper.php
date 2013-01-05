@@ -640,6 +640,7 @@ class tx_browser_pi1_wrapper
 if( $this->pObj->boolFirstRow )
 {
   //$this->pObj->dev_var_dump( $lConfCObj );
+  $this->pObj->tmp = false;
   $tmplConfCObj1 = $lConfCObj;
 }
       $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs( $lConfCObj, $this->pObj->elements );
@@ -651,7 +652,9 @@ if( $this->pObj->boolFirstRow )
   $tmplConfCObj2 = $this->pObj->objMarker->substitute_tablefield_marker( $tmplConfCObj1 );
   if( $tmplConfCObj2 != $lConfCObj ) 
   {
-    $this->pObj->dev_var_dump( $tmplConfCObj1, $lConfCObj, $tmplConfCObj2 );
+    $this->pObj->tmp = true;
+    $tmplConfCObj2 = $this->pObj->objMarker->substitute_tablefield_marker( $tmplConfCObj1 );
+    $this->pObj->tmp = false;
   }
 }
 //$this->pObj->dev_var_dump( $lConfCObj );      

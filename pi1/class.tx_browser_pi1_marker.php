@@ -283,6 +283,11 @@
       // One dimensional array of the tsConf markers
     $arr_one_dimensional = t3lib_BEfunc::implodeTSParams( $arr_multi_dimensional );
 
+if( $this->pObj->tmp )
+{
+  $this->pObj->dev_var_dump( $arr_multi_dimensional, $arr_one_dimensional );
+}
+
       // Loop through one dimensional tsConf array
     foreach( ( array ) $arr_one_dimensional as $key_tsConf => $value_tsConf )
     {
@@ -416,6 +421,10 @@
       // Rebuild $arr_multi_dimensional
     unset( $arr_multi_dimensional );
     $arr_multi_dimensional = $this->pObj->objTyposcript->oneDim_to_tree( $arr_one_dimensional );
+if( $this->pObj->tmp )
+{
+  $this->pObj->dev_var_dump( $arr_multi_dimensional, $arr_one_dimensional );
+}
       // #12472, 110124, dwildt
 //$this->pObj->dev_var_dump( $arr_multi_dimensional );      
     return $arr_multi_dimensional;
