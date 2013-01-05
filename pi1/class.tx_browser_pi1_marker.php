@@ -339,6 +339,7 @@
             // Marker has children values
           if( in_array( $key_tableField, ( array ) $arr_children_to_devide ) )
           {
+              // #44318, 130105, dwildt, 7+
               // DRS
             if( $this->pObj->boolFirstRow && $this->pObj->b_drs_error )
             {
