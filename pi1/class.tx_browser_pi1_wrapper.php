@@ -617,7 +617,6 @@ class tx_browser_pi1_wrapper
     $lConfCObj['10.']['value'] = $value;
     if( $lAutoconf['marker.']['typoScript.']['replacement'] )
     {
-//$this->pObj->dev_var_dump( $lConfCObj );      
       if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
       {
         $prompt = 'Replacement for markers in TypoScript is activated.';
@@ -637,27 +636,9 @@ class tx_browser_pi1_wrapper
         }
       }
         // #44316, 130104, dwildt, 1-
-if( $this->pObj->boolFirstRow )
-{
-  //$this->pObj->dev_var_dump( $lConfCObj );
-  $this->pObj->tmp = false;
-  $tmplConfCObj1 = $lConfCObj;
-}
-      $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs( $lConfCObj, $this->pObj->elements );
+//      $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs( $lConfCObj, $this->pObj->elements );
         // #44316, 130104, dwildt, 1+
-//      $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
-if( $this->pObj->boolFirstRow )
-{
-  //$this->pObj->dev_var_dump( $lConfCObj );
-  $tmplConfCObj2 = $this->pObj->objMarker->substitute_tablefield_marker( $tmplConfCObj1 );
-  if( $tmplConfCObj2 != $lConfCObj ) 
-  {
-    $this->pObj->tmp = true;
-    $tmplConfCObj2 = $this->pObj->objMarker->substitute_tablefield_marker( $tmplConfCObj1 );
-    $this->pObj->tmp = false;
-  }
-}
-//$this->pObj->dev_var_dump( $lConfCObj );      
+      $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
         //Replace all ###MARKER### in Typoscript with its values.
     }
     if( ! $lAutoconf['marker.']['typoScript.']['replacement'] )
@@ -775,9 +756,9 @@ if( $this->pObj->boolFirstRow )
           }
         }
           // #44316, 130104, dwildt, 1-
-        $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
+//        $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
           // #44316, 130104, dwildt, 1+
-//        $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
+        $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
           // Replace all ###MARKER### in Typoscript with its values.
 
           // Recover piVars, if they weren't used in the realUrl path

@@ -281,21 +281,16 @@
       // Loop through all elements (real values)
 
       // One dimensional array of the tsConf markers
-      // #44316, 130104, dwildt, 1+
-    $firstKeyOfMdArray    = key( $arr_multi_dimensional );
+      // #44318, 130104, dwildt, 2+
+      // $properKey is needed for a workaround: t3lib_BEfunc::implodeTSParams returns an unproper first key
+    $properKey            = key( $arr_multi_dimensional );
     $arr_one_dimensional  = t3lib_BEfunc::implodeTSParams( $arr_multi_dimensional );
-
-if( $this->pObj->tmp )
-{
-  $this->pObj->dev_var_dump( key ( $arr_multi_dimensional ) );  
-  $this->pObj->dev_var_dump( $arr_multi_dimensional, $arr_one_dimensional );
-}
+      // One dimensional array of the tsConf markers
 
       // Loop through one dimensional tsConf array
     foreach( ( array ) $arr_one_dimensional as $key_tsConf => $value_tsConf )
     {
       $value_tsConf_after_loop = $value_tsConf;
-//$this->pObj->dev_var_dump( $value_tsConf_after_loop );      
 
         // CONTINUE: there isn't any marker - go to the next tsConf element
       $int_countMarker = substr_count( $value_tsConf, '###' );  // I.e: 4
@@ -417,7 +412,6 @@ if( $this->pObj->tmp )
         // DRS - Development Reporting System
 
       $arr_one_dimensional[$key_tsConf] = $value_tsConf_after_loop;
-//$this->pObj->dev_var_dump( $value_tsConf_after_loop );      
     }
       // Loop through one dimensional tsConf array
 
@@ -425,13 +419,14 @@ if( $this->pObj->tmp )
     unset( $arr_multi_dimensional );
     $arr_multi_dimensional = $this->pObj->objTyposcript->oneDim_to_tree( $arr_one_dimensional );
       // #12472, 110124, dwildt
-//$this->pObj->dev_var_dump( $arr_multi_dimensional );     
     
-      // #44316, 130104, dwildt, 1+
-    $tmpFirstKeyOfMdArray   = key( $arr_multi_dimensional );
-    $tmpFirstElement[$firstKeyOfMdArray]        = $arr_multi_dimensional[$tmpFirstKeyOfMdArray];
-    unset( $arr_multi_dimensional[$tmpFirstKeyOfMdArray] );
-    $arr_multi_dimensional  = $tmpFirstElement + $arr_multi_dimensional;
+      // #44318, 130104, dwildt, 6+
+      // Reset the first key
+    $unproperKey              = key( $arr_multi_dimensional );
+    $firstElement[$properKey] = $arr_multi_dimensional[$unproperKey];
+    unset( $arr_multi_dimensional[$unproperKey] );
+    $arr_multi_dimensional    = $firstElement + $arr_multi_dimensional;
+      // Reset the first key
     
     return $arr_multi_dimensional;
   }
