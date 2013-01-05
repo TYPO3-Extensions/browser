@@ -211,8 +211,9 @@
     }
       // RETURN there isn't any element
 
-      // Get the children devider configuration
-    $arr_children_to_devide = ( array ) $this->pObj->arr_children_to_devide;
+      // 130105, dwildt, 2-
+//      // Get the children devider configuration
+//    $arr_children_to_devide = ( array ) $this->pObj->arr_children_to_devide;
 
       // 130105, dwildt, -
 //    if( $this->pObj->objTyposcript->str_sqlDeviderDisplay == false )
@@ -229,10 +230,11 @@
 //      // Get the children devider configuration
       // 130105, dwildt, -
 
-      // 130105, dwildt, 3+
-      // Get the children devider configuration
-    $str_devider            = $this->pObj->objTyposcript->set_confSqlDevider();
-    $str_sqlDeviderDisplay  = $this->pObj->objTyposcript->str_sqlDeviderDisplay;
+      // 130105, dwildt, 4-
+//      // 130105, dwildt, 3+
+//      // Get the children devider configuration
+//    $str_devider            = $this->pObj->objTyposcript->set_confSqlDevider();
+//    $str_sqlDeviderDisplay  = $this->pObj->objTyposcript->str_sqlDeviderDisplay;
 
 
       // dwildt, 130105, -
@@ -273,23 +275,19 @@
 //      // Add to the $elements piVars and singlePid
       // dwildt, 130105, -
 
-      // 130105, dwildt, 1+
+      // 130105, dwildt, 2+
+      // Extend elements with piVars and singlePid
     $elements = $this->extend_elements( $elements );
 
 
-      /////////////////////////////////////
-      //
-      // Loop through all elements (real values)
-
-      // One dimensional array of the tsConf markers
+      // Get one dimensional array
       // #44318, 130104, dwildt, 2+
       // $properKey is needed for a workaround: t3lib_BEfunc::implodeTSParams returns an unproper first key
     $properKey            = key( $arr_multi_dimensional );
     $arr_one_dimensional  = t3lib_BEfunc::implodeTSParams( $arr_multi_dimensional );
+      // Get one dimensional array
 
-      // One dimensional array of the tsConf markers
-
-      // Loop through one dimensional tsConf array
+      // LOOP : one dimensional array
     foreach( ( array ) $arr_one_dimensional as $key_tsConf => $value_tsConf )
     {
       $value_tsConf_after_loop = $value_tsConf;
@@ -312,17 +310,9 @@
       }
         // CONTINUE: there isn't any marker - go to the next tsConf element
 
-        // DRS
-      if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
-      {
-        $prompt = '$elements: ' . var_export( $elements, true );
-        t3lib_div::devlog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
-      }
-        // DRS
-      
         // 130105, dwildt, 2+
         // LOOP elements
-      $value_tsConf_after_loop = $this->elements_loop( $elements, $value_tsConf_after_loop, $str_devider, $str_sqlDeviderDisplay, $key_tsConf );
+      $value_tsConf_after_loop = $this->elements_loop( $elements, $value_tsConf_after_loop, $key_tsConf );
       
 //        // Loop through all elements (real values)
 //      foreach( ( array ) $elements as $key_tableField => $value_tableField )
@@ -430,7 +420,7 @@
 
       $arr_one_dimensional[$key_tsConf] = $value_tsConf_after_loop;
     }
-      // Loop through one dimensional tsConf array
+      // LOOP : one dimensional array
 
       // Rebuild $arr_multi_dimensional
     unset( $arr_multi_dimensional );
@@ -832,7 +822,7 @@
                 // Marker has children values
               if(in_array($key_tableField, $arr_children_to_devide))
               {
-//var_dump(__METHOD__ . ': ' . __LINE__);
+$this->pObj->dev_var_dump( 'Y' );
                   // Get children values
                 $arr_valuesChildren   = explode($str_devider, $value_tableField);
 
@@ -970,6 +960,14 @@
  */
   function elements_loop( $elements, $value_tsConf_after_loop, $key_tsConf )
   {
+      // DRS
+    if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
+    {
+      $prompt = '$elements: ' . var_export( $elements, true );
+      t3lib_div::devlog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
+    }
+      // DRS
+      
       // FOREACH  : elements
     foreach( ( array ) $elements as $key_tableField => $value_tableField )
     {
@@ -1022,6 +1020,8 @@
  */
   function elements_loopReplaceChildren( $value_tsConf_after_loop, $value_tableField, $key_marker )
   {
+    $this->pObj->dev_var_dump( 'X' );
+    
       // Get the sqlDevider configuration
     $str_devider            = $this->pObj->objTyposcript->set_confSqlDevider();
     $str_sqlDeviderDisplay  = $this->pObj->objTyposcript->str_sqlDeviderDisplay;
