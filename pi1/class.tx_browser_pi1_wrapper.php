@@ -510,7 +510,7 @@ class tx_browser_pi1_wrapper
         break;
           // ERROR: undefined case!
     }
-    $str_prompt_drs = implode(' -> ', $arr_prompt_drs);
+    //$str_prompt_drs = implode(' -> ', $arr_prompt_drs);
     //var_dump(__METHOD__ . ': ' . __LINE__, $str_prompt_drs, '$boolDoLinkToSingle: ' . $boolDoLinkToSingle);
       // Prepaire booleans for the link process management
 
@@ -637,9 +637,9 @@ $this->pObj->dev_var_dump( $lConfCObj );
         }
       }
         // #44316, 130104, dwildt, 1-
-      //$lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
+      $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs($lConfCObj, $this->pObj->elements);
         // #44316, 130104, dwildt, 1+
-      $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
+      //$lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
 $this->pObj->dev_var_dump( $lConfCObj );      
         //Replace all ###MARKER### in Typoscript with its values.
     }
