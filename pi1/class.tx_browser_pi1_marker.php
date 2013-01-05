@@ -417,6 +417,7 @@ $this->pObj->dev_var_dump( $value_tsConf_after_loop );
     unset( $arr_multi_dimensional );
     $arr_multi_dimensional = $this->pObj->objTyposcript->oneDim_to_tree( $arr_one_dimensional );
       // #12472, 110124, dwildt
+$this->pObj->dev_var_dump( $arr_multi_dimensional );      
     return $arr_multi_dimensional;
   }
 
