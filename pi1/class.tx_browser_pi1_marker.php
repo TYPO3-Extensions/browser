@@ -970,9 +970,6 @@
  */
   function elements_loop( $elements, $value_tsConf_after_loop, $key_tsConf )
   {
-      // Get the children devider configuration
-    $arr_children_to_devide = ( array ) $this->pObj->arr_children_to_devide;
-
       // FOREACH  : elements
     foreach( ( array ) $elements as $key_tableField => $value_tableField )
     {
@@ -996,7 +993,7 @@
         // CONTINUE : Value doesn't contain the current marker
         
         // CONTINUE : Marker hasn't any child value, replace marker with value
-      if( ! in_array( $key_tsConf, ( array ) $arr_children_to_devide ) )
+      if( ! in_array( $key_tsConf, ( array ) $this->pObj->arr_children_to_devide ) )
       {
           // Color swords
         $value_tableField        = $this->pObj->objZz->color_swords( $key_tableField, $value_tableField );

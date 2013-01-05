@@ -636,10 +636,16 @@ class tx_browser_pi1_wrapper
         }
       }
         // #44316, 130104, dwildt, 1-
+if( $GLOBALS['TSFE']->id != 1278 )
+{
       $lConfCObj = $this->pObj->objMarker->substitute_marker_recurs( $lConfCObj, $this->pObj->elements );
+}
         // #44316, 130104, dwildt, 1+
 // Doesn't process children proper
-//      $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
+if( $GLOBALS['TSFE']->id == 1278 )
+{
+      $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
+}
         //Replace all ###MARKER### in Typoscript with its values.
     }
     if( ! $lAutoconf['marker.']['typoScript.']['replacement'] )
