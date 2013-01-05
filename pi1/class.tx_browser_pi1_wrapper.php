@@ -613,29 +613,26 @@ class tx_browser_pi1_wrapper
       // Get the local or global autoconfig array - #9879
 
 
-// 110125, dwildt
-//if(t3lib_div::getIndpEnv('REMOTE_ADDR') =='84.184.207.88')
-//{
-//  if(isset($lConfCObj['10.']['layout.']['default.']['value']))
-//  {
-//    var_dump('wrapper 579', $lConfCObj['10.']['layout.']['default.']['value']);
-//  }
-//}
     $lConfCObj['10']  = $lCObjType;
     $lConfCObj['10.']['value'] = $value;
-    if ($lAutoconf['marker.']['typoScript.']['replacement'])
+    if( $lAutoconf['marker.']['typoScript.']['replacement'] )
     {
-      //if(t3lib_div::_GP('dev')) var_dump('wrapper 478', $lConfCObj, $this->pObj->elements);
-      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+      if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
       {
-        t3lib_div::devLog('[INFO/TEMPLATING] Replacement for markers in TypoScript is activated.', $this->pObj->extKey, 0);
-        t3lib_div::devLog('[HELP/TEMPLATING] If you don\'t want a replacement, please configure '.$view_path.'autoconfig.marker.typoScript.replacement.', $this->pObj->extKey, 1);
+        $prompt = 'Replacement for markers in TypoScript is activated.';
+        t3lib_div::devLog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you don\'t want a replacement, please configure ' . 
+                  $view_path . 'autoconfig.marker.typoScript.replacement.';
+        t3lib_div::devLog( '[HELP/MARKER] ' . $prompt, $this->pObj->extKey, 1 );
+        $prompt = '$lConfCObj: ' . var_export( $lConfCObj, true );
+        t3lib_div::devLog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
       }
-      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_warn)
+      if( ! isset( $this->pObj->elements ) )
       {
-        if(!isset($this->pObj->elements))
+        if( $this->pObj->boolFirstRow && $this->pObj->b_drs_warn )
         {
-          t3lib_div::devLog('[WARN/TEMPLATING] $this->pObj->elements isn\'t set!', $this->pObj->extKey, 2);
+          $prompt = '$this->pObj->elements isn\'t set!';
+          t3lib_div::devLog( '[WARN/MARKER] ' . $prompt, $this->pObj->extKey, 2 );
         }
       }
         // #44316, 130104, dwildt, 1-
@@ -644,12 +641,15 @@ class tx_browser_pi1_wrapper
       $lConfCObj = $this->pObj->objMarker->substitute_tablefield_marker( $lConfCObj );
         //Replace all ###MARKER### in Typoscript with its values.
     }
-    if (!$lAutoconf['marker.']['typoScript.']['replacement'])
+    if( ! $lAutoconf['marker.']['typoScript.']['replacement'] )
     {
-      if ($this->pObj->boolFirstRow && $this->pObj->b_drs_templating)
+      if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
       {
-        t3lib_div::devLog('[INFO/TEMPLATING] Replacement for markers in TypoScript is deactivated.', $this->pObj->extKey, 0);
-        t3lib_div::devLog('[HELP/TEMPLATING] If you want a replacement, please configure '.$view_path.'autoconfig.marker.typoScript.replacement.', $this->pObj->extKey, 1);
+        $prompt = 'Replacement for markers in TypoScript is deactivated.';
+        t3lib_div::devLog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
+        $prompt = 'If you want a replacement, please configure ' . 
+                  $view_path . 'autoconfig.marker.typoScript.replacement.';
+        t3lib_div::devLog( '[HELP/MARKER] ' . $prompt, $this->pObj->extKey, 1 );
       }
     }
 

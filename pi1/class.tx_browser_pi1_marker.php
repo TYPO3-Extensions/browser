@@ -308,7 +308,7 @@
 
       if( $this->pObj->boolFirstRow && $this->pObj->b_drs_marker )
       {
-        $prompt = var_export( $elements, true );
+        $prompt = '$elements: ' . var_export( $elements, true );
         t3lib_div::devlog( '[INFO/MARKER] ' . $prompt, $this->pObj->extKey, 0 );
       }
       
@@ -380,7 +380,7 @@
         // Clear markers, which aren't replaced
       if( $this->pObj->objZz->bool_advanced_3_6_0_rmMarker )
       {
-        $value_tsConf_after_loop = preg_replace('|###.*?###|i', '', $value_tsConf_after_loop);
+        $value_tsConf_after_loop = preg_replace( '|###.*?###|i', '', $value_tsConf_after_loop );
       }
 
         // DRS - Development Reporting System
