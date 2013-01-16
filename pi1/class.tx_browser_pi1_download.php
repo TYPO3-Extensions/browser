@@ -569,9 +569,9 @@ class tx_browser_pi1_download
       // Require fileFunc class
     require_once( PATH_t3lib . 'class.t3lib_basicfilefunc.php' );
       // Initialize new fileFunc object
-		$this->fileFunc = t3lib_div::makeInstance( 't3lib_basicFileFunctions' );
+    $this->fileFunc = t3lib_div::makeInstance( 't3lib_basicFileFunctions' );
       // Get fileinfo
-		$fileInfo       = $this->fileFunc->getTotalFileInfo( $str_pathFile );
+    $fileInfo       = $this->fileFunc->getTotalFileInfo( $str_pathFile );
       // filefunc object
 
 
