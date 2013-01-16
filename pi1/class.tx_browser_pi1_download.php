@@ -612,6 +612,7 @@ class tx_browser_pi1_download
     foreach( $arr_header as $str_header )
     {
       header( $str_header );
+      header('Content-Transfer-Encoding: binary'); 
     }
       // Loop header
       // Set the header
