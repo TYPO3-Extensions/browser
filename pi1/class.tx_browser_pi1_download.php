@@ -612,7 +612,6 @@ class tx_browser_pi1_download
     foreach( $arr_header as $str_header )
     {
       header( $str_header );
-      header('Content-Transfer-Encoding: binary'); 
     }
       // Loop header
       // Set the header
@@ -633,8 +632,14 @@ class tx_browser_pi1_download
       // Send the header and the file
 
       // Read the file and write it to the output buffer.
-		@readfile( $str_pathFile ) || die ( __METHOD__ . ' (' . __LINE__ . '): ' . readfile( $str_pathFile ) );
-		exit;
+
+//    @readfile( $str_pathFile ) || die ( __METHOD__ . ' (' . __LINE__ . '): ' . readfile( $str_pathFile ) );
+    $fp = fopen( $str_pathFile, 'rb' );
+    if( $fp )
+    {
+      fpassthru( $fp );
+    }
+    exit;
       // Send the header and the file
   }
 
