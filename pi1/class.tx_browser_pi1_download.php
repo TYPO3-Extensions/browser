@@ -385,6 +385,7 @@ class tx_browser_pi1_download
           // Given typeNum isn't the internal typeNum for download
         $this->str_typeNum = 'undefined';
     }
+    unset( $conf );
       // Check the proper typeNum
 
       // DRS - Development Reporting System
@@ -634,12 +635,6 @@ class tx_browser_pi1_download
       // Read the file and write it to the output buffer.
 
     @readfile( $str_pathFile ) || die ( __METHOD__ . ' (' . __LINE__ . '): ' . readfile( $str_pathFile ) );
-// 130116, dwildt, test
-//    $fp = fopen( $str_pathFile, 'rb' );
-//    if( $fp )
-//    {
-//      fpassthru( $fp );
-//    }
     exit;
       // Send the header and the file
   }

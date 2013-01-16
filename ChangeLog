@@ -1,3 +1,30 @@
+4.4.2
+  Bugfix
+  * #44584: Download: broken images and archives
+            Effected files:
+            * pi1
+              * class.tx_browser_pi1_navi_recordbrowser.php
+              * class.tx_browser_pi1_backend_wizicon.php
+              * class.tx_browser_pi1_cal.php
+              * class.tx_browser_pi1_download.php
+              * class.tx_browser_pi1_filter_3x.php
+              * class.tx_browser_pi1_flexform.php
+              * class.tx_browser_pi1_javascript.php
+              * class.tx_browser_pi1_localisation_3x.php
+              * class.tx_browser_pi1_localisation.php
+              * class.tx_browser_pi1_map.php
+              * class.tx_browser_pi1_multisort.php
+              * class.tx_browser_pi1_navi_3x.php
+              * class.tx_browser_pi1_navi_modeSelector.php
+              * class.tx_browser_pi1_sql_auto_3x.php
+              * class.tx_browser_pi1_sql_auto.php
+              * class.tx_browser_pi1_sql_functions_3x.php
+              * class.tx_browser_pi1_statistics.php
+              * class.tx_browser_pi1_typoscript.php
+              * class.tx_browser_pi1_views.php
+              * class.tx_browser_pi1_wrapper.php
+              * class.tx_browser_pi1_zz.php
+
 4.4.1
   130113
   Improvement
