@@ -1989,8 +1989,8 @@ plugin.tx_browser_pi1 {
             // [Boolean] Disable the treeview. Enable is recommended. Has an effect only in case of cps_tcatree and a proper TCA configuration.
           enabled = TEXT
           enabled {
-              // True (default)
-            value = 0
+              // true, false (default)
+            value = {$plugin.tx_browser_pi1.jQuery.plugin.jstree.enable}
           }
             // [String] HTML id of the treeview.
           html_id = TEXT

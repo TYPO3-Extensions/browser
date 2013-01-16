@@ -457,11 +457,11 @@ class tx_browser_pi1_download
 
       //////////////////////////////////////////////////////////////////////////
       //
-      // Get the absoluite path
+      // Get the absolute path
 
     $str_pathAbsolute = t3lib_div::getFileAbsFileName( $uploadFolder );
     $str_pathAbsolute = rtrim( $str_pathAbsolute, '/' ) . '/';
-      // Get the absoluite path
+      // Get the absolute path
 
 
 
@@ -587,13 +587,13 @@ class tx_browser_pi1_download
     if( isset ( $this->pObj->conf['download.']['mimetypes.']['fileext.'][$str_fileext] ) )
     {
       $str_application    = $this->pObj->conf['download.']['mimetypes.']['fileext.'][$str_fileext];
-  		$arr_header['type'] = 'Content-type: ' . $str_application;
+      $arr_header['type'] = 'Content-type: ' . $str_application;
     }
       // Fileextension correspondends with a defined mimetype
 
-    $arr_header['description']  = 'Content-Description: TYPO3 Browser Download Modul';
-    $arr_header['disposition']  = 'Content-Disposition: attachment; filename="' . $str_file . '"';
-    $arr_header['length']       = 'Content-Length: ' . $fileInfo['size'];
+//    $arr_header['description']  = 'Content-Description: TYPO3 Browser Download Modul';
+//    $arr_header['disposition']  = 'Content-Disposition: attachment; filename="' . $str_file . '"';
+//    $arr_header['length']       = 'Content-Length: ' . $fileInfo['size'];
 
     $str_header = implode( ' // ', $arr_header );
 

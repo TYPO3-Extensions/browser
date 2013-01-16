@@ -1,3 +1,12 @@
+4.4.1
+  130113
+  Improvement
+  * #00000: Tree view can enabled and disabled by the constant editor
+            Effected files:
+            * static
+              * constants.txt
+              * setup.txt
+
 4.4.0
   130104
   New Features
