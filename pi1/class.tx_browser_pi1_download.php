@@ -592,10 +592,9 @@ class tx_browser_pi1_download
       // Fileextension correspondends with a defined mimetype
 
 //    $arr_header['description']  = 'Content-Description: TYPO3 Browser Download Modul';
-//    $arr_header['disposition']  = 'Content-Disposition: attachment; filename="' . $str_file . '"';
-//    $arr_header['length']       = 'Content-Length: ' . $fileInfo['size'];
+    $arr_header['disposition']  = 'Content-Disposition: attachment; filename="' . $str_file . '"';
+    $arr_header['length']       = 'Content-Length: ' . $fileInfo['size'];
 
-    $str_header = implode( ' // ', $arr_header );
 
       // DRS - Development Reporting System
     if ( $this->pObj->b_drs_download )
@@ -604,6 +603,7 @@ class tx_browser_pi1_download
       t3lib_div::devlog( '[INFO/DOWNLOAD] file path: '      . $fileInfo['path'],  $this->pObj->extKey, 0 );
       t3lib_div::devlog( '[INFO/DOWNLOAD] file size: '      . $fileInfo['size'],  $this->pObj->extKey, 0 );
       t3lib_div::devlog( '[INFO/DOWNLOAD] file extension: ' . $str_fileext,       $this->pObj->extKey, 0 );
+      $str_header = implode( ' // ', $arr_header );
       t3lib_div::devlog( '[INFO/DOWNLOAD] header: '         . $str_header,        $this->pObj->extKey, 0 );
     }
       // DRS - Development Reporting System
