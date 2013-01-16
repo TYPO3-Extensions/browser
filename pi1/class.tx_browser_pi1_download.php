@@ -591,9 +591,9 @@ class tx_browser_pi1_download
     }
       // Fileextension correspondends with a defined mimetype
 
-//    $arr_header['description']  = 'Content-Description: TYPO3 Browser Download Modul';
+    $arr_header['description']  = 'Content-Description: TYPO3 Browser Download Modul';
     $arr_header['disposition']  = 'Content-Disposition: attachment; filename="' . $str_file . '"';
-//    $arr_header['length']       = 'Content-Length: ' . $fileInfo['size'];
+    $arr_header['length']       = 'Content-Length: ' . $fileInfo['size'];
 
 
       // DRS - Development Reporting System
