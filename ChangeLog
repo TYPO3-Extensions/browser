@@ -1,4 +1,15 @@
+4.4.3
+  13-01-17
+  Improvement
+  * #44619: BrowserMaps: cHash in links to the single view
+            mapLinkToSingle: useCasheHash
+            Effected files:
+            * static/setup.txt
+  Bugfix
+  * #44621: Filter and localisation: localisation is ignored in some cases
+
 4.4.2
+  13-01-16
   Bugfix
   * #44584: Download: broken images and archives
             Effected files:

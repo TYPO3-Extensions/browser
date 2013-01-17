@@ -1119,6 +1119,8 @@ class tx_browser_pi1_filter_4x {
       $this->pObj->objLocalise->init_typoscript( );
     }
 
+      // #44621, 130117, dwildt: Maybe switch below isn't needed. See #44621 below in code.
+    
       // Set class var $bool_dontLocalise
       // SWITCH $int_localisation_mode
     switch( $this->int_localisation_mode )
@@ -3077,12 +3079,13 @@ class tx_browser_pi1_filter_4x {
  */
   private function sql_select_addLL( )
   {
-      // RETURN no localisation
-    if( $this->bool_dontLocalise )
-    {
-      return;
-    }
-      // RETURN no localisation
+      // #44621, 130117, dwildt, 6-
+//      // RETURN no localisation
+//    if( $this->bool_dontLocalise )
+//    {
+//      return;
+//    }
+//      // RETURN no localisation
 
       // Get addSelect
     $addSelect = $this->sql_select_addLL_sysLanguage( );
