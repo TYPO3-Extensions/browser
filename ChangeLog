@@ -7,6 +7,8 @@
             * static/setup.txt
   Bugfix
   * #44621: Filter and localisation: localisation is ignored in some cases
+            Effected files:
+            * pi1/class.tx_browser_pi1_filter_4x.php
 
 4.4.2
   13-01-16
