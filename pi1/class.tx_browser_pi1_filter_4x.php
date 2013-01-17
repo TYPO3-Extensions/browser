@@ -3,7 +3,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2012-2013 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      4.1.26
+ * @version      4.4.3
  * @since        3.9.9
  */
 
@@ -205,8 +205,9 @@ class tx_browser_pi1_filter_4x {
     // Variables set by the pObj (by class.tx_browser_pi1.php)
 
 
-    // [Boolean] true: don't localise the current SQL query, false: localise it
-  var $bool_dontLocalise      = null;
+    // #44621, 130118, dwildt, 2-
+//    // [Boolean] true: don't localise the current SQL query, false: localise it
+//  var $bool_dontLocalise      = null;
     // [Boolean] true: there is a ts filter array with tableFields
   var $bool_isFilter          = null;
     // [Array] Back up of cObject data
@@ -1106,7 +1107,7 @@ class tx_browser_pi1_filter_4x {
  *                            * bool_dontLocalise
  *
  * @return	void
- * @version 3.9.9
+ * @version 4.4.3
  * @since   3.9.9
  */
   private function init_localisation( )
@@ -1119,22 +1120,23 @@ class tx_browser_pi1_filter_4x {
       $this->pObj->objLocalise->init_typoscript( );
     }
 
-      // #44621, 130117, dwildt: Maybe switch below isn't needed. See #44621 below in code.
-    
       // Set class var $bool_dontLocalise
       // SWITCH $int_localisation_mode
     switch( $this->int_localisation_mode )
     {
       case( PI1_DEFAULT_LANGUAGE ):
-        $this->bool_dontLocalise = true;
+          // #44621, 130118, dwildt, 1-
+//        $this->bool_dontLocalise = true;
         $prompt = 'Localisation mode is PI1_DEFAULT_LANGUAGE. There isn\' any need to localise!';
         break;
       case( PI1_DEFAULT_LANGUAGE_ONLY ):
-        $this->bool_dontLocalise = true;
+          // #44621, 130118, dwildt, 1-
+//        $this->bool_dontLocalise = true;
         $prompt = 'Localisation mode is PI1_DEFAULT_LANGUAGE_ONLY. There isn\' any need to localise!';
         break;
       default:
-        $this->bool_dontLocalise = false;
+          // #44621, 130118, dwildt, 1-
+//        $this->bool_dontLocalise = false;
         $prompt = 'Localisation mode is enabled';
         break;
     }
@@ -3074,12 +3076,12 @@ class tx_browser_pi1_filter_4x {
  *                      * foreign table (language overlay)
  *
  * @return	string		$addSelect  : the addSelect with the localisation fields
- * @version 3.9.9
+ * @version 4.4.3
  * @since   3.9.9
  */
   private function sql_select_addLL( )
   {
-      // #44621, 130117, dwildt, 6-
+      // #44621, 130118, dwildt, 6-
 //      // RETURN no localisation
 //    if( $this->bool_dontLocalise )
 //    {
