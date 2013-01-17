@@ -1222,6 +1222,8 @@ plugin.tx_browser_pi1 {
             url {
               typolink {
                 parameter.data = field:mapLinkToSingle
+                  // 130117
+                useCacheHash = 1
                 returnLast  = url
               }
             }
@@ -2942,6 +2944,8 @@ plugin.tx_browser_pi1 {
             }
             typolink {
               parameter.data = field:mapLinkToSingle
+                // 130117
+              useCacheHash = 1
             }
           }
         }
