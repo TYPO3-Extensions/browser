@@ -121,8 +121,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $coa_name               = $conf['userFunc.']['drs'];
       $coa_conf_userFunc_drs  = $conf['userFunc.']['drs.'];
       $bool_drs               = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf_userFunc_drs, $TSkey='__' ) );
-global $TSFE;
-var_dump( __METHOD__, __LINE__, $TSFE->cObj ); exit;
+//global $TSFE;
+//var_dump( __METHOD__, __LINE__, $TSFE->cObj ); exit;
     }
     if( $bool_drs )
     {
