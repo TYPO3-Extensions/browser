@@ -2909,7 +2909,6 @@ if( $this->pObj->boolFirstRow )
   $this->pObj->dev_var_dump( $this->pObj->cObj->data );
   //$this->pObj->dev_var_dump( $GLOBALS['TSFE'] );
   //var_dump( $GLOBALS['TSFE'] );
-  exit;
 }
 
     foreach ($this->_elementsTransformed as $key => $value)
