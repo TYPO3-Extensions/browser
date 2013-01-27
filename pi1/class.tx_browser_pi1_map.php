@@ -1389,9 +1389,9 @@ class tx_browser_pi1_map
 
 
       // #44849, dwildt, 1-
-    if( $this->boolMoreThanOneCategory )
+//    if( $this->boolMoreThanOneCategory )
       // #44849, dwildt, 1+
-//    if( $this->boolMoreThanOneCategory || 1 )
+    if( $this->boolMoreThanOneCategory || 1 )
     {
       $arrCategoriesFlipped = array_flip( $this->arrCategories['labels'] );
     }
@@ -1413,9 +1413,9 @@ class tx_browser_pi1_map
     {
         // IF there are more than one category
         // #44849, dwildt, 1-
-      if( $this->boolMoreThanOneCategory )
+//      if( $this->boolMoreThanOneCategory )
         // #44849, dwildt, 1+
-//      if( $this->boolMoreThanOneCategory || 1 )
+      if( $this->boolMoreThanOneCategory || 1 )
       {
           // Get categories
         if( isset( $row[ $catField ] ) )
@@ -1448,9 +1448,9 @@ class tx_browser_pi1_map
         // IF there are more than one category
         // IF there is one category exactly
         // #44849, dwildt, 1-
-      if( ! $this->boolMoreThanOneCategory )
+//      if( ! $this->boolMoreThanOneCategory )
         // #44849, dwildt, 1+
-//      if( ! $this->boolMoreThanOneCategory && 0 )
+      if( ! $this->boolMoreThanOneCategory && 0 )
       {
           // Set dummy category
         $categories = array( $keys[ 0 ] => $llNoCat );
