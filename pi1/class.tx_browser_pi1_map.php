@@ -1383,15 +1383,22 @@ class tx_browser_pi1_map
     $lons         = array( );
     $lats         = array( );
     $dontHandle00 = $this->confMap['configuration.']['00Coordinates.']['dontHandle'];
+    
+      // #44849, dwildt, 1+
+    $llNoCat      = $this->pObj->pi_getLL('phrase_noMapCat');
 
+
+      // #44849, dwildt, 1-
     if( $this->boolMoreThanOneCategory )
+      // #44849, dwildt, 1+
+//    if( $this->boolMoreThanOneCategory || 1 )
     {
       $arrCategoriesFlipped = array_flip( $this->arrCategories['labels'] );
     }
     else
     {
       $keys = array_keys( $this->confMap['configuration.']['categories.']['colours.']['points.'] );
-      $arrCategoriesFlipped = array( 'dummy' => $keys[ 0 ] );
+      $arrCategoriesFlipped = array( $llNoCat => $keys[ 0 ] );
     }
       
 
@@ -1406,9 +1413,9 @@ class tx_browser_pi1_map
     {
         // IF there are more than one category
         // #44849, dwildt, 1-
-//      if( $this->boolMoreThanOneCategory )
+      if( $this->boolMoreThanOneCategory )
         // #44849, dwildt, 1+
-      if( $this->boolMoreThanOneCategory || 1 )
+//      if( $this->boolMoreThanOneCategory || 1 )
       {
           // Get categories
         if( isset( $row[ $catField ] ) )
@@ -1417,7 +1424,7 @@ class tx_browser_pi1_map
         }
         else
         {
-          $categories = array( $keys[ 0 ] => 'dummy' );
+          $categories = array( $keys[ 0 ] => $llNoCat );
         }
           // Get categories
           // Get category icons
@@ -1441,12 +1448,12 @@ class tx_browser_pi1_map
         // IF there are more than one category
         // IF there is one category exactly
         // #44849, dwildt, 1-
-//      if( ! $this->boolMoreThanOneCategory )
+      if( ! $this->boolMoreThanOneCategory )
         // #44849, dwildt, 1+
-      if( ! $this->boolMoreThanOneCategory && 0 )
+//      if( ! $this->boolMoreThanOneCategory && 0 )
       {
           // Set dummy category
-        $categories = array( $keys[ 0 ] => 'dummy' );
+        $categories = array( $keys[ 0 ] => $llNoCat );
           // IF there are one icon at least
         if( isset( $this->arrCategories['icons'] ) )
         {
