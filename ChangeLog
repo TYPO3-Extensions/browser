@@ -7,6 +7,14 @@
             * static
               * constants.txt
               * setup.txt
+  Bugfix
+  * #44849: BrowserMaps: dummy category in single-view
+            * dummy got a LL-value
+            * dummy is displayed only if there isn't any category
+            Effected files:
+            * pi1
+              * class.tx_browser_pi1_map.php
+              * locallang.xml
 
 4.4.3
   13-01-18
