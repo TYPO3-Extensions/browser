@@ -1405,7 +1405,10 @@ class tx_browser_pi1_map
     foreach( $this->pObj->rows as $row )
     {
         // IF there are more than one category
-      if( $this->boolMoreThanOneCategory )
+        // #44849, dwildt, 1-
+//      if( $this->boolMoreThanOneCategory )
+        // #44849, dwildt, 1+
+      if( $this->boolMoreThanOneCategory || 1 )
       {
           // Get categories
         if( isset( $row[ $catField ] ) )
@@ -1437,7 +1440,10 @@ class tx_browser_pi1_map
       }
         // IF there are more than one category
         // IF there is one category exactly
-      if( ! $this->boolMoreThanOneCategory )
+        // #44849, dwildt, 1-
+//      if( ! $this->boolMoreThanOneCategory )
+        // #44849, dwildt, 1+
+      if( ! $this->boolMoreThanOneCategory && 0 )
       {
           // Set dummy category
         $categories = array( $keys[ 0 ] => 'dummy' );
