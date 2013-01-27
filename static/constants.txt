@@ -214,7 +214,7 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Database/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   database.links = Click me!
 
-  # cat=BrowserMaps - Debugging//101;             type=boolean;   label= Frontend Alert:Error module is added. There will be an alert in the frontend in case of a bug.
+  # cat=BrowserMaps - Debugging//101;             type=boolean;   label= Frontend Alert:Error module is added to the modules, LayerSwitcher to the controllers. There will be an alert in the frontend in case of a bug.
   map.debugging.feAlert = 0
   # cat=BrowserMaps - Debugging//102;             type=boolean;   label= Use uncompressed JavaScript:The oxMap API files will included uncompressed. Default is one include compressed file.
   map.debugging.uncompressed = 0
