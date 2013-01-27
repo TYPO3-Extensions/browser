@@ -337,6 +337,7 @@ class tx_browser_pi1 extends tslib_pibase {
   var $b_drs_info         = false;
   var $b_drs_browser      = false;
   var $b_drs_cal          = false;
+  var $b_drs_cObjData     = false;
   var $b_drs_devTodo      = false;
   var $b_drs_discover     = false;
   var $b_drs_download     = false;
