@@ -1745,6 +1745,11 @@ class tx_browser_pi1 extends tslib_pibase {
     require_once('class.tx_browser_pi1_flexform.php');
     $this->objFlexform = new tx_browser_pi1_flexform( $this );
 
+      // #44858, 130128, dwildt, 3+
+      // Class with methods for handle the cObj->data
+    require_once('class.tx_browser_pi1_cObjData.php');
+    $this->objCObj = new tx_browser_pi1_cObjData( $this );
+
       // Class with methods for consolidating rows
     require_once('class.tx_browser_pi1_consolidate.php');
     $this->objConsolidate = new tx_browser_pi1_consolidate( $this );

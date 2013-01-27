@@ -11,6 +11,8 @@
   * #44858: Extend cObj->data +++ first step
             Effected files:
             * pi1
+              * class.tx_browser_pi1.php
+              * class.tx_browser_pi1_cObjData.php (new)
   Bugfix
   * #44849: BrowserMaps: dummy category in single-view
             * dummy got a LL-value

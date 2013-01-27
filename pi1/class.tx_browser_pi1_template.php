@@ -2902,6 +2902,12 @@ class tx_browser_pi1_template
     $addedTableFields = $this->pObj->arrConsolidate['addedTableFields'];
       // #28562: 110830, dwildt+
 
+// #44858 
+if( $this->pObj->boolFirstRow )
+{
+  $this->pObj->dev_var_dump( $this->_elementsTransformed, $this->pObj->cObj->data );    
+}
+
     foreach ($this->_elementsTransformed as $key => $value)
     {
       $boolSubstitute = $this->_elementsBoolSubstitute[$key];

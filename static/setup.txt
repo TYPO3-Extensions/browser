@@ -13,6 +13,7 @@
   // plugin.tx_browser_pi1: displayList
   // plugin.tx_browser_pi1: displayList master_templates
   // plugin.tx_browser_pi1: displayList images
+  // plugin.tx_browser_pi1: cObjData
   // plugin.tx_browser_pi1: marker
   // plugin.tx_browser_pi1: flexform
   // plugin.tx_browser_pi1: javascript
@@ -3194,6 +3195,20 @@ plugin.tx_browser_pi1 {
   }
 }
   // plugin.tx_browser_pi1: displayList images
+
+
+
+  ///////////////////////////////////////////////////////////////
+  //
+  // plugin.tx_browser_pi1: cObjData
+
+plugin.tx_browser_pi1 {
+    // myData, system: Will added to cObjData while runtime
+  cObjData =
+  cObjData {
+  }
+}
+  // plugin.tx_browser_pi1: cObjData
 
 
 
