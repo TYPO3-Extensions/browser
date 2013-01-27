@@ -173,7 +173,9 @@ plugin.tx_browser_pi1 {
   # cat=BrowserMaps - Controlling//104;             type=int+;      label= Map width: Width of the map (in pixel)
   map.width = 600
   # cat=BrowserMaps - Controlling//201;             type=string;    label= Map controls: Comma seperated list of quoted map controls wrapped by square brackets. Examples: ['Navigation', 'PanZoomBar'], ['Navigation', 'PanZoomBar', 'LayerSwitcher']
-  map.controls = ['Navigation', 'PanZoom'] 
+  map.controls.default = ['Navigation', 'PanZoom'] 
+  # cat=BrowserMaps - Controlling//201;             type=string;    label= Map controls: Comma seperated list of quoted map controls wrapped by square brackets. Examples: ['Navigation', 'PanZoomBar'], ['Navigation', 'PanZoomBar', 'LayerSwitcher']
+  map.controls.debugging = ['Navigation', 'PanZoom', 'LayerSwitcher'] 
   # cat=BrowserMaps - Controlling//202;             type=string;    label= Map modules: Comma seperated list of quoted map modules wrapped by square brackets. Examples: ['OSM', 'OSM.Filter'], ['OSM', 'OSM.CDmap', 'OSM.Filter']. OSM.CDmap is needed, if you are using the custom array.
   map.modules.default = ['OSM', 'OSM.Filter'] 
   # cat=BrowserMaps - Controlling//203;             type=string;    label= Map modules (debugging): Comma seperated list of quoted map modules wrapped by square brackets. Examples: ['Error', 'OSM', 'OSM.Filter'], ['Error', 'OSM', 'OSM.CDmap', 'OSM.Filter']. OSM.CDmap is needed, if you are using the custom array.

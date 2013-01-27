@@ -1017,10 +1017,26 @@ plugin.tx_browser_pi1 {
                 wrap  = '|'
               }
                 // Map controlling tools
-              oxMapConfigMapControls = TEXT
+              oxMapConfigMapControls = COA
               oxMapConfigMapControls {
-                  // [STRING/CSV] Comma seperated list of quoted map controls wrapped by square brackets. Example: ['Navigation', 'PanZoomBar']
-                value = {$plugin.tx_browser_pi1.map.controls}
+                  // Debug mode off
+                10 = TEXT
+                10 {
+                  if {
+                    isFalse = {$plugin.tx_browser_pi1.map.debugging.feAlert}
+                  }
+                    // [STRING/CSV] Comma seperated list of quoted map controls wrapped by square brackets. Example: ['Navigation', 'PanZoomBar']
+                  value = {$plugin.tx_browser_pi1.map.controls.default}
+                }
+                  // Debug mode on
+                20 = TEXT
+                20 {
+                  if {
+                    isTrue = {$plugin.tx_browser_pi1.map.debugging.feAlert}
+                  }
+                    // [STRING/CSV] Comma seperated list of quoted map controls wrapped by square brackets. Example: ['Navigation', 'PanZoomBar']
+                  value = {$plugin.tx_browser_pi1.map.controls.debugging}
+                }
               }
                 // Map marker standalone mode
               oxMapConfigMapMarker = TEXT
