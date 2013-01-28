@@ -3028,15 +3028,9 @@ if( $this->pObj->boolFirstRow )
 // #44858 
 if ( $this->pObj->boolFirstRow ) 
 {
-//  $this->pObj->dev_var_dump( $this->_elementsTransformed );
   $this->pObj->objCObjData->mainUnset( $elements );
-  $this->pObj->dev_var_dump($this->pObj->cObj->data);
-  $this->pObj->dev_var_dump($GLOBALS['TSFE']->cObj->data);
-  //$this->pObj->dev_var_dump( $GLOBALS['TSFE'] );
-  //echo '<pre>' . PHP_EOL;
-  //var_dump( $GLOBALS['TSFE'] );
-  //echo '</pre>' . PHP_EOL;
-  //exit;
+//  $this->pObj->dev_var_dump($this->pObj->cObj->data);
+//  $this->pObj->dev_var_dump($GLOBALS['TSFE']->cObj->data);
 }
 
       // #12723, mbless, 110310
