@@ -2721,9 +2721,9 @@ class tx_browser_pi1_template
 if( $this->pObj->boolFirstRow )
 {
   $this->pObj->dev_var_dump( $elements );
-//  $this->pObj->objCObjData->mainUpdate( $this->_elementsTransformed );
-//  $this->pObj->dev_var_dump( $this->pObj->cObj->data );
-//  $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
+  $this->pObj->objCObjData->mainUpdate( $elements );
+  $this->pObj->dev_var_dump( $this->pObj->cObj->data );
+  $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
   //$this->pObj->dev_var_dump( $GLOBALS['TSFE'] );
   //echo '<pre>' . PHP_EOL;
   //var_dump( $GLOBALS['TSFE'] );
@@ -2916,19 +2916,19 @@ if( $this->pObj->boolFirstRow )
     $addedTableFields = $this->pObj->arrConsolidate['addedTableFields'];
       // #28562: 110830, dwildt+
 
-// #44858 
-if( $this->pObj->boolFirstRow )
-{
-//  $this->pObj->dev_var_dump( $this->_elementsTransformed );
-  $this->pObj->objCObjData->mainUpdate( $this->_elementsTransformed );
-  $this->pObj->dev_var_dump( $this->pObj->cObj->data );
-  $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
-  //$this->pObj->dev_var_dump( $GLOBALS['TSFE'] );
-  //echo '<pre>' . PHP_EOL;
-  //var_dump( $GLOBALS['TSFE'] );
-  //echo '</pre>' . PHP_EOL;
-  //exit;
-}
+//// #44858 
+//if( $this->pObj->boolFirstRow )
+//{
+////  $this->pObj->dev_var_dump( $this->_elementsTransformed );
+//  $this->pObj->objCObjData->mainUpdate( $this->_elementsTransformed );
+//  $this->pObj->dev_var_dump( $this->pObj->cObj->data );
+//  $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
+//  //$this->pObj->dev_var_dump( $GLOBALS['TSFE'] );
+//  //echo '<pre>' . PHP_EOL;
+//  //var_dump( $GLOBALS['TSFE'] );
+//  //echo '</pre>' . PHP_EOL;
+//  //exit;
+//}
 
     foreach ($this->_elementsTransformed as $key => $value)
     {
@@ -3029,7 +3029,7 @@ if( $this->pObj->boolFirstRow )
 if ( $this->pObj->boolFirstRow ) 
 {
 //  $this->pObj->dev_var_dump( $this->_elementsTransformed );
-  $this->pObj->objCObjData->mainUnset($this->_elementsTransformed);
+  $this->pObj->objCObjData->mainUnset( $elements );
   $this->pObj->dev_var_dump($this->pObj->cObj->data);
   $this->pObj->dev_var_dump($GLOBALS['TSFE']->cObj->data);
   //$this->pObj->dev_var_dump( $GLOBALS['TSFE'] );
