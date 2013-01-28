@@ -420,7 +420,6 @@ class tx_browser_pi1 extends tslib_pibase {
  */
   public function main( $content, $conf )
   {
-$this->dev_var_dump( 'TEST #44858');
 
       // Globalise TypoScript configuration
     $this->conf = $conf;
@@ -568,6 +567,7 @@ $this->dev_var_dump( 'TEST #44858');
 
     $this->require_classes( );
       // Require and init helper classes
+$this->dev_var_dump( 'TEST #44858');
 
 
 
