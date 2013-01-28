@@ -46,7 +46,13 @@
 class tx_browser_pi1_cObjData
 {
     // [OBJECT] parent object
-  var $pObj = null;
+  private $pObj = null;
+  
+    // Backup of cObj->data
+  private $bakCObjData = null;
+  
+    // Backup of $GLOBALS['TSFE']->cObj->data
+  private $bakTsfeData = null;
 
 
 
@@ -71,21 +77,22 @@ class tx_browser_pi1_cObjData
 
 /**
  * mainUpdate( ): Adds the elements of the given array to cObjData and
- *                    elements from TypoSCript
+ *                adds the elements from TypoScript
  * @param    array    $keyValues  : key value pairs
- * @param    boolean  $drs        : Should key value pairs prompt to DRS
+ * @param    boolean  $drs        : Should key value pairs prompt to DRS?
  * @return    void
  * @version 4.4.4
  * @since   4.4.4
  */
-  public function mainUpdate( $keyValues, $drs = true )
+  public function add( $keyValues, $drs = true )
   {
+    $this->backup( );
     $this->addArray( $keyValues, $drs );
     $this->addTsValues( );
   }
 
 /**
- * mainUnset( ): Removes the elements of the given array of cObjData and
+ * mainRemove( ): Removes the elements of the given array of cObjData and
  *               removes elements from TypoSCript
  * @param    array    $keyValues  : key value pairs
  * @param    boolean  $drs        : Should key value pairs prompt to DRS
@@ -93,10 +100,29 @@ class tx_browser_pi1_cObjData
  * @version 4.4.4
  * @since   4.4.4
  */
-  public function mainUnset( $keyValues )
+//  public function mainRemove( $keyValues )
+  public function reset( )
   {
-    $this->removeArray( $keyValues );
+    $this->pObj->cObj->data = $this->bakCObjData;
+    $GLOBALS['TSFE']->cObj->data = $this->bakTsfeData;
+//    $this->removeArray( $keyValues );
 //    $this->removeTsValues( );
+  }
+
+/**
+ * mainSet( ): Sets the elements of the given array as cObjData and
+ *             adds the elements from TypoScript
+ * @param    array    $keyValues  : key value pairs
+ * @param    boolean  $drs        : Should key value pairs prompt to DRS?
+ * @return    void
+ * @version 4.4.4
+ * @since   4.4.4
+ */
+  public function set( $keyValues, $drs = true )
+  {
+    $this->backup( );
+    $this->setArray( $keyValues, $drs );
+    $this->addTsValues( );
   }
   
   
@@ -132,7 +158,8 @@ class tx_browser_pi1_cObjData
     }
       // FOREACH  : element
     
-    $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'] = $this->pObj->cObj->data;
+//    $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'] = $this->pObj->cObj->data;
+    $GLOBALS['TSFE']->cObj->data = $this->pObj->cObj->data;
 
       // DRS
     if( $drs )
@@ -176,7 +203,8 @@ class tx_browser_pi1_cObjData
 
         // Adds element to cObjData
       $this->pObj->cObj->data[ 'tx_browser_pi1.cObjData.' . $tsValue ] = $content;
-      $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'][ 'tx_browser_pi1.cObjData.' . $tsValue ] = $content;
+//      $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'][ 'tx_browser_pi1.cObjData.' . $tsValue ] = $content;
+      $GLOBALS['TSFE']->cObj->data[ 'tx_browser_pi1.cObjData.' . $tsValue ] = $content;
 
       if( $this->pObj->b_drs_cObjData )
       {
@@ -202,38 +230,59 @@ class tx_browser_pi1_cObjData
   
   /***********************************************
   *
-  * Remove
+  * Backup
   *
   **********************************************/
 
 /**
- * removeArray( ): Removes the given key value pairs from cObjData
+ * backup( ): 
  *
- * @param     array   $keyValue : array with key value pairs
  * @return    void
  * @version 4.4.4
  * @since   4.4.4
  */
-  private function removeArray( $keyValue )
+  private function backup(  )
   {
-      // FOREACH  : element
-    foreach( array_keys( $keyValue ) as $key )
-    {
-        // CONTINUE : key is empty
-      if( empty( $key ) )
-      {
-        continue;
-      }
-        // CONTINUE : key is empty
-
-        // Remove value from cObjData
-      unset( $this->pObj->cObj->data[ $key ] );
-    }
-      // FOREACH  : element
-
-    unset( $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'] );
+    $this->bakCObjData = $this->pObj->cObj->data;
+    $this->bakTsfeData = $GLOBALS['TSFE']->cObj->data;
   }
-
+  
+  
+  
+//  /***********************************************
+//  *
+//  * Remove
+//  *
+//  **********************************************/
+//
+///**
+// * removeArray( ): Removes the given key value pairs from cObjData
+// *
+// * @param     array   $keyValue : array with key value pairs
+// * @return    void
+// * @version 4.4.4
+// * @since   4.4.4
+// */
+//  private function removeArray( $keyValue )
+//  {
+//      // FOREACH  : element
+//    foreach( array_keys( $keyValue ) as $key )
+//    {
+//        // CONTINUE : key is empty
+//      if( empty( $key ) )
+//      {
+//        continue;
+//      }
+//        // CONTINUE : key is empty
+//
+//        // Remove value from cObjData
+//      unset( $this->pObj->cObj->data[ $key ] );
+//    }
+//      // FOREACH  : element
+//
+//    unset( $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'] );
+//  }
+//
 ///**
 // * removeTsValues( ): Removes values of plugin.tx_browser_pi1.cObjData from cObjData
 // *
@@ -259,6 +308,28 @@ class tx_browser_pi1_cObjData
 //    }
 //      // FOREACH  : plugin.tx_browser_pi1.cObjData
 //  }
+  
+  
+  
+  /***********************************************
+  *
+  * Set
+  *
+  **********************************************/
+
+/**
+ * setArray( ): Set the elements of the given array to cObjData
+ *
+ * @param    array
+ * @return    void
+ * @version 4.4.4
+ * @since   4.4.4
+ */
+  private function setArray( $keyValues, $drs )
+  {
+    unset( $this->pObj->cObj->data );
+    $this->addArray( $keyValues, $drs );
+  }
 
   
   

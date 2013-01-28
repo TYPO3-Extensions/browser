@@ -2717,19 +2717,9 @@ class tx_browser_pi1_template
     $this->_elementsBoolSubstitute  = array();
       // #12723, mbless, 110310
 
-// #44858 
-if( $this->pObj->boolFirstRow )
-{
-  $this->pObj->dev_var_dump( $elements );
-  $this->pObj->objCObjData->mainUpdate( $elements );
-  $this->pObj->dev_var_dump( $this->pObj->cObj->data );
-  $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
-  //$this->pObj->dev_var_dump( $GLOBALS['TSFE'] );
-  //echo '<pre>' . PHP_EOL;
-  //var_dump( $GLOBALS['TSFE'] );
-  //echo '</pre>' . PHP_EOL;
-  //exit;
-}
+      // #44858 
+    $drsForFirstRowOnly = $this->pObj->boolFirstRow; 
+    $this->cObjDataSet( $elements, $$drsForFirstRowOnly );    
 
       // LOOP elements
     foreach( ( array ) $elements as $key => $value )
@@ -2916,20 +2906,6 @@ if( $this->pObj->boolFirstRow )
     $addedTableFields = $this->pObj->arrConsolidate['addedTableFields'];
       // #28562: 110830, dwildt+
 
-//// #44858 
-//if( $this->pObj->boolFirstRow )
-//{
-////  $this->pObj->dev_var_dump( $this->_elementsTransformed );
-//  $this->pObj->objCObjData->mainUpdate( $this->_elementsTransformed );
-//  $this->pObj->dev_var_dump( $this->pObj->cObj->data );
-//  $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
-//  //$this->pObj->dev_var_dump( $GLOBALS['TSFE'] );
-//  //echo '<pre>' . PHP_EOL;
-//  //var_dump( $GLOBALS['TSFE'] );
-//  //echo '</pre>' . PHP_EOL;
-//  //exit;
-//}
-
     foreach ($this->_elementsTransformed as $key => $value)
     {
       $boolSubstitute = $this->_elementsBoolSubstitute[$key];
@@ -3025,13 +3001,8 @@ if( $this->pObj->boolFirstRow )
     unset( $max_td );
       // Loop through all elements
 
-// #44858 
-if ( $this->pObj->boolFirstRow ) 
-{
-  $this->pObj->objCObjData->mainUnset( $elements );
-//  $this->pObj->dev_var_dump($this->pObj->cObj->data);
-//  $this->pObj->dev_var_dump($GLOBALS['TSFE']->cObj->data);
-}
+      // #44858 
+    $this->cObjDataReset( );    
 
       // #12723, mbless, 110310
     unset ($this->_elementsTransformed);
@@ -3368,9 +3339,84 @@ if ( $this->pObj->boolFirstRow )
 
 
 
+  /***********************************************
+  *
+  * cObjData
+  *
+  **********************************************/
 
+/**
+ * cObjDataAddFieldsWoLocaltable( ):
+ *
+ * @param	array		$elements: The current record
+ * @return	void
+ * @internal  #44858
+ * @version   4.4.4
+ * @since     4.4.4
+ */
+  private function cObjDataAddFieldsWoLocaltable( $elements )
+  {
+    $fieldsWoLocaltable = null; 
+    
+      // FOREACH  : elements
+    foreach( ( array ) $elements as $tableField => $value )
+    {
+      list( $table, $field ) = explode( '.', $tableField );
+      if( $table == $this->pObj->localTable )
+      {
+        $fieldsWoLocaltable[ $field ] = $value;
+      }
+    }
+      // FOREACH  : elements
+    
+    if( is_array( $fieldsWoLocaltable ) )
+    {
+      $this->pObj->objCObjData->add( $fieldsWoLocaltable );
+    }
+    
+    unset( $fieldsWoLocaltable );
+  }
 
+/**
+ * cObjDataReset( ):
+ *
+ * @return	void
+ * @internal  #44858
+ * @version   4.4.4
+ * @since     4.4.4
+ */
+  private function cObjDataReset( )
+  {
+    $this->pObj->objCObjData->reset( );
 
+    if( $this->pObj->boolFirstRow )
+    {
+      $this->pObj->dev_var_dump( $this->pObj->cObj->data );
+      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
+    }
+  }
+
+/**
+ * cObjDataSet( ):
+ *
+ * @param	array		$elements: The current record
+ * @return	void
+ * @internal  #44858
+ * @version   4.4.4
+ * @since     4.4.4
+ */
+  private function cObjDataSet( $elements )
+  {
+    $this->pObj->objCObjData->set( $elements );
+    $this->cObjDataAddFieldsWoLocaltable( $elements );
+
+    if( $this->pObj->boolFirstRow )
+    {
+      $this->pObj->dev_var_dump( $elements );
+      $this->pObj->dev_var_dump( $this->pObj->cObj->data );
+      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
+    }
+  }
 
 
 
@@ -3379,112 +3425,6 @@ if ( $this->pObj->boolFirstRow )
   * GroupBy
   *
   **********************************************/
-
-
-
-/**
- * Verifying the GROUPBY configuration. If groupby isn't configured in TypoScript, GROUPBY marker in HTML
- * template will be removed. If groupby is configured in TypoScript, but the template hasn't any GROUPBY marker
- * there will be a log in devlog.
- *
- * @param	string		$template: The HTML template with the GROUPBY-markers
- * @return	string		$template: The HTML template with or without the GROUPBY-by-markers
- * @version   3.3.7
- * @since     3.3.0
- */
-  private function groupBy_verify( $template )
-  {
-    // Do we have a TypoScript group by configuration?
-    $this->bool_groupby = false;
-    if(isset($this->pObj->conf_sql['groupBy']) && $this->pObj->conf_sql['groupBy'] != '')
-    {
-      $this->bool_groupby = true;
-    }
-    // Do we have a TypoScript group by configuration?
-
-
-    // RETURN if we have an HTML without any groupby marker
-    if(strpos($template, '###GROUPBY###') === false)
-    {
-      if($this->bool_groupby)
-      {
-        // DRS- Developement Reporting System
-        if ($this->pObj->b_drs_templating || $this->pObj->b_drs_error)
-        {
-          t3lib_div::devLog('[ERROR/TEMPLATING] TypoScript is configured with groupby. '.
-            'But your template doesn\'t contain any marker like ###GROUPBY###', $this->pObj->extKey, 3);
-          t3lib_div::devLog('[WARN/TEMPLATING] Your data won\'t grouped.', $this->pObj->extKey, 2);
-          t3lib_div::devLog('[HELP/TEMPLATING] Please configure your HTML template.', $this->pObj->extKey, 1);
-        }
-        // DRS- Developement Reporting System
-      }
-      return $template;
-    }
-    // RETURN if we have an HTML without any groupby marker
-
-
-    // Edit the template
-    // Don't change anything
-    if($this->bool_groupby)
-    {
-      // Do nothing
-      // DRS- Developement Reporting System
-      if ($this->pObj->b_drs_templating)
-      {
-        t3lib_div::devLog('[OK/TEMPLATING] TypoScript is configured with groupby. '.
-          'And the template contains the marker ###GROUPBY###.', $this->pObj->extKey, -1);
-      }
-      // DRS- Developement Reporting System
-    }
-    // Don't change anything
-    // Remove all GROUPBY marker
-    if(!$this->bool_groupby)
-    {
-      // Remove all groupby markers
-      $template = $this->groupBy_remove($template);
-      // DRS- Developement Reporting System
-      if ($this->pObj->b_drs_templating)
-      {
-        t3lib_div::devLog('[INFO/TEMPLATING] TypoScript is configured without groupby. '.
-          'All markers ###GROUPBY### will removed in the template.', $this->pObj->extKey, 0);
-      }
-      // DRS- Developement Reporting System
-    }
-    // Remove all GROUPBY marker
-    // Edit the template
-
-    return $template;
-  }
-
-
-
-
-
-
-
-
-/**
- * Remove all GROUPBY marker
- *
- * @param	string		$template: The HTML template with the groupby-markers
- * @return	string		$template: The HTML template without the groupby-markers
- * @version   3.3.7
- * @since     3.3.0
- */
-  private function groupBy_remove($template)
-  {
-    $template = $this->pObj->cObj->substituteSubpart($template, '###GROUPBYHEAD###', '', true);
-    $template = str_replace('<!-- ###GROUPBY### begin -->',     '', $template);
-    $template = str_replace('<!-- ###GROUPBY### end -->',       '', $template);
-    $template = str_replace('<!-- ###GROUPBYBODY### begin -->', '', $template);
-    $template = str_replace('<!-- ###GROUPBYBODY### end -->',   '', $template);
-    return $template;
-  }
-
-
-
-
-
 
 
 
@@ -3526,8 +3466,23 @@ if ( $this->pObj->boolFirstRow )
 
 
 
-
-
+/**
+ * Remove all GROUPBY marker
+ *
+ * @param	string		$template: The HTML template with the groupby-markers
+ * @return	string		$template: The HTML template without the groupby-markers
+ * @version   3.3.7
+ * @since     3.3.0
+ */
+  private function groupBy_remove($template)
+  {
+    $template = $this->pObj->cObj->substituteSubpart($template, '###GROUPBYHEAD###', '', true);
+    $template = str_replace('<!-- ###GROUPBY### begin -->',     '', $template);
+    $template = str_replace('<!-- ###GROUPBY### end -->',       '', $template);
+    $template = str_replace('<!-- ###GROUPBYBODY### begin -->', '', $template);
+    $template = str_replace('<!-- ###GROUPBYBODY### end -->',   '', $template);
+    return $template;
+  }
 
 
 
@@ -3604,6 +3559,82 @@ if ( $this->pObj->boolFirstRow )
 
     return $str_value;
     // RETURN with stdWrap
+  }
+
+
+
+/**
+ * Verifying the GROUPBY configuration. If groupby isn't configured in TypoScript, GROUPBY marker in HTML
+ * template will be removed. If groupby is configured in TypoScript, but the template hasn't any GROUPBY marker
+ * there will be a log in devlog.
+ *
+ * @param	string		$template: The HTML template with the GROUPBY-markers
+ * @return	string		$template: The HTML template with or without the GROUPBY-by-markers
+ * @version   3.3.7
+ * @since     3.3.0
+ */
+  private function groupBy_verify( $template )
+  {
+    // Do we have a TypoScript group by configuration?
+    $this->bool_groupby = false;
+    if(isset($this->pObj->conf_sql['groupBy']) && $this->pObj->conf_sql['groupBy'] != '')
+    {
+      $this->bool_groupby = true;
+    }
+    // Do we have a TypoScript group by configuration?
+
+
+    // RETURN if we have an HTML without any groupby marker
+    if(strpos($template, '###GROUPBY###') === false)
+    {
+      if($this->bool_groupby)
+      {
+        // DRS- Developement Reporting System
+        if ($this->pObj->b_drs_templating || $this->pObj->b_drs_error)
+        {
+          t3lib_div::devLog('[ERROR/TEMPLATING] TypoScript is configured with groupby. '.
+            'But your template doesn\'t contain any marker like ###GROUPBY###', $this->pObj->extKey, 3);
+          t3lib_div::devLog('[WARN/TEMPLATING] Your data won\'t grouped.', $this->pObj->extKey, 2);
+          t3lib_div::devLog('[HELP/TEMPLATING] Please configure your HTML template.', $this->pObj->extKey, 1);
+        }
+        // DRS- Developement Reporting System
+      }
+      return $template;
+    }
+    // RETURN if we have an HTML without any groupby marker
+
+
+    // Edit the template
+    // Don't change anything
+    if($this->bool_groupby)
+    {
+      // Do nothing
+      // DRS- Developement Reporting System
+      if ($this->pObj->b_drs_templating)
+      {
+        t3lib_div::devLog('[OK/TEMPLATING] TypoScript is configured with groupby. '.
+          'And the template contains the marker ###GROUPBY###.', $this->pObj->extKey, -1);
+      }
+      // DRS- Developement Reporting System
+    }
+    // Don't change anything
+    // Remove all GROUPBY marker
+    if(!$this->bool_groupby)
+    {
+      // Remove all groupby markers
+      $template = $this->groupBy_remove($template);
+      // DRS- Developement Reporting System
+      if ($this->pObj->b_drs_templating)
+      {
+        t3lib_div::devLog('[INFO/TEMPLATING] TypoScript is configured without groupby. '.
+          'All markers ###GROUPBY### will removed in the template.', $this->pObj->extKey, 0);
+      }
+      // DRS- Developement Reporting System
+    }
+    // Remove all GROUPBY marker
+    // Edit the template
+
+    return $template;
   }
 
 
