@@ -96,7 +96,7 @@ class tx_browser_pi1_cObjData
   public function mainUnset( $keyValues )
   {
     $this->removeArray( $keyValues );
-    $this->removeTsValues( );
+//    $this->removeTsValues( );
   }
   
   
@@ -129,10 +129,11 @@ class tx_browser_pi1_cObjData
 
         // Adds element to cObjData
       $this->pObj->cObj->data[ $key ] = $value;
-      $GLOBALS['TSFE']->cObj->data->tx_browser_pi1[ $key ] = $value;
     }
       // FOREACH  : element
     
+    $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'] = $this->pObj->cObj->data;
+
       // DRS
     if( $drs )
     {
@@ -175,7 +176,7 @@ class tx_browser_pi1_cObjData
 
         // Adds element to cObjData
       $this->pObj->cObj->data[ 'tx_browser_pi1.cObjData.' . $tsValue ] = $content;
-      $GLOBALS['TSFE']->cObj->data->tx_browser_pi1[ 'tx_browser_pi1.cObjData.' . $tsValue ] = $content;
+      $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'][ 'tx_browser_pi1.cObjData.' . $tsValue ] = $content;
 
       if( $this->pObj->b_drs_cObjData )
       {
@@ -194,6 +195,7 @@ class tx_browser_pi1_cObjData
       }
     }
       // FOREACH  : plugin.tx_browser_pi1.cObjData
+    
   }
   
   
@@ -226,36 +228,37 @@ class tx_browser_pi1_cObjData
 
         // Remove value from cObjData
       unset( $this->pObj->cObj->data[ $key ] );
-      unset( $GLOBALS['TSFE']->cObj->data->tx_browser_pi1[ $key ] );
     }
       // FOREACH  : element
+
+    unset( $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'] );
   }
 
-/**
- * removeTsValues( ): Removes values of plugin.tx_browser_pi1.cObjData from cObjData
- *
- * @return    void
- * @version 4.4.4
- * @since   4.4.4
- */
-  private function removeTsValues( )
-  {
-      // FOREACH  : plugin.tx_browser_pi1.cObjData
-    foreach( array_keys( $this->pObj->conf['cObjData.'] ) as $tsValue )
-    {
-        // CONTINUE : current value is an array
-      if( substr( $tsValue, -1, 1 ) == '.' )
-      {
-        continue;
-      }
-        // CONTINUE : current value is an array
-
-        // Remove value from cObjData
-      unset( $this->pObj->cObj->data[ 'tx_browser_pi1.cObjData.' . $tsValue ] );
-      unset( $GLOBALS['TSFE']->cObj->data->tx_browser_pi1[ 'tx_browser_pi1.cObjData.' . $tsValue ] );
-    }
-      // FOREACH  : plugin.tx_browser_pi1.cObjData
-  }
+///**
+// * removeTsValues( ): Removes values of plugin.tx_browser_pi1.cObjData from cObjData
+// *
+// * @return    void
+// * @version 4.4.4
+// * @since   4.4.4
+// */
+//  private function removeTsValues( )
+//  {
+//      // FOREACH  : plugin.tx_browser_pi1.cObjData
+//    foreach( array_keys( $this->pObj->conf['cObjData.'] ) as $tsValue )
+//    {
+//        // CONTINUE : current value is an array
+//      if( substr( $tsValue, -1, 1 ) == '.' )
+//      {
+//        continue;
+//      }
+//        // CONTINUE : current value is an array
+//
+//        // Remove value from cObjData
+//      unset( $this->pObj->cObj->data[ 'tx_browser_pi1.cObjData.' . $tsValue ] );
+//      unset( $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'][ 'tx_browser_pi1.cObjData.' . $tsValue ] );
+//    }
+//      // FOREACH  : plugin.tx_browser_pi1.cObjData
+//  }
 
   
   
