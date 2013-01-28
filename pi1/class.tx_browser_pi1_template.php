@@ -3016,9 +3016,21 @@ if( $this->pObj->boolFirstRow )
     unset ($this->_elementsBoolSubstitute);
       // #12723, mbless, 110310
 
+  // #44858 
+    if ($this->pObj->boolFirstRow) {
+//  $this->pObj->dev_var_dump( $this->_elementsTransformed );
+      $this->pObj->objCObjData->mainUnset($this->_elementsTransformed);
+      $this->pObj->dev_var_dump($this->pObj->cObj->data);
+      $this->pObj->dev_var_dump($GLOBALS['TSFE']->cObj->data);
+      //$this->pObj->dev_var_dump( $GLOBALS['TSFE'] );
+      //echo '<pre>' . PHP_EOL;
+      //var_dump( $GLOBALS['TSFE'] );
+      //echo '</pre>' . PHP_EOL;
+      //exit;
+    }
 
 
-      // DRS - Performance
+    // DRS - Performance
     if ($this->pObj->boolFirstRow)
     {
         // Prompt the expired time to devlog

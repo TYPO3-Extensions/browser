@@ -420,6 +420,8 @@ class tx_browser_pi1 extends tslib_pibase {
  */
   public function main( $content, $conf )
   {
+$this->dev_var_dump( 'TEST #44858');
+
       // Globalise TypoScript configuration
     $this->conf = $conf;
       // Set default values for piVars[]
