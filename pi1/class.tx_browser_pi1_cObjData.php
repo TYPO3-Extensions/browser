@@ -70,7 +70,7 @@ class tx_browser_pi1_cObjData
   **********************************************/
 
 /**
- * cObjDataUpdate( ): Adds the elements of the given array to cObjData and
+ * mainUpdate( ): Adds the elements of the given array to cObjData and
  *                    elements from TypoSCript
  * @param    array    $keyValues  : key value pairs
  * @param    boolean  $drs        : Should key value pairs prompt to DRS
@@ -78,25 +78,25 @@ class tx_browser_pi1_cObjData
  * @version 4.4.4
  * @since   4.4.4
  */
-  public function cObjDataUpdate( $keyValues, $drs = true )
+  public function mainUpdate( $keyValues, $drs = true )
   {
-    $this->cObjDataAddArray( $keyValues, $drs );
-    $this->cObjDataAddTsValues( );
+    $this->addArray( $keyValues, $drs );
+    $this->addTsValues( );
   }
 
 /**
- * cObjDataUnset( ): Adds the elements of the given array to cObjData and
- *                    elements from TypoSCript
+ * mainUnset( ): Removes the elements of the given array of cObjData and
+ *               removes elements from TypoSCript
  * @param    array    $keyValues  : key value pairs
  * @param    boolean  $drs        : Should key value pairs prompt to DRS
  * @return    void
  * @version 4.4.4
  * @since   4.4.4
  */
-  public function cObjDataUnset( $keyValues )
+  public function mainUnset( $keyValues )
   {
-    $this->cObjDataRemoveArray( $keyValues );
-    $this->cObjDataRemoveTsValues( );
+    $this->removeArray( $keyValues );
+    $this->removeTsValues( );
   }
   
   
@@ -108,14 +108,14 @@ class tx_browser_pi1_cObjData
   **********************************************/
 
 /**
- * cObjDataAddArray( ): Adds the elements of the given array to cObjData
+ * addArray( ): Adds the elements of the given array to cObjData
  *
  * @param    array
  * @return    void
  * @version 4.4.4
  * @since   4.4.4
  */
-  private function cObjDataAddArray( $keyValues, $drs )
+  private function addArray( $keyValues, $drs )
   {
       // FOREACH  : element
     foreach( ( array ) $keyValues as $key => $value )
@@ -129,6 +129,7 @@ class tx_browser_pi1_cObjData
 
         // Adds element to cObjData
       $this->pObj->cObj->data[ $key ] = $value;
+      $GLOBALS['TSFE']->cObj->data[ $key ] = $value;
     }
       // FOREACH  : element
     
@@ -148,13 +149,13 @@ class tx_browser_pi1_cObjData
   }
 
 /**
- * cObjDataAddTsValues( ): Adds values of plugin.tx_browser_pi1.cObjData to cObjData
+ * addTsValues( ): Adds values of plugin.tx_browser_pi1.cObjData to cObjData
  *
  * @return    void
  * @version 4.4.4
  * @since   4.4.4
  */
-  private function cObjDataAddTsValues( )
+  private function addTsValues( )
   {
       // FOREACH  : plugin.tx_browser_pi1.cObjData
     foreach( ( array ) array_keys( $this->pObj->conf['cObjData.'] ) as $tsValue )
@@ -174,6 +175,7 @@ class tx_browser_pi1_cObjData
 
         // Adds element to cObjData
       $this->pObj->cObj->data[ 'tx_browser_pi1.cObjData.' . $tsValue ] = $content;
+      $GLOBALS['TSFE']->cObj->data[ 'tx_browser_pi1.cObjData.' . $tsValue ] = $content;
 
       if( $this->pObj->b_drs_cObjData )
       {
@@ -203,14 +205,14 @@ class tx_browser_pi1_cObjData
   **********************************************/
 
 /**
- * cObjDataRemoveArray( ): Removes the given key value pairs from cObjData
+ * removeArray( ): Removes the given key value pairs from cObjData
  *
  * @param     array   $keyValue : array with key value pairs
  * @return    void
  * @version 4.4.4
  * @since   4.4.4
  */
-  private function cObjDataRemoveArray( $keyValue )
+  private function removeArray( $keyValue )
   {
       // FOREACH  : element
     foreach( array_keys( $keyValue ) as $key )
@@ -224,18 +226,19 @@ class tx_browser_pi1_cObjData
 
         // Remove value from cObjData
       unset( $this->pObj->cObj->data[ $key ] );
+      unset( $GLOBALS['TSFE']->cObj->data[ $key ] );
     }
       // FOREACH  : element
   }
 
 /**
- * cObjDataRemoveTsValues( ): Removes values of plugin.tx_browser_pi1.cObjData from cObjData
+ * removeTsValues( ): Removes values of plugin.tx_browser_pi1.cObjData from cObjData
  *
  * @return    void
  * @version 4.4.4
  * @since   4.4.4
  */
-  private function cObjDataRemoveTsValues( )
+  private function removeTsValues( )
   {
       // FOREACH  : plugin.tx_browser_pi1.cObjData
     foreach( array_keys( $this->pObj->conf['cObjData.'] ) as $tsValue )
@@ -249,6 +252,7 @@ class tx_browser_pi1_cObjData
 
         // Remove value from cObjData
       unset( $this->pObj->cObj->data[ 'tx_browser_pi1.cObjData.' . $tsValue ] );
+      unset( $GLOBALS['TSFE']->cObj->data[ 'tx_browser_pi1.cObjData.' . $tsValue ] );
     }
       // FOREACH  : plugin.tx_browser_pi1.cObjData
   }

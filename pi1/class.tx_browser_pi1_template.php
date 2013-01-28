@@ -2905,7 +2905,8 @@ class tx_browser_pi1_template
 // #44858 
 if( $this->pObj->boolFirstRow )
 {
-  $this->pObj->dev_var_dump( $this->_elementsTransformed );
+//  $this->pObj->dev_var_dump( $this->_elementsTransformed );
+  $this->pObj->cObjData->mainUpdate( $this->_elementsTransformed );
   $this->pObj->dev_var_dump( $this->pObj->cObj->data );
   $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
   //$this->pObj->dev_var_dump( $GLOBALS['TSFE'] );
