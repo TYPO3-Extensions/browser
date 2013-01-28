@@ -2717,6 +2717,20 @@ class tx_browser_pi1_template
     $this->_elementsBoolSubstitute  = array();
       // #12723, mbless, 110310
 
+// #44858 
+if( $this->pObj->boolFirstRow )
+{
+  $this->pObj->dev_var_dump( $elements );
+//  $this->pObj->objCObjData->mainUpdate( $this->_elementsTransformed );
+//  $this->pObj->dev_var_dump( $this->pObj->cObj->data );
+//  $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
+  //$this->pObj->dev_var_dump( $GLOBALS['TSFE'] );
+  //echo '<pre>' . PHP_EOL;
+  //var_dump( $GLOBALS['TSFE'] );
+  //echo '</pre>' . PHP_EOL;
+  //exit;
+}
+
       // LOOP elements
     foreach( ( array ) $elements as $key => $value )
     {
