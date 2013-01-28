@@ -243,6 +243,10 @@ class tx_browser_pi1_cObjData
  */
   private function backup(  )
   {
+    if( ! ( $this->bakCObjData === null ) )
+    {
+      return;
+    }
     $this->bakCObjData = $this->pObj->cObj->data;
     $this->bakTsfeData = $GLOBALS['TSFE']->cObj->data;
   }
