@@ -129,7 +129,7 @@ class tx_browser_pi1_cObjData
 
         // Adds element to cObjData
       $this->pObj->cObj->data[ $key ] = $value;
-      $GLOBALS['TSFE']->cObj->data->tx_browser_pi1[ $key ] = $value;
+      $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'][ $key ] = $value;
     }
       // FOREACH  : element
     
@@ -175,7 +175,7 @@ class tx_browser_pi1_cObjData
 
         // Adds element to cObjData
       $this->pObj->cObj->data[ 'tx_browser_pi1.cObjData.' . $tsValue ] = $content;
-      $GLOBALS['TSFE']->cObj->data->tx_browser_pi1[ 'tx_browser_pi1.cObjData.' . $tsValue ] = $content;
+      $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'][ 'tx_browser_pi1.cObjData.' . $tsValue ] = $content;
 
       if( $this->pObj->b_drs_cObjData )
       {
@@ -226,7 +226,7 @@ class tx_browser_pi1_cObjData
 
         // Remove value from cObjData
       unset( $this->pObj->cObj->data[ $key ] );
-      unset( $GLOBALS['TSFE']->cObj->data->tx_browser_pi1[ $key ] );
+      unset( $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'][ $key ] );
     }
       // FOREACH  : element
   }
@@ -252,7 +252,7 @@ class tx_browser_pi1_cObjData
 
         // Remove value from cObjData
       unset( $this->pObj->cObj->data[ 'tx_browser_pi1.cObjData.' . $tsValue ] );
-      unset( $GLOBALS['TSFE']->cObj->data->tx_browser_pi1[ 'tx_browser_pi1.cObjData.' . $tsValue ] );
+      unset( $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'][ 'tx_browser_pi1.cObjData.' . $tsValue ] );
     }
       // FOREACH  : plugin.tx_browser_pi1.cObjData
   }
