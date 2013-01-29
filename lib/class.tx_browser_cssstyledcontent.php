@@ -110,6 +110,16 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //    }
 
     $out = null;
+    
+  // #44858 
+$pos = strpos( '87.177.65.251 ', t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
+if ( ! ( $pos === false ) )
+{
+  echo '<pre>';
+  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->cObj->data );
+  var_dump( __METHOD__, __LINE__, $this->cObj->data );
+  echo '</pre>';
+}
 
       //////////////////////////////////////////////////////////////////////////
       //
@@ -121,8 +131,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $coa_name               = $conf['userFunc.']['drs'];
       $coa_conf_userFunc_drs  = $conf['userFunc.']['drs.'];
       $bool_drs               = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf_userFunc_drs, $TSkey='__' ) );
-//global $TSFE;
-//var_dump( __METHOD__, __LINE__, $TSFE->cObj ); exit;
     }
     if( $bool_drs )
     {
