@@ -3345,37 +3345,37 @@ class tx_browser_pi1_template
   *
   **********************************************/
 
-/**
- * cObjDataAddFieldsWoLocaltable( ):
- *
- * @param	array		$elements: The current record
- * @return	void
- * @internal  #44858
- * @version   4.4.4
- * @since     4.4.4
- */
-  private function cObjDataAddFieldsWoLocaltable( $elements )
-  {
-    $fieldsWoLocaltable = null; 
-    
-      // FOREACH  : elements
-    foreach( ( array ) $elements as $tableField => $value )
-    {
-      list( $table, $field ) = explode( '.', $tableField );
-      if( $table == $this->pObj->localTable )
-      {
-        $fieldsWoLocaltable[ $field ] = $value;
-      }
-    }
-      // FOREACH  : elements
-    
-    if( is_array( $fieldsWoLocaltable ) )
-    {
-      $this->pObj->objCObjData->add( $fieldsWoLocaltable );
-    }
-    
-    unset( $fieldsWoLocaltable );
-  }
+///**
+// * cObjDataAddFieldsWoLocaltable( ):
+// *
+// * @param	array		$elements: The current record
+// * @return	void
+// * @internal  #44858
+// * @version   4.4.4
+// * @since     4.4.4
+// */
+//  private function cObjDataAddFieldsWoLocaltable( $elements )
+//  {
+//    $fieldsWoLocaltable = null; 
+//    
+//      // FOREACH  : elements
+//    foreach( ( array ) $elements as $tableField => $value )
+//    {
+//      list( $table, $field ) = explode( '.', $tableField );
+//      if( $table == $this->pObj->localTable )
+//      {
+//        $fieldsWoLocaltable[ $field ] = $value;
+//      }
+//    }
+//      // FOREACH  : elements
+//    
+//    if( is_array( $fieldsWoLocaltable ) )
+//    {
+//      $this->pObj->objCObjData->add( $fieldsWoLocaltable );
+//    }
+//    
+//    unset( $fieldsWoLocaltable );
+//  }
 
 /**
  * cObjDataReset( ):
@@ -3408,7 +3408,7 @@ class tx_browser_pi1_template
   private function cObjDataSet( $elements )
   {
     $this->pObj->objCObjData->set( $elements );
-    $this->cObjDataAddFieldsWoLocaltable( $elements );
+//    $this->cObjDataAddFieldsWoLocaltable( $elements );
 
     if( $this->pObj->boolFirstRow )
     {

@@ -45,13 +45,25 @@
  */
 class tx_browser_pi1_cObjData
 {
-    // [OBJECT] parent object
+ /**
+  * parent object
+  *
+  * @var object
+  */
   private $pObj = null;
   
-    // Backup of cObj->data
+ /**
+  * Backup of cObj->data
+  *
+  * @var array
+  */
   private $bakCObjData = null;
   
-    // Backup of $GLOBALS['TSFE']->cObj->data
+ /**
+  * Backup of $GLOBALS['TSFE']->cObj->data
+  *
+  * @var array
+  */
   private $bakTsfeData = null;
 
 
