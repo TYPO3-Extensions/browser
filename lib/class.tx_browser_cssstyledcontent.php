@@ -102,24 +102,18 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   */
   public function render_uploads( $content, $conf )
   {
-//    $this->str_developer_csvIp = '79.237.182.65';
-//    $pos = strpos($this->str_developer_csvIp, t3lib_div :: getIndpEnv('REMOTE_ADDR'));
-//    if ( ! ( $pos === false ) )
-//    {
-//      var_dump(__METHOD__. ' (' . __LINE__ . '): ' , $this->str_developer_csvIp );
-//    }
-
     $out = null;
     
-//  // #44858 
-//$pos = strpos( '87.177.65.251 ', t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
-//if ( ! ( $pos === false ) )
-//{
-//  echo '<pre>';
-//  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->cObj->data );
-//  var_dump( __METHOD__, __LINE__, $this->cObj->data );
-//  echo '</pre>' . PHP_EOL;
-//}
+  // #44858 
+$pos = strpos( '87.177.65.251 ', t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
+if ( ! ( $pos === false ) )
+{
+  echo '<pre>';
+  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->cObj->data );
+  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->currentRecord );
+  var_dump( __METHOD__, __LINE__, $this->cObj->data );
+  echo '</pre>' . PHP_EOL;
+}
 
       //////////////////////////////////////////////////////////////////////////
       //
