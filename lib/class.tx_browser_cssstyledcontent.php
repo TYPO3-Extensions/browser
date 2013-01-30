@@ -111,15 +111,15 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
     $out = null;
     
-  // #44858 
-$pos = strpos( '87.177.65.251 ', t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
-if ( ! ( $pos === false ) )
-{
-  echo '<pre>';
-  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->cObj->data );
-  var_dump( __METHOD__, __LINE__, $this->cObj->data );
-  echo '</pre>';
-}
+//  // #44858 
+//$pos = strpos( '87.177.65.251 ', t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
+//if ( ! ( $pos === false ) )
+//{
+//  echo '<pre>';
+//  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->cObj->data );
+//  var_dump( __METHOD__, __LINE__, $this->cObj->data );
+//  echo '</pre>' . PHP_EOL;
+//}
 
       //////////////////////////////////////////////////////////////////////////
       //
@@ -137,15 +137,6 @@ if ( ! ( $pos === false ) )
       $this->helper_init_drs( );
     }
       // Enable the DRS by TypoScript
-
-//      // DRS
-//    if ( $this->b_drs_renderuploads )
-//    {
-//      $prompt = 'render_uploads( ) start';
-//      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
-//    }
-//      // DRS
-
 
       //////////////////////////////////////////////////////////////////////////
       //
