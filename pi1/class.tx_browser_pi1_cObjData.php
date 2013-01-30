@@ -60,6 +60,13 @@ class tx_browser_pi1_cObjData
   private $bakCObjData = null;
   
  /**
+  * Backup of $GLOBALS['TSFE']->currentRecord
+  *
+  * @var array
+  */
+  private $bakCurrRecord = null;
+  
+ /**
   * Backup of $GLOBALS['TSFE']->cObj->data
   *
   * @var array
@@ -115,8 +122,9 @@ class tx_browser_pi1_cObjData
 //  public function mainRemove( $keyValues )
   public function reset( )
   {
-    $this->pObj->cObj->data = $this->bakCObjData;
-    $GLOBALS['TSFE']->cObj->data = $this->bakTsfeData;
+    $this->pObj->cObj->data         = $this->bakCObjData;
+    $GLOBALS['TSFE']->cObj->data    = $this->bakTsfeData;
+    $GLOBALS['TSFE']->currentRecord = $this->bakCurrRecord;
 //    $this->removeArray( $keyValues );
 //    $this->removeTsValues( );
   }
@@ -173,6 +181,9 @@ class tx_browser_pi1_cObjData
 //    $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'] = $this->pObj->cObj->data;
     $GLOBALS['TSFE']->cObj->data = $this->pObj->cObj->data;
 
+      // #44858, 130130, dwildt, 1+ 
+    $GLOBALS['TSFE']->currentRecord = $this->pObj->$localTable . ':' . $this->cObj->data[$this->pObj->$localTable . '.uid'];
+    
       // DRS
     if( $drs )
     {
@@ -259,8 +270,9 @@ class tx_browser_pi1_cObjData
     {
       return;
     }
-    $this->bakCObjData = $this->pObj->cObj->data;
-    $this->bakTsfeData = $GLOBALS['TSFE']->cObj->data;
+    $this->bakCObjData    = $this->pObj->cObj->data;
+    $this->bakTsfeData    = $GLOBALS['TSFE']->cObj->data;
+    $this->bakCurrRecord  = $GLOBALS['TSFE']->currentRecord;
   }
   
   
