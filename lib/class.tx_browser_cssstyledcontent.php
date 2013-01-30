@@ -144,15 +144,15 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
     // #44858, 130130, dwildt, 1+ 
   $this->cObjDataAddFieldsWoTablePrefix( );
-$pos = strpos( '87.177.65.251 ', t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
-if ( ! ( $pos === false ) )
-{
-  echo '<pre>';
-  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->cObj->data );
-  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->currentRecord );
-  var_dump( __METHOD__, __LINE__, $this->cObj->data );
-  echo '</pre>' . PHP_EOL;
-}
+//$pos = strpos( '87.177.65.251 ', t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
+//if ( ! ( $pos === false ) )
+//{
+//  echo '<pre>';
+//  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->cObj->data );
+//  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->currentRecord );
+//  var_dump( __METHOD__, __LINE__, $this->cObj->data );
+//  echo '</pre>' . PHP_EOL;
+//}
 
       //////////////////////////////////////////////////////////////////////////
       //
