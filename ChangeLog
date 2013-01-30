@@ -10,6 +10,7 @@
   Feature
   * #44858: Extend cObj->data +++ first step
             Effected files:
+            * lib/class.tx_browser_cssstyledcontent.php
             * pi1
               * class.tx_browser_pi1.php
               * class.tx_browser_pi1_cObjData.php (new)
