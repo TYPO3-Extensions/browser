@@ -181,8 +181,9 @@ class tx_browser_pi1_cObjData
 //    $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'] = $this->pObj->cObj->data;
     $GLOBALS['TSFE']->cObj->data = $this->pObj->cObj->data;
 
-      // #44858, 130130, dwildt, 1+ 
-    $GLOBALS['TSFE']->currentRecord = $this->pObj->$localTable . ':' . $this->pObj->cObj->data[$this->pObj->$localTable . '.uid'];
+      // #44858, 130130, dwildt, 2+ 
+    $table = $this->pObj->localTable;
+    $GLOBALS['TSFE']->currentRecord = $table . ':' . $this->pObj->cObj->data[$table . '.uid'];
     
       // DRS
     if( $drs )
