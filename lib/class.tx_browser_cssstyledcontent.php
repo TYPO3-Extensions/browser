@@ -77,6 +77,27 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   public $prefixId      = 'tx_browser_cssstyledcontent';
     // Path to any file in pi1 for locallang
   public $scriptRelPath = 'lib/class.tx_browser_cssstyledcontent.php';
+  
+ /**
+  * Backup of cObj->data
+  *
+  * @var array
+  */
+  private $bakCObjData = null;
+  
+ /**
+  * Backup of $GLOBALS['TSFE']->currentRecord
+  *
+  * @var array
+  */
+  private $bakCurrRecord = null;
+  
+ /**
+  * Backup of $GLOBALS['TSFE']->cObj->data
+  *
+  * @var array
+  */
+  private $bakTsfeData = null;
 
 
 
@@ -104,17 +125,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   {
     $out = null;
     
-  // #44858 
-$pos = strpos( '87.177.65.251 ', t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
-if ( ! ( $pos === false ) )
-{
-  echo '<pre>';
-  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->cObj->data );
-  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->currentRecord );
-  var_dump( __METHOD__, __LINE__, $this->cObj->data );
-  echo '</pre>' . PHP_EOL;
-}
-
       //////////////////////////////////////////////////////////////////////////
       //
       // Enable the DRS by TypoScript
@@ -131,6 +141,18 @@ if ( ! ( $pos === false ) )
       $this->helper_init_drs( );
     }
       // Enable the DRS by TypoScript
+
+    // #44858, 130130, dwildt, 1+ 
+  $this->cObjDataAddFieldsWoTablePrefix( );
+$pos = strpos( '87.177.65.251 ', t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
+if ( ! ( $pos === false ) )
+{
+  echo '<pre>';
+  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->cObj->data );
+  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->currentRecord );
+  var_dump( __METHOD__, __LINE__, $this->cObj->data );
+  echo '</pre>' . PHP_EOL;
+}
 
       //////////////////////////////////////////////////////////////////////////
       //
@@ -202,6 +224,8 @@ if ( ! ( $pos === false ) )
     if( $bool_currLangOnly )
     {
       $out = $out . $this->render_uploads_per_language( $content, $coa_conf );
+        // #44858, 130130, dwildt, 1+ 
+      $this->cObjDataReset( );
       return $out;
     }
       // RETURN the filelink for the current language only
@@ -374,6 +398,8 @@ if ( ! ( $pos === false ) )
       //
       // RETURN the content
 
+      // #44858, 130130, dwildt, 1+ 
+    $this->cObjDataReset( );
     return $out;
       // RETURN the content
   }
@@ -742,6 +768,100 @@ if ( ! ( $pos === false ) )
       // Return the result
     return $out;
   }
+  
+  
+  
+  /***********************************************
+  *
+  * cObjData
+  *
+  **********************************************/
+
+/**
+ * cObjDataAddFieldsWoTablePrefix( ): 
+ *
+ * @return    void
+ * @internal  #44896
+ * @version 1.0.0
+ * @since   1.0.0
+ */
+  private function cObjDataAddFieldsWoTablePrefix(  )
+  {
+    $this->cObjDataBackup( );
+    $this->cObj->data = $GLOBALS['TSFE']->cObj->data;
+    
+    list( $currTable ) = explode( ':', $GLOBALS['TSFE']->currentRecord );
+
+      // FOREACH  : cObj->data in TSFE
+    foreach( array_keys( $GLOBALS['TSFE']->cObj->data ) as $tableField )
+    {
+      list( $table, $field ) = explode( '.', $tableField );
+      if( $table != $currTable )
+      {
+        continue;
+      }
+      $this->cObj->data[$field] = $GLOBALS['TSFE']->cObj->data[$tableField];
+    }
+      // FOREACH  : cObj->data in TSFE
+  }
+  
+/**
+ * cObjDataBackup( ): 
+ *
+ * @return    void
+ * @internal  #44896
+ * @version 1.0.0
+ * @since   1.0.0
+ */
+  private function cObjDataBackup(  )
+  {
+    if( ! ( $this->bakCObjData === null ) )
+    {
+      return;
+    }
+
+    $this->bakCObjData    = $this->cObj->data;
+    $this->bakTsfeData    = $GLOBALS['TSFE']->cObj->data;
+//    $this->bakCurrRecord  = $GLOBALS['TSFE']->currentRecord;
+
+      // DRS
+    if( $this->b_drs_cObjData )
+    {
+      $prompt = 'cObj->data are set (overriden).';
+      t3lib_div::devlog( '[INFO/COBJDATA] ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
+  }
+  
+/**
+ * cObjDataReset( ): 
+ *
+ * @return    void
+ * @internal  #44896
+ * @version 1.0.0
+ * @since   1.0.0
+ */
+  private function cObjDataReset(  )
+  {
+    if( $this->bakCObjData === null )
+    {
+      return;
+    }
+    $this->cObj->data               = $this->bakCObjData;
+    $GLOBALS['TSFE']->cObj->data    = $this->bakTsfeData;
+//    $GLOBALS['TSFE']->currentRecord = $this->bakCurrRecord;
+
+      // DRS
+    if( $this->b_drs_cObjData )
+    {
+      $prompt = 'cObj->data are reset.';
+      t3lib_div::devlog( '[INFO/INIT] ' . $prompt, $this->extKey, 0 );
+    }
+      // DRS
+  }
+  
+  
+  
 
 
 
@@ -936,6 +1056,7 @@ if ( ! ( $pos === false ) )
     $this->b_drs_error          = true;
     $this->b_drs_warn           = true;
     $this->b_drs_info           = true;
+    $this->b_drs_cObjData       = true;
     $this->b_drs_download       = true;
     $this->b_drs_localisation   = true;
     $this->b_drs_renderuploads  = true;
