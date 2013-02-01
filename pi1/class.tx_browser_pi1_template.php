@@ -3389,22 +3389,22 @@ class tx_browser_pi1_template
  */
   private function cObjDataAdd( $elements )
   {
-    if( $this->pObj->boolFirstRow )
-    {
-      $this->pObj->dev_var_dump( $elements );
-      $this->pObj->dev_var_dump( $this->pObj->cObj->data );
-      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
-    }
+//    if( $this->pObj->boolFirstRow )
+//    {
+//      $this->pObj->dev_var_dump( $elements );
+//      $this->pObj->dev_var_dump( $this->pObj->cObj->data );
+//      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
+//    }
 
     $this->pObj->objCObjData->add( $elements );
 //    $this->cObjDataAddFieldsWoLocaltable( $elements );
 
-    if( $this->pObj->boolFirstRow )
-    {
-      $this->pObj->dev_var_dump( $elements );
-      $this->pObj->dev_var_dump( $this->pObj->cObj->data );
-      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
-    }
+//    if( $this->pObj->boolFirstRow )
+//    {
+//      $this->pObj->dev_var_dump( $elements );
+//      $this->pObj->dev_var_dump( $this->pObj->cObj->data );
+//      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
+//    }
   }
 
 /**
