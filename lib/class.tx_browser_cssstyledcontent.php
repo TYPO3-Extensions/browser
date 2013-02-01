@@ -144,13 +144,16 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 //    // #44858, 130130, dwildt, 1+ 
 //  $this->cObjDataAddFieldsWoTablePrefix( );
+    $this->cObjDataSet( );
 $pos = strpos( '87.177.72.26 ', t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
 if ( ! ( $pos === false ) )
 {
   echo '<pre>';
-  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->cObj->data );
-  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->currentRecord );
-  var_dump( __METHOD__, __LINE__, $this->cObj->data );
+//  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->cObj->data );
+//  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->currentRecord );
+//  var_dump( __METHOD__, __LINE__, $this->cObj->data );
+  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->tx_browser_pi1 );
+  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->tx_browser_pi2 );
   echo '</pre>' . PHP_EOL;
 }
 
@@ -224,8 +227,8 @@ if ( ! ( $pos === false ) )
     if( $bool_currLangOnly )
     {
       $out = $out . $this->render_uploads_per_language( $content, $coa_conf );
-//        // #44858, 130130, dwildt, 1+ 
-//      $this->cObjDataReset( );
+        // #44858, 130130, dwildt, 1+ 
+      $this->cObjDataReset( );
       return $out;
     }
       // RETURN the filelink for the current language only
@@ -398,8 +401,8 @@ if ( ! ( $pos === false ) )
       //
       // RETURN the content
 
-//      // #44858, 130130, dwildt, 1+ 
-//    $this->cObjDataReset( );
+      // #44858, 130130, dwildt, 1+ 
+    $this->cObjDataReset( );
     return $out;
       // RETURN the content
   }
@@ -777,33 +780,33 @@ if ( ! ( $pos === false ) )
   *
   **********************************************/
 
-/**
- * cObjDataAddFieldsWoTablePrefix( ): 
- *
- * @return    void
- * @internal  #44896
- * @version 1.0.0
- * @since   1.0.0
- */
-  private function cObjDataAddFieldsWoTablePrefix(  )
-  {
-    $this->cObjDataBackup( );
-    $this->cObj->data = $GLOBALS['TSFE']->cObj->data;
-    
-    list( $currTable ) = explode( ':', $GLOBALS['TSFE']->currentRecord );
-
-      // FOREACH  : cObj->data in TSFE
-    foreach( array_keys( $GLOBALS['TSFE']->cObj->data ) as $tableField )
-    {
-      list( $table, $field ) = explode( '.', $tableField );
-      if( $table != $currTable )
-      {
-        continue;
-      }
-      $this->cObj->data[$field] = $GLOBALS['TSFE']->cObj->data[$tableField];
-    }
-      // FOREACH  : cObj->data in TSFE
-  }
+///**
+// * cObjDataAddFieldsWoTablePrefix( ): 
+// *
+// * @return    void
+// * @internal  #44896
+// * @version 1.0.0
+// * @since   1.0.0
+// */
+//  private function cObjDataAddFieldsWoTablePrefix(  )
+//  {
+//    $this->cObjDataBackup( );
+//    $this->cObj->data = $GLOBALS['TSFE']->cObj->data;
+//    
+//    list( $currTable ) = explode( ':', $GLOBALS['TSFE']->currentRecord );
+//
+//      // FOREACH  : cObj->data in TSFE
+//    foreach( array_keys( $GLOBALS['TSFE']->cObj->data ) as $tableField )
+//    {
+//      list( $table, $field ) = explode( '.', $tableField );
+//      if( $table != $currTable )
+//      {
+//        continue;
+//      }
+//      $this->cObj->data[$field] = $GLOBALS['TSFE']->cObj->data[$tableField];
+//    }
+//      // FOREACH  : cObj->data in TSFE
+//  }
   
 /**
  * cObjDataBackup( ): 
@@ -858,6 +861,20 @@ if ( ! ( $pos === false ) )
       t3lib_div::devlog( '[INFO/INIT] ' . $prompt, $this->extKey, 0 );
     }
       // DRS
+  }
+
+/**
+ * cObjDataSet( ): 
+ *
+ * @return    void
+ * @internal  #44896
+ * @version 1.0.0
+ * @since   1.0.0
+ */
+  private function cObjDataSet(  )
+  {
+    $this->cObjDataBackup( );
+    $this->cObj->data = $GLOBALS['TSFE']->cObj->data;
   }
   
   
