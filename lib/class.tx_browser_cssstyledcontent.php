@@ -85,19 +85,19 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   */
   private $bakCObjData = null;
   
- /**
-  * Backup of $GLOBALS['TSFE']->currentRecord
-  *
-  * @var array
-  */
-  private $bakCurrRecord = null;
-  
- /**
-  * Backup of $GLOBALS['TSFE']->cObj->data
-  *
-  * @var array
-  */
-  private $bakTsfeData = null;
+// /**
+//  * Backup of $GLOBALS['TSFE']->currentRecord
+//  *
+//  * @var array
+//  */
+//  private $bakCurrRecord = null;
+//  
+// /**
+//  * Backup of $GLOBALS['TSFE']->cObj->data
+//  *
+//  * @var array
+//  */
+//  private $bakTsfeData = null;
 
 
 
@@ -145,16 +145,15 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //    // #44858, 130130, dwildt, 1+ 
 //  $this->cObjDataAddFieldsWoTablePrefix( );
     $this->cObjDataSet( );
-$pos = strpos( '87.177.72.26 ', t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
-if ( ! ( $pos === false ) )
-{
-  echo '<pre>';
-//  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->cObj->data );
-//  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->currentRecord );
-//  var_dump( __METHOD__, __LINE__, $this->cObj->data );
-  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->tx_browser_pi1 );
-  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->tx_browser_pi2 );
-  echo '</pre>' . PHP_EOL;
+//$pos = strpos( '87.177.72.26 ', t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
+//if ( ! ( $pos === false ) )
+//{
+//  echo '<pre>';
+////  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->cObj->data );
+////  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->currentRecord );
+////  var_dump( __METHOD__, __LINE__, $this->cObj->data );
+//  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->tx_browser_pi1 );
+//  echo '</pre>' . PHP_EOL;
 }
 
       //////////////////////////////////////////////////////////////////////////
@@ -824,7 +823,7 @@ if ( ! ( $pos === false ) )
     }
 
     $this->bakCObjData    = $this->cObj->data;
-    $this->bakTsfeData    = $GLOBALS['TSFE']->cObj->data;
+//    $this->bakTsfeData    = $GLOBALS['TSFE']->cObj->data;
 //    $this->bakCurrRecord  = $GLOBALS['TSFE']->currentRecord;
 
       // DRS
@@ -851,7 +850,7 @@ if ( ! ( $pos === false ) )
       return;
     }
     $this->cObj->data               = $this->bakCObjData;
-    $GLOBALS['TSFE']->cObj->data    = $this->bakTsfeData;
+//    $GLOBALS['TSFE']->cObj->data    = $this->bakTsfeData;
 //    $GLOBALS['TSFE']->currentRecord = $this->bakCurrRecord;
 
       // DRS
@@ -874,7 +873,7 @@ if ( ! ( $pos === false ) )
   private function cObjDataSet(  )
   {
     $this->cObjDataBackup( );
-    $this->cObj->data = $GLOBALS['TSFE']->cObj->data;
+    $this->cObj->data = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
   }
   
   

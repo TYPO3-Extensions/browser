@@ -59,19 +59,19 @@ class tx_browser_pi1_cObjData
   */
   private $bakCObjData = null;
   
- /**
-  * Backup of $GLOBALS['TSFE']->currentRecord
-  *
-  * @var array
-  */
-  private $bakCurrRecord = null;
-  
- /**
-  * Backup of $GLOBALS['TSFE']->cObj->data
-  *
-  * @var array
-  */
-  private $bakTsfeData = null;
+// /**
+//  * Backup of $GLOBALS['TSFE']->currentRecord
+//  *
+//  * @var array
+//  */
+//  private $bakCurrRecord = null;
+//  
+// /**
+//  * Backup of $GLOBALS['TSFE']->cObj->data
+//  *
+//  * @var array
+//  */
+//  private $bakTsfeData = null;
 
 
 
@@ -123,8 +123,9 @@ class tx_browser_pi1_cObjData
   public function reset( )
   {
     $this->pObj->cObj->data         = $this->bakCObjData;
-    $GLOBALS['TSFE']->cObj->data    = $this->bakTsfeData;
-    $GLOBALS['TSFE']->currentRecord = $this->bakCurrRecord;
+    unset( $GLOBALS['TSFE']->tx_browser_pi1 );
+//    $GLOBALS['TSFE']->cObj->data    = $this->bakTsfeData;
+//    $GLOBALS['TSFE']->currentRecord = $this->bakCurrRecord;
 //    $this->removeArray( $keyValues );
 //    $this->removeTsValues( );
   }
@@ -179,13 +180,12 @@ class tx_browser_pi1_cObjData
       // FOREACH  : element
     
 //    $GLOBALS['TSFE']->cObj->data['tx_browser_pi1'] = $this->pObj->cObj->data;
-    $GLOBALS['TSFE']->cObj->data = $this->pObj->cObj->data;
+//    $GLOBALS['TSFE']->cObj->data = $this->pObj->cObj->data;
 
       // #44858, 130130, dwildt, 2+ 
     $table = $this->pObj->localTable;
-//    $GLOBALS['TSFE']->currentRecord = $table . ':' . $this->pObj->cObj->data[$table . '.uid'];
     $GLOBALS['TSFE']->tx_browser_pi1->currentRecord = $table . ':' . $this->pObj->cObj->data[$table . '.uid'];
-    $GLOBALS['TSFE']->tx_browser_pi2['currentRecord'] = $table . ':' . $this->pObj->cObj->data[$table . '.uid'];
+    $GLOBALS['TSFE']->tx_browser_pi1->cObj->data    = $this->pObj->cObj->data;
     
       // DRS
     if( $drs )
@@ -274,8 +274,8 @@ class tx_browser_pi1_cObjData
       return;
     }
     $this->bakCObjData    = $this->pObj->cObj->data;
-    $this->bakTsfeData    = $GLOBALS['TSFE']->cObj->data;
-    $this->bakCurrRecord  = $GLOBALS['TSFE']->currentRecord;
+//    $this->bakTsfeData    = $GLOBALS['TSFE']->cObj->data;
+//    $this->bakCurrRecord  = $GLOBALS['TSFE']->currentRecord;
   }
   
   
