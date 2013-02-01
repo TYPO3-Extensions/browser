@@ -142,8 +142,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     }
       // Enable the DRS by TypoScript
 
-    // #44858, 130130, dwildt, 1+ 
-  $this->cObjDataAddFieldsWoTablePrefix( );
+//    // #44858, 130130, dwildt, 1+ 
+//  $this->cObjDataAddFieldsWoTablePrefix( );
 //$pos = strpos( '87.177.65.251 ', t3lib_div :: getIndpEnv( 'REMOTE_ADDR' ) );
 //if ( ! ( $pos === false ) )
 //{
@@ -224,8 +224,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     if( $bool_currLangOnly )
     {
       $out = $out . $this->render_uploads_per_language( $content, $coa_conf );
-        // #44858, 130130, dwildt, 1+ 
-      $this->cObjDataReset( );
+//        // #44858, 130130, dwildt, 1+ 
+//      $this->cObjDataReset( );
       return $out;
     }
       // RETURN the filelink for the current language only
@@ -398,8 +398,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       //
       // RETURN the content
 
-      // #44858, 130130, dwildt, 1+ 
-    $this->cObjDataReset( );
+//      // #44858, 130130, dwildt, 1+ 
+//    $this->cObjDataReset( );
     return $out;
       // RETURN the content
   }
