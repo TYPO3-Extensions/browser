@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2011-2012 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
+*  (c) 2011-2013 - Dirk Wildt <http://wildt.at.die-netzmacher.de>
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -43,7 +43,7 @@ require_once(PATH_site . 'typo3/sysext/css_styled_content/pi1/class.tx_cssstyled
 * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
 * @package    TYPO3
 * @subpackage    browser
-* @version 4.1.0
+* @version 4.4.4
 * @since 3.6.4
 */
 
@@ -118,7 +118,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   * @param	array		TypoScript configuration
   * @return	string		HTML output.
   * @access public
-  * @version 3.9.8
+  * @version 4.4.4
   * @since 3.9.3
   */
   public function render_uploads( $content, $conf )
@@ -784,8 +784,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 // *
 // * @return    void
 // * @internal  #44896
-// * @version 1.0.0
-// * @since   1.0.0
+// * @version 4.4.4
+// * @since   4.4.4
 // */
 //  private function cObjDataAddFieldsWoTablePrefix(  )
 //  {
@@ -812,8 +812,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
  *
  * @return    void
  * @internal  #44896
- * @version 1.0.0
- * @since   1.0.0
+ * @version 4.4.4
+ * @since   4.4.4
  */
   private function cObjDataBackup(  )
   {
@@ -840,8 +840,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
  *
  * @return    void
  * @internal  #44896
- * @version 1.0.0
- * @since   1.0.0
+ * @version 4.4.4
+ * @since   4.4.4
  */
   private function cObjDataReset(  )
   {
@@ -867,8 +867,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
  *
  * @return    void
  * @internal  #44896
- * @version 1.0.0
- * @since   1.0.0
+ * @version 4.4.4
+ * @since   4.4.4
  */
   private function cObjDataSet(  )
   {
