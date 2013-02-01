@@ -2719,7 +2719,8 @@ class tx_browser_pi1_template
 
       // #44858 
     $drsForFirstRowOnly = $this->pObj->boolFirstRow; 
-    $this->cObjDataSet( $elements, $$drsForFirstRowOnly );    
+    $this->cObjDataAdd( $elements, $$drsForFirstRowOnly );    
+//    $this->cObjDataSet( $elements, $$drsForFirstRowOnly );    
 
       // LOOP elements
     foreach( ( array ) $elements as $key => $value )
@@ -3388,7 +3389,7 @@ class tx_browser_pi1_template
  */
   private function cObjDataAdd( $elements )
   {
-    $this->pObj->objCObjData->set( $elements );
+    $this->pObj->objCObjData->add( $elements );
 //    $this->cObjDataAddFieldsWoLocaltable( $elements );
 
 //    if( $this->pObj->boolFirstRow )
