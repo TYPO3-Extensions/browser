@@ -3419,11 +3419,11 @@ class tx_browser_pi1_template
   {
     $this->pObj->objCObjData->reset( );
 
-    if( $this->pObj->boolFirstRow )
-    {
-      $this->pObj->dev_var_dump( $this->pObj->cObj->data );
-      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
-    }
+//    if( $this->pObj->boolFirstRow )
+//    {
+//      $this->pObj->dev_var_dump( $this->pObj->cObj->data );
+//      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
+//    }
   }
 
 /**
