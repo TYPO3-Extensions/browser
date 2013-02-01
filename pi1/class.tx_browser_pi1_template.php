@@ -3378,6 +3378,28 @@ class tx_browser_pi1_template
 //  }
 
 /**
+ * cObjDataAdd( ):
+ *
+ * @param	array		$elements: The current record
+ * @return	void
+ * @internal  #44858
+ * @version   4.4.4
+ * @since     4.4.4
+ */
+  private function cObjDataAdd( $elements )
+  {
+    $this->pObj->objCObjData->set( $elements );
+//    $this->cObjDataAddFieldsWoLocaltable( $elements );
+
+//    if( $this->pObj->boolFirstRow )
+//    {
+//      $this->pObj->dev_var_dump( $elements );
+//      $this->pObj->dev_var_dump( $this->pObj->cObj->data );
+//      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
+//    }
+  }
+
+/**
  * cObjDataReset( ):
  *
  * @return	void
