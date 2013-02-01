@@ -2390,7 +2390,7 @@ class tx_browser_pi1_backend
 
 
 
-  /**
+/**
  * init(): Initiate this class.
  *
  * @param	array		$arr_pluginConf: Current plugin/flexform configuration
