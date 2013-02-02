@@ -877,20 +877,35 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $this->cObjDataBackup( );
     $this->cObj->data = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
     
+      // IF : fields should added with another key ...
     if( is_array( $this->conf['userFunc.']['cObjData.'] ) )
     {
+        // FOREACH  : userFunc.cObjData. ...
       foreach( array_keys( $this->conf['userFunc.']['cObjData.'] )  as $key )
       {
+          // CONTINUE : current item is an array
         if( is_array( $this->conf['userFunc.']['cObjData.'][$key] ) )
         {
           continue;
         }
+          // CONTINUE : current item is an array
         
+          // Get the original field name. Example: tx_org_downloads.tx_flipit_layout
         $value = $this->conf['userFunc.']['cObjData.'][$key];
+        
+          // CONTINUE : field isn't set in current row
+        if( ! ( isset( $this->cObj->data[$value] ) ) )
+        {
+          continue;
+        }
+          // CONTINUE : field isn't set in current row
+        
+          // Set value of original field to field with the new key. Example tx_flipit_layout = 'layout_01'
         $this->cObj->data[$key] = $this->cObj->data[$value];
       }
+        // FOREACH  : userFunc.cObjData. ...
     }
-var_dump( __METHOD__, __LINE__, $this->cObj->data );    
+      // IF : fields should added with another key ...
   }
   
   
