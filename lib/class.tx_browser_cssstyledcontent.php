@@ -123,6 +123,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   */
   public function render_uploads( $content, $conf )
   {
+    $this->conf = $conf;
+    
     $out = null;
     
       //////////////////////////////////////////////////////////////////////////
@@ -874,6 +876,21 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   {
     $this->cObjDataBackup( );
     $this->cObj->data = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
+    
+    if( is_array( $this->conf['userFunc.']['cObjData.'] ) )
+    {
+      foreach( array_keys( $this->conf['userFunc.']['cObjData.'] )  as $key )
+      {
+        if( is_array( $this->conf['userFunc.']['cObjData.'][$key] ) )
+        {
+          continue;
+        }
+        
+        $value = $this->conf['userFunc.']['cObjData.'][$key];
+        $this->cObj->data[$key] = $this->cObj->data[$value];
+      }
+    }
+var_dump( __METHOD__, __LINE__, $this->cObj->data );    
   }
   
   
