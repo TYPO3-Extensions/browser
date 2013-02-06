@@ -207,7 +207,7 @@ class tx_browser_pi1_cObjData
  * addArrayFieldWrapper( ): 
  *
  * @return    void
- * @internal  #44896, #00001
+ * @internal  #44896, #i0001
  * @version 4.4.5
  * @since   4.4.5
  */

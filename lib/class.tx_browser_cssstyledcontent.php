@@ -149,7 +149,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //}
 // #i0008
 //var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->register );
-// #00002
+// #i0002
 var_dump( __METHOD__, __LINE__, $this->cObj->data['filelink_size'], $this->cObj->data['tx_org_downloads.documentssize'] );
 
       //////////////////////////////////////////////////////////////////////////
@@ -861,23 +861,22 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data['filelink_size'], $this->cObj-
  * cObjDataSet( ): 
  *
  * @return    void
- * @internal  #44896, #00001
+ * @internal  #44896, #i0001
  * @version 4.4.5
  * @since   4.4.4
  */
   private function cObjDataSet(  )
   {
     $this->cObjDataBackup( );
-    $this->cObj->data = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
-    
     $this->cObjDataSetFieldWrapper( );
+    $this->cObj->data = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
   }
 
 /**
  * cObjDataSetFieldWrapper( ): 
  *
  * @return    void
- * @internal  #44896, #00001
+ * @internal  #44896, #i0001
  * @version 4.4.5
  * @since   4.4.5
  */
@@ -1221,7 +1220,7 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data['filelink_size'], $this->cObj-
   * helper_cObjGetSingle( ):
   *
   * @return    string        $value  : ....
-  * @internal #00001
+  * @internal #i0001
   * @access   private
   * @version  4.4.5
   * @since    4.4.5
