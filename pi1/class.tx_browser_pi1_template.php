@@ -2720,7 +2720,6 @@ class tx_browser_pi1_template
       // #44858 
     $drsForFirstRowOnly = $this->pObj->boolFirstRow; 
     $this->cObjDataAdd( $elements, $$drsForFirstRowOnly );    
-//    $this->cObjDataSet( $elements, $$drsForFirstRowOnly );    
 
       // LOOP elements
     foreach( ( array ) $elements as $key => $value )
@@ -3421,28 +3420,6 @@ class tx_browser_pi1_template
 
 //    if( $this->pObj->boolFirstRow )
 //    {
-//      $this->pObj->dev_var_dump( $this->pObj->cObj->data );
-//      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
-//    }
-  }
-
-/**
- * cObjDataSet( ):
- *
- * @param	array		$elements: The current record
- * @return	void
- * @internal  #44858
- * @version   4.4.4
- * @since     4.4.4
- */
-  private function cObjDataSet( $elements )
-  {
-    $this->pObj->objCObjData->set( $elements );
-//    $this->cObjDataAddFieldsWoLocaltable( $elements );
-
-//    if( $this->pObj->boolFirstRow )
-//    {
-//      $this->pObj->dev_var_dump( $elements );
 //      $this->pObj->dev_var_dump( $this->pObj->cObj->data );
 //      $this->pObj->dev_var_dump( $GLOBALS['TSFE']->cObj->data );
 //    }
