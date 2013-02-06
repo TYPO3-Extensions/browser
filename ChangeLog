@@ -1,5 +1,9 @@
 4.4.5
   13-02-06
+  Feature
+  * #00002: class.tx_browser_cssstyledcontent.php is integrated in the DRS
+            Effected files:
+            * lib/class.tx_browser_cssstyledcontent.php
   Improvement
   * #00001: Optimise cObjcObjGetSingle
             Effected files:

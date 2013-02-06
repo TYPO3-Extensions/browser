@@ -887,11 +887,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           switch( true )
           {
             case( isset( $this->cObj->data[$key] ) ):
-              $prompt = 'cObj->data[' . $key . '] will be overriden by cObj->data[' . $value . ']!';
+              $prompt = 'cObj->data[' . $key . '] will be overriden by cObj->data[' . $value . ']: ' . $value ;
               t3lib_div::devlog( '[INFO/COBJDATA] ' . $prompt, $this->extKey, 2 );
               break;
             default:
-              $prompt = 'cObj->data[' . $key . '] will become cObj->data[' . $value . ']!';
+              $prompt = 'cObj->data[' . $key . '] will become cObj->data[' . $value . ']: ' . $value ;
               t3lib_div::devlog( '[INFO/COBJDATA] ' . $prompt, $this->extKey, 0 );
               break;
           }
@@ -1090,14 +1090,17 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
 
 
-  /**
+/**
  * helper_init_drs( ): Init the DRS - Development Reportinmg System
  *
  * @return	void
  * @access private
+ * @version 4.4.5
+ * @since 3.6.4
  */
   private function helper_init_drs( )
   {
+      // #00002, 13-02-06, dwildt, +
     $this->arr_extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]);
     
     switch( true )
@@ -1158,6 +1161,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         return;
         break;
     }
+      // #00002, 13-02-06, dwildt, +
 
 //    $conf = $this->conf;
 //    
