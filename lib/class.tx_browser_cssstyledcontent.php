@@ -131,17 +131,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       //
       // Enable the DRS by TypoScript
 
-    $bool_drs = false;
-    if( isset( $conf['userFunc.']['drs'] ) )
-    {
-      $coa_name               = $conf['userFunc.']['drs'];
-      $coa_conf_userFunc_drs  = $conf['userFunc.']['drs.'];
-      $bool_drs               = intval( $this->helper_cObjGetSingle( $coa_name, $coa_conf_userFunc_drs ) );
-    }
-    if( $bool_drs )
-    {
-      $this->helper_init_drs( );
-    }
+    $this->helper_init_drs( );
       // Enable the DRS by TypoScript
 
 //    // #44858, 130130, dwildt, 1+ 
@@ -876,20 +866,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $this->cObjDataBackup( );
     $this->cObj->data = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
     
-if ( $this->b_drs_warn )
-{
-  $prompt = 'ABC';
-  t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
-}
-
       // IF : fields should added with another key ...
     if( is_array( $this->conf['userFunc.']['cObjDataFieldWrapper.'] ) )
     {
-if ( $this->b_drs_warn )
-{
-  $prompt = 'DEF';
-  t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
-}
         // FOREACH  : userFunc.cObjDataFieldWrapper. ...
       foreach( array_keys( $this->conf['userFunc.']['cObjDataFieldWrapper.'] )  as $key )
       {       
@@ -909,11 +888,11 @@ if ( $this->b_drs_warn )
           {
             case( isset( $this->cObj->data[$key] ) ):
               $prompt = 'cObj->data[' . $key . '] will be overriden by cObj->data[' . $value . ']!';
-              t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
+              t3lib_div::devlog( '[INFO/COBJDATA] ' . $prompt, $this->extKey, 2 );
               break;
             default:
               $prompt = 'cObj->data[' . $key . '] will become cObj->data[' . $value . ']!';
-              t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0 );
+              t3lib_div::devlog( '[INFO/COBJDATA] ' . $prompt, $this->extKey, 0 );
               break;
           }
         }
@@ -922,11 +901,6 @@ if ( $this->b_drs_warn )
         $this->cObj->data[$key] = $this->cObj->data[$value];
       }
         // FOREACH  : userFunc.cObjDataFieldWrapper. ...
-if ( $this->b_drs_warn )
-{
-  $prompt = 'GHI';
-  t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
-}
     }
       // IF : fields should added with another key ...
   }
@@ -1124,6 +1098,21 @@ if ( $this->b_drs_warn )
  */
   private function helper_init_drs( )
   {
+    $conf = $this->conf;
+    
+    if( ! isset( $conf['userFunc.']['drs'] ) )
+    {
+      return;
+    }
+
+    $coa_name               = $conf['userFunc.']['drs'];
+    $coa_conf_userFunc_drs  = $conf['userFunc.']['drs.'];
+
+    if( ! intval( $this->helper_cObjGetSingle( $coa_name, $coa_conf_userFunc_drs ) ) )
+    {
+      return;
+    }
+
     $this->b_drs_error          = true;
     $this->b_drs_warn           = true;
     $this->b_drs_info           = true;
