@@ -868,8 +868,9 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data['filelink_size'], $this->cObj-
   private function cObjDataSet(  )
   {
     $this->cObjDataBackup( );
-    $this->cObjDataSetFieldWrapper( );
     $this->cObj->data = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
+    
+    $this->cObjDataSetFieldWrapper( );
   }
 
 /**
