@@ -911,9 +911,9 @@ if ( $this->b_drs_warn )
 //        $value = $this->conf['userFunc.']['cObjData.'][$key];
         
           // Render the content
-        $name   = $this->pObj->conf['cObjData.'][$key];
-        $conf   = $this->pObj->conf['cObjData.'][$key . '.'];
-        $value  = $this->pObj->cObj->cObjGetSingle($name, $conf);
+        $name   = $this->conf['cObjData.'][$key];
+        $conf   = $this->conf['cObjData.'][$key . '.'];
+        $value  = $this->helper_cObjGetSingle($name, $conf);
           // Render the content
 
         if ( $this->b_drs_warn )
