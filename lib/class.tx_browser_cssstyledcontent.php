@@ -199,6 +199,7 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data );
 
     $marker                         = null;
     list( $cR_table, $cR_uid)       = explode( ':', $GLOBALS['TSFE']->currentRecord );
+    unset( $cR_table );
     $marker['###TT_CONTENT.UID###'] = $cR_uid;
 //var_dump( __METHOD__, __LINE__, $marker );
       // 111215, dwildt-
@@ -284,12 +285,13 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data );
 
 
 
-      //////////////////////////////////////////////////////////////////////////
-      //
-      // Get the configuration
-
-    $userFunc_conf = $coa_conf['userFunc.']['conf.'];
-      // Get the configuration
+      // 130207, dwildt, 6-
+//      //////////////////////////////////////////////////////////////////////////
+//      //
+//      // Get the configuration
+//
+//    $userFunc_conf = $coa_conf['userFunc.']['conf.'];
+//      // Get the configuration
 
 
 
@@ -297,8 +299,9 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data );
       //
       // Set and get localisation configuration
 
-      // Remove 'L' from linkVars
-    $str_linkVarsWoL                          = $this->helper_linkVarsWoL( );
+      // 130207, dwildt, 2-
+//      // Remove 'L' from linkVars
+//    $str_linkVarsWoL                          = $this->helper_linkVarsWoL( );
       // Save the language id for the reset below
     $lang_id                                  = $this->objLocalise3x->lang_id;
       // Set and get localisation configuration
@@ -309,7 +312,10 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data );
       //
       // LOOP all languages
 
-    foreach( $llRows as $flag => $arr_lang )
+      // 130207, dwildt, 1-
+//    foreach( $llRows as $flag => $arr_lang )
+      // 130207, dwildt, 1+
+    foreach( array_keys( ( array ) $llRows ) as $flag )
     {
         // Get the localised uid
         // Don't substitute non localised records with default language
@@ -447,40 +453,78 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data );
 //    }
       // DRS
 
+      // 130207, dwildt, 1+
+    unset( $content );
+      
       // the result
     $out = '';
 
       // get layout type
       // 0: link only, 1: with application icon, 2: with based icon
-    $type = intval( $this->cObj->stdWrap( $conf['fields.']['layout'], $conf['fields.']['layout.'] ) );
-//      // DRS
-//    if ( $this->b_drs_download )
-//    {
-//      $prompt = 'type = ' . $type . ' <- TypoScript property fields.layout' ;
-//      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
-//    }
-//      // DRS
+// #44858, 130207, dwildt, 1-
+//    $type = intval( $this->cObj->stdWrap( $conf['fields.']['layout'], $conf['fields.']['layout.'] ) );
+// #44858, 130207, dwildt, 1+
+    $type = intval( $this->cObj->data['layout'] );
 
       // set default path
     $path = 'uploads/media/';
 
-      // get tableField
-    $tableField = $this->cObj->stdWrap($conf['tableField'], $conf['tableField.']);
-    list($table, $field) = explode('.', $tableField);
+      // #44858, 130207, dwildt, 3-
+//      // get tableField
+//    $tableField = $this->cObj->stdWrap($conf['tableField'], $conf['tableField.']);
+//    list($table, $field) = explode('.', $tableField);
+
+      // #44858, 130207, dwildt, 11+
+      // get table and field
+    if( ! empty( $conf['tableField'] ) )
+    {
+      list($table, $field) = explode('.', $conf['tableField'] );
+    }
+    else
+    {
+      $table = $this->table;
+      $field = ( trim( $conf['field'] ) ? trim( $conf['field'] ) : 'media' );
+    }
+      // get table and field
+      // #44858, 130207, dwildt, 11+
+      
 
       // file path variable is set, this takes precedence
-    $filePathConf = $this->cObj->stdWrap($conf['fields.']['from_path'], $conf['fields.']['from_path.']);
+      // 130207, dwildt, 1-
+//    $filePathConf = $this->cObj->stdWrap($conf['fields.']['from_path'], $conf['fields.']['from_path.']);
+      // 130207, dwildt, 1+
+    $filePathConf = $this->cObj->stdWrap( $conf['filePath'], $conf['filePath.'] );
+
+      // 130207, dwildt, +
+      // DRS
+    if ( $this->b_drs_devTodo )
+    {
+      $prompt = 'tx_dam / file path configuration: fields.from_path is moved to filePath';
+      t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->extKey, 2 );
+    }
+      // DRS
+      // 130207, dwildt, +
+    
     if ( ! empty( $filePathConf ) )
     {
         // #37165, 120517, dwildt
       if( $table != 'tx_dam' )
       {
-        $fileList   = $this->cObj->filelist($filePathConf);
+        $fileList   = $this->cObj->filelist( $filePathConf );
       }
       if( $table == 'tx_dam' )
       {
           // Get the list of files from the field
         $fileList = trim($this->cObj->stdWrap($conf['fields.']['files'], $conf['fields.']['files.']));
+          // 130207, dwildt, +
+          // DRS
+        if ( $this->b_drs_devTodo )
+        {
+          $prompt = 'tx_dam / file list configuration: fields.files';
+          t3lib_div::devlog( '[INFO/TODO] ' . $prompt, $this->extKey, 2 );
+        }
+          // DRS
+          // 130207, dwildt, +
       }
         // #37165, 120517, dwildt
       list( $path ) = explode( '|', $filePathConf );
@@ -490,11 +534,15 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data );
     if ( empty( $filePathConf ) )
     {
         // Get the list of files from the field
-      $fileList = trim($this->cObj->stdWrap($conf['fields.']['files'], $conf['fields.']['files.']));
+        // #44858, 130207, dwildt, 1-
+//      $fileList = trim($this->cObj->stdWrap($conf['fields.']['files'], $conf['fields.']['files.']));
+        // #44858, 130207, dwildt, 1+
+      $fileList = $this->cObj->data[$field];
+
         // Get the path
-      if (is_array($GLOBALS['TCA'][$table]['columns'][$field]))
+      if( is_array( $GLOBALS['TCA'][$table]['columns'][$field] ) )
       {
-        if(!empty($GLOBALS['TCA'][$table]['columns'][$field]['config']['uploadfolder']))
+        if( ! empty( $GLOBALS['TCA'][$table]['columns'][$field]['config']['uploadfolder'] ) )
         {
             // in TCA-array folders are saved without trailing slash
           $path = $GLOBALS['TCA'][$table]['columns'][$field]['config']['uploadfolder'] . '/';
@@ -506,11 +554,21 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data );
     $fileArray = t3lib_div::trimExplode( ',', $fileList, 1 );
 
       // there are files to list ...
-    if (count($fileArray))
+    if( count( $fileArray ) )
     {
-        // the captions of the files
-      $captions = $this->cObj->stdWrap($conf['fields.']['caption'], $conf['fields.']['caption.']);
-      $captions = t3lib_div::trimExplode(LF, $captions);
+        // 130207, dwildt, 3-
+//        // the captions of the files
+//      $captions = $this->cObj->stdWrap($conf['fields.']['caption'], $conf['fields.']['caption.']);
+//      $captions = t3lib_div::trimExplode(LF, $captions);
+
+        // 130207, dwildt, 6+
+        // Get the descriptions for the files (if any):
+      $descriptions = t3lib_div::trimExplode(LF,$this->cObj->data['imagecaption']);
+        // Get the titles for the files (if any)
+      $titles = t3lib_div::trimExplode(LF, $this->cObj->data['titleText']);
+        // Get the alternative text for icons/thumbnails
+      $altTexts = t3lib_div::trimExplode(LF, $this->cObj->data['altText']);
+        // 130207, dwildt, 6+
 
         // Adding hardcoded TS to linkProc configuration
       $conf['linkProc.']['path.']['current']    = 1;
@@ -533,10 +591,11 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data );
         $conf['linkProc.']['removePrependedNumbers'] = 0;
       }
 
-        // dwildt, 111110, +
-        // Get configured languages
-      $llRows = $this->objLocalise3x->sql_getLanguages( );
-        // dwildt, 111110, +
+        // #44858, 130207, dwildt, 4-
+//        // dwildt, 111110, +
+//        // Get configured languages
+//      $llRows = $this->objLocalise3x->sql_getLanguages( );
+//        // dwildt, 111110, +
 
         // LOOP: files
       $filesData = array();
@@ -575,7 +634,20 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data );
           $filesData[$key]['path']          = $path;
           $filesData[$key]['filesize']      = filesize($absPath);
           $filesData[$key]['fileextension'] = strtolower($path_info['extension']);
-          $filesData[$key]['description']   = trim($captions[$key]);
+            // 130207, dwildt, 1-
+//          $filesData[$key]['description']   = trim($captions[$key]);
+            // 130207, dwildt, 1+
+          $filesData[$key]['description']   = trim($descriptions[$key]);
+            // 130207, dwildt, 1+
+          $conf['linkProc.']['title'] = trim($titles[$key]);
+
+            // 130207, dwildt, 6+
+          if (isset($altTexts[$key]) && !empty($altTexts[$key])) {
+            $altText = trim($altTexts[$key]);
+          } else {
+            $altText = sprintf($this->pi_getLL('uploads.icon'), $fileName);
+          }
+          $conf['linkProc.']['altText'] = $conf['linkProc.']['iconCObject.']['altText'] = $altText;
 
           $this->cObj->setCurrentVal($path);
           $GLOBALS['TSFE']->register['ICON_REL_PATH'] = $path.$fileName;
@@ -869,7 +941,9 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data );
   {
     $this->cObjDataBackup( );
     $this->cObj->data = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
-    
+      // #44858, 130207, dwildt, 1+
+    list( $this->table ) = explode( ':', $GLOBALS['TSFE']->tx_browser_pi1->currentRecord );
+
     $this->cObjDataSetFieldWrapper( );
   }
 
@@ -968,6 +1042,10 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data );
  */
   private function helper_browser_linkProc( $conf, $key, $fileName )
   {
+      // 130207, dwildt, 2+
+    $arr_default_filelinks  = null;
+    $arr_filelinks          = null;
+    
       //////////////////////////////////////////////////////////////////////////
       //
       // Replace markers
@@ -1020,6 +1098,9 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data );
     $str_currIconRelPath      = $arr_default_filelinks[0];
       // I.e. <a href="uploads/tx_org/flyer_typo3_organiser_01.pdf" target="_blank" ><img src="typo3temp/pics/abfb01d4d2.jpg" width="200" height="408" alt="" /></a>
     list( $dummy, $str_srce ) = explode( 'src="', $str_currIconRelPath );
+      // 130207, dwildt, 1+
+    unset( $dummy );
+    
       // I.e. typo3temp/pics/abfb01d4d2.jpg" width="200" height="408" alt="" /></a>
     list( $str_srce )         = explode( '"',     $str_srce );
       // I.e. typo3temp/pics/abfb01d4d2.jpg
@@ -1055,54 +1136,55 @@ var_dump( __METHOD__, __LINE__, $this->cObj->data );
 
 
 
-
-  /**
- * helper_linkVarsWoL( ): Remove parameter 'L' from linkVars
- *
- * @return	string		$str_linkVarsWoL: linkVars without 'L'
- * @access private
- */
-  private function helper_linkVarsWoL( )
-  {
-      // Get linkVars
-    $str_linkVars = $GLOBALS['TSFE']->linkVars;
-
-      // LOOP linkVars: remove 'L'
-    $arr_linkVars = explode( '&', $str_linkVars );
-    foreach( $arr_linkVars as $str_linkVar )
-    {
-      list( $key_linkVar, $value_linkVar ) = explode( '=', $str_linkVar );
-        // remove 'L'
-      if( $key_linkVar != 'L' && ! empty( $key_linkVar ) )
-      {
-        $arr_linkVarsWoL[] = $key_linkVar . '=' . $value_linkVar;
-      }
-        // remove 'L'
-    }
-      // LOOP linkVars: remove 'L'
-
-      // Set linkVars without 'L'
-    $str_linkVarsWoL = implode( '&', ( array ) $arr_linkVarsWoL );
-    if( ! empty( $str_linkVarsWoL ) )
-    {
-      $str_linkVarsWoL = '&' . $str_linkVarsWoL;
-    }
-      // Set linkVars without 'L'
-
-      // DRS - Development Reporting System
-    if ( $this->b_drs_localisation )
-    {
-      if ( $str_linkVars != $str_linkVarsWoL )
-      {
-        $prompt = '\'L=' . $GLOBALS['TSFE']->sys_language_content . '\' is removed temporarily from linkVars.';
-        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
-      }
-    }
-      // DRS - Development Reporting System
-
-      // RETURN linkVars without 'L'
-    return $str_linkVarsWoL;
-  }
+  // 130207, dwildt, -
+//  /**
+// * helper_linkVarsWoL( ): Remove parameter 'L' from linkVars
+// *
+// * @return	string		$str_linkVarsWoL: linkVars without 'L'
+// * @access private
+// */
+//  private function helper_linkVarsWoL( )
+//  {
+//      // Get linkVars
+//    $str_linkVars = $GLOBALS['TSFE']->linkVars;
+//
+//      // LOOP linkVars: remove 'L'
+//    $arr_linkVars = explode( '&', $str_linkVars );
+//    foreach( $arr_linkVars as $str_linkVar )
+//    {
+//      list( $key_linkVar, $value_linkVar ) = explode( '=', $str_linkVar );
+//        // remove 'L'
+//      if( $key_linkVar != 'L' && ! empty( $key_linkVar ) )
+//      {
+//        $arr_linkVarsWoL[] = $key_linkVar . '=' . $value_linkVar;
+//      }
+//        // remove 'L'
+//    }
+//      // LOOP linkVars: remove 'L'
+//
+//      // Set linkVars without 'L'
+//    $str_linkVarsWoL = implode( '&', ( array ) $arr_linkVarsWoL );
+//    if( ! empty( $str_linkVarsWoL ) )
+//    {
+//      $str_linkVarsWoL = '&' . $str_linkVarsWoL;
+//    }
+//      // Set linkVars without 'L'
+//
+//      // DRS - Development Reporting System
+//    if ( $this->b_drs_localisation )
+//    {
+//      if ( $str_linkVars != $str_linkVarsWoL )
+//      {
+//        $prompt = '\'L=' . $GLOBALS['TSFE']->sys_language_content . '\' is removed temporarily from linkVars.';
+//        t3lib_div::devlog('[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0);
+//      }
+//    }
+//      // DRS - Development Reporting System
+//
+//      // RETURN linkVars without 'L'
+//    return $str_linkVarsWoL;
+//  }
+  // 130207, dwildt, -
 
 
 
