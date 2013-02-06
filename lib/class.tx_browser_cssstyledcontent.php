@@ -179,7 +179,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
                                                       );
     }
 //      // DRS
-//    if ( $this->b_drs_renderuploads )
+//    if ( $this->b_drs_download )
 //    {
 //      $prompt = '$bool_currLangOnly: \'' . $bool_currLangOnly . '\'';
 //      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
@@ -436,7 +436,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
   private function render_uploads_per_language( $content, $conf )
   {
 //      // DRS
-//    if ( $this->b_drs_renderuploads )
+//    if ( $this->b_drs_download )
 //    {
 //      $prompt = 'render_uploads_per_language( ) start';
 //      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
@@ -450,7 +450,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // 0: link only, 1: with application icon, 2: with based icon
     $type = intval( $this->cObj->stdWrap( $conf['fields.']['layout'], $conf['fields.']['layout.'] ) );
 //      // DRS
-//    if ( $this->b_drs_renderuploads )
+//    if ( $this->b_drs_download )
 //    {
 //      $prompt = 'type = ' . $type . ' <- TypoScript property fields.layout' ;
 //      t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
@@ -541,7 +541,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $absPath = t3lib_div::getFileAbsFileName($path.$fileName);
 
           // DRS
-        if ( $this->b_drs_renderuploads )
+        if ( $this->b_drs_download )
         {
           $prompt = $absPath;
           t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
@@ -557,7 +557,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         if (@is_file($absPath))
         {
             // DRS
-          if ( $this->b_drs_renderuploads )
+          if ( $this->b_drs_download )
           {
             $prompt = 'File does exist.';
             t3lib_div::devlog( '[OK] ' . $prompt, $this->extKey, -1 );
@@ -672,7 +672,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         if( empty( $str_outputEntry ) )
         {
             // DRS
-          if ( $this->b_drs_renderuploads )
+          if ( $this->b_drs_download )
           {
             $prompt = 'Result is empty.';
             t3lib_div::devlog( '[ERROR] ' . $prompt, $this->extKey, 3 );
@@ -748,7 +748,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     if( empty( $out ) )
     {
         // DRS
-      if ( $this->b_drs_renderuploads )
+      if ( $this->b_drs_download )
       {
         $prompt = 'Result is empty. This is an error probably.';
         t3lib_div::devlog( '[ERROR] ' . $prompt, $this->extKey, 3 );
@@ -1098,34 +1098,96 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
  */
   private function helper_init_drs( )
   {
-    $conf = $this->conf;
+    $this->arr_extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]);
     
-    if( ! isset( $conf['userFunc.']['drs'] ) )
+    switch( true )
     {
-      return;
+      case( $this->arr_extConf['drs_mode'] == 'All' ):
+        $this->b_drs_error          = true;
+        $this->b_drs_warn           = true;
+        $this->b_drs_info           = true;
+        $this->b_drs_cObjData       = true;
+        $this->b_drs_download       = true;
+        $this->b_drs_localisation   = true;
+        $this->b_drs_sql            = true;
+        $this->b_drs_statistics     = true;
+        $this->b_drs_devTodo        = true;
+        break;
+      case( $this->arr_extConf['drs_mode'] == 'cObj->data' ):
+        $this->b_drs_error          = true;
+        $this->b_drs_warn           = true;
+        $this->b_drs_info           = true;
+        $this->b_drs_cObjData       = true;
+        break;
+      case( $this->arr_extConf['drs_mode'] == 'Download' ):
+        $this->b_drs_error          = true;
+        $this->b_drs_warn           = true;
+        $this->b_drs_info           = true;
+        $this->b_drs_cObjData       = true;
+        $this->b_drs_download       = true;
+        break;
+      case( $this->arr_extConf['drs_mode'] == 'Localisation' ):
+        $this->b_drs_error          = true;
+        $this->b_drs_warn           = true;
+        $this->b_drs_info           = true;
+        $this->b_drs_localisation   = true;
+        break;
+      case( $this->arr_extConf['drs_mode'] == 'SQL development' ):
+        $this->b_drs_error          = true;
+        $this->b_drs_warn           = true;
+        $this->b_drs_info           = true;
+        $this->b_drs_localisation   = true;
+        break;
+      case( $this->arr_extConf['drs_mode'] == 'Statistics' ):
+        $this->b_drs_error          = true;
+        $this->b_drs_warn           = true;
+        $this->b_drs_info           = true;
+        $this->b_drs_sql            = true;
+        break;
+      case( $this->arr_extConf['drs_mode'] == ':TODO: for Development' ):
+        $this->b_drs_error          = true;
+        $this->b_drs_warn           = true;
+        $this->b_drs_info           = true;
+        $this->b_drs_devTodo        = true;
+        break;
+      case( $this->arr_extConf['drs_mode'] == 'Warnings and errors' ):
+        $this->b_drs_error          = true;
+        $this->b_drs_warn           = true;
+        break;
+      default:
+        return;
+        break;
     }
 
-    $coa_name               = $conf['userFunc.']['drs'];
-    $coa_conf_userFunc_drs  = $conf['userFunc.']['drs.'];
-
-    if( ! intval( $this->helper_cObjGetSingle( $coa_name, $coa_conf_userFunc_drs ) ) )
-    {
-      return;
-    }
-
-    $this->b_drs_error          = true;
-    $this->b_drs_warn           = true;
-    $this->b_drs_info           = true;
-    $this->b_drs_cObjData       = true;
-    $this->b_drs_download       = true;
-    $this->b_drs_localisation   = true;
-    $this->b_drs_renderuploads  = true;
-    $this->b_drs_sql            = true;
-    $this->b_drs_statistics     = true;
-    $prompt_01 = 'The DRS - Development Reporting System is enabled by TypoScript.';
-    $prompt_02 = 'Change it: Please look for userFunc = tx_browser_cssstyledcontent->render_uploads and for userFunc.drs.';
-    t3lib_div::devlog('[INFO/DRS] ' . $prompt_01, $this->extKey, 0);
-    t3lib_div::devlog('[HELP/DRS] ' . $prompt_02, $this->extKey, 1);
+//    $conf = $this->conf;
+//    
+//    
+//    if( ! isset( $conf['userFunc.']['drs'] ) )
+//    {
+//      return;
+//    }
+//
+//    $coa_name               = $conf['userFunc.']['drs'];
+//    $coa_conf_userFunc_drs  = $conf['userFunc.']['drs.'];
+//
+//    if( ! intval( $this->helper_cObjGetSingle( $coa_name, $coa_conf_userFunc_drs ) ) )
+//    {
+//      return;
+//    }
+//
+//    $this->b_drs_error          = true;
+//    $this->b_drs_warn           = true;
+//    $this->b_drs_info           = true;
+//    $this->b_drs_cObjData       = true;
+//    $this->b_drs_download       = true;
+//    $this->b_drs_localisation   = true;
+//    $this->b_drs_download  = true;
+//    $this->b_drs_sql            = true;
+//    $this->b_drs_statistics     = true;
+//    $prompt_01 = 'The DRS - Development Reporting System is enabled by TypoScript.';
+//    $prompt_02 = 'Change it: Please look for userFunc = tx_browser_cssstyledcontent->render_uploads and for userFunc.drs.';
+//    t3lib_div::devlog('[INFO/DRS] ' . $prompt_01, $this->extKey, 0);
+//    t3lib_div::devlog('[HELP/DRS] ' . $prompt_02, $this->extKey, 1);
   }
 
   

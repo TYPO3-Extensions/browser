@@ -1379,7 +1379,7 @@ class tx_browser_pi1 extends tslib_pibase {
       //
       // Set the DRS mode
 
-    if ($this->arr_extConf['drs_mode'] == 'All')
+    if( $this->arr_extConf['drs_mode'] == 'All' )
     {
       $this->b_drs_all          = true;
       $this->b_drs_error        = true;
@@ -1441,7 +1441,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_cal        = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
-    if ($this->arr_extConf['drs_mode'] == 'cObj->data')
+    if( $this->arr_extConf['drs_mode'] == 'cObj->data' )
     {
       $this->b_drs_error      = true;
       $this->b_drs_warn       = true;
@@ -1576,7 +1576,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_socialmedia  = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System: Social media.', $this->extKey, 0);
     }
-    if ($this->arr_extConf['drs_mode'] == 'SQL development')
+    if( $this->arr_extConf['drs_mode'] == 'SQL development' )
     {
       $this->b_drs_error      = true;
       $this->b_drs_warn       = true;
@@ -1586,7 +1586,7 @@ class tx_browser_pi1 extends tslib_pibase {
       //$this->b_drs_tca        = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
-    if ($this->arr_extConf['drs_mode'] == 'Statistics')
+    if( $this->arr_extConf['drs_mode'] == 'Statistics' )
     {
       $this->b_drs_error      = true;
       $this->b_drs_warn       = true;
@@ -1624,7 +1624,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_tsUpdate   = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
-    if ($this->arr_extConf['drs_mode'] == ':TODO: for Development')
+    if( $this->arr_extConf['drs_mode'] == ':TODO: for Development' )
     {
       $this->b_drs_error      = true;
       $this->b_drs_warn       = true;
@@ -1632,7 +1632,7 @@ class tx_browser_pi1 extends tslib_pibase {
       $this->b_drs_devTodo    = true;
       t3lib_div::devlog('[INFO/DRS] DRS - Development Reporting System:<br />'.$this->arr_extConf['drs_mode'], $this->extKey, 0);
     }
-    if ($this->arr_extConf['drs_mode'] == 'Warnings and errors')
+    if( $this->arr_extConf['drs_mode'] == 'Warnings and errors' )
     {
       $this->b_drs_error      = true;
       $this->b_drs_warn       = true;
