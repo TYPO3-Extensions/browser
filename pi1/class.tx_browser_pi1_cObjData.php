@@ -107,6 +107,7 @@ class tx_browser_pi1_cObjData
   {
     $this->backup( );
     $this->addArray( $keyValues, $drs );
+    $this->addArrayFieldWrapper( );
     $this->addTsValues( );
   }
 
@@ -200,6 +201,59 @@ class tx_browser_pi1_cObjData
     }
       // DRS
 
+  }
+
+/**
+ * addArrayFieldWrapper( ): 
+ *
+ * @return    void
+ * @internal  #44896, #00001
+ * @version 4.4.5
+ * @since   4.4.5
+ */
+  private function addArrayFieldWrapper(  )
+  {
+      // RETURN : if fields shouldn't  added with another key ...
+    if( ! is_array( $this->conf['cObjDataFieldWrapper.'] ) )
+    {
+      return;
+    }
+      // RETURN : if fields shouldn't  added with another key ...
+      
+      // FOREACH  : userFunc.cObjDataFieldWrapper. ...
+    foreach( array_keys( $this->conf['cObjDataFieldWrapper.'] )  as $key )
+    {       
+        // CONTINUE : current value is an array
+      if( substr( $key, -1, 1 ) == '.' )
+      {
+        continue;
+      }
+        // CONTINUE : current value is an array
+
+        // Get the original field name. Example: tx_org_downloads.tx_flipit_layout
+      $value = $this->conf['cObjDataFieldWrapper.'][$key];
+
+      if ( $this->b_drs_warn )
+      {
+        switch( true )
+        {
+          case( isset( $this->cObj->data[$key] ) ):
+            $prompt = 'cObj->data[' . $key . '] will be overriden by cObj->data[' . $value . ']: ' . 
+                      $this->cObj->data[$value] ;
+            t3lib_div::devlog( '[INFO/COBJDATA] ' . $prompt, $this->extKey, 2 );
+            break;
+          default:
+            $prompt = 'cObj->data[' . $key . '] will become cObj->data[' . $value . ']: '  . 
+                      $this->cObj->data[$value] ;
+            t3lib_div::devlog( '[INFO/COBJDATA] ' . $prompt, $this->extKey, 0 );
+            break;
+        }
+      }
+
+        // Set value of original field to field with the new key. Example tx_flipit_layout = 'layout_01'
+      $this->cObj->data[$key] = $this->cObj->data[$value];
+    }
+      // FOREACH  : userFunc.cObjDataFieldWrapper. ...
   }
 
 /**

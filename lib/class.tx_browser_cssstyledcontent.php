@@ -866,45 +866,60 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $this->cObjDataBackup( );
     $this->cObj->data = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
     
-      // IF : fields should added with another key ...
-    if( is_array( $this->conf['userFunc.']['cObjDataFieldWrapper.'] ) )
-    {
-        // FOREACH  : userFunc.cObjDataFieldWrapper. ...
-      foreach( array_keys( $this->conf['userFunc.']['cObjDataFieldWrapper.'] )  as $key )
-      {       
-          // CONTINUE : current value is an array
-        if( substr( $key, -1, 1 ) == '.' )
-        {
-          continue;
-        }
-          // CONTINUE : current value is an array
-          
-          // Get the original field name. Example: tx_org_downloads.tx_flipit_layout
-        $value = $this->conf['userFunc.']['cObjDataFieldWrapper.'][$key];
-        
-        if ( $this->b_drs_warn )
-        {
-          switch( true )
-          {
-            case( isset( $this->cObj->data[$key] ) ):
-              $prompt = 'cObj->data[' . $key . '] will be overriden by cObj->data[' . $value . ']: ' . 
-                        $this->cObj->data[$value] ;
-              t3lib_div::devlog( '[INFO/COBJDATA] ' . $prompt, $this->extKey, 2 );
-              break;
-            default:
-              $prompt = 'cObj->data[' . $key . '] will become cObj->data[' . $value . ']: '  . 
-                        $this->cObj->data[$value] ;
-              t3lib_div::devlog( '[INFO/COBJDATA] ' . $prompt, $this->extKey, 0 );
-              break;
-          }
-        }
+    $this->cObjDataSetFieldWrapper( );
+  }
 
-          // Set value of original field to field with the new key. Example tx_flipit_layout = 'layout_01'
-        $this->cObj->data[$key] = $this->cObj->data[$value];
-      }
-        // FOREACH  : userFunc.cObjDataFieldWrapper. ...
+/**
+ * cObjDataSetFieldWrapper( ): 
+ *
+ * @return    void
+ * @internal  #44896, #00001
+ * @version 4.4.5
+ * @since   4.4.5
+ */
+  private function cObjDataSetFieldWrapper(  )
+  {
+      // RETURN : if fields shouldn't  added with another key ...
+    if( ! is_array( $this->conf['userFunc.']['cObjDataFieldWrapper.'] ) )
+    {
+      return;
     }
-      // IF : fields should added with another key ...
+      // RETURN : if fields shouldn't  added with another key ...
+      
+      // FOREACH  : userFunc.cObjDataFieldWrapper. ...
+    foreach( array_keys( $this->conf['userFunc.']['cObjDataFieldWrapper.'] )  as $key )
+    {       
+        // CONTINUE : current value is an array
+      if( substr( $key, -1, 1 ) == '.' )
+      {
+        continue;
+      }
+        // CONTINUE : current value is an array
+
+        // Get the original field name. Example: tx_org_downloads.tx_flipit_layout
+      $value = $this->conf['userFunc.']['cObjDataFieldWrapper.'][$key];
+
+      if ( $this->b_drs_warn )
+      {
+        switch( true )
+        {
+          case( isset( $this->cObj->data[$key] ) ):
+            $prompt = 'cObj->data[' . $key . '] will be overriden by cObj->data[' . $value . ']: ' . 
+                      $this->cObj->data[$value] ;
+            t3lib_div::devlog( '[INFO/COBJDATA] ' . $prompt, $this->extKey, 2 );
+            break;
+          default:
+            $prompt = 'cObj->data[' . $key . '] will become cObj->data[' . $value . ']: '  . 
+                      $this->cObj->data[$value] ;
+            t3lib_div::devlog( '[INFO/COBJDATA] ' . $prompt, $this->extKey, 0 );
+            break;
+        }
+      }
+
+        // Set value of original field to field with the new key. Example tx_flipit_layout = 'layout_01'
+      $this->cObj->data[$key] = $this->cObj->data[$value];
+    }
+      // FOREACH  : userFunc.cObjDataFieldWrapper. ...
   }
   
   
