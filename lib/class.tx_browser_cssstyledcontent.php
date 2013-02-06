@@ -915,6 +915,7 @@ if ( $this->b_drs_warn )
               $prompt = 'cObj->data[' . $key . '] will become cObj->data[' . $value . ']!';
               t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0 );
               break;
+          }
         }
 
           // Set value of original field to field with the new key. Example tx_flipit_layout = 'layout_01'
