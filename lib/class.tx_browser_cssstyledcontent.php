@@ -887,11 +887,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           switch( true )
           {
             case( isset( $this->cObj->data[$key] ) ):
-              $prompt = 'cObj->data[' . $key . '] will be overriden by cObj->data[' . $value . ']: ' . $value ;
+              $prompt = 'cObj->data[' . $key . '] will be overriden by cObj->data[' . $value . ']: ' . 
+                        $this->cObj->data[$value] ;
               t3lib_div::devlog( '[INFO/COBJDATA] ' . $prompt, $this->extKey, 2 );
               break;
             default:
-              $prompt = 'cObj->data[' . $key . '] will become cObj->data[' . $value . ']: ' . $value ;
+              $prompt = 'cObj->data[' . $key . '] will become cObj->data[' . $value . ']: '  . 
+                        $this->cObj->data[$value] ;
               t3lib_div::devlog( '[INFO/COBJDATA] ' . $prompt, $this->extKey, 0 );
               break;
           }
