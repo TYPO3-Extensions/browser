@@ -150,7 +150,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 // #i0008
 //var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->register );
 // #i0002
-//var_dump( __METHOD__, __LINE__, $this->cObj->data['filelink_size'], $this->cObj->data['tx_org_downloads.documentssize'] );
+var_dump( __METHOD__, __LINE__, $this->cObj->data );
 
       //////////////////////////////////////////////////////////////////////////
       //
