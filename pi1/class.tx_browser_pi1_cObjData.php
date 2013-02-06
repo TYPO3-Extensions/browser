@@ -213,8 +213,6 @@ class tx_browser_pi1_cObjData
  */
   private function addArrayFieldWrapper(  )
   {
-// #i0002
-var_dump( __METHOD__, __LINE__, $this->pObj->conf['cObjDataFieldWrapper.'], $this->conf['cObjDataFieldWrapper.'] );
       // RETURN : if fields shouldn't  added with another key ...
     if( ! is_array( $this->pObj->conf['cObjDataFieldWrapper.'] ) )
     {
