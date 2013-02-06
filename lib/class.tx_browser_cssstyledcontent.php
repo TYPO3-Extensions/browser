@@ -883,28 +883,16 @@ if ( $this->b_drs_warn )
 }
 
       // IF : fields should added with another key ...
-    if( is_array( $this->conf['userFunc.']['cObjData.'] ) )
+    if( is_array( $this->conf['userFunc.']['cObjDataFieldWrapper.'] ) )
     {
 if ( $this->b_drs_warn )
 {
   $prompt = 'DEF';
   t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
 }
-        // FOREACH  : userFunc.cObjData. ...
-      foreach( array_keys( $this->conf['userFunc.']['cObjData.'] )  as $key )
-      {
-if ( $this->b_drs_warn )
-{
-  $prompt = 'key: ' . $key;
-  t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
-}
-//          // CONTINUE : current item is an array
-//        if( is_array( $this->conf['userFunc.']['cObjData.'][$key] ) )
-//        {
-//          continue;
-//        }
-//          // CONTINUE : current item is an array
-        
+        // FOREACH  : userFunc.cObjDataFieldWrapper. ...
+      foreach( array_keys( $this->conf['userFunc.']['cObjDataFieldWrapper.'] )  as $key )
+      {       
           // CONTINUE : current value is an array
         if( substr( $key, -1, 1 ) == '.' )
         {
@@ -912,42 +900,27 @@ if ( $this->b_drs_warn )
         }
           // CONTINUE : current value is an array
           
-//          // Get the original field name. Example: tx_org_downloads.tx_flipit_layout
-//        $value = $this->conf['userFunc.']['cObjData.'][$key];
+          // Get the original field name. Example: tx_org_downloads.tx_flipit_layout
+        $value = $this->conf['userFunc.']['cObjDataFieldWrapper.'][$key];
         
-          // Render the content
-        $name   = $this->conf['userFunc.']['cObjData.'][$key];
-        $conf   = $this->conf['userFunc.']['cObjData.'][$key . '.'];
-        $value  = $this->helper_cObjGetSingle($name, $conf);
-          // Render the content
-
-if ( $this->b_drs_warn )
-{
-  $prompt = 'value: ' . $value;
-  t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
-}
         if ( $this->b_drs_warn )
         {
-          if( isset( $this->cObj->data[$key] ) )
+          switch( true )
           {
-            $prompt = 'cObj->data[' . $key . '] will be overriden by userFunc.cObjData.' . $key . '!';
-            t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
-          }
+            case( isset( $this->cObj->data[$key] ) ):
+              $prompt = 'cObj->data[' . $key . '] will be overriden by cObj->data[' . $value . ']!';
+              t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
+              break;
+            default:
+              $prompt = 'cObj->data[' . $key . '] will become cObj->data[' . $value . ']!';
+              t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 0 );
+              break;
         }
 
-        $this->cObj->data[$key] = $value;
-
-//          // CONTINUE : field isn't set in current row
-//        if( ! ( isset( $this->cObj->data[$value] ) ) )
-//        {
-//          continue;
-//        }
-//          // CONTINUE : field isn't set in current row
-//        
-//          // Set value of original field to field with the new key. Example tx_flipit_layout = 'layout_01'
-//        $this->cObj->data[$key] = $this->cObj->data[$value];
+          // Set value of original field to field with the new key. Example tx_flipit_layout = 'layout_01'
+        $this->cObj->data[$key] = $this->cObj->data[$value];
       }
-        // FOREACH  : userFunc.cObjData. ...
+        // FOREACH  : userFunc.cObjDataFieldWrapper. ...
 if ( $this->b_drs_warn )
 {
   $prompt = 'GHI';
