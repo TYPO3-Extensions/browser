@@ -1,3 +1,13 @@
+4.4.5
+  13-02-06
+  Improvement
+  * #00001: Optimise cObjcObjGetSingle
+            Effected files:
+            * lib/class.tx_browser_cssstyledcontent.php
+  * #44858: Extend cObj->data +++ first step
+            Effected files:
+            * lib/class.tx_browser_cssstyledcontent.php
+  
 4.4.4
   13-01-27
   Improvement

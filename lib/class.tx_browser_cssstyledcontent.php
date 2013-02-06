@@ -136,7 +136,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     {
       $coa_name               = $conf['userFunc.']['drs'];
       $coa_conf_userFunc_drs  = $conf['userFunc.']['drs.'];
-      $bool_drs               = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf_userFunc_drs, $TSkey='__' ) );
+      $bool_drs               = intval( $this->helper_cObjGetSingle( $coa_name, $coa_conf_userFunc_drs ) );
     }
     if( $bool_drs )
     {
@@ -181,11 +181,10 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $coa_conf_userFunc_renderCurrentLanguageOnly  = $conf['userFunc.']['renderCurrentLanguageOnly.'];
       $bool_currLangOnly                            = intval
                                                       (
-                                                        $this->cObj->cObjGetSingle
+                                                        $this->helper_cObjGetSingle
                                                         (
                                                           $coa_name,
-                                                          $coa_conf_userFunc_renderCurrentLanguageOnly,
-                                                          $TSkey='__'
+                                                          $coa_conf_userFunc_renderCurrentLanguageOnly
                                                         )
                                                       );
     }
@@ -254,7 +253,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     {
       $coa_name                 = $coa_conf['userFunc.']['table'];
       $coa_conf_userFunc_table  = $coa_conf['userFunc.']['table.'];
-      $table                    = $this->cObj->cObjGetSingle( $coa_name, $coa_conf_userFunc_table, $TSkey='__' );
+      $table                    = $this->helper_cObjGetSingle( $coa_name, $coa_conf_userFunc_table );
     }
       // Get the current table
 
@@ -269,7 +268,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     {
       $coa_name                 = $coa_conf['userFunc.']['record'];
       $coa_conf_userFunc_record = $coa_conf['userFunc.']['record.'];
-      $uid                      = intval( $this->cObj->cObjGetSingle( $coa_name, $coa_conf_userFunc_record, $TSkey='__' ) );
+      $uid                      = intval( $this->helper_cObjGetSingle( $coa_name, $coa_conf_userFunc_record ) );
     }
       // Get the current uid (of the default language record)
 
@@ -284,7 +283,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     {
       $coa_name                 = $coa_conf['userFunc.']['select'];
       $coa_conf_userFunc_select = $coa_conf['userFunc.']['select.'];
-      $select                   = $this->cObj->cObjGetSingle( $coa_name, $coa_conf_userFunc_select, $TSkey='__' );
+      $select                   = $this->helper_cObjGetSingle( $coa_name, $coa_conf_userFunc_select );
       $select                   = $this->objZz->cleanUp_lfCr_doubleSpace( $select );
     }
       // Get the select
@@ -645,7 +644,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $GLOBALS['TSFE']->register['fileExtension'] = $fileData['fileextension'];
 
 // dwildt, 111106, -
-//        $outputEntries[]  = $this->cObj->cObjGetSingle
+//        $outputEntries[]  = $this->helper_cObjGetSingle
 //                            (
 //                              $splitConf[$key]['itemRendering'],
 //                              $splitConf[$key]['itemRendering.']
@@ -672,7 +671,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
         $coa_name         = $splitConf[$key]['itemRendering'];
 
-        $str_outputEntry  = $this->cObj->cObjGetSingle
+        $str_outputEntry  = $this->helper_cObjGetSingle
                             (
                               $coa_name,
                               $coa_conf_itemRendering
@@ -868,8 +867,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
  * cObjDataSet( ): 
  *
  * @return    void
- * @internal  #44896
- * @version 4.4.4
+ * @internal  #44896, #00001
+ * @version 4.4.5
  * @since   4.4.4
  */
   private function cObjDataSet(  )
@@ -877,31 +876,71 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $this->cObjDataBackup( );
     $this->cObj->data = $GLOBALS['TSFE']->tx_browser_pi1->cObj->data;
     
+if ( $this->b_drs_warn )
+{
+  $prompt = 'ABC';
+  t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
+}
+
       // IF : fields should added with another key ...
     if( is_array( $this->conf['userFunc.']['cObjData.'] ) )
     {
+if ( $this->b_drs_warn )
+{
+  $prompt = 'DEF';
+  t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
+}
         // FOREACH  : userFunc.cObjData. ...
       foreach( array_keys( $this->conf['userFunc.']['cObjData.'] )  as $key )
       {
-          // CONTINUE : current item is an array
-        if( is_array( $this->conf['userFunc.']['cObjData.'][$key] ) )
+//          // CONTINUE : current item is an array
+//        if( is_array( $this->conf['userFunc.']['cObjData.'][$key] ) )
+//        {
+//          continue;
+//        }
+//          // CONTINUE : current item is an array
+        
+          // CONTINUE : current value is an array
+        if( substr( $key, -1, 1 ) == '.' )
         {
           continue;
         }
-          // CONTINUE : current item is an array
+          // CONTINUE : current value is an array
+          
+//          // Get the original field name. Example: tx_org_downloads.tx_flipit_layout
+//        $value = $this->conf['userFunc.']['cObjData.'][$key];
         
-          // Get the original field name. Example: tx_org_downloads.tx_flipit_layout
-        $value = $this->conf['userFunc.']['cObjData.'][$key];
-        
-          // CONTINUE : field isn't set in current row
-        if( ! ( isset( $this->cObj->data[$value] ) ) )
+          // Render the content
+        $name   = $this->pObj->conf['cObjData.'][$key];
+        $conf   = $this->pObj->conf['cObjData.'][$key . '.'];
+        $value  = $this->pObj->cObj->cObjGetSingle($name, $conf);
+          // Render the content
+
+        if ( $this->b_drs_warn )
         {
-          continue;
+          if( isset( $this->cObj->data[$key] ) )
+          {
+            $prompt = 'cObj->data[' . $key . '] will be overriden by userFunc.cObjData.' . $key . '!';
+            t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
+          }
         }
-          // CONTINUE : field isn't set in current row
-        
-          // Set value of original field to field with the new key. Example tx_flipit_layout = 'layout_01'
-        $this->cObj->data[$key] = $this->cObj->data[$value];
+
+        $this->cObj->data[$key] = $value;
+
+if ( $this->b_drs_warn )
+{
+  $prompt = 'GHI';
+  t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
+}
+//          // CONTINUE : field isn't set in current row
+//        if( ! ( isset( $this->cObj->data[$value] ) ) )
+//        {
+//          continue;
+//        }
+//          // CONTINUE : field isn't set in current row
+//        
+//          // Set value of original field to field with the new key. Example tx_flipit_layout = 'layout_01'
+//        $this->cObj->data[$key] = $this->cObj->data[$value];
       }
         // FOREACH  : userFunc.cObjData. ...
     }
@@ -1014,7 +1053,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       //
       // RETURN by handling the tx_browser_pi1 linkProc configuration array
 
-    $str_filelinks =  $this->cObj->cObjGetSingle
+    $str_filelinks =  $this->helper_cObjGetSingle
                       (
                         $coa_confLinkProc['tx_browser_pi1'],
                         $coa_confLinkProc['tx_browser_pi1.']
@@ -1114,6 +1153,33 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $prompt_02 = 'Change it: Please look for userFunc = tx_browser_cssstyledcontent->render_uploads and for userFunc.drs.';
     t3lib_div::devlog('[INFO/DRS] ' . $prompt_01, $this->extKey, 0);
     t3lib_div::devlog('[HELP/DRS] ' . $prompt_02, $this->extKey, 1);
+  }
+
+  
+  
+ /**
+  * helper_cObjGetSingle( ):
+  *
+  * @return    string        $value  : ....
+  * @internal #00001
+  * @access   private
+  * @version  4.4.5
+  * @since    4.4.5
+  */
+  private function helper_cObjGetSingle( $cObj_name, $cObj_conf )
+  {
+    switch( true )
+    {
+      case( is_array( $cObj_conf ) ):
+        $value = $this->cObj->cObjGetSingle( $cObj_name, $cObj_conf );
+        break;
+      case( ! ( is_array( $cObj_conf ) ) ):
+      default:
+        $value = $cObj_name;
+        break;
+    }
+      
+    return $value;
   }
 
 
