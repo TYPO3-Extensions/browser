@@ -106,9 +106,9 @@ class tx_browser_pi1_cObjData
   public function add( $keyValues, $drs = true )
   {
     $this->backup( );
-    $this->addArray( $keyValues, $drs );
     $this->addArrayFieldWrapper( );
     $this->addTsValues( );
+    $this->addArray( $keyValues, $drs );
   }
 
 /**
