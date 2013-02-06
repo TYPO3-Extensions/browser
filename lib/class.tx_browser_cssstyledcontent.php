@@ -147,6 +147,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //  var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->tx_browser_pi1 );
 //  echo '</pre>' . PHP_EOL;
 //}
+// #i0008
+var_dump( __METHOD__, __LINE__, $GLOBALS['TSFE']->register );
 
       //////////////////////////////////////////////////////////////////////////
       //
