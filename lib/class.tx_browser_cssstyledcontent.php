@@ -893,6 +893,11 @@ if ( $this->b_drs_warn )
         // FOREACH  : userFunc.cObjData. ...
       foreach( array_keys( $this->conf['userFunc.']['cObjData.'] )  as $key )
       {
+if ( $this->b_drs_warn )
+{
+  $prompt = 'key: ' . $key;
+  t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
+}
 //          // CONTINUE : current item is an array
 //        if( is_array( $this->conf['userFunc.']['cObjData.'][$key] ) )
 //        {
@@ -911,11 +916,16 @@ if ( $this->b_drs_warn )
 //        $value = $this->conf['userFunc.']['cObjData.'][$key];
         
           // Render the content
-        $name   = $this->conf['cObjData.'][$key];
-        $conf   = $this->conf['cObjData.'][$key . '.'];
+        $name   = $this->conf['userFunc.']['cObjData.'][$key];
+        $conf   = $this->conf['userFunc.']['cObjData.'][$key . '.'];
         $value  = $this->helper_cObjGetSingle($name, $conf);
           // Render the content
 
+if ( $this->b_drs_warn )
+{
+  $prompt = 'value: ' . $value;
+  t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
+}
         if ( $this->b_drs_warn )
         {
           if( isset( $this->cObj->data[$key] ) )
@@ -927,11 +937,6 @@ if ( $this->b_drs_warn )
 
         $this->cObj->data[$key] = $value;
 
-if ( $this->b_drs_warn )
-{
-  $prompt = 'GHI';
-  t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
-}
 //          // CONTINUE : field isn't set in current row
 //        if( ! ( isset( $this->cObj->data[$value] ) ) )
 //        {
@@ -943,6 +948,11 @@ if ( $this->b_drs_warn )
 //        $this->cObj->data[$key] = $this->cObj->data[$value];
       }
         // FOREACH  : userFunc.cObjData. ...
+if ( $this->b_drs_warn )
+{
+  $prompt = 'GHI';
+  t3lib_div::devlog( '[INFO/LOCALISATION] ' . $prompt, $this->extKey, 2 );
+}
     }
       // IF : fields should added with another key ...
   }
