@@ -560,7 +560,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
       // explode into an array
     $fileArray = t3lib_div::trimExplode( ',', $fileList, 1 );
-var_dump( __METHOD__, __LINE__, '$fileArray: ',  $fileArray );
 
       // there are files to list ...
     if( count( $fileArray ) )
@@ -616,7 +615,7 @@ var_dump( __METHOD__, __LINE__, '$fileArray: ',  $fileArray );
         $absPath = t3lib_div::getFileAbsFileName($path.$fileName);
 
           // DRS
-        if ( $this->b_drs_download )
+        if ( $this->b_drs_error )
         {
           $prompt = $absPath;
           t3lib_div::devlog( '[INFO] ' . $prompt, $this->extKey, 0 );
