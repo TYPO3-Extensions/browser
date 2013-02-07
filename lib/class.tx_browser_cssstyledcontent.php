@@ -543,6 +543,8 @@ var_dump( __METHOD__, __LINE__, '$filePathConf: ' . $filePathConf );
 //      $fileList = trim($this->cObj->stdWrap($conf['fields.']['files'], $conf['fields.']['files.']));
         // #44858, 130207, dwildt, 1+
       $fileList = $this->cObj->data[$field];
+var_dump( __METHOD__, __LINE__, '$this->cObj->data: ', $this->cObj->data );
+var_dump( __METHOD__, __LINE__, '$field: ' . $field );
 var_dump( __METHOD__, __LINE__, '$fileList: ' . $fileList );
 
         // Get the path
