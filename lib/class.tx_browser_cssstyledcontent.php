@@ -479,7 +479,8 @@ var_dump( __METHOD__, __LINE__, '$type: ' . $type );
       // get table and field
     if( ! empty( $conf['tableField'] ) )
     {
-      list( $table, $field ) = explode('.', $conf['tableField'] );
+      list( $table )  = explode('.', $conf['tableField'] );
+      $field          = $conf['tableField'];
     }
     else
     {
