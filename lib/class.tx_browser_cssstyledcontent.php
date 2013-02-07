@@ -546,6 +546,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //var_dump( __METHOD__, __LINE__, '$this->cObj->data: ', $this->cObj->data );
 //var_dump( __METHOD__, __LINE__, '$field: ' . $field );
 //var_dump( __METHOD__, __LINE__, '$fileList: ' . $fileList );
+var_dump( __METHOD__, __LINE__, '$table: ' . $table );
+var_dump( __METHOD__, __LINE__, '$field: ' . $field );
+var_dump( __METHOD__, __LINE__, 'GLOBALS->TCA' . $GLOBALS['TCA'][$table]['columns'][$field] );
 
         // Get the path
       if( is_array( $GLOBALS['TCA'][$table]['columns'][$field] ) )
@@ -612,7 +615,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       $filesData = array( );
       foreach($fileArray as $key => $fileName)
       {
-        $absPath = t3lib_div::getFileAbsFileName($path.$fileName);
+        $absPath = t3lib_div::getFileAbsFileName( $path . $fileName );
 
           // DRS
         if ( $this->b_drs_error )
