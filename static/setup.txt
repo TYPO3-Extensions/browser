@@ -811,7 +811,7 @@ plugin.tx_browser_pi1 {
                     var oxMapConfig = {
                       MapId:          'oxMapArea',                //    HTML map viewport id
                       MapControls:    '###MAPCONTROLS###',        //    customized control types
-                      MapZoomWheel:   '###MAPZOOMWHEEL###',
+                      MapZoomWheel:   '###ZOOMWHEELENABLE###',
                       MapZoomLevels:  '###MAPZOOMLEVELS###',      //    customized zoom levels
                       MapMarker:      '###MAPMARKER###',          //    standalone marker is allowed
                       MapMarkerInfo:  '###MAPMARKERINFO###',      //    marker with infolayer is allowed
@@ -937,7 +937,7 @@ plugin.tx_browser_pi1 {
                       , type            : '###OXMAPCONFIGTYPE###'             //  Mapnik | ROADMAP
                       , center          : '###OXMAPCONFIGCENTER###'
                       , startLevel      : '###OXMAPCONFIGSTARTLEVEL###'
-                      , mapZoomWheel    : '###OXMAPCONFIGMAPZOOMWHEEL###'
+                      , zoomWheelEnable : '###OXMAPCONFIGZOOMWHEELENABLE###'
                       , numZoomLevels   : '###OXMAPCONFIGNUMZOOMLEVELS###'
                       , filter          : '#oxMapFilter'
                       , filterItems     : '.oxMapFilter'
@@ -1058,8 +1058,8 @@ plugin.tx_browser_pi1 {
                 value = '{$plugin.tx_browser_pi1.map.popup.behaviour}'
               }
                 // Map zoom wheel
-              oxMapConfigMapZoomWheel = TEXT
-              oxMapConfigMapZoomWheel {
+              oxMapConfigZoomWheelEnable = TEXT
+              oxMapConfigZoomWheelEnable {
                   // [BOOLEAN] enable or disable the zoom wheel
                 value = {$plugin.tx_browser_pi1.map.zoomWheel}
               }

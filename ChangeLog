@@ -2,6 +2,9 @@
   13-02-07
   Improvement
   * #42788: BrowserMaps will extended for GoogleMaps
+            * param mapZoomWheel is moved to zoomWheelEnable
+              Effected files:
+              * static/setup.txt
             * Moved files
               * oxRenderMap_1.1.02.js -> oxMap.Render_1.2.01.js
   
