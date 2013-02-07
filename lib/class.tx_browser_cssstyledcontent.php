@@ -495,8 +495,35 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $fieldInTca = $tableInTca;
       }
     }
-//var_dump( __METHOD__, __LINE__, '$table: ' . $table );
-//var_dump( __METHOD__, __LINE__, '$field: ' . $field  );
+    
+      // 130207, +
+    $thumbTableField  = null;
+    $thumbTable       = null;
+    $thumbField       = null;
+    $thumbList        = null;
+    $thumbArray       = null;
+    $thumbPath        = null;
+    
+    $thumbTableField = $conf['thumbnail'];
+    if( ! empty ( $thumbTableField ) )
+    {
+      $thumbList = $this->cObj->data[$thumbTableField];
+      if( ! empty ( $thumbList ) )
+      {
+        $thumbArray = t3lib_div::trimExplode( ',', $thumbList, 1 );
+        list( $thumbTable, $thumbField ) = explode( '.', $thumbTableField );
+        if( is_array( $GLOBALS['TCA'][$thumbTable]['columns'][$thumbField] ) )
+        {
+          if( ! empty( $GLOBALS['TCA'][$thumbTable]['columns'][$thumbField]['config']['uploadfolder'] ) )
+          {
+              // in TCA-array folders are saved without trailing slash
+            $thumbPath = $GLOBALS['TCA'][$thumbTable]['columns'][$thumbField]['config']['uploadfolder'] . '/';
+          }
+        }      
+      }
+    }
+      // 130207, +
+    
       // get table and field
       // #44858, 130207, dwildt, 11+
       
@@ -685,7 +712,18 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           $conf['linkProc.']['altText'] = $conf['linkProc.']['iconCObject.']['altText'] = $altText;
 
           $this->cObj->setCurrentVal($path);
-          $GLOBALS['TSFE']->register['ICON_REL_PATH'] = $path.$fileName;
+          
+            // 130207, dwildt, 1-
+          //$GLOBALS['TSFE']->register['ICON_REL_PATH'] = $path . $fileName;
+            // 130207, dwildt, +
+          $icon_rel_path = $path . $fileName;
+          if( ! empty ( $thumbPath ) )
+          {
+            $icon_rel_path = $thumbPath . $thumbArray[$key];
+          }
+          $GLOBALS['TSFE']->register['ICON_REL_PATH'] = $icon_rel_path;
+            // 130207, dwildt, +
+          
           $GLOBALS['TSFE']->register['filename']      = $filesData[$key]['filename'];
           $GLOBALS['TSFE']->register['path']          = $filesData[$key]['path'];
           $GLOBALS['TSFE']->register['fileSize']      = $filesData[$key]['filesize'];
