@@ -203,6 +203,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $marker['###TT_CONTENT.UID###'] = $cR_uid;
       // 130207, dwildt, 1+
     $this->cObj->data['tt_content.uid'] = $cR_uid;
+    
 //var_dump( __METHOD__, __LINE__, $marker );
       // 111215, dwildt-
     //$conf                           = $this->cObj->substituteMarkerInObject( $conf, $marker );
@@ -757,6 +758,10 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
           // Set marker array
         $marker['###KEY###']                = $key;
         $marker['###FILENAME###']           = $fileName;
+          // 130207, dwildt, 2+
+        $this->cObj->data['key']            = $key;
+        $this->cObj->data['filename']       = $fileName;
+        
           // Set marker array
 
           // Replace the marker in the TypoScript recursively
@@ -1089,6 +1094,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // Set marker array
     $marker['###KEY###']                = $key;
     $marker['###FILENAME###']           = $fileName;
+      // 130207, dwildt, 2+
+    $this->cObj->data['key']            = $key;
+    $this->cObj->data['filename']       = $fileName;
       // Set marker array
 
       // Replace the marker in the TypoScript recursively
