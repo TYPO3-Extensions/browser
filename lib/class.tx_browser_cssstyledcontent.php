@@ -613,9 +613,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // 130207, dwildt, +
     if( empty( $fileList ) )
     {
-      if( ! empty( $thumbArray ) )
+      if( ! empty( $thumbList ) )
       {
-        $fileList = $thumbArray;
+        $fileList = $thumbList;
         $path     = $thumbPath;
       }
 var_dump( __METHOD__, __LINE__, '$fileList: ', $fileList );
