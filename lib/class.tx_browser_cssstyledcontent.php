@@ -486,6 +486,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     {
       $table = $this->table;
       $field = ( trim( $conf['field'] ) ? trim( $conf['field'] ) : 'media' );
+      list( $tableInTca, $fieldInTca ) = explode( '.', $field );
+      if( empty ( $fieldInTca ) )
+      {
+        $fieldInTca = $tableInTca;
+      }
     }
 //var_dump( __METHOD__, __LINE__, '$table: ' . $table );
 //var_dump( __METHOD__, __LINE__, '$field: ' . $field  );
@@ -551,13 +556,25 @@ var_dump( __METHOD__, __LINE__, '$field: ' . $field );
 var_dump( __METHOD__, __LINE__, 'GLOBALS->TCA',  $GLOBALS['TCA'][$table] );
 //var_dump( __METHOD__, __LINE__, 'GLOBALS->TCA',  $GLOBALS['TCA'][$table]['columns'][$field] );
 
+// 130207, dwildt, -
+//        // Get the path
+//      if( is_array( $GLOBALS['TCA'][$table]['columns'][$field] ) )
+//      {
+//        if( ! empty( $GLOBALS['TCA'][$table]['columns'][$field]['config']['uploadfolder'] ) )
+//        {
+//            // in TCA-array folders are saved without trailing slash
+//          $path = $GLOBALS['TCA'][$table]['columns'][$field]['config']['uploadfolder'] . '/';
+//        }
+//      }
+
+// 130207, dwildt, +
         // Get the path
-      if( is_array( $GLOBALS['TCA'][$table]['columns'][$field] ) )
+      if( is_array( $GLOBALS['TCA'][$table]['columns'][$fieldInTca] ) )
       {
-        if( ! empty( $GLOBALS['TCA'][$table]['columns'][$field]['config']['uploadfolder'] ) )
+        if( ! empty( $GLOBALS['TCA'][$table]['columns'][$fieldInTca]['config']['uploadfolder'] ) )
         {
             // in TCA-array folders are saved without trailing slash
-          $path = $GLOBALS['TCA'][$table]['columns'][$field]['config']['uploadfolder'] . '/';
+          $path = $GLOBALS['TCA'][$table]['columns'][$fieldInTca]['config']['uploadfolder'] . '/';
         }
       }
     }
