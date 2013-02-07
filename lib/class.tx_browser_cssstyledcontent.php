@@ -465,7 +465,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //    $type = intval( $this->cObj->stdWrap( $conf['fields.']['layout'], $conf['fields.']['layout.'] ) );
 // #44858, 130207, dwildt, 1+
     $type = intval( $this->cObj->data['layout'] );
-var_dump( __METHOD__, __LINE__, '$type: ' . $type );
+//var_dump( __METHOD__, __LINE__, '$type: ' . $type );
 
       // set default path
     $path = 'uploads/media/';
@@ -487,8 +487,8 @@ var_dump( __METHOD__, __LINE__, '$type: ' . $type );
       $table = $this->table;
       $field = ( trim( $conf['field'] ) ? trim( $conf['field'] ) : 'media' );
     }
-var_dump( __METHOD__, __LINE__, '$table: ' . $table );
-var_dump( __METHOD__, __LINE__, '$field: ' . $field  );
+//var_dump( __METHOD__, __LINE__, '$table: ' . $table );
+//var_dump( __METHOD__, __LINE__, '$field: ' . $field  );
       // get table and field
       // #44858, 130207, dwildt, 11+
       
@@ -498,7 +498,7 @@ var_dump( __METHOD__, __LINE__, '$field: ' . $field  );
 //    $filePathConf = $this->cObj->stdWrap($conf['fields.']['from_path'], $conf['fields.']['from_path.']);
       // 130207, dwildt, 1+
     $filePathConf = $this->cObj->stdWrap( $conf['filePath'], $conf['filePath.'] );
-var_dump( __METHOD__, __LINE__, '$filePathConf: ' . $filePathConf );
+//var_dump( __METHOD__, __LINE__, '$filePathConf: ' . $filePathConf );
 
       // 130207, dwildt, +
       // DRS
@@ -543,9 +543,9 @@ var_dump( __METHOD__, __LINE__, '$filePathConf: ' . $filePathConf );
 //      $fileList = trim($this->cObj->stdWrap($conf['fields.']['files'], $conf['fields.']['files.']));
         // #44858, 130207, dwildt, 1+
       $fileList = $this->cObj->data[$field];
-var_dump( __METHOD__, __LINE__, '$this->cObj->data: ', $this->cObj->data );
-var_dump( __METHOD__, __LINE__, '$field: ' . $field );
-var_dump( __METHOD__, __LINE__, '$fileList: ' . $fileList );
+//var_dump( __METHOD__, __LINE__, '$this->cObj->data: ', $this->cObj->data );
+//var_dump( __METHOD__, __LINE__, '$field: ' . $field );
+//var_dump( __METHOD__, __LINE__, '$fileList: ' . $fileList );
 
         // Get the path
       if( is_array( $GLOBALS['TCA'][$table]['columns'][$field] ) )
@@ -577,9 +577,9 @@ var_dump( __METHOD__, __LINE__, '$fileList: ' . $fileList );
         // Get the alternative text for icons/thumbnails
       $altTexts = t3lib_div::trimExplode(LF, $this->cObj->data['altText']);
         // 130207, dwildt, 6+
-var_dump( __METHOD__, __LINE__, '$descriptions: ',  $descriptions );
-var_dump( __METHOD__, __LINE__, '$titles: ',  $titles );
-var_dump( __METHOD__, __LINE__, '$altTexts: ', $altTexts );
+//var_dump( __METHOD__, __LINE__, '$descriptions: ',  $descriptions );
+//var_dump( __METHOD__, __LINE__, '$titles: ',  $titles );
+//var_dump( __METHOD__, __LINE__, '$altTexts: ', $altTexts );
 
         // Adding hardcoded TS to linkProc configuration
       $conf['linkProc.']['path.']['current']    = 1;
@@ -667,6 +667,7 @@ var_dump( __METHOD__, __LINE__, '$altTexts: ', $altTexts );
           $GLOBALS['TSFE']->register['fileSize']      = $filesData[$key]['filesize'];
           $GLOBALS['TSFE']->register['fileExtension'] = $filesData[$key]['fileextension'];
           $GLOBALS['TSFE']->register['description']   = $filesData[$key]['description'];
+var_dump( __METHOD__, __LINE__, '$filesData: ' . $filesData );
 // dwildt, 111106, -
 //          $filesData[$key]['linkedFilenameParts']     = $this->beautifyFileLink
 //                                                        (
@@ -698,6 +699,7 @@ var_dump( __METHOD__, __LINE__, '$altTexts: ', $altTexts );
                                                       $conf['stripFileExtensionFromLinkText']
                                                     );
 // dwildt, 111106, +
+var_dump( __METHOD__, __LINE__, '$filesData: ' . $filesData );
         }
           // file is a file
       }
