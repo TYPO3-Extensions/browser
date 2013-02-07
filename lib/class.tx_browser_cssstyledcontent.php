@@ -560,6 +560,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 
       // explode into an array
     $fileArray = t3lib_div::trimExplode( ',', $fileList, 1 );
+var_dump( __METHOD__, __LINE__, '$fileArray: ',  $fileArray );
 
       // there are files to list ...
     if( count( $fileArray ) )
