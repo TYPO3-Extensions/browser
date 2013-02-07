@@ -646,17 +646,18 @@ class tx_browser_pi1_javascript
     switch( true )
     {
       case( $this->pObj->b_drs_error ):
+        if( ! $bool_success )
+        {
+          $prompt = $path . ' couldn\'t embedded.';
+          t3lib_div::devlog( '[ERROR/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 3 );
+        }
+        break;
       case( $this->pObj->b_drs_flexform ):
       case( $this->pObj->b_drs_javascript ):
         if( $bool_success )
         {
           $prompt = $path . ' is embedded.';
           t3lib_div::devlog( '[INFO/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 0 );
-        }
-        if( ! $bool_success )
-        {
-          $prompt = $path . ' couldn\'t embedded.';
-          t3lib_div::devlog( '[ERROR/FLEXFORM+JSS] ' . $prompt, $this->pObj->extKey, 3 );
         }
         break;
     }

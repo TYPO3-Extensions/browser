@@ -609,7 +609,7 @@ var_dump( __METHOD__, __LINE__, '$altTexts: ', $altTexts );
 //        // dwildt, 111110, +
 
         // LOOP: files
-      $filesData = array();
+      $filesData = array( );
       foreach($fileArray as $key => $fileName)
       {
         $absPath = t3lib_div::getFileAbsFileName($path.$fileName);
@@ -759,7 +759,7 @@ var_dump( __METHOD__, __LINE__, '$altTexts: ', $altTexts );
         if( empty( $str_outputEntry ) )
         {
             // DRS
-          if ( $this->b_drs_download )
+          if ( $this->b_drs_error )
           {
             $prompt = 'Result is empty.';
             t3lib_div::devlog( '[ERROR] ' . $prompt, $this->extKey, 3 );
