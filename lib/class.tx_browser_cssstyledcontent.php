@@ -201,6 +201,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     list( $cR_table, $cR_uid)       = explode( ':', $GLOBALS['TSFE']->currentRecord );
     unset( $cR_table );
     $marker['###TT_CONTENT.UID###'] = $cR_uid;
+      // 130207, dwildt, 1+
+    $this->cObj->data['tt_content.uid'] = $cR_uid;
 //var_dump( __METHOD__, __LINE__, $marker );
       // 111215, dwildt-
     //$conf                           = $this->cObj->substituteMarkerInObject( $conf, $marker );
@@ -358,10 +360,10 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       }
         // CONTINUE there isn't any localised record
 
+        // Set data of the localised record as a marker array
       $marker['###SYS_LANGUAGE.FLAG###']  = $llRows[$flag]['flag'];
       $marker['###SYS_LANGUAGE.TITLE###'] = $llRows[$flag]['title'];
-        // Set data of the localised record as a marker array
-
+      
       // 111215, dwildt+
       $marker['###TABLE.UID###'] = $llUid;
 
