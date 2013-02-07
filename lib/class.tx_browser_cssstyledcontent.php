@@ -1169,7 +1169,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // RETURN the result
       return ( $arr_default_filelinks );
     }
-return ( $arr_default_filelinks );
+var_dump( __METHOD__, __LINE__, $arr_default_filelinks );
       // RETURN by handling the default linkProc configuration array
 
 
@@ -1205,6 +1205,7 @@ return ( $arr_default_filelinks );
     list( $arr_filelinks[0], $arr_filelinks[1] ) = explode( '//**//', $str_filelinks );
 
 
+var_dump( __METHOD__, __LINE__, $arr_filelinks );
 
       // RETURN the result
     return ( $arr_filelinks );
