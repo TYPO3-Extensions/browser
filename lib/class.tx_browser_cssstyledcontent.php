@@ -548,7 +548,8 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //var_dump( __METHOD__, __LINE__, '$fileList: ' . $fileList );
 var_dump( __METHOD__, __LINE__, '$table: ' . $table );
 var_dump( __METHOD__, __LINE__, '$field: ' . $field );
-var_dump( __METHOD__, __LINE__, 'GLOBALS->TCA' . $GLOBALS['TCA'][$table]['columns'][$field] );
+var_dump( __METHOD__, __LINE__, 'GLOBALS->TCA',  $GLOBALS['TCA'][$table] );
+//var_dump( __METHOD__, __LINE__, 'GLOBALS->TCA',  $GLOBALS['TCA'][$table]['columns'][$field] );
 
         // Get the path
       if( is_array( $GLOBALS['TCA'][$table]['columns'][$field] ) )
