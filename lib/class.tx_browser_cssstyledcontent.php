@@ -620,6 +620,8 @@ var_dump( __METHOD__, __LINE__, '$thumbPath: ', $thumbPath );
         $fileList = $thumbArray;
         $path     = $thumbPath;
       }
+var_dump( __METHOD__, __LINE__, '$fileList: ', $fileList );
+var_dump( __METHOD__, __LINE__, '$path: ', $path );
     }
       // 130207, dwildt, +
 
