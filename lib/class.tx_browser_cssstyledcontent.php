@@ -618,7 +618,6 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $fileList = $thumbList;
         $path     = $thumbPath;
       }
-var_dump( __METHOD__, __LINE__, '$fileList: ', $fileList );
     }
       // 130207, dwildt, +
 
@@ -628,7 +627,6 @@ var_dump( __METHOD__, __LINE__, '$fileList: ', $fileList );
       // there are files to list ...
     if( count( $fileArray ) )
     {
-var_dump( __METHOD__, __LINE__, '$fileArray: ', $fileArray );
         // 130207, dwildt, 3-
 //        // the captions of the files
 //      $captions = $this->cObj->stdWrap($conf['fields.']['caption'], $conf['fields.']['caption.']);
@@ -677,7 +675,6 @@ var_dump( __METHOD__, __LINE__, '$fileArray: ', $fileArray );
       $filesData = array( );
       foreach($fileArray as $key => $fileName)
       {
-var_dump( __METHOD__, __LINE__, '$fileName: ', $fileName );
         $absPath = t3lib_div::getFileAbsFileName( $path . $fileName );
 
           // DRS
