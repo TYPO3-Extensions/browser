@@ -551,9 +551,9 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //var_dump( __METHOD__, __LINE__, '$this->cObj->data: ', $this->cObj->data );
 //var_dump( __METHOD__, __LINE__, '$field: ' . $field );
 //var_dump( __METHOD__, __LINE__, '$fileList: ' . $fileList );
-var_dump( __METHOD__, __LINE__, '$table: ' . $table );
-var_dump( __METHOD__, __LINE__, '$field: ' . $field );
-var_dump( __METHOD__, __LINE__, 'GLOBALS->TCA',  $GLOBALS['TCA'][$table] );
+//var_dump( __METHOD__, __LINE__, '$table: ' . $table );
+//var_dump( __METHOD__, __LINE__, '$field: ' . $field );
+//var_dump( __METHOD__, __LINE__, 'GLOBALS->TCA',  $GLOBALS['TCA'][$table] );
 //var_dump( __METHOD__, __LINE__, 'GLOBALS->TCA',  $GLOBALS['TCA'][$table]['columns'][$field] );
 
 // 130207, dwildt, -
@@ -688,7 +688,7 @@ var_dump( __METHOD__, __LINE__, 'GLOBALS->TCA',  $GLOBALS['TCA'][$table] );
           $GLOBALS['TSFE']->register['fileSize']      = $filesData[$key]['filesize'];
           $GLOBALS['TSFE']->register['fileExtension'] = $filesData[$key]['fileextension'];
           $GLOBALS['TSFE']->register['description']   = $filesData[$key]['description'];
-var_dump( __METHOD__, __LINE__, '$filesData: ' . $filesData );
+//var_dump( __METHOD__, __LINE__, '$filesData: ' . $filesData );
 // dwildt, 111106, -
 //          $filesData[$key]['linkedFilenameParts']     = $this->beautifyFileLink
 //                                                        (
@@ -720,7 +720,7 @@ var_dump( __METHOD__, __LINE__, '$filesData: ' . $filesData );
                                                       $conf['stripFileExtensionFromLinkText']
                                                     );
 // dwildt, 111106, +
-var_dump( __METHOD__, __LINE__, '$filesData: ' . $filesData );
+//var_dump( __METHOD__, __LINE__, '$filesData: ' . $filesData );
         }
           // file is a file
       }
