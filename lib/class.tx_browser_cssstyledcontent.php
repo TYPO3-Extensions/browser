@@ -578,6 +578,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
 //      $fileList = trim($this->cObj->stdWrap($conf['fields.']['files'], $conf['fields.']['files.']));
         // #44858, 130207, dwildt, 1+
       $fileList = $this->cObj->data[$field];
+      
 //var_dump( __METHOD__, __LINE__, '$this->cObj->data: ', $this->cObj->data );
 //var_dump( __METHOD__, __LINE__, '$field: ' . $field );
 //var_dump( __METHOD__, __LINE__, '$fileList: ' . $fileList );
@@ -608,6 +609,17 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         }
       }
     }
+
+      // 130207, dwildt, +
+    if( empty( $fileList) )
+    {
+      if( ! empty( $thumbArray ) )
+      {
+        $fileList = $thumbArray;
+        $path     = $thumbPath;
+      }
+    }
+      // 130207, dwildt, +
 
       // explode into an array
     $fileArray = t3lib_div::trimExplode( ',', $fileList, 1 );
