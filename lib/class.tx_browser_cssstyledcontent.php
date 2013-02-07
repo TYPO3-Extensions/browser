@@ -618,6 +618,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         $fileList = $thumbArray;
         $path     = $thumbPath;
       }
+var_dump( __METHOD__, __LINE__, '$fileList: ', $fileList );
     }
       // 130207, dwildt, +
 
