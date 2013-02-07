@@ -1169,6 +1169,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
         // RETURN the result
       return ( $arr_default_filelinks );
     }
+return ( $arr_default_filelinks );
       // RETURN by handling the default linkProc configuration array
 
 
@@ -1180,13 +1181,13 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
     $str_currIconRelPath      = $arr_default_filelinks[0];
       // I.e. <a href="uploads/tx_org/flyer_typo3_organiser_01.pdf" target="_blank" ><img src="typo3temp/pics/abfb01d4d2.jpg" width="200" height="408" alt="" /></a>
     list( $dummy, $str_srce ) = explode( 'src="', $str_currIconRelPath );
-      // 130207, dwildt, 1+
-    unset( $dummy );
-    
       // I.e. typo3temp/pics/abfb01d4d2.jpg" width="200" height="408" alt="" /></a>
     list( $str_srce )         = explode( '"',     $str_srce );
       // I.e. typo3temp/pics/abfb01d4d2.jpg
     $GLOBALS['TSFE']->register['ICON_REL_PATH_FROM_LINCPROC'] = $str_srce;
+
+      // 130207, dwildt, 1+
+    unset( $dummy );
       // Set register ICON_REL_PATH_FROM_LINCPROC
 
 
