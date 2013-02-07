@@ -577,9 +577,9 @@ var_dump( __METHOD__, __LINE__, '$fileList: ' . $fileList );
         // Get the alternative text for icons/thumbnails
       $altTexts = t3lib_div::trimExplode(LF, $this->cObj->data['altText']);
         // 130207, dwildt, 6+
-var_dump( __METHOD__, __LINE__, '$descriptions: ' . $descriptions );
-var_dump( __METHOD__, __LINE__, '$titles: ' . $titles );
-var_dump( __METHOD__, __LINE__, '$altTexts: ' . $altTexts );
+var_dump( __METHOD__, __LINE__, '$descriptions: ',  $descriptions );
+var_dump( __METHOD__, __LINE__, '$titles: ',  $titles );
+var_dump( __METHOD__, __LINE__, '$altTexts: ', $altTexts );
 
         // Adding hardcoded TS to linkProc configuration
       $conf['linkProc.']['path.']['current']    = 1;
