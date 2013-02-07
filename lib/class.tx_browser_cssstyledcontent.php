@@ -627,6 +627,7 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // there are files to list ...
     if( count( $fileArray ) )
     {
+var_dump( __METHOD__, __LINE__, '$fileArray: ', $fileArray );
         // 130207, dwildt, 3-
 //        // the captions of the files
 //      $captions = $this->cObj->stdWrap($conf['fields.']['caption'], $conf['fields.']['caption.']);
