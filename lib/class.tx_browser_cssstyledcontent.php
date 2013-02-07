@@ -613,15 +613,11 @@ class tx_browser_cssstyledcontent extends tx_cssstyledcontent_pi1
       // 130207, dwildt, +
     if( empty( $fileList ) )
     {
-var_dump( __METHOD__, __LINE__, '$thumbArray: ', $thumbArray );
-var_dump( __METHOD__, __LINE__, '$thumbPath: ', $thumbPath );
       if( ! empty( $thumbArray ) )
       {
         $fileList = $thumbArray;
         $path     = $thumbPath;
       }
-var_dump( __METHOD__, __LINE__, '$fileList: ', $fileList );
-var_dump( __METHOD__, __LINE__, '$path: ', $path );
     }
       // 130207, dwildt, +
 
@@ -679,6 +675,7 @@ var_dump( __METHOD__, __LINE__, '$path: ', $path );
       $filesData = array( );
       foreach($fileArray as $key => $fileName)
       {
+var_dump( __METHOD__, __LINE__, '$fileName: ', $fileName );
         $absPath = t3lib_div::getFileAbsFileName( $path . $fileName );
 
           // DRS
