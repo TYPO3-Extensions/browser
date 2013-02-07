@@ -969,7 +969,7 @@ plugin.tx_browser_pi1 {
                       isFalse = {$plugin.tx_browser_pi1.map.debugging.uncompressed}
                     }
                     value (
-                      <script src="typo3conf/ext/browser/res/js/map/oxRenderMap_1.1.02.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/oxMap.Render_1.2.01.js"></script>
 )
                   }
                     // All uncompressed files (debugging mode)
