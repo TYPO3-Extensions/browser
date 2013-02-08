@@ -975,13 +975,13 @@ plugin.tx_browser_pi1 {
                       isTrue = {$plugin.tx_browser_pi1.map.debugging.uncompressed}
                     }
                     value (
-                      <script src="typo3conf/ext/browser/res/js/map/api_1.1.02/oxMap.Helper.js"></script>
-                      <script src="typo3conf/ext/browser/res/js/map/api_1.1.02/oxMap.Error.js"></script>
-                      <script src="typo3conf/ext/browser/res/js/map/api_1.1.02/oxMap.OSM.js"></script>
-                      <script src="typo3conf/ext/browser/res/js/map/api_1.1.02/oxMap.OSM.Marker.js"></script>
-                      <script src="typo3conf/ext/browser/res/js/map/api_1.1.02/oxMap.OSM.Filter.js"></script>
-                      <script src="typo3conf/ext/browser/res/js/map/api_1.1.02/oxMap.OSM.CDmap.js"></script>
-                      <script src="typo3conf/ext/browser/res/js/map/api_1.1.02/oxMap.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api/1.2.01/oxMap.Helper.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api/1.2.01/oxMap.Error.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api/1.2.01/oxMap.OSM.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api/1.2.01/oxMap.OSM.Marker.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api/1.2.01/oxMap.OSM.Filter.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api/1.2.01/oxMap.OSM.CDmap.js"></script>
+                      <script src="typo3conf/ext/browser/res/js/map/api/1.2.01/oxMap.js"></script>
 )
                   }
                 }

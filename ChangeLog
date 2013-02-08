@@ -8,6 +8,14 @@
               * static/setup.txt
             * Moved files
               * oxRenderMap_1.1.02.js -> oxMap.Render_1.2.01.js
+              Effected files:
+              * t3jquery.txt
+              * static/setup.txt
+            * New Api
+              * api_1.1.02 -> api/1.2.01
+              Effected files:
+              * t3jquery.txt
+              * static/setup.txt
   
 4.4.5
   13-02-06
