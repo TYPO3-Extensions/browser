@@ -813,8 +813,6 @@ plugin.tx_browser_pi1 {
                       MapControls:    '###MAPCONTROLS###',        //    customized control types
                       MapZoomWheel:   '###ZOOMWHEELENABLE###',
                       MapZoomLevels:  '###MAPZOOMLEVELS###',      //    customized zoom levels
-                      MapMarker:      '###MAPMARKER###',          //    standalone marker is allowed
-                      MapMarkerInfo:  '###MAPMARKERINFO###',      //    marker with infolayer is allowed
                       MapMarkerEvent: '###MAPMARKEREVENT###',     //    click | hover | off | on (for drawing one point only)
 
                       OSM:            true,                                              //    WMS type OSM
@@ -943,8 +941,6 @@ plugin.tx_browser_pi1 {
                       , filterItems     : '.oxMapFilter'
                       , mapID           : 'oxMapArea'
                       , mapControls     : '###OXMAPCONFIGMAPCONTROLS###'
-                      , mapMarker       : '###OXMAPCONFIGMAPMARKER###'        // standalone marker is allowed
-                      , mapMarkerInfo   : '###OXMAPCONFIGMAPMARKERINFO###'    // marker with infolayer is allowed
                       , mapMarkerEvent  : '###OXMAPCONFIGMAPMARKEREVENT###'   // click | hover | on (for drawing one point only)
 )
                   }
@@ -1038,18 +1034,6 @@ plugin.tx_browser_pi1 {
                     // [STRING/CSV] Comma seperated list of quoted map controls wrapped by square brackets. Example: ['Navigation', 'PanZoomBar']
                   value = {$plugin.tx_browser_pi1.map.controls.debugging}
                 }
-              }
-                // Map marker standalone mode
-              oxMapConfigMapMarker = TEXT
-              oxMapConfigMapMarker {
-                  // [Boolean] standalone marker is allowed
-                value = true
-              }
-                // Map marker infolayer mode
-              oxMapConfigMapMarkerInfo = TEXT
-              oxMapConfigMapMarkerInfo {
-                  // [BOOLEAN] marker with infolayer is allowed
-                value = true
               }
                 // Map marker event type
               oxMapConfigMapMarkerEvent = TEXT
