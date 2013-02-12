@@ -789,7 +789,8 @@ $this->pObj->dev_var_dump( $str_andWhere );
 $this->pObj->dev_var_dump(
   $this->pObj->objFlexform->sheet_extend_cal_field_start,  
   $this->pObj->objFlexform->sheet_extend_cal_field_end,  
-  $str_andWhere 
+  $str_andWhere,
+  $date('Y-m-d H:m:s', $to)
 );
     return $str_andWhere;
   }
