@@ -786,7 +786,7 @@ $this->pObj->dev_var_dump( $str_andWhere );
     }
 
 // #45422    
-    $this->pObj->dev_var_dump( $this->pObj->objCal->sheet_extend_cal_field_end,  $str_andWhere );
+    $this->pObj->dev_var_dump( $this->pObj->objFlexform->sheet_extend_cal_field_end,  $str_andWhere );
     return $str_andWhere;
   }
 
