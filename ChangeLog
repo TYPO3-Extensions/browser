@@ -2,6 +2,8 @@
   13-02-12
   Feature 
   * #45422: Calendar: Handle periods over days
+            Effected file:
+            * pi1/class.tx_browser_pi1_filter_4x.php
 
 4.4.6
   13-02-07
