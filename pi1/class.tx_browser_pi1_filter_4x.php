@@ -740,6 +740,31 @@ $this->pObj->dev_var_dump( $str_andWhere );
     $sheet_extend_cal_field_start = $this->pObj->objFlexform->sheet_extend_cal_field_start;
     $sheet_extend_cal_field_end   = $this->pObj->objFlexform->sheet_extend_cal_field_end;  
 
+      // #45422, 130212, dwildt, +
+    if( $tableField != $sheet_extend_cal_field_start || 1 )
+    {
+      $prompt = '
+        <div style="border:red solid 1em;color:red;padding:1em;text_align:center;">
+          <h1>
+            ERROR
+          </h1>
+          <h2>
+            tableField is unexpected
+          </h2>
+          <p>
+            tableField is ' . $tablefield . ' but
+            $sheet_extend_cal_field_start is ' . $sheet_extend_cal_field_start . '
+          </p>
+          <p>
+            Browser - TYPO3 without PHP<br />
+            ' . __METHOD__ . ' (line ' . __LINE__ . ') 
+          </p>
+        </div>  
+        ';
+      die( $prompt );
+    }
+      // #45422, 130212, dwildt, +
+    
     list ($table, $field) = explode('.', $tableField);
     $conf_array           = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
