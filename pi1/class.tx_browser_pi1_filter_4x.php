@@ -777,7 +777,7 @@ $this->pObj->dev_var_dump( $str_andWhere );
           // #45422, 130212, dwildt, 1-
 //        $arr_item[] = $tableField . " <= '" . $to . "'";
           // #45422, 130212, dwildt, 1+
-        $arr_item[] = $tableField . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "')";
+        $arr_item[] = $tableField . " <= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "')";
           // #30912, 120127, dwildt+
         $this->arr_filter_condition[$tableField]['to'] = $to;
       }
