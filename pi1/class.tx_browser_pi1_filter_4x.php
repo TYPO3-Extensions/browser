@@ -665,7 +665,8 @@ class tx_browser_pi1_filter_4x {
     {
       $str_andWhere = ' (' . $str_andWhere . ')';
     }
-
+// #45422    
+$this->pObj->dev_var_dump( $str_andWhere );
     return $str_andWhere;
   }
 
@@ -784,6 +785,8 @@ class tx_browser_pi1_filter_4x {
       $str_andWhere = ' (' . $str_andWhere . ')';
     }
 
+// #45422    
+    $this->pObj->dev_var_dump($str_andWhere);
     return $str_andWhere;
   }
 
