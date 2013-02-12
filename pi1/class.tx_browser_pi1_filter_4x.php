@@ -796,7 +796,7 @@ $this->pObj->dev_var_dump( $str_andWhere );
 
       if( is_array( $arr_item ) )
       {
-        $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
+        $arr_orValues[] = '(' . implode(') AND (', $arr_item) . ') ';
       }
     }
       // LOOP : each piVar
