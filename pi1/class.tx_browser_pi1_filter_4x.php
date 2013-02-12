@@ -744,7 +744,7 @@ $this->pObj->dev_var_dump( $str_andWhere );
     if( $tableField != $sheet_extend_cal_field_start || 1 )
     {
       $prompt = '
-        <div style="border:red solid 1em;color:red;padding:1em;text_align:center;">
+        <div style="border:red solid 1em;color:red;padding:1em;text-align:center;">
           <h1>
             ERROR
           </h1>
@@ -752,12 +752,15 @@ $this->pObj->dev_var_dump( $str_andWhere );
             tableField is unexpected
           </h2>
           <p>
-            tableField is ' . $tablefield . ' but
+            tableField is ' . $tableField . ' but
             $sheet_extend_cal_field_start is ' . $sheet_extend_cal_field_start . '
           </p>
           <p>
             Browser - TYPO3 without PHP<br />
             ' . __METHOD__ . ' (line ' . __LINE__ . ') 
+          </p>
+          <p>
+            Sorry for the trouble.
           </p>
         </div>  
         ';
