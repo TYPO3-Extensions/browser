@@ -754,22 +754,32 @@ $this->pObj->dev_var_dump( $str_andWhere );
       $from_conf  = $arr_currField['valueFrom_stdWrap.'];
       $from_conf  = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
       $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
+        // #45422, 130212, dwildt, 1+    
+      $from = mysql_real_escape_string( $from );
       if( ! empty( $from ) )
       {
-        $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
+          // #45422, 130212, dwildt, 1-
+//        $arr_item[] = $tableField . " >= '" . $from . "'";
+          // #45422, 130212, dwildt, 1+    
+        $arr_item[] = $tableField . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "')";
           // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$tableField]['from'] = mysql_real_escape_string( $from );
+        $this->arr_filter_condition[$tableField]['from'] = $from;
       }
 
       $to         = $arr_currField['valueTo_stdWrap.']['value'];
       $to_conf    = $arr_currField['valueTo_stdWrap.'];
       $to_conf    = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
       $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+        // #45422, 130212, dwildt, +    
+      $to         = mysql_real_escape_string( $to );
       if( ! empty( $to ) )
       {
-        $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
+          // #45422, 130212, dwildt, 1-
+//        $arr_item[] = $tableField . " <= '" . $to . "'";
+          // #45422, 130212, dwildt, 1+
+        $arr_item[] = $tableField . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "')";
           // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$tableField]['to'] = mysql_real_escape_string( $to );
+        $this->arr_filter_condition[$tableField]['to'] = $to;
       }
 
       if( is_array( $arr_item ) )
