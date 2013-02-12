@@ -736,6 +736,10 @@ $this->pObj->dev_var_dump( $str_andWhere );
   {
     $str_andWhere = null;
 
+      // #45422, 130212, dwildt, 2+
+    $sheet_extend_cal_field_start = $this->pObj->objFlexform->sheet_extend_cal_field_start;
+    $sheet_extend_cal_field_end   = $this->pObj->objFlexform->sheet_extend_cal_field_end;  
+
     list ($table, $field) = explode('.', $tableField);
     $conf_array           = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
@@ -760,8 +764,12 @@ $this->pObj->dev_var_dump( $str_andWhere );
       {
           // #45422, 130212, dwildt, 1-
 //        $arr_item[] = $tableField . " >= '" . $from . "'";
-          // #45422, 130212, dwildt, 1+    
-        $arr_item[] = $tableField . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "')";
+          // #45422, 130212, dwildt, 2-
+//          // #45422, 130212, dwildt, 1+    
+//        $arr_item[] = $tableField . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "')";
+          // #45422, 130212, dwildt, 2+
+        $arr_item[] = $sheet_extend_cal_field_end . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "') " .
+                      "OR " . $sheet_extend_cal_field_end . " IS NULL"; 
           // #30912, 120127, dwildt+
         $this->arr_filter_condition[$tableField]['from'] = $from;
       }
@@ -776,8 +784,12 @@ $this->pObj->dev_var_dump( $str_andWhere );
       {
           // #45422, 130212, dwildt, 1-
 //        $arr_item[] = $tableField . " <= '" . $to . "'";
-          // #45422, 130212, dwildt, 1+
-        $arr_item[] = $tableField . " <= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "')";
+          // #45422, 130212, dwildt, 2-
+//          // #45422, 130212, dwildt, 1+
+//        $arr_item[] = $tableField . " <= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "')";
+          // #45422, 130212, dwildt, 2+
+        $arr_item[] = $sheet_extend_cal_field_start . " <= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "') " .
+                      "OR " . $sheet_extend_cal_field_start . " IS NULL"; 
           // #30912, 120127, dwildt+
         $this->arr_filter_condition[$tableField]['to'] = $to;
       }
