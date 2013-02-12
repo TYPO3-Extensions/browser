@@ -31,7 +31,7 @@
  * @package      TYPO3
  * @subpackage   browser
  *
- * @version      4.4.3
+ * @version      4.4.7
  * @since        3.9.9
  */
 
@@ -610,13 +610,45 @@ class tx_browser_pi1_filter_4x {
  * @param	string		$tableField   Current table.field
  * @return	array		arr_andWhereFilter: NULL if there isn' any filter
  * @internal              #30912: Filter: count items with no relation to category:
- * @version 4.1.21
+ * @version 4.4.7
  * @since   3.6.0
  */
   private function init_andWhereFilter_foreignTableArea( $arr_piVar, $tableField )
   {
     $str_andWhere = null;
 
+      // #45422, 130212, dwildt, 2+
+    $sheet_extend_cal_field_start = $this->pObj->objFlexform->sheet_extend_cal_field_start;
+    $sheet_extend_cal_field_end   = $this->pObj->objFlexform->sheet_extend_cal_field_end;  
+
+      // #45422, 130212, dwildt, +
+    if( $tableField != $sheet_extend_cal_field_start )
+    {
+      $prompt = '
+        <div style="border:red solid 1em;color:red;padding:1em;text-align:center;">
+          <h1>
+            ERROR
+          </h1>
+          <h2>
+            tableField has an unexpected value
+          </h2>
+          <p>
+            tableField is ' . $tableField . ' but
+            $sheet_extend_cal_field_start is ' . $sheet_extend_cal_field_start . '
+          </p>
+          <p>
+            Browser - TYPO3 without PHP<br />
+            ' . __METHOD__ . ' (line ' . __LINE__ . ') 
+          </p>
+          <p>
+            Sorry for the trouble.
+          </p>
+        </div>  
+        ';
+      die( $prompt );
+    }
+      // #45422, 130212, dwildt, +
+    
     list ($table, $field) = explode('.', $tableField);
     $conf_array           = $this->conf_view['filter.'][$table . '.'][$field . '.'];
 
@@ -635,27 +667,50 @@ class tx_browser_pi1_filter_4x {
       $from_conf  = $arr_currField['valueFrom_stdWrap.'];
       $from_conf  = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
       $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
+        // #45422, 130212, dwildt, 6-
+//      if( ! empty( $from ) )
+//      {
+//        $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
+//          // #30912, 120127, dwildt+
+//        $this->arr_filter_condition[$tableField]['from'] = mysql_real_escape_string( $from );
+//      }
+        // #45422, 130212, dwildt, 8+    
+      $from = mysql_real_escape_string( $from );
       if( ! empty( $from ) )
       {
-        $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
+        $arr_item[] = $sheet_extend_cal_field_end . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "') " .
+                      "OR " . $sheet_extend_cal_field_end . " IS NULL"; 
           // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$tableField]['from'] = mysql_real_escape_string( $from );
+        $this->arr_filter_condition[$sheet_extend_cal_field_end]['from'] = $from;
       }
 
       $to         = $arr_currField['valueTo_stdWrap.']['value'];
       $to_conf    = $arr_currField['valueTo_stdWrap.'];
       $to_conf    = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
       $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+        // #45422, 130212, dwildt, 6-    
+//      if( ! empty( $to ) )
+//      {
+//        $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
+//          // #30912, 120127, dwildt+
+//        $this->arr_filter_condition[$tableField]['to'] = mysql_real_escape_string( $to );
+//      }
+        // #45422, 130212, dwildt, 8+    
+      $to         = mysql_real_escape_string( $to );
       if( ! empty( $to ) )
       {
-        $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
+        $arr_item[] = $sheet_extend_cal_field_start . " <= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "') " .
+                      "OR " . $sheet_extend_cal_field_start . " IS NULL"; 
           // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$tableField]['to'] = mysql_real_escape_string( $to );
+        $this->arr_filter_condition[$sheet_extend_cal_field_start]['to'] = $to;
       }
 
       if( is_array( $arr_item ) )
       {
-        $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
+         // #45422, 130212, 1-
+//        $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
+         // #45422, 130212, 1+
+        $arr_orValues[] = '(' . implode(') AND (', $arr_item) . ') ';
       }
     }
       // LOOP : each piVar
@@ -665,8 +720,6 @@ class tx_browser_pi1_filter_4x {
     {
       $str_andWhere = ' (' . $str_andWhere . ')';
     }
-// #45422    
-$this->pObj->dev_var_dump( $str_andWhere );
     return $str_andWhere;
   }
 
@@ -741,7 +794,7 @@ $this->pObj->dev_var_dump( $str_andWhere );
     $sheet_extend_cal_field_end   = $this->pObj->objFlexform->sheet_extend_cal_field_end;  
 
       // #45422, 130212, dwildt, +
-    if( $tableField != $sheet_extend_cal_field_start || 1 )
+    if( $tableField != $sheet_extend_cal_field_start )
     {
       $prompt = '
         <div style="border:red solid 1em;color:red;padding:1em;text-align:center;">
@@ -749,7 +802,7 @@ $this->pObj->dev_var_dump( $str_andWhere );
             ERROR
           </h1>
           <h2>
-            tableField is unexpected
+            tableField has an unexpected value
           </h2>
           <p>
             tableField is ' . $tableField . ' but
@@ -798,15 +851,19 @@ $this->pObj->dev_var_dump( $str_andWhere );
           // #45422, 130212, dwildt, 2+
         $arr_item[] = $sheet_extend_cal_field_end . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "') " .
                       "OR " . $sheet_extend_cal_field_end . " IS NULL"; 
+          // #45422, 130212, dwildt, 2-
+//          // #30912, 120127, dwildt+
+//        $this->arr_filter_condition[$tableField]['from'] = $from;
+          // #45422, 130212, dwildt, 2+
           // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$tableField]['from'] = $from;
+        $this->arr_filter_condition[$sheet_extend_cal_field_end]['from'] = $from;
       }
 
       $to         = $arr_currField['valueTo_stdWrap.']['value'];
       $to_conf    = $arr_currField['valueTo_stdWrap.'];
       $to_conf    = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
       $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
-        // #45422, 130212, dwildt, +    
+        // #45422, 130212, dwildt, 1+    
       $to         = mysql_real_escape_string( $to );
       if( ! empty( $to ) )
       {
@@ -818,12 +875,19 @@ $this->pObj->dev_var_dump( $str_andWhere );
           // #45422, 130212, dwildt, 2+
         $arr_item[] = $sheet_extend_cal_field_start . " <= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "') " .
                       "OR " . $sheet_extend_cal_field_start . " IS NULL"; 
+          // #45422, 130212, dwildt, 2-
+//          // #30912, 120127, dwildt+
+//        $this->arr_filter_condition[$tableField]['to'] = $to;
+          // #45422, 130212, dwildt, 2+
           // #30912, 120127, dwildt+
-        $this->arr_filter_condition[$tableField]['to'] = $to;
+        $this->arr_filter_condition[$sheet_extend_cal_field_start]['to'] = $to;
       }
 
       if( is_array( $arr_item ) )
       {
+         // #45422, 130212, 1-
+//        $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
+         // #45422, 130212, 1+
         $arr_orValues[] = '(' . implode(') AND (', $arr_item) . ') ';
       }
     }
@@ -835,14 +899,6 @@ $this->pObj->dev_var_dump( $str_andWhere );
       $str_andWhere = ' (' . $str_andWhere . ')';
     }
 
-// #45422    
-$this->pObj->dev_var_dump(
-  $this->pObj->objFlexform->sheet_extend_cal_field_start,  
-  $this->pObj->objFlexform->sheet_extend_cal_field_end,  
-  $str_andWhere,
-  date('Y-m-d H:i:s', $from),
-  date('Y-m-d H:i:s', $to)
-);
     return $str_andWhere;
   }
 
