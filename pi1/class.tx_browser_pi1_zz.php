@@ -28,7 +28,7 @@
  * @author      Dirk Wildt http://wildt.at.die-netzmacher.de
  * @package     TYPO3
  * @subpackage  browser
- * @version     4.1.10
+ * @version     4.5.0
  * @since       1.0.0
  */
 
@@ -1671,16 +1671,30 @@
 
 
 
-  /**
+/**
  * Calculate the cHash md5 value
  *
  * @param	string		$str_params: URL parameter string like &tx_browser_pi1[showUid]=12&&tx_browser_pi1[cat]=1
  * @return	string		$cHash_md5: md5 value like d218cfedf9
+ * 
+ * @version   4.5.0 
  */
-  function get_cHash($str_params)
+  function get_cHash( $str_params )
   {
-    $cHash_array  = t3lib_div::cHashParams($str_params);
-    $cHash_md5    = t3lib_div::shortMD5(serialize($cHash_array));
+      // #43108, 130222, dwildt, 1-
+//    $cHash_array  = t3lib_div::cHashParams( $str_params );
+      // #43108, 130222, dwildt, 9+
+    switch( true )
+    {
+      case( $this->typo3Version < 6000000 ):
+        $cHash_array  = t3lib_div::cHashParams( $str_params );
+        break;
+      default:
+        $cHash_array  = t3lib_cacheHash( $str_params );
+        break;
+    }
+      // #43108, 130222, dwildt, 9+
+    $cHash_md5    = t3lib_div::shortMD5( serialize( $cHash_array ) );
 
     return $cHash_md5;
   }

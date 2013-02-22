@@ -29,7 +29,7 @@
 * @package    TYPO3
 * @subpackage    browser
 *
-* @version 4.4.0
+* @version 4.5.0
 * @since 3.0.0
 */
 
@@ -1022,7 +1022,7 @@ class tx_browser_pi1_wrapper
  *
  * @param    array        $tsImage : the typoscript array of an image
  * @return    string        The wrapped image(s)
- * @version 3.6.0
+ * @version 4.5.0
  * @since 1.0
  */
   function wrapImage($tsImage)
@@ -1107,7 +1107,19 @@ class tx_browser_pi1_wrapper
     {
       $imageNum = $lConf['imageCount'];
     }
-    $imageNum       = t3lib_div::intInRange($imageNum, 0, 100);
+      // #43108, 130222, dwildt, 1-
+//    $imageNum = t3lib_div::intInRange($imageNum, 0, 100);
+      // #43108, 130222, dwildt, 9+
+    switch( true )
+    {
+      case( $this->typo3Version < 6000000 ):
+        $imageNum = t3lib_div::intInRange( $imageNum, 0, 100 );
+        break;
+      default:
+        $imageNum = t3lib_utility_Math::forceIntegerInRange( $imageNum, 0, 100 );
+        break;
+    }
+      // #43108, 130222, dwildt, 9+
     $theImgCode     = '';
     $imgs           = t3lib_div::trimExplode(',', $tsImage['image'], 1);
     $imgsCaptions   = explode(chr(10), $tsImage['imagecaption']);

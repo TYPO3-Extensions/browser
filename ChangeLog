@@ -1,3 +1,24 @@
+4.5.0
+  13-02-22
+  Feature
+  * #43108: TYPO3 6.0 compatibility
+            * t3lib_div::intInRange   -> t3lib_utility_Math::forceIntegerInRange()
+            * t3lib_div::int_from_ver -> t3lib_utility_VersionNumber::convertVersionNumberToInteger()
+            * t3lib_div::cHashParams  -> t3lib_cacheHash
+              Effected files:
+              * pi1
+                * class.tx_browser_pi1.php
+                * class.tx_browser_pi1_backend.php
+                * class.tx_browser_pi1_wrapper.php
+                * class.tx_browser_pi1_zz.php
+
+4.4.8
+  13-02-14
+  Improvement
+  * #i0003: Optimise query string for DRS. Replace ',' with ', '
+            Effected file:
+            * pi1/class.tx_browser_pi1_sql_functions.php
+
 4.4.7
   13-02-12
   Feature 

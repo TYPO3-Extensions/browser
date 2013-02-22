@@ -30,7 +30,7 @@
  *
  * @author    Dirk Wildt <http://wildt.at.die-netzmacher.de>
  *
- * @version   4.1.13
+ * @version   4.1.8
  * @since     3.9.9
  *
  * @package     TYPO3
@@ -687,7 +687,7 @@ class tx_browser_pi1_sql_functions
  * @param	string		$orderBy  : ORDER BY statement
  * @param	string		$limit    : LIMIT statement
  * @return	array		$res      : SQL result
- * @version 3.9.12
+ * @version 4.1.8
  * @since   3.9.12
  */
   public function exec_SELECTquery( $select, $from, $where, $groupBy, $orderBy, $limit )
@@ -745,7 +745,10 @@ class tx_browser_pi1_sql_functions
     if( $this->pObj->b_drs_sql )
     {
       $debugTrail = $this->pObj->drs_debugTrail( $debugTrailLevel );
-      $prompt     = $debugTrail['prompt'] . ': ' . $query;
+        // #i0003, 130214, dwildt, 1-
+//      $prompt     = $debugTrail['prompt'] . ': ' . $query;
+        // #i0003, 130214, dwildt, 1+
+      $prompt     = $debugTrail['prompt'] . ': ' . str_replace( ',', ', ' . $query );
       t3lib_div::devlog( '[OK/SQL] ' . $prompt,  $this->pObj->extKey, -1 );
       $prompt     = 'Be aware of the multi-byte notation, if you want to use the query ' .
                     'in your SQL shell or in phpMyAdmin.';
@@ -835,7 +838,10 @@ class tx_browser_pi1_sql_functions
 //    }
     if( $this->pObj->b_drs_sql )
     {
-      $prompt = $debugTrail['prompt'] . ': ' . $query;
+        // #i0003, 130214, dwildt, 1-
+//      $prompt = $debugTrail['prompt'] . ': ' . $query;
+        // #i0003, 130214, dwildt, 1+
+      $prompt = $debugTrail['prompt'] . ': ' . str_replace( ',', ', ' . $query );
       t3lib_div::devlog( '[OK/SQL] ' . $prompt,  $this->pObj->extKey, -1 );
 //      $prompt = 'Be aware of the multi-byte notation, if you want to use the query ' .
 //                'in your SQL shell or in phpMyAdmin.';

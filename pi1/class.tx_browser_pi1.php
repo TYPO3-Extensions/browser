@@ -62,7 +62,7 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * @package    TYPO3
  * @subpackage  browser
  *
- * @version 4.4.0
+ * @version 4.5.0
  * @since 0.0.1
  */
 
