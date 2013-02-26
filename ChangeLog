@@ -7,6 +7,7 @@
               * plugins/jquery.t3browser/jquery.t3browser-0.0.5.js
               * tx_browser_pi1-0.0.5.js
             * static
+              * constants.txt
               * setup.txt
 
   * #43108: TYPO3 6.0 compatibility

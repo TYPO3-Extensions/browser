@@ -132,7 +132,7 @@
                           // ERROR server has an error and has send a message
 
 
-                        if( ! $( "#tmp-container div22222222222" ).length ) {
+                        if( ! $( "#tmp-container div" ).length ) {
                           if( t3browserAlert )
                           {
                               // #44295, 130103, dwildt

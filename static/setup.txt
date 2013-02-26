@@ -4105,7 +4105,7 @@ plugin.tx_browser_pi1 {
                 // Enable/Disable JSS alerts
               t3browseralert = TEXT
               t3browseralert {
-                value = 1
+                value = {$plugin.tx_browser_pi1.jQuery.debugging.alerts.enable}
               }
               typenum_ajax = TEXT
               typenum_ajax {

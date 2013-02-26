@@ -48,6 +48,11 @@ plugin.tx_browser_pi1 {
   # cat=Browser - Image Dimensions/others/999;     type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
   dimensions.links = Click me!
 
+  # cat=Browser - jQuery debugging//100;          type=boolean;  label= JSS Alerts: Enable / disable JSS alerts.
+  jQuery.debugging.alerts.enable = 1
+  # cat=Browser - jQuery debugging/others/999;    type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=Helpful links
+  jQuery.debugging.links = Click me!
+
   # cat=Browser - jQuery jstree//100;   type=boolean;  label= Enabling: Enable the jstree.
   jQuery.plugin.jstree.enable           = 0
   # cat=Browser - jQuery jstree//100;   type=options[apple,classic,default,default-rtl];  label= Theme: Name of the theme of tree views
