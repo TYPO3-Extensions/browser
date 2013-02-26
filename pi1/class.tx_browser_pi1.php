@@ -80,7 +80,6 @@ require_once(PATH_tslib.'class.tslib_pibase.php');
  * 1145:     public function drs_debugTrail( $level = 1 )
  * 1181:     private function init_drs()
  * 1477:     public function dev_var_dump( $content )
-  //public function dev_var_dump( )
  *
  *              SECTION: Classes
  * 1548:     private function require_classes()

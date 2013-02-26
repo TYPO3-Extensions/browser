@@ -1,6 +1,13 @@
 4.5.0
   13-02-22
   Feature
+  * #45846: Controlling JSS alerts
+            Effected files:
+            * res/js/jquery
+              * tx_browser_pi1-0.0.5.js
+            * static
+              * setup.txt
+
   * #43108: TYPO3 6.0 compatibility
             * t3lib_div::intInRange   -> t3lib_utility_Math::forceIntegerInRange()
             * t3lib_div::int_from_ver -> t3lib_utility_VersionNumber::convertVersionNumberToInteger()

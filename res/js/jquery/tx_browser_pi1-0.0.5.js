@@ -13,8 +13,9 @@
  *   http://www.gnu.org/licenses/gpl.html
  */
 
-
-
+  // #45846, 130226, dwildt, 1+
+var t3browserAlert = ###T3BROWSERALERT###;
+  
 $( document ).ready( function( )
 {
     //////////////////////////////////////////////////////////

@@ -4102,6 +4102,11 @@ plugin.tx_browser_pi1 {
                   returnLast = url
                 }
               }
+                // Enable/Disable JSS alerts
+              t3browseralert = TEXT
+              t3browseralert {
+                value = 1
+              }
               typenum_ajax = TEXT
               typenum_ajax {
                 value = {$plugin.tx_browser_pi1.typeNum.ajaxPageObj}
