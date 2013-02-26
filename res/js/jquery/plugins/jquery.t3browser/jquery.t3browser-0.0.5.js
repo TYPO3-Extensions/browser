@@ -79,11 +79,14 @@
                     {
                         // ERROR html_element is missing. Don't use AJAX but forward
                       if( ! $( plugin_id ).length ) {
-                        prompt = format( settings.messages.errMissingTagPropertyPrmpt, plugin_id);
-                        alert( settings.messages.errMissingTagPropertyLabel + " " + prompt );
-                        prompt = format( settings.messages.hlpMissingTagPropertyPrmpt, plugin_id);
-                        alert( settings.messages.hlpMissingTagPropertyLabel + " " + prompt );
-                        //alert(settings.messages.hlpAjaxConflictLabel + " " + settings.messages.hlpAjaxConflictPrmpt );
+                        if( t3browserAlert )
+                        {
+                          prompt = format( settings.messages.errMissingTagPropertyPrmpt, plugin_id);
+                          alert( settings.messages.errMissingTagPropertyLabel + " " + prompt );
+                          prompt = format( settings.messages.hlpMissingTagPropertyPrmpt, plugin_id);
+                          alert( settings.messages.hlpMissingTagPropertyLabel + " " + prompt );
+                          //alert(settings.messages.hlpAjaxConflictLabel + " " + settings.messages.hlpAjaxConflictPrmpt );
+                        }
                         fq_url = window.location.protocol + "//" + window.location.host + "/" + url;
                         window.location.href = fq_url;
                         return;
@@ -130,19 +133,22 @@
 
 
                         if( ! $( "#tmp-container div" ).length ) {
-                            // #44295, 130103, dwildt
-                          alert( "ERROR in jquery.t3browser-0.0.5.js: Content is empty!\n" +
-                            "\n" +
-                            "Please check the link manually:\n" +
-                            url + "\n" +
-                            "\n" +
-                            "Please check the HTML id manually:\n" +
-                            plugin_id + "\n" +
-                            "\n" +
-                            "Reasons can be:\n" +
-                            "* The TYPO3 colPos of your content isn't 0.\n" +
-                            "* THE HTML id isn't proper."
-                          );
+                          if( t3browserAlert )
+                          {
+                              // #44295, 130103, dwildt
+                            alert( "ERROR in jquery.t3browser-0.0.5.js: Content is empty!\n" +
+                              "\n" +
+                              "Please check the link manually:\n" +
+                              url + "\n" +
+                              "\n" +
+                              "Please check the HTML id manually:\n" +
+                              plugin_id + "\n" +
+                              "\n" +
+                              "Reasons can be:\n" +
+                              "* The TYPO3 colPos of your content isn't 0.\n" +
+                              "* THE HTML id isn't proper."
+                            );
+                          }
                             // Fade out the loading *.gif, initiate buttons again
                           clean_up( html_element );
                           return;
@@ -151,10 +157,13 @@
                         var id_of_loaded_content = "#" + $( "#tmp-container div" ).attr( "id" )
 
                         if( ! $( id_of_loaded_content ).length ) {
-                          alert( "ERROR: The first <div> hasn\'t any id.\n" +
-                            "Probably the first div is the header.\n" +
-                            "If it is the header, please set it to [don\'t display header]."
-                          );
+                          if( t3browserAlert )
+                          {
+                            alert( "ERROR: The first <div> hasn\'t any id.\n" +
+                              "Probably the first div is the header.\n" +
+                              "If it is the header, please set it to [don\'t display header]."
+                            );
+                          }
                           $( "#tmp-container div" ).remove( );
                             // Fade out the loading *.gif, initiate buttons again
                           clean_up( html_element );
@@ -210,7 +219,10 @@
                       // Prompt errors
                     function err_prompt( selector, label, prompt ) {
                       if( !$( "#update-prompt" ).length ) {
-                        alert( label + " " + prompt);
+                        if( t3browserAlert )
+                        {
+                          alert( label + " " + prompt);
+                        }
                         return;
                       }
                       element = format( settings.templates.uiErr, label, prompt);
@@ -221,7 +233,10 @@
                       // Prompt informations
                     function inf_prompt( selector, label, prompt ) {
                       if( !$( "#update-prompt" ).length ) {
-                        alert( label + " " + prompt);
+                        if( t3browserAlert )
+                        {
+                          alert( label + " " + prompt);
+                        }
                         return;
                       }
                       element = format( settings.templates.uiInf, label, prompt);
@@ -276,7 +291,10 @@
                     {
                         // ERROR html_element is missing. Don't use AJAX but forward
                       if( !$( element_out ).length ) {
-                        alert( element_out + " doesn\'t exist." );
+                        if( t3browserAlert )
+                        {
+                          alert( element_out + " doesn\'t exist." );
+                        }
                         return;
                       }
                         // ERROR element_outis missing. Don't use AJAX but forward
@@ -349,11 +367,14 @@
                     {
                         // ERROR html_element is missing. Don't use AJAX but forward
                       if( !$( html_element ).length ) {
-                        prompt = format( settings.messages.errMissingTagPropertyPrmpt, html_element);
-                        alert( settings.messages.errMissingTagPropertyLabel + " " + prompt );
-                        prompt = format( settings.messages.hlpMissingTagPropertyPrmpt, html_element);
-                        alert( settings.messages.hlpMissingTagPropertyLabel + " " + prompt );
-                        //alert(settings.messages.hlpAjaxConflictLabel + " " + settings.messages.hlpAjaxConflictPrmpt );
+                        if( t3browserAlert )
+                        {
+                          prompt = format( settings.messages.errMissingTagPropertyPrmpt, html_element);
+                          alert( settings.messages.errMissingTagPropertyLabel + " " + prompt );
+                          prompt = format( settings.messages.hlpMissingTagPropertyPrmpt, html_element);
+                          alert( settings.messages.hlpMissingTagPropertyLabel + " " + prompt );
+                          //alert(settings.messages.hlpAjaxConflictLabel + " " + settings.messages.hlpAjaxConflictPrmpt );
+                        }
                         fq_url = window.location.protocol + "//" + window.location.host + "/" + url;
                         window.location.href = fq_url;
                         return;
@@ -444,7 +465,10 @@
                       // Prompt errors
                     function err_prompt( selector, label, prompt ) {
                       if( !$( "#update-prompt" ).length ) {
-                        alert( label + " " + prompt);
+                        if( t3browserAlert )
+                        {
+                          alert( label + " " + prompt);
+                        }
                         return;
                       }
                       element = format( settings.templates.uiErr, label, prompt);
@@ -455,7 +479,10 @@
                       // Prompt informations
                     function inf_prompt( selector, label, prompt ) {
                       if( !$( "#update-prompt" ).length ) {
-                        alert( label + " " + prompt);
+                        if( t3browserAlert )
+                        {
+                          alert( label + " " + prompt);
+                        }
                         return;
                       }
                       element = format( settings.templates.uiInf, label, prompt);

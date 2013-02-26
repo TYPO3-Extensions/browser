@@ -4,6 +4,7 @@
   * #45846: Controlling JSS alerts
             Effected files:
             * res/js/jquery
+              * plugins/jquery.t3browser/jquery.t3browser-0.0.5.js
               * tx_browser_pi1-0.0.5.js
             * static
               * setup.txt
