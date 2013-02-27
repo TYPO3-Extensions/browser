@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <body>
+<pre>
+<em>
+
+VERSION 3.7.0
+  - #27041: Single view got the record browser. See marker ###RECORD_BROWSER### below.
+            Single view got an id.
+    #28562: Single view got some classes with jQuery ui. See ui-widget among others.
+
+VERSION 3.6.1
+  - 11886: List view search form got the new hidden field: tx_browser_pi1[plugin]
+
+
+DEFAULT TEMPLATE FOR LIST VIEWS
+===============================
+This template is the default template for all list views.
+
+</em>
+
+<!-- ###TEMPLATE_LIST### begin -->
+      <div class="###MODE### listview-###MODE### ui-widget ui-corner-all">
+<!-- ###LIST_TITLE### begin -->
+        ###MY_TITLE###
+<!-- ###LIST_TITLE### end -->
+<!-- ###SEARCHFORM### begin -->
+        <div id="c###TT_CONTENT.UID###-list-searchbox-###MODE###" class="searchbox searchbox-list-###MODE###">
+          <form id="c###TT_CONTENT.UID###-list-searchbox-form-###MODE###" action="###ACTION###" method="post" >
+            <fieldset class="ui-corner-all">
+              <legend>###MY_SEARCH_LEGEND###</legend>
+              ###HIDDEN###
+              <input type="hidden" name="no_cache" value="1" />
+              <input type="hidden" name="tx_browser_pi1[plugin]" value="###PLUGIN###" />
+              <input class="sword" type="text" name="tx_browser_pi1[sword]" onfocus="if(this.value =='###SWORD_DEFAULT###') this.value=''" value="###SWORD###" />
+              <input class="button hidesubmit" type="submit" value="###MY_SEARCH###" />
+              <!-- ###BUTTON_CSV-EXPORT### begin -->
+              <input id="c###TT_CONTENT.UID###-list-submit-csv-export-###MODE###" class="button hidesubmit"  type="submit"  value="###MY_CSV_EXPORT###" />
+              <!-- ###BUTTON_CSV-EXPORT### end -->
+              <input class="reset" type="button" onclick="location='###MY_URL###'" value="###MY_RESET###" />
+              <!-- Add filters with the ###TABLE.FIELD### syntax and configure your filters with TypoScript --> 
+            </fieldset>
+          </form>
+          ###RESULTPHRASE###
+        </div><!-- ###SEARCHFORM### end -->
+        <div class="listarea">
+          <!-- ###LISTTABS### begin -->
+          <div id="c###TT_CONTENT.UID###-list-tabs-###MODE###" class="ui-tabs ui-tabs-list-###MODE### ui-widget ui-widget-content ui-corner-all">
+<!-- ###LISTHEAD### begin --><!-- ###LISTHEADITEM### begin -->
+            ###ITEM###<!-- ###LISTHEADITEM### end --><!-- ###LISTHEAD### end -->
+<!-- ###INDEXBROWSER### begin -->
+            <div id="c###TT_CONTENT.UID###-indexBrowser-###MODE###" class="indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE###">
+              <ul class="indexBrowser indexBrowser-###UL_VIEW###-###UL_MODE###"><!-- ###INDEXBROWSERTABS### begin -->
+                <li###LI_CLASS###>###TAB###</li><!-- ###INDEXBROWSERTABS### end -->
+              </ul>
+            </div><!-- ###INDEXBROWSER### end -->
+<!-- ###PAGEBROWSER### begin -->
+           <div id="c###TT_CONTENT.UID###-browsebox-###MODE###" class="browsebox browsebox-list-###MODE###">          
+              ###RESULT_AND_ITEMS###
+            </div><!-- ###PAGEBROWSER### end -->
+<!-- ###MODESELECTOR### begin -->
+            <div id="c###TT_CONTENT.UID###-modeSelector-###MODE###" class="modeSelector modeSelector-list-###MODE###">
+              <ul class="ui-tabs-nav ui-tabs-nav-list-###MODE### ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+                <!-- ###MODESELECTORTABS### begin -->
+                <li id="c###TT_CONTENT.UID###-list-tab-###MODE###" class="ui-state-default ui-corner-top c###TT_CONTENT.UID###-list-tab###UI-STATE-ACTIVE######UI-TABS-SELECTED###">###TABS###</li>
+                <!-- ###MODESELECTORTABS### end -->
+              </ul>
+            </div><!-- ###MODESELECTOR### end -->
+<!-- ###LISTVIEW### begin -->
+            <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="listview listview-content listview-###MODE### listview-content-###MODE###">
+<!-- ###GROUPBY### begin -->
+<!-- ###GROUPBYHEAD### begin -->
+              <h2>###GROUPBY_GROUPNAME###</h2>
+<!-- ###GROUPBYHEAD### end -->
+<!-- ###GROUPBYBODY### begin -->
+              <ul><!-- ###LISTBODY### begin --><!-- ###LISTBODYITEM### begin -->
+                <li###CLASS###>###ITEM### ###SOCIALMEDIA_BOOKMARKS###</li><!-- ###LISTBODYITEM### end -->
+              <!-- ###LISTBODY### end --></ul>
+<!-- ###GROUPBYBODY### end -->
+<!-- ###GROUPBY### end -->
+            </div><!-- /listview --><!-- ###LISTVIEW### end -->
+          </div> <!-- /ui-tabs --><!-- ###LISTTABS### end -->
+        </div> <!-- /listarea -->
+      </div> <!-- /ui-widget -->
+<!-- ###TEMPLATE_LIST### end -->
+
+
+
+<em>
+
+DEFAULT TEMPLATE FOR SINGLE VIEWS WITH TABLE
+============================================
+THIS SHOULD BE THE DEFAULT FOR A SINGLE VIEW!
+
+This template is used, if you have configured your typoscript like this:
+plugin.tx_browser_pi1.views.single.XX.template.default = 1
+
+  CONTROLLING MARKERS
+  ===================
+  You can control the display of subparts and markers with typoscript:
+
+    plugin.tx_browser_pi1.views.single.XX.display {
+      title         = 1     // Display [1] or hide [0] the title
+      table {
+        summary     = 1     // Display [1] or hide [0] the table summary
+        caption     = 1     // Display [1] or hide [0] the table caption
+      }
+      backbutton    = 1     // Display [1] or hide [0] the backbutton
+    }
+
+    MODESELECTOR
+    ============
+    The display of the modeselector depends on the number of your views.
+    If you have only one single view, there won't be any modeselector.
+    If you have more than one single view, there will be a modeselector.
+
+</em>
+
+<!-- ###TEMPLATE_SINGLE### begin -->
+<!-- ###MODESELECTOR### begin -->
+        <ul id="c###TT_CONTENT.UID###-modeSelector-single-###MODE###" class="modeSelector modeSelector-single-###MODE###"><!-- ###MODESELECTORTABS### begin -->
+          <li###CLASS###>###TABS###</li><!-- ###MODESELECTORTABS### end -->
+        </ul><!-- ###MODESELECTOR### end -->
+        <!-- ###SINGLEVIEW### begin -->
+<!-- ###AREA_FOR_AJAX_LIST_01### begin -->
+        <div id="c###TT_CONTENT.UID###-singleview-###MODE###" class="singleview singleview-###MODE###">
+          ###RECORD_BROWSER###
+          <div class="ui-widget ui-corner-all">
+            <!-- ###SINGLEBODY### begin -->
+            <h1 class="ui-widget-header ui-corner-top">
+              ###TITLE###
+            </h1>
+            <div class="ui-widget-content ui-corner-bottom">
+              <dl style="font-size:.85em;">
+                <!-- ###SINGLEBODYROW### begin -->
+                <dt###CLASS###>
+                  ###FIELD###
+                </dt>
+                <dd###CLASS###>
+                  ###VALUE### ###SOCIALMEDIA_BOOKMARKS###
+                </dd>
+                <!-- ###SINGLEBODYROW### end -->
+              </dl>
+            </div>
+  <!-- ###AREA_FOR_AJAX_LIST_01### end -->
+            <!-- ###BACKBUTTON### begin -->
+            <p class="backbutton">
+              ###BUTTON###
+            </p>
+            <!-- ###BACKBUTTON### end -->
+  <!-- ###AREA_FOR_AJAX_LIST_02### begin -->
+            <!-- ###SINGLEBODY### end -->
+          </div>
+        </div>
+<!-- ###AREA_FOR_AJAX_LIST_02### end -->
+        <!-- ###SINGLEVIEW### end -->
+<!-- ###TEMPLATE_SINGLE### end -->
+
+
+
+<em>
+
+TEMPLATE FOR SELECT BOX FOR ORDERING
+====================================
+This template is used in list views for ordering records by a select box.
+This template generates valid HTML code.
+If you want to disable the sortbox, please configure in your TypoScript template
+displayList.selectBox_orderBy.display = 0
+
+</em>
+
+<!-- ###TEMPLATE_SELECTBOX_VALID### begin -->
+            <div class="sortbox c###TT_CONTENT.UID###-###VIEW###view-###MODE###-sortbox">
+              <form ###CLASS### action="###URL###" method="POST">
+                <fieldset>
+                  <legend>###LEGEND###</legend>
+                  <input type="hidden" name="no_cache" value="1" />
+                  ###HIDDEN###
+                  ###SELECTBOX###
+                  <input class="button" type="submit" value="###BUTTON###" />
+                </fieldset>
+              </form>
+            </div>
+<!-- ###TEMPLATE_SELECTBOX_VALID### end -->
+
+
+
+
+
+<em>
+
+DEPRECATED! TEMPLATE FOR SELECT BOX FOR ORDERING
+================================================
+This template is used in list views for ordering records by a select box.
+This template is deprecated, because the Code isn't HTML valid.
+
+<!-- ###TEMPLATE_SELECTBOX### begin -->
+          <script type="text/javascript">
+            function Go (select) {
+              var str_url = select.options[select.options.selectedIndex].value;
+              if (str_url == "0") {
+                select.form.reset();
+                return;
+              } else {
+                window.location.href = str_url;
+              }
+            }
+          </script>
+          <form action="">
+            ###SELECTBOX###
+          </form>
+<!-- ###TEMPLATE_SELECTBOX### end -->
+
+
+
+
+</pre>
+  </body>
+</html>

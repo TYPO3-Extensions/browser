@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+  <meta>
+    <langDisable>1</langDisable>
+  </meta>
+  <sheets>
+    <evaluate>EXT:browser/pi1/flexform_sheet_evaluate.xml</evaluate>
+    <sDEF>EXT:browser/pi1/flexform_sheet_sDEF.xml</sDEF>
+    <viewList>EXT:browser/pi1/flexform_sheet_viewList.xml</viewList>
+    <viewSingle>EXT:browser/pi1/flexform_sheet_viewSingle.xml</viewSingle>
+    <templating>EXT:browser/pi1/flexform_sheet_templating.xml</templating>
+    <javascript>EXT:browser/pi1/flexform_sheet_javascript.xml</javascript>
+    <advanced>EXT:browser/pi1/flexform_sheet_advanced.xml</advanced>
+    <socialmedia>EXT:browser/pi1/flexform_sheet_socialmedia.xml</socialmedia>
+    <tca>EXT:browser/pi1/flexform_sheet_tca.xml</tca>
+    <extend>EXT:browser/pi1/flexform_sheet_extend.xml</extend>
+  </sheets>
+</T3DataStructure>

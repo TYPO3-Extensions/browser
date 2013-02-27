@@ -1,0 +1,10 @@
+// Code Tutorial I, step 2
+plugin.tx_browser_pi1 {
+  views {
+    list {
+      1 {
+        select = tt_news.title, tt_news_cat.title
+      }
+    }
+  }
+}

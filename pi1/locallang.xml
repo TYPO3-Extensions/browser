@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+  <meta type="array">
+    <type>module</type>
+    <description>Language labels for plugin &quot;tx_browser_pi1&quot;</description>
+  </meta>
+  <data type="array">
+    <languageKey index="default" type="array">
+      <label index="backbutton">Back</label>
+      <label index="config_error_h1">Error Browser Plugin</label>
+      <label index="config_error_prompt">Error in %class%::%sheet%: Value '%field%' isn't defined: '%value%'.</label>
+      <label index="config_reload">Please reload your plugin Browser! Id of the page: %pid%, id of the content element: %uid%</label>
+      <label index="drs_security">SECURITY WARNING: Please deactivate the DRS - Development Reporting System - on every operating system.</label>
+      <label index="drs_sql_prompt">The SQL query has an error. Please use the DRS - the Development Reporting System. The DRS will display the query and the error. 
+
+Enabling the DRS: Modul/Admin Tools/Ext Manager -> Extension Browser -> Enable DRS.</label>
+      <label index="error_h1">Error</label>
+      <label index="error_filterh1">Filter Configuration Error</label>
+      <label index="error_filter_prompt"><![CDATA[The configuration of the filter  has an error. Please use the DRS - the Development Reporting System. The DRS will display the error and the solution probably.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_readlog_h1">Error</label>
+      <label index="error_readlog_prompt">There is an error. Please activate the logging mode of this extension (browser) and take a look in the log of cc_devlog!</label>
+      <label index="error_relation_h1">Relation Building: Error</label>
+      <label index="error_relation_no_table"><![CDATA[There isn't any table used. There have to be a local table at least. Please activate the logging mode of this extension (browser) and take a look in the log of cc_devlog!<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_relation_no_relation"><![CDATA[There is an error. Please activate the logging mode of this extension (browser) and take a look in the log of cc_devlog!<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_sql_h1">SQL Error</label>
+      <label index="error_sql_localtable"><![CDATA[The global variable arrLocalTable has an error. You get help in the log of devlog.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_sql_orderby"><![CDATA[The ORDER BY clause has an error. You get help in the log of devlog.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_sql_prompt"><![CDATA[The SQL query has an error. Please use the DRS - the Development Reporting System. The DRS will display the query and the error.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_sql_select"><![CDATA[The SELECT clause has an error. You get help in the log of devlog.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_sql_search"><![CDATA[The search fields have  an error. You get help in the log of devlog.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_table_no"><![CDATA[There aren't any tables for processing.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_template_array"><![CDATA[The returned template is an array. This is an error.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_template_indexbrowser_no_subpart"><![CDATA[The subpart marker INDEXBROWSER (or AZBROWSER (deperecated!))  is missing in the HTML template.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_template_map_no"><![CDATA[There isn't any HTML template for the open street map.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_template_map_no_subpart"><![CDATA[The subpart TEMPLATE_MAP is missing in the HTML template for the open street map.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_template_no">There isn't any HTML template.<![CDATA[<br />]]>
+                                        <![CDATA[<br />]]>
+                                        Please check:<![CDATA[<br />]]>
+                                        * Plugin / flexform: tab <![CDATA[[]]>Plugin check<![CDATA[]]]><![CDATA[<br />]]>
+                                        * Plugin / flexform: tab  <![CDATA[[]]>Templating<![CDATA[]]]> Menu "HTML"<![CDATA[<br />]]>
+                                        * Plugin / flexform: tab  <![CDATA[[]]>General<![CDATA[]]]> Menu "Views filter"<![CDATA[<br />]]>
+                                        * TypoScript: plugin.tx_browser_pi1.template.<![CDATA[<br />]]>
+                                        <![CDATA[<br />]]>
+                                        Browser - TYPO3 without PHP</label>
+      <label index="error_template_render">The template isn't rendered. It seems that the TypoScript isn't configured proper. Please take a look in the Developer Log.</label>
+      <label index="error_ttc_h1">ERROR: TypoScript-Template-Container (TTC)</label>
+      <label index="error_ttc_prompt_array">There is a TypoScript Object TT_CONTAINER, which isn't an array. See devlog for more information.</label>
+      <label index="error_ttc_prompt_tablefielduid">A TypoScript Object TT_CONTAINER hasn't any value in tableFieldUid. See devlog for more information.</label>
+      <label index="error_ttcv_prompt_array">There is a TypoScript Object TT_CONTAINER_VALUE, which isn't an array. See devlog for more information.</label>
+      <label index="error_ttcv_prompt_object">The TT_CONTAINER object isn't defined.</label>
+      <label index="error_ttcv_prompt_realurl_1">You used in your TypoScript a typolink with the property civserv.realurl. But the used value isn't defined in your realurl configuration file.</label>
+      <label index="error_ttcv_prompt_recursion">The limit of the recursionguard is overrun. If it isn't an error, please increase the recursionGuard. Did you miss to include the browser template in the page template?</label>
+      <label index="error_ttcv_prompt_value">A TypoScript Object TT_CONTAINER_VALUE hasn't any value in value. See devlog for more information.</label>
+      <label index="error_typoscript_h1">Typoscript Error</label>
+      <label index="error_typoscript_joins">If you define a SQL query manually, you have to define the TypoScript values select, from, andWhere and the array joins. There are further information in the DRS and the manual.</label>
+      <label index="error_typoscript_no_listview">Sorry, there isn't any view list configured.<![CDATA[<br />]]>
+        * Did you forget to include the static template of the TYPO3 Browser?<![CDATA[<br />]]>
+        * Or did you forget, to configure plugin.tx_browser_pi1.views.list<![CDATA[<br />]]>
+        * Do you have selected a proper template in the plugin/flexform?<![CDATA[<br />]]>
+        <![CDATA[<br />]]>
+        Browser - TYPO3 without PHP.
+      </label>
+      <label index="error_value_empty">Error: value is empty.</label>
+      <label index="error_views_noview">Sorry, there isn't any view configured.</label>
+      <label index="error_views_single_noview">Sorry, there isn't any single view configured.</label>
+      <label index="warn_sql_h1">SQL Warning</label>
+      <label index="warn_indexbrowser_ll">Sorry: index browser isn't localised (TYPO3 Browser version 4.0). Please disable it on translated pages.</label>
+      <label index="pi_list_searchBox_search">Search!</label>
+      <label index="browserItem">item</label>
+      <label index="browserItems">items</label>
+      <label index="label_indexBrowser_all">All</label>
+      <label index="label_indexBrowser_others">Others</label>
+      <label index="label_categorymenu_noValue">No value</label>
+      <label index="label_checkbox_noValue">No value</label>
+      <label index="label_filter_firstitem_default">All Items</label>
+      <label index="label_first_visit">Please click on a tab or send a search word.</label>
+      <label index="label_noImageFile">There isn't any image available.</label>
+      <label index="label_from">From</label>
+      <label index="label_fromTo">From to</label>
+      <label index="label_radiobuttons_noValue">No value</label>
+      <label index="label_search_legend">Search</label>
+      <label index="label_selectbox_firstitem_default">Order Items</label>
+      <label index="label_selectbox_noValue">No value</label>
+      <label index="label_sword_default">Search Word</label>
+      <label index="label_to">To</label>
+      <label index="phrase_norecord">Sorry, there is no matched record!</label>
+    </languageKey>
+    <languageKey index="de" type="array">
+      <label index="backbutton"><![CDATA[Zurück]]></label>
+      <label index="config_error_h1">Fehler im Browser-Plugin</label>
+      <label index="config_error_prompt">Fehler in %class%::%sheet%: Der Wert des Felds '%field%' ist undefiniert: '%value%'.</label>
+      <label index="config_reload">Bitte speichere das Plugin 'Browser' erneut ab! ID der Seite: %pid%, ID des Content-Elements: %uid%</label>
+      <label index="drs_security">SICHERHEITS-HINWEIS: Bitte deaktiviere das DRS - Development Reporting System - auf jedem operativem System. Die Fehlermeldung unten ist ein Sicherheitsrisiko!</label>
+      <label index="drs_sql_prompt"><![CDATA[Browser - TYPO3 ohne PHP<br />
+Die SQL-Abfrage enthält einen Fehler. Bitte benutze das DRS - das Development Reporting System. DRS zeigt die SQL-Abfrage und den Fehler.
+
+DRS einschalten: Modul/Adminwerkzeuge/Erweiterungen -> Erweiterung Browser -> DRS aktivieren.]]></label>
+      <label index="error_h1">Fehler</label>
+      <label index="error_filter_h1">Fehler mit der Filter-Konfiguration</label>
+      <label index="error_filter_prompt"><![CDATA[Die Filter sind falsch konfiguriert. Benutze das DRS - Development Reporting System. Das DRS beschreibt den Fehler und wird versuchen eine Lösung anzubieten.]]></label>
+      <label index="error_readlog_h1">Fehler</label>
+      <label index="error_readlog_prompt">Es ist ein Fehler aufgetreten. Bitte aktiviere die Logging-Funktion dieser Extension (Browser) und wirf einen Blick in das Log von cc_devLog!</label>
+      <label index="error_sql_h1">SQL Fehler</label>
+      <label index="error_sql_localtable"><![CDATA[Die globale Variable arrLocalTable hat einen Fehler. Weitere Hinweise erh&auml;ltst Du in den Log-Einträgen von devlog.<br /><br />Browser - TYPO3 ohne PHP]]></label>
+      <label index="error_sql_orderby"><![CDATA[Die ORDER BY-Anweisung hat einen Fehler. Weitere Hinweise erh&auml;ltst Du in den Log-Einträgen von devlog.<br /><br />Browser - TYPO3 ohne PHP]]></label>
+      <label index="error_sql_prompt"><![CDATA[Die SQL-Abfrage enthält einen Fehler. Bitte benutze das DRS - das Development Reporting System. DRS zeigt die SQL-Abfrage und den Fehler.<br /><br />Browser - TYPO3 ohne PHP]]></label>
+      <label index="error_sql_select"><![CDATA[Die SELECT-Anweisung hat einen Fehler. Weitere Hinweise erh&auml;ltst Du in den Log-Einträgen von devlog.<br /><br />Browser - TYPO3 ohne PHP]]></label>
+      <label index="error_sql_search"><![CDATA[Die im TypoScript angegenen Suchfelder haben einen Fehler. Weitere Hinweise erh&auml;ltst Du in den Log-Einträgen von devlog.<br /><br />Browser - TYPO3 ohne PHP]]></label>
+      <label index="error_table_no"><![CDATA[Es konnten keine Tabellen für die Verarbeitung gefunden werden.]]></label>
+      <label index="error_template_array"><![CDATA[Das Template ist ein Array. Das ist ein Fehler.<br /><br />Browser - TYPO3 ohne PHP]]></label>
+      <label index="error_template_indexbrowser_no_subpart"><![CDATA[Der Subpart-Marker INDEXBROWSER (oder AZBROWSER (&uumlberholt!)) fehlt im HTML-Template.<br /><br />Browser - TYPO3 without PHP]]></label>
+      <label index="error_template_map_no"><![CDATA[Es gibt kein HTML-Template f&uuml;r die OpenStreetMap-Karte.<br /><br />Browser - TYPO3 ohne PHP]]></label>
+      <label index="error_template_map_no_subpart"><![CDATA[Im HTML-Template f&uuml;r die OpenStreetMap-Karte fehlt der Subpart TEMPLATE_MAP<br /><br />Browser - TYPO3 ohne PHP]]></label>
+      <label index="error_template_no"> Es gibt kein HTML-Template.<![CDATA[<br />]]>
+                                        <![CDATA[<br />]]>
+                                        Du kannst folgendes pr<![CDATA[&uuml;]]>fen:<![CDATA[<br />]]>
+                                        * Plugin / Flexform: Reiter <![CDATA[[]]>Plugin Check<![CDATA[]]]><![CDATA[<br />]]>
+                                        * Plugin / Flexform: Reiter <![CDATA[[]]>Templating<![CDATA[]]]> Men<![CDATA[&uuml;]]> "HTML"<![CDATA[<br />]]>
+                                        * Plugin / Flexform: Reiter <![CDATA[[]]>Allgemein<![CDATA[]]]> Men<![CDATA[&uuml;]]> "Views Filter"<![CDATA[<br />]]>
+                                        * TypoScript: plugin.tx_browser_pi1.template.<![CDATA[<br />]]>
+                                        <![CDATA[<br />]]>
+                                        Browser - TYPO3 ohne PHP</label>
+      <label index="error_template_render">Das HTML-Template ist nicht verarbeitet worden. Scheinbar ist die TypoScript-Konfiguration fehlerhaft. Der Bericht des Developer Log wird entsprechende Hinweise haben.</label>
+      <label index="error_ttc_h1">FEHLER: TypoScript-Template-Container (TTC)</label>
+      <label index="error_ttc_prompt_array">Es gibt ein TypoScript Objekt TT_CONTAINER, das kein Array ist! Weitere Hinweise siehe devlog.</label>
+      <label index="error_ttc_prompt_tablefielduid">Ein TypoScript Object TT_CONTAINER hat keinen Wert in tableFieldUid. Weitere Hinweise siehe devlog.</label>
+      <label index="error_ttcv_prompt_array">Es gibt ein TypoScript Objekt TT_CONTAINER_VALUE, das kein Array ist! Weitere Hinweise siehe devlog.</label>
+      <label index="error_ttcv_prompt_object">Das TT_CONTAINER Objekt ist nicht definiert.</label>
+      <label index="error_ttcv_prompt_realurl_1">Du verwendest im TypoScript ein typolink Array mit der Eigenschaft civserv.realurl. Der dort verwendete Wert ist nicht in der Realurl Konfigurationsdatei definiert.</label>
+      <label index="error_ttcv_prompt_recursion"><![CDATA[Die Begrenzung der Recursions-Kontrolle ist überschritten. Falls es sich dabei um keinen Fehler handeln sollte, erhöhe bitte den Wert in recursionGuard. Hast Du vergessen, dass static template einzubinden?]]></label>
+      <label index="error_ttcv_prompt_value">Ein TypoScript Object TT_CONTAINER_VALUE hat keinen Wert in value. Weitere Hinweise siehe devlog.</label>
+      <label index="error_typoscript_h1">Typoscript Fehler</label>
+      <label index="error_typoscript_joins"><![CDATA[Wenn Du eine SQL-Abfrage manuell definierst, musst Du die TypoScript-Werte für select, from und andWhere sowie für das Array joins angeben. Weitere Informationen findest Du im DRS und in der Dokumentation.]]></label>
+      <label index="error_typoscript_no_listview">Sorry, es ist keine Listenansicht konfiguriert.<![CDATA[<br />]]>
+        * Hast Du vergessen, das static template des TYPO3 Browsers einzubinden?<![CDATA[<br />]]>
+        * Oder hast du vergessen, plugin.tx_browser_pi1.views.list zu konfigurieren?<![CDATA[<br />]]>
+        * Hast Du ein g<![CDATA[&uuml;]]>ltiges Template im Plugin/in der Flexform ausgew<![CDATA[&auml;]]>hlt?<![CDATA[<br />]]>
+        <![CDATA[<br />]]>
+        Browser - TYPO3 ohne PHP.
+      </label>
+      <label index="error_value_empty">Fehler: Der Wert ist leer.</label>
+      <label index="error_views_noview"><![CDATA[Pardon, es ist keine Ansicht (view) konfiguriert.<br /><br />Browser - TYPO3 ohne PHP]]></label>
+      <label index="error_views_single_noview">Pardon, es ist keine Detailansicht konfiguriert.</label>
+      <label index="warn_sql_h1">SQL Warnung</label>
+      <label index="warn_indexbrowser_ll">Sorry: Der Index-Browser ist nicht lokalisiert (TYPO3-Browser Version 4.0. Bitte deaktiviere ihn auf <![CDATA[ü]]>bersetzten Seitzen.</label>
+      <label index="pi_list_searchBox_search">Suche</label>
+      <label index="browserItem">Eintrag</label>
+      <label index="browserItems"><![CDATA[Einträge]]></label>
+      <label index="label_indexBrowser_all">Alle</label>
+      <label index="label_indexBrowser_others">Andere</label>
+      <label index="label_categorymenu_noValue">Ohne Angabe</label>
+      <label index="label_checkbox_noValue">Ohne Angabe</label>
+      <label index="label_filter_firstitem_default"><![CDATA[Alle Einträge]]></label>
+      <label index="label_first_visit">Klicken Sie auf einen Buchstaben oder senden Sie eine Suchabfrage.</label>
+      <label index="label_from">Von</label>
+      <label index="label_fromTo">Von bis</label>
+      <label index="label_noImageFile"><![CDATA[Es ist kein Bild verfügbar.]]></label>
+      <label index="label_radiobuttons_noValue">Ohne Angabe</label>
+      <label index="label_search_legend">Suche</label>
+      <label index="label_selectbox_firstitem_default">Sortieren</label>
+      <label index="label_selectbox_noValue">Ohne Angabe</label>
+      <label index="label_sword_default">Begriff suchen</label>
+      <label index="label_to">Bis</label>
+      <label index="phrase_norecord">Zu Ihrer Anfrage gibt es keine Treffer.</label>
+    </languageKey>
+  </data>
+</T3locallang>

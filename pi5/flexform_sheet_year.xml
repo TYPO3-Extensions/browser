@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+  <ROOT>
+    <TCEforms>
+      <sheetTitle>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year</sheetTitle>
+    </TCEforms>
+    <type>array</type>
+    <el>
+      <schedule.display>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.display</label>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.display.yes</numIndex>
+                <numIndex index="1">yes</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.display.no</numIndex>
+                <numIndex index="1">no</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.display.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+            </items>
+            <default>yes</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </schedule.display>
+      <schedule.startingpoint>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.startingpoint</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.startingpoint.item.relative</numIndex>
+                <numIndex index="1">relative</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.startingpoint.item.absolute</numIndex>
+                <numIndex index="1">absolute</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.startingpoint.item.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+            </items>
+            <default>ts</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </schedule.startingpoint>
+      <schedule.startingpoint.relative>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.startingpoint.relative</label>
+          <displayCond>FIELD:schedule.startingpoint:=:relative</displayCond>
+          <config>
+            <type>select</type>
+            <multiple>0</multiple>
+            <size>1</size>
+            <minitems>0</minitems>
+            <maxitems>1</maxitems>
+            <allowNonIdValues>1</allowNonIdValues>
+            <selectedListStyle>width:200px</selectedListStyle>
+            <itemListStyle>width:200px</itemListStyle>
+            <items type="array"></items>
+            <itemsProcFunc>tx_browser_pi5_backend->year_selectRelative</itemsProcFunc>
+            <default>today 0:00</default>
+          </config>
+        </TCEforms>
+      </schedule.startingpoint.relative>
+      <schedule.startingpoint.absolute>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.schedule.startingpoint.absolute</label>
+          <displayCond>FIELD:schedule.startingpoint:=:absolute</displayCond>
+          <config>
+            <type>input</type>
+            <size>10</size>
+            <max>10</max>
+            <eval>date</eval>
+            <default>1293840000</default>
+          </config>
+        </TCEforms>
+      </schedule.startingpoint.absolute>
+      <navigator.display>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.navigator.display</label>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.navigator.display.yes</numIndex>
+                <numIndex index="1">yes</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.navigator.display.no</numIndex>
+                <numIndex index="1">no</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_year.navigator.display.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+            </items>
+            <default>yes</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </navigator.display>
+    </el>
+  </ROOT>
+</T3DataStructure>

@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+  <ROOT>
+    <TCEforms>
+      <sheetTitle>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF</sheetTitle>
+    </TCEforms>
+    <type>array</type>
+    <el>
+      <views>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.views</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.views.all</numIndex>
+                <numIndex index="1">all</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.views.selected</numIndex>
+                <numIndex index="1">selected</numIndex>
+              </numIndex>
+            </items>
+            <default>all</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </views>
+      <viewsTutorial>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsTutorial</label>
+          <displayCond>FIELD:views:=:selected</displayCond>
+          <config>
+            <type>check</type>
+            <cols>1</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsTutorial.0</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsTutorial.1</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsTutorial.2</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+          </config>
+        </TCEforms>
+      </viewsTutorial>
+      <viewsHandleFromTemplateOnly>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsHandleFromTemplateOnly</label>
+          <onChange>reload</onChange>
+          <displayCond>FIELD:views:=:selected</displayCond>
+          <config>
+            <type>check</type>
+            <cols>1</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsHandleFromTemplateOnly.0</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+            <default>1</default>
+          </config>
+        </TCEforms>
+      </viewsHandleFromTemplateOnly>
+      <viewsList>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsList</label>
+          <displayCond>FIELD:views:=:selected</displayCond>
+          <config>
+            <type>select</type>
+            <multiple>1</multiple>
+            <size>5</size>
+            <maxitems>99</maxitems>
+            <allowNonIdValues>1</allowNonIdValues>
+            <selectedListStyle>width:360px</selectedListStyle>
+            <itemListStyle>width:360px</itemListStyle>
+            <items type="array"></items>
+            <itemsProcFunc>tx_browser_pi1_backend->sDef_getArrViewsList</itemsProcFunc>
+          </config>
+        </TCEforms>
+      </viewsList>
+      <viewsSinglePid>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsSinglePid</label>
+          <displayCond>FIELD:views:=:selected</displayCond>
+          <config>
+            <type>group</type>
+            <internal_type>db</internal_type>
+            <allowed>pages</allowed>
+            <size>1</size>
+            <maxitems>1</maxitems>
+            <minitems>0</minitems>
+            <show_thumbs>1</show_thumbs>
+          </config>
+        </TCEforms>
+      </viewsSinglePid>
+      <viewsListPid>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.viewsListPid</label>
+          <displayCond>FIELD:views:=:selected</displayCond>
+          <config>
+            <type>group</type>
+            <internal_type>db</internal_type>
+            <allowed>pages</allowed>
+            <size>1</size>
+            <maxitems>1</maxitems>
+            <minitems>0</minitems>
+            <show_thumbs>1</show_thumbs>
+          </config>
+        </TCEforms>
+      </viewsListPid>
+      <piVars>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.piVars</label>
+          <displayCond>FIELD:views:=:selected</displayCond>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.piVars.pluginThis</numIndex>
+                <numIndex index="1">default</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.piVars.pluginAll</numIndex>
+                <numIndex index="1">all</numIndex>
+              </numIndex>
+            </items>
+            <default>default</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </piVars>
+      <controlling.enabled>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.controlling.enabled</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.controlling.enabled.no</numIndex>
+                <numIndex index="1">no</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.controlling.enabled.yes</numIndex>
+                <numIndex index="1">yes</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.controlling.enabled.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+            </items>
+            <default>no</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </controlling.enabled>
+      <controlling.adjustment.display_if_in_list>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.controlling.adjustment.display_if_in_list</label>
+          <displayCond>FIELD:controlling.enabled:=:yes</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <max>255</max>
+            <eval>trim</eval>
+          </config>
+        </TCEforms>
+      </controlling.adjustment.display_if_in_list>
+      <controlling.adjustment.hide_if_in_list>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.controlling.adjustment.hide_if_in_list</label>
+          <displayCond>FIELD:controlling.enabled:=:yes</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <max>255</max>
+            <eval>trim</eval>
+          </config>
+        </TCEforms>
+      </controlling.adjustment.hide_if_in_list>
+      <relations_select>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.default</numIndex>
+                <numIndex index="1">default</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.configured</numIndex>
+                <numIndex index="1">configured</numIndex>
+              </numIndex>
+            </items>
+            <default>default</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </relations_select>
+      <relationsTutorial>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relationsTutorial</label>
+          <displayCond>FIELD:relations_select:=:configured</displayCond>
+          <config>
+            <type>check</type>
+            <cols>1</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relationsTutorial.0</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+          </config>
+        </TCEforms>
+      </relationsTutorial>
+      <relations>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.relations</label>
+          <displayCond>FIELD:relations_select:=:configured</displayCond>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.relations.all</numIndex>
+                <numIndex index="1">all</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.relations.mm</numIndex>
+                <numIndex index="1">mm</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.relations.single</numIndex>
+                <numIndex index="1">single</numIndex>
+              </numIndex>
+              <numIndex index="3" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.relations.typoscript</numIndex>
+                <numIndex index="1">typoscript</numIndex>
+              </numIndex>
+            </items>
+            <default>all</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </relations>
+      <joins>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.joins</label>
+          <displayCond>FIELD:relations_select:=:configured</displayCond>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.joins.full</numIndex>
+                <numIndex index="1">0</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.joins.left</numIndex>
+                <numIndex index="1">1</numIndex>
+              </numIndex>
+            </items>
+            <default>1</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </joins>
+      <root>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.root</label>
+          <displayCond>FIELD:relations_select:=:configured</displayCond>
+          <config>
+            <type>check</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.relations.root.display</numIndex>
+                <numIndex index="1">1</numIndex>
+              </numIndex>
+            </items>
+          </config>
+        </TCEforms>
+      </root>
+      <session>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.session</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.session.0</numIndex>
+                <numIndex index="1">0</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.session.1</numIndex>
+                <numIndex index="1">1</numIndex>
+              </numIndex>
+            </items>
+            <default>0</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </session>
+      <session.type>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.session.type</label>
+          <displayCond>FIELD:session:=:1</displayCond>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.session.type.0</numIndex>
+                <numIndex index="1">0</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.session.type.1</numIndex>
+                <numIndex index="1">1</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.session.type.2</numIndex>
+                <numIndex index="1">2</numIndex>
+              </numIndex>
+            </items>
+            <default>1</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </session.type>
+      <downloads.enabled>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.downloads.enabled</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.downloads.enabled.no</numIndex>
+                <numIndex index="1">no</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.downloads.enabled.yes</numIndex>
+                <numIndex index="1">yes</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.downloads.enabled.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+            </items>
+            <default>no</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </downloads.enabled>
+      <statistics.enabled>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.enabled</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.enabled.no</numIndex>
+                <numIndex index="1">no</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.enabled.yes</numIndex>
+                <numIndex index="1">yes</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.enabled.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+            </items>
+            <default>no</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </statistics.enabled>
+      <statistics.adjustment.timeout>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.timeout</label>
+          <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
+          <config>
+            <type>input</type>
+            <size>10</size>
+            <max>10</max>
+            <eval>trim,int,required</eval>
+            <default>1800</default>
+          </config>
+        </TCEforms>
+      </statistics.adjustment.timeout>
+      <statistics.adjustment.dontAccountIPsOfCsvList>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.dontAccountIPsOfCsvList</label>
+          <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim,required</eval>
+            <default>127.0.0.1, 127.0.0.2</default>
+          </config>
+        </TCEforms>
+      </statistics.adjustment.dontAccountIPsOfCsvList>
+      <statistics.adjustment.debugging>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.debugging</label>
+          <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.debugging.no</numIndex>
+                <numIndex index="1">no</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.debugging.yes</numIndex>
+                <numIndex index="1">yes</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.debugging.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+            </items>
+            <default>no</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </statistics.adjustment.debugging>
+      <statistics.adjustment.fields.hits>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.fields.hits</label>
+          <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim,required</eval>
+            <default>statistics_hits</default>
+          </config>
+        </TCEforms>
+      </statistics.adjustment.fields.hits>
+      <statistics.adjustment.fields.visits>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.fields.visits</label>
+          <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim,required</eval>
+            <default>statistics_visits</default>
+          </config>
+        </TCEforms>
+      </statistics.adjustment.fields.visits>
+      <statistics.adjustment.fields.downloads>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.fields.downloads</label>
+          <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim,required</eval>
+            <default>statistics_downloads</default>
+          </config>
+        </TCEforms>
+      </statistics.adjustment.fields.downloads>
+      <statistics.adjustment.fields.downloadsByVisits>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_sDEF.statistics.adjustment.fields.downloadsByVisits</label>
+          <displayCond>FIELD:statistics.enabled:=:yes</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim,required</eval>
+            <default>statistics_downloads_by_visits</default>
+          </config>
+        </TCEforms>
+      </statistics.adjustment.fields.downloadsByVisits>
+    </el>
+  </ROOT>
+</T3DataStructure>

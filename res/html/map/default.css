@@ -1,0 +1,18 @@
+.tx-browser-pi1 .mapview {
+  margin-top:1em;
+}
+.tx-browser-pi1 .mapview-content {
+  padding:1em;
+}
+.tx-browser-pi1 .mapview-content form {
+  padding-bottom:1em;
+  text-align:center;
+}
+
+.tx-browser-pi1 .olMap {
+  margin: auto !important;
+}
+.tx-browser-pi1 .oxMapArea {
+  width:600px;
+  height:400px;
+}

@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+  <ROOT>
+    <TCEforms>
+      <sheetTitle>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript</sheetTitle>
+    </TCEforms>
+    <type>array</type>
+    <el>
+      <jquery_library>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_library</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_library.0</numIndex>
+                <numIndex index="1">typoscript</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_library.1</numIndex>
+                <numIndex index="1">http://code.jquery.com/jquery-1.6.min.js</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_library.2</numIndex>
+                <numIndex index="1">configured</numIndex>
+              </numIndex>
+              <numIndex index="3" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_library.3</numIndex>
+                <numIndex index="1">none</numIndex>
+              </numIndex>
+            </items>
+            <default>typoscript</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </jquery_library>
+      <jquery_library_own>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_library_own</label>
+          <displayCond>FIELD:jquery_library:IN:configured</displayCond>
+          <config>
+            <type>input</type>
+            <size>255</size>
+            <eval>trim,required,nospace</eval>
+            <default>EXT:browser/res/js/jquery/jquery-1.6.2.min.js</default>
+          </config>
+        </TCEforms>
+      </jquery_library_own>
+      <jquery_ui>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <selicon_cols>7</selicon_cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.own</numIndex>
+                <numIndex index="1">own</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.no</numIndex>
+                <numIndex index="1">no</numIndex>
+              </numIndex>
+            </items>
+            <default>ts</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </jquery_ui>
+      <jquery_ui.own.path>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_javascript.jquery_ui.own.path</label>
+          <displayCond>FIELD:jquery_ui:IN:own</displayCond>
+          <config>
+            <type>group</type>
+            <internal_type>file</internal_type>
+            <allowed>js,jss</allowed>
+            <max_items>1</max_items>
+            <max_size>100</max_size>
+            <size>1</size>
+            <selectedListStyle>width:400px;</selectedListStyle>
+            <uploadfolder>uploads/tx_browser/</uploadfolder>
+          </config>
+        </TCEforms>
+      </jquery_ui.own.path>
+      <jquery_plugins.t3browser>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser.own</numIndex>
+                <numIndex index="1">own</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser.no</numIndex>
+                <numIndex index="1">no</numIndex>
+              </numIndex>
+            </items>
+            <default>ts</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </jquery_plugins.t3browser>
+      <jquery_plugins.t3browser.own.plugin>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser.own.plugin</label>
+          <displayCond>FIELD:jquery_plugins.t3browser:IN:own</displayCond>
+          <config>
+            <type>group</type>
+            <internal_type>file</internal_type>
+            <allowed>js,jss</allowed>
+            <max_items>1</max_items>
+            <max_size>100</max_size>
+            <size>1</size>
+            <selectedListStyle>width:400px;</selectedListStyle>
+            <uploadfolder>uploads/tx_browser/</uploadfolder>
+          </config>
+        </TCEforms>
+      </jquery_plugins.t3browser.own.plugin>
+      <jquery_plugins.t3browser.own.library>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser.own.library</label>
+          <displayCond>FIELD:jquery_plugins.t3browser:IN:own</displayCond>
+          <config>
+            <type>group</type>
+            <internal_type>file</internal_type>
+            <allowed>js,jss</allowed>
+            <max_items>1</max_items>
+            <max_size>100</max_size>
+            <size>1</size>
+            <selectedListStyle>width:400px;</selectedListStyle>
+            <uploadfolder>uploads/tx_browser/</uploadfolder>
+          </config>
+        </TCEforms>
+      </jquery_plugins.t3browser.own.library>
+      <jquery_plugins.t3browser.own.localisation>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.jquery_plugins.t3browser.own.localisation</label>
+          <displayCond>FIELD:jquery_plugins.t3browser:IN:own</displayCond>
+          <config>
+            <type>input</type>
+            <size>255</size>
+            <eval>trim,required,nospace</eval>
+            <default>EXT:browser/res/js/jquery/plugins/jquery.t3browser/localisation.###LANG###.js</default>
+          </config>
+        </TCEforms>
+      </jquery_plugins.t3browser.own.localisation>
+      <browser_libraries>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries.0</numIndex>
+                <numIndex index="1">typoscript</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries.1</numIndex>
+                <numIndex index="1">configured</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries.2</numIndex>
+                <numIndex index="1">none</numIndex>
+              </numIndex>
+            </items>
+            <default>typoscript</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </browser_libraries>
+      <browser_libraries_general>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries_general</label>
+          <displayCond>FIELD:browser_libraries:IN:configured</displayCond>
+          <config>
+            <type>input</type>
+            <size>255</size>
+            <eval>trim,required,nospace</eval>
+            <default>EXT:browser/res/js/tx_browser_pi1-0.0.2.js</default>
+          </config>
+        </TCEforms>
+      </browser_libraries_general>
+      <browser_libraries_ajax>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries_ajax</label>
+          <displayCond>FIELD:browser_libraries:IN:configured</displayCond>
+          <config>
+            <type>input</type>
+            <size>255</size>
+            <eval>trim,required,nospace</eval>
+            <default>EXT:browser/res/js/tx_browser_pi1_ajax-0.0.1.js</default>
+          </config>
+        </TCEforms>
+      </browser_libraries_ajax>
+      <browser_libraries_ajaxLL>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.browser_libraries_ajaxLL</label>
+          <displayCond>FIELD:browser_libraries:IN:configured</displayCond>
+          <config>
+            <type>input</type>
+            <size>255</size>
+            <eval>trim,required,nospace</eval>
+            <default>EXT:browser/res/js/tx_browser_pi1_ajax_languages.js</default>
+          </config>
+        </TCEforms>
+      </browser_libraries_ajaxLL>
+      <mode>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.mode</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.mode.0</numIndex>
+                <numIndex index="1">disabled</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.mode.1</numIndex>
+                <numIndex index="1">list_only</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.mode.2</numIndex>
+                <numIndex index="1">list_and_single</numIndex>
+              </numIndex>
+            </items>
+            <default>disabled</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </mode>
+      <ajaxTutorial>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.ajaxTutorial</label>
+          <displayCond>FIELD:mode:IN:list_only,list_and_single</displayCond>
+          <config>
+            <type>check</type>
+            <cols>1</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.ajaxTutorial.0</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+          </config>
+        </TCEforms>
+      </ajaxTutorial>
+      <ajaxChecklist>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.ajaxChecklist</label>
+          <displayCond>FIELD:mode:IN:list_only,list_and_single</displayCond>
+          <config>
+            <type>check</type>
+            <cols>1</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.ajaxChecklist.0</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+          </config>
+        </TCEforms>
+      </ajaxChecklist>
+      <list_transition>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.list_transition</label>
+          <displayCond>FIELD:mode:IN:list_only,list_and_single</displayCond>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.list_transition.0</numIndex>
+                <numIndex index="1">none</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.list_transition.1</numIndex>
+                <numIndex index="1">collapse</numIndex>
+              </numIndex>
+            </items>
+            <default>collapse</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </list_transition>
+      <single_transition>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.single_transition</label>
+          <displayCond>FIELD:mode:=:list_and_single</displayCond>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.single_transition.0</numIndex>
+                <numIndex index="1">none</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.single_transition.1</numIndex>
+                <numIndex index="1">collapse</numIndex>
+              </numIndex>
+            </items>
+            <default>collapse</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </single_transition>
+      <list_on_single>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.list_on_single</label>
+          <displayCond>FIELD:mode:=:list_and_single</displayCond>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.list_on_single.0</numIndex>
+                <numIndex index="1">listAndSingle</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.list_on_single.1</numIndex>
+                <numIndex index="1">listCollapsableAndSingle</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_javascript.list_on_single.2</numIndex>
+                <numIndex index="1">single</numIndex>
+              </numIndex>
+            </items>
+            <default>single</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </list_on_single>
+    </el>
+  </ROOT>
+</T3DataStructure>

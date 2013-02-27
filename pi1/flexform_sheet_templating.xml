@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+  <ROOT>
+    <TCEforms>
+      <sheetTitle>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating</sheetTitle>
+    </TCEforms>
+    <type>array</type>
+    <el>
+      <template.tutorial>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating.template.tutorial</label>
+          <config>
+            <type>check</type>
+            <cols>1</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating.template.tutorial.0</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+          </config>
+        </TCEforms>
+      </template.tutorial>
+      <template>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating.template</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <multiple>0</multiple>
+            <size>1</size>
+            <minitems>0</minitems>
+            <maxitems>1</maxitems>
+            <allowNonIdValues>1</allowNonIdValues>
+            <selectedListStyle>width:200px</selectedListStyle>
+            <itemListStyle>width:200px</itemListStyle>
+            <items type="array"></items>
+            <itemsProcFunc>tx_browser_pi1_backend->templating_getExtensionTemplates</itemsProcFunc>
+            <default>typoscript</default>
+          </config>
+        </TCEforms>
+      </template>
+      <path>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating.path</label>
+          <displayCond>FIELD:template:=:adjusted</displayCond>
+          <config>
+            <type>group</type>
+            <internal_type>file</internal_type>
+            <allowed>tmpl,html</allowed>
+            <max_items>1</max_items>
+            <max_size>100</max_size>
+            <size>1</size>
+            <selectedListStyle>width:400px;</selectedListStyle>
+            <uploadfolder>uploads/tx_browser/</uploadfolder>
+          </config>
+        </TCEforms>
+      </path>
+      <css.browser>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.browser</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <selicon_cols>7</selicon_cols>
+            <items type="array">
+              <numIndex index="100" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.browser.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+              <numIndex index="101" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.browser.own</numIndex>
+                <numIndex index="1">own</numIndex>
+              </numIndex>
+              <numIndex index="102" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.browser.no</numIndex>
+                <numIndex index="1">no</numIndex>
+              </numIndex>
+            </items>
+            <default>ts</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </css.browser>
+      <css.browser.own.path>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.browser.own.path</label>
+          <displayCond>FIELD:css.browser:IN:own</displayCond>
+          <config>
+            <type>group</type>
+            <internal_type>file</internal_type>
+            <allowed>css</allowed>
+            <max_items>1</max_items>
+            <max_size>100</max_size>
+            <size>1</size>
+            <selectedListStyle>width:400px;</selectedListStyle>
+            <uploadfolder>uploads/tx_browser/</uploadfolder>
+          </config>
+        </TCEforms>
+      </css.browser.own.path>
+      <css.jqui>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <selicon_cols>7</selicon_cols>
+            <itemsProcFunc>tx_browser_pi1_backend->templating_get_jquery_ui</itemsProcFunc>
+            <default>smoothness</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </css.jqui>
+      <css.jqui.z_own.path>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/flexform_locallang.xml:sheet_templating.css.jqui.z_own.path</label>
+          <displayCond>FIELD:css.jqui:IN:z_own</displayCond>
+          <config>
+            <type>group</type>
+            <internal_type>file</internal_type>
+            <allowed>css</allowed>
+            <max_items>1</max_items>
+            <max_size>100</max_size>
+            <size>1</size>
+            <selectedListStyle>width:400px;</selectedListStyle>
+            <uploadfolder>uploads/tx_browser/</uploadfolder>
+          </config>
+        </TCEforms>
+      </css.jqui.z_own.path>
+      <dataQuery>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating.dataQuery</label>
+          <config>
+            <type>select</type>
+            <multiple>0</multiple>
+            <size>1</size>
+            <maxitems>1</maxitems>
+            <allowNonIdValues>1</allowNonIdValues>
+            <selectedListStyle>width:200px</selectedListStyle>
+            <itemListStyle>width:200px</itemListStyle>
+            <items type="array"></items>
+            <itemsProcFunc>tx_browser_pi1_backend->templating_getArrDataQuery</itemsProcFunc>
+          </config>
+        </TCEforms>
+      </dataQuery>
+      <wrapBaseClass>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating.wrapBaseClass</label>
+          <config>
+            <type>check</type>
+            <cols>1</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_templating.wrapBaseClass.0</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+            <default>1</default>
+          </config>
+        </TCEforms>
+      </wrapBaseClass>
+    </el>
+  </ROOT>
+</T3DataStructure>

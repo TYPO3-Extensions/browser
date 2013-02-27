@@ -1,0 +1,47 @@
+
+
+  ///////////////////////////////////////////////
+  //
+  // Example for a index browser with this groups:
+  //
+  //   All | 0-9 | A-E | F-J | K-P | R-Z
+  //
+
+plugin.tx_browser_pi1 {
+  navigation {
+    indexBrowser {
+      tabs >
+      tabs {
+        0 = All
+        0 { 
+          special =  all
+        } 
+        1 = 0-9
+        1 { 
+          valuesCSV =  0,1,2,3,4,5,6,7,8,9
+        } 
+        2 = A-E
+        2 { 
+          valuesCSV =  a,b,c,d,e
+        } 
+        3 = F-J
+        3 { 
+          valuesCSV =  f,g,h,i,j
+        } 
+        4 = K-P
+        4 { 
+          valuesCSV =  k,l,m,n,o,p
+        } 
+        5 = R-Z
+        5 { 
+          valuesCSV =  r,s,t,u,v,w,x,y,z
+        } 
+        6 = Others
+        6 { 
+          special =  others
+          displayWithoutLink = 0
+        } 
+      }
+    }
+  }
+}

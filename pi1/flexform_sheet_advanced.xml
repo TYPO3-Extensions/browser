@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+  <ROOT>
+    <TCEforms>
+      <sheetTitle>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced</sheetTitle>
+    </TCEforms>
+    <type>array</type>
+    <el>
+      <performance_select>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_select</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_select.default</numIndex>
+                <numIndex index="1">default</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_select.configured</numIndex>
+                <numIndex index="1">configured</numIndex>
+              </numIndex>
+            </items>
+            <default>default</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </performance_select>
+      <performanceTutorial>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performanceTutorial</label>
+          <displayCond>FIELD:performance_select:=:configured</displayCond>
+          <config>
+            <type>check</type>
+            <cols>1</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performanceTutorial.0</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+          </config>
+        </TCEforms>
+      </performanceTutorial>
+      <performance_costs>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_costs</label>
+          <displayCond>FIELD:performance_select:=:configured</displayCond>
+          <config>
+            <type>check</type>
+            <cols>1</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.performance_costs.look_for_globals</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+            <default>0</default>
+          </config>
+        </TCEforms>
+      </performance_costs>
+      <realUrl_select>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl_select</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl_select.default</numIndex>
+                <numIndex index="1">default</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl_select.configured</numIndex>
+                <numIndex index="1">configured</numIndex>
+              </numIndex>
+            </items>
+            <default>default</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </realUrl_select>
+      <realUrlTutorial>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrlTutorial</label>
+          <displayCond>FIELD:realUrl_select:=:configured</displayCond>
+          <config>
+            <type>check</type>
+            <cols>1</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrlTutorial.0</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+          </config>
+        </TCEforms>
+      </realUrlTutorial>
+      <realUrl>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl</label>
+          <displayCond>FIELD:realUrl_select:=:configured</displayCond>
+          <config>
+            <type>check</type>
+            <cols>2</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl.piVar_indexBrowserTab</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl.piVar_mode</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl.piVar_pointer</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+              <numIndex index="3" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl.piVar_plugin</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+              <numIndex index="4" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl.piVar_sort</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+            <default>8</default>
+          </config>
+        </TCEforms>
+      </realUrl>
+      <realUrl_checkpoint>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl_checkpoint</label>
+          <displayCond>FIELD:realUrl_select:=:configured</displayCond>
+          <config>
+            <type>check</type>
+            <cols>1</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_advanced.realUrl_checkpoint.prompt</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+            <default>0</default>
+          </config>
+        </TCEforms>
+      </realUrl_checkpoint>
+    </el>
+  </ROOT>
+</T3DataStructure>

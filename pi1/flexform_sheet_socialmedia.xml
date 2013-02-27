@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+  <ROOT>
+    <TCEforms>
+      <sheetTitle>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia</sheetTitle>
+    </TCEforms>
+    <type>array</type>
+    <el>
+      <tutorial>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.tutorial</label>
+          <config>
+            <type>check</type>
+            <cols>1</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.tutorial.0</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+          </config>
+        </TCEforms>
+      </tutorial>
+      <enabled>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.enabled</label>
+          <onChange>reload</onChange>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.enabled.0</numIndex>
+                <numIndex index="1">disabled</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.enabled.1</numIndex>
+                <numIndex index="1">enabled_wi_browser_template</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.enabled.2</numIndex>
+                <numIndex index="1">enabled_wi_individual_template</numIndex>
+              </numIndex>
+            </items>
+            <default>disabled</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </enabled>
+      <tablefieldSite_list>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.tablefieldSite_list</label>
+          <displayCond>FIELD:enabled:=:enabled_wi_browser_template</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim,nospace</eval>
+          </config>
+        </TCEforms>
+      </tablefieldSite_list>
+      <tablefieldTitle_list>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.tablefieldTitle_list</label>
+          <displayCond>FIELD:enabled:=:enabled_wi_browser_template,enabled_wi_individual_template</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim,nospace</eval>
+          </config>
+        </TCEforms>
+      </tablefieldTitle_list>
+      <bookmarks_list>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.bookmarks_list</label>
+          <displayCond>FIELD:enabled:=:enabled_wi_browser_template,enabled_wi_individual_template</displayCond>
+          <config>
+            <type>select</type>
+            <multiple>0</multiple>
+            <size>10</size>
+            <minitems>0</minitems>
+            <maxitems>99</maxitems>
+            <allowNonIdValues>1</allowNonIdValues>
+            <selectedListStyle>width:200px</selectedListStyle>
+            <itemListStyle>width:200px</itemListStyle>
+            <items type="array"></items>
+            <itemsProcFunc>tx_browser_pi1_backend->socialmedia_getArrBookmarks</itemsProcFunc>
+          </config>
+        </TCEforms>
+      </bookmarks_list>
+      <tablefieldSite_single>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.tablefieldSite_single</label>
+          <displayCond>FIELD:enabled:=:enabled_wi_browser_template</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim,nospace</eval>
+          </config>
+        </TCEforms>
+      </tablefieldSite_single>
+      <tablefieldTitle_single>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.tablefieldTitle_single</label>
+          <displayCond>FIELD:enabled:=:enabled_wi_browser_template,enabled_wi_individual_template</displayCond>
+          <config>
+            <type>input</type>
+            <size>40</size>
+            <eval>trim,nospace</eval>
+          </config>
+        </TCEforms>
+      </tablefieldTitle_single>
+      <bookmarks_single>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.bookmarks_single</label>
+          <displayCond>FIELD:enabled:=:enabled_wi_browser_template,enabled_wi_individual_template</displayCond>
+          <config>
+            <type>select</type>
+            <multiple>0</multiple>
+            <size>10</size>
+            <minitems>0</minitems>
+            <maxitems>99</maxitems>
+            <allowNonIdValues>1</allowNonIdValues>
+            <selectedListStyle>width:200px</selectedListStyle>
+            <itemListStyle>width:200px</itemListStyle>
+            <items type="array"></items>
+            <itemsProcFunc>tx_browser_pi1_backend->socialmedia_getArrBookmarks</itemsProcFunc>
+          </config>
+        </TCEforms>
+      </bookmarks_single>
+      <missingBookmark>
+        <TCEforms>
+          <exclude>1</exclude>
+          <label>LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.missingBookmark</label>
+          <displayCond>FIELD:enabled:=:enabled_wi_browser_template,enabled_wi_individual_template</displayCond>
+          <config>
+            <type>check</type>
+            <cols>1</cols>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi1/locallang_flexform.xml:sheet_socialmedia.missingBookmark.0</numIndex>
+                <numIndex index="1"></numIndex>
+              </numIndex>
+            </items>
+          </config>
+        </TCEforms>
+      </missingBookmark>
+    </el>
+  </ROOT>
+</T3DataStructure>

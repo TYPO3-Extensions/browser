@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+  <ROOT>
+    <TCEforms>
+      <sheetTitle>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF</sheetTitle>
+    </TCEforms>
+    <type>array</type>
+    <el>
+      <initialView>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF.initialView</label>
+          <config>
+            <type>select</type>
+            <items type="array">
+              <numIndex index="0" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF.initialView.year</numIndex>
+                <numIndex index="1">year</numIndex>
+              </numIndex>
+              <numIndex index="1" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF.initialView.month</numIndex>
+                <numIndex index="1">month</numIndex>
+              </numIndex>
+              <numIndex index="2" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF.initialView.week</numIndex>
+                <numIndex index="1">week</numIndex>
+              </numIndex>
+              <numIndex index="3" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF.initialView.day</numIndex>
+                <numIndex index="1">day</numIndex>
+              </numIndex>
+              <numIndex index="4" type="array">
+                <numIndex index="0">LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_sDEF.initialView.ts</numIndex>
+                <numIndex index="1">ts</numIndex>
+              </numIndex>
+            </items>
+            <default>month</default>
+            <maxitems>1</maxitems>
+            <size>1</size>
+          </config>
+        </TCEforms>
+      </initialView>
+    </el>
+  </ROOT>
+</T3DataStructure>

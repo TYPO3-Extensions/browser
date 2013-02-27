@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <body>
+<pre>
+
+
+<!-- ###TEMPLATE_LIST### begin -->
+      <div class="###MODE### listview-###MODE### ui-widget ui-corner-all">
+        <!-- ###LIST_TITLE### begin -->
+        ###NPZ_TITLE_DATE###
+        <!-- ###LIST_TITLE### end -->
+        <!-- ###SEARCHFORM### begin -->
+        <div id="c###TT_CONTENT.UID###-list-searchbox-###MODE###" class="searchbox searchbox-list-###MODE###">
+          <form action="###ACTION###" method="post" >
+            <fieldset>
+              <div class="filter">
+                Your filter field
+              </div>
+            </fieldset>
+          </form>
+          ###RESULTPHRASE###
+        </div> <!-- /searchbox -->
+        <!-- ###SEARCHFORM### end -->
+        <!-- ###LISTTABS### begin -->
+        <div id="c###TT_CONTENT.UID###-list-tabs-###MODE###" class="ui-tabs ui-tabs-list-###MODE### ui-widget ui-widget-content ui-corner-all">
+          <!-- ###MODESELECTOR### begin -->
+          <ul class="ui-tabs-nav ui-tabs-nav-list-###MODE### ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+            <!-- ###MODESELECTORTABS### begin -->
+            <li id="c###TT_CONTENT.UID###-list-tab-###MODE###" class="ui-state-default ui-corner-top c###TT_CONTENT.UID###-list-tab###UI-STATE-ACTIVE######UI-TABS-SELECTED###">###TABS###</li>
+            <!-- ###MODESELECTORTABS### end -->
+          </ul>
+          <!-- ###MODESELECTOR### end -->
+          <!-- ###LISTVIEW### begin -->
+          <div id="c###TT_CONTENT.UID###-listview-###MODE###" class="listview listview-###MODE### ui-tabs-panel ui-widget-content ui-corner-bottom">
+            <table id="c###TT_CONTENT.UID###-listview-###MODE###-table" class="###MODE### listview-###MODE### cal"###SUMMARY###>
+              ###CAPTION###
+              <!-- ###LISTHEAD### begin -->
+              <thead>
+                <tr>
+                  <th class="period first">
+                    ###CAL_PERIOD###
+                  </th>
+                  <!-- ###CAL_DATE_GROUP### begin -->
+                  <th class="date group_###CAL_GROUP### ###TH_EVEN_OR_ODD### ###TH_FIRST_LAST###">
+                    ###CAL_DATE###
+                  </th>
+                  <!-- ###CAL_DATE_GROUP### end -->
+                </tr>
+              </thead>
+              <!-- ###LISTHEAD### end -->
+              <!-- ###LISTBODY### begin -->
+              <tbody>
+                <!-- ###LISTBODYITEM### begin -->
+                <tr class="tr_###TR_COUNTER### ###TR_EVEN_OR_ODD### ###TR_FIRST_LAST###">
+                  <td class="period td_0 first">
+                    ###CAL_PERIOD###
+                  </td>
+                  <!-- ###CAL_DATE_GROUP### begin --><td class="date group_###CAL_GROUP### td_###TD_COUNTER### ###TD_EVEN_OR_ODD### ###TD_FIRST_LAST###">
+                    <!-- ###CAL_DATE### begin -->
+                      Your calendar item
+                    <!-- ###CAL_DATE### end -->
+                  </td><!-- ###CAL_DATE_GROUP### end -->
+                </tr>
+                <!-- ###LISTBODYITEM### end -->
+              </tbody>
+              <!-- ###LISTBODY### end -->
+            </table>
+          </div> <!-- /listview -->
+          <!-- ###LISTVIEW### end -->
+        </div> <!-- /ui-tabs -->
+        <!-- ###LISTTABS### end -->
+      </div> <!-- /ui-widget -->
+<!-- ###TEMPLATE_LIST### end -->
+
+
+
+
+
+<!-- ###TEMPLATE_SINGLE### begin -->
+<!-- ###AREA_FOR_AJAX_LIST_01### begin -->
+<!-- ###MODESELECTOR### begin -->
+        <div class="modeSelector modeSelector-###VIEW###-###MODE###">
+          <ul class="modeSelector modeSelector-###VIEW###-###MODE###"><!-- ###MODESELECTORTABS### begin -->
+            <li###CLASS###>###TABS###</li><!-- ###MODESELECTORTABS### end -->
+          </ul>
+        </div><!-- ###MODESELECTOR### end --><!-- ###SINGLEVIEW### begin -->
+        <div class="###VIEW###view ###VIEW###view-###MODE###">
+          <h1>
+            ###TITLE###
+          </h1>
+          <table###SUMMARY###>
+            ###CAPTION###<!-- ###SINGLEBODY### begin -->
+            <tbody><!-- ###SINGLEBODYROW### begin -->
+              <tr###CLASS###>
+                <th>###FIELD###</th>
+                <td>###VALUE### ###SOCIALMEDIA_BOOKMARKS###</td>
+              </tr><!-- ###SINGLEBODYROW### end -->
+            </tbody><!-- ###SINGLEBODY### end -->
+          </table>
+<!-- ###AREA_FOR_AJAX_LIST_01### end -->
+          <!-- ###BACKBUTTON### begin -->
+          <p class="backbutton">
+            ###BUTTON###
+          </p>
+          <!-- ###BACKBUTTON### end -->
+<!-- ###AREA_FOR_AJAX_LIST_02### begin -->
+        </div>
+<!-- ###AREA_FOR_AJAX_LIST_02### end -->
+        <!-- ###SINGLEVIEW### end -->
+<!-- ###TEMPLATE_SINGLE### end -->
+
+
+
+</pre>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+  <ROOT>
+    <TCEforms>
+      <sheetTitle>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate</sheetTitle>
+    </TCEforms>
+    <type>array</type>
+    <el>
+      <plugin>
+        <TCEforms>
+          <exclude>0</exclude>
+          <config>
+            <type>user</type>
+            <userFunc>tx_browser_pi5_backend->evaluate_plugin</userFunc>
+          </config>
+        </TCEforms>
+      </plugin>
+      <externalLinks>
+        <TCEforms>
+          <label>LLL:EXT:browser/pi5/flexform_locallang.xml:sheet_evaluate.externalLinks</label>
+          <exclude>0</exclude>
+          <config>
+            <type>user</type>
+            <userFunc>tx_browser_pi5_backend->evaluate_externalLinks</userFunc>
+          </config>
+        </TCEforms>
+      </externalLinks>
+    </el>
+  </ROOT>
+</T3DataStructure>

@@ -1,0 +1,30 @@
+  ////////////////////////////////////////////////////////
+  //
+  // RSS alternate link in the HTML head section
+  
+page {
+  headerData {
+    99 = COA
+    99 {
+      10 = TEXT
+      10 {
+        value = <link rel="alternate" type="application/rss+xml" title="News" href="
+      }
+      20 = TEXT
+      20 {
+        stdWrap {
+          typolink {
+            // The uid of the page with the RSS feed
+            parameter   = 
+            returnLast  = url
+          }
+        }
+      }
+      30 = TEXT
+      30 {
+        value = " />
+      }
+    }
+  }
+}
+  // RSS alternate link in the HTML head section

@@ -1,0 +1,343 @@
+a:2:{s:4:"meta";a:3:{s:5:"title";s:0:"";s:5:"descr";s:0:"";s:7:"options";a:2:{s:10:"usageCount";N;s:19:"includeCodeAbstract";N;}}s:5:"files";a:1:{s:14:"MD5_6e125bb7ab";a:4:{s:8:"filename";s:38:"pi1/class.tx_browser_pi1_filter_4x.php";s:8:"filesize";i:94154;s:6:"header";a:5:{s:4:"text";s:142:"
+
+The class tx_browser_pi1_filter_4x bundles methods for rendering and processing filters and category menues.
+4x means: with SQL engine 4.x
+
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}s:5:"other";a:5:{i:0;s:60:"@author       Dirk Wildt <http://wildt.at.die-netzmacher.de>";i:1;s:19:"@package      TYPO3";i:2;s:21:"@subpackage   browser";i:3;s:19:"@version      3.9.9";i:4;s:19:"@since        3.9.9";}s:11:"other_index";a:5:{s:7:"@author";a:1:{i:0;s:46:"Dirk Wildt <http://wildt.at.die-netzmacher.de>";}s:8:"@package";a:1:{i:0;s:6:"TYPO3 ";}s:11:"@subpackage";a:1:{i:0;s:8:"browser ";}s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:3:"DAT";a:54:{i:1;a:8:{s:6:"header";s:32:"class tx_browser_pi1_filter_4x {";s:5:"class";i:1;s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:3:{s:4:"text";s:3479:"
+
+[CLASS/FUNCTION INDEX of SCRIPT]
+
+
+
+ 128: class tx_browser_pi1_filter_4x
+ 186:     function __construct($pObj)
+
+             SECTION: Main
+ 219:     public function get_filters( )
+
+             SECTION: Init
+ 309:     private function init( )
+
+             SECTION: Filter rendering
+ 369:     private function get_filter( )
+ 427:     private function get_filterItems( )
+ 504:     private function get_filterItemsDefault( )
+ 563:     private function get_filterItemsTree( )
+ 654:     private function get_filterItemsWrap( $items )
+ 767:     private function get_filterItem( $conf_array, $uid, $value )
+ 858:     private function get_filterTitle( )
+ 980:     private function get_filterWrap( $items )
+
+             SECTION: Handle rows
+1040:     private function get_rows( )
+1079:     private function get_rowsWiHits( )
+1120:     private function get_rowsAllItems( $rows_wiHits )
+
+             SECTION: SQL ressources
+1195:     private function sql_resAllItems( )
+1272:     private function sql_resWiHits( )
+
+             SECTION: SQL ressources to rows
+1360:     private function sql_resToRows( $res )
+1400:     private function sql_resToRows_allItemsWiHits( $res, $rows_wiHits )
+
+             SECTION: SQL statements - select
+1474:     private function sql_select( $bool_count )
+1551:     private function sql_select_addLL( )
+1586:     private function sql_select_addLL_sysLanguage( )
+1661:     private function sql_select_addLL_lang_ol(  )
+1727:     private function sql_select_addTreeview( )
+
+             SECTION: SQL statements - from, groupBy, orderBy, limit
+1830:     private function sql_from( )
+1868:     private function sql_groupBy( )
+1893:     private function sql_orderBy( )
+1949:     private function sql_limit( )
+
+             SECTION: SQL statements - where
+1988:     private function sql_whereAllItems( )
+2022:     private function sql_whereWiHits( )
+2047:     private function sql_andWhere_enableFields( )
+2074:     private function sql_andWhere_fromTS( )
+2106:     private function sql_andWhere_pidList( )
+2159:     private function sql_andWhere_sysLanguage( )
+
+             SECTION: TypoScript values
+2232:     private function ts_condition( )
+2298:     private function ts_displayHits( )
+2326:     private function ts_displayWithoutAnyHit( )
+
+             SECTION: Tree view helper
+2394:     private function tree_setOneDim( $uid_parent )
+2433:     private function tree_getRendered( )
+
+             SECTION: Replace marker
+2640:     private function replace_itemClass( $conf_array, $item )
+2684:     private function replace_itemSelected( $conf_array, $uid, $value, $item )
+2767:     private function replace_itemStyle( $conf_array, $item )
+2804:     private function replace_itemTitle( $conf_array, $item )
+2855:     private function replace_itemUid( $conf_array, $uid, $item )
+2882:     private function replace_itemUrl( $conf_array, $uid, $item )
+
+             SECTION: Helper
+3043:     private function set_maxItemsPerHtmlRow( )
+3109:     private function maxitemsPerHtmlRowBegin( $item )
+3148:     private function maxItemsPerHtmlRowIncreaseItemNumber( )
+3178:     private function maxItemsPerHtmlRowWrap( $items )
+3213:     private function set_firstItem( )
+3277:     private function set_htmlSpaceLeft( )
+3315:     private function set_hits( $uid, $value, $row )
+3422:     private function sum_hits( $rows )
+3462:     private function set_nicePiVar( )
+
+TOTAL FUNCTIONS: 53
+(This index is automatically created/updated by the extension "extdeveval")
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"[type]";i:1;s:3:"...";}}s:7:"content";s:0:"";s:12:"content_size";i:1481;s:13:"content_lines";i:51;s:6:"atLine";i:126;}i:3;a:7:{s:6:"header";s:29:"function __construct($pObj) {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:3:{s:4:"text";s:53:"
+
+Constructor. The method initiate the parent object
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"object";i:1;s:17:"The parent object";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}}s:7:"content";s:0:"";s:12:"content_size";i:164;s:13:"content_lines";i:25;s:6:"atLine";i:184;}i:5;a:8:{s:6:"header";s:34:"public function get_filters( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:11:"sectionText";a:1:{i:0;s:4:"Main";}s:4:"cDat";a:5:{s:4:"text";s:75:"
+
+get_filters( ):  Get filters. Returns a marker array or an error message
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:13:"$arr_return :";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:2100;s:13:"content_lines";i:81;s:6:"atLine";i:217;}i:7;a:8:{s:6:"header";s:28:"private function init( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:11:"sectionText";a:1:{i:0;s:4:"Init";}s:4:"cDat";a:5:{s:4:"text";s:89:"
+
+init( ):  Inits the localisation mode. Set the class var $this->int_localisation_mode.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1121;s:13:"content_lines";i:50;s:6:"atLine";i:307;}i:9;a:8:{s:6:"header";s:34:"private function get_filter( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:11:"sectionText";a:1:{i:0;s:16:"Filter rendering";}s:4:"cDat";a:5:{s:4:"text";s:164:"
+
+get_filter( ):  It renders filters and category menus in HTML.
+                A rendered filter can be a category menu, a checkbox, radiobuttons and a selectbox
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:13:"$arr_return :";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1297;s:13:"content_lines";i:49;s:6:"atLine";i:367;}i:11;a:7:{s:6:"header";s:39:"private function get_filterItems( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:68:"
+
+get_filterItems( ): Render the given rows. Returns a HTML filter.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:0:"";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1682;s:13:"content_lines";i:68;s:6:"atLine";i:425;}i:13;a:7:{s:6:"header";s:46:"private function get_filterItemsDefault( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:75:"
+
+get_filterItemsDefault( ): Render the given rows. Returns a HTML filter.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:0:"";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1272;s:13:"content_lines";i:49;s:6:"atLine";i:502;}i:15;a:7:{s:6:"header";s:43:"private function get_filterItemsTree( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:75:"
+
+get_filterItemsTree( ): Get the elements ordered to the needs of a tree.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:83:"$arr_tableFields  : Array with the values. Values are wrapped with ul- and li-tags.";}s:5:"other";a:3:{i:0;s:40:"@internal        #32223, 120119, dwildt+";i:1;s:14:"@version 3.9.9";i:2;s:14:"@since   3.9.9";}s:11:"other_index";a:3:{s:9:"@internal";a:1:{i:0;s:23:"#32223, 120119, dwildt+";}s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:2275;s:13:"content_lines";i:77;s:6:"atLine";i:561;}i:17;a:7:{s:6:"header";s:50:"private function get_filterItemsWrap( $items )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:58:"
+
+get_filterItemsWrap( ) Wrap all items (wrap the object)
+";s:5:"param";a:5:{i:0;a:2:{i:0;s:6:"string";i:1;s:66:"$conf_name: The content object CHECKBOX, RADIOBUTTONS or SELECTBOX";}i:1;a:2:{i:0;s:5:"array";i:1;s:56:"$conf_array: The current TS configuration of the obkject";}i:2;a:2:{i:0;s:6:"string";i:1;s:52:"$str_nice_piVar: The nice name for the current piVar";}i:3;a:2:{i:0;s:6:"string";i:1;s:38:"$key_piVar: The real name of the piVar";}i:4;a:2:{i:0;s:7:"integer";i:1;s:37:"$number_of_items: The number of items";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:32:"Returns the wrapped items/object";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:15:"@since    3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:2898;s:13:"content_lines";i:101;s:6:"atLine";i:652;}i:19;a:7:{s:6:"header";s:64:"private function get_filterItem( $conf_array, $uid, $value )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:67:"
+
+get_filterItem( ): Render the given rows. Returns a HTML filter.
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:17:"$$conf_array: ...";}i:1;a:2:{i:0;s:6:"[type]";i:1;s:9:"$uid: ...";}i:2;a:2:{i:0;s:6:"[type]";i:1;s:11:"$value: ...";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:0:"";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:2475;s:13:"content_lines";i:82;s:6:"atLine";i:765;}i:21;a:7:{s:6:"header";s:39:"private function get_filterTitle( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:68:"
+
+get_filterTitle( ): Get the wrapped title for the current filter.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:35:"$title_stdWrap  : The wrapped title";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:3808;s:13:"content_lines";i:112;s:6:"atLine";i:856;}i:23;a:7:{s:6:"header";s:45:"private function get_filterWrap( $items )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:59:"
+
+get_filterWrap( ): Wraps the items with table.field.wrap
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:50:"$items  : items of the current tableField / filter";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:23:"$items  : items wrapped";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1043;s:13:"content_lines";i:51;s:6:"atLine";i:978;}i:25;a:8:{s:6:"header";s:32:"private function get_rows( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:11:"sectionText";a:1:{i:0;s:11:"Handle rows";}s:4:"cDat";a:5:{s:4:"text";s:51:"
+
+get_rows( ):  Get the rows of the current filter
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:53:"$arr_return : Array with the rows or an error message";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:705;s:13:"content_lines";i:30;s:6:"atLine";i:1038;}i:27;a:7:{s:6:"header";s:38:"private function get_rowsWiHits( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:91:"
+
+get_rowsWiHits( ): Get the rows with the items with a hit at least of the current filter
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:53:"$arr_return : Array with the rows or an error message";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:626;s:13:"content_lines";i:29;s:6:"atLine";i:1077;}i:29;a:7:{s:6:"header";s:53:"private function get_rowsAllItems( $rows_wiHits )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:222:"
+
+get_rowsAllItems( ): Get the rows with all items of the current filter.
+                           If param $rows_wiHits contains rows, the counted
+                           hits will taken over in rows with all items.
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:5:"array";i:1;s:82:"$rows_wiHits  : Rows with items of the current filter, which have one hit at least";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:55:"$arr_return   : Array with the rows or an error message";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1606;s:13:"content_lines";i:65;s:6:"atLine";i:1118;}i:31;a:8:{s:6:"header";s:39:"private function sql_resAllItems( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:11:"sectionText";a:1:{i:0;s:14:"SQL ressources";}s:4:"cDat";a:5:{s:4:"text";s:115:"
+
+sql_resAllItems( ):  Get the SQL ressource for a filter with all items.
+                     Hits won't counted.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:62:"$arr_return : Array with the SQL ressource or an error message";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1913;s:13:"content_lines";i:67;s:6:"atLine";i:1193;}i:33;a:7:{s:6:"header";s:37:"private function sql_resWiHits( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:125:"
+
+sql_resWiHits( ):  Get the SQL ressource for a filter with items with hits only.
+                       Hits will counted.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:62:"$arr_return : Array with the SQL ressource or an error message";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1949;s:13:"content_lines";i:78;s:6:"atLine";i:1270;}i:35;a:8:{s:6:"header";s:42:"private function sql_resToRows( $res )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:11:"sectionText";a:1:{i:0;s:22:"SQL ressources to rows";}s:4:"cDat";a:5:{s:4:"text";s:66:"
+
+sql_resToRows( ):  Handle the SQL result, free it. Return rows.
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:9:"ressource";i:1;s:29:"$res  : current SQL ressource";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:12:"$rows : rows";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:535;s:13:"content_lines";i:27;s:6:"atLine";i:1358;}i:37;a:7:{s:6:"header";s:71:"private function sql_resToRows_allItemsWiHits( $res, $rows_wiHits )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:272:"
+
+sql_resToRows_allItemsWiHits( ): Handle the SQL result, free it. If param $rows_wiHits contains
+                                 rows, the hit of each row will override the hit in the current row.
+                                 Hit in the current row is 0 by default.
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:9:"ressource";i:1;s:41:"$res              : current SQL ressource";}i:1;a:2:{i:0;s:5:"array";i:1;s:34:"$rows_wiHits      : rows with hits";}}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:46:"$rows_wiAllItems  : rows with all filter items";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1222;s:13:"content_lines";i:62;s:6:"atLine";i:1398;}i:39;a:8:{s:6:"header";s:46:"private function sql_select( $bool_count )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:11:"sectionText";a:1:{i:0;s:23:"SQL statements - select";}s:4:"cDat";a:5:{s:4:"text";s:204:"
+
+sql_select( ): Get the SELECT statement for the current filter (the current tableField).
+               Statement will contain fields for localisation and treeview, if there is
+               any need.
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:7:"boolean";i:1;s:66:"$bool_count : true: hits are counted, false: any hit isn't counted";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:30:"$select     : SELECT statement";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1891;s:13:"content_lines";i:64;s:6:"atLine";i:1472;}i:41;a:7:{s:6:"header";s:40:"private function sql_select_addLL( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:300:"
+
+sql_select_addLL( ): Returns an addSelect with the localisation fields,
+                     if there are localisation needs.
+                     Localisation fields depends on case
+                     * local table   (sys_language record)
+                     * foreign table (language overlay)
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:56:"$addSelect  : the addSelect with the localisation fields";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:358;s:13:"content_lines";i:24;s:6:"atLine";i:1549;}i:43;a:7:{s:6:"header";s:52:"private function sql_select_addLL_sysLanguage( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:244:"
+
+sql_select_addLL_sysLanguage( ): Returns an addSelect with the localisation fields,
+                                 if there are localisation needs.
+                                 Method handles the local table (sys_language record) only.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:56:"$addSelect  : the addSelect with the localisation fields";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:2334;s:13:"content_lines";i:64;s:6:"atLine";i:1584;}i:45;a:7:{s:6:"header";s:49:"private function sql_select_addLL_lang_ol(  )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:231:"
+
+sql_select_addLL_lang_ol( ): Returns an addSelect with the localisation fields,
+                             if there are localisation needs.
+                             Method handles the foreign table (language overlay) only.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:56:"$addSelect  : the addSelect with the localisation fields";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1650;s:13:"content_lines";i:55;s:6:"atLine";i:1659;}i:47;a:7:{s:6:"header";s:46:"private function sql_select_addTreeview( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:133:"
+
+sql_select_addTreeview( ): Returns an addSelect with the treeParentField,
+                           if there is a treeParentField
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:52:"$addSelect  : the addSelect with the treeParentField";}s:5:"other";a:3:{i:0;s:24:"@internal #32223, 120119";i:1;s:14:"@version 3.9.9";i:2;s:14:"@since   3.9.9";}s:11:"other_index";a:3:{s:9:"@internal";a:1:{i:0;s:14:"#32223, 120119";}s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:2857;s:13:"content_lines";i:94;s:6:"atLine";i:1725;}i:49;a:8:{s:6:"header";s:32:"private function sql_from( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:11:"sectionText";a:1:{i:0;s:46:"SQL statements - from, groupBy, orderBy, limit";}s:4:"cDat";a:5:{s:4:"text";s:42:"
+
+sql_from( ): Get the FROM statement ...
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:22:"$from : FROM statement";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:515;s:13:"content_lines";i:29;s:6:"atLine";i:1828;}i:51;a:7:{s:6:"header";s:35:"private function sql_groupBy( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:49:"
+
+sql_groupBy( ): Get the GROUP BY statement ...
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:26:"$from : GROUP BY statement";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:155;s:13:"content_lines";i:15;s:6:"atLine";i:1866;}i:53;a:7:{s:6:"header";s:35:"private function sql_orderBy( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:124:"
+
+sql_orderBy( ):  Get the ORDER BY statement. It depends on the TS configuration
+                 filter.table.field.order
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:46:"$orderBy : ORDER BY statement without ORDER BY";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:991;s:13:"content_lines";i:47;s:6:"atLine";i:1891;}i:55;a:7:{s:6:"header";s:33:"private function sql_limit( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:44:"
+
+sql_limit( ): Get the LIMIT statement ...
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:24:"$limit : LIMIT statement";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:257;s:13:"content_lines";i:29;s:6:"atLine";i:1947;}i:57;a:8:{s:6:"header";s:41:"private function sql_whereAllItems( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:11:"sectionText";a:1:{i:0;s:22:"SQL statements - where";}s:4:"cDat";a:5:{s:4:"text";s:129:"
+
+sql_whereAllItems( ):  Get the WHERE statement for all items.
+                       All items means: idenependent of any hit.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:38:"$where : WHERE statement without WHERE";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:522;s:13:"content_lines";i:24;s:6:"atLine";i:1986;}i:59;a:7:{s:6:"header";s:39:"private function sql_whereWiHits( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:135:"
+
+sql_whereWiHits( ):  Get the WHERE statement for a filter, which should diplay
+                         flter items with a hit only.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:38:"$where : WHERE statement without WHERE";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:228;s:13:"content_lines";i:16;s:6:"atLine";i:2020;}i:61;a:7:{s:6:"header";s:49:"private function sql_andWhere_enableFields( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:85:"
+
+sql_andWhere_enableFields( ): Get the AND WHERE statement with the enabled fields.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:43:"$andWhere : AND WHERE statement with an AND";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:230;s:13:"content_lines";i:17;s:6:"atLine";i:2045;}i:63;a:7:{s:6:"header";s:43:"private function sql_andWhere_fromTS( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:125:"
+
+sql_andWhere_fromTS( ):  Get the AND WHERE statement from the TS configuration.
+                         See sql.andWhere.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:43:"$andWhere : AND WHERE statement with an AND";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:379;s:13:"content_lines";i:23;s:6:"atLine";i:2072;}i:65;a:7:{s:6:"header";s:44:"private function sql_andWhere_pidList( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:74:"
+
+sql_andWhere_pidList( ): Get the AND WHERE statement with the pid list.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:43:"$andWhere : AND WHERE statement with an AND";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:983;s:13:"content_lines";i:42;s:6:"atLine";i:2104;}i:67;a:7:{s:6:"header";s:48:"private function sql_andWhere_sysLanguage( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:214:"
+
+sql_andWhere_sysLanguage( ): Get the AND WHERE statement with gthe sys_language_uid.
+                             It is an AND WHERE for tables which have a record for each
+                             language.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:43:"$andWhere : AND WHERE statement with an AND";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1458;s:13:"content_lines";i:64;s:6:"atLine";i:2157;}i:69;a:8:{s:6:"header";s:36:"private function ts_condition( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:11:"sectionText";a:1:{i:0;s:17:"TypoScript values";}s:4:"cDat";a:5:{s:4:"text";s:48:"
+
+ts_condition( ):  Render the filter condition
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:7:"boolean";i:1;s:68:"True, if filter should displayed, false if filter shouldn't diplayed";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.3";i:1;s:14:"@since   3.9.3";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.3 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.3 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1596;s:13:"content_lines";i:56;s:6:"atLine";i:2230;}i:71;a:7:{s:6:"header";s:38:"private function ts_displayHits( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:167:"
+
+ts_displayHits( ):  Get the TS configuration for displaying items without hits.
+                             If current filter is a tree view, return value is true.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:54:"$display_without_any_hit : value from TS configuration";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:298;s:13:"content_lines";i:18;s:6:"atLine";i:2296;}i:73;a:7:{s:6:"header";s:47:"private function ts_displayWithoutAnyHit( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:176:"
+
+ts_displayWithoutAnyHit( ):  Get the TS configuration for displaying items without hits.
+                             If current filter is a tree view, return value is true.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:54:"$display_without_any_hit : value from TS configuration";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1317;s:13:"content_lines";i:52;s:6:"atLine";i:2324;}i:75;a:8:{s:6:"header";s:50:"private function tree_setOneDim( $uid_parent )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:11:"sectionText";a:1:{i:0;s:16:"Tree view helper";}s:4:"cDat";a:5:{s:4:"text";s:366:"
+
+set_treeOneDim:  Recursive method. It generates a one dimensional array.
+                 Each array has upto three elements:
+                 * [obligate] uid   : uid of the record
+                 * [obligate] value : value of the record
+                 * [optional] array : if the record has children ...
+                               It is 0 while starting.
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:7:"integer";i:1;s:69:"$uid_parent : Parent uid of the current record - for recursive calls.";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:49:"Result will be allocated to the global $tmpOneDim";}s:5:"other";a:3:{i:0;s:40:"@internal        #32223, 120119, dwildt+";i:1;s:14:"@version 3.9.9";i:2;s:14:"@since   3.9.9";}s:11:"other_index";a:3:{s:9:"@internal";a:1:{i:0;s:23:"#32223, 120119, dwildt+";}s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:659;s:13:"content_lines";i:27;s:6:"atLine";i:2392;}i:77;a:7:{s:6:"header";s:40:"private function tree_getRendered( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:255:"
+
+get_treeRendered:  Method converts a one dimensional array to a multidimensional array.
+                   It wraps every element of the array with ul and or li tags.
+                   Wrapping depends in position and level of the element in the tree.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:5:"array";i:1;s:46:"$arr_result : Array with the rendered elements";}s:5:"other";a:3:{i:0;s:40:"@internal        #32223, 120119, dwildt+";i:1;s:14:"@version 3.9.9";i:2;s:14:"@since   3.9.9";}s:11:"other_index";a:3:{s:9:"@internal";a:1:{i:0;s:23:"#32223, 120119, dwildt+";}s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:6154;s:13:"content_lines";i:196;s:6:"atLine";i:2431;}i:79;a:8:{s:6:"header";s:60:"private function replace_itemClass( $conf_array, $item )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:11:"sectionText";a:1:{i:0;s:14:"Replace marker";}s:4:"cDat";a:5:{s:4:"text";s:79:"
+
+replace_itemClass( ): Replaces the marker ###CLASS### with the value from TS
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:56:"$conf_array : The TS configuration of the current filter";}i:1;a:2:{i:0;s:6:"string";i:1;s:26:"$item   : The current item";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:34:"$item   :	Returns the wrapped item";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.0.0";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.0.0 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:466;s:13:"content_lines";i:31;s:6:"atLine";i:2638;}i:81;a:7:{s:6:"header";s:77:"private function replace_itemSelected( $conf_array, $uid, $value, $item )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:90:"
+
+replace_itemSelected( ): Replaces the marker ###ITEM_SELECTED### with the value from TS
+";s:5:"param";a:4:{i:0;a:2:{i:0;s:5:"array";i:1;s:56:"$conf_array : The TS configuration of the current filter";}i:1;a:2:{i:0;s:7:"integer";i:1;s:41:"$uid        : The uid of the current item";}i:2;a:2:{i:0;s:6:"string";i:1;s:43:"$value      : The value of the current item";}i:3;a:2:{i:0;s:6:"string";i:1;s:26:"$item   : The current item";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:34:"$item   :	Returns the wrapped item";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.0.0";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.0.0 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1552;s:13:"content_lines";i:72;s:6:"atLine";i:2682;}i:83;a:7:{s:6:"header";s:60:"private function replace_itemStyle( $conf_array, $item )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:79:"
+
+replace_itemStyle( ): Replaces the marker ###STYLE### with the value from TS
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:56:"$conf_array : The TS configuration of the current filter";}i:1;a:2:{i:0;s:6:"string";i:1;s:26:"$item   : The current item";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:34:"$item   :	Returns the wrapped item";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.0.0";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.0.0 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:372;s:13:"content_lines";i:26;s:6:"atLine";i:2765;}i:85;a:7:{s:6:"header";s:60:"private function replace_itemTitle( $conf_array, $item )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:79:"
+
+replace_itemTitle( ): Replaces the marker ###TITLE### with the value from TS
+";s:5:"param";a:2:{i:0;a:2:{i:0;s:5:"array";i:1;s:56:"$conf_array : The TS configuration of the current filter";}i:1;a:2:{i:0;s:6:"string";i:1;s:26:"$item   : The current item";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:34:"$item   :	Returns the wrapped item";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.0.0";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.0.0 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:691;s:13:"content_lines";i:39;s:6:"atLine";i:2802;}i:87;a:7:{s:6:"header";s:64:"private function replace_itemUid( $conf_array, $uid, $item )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:71:"
+
+replace_itemUid( ): Replaces the marker ###UID### with the given uid
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:5:"array";i:1;s:56:"$conf_array : The TS configuration of the current filter";}i:1;a:2:{i:0;s:6:"string";i:1;s:41:"$uid        : The uid of the current item";}i:2;a:2:{i:0;s:6:"string";i:1;s:26:"$item   : The current item";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:34:"$item   :	Returns the wrapped item";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.0.0";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.0.0 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:137;s:13:"content_lines";i:15;s:6:"atLine";i:2853;}i:89;a:7:{s:6:"header";s:64:"private function replace_itemUrl( $conf_array, $uid, $item )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:52:"
+
+replace_itemUrl( ): Replaces the marker ###URL###
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:5:"array";i:1;s:56:"$conf_array : The TS configuration of the current filter";}i:1;a:2:{i:0;s:6:"string";i:1;s:41:"$uid        : The uid of the current item";}i:2;a:2:{i:0;s:6:"string";i:1;s:26:"$item   : The current item";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:34:"$item   :	Returns the wrapped item";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.6.1";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.6.1 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:3959;s:13:"content_lines";i:152;s:6:"atLine";i:2880;}i:91;a:8:{s:6:"header";s:46:"private function set_maxItemsPerHtmlRow( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:11:"sectionText";a:1:{i:0;s:6:"Helper";}s:4:"cDat";a:5:{s:4:"text";s:61:"
+
+set_maxItemsPerHtmlRow( ): Set class var $itemsPerHtmlRow.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1566;s:13:"content_lines";i:56;s:6:"atLine";i:3041;}i:93;a:7:{s:6:"header";s:53:"private function maxitemsPerHtmlRowBegin( $item )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:34:"
+
+maxitemsPerHtmlRowBegin( ): ...
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:11:"$$item: ...";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:842;s:13:"content_lines";i:30;s:6:"atLine";i:3107;}i:95;a:7:{s:6:"header";s:60:"private function maxItemsPerHtmlRowIncreaseItemNumber( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:47:"
+
+maxItemsPerHtmlRowIncreaseItemNumber( ): ...
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:273;s:13:"content_lines";i:20;s:6:"atLine";i:3146;}i:97;a:7:{s:6:"header";s:53:"private function maxItemsPerHtmlRowWrap( $items )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:33:"
+
+maxItemsPerHtmlRowWrap( ): ...
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"[type]";i:1;s:12:"$$items: ...";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:437;s:13:"content_lines";i:25;s:6:"atLine";i:3176;}i:99;a:7:{s:6:"header";s:37:"private function set_firstItem( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:150:"
+
+set_firstItem( ):  Adds the first item to the rows of the current filter.
+                   If firstItem shouldn't displayed, nothing will happen.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.9.9";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.9.9 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:1469;s:13:"content_lines";i:55;s:6:"atLine";i:3211;}i:101;a:7:{s:6:"header";s:41:"private function set_htmlSpaceLeft( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:85:"
+
+set_htmlSpaceLeft( ): Set the left margin for HTML code. Class var $htmlSpaceLeft.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.0.0";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.0.0 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:505;s:13:"content_lines";i:24;s:6:"atLine";i:3275;}i:103;a:7:{s:6:"header";s:51:"private function set_hits( $uid, $value, $row )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:179:"
+
+set_hits( ): Prepend or append the hits to the curren item.
+             Hits will handled by stdWrap.
+             If hits shouldn't displayed, method returns the given value.
+";s:5:"param";a:3:{i:0;a:2:{i:0;s:7:"integer";i:1;s:40:"$uid    : uid of the current filter item";}i:1;a:2:{i:0;s:6:"string";i:1;s:42:"$value  : value of the current filter item";}i:2;a:2:{i:0;s:5:"array";i:1;s:21:"$row    : current row";}}s:6:"return";a:2:{i:0;s:6:"string";i:1;s:41:"$value  : Value with hits or without hits";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.0.0";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.0.0 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:2443;s:13:"content_lines";i:96;s:6:"atLine";i:3313;}i:105;a:4:{s:6:"header";s:38:"private function sum_hits( $rows )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:124:"
+
+sum_hits( ): Count the hits of the current tableField.
+             Store it in the class var $this->hits_sum[tableField]
+";s:5:"param";a:1:{i:0;a:2:{i:0;s:6:"string";i:1;s:22:"$rows   : current rows";}}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.0.0";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.0.0 ";}}}s:6:"atLine";i:3420;}i:107;a:7:{s:6:"header";s:37:"private function set_nicePiVar( )
+  {";s:11:"parentClass";s:24:"tx_browser_pi1_filter_4x";s:4:"cDat";a:5:{s:4:"text";s:87:"
+
+set_nicePiVar( ): Set class var nicePiVar. Result depends on HTML multiple property.
+";s:5:"param";a:0:{}s:6:"return";a:2:{i:0;s:4:"void";i:1;s:0:"";}s:5:"other";a:2:{i:0;s:14:"@version 3.9.9";i:1;s:14:"@since   3.0.0";}s:11:"other_index";a:2:{s:8:"@version";a:1:{i:0;s:6:"3.9.9 ";}s:6:"@since";a:1:{i:0;s:6:"3.0.0 ";}}}s:7:"content";s:0:"";s:12:"content_size";i:2435;s:13:"content_lines";i:88;s:6:"atLine";i:3460;}}}}}

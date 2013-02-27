@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+  <meta type="array">
+    <type>module</type>
+    <description>Language labels for plugin &quot;tx_browser_pi1&quot;</description>
+  </meta>
+  <data type="array">
+    <languageKey index="default" type="array">
+      <label index="befilter_from">from</label>
+      <label index="befilter_to">to</label>
+      <label index="promptCheckUpdateHeader">Update wizard</label>
+      <label index="promptCheckUpdateBody"><![CDATA[
+        You don't need the update wizard
+        <ul style="list-style:outside;">
+          <li>
+            if you are using the Browser the first time
+          </li>
+          <li>
+            if your last Browser version was > 3.9.13
+          </li>
+        </ul>
+        <br />
+        The Browser TypoScript configuration or the Browser plugin/flexform will be 
+        changed with this update!<br />
+        <br />
+        You can check with the update wizard, if your installation is affected.<br />
+        <br />
+        <ol style="list-style:outside;">
+          <li>
+            Please enable the option <strong>Update Wizard Enabling [x]</strong>.
+          </li>
+          <li>
+            Please add your IP in the field <strong>Update Wizard Allowed IPs</strong>.<br />
+            The Update Wizard displays its report for clients with this IP only. 
+          </li>
+          <li>
+            Please clear all TYPO3 caches.
+          </li>
+          <li>
+            Visit a page with a browser plugin/flexform in the TYPO3 frontend. You will receive a report.
+          </li>
+        </ol>
+      ]]></label>
+      <label index="promptCurrIPBody">Your current IP</label>
+      <label index="promptExternalLinksBody"><![CDATA[
+        <div style="float:right;padding-left:1em;">
+          <a href="http://typo3-browser.de/en/"
+            alt="TYPO3 Browser online"
+            title="TYPO3 Browser online"
+            target="_blank">
+            <img src="../../../../typo3conf/ext/browser/lib/icons/typo3_browser.gif"
+              width="90"
+              height="80"
+              alt="TYPO3 Browser online" /></a>
+          <a href="http://die-netzmacher.de/" 
+            alt="Die Netzmacher - Internet is trade"
+            title="Die Netzmacher - Internet is trade"
+            target="_blank">
+            <img src="../../../../typo3conf/ext/browser/lib/icons/die-netzmacher.de_200px.gif" 
+              width="200" 
+              height="80" 
+              alt="Die Netzmacher - Internet is trade" /></a>
+        </div>
+        <ul style="list-style:outside;">
+          <li>
+            TYPO3-Browser website<br />
+            <a href="http://typo3-browser.de/en"
+              style="text-decoration:underline;"
+              alt="Browser - TYPO3 without PHP"
+              title="Browser - TYPO3 without PHP"
+              target="_blank">typo3-browser.de/en</a>
+          </li>
+          <li>
+            TYPO3-Browser forum<br />
+            <a href="http://typo3-browser.de/forum/" 
+              style="text-decoration:underline;"
+              alt="TYPO3-Browser - Forum"
+              title="TYPO3-Browser - Forum"
+              target="_blank">typo3-browser.de/forum</a>
+          </li>
+          <li>
+            TYPO3-Browser developer<br />
+            <a href="http://die-netzmacher.de/" 
+              style="text-decoration:underline;"
+              alt="Die Netzmacher - Internet is trade"
+              title="Die Netzmacher - Internet is trade"
+              target="_blank">die-netzmacher.de</a>
+          </li>
+        </ul>
+        </div>
+        <p style="font-weight:bold;padding:1em 0;">
+          The TYPO3-Browser project is sponsored by:
+        </p>
+        <p style="padding:0 0 1em 0;">
+          You like to subsidise the TYPO3-Browser project?
+          <a href="http://typo3-browser.de/en/sponsoring/"
+            style="text-decoration:underline;"
+            alt="Your logo with your URL. 120 x 90 pixel."
+            title="Your logo with your URL. 120 x 90 pixel."
+            target="_blank">
+            Further information</a>.
+        </p>
+        <a href="http://lieska.net/"
+          alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsers the TYPO3-Browser project"
+          title="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsers the TYPO3-Browser project"
+          target="_blank">
+          <img src="../../../../typo3conf/ext/browser/lib/icons/Lieska_Tuotanto_Oy_130501_01.jpg"
+            width="120"
+            height="90"
+            alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsers the TYPO3-Browser project" /></a>
+        <a href="http://freemedia.ch/"
+          alt="Freemedia Medien & Verlag, Bern/Switzerland, sponsers the TYPO3-Browser project"
+          title="Freemedia Medien & Verlag, Bern/Switzerland, sponsers the TYPO3-Browser project"
+          target="_blank">
+          <img src="../../../../typo3conf/ext/browser/lib/icons/freemedia.ch.20130301.gif"
+            width="120"
+            height="90"
+            alt="Freemedia Medien & Verlag, Bern/Switzerland, sponsers the TYPO3-Browser project" /></a>
+        <a href="http://typo3-browser.de/en/sponsoring/"
+          alt="Your logo with your URL. 120 x 90 pixel."
+          title="Your logo with your URL. 120 x 90 pixel."
+          target="_blank">
+          <img src="../../../../typo3conf/ext/browser/lib/icons/your-logo_default-grey.gif" 
+            width="120" 
+            height="90" 
+            alt="Your logo with your URL. 120 x 90 pixel." /></a>
+      ]]></label>
+    </languageKey>
+    <languageKey index="de" type="array">
+      <label index="befilter_from">von</label>
+      <label index="befilter_to">bis</label>
+      <label index="promptCheckUpdateHeader">Update-Assistent</label>
+      <label index="promptCheckUpdateBody"><![CDATA[
+        Du brauchst keinen Update-Test durchzuf&uuml;hren,
+        <ul style="list-style:outside;">
+          <li>
+            wenn Du den Browser zum ersten Mal installierst
+          </li>
+          <li>
+            wenn Deine letzte Browser-Version > 3.9.13 war
+          </li>
+        </ul>
+        <br />
+        Mit dem aktuellen Update des Browsers werden TypoScript-Dateien 
+        und das Browser Plugin (Flexform) aktualisiert!<br />
+        <br />
+        Mit dem Update-Assistenten kannst Du &uuml;berpr&uuml;fen, ob Deine Installation betroffen ist.<br />
+        <br />
+        <ol style="list-style:outside;">
+          <li>
+            Bitte aktiviere die Option <strong>Update Wizard Enabling [x]</strong>.
+          </li>
+          <li>
+            Bitte f&uuml;ge im Feld <strong>Update Wizard Allowed IPs</strong> Deine IP-Adresse hinzu.<br />
+            Nur Rechner mit dieser IP-Adresse sehen den Bericht des Update-Assistenten.
+          </li>
+          <li>
+            Leere alle TYPO3 Caches.
+          </li>
+          <li>
+            Rufe im Frontend eine Seite mit einem Browser-Plugin auf. Du erh&auml;ltst dann einen Bericht.
+          </li>
+        </ol>
+      ]]></label>
+      <label index="promptCurrIPBody">Deine aktuelle IP-Adresse</label>
+      <label index="promptExternalLinksBody"><![CDATA[
+        <div style="float:right;padding-left:1em;">
+          <a href="http://typo3-browser.de/"
+            alt="TYPO3-Browser Online"
+            title="TYPO3-Browser Online"
+            target="_blank">
+            <img src="../../../../typo3conf/ext/browser/lib/icons/typo3_browser.gif"
+              width="90"
+              height="80"
+              alt="TYPO3-Browser Online" /></a>
+          <a href="http://die-netzmacher.de/" 
+            alt="Die Netzmacher - Internet ist Handwerk"
+            title="Die Netzmacher - Internet ist Handwerk"
+            target="_blank">
+            <img src="../../../../typo3conf/ext/browser/lib/icons/die-netzmacher.de_200px.gif" 
+              width="200" 
+              height="80" 
+              alt="Die Netzmacher - Internet ist Handwerk" /></a>
+        </div>
+        <ul style="list-style:outside;">
+          <li>
+            TYPO3-Browser Homepage<br />
+            <a href="http://typo3-browser.de/" 
+              style="text-decoration:underline;"
+              alt="Browser - TYPO3 ohne PHP"
+              title="Browser - TYPO3 ohne PHP"
+              target="_blank">typo3-browser.de</a>
+          </li>
+          <li>
+            TYPO3-Browser Forum<br />
+            <a href="http://typo3-browser.de/forum/" 
+              style="text-decoration:underline;"
+              alt="Browser - TYPO3 ohne PHP: Forum"
+              title="Browser - TYPO3 ohne PHP: Forum"
+              target="_blank">typo3-browser.de/forum</a>
+          </li>
+          <li>
+            TYPO3-Browser Entwickler<br />
+            <a href="http://die-netzmacher.de/" 
+              style="text-decoration:underline;"
+              alt="Die Netzmacher - Internet ist Handwerk"
+              title="Die Netzmacher - Internet ist Handwerk"
+              target="_blank">die-netzmacher.de</a>
+          </li>
+        </ul>
+        <p style="font-weight:bold;padding:1em 0;">
+          Der Browser - TYPO3 ohne PHP - wird gesponsert von:
+        </p>
+        <p style="padding:0 0 1em 0;">
+          Du m&ouml;chtest das TYPO3-Browser-Projekt finanziell unterst&uuml;tzen?
+          <a href="http://typo3-browser.de/sponsoring/" 
+            style="text-decoration:underline;"
+            alt="Dein Logo mit Deiner URL. 120 x 90 Pixel."
+            title="Dein Logo mit Deiner URL. 120 x 90 Pixel."
+            target="_blank">
+            Mehr Informationen</a>.
+        </p>
+        <a href="http://lieska.net/"
+          alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsert das TYPO3-Browser-Projekt"
+          title="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsert das TYPO3-Browser-Projekt"
+          target="_blank">
+          <img src="../../../../typo3conf/ext/browser/lib/icons/Lieska_Tuotanto_Oy_130501_01.jpg"
+            width="120"
+            height="90"
+            alt="Lieska-Tuotanto Oy, Helsinki/Finnland, sponsert das TYPO3-Browser-Projekt" /></a>
+        <a href="http://freemedia.ch/"
+          alt="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt"
+          title="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt"
+          target="_blank">
+          <img src="../../../../typo3conf/ext/browser/lib/icons/freemedia.ch.20130301.gif"
+            width="120"
+            height="90"
+            alt="Freemedia Medien & Verlag, Bern/Schweiz sponsert das TYPO3-Browser-Projekt" /></a>
+        <a href="http://typo3-browser.de/sponsoring/" 
+          alt="Dein Logo mit Deiner URL. 120 x 90 Pixel."
+          title="Dein Logo mit Deiner URL. 120 x 90 Pixel."
+          target="_blank">
+          <img src="../../../../typo3conf/ext/browser/lib/icons/your-logo_de-grey.gif" 
+            width="120" 
+            height="90" 
+            alt="Dein Logo mit Deiner URL. 120 x 90 Pixel." /></a>
+      ]]></label>
+    </languageKey>
+  </data>
+</T3locallang>
