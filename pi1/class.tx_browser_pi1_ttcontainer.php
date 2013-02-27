@@ -502,11 +502,11 @@ class tx_browser_pi1_ttcontainer
     // Get rows with the pairs marker and value like: $arr_markers[0][tx_civserv_service.uid] = 112
     $arr_marker_values  = $this->get_marker_ordered($arr_marker_values);
 // #45888
-var_dump( $arr_marker_values );    
+var_dump( __METHOD__, __LINE__, $arr_marker_values );    
     // Oder the marker array
     $arr_return         = $this->get_wrapped_marker($arr_ttc_values, $arr_marker_values, $str_ttc_type);
 // #45888
-var_dump( $arr_return );    
+var_dump( __METHOD__, __LINE__,$arr_return );    
     // Get the template as finished HTML code in $arr_return['data']['template']
 
 
