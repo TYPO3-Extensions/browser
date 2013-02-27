@@ -1,3 +1,8 @@
+3.9.15
+  130227
+  Bugfix
+  * #45888: Ordering of elements within a TT_CONTAINER
+
 3.9.14
   120514
   Improvements
