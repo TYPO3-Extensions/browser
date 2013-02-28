@@ -1286,11 +1286,11 @@ class tx_browser_pi1_ttcontainer
       }
       array_multisort($arr_sort[$str_order_field], $str_order_sort, $arr_marker_values);
     }
-//// #45888
-//if( $this->str_ttc_path = 'ttContainer.40.20.20' )
-//{
-//  var_dump( __METHOD__, __LINE__, $arr_marker_values );
-//}
+// #45888
+if( $this->str_ttc_path = 'ttContainer.40.20.20' )
+{
+  var_dump( __METHOD__, __LINE__, $arr_marker_values );
+}
 
     /////////////////////////////////////
     //
