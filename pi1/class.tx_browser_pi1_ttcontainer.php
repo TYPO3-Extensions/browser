@@ -1408,6 +1408,10 @@ if( $this->str_ttc_path = 'ttContainer.40.20.20' )
       {
         return $arr_result;
       }
+if( $this->str_ttc_path = 'ttContainer.40.20.20' )
+{
+  var_dump( __METHOD__, __LINE__, $arr_result['data']['template'] );
+}
       $template .= $arr_result['data']['template'];
       unset($arr_result);
 
