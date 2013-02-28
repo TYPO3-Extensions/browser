@@ -1420,6 +1420,10 @@ if( $this->str_ttc_path = 'ttContainer.40.20.20' )
       // Load the current realurl configuration
     }
     // Update all markers in the current TypoScript recursive
+if( $this->str_ttc_path = 'ttContainer.40.20.20' )
+{
+  var_dump( __METHOD__, __LINE__, $template );
+}
 
 
     ///////////////////////////////////////
