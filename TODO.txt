@@ -1,1 +1,3 @@
-Nothing to do.
+4.7.0
+  Feature
+  #46062: BrowserMaps: Localosation of the form labels

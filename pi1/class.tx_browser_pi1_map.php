@@ -591,6 +591,13 @@ class tx_browser_pi1_map
       // Get categories from the rows
     $categoryLabels = array( );
       // FOREACH row
+if( $this->pObj->b_drs_todo )
+{
+  $prompt = 'TODO: Lokalisation of the map form labels.';
+  t3lib_div :: devLog( '[TODO/BROWSERMAPS] ' . $prompt , $this->pObj->extKey, 3 );
+// #46062, 130306, dwildt: TODO: Lokalisierung der Labels:
+// Wenn Standortdatensatz uebersetzt ist, sind die Kategorie-Labels leer
+}
     foreach( $this->pObj->rows as $row )
     {
         // RETURN : field for category label is missing
