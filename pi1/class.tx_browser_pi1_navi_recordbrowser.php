@@ -573,7 +573,8 @@ class tx_browser_pi1_navi_recordbrowser
 
     $pos_of_first_row               = 0;
     $pos_of_curr_row                = $pos_of_all_rows[$singlePid];
-    $pos_of_last_row                = $pos_of_all_rows[end( ( array ) $uids_of_all_rows )];
+    $uids_of_all_rows               = ( array ) $uids_of_all_rows );
+    $pos_of_last_row                = $pos_of_all_rows[end( $uids_of_all_rows )];
     $marker['###RECORD_SUM###']     = $pos_of_last_row + 1;
     $marker['###TT_CONTENT.UID###'] = $this->pObj->cObj->data['uid'];
       // Get first, current and last positions and the position array
