@@ -1,9 +1,16 @@
 4.5.1
   13-03-07
   Bugfix
-  * #i0004: implode( ): invalid arguments passed in line 592
-            Effected file:
-            * pi1/class.tx_browser_pi1_filter_4x.php
+  * #i0004: * implode( ): invalid arguments passed in line 592
+              Effected file:
+              * pi1/class.tx_browser_pi1_filter_4x.php
+            * end( ): expects parameter 1 to be array line 576
+              array_flip( ) expects parameter 1 to be array line 572
+              Effected file:
+              * pi1/class.tx_browser_pi1_navi_recordbrowser.php
+            * in_array( ) expects parameter 2 to be array, null given in line 863
+              Effected file:
+              * pi1/class.tx_browser_pi1_localisation_3x.php
 
 4.5.0
   13-02-22

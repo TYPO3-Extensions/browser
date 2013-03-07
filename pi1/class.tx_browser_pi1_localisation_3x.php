@@ -860,7 +860,7 @@ class tx_browser_pi1_localisation_3x
       list($table, $field)  = explode('.', $tableField);
       $langPidField         = $GLOBALS['TCA'][$table]['ctrl']['transOrigPointerField'];
       $int_languagePid      = $elements['table.'.$langPidField];
-      if ( in_array( ( array ) $int_languagePid, array_keys( $arr_default[$table] ) ) )
+      if ( in_array( ( array ) $int_languagePid, array_keys( ( array ) $arr_default[$table] ) ) )
       {
         $row_default = $arr_default[$table][$int_languagePid];
         unset($rows[$row_default]);
