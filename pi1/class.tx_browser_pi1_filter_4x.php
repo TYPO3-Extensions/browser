@@ -589,7 +589,7 @@ class tx_browser_pi1_filter_4x {
         break;
       default:
           // Handle default filter (without area)
-        $str_uidList  = implode( ', ', $arr_piVar );
+        $str_uidList  = implode( ', ', ( array ) $arr_piVar );
 //$this->pObj->dev_var_dump( $arr_piVar, $str_uidList );
         $str_andWhere = $table . '.uid IN (' . $str_uidList . ')' . PHP_EOL;
           // #30912, 120127, dwildt+
