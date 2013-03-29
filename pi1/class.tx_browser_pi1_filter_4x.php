@@ -480,13 +480,11 @@ class tx_browser_pi1_filter_4x {
     foreach( $this->arr_tsFilterTableFields as $tableField )
     {
       list( $table, $field ) = explode( '.', $tableField );
-$this->pObj->dev_var_dump( __METHOD__, __LINE__, $tableField );
       $str_andWhere         = null;
 
         // Get nice_piVar
       $arr_result   = $this->zz_getNicePiVar( $tableField );
       $arr_piVar    = $arr_result['data']['arr_piVar'];
-//$this->pObj->dev_var_dump( $tableField, $arr_piVar );
       unset ($arr_result);
         // Get nice_piVar
 
@@ -513,12 +511,10 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $tableField );
           {
             case( $table == $this->pObj->localTable ):
               $str_andWhere = $this->init_andWhereFilter_localTable( $arr_piVar, $tableField);
-$this->pObj->dev_var_dump( __METHOD__, __LINE__ );
               break;
             case( $table != $this->pObj->localTable ):
             default:
               $str_andWhere = $this->init_andWhereFilter_foreignTable( $arr_piVar, $tableField);
-$this->pObj->dev_var_dump( __METHOD__, __LINE__ );
               break;
           }
             // SWITCH : local table versus foreign table
@@ -542,7 +538,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__ );
     if( empty( $strAndWhere ) )
     {
       $this->andWhereFilter = false;
-$this->pObj->dev_var_dump( __METHOD__, __LINE__ );
       return $this->andWhereFilter;
     }
       // RETURN : there isn't any andWhere statement
