@@ -1527,12 +1527,14 @@ class tx_browser_pi1_viewlist
 //$this->pObj->dev_var_dump( $where );
     if( $this->pObj->objFltr4x->get_selectedFilters( ) )
     {
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->objFltr4x->andWhereFilter );
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $this->pObj->objFltr4x->andWhereFilter );
     }
 
     if( ! empty( $this->pObj->objNaviIndexBrowser->findInSetForCurrTab ) )
     {
       $findInSetForCurrTab = $this->pObj->objNaviIndexBrowser->findInSetForCurrTab;
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $findInSetForCurrTab );
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
     }
 
