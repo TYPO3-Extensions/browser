@@ -617,6 +617,40 @@ class tx_browser_pi1_filter_4x {
   {
     $str_andWhere = null;
 
+      // #46776, 130329, dwildt, +
+    switch( $this->pObj->objCal->is_loaded )
+    {
+      case( true ):
+          // +Browser Calendar is loaded
+        $str_andWhere = $this->init_andWhereFilter_foreignTableAreaWiCal( $arr_piVar, $tableField );
+        break;
+      case( false ):
+      default:
+          // +Browser Calendar isn't loaded
+        $str_andWhere = $this->init_andWhereFilter_foreignTableAreaWoCal( $arr_piVar, $tableField );
+        break;
+    }
+      // #46776, 130329, dwildt, +
+
+    return $str_andWhere;
+  }
+
+
+
+  /**
+ * init_andWhereFilter_foreignTableAreaWiCal( ) : 
+ *
+ * @param	array		$arr_piVar   Current piVars
+ * @param	string		$tableField   Current table.field
+ * @return	array		arr_andWhereFilter: NULL if there isn' any filter
+ * @internal              #30912: Filter: count items with no relation to category:
+ * @version 4.4.7
+ * @since   3.6.0
+ */
+  private function init_andWhereFilter_foreignTableAreaWiCal( $arr_piVar, $tableField )
+  {
+    $str_andWhere = null;
+
       // #45422, 130212, dwildt, 2+
     $sheet_extend_cal_field_start = $this->pObj->objFlexform->sheet_extend_cal_field_start;
     $sheet_extend_cal_field_end   = $this->pObj->objFlexform->sheet_extend_cal_field_end;  
@@ -725,6 +759,96 @@ class tx_browser_pi1_filter_4x {
 
 
 
+  /**
+ * init_andWhereFilter_foreignTableAreaWoCal: 
+ *
+ * @param	array		$arr_piVar   Current piVars
+ * @param	string		$tableField   Current table.field
+ * @return	array		arr_andWhereFilter: NULL if there isn' any filter
+ * @internal              #30912: Filter: count items with no relation to category:
+ * @version 4.4.7
+ * @since   3.6.0
+ */
+  private function init_andWhereFilter_foreignTableAreaWoCal( $arr_piVar, $tableField )
+  {
+    $str_andWhere = null;
+
+    list ($table, $field) = explode('.', $tableField);
+    $conf_array           = $this->conf_view['filter.'][$table . '.'][$field . '.'];
+
+      // LOOP : each piVar
+    foreach( ( array ) $arr_piVar as $str_piVar )
+    {
+        // 13920, 110319, dwildt
+        // Move url value to tsKey
+      $str_piVar      = $this->pObj->objCal->area_get_tsKey_from_urlPeriod($tableField, $str_piVar);
+
+      $arr_item       = null;
+      $str_key        = $this->pObj->objCal->arr_area[$tableField]['key']; // I.e strings
+      $arr_currField  = $conf_array['area.'][$str_key . '.']['options.']['fields.'][$str_piVar . '.'];
+
+      $from       = $arr_currField['valueFrom_stdWrap.']['value'];
+      $from_conf  = $arr_currField['valueFrom_stdWrap.'];
+      $from_conf  = $this->pObj->objZz->substitute_t3globals_recurs($from_conf);
+      $from       = $this->pObj->local_cObj->stdWrap($from, $from_conf);
+        // #45422, 130212, dwildt, 6-
+      if( ! empty( $from ) )
+      {
+        $arr_item[] = $tableField . " >= '" . mysql_real_escape_string($from) . "'";
+          // #30912, 120127, dwildt+
+        $this->arr_filter_condition[$tableField]['from'] = mysql_real_escape_string( $from );
+      }
+//        // #45422, 130212, dwildt, 8+    
+//      $from = mysql_real_escape_string( $from );
+//      if( ! empty( $from ) )
+//      {
+//        $arr_item[] = $sheet_extend_cal_field_end . " >= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $from ) . "') " .
+//                      "OR " . $sheet_extend_cal_field_end . " IS NULL"; 
+//          // #30912, 120127, dwildt+
+//        $this->arr_filter_condition[$sheet_extend_cal_field_end]['from'] = $from;
+//      }
+
+      $to         = $arr_currField['valueTo_stdWrap.']['value'];
+      $to_conf    = $arr_currField['valueTo_stdWrap.'];
+      $to_conf    = $this->pObj->objZz->substitute_t3globals_recurs($to_conf);
+      $to         = $this->pObj->local_cObj->stdWrap($to, $to_conf);
+        // #45422, 130212, dwildt, 6-    
+      if( ! empty( $to ) )
+      {
+        $arr_item[] = $tableField . " <= '" . mysql_real_escape_string($to) . "'";
+          // #30912, 120127, dwildt+
+        $this->arr_filter_condition[$tableField]['to'] = mysql_real_escape_string( $to );
+      }
+//        // #45422, 130212, dwildt, 8+    
+//      $to         = mysql_real_escape_string( $to );
+//      if( ! empty( $to ) )
+//      {
+//        $arr_item[] = $sheet_extend_cal_field_start . " <= UNIX_TIMESTAMP('" . date( 'Y-m-d H:i:s', $to ) . "') " .
+//                      "OR " . $sheet_extend_cal_field_start . " IS NULL"; 
+//          // #30912, 120127, dwildt+
+//        $this->arr_filter_condition[$sheet_extend_cal_field_start]['to'] = $to;
+//      }
+
+      if( is_array( $arr_item ) )
+      {
+         // #45422, 130212, 1-
+        $arr_orValues[] = '(' . implode(' AND ', $arr_item) . ') ';
+//         // #45422, 130212, 1+
+//        $arr_orValues[] = '(' . implode(') AND (', $arr_item) . ') ';
+      }
+    }
+      // LOOP : each piVar
+    
+    $str_andWhere = implode(' OR ', $arr_orValues);
+    if( ! empty( $str_andWhere ) )
+    {
+      $str_andWhere = ' (' . $str_andWhere . ')';
+    }
+    return $str_andWhere;
+  }
+
+
+
 /**
  * init_andWhereFilter_localTable: Generate the andWhere statement for a field from the localtable.
  *                      If there is an area, it will be handled
@@ -789,8 +913,21 @@ class tx_browser_pi1_filter_4x {
   {
     $str_andWhere = null;
 
-      // #46776, 130329, dwildt
-    $str_andWhere = $this->init_andWhereFilter_localTableAreaWoCal( $arr_piVar, $tableField );
+      // #46776, 130329, dwildt, +
+    switch( $this->pObj->objCal->is_loaded )
+    {
+      case( true ):
+          // +Browser Calendar is loaded
+        $str_andWhere = $this->init_andWhereFilter_localTableAreaWiCal( $arr_piVar, $tableField );
+        break;
+      case( false ):
+      default:
+          // +Browser Calendar isn't loaded
+        $str_andWhere = $this->init_andWhereFilter_localTableAreaWoCal( $arr_piVar, $tableField );
+        break;
+    }
+      // #46776, 130329, dwildt, +
+
     return $str_andWhere;
   }
 

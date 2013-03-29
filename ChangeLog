@@ -2,6 +2,8 @@
   13-03-29
   Bugfix
   * #46776: Handle periods over days: With and without Browser +Calendar
+            Effected file:
+            * pi1/class.tx_browser_pi1_filter_4x.php
 
 4.5.1
   13-03-07
