@@ -1537,6 +1537,7 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $this->pObj->objFltr4x->andWher
 $this->pObj->dev_var_dump( __METHOD__, __LINE__, $findInSetForCurrTab );
       $where  = $this->pObj->objSqlFun->zz_concatenateWithAnd( $where, $findInSetForCurrTab );
     }
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $where );
 
     $groupBy  = null;
 
