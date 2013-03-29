@@ -453,6 +453,7 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_andWhereFilter( )
   {
+$this->pObj->dev_var_dump( __METHOD__, __LINE__ );
       // RETURN : $this->andWhereFilter was set before
     if( ! ( $this->andWhereFilter === null ) )
     {
@@ -467,6 +468,7 @@ class tx_browser_pi1_filter_4x {
       return $this->andWhereFilter;
     }
       // RETURN : there isn't any filter
+$this->pObj->dev_var_dump( __METHOD__, __LINE__ );
 
     $arr_andWhereFilter = null;
 
@@ -479,7 +481,8 @@ class tx_browser_pi1_filter_4x {
       // LOOP: filter tableFields
     foreach( $this->arr_tsFilterTableFields as $tableField )
     {
-      list ($table, $field) = explode('.', $tableField);
+      list( $table, $field ) = explode( '.', $tableField );
+$this->pObj->dev_var_dump( __METHOD__, __LINE__, $tableField );
       $str_andWhere         = null;
 
         // Get nice_piVar
@@ -539,6 +542,7 @@ class tx_browser_pi1_filter_4x {
     if( empty( $strAndWhere ) )
     {
       $this->andWhereFilter = false;
+$this->pObj->dev_var_dump( __METHOD__, __LINE__ );
       return $this->andWhereFilter;
     }
       // RETURN : there isn't any andWhere statement
@@ -555,6 +559,7 @@ class tx_browser_pi1_filter_4x {
       }
     }
       // DRS
+$this->pObj->dev_var_dump( __METHOD__, __LINE__ );
 
     return $this->andWhereFilter;
   }
