@@ -1,3 +1,8 @@
+4.5.2
+  13-03-29
+  Bugfix
+  * #46776: Handle periods over days: With and without Browser +Calendar
+
 4.5.1
   13-03-07
   Bugfix
