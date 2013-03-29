@@ -2748,8 +2748,30 @@ class tx_browser_pi1_cal
       $this->arr_url_tsKey[$tableField][$tsKeyUrl] = $int_element;
         // 13920, 110318, dwildt
 
+      $fromForDrs = $from;
       $from = strtotime($offset, $from);
       $to   = strtotime($offset, $to);
+
+        // DRS - Development Reporting System
+      if( $this->pObj->b_drs_error )
+      {
+        $value      = $fromForDrs;
+        $conf       = $arr_period_conf['value_stdWrap.'];
+        $fromValue  = $this->pObj->local_cObj->stdWrap( $value, $conf );
+        $conf       = $arr_period_conf['url_stdWrap.'];
+        $fromUrl    = $this->pObj->local_cObj->stdWrap( $value, $conf );
+        if( $fromValue != $fromUrl )
+        {
+          $prompt = 'value_stdWrap and url_stdWrap hasn\'t the same configuration. Filter won\'t run proper!';
+          t3lib_div :: devLog('[INFO/ERROR] ' . $prompt, $this->pObj->extKey, 3 );        
+          $prompt = 'Take care of proper properties in the area configuration of your filter!';
+          t3lib_div :: devLog('[INFO/HELP] ' . $prompt, $this->pObj->extKey, 1 );        
+          $prompt = 'See: http://forge.typo3.org/issues/46783';
+          t3lib_div :: devLog('[INFO/HELP] ' . $prompt, $this->pObj->extKey, 1 );        
+        }  
+      }
+        // DRS - Development Reporting System
+      
     }
       // Set fields array
 

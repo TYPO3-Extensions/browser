@@ -1264,7 +1264,7 @@ class tx_browser_pi1_sql_functions_3x
  * @param	string		The andWhere statement
  * @return	array		The andWhere with an AND at the top, the used table.fields in the where clause
  */
-    function get_propper_andWhere($str_andWhere)
+    function get_propper_andWhere( $str_andWhere )
     {
       $conf = $this->pObj->conf;
       $mode = $this->pObj->piVar_mode;
@@ -1387,14 +1387,21 @@ class tx_browser_pi1_sql_functions_3x
               break;
           }
         }
-        if ($boolTableField)
+        if( $boolTableField )
         {
           // We should have a table.field value
           $table = trim($arr_item_wi_dot[0]);
           $field = trim($arr_item_wi_dot[1]);
-          if ($this->pObj->b_drs_sql)
+          if( $this->pObj->b_drs_sql )
           {
-            t3lib_div::devlog('[INFO/SQL] views.'.$viewWiDot.$mode.' has this table in the andWhere clause: '.$table, $this->pObj->extKey, 0);
+            t3lib_div::devlog
+            (
+                '[INFO/SQL] views.' . $viewWiDot . $mode 
+              . ' has this table in the andWhere clause: '
+              . $table
+              , $this->pObj->extKey
+              , 0
+            );
           }
 
 
