@@ -453,7 +453,6 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_andWhereFilter( )
   {
-$this->pObj->dev_var_dump( __METHOD__, __LINE__ );
       // RETURN : $this->andWhereFilter was set before
     if( ! ( $this->andWhereFilter === null ) )
     {
@@ -468,7 +467,6 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__ );
       return $this->andWhereFilter;
     }
       // RETURN : there isn't any filter
-$this->pObj->dev_var_dump( __METHOD__, __LINE__ );
 
     $arr_andWhereFilter = null;
 
@@ -515,10 +513,12 @@ $this->pObj->dev_var_dump( __METHOD__, __LINE__, $tableField );
           {
             case( $table == $this->pObj->localTable ):
               $str_andWhere = $this->init_andWhereFilter_localTable( $arr_piVar, $tableField);
+$this->pObj->dev_var_dump( __METHOD__, __LINE__ );
               break;
             case( $table != $this->pObj->localTable ):
             default:
               $str_andWhere = $this->init_andWhereFilter_foreignTable( $arr_piVar, $tableField);
+$this->pObj->dev_var_dump( __METHOD__, __LINE__ );
               break;
           }
             // SWITCH : local table versus foreign table
