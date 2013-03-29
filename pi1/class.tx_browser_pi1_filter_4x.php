@@ -790,7 +790,7 @@ class tx_browser_pi1_filter_4x {
     $str_andWhere = null;
 
       // #46776, 130329, dwildt
-    $str_andWhere = init_andWhereFilter_localTableAreaWoCal( $arr_piVar, $tableField );
+    $str_andWhere = $this->init_andWhereFilter_localTableAreaWoCal( $arr_piVar, $tableField );
     return $str_andWhere;
   }
 
