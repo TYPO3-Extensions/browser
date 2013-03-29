@@ -748,7 +748,7 @@ class tx_browser_pi1_sql_functions
         // #i0003, 130214, dwildt, 1-
 //      $prompt     = $debugTrail['prompt'] . ': ' . $query;
         // #i0003, 130214, dwildt, 1+
-      $prompt     = $debugTrail['prompt'] . ': ' . str_replace( ',', ', ' . $query );
+      $prompt     = $debugTrail['prompt'] . ': ' . str_replace( ',', ', ' , $query );
       t3lib_div::devlog( '[OK/SQL] ' . $prompt,  $this->pObj->extKey, -1 );
       $prompt     = 'Be aware of the multi-byte notation, if you want to use the query ' .
                     'in your SQL shell or in phpMyAdmin.';
@@ -841,7 +841,7 @@ class tx_browser_pi1_sql_functions
         // #i0003, 130214, dwildt, 1-
 //      $prompt = $debugTrail['prompt'] . ': ' . $query;
         // #i0003, 130214, dwildt, 1+
-      $prompt = $debugTrail['prompt'] . ': ' . str_replace( ',', ', ' . $query );
+      $prompt = $debugTrail['prompt'] . ': ' . str_replace( ',', ', ' , $query );
       t3lib_div::devlog( '[OK/SQL] ' . $prompt,  $this->pObj->extKey, -1 );
 //      $prompt = 'Be aware of the multi-byte notation, if you want to use the query ' .
 //                'in your SQL shell or in phpMyAdmin.';
