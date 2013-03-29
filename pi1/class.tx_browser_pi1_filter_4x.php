@@ -554,7 +554,6 @@ class tx_browser_pi1_filter_4x {
       }
     }
       // DRS
-$this->pObj->dev_var_dump( __METHOD__, __LINE__ );
 
     return $this->andWhereFilter;
   }
