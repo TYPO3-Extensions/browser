@@ -472,7 +472,7 @@ class tx_browser_pi1 extends tslib_pibase {
     $str_browserEngineIndicator = null;  
     switch( $this->arr_extConf['browserEngine'] )
     {
-      case( 'Engine 3.x (beta)' ):
+      case( 'Engine 3.x (deprecated)' ):
         $this->dev_browserEngine = 3;
         $str_browserEngineIndicator = '
           <div>
@@ -486,7 +486,7 @@ class tx_browser_pi1 extends tslib_pibase {
           t3lib_div::devLog('[OK/SQL] ' . $prompt, $this->extKey, -1);
         }
         break;
-      case( 'Engine 4.x (alpha): recommended' ):
+      case( 'Engine 4.x (recommended)' ):
       default:
 //        if( ! $this->bool_accessByIP )
 //        {

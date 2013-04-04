@@ -1,5 +1,5 @@
-  # cat=basic/enable;             type=options[Engine 4.x (alpha): recommended,Engine 3.x (beta)]; label= Browser engine: 4.x has a high performance, but it's alpha - because of a lot revised code. Please use 3.x, if you have any problem. Be aware: You have to use the update wizard in every case.  
-browserEngine = Engine 4.x (alpha): recommended
+  # cat=basic/enable;             type=options[Engine 4.x (recommended),Engine 3.x (deprecated)]; label= Browser engine: 4.x has a high performance, but it's alpha - because of a lot revised code. Please use 3.x, if you have any problem. Be aware: You have to use the update wizard in every case.  
+browserEngine = Engine 4.x (recommended)
   # cat=basic/enable;             type=options[Off (recommended),On]; label= Browser engine 4.x indicator: Enable the display of a label in the frontend. For development.
 browserEngineIndicator = Off (recommended)
   # cat=basic/others;             type=user[EXT:browser/lib/class.tx_browser_extmanager.php:tx_browser_extmanager->promptExternalLinks]; label=External Links
