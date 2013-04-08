@@ -1,3 +1,11 @@
+4.5.5
+  13-04-09
+  Bugfixes
+  * #i0006: * array_multisort() : invalid arguments passed in line 989
+            * array_diff()      : invalid arguments passed in line 192
+              Effected file:
+              * pi1/class.tx_browser_pi1_multisort.php
+
 4.5.4
   13-04-08
   Update Sponsors

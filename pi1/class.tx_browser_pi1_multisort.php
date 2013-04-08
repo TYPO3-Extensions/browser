@@ -189,8 +189,11 @@ class tx_browser_pi1_multisort
 
     reset( $rows );
     $firstKey             = key( $rows );
-    $arr_rmKeys           = array_diff( $arrOrderByWoAscDesc, array_keys($rows[$firstKey] ) );
-    $arrOrderByWoAscDesc  = array_flip( $arrOrderByWoAscDesc );
+      // #i0006, dwildt, 1-
+//    $arr_rmKeys           = array_diff( $arrOrderByWoAscDesc, array_keys($rows[$firstKey] ) );
+      // #i0006, dwildt, 1+
+    $arr_rmKeys           = array_diff( ( array ) $arrOrderByWoAscDesc, ( array ) array_keys( $rows[$firstKey] ) );
+    $arrOrderByWoAscDesc  = array_flip( ( array ) $arrOrderByWoAscDesc );
     foreach( ( array ) $arr_rmKeys as $key )
     {
       unset($arrOrderByWoAscDesc[$key]);
@@ -969,6 +972,20 @@ class tx_browser_pi1_multisort
  */
   function multisort_rows_upto_6_level($arr_multisort, $rows)
   {
+      // #i0006, dwildt, 3+
+    $arr_return                   = array( );
+    $arr_return['arr_multisort']  = $arr_multisort;
+    $arr_return['rows']           = $rows;
+    
+      // #i0006, dwildt, 6+
+      // RETURN : $arr_multisort isn't an array
+    if( ! is_array( $arr_multisort ) )
+    {
+      return $arr_return;
+    }
+      // RETURN : $arr_multisort isn't an array
+
+    
     /////////////////////////////////////////////////////////////////
     //
     // Process array_multisort
