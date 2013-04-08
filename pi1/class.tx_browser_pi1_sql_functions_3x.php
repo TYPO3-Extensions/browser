@@ -1074,7 +1074,7 @@ class tx_browser_pi1_sql_functions_3x
 
       foreach ($arr_aliastableField as $key_field => $str_tablefield)
       {
-        $arr_tablefield                   = explode ('.', trim($str_tablefield));
+        $arr_tablefield                   = explode ('.', trim( $str_tablefield ) );
         list($str_tablealias, $str_field) = $arr_tablefield;
         $str_tablereal                    = $conf_view['aliases.']['tables.'][$str_tablealias];
         if ($str_tablereal)

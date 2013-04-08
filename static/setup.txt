@@ -3531,11 +3531,6 @@ plugin.tx_browser_pi1 {
               url     = http://linkarena.com/bookmarks/addlink/?url=###URL###&amp;title=###TITLE###
               image   = EXT:browser/res/images/socialmedia/bookmarks/linkarena.png
             }
-            live {
-              name    = live.com
-              url     = https://favorites.live.com/quickadd.aspx?marklet=1&amp;mkt=en-us&amp;url=###URL###&amp;title=###TITLE###&amp;top=1
-              image   = EXT:browser/res/images/socialmedia/bookmarks/live.png
-            }
             magnolia {
               name    = Ma.gnolia
               url     = http://ma.gnolia.com/beta/bookmarklet/add?url=###URL###&amp;title=###TITLE###&amp;description=###TITLE###

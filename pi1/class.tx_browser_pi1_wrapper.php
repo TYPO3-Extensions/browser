@@ -1255,7 +1255,7 @@ class tx_browser_pi1_wrapper
  * @param    string        $documents : the list of documents
  * @return    string        The wrapped document(s)
  */
-  function wrapDocument($documents) {
+  function wrapDocument( $documents ) {
 
     $conf = $this->pObj->conf;
     $mode = $this->pObj->piVar_mode;
