@@ -1289,13 +1289,10 @@ class tx_browser_pi1_filter_4x {
  */
   private function init_consolidationAndSelect_setArrayConsolidation( )
   {
-    // #47089, 120410, dwildt
-$this->pObj->dev_var_dump( $this->pObj->conf_sql );
       // LOOP : each filter (table.field)
     foreach( ( array ) $this->arr_tsFilterTableFields as $tableField )
     {
       list( $table ) = explode( '.', $tableField );
-$this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields[$table] );
       $tableUid = $table . '.uid';
 
         // CONTINUE : $arrConsolidation contains the current tableUid
@@ -1304,6 +1301,16 @@ $this->pObj->dev_var_dump( $this->pObj->arr_realTables_arrFields[$table] );
         continue;
       }
         // CONTINUE : $arrConsolidation contains the current tableUid
+
+        // #47089, 120410, dwildt
+        // CONTINUE : select clause contains the current tableUid
+      $pos = strpos( $this->pObj->conf_sql, $tableUid );
+      if( ! ( $pos === false ) )
+      {
+        continue;
+      }
+        // CONTINUE : select clause contains the current tableUid
+        // #47089, 120410, dwildt
 
         // Add current tableUid
       $this->pObj->arrConsolidate['addedTableFields'][] = $tableUid;
