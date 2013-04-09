@@ -1294,7 +1294,7 @@ class tx_browser_pi1_template
         // GROUP BY true
 
         // GROUP BY false
-$this->pObj->dev_var_dump( $template );
+//$this->pObj->dev_var_dump( $template );
       if( ! $this->bool_groupby )
       {
         if( $this->ignore_empty_rows_rule )
@@ -1309,7 +1309,7 @@ $this->pObj->dev_var_dump( $template );
           $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODY###', $tmpl_rows, true);
         }
       }
-$this->pObj->dev_var_dump( $template );
+$this->pObj->dev_var_dump( $tmpl_rows, $template );
         // GROUP BY false
 
       $this->pObj->rows = $rows;
