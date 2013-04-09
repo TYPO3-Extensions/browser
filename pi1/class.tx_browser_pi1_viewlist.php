@@ -398,7 +398,7 @@ class tx_browser_pi1_viewlist
     }
       // #42124, dwildt, +
     $this->content = $content;
-
+$this->pObj->dev_var_dump( $marker, $hashMarker, $content, $this->content );    
       // Prompt the expired time to devlog
     $debugTrailLevel = 1;
     $this->pObj->timeTracking_log( $debugTrailLevel,  'end' );
@@ -617,7 +617,7 @@ class tx_browser_pi1_viewlist
     }
       // Set mode selector
 
-$this->pObj->dev_var_dump( $marker, $hashMarker, $content, $this->content );    
+//$this->pObj->dev_var_dump( $marker, $hashMarker, $content, $this->content );    
     return;
   }
 
