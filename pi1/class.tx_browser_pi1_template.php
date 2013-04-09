@@ -1171,6 +1171,7 @@ class tx_browser_pi1_template
       $int_groupCounter  = -1;
         // Rows of a group
       $tmpl_rows         = '';
+$this->pObj->dev_var_dump( $tmpl_rows );
         // Wrap for the groupname
       if($this->pObj->str_wrap_grouptitle)
       {
@@ -1264,6 +1265,7 @@ class tx_browser_pi1_template
         }
         $c++;
       }
+$this->pObj->dev_var_dump( $tmpl_rows );
         // Rows
       unset($markerArray);
 
@@ -1309,7 +1311,6 @@ class tx_browser_pi1_template
           $template = $this->pObj->cObj->substituteSubpart($template, '###LISTBODY###', $tmpl_rows, true);
         }
       }
-$this->pObj->dev_var_dump( $tmpl_rows, $template );
         // GROUP BY false
 
       $this->pObj->rows = $rows;
