@@ -1333,7 +1333,9 @@ class tx_browser_pi1_template
       // #44295, 130103, dwildt, 1+
     $markerArray['###TT_CONTENT.UID###']  = $this->pObj->cObj->data['uid'];
     $subpart        = $this->pObj->cObj->getSubpart($template, '###LISTVIEW###');
+$this->pObj->dev_var_dump( $subpart );
     $listview       = $this->pObj->cObj->substituteMarkerArray($subpart, $markerArray);
+$this->pObj->dev_var_dump( $content );
     $template       = $this->pObj->cObj->substituteSubpart($template, '###LISTVIEW###', $listview, true);
     unset($markerArray);
       // 110829, dwildt-
