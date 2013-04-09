@@ -763,7 +763,7 @@ class tx_browser_pi1_viewlist
       $content     = '<!-- ' . $hashSubpart . ' begin -->' . $content . '<!-- ' . $hashSubpart . ' end -->';
       $this->content  = $this->pObj->cObj-> substituteSubpart( $this->content, $hashSubpart, $content );
         // Replace the subpart by the content
-//$this->pObj->dev_var_dump( $subpart, $hashSubpart, $content, $this->content );    
+$this->pObj->dev_var_dump( $subpart, $hashSubpart, $content, $this->content );    
     }
       // FOREACH subpart
 
