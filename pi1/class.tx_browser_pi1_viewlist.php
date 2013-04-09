@@ -743,6 +743,7 @@ class tx_browser_pi1_viewlist
 
       // FOREACH subparts
     $confSubpart = $this->conf_view['htmlSnippets.']['subparts.'];
+$this->pObj->dev_var_dump( array_keys ( ( array ) $confSubpart ) );    
     foreach( array_keys ( ( array ) $confSubpart ) as $subpart )
     {
         // CONTINUE current subpart has a dot
