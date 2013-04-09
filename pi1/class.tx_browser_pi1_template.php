@@ -1171,7 +1171,6 @@ class tx_browser_pi1_template
       $int_groupCounter  = -1;
         // Rows of a group
       $tmpl_rows         = '';
-$this->pObj->dev_var_dump( $rows );
         // Wrap for the groupname
       if($this->pObj->str_wrap_grouptitle)
       {
@@ -1222,7 +1221,9 @@ $this->pObj->dev_var_dump( $rows );
 
         $this->pObj->elements    = $elements;
         $this->pObj->rows[$row]  = $rows[$row];
+$this->pObj->dev_var_dump( $elements );
         $tmpl_row                = $this->tmplRow($elements, '###LISTBODYITEM###', $template); //:todo: Performance
+$this->pObj->dev_var_dump( $tmpl_row );
 
           // Remove last devider in case of csv export
           // #29370, 110831, dwildt+
